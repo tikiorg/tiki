@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.74 2007-06-29 21:53:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.75 2007-07-04 18:28:18 gillesm Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -55,13 +55,11 @@ class FileGalLib extends TikiLib {
 	  global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $fgal_allow_duplicates, $smarty, $user;
 
 		$name = strip_tags($name);
-
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
 			$savedir=$fgal_podcast_dir;
 		} else {
 			$savedir=$fgal_use_dir;
 		}
-
 		if (($fgal_use_db == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				$checksum = md5_file($savedir . $path);
@@ -71,7 +69,6 @@ class FileGalLib extends TikiLib {
 		} else {
 			$checksum = md5($data);
 		}
-
 		$description = strip_tags($description);
 
 		if ( $fgal_allow_duplicates != 'y' ) {
@@ -92,7 +89,6 @@ class FileGalLib extends TikiLib {
 		}
 		if (empty($created))
 			$created = $this->now;
-		
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array($galleryId,trim($name),$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));

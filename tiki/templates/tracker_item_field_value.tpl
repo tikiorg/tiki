@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.8 2007-06-29 16:51:42 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.9 2007-07-04 18:28:19 gillesm Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -62,9 +62,9 @@
 {* -------------------- Multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
 	
-	{assign URL=$URLAppend.$field_value.value}
+	
 	{if $field_value.value ne ''}
-		{include file=multiplayer.tpl url="$field_value.value" w="$field_value.options_array[1]" h="$field_value.options_array[]"}
+		{include file=multiplayer.tpl url=$field_value.value w=$field_value.options_array[1] h=$field_value.options_array[2]}
 	{/if}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.128 2007-06-29 16:33:41 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.129 2007-07-04 18:28:15 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -469,7 +469,6 @@ foreach($xfields["data"] as $i=>$array) {
 
 
 			if (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3' ) )	{
-
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {	
 					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
 					$data = '';
@@ -1121,6 +1120,7 @@ if ($feature_jscalendar) {
 ask_ticket('view-trackers-items');
 
 // Display the template
+$smarty->assign('URLAppend',$URLAppend);
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 $smarty->display("tiki.tpl");
 

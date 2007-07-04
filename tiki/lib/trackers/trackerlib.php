@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.206 2007-07-03 16:03:33 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.207 2007-07-04 18:28:18 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -844,9 +844,11 @@ class TrackerLib extends TikiLib {
 					} else if( $ins_fields["data"][$i]['value'] != '' ) {
 						$opts = split(',', $ins_fields['data'][$i]["options"]);
 						global $filegallib; include_once ("lib/filegals/filegallib.php");
-						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$ins_fields["data"][$i]["file_type"] , "system",time() , '', "system", $created='', $lockedby=NULL) ; 
+						global $MultimediaGalerie;
+						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$ins_fields["data"][$i]["file_type"] , $user,"" , '', "system", time(), $lockedby=NULL) ; 
+						$ins_fields["data"][$i]['value']=$fileGalId;
 
- 						if (!$fileId) {
+ 						if (!$fileGalId) {
 							$errors[] = tra('Upload was not successful. Duplicate file content ?'). ': ' . $name;
 // 						if (($fgal_use_db == 'n') || ($podCastGallery)) {
 // 							@unlink($savedir . $fhash);
