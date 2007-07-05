@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.110 2007-05-09 13:55:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.111 2007-07-05 22:57:23 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -601,20 +601,25 @@ $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
 
 if ($feature_user_watches == 'y') {
-    if ($user && isset($_REQUEST['watch_event'])) {
-	check_ticket('view-forum');
-	if ($_REQUEST['watch_action'] == 'add') {
-	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum', $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
+	if ($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('view-forum');
+		if ($_REQUEST['watch_action'] == 'add') {
+			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum', $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
+		} else {
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+		}
+    }
+
+	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic', $_REQUEST['forumId'])) {
+		$smarty->assign('user_watching_forum', 'y');
 	} else {
-	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+		$smarty->assign('user_watching_forum', 'n');
 	}
-    }
-
-    $smarty->assign('user_watching_forum', 'n');
-
-    if ($user && $tikilib->user_watches($user, 'forum_post_topic', $_REQUEST['forumId'], 'forum')) {
-	$smarty->assign('user_watching_forum', 'y');
-    }
+	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic_and_thread', $_REQUEST['forumId'])) {
+		$smarty->assign('user_watching_forum_topic_and_thread', 'y');
+	} else {
+		$smarty->assign('user_watching_forum_topic_and_thread', 'n');
+	}
 }
 
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {

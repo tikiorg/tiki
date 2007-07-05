@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.754 2007-06-25 16:27:02 ang23 Exp $
+// CVS: $Id: tikilib.php,v 1.755 2007-07-05 22:57:23 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -253,32 +253,45 @@ class TikiLib extends TikiDB {
 	}
 
     /*shared*/
-    function get_event_watches($event, $object) {
+    function get_event_watches($event, $object, $info=null) {
 	global $feature_user_watches_translations, $dbTiki;
 	$ret = array();
 
 	$where = array();
 	$mid = '';
-	$bindvars[] = $event;
 	if( $feature_user_watches_translations == 'y'  && $event == 'wiki_page_changed') {
 	    // If $feature_user_watches_translations is turned on, also look for
 	    // pages in a translation group.
+		$mid = "`event`=?";
+		$bindvars[] = $event;
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$page_info = $this->get_page_info( $object );
 		$pages = $multilinguallib->getTranslations('wiki page', $page_info['page_id'], $object, '' );
 		foreach ($pages as $page) {
-			if ($mid != "")
-				$mid .= " or ";
-			$mid .= "`object`=?";
+			$mids[] = "`object`=?";
 			$bindvars[] = $page['objName'];
 		}
+		$mid .= 'and ('.implode(' or ', $mids).')';
+	} else if ($event == 'forum_post_topic') {
+		$mid = "(`event`=? or `event`=?) and `object`=?";
+		$bindvars[] = $event;
+		$bindvars[] = 'forum_post_topic_and_thread';
+		$bindvars[] = $object;
+	} else if ($event == 'forum_post_thread') {
+		$mid = "(`event`=? and `object`=?) or ( `event`=? and `object`=?)";
+		$bindvars[] = $event;
+		$bindvars[] = $object;
+		$bindvars[] = 'forum_post_topic_and_thread';
+		$forumId = $info['forumId'];
+		$bindvars[] = $forumId;
 	} else {
-		$mid .= "`object`=?";
+		$mid = "`event`=? and `object`=?";
+		$bindvars[] = $event;
 		$bindvars[] = $object;
 	}
-	$query = "select `user`,`email` from `tiki_user_watches` where `event`=? and (".$mid.")";
 	$result = $this->query($query,$bindvars);
+	echo $query;print_r($bindvars); echo $object;
 
 	if (!$result->numRows()) {
 	    return $ret;
@@ -309,9 +322,6 @@ class TikiLib extends TikiDB {
                                  $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
                     break;
                 case 'forum_post_thread':
-                    require_once('lib/commentslib.php');
-                    $commentslib = new Comments($dbTiki);
-                    $forumId=$commentslib->get_comment_father($object);
                     $res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
                                   $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
                     break;
