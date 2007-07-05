@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.207 2007-07-04 18:28:18 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.208 2007-07-05 15:09:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -910,8 +910,8 @@ class TrackerLib extends TikiLib {
 					$the_data .= "\n";
 
 					if ($itemId) {
-						$query = "select `itemId` from `tiki_tracker_item_fields` where `itemId`=?";
-						if ($this->getOne($query,(int) $itemId)) {
+						$query = "select `itemId` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?";
+						if ($this->getOne($query,array((int) $itemId, (int) $fieldId))) {
 							$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 							$this->query($query,array('',(int) $itemId,(int) $fieldId));
 						} else {
