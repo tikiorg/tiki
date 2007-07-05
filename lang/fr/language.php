@@ -2168,6 +2168,7 @@ $lang=Array(
 "Submit article" => "Soumettre un article",
 "View submissions" => "Liste des soumissions",
 "Edit article" => "Modifier un article",
+"New article" => "Créer un article",
 "Send articles" => "Envoyer des articles",
 "Received articles" => "Articles reçus",
 "Admin topics" => "Administrer les sujets",

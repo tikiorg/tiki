@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.170 2007-07-03 21:53:27 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.171 2007-07-05 16:10:04 jyhem Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -950,7 +950,7 @@ UPDATE tiki_menu_options SET perm='tiki_p_view' where url='tiki-admin_structures
 #mose 07 06 07 
 alter table tiki_menu_options add userlevel int(4) default 0 after groupname;
 
-#Jyhem 2007-06-19
+#Jyhem 2007-06-19 (obsolete perm name)
 DELETE FROM `users_permissions` WHERE permName='tiki_p_batch_upload_files_dir';
 
 #mose because tomtom is just a lazy guy 01 07 07 
@@ -958,3 +958,7 @@ ALTER TABLE `tiki_newsletters` ADD `author` varchar(200) default NULL;
 
 #2007-07-02 sylvieg
 ALTER TABLE tiki_pages CHANGE `cache` `cache` longtext;
+
+#Jyhem 2007-07-05 (correct misleading title)
+UPDATE tiki_menu_options SET name='New article' where url='tiki-edit_article.php';
+
