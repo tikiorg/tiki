@@ -57,7 +57,7 @@
 
 {if $user_tracker_infos}
   {foreach item=itemField from=$userItem.field_values}
-	{if $itemField.value ne ''}
+	{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 		<tr><td class="form">{tr}{$itemField.name}{/tr}:</td>
 		<td>{include file="tracker_item_field_value.tpl" field_value=$itemField item=$itemField}</td></tr>
 	{/if}
