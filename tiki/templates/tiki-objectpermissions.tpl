@@ -1,6 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.22 2007-06-03 13:35:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.23 2007-07-05 23:07:29 sylvieg Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
+<div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
+</div>
 
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <div class="rbox" name="tip">
