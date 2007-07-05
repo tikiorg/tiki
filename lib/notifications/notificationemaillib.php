@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.27 2007-04-25 17:01:58 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.28 2007-07-05 22:57:23 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -81,7 +81,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 
 	// Users watching this forum or this post
 	if ($feature_user_watches == 'y') {
-		$nots = $tikilib->get_event_watches($event, $parentId? $parentId: $object);
+		$nots = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}
@@ -117,10 +117,10 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('forumId', $forum_info["forumId"]);
 		if ($event == "forum_post_topic") {
 			$smarty->assign('new_topic', 'y');
-			$smarty->assign('topicId', $threadId);
 		} else {
-			$smarty->assign('topicId', $object);
+		$smarty->assign('threadId', $object);
 		}
+		$smarty->assign('topicId', $threadId);
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
 			$mail->setUser($not['user']);

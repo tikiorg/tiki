@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.83 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.84 2007-07-05 22:57:23 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -39,6 +39,13 @@
 {else}
 <a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' src='img/icons/icon_unwatch.png' /></a>
 {/if}
+{/if}
+{if $user and $feature_user_watches eq 'y'}
+	{if $user_watching_forum_topic_and_thread eq 'n'}
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor this forum topic and thread{/tr}'><img border='0' alt='{tr}monitor this forum topic and thread{/tr}' src='img/icons/icon_watch.png' /></a>
+	{else}
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}stop monitoring this forum topic and thread{/tr}'><img border='0' alt='{tr}stop monitoring this forum topic and thread{/tr}' src='img/icons/icon_unwatch.png' /></a>
+	{/if}
 {/if}
 </td>
 </tr>
@@ -397,6 +404,9 @@ a moderator approves it.{/tr}</small>
 </form>
   <div align="center">
   <div class="mini">
+
+{if $comments_cant_pages >1}
+
   {if $comments_prev_offset >= 0}
   [<a class="forumprevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}prev{/tr}</a>]&nbsp;
   {/if}
@@ -412,6 +422,9 @@ a moderator approves it.{/tr}</small>
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
+
+{/if}
+
   </div>
   <br />
   </div>
