@@ -1,0 +1,44 @@
+contributor:
+$Author: nkoth $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-07-05 23:26:27 $
+
+files:
+wiki-plugins/wikiplugin_gmap.php lib/wiki-plugins/wikiplugin_gmap.php
+wiki-plugins/gmapwikipluginlib.php lib/wiki-plugins/gmapwikipluginlib.php
+gmap_wikiplugin_save.php gmap_wikiplugin_save.php
+templates/wiki-plugins/wikiplugin-backlinkgmap.tpl templates/wiki-plugins/wikiplugin-backlinkgmap.tpl
+templates/wiki-plugins/wikiplugin-gmap.tpl templates/wiki-plugins/wikiplugin-gmap.tpl
+templates/wiki-plugins/wikiplugin-routegmap.tpl templates/wiki-plugins/wikiplugin-routegmap.tpl
+templates/wiki-plugins/wikiplugin-structuregmap.tpl templates/wiki-plugins/wikiplugin-structuregmap.tpl
+
+Description:
+Creates a Google Map to map a geo-coded location of a wiki page, backlinked pages, or pages in a structure.
+
+Author:
+Nelson Ko
+
+Changelog:
+1 initial package
+
+Devurl:
+http://www.google.com/apis/maps/documentation/
+
+Licence:
+GNU/LGPL
+
+Configuration help:
+Please see information stored as comments in wikiplugin_gmap.php
+
+help:
+Please see information stored as comments in wikiplugin_gmap.php
+
+sql-install:
+CREATE TABLE `wikiplugin_gmap` (`pageid` int(14) NOT NULL, `pref` varchar(40) NOT NULL, `value` varchar(250) default NULL, PRIMARY KEY  (`pageid`,`pref`)) TYPE=MyISAM;
+
+sql-remove:
+drop table if exists wikiplugin_gmap;
