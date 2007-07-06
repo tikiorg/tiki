@@ -19,8 +19,8 @@ function smarty_modifier_avatarize($user)
   global $tikilib;
   global $userlib;
   $avatar = $tikilib->get_user_avatar($user);
-  if ($tikilib->get_user_preference($user,'user_information','public')=='public') {
-	$id = $userlib->get_user_login($user);
+  if ( $avatar != '' && $tikilib->get_user_preference($user, 'user_information', 'public') == 'public' ) {
+	$id = $userlib->get_user_id($user);
   	$avatar = "<a title=\"$user\" href=\"tiki-user_information.php?userId=$id\">".$avatar.'</a>';
   } 
   return $avatar;	
