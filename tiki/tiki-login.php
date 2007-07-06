@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.79 2007-06-29 13:58:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.80 2007-07-06 18:06:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.79 2007-06-29 13:58:05 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.80 2007-07-06 18:06:58 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -216,7 +216,8 @@ if ( $isvalid ) {
 		$smarty->assign('msg', tra('For security purposes; we must periodically validate your email to allow continued access to this site.').' '.tra('A validation email has been sent to you with the instructions to follow.').' '.tra('Thank you.'));
 		$smarty->assign('user', '');
 		unset($user);
-		$smarty->display('information.tpl');
+		$smarty->assign('mid', 'tiki-information.tpl');
+		$smarty->display("tiki.tpl");
 		die;
 	} else {
 		// User is valid and not due to change pass.. start session
@@ -271,7 +272,8 @@ if ( $isvalid ) {
 			$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
 			$smarty->assign('user', '');
 			unset($user);
-			$smarty->display('information.tpl');
+			$smarty->assign('mid', 'tiki-information.tpl');
+			$smarty->display("tiki.tpl");
 			die;
 		}
 		$userlib->set_unsuccessful_logins($user, $nb_bad_logins + 1);

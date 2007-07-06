@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-confirm_user_email.php,v 1.1 2007-05-24 14:30:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-confirm_user_email.php,v 1.2 2007-07-06 18:06:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,8 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 		$smarty->assign('msg', tra('Account validated successfully.'));
 		$_SESSION["$user_cookie_site"] = $user = $_REQUEST['user'];
 		$smarty->assign('user', $user);
-		$smarty->display("information.tpl");
+		$smarty->assign('mid', 'tiki-information.tpl');
+		$smarty->display("tiki.tpl");
 		die;
 	}
 }
