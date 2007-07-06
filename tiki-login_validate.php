@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.23 2007-06-12 23:45:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.24 2007-07-06 18:06:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,9 @@ if ($isvalid) {
 		$smarty->assign('user', $user);
 	}
 	$smarty->assign('msg', tra("Account validated successfully."));
-	$smarty->display("information.tpl");
+	$smarty->assign('mid', 'tiki-information.tpl');
+	$smarty->display("tiki.tpl");
+	die;
 } else {
 	if ($error == PASSWORD_INCORRECT)
 		$error = tra("Invalid password");
