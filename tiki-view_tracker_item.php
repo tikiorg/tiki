@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.129 2007-07-04 18:28:15 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.130 2007-07-06 12:25:34 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
+include_once ("lib/filegals/filegallib.php");
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
@@ -468,7 +468,8 @@ foreach($xfields["data"] as $i=>$array) {
 			}
 
 
-			if (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3' ) )	{
+			if ($fields["data"][$i]["type"] == 'M') {
+			 if ($fields["data"][$i]["options_array"][0] >= '3' ) 	{
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {	
 					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
 					$data = '';
@@ -481,6 +482,16 @@ foreach($xfields["data"] as $i=>$array) {
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
+				
+			  }
+ 			global $filegallib; 
+			global $URLAppend;
+			if ( $URLAppend == '' ) { list ($val1,$val2)=split('=', $ins_fields["data"][$i]["value"]); }
+			else { $val2=$ins_fields["data"][$i]["value"];}
+			$res=$filegallib->get_file_info($val2);
+			if ( $res["filetype"] == "application/octet-stream" ) { $ModeVideo = 'y' ;}
+			else { $ModeVideo = 'n' ;} ;
+			$smarty->assign('ModeVideo', $ModeVideo);
 			}
 		
 			if ($fields["data"][$i]["type"] == 'i')	{
@@ -1120,7 +1131,6 @@ if ($feature_jscalendar) {
 ask_ticket('view-trackers-items');
 
 // Display the template
-$smarty->assign('URLAppend',$URLAppend);
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 $smarty->display("tiki.tpl");
 
