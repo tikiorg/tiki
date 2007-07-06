@@ -13,7 +13,7 @@
     {help crumb=$crumbs[$crumb]}
   </div>
 
-{include file=multiplayer.tpl url="" w=200 h=100}
+{include file=multiplayer.tpl url="" w=200 h=100 video='n'}
 	
       <form action="tiki-admin.php?page=multimedia" method="post">
         <table class="admin">

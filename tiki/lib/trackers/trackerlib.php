@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.209 2007-07-05 21:06:40 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.210 2007-07-06 12:25:34 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -843,7 +843,7 @@ class TrackerLib extends TikiLib {
 						$ins_fields["data"][$i]["value"] = '';
 					} else if( $ins_fields["data"][$i]['value'] != '' ) {
 						$opts = split(',', $ins_fields['data'][$i]["options"]);
-						global $filegallib; include_once ("lib/filegals/filegallib.php");
+// 						global $filegallib; include_once ("lib/filegals/filegallib.php");
 						global $MultimediaGalerie;
 						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$ins_fields["data"][$i]["file_type"] , $user,"" , '', "system", time(), $lockedby=NULL) ; 
 						$ins_fields["data"][$i]['value']=$fileGalId;
@@ -1343,7 +1343,7 @@ class TrackerLib extends TikiLib {
 					//MP3 file in gallery expected 
 					  $file=$URLAppend.$f['value'];
 					  list($rest1,$idfilegal)=split('=',$file);
-					  include_once ('lib/filegals/filegallib.php');
+					  global $filegallib ; include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
 					  if ( $filetype != "audio/x-mp3" ) {
@@ -1355,7 +1355,7 @@ class TrackerLib extends TikiLib {
 					// FLV file in gallery expected 
 					  $file=$URLAppend.$f['value'] ;
 					  list($rest1,$idfilegal)=split('=',$file);
-					  include_once ('lib/filegals/filegallib.php');
+					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
 					  if ( $filetype != "application/octet-stream" ) {
