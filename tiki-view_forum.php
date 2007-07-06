@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.111 2007-07-05 22:57:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.112 2007-07-06 11:42:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -610,12 +610,12 @@ if ($feature_user_watches == 'y') {
 		}
     }
 
-	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic', $_REQUEST['forumId'])) {
+	if ($user && $watch = $tikilib->get_user_watches($user, 'forum_post_topic', $_REQUEST['forumId'])) {
 		$smarty->assign('user_watching_forum', 'y');
 	} else {
 		$smarty->assign('user_watching_forum', 'n');
 	}
-	if ($user && $watch = $tikilib->get_user_event_watches($user, 'forum_post_topic_and_thread', $_REQUEST['forumId'])) {
+	if ($user && $watch = $tikilib->get_user_watches($user, 'forum_post_topic_and_thread', $_REQUEST['forumId'])) {
 		$smarty->assign('user_watching_forum_topic_and_thread', 'y');
 	} else {
 		$smarty->assign('user_watching_forum_topic_and_thread', 'n');

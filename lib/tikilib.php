@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.755 2007-07-05 22:57:23 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.756 2007-07-06 11:42:31 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -291,7 +291,6 @@ class TikiLib extends TikiDB {
 		$bindvars[] = $object;
 	}
 	$result = $this->query($query,$bindvars);
-	echo $query;print_r($bindvars); echo $object;
 
 	if (!$result->numRows()) {
 	    return $ret;
