@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.1 2007-07-02 20:53:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.2 2007-07-06 21:10:37 nyloth Exp $ *}
 <div class="content">
 
 	<div class="author">
@@ -32,13 +32,16 @@
 			{/if}
 
 			{if $comment.userName}
-			<span class="author_actions">
+			<span class="icons">
+			<span class="actions">
 			{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
 				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}"><img src="pics/icons/user_go.png" border="0" alt="{tr}private message{/tr}" title="{tr}private message{/tr}" /></a>
 			{/if}
 			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0}  
 				<a href="mailto:{$comment.user_email|escape:'hex'}"><img src="pics/icons/email.png" alt="{tr}send email to user{/tr}" title="{tr}send email to user{/tr}" border='0' /></a>
 			{/if}
+			</span>
+			<span class="infos">
 			{if $forum_info.ui_online eq 'y'}
 				{if $comment.user_online eq 'y'}
 				<img src="pics/icons/user_red.png" border="0" alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
@@ -47,8 +50,9 @@
 				{/if}
 			{/if}
 			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
-				<br />{$comment.userName|countryflag}
+				{$comment.userName|countryflag}
 			{/if}
+			</span>
 			</span>
 			{/if}
 		{/if}

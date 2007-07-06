@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.12 2007-07-02 22:05:13 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.13 2007-07-06 21:10:37 nyloth Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -92,7 +92,9 @@ div#ajaxLoading {
 	background-color: #E0EAF4;
 	padding: 0 2px 2px 2px;
 }
-.post .author_actions { display: block; }
+.post .author_info .icons { display: block; }
+.post .author_info .icons .actions { margin-right: 10px; }
+
 .post .author_post_info_on { font-style: italic; }
 .post .author_info {
 	float: right;
