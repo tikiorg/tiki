@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.74 2007-07-03 14:30:39 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.75 2007-07-08 17:39:01 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,19 +24,65 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-if (!isset($comments_per_page)) {
-    $comments_per_page = 10;
+/* 
+ * Determine the settings used to display the thread
+ */
+
+// user requests that could be used to change thread display settings
+$handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode');
+
+// First override existing values (e.g. coming from forum specific settings) by user specific requests if we allow them
+//   (we empty those user specific requests if they are denied)
+if ( $forum_thread_user_settings == 'y' ) {
+	foreach ( $handled_requests as $request_name ) {
+		if ( isset($_REQUEST[$request_name]) ) {
+			$$request_name = $_REQUEST[$request_name];
+			$smarty->assign($request_name.'_param', '&amp;'.$request_name.'='.$_REQUEST[$request_name]);
+			if ( $forum_thread_user_settings_keep == 'y' ) $_SESSION['forums_'.$request_name] = $_REQUEST[$request_name];
+		}
+	}
+} else foreach ( $handled_requests as $request_name ) unset($_REQUEST[$request_name]);
+
+// Then determine the final value for thread display settings
+if ( isset($forum_mode) && $forum_mode == 'y' ) {
+	// If we are in a forum thread
+
+	if ( $forum_thread_user_settings == 'y' && $forum_thread_user_settings_keep == 'y' ) {
+		// If 'forum_thread_user_settings' is enabled (allow user to change thread display settings)
+		// and if the 'forum_thread_user_settings_keep' is enabled (keep user settings for all forums during his session)
+		// ... we check session vars
+		//  !! Session var is not used when there is an explicit user request !!
+
+		foreach ( $handled_requests as $request_name )
+			if ( isset($_SESSION['forums_'.$request_name]) && ! isset($_REQUEST[$request_name]) )
+				$$request_name = $_SESSION['forums_'.$request_name];
+
+	} else {
+		// Fallback to global values if 'forum_thread_user_settings_keep' is disabled AND if :
+		//    - forum specific settings are set to empty (i.e. 'default')
+		// or - 'forum_thread_defaults_by_forum' is disabled (don't allow settings by forum)
+		//  !! Global value is not used when there is an explicit user request !!
+
+		foreach ( $handled_requests as $request_name )
+			if ( ( ! isset($$request_name) || $$request_name == '' || $forum_thread_defaults_by_forum != 'y' )
+				&& ! isset($_REQUEST[$request_name])
+			) $$request_name = ${'forum_'.$request_name};
+	}
+
+} else {
+	// If we are not in a forum (e.g. wiki page comments, ...), we use other fallback values
+	if ( ! isset($comments_per_page) ) $comments_per_page = 10;
+	if ( ! isset($thread_sort_mode) ) $thread_sort_mode = 'commentDate_desc';
+	if ( ! isset($thread_style) ) $thread_style = 'commentStyle_threaded';	
 }
 
-if (!isset($comments_default_ordering)) {
-    $comments_default_ordering = 'commentDate_desc';
-}
+// Assign final values to smarty vars in order
+foreach ( $handled_requests as $request_name ) $smarty->assign($request_name, $$request_name);
 
-if (!isset($_REQUEST["comment_rating"])) {
-    $_REQUEST["comment_rating"] = '';
-}
 
+if ( ! isset($_REQUEST["comment_rating"]) ) $_REQUEST["comment_rating"] = '';
 $comments_aux = array();
+
 // show/hide comments zone on request and store the status in a cookie (also works with javascript off)
 if (isset($_REQUEST['comzone'])) {
 	$comments_show = 'n';
@@ -452,46 +498,11 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($msgError)) {
         $smarty->assign('comment_preview', 'y');
 }
 
-// Check for settings
-if (!isset($_REQUEST["comments_maxComments"])) {
-    $_REQUEST["comments_maxComments"] = $comments_per_page;
-    $smarty->assign('comments_maxComments_param', NULL);
-} else {
-	$comments_maxComments_param = 'comments_maxComments=' . $_REQUEST["comments_maxComments"];
-	$smarty->assign('comments_maxComments_param', '&amp;'.htmlspecialchars($comments_maxComments_param));
-    $comments_show = 'y';
-}
+// Always show comments when a display setting has been explicitely specified
+if ( isset($_REQUEST['comments_per_page']) || isset($_REQUEST['thread_style']) || isset($_REQUEST['thread_sort_mode']) )
+	$comments_show = 'y';
 
-// $end_time = microtime(true);
-
-// print "TIME3 in comments.php: ".($end_time - $start_time)."\n";
-
-if (!isset($_REQUEST["comments_style"])) {
-    // TODO: Make this an option.
-    $_REQUEST["comments_style"] = 'commentStyle_threaded';
-} else {
-    $smarty->assign('comments_style_param', '&amp;comments_style='.$_REQUEST['comments_style']);
-    $comments_show = 'y';
-}
-
-if (!isset($_REQUEST["comments_sort_mode"])) {
-    $_REQUEST["comments_sort_mode"] = $comments_default_ordering;
-} else {
-    $smarty->assign('comments_sort_mode_param', '&amp;comments_sort_mode='.$_REQUEST['comments_sort_mode']);
-    $comments_show = 'y';
-}
-
-if (!isset($_REQUEST["comments_commentFind"])) {
-    $_REQUEST["comments_commentFind"] = '';
-} else {
-    $comments_show = 'y';
-}
-
-$smarty->assign('comments_maxComments', $_REQUEST["comments_maxComments"]);
-$smarty->assign('comments_sort_mode', $_REQUEST["comments_sort_mode"]);
-$smarty->assign('comments_style', $_REQUEST["comments_style"]);
-$smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
-$smarty->assign('comments_show', $comments_show);
+if (!isset($_REQUEST["comments_commentFind"])) $_REQUEST["comments_commentFind"] = ''; else $comments_show = 'y';
 
 //print("Show: $comments_show<br />");
 // Offset setting for the list of comments
@@ -533,8 +544,8 @@ else
 // print "TIME4 in comments.php: ".($end_time - $start_time)."\n";
 
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
-	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
-	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
+	$comments_offset, $comments_per_page, $thread_sort_mode, $_REQUEST["comments_commentFind"],
+	$_REQUEST['comments_threshold'], $thread_style, $threadId_if_reply);
 
 // $end_time = microtime(true);
 // print "TIME5 in comments.php: ".($end_time - $start_time)."\n";
@@ -554,7 +565,7 @@ $smarty->assign('comments_cant', $comments_cant);
 //print "</pre>";
 
 // Offset management
-$comments_maxRecords = $_REQUEST["comments_maxComments"];
+$comments_maxRecords = $comments_per_page;
 
 //print "<pre>Counts: ";
 //print_r($comments_cant);

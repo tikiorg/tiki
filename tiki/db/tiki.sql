@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-06 08:20:30 $
-# $Author: jyhem $
+# $Date: 2007-07-08 17:39:03 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1462,6 +1462,8 @@ CREATE TABLE tiki_forums (
   vote_threads char(1) default NULL,
   forum_last_n int(2) default 0,
   mandatory_contribution char(1) default NULL,
+  threadStyle varchar(100) default NULL,
+  commentsPerPage varchar(100) default NULL,
   PRIMARY KEY  (forumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

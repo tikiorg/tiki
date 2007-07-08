@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.112 2007-07-06 11:42:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.113 2007-07-08 17:39:03 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -219,7 +219,7 @@ if ($tiki_p_admin_forum == 'y') {
 $smarty->assign_by_ref('forum_info', $forum_info);
 
 $comments_per_page = $forum_info["topicsPerPage"];
-$comments_default_ordering = $forum_info["topicOrdering"];
+$thread_sort_mode = $forum_info["topicOrdering"];
 $comments_vars = array('forumId');
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
@@ -524,12 +524,12 @@ if (isset($_REQUEST["comments_previewComment"])) {
 }
 
 // Check for settings
-if (!isset($_REQUEST["comments_maxComments"])) {
-    $_REQUEST["comments_maxComments"] = $comments_per_page;
+if (!isset($_REQUEST["comments_per_page"])) {
+    $_REQUEST["comments_per_page"] = $comments_per_page;
 }
 
-if (!isset($_REQUEST["comments_sort_mode"])) {
-    $_REQUEST["comments_sort_mode"] = $comments_default_ordering;
+if (!isset($_REQUEST["thread_sort_mode"])) {
+    $_REQUEST["thread_sort_mode"] = $thread_sort_mode;
 } else {
     $comments_show = 'y';
 }
@@ -540,8 +540,8 @@ if (!isset($_REQUEST["comments_commentFind"])) {
     $comments_show = 'y';
 }
 
-$smarty->assign('comments_maxComments', $_REQUEST["comments_maxComments"]);
-$smarty->assign('comments_sort_mode', $_REQUEST["comments_sort_mode"]);
+$smarty->assign('comments_per_page', $_REQUEST["comments_per_page"]);
+$smarty->assign('thread_sort_mode', $_REQUEST["thread_sort_mode"]);
 $smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
 
 //print("Show: $comments_show<br />");
@@ -566,8 +566,8 @@ $_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
 $comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'],
-		$comments_offset, $_REQUEST['comments_maxComments'],
-		$_REQUEST['comments_sort_mode']);
+		$comments_offset, $_REQUEST['comments_per_page'],
+		$_REQUEST['thread_sort_mode']);
 
 // Get the last "n" comments to this forum
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'],
@@ -576,7 +576,7 @@ $smarty->assign_by_ref('last_comments',$last_comments);
 $comments_cant = $commentslib->count_comments_threads($comments_objectId);
 $smarty->assign('comments_cant', $comments_cant);
 
-$comments_maxRecords = $_REQUEST["comments_maxComments"];
+$comments_maxRecords = $_REQUEST["comments_per_page"];
 $comments_cant_pages = ceil($comments_cant / $comments_maxRecords);
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));

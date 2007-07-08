@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.171 2007-07-05 16:10:04 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.172 2007-07-08 17:39:04 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -962,3 +962,6 @@ ALTER TABLE tiki_pages CHANGE `cache` `cache` longtext;
 #Jyhem 2007-07-05 (correct misleading title)
 UPDATE tiki_menu_options SET name='New article' where url='tiki-edit_article.php';
 
+#nyloth 2007-07-08
+ALTER TABLE `tiki_forums` ADD `threadStyle` varchar(100) default NULL;
+ALTER TABLE `tiki_forums` ADD `commentsPerPage` varchar(100) default NULL;

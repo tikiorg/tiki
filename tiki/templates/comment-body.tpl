@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.2 2007-07-06 21:10:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.3 2007-07-08 17:39:05 nyloth Exp $ *}
 <div class="content">
 
 	<div class="author">
 
-	{if $comments_style != 'commentStyle_headers'}
+	{if $thread_style != 'commentStyle_headers'}
 		{if $forum_info.ui_avatar eq 'y' and $comment.userName|avatarize}
 		<span class="avatar">{$comment.userName|avatarize}</span>
 		{/if}
@@ -19,7 +19,7 @@
 					{tr}by{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
 				{/if}
 			</span>
-		{if $comments_style != 'commentStyle_headers'}
+		{if $thread_style != 'commentStyle_headers'}
 			{if $forum_info.ui_posts eq 'y' and $comment.user_posts}
 			<span class="author_posts">
 				{tr}posts:{/tr} {$comment.user_posts}
@@ -59,14 +59,14 @@
 		</span>
 	</div>
 
-{if $comments_style != 'commentStyle_headers'}
+{if $thread_style != 'commentStyle_headers'}
 	{$comment.parsed}
 	{* <span class="signature"><!-- SIGNATURE --></span> *}
 {/if}
 
 </div>
 
-{if $comments_style != 'commentStyle_headers' and count($comment.attachments) > 0}
+{if $thread_style != 'commentStyle_headers' and count($comment.attachments) > 0}
 <div class="attachments">
 	{section name=ix loop=$comment.attachments}
 	<a class="link" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}">
@@ -75,9 +75,9 @@
 	{if $tiki_p_admin_forum eq 'y'}
 	<a class="link"
 		{if $first eq 'y'}
-		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
+		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_per_page_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
 		{else}
-		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
+		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;thread_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
 		{/if}
 	>{html_image file="pics/icons/cross.png" border="0" alt='{tr}remove{/tr}'}</a>
 	{/if}

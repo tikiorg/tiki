@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.154 2007-07-02 20:53:19 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.155 2007-07-08 17:39:04 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -714,7 +714,7 @@ class Comments extends TikiLib {
 	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 	    $approval_type, $moderator_group, $forum_password,
 	    $forum_use_password, $att, $att_store, $att_store_dir,
-	    $att_max_size,$forum_last_n)
+	    $att_max_size, $forum_last_n, $commentsPerPage, $threadStyle)
     {
 	if ($forumId)
 	{
@@ -765,7 +765,9 @@ class Comments extends TikiLib {
 	    `topicOrdering` = ?,
 	    `threadOrdering` = ?,
 	    `pruneMaxAge` = ?,
-	    `forum_last_n` = ?
+	    `forum_last_n` = ?,
+	    `commentsPerPage` = ?,
+	    `threadStyle` = ?
 		where `forumId` = ?";
 	    $result = $this->query(
 		    $query,
@@ -817,6 +819,8 @@ class Comments extends TikiLib {
 			$threadOrdering,
 			(int) $pruneMaxAge,
 			(int) $forum_last_n,
+			$commentsPerPage,
+			$threadStyle,
 			(int) $forumId
 			    )
 			    );
@@ -837,12 +841,12 @@ class Comments extends TikiLib {
 	    `ui_avatar`, `ui_flag`, `ui_posts`, `ui_level`, `ui_email`,
 	    `ui_online`, `approval_type`, `moderator_group`,
 	    `forum_password`, `forum_use_password`, `att`, `att_store`,
-	    `att_store_dir`, `att_max_size`,`forum_last_n`) 
+	    `att_store_dir`, `att_max_size`,`forum_last_n`, `commentsPerPage`, `threadStyle`) 
 		values (?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?,?,?,?)";
+			?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    $bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0, 0,
 		    $controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
@@ -858,7 +862,7 @@ class Comments extends TikiLib {
 		    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 		    $approval_type, $moderator_group, $forum_password,
 		    $forum_use_password, $att, $att_store, $att_store_dir,
-		    (int) $att_max_size,(int) $forum_last_n);
+		    (int) $att_max_size,(int) $forum_last_n, $commentsPerPage, $threadStyle);
 
 	    $result = $this->query($query,$bindvars);
 	    $forumId = $this->getOne("select max(`forumId`)

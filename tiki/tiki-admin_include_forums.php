@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.15 2007-05-09 14:08:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.16 2007-07-08 17:39:02 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,22 @@ if (isset($_REQUEST["forumlistprefs"])) {
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
+}
+
+if (isset($_REQUEST["forumthreadprefs"])) {
+	check_ticket('admin-inc-forums');
+	$pref_toggles = array(
+	'forum_thread_defaults_by_forum',
+	'forum_thread_user_settings',
+	'forum_thread_user_settings_keep'
+	);
+	$pref_values = array(
+	'forum_comments_per_page',
+	'forum_thread_style',
+	'forum_thread_sort_mode'
+	);
+	foreach ( $pref_toggles as $toggle) simple_set_toggle($toggle);
+	foreach ( $pref_values as $value ) simple_set_value($value);
 }
 
 include_once ("lib/commentslib.php");

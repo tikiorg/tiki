@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.59 2007-06-16 16:02:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.60 2007-07-08 17:39:05 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -49,7 +49,6 @@
 <option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 {tr}mins{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
 <select name="section">
 <option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
@@ -64,7 +63,7 @@
 <select name="moderator">
 <option value="" {if $moderator eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-<option value="{$one|escape}" {if $moderator eq $one}selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}" {if $moderator eq $one}selected="selected"{/if}>{$one|username}</option>
 {/foreach}
 </select>
 </td></tr>
@@ -86,27 +85,7 @@
 <tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password|escape}" /></td></tr>
 
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
-<select name="topicOrdering">
-<option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
-<option value="commentDate_asc" {if $topicOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
-<option value="average_desc" {if $topicOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
-<option value="replies_desc" {if $topicOrdering eq 'replies_desc'}selected="selected"{/if}>{tr}Replies (desc){/tr}</option>
-<option value="hits_desc" {if $topicOrdering eq 'hits_desc'}selected="selected"{/if}>{tr}Reads (desc){/tr}</option>
-<option value="lastPost_desc" {if $topicOrdering eq 'lastPost_desc'}selected="selected"{/if}>{tr}Last post (desc){/tr}</option>
-<option value="title_desc" {if $topicOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
-<option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
-</select>
-</td></tr>
-<tr><td class="formcolor">{tr}Default ordering for threads{/tr}:</td><td class="formcolor">
-<select name="threadOrdering">
-<option value="commentDate_desc" {if $threadOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
-<option value="commentDate_asc" {if $threadOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
-<option value="average_desc" {if $threadOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
-<option value="title_desc" {if $threadOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
-<option value="title_asc" {if $threadOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
-</select>
-</td></tr>
+
 <tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
 <tr><td class="formcolor"><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td class="formcolor">
 <select name="pruneUnrepliedAge">
@@ -275,6 +254,78 @@
 		</table>
 	</td>
 </tr>
+
+<tr class="formcolor">
+<td>{tr}Set topics preferences{/tr}</td>
+<td>
+<a class="link" href="javascript:flip('topicconfig');flip('topicprefshow','inline');flip('topicprefhide','inline');">
+<span id="topicprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}none{else}inline{/if};">{tr}show topics preferences{/tr}</span>
+<span id="topicprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}inline{else}none{/if};">{tr}hide topics preferences{/tr}</span>
+</a>
+</td></tr>
+
+<tr><td colspan="2"><table id="topicconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_topicconfig) and $smarty.session.tiki_cookie_jar.show_topicconfig eq 'y'}block{else}none{/if}; border: 0;">
+
+<tr><td>{tr}Default ordering for topics{/tr}:</td>
+<td>
+<select name="topicOrdering">
+<option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
+<option value="commentDate_asc" {if $topicOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
+<option value="average_desc" {if $topicOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
+<option value="replies_desc" {if $topicOrdering eq 'replies_desc'}selected="selected"{/if}>{tr}Replies (desc){/tr}</option>
+<option value="hits_desc" {if $topicOrdering eq 'hits_desc'}selected="selected"{/if}>{tr}Reads (desc){/tr}</option>
+<option value="lastPost_desc" {if $topicOrdering eq 'lastPost_desc'}selected="selected"{/if}>{tr}Last post (desc){/tr}</option>
+<option value="title_desc" {if $topicOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+<option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
+
+</table></td></tr>
+
+{if $forum_thread_defaults_by_forum eq 'y'}
+<tr class="formcolor"><td>{tr}Set thread preferences{/tr}</td><td>
+<a class="link" href="javascript:flip('threadconfig');flip('threadprefshow','inline');flip('threadprefhide','inline');">
+<span id="threadprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}none{else}inline{/if};">{tr}show threads preferences{/tr}</span>
+<span id="threadprefhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}inline{else}none{/if};">{tr}hide threads preferences{/tr}</span>
+</a>
+</td></tr>
+
+<tr><td colspan="2"><table id="threadconfig" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}block{else}none{/if}; border: 0;">
+
+<tr><td>{tr}Default ordering for threads{/tr}:</td>
+<td>
+<select name="threadOrdering">
+<option value="" {if $threadOrdering eq ''}selected="selected"{/if}>{tr}default{/tr}</option>
+<option value="commentDate_desc" {if $threadOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+<option value="commentDate_asc" {if $threadOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+<option value="points_desc" {if $threadOrdering eq 'points_desc' or $threadOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+<option value="title_desc" {if $threadOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+<option value="title_asc" {if $threadOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
+</select>
+</td></tr>
+<tr><td>{tr}Default style for threads{/tr}:</td>
+<td>
+<select name="threadStyle">
+<option value="" {if $threadStyle eq ''}selected="selected"{/if}>{tr}default{/tr}</option>
+<option value="commentStyle_plain" {if $threadStyle eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
+<option value="commentStyle_threaded" {if $threadStyle eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
+<option value="commentStyle_headers" {if $threadStyle eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
+</select>
+</td></tr>
+<tr><td>{tr}Default number of comments per page{/tr}:</td>
+<td>
+<select name="commentsPerPage">
+<option value="" {if $commentsPerPage eq '' }selected="selected"{/if}>{tr}default{/tr}</option>
+<option value="10" {if $commentsPerPage eq 10 }selected="selected"{/if}>10</option>
+<option value="20" {if $commentsPerPage eq 20 }selected="selected"{/if}>20</option>
+<option value="30" {if $commentsPerPage eq 30 }selected="selected"{/if}>30</option>
+<option value="999999" {if $commentsPerPage eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
+</select>
+</td></tr>
+
+</table></td></tr>
+{/if}
 
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

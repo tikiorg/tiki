@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.88 2007-06-16 16:01:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.89 2007-07-08 17:39:03 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -229,8 +229,10 @@ if ($tiki_p_admin_forum != 'y' && $thread_info['type'] == 'l') {
 //print_r($thread_info);
 $smarty->assign_by_ref('thread_info', $thread_info);
 
-$comments_per_page = $forum_info["topicsPerPage"];
-$comments_default_ordering = $forum_info["threadOrdering"];
+$comments_per_page = $forum_info['commentsPerPage'];
+$thread_sort_mode = $forum_info['threadOrdering'];
+$thread_style = $forum_info['threadStyle'];
+
 $comments_vars = array('forumId');
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';

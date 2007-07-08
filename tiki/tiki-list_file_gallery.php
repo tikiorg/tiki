@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.42 2007-06-05 14:44:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.43 2007-07-08 17:39:02 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,7 +307,7 @@ $smarty->assign_by_ref('files', $files['data']);
 if ($feature_file_galleries_comments == 'y') {
 	$comments_per_page = $file_galleries_comments_per_page;
 
-	$comments_default_ordering = $file_galleries_comments_default_ordering;
+	$thread_sort_mode = $file_galleries_comments_default_ordering;
 	$comments_vars = array('galleryId',	'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
 
 	$comments_prefix_var = 'file gallery:';

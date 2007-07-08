@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.20 2007-05-09 14:08:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.21 2007-07-08 17:39:05 nyloth Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div>
@@ -116,4 +116,49 @@
   </div>
 </div>    
 
-
+<div class="cbox">
+  <div class="cbox-title">{tr}Threads default preferences{/tr}</div>
+  <div class="cbox-data">
+      <form method="post" action="tiki-admin.php?page=forums">
+        <table class="admin"><tr class="form">
+          <td><label>{tr}Allow to manage thread defaults in each forum configuration{/tr}</label></td>
+	  <td><input type="checkbox" name="forum_thread_defaults_by_forum"
+		{if $forum_thread_defaults_by_forum eq 'y'}checked="checked"{/if} /></td>
+	</td>
+        </tr><tr class="form">
+          <td><label>{tr}Display thread configuration bar to override defaults{/tr}</label></td>
+	  <td><input type="checkbox" name="forum_thread_user_settings"
+		{if $forum_thread_user_settings eq 'y'}checked="checked"{/if} />
+	</td>
+	</tr><tr class="form">
+          <td><label>{tr}Configuration bar settings are the kept for all forums during the user session:{/tr}</label></td>
+	  <td><input type="checkbox" name="forum_thread_user_settings_keep"
+		{if $forum_thread_user_settings_keep eq 'y'}checked="checked"{/if} />
+	</td>
+        </tr><tr class="form">
+          <td><label>{tr}Default number of comments per page{/tr}</label></td>
+	  <td><input size="5" type="text" name="forum_comments_per_page" value="{$forum_comments_per_page|escape}" /></td></tr>
+	</td>
+        </tr><tr class="form">
+          <td><label>{tr}Default thread style{/tr}</label></td>
+	  <td><select name="forum_thread_style">
+	  	<option value="commentStyle_plain" {if $forum_thread_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
+		<option value="commentStyle_threaded" {if $forum_thread_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
+		<option value="commentStyle_headers" {if $forum_thread_style eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
+	  </select></td>
+        </tr><tr class="form">
+          <td><label>{tr}Default thread sort mode{/tr}</label></td>
+	  <td><select name="forum_thread_sort_mode">
+		<option value="commentDate_desc" {if $forum_thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+		<option value="commentDate_asc" {if $forum_thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+		<option value="points_desc" {if $forum_thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+		<option value="title_desc" {if $forum_thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+		<option value="title_asc" {if $forum_thread_sort_mode eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
+	  </select></td>
+        </tr><tr>
+          <td colspan="2" class="button"><input type="submit" name="forumthreadprefs"
+              value="{tr}Change preferences{/tr}" /></td>
+        </tr></table>
+      </form>
+  </div>
+</div>    

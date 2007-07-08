@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_blog_post.php,v 1.15 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_blog_post.php,v 1.16 2007-07-08 17:39:02 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,7 +122,7 @@ if (!$blog_data) {
 if ($feature_blogposts_comments == 'y') {
 	$comments_per_page = $blog_comments_per_page;
 
-	$comments_default_ordering = $blog_comments_default_ordering;
+	$thread_sort_mode = $blog_comments_default_ordering;
 	$comments_vars = array(
 		'postId',
 		'offset',
