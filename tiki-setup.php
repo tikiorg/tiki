@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.450 2007-06-29 16:33:41 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.451 2007-07-08 17:39:02 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -594,7 +594,6 @@ $pref['feature_forum_replyempty'] = 'n';
 $pref['feature_forum_quickjump'] = 'n';
 $pref['feature_forum_topicd'] = 'y';
 $pref['forums_ordering'] = 'created_desc';
-$pref['forums_comments_per_page'] = 10;
 $pref['forum_list_topics'] =  'y';
 $pref['forum_list_posts'] =  'y';
 $pref['forum_list_ppd'] =  'y';
@@ -603,6 +602,12 @@ $pref['forum_list_visits'] =  'y';
 $pref['forum_list_desc'] =  'y';
 $pref['feature_forum_local_search'] = 'n';
 $pref['feature_forum_local_tiki_search'] = 'n';
+$pref['forum_thread_defaults_by_forum'] = 'n';
+$pref['forum_thread_user_settings'] = 'y';
+$pref['forum_thread_user_settings_keep'] = 'n';
+$pref['forum_comments_per_page'] = 20;
+$pref['forum_thread_style'] = 'commentStyle_plain';
+$pref['forum_thread_sort_mode'] = 'commentDate_desc';
 
 # articles
 $sections['cms']['feature'] = 'feature_articles';

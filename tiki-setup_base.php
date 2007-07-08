@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.134 2007-06-03 13:12:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.135 2007-07-08 17:39:02 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,7 +136,9 @@ $vartype['file_next_offset'] = 'intSign';
 $vartype['comments_offset'] = 'int';
 $vartype['comments_thresold'] = 'int';
 $vartype['comments_parentId'] = '+int';
-$vartype['comments_sort_mode'] = '+char';  // TODO: only allow valid field names and order here!
+$vartype['thread_sort_mode'] = '+char';  // TODO: only allow valid field names and order here!
+$vartype['thread_style'] = '+char';  // TODO: only allow valid field names and order here!
+$vartype['comments_per_page'] = '+int';
 $vartype['topics_offset'] = 'int';
 $vartype['topics_sort_mode'] = '+char';  // TODO: only allow valid field names and order here!
 $vartype['priority'] = 'int';

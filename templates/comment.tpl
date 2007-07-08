@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment.tpl,v 1.34 2007-07-02 20:53:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment.tpl,v 1.35 2007-07-08 17:39:05 nyloth Exp $ *}
 {if $comment.doNotShow != 1 }
-<div class="post {$comments_style}" id="threadId{$comment.threadId}">
+<div class="post {$thread_style}" id="threadId{$comment.threadId}">
 	<div class="inner"><span class="corners-top"><span></span></span>
 
 	<div class="postbody">
@@ -8,7 +8,7 @@
 		{include file="comment-body.tpl"}
 	</div>
 
-{if $comments_style != 'commentStyle_headers'}
+{if $thread_style != 'commentStyle_headers'}
 	{include file="comment-footer.tpl"}
 	<br style="clear: both;" />
 {/if}

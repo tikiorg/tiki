@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.83 2007-07-02 20:53:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.84 2007-07-08 17:39:05 nyloth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -66,10 +66,11 @@
 	</div>
 	{/if}
 
+	{if $forum_mode neq 'y' or $forum_thread_user_settings eq 'y'}
 	<div class="forum_actions">
 		<div class="headers">
 			<span class="infos">
-				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
+				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
 			</span>
 		</div>
 		<div class="actions">
@@ -77,28 +78,30 @@
 
 				{if $comments_cant > 10}
 				<label for="comments-maxcomm">{tr}Messages{/tr}:</label>
-				<select name="comments_maxComments" id="comments-maxcomm">
-					<option value="10" {if $comments_maxComments eq 10 }selected="selected"{/if}>10</option>
-					<option value="20" {if $comments_maxComments eq 20 }selected="selected"{/if}>20</option>
-					<option value="30" {if $comments_maxComments eq 30 }selected="selected"{/if}>30</option>
-					<option value="999999" {if $comments_maxComments eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
+				<select name="comments_per_page" id="comments-maxcomm">
+					<option value="10" {if $comments_per_page eq 10 }selected="selected"{/if}>10</option>
+					<option value="20" {if $comments_per_page eq 20 }selected="selected"{/if}>20</option>
+					<option value="30" {if $comments_per_page eq 30 }selected="selected"{/if}>30</option>
+					<option value="999999" {if $comments_per_page eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
 				</select>
 				{/if}
 
 				<label for="comments-style">{tr}Style{/tr}:</label>
-				<select name="comments_style" id="comments-style">
-					<option value="commentStyle_plain" {if $comments_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
-					<option value="commentStyle_threaded" {if $comments_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
-					<option value="commentStyle_headers" {if $comments_style eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
+				<select name="thread_style" id="comments-style">
+					<option value="commentStyle_plain" {if $thread_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
+					<option value="commentStyle_threaded" {if $thread_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
+					<option value="commentStyle_headers" {if $thread_style eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
 				</select>
 
 				<label for="comments-sort">{tr}Sort{/tr}:</label>
-				<select name="comments_sort_mode" id="comments-sort">
-					<option value="commentDate_desc" {if $comments_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-					<option value="commentDate_asc" {if $comments_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-					{if $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' or $forum_mode neq 'y'}	
-					<option value="points_desc" {if $comments_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+				<select name="thread_sort_mode" id="comments-sort">
+					<option value="commentDate_desc" {if $thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+					<option value="commentDate_asc" {if $thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+					{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}	
+					<option value="points_desc" {if $thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
 					{/if}
+					<option value="title_desc" {if $thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+					<option value="title_asc" {if $thread_sort_mode eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 				</select>
 
 				{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}
@@ -121,6 +124,7 @@
 			</span>
 		</div>
 	</div>
+	{/if}
 
 {*** Seems buggy (at least when called for a wiki page)
 {if $forum_mode ne 'y'}
@@ -132,7 +136,7 @@
 
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
-		{if $comments_style != 'commentStyle_plain'}<br />{/if}
+		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
 
 </form>
@@ -148,20 +152,20 @@
 	<div class="mini">
 
 		{if $comments_prev_offset >= 0}
-		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
+		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}prev{/tr}</a>]&nbsp;
 		{/if}
 
 		{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
 
 		{if $comments_next_offset >= 0}
-		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}next{/tr}</a>]
+		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}next{/tr}</a>]
 		{/if}
 
 		{if $direct_pagination eq 'y'}
 		<br />
 		{section loop=$comments_cant_pages name=foo}
-		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
-		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$selector_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">
+		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}
+		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$selector_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">
 		{$smarty.section.foo.index_next}</a>&nbsp;
 		{/section}
 		{/if}
@@ -220,7 +224,7 @@
 	<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
 	<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
-	<input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 
 	{* Traverse request variables that were set to this page adding them as hidden data *}
 	{section name=i loop=$comments_request_data}

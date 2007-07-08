@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.22 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.23 2007-07-08 17:39:03 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,7 +100,7 @@ $smarty->assign('suggested_cant', count($suggested["data"]));
 if ($feature_faq_comments == 'y') {
 	$comments_per_page = $faq_comments_per_page;
 
-	$comments_default_ordering = $faq_comments_default_ordering;
+	$thread_sort_mode = $faq_comments_default_ordering;
 	$comments_vars = array('faqId');
 	$comments_prefix_var = 'faq:';
 	$comments_object_var = 'faqId';
