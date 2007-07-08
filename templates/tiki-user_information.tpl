@@ -109,6 +109,24 @@
 {/section}
 </table>
 {/if}
+{if $user_articles|@count > 0}
+<h2>{tr}Articles{/tr}</h2>
+<table class="normal">
+{cycle values="even,odd" print=false}
+{section name=ix loop=$user_articles}
+<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-read_article.php?articleId={$user_articles[ix].articleId}">{$user_articles[ix].title}</a></td></tr>
+{/section}
+</table>
+{/if}
+{if $user_forum_comments|@count > 0}
+<h2>{tr}Forum comments{/tr}</h2>
+<table class="normal">
+{cycle values="even,odd" print=false}
+{section name=ix loop=$user_forum_comments}
+<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">{$user_forum_comments[ix].title}</a></td></tr>
+{/section}
+</table>
+{/if}
 </td></tr>
 {/if}
 

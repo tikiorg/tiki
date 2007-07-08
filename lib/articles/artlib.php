@@ -515,6 +515,19 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 
 		return $ret;
 	}
+
+        function get_user_articles($user, $max) {
+	    $query = "select `articleId` ,`title`  from `tiki_articles` where `author`=? order by `publishDate` desc";
+	    
+	    $result = $this->query($query,array($user),$max);
+	    $ret = array();
+	    
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+	    
+	    return $ret;
+	}
 }
 
 global $dbTiki;
