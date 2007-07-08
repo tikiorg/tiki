@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.84 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.85 2007-07-08 21:24:42 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -69,9 +69,6 @@
 	{if $forum_mode neq 'y' or $forum_thread_user_settings eq 'y'}
 	<div class="forum_actions">
 		<div class="headers">
-			<span class="infos">
-				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
-			</span>
 		</div>
 		<div class="actions">
 			<span class="action">
