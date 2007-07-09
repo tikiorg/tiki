@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.60 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.61 2007-07-09 07:28:27 pkdille Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -391,17 +391,17 @@
 <!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle}">
-<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}view{/tr}" </a>{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}view{/tr}" </a>
+
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
-{/if}
-   {if $channels[user].individual eq 'y'}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
-   {else}
-   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}perms{/tr}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt="{tr}perms{/tr}" /></a>
+  <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+
+  {if $channels[user].individual eq 'y'}
+    <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
+  {else}
+    <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}perms{/tr}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt="{tr}perms{/tr}" /></a>
    {/if}
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}delete{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}delete{/tr}' /></a>
+  &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}delete{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}delete{/tr}' /></a>
 {/if}
 </td>
 </tr>
