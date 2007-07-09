@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.58 2007-07-02 01:34:42 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.59 2007-07-09 21:45:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -469,7 +469,8 @@ class NlLib extends TikiLib {
 		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
-		$cant = 0;
+		$query_cant = "select count(*) from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn where tn.`nlId`=tsn.`nlId` $mid";
+		$cant = $this->getOne($query_cant,$bindvars);
 
 		while ($res = $result->fetchRow()) {
 			if ($nlId) {
@@ -486,7 +487,6 @@ class NlLib extends TikiLib {
 					continue;
 			}
 			$ret[] = $res;
-			++$cant;
 		}
 
 		$retval = array();
