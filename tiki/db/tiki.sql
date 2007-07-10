@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-09 10:14:41 $
-# $Author: pkdille $
+# $Date: 2007-07-10 13:55:48 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -232,7 +232,8 @@ CREATE TABLE messu_messages (
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
   priority int(2) default NULL,
-  PRIMARY KEY  (msgId)
+  PRIMARY KEY  (msgId),
+  KEY userIsRead (user, isRead)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -382,6 +383,10 @@ CREATE TABLE tiki_articles (
   KEY body (body(255)),
   KEY author (author(32)),
   KEY nbreads (nbreads),
+  KEY topicId (topicId),
+  KEY publishDate (publishDate),
+  KEY expireDate (expireDate),
+  KEY type (type),
   FULLTEXT KEY ft (title,heading,body)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -408,7 +413,9 @@ CREATE TABLE tiki_article_types (
   show_lang varchar(1) default 'n',
   creator_edit varchar(1) default NULL,
   comment_can_rate_article char(1) default NULL,
-  PRIMARY KEY  (type)
+  PRIMARY KEY  (type),
+  KEY show_pre_publ (show_pre_publ),
+  KEY show_post_expire (show_post_expire)
 ) TYPE=MyISAM ;
 
 INSERT IGNORE INTO tiki_article_types(type) VALUES ('Article');
@@ -989,7 +996,8 @@ CREATE TABLE tiki_comments (
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
   KEY data (data(255)),
-  KEY object (object),
+  KEY objectType (object, objectType),
+  KEY commentDate (commentDate),
   KEY hits (hits),
   KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
@@ -1378,7 +1386,8 @@ CREATE TABLE tiki_forum_attachments (
   dir varchar(200) default NULL,
   created int(14) default NULL,
   path varchar(250) default NULL,
-  PRIMARY KEY  (attId)
+  PRIMARY KEY  (attId),
+  KEY threadId (threadId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1556,6 +1565,8 @@ CREATE TABLE tiki_galleries (
   KEY name (name),
   KEY description (description(255)),
   KEY hits (hits),
+  KEY parentgallery (parentgallery),
+  KEY visibleUser (visible, user),
   FULLTEXT KEY ft (name,description)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1783,7 +1794,8 @@ CREATE TABLE tiki_link_cache (
   url varchar(250) default NULL,
   data longblob,
   refresh int(14) default NULL,
-  PRIMARY KEY  (cacheId)
+  PRIMARY KEY  (cacheId),
+  KEY url (url)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 # --------------------------------------------------------
@@ -2053,6 +2065,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Users map','tiki-gmap_usermap.php',36,'feature_gmap','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
@@ -2339,6 +2352,7 @@ CREATE TABLE tiki_modules (
   params varchar(255) default NULL,
   groups text,
   PRIMARY KEY  (name, position, ord)
+  KEY positionType (position, type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
@@ -3033,7 +3047,9 @@ CREATE TABLE tiki_sessions (
   user varchar(200) default NULL,
   timestamp int(14) default NULL,
   tikihost varchar(200) default NULL,
-  PRIMARY KEY  (sessionId)
+  PRIMARY KEY  (sessionId),
+  KEY user (user),
+  KEY timestamp (timestamp)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -4101,6 +4117,7 @@ CREATE TABLE users_permissions (
   type varchar(20) default NULL,
   admin varchar(1) default NULL,
   PRIMARY KEY  (permName)
+  KEY type (type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 # 
