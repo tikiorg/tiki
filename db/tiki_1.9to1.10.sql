@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.173 2007-07-09 09:16:03 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.174 2007-07-10 13:58:49 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -962,4 +962,23 @@ DELETE FROM tiki_quicktags WHERE taglabel='table' AND taginsert='||r1c1|r1c2||r2
 DELETE FROM tiki_quicktags WHERE taglabel='table' AND taginsert='||r1c1|r1c2||r2c1|r2c2||' AND tagicon='images/insert_table.gif' AND tagcategory='faqs';
 DELETE FROM tiki_quicktags WHERE taglabel='table' AND taginsert='||r1c1|r1c2||r2c1|r2c2||' AND tagicon='images/insert_table.gif' AND tagcategory='forums';
 
-
+##2007-07-10 sylvieg - thx tibi - duplication from 1_8to1_9
+ALTER TABLE users_permissions ADD INDEX type (type);
+ALTER TABLE tiki_articles ADD INDEX topicId (topicId);
+ALTER TABLE tiki_articles ADD INDEX publishDate (publishDate);
+ALTER TABLE tiki_articles ADD INDEX expireDate (expireDate);
+ALTER TABLE tiki_articles ADD INDEX type (type);
+ALTER TABLE tiki_forum_attachments ADD INDEX threadId (threadId);
+ALTER TABLE users_users ADD INDEX login (login);
+ALTER TABLE tiki_article_types ADD INDEX show_pre_publ (show_pre_publ);
+ALTER TABLE tiki_article_types ADD INDEX show_post_expire (show_post_expire);
+ALTER TABLE tiki_comments DROP KEY object;
+ALTER TABLE tiki_comments ADD INDEX objectType (object, objectType);
+ALTER TABLE tiki_comments ADD INDEX commentDate (commentDate);
+ALTER TABLE tiki_sessions ADD INDEX user (user);
+ALTER TABLE tiki_sessions ADD INDEX timestamp (timestamp);
+ALTER TABLE tiki_galleries ADD INDEX parentgallery (parentgallery);
+ALTER TABLE tiki_galleries ADD INDEX visibleUser (visible, user);
+ALTER TABLE tiki_modules ADD INDEX positionType (position, type);
+ALTER TABLE tiki_link_cache ADD INDEX url(url);
+ALTER TABLE messu_messages ADD INDEX  userIsRead (user, isRead);
