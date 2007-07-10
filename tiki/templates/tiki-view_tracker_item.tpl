@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.139 2007-07-09 10:42:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.140 2007-07-10 11:06:00 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -119,6 +119,8 @@
 	{/if}
   {/if}
 {/foreach}
+{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}</td><td colspan="3">{$info.created|tiki_long_datetime}</td></tr>{/if}
+{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3">{$info.lastModif|tiki_long_datetime}</td></tr>{/if}
 </table>
 </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.57 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.58 2007-07-10 11:06:01 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,6 +69,13 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showCreated"] = 'y';
 	} else {
 		$tracker_options["showCreated"] = 'n';
+	}
+	if (isset($_REQUEST["showCreatedView"]) 
+		&& ($_REQUEST["showCreatedView"] == 'on' 
+			or $_REQUEST["showCreatedView"] == 'y')) {
+		$tracker_options["showCreatedView"] = 'y';
+	} else {
+		$tracker_options["showCreatedView"] = 'n';
 	}
 
 	if (isset($_REQUEST["showStatus"]) 
@@ -171,6 +178,13 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showLastModif"] = 'y';
 	} else {
 		$tracker_options["showLastModif"] = 'n';
+	}
+	if (isset($_REQUEST["showLastModifView"]) 
+		&& ($_REQUEST["showLastModifView"] == 'on'
+			or $_REQUEST["showLastModifView"] == 'y')) {
+		$tracker_options["showLastModifView"] = 'y';
+	} else {
+		$tracker_options["showLastModifView"] = 'n';
 	}
 
 
@@ -329,6 +343,7 @@ $fields = array('data'=>array());
 $info["name"] = '';
 $info["description"] = '';
 $info["showCreated"] = '';
+$info["showCreatedView"] = '';
 $info["useExplicitNames"] = '';
 $info['doNotShowEmptyField'] = '';
 $info['showPopup'] = '';
@@ -338,6 +353,7 @@ $info["simpleEmail"] = '';
 $info["outboundEmail"] = '';
 $info["newItemStatus"] = '';
 $info["showLastModif"] = '';
+$info["showLastModifView"] = '';
 $info["useRatings"] = '';
 $info["ratingOptions"] = '';
 $info["showRatings"] = '';
@@ -374,6 +390,7 @@ $smarty->assign('fields', $fields['data']);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
+$smarty->assign('showCreatedView', $info["showCreatedView"]);
 $smarty->assign('useExplicitNames', $info["useExplicitNames"]);
 $smarty->assign('doNotShowEmptyField', $info['doNotShowEmptyField']);
 $smarty->assign('showPopup', $info['showPopup']);
@@ -383,6 +400,7 @@ $smarty->assign('simpleEmail', $info["simpleEmail"]);
 $smarty->assign('outboundEmail', $info["outboundEmail"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
+$smarty->assign('showLastModifView', $info["showLastModifView"]);
 $smarty->assign('useRatings', $info["useRatings"]);
 $smarty->assign('ratingOptions', $info["ratingOptions"]);
 $smarty->assign('showRatings', $info["showRatings"]);
