@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.4 2007-07-10 14:45:26 sylvieg Exp $
 
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) != FALSE) { header('location: index.php'); exit; }
 
@@ -9,11 +10,20 @@ if ($feature_wysiwyg == 'y') {
 	} elseif ($wysiwyg_optional == 'y' and isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
 		$_SESSION['wysiwyg'] = 'n';
 	}
+} else {
+	$_SESSION['wysiwyg'] = 'n';
+}
+if ($_SESSION['wysiwyg'] == 'y') {
 	$is_html = true;
 } elseif ($feature_wiki_allowhtml == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
-	$_SESSION['wysiwyg'] = 'n';
-	if ((isset($info['is_html']) and $info['is_html']) or (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on")) {
-		$is_html = true;
+	if (isset($_REQUEST['preview']) || isset($_REQUEST['edit'])) {
+		if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
+			$is_html = true;
+		}
+	} else {
+		if ((isset($info['is_html']) and $info['is_html'])) {
+			$is_html = true;
+		}
 	}
 }
 ?>
