@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.132 2007-07-02 13:35:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.133 2007-07-11 14:22:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -749,6 +749,11 @@ $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $items["cant"];
 include "tiki-pagination.php";
 
+if ($tracker_info['useComments'] == 'y' && $tracker_info['showComments'] == 'y') {
+	foreach ($items['data'] as $itkey=>$oneitem) {
+		$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
+	}
+}
 if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {
 	foreach ($items["data"] as $itkey=>$oneitem) {
 		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
