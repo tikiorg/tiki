@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.64 2007-06-16 22:09:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.65 2007-07-11 10:45:30 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -89,6 +89,9 @@
 						<input type="checkbox" name="error_reporting_adminonly"{if $error_reporting_adminonly eq 'y'} checked="checked"{/if} />
 						<br />{tr}smarty notice reporting{/tr}<input type="checkbox" name="smarty_notice_reporting"{if $smarty_notice_reporting eq 'y'} checked="checked"{/if} />
       </td>
+	  </tr><tr>
+	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
+	  <td><input type="checkbox" name="log_sql"{if $log_sql eq 'y'} checked="checked"{/if} /></td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
       <td><select name="default_mail_charset" id="general-charset">

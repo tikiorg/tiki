@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.57 2007-06-16 22:09:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.58 2007-07-11 10:45:26 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,8 @@ if (isset($_REQUEST["prefs"])) {
         "feature_help",
         "error_reporting_adminonly",
         "smarty_notice_reporting",
-        "user_show_realnames"
+        "user_show_realnames",
+		"log_sql"
     );
 
     foreach ($pref_toggles as $toggle) {
