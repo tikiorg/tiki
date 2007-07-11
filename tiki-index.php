@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.187 2007-07-09 08:23:57 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.188 2007-07-11 14:35:54 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -241,38 +241,7 @@ if($wiki_creator_admin == 'y') {
 
 require_once('tiki-pagesetup.php');
 
-// Check to see if page is categorized
-$objId = urldecode($page);
-if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
-	// Check to see if page is categorized
-	$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-		if ($tiki_p_view_categories == 'y' || $tiki_p_admin_categories == 'y') {
-			$tiki_p_view = 'y';
-			$smarty->assign('tiki_p_view', 'y');
-		}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra('Please login'));
-		} else {
-			$smarty->assign('msg',tra('Permission denied you cannot view this page'));
-    	}
-	    $smarty->display('error.tpl');
-		die;
-	}
-} elseif ($feature_categories == 'y') {
-	$is_categorized = $categlib->is_categorized('wiki page',$objId);
-} else {
-	$is_categorized = FALSE;
-}
+$tikilib->get_perm_object($page, 'wiki page', true);
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
