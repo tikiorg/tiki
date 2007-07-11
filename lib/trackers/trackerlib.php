@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.210 2007-07-06 12:25:34 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.211 2007-07-11 11:09:50 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -613,7 +613,10 @@ class TrackerLib extends TikiLib {
 					global $categlib;
 					include_once('lib/categories/categlib.php');
 					$mycats = $categlib->get_child_categories($fopt['options']);
-					$zcats = $categlib->get_object_categories('tracker '.$trackerId, $res['itemId']);
+					if (empty($zcatItemId) || $zcatItemId != $res['itemId']) {
+						$zcatItemId = $res['itemId'];
+						$zcats = $categlib->get_object_categories('tracker '.$trackerId, $res['itemId']);
+					}
 					$cats = array();
 					foreach ( $mycats as $m ) {
 						if ( in_array($m['categId'], $zcats) ) {
