@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.36 2007-06-28 19:03:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.37 2007-07-11 14:22:14 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -249,6 +249,11 @@ function wikiplugin_trackerlist($data, $params) {
 			if ($rated) {
 				foreach ($items['data'] as $f=>$v) {
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'],$user);
+				}
+			}
+			if ($tracker_info['useComments'] == 'y' && $tracker_info['showComments'] == 'y') {
+				foreach ($items['data'] as $itkey=>$oneitem) {
+					$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 				}
 			}
 			if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {

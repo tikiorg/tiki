@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.211 2007-07-11 11:09:50 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.212 2007-07-11 14:22:13 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -87,6 +87,10 @@ class TrackerLib extends TikiLib {
 		if ($res = $result->fetchRow())
 			return $res;
 		return array();
+	}
+
+	function get_item_nb_comments($itemId) {
+		return $this->getOne('select count(*) from `tiki_tracker_item_comments` where `itemId`=?', array((int)$itemId));
 	}
 
 	function list_all_attachements($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
@@ -682,7 +686,6 @@ class TrackerLib extends TikiLib {
 			}
 
 			$res['field_values'] = $fields;
-			$res['comments'] = $this->getOne('select count(*) from `tiki_tracker_item_comments` where `itemId` = ?', array((int)$itid));
 			if ( $kx == '' ) // ex: if the sort field is non visible, $kx is null
 				$ret[] = $res;
 			else $ret[$kx] = $res;
