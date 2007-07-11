@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.452 2007-07-11 10:45:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.453 2007-07-11 21:57:56 nkoth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -66,7 +66,7 @@ class TikiSetup extends TikiInit {
                 $save_path = TikiSetup::tempdir();
 
                 if (is_dir($save_path) && is_writeable($save_path)) {
-                    ini_set('session.save_path', $save_path);
+                    session_save_path($save_path);
 
                     $errors = '';
                 }
