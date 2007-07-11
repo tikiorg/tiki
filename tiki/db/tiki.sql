@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-10 13:55:48 $
-# $Author: sylvieg $
+# $Date: 2007-07-11 16:27:49 $
+# $Author: pkdille $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2351,7 +2351,7 @@ CREATE TABLE tiki_modules (
   rows int(4) default NULL,
   params varchar(255) default NULL,
   groups text,
-  PRIMARY KEY  (name, position, ord)
+  PRIMARY KEY  (name, position, ord),
   KEY positionType (position, type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -4116,7 +4116,7 @@ CREATE TABLE users_permissions (
   level varchar(80) default NULL,
   type varchar(20) default NULL,
   admin varchar(1) default NULL,
-  PRIMARY KEY  (permName)
+  PRIMARY KEY  (permName),
   KEY type (type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
