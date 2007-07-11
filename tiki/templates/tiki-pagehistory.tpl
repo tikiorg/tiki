@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.30 2007-06-06 13:27:04 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.31 2007-07-11 17:25:12 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}history{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -130,6 +130,7 @@
 {if $feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
 <th class="heading">{tr}Comment{/tr}</th>
 {if $feature_contribution eq 'y'}<th class="heading">{tr}Contribution{/tr}</th>{/if}
+{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<th class="heading">{tr}Contributors{/tr}</th>{/if}
 <th class="heading">{tr}Version{/tr}</th>
 <th class="heading">{tr}Action{/tr}</th>
 {if $default_wiki_diff_style != "old" and $history}
@@ -146,7 +147,8 @@
 {if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user}</td>{/if}
 {if $feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
 <td class="odd">{if $info.comment}{$info.comment}{else}&nbsp;{/if}</td>
-{if $feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
+{if $feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
+{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
 <td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
 <td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}view{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
@@ -168,7 +170,8 @@
 {if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$history[hist].user}</td>{/if}
 {if $feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$history[hist].ip}</td>{/if}
 <td class="{cycle advance=false}">{if $history[hist].comment}{$history[hist].comment}{else}&nbsp;{/if}</td>
-{if $feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$history[hist].contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$history[hist].contributions[ix].name|escape}{/section}</td>{/if}
+{if $feature_contribution eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$history[hist].contributions[ix].name|escape}{/section}</td>{/if}
+{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributors}{if !$smarty.section.ix.first},{/if}{$history[hist].contributors[ix].login|username}{/section}</td>{/if}
 <td class="{cycle advance=false} button">{$history[hist].version}</td>
 <td class="{cycle advance=false} button">
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>
