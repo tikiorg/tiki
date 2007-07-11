@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.156 2007-07-08 22:57:22 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.157 2007-07-11 22:14:36 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -714,7 +714,8 @@ class Comments extends TikiLib {
 	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 	    $approval_type, $moderator_group, $forum_password,
 	    $forum_use_password, $att, $att_store, $att_store_dir,
-	    $att_max_size, $forum_last_n, $commentsPerPage, $threadStyle)
+	    $att_max_size, $forum_last_n, $commentsPerPage, $threadStyle,
+	    $is_flat)
     {
 	if ($forumId)
 	{
@@ -767,7 +768,8 @@ class Comments extends TikiLib {
 	    `pruneMaxAge` = ?,
 	    `forum_last_n` = ?,
 	    `commentsPerPage` = ?,
-	    `threadStyle` = ?
+	    `threadStyle` = ?,
+	    `is_flat` = ?
 		where `forumId` = ?";
 	    $result = $this->query(
 		    $query,
@@ -821,6 +823,7 @@ class Comments extends TikiLib {
 			(int) $forum_last_n,
 			$commentsPerPage,
 			$threadStyle,
+			$is_flat,
 			(int) $forumId
 			    )
 			    );
@@ -841,12 +844,13 @@ class Comments extends TikiLib {
 	    `ui_avatar`, `ui_flag`, `ui_posts`, `ui_level`, `ui_email`,
 	    `ui_online`, `approval_type`, `moderator_group`,
 	    `forum_password`, `forum_use_password`, `att`, `att_store`,
-	    `att_store_dir`, `att_max_size`,`forum_last_n`, `commentsPerPage`, `threadStyle`) 
+	    `att_store_dir`, `att_max_size`,`forum_last_n`, `commentsPerPage`, `threadStyle`,
+	    `is_flat`) 
 		values (?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	    $bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0, 0,
 		    $controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
@@ -862,7 +866,8 @@ class Comments extends TikiLib {
 		    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 		    $approval_type, $moderator_group, $forum_password,
 		    $forum_use_password, $att, $att_store, $att_store_dir,
-		    (int) $att_max_size,(int) $forum_last_n, $commentsPerPage, $threadStyle);
+		    (int) $att_max_size,(int) $forum_last_n, $commentsPerPage, $threadStyle,
+	    	    $is_flat);
 
 	    $result = $this->query($query,$bindvars);
 	    $forumId = $this->getOne("select max(`forumId`)
@@ -2100,7 +2105,9 @@ class Comments extends TikiLib {
 	    $forum_info['ui_flag'], $forum_info['ui_posts'], $forum_info['ui_level'], $forum_info['ui_email'], $forum_info['ui_online'],
 	    $forum_info['approval_type'], $forum_info['moderator_group'], $forum_info['forum_password'],
 	    $forum_info['forum_use_password'], $forum_info['att'], $forum_info['att_store'], $forum_info['att_store_dir'],
-	    $forum_info['att_max_size'],$forum_info['forum_last_n']);
+	    $forum_info['att_max_size'],$forum_info['forum_last_n'], $forum_info['commentsPerPage'], $forum_info['threadStyle'],
+	    $forum_info['is_flat']);
+
 		return $newForumId;		
 	}
 }

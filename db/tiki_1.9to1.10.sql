@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.174 2007-07-10 13:58:49 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.175 2007-07-11 22:14:36 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -982,3 +982,6 @@ ALTER TABLE tiki_galleries ADD INDEX visibleUser (visible, user);
 ALTER TABLE tiki_modules ADD INDEX positionType (position, type);
 ALTER TABLE tiki_link_cache ADD INDEX url(url);
 ALTER TABLE messu_messages ADD INDEX  userIsRead (user, isRead);
+
+#nyloth 2007-07-12
+ALTER TABLE `tiki_forums` ADD `is_flat` char(1) default NULL;

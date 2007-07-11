@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.46 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.47 2007-07-11 22:14:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,6 +74,7 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST['topics_list_reads'] = isset($_REQUEST['topics_list_reads']) ? 'y' : 'n';
 	$_REQUEST['topics_list_replies'] = isset($_REQUEST['topics_list_replies']) ? 'y' : 'n';
 	$_REQUEST['show_description'] = isset($_REQUEST['show_description']) ? 'y' : 'n';
+	$_REQUEST['is_flat'] = isset($_REQUEST['is_flat']) ? 'y' : 'n';
 
 	$_REQUEST['topic_summary'] = isset($_REQUEST['topic_summary']) ? 'y' : 'n';
 	$_REQUEST['topic_smileys'] = isset($_REQUEST['topic_smileys']) ? 'y' : 'n';
@@ -113,7 +114,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'],
 		$_REQUEST['moderator_group'], $_REQUEST['forum_password'], $_REQUEST['forum_use_password'], $_REQUEST['att'],
 		$_REQUEST['att_store'], $_REQUEST['att_store_dir'], $_REQUEST['att_max_size'],$_REQUEST['forum_last_n'],
-		$_REQUEST['commentsPerPage'], $_REQUEST['threadStyle']);
+		$_REQUEST['commentsPerPage'], $_REQUEST['threadStyle'], $_REQUEST['is_flat']);
 
 	$cat_type = 'forum';
 	$cat_objid = $fid;
@@ -198,6 +199,7 @@ if ($_REQUEST["forumId"]) {
 	$info["topics_list_author"] = 'y';
 	$info["vote_threads"] = 'y';
 	$info["forum_last_n"] = 0;
+	$info["is_flat"] = 'n';
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);

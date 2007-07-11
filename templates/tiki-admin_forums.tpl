@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.61 2007-07-09 07:28:27 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.62 2007-07-11 22:14:36 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -83,6 +83,7 @@
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Only allow replies to the first message (flat forum){/tr}:</td><td class="formcolor"><input type="checkbox" name="is_flat" {if $is_flat eq 'y'}checked="checked"{/if} /></td></tr>
 
 {include file=categorize.tpl}
 
