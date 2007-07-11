@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.2 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.3 2007-07-11 22:14:36 nyloth Exp $ *}
 <div class="postfooter">
 	<div class="status">
 	{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}
@@ -55,7 +55,7 @@
 				<a class="linkbut" href="#form">{tr}reply{/tr}</a>
 				{elseif $comments_grandParentId}
 				<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_grandParentId={$comments_grandParentId}&amp;comments_parentId={$comments_grandParentId}&amp;thread_style={$thread_style}&amp;post_reply=1#form">{tr}reply{/tr}</a>
-				{else}
+				{elseif $forum_info.is_flat neq 'y'}
 				<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_grandParentId={$comment.parentId}&amp;comments_parentId={$comment.parentId}&amp;thread_style={$thread_style}&amp;post_reply=1#form">{tr}reply{/tr}</a>
 				{/if}
 			{/if}

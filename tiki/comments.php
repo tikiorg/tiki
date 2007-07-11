@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.75 2007-07-08 17:39:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.76 2007-07-11 22:14:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,6 +67,12 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 			if ( ( ! isset($$request_name) || $$request_name == '' || $forum_thread_defaults_by_forum != 'y' )
 				&& ! isset($_REQUEST[$request_name])
 			) $$request_name = ${'forum_'.$request_name};
+	}
+
+	if ( $forum_info['is_flat'] == 'y' ) {
+		// If we have a flat forum (i.e. we reply only to the first message / thread)
+		// ... we then override $thread_style and force a 'plain' style
+		$thread_style = 'commentStyle_plain';
 	}
 
 } else {
@@ -211,18 +217,22 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		}
 	$comments_show = 'y';
 
-	if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($feature_contribution == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $feature_contribution_mandatory_forum == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $feature_contribution_mandatory_comment == 'y')) && empty($_REQUEST['contributions']))) {
-	    if (empty($_REQUEST["comments_parentId"])) {
-		$_REQUEST["comments_parentId"] = 0;
+	  if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($feature_contribution == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $feature_contribution_mandatory_forum == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $feature_contribution_mandatory_comment == 'y')) && empty($_REQUEST['contributions']))) {
+
+	    if ( isset($forum_mode) && $forum_mode == 'y' && $forum_info['is_flat'] == 'y' && $_REQUEST["comments_grandParentId"] > 0 ) {
+		$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
+		$smarty->display("error.tpl");
+		die;
 	    }
+
+	    if ( empty($_REQUEST["comments_parentId"]) ) $_REQUEST["comments_parentId"] = 0;
 
 	    // Remove HTML tags and empty lines at the end of the posted comment
 	    $_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"]));
 
-	    if ($_REQUEST["comments_threadId"] == 0) {
-		if (isset($_REQUEST["comments_reply_threadId"]) &&
-			!empty($_REQUEST["comments_reply_threadId"]) )
-		{
+	    if ( $_REQUEST["comments_threadId"] == 0 ) {
+
+		if ( isset($_REQUEST["comments_reply_threadId"]) && ! empty($_REQUEST["comments_reply_threadId"]) ) {
 		    $reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
 		    $in_reply_to = $reply_info["message_id"];
 		} else {
@@ -231,9 +241,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		$message_id = '';
 
 		$object = explode(':', $comments_objectId );
-		if( $object[0] == 'forum' && 
-			!empty($_REQUEST["comments_grandParentId"] ))
-		{
+		if( $object[0] == 'forum' && ! empty($_REQUEST["comments_grandParentId"] )) {
 		    $parent_id = $_REQUEST["comments_grandParentId"];
 		} else {
 		    $parent_id = $_REQUEST["comments_parentId"];
@@ -250,6 +258,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"]; // to have the right re:
 		$smarty->assign("comments_reply_threadId", $_REQUEST["comments_parentId"]); // without the flag
 	    } else {
+
 		$qId = $_REQUEST["comments_threadId"];
 		if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 			|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
@@ -450,7 +459,15 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_data', $comment_info["data"]);
 } elseif ($_REQUEST["comments_reply_threadId"] > 0) {
     // Replies to comments.
+
     $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
+
+    if ( $comment_info['parentId'] > 0 && $forum_info['is_flat'] == 'y' ) {
+	$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
+	$smarty->display("error.tpl");
+	die;
+    }
+
     // Add the replied-to text, with >.
     // Disabled by damian
     //	$smarty->assign('comment_data', '');
