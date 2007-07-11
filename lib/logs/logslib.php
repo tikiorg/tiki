@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.41 2007-04-26 12:55:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.42 2007-07-11 17:25:12 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -699,6 +699,17 @@ class LogsLib extends TikiLib {
 	function get_contributors($actionId) {
 		$query = 'select uu.`login` from `tiki_actionlog_params` tap, `users_users` uu where tap.`actionId`=? and tap.`name`=? and uu.`userId`=tap.`value`';
 		$result = $this->query($query, array($actionId, 'contributor'));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+
+	// get the contributors of the last update of a wiki page
+	function get_wiki_contributors($page_info) {
+		$query = 'select distinct(uu.`login`) from `tiki_actionlog_params` tap, `users_users` uu , `tiki_actionlog` ta where tap.`actionId`= ta.`actionId` and tap.`name`=? and uu.`userId`=tap.`value` and ta.`object`=? and ta.`objectType`=? and ta.`lastModif`=? order by `login` asc';
+		$result = $this->query($query, array('contributor', $page_info['pageName'], 'wiki page', $page_info['lastModif'])); 
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.42 2007-06-30 00:44:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.43 2007-07-11 17:25:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,6 +66,11 @@ if ($feature_contribution == 'y') {
 	global $contributionlib; include_once('lib/contribution/contributionlib.php');
 	$contributions = $contributionlib->get_assigned_contributions($page, 'wiki page');
 	$smarty->assign_by_ref('contributions', $contributions);
+	if ($feature_contributor_wiki == 'y') {
+		global $logslib; include_once('lib/logs/logslib.php');
+		$contributors = $logslib->get_wiki_contributors($info);
+		$smarty->assign_by_ref('contributors', $contributors);
+	}
 }
 
 if (isset($_REQUEST['oldver'])) { $oldver=(int)$_REQUEST["oldver"]; } else $oldver=0;
