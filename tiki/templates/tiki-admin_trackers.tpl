@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.84 2007-07-12 16:07:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.85 2007-07-12 21:43:05 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -148,9 +148,10 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Member of the default group of creator can modify items?{/tr}<br /><i>{tr}The tracker needs a group field with the option 1{/tr}</i></td><td><input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} onclick="toggleSpan('showCreatedOptions')" />
 <span id="showCreatedOptions" style="display:{if $showCreated eq 'y'}inline{else}none{/if}"><br />{tr}Format if not the default short one:{/tr}<input type="text" name="showCreatedFormat" value="{$showCreatedFormat}"/><br /><a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a></span></td></tr>
-<tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when viewing tracker item?{/tr}</td><td><input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if}  onclick="toggleSpan('showLastModifOptions')"/>
-<span id="showLastModifOptions" style="display:{if $showLastModif eq 'y'}inline{else}none{/if}"><br />{tr}Format if not the default short one:{/tr}<input type="text" name="showLastModifFormat" value="{$showLastModifFormat}"/><br /><a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a></span></td></tr>
-<tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} />
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when viewing tracker item?{/tr}</td><td><input type="checkbox" name="showCreatedView" {if $showCreatedView eq 'y'}checked="checked"{/if} />
+</td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} onclick="toggleSpan('showLastModifOptions') "/>
+<span id="showLastModifOptions" style="display:{if $showLastModif eq 'y'}inline{else}none{/if}"><br />{tr}Format if not the default short one:{/tr}<input type="text" name="showLastModifFormat" value="{$showLastModifFormat}"/><br /><a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a></span>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when viewing tracker item?{/tr}</td><td><input type="checkbox" name="showLastModifView" {if $showLastModifView eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td>

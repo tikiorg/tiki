@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.27 2007-06-28 19:03:18 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.28 2007-07-12 21:43:05 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -80,11 +80,11 @@
 {/section}
 {* ------------------------------------ *}
 
-{if (empty($showcreated) && $tracker_info.showCreated eq 'y') || (!empty($showcreated) && $showcreated eq 'y')}
-<td>{$items[user].created|tiki_short_datetime}</td>
+{if $tracker_info.showCreated eq 'y'}
+<td>{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td>{$items[user].lastModif|tiki_short_datetime}</td>
+<td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td  style="text-align:center;">{$items[user].comments}</td>
