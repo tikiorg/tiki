@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.42 2007-07-11 17:25:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.43 2007-07-12 20:15:11 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -216,12 +216,13 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
-		global $feature_contribution, $feature_contributor_wiki, $section;
+		global $feature_contribution, $feature_contributor_wiki, $section, $tikilib;
 		global $contributionlib;include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
 		$amid = array();
 		$mid = '';
+		$where = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			$amid[] = "`comment` like ?";
@@ -243,13 +244,19 @@ class LogsLib extends TikiLib {
 			$bindvars[] = '' ;
 		} else if ($user) {
 			if (is_array($user)) {
-				$amid[] = '`user` in ('.implode(',',array_fill(0,count($user),'?')).')';
+				$amid[] = '(`user` in ('.implode(',',array_fill(0,count($user),'?')).') or (ap.`value` in ('.implode(',',array_fill(0,count($user),'?')).') and ap.`name`=? and ap.`actionId`=a.`actionId`))';
 				foreach ($user as $u)
 					$bindvars[] = $u;
+				foreach ($user as $u)
+					$bindvars[] = $tikilib->get_user_id($u);
+				$bindvars[] = 'contributor';
 			} else {
-				$amid[] = "`user` = ?";
+				$amid[] = '(`user` = ? or (ap.`value`=? and ap.`name`=? and ap.`actionId`=a.`actionId`))';
 				$bindvars[] = $user ;
+				$bindvars[] = $tikilib->get_user_id($user) ;
+				$bindvars[] = 'contributor';
 			}
+			$where = ', `tiki_actionlog_params` ap';
 		}
 		if ($start) {
 			$amid[] = "`lastModif` > ?";
@@ -274,7 +281,7 @@ class LogsLib extends TikiLib {
 			$mid = " where ".implode(" and ",$amid)." ";
 		}
 		$query = "select a.* ";
-		$query.= " from `tiki_actionlog` a ,`tiki_actionlog_conf` c $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_actionlog` a ,`tiki_actionlog_conf` c $where $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
