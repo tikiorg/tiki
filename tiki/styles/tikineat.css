@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.32 2007-06-02 01:50:29 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.33 2007-07-12 09:43:01 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1064,6 +1064,15 @@ span.commentstitle {
 }
 .subcomment {
 	margin-left: 10px;
+}
+
+/* Help box*/
+div.commentsedithelp {
+	background : #ffcfcf;
+	color : black;
+	border : 1px solid #ff0000;
+	text-align : center;
+	font-weight : bold;
 }
 
 /************************************************************ CHAT *********************************************************/
