@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.757 2007-07-06 15:01:45 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.758 2007-07-12 10:40:44 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6524,8 +6524,13 @@ if (!$simple_wiki) {
 			function get_long_datetime_format() {
 			    static $long_datetime_format = false;
 
-			    if (!$long_datetime_format)
-				$long_datetime_format = $this->get_long_date_format(). ' [' . $this->get_long_time_format(). ']';
+			    if (!$long_datetime_format) {
+					$t = $this->get_long_time_format();
+					if (!empty($t)) {
+						$t = ' ['.$t.']';
+					}
+					$long_datetime_format = $this->get_long_date_format().$t;
+				}
 
 			    return $long_datetime_format;
 			}
