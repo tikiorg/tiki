@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.176 2007-07-12 17:50:29 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.177 2007-07-12 20:10:00 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -986,3 +986,6 @@ ALTER TABLE messu_messages ADD INDEX  userIsRead (user, isRead);
 #nyloth 2007-07-12
 ALTER TABLE `tiki_forums` ADD `is_flat` char(1) default NULL;
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_edit_own_posts', 'Can edit own forum posts', 'registered', 'forums');
+
+#sylvieg 2007-01-12
+ALTER TABLE tiki_actionlog_params ADD INDEX nameValue (name, value(200));

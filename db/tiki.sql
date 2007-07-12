@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-12 17:50:29 $
-# $Author: nyloth $
+# $Date: 2007-07-12 20:10:00 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -331,7 +331,8 @@ CREATE TABLE tiki_actionlog_params (
   actionId int(8) NOT NULL,
   name varchar(40) NOT NULL,
   value text,
-  KEY  (actionId)
+  KEY (actionId),
+  KEY nameValue (name, value(200))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
