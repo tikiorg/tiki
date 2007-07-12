@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.13 2007-02-16 15:12:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.14 2007-07-12 18:46:30 sylvieg Exp $ *}
 {if $feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">
@@ -19,8 +19,8 @@
 <td class="formcolor">{tr}Contributors{/tr}</td>
 <td class="formcolor">
    <select name="contributors[]" multiple="multiple" size="5">
-	{foreach key=userId item=user from=$users}
-	<option value="{$userId}"{if !empty($contributors) and in_array($userId, $contributors)} selected="selected"{/if}>{$user}</option>
+	{foreach key=userId item=u from=$users}
+	{if $u ne $user}<option value="{$userId}"{if !empty($contributors) and in_array($userId, $contributors)} selected="selected"{/if}>{$u}</option>{/if}
 	{/foreach}
    </select>
 
