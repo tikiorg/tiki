@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.143 2007-06-29 16:33:41 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.144 2007-07-12 16:07:08 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -6,7 +6,7 @@
 
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div class="navbar">
-{if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
+{if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 {if $user_watching_tracker ne 'y'}
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}monitor{/tr}" /></a>
 {else}
@@ -457,10 +457,10 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 
 
 {if $tracker_info.showCreated eq 'y'}
-<td>{$items[user].created|tiki_short_datetime}</td>
+<td>{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td>{$items[user].lastModif|tiki_short_datetime}</td>
+<td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td  style="text-align:center;">{$items[user].comments}</td>
