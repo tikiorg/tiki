@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.133 2007-07-11 14:22:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.134 2007-07-12 11:24:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -609,6 +609,9 @@ if (isset($_REQUEST['import'])) {
 				header("location: tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid);
 				die;
 			}
+			if (isset($tracker_info["defaultStatus"])) {
+				$_REQUEST['status'] = $tracker_info["defaultStatus"];
+			}
 		} else {
 			$cookietab = "2";
 			$smarty->assign('input_err', '1'); // warning to display
@@ -710,9 +713,6 @@ if ($my and $writerfield) {
 }
 $smarty->assign('filtervalue', $filtervalue);
 
-
-if (!isset($_REQUEST["status"]))
-	$_REQUEST["status"] = 'o';
 
 $smarty->assign('status', $_REQUEST["status"]);
 
