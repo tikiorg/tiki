@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.114 2007-07-11 14:31:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.115 2007-07-13 08:54:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -258,7 +258,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			$smarty->display("error.tpl");
 			die;
 		}
-	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) && !($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']))) {
+	  if ( ! empty($_REQUEST["comments_title"])
+		&& ! ( empty($_REQUEST["comments_data"]) && $feature_forums_allow_thread_titles != 'y' )
+		&& ! ( $feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']) )
+	  ) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
 		//Replace things between square brackets by links
 		// no need to strip, & replaced by &lt; on display anyway
@@ -403,12 +406,13 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	    // give him a chance to correct this
 	    $smarty->assign('openpost', 'y');
 
-	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"]))
-		$smarty->assign('warning', 'y');
-	   if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions'])) {
+	    if ( empty($_REQUEST["comments_title"]) || ( empty($_REQUEST["comments_data"]) && $feature_forums_allow_thread_titles != 'y' ) )
+		    $smarty->assign('warning', 'y');
+
+	    if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions'])) {
 		$smarty->assign('contribution_needed', 'y');
 		unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
-	   }
+	    }
 	}
     }
 }

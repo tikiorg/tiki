@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.21 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.22 2007-07-13 08:54:25 nyloth Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div>
@@ -36,6 +36,10 @@
           <td><label>{tr}Accept wiki syntax{/tr}:</label></td>
           <td><input type="checkbox" name="feature_forum_parse"
               {if $feature_forum_parse eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr class="form">
+          <td><label>{tr}Allow first posts of a thread to have an empty body (will be a thread title){/tr}:</label></td>
+          <td><input type="checkbox" name="feature_forums_allow_thread_titles"
+              {if $feature_forums_allow_thread_titles eq 'y'}checked="checked"{/if}/></td>
         </tr><tr class="form">
           <td><label>{tr}Reply posts are empty{/tr}:</label></td>
           <td><input type="checkbox" name="feature_forum_replyempty"
