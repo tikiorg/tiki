@@ -26,6 +26,6 @@
 		<VideoLength>200</VideoLength>
 	</Value>
 	<Text>
-		<URLAppend>http://localhost/tiki-download_file.php?fileId=</URLAppend>
+		<URLAppend>tiki-download_file.php?fileId=</URLAppend>
 	</Text>
 </interface>
