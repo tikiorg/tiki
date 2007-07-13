@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.31 2007-07-13 12:35:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.32 2007-07-13 20:59:54 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,6 +26,7 @@ if (empty($user) || $tiki_p_view_actionlog != 'y') {
 }
 
 $confs = $logslib->get_all_actionlog_conf();
+$nbViewedConfs = 0;
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST['setConf'])) { 
 		for ($i = 0; $i < sizeof($confs); ++$i) {
@@ -70,6 +71,12 @@ if ($tiki_p_admin == 'y') {
 	global $actionlogConf;
 	$actionlogConf = $confs;
 }
+foreach ($confs as $conf) {
+	if ($conf['status'] == 'v') {
+		++$nbViewedConfs;
+	}
+}
+$smarty->assign('nbViewedConfs', $nbViewedConfs);
 $smarty->assign_by_ref('actionlogConf', $confs);
 
 if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
@@ -372,6 +379,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 }
 
 if (isset($_REQUEST['graph'])) {
+	$contributions = $contributionlib->list_contributions(0, -1);
+	$userStat = $logslib->get_stat_user($contributorActions);
 	require_once ('lib/sheet/grid.php');
 	require_once ('lib/graph-engine/gd.php');
 	require_once ('lib/graph-engine/pdflib.php');
@@ -381,53 +390,88 @@ if (isset($_REQUEST['graph'])) {
 	require_once ('lib/graph-engine/graph.multiline.php');
 	$ext = 'jpg';
 	$graph = 'BarStackGraphic';
-	$background = &new GD_GRenderer( 800, 600, $ext );
-	$widthWeek = 400;
-	$widthTotal = 300;
-	$height = 300;
+	$widthWeek = 50*$contributionStat['nbCols']+400;
+	$widthTotal = 450;
+	$height = 200;
+	$widthUser = 50*$userStat['nbCols']+400;
+	$background = &new GD_GRenderer( max($widthUser,$widthWeek) , 6*$height, $ext );
 
-	$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
+	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 	$graph = new $graph;
-	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add');
+	$series = $logslib->draw_contribution_user($userStat, 'add', $contributions);
+	//echo '<pre>XXX';print_r($userStat);;print_r($series); die;
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Contributions Addition per Week'));
+		$graph->setTitle(tra('Users Contributions Addition'));
 		$graph->draw($renderer);
-		imagecopy($background->gd, $renderer->gd, 0,0,0,0, $widthWeek, $height);
+		imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0,$renderer->width, $renderer->height);
+		//echo "<pre>";print_r($graph); die;
+	}
+
+	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
+	$graph = new $graph;
+	$series = $logslib->draw_contribution_user($userStat, 'del', $contributions);
+	if ($series['totalVol']) {
+		unset($series['totalVol']);
+		$graph->setData($series);
+		$graph->setTitle(tra('Users Contributions Suppression'));
+		$graph->draw($renderer);
+		imagecopy($background->gd, $renderer->gd, 0, $height, 0, 0, $renderer->width, $renderer->height);
 	}
 
 	$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
 	$graph = new $graph;
-	$series = $logslib->draw_week_contribution_vol($contributionStat, 'del');
+	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add', $contributions);
+	//echo '<pre>XXX';print_r($contributionStat);;print_r($series); die;
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Contributions Suppression per Week'));
+		if ($_REQUEST['contribTime'] == 'd') {
+			$graph->setTitle(tra('Contributions Addition per Day'));
+		} else {
+			$graph->setTitle(tra('Contributions Addition per Week'));
+		}
 		$graph->draw($renderer);
-		imagecopy($background->gd, $renderer->gd, $width,0,0,0,$widthWeek, $height);
+		imagecopy($background->gd, $renderer->gd, 0, 2*$height, 0, 0, $renderer->width, $renderer->height);
+	}
+
+   	$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
+	$graph = new $graph;
+	$series = $logslib->draw_week_contribution_vol($contributionStat, 'del', $contributions);
+	if ($series['totalVol']) {
+		unset($series['totalVol']);
+		$graph->setData($series);
+		if ($_REQUEST['contribTime'] == 'd') {
+			$graph->setTitle(tra('Contributions Suppression per Day'));
+		} else {
+			$graph->setTitle(tra('Contributions Suppression per Week'));
+		}
+		$graph->draw($renderer);
+		imagecopy($background->gd, $renderer->gd, 0, 3*$height, 0, 0, $renderer->width, $renderer->height);
 	}
 
 	$renderer = &new GD_GRenderer( $widthTotal, $height, $ext );
 	$graph = new $graph;
-	$series = $logslib->draw_contribution_vol($contributionStat, 'add');
+	$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
+	//echo "<pre>";print_r($contributionStat);print_r($series);die;
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
 		$graph->setTitle(tra('Total Contributions Addition'));
 		$graph->draw($renderer);
-		imagecopy($background->gd, $renderer->gd, 0, $height,0,0, $widthTotal, $height);
+		imagecopy($background->gd, $renderer->gd, 0, 4*$height, 0, 0, $renderer->width, $renderer->height);
 	}
 
 	$renderer = &new GD_GRenderer( $widthTotal, $height, $ext );
 	$graph = new $graph;
-	$series = $logslib->draw_contribution_vol($contributionStat, 'del');
+	$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
 		$graph->setTitle(tra('Total Contributions Suppression'));
 		$graph->draw($renderer);
-		imagecopy($background->gd, $renderer->gd, 0, $height*2,0,0,$widthTotal, $height);
+		imagecopy($background->gd, $renderer->gd, 0, 5*$height, 0, 0, $renderer->width, $renderer->height);
 	}
 
 	ob_start();
