@@ -1,11 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.3 2007-07-12 17:50:30 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.4 2007-07-13 07:34:53 nyloth Exp $ *}
 <div class="postbody-title">
 
 	{if $forumId > 0 and $comments_parentId > 0 and $thread_style != 'commentStyle_headers'}
 	<div class="actions">
-		{if $comment.userName == $user
-			|| ( $forum_mode neq 'y' and $tiki_p_edit_comments eq 'y' )
-			|| ( $forum_mode eq 'y' and ( $tiki_p_admin_forum eq 'y' || $tiki_p_forum_edit_own_posts eq 'y' ) )
+		{if	$forum_mode neq 'y' && (
+				$tiki_p_edit_comments eq 'y'
+				|| $comment.userName == $user
+			)
+			|| $forum_mode eq 'y' && (
+				$tiki_p_admin_forum eq 'y'
+				|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )
+			)
 		}
 		<a title="{tr}edit{/tr}"
 			{if $first eq 'y'}
