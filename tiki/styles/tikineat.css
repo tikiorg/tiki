@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.33 2007-07-12 09:43:01 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.34 2007-07-13 07:36:29 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -680,6 +680,7 @@ body .button2 {
 	text-decoration : none;
 	border : 1px solid #999;
 	height : 16px;
+	white-space : nowrap;
 }
 .linkbut:hover {
 	background-color : #dca;
