@@ -6,3 +6,13 @@
 <a class="linkbut" href="tiki-tinvoice_transactions.php">{tr}Transactions{/tr}</a>
 <a class="linkbut" href="tiki-tinvoice_bank_edit.php">{tr}New bank account{/tr}</a>
 </div>
+<table class="normal">
+<tr>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Account Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Bank{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-tinvoice_list.php">{tr}Account{/tr}</a></td>
+<td class="heading">{tr}Action{/tr}</td>
+</tr>
+{cycle values="odd,even" print=false}
+</table>
+

@@ -22,18 +22,21 @@ if ($tiki_p_tinvoice_edit != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (!$_REQUEST["bankId"]) {
-
-
-} else {
-
+$tinvoicelib=new TinvoiceLib($dbTiki);
+$userId=$tikilib->get_user_id($user);
+if ($_REQUEST["save"] && $_REQUEST["name"]) {
+	$data=array();
+	$data["name"]=$_REQUEST["name"];
+	$data["bank"]=$_REQUEST["bank"];
+	$data["account_nb"]=$_REQUEST["account_nb"];
+	$data["rib"]=$_REQUEST["rib"];
+	$data["swift"]=$_REQUEST["swift"];
+	$bankId=$tinvoicelib->update_bank($userId,$_REQUEST["bankId"],$data);
+	$smarty->assign("bankId",$bankId);
 }
-if (!$_REQUEST["userId"]) {
 
+var_dump($banks);
 
-} else {
-
-}
 
 
 // Display the template

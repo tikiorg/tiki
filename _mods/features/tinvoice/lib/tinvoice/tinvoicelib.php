@@ -65,7 +65,50 @@ class TinvoiceLib extends TikiLib {
 	}
 	return $ret;
     }
-   
+   /*public*/ function list_banks($userId) {
+
+	$query = "select * from `tiki_tinvoice_banks` where `userId`=?";
+	$result = $this->query($query, array((int)$userId));
+	while ($res = $result->fetchRow()) {	    
+		$ret[]=new Tinvoice($this, $res);
+	}
+	return $ret;
+    }
+    /*public*/ function list_transactions($userId) {
+
+	$query = "select * from `tiki_tinvoice_bank_transactions` where `userId`=?";
+	$result = $this->query($query, array((int)$userId));
+	while ($res = $result->fetchRow()) {	    
+		$ret[]=new Tinvoice($this, $res);
+	}
+	return $ret;
+    }
+    /*public*/ function update_bank($userId, $bankId, $data) {
+
+	if (!$bankId) {
+		// add new bank
+		$query ="INSERT into `tiki_tinvoice_banks` (`userId`, `name`, `bank`, `account_nb`, `rib`, `swift`) VALUES (?, ?, ?, ?, ?, ?)";	
+		$result = $this->query($query, array((int)$userId,
+							$data["name"],
+							$date["bank"],
+							$data["account_nb"],
+							$data["rib"],
+							$data["swift"]));
+		$bankId=$this->getOne("SELECT `id` from `tiki_tinvoice_banks` where `userId`=? and `account_nb`=?",array((int)userId,$data["account_nb"]));
+	} else {
+		// update bank account
+		$query="UPDATE `tiki_tinvoice_banks` SET `name`=? , `bank`=? , `account_nb`=?, `rib`=?, `swift`=? WHERE `userId`=? AND `id`=?";
+		$result = $this->query($query, array($data["name"],
+							$date["bank"],
+							$data["account_nb"],
+							$data["rib"],
+							$data["swift"],
+							(int)$userId,
+							(int)$bankId));
+
+	}
+	return $bankId;
+    }
     /*public*/ function get_period_dates($todate, $graphPeriod ) {
     	$period=array();
 	if ($graphPeriod == "week") {
