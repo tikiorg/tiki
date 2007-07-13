@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.453 2007-07-11 21:57:56 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.454 2007-07-13 08:54:24 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -593,6 +593,7 @@ $pref['feature_forum_parse'] = 'n';
 $pref['feature_forum_replyempty'] = 'n';
 $pref['feature_forum_quickjump'] = 'n';
 $pref['feature_forum_topicd'] = 'y';
+$pref['feature_forums_allow_thread_titles'] = 'n';
 $pref['forums_ordering'] = 'created_desc';
 $pref['forum_list_topics'] =  'y';
 $pref['forum_list_posts'] =  'y';

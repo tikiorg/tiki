@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.16 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.17 2007-07-13 08:54:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,16 +20,20 @@ if (isset($_REQUEST["homeforumprefs"]) && isset($_REQUEST["home_forum"])) {
 
 if (isset($_REQUEST["forumprefs"])) {
 	check_ticket('admin-inc-forums');
-	simple_set_toggle('feature_forum_rankings');
-	simple_set_toggle('feature_forum_parse');
-	simple_set_toggle('feature_forum_replyempty');
-	simple_set_toggle('feature_forum_quickjump');
-	simple_set_toggle('feature_forum_topicd');
+	$pref_toggles = array('feature_forum_rankings',
+	'feature_forum_parse',
+	'feature_forum_replyempty',
+	'feature_forum_quickjump',
+	'feature_forum_topicd',
+	'feature_forum_local_search',
+	'feature_forum_local_tiki_search',
+	'feature_forums_search',
+	'feature_forums_tiki_search',
+	'feature_forums_allow_thread_titles'
+	);
+	foreach ( $pref_toggles as $toggle) simple_set_toggle($toggle);
+
 	simple_set_value('forums_ordering');
-	simple_set_toggle('feature_forum_local_search');
-	simple_set_toggle('feature_forum_local_tiki_search');
-	simple_set_toggle('feature_forums_search');
-	simple_set_toggle('feature_forums_tiki_search');
 }
 
 if (isset($_REQUEST["forumlistprefs"])) {
