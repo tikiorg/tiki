@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.28 2007-04-08 23:47:56 bluestrain Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.29 2007-07-13 12:35:51 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -111,7 +111,8 @@
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].action}{/tr}</td>
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].objectType}{/tr}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
-{if !$reportCateg and $showCateg eq 'y'}<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
+{if !$reportCateg and $showCateg eq 'y'}
+<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}{if $actionlogs[ix].del} diffdeleted{/if}">{if $actionlogs[ix].del or $actionlogs[ix].del eq '0'}{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
 {if $feature_contribution eq 'y'}
@@ -225,6 +226,7 @@
 </tr>
 {/foreach}
 </table>
+<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 {/if}
 
 {if $statUser|@count ne 0}

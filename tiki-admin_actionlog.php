@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.30 2007-04-04 17:23:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.31 2007-07-13 12:35:52 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -193,7 +193,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
 
-	$statUser = $logslib->get_action_stat_user($actions);
+	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
+	$statUser = $logslib->get_action_stat_user($contributorActions);
 	$smarty->assign_by_ref('statUser', $statUser);
 	if ($showCateg) {
 		$statCateg = $logslib->get_action_stat_categ($actions, $categNames);
@@ -202,13 +203,13 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb')
 			$volCateg = $logslib->in_kb($volCateg);
 		$smarty->assign_by_ref('volCateg', $volCateg);
-		$volUserCateg = $logslib->get_action_vol_user_categ($actions, $categNames);
+		$volUserCateg = $logslib->get_action_vol_user_categ($contributorActions, $categNames);
 		if (isset($_REQUEST['unit']) && $_REQUEST['unit'] == 'kb')
 			$volUserCateg = $logslib->in_kb($volUserCateg);
 		$smarty->assign_by_ref('volUserCateg', $volUserCateg);
 		$typeVol = $logslib->get_action_vol_type($volCateg);
 		$smarty->assign_by_ref('typeVol', $typeVol);
-		$statUserCateg = $logslib->get_action_stat_user_categ($actions, $categNames);
+		$statUserCateg = $logslib->get_action_stat_user_categ($contributorActions, $categNames);
 		$smarty->assign_by_ref('statUserCateg', $statUserCateg);
 	}
 	for ($i = 0; $i < sizeof($actions); ++$i) {
