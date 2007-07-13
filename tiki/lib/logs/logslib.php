@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.43 2007-07-12 20:15:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.44 2007-07-13 12:35:52 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -220,9 +220,10 @@ class LogsLib extends TikiLib {
 		global $contributionlib;include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
+		$bindvarsU = array();
 		$amid = array();
-		$mid = '';
-		$where = '';
+		$mid1 = '';
+		$mid2 = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			$amid[] = "`comment` like ?";
@@ -244,19 +245,20 @@ class LogsLib extends TikiLib {
 			$bindvars[] = '' ;
 		} else if ($user) {
 			if (is_array($user)) {
-				$amid[] = '(`user` in ('.implode(',',array_fill(0,count($user),'?')).') or (ap.`value` in ('.implode(',',array_fill(0,count($user),'?')).') and ap.`name`=? and ap.`actionId`=a.`actionId`))';
+				$mid1 = '`user` in ('.implode(',',array_fill(0,count($user),'?')).')';
+				$mid2 = 'ap.`value` in ('.implode(',',array_fill(0,count($user),'?')).') and ap.`name`=? and ap.`actionId`=a.`actionId`';
 				foreach ($user as $u)
-					$bindvars[] = $u;
+					$bindvarsU[] = $u;
 				foreach ($user as $u)
-					$bindvars[] = $tikilib->get_user_id($u);
-				$bindvars[] = 'contributor';
+					$bindvarsU[] = $tikilib->get_user_id($u);
+				$bindvarsU[] = 'contributor';
 			} else {
-				$amid[] = '(`user` = ? or (ap.`value`=? and ap.`name`=? and ap.`actionId`=a.`actionId`))';
-				$bindvars[] = $user ;
-				$bindvars[] = $tikilib->get_user_id($user) ;
-				$bindvars[] = 'contributor';
+				$mid1 = '`user` = ?';
+				$mid2 = 'ap.`value`=? and ap.`name`=? and ap.`actionId`=a.`actionId`';
+				$bindvarsU[] = $user ;
+				$bindvarsU[] = $tikilib->get_user_id($user) ;
+				$bindvarsU[] = 'contributor';
 			}
-			$where = ', `tiki_actionlog_params` ap';
 		}
 		if ($start) {
 			$amid[] = "`lastModif` > ?";
@@ -275,13 +277,19 @@ class LogsLib extends TikiLib {
 				$bindvars[] = $categId;
 			}
 		}
-		$amid[] = "a.`action` = c.`action` and a.`objectType` = c.`objectType` and (c.`status` = 'y' or c.`status` = 'v')";
+		$amid[] = " a.`action` = c.`action` and a.`objectType` = c.`objectType` and (c.`status` = 'y' or c.`status` = 'v')";
 
 		if (count($amid)) {
-			$mid = " where ".implode(" and ",$amid)." ";
+			$mid = implode(" and ",$amid);
 		}
-		$query = "select a.* ";
-		$query.= " from `tiki_actionlog` a ,`tiki_actionlog_conf` c $where $mid order by ".$this->convert_sortmode($sort_mode);
+		if (!empty($bindvarsU)) {
+			$bindvars = array_merge($bindvars, $bindvarsU, $bindvars);
+			$query = "(select a.* from `tiki_actionlog` a ,`tiki_actionlog_conf` c where $mid and $mid1)";
+			$query .= "union (select a.* from `tiki_actionlog` a ,`tiki_actionlog_conf` c,`tiki_actionlog_params` ap where $mid2 and $mid)";
+		} else {
+			$query = "select a.* from `tiki_actionlog` a ,`tiki_actionlog_conf` c where $mid";
+		}
+		$query .= " order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -297,6 +305,7 @@ class LogsLib extends TikiLib {
 				}
 				if ($feature_contributor_wiki == 'y' && $res['objectType'] == 'wiki page') {
 					$res['contributors'] = $this->get_contributors($res['actionId']);
+					$res['nbContributors'] = 1 + sizeof($res['contributors']);
 				}
 				if ($res['objectType'] == 'comment' && empty($res['categId'])) { // patch for xavi
 					global $categlib; include_once('lib/categories/categlib.php');
@@ -722,6 +731,24 @@ class LogsLib extends TikiLib {
 			$ret[] = $res;
 		}
 		return $ret;
+	}
+   
+	function split_actions_per_contributors($actions, $users) {
+		$contributorActions = array();
+		foreach ($actions as $action) {
+			$bytes = $this->get_volume_action($action);
+			$action['comment'] = 'add='.$bytes['add']/$action['nbContributors'].'&del='.$bytes['del']/$action['nbContributors'];
+			if (in_array($action['user'], $users)) {
+				$contributorActions[] = $action;
+			}
+			foreach ($action['contributors'] as $contributor) {
+				if (in_array($contributor['login'], $users)) {
+					$action['user'] = $contributor['login'];
+					$contributorActions[] = $action;
+				}
+			}
+		}
+		return $contributorActions;
 	}
 
 }
