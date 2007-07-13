@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.212 2007-07-11 14:22:13 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.213 2007-07-13 14:33:38 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -849,9 +849,15 @@ class TrackerLib extends TikiLib {
 						$ins_fields["data"][$i]["value"] = '';
 					} else if( $ins_fields["data"][$i]['value'] != '' ) {
 						$opts = split(',', $ins_fields['data'][$i]["options"]);
-// 						global $filegallib; include_once ("lib/filegals/filegallib.php");
+ 						global $filegallib; 
 						global $MultimediaGalerie;
-						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$ins_fields["data"][$i]["file_type"] , $user,"" , '', "system", time(), $lockedby=NULL) ; 
+						if(  $ins_fields["data"][$i]["options_array"][0] == '3' ||  $ins_fields["data"][$i]["options_array"][0] == '5' ) {// flv
+						$Mytype="video/x-flv";
+						}
+						else {	//MP3
+						$Mytype="audio/x-mp3";
+						}	
+						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$Mytype , $user,"" , '', "system", time(), $lockedby=NULL) ; 
 						$ins_fields["data"][$i]['value']=$fileGalId;
 
  						if (!$fileGalId) {
