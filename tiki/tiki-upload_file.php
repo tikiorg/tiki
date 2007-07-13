@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.56 2007-06-29 16:33:41 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.57 2007-07-13 14:33:38 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -233,7 +233,10 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 
 			$size = $_FILES["userfile$i"]['size'];
 			$name = $_FILES["userfile$i"]['name'];
+
 			$type = $_FILES["userfile$i"]['type'];
+
+			if (preg_match('/.flv$/',$name)) { $type="video/x-flv"; }
 
 			if (count($errors)) {
 				break;

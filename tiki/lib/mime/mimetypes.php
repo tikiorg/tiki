@@ -134,6 +134,7 @@ static $mimetypes = array(
 	"lzh" => "application/octet-stream",
 	"skm" => "application/x-koan",
 	"exe" => "application/octet-stream",
+	"flv" => "video/x-flv",
 	"class" => "application/octet-stream"
 );
 

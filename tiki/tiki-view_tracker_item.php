@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.131 2007-07-08 20:30:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.132 2007-07-13 14:33:38 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -484,15 +484,7 @@ foreach($xfields["data"] as $i=>$array) {
 				}
 				
 			  }
- 			global $filegallib; 
-			global $URLAppend;
-			if ( $URLAppend == '' ) { list ($val1,$val2)=split('=', $ins_fields["data"][$i]["value"]); }
-			else { $val2=$ins_fields["data"][$i]["value"];}
-			$res=$filegallib->get_file_info($val2);
-			if ( $res["filetype"] == "application/octet-stream" ) { $ModeVideo = 'y' ;}
-			else { $ModeVideo = 'n' ;} ;
-			$smarty->assign('ModeVideo', $ModeVideo);
-			}
+ 			}
 		
 			if ($fields["data"][$i]["type"] == 'i')	{
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {					
@@ -870,7 +862,16 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}
-
+			if ($fields['data'][$i]['type'] == 'M' ) {
+			global $filegallib; 
+			global $URLAppend;
+			if ( $URLAppend == '' ) { list ($val1,$val2)=split('=', $ins_fields["data"][$i]["value"]); }
+			else { $val2=$ins_fields["data"][$i]["value"];}
+			$res=$filegallib->get_file_info($val2);
+			if ( $res["filetype"] == "video/x-flv" ) { $ModeVideo = 'y' ;}
+			else { $ModeVideo = 'n' ;} ;
+			$smarty->assign('ModeVideo', $ModeVideo);
+			}
 
 				if ($fields['data'][$i]['type'] == 'i' && !empty($ins_fields["data"][$i]['options_array'][2]) && !empty($ins_fields['data'][$i]['value'])) {
 					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
