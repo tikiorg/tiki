@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.29 2007-07-13 12:35:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.30 2007-07-13 20:59:54 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -27,6 +27,9 @@
 <a name="Report" />
 <form method="post" action="tiki-admin_actionlog.php#Report">
 <h2>{tr}Filter{/tr}</h2>
+{if empty($nbViewedConfs)}
+<div class="simplebox highlight">{tr}Please select some actions to view.{/tr}</div>
+{else}
 <table class="smallnormal">
 <tr class="formcolor">
 <td>{tr}Start date:{/tr}</td>
@@ -79,6 +82,7 @@
 {/if}
 </table>
 </form>
+{/if}
 
 {if $actionlogs}<a href="#Statistic" class="buttom">See Statictics</a>{/if}
 

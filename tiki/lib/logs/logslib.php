@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.44 2007-07-13 12:35:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.45 2007-07-13 20:59:54 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -657,6 +657,39 @@ class LogsLib extends TikiLib {
 		}
 		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
+	function get_stat_user($actions) {
+		$tab = array();
+		foreach ($actions as $action) {
+			if (isset($action['contributions'])) {
+				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
+					continue;	// differ only by the categories
+				$previousAction = $action;
+				foreach ($action['contributions'] as $contrib) {
+					if (empty($tab[$action['user']]) or empty($tab[$action['user']]['stat'][$contrib['contributionId']])) {
+						$tab[$action['user']][$contrib['contributionId']]['name'] = $contrib['name'];
+						$tab[$action['user']][$contrib['contributionId']]['stat']['add'] = 0;
+						$tab[$action['user']][$contrib['contributionId']]['stat']['del'] = 0;
+						$tab[$action['user']][$contrib['contributionId']]['stat']['nbAdd'] = 0;
+						$tab[$action['user']][$contrib['contributionId']]['stat']['nbDel'] = 0;
+						$tab[$action['user']][$contrib['contributionId']]['stat']['nbUpdate'] = 0;
+					}
+					if ($action['add']) {
+						$tab[$action['user']][$contrib['contributionId']]['stat']['add'] += $action['add'];
+						if (!$action['del'])
+							++$tab[$action['user']][$contrib['contributionId']]['stat']['nbAdd'];
+					}
+					if ($action['del']) {
+						$tab[$action['user']][$contrib['contributionId']]['stat']['del'] += $action['del'];
+						if (!$action['add'])
+							++$tab[$action['user']][$contrib['contributionId']]['stat']['nbDel'];
+					}
+					if ($action['add'] && $action['del'])
+						++$tab[$action['user']][$contrib['contributionId']]['stat']['nbUpdate'];
+				}				
+			}
+		}
+		return array('data'=>$tab, 'nbCols'=>sizeof($tab));;
+	}
 	function get_colors($nb) {
 		$colors[] = 'red';	if (!--$nb) return $colors;
 		$colors[] = 'yellow';	if (!--$nb) return $colors;
@@ -677,38 +710,66 @@ class LogsLib extends TikiLib {
 			$colors[] = rand(1, 999999);
 		} 
 	}
-	function draw_contribution_vol($contributionStat, $type='add') {
+	function draw_contribution_vol($contributionStat, $type='add', $contributions) {
 		$ret = array();
-		$ret['x'][] = tra('Contributions');
-		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
 		$ret['totalVol'] = 0;
-		$j = 0;
-		foreach ($contributionStat['data'] as $contribution) {
+		$ret['x'][] = tra('Contributions');
+		$ret['color'] = $this->get_colors($contributions['cant']);
+		$iy = 0;
+		foreach ($contributions['data'] as $contribution) {
 			$ret['label'][] = $contribution['name'];
 			$vol = 0;
-			foreach ($contribution['stat'] as $stat) {
-				$vol += $stat[$type];
+			for ($ix = 0; $ix < $contributionStat['nbCols']; ++$ix) {
+				if (!empty($contributionStat['data'][$contribution['contributionId']]['stat'][$ix])) {
+					$vol += $contributionStat['data'][$contribution['contributionId']]['stat'][$ix][$type];
+				}
 			}
-			$ret["y$j"][] = $vol;
+			$ret["y$iy"][] = $vol;
 			$ret['totalVol'] += $vol;
-			++$j;
+			++$iy;
 		}
 		return $ret;
 	}
-	function draw_week_contribution_vol($contributionStat, $type='add') {
+	function draw_week_contribution_vol($contributionStat, $type='add', $contributions) {
 		$ret = array();
+		$ret['totalVol'] = 0;
 		for ($i = 1, $nb = $contributionStat['nbCols']; $nb; --$nb)
 			$ret['x'][] = $i++;
-		$ret['color'] = $this->get_colors($contributionStat['nbCols']);
-		$ret['totalVol'] = 0;
-		$j = 0;
-		foreach ($contributionStat['data'] as $contribution) {
+		$ret['color'] = $this->get_colors($contributions['cant']);
+		$iy = 0;
+		foreach ($contributions['data'] as $contribution) {
 			$ret['label'][] = $contribution['name'];
-			foreach ($contribution['stat'] as $key=>$stat) {
-				$ret["y$j"][] = $stat[$type];
-				$ret['totalVol'] += $stat[$type];
+			for ($ix = 0; $ix < $contributionStat['nbCols']; ++$ix) {
+				if (empty($contributionStat['data'][$contribution['contributionId']]) || empty($contributionStat['data'][$contribution['contributionId']]['stat'][$ix])) {
+					$ret["y$iy"][] = 0;
+				} else {
+					$ret["y$iy"][] = $contributionStat['data'][$contribution['contributionId']]['stat'][$ix][$type];
+					$ret['totalVol'] += $contributionStat['data'][$contribution['contributionId']]['stat'][$ix][$type];
+				}
 			}
-			++$j;
+			++$iy;
+		}
+		return $ret;
+	}
+	function draw_contribution_user($userStat, $type='add', $contributions) {
+		$ret = array();
+		$ret['totalVol'] = 0;
+		foreach ($userStat['data'] as $user=>$stats) {
+			$ret['x'][] = $user;
+		}
+		$ret['color'] = $this->get_colors($contributions['cant']);
+		$iy = 0;
+		foreach ($contributions['data'] as $contribution) {
+			$ret['label'][] = $contribution['name'];
+			foreach ($userStat['data'] as $user=>$stats) {
+				if (empty($stats[$contribution['contributionId']])) {
+					$ret["y$iy"][] = 0;
+				} else {
+					$ret["y$iy"][] = $stats[$contribution['contributionId']]['stat']["$type"];
+					$ret['totalVol'] += $stats[$contribution['contributionId']]['stat']["$type"];
+				}
+			}
+			++$iy;
 		}
 		return $ret;
 	}
@@ -737,12 +798,14 @@ class LogsLib extends TikiLib {
 		$contributorActions = array();
 		foreach ($actions as $action) {
 			$bytes = $this->get_volume_action($action);
+			$action['add'] = $bytes['add'];
+			$action['del'] = $bytes['del'];
 			$action['comment'] = 'add='.$bytes['add']/$action['nbContributors'].'&del='.$bytes['del']/$action['nbContributors'];
-			if (in_array($action['user'], $users)) {
+			if (empty($users) || in_array($action['user'], $users)) {
 				$contributorActions[] = $action;
 			}
 			foreach ($action['contributors'] as $contributor) {
-				if (in_array($contributor['login'], $users)) {
+				if (empty($users) || in_array($contributor['login'], $users)) {
 					$action['user'] = $contributor['login'];
 					$contributorActions[] = $action;
 				}
