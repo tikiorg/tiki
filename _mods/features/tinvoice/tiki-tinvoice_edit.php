@@ -264,7 +264,6 @@ if (isset($_REQUEST['xajax'])) {
     domyajax();
 } else {
     tiki_edit_invoice::init();
-    var_dump($_POST);
 }
 
 ?>

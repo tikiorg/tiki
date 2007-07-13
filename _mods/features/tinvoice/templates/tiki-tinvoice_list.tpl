@@ -1,8 +1,9 @@
 <h1><a href="tiki-tinvoice_list.php" class="pagetitle">{tr}Invoices{/tr}</a></h1>
 <div class="navbar">
-{if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php?id_emitter={$me_tikiid}">{tr}create new invoice{/tr}</a>&nbsp;{/if}
-<a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}Invoices preferences{/tr}</a>
-<a class="linkbut" href="tiki-tinvoice_graph.php">{tr}Invoices Graphs{/tr}</a>
+{if $tiki_p_tinvoice_edit eq 'y'}<a class="linkbut" href="tiki-tinvoice_edit.php?id_emitter={$me_tikiid}">{tr}new invoice{/tr}</a>&nbsp;{/if}
+<a class="linkbut" href="tiki-tinvoice_prefs.php">{tr}preferences{/tr}</a>
+<a class="linkbut" href="tiki-tinvoice_graph.php">{tr}Graphs{/tr}</a>
+<a class="linkbut" href="tiki-tinvoice_transactions.php">{tr}Transactions{/tr}</a>
 </div>
 <div style="width: 500px; float: left;" class="button2">
 <a class="linkbut" href='tiki-tinvoice_list.php?id_emitter={$me_tikiid}'>{tr}clients invoices{/tr}</a>&nbsp;
