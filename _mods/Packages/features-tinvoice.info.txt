@@ -1,11 +1,11 @@
 contributor:
-$Author: niclone $
+$Author: tombombadilom $
 
 revision:
-$Revision: 1.21 $
+$Revision: 1.22 $
 
 lastmodif:
-$Date: 2007-06-19 16:38:31 $
+$Date: 2007-07-13 13:39:30 $
 
 requires:
 lib-fpdf_freefonts
@@ -25,11 +25,13 @@ features/tinvoice/templates/tiki-tinvoice_graph.tpl templates/tiki-tinvoice_grap
 features/tinvoice/lib/tinvoice/tinvoicelib.php lib/tinvoice/tinvoicelib.php
 
 sql-install:
-CREATE TABLE `tiki_tinvoice` ( `id` int(11) NOT NULL auto_increment, `id_emitter` int(11) NOT NULL, `id_receiver` int(11) NOT NULL, `idtype_emitter` enum('tiki','contact') collate utf8_bin NOT NULL, `idtype_receiver` enum('tiki','contact') collate utf8_bin NOT NULL, `annual_id` int(11) default NULL, `ref` varchar(31) collate utf8_bin NOT NULL, `date` datetime NOT NULL, `status` enum('draft','emitted','paid','canceled') collate utf8_bin NOT NULL, `libelle` varchar(256) collate utf8_bin NOT NULL, `amount` decimal(12,2) NOT NULL default '0.00', `amount_vat` decimal(12,2) NOT NULL, PRIMARY KEY (`id`), KEY `ref` (`ref`));
+CREATE TABLE if not exists `tiki_tinvoice` ( `id` int(11) NOT NULL auto_increment, `id_emitter` int(11) NOT NULL, `id_receiver` int(11) NOT NULL, `idtype_emitter` enum('tiki','contact') collate utf8_bin NOT NULL, `idtype_receiver` enum('tiki','contact') collate utf8_bin NOT NULL, `annual_id` int(11) default NULL, `ref` varchar(31) collate utf8_bin NOT NULL, `date` datetime NOT NULL, `status` enum('draft','emitted','paid','canceled') collate utf8_bin NOT NULL, `libelle` varchar(256) collate utf8_bin NOT NULL, `amount` decimal(12,2) NOT NULL default '0.00', `amount_vat` decimal(12,2) NOT NULL, PRIMARY KEY (`id`), KEY `ref` (`ref`));
 CREATE TABLE if not exists `tiki_tinvoice_infos` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `type` varchar(31) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY (`id`), KEY `id_invoice` (`id_invoice`));
 CREATE TABLE if not exists `tiki_tinvoice_items` ( `id` int(11) NOT NULL auto_increment, `id_invoice` int(11) NOT NULL, `ref` varchar(32) NOT NULL, `designation` varchar(256) NOT NULL, `quantity` int(11) NOT NULL, `unitprice` decimal(12,2) NOT NULL, `vat` decimal(5,2) NOT NULL, PRIMARY KEY (`id`), KEY `id_invoices` (`id_invoice`));
 CREATE TABLE if not exists `tiki_tinvoice_prefs` ( `id` int(11) NOT NULL auto_increment, `userId` int(11) NOT NULL, `key` varchar(32) NOT NULL, `value` varchar(256) NOT NULL, PRIMARY KEY (`id`), KEY `userId` (`userId`));
 CREATE TABLE if not exists `tiki_tinvoice_tva` ( `id` int(11) NOT NULL auto_increment, `value` double NOT NULL, PRIMARY KEY (`id`));
+CREATE TABLE if not exists `tiki_tinvoice_banks` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`name` text,`bank` text,`account_nb` text,`rib` text,`swift` text,PRIMARY KEY  (`id`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE if not exists `tiki_tinvoice_bank_transactions` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`bankId` varchar(11) NOT NULL,`date` int(14) NOT NULL,`operationNb` varchar(200) default NULL,`label` text,`debit` decimal(10,2) default NULL,`credit` decimal(10,2) default NULL,`status` tinyint(1) default NULL,PRIMARY KEY  (`id`),KEY `bankId` (`bankId`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES ('42','o','My Invoices','tiki-tinvoice_list.php',98,'','','Registered');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tinvoice', 'can view tinvoice', 'Registered', 'tinvoice'); 
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tinvoice_del', 'can delete invoice', 'Admins', 'tinvoice'); 
@@ -47,6 +49,9 @@ delete from tiki_menu_options WHERE menuId='42' AND position='98' AND name='My I
 delete from users_permissions WHERE permName='tiki_p_tinvoice' OR permName='tiki_p_tinvoice_edit' OR permName='tiki_p_tinvoice_del' OR permName='tiki_p_tinvoice_chart';
 
 sql-upgrade:
+:1.19
+CREATE TABLE if not exists `tiki_tinvoice_banks` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`name` text,`bank` text,`account_nb` text,`rib` text,`swift` text,PRIMARY KEY  (`id`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE if not exists `tiki_tinvoice_bank_transactions` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`bankId` varchar(11) NOT NULL,`date` int(14) NOT NULL,`operationNb` varchar(200) default NULL,`label` text,`debit` decimal(10,2) default NULL,`credit` decimal(10,2) default NULL,`status` tinyint(1) default NULL,PRIMARY KEY  (`id`),KEY `bankId` (`bankId`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 :1.18
 ALTER TABLE tiki_tinvoice DROP paid;
 ALTER TABLE tiki_tinvoice ADD amount_vat DECIMAL(12, 2) NOT NULL AFTER amount;
@@ -64,5 +69,6 @@ Description:
 Tinvoice mod intend to add invoice management and generation to tikiwiki.
 
 Changelog:
+1.19 added transaction module
 0.0.1 initial package
 
