@@ -1,11 +1,11 @@
 contributor:
-$Author: tombombadilom $
+$Author: niclone $
 
 revision:
-$Revision: 1.22 $
+$Revision: 1.23 $
 
 lastmodif:
-$Date: 2007-07-13 13:39:30 $
+$Date: 2007-07-14 14:11:49 $
 
 requires:
 lib-fpdf_freefonts
@@ -49,6 +49,9 @@ delete from tiki_menu_options WHERE menuId='42' AND position='98' AND name='My I
 delete from users_permissions WHERE permName='tiki_p_tinvoice' OR permName='tiki_p_tinvoice_edit' OR permName='tiki_p_tinvoice_del' OR permName='tiki_p_tinvoice_chart';
 
 sql-upgrade:
+:1.22
+CREATE TABLE if not exists `tiki_tinvoice_banks` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`name` text,`bank` text,`account_nb` text,`rib` text,`swift` text,PRIMARY KEY  (`id`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE if not exists `tiki_tinvoice_bank_transactions` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`bankId` varchar(11) NOT NULL,`date` int(14) NOT NULL,`operationNb` varchar(200) default NULL,`label` text,`debit` decimal(10,2) default NULL,`credit` decimal(10,2) default NULL,`status` tinyint(1) default NULL,PRIMARY KEY  (`id`),KEY `bankId` (`bankId`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 :1.19
 CREATE TABLE if not exists `tiki_tinvoice_banks` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`name` text,`bank` text,`account_nb` text,`rib` text,`swift` text,PRIMARY KEY  (`id`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 CREATE TABLE if not exists `tiki_tinvoice_bank_transactions` (`id` int(11) NOT NULL auto_increment,`userId` int(11) NOT NULL,`bankId` varchar(11) NOT NULL,`date` int(14) NOT NULL,`operationNb` varchar(200) default NULL,`label` text,`debit` decimal(10,2) default NULL,`credit` decimal(10,2) default NULL,`status` tinyint(1) default NULL,PRIMARY KEY  (`id`),KEY `bankId` (`bankId`),KEY `userId` (`userId`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
