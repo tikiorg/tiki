@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.89 2007-07-13 08:20:23 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.90 2007-07-14 22:51:06 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -105,7 +105,7 @@ a moderator approves it.{/tr}</small>
   <br />
   {/if}
 
-<div id="forumpost" style="display:{if $comments_threadId > 0 or $warning eq 'y'}block{else}none{/if};">
+<div id="forumpost" style="display:{if $comments_threadId > 0 or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}post new comment{/tr}</a>)
     {/if}
