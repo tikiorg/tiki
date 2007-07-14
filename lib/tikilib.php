@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.759 2007-07-12 14:54:00 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.760 2007-07-14 20:33:34 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1083,6 +1083,7 @@ class TikiLib extends TikiDB {
 	$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
 	$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
 	$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
+	$ret["calendar"] = $this->getOne("select count(*) from `tiki_calendar_items` where `lastmodif`>?",array((int)$last));
 	return $ret;
     }
 
