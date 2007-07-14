@@ -1,7 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.4 2007-07-13 07:34:53 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.5 2007-07-14 15:40:20 nyloth Exp $ *}
 <div class="postbody-title">
 
-	{if $forumId > 0 and $comments_parentId > 0 and $thread_style != 'commentStyle_headers'}
+	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
+		and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )
+	}
 	<div class="actions">
 		{if	$forum_mode neq 'y' && (
 				$tiki_p_edit_comments eq 'y'
@@ -21,8 +23,9 @@
 		>{html_image file='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
 		{/if}
 
-		{if ( $forum_mode neq 'y' and $tiki_p_remove_comments
-			|| $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )
+		{if
+			( $forum_mode neq 'y' and $tiki_p_remove_comments eq 'y' )
+			|| ( $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )
 		}
 		<a title="{tr}delete{/tr}"
 			{if $first eq 'y'}
