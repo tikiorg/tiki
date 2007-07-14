@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.76 2007-07-11 22:14:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.77 2007-07-14 18:18:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -475,12 +475,14 @@ if ($_REQUEST["comments_threadId"] > 0) {
     // However, I re-enabled it *working*, instead of broken.  -rlpowell
     // check to see if QUOTE plugin or > should be used -Terence
     global $feature_forum_parse, $feature_use_quoteplugin;
-	if ($feature_forum_parse == 'y' && $feature_use_quoteplugin == 'y') {
+    if ( $comment_info["data"] != ''  ) {
+	if ( $feature_forum_parse == 'y' && $feature_use_quoteplugin == 'y' ) {
 		$comment_info["data"] = "\n{QUOTE()}" . $comment_info["data"] . '{QUOTE}';
 	} else {
-    $comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
-    $comment_info["data"] = "\n> " . $comment_info["data"];
+		$comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
+		$comment_info["data"] = "\n> " . $comment_info["data"];
 	}
+    }
     $smarty->assign( 'comment_data', $comment_info["data"] );
 
     if( ! array_key_exists( "title", $comment_info ) )
