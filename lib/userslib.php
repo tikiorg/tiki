@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.228 2007-06-29 12:37:17 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.229 2007-07-14 21:58:42 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1135,7 +1135,9 @@ function get_included_groups($group, $recur=true) {
     }
 
     function remove_user($user) {
-		global $cachelib;
+	global $cachelib;
+	if ( $user == 'admin' ) return false;
+
 	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
 	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
@@ -1155,6 +1157,8 @@ function get_included_groups($group, $recur=true) {
 
 	function change_login($from,$to) {
 		global $cachelib;
+		if ( $from == 'admin' ) return false;
+
 		$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($from));
 		if ($userId) {
 			$this->query("update `users_users` set `login`=? where `userId` = ?", array($to,(int)$userId));
@@ -1255,6 +1259,8 @@ function get_included_groups($group, $recur=true) {
 
     function remove_group($group) {
 	global $cachelib;
+	if ( $group == 'Anonymous' || $group == 'Registered' ) return false;
+
 	$query = "delete from `users_groups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or `includeGroup` = ?";
@@ -2115,7 +2121,9 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='') {
-		global $cachelib;  
+		global $cachelib;
+		if ( $oldgroup == 'Anonymous' || $oldgroup == 'Registered' ) return false;
+
 		if (!$this->group_exists($olgroup))
 			return $this->add_group($group, $desc, $home,$utracker,$gtracker);
 		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
