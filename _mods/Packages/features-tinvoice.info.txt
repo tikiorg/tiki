@@ -2,10 +2,10 @@ contributor:
 $Author: niclone $
 
 revision:
-$Revision: 1.23 $
+$Revision: 1.24 $
 
 lastmodif:
-$Date: 2007-07-14 14:11:49 $
+$Date: 2007-07-14 14:15:07 $
 
 requires:
 lib-fpdf_freefonts
@@ -18,6 +18,10 @@ features/tinvoice/tiki-tinvoice_edit.php tiki-tinvoice_edit.php
 features/tinvoice/tiki-tinvoice_prefs.php tiki-tinvoice_prefs.php
 features/tinvoice/tiki-tinvoice_list.php tiki-tinvoice_list.php
 features/tinvoice/tiki-tinvoice_chart.php tiki-tinvoice_chart.php
+features/tinvoice/tiki-tinvoice_banks.php tiki-tinvoice_banks.php
+features/tinvoice/tiki-tinvoice_bank_edit.php tiki-tinvoice_bank_edit.php
+features/tinvoice/tiki-tinvoice_transaction_edit.php tiki-tinvoice_transaction_edit.php
+features/tinvoice/tiki-tinvoice_transactions.php tiki-tinvoice_transactions.php
 features/tinvoice/templates/tiki-tinvoice_edit.tpl templates/tiki-tinvoice_edit.tpl
 features/tinvoice/templates/tiki-tinvoice_prefs.tpl templates/tiki-tinvoice_prefs.tpl
 features/tinvoice/templates/tiki-tinvoice_list.tpl templates/tiki-tinvoice_list.tpl
