@@ -16,5 +16,19 @@
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
+{section name=op loop=$transactions}
+<tr>
+<td class="{cycle advance=false}">{$transactions[op].date}</td>
+<td class="{cycle advance=false}">{$transactions[op].bankId}</td>
+<td class="{cycle advance=false}">{$transactions[op].label}</td>
+<td class="{cycle advance=false}">{$transactions[op].debit}</td>
+<td class="{cycle advance=false}">{$transactions[op].credit}</td>
+<td class="{cycle advance=false}">{$transactions[op].status}</td>
+<td class="{cycle advance=false}"></td>
+<td><a href="tiki-tinvoice_transaction_edit.php?tId={$transactions[op].id}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
+<a href="tiki-tinvoice_transaction_edit.php?drop={$transactions[op].id}" style="margin-left:20px;"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+</td>
+</tr>
+{/section}
 </table>
 

@@ -70,16 +70,42 @@ class TinvoiceLib extends TikiLib {
 	$query = "select * from `tiki_tinvoice_banks` where `userId`=?";
 	$result = $this->query($query, array((int)$userId));
 	while ($res = $result->fetchRow()) {	    
-		$ret[]=new Tinvoice($this, $res);
+		$ret[]=$res;
 	}
 	return $ret;
+    }
+    /*public*/ function get_bank($id) {
+	$query = "select * from `tiki_tinvoice_banks` where `id`=?";
+	$result = $this->query($query, array((int)$id));
+	if ($res = $result->fetchRow()) {
+		$ret=$res;
+	}
+	return $ret;
+    }
+    /*public*/ function get_transaction($id) {
+	$query = "select * from `tiki_tinvoice_bank_transactions` where `id`=?";
+	$result = $this->query($query, array((int)$id));
+	if ($res = $result->fetchRow()) {
+		$ret=$res;
+	}
+	return $ret;
+    }
+    /*public*/ function drop_bank($id) {
+	$query = "delete from `tiki_tinvoice_banks` where `id`=?";
+	$result = $this->query($query, array((int)$id));
+	return $result;
+    }
+    /*public*/ function drop_transaction($id) {
+	$query = "delete from `tiki_tinvoice_bank_transactions` where `id`=?";
+	$result = $this->query($query, array((int)$id));
+	return $result;
     }
     /*public*/ function list_transactions($userId) {
 
 	$query = "select * from `tiki_tinvoice_bank_transactions` where `userId`=?";
 	$result = $this->query($query, array((int)$userId));
 	while ($res = $result->fetchRow()) {	    
-		$ret[]=new Tinvoice($this, $res);
+		$ret[]=$res;
 	}
 	return $ret;
     }
@@ -90,7 +116,7 @@ class TinvoiceLib extends TikiLib {
 		$query ="INSERT into `tiki_tinvoice_banks` (`userId`, `name`, `bank`, `account_nb`, `rib`, `swift`) VALUES (?, ?, ?, ?, ?, ?)";	
 		$result = $this->query($query, array((int)$userId,
 							$data["name"],
-							$date["bank"],
+							$data["bank"],
 							$data["account_nb"],
 							$data["rib"],
 							$data["swift"]));
@@ -99,7 +125,7 @@ class TinvoiceLib extends TikiLib {
 		// update bank account
 		$query="UPDATE `tiki_tinvoice_banks` SET `name`=? , `bank`=? , `account_nb`=?, `rib`=?, `swift`=? WHERE `userId`=? AND `id`=?";
 		$result = $this->query($query, array($data["name"],
-							$date["bank"],
+							$data["bank"],
 							$data["account_nb"],
 							$data["rib"],
 							$data["swift"],
@@ -108,6 +134,36 @@ class TinvoiceLib extends TikiLib {
 
 	}
 	return $bankId;
+    }
+    /*public*/ function update_transaction($userId, $tId, $data) {
+
+	if (!$tId) {
+		// add new transaction
+		$query ="INSERT into `tiki_tinvoice_bank_transactions` (`userId`, `bankId`, `date`, `operationNb`, `label`, `debit`, `credit`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";	
+		$result = $this->query($query, array((int)$userId,
+							(int)$data["bankId"],
+							$data["date"],
+							$data["operation_nb"],
+							$data["label"],
+							$data["debit"],
+							$data["credit"],
+							$data["status"]));
+		$tId=$this->getOne("SELECT `id` from `tiki_tinvoice_bank_transactions` where `userId`=? and `operation_nb`=?",array((int)userId,$data["operation_nb"]));
+	} else {
+		// update transaction
+		$query="UPDATE `tiki_tinvoice_bank_transactions` SET `bankId`=? , `date`=? , `operation_nb`=?, `label`=?, `debit`=? , `credit`=? , `status`=? WHERE `userId`=? AND `id`=?";
+		$result = $this->query($query, array($data["bankId"],
+							$data["date"],
+							$data["operation_nb"],
+							$data["label"],
+							$data["debit"],
+							$data["credit"],
+							$data["status"],
+							(int)$userId,
+							(int)$tId));
+
+	}
+	return $tId;
     }
     /*public*/ function get_period_dates($todate, $graphPeriod ) {
     	$period=array();

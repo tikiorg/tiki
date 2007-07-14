@@ -26,8 +26,10 @@ $tinvoicelib=new TinvoiceLib($dbTiki);
 $userId=$tikilib->get_user_id($user);
 $transactions=$tinvoicelib->list_transactions($userId);
 $smarty->assign("transactions",$transactions);
+$banks=$tinvoicelib->list_banks($userId);
+$smarty->assign("banks",$banks);
 
-var_dump($transactions);
+
 
 
 

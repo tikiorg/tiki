@@ -14,5 +14,15 @@
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
+{section name=b loop=$banks}
+<tr>
+<td class="{cycle advance=false}">{$banks[b].name}</td>
+<td class="{cycle advance=false}">{$banks[b].bank}</td>
+<td class="{cycle advance=false}">{$banks[b].account_nb}</td>
+<td><a href="tiki-tinvoice_bank_edit.php?bankId={$banks[b].id}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
+<a href="tiki-tinvoice_bank_edit.php?drop={$banks[b].id}" style="margin-left:20px;"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+</td>
+</tr>
+{/section}
 </table>
 

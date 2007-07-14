@@ -27,7 +27,6 @@ $userId=$tikilib->get_user_id($user);
 $banks=$tinvoicelib->list_banks($userId);
 $smarty->assign("banks",$banks);
 
-var_dump($banks);
 // Display the template
 $smarty->assign('mid', 'tiki-tinvoice_banks.tpl');
 $smarty->display("tiki.tpl");

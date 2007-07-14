@@ -22,7 +22,33 @@ if ($tiki_p_tinvoice_edit != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
+$tinvoicelib=new TinvoiceLib($dbTiki);
+$userId=$tikilib->get_user_id($user);
+if ($_REQUEST["drop"]) {
+	$tinvoicelib->drop_bank($_REQUEST["drop"]);
+	header("Location: tiki-tinvoice_transactions.php");
+}
+if ($_REQUEST["save"] && $_REQUEST["date"]) {
+	$data=array();
+	$data["bankId"]=$_REQUEST["bankId"];
+	$data["date"]=$_REQUEST["date"];
+	$data["transaction_nb"]=$_REQUEST["operation_nb"];
+	$data["label"]=$_REQUEST["label"];
+	$data["debit"]=$_REQUEST["debit"];
+	$data["credit"]=$_REQUEST["credit"];
+	$data["status"]=$_REQUEST["status"];
+	$tId=$tinvoicelib->update_transaction($userId,$_REQUEST["tId"],$data);
+	$smarty->assign("tId",$tId);
+	header("Location: tiki-tinvoice_transactions.php");
+}
+// get banks accounts
+$banks=$tinvoicelib->list_banks($userId, $_REQUEST["bankId"]);
+$smarty->assign("banks",$banks);
+if ($_REQUEST["tId"]) {
+	$transaction=$tinvoicelib->get_transaction($_REQUEST["tId"]);
+	$smarty->assign("transaction",$transaction);
+	var_dump($transaction);
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-tinvoice_transaction_edit.tpl');
