@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.72 2007-05-17 14:11:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.73 2007-07-14 21:58:42 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,7 +162,7 @@ if (isset($_REQUEST["newuser"])) {
 		}
 	}
 } elseif (isset($_REQUEST["action"])) {
-	if ($_REQUEST["action"] == 'delete') {
+	if ($_REQUEST["action"] == 'delete' && $_REQUEST["user"] != 'admin') {
 		$area = 'deluser';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -191,7 +191,7 @@ if (isset($_REQUEST["newuser"])) {
 		$area = 'batchdeluser';
 		if ($feature_ticketlib2 == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			foreach ($_REQUEST["checked"] as $deleteuser) {
+			foreach ($_REQUEST["checked"] as $deleteuser) if ( $deleteuser != 'admin' ) {
 				$userlib->remove_user($deleteuser);
 				if ($_REQUEST['submit_mult'] == 'remove_users_with_page')
 					$tikilib->remove_all_versions($feature_wiki_userpage_prefix.$deleteuser);
@@ -364,7 +364,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
 		//var_dump($_POST);die;
 		if ($_POST['name']) {
-			if ($userinfo['login'] != $_POST['name']) {
+			if ( $userinfo['login'] != $_POST['name'] && $userinfo['login'] != 'admin' ) {
 				if ($userlib->user_exists($_POST['name'])) {
 					$smarty->assign('msg', tra("User already exists"));
 			  	$smarty->display("error.tpl");

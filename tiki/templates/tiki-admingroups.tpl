@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.73 2007-06-16 16:02:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.74 2007-07-14 21:58:42 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -91,7 +91,7 @@ class="prevnext">{tr}All{/tr}</a>
 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}permissions{/tr}"><img border="0" alt="{tr}permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /> {$users[user].permcant}</a>
 </td>
 <td style="width: 20px;">
-{if $users[user].groupName ne 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
+{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
 </td>
 </tr>
@@ -130,7 +130,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cr
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
-<tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
+<tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
 <tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}</i></td><td>
 {if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
