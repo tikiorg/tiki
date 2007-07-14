@@ -39,7 +39,7 @@
 	<tr><td class="formcolor" colspan="2"><span class="hightlight">{$msg}</span></td></tr>
 {/if}
   <tr>
-    <td class="formcolor">{tr}Name:{/tr}</td>
+    <td class="formcolor">{tr}Name{/tr}:</td>
     <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
   </tr>
   <tr>
