@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.92 2007-07-09 21:33:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.93 2007-07-14 17:29:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -329,20 +329,13 @@ if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
     $smarty->assign('all_forums', $all_forums['data']);
 }
 
-// As far as I can tell, this is never used.
-// -rlpowell 10 Oct 2006
-// if ($tiki_p_admin_forum == 'y') {
-//     $topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200,
-// 	    "commentDate_desc");
-// 
-//     $smarty->assign_by_ref('topics', $topics);
-// }
+// Generate the list of topics, used in comments.tpl for the moderator actions (e.g. move a comment to another topic)
+if ( $tiki_p_admin_forum == 'y' ) {
+	$topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200, 'commentDate_desc');
+	$smarty->assign_by_ref('topics', $topics);
+}
 
 $smarty->assign('unread', 0);
-
-//$end_time = microtime(true);
-
-//print "TIME6: ".($end_time - $start_time)."\n";
 
 if ($user && $feature_messages == 'y' && $tiki_p_messages == 'y') {
     $unread = $tikilib->user_unread_messages($user);
