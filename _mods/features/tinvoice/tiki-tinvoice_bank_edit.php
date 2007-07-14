@@ -42,7 +42,6 @@ if ($_REQUEST["save"] && $_REQUEST["bankName"]) {
 if ($_REQUEST["bankId"]) {
 	$bank=$tinvoicelib->get_bank($_REQUEST["bankId"]);
 	$smarty->assign("bank",$bank);
-	var_dump($bank);
 }
 
 

@@ -12,15 +12,18 @@
 <hr />
 <form method='POST'action="" >
 <input type="hidden" name="userId" value="{$transaction.userId}" />
+<input type="hidden" name="status" value="{$transaction.status}" />
  <span style="width: 130px; display: block; float: left" >{tr}Bank Account{/tr}:</span><select  style="width: 200px" name="bankId" >
 	{section name=b loop=$banks}
 	<option value="{$banks[b].id}">{$banks[b].name}  ({$banks[b].bank} - {$banks[b].account_nb})</option>
 	{/section}
 </select>
  <br />
- <span style="width: 130px; display: block; float: left">{tr}Date{/tr}:</span><input type="texte" style="width: 200px" name="bank" value="{$transaction.date}" /><br />
+
+
+ <span style="width: 130px; display: block; float: left">{tr}Date{/tr}:</span>{if $feature_jscalendar ne 'y'}<input type='text' name='date' value='{$transaction.date|escape}' />{else}<input type='text' id="id_start" name='date' style="width: 70px"  value='{$transaction.date|escape}' />{jscalendar id="start" date=$transaction.date fieldname="date" ifFormat="%Y-%m-%d" align="Bc" showtime='n'}{/if}<br />
  <span style="width: 130px; display: block; float: left">{tr}transaction nb{/tr}:</span><input type="texte" style="width: 200px" name="operationNb" value="{$transaction.operationNb}" /><br />
- <span style="width: 130px; display: block; float: left">{tr}label{/tr}:</span><input type="texte" style="width: 200px" name="bankRib" value="{$transaction.label}" /><br />
+ <span style="width: 130px; display: block; float: left">{tr}label{/tr}:</span><input type="texte" style="width: 200px" name="label" value="{$transaction.label}" /><br />
  <span style="width: 130px; display: block; float: left">{tr}debit{/tr}:</span><input type="texte" style="width: 200px" name="debit" value="{$transaction.debit}" /><br />
  <span style="width: 130px; display: block; float: left">{tr}credit{/tr}:</span><input type="texte" style="width: 200px" name="credit" value="{$transaction.credit}" /><br />
 	<input type="submit" name="save" value="{tr}save{/tr}" />

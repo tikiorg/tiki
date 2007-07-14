@@ -148,10 +148,10 @@ class TinvoiceLib extends TikiLib {
 							$data["debit"],
 							$data["credit"],
 							$data["status"]));
-		$tId=$this->getOne("SELECT `id` from `tiki_tinvoice_bank_transactions` where `userId`=? and `operation_nb`=?",array((int)userId,$data["operation_nb"]));
+		$tId=$this->getOne("SELECT `id` from `tiki_tinvoice_bank_transactions` where `userId`=? and `operationNb`=?",array((int)userId,$data["operation_nb"]));
 	} else {
 		// update transaction
-		$query="UPDATE `tiki_tinvoice_bank_transactions` SET `bankId`=? , `date`=? , `operation_nb`=?, `label`=?, `debit`=? , `credit`=? , `status`=? WHERE `userId`=? AND `id`=?";
+		$query="UPDATE `tiki_tinvoice_bank_transactions` SET `bankId`=? , `date`=? , `operationNb`=?, `label`=?, `debit`=? , `credit`=? , `status`=? WHERE `userId`=? AND `id`=?";
 		$result = $this->query($query, array($data["bankId"],
 							$data["date"],
 							$data["operation_nb"],
