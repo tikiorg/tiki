@@ -1,0 +1,38 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-07-14 09:22:48 $
+
+files:
+features/sample:multicam.php multicam.php
+features/templates/multicam.tpl templates/multicam.tpl
+
+author:
+mose
+
+licence:
+Public Domain
+
+Description:
+Page to display multiple webcam from a wiki page listing them. Just point browser to <a href="multicam.php">multicam.php</a> after install.
+
+Changelog:
+1.1 initial package
+
+configuration help:
+In a wiki page, create a table with 4 columns, with following fields: 
+username, url of webcam image, webcam type, location.
+For example :
+: || mose | http://mose.fr/cam.jpg | Logitech pro 4000 (046d/08b2) + pwc | Coutances - FR ||
+
+configuration:
+Webcams Wiki Page name,webcampage,WebCams
+
+sql-install:
+
+sql-remove:
+
