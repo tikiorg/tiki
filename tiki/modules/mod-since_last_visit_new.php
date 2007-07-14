@@ -393,6 +393,26 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["trackers"]["count"] = $count;
   }
 
+  if ($tikilib->get_preference('feature_calendar') == 'y') {    
+    $ret["items"]["calendar"]["label"] = tra("new calendar events");
+    $ret["items"]["calendar"]["cname"] = "slvn_calendar_menu";
+
+    $query = "select `calitemId`, `calendarId`, `created`, `lastmodif`, `name` from `tiki_calendar_items` where `lastmodif`>? order by `lastmodif` desc";
+    $result = $tikilib->query($query, array((int)$last));
+
+    $count = 0;
+    while ($res = $result->fetchRow())
+    {
+        if ($userlib->user_has_perm_on_object($user, $res['calendarId'], 'calendar', 'tiki_p_view_calendar')) {
+	   $ret["items"]["calendar"]["list"][$count]["href"]  = 'tiki-calendar_edit_item.php?viewcalitemId='.$res['calitemId'];
+           $ret["items"]["calendar"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastmodif"]);
+	   $ret["items"]["calendar"]["list"][$count]["label"] = $res['name'];
+           $count++;
+        }
+    }
+    $ret["items"]["calendar"]["count"] = $count;
+  }
+
   return $ret;
 
 }

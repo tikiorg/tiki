@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.12 2007-02-18 11:21:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.13 2007-07-14 20:33:35 nyloth Exp $ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Since your last visit{/tr}"}{/if}
@@ -10,6 +10,7 @@
 {$nvi_info.files} {tr}new files{/tr}<br />
 {$nvi_info.comments} {tr}new comments{/tr}<br />
 {$nvi_info.trackers} {tr}new tracker items{/tr}<br />
+{$nvi_info.calendar} {tr}new calendar events{/tr}<br />
 {$nvi_info.users} {tr}new users{/tr}<br />
 {/tikimodule}
 {/if}
