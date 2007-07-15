@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.22 2007-05-04 16:35:52 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.23 2007-07-15 21:40:23 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -15,6 +15,7 @@
 {include file=tiki-mytiki_bar.tpl}
 <br />
 
+{capture name=my}
 {if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
   <div class="cbox">
@@ -143,3 +144,6 @@
       {include file="tiki-g-my_instances.tpl"}
   </div>
 {/if}
+{/capture}
+{$smarty.capture.my}
+{if $smarty.capture.my|strip:'' eq ''}{tr}To display the objects you participate:{/tr} <a href="tiki-user_preferences.php?tab3#MyTiki">{tr}My Tiki{/tr}</a>{/if}

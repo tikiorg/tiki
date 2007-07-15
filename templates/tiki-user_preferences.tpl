@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.100 2007-07-14 12:33:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.101 2007-07-15 21:40:23 sylvieg Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -373,7 +373,7 @@
 </div>
 
   {/if}
-
+<a name="MyTiki"></a>
   <div class="cbox">
   <div class="cbox-title"><a href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a></div>
   <div class="cbox-data">

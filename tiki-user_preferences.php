@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.94 2007-06-02 12:08:11 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.95 2007-07-15 21:40:23 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,7 +82,11 @@ $smarty->assign('url_visit', $tikilib->httpPrefix(). $foo2);
 $smarty->assign('show_mouseover_user_info',
 		$userlib->get_user_preference($user, 'show_mouseover_user_info',$feature_community_mouseover));
 
-$cookietab = 1;
+if (isset($_REQUEST['tab'])) {
+	$cookietab = $_REQUEST['tab'];
+}	else {
+	$cookietab = 1;
+ }
 
 if (isset($_REQUEST["prefs"])) {
 	check_ticket('user-prefs');
