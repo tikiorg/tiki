@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.454 2007-07-13 08:54:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.455 2007-07-15 12:43:38 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -667,6 +667,7 @@ $pref['userbreadCrumb'] = 4;
 $pref['user_assigned_modules'] = 'n';
 $pref['user_flip_modules'] = 'module';
 $pref['user_show_realnames'] = 'n';
+$pref['feature_mytiki'] = 'y';
 $pref['feature_userPreferences'] = 'n';
 $pref['feature_userVersions'] = 'y';
 $pref['feature_user_bookmarks'] = 'n';

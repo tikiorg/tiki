@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.104 2007-06-22 20:52:13 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.105 2007-07-15 12:43:39 nyloth Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -351,6 +351,10 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
   <tr>
     <td class="heading" colspan="5"
             align="center">{tr}User Features{/tr}</td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="feature_mytiki" {if $feature_mytiki eq 'y'}checked="checked"{/if}/></td>
+    <td colspan="4" class="form"> {tr}Display 'MyTiki' in the application menu{/tr} </td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_userPreferences"
