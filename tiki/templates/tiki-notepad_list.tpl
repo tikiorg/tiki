@@ -33,7 +33,7 @@
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 <td style="text-align:right;" class="heading" >{tr}Size{/tr}</td>
-<td style="text-align:right;" class="heading" >&nbsp;</td>
+<td style="text-align:center;" class="heading" >{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -46,9 +46,10 @@
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].size|kbsize}</td>
-<td style="text-align:right;"  class="{cycle}">
+<td style="text-align:center;"  class="{cycle}">
 <a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link"><img src="pics/icons/magnifier.png" width="16" height="16" border="0" alt="{tr}view{/tr}" /></a>
-<a style="margin-left:10px;" href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}save{/tr}" /></a>
+<a href="tiki-notepad_read.php?noteId={$channels[user].noteId}" class="link"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
+<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}save{/tr}" /></a>
 </td>
 </tr>
 {sectionelse}
