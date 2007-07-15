@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/confirm.tpl,v 1.9 2007-02-17 10:10:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/confirm.tpl,v 1.10 2007-07-15 20:35:00 nyloth Exp $ *}
 <div class="cbox">
 {if !empty($confirmation_text)}<div class="cbox-title">{$confirmation_text}</div>{/if}
 <br />
@@ -6,7 +6,13 @@
 <form action="{$confirmaction}" method="post">
 {if $ticket}<input value="{$ticket}" name="ticket" type="hidden" />{/if}
 {foreach key=k item=i from=$post}
+	{if is_array($i)}
+		{foreach from=$i item=i2}
+<input type="hidden" name="{$k}[]" value="{$i2|escape}" />
+		{/foreach}
+	{else}
 <input type="hidden" name="{$k}" value="{$i|escape}" />
+	{/if}
 {/foreach}
 <input type="submit" name="daconfirm" value="{tr}Click here to confirm your action{/tr}" />
 <span class="button2"><a href="javascript:history.back()" class="linkbut">{tr}Go back{/tr}</a></span>
