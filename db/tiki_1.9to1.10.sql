@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.177 2007-07-12 20:10:00 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.178 2007-07-15 12:43:39 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -989,3 +989,21 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #sylvieg 2007-01-12
 ALTER TABLE tiki_actionlog_params ADD INDEX nameValue (name, value(200));
+
+#nyloth 2007-07-15
+ALTER TABLE tiki_menu_options ADD UNIQUE KEY uniq_menu(menuId,name,url,position,section,perm);
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','','');
+UPDATE tiki_menu_options SET section = 'feature_mytiki' WHERE menuId=42 AND url='tiki-my_tiki.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_userPreferences' WHERE menuId=42 AND url='tiki-user_preferences.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_messages' WHERE menuId=42 AND url='messu-mailbox.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_tasks' WHERE menuId=42 AND url='tiki-user_tasks.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_user_bookmarks' WHERE menuId=42 AND url='tiki-user_bookmarks.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,user_assigned_modules' WHERE menuId=42 AND url='tiki-user_assigned_modules.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_newsreader' WHERE menuId=42 AND url='tiki-newsreader_servers.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_webmail' WHERE menuId=42 AND url='tiki-webmail.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_contacts' WHERE menuId=42 AND url='tiki-contacts.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_notepad' WHERE menuId=42 AND url='tiki-notepad_list.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_userfiles' WHERE menuId=42 AND url='tiki-userfiles.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_usermenu' WHERE menuId=42 AND url='tiki-usermenu.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_minical' WHERE menuId=42 AND url='tiki-minical.php';
+UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_user_watches' WHERE menuId=42 AND url='tiki-user_watches.php';
