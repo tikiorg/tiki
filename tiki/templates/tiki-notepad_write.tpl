@@ -6,6 +6,7 @@
 <br /><br />
 
 <form action="tiki-notepad_write.php" method="post">
+<input type="hidden" name="parse_mode" value="{$info.parse_mode|escape}" />
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
