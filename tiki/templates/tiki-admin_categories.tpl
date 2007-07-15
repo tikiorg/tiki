@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.47 2007-04-02 17:21:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.48 2007-07-15 15:33:55 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -123,15 +123,15 @@
       
       <table class="normal">
       <tr>
+        <td class="heading">&nbsp;</td>
         <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#objects">{tr}name{/tr}</a></td>
         <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}type{/tr}</a></td>
-        <td class="heading">{tr}delete{/tr}</td>
       </tr>
       {section name=ix loop=$objects}
       <tr>
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}remove from this category{/tr}"><img alt="{tr}remove from this category{/tr}" src="pics/icons/link_delete.png" border="0" width="16" height="16" /></a></td>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
-        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="pics/icons/cross.png" border="0" width="16" height="16" /></a></td>
       </tr>
       {/section}
       </table>
