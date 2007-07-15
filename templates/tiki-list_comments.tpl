@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.1 2005-10-14 13:50:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.2 2007-07-15 11:22:14 fr_rodo Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -13,7 +13,7 @@
 <tr><td class="findtable" colspan="2">
 {*<select name="types[]" multiple="multiple" size="5">*}
 {foreach key=key item=selected from=$list_types}
-<input type="checkbox"  name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if}>{$key|escape}&nbsp;&nbsp;
+<input type="checkbox"  name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if}>{tr}{$key|escape}{/tr}&nbsp;&nbsp;
 {*<option value="{$key|escape}" {if $selected eq 'y'}selected="selected"{/if}>{$key|escape}</option>*}
 {/foreach}
 {*</select>*}
