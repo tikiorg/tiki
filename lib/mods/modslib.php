@@ -462,33 +462,27 @@ class ModsLib {
 	}
 
 	function get_remote($url) {
+		global $tikilib;
 		$this->feedback_info("downloading '$url'...");
-		$fp = fopen($url, "r");
-		if ($fp === FALSE) {
+		$buffer = $tikilib->httprequest($url, $reqmethod = "GET");
+		if ( ! $buffer ) {
 			$this->feedback_error(sprintf(tra('Impossible to open %s : %s'), $url, 'n/a'));
 			return false;
 		}
-		$buffer='';
-		while(($buf = fread($fp, 1024)) !== '') {
-			if ($buf === FALSE) {
-				$this->feedback_error(sprintf(tra('Impossible to read from %s'), $url));
-				return FALSE;
-			}
-			$buffer.=$buf;
-		}
-		fclose($fp);
+
 		return $buffer;
 	}
 
 	function refresh_remote($remote,$local) {
 		$buffer = $this->get_remote($remote);
-		if ($buffer) {
-			$fl = fopen($local,'w');
-			fputs($fl,$buffer);
-			fclose($fl);
-		} else {
+		if ( ! $buffer || $buffer{0} != "'" ) {
+			$this->feedback_error(sprintf(tra('The content retrieved at %s is not a list of mods'), $remote, 'n/a'));
 			return false;
 		}
+		$fl = fopen($local,'w');
+		fputs($fl,$buffer);
+		fclose($fl);
+		return true;
 	}
 
 	function _publish($modpath,$public, $items,$add=true) {
