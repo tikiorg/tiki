@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.760 2007-07-14 20:33:34 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.761 2007-07-15 14:16:15 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -153,19 +153,19 @@ class TikiLib extends TikiDB {
     }
 
     /*shared*/
-    function replace_note($user, $noteId, $name, $data) {
+    function replace_note($user, $noteId, $name, $data, $parse_mode = null) {
 	$size = strlen($data);
 
 	if ($noteId) {
-	    $query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?  where `user`=? and `noteId`=?";
-	    $this->query($query,array($name,$data,(int)$size,(int)$this->now,$user,(int)$noteId));
-	    return $noteId;
+	    $query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?, `parse_mode` = ?  where `user`=? and `noteId`=?";
+	    $this->query($query,array($name,$data,(int)$size,(int)$this->now,$parse_mode,$user,(int)$noteId));
 	} else {
-	    $query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`) values(?,?,?,?,?,?,?)";
-	    $this->query($query,array($user,(int)$noteId,$name,$data,(int)$this->now,(int)$this->now,(int)$size));
+	    $query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`,`parse_mode`) values(?,?,?,?,?,?,?,?)";
+	    $this->query($query,array($user,(int)$noteId,$name,$data,(int)$this->now,(int)$this->now,(int)$size,$parse_mode));
 	    $noteId = $this->getOne( "select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$this->now));
-	    return $noteId;
 	}
+
+	return $noteId;
     }
 
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {

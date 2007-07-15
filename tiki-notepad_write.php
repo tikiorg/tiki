@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.14 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.15 2007-07-15 14:16:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,26 +34,23 @@ if (isset($_REQUEST["remove"])) {
 	$notepadlib->remove_note($user, $_REQUEST['remove']);
 }
 
+include 'tiki-parsemode_setup.php';
 if ($_REQUEST["noteId"]) {
 	$info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
-	if ($info['parse_mode'] == 'raw') {
+	if ( $info['parse_mode'] == 'raw' ) {
 		$info['parsed'] = nl2br(htmlspecialchars($info['data']));
-		$smarty->assign('wysiwyg','n');
-	} else {
-		include 'tiki-parsemode_setup.php';
-		$info['parsed'] = $tikilib->parse_data($info['data'],$is_html);
-	}
+		$smarty->assign('wysiwyg', 'n');
+	} else $info['parsed'] = $tikilib->parse_data($info['data'], $is_html);
 } else {
 	$info = array();
 	$info['name'] = '';
 	$info['data'] = '';
-	$info['parse_mode'] = 'raw';
-	$smarty->assign('wysiwyg','n');
+	$info['parse_mode'] = 'wiki';
 }
 
 if (isset($_REQUEST['save'])) {
 	check_ticket('notepad-write');
-	$notepadlib->replace_note($user, $_REQUEST["noteId"], $_REQUEST["name"], $_REQUEST["data"]);
+	$_REQUEST["noteId"] = $notepadlib->replace_note($user, $_REQUEST["noteId"], $_REQUEST["name"], $_REQUEST["data"], $_REQUEST["parse_mode"]);
 	header ('location: tiki-notepad_read.php?noteId='.$_REQUEST["noteId"]);
 	die;
 }
