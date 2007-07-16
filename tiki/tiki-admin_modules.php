@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.48 2007-06-04 15:55:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.49 2007-07-16 19:24:28 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,9 +69,9 @@ $smarty->assign('assign_selected','');
 $smarty->assign('assign_type','');
 $smarty->assign('assign_title','');
 
-if (isset($_REQUEST['edit_assign']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['edit_assign'])) {
 	check_ticket('admin-modules');
-	$info = $modlib->get_assigned_module($_REQUEST['edit_assign'], $_REQUEST['position'], $_REQUEST['ord']);
+	$info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
 	$grps = '';
 
 	if ($info["groups"]) {
@@ -82,18 +82,7 @@ if (isset($_REQUEST['edit_assign']) && isset($_REQUEST['position']) && isset($_R
 		}
 	}
 
-	if (!isset($info['rows']) || empty($info['rows'])) {
-		$info['rows'] = 0;
-	}
-
 	$smarty->assign('module_groups', $grps);
-	$smarty->assign_by_ref('assign_name', $info["name"]);
-	//$smarty->assign_by_ref('assign_title',$info["title"]);
-	$smarty->assign_by_ref('assign_position', $info["position"]);
-	$smarty->assign_by_ref('assign_cache', $info["cache_time"]);
-	$smarty->assign_by_ref('assign_rows', $info["rows"]);
-	$smarty->assign_by_ref('assign_params', $info["params"]);
-	$smarty->assign_by_ref('assign_type', $info["type"]);
 
 	if (isset($info["ord"])) {
 		$cosa = "" . $info["ord"];
@@ -101,37 +90,46 @@ if (isset($_REQUEST['edit_assign']) && isset($_REQUEST['position']) && isset($_R
 		$cosa = "";
 	}
 
+	$smarty->assign_by_ref('assign_name', $info["name"]);
+	//$smarty->assign_by_ref('assign_title',$info["title"]);
+	$smarty->assign_by_ref('assign_position', $info["position"]);
+	$smarty->assign_by_ref('assign_cache', $info["cache_time"]);
+	$smarty->assign_by_ref('assign_rows', $info["rows"]);
+	$smarty->assign_by_ref('assign_params', $info["params"]);
+	$smarty->assign_by_ref('assign_type', $info["type"]);
 	$smarty->assign_by_ref('assign_order', $cosa);
+	$smarty->assign_by_ref('info', $info);
 
 	if (!$info['name']) {
 	  $smarty->assign('assign_selected', $_REQUEST['edit_assign']);
 	}
 }
 
-if (isset($_REQUEST['unassign']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['unassign'])) {
 	check_ticket('admin-modules');
-	$modlib->unassign_module($_REQUEST['unassign'], $_REQUEST['position'], $_REQUEST['ord']);
-	$logslib->add_log('adminmodules','unassigned module '.$_REQUEST["unassign"]);
+	$modlib->unassign_module($_REQUEST['unassign']);
+	$info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
+	$logslib->add_log('adminmodules','unassigned module '.$info['name']);
 }
 
-if (isset($_REQUEST['modup']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['modup'])) {
 	check_ticket('admin-modules');
-	$modlib->module_up($_REQUEST['modup'], $_REQUEST['position'], $_REQUEST['ord']);
+	$modlib->module_up($_REQUEST['modup']);
 }
 
-if (isset($_REQUEST['moddown']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['moddown'])) {
 	check_ticket('admin-modules');
-	$modlib->module_down($_REQUEST['moddown'], $_REQUEST['position'], $_REQUEST['ord']);
+	$modlib->module_down($_REQUEST['moddown']);
 }
 
-if (isset($_REQUEST['modleft']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['modleft'])) {
 	check_ticket('admin-modules');
-	$modlib->module_left($_REQUEST['modleft'], $_REQUEST['position'], $_REQUEST['ord']);
+	$modlib->module_left($_REQUEST['modleft']);
 }
 
-if (isset($_REQUEST['modright']) && isset($_REQUEST['position']) && isset($_REQUEST['ord'])) {
+if (!empty($_REQUEST['modright'])) {
 	check_ticket('admin-modules');
-	$modlib->module_right($_REQUEST['modright'], $_REQUEST['position'], $_REQUEST['ord']);
+	$modlib->module_right($_REQUEST['modright']);
 }
 
 /* Edit or delete a user module */
@@ -235,7 +233,7 @@ if (isset($_REQUEST["assign"])) {
 	}
 
 	$smarty->assign('module_groups', $grps);
-	$modlib->assign_module($_REQUEST["assign_name"],
+	$modlib->assign_module(isset($_REQUEST['moduleId'])?$_REQUEST['moduleId']:0, $_REQUEST["assign_name"],
 		'', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $_REQUEST["assign_rows"],
 		serialize($module_groups), $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
 	$logslib->add_log('adminmodules','assigned module '.$_REQUEST["assign_name"]);

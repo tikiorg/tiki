@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-15 12:43:38 $
-# $Author: nyloth $
+# $Date: 2007-07-16 19:24:28 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2346,6 +2346,7 @@ CREATE TABLE tiki_minical_topics (
 
 DROP TABLE IF EXISTS tiki_modules;
 CREATE TABLE tiki_modules (
+  moduleId int(8) NOT NULL auto_increment,
   name varchar(200) NOT NULL default '',
   position char(1) default NULL,
   ord int(4) default NULL,
@@ -2356,7 +2357,8 @@ CREATE TABLE tiki_modules (
   params varchar(255) default NULL,
   groups text,
   PRIMARY KEY  (name, position, ord),
-  KEY positionType (position, type)
+  KEY positionType (position, type),
+  KEY moduleId (moduleId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');

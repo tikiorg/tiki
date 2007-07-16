@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.761 2007-07-15 14:16:15 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.762 2007-07-16 19:24:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2791,7 +2791,7 @@ function add_pageview() {
 	if ($displayed != 'n') {
 	    $filter = " and (`type` is null or `type` !='h')";
 	}
-	$query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` ";
+	$query = "select * from `tiki_modules` ";
 	$query.= " where `position`= ? $filter order by ".$this->convert_sortmode("ord_asc");
 
 	$result = $this->query($query, array($position));
