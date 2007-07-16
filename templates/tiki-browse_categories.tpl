@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.23 2007-03-21 19:21:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.24 2007-07-16 10:42:18 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -105,7 +105,7 @@
 <tr class="{cycle}" >
 {if $deep eq 'on'}<td>{$objects[ix].categName|tr_if}</td>{/if}
 <td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
-<td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
+<td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name|default:'&nbsp;'}</a></td>
 <td>{$objects[ix].description}&nbsp;</td>
 </tr>
 {/section}
