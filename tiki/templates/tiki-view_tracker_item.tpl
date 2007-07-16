@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.141 2007-07-10 21:59:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.142 2007-07-16 14:06:22 gillesm Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -478,11 +478,18 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="file" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
 {else}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
-{if $cur_field.value ne ''}
-{include file=multiplayer.tpl url=$cur_field.value w=400 h=100 video=$ModeVideo}
-{/if}
-{/if}
 
+
+	{assign var='Height' value="$MultimediaDefaultHeight"}
+	{assign var='Lenght' value="$MultimediaDefaultLength"}
+
+	{if $cur_field.value ne ''}	
+	{if  $cur_field.options_array[1] ne '' } { $Lenght=$cur_field.options_array[1] }{/if}
+	{if  $cur_field.options_array[2] ne '' } { $Height=$cur_field.options_array[2] }{/if}
+	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$VideoHeight}{/if}
+	{include file=multiplayer.tpl url=$cur_field.value w=$Lenght h=$Height video=$ModeVideo}
+{/if}
+{/if}
 {elseif $cur_field.type eq 'U'}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
 

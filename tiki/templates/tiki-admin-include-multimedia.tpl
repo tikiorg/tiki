@@ -13,7 +13,7 @@
     {help crumb=$crumbs[$crumb]}
   </div>
 
-{include file=multiplayer.tpl url="" w=200 h=100 video='n'}
+{include file=multiplayer.tpl url="" w=$MultimediaDefaultLength h=$MultimediaDefaultHeight video='n'}
 	
       <form action="tiki-admin.php?page=multimedia" method="post">
         <table class="admin">
@@ -59,6 +59,11 @@
    	<td class="form">{tr}Alert Message Color{/tr}:</td><td class="form"><input type="text" name="AlertMesg" value="{$AlertMesg|escape}" size=7/><span style="height:8px;width:30px;background-color:{$AlertMesg};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 	</tr>
 	
+	<tr>
+   	<td class="form">{tr}Flash Lenght{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultLength" value="{$MultimediaDefaultLength|escape}" size=7/></td>
+	<td class="form">{tr}Flash Heigth{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultHeight" value="{$MultimediaDefaultHeight|escape}" size=7/></td>
+	</tr>
+	<tr>
 
 	<tr>
    	<td class="form">{tr}Video Lenght{/tr}:</td><td class="form"><input type="text" name="VideoLength" value="{$VideoLength|escape}" size=7/></td>
