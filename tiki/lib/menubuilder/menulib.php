@@ -106,42 +106,35 @@ class MenuLib extends TikiLib {
 	}
 
 	function prev_pos ($optionId) {
-		$query="select position,menuId from  tiki_menu_options where  optionId =?";
-		$result = $this->query($query,array($optionId));
-        	$res = $result->fetchRow() ;
-		$position1=$res['position'];
-		$menuId=$res['menuId'];
-		$query="select position from tiki_menu_options where menuId =?";
-		$max=0;
-		$result = $this->query($query,array($menuId));
-		while ($res=$result->fetchRow())
-			{
-			$max=( $res['position'] > $max and $res['position'] < $position1)?$res['position']:$max ;
-			}
+		$query="select `position`, `menuId` from  `tiki_menu_options` where  `optionId` =?";
+		$result = $this->query($query, array($optionId));
+		if (!($res = $result->fetchRow()))
+			return;
+		$position1 = $res['position'];
+		$menuId = $res['menuId'];
+		$query = "select `position` from `tiki_menu_options` where `menuId` =? and `position` < ? order by `position` desc";
+		if (!($position = $this->getOne($query, array($menuId, $position1))))
+			return;
 		$query = "update `tiki_menu_options` set `position`=? where `position`=? and `menuId`=? ";
-		$result=$this->query($query,array($position1,$max,$menuId));
+		$result=$this->query($query,array($position1, $position, $menuId));
 		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
-		$result=$this->query($query,array($max,$optionId,));
-
+		$result=$this->query($query,array($position, $optionId,));
 	}
 
 	function next_pos ($optionId) {
-		$query="select position,menuId from  tiki_menu_options where  optionId =?";
-		$result = $this->query($query,array($optionId));
-        	$res = $result->fetchRow() ;
-		$position1=$res['position'];
-		$menuId=$res['menuId'];
-		$query="select position from tiki_menu_options where menuId =?";
-		$min=65935;
-		$result = $this->query($query,array($menuId));
-		while ($res=$result->fetchRow())
-			{
-			$min=( $res['position'] < $min and $res['position'] > $position1)?$res['position']:$min ;
-			}
+		$query = "select `position`, `menuId` from  `tiki_menu_options` where  `optionId` =?";
+		$result = $this->query($query, array($optionId));
+		if (!($res = $result->fetchRow()))
+			return;
+		$position1 = $res['position'];
+		$menuId = $res['menuId'];
+		$query = "select `position` from `tiki_menu_options` where `menuId` =? and `position` > ? order by `position` asc";
+		if (!$position = $this->getOne($query, array($menuId, $position1)))
+			return;
 		$query = "update `tiki_menu_options` set `position`=? where `position`=? and `menuId`=? ";
-		$result=$this->query($query,array($position1,$min,$menuId));
+		$result = $this->query($query, array($position1, $position, $menuId));
 		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
-		$result=$this->query($query,array($min,$optionId,));
+		$result = $this->query($query, array($position, $optionId));
 	}
 	/*
          * gets the result of list_menu_options and create the field "type_description"
