@@ -16,6 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     $pref_toggles_Colors = array('ProgressBarPlay','ProgressBarLoad','ProgressBarButton','ProgressBar','VolumeOn','VolumeOff','VolumeButton',
 	'Button','ButtonPressed','ButtonOver','ButtonInfo','ButtonInfoPressed','ButtonInfoOver','ButtonInfoText','ID3','PlayTime',
 	'TotalTime','PanelDisplay','AlertMesg');
+    $pref_toggles_Values_external_flash = array('MultimediaDefaultLength','MultimediaDefaultHeight');
     $pref_toggles_Values = array('PreloadDelay','VideoHeight','VideoLength','MaxPlay');
     $pref_toggles_Text = array('URLAppend','LimitedMsg');
     $pref_toggles_System = array('MultimediaGalerie');	
@@ -45,6 +46,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
       if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
 }
     fwrite ( $xmlmm,'	</Value>'."\n");
+
+    foreach ($pref_toggles_Values_external_flash as $toggle) {
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
+      $smarty->assign($toggle, $_REQUEST[$toggle]);
+}
+
 
     fwrite ( $xmlmm,'	<Text>'."\n");
 
