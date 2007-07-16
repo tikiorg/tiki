@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.51 2007-06-12 16:13:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.52 2007-07-16 22:18:56 sylvieg Exp $ *}
+{if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
@@ -126,3 +127,4 @@
       </form>
     {/if}
 {/tikimodule}
+{/if}
