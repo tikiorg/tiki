@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.213 2007-07-13 14:33:38 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.214 2007-07-16 12:08:21 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1351,27 +1351,39 @@ class TrackerLib extends TikiLib {
 				case 'M':
 				global $URLAppend;
 				if ( empty($f['options_array'][0]) 
-					||$f['options_array'][0] == '0' || $f['options_array'][0] == '2' ) {
-					//MP3 file in gallery expected 
+					||$f['options_array'][0] == '0' ) {
+					//MP3 link file in gallery expected 
 					  $file=$URLAppend.$f['value'];
 					  list($rest1,$idfilegal)=split('=',$file);
 					  global $filegallib ; include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
-					  if ( $filetype != "audio/x-mp3" ) {
-					$f['error'] = tra('field is not a link to mp3');
+					  if ( $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
+					$f['error'] = tra('field is not a link to mp3 in the gallery');
 					$erroneous_values[] = $f; 				
 					  }
 					}
-				elseif ($f['options_array'][0] == '1' || $f['options_array'][0] == '2' ) {
-					// FLV file in gallery expected 
+				elseif ($f['options_array'][0] == '1' ) {
+					// FLV link in gallery expected 
 					  $file=$URLAppend.$f['value'] ;
 					  list($rest1,$idfilegal)=split('=',$file);
 					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
-					  if ( $filetype != "application/octet-stream" ) {
-				   	   $f['error'] = tra('field is not a link to FLV');
+					  if ( $filetype != "video/x-flv" ) {
+				   	   $f['error'] = tra('field is not a link to FLV in the gallery');
+					   $erroneous_values[] = $f; 				
+					  }
+					}
+				elseif ($f['options_array'][0] == '2' ) {
+					// FLV or MP3 link in gallery expected 
+					  $file=$URLAppend.$f['value'] ;
+					  list($rest1,$idfilegal)=split('=',$file);
+					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
+					  $info = $filegallib->get_file_info($idfilegal);
+					  $filetype = $info['filetype'];
+					  if ( $filetype != "video/x-flv" && $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
+				   	   $f['error'] = tra('field is not a link to FLV or MP3 in the gallery');
 					   $erroneous_values[] = $f; 				
 					  }
 					}
