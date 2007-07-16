@@ -22,7 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
    
-   $xmlmm=fopen('multiplayer.xml','w');
+   $xmlmm=fopen('tikimovies/multiplayer.xml','w');
    fwrite ( $xmlmm,'<interface name="default">'."\n");
    fwrite ( $xmlmm,'	<Color>'."\n");
 
