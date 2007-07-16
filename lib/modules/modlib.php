@@ -24,14 +24,17 @@ class ModLib extends TikiLib {
 		}
 	}
 
-	function assign_module($name, $title, $position, $order, $cache_time = 0, $rows = 10, $groups, $params,$type) {
-		$query = "delete from `tiki_modules` where `name`=? and `ord`=? and `position`=?";
-		$result = $this->query($query,array($name, $order, $position));
+	function assign_module($moduleId=0, $name, $title, $position, $order, $cache_time = 0, $rows = 10, $groups, $params,$type) {
 		//check for valid values
 		$cache_time = is_numeric($cache_time) ? $cache_time : 0;
 		$rows = is_numeric($rows) ? $rows : 10;
-		$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
+		if ($moduleId) {
+			$query = "update `tiki_modules` set `name`=?,`title`=?,`position`=?,`ord`=?,`cache_time`=?,`rows`=?,`groups`=?,`params`=?,`type`=? where `moduleId`=?";
+			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type, $moduleId));
+		} else {
+			$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
+		}
 		if ($type == "D" || $type == "P") {
 			global $usermoduleslib;
 			$usermoduleslib->add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
@@ -39,10 +42,9 @@ class ModLib extends TikiLib {
 		return true;
 	}
 
-	function get_assigned_module($name, $position, $ord) {
-		$query = "select * from `tiki_modules` where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
+	function get_assigned_module($moduleId) {
+		$query = "select * from `tiki_modules` where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
 		$res = $result->fetchRow();
 
 		if ($res["groups"]) {
@@ -58,12 +60,11 @@ class ModLib extends TikiLib {
 		return $res;
 	}
 
-	function unassign_module($name, $position, $ord) {
-		$query = "delete from `tiki_modules` where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
-		$query = "delete from `tiki_user_assigned_modules` where `name`=? and `position`=? and `ord`=?";
-		$result = $this->query($query,array($name, $position, $ord));
+	function unassign_module($moduleId) {
+		$query = "delete from `tiki_modules` where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
+		$query = "delete from `tiki_user_assigned_modules` where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
 		return true;
 	}
 
@@ -78,31 +79,27 @@ class ModLib extends TikiLib {
 		return $rows;
 	}
 
-	function module_up($name, $position, $ord) {
-		$query = "update `tiki_modules` set `ord`=`ord`-1 where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
+	function module_up($moduleId) {
+		$query = "update `tiki_modules` set `ord`=`ord`-1 where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
 		return true;
 	}
 
-	function module_down($name, $position, $ord) {
-		$query = "update `tiki_modules` set `ord`=`ord`+1 where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
-		return true;
-	}
-	
-	function module_left($name, $position, $ord) {
-		$query = "update `tiki_modules` set `position`='l' where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
+	function module_down($moduleId) {
+		$query = "update `tiki_modules` set `ord`=`ord`+1 where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
 		return true;
 	}
 	
-	function module_right($name, $position, $ord) {
-		$query = "update `tiki_modules` set `position`='r' where `name`=? and `position`=? and `ord`=?";
-
-		$result = $this->query($query,array($name, $position, $ord));
+	function module_left($moduleId) {
+		$query = "update `tiki_modules` set `position`='l' where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
+		return true;
+	}
+	
+	function module_right($moduleId) {
+		$query = "update `tiki_modules` set `position`='r' where `moduleId`=?";
+		$result = $this->query($query,array($moduleId));
 		return true;
 	}
 
