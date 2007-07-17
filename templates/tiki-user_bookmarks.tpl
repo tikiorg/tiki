@@ -74,7 +74,7 @@
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
           <td class="formcolor">
-	  <input type="submit" name="addfolder"  value="{tr}add{/tr}" /></td>
+	  <input type="submit" name="addfolder"  value="{tr}Add{/tr}" /></td>
       </tr>
       </form>
     </table>
@@ -94,7 +94,7 @@
           <td class="formcolor"><input type="text" size = "40" name="urlurl" value="{$urlurl|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
-          <td class="formcolor"><input type="submit" name="addurl" value="{tr}add{/tr}" /></td>
+          <td class="formcolor"><input type="submit" name="addurl" value="{tr}Add{/tr}" /></td>
       </tr>
       </form>
     </table>

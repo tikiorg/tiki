@@ -26,7 +26,7 @@
       <tr><td class="formcolor"><label for="copyleft-tit">{tr}Title{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" id="copyleft-tit" value="{$copyrights[i].title|escape}" /></td></tr>
       <tr><td class="formcolor"><label for="copyleft-yyyy">{tr}Year{/tr}:</label></td><td><input size="4" class="wikitext" type="text" name="copyrightYear" id="copyleft-yyyy" value="{$copyrights[i].year|escape}" /></td></tr>
       <tr><td class="formcolor"><label for="copyleft-auth">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-auth" value="{$copyrights[i].authors|escape}" /></td></tr>
-      <tr><td class="formcolor"><input type="submit" name="addcopyright" value="{tr}add{/tr}" /></td></tr>
+      <tr><td class="formcolor"><input type="submit" name="addcopyright" value="{tr}Add{/tr}" /></td></tr>
     </table><input type="hidden" name="page" value="{$page|escape}" />
 </form>
 </td></tr>

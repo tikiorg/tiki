@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.23 2006-11-17 11:44:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.24 2007-07-17 16:47:44 jyhem Exp $ *}
 {include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $feature_bidi eq 'y'}
@@ -35,7 +35,7 @@
 
 {if $feature_usermenu eq 'y'}	
 <div id="usermenu">
-&nbsp;&nbsp;<a href="tiki-usermenu.php?url={$smarty.server.REQUEST_URI|escape:"url"}" title='{tr}add{/tr}' class="linkmenu"><b>+</b></a>
+&nbsp;&nbsp;<a href="tiki-usermenu.php?url={$smarty.server.REQUEST_URI|escape:"url"}" title='{tr}Add{/tr}' class="linkmenu"><b>+</b></a>
 {section name=ix loop=$usr_user_menus}
 &nbsp;<a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="linkmenu"><b style="color:#999999;">&gt;</b>{$usr_user_menus[ix].name}</a>
 {/section}

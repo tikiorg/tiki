@@ -131,7 +131,7 @@
 </tr>
 <tr>
 	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor"><input type="submit" name="addprop" value="{tr}add{/tr}" /></td>
+	<td class="formcolor"><input type="submit" name="addprop" value="{tr}Add{/tr}" /></td>
 </tr>
 
 </table>

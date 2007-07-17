@@ -374,7 +374,7 @@ Errors:<br />
 		<tr>
 		  <td class="formcolor">&nbsp;</td>
 		  <td class="formcolor">
-		    <input type="submit" name="add_trans" value="{tr}add{/tr}" />
+		    <input type="submit" name="add_trans" value="{tr}Add{/tr}" />
 		  </td>
 		</tr>
 		</table>	

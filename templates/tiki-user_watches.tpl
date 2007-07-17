@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.19 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.20 2007-07-17 16:47:44 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -26,7 +26,7 @@
 </td>
 </tr>
 <tr><td class="formcolor">&nbsp;</td>
-<td class="formcolor"><input type="submit" name="add" value="{tr}add{/tr}" /></td>
+<td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 </tr>
 </table>
 </form>
