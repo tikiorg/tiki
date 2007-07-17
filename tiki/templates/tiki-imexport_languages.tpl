@@ -39,7 +39,7 @@
         </option>
         {/section}
         </select></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>
+  <tr><td align="center" colspan="2"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
   </table>
   </form>
   </div>

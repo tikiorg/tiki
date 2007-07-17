@@ -145,7 +145,7 @@
 
 {if $page|lower ne 'sandbox'}
 	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}History{/tr}</a></span>
 	{/if}
 {/if}
 
@@ -166,7 +166,7 @@
 {/if}
 
 {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}Export{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_discuss eq 'y'}
@@ -200,7 +200,7 @@
  
 {/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
+     <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}Translation{/tr}</a></span>
 {/if}
 
 {/if}

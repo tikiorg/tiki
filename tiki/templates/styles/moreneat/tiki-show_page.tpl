@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.63 2007-07-17 17:05:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.64 2007-07-17 17:12:21 jyhem Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -143,7 +143,7 @@
 
 {if $page|lower ne 'sandbox'}
 	{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}History{/tr}</a></span>
 	{/if}
 {/if}
 
@@ -164,7 +164,7 @@
 {/if}
 
 {if $tiki_p_admin_wiki eq 'y'}
-        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}Export{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_discuss eq 'y'}
@@ -207,7 +207,7 @@
 
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
     <span class="tabbut">
-      <a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a>
+      <a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}Translation{/tr}</a>
     </span>
 {/if}
 

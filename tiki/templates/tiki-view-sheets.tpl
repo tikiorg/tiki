@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.13 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.14 2007-07-17 17:12:21 jyhem Exp $ *}
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
 {* here is missing body tag when above link to CSS remains!!! (luci) *}
 <h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
@@ -70,10 +70,10 @@
 {/if}
 {/if}
 {if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}history{/tr}</a>
+<a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}History{/tr}</a>
 {/if}
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-export_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}export{/tr}</a>
+<a href="tiki-export_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Export{/tr}</a>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 <a href="tiki-import_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}import{/tr}</a>
