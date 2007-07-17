@@ -1809,6 +1809,7 @@ $lang=Array(
 "Assign permissions to " => "指定權限給",
 "to group" => "給群組",
 "rename" => "更名",
+"Rename" => "更名",
 "Diff to version" => "Diff 至版本",
 "source" => "來源",
 "Assign permissions to page" => "指定權限到頁面",

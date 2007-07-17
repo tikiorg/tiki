@@ -4509,6 +4509,7 @@ $lang=Array(
 "Last page" => "utolsó oldal",
 "click here" => "klikkeljen ide",
 "rename" => "átnevezem",
+"Rename" => "átnevezem",
 "unlock" => "megnyitom",
 "lock" => "zárom",
 "perms" => "jogok",

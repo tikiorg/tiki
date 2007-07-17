@@ -1403,6 +1403,7 @@ $lang=Array(
 // "The content on this page is licensed under the terms of the" => "The content on this page is licensed under the terms of the",
 // "The original document is available at" => "The original document is available at",
 // "rename" => "rename",
+// "Rename" => "rename",
 // "discuss" => "discuss",
 // "add comment" => "add comment",
 // "1 comment" => "1 comment",

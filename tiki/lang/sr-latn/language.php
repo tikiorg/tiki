@@ -3643,6 +3643,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Sadržaj ove strane je licenciram po uslovima od",
 "The original document is available at" => "Originalan dokumenat možete naći na",
 "rename" => "promeni ime",
+"Rename" => "Promeni ime",
 "unlock" => "otključaj",
 "lock" => "zaključaj",
 "perms" => "dozvole",

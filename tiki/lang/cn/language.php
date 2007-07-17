@@ -4295,6 +4295,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "本页面的內容根据以下条文授权",
 "The original document is available at" => "原始文件位于",
 "rename" => "更名",
+"Rename" => "更名",
 "unlock" => "解除锁定",
 "lock" => "锁定",
 "perms" => "权限",

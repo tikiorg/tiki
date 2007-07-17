@@ -3260,6 +3260,7 @@ $lang=Array(
 "print" => "print",
 "pdf" => "pdf",
 "rename" => "rename",
+"Rename" => "Rename",
 "perms" => "perms",
 "history" => "history",
 "undo" => "undo",

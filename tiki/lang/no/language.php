@@ -1566,6 +1566,7 @@ $lang=Array(
 // "The content on this page is licensed under the terms of the" => "The content on this page is licensed under the terms of the",
 // "The original document is available at" => "The original document is available at",
 // "rename" => "rename",
+// "Rename" => "Rename",
 // "unlock" => "unlock",
 // "lock" => "lock",
 // "perms" => "perms",

@@ -4973,6 +4973,7 @@ $lang=Array(
 "Last page" => "Ostatnia strona",
 "click here" => "kliknij tutaj",
 "rename" => "zmień nazwę",
+"Rename" => "Zmień nazwę",
 "unlock" => "odblokuj",
 "lock" => "zablokuj",
 "perms" => "uprawnienia",

@@ -2455,6 +2455,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "De inhoud van deze pagina is gelicensieerd onder de voorwaarden van",
 "The original document is available at" => "Het originele document is beschikbaar op",
 "rename" => "hernoemen",
+"Rename" => "Hernoemen",
 "unlock" => "ontgrendelen",
 "lock" => "vergrendelen",
 "perms" => "perm.",

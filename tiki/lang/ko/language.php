@@ -5129,6 +5129,7 @@ $lang=Array(
 "To edit the copyright notices" => "저작권 정보 수정하기",
 "click here" => "여기를 클릭하세요",
 "rename" => "이름변경",
+"Rename" => "이름변경",
 "unlock" => "잠금해제",
 "lock" => "잠금",
 "perms" => "권한",
