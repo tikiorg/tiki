@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.68 2007-07-17 17:05:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.69 2007-07-17 17:12:21 jyhem Exp $ *}
 
 <hr/>
 
@@ -51,7 +51,7 @@
 {/if}
 
 {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-<span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}history{/tr}</a></span>
+<span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}History{/tr}</a></span>
 {/if}
 {/if}
 
@@ -72,7 +72,7 @@
 {/if}
 {/if}
 {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-<span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></span>
+<span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}Export{/tr}</a></span>
 {/if}
 {if $feature_wiki_discuss eq 'y'}
 <span class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}discuss{/tr}</a></span>
@@ -128,7 +128,7 @@
   {/if}{* attachments *}
 
   {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></span>
+     <span class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}Translation{/tr}</a></span>
   {/if}
 {/if}
 

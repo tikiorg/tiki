@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.16 2007-07-17 17:05:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.17 2007-07-17 17:12:21 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -30,7 +30,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {/if}
 
 {if $feature_history eq 'y' and $tiki_p_edit eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-<div class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}history{/tr}</a></div>
+<div class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}History{/tr}</a></div>
 {/if}
 {/if}
 
@@ -51,7 +51,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {/if}
 
 {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-<div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div>
+<div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}Export{/tr}</a></div>
 {/if}
 
 {if $feature_wiki_print eq 'y'}
@@ -107,7 +107,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 
 {/if}
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y'  and !$lock}
-     <div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></div>
+     <div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}Translation{/tr}</a></div>
   {/if}
 
 </div>

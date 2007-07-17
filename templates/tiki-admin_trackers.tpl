@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.86 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.87 2007-07-17 17:12:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -284,7 +284,7 @@ categories = {$catsdump}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
 </form>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
