@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.22 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.23 2007-07-17 11:59:49 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,7 @@ $user_info = $userlib->get_user_info($assign_user,true);
 $smarty->assign_by_ref('user_info', $user_info);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'groupName_desc';
+	$sort_mode = 'groupName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -99,14 +99,23 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
+
+if (isset($_REQUEST['maxRecords'])) {
+	$maxRecords = $_REQUEST['maxRecords'];
+	$smarty->assign('maxRecords', $maxRecords);
+}
 
 if ($tiki_p_admin != 'y')
 	$groups = $userlib->get_user_groups_inclusion($user);
 else
 	$groups = '';
 $users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y', $groups);
+foreach ($users['data'] as $key=>$group) {
+	if (isset($user_info['groups'][$group['groupName']])) {
+		$users['data'][$key]['what'] = $user_info['groups'][$group['groupName']];
+	}
+}
 			
 $cant_pages = ceil($users["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
