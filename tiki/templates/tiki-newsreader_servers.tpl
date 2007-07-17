@@ -39,8 +39,8 @@
 	<a class="link" href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}" title="{tr}Read the news{/tr}">{$channels[user].server}</a>
 </td>
 <td class="{cycle}">
-	<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
-	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}del{/tr}' title='{tr}delete{/tr}' /></a>
+	<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}del{/tr}' title='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {/section}

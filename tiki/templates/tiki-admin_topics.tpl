@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.29 2006-09-30 20:20:19 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.30 2007-07-17 16:21:48 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -6,7 +6,7 @@
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin topics template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Create a new topic{/tr}</h2>
 
@@ -50,7 +50,7 @@
 <a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}"><img border="0" alt="{tr}deactivate{/tr}" title='{tr}inactive - click to activate{/tr}' src="pics/icons/delete.png" width='16' height='16' /></a>
 {/if}
 {if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}"><img border="0" alt="{tr}permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{if $topics[user].individual eq 'y'}){/if}
- <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' width='16' height='16' /></a>
+ <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' width='16' height='16' /></a>
 </td>
 </tr>
 {sectionelse}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.12 2006-08-29 20:19:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.13 2007-07-17 16:21:50 jyhem Exp $ *}
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
 {* here is missing body tag when above link to CSS remains!!! (luci) *}
 <h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
@@ -64,9 +64,9 @@
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 {if $editconflict eq 'y'}
-	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut" title="{$semUser}" ><span class="highlight">{tr}edit{/tr}</span></a>
+	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut" title="{$semUser}" ><span class="highlight">{tr}Edit{/tr}</span></a>
 {else}
-	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}edit{/tr}</a>
+	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}Edit{/tr}</a>
 {/if}
 {/if}
 {if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}

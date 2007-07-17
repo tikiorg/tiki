@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.99 2007-07-14 21:58:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.100 2007-07-17 16:21:49 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -7,7 +7,7 @@
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=login" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
@@ -146,13 +146,13 @@ title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt=
 <td>
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
-{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}edit included group{/tr}"{else}"{tr}edit{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
+{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}edit included group{/tr}"{else}"{tr}Edit{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
 {if $what ne 'included'}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}" title="{tr}remove{/tr}">x</a>){/if}
 {if $grs eq $users[user].default_group} {tr}default{/tr}{/if}<br />
 {/if}
 {/foreach}
 <td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}"
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}
 </td>
 </tr>
 {/section}

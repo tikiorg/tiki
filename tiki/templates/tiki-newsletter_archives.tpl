@@ -4,7 +4,7 @@
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
  {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-newsletter_archives.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 <span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a></span>
 {if $tiki_p_subscribe_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a></span>{/if}

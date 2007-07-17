@@ -15,7 +15,7 @@
 <td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].iconpath}</td>
 <td class="{cycle advance=false}">{$quicktags[tag].tagcategory}</td>
 <td class="{cycle}">
-   <a class="link" {ajax_href template="tiki-admin_quicktags_edit.tpl" htmlelement="quicktags-edit"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}{/ajax_href}}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>&nbsp;&nbsp;
+   <a class="link" {ajax_href template="tiki-admin_quicktags_edit.tpl" htmlelement="quicktags-edit"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}{/ajax_href}}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>
 </td>
 </tr>

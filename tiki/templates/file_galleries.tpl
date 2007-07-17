@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.10 2007-05-13 22:09:01 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.11 2007-07-17 16:21:45 jyhem Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -124,7 +124,7 @@
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 		{/if}
 	{/if}
 
@@ -145,7 +145,7 @@
 	{/if}
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
                 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
                 {/if}
         {/if}
 	</td>

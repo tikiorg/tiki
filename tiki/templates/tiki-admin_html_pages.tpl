@@ -6,7 +6,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Html Pages template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}
 </h1>
 
 {if $pageName ne ''}
@@ -77,11 +77,11 @@
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=true}">
    &nbsp;&nbsp;
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}"><img src="pics/icons/monitor.png" border="0" height="16" width="16" alt='{tr}view{/tr}' /></a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a> &nbsp;
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
-   title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+   title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}

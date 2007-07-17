@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.50 2007-07-17 15:13:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.51 2007-07-17 16:21:46 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -8,7 +8,7 @@
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin modules template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
 <a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
@@ -43,9 +43,9 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}assign{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}delete{/tr}' /></a></td>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
@@ -136,7 +136,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="{cycle advance=false}">{$left[user].params}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}move to right column{/tr}"><img src="pics/icons/arrow_right.png" border="0" width="16" height="16" alt='{tr}right{/tr}' /></a>
@@ -172,7 +172,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="{cycle advance=false}">{$right[user].params}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}move up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}move down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}move to left column{/tr}"><img src="pics/icons/arrow_left.png" border="0" width="16" height="16" alt='{tr}left{/tr}' /></a>

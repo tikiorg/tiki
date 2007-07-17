@@ -12,8 +12,8 @@
       <tr class="formcolor"><td><label for="copyleft-authors">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-authors" value="{$copyrights[i].authors|escape}" /></td></tr>
     </table>
   </td><td class="formcolor" align="right">
-    <input type="submit" name="editcopyright" value="{tr}edit{/tr}" /><br />
-    <a title="{tr}delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
+    <input type="submit" name="editcopyright" value="{tr}Edit{/tr}" /><br />
+    <a title="{tr}Delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
 ><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}up{/tr}' /></a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}down{/tr}' /></a>

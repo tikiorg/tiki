@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.40 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.41 2007-07-17 16:21:49 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
@@ -85,7 +85,7 @@
 <td class="{cycle}" nowrap="nowrap">
 	{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' ) }
-			<a class="bloglink" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' /></a>
+			<a class="bloglink" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' /></a>
 		{/if}
 	{/if}
 	{if $tiki_p_blog_post eq 'y'}

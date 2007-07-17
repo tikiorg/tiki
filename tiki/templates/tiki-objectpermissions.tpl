@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.23 2007-07-05 23:07:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.24 2007-07-17 16:21:50 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -20,7 +20,7 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$page_perms[pg].permName|cat:' '|cat:$page_perms[pg].groupName|escape}"  {if $smarty.request.checked and in_array($page_perms[pg].permName.' '.$page_perms[pg].groupName,$smarty.request.checked)}checked="checked"{/if} />
 <td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
 <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
-<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}delete{/tr}" border="0" /></a></td></tr>
+<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}" border="0" /></a></td></tr>
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
@@ -35,7 +35,7 @@
 </table>
 <div>
 {tr}Perform action with checked:{/tr} 
-<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 {if isset($inStructure)}
 {tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
 {/if}

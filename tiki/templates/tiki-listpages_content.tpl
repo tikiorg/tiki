@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.16 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.17 2007-07-17 16:21:50 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -96,7 +96,7 @@
 {/if}
 <td class="{cycle advance=false}">
 {if $tiki_p_edit eq 'y'}
-&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
+&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
 {/if}
 </td>
 {if $wiki_list_name eq 'y'}

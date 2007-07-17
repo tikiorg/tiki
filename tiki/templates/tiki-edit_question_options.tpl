@@ -43,7 +43,7 @@
 <td class="odd">{$channels[user].points}</td>
 <td class="odd">
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}Edit{/tr}</a>
 </td>
 </tr>
 {else}
@@ -53,7 +53,7 @@
 <td class="even">{$channels[user].points}</td>
 <td class="even">
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}Edit{/tr}</a>
 </td>
 </tr>
 {/if}

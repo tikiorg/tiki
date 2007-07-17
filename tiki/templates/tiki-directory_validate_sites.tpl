@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.21 2007-05-17 20:08:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.22 2007-07-17 16:21:49 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
   
       {if $feature_help eq 'y'}
@@ -43,7 +43,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
 {/if}
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td  class="{cycle advance=false}">
-   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='pics/icons/page_edit.png'  height="16" width="16" border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='pics/icons/page_edit.png'  height="16" width="16" border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
    <a class="link" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='pics/icons/cross.png' border='0' height="16" width="16" alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 </td>
 </tr>

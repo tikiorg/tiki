@@ -42,7 +42,7 @@
 <td class="{cycle advance=true}">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this word?{/tr}')" 
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

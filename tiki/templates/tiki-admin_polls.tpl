@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.28 2007-01-18 22:04:27 sylvieg Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.29 2007-07-17 16:21:46 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -7,7 +7,7 @@
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{/if}</h1>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=polls"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure polls{/tr}" title="{tr}configure polls{/tr}" height="16" width="16" /></a>
@@ -77,8 +77,8 @@
 <td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}delete{/tr}</a>
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}Delete{/tr}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}Edit{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
 </td>
 </tr>

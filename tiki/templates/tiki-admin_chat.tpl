@@ -64,10 +64,10 @@
 <td class="{cycle advance=false}">{$channels[user].refresh}</td>
 <td class="{cycle advance=true}">
    &nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">
-   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
-   <a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" >
-   <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+   <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">
+   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
+   <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" >
+   <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}

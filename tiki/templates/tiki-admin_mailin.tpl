@@ -7,7 +7,7 @@
 
 {if $feature_view_tpl eq 'y'}
   <a href="tiki-edit_templates.php?template=tiki-admin_mailin.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin mailin template{/tr}">
-  <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+  <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}</h1>
 
 <table class="normal">
@@ -24,7 +24,7 @@
   {section name=ix loop=$accounts}
     <tr>
       <td class="{cycle advance=false}" align="middle">
-        <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add"><img border='0' width='16' height='16' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' /></a> &nbsp;
+        <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add"><img border='0' width='16' height='16' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a> &nbsp;
         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" ><img border='0' width='16' height='16' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
       </td>
       <td class="{cycle advance=false}">{$accounts[ix].account}</td>
@@ -142,7 +142,7 @@
    </tr>
     <tr class="formcolor">
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}add{/tr}{else}{tr}edit{/tr}{/if}" /></td>
+      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}add{/tr}{else}{tr}Edit{/tr}{/if}" /></td>
     </tr>
   </table>
 </form>

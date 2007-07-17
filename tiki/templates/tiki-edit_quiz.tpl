@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.27 2007-06-07 13:26:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.28 2007-07-17 16:21:49 jyhem Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -178,7 +178,7 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="odd">{$channels[user].results}</td>
 <td class="odd">
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
    <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}questions{/tr}</a>
    <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}results{/tr}</a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
@@ -195,7 +195,7 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="even">{$channels[user].results}</td>
 <td class="even">
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
    <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}questions{/tr}</a>
    <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}results{/tr}</a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}

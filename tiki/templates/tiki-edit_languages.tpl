@@ -86,7 +86,7 @@
       <td class="form">{tr}Translation{/tr}:</td>
       <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]}" size=42 maxlength=255 /></td>
       <td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}translate{/tr}" /></td>
-      <td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}delete{/tr}" /></td>
+      <td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>
   {/section}
   </table>
   {if $tr_recnum != 0}

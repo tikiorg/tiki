@@ -59,7 +59,7 @@
 <input type="hidden" name="flag" value="{$flag|escape}" />
 <input type="hidden" name="flagval" value="{$flagval|escape}" />
 <input type="hidden" name="priority" value="{$priority|escape}" />
-<input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
 <input type="submit" name="download" value="{tr}download{/tr}" />
 <script type="text/javascript">

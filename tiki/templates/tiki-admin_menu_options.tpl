@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.46 2007-07-16 16:01:20 sylvieg Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.47 2007-07-17 16:21:46 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -181,7 +181,7 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}">{$channels[user].optionId}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
-title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a></td>
+title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a></td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url|truncate:40:' ...'}</a></td>
@@ -197,7 +197,7 @@ title="{tr}switch with previous option{/tr}"><img src="pics/icons/up.png" border
 {if !$smarty.section.user.last}<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options"
 title="{tr}switch with next option{/tr}"><img src="pics/icons/down.png" border="0" height="8" width="16" alt='{tr}down{/tr}' /></a>{/if}
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {/section}
@@ -208,7 +208,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 </table>
 <div align="left">
 {tr}Perform action with checked:{/tr}
-<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 </div>
 </form>
 <br />

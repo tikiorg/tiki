@@ -39,10 +39,10 @@
 <td class="{cycle advance=false}">{$channels[user].dsn}</td>
 <td class="{cycle}">
    &nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">
-   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
-   <a title="{tr}delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">
-   <img border="0" width="16" height="16" alt="{tr}delete{/tr}" src="pics/icons/cross.png" /></a>
+   <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">
+   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
+   <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">
+   <img border="0" width="16" height="16" alt="{tr}Delete{/tr}" src="pics/icons/cross.png" /></a>
 </td>
 </tr>
 {sectionelse}

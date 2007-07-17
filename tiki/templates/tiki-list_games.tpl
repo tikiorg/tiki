@@ -87,7 +87,7 @@
   {if $tiki_p_admin_games eq 'y'}
   <div align="center"><small>
   [<a href="tiki-list_games.php?remove={$ix.game}" class="link">{tr}x{/tr}</a>
-  |<a href="tiki-list_games.php?edit={$ix.game}" class="link">{tr}edit{/tr}</a>]
+  |<a href="tiki-list_games.php?edit={$ix.game}" class="link">{tr}Edit{/tr}</a>]
   </small></div>
   {/if}
 

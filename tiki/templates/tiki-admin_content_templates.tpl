@@ -93,16 +93,16 @@
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">
 {section name=ix loop=$channels[user].sections}
-({$channels[user].sections[ix]} <a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-><img src="pics/icons/cross.png" border="0" width="8" height="8" alt='{tr}delete{/tr}' /></a>)&nbsp;&nbsp;
+({$channels[user].sections[ix]} <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+><img src="pics/icons/cross.png" border="0" width="8" height="8" alt='{tr}Delete{/tr}' /></a>)&nbsp;&nbsp;
 {/section}
 </td>
 <td class="{cycle advance=true}">
    &nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
-   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
-   <a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
-   <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+   <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
+   <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
+   <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+   <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}

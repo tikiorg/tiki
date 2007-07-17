@@ -9,8 +9,8 @@
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}"{if $feature_tabs ne "y"}#details{/if} title="{tr}details{/tr}">
 <img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;
 {if $hrows[$h][hr].modifiable eq "y"}
-<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}edit{/tr}">
-<img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a>
+<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}Edit{/tr}">
+<img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}">
 <img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>
 {/if}

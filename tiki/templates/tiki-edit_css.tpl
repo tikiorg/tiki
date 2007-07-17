@@ -19,7 +19,7 @@
 </select>
 <input type="submit" name="try" value="{tr}try{/tr}" />
 <input type="submit" name="display" value="{tr}display{/tr}" />
-<input type="submit" name="edit" value="{tr}edit{/tr}" /><br />
+<input type="submit" name="edit" value="{tr}Edit{/tr}" /><br />
 <div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
 </div>
 {section name=l loop=$css}

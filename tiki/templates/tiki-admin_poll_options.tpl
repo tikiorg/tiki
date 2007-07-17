@@ -43,8 +43,8 @@
 <td>{$channels[user].title}</td>
 <td>{$channels[user].votes}</td>
 <td>
-   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;remove={$channels[user].optionId}">{tr}delete{/tr}</a>
-   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;remove={$channels[user].optionId}">{tr}Delete{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;optionId={$channels[user].optionId}">{tr}Edit{/tr}</a>
 </td>
 </tr>
 {/section}

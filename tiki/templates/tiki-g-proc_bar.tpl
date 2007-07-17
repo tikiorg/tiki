@@ -23,7 +23,7 @@
 			<td><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/book.gif' alt='{tr}code{/tr}' title='{tr}code{/tr}' /></a></td>		
 			<td><a class="link" href="tiki-g-admin_graph.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/mode_tree.gif' alt='{tr}graph{/tr} 'title='{tr}graph{/tr}' /></a></td>		
 			<td><a class="link" href="tiki-g-admin_roles.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/myinfo.gif' alt='{tr}roles{/tr}' title='{tr}roles{/tr}' /></a></td>		
-			<td><a class="link" href="tiki-g-admin_processes.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/change.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a></td>				
+			<td><a class="link" href="tiki-g-admin_processes.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/change.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a></td>				
 			<td><a class="link" href="tiki-g-save_process.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/export.gif' alt='{tr}export{/tr}' title='{tr}export{/tr}' /></a></td>
 		</tr>
 		</table>

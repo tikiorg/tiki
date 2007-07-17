@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.26 2006-12-17 17:43:20 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.27 2007-07-17 16:21:50 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -153,7 +153,7 @@
 <td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
 <td class="{cycle advance=true}">
-   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a> &nbsp;
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
    <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
    <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
    <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
