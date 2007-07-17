@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.13 2007-03-06 19:30:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.14 2007-07-17 16:33:13 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -6,7 +6,7 @@
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')}
 <div class="button2"><a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" 
-class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</span>{else}{tr}edit{/tr}{/if}</a></div>
+class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</span>{else}{tr}Edit{/tr}{/if}</a></div>
 {/if}
 
 {if $page|lower ne 'sandbox'}

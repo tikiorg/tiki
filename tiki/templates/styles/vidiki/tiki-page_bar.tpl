@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.6 2007-02-28 15:28:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.7 2007-07-17 16:33:15 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -9,9 +9,9 @@
     <li>
       <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}"
         {if $beingEdited eq 'y'}
-          class="active">{tr}edit{/tr}
+          class="active">{tr}Edit{/tr}
         {else}
-          class="">{tr}edit{/tr}
+          class="">{tr}Edit{/tr}
         {/if}
       </a>
     </li>
