@@ -90,7 +90,7 @@
 </table>
 </td></tr>
 <tr><td colspan="2" class="button">
-	{tr}add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value='{tr}Add{/tr}' />
+	{tr}Add{/tr}: <input type='text' name='ext_add' /> <input type='submit' name='add_fields' value='{tr}Add{/tr}' />
 </td></tr>
 </table>
 </form>

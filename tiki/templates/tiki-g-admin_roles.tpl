@@ -155,7 +155,7 @@ Errors:<br />
 	<tr>
 		<td class="formcolor">
 			<select name="op">
-			<option value="add">{tr}add{/tr}</option>
+			<option value="add">{tr}Add{/tr}</option>
 			<option value="remove">{tr}remove{/tr}</option>
 			</select>
 		</td>

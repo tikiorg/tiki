@@ -8,7 +8,7 @@
 <option value="{$usr_user_menus[ix].url}">{$usr_user_menus[ix].name}</option>
 {/section}
 <option value="">----</option>
-<option value="tiki-usermenu.php?url={$smarty.server.REQUEST_URI|escape:"url"}">{tr}add{/tr} ...</option>
+<option value="tiki-usermenu.php?url={$smarty.server.REQUEST_URI|escape:"url"}">{tr}Add{/tr} ...</option>
 </select>
 {/if}
 <select name="mytiki" onchange="go(this);">

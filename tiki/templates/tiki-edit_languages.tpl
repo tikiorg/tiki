@@ -46,7 +46,7 @@
   <table>
   <tr><td class="form">{tr}Original{/tr}:</td><td><input name="add_tran_source" size=20 maxlength=255></td>
       <td class="form">{tr}Translation{/tr}:</td><td><input name="add_tran_tran" size=20 maxlength=255></td>
-      <td align="center"><input type="submit" name="add_tran" value="{tr}add{/tr}" />
+      <td align="center"><input type="submit" name="add_tran" value="{tr}Add{/tr}" />
   </table>
   </div>
   {/if}

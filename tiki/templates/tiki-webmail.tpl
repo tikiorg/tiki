@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.36 2007-07-17 16:21:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.37 2007-07-17 16:47:44 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -60,7 +60,7 @@
 <tr><td class="formcolor">{tr}Username{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="password" name="pass" value="{$info.pass|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs|escape}" /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}User accounts{/tr}</h2>
@@ -343,7 +343,7 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
     {if $attach3}
     ({$attach3})
     {/if}
-    <input type="submit" name="attach" value="{tr}add{/tr}" />
+    <input type="submit" name="attach" value="{tr}Add{/tr}" />
     </td></tr>
     <tr>
     <tr class="formcolor"><td>&nbsp;</td>

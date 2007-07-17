@@ -48,7 +48,7 @@
 <tr><td class="formcolor">{tr}Don't send confirmation mail{/tr}</td><td colspan="2" class="formcolor"><input type="checkbox" name="confirmEmail" /></td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><i>{tr}The user email will be refreshed at each newsletter sending{/tr}</i></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 
@@ -58,7 +58,7 @@
 <input type="hidden" name="nlId" value="{$nlId|escape}" /> 	 
 <table class="normal"> 	 
 <tr><td class="formcolor" width="30%">{tr}File{/tr}:</td><td class="formcolor" colspan="2"><input type="file" name="batch_subscription" /><br /><i>{tr}txt file, one e-mail per line{/tr}</td></tr> 	 
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addbatch" value="{tr}add{/tr}" /></td></tr> 	 
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addbatch" value="{tr}Add{/tr}" /></td></tr> 	 
 </table> 	 
 </form> 	 
 {/if}
@@ -75,7 +75,7 @@
 {/section}
 </select><br /><i>{tr}Included group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addgroup" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addgroup" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 

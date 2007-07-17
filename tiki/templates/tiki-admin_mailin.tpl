@@ -142,7 +142,7 @@
    </tr>
     <tr class="formcolor">
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}add{/tr}{else}{tr}Edit{/tr}{/if}" /></td>
+      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}Add{/tr}{else}{tr}Edit{/tr}{/if}" /></td>
     </tr>
   </table>
 </form>
