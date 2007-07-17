@@ -2495,6 +2495,7 @@ $lang=Array(
 "Rename" => "Renommer",
 "unlock" => "déverrouiller",
 "lock" => "verrouiller",
+"Lock" => "Verrouiller",
 "history" => "historique",
 "similar" => "similaire",
 "undo" => "annuler",

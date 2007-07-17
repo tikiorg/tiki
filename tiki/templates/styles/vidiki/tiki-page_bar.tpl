@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.8 2007-07-17 16:57:58 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.9 2007-07-17 17:05:39 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -26,10 +26,10 @@
 <li><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="">{tr}Rename{/tr}</a></li>
 {/if}
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
-<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="">{tr}unlock{/tr}</a></li>
+<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="">{tr}Unlock{/tr}</a></li>
 {/if}
 {if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
-<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="">{tr}lock{/tr}</a></li>
+<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="">{tr}Lock{/tr}</a></li>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
 <li><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="">{tr}perms{/tr}</a></li>
@@ -44,7 +44,7 @@
 <li><a href="tiki-likepages.php?page={$page|escape:"url"}" class="">{tr}similar{/tr}</a></li>
 {/if}
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
-<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="">{tr}undo{/tr}</a></li>
+<li><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="">{tr}Undo{/tr}</a></li>
 {/if}
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}

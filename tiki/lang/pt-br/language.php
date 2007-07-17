@@ -4245,6 +4245,7 @@ $lang=Array(
 "Rename" => "Renomear",
 "unlock" => "destravar",
 "lock" => "travar",
+"Lock" => "Travar",
 "history" => "histórico",
 "similar" => "similares",
 "undo" => "desfazer",
