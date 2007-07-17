@@ -133,6 +133,8 @@ class HistLib extends TikiLib {
 			if ($feature_contribution == 'y') {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
 				$aux['contributions'] = $contributionlib->get_assigned_contributions($res['historyId'], 'history');
+				global $logslib; include_once('lib/logs/logslib.php');
+				$aux['contributors'] = $logslib->get_wiki_contributors($aux);
 			}
 			$ret[] = $aux;
 		}
