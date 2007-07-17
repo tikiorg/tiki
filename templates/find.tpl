@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.6 2007-07-17 14:15:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.7 2007-07-17 14:17:43 sylvieg Exp $ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
@@ -35,7 +35,7 @@
 	</td>
 {/if}
 
-{if $find_show_language ne 'n' and $feature_multilingual eq 'y'}
+{if $find_show_languages ne 'n' and $feature_multilingual eq 'y'}
 	<td class="findtitle">
 		<select name="lang">
 		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
