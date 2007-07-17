@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.27 2007-06-16 16:02:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.28 2007-07-17 16:21:46 jyhem Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
 
@@ -98,11 +98,11 @@
       <td class="{cycle advance=false}">{$repositories[rep].start_page}</td>
       <td class="{cycle advance=false}">{$repositories[rep].css_file}</td>
       <td class="{if (strlen($repositories[rep].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
-        <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}edit{/tr}">
-            <img src="pics/icons/wrench.png" alt="{tr}edit{/tr}" border="0" width="16" height="16" />
+        <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}Edit{/tr}">
+            <img src="pics/icons/wrench.png" alt="{tr}Edit{/tr}" border="0" width="16" height="16" />
         </a>
         &nbsp;&nbsp;<a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}"  
-		title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="pics/icons/cross.png" border="0" width="16" height="16" /></a>&nbsp;&nbsp;
+		title="{tr}Delete{/tr}"><img alt="{tr}Delete{/tr}" src="pics/icons/cross.png" border="0" width="16" height="16" /></a>&nbsp;&nbsp;
       </td>
 
     {* Show description as colspaned row if it is not an empty *}

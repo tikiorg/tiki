@@ -58,7 +58,7 @@
 	<td class="heading"><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
 		{if $editable == 'y'}
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
-		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
+		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
 		{/if}
 	</td>
 	<td class="heading">
@@ -76,9 +76,9 @@
 		{if $subtree[ix].viewable == 'y'}<a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}&amp;structure={$structure_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>{else}&nbsp;{/if}
 		{if $subtree[ix].editable == 'y'}
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
-		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
+		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
 		{/if}
-		{if $editable == 'y'}<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' width='16' height='16' style="margin-right:20px;"/></a>{/if}
+		{if $editable == 'y'}<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'><img src='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' width='16' height='16' style="margin-right:20px;"/></a>{/if}
 	</td>
 	<td {if $page_ref_id eq $subtree[ix].page_ref_id}style="border-style:dotted; border-width:1px; border-color:gray;"{/if}>
 		{if $page_ref_id eq $subtree[ix].page_ref_id}<b>{/if}

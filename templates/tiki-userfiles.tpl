@@ -40,7 +40,7 @@
 </div>
 
 <form action="tiki-userfiles.php" method="post">
-<input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <table class="normal">
 <tr>
 <td style="text-align:center;" class="heading">&nbsp;</td>

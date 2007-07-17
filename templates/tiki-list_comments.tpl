@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.2 2007-07-15 11:22:14 fr_rodo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.3 2007-07-17 16:21:50 jyhem Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -36,7 +36,7 @@
   document.write("<label for=\"clickall\">{tr}select all{/tr}</label>");
   //-->                     
 </script>
-&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}delete{/tr}" />
+&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
 
 <table class="normal">
@@ -73,7 +73,7 @@
   document.write("<label for=\"clickall\">{tr}select all{/tr}</label>");
   //-->                     
 </script>
-&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}delete{/tr}" />
+&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
 </form
 

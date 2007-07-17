@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.115 2007-06-06 15:32:52 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.116 2007-07-17 16:21:50 jyhem Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -23,7 +23,7 @@
 {if $print_page ne 'y'}
 	<td style="vertical-align:top;text-align:right;width:142px;wrap:nowrap">
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
-		<a title="{tr}edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}" /></a>
+		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}       
 	{if $feature_morcego eq 'y' && $wiki_feature_3d eq 'y'}
 		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt="{tr}3d browser{/tr}" /></a>

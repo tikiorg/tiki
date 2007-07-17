@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.26 2006-12-17 17:43:20 fr_rodo Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.27 2007-07-17 16:21:45 jyhem Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -145,8 +145,8 @@
 {/section}
 </td>
 <td class="{cycle}">
-&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
-><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;
+&nbsp;&nbsp;<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
+><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

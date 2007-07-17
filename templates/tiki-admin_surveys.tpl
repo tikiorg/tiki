@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.23 2007-06-07 13:26:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.24 2007-07-17 16:21:48 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
-<img border="0" src="pics/icons/shape_square_edit.png" alt="{tr}edit{/tr}" width="16" height="16" /></a>{/if}</h1>
+<img border="0" src="pics/icons/shape_square_edit.png" alt="{tr}Edit{/tr}" width="16" height="16" /></a>{/if}</h1>
 
 <div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
@@ -102,7 +102,7 @@
 </td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
 <td  class="{cycle}">
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
    <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='pics/icons/help.png' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}' width='16' height='16' /></a>
    <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
    {if $channels[user].individual eq 'y'}

@@ -12,7 +12,7 @@
 <a href="tiki-view_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}view{/tr}</a>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}edit{/tr}</a>
+<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}Edit{/tr}</a>
 {/if}
 {if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 <a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}history{/tr}</a>

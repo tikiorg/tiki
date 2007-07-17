@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.142 2007-07-16 14:06:22 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.143 2007-07-17 16:21:51 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -144,8 +144,8 @@
 {section name=ix loop=$comments}
 <div class="commentbloc">
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="20" height="16"  alt='{tr}edit{/tr}' /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;]{/if}
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="20" height="16"  alt='{tr}Edit{/tr}' /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
@@ -170,7 +170,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <tr class="formcolor"><td>{tr}version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
-<tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}edit{/tr}"{else}"{tr}attach{/tr}"{/if} /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}attach{/tr}"{/if} /></td></tr>
 </table>
 </form>
 {/if}
@@ -214,10 +214,10 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 <td>{$atts[ix].longdesc}</td>
 <td>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}delete{/tr}"><img
-src="pics/icons/cross.png" border="0"  height="16" width="16" alt="{tr}delete{/tr}"  hspace="2" vspace="0" /></a>
-<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}edit{/tr}"><img
-src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}edit{/tr}"  hspace="2" vspace="0" /></a>
+<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}"><img
+src="pics/icons/cross.png" border="0"  height="16" width="16" alt="{tr}Delete{/tr}"  hspace="2" vspace="0" /></a>
+<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Edit{/tr}"><img
+src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/tr}"  hspace="2" vspace="0" /></a>
 {/if}
 </td>
 </tr>
@@ -254,7 +254,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}edit{/
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
 <input type="submit" name="save_return" value="{tr}save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
-{if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>{/if}
+{if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}
 {/if}
 {* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}

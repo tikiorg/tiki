@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.26 2006-09-29 23:40:01 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.27 2007-07-17 16:21:45 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 
@@ -20,7 +20,7 @@
 <h2>{tr}Preview{/tr}</h2>
 <div align="center">
 	<a href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$draw_info.name}','','menubar=no,width=252,height=25');">
-		<img width='154' height='98' border='0' src='img/wiki/{$draw_info.filename_draw}' alt='{tr}edit{/tr}' /></a>
+		<img width='154' height='98' border='0' src='img/wiki/{$draw_info.filename_draw}' alt='{tr}Edit{/tr}' /></a>
 </div>
 {/if}
 
@@ -70,16 +70,16 @@
 </td>
 <td class="{cycle}">
 {if not $smarty.request.ver}
-<a title="{tr}edit{/tr}" class="link" href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}edit{/tr}' /></a> &nbsp;
+<a title="{tr}Edit{/tr}" class="link" href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
 {/if}
 <a title="{tr}view{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link">
 <img src='pics/icons/monitor.png' border='0' width='16' height='16' alt='{tr}view{/tr}' /></a> &nbsp;
 {if $smarty.request.ver}
-	<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link" >
-	<img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+	<a title="{tr}Delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link" >
+	<img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 {else}
-	<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link" >
-	<img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+	<a title="{tr}Delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link" >
+	<img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 {/if}
 </td>
 </tr>

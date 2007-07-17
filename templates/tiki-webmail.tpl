@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.35 2007-06-16 16:02:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.36 2007-07-17 16:21:51 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -7,7 +7,7 @@
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
-<img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>
+<img border="0" src="img/icons/info.gif" alt="{tr}Edit{/tr}" /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=webmail" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
@@ -80,8 +80,8 @@
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
 <td class="{cycle advance=false}">{$accounts[ix].username}</td>
 <td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" 
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
-<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>{if $accounts[ix].current ne 'y'}<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}"><img src="pics/icons/accept.png" alt="{tr}Activate{/tr}" width="16" height="16" border="0" /></a>{/if}</td></tr>
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
+<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{if $accounts[ix].current ne 'y'}<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}"><img src="pics/icons/accept.png" alt="{tr}Activate{/tr}" width="16" height="16" border="0" /></a>{/if}</td></tr>
 {/section}
 </table>
 {/if}
@@ -103,7 +103,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 </table><br />
 <form action="tiki-webmail.php" method="post">
 <input type="hidden" name="locSection" value="mailbox" />
-<input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="hidden" name="start" value="{$start|escape}" />
 <select name="action">
 <option value="flag">{tr}Mark as flagged{/tr}</option>
@@ -164,7 +164,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <tr>
   <td>
     <form method="post" action="tiki-webmail.php">
-    <input type="submit" name="delete_one" value="{tr}delete{/tr}" />
+    <input type="submit" name="delete_one" value="{tr}Delete{/tr}" />
     {if $next}
     <input type="hidden" name="locSection" value="read" />
     <input type="hidden" name="msgid" value="{$next|escape}" />
@@ -288,7 +288,7 @@ title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email|escape}</a>
 [&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
-title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>&nbsp;&nbsp;]
+title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 </tr>

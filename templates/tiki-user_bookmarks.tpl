@@ -23,7 +23,7 @@
 <tr>
   <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border='0' src='pics/icons/folder.png' alt='{tr}Folder in{/tr}' width='16' height='16' /></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
   <td class="{cycle}">
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a> &nbsp;
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}remove{/tr}' title='{tr}remove folder{/tr}' border='0' width='16' height='16' /></a>
   </td>
 </tr>
@@ -48,7 +48,7 @@
   </td>
   <td class="{cycle advance=false}">{textformat wrap="60" wrap_cut=true wrap_char="<br />"}{$urls[ix].url}{/textformat}</td>
   <td class="{cycle}">
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' width='16' height='16' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
     {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='pics/icons/arrow_refresh.png' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' width='16' height='16' /></a>
     {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.9 2007-02-06 22:01:42 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.10 2007-07-17 16:21:49 jyhem Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -29,6 +29,6 @@
     </td>
 </tr>
 <tr><td class="formcolor">{tr}Add Notification Email{/tr}</td><td class="formcolor"><input type="text" name="email" value="{$email|escape}" />&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}"><img src="pics/icons/wrench.png" border="0" alt="{tr}Admin notifications{/tr}" /></a></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}edit{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}Edit{/tr}" /></td></tr>
 </table>
 </form>

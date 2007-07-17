@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.85 2007-07-12 21:43:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.86 2007-07-17 16:21:49 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -6,7 +6,7 @@
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Trackers tpl{/tr}">
-<img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}edit{/tr}" width='16' height='16' /></a>{/if}</h1>
+<img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}Edit{/tr}" width='16' height='16' /></a>{/if}</h1>
 
 <div class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -67,14 +67,14 @@
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
 <td class="auto">
-<a title="{tr}edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}edit{/tr}" border='0' width='16' height='16' /></a>
+<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
 <a title="{tr}fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/table.png' alt="{tr}fields{/tr}" border='0' width='16' height='16' /></a>
 {if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
 <img src='pics/icons/key_active.png' border='0' alt="{tr}active permissions{/tr}" width='16' height='16' /></a>{else}
 <a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
 <img src='pics/icons/key.png' border='0' alt="{tr}permissions{/tr}" width='16' height='16' /></a>{/if}
 &nbsp;
-<a title="{tr}delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='pics/icons/cross.png' alt="{tr}delete{/tr}" border='0' width='16' height='16' /></a></td>
+<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='pics/icons/cross.png' alt="{tr}Delete{/tr}" border='0' width='16' height='16' /></a></td>
 </tr>
 {/section}
 </table>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.90 2007-07-14 22:51:06 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.91 2007-07-17 16:21:50 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -241,7 +241,7 @@ a moderator approves it.{/tr}</small>
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected topics{/tr}' />
 	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
 	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}lock{/tr}' title='{tr}lock selected topics{/tr}' />
-	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected topics{/tr}' />
+	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}delete selected topics{/tr}' />
 	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
@@ -364,7 +364,7 @@ a moderator approves it.{/tr}</small>
 
   {if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"
-     class="admlink">{html_image file='pics/icons/page_edit.png' border='0'  width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
+     class="admlink">{html_image file='pics/icons/page_edit.png' border='0'  width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'}</a>
    {/if}
   {if $tiki_p_admin_forum eq 'y' }
    <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"

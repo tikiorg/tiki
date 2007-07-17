@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.42 2007-06-16 16:02:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.43 2007-07-17 16:21:49 jyhem Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -122,8 +122,8 @@
             	{if $imagerotate}
             		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' width='11' height='11 alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
             	{/if}
-            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' width='11' height='11 alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
-            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' width='11' height='11 alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}Delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' width='11' height='11 alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' width='11' height='11 alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
           {/if}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId=`$item.imageId`&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
 <img src='img/icons2/admin_unhide.gif' border='0' width='11' height='11 alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.51 2007-06-08 10:56:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.52 2007-07-17 16:21:48 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -98,7 +98,7 @@
 <tr class="{cycle}">
 <td>{$channels[user].fieldId}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}edit{/tr}"><img src='pics/icons/page_edit.png' border='0' width="16" hight="16" alt="{tr}edit{/tr}"></a>
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}" title="{tr}Edit{/tr}"><img src='pics/icons/page_edit.png' border='0' width="16" hight="16" alt="{tr}Edit{/tr}"></a>
 {/if}</td>
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>

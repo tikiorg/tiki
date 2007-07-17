@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.23 2007-07-15 21:40:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.24 2007-07-17 16:21:50 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -34,7 +34,7 @@
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}">{$user_pages[ix].date|tiki_short_datetime}</td>
-  <td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}: {$user_pages[ix].pageName}" src="pics/icons/page_edit.png" width="16" height="16" /></a></td>
+  <td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}: {$user_pages[ix].pageName}" src="pics/icons/page_edit.png" width="16" height="16" /></a></td>
   </tr>
   {/section}
   </table>
@@ -54,7 +54,7 @@
   <tr><td class="{cycle advance=false}">
   <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
   </td><td class="{cycle}" style="text-align:center;">
-  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
+  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
   </td></tr>
   {/section}
   </table>
@@ -129,7 +129,7 @@
   <tr><td class="{cycle advance=false}">
   <a class="link" title="{tr}view{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
   </td><td class="{cycle}" style="text-align:center;">
-  <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
+  <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
   </td></tr>
   {/section}
   </table>

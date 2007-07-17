@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.27 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.28 2007-07-17 16:21:49 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -66,7 +66,7 @@
 <td class="{cycle advance=false}">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+<a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}{if $forum_list_desc eq 'y'}<br />
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>

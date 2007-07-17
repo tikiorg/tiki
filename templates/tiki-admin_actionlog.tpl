@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.30 2007-07-13 20:59:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.31 2007-07-17 16:21:45 jyhem Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -134,7 +134,7 @@
 {/section}
 </td>
 {/if}
-{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
+{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}edit contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}Edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
 {/if}
 <!-- {cycle} -->
 </tr>

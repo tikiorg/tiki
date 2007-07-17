@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.25 2007-06-16 16:02:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.26 2007-07-17 16:21:45 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -46,7 +46,7 @@
 <td class="{cycle advance=false}">{$words[user].url}</td>
 <td class="{cycle advance=true}">
 <a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" 
-title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 </td>
 </tr>
 {sectionelse}

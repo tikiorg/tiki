@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.19 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.20 2007-07-17 16:21:45 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -209,12 +209,12 @@
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
 		{if $files[changes].archiveId == 0}
-			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' {if $gal_info.lockable eq 'y' and $files[changes].lockedby}alt='{tr}edit/unlock{/tr}'{else}alt='{tr}edit{/tr}'{/if} {if $gal_info.lockable eq 'y' and $files[changes].lockedby}title='{tr}edit/unlock{/tr}'{else}title='{tr}edit{/tr}'{/if} /></a>
+			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' {if $gal_info.lockable eq 'y' and $files[changes].lockedby}alt='{tr}edit/unlock{/tr}'{else}alt='{tr}Edit{/tr}'{/if} {if $gal_info.lockable eq 'y' and $files[changes].lockedby}title='{tr}edit/unlock{/tr}'{else}title='{tr}Edit{/tr}'{/if} /></a>
 		{/if}
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
-			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
 	{/if}
 </td>
 </tr>
@@ -238,7 +238,7 @@
 {if !isset($file_info)}
 	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
-<input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
+<input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 </div>
 {if $smarty.request.movesel_x and !isset($file_info)} 
 <div>

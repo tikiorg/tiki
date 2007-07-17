@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.61 2007-06-16 16:02:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.62 2007-07-17 16:21:49 jyhem Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -214,7 +214,7 @@
   {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/page_edit.png' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' width='16' height='16'></a>
+    <a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0' width='16' height='16'></a>
   {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}
@@ -236,7 +236,7 @@
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    &nbsp;&nbsp;<a class="gallink" title="{tr}delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='pics/icons/cross.png' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+    &nbsp;&nbsp;<a class="gallink" title="{tr}Delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='pics/icons/cross.png' height="16" width="16" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
   {/if}
   {/if}
 

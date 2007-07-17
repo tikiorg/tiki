@@ -10,7 +10,7 @@
 <div style="text-align:right" class='box-title'>
 {if $calendar_sticky_popup eq "y"}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}details{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16"
-alt="{tr}zoom{/tr}" /></a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edit_item.php?calitemId={$cellid}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}edit{/tr}"
+alt="{tr}zoom{/tr}" /></a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edit_item.php?calitemId={$cellid}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}"
 /></a><a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=1" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}
 {elseif $cellmodif eq "y"}
 ... {tr}click to edit{/tr}

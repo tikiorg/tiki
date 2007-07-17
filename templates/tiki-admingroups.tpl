@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.74 2007-07-14 21:58:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.75 2007-07-17 16:21:49 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -79,8 +79,8 @@ class="prevnext">{tr}All{/tr}</a>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a></td>
-<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" title="{tr}edit{/tr}">{$users[user].groupName}</a></td>
+<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a></td>
+<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
 <td>{tr}{$users[user].groupDesc}{/tr}</td>
 <td>
 {section name=ix loop=$users[user].included}
@@ -92,7 +92,7 @@ class="prevnext">{tr}All{/tr}</a>
 </td>
 <td style="width: 20px;">
 {if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
+title="{tr}Delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
 </td>
 </tr>
 {/section}
@@ -225,7 +225,7 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 {if $memberslist}
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=ix loop=$memberslist}
-<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}remove from group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
+<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}remove from group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
 {/section}
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>

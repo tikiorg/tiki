@@ -18,13 +18,13 @@
 <td>
 <form action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
-<input type="submit" name="remove" value="{tr}delete{/tr}" />
+<input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </form>
 </td>
 <td>
 <form action="tiki-notepad_write.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
-<input type="submit" name="write" value="{tr}edit{/tr}" />
+<input type="submit" name="write" value="{tr}Edit{/tr}" />
 </form>
 </td>
 {if $tiki_p_edit eq 'y'}

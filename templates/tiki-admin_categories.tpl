@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.48 2007-07-15 15:33:55 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.49 2007-07-17 16:21:45 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -34,9 +34,9 @@
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}">
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">
 <img border="0" src="pics/icons/page_edit.png" height="16" width="16" hspace="5" vspace="1" /></a>
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}">
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">
 <img border="0" src="pics/icons/cross.png" height="16" width="16" hspace="5" vspace="1" /></a>
 {if $catree[dx].has_perm eq 'y'}
 <a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}permissions{/tr}" src="pics/icons/key_active.png" /></a>

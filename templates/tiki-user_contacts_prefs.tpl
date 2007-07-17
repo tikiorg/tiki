@@ -82,7 +82,7 @@
 		{else}
 		<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}show{/tr}"><img src="pics/icons/eye.png" border="0" height="16" width="16" alt='{tr}show{/tr}' /></a>
 		{/if}
-		<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+		<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 	</td>
   </tr>
   {/foreach}

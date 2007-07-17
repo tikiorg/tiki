@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.5 2007-07-14 15:40:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.6 2007-07-17 16:21:45 jyhem Exp $ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -14,26 +14,26 @@
 				|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )
 			)
 		}
-		<a title="{tr}edit{/tr}"
+		<a title="{tr}Edit{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_threadId={$comment.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"
 			{else}
 			class="link" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}&amp;edit_reply=1#form"
 			{/if}
-		>{html_image file='pics/icons/page_edit.png' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}'}</a>
+		>{html_image file='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'}</a>
 		{/if}
 
 		{if
 			( $forum_mode neq 'y' and $tiki_p_remove_comments eq 'y' )
 			|| ( $forum_mode eq 'y' and $tiki_p_admin_forum eq 'y' )
 		}
-		<a title="{tr}delete{/tr}"
+		<a title="{tr}Delete{/tr}"
 			{if $first eq 'y'}
 			class="admlink" href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_remove=1&amp;comments_threadId={$comment.threadId}&amp;forumId={$forum_info.forumId}{$comments_per_page_param}"
 			{else}
 			class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;thread_style={$thread_style}"
 			{/if}
-		>{html_image file='pics/icons/cross.png' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}'}</a>
+		>{html_image file='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}'}</a>
 		{/if}
 
 	  	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}

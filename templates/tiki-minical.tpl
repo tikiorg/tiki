@@ -211,7 +211,7 @@
   <tr><td class="formcolor">{tr}Title{/tr}</td>
       <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}save{/tr}" />
       {if $eventId}
-      <input type="submit" name="remove2" value="{tr}delete{/tr}" />
+      <input type="submit" name="remove2" value="{tr}Delete{/tr}" />
       {/if}
       </td>
   </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.18 2007-06-07 12:58:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.19 2007-07-17 16:21:49 jyhem Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -107,7 +107,7 @@ loc="page" crumbs=$crumbs}
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
 {/if}
 <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
-{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}edit{/tr}</a>]{/if} 
+{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}Edit{/tr}</a>]{/if} 
 {if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}cache{/tr}</a>){/if}
 <br />
 <span class="dirsitedesc">{$items[ix].description}</span><br />
