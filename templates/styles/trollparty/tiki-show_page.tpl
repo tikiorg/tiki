@@ -6,7 +6,7 @@
 {/if}
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
-<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page}" class="linkbuttop">{tr}edit{/tr}</a>
+<a title="{tr}Edit{/tr}" href="tiki-editpage.php?page={$page}" class="linkbuttop">{tr}Edit{/tr}</a>
 {/if}
 
 {if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}

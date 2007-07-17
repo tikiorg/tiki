@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.7 2005-05-18 11:03:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.8 2007-07-17 16:33:14 jyhem Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
@@ -22,7 +22,7 @@
   <tr><td>
   <a class="link" title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
   </td><td align="right">
-  (<a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+  (<a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{tr}Edit{/tr}</a>)
   </td></tr>
   {/section}
   </table>
@@ -39,7 +39,7 @@
   <tr><td>
   <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
   </td><td align="right">
-  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}edit{/tr})</a>
+  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}Edit{/tr})</a>
   </td></tr>
   {/section}
   </table>
@@ -56,7 +56,7 @@
   <tr><td>
   <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
   </td><td align="right">
-  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
+  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}Edit{/tr})</a>
   </td>
   </tr>
   {/section}
@@ -101,7 +101,7 @@
   <tr><td>
   <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
   </td><td align="right">
-  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
+  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}Edit{/tr}</a>)
   </td></tr>
   {/section}
   </table>

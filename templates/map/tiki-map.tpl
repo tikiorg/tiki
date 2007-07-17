@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.38 2007-01-22 02:55:44 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.39 2007-07-17 16:33:13 jyhem Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -184,7 +184,7 @@
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
-				<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width="16" height="16" /></a>
+				<img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
 			{/if}
 			&nbsp;
 			<a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 

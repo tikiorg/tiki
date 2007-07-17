@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.17 2006-09-30 19:28:04 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.18 2007-07-17 16:33:13 jyhem Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -21,7 +21,7 @@
 <td class="odd">
 {if $tiki_p_map_edit eq 'y'}
 <a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&amp;mode=editing">
-<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width='16' height='16' />
+<img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width='16' height='16' />
 </a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
@@ -47,7 +47,7 @@
 <td class="even">
 {if $tiki_p_map_edit eq 'y'}
 <a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&amp;mode=editing">
-<img src="pics/icons/wrench.png" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" width='16' height='16' />
+<img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width='16' height='16' />
 </a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
@@ -105,7 +105,7 @@
 <div align="center">
 <form class="wikiaction" action="tiki-map_edit.php" method="get" id='editpageform'>
 <input type="hidden" name="mapfile" value="{$mapfile}" />
-<input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="submit" name="delete" value="{tr}Delete{/tr}" />
 </form>
 </div>
 {/if}

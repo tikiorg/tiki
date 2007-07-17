@@ -73,9 +73,9 @@
 {if !$lock}
 	{if $tiki_p_edit eq 'y' or $page|lower eq 'sandbox'}
 		{if $beingEdited eq 'y'}
-			<span class="tabbut"><a title="{$semUser}" class="highlight" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
+			<span class="tabbut"><a title="{$semUser}" class="highlight" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}Edit{/tr}</a></span>
 		{else}
-			<span class="tabbut"><a href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
+			<span class="tabbut"><a href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}Edit{/tr}</a></span>
 		{/if}
 	{/if}
 {/if}
