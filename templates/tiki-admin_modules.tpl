@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.49 2007-07-16 19:24:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.50 2007-07-17 15:13:07 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -43,9 +43,9 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" alt='{tr}edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" alt='{tr}assign{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" alt='{tr}delete{/tr}' /></a></td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}assign{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}delete{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
