@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.59 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.60 2007-07-17 14:50:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -203,6 +203,8 @@ if ($feature_article_comments == 'y') {
 	$comments_prefix_var = 'article:';
 	$comments_object_var = 'articleId';
 	include_once ("comments.php");
+	if (isset($_REQUEST['show_comzone']) && $_REQUEST['show_comzone'] == 'y')
+		$smarty->assign('show_comzone', 'y');
 }
 
 $objId = $_REQUEST['articleId'];

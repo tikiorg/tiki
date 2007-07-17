@@ -99,7 +99,7 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
 {tr}add comment{/tr}
 {elseif $listpages[ix].comments_cant == 1}

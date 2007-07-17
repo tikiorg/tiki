@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.86 2007-07-11 22:14:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.87 2007-07-17 14:50:20 sylvieg Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
 {else}
 <span id="comments" />
 <div id="comzone"
-{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}
+{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or (isset($show_comzone) and $show_comzone eq 'y')}
 	style="display:block;"
 {else}
 	style="display:none;"
