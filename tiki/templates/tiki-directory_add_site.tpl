@@ -4,12 +4,14 @@
 <br /><br />
 
 {if $categs[0] eq ''}
-{tr}You cannot add sites until Directory Categories are setup.{/tr}<br />
-{tr}Please contact the Site Administrator{/tr}
+  {tr}You cannot add sites until Directory Categories are setup.{/tr}<br />
+  {tr}Please contact the Site Administrator{/tr}
 {else}
 {if $save eq 'y'}
 <h2>{tr}Site added{/tr}</h2>
-{tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
+<br /><b>
+  {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
+</b><br /><br />
 <table class="normal">
 <tr>
     <td class="formcolor">{tr}Name{/tr}:</td>
@@ -26,18 +28,23 @@
   <tr>
     <td class="formcolor">{tr}Country{/tr}:</td>
     <td class="formcolor">{$info.country}</td>
-</tr></table>
+</tr>
+</table>
 
 {else}
+  {if $msg}
+    <div class="commentsedithelp">
+      <br /><b>{tr}{$msg}{/tr}</b><br /><br />
+    </div>
+  {/if}
+
 {* Dislay a form to add or edit a site *}
 <h2>{tr}Add or edit a site{/tr}</h2>
 <form action="tiki-directory_add_site.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
+
 <table class="normal">
-{if $msg}
-	<tr><td class="formcolor" colspan="2"><span class="hightlight">{$msg}</span></td></tr>
-{/if}
   <tr>
     <td class="formcolor">{tr}Name{/tr}:</td>
     <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
@@ -48,7 +55,7 @@
   </tr>
   <tr>
     <td class="formcolor">{tr}URL:{/tr}</td>
-    <td class="formcolor"><input type="text" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" /></td>
+    <td class="formcolor"><input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" /></td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Categories:{/tr}</td>
