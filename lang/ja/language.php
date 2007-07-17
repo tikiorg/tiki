@@ -4593,6 +4593,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "The\ncontent on this page is licensed under the terms of the",
 "The original document is available at" => "The original document is\navailable at",
 "rename" => "名前変更",
+"Rename" => "名前変更",
 "unlock" => "ロック解除",
 "lock" => "ロック",
 "perms" => "権限",

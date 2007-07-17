@@ -3766,6 +3766,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "O conteúdo desta página é licenciado sob os termos do",
 "The original document is available at" => "O documento original pode ser encontrado em",
 "rename" => "renomear",
+"Rename" => "Renomear",
 "unlock" => "desbloquear",
 "lock" => "bloquear",
 "history" => "histórico",

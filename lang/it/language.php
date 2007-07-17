@@ -4669,6 +4669,7 @@ $lang=Array(
 "Save to notepad" => "Salva nel blocco note",
 "page" => "pagina",
 "rename" => "rinomina",
+"Rename" => "Rinomina",
 "unlock" => "sblocca",
 "lock" => "blocca",
 "history" => "versioni",

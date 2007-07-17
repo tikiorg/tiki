@@ -2234,6 +2234,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Tämän sivun sisältö on lisenssoitu seuraavien ehtojen mukaan",
 "The original document is available at" => "Alkuperäinen asiakirja on saatavilla",
 "rename" => "nimeä",
+"Rename" => "Nimeä",
 "unlock" => "aukaise",
 "lock" => "lukitse",
 "perms" => "oikeud",

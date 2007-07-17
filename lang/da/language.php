@@ -4149,6 +4149,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Indholdet på disse sider er beskyttet af betingelserne beskrevet i",
 "The original document is available at" => "Deyt originale dokument er tilgængeligt på",
 "rename" => "omdøb",
+"Rename" => "Omdøb",
 "unlock" => "lås op",
 "lock" => "lås",
 "perms" => "tilladelser",

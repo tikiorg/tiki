@@ -3798,6 +3798,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Innehållet på denna sida är licensierat under villkor av",
 "The original document is available at" => "Orginaldokumentet finns tillgängligt på",
 "rename" => "döp om",
+"Rename" => "Döp om",
 "unlock" => "lås upp",
 "lock" => "lås",
 "perms" => "rättigheter",

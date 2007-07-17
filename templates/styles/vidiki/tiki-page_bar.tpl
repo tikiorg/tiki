@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.7 2007-07-17 16:33:15 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.8 2007-07-17 16:57:58 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -23,7 +23,7 @@
 <li><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="">{tr}remove{/tr}</a></li>
 {/if}
 {if $tiki_p_rename eq 'y' && $editable}
-<li><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="">{tr}rename{/tr}</a></li>
+<li><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="">{tr}Rename{/tr}</a></li>
 {/if}
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="">{tr}unlock{/tr}</a></li>

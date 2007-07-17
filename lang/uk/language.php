@@ -3919,6 +3919,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Вміст цієї сторінки підлягає ліцензуванню на умовах ",
 "The original document is available at" => "Оригінал документу знаходиться на",
 "rename" => "змінити назву",
+"Rename" => "змінити назву",
 "unlock" => "відімкнути",
 "lock" => "замкнути",
 "perms" => "дозволи",

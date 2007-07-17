@@ -4164,6 +4164,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Obsah tejto stránky je licencovaný podľa podmienok",
 "The original document is available at" => "Pôvodný dokument je k dispozícii na",
 "rename" => "premenovať",
+"Rename" => "Premenovať",
 "unlock" => "odomknúť",
 "lock" => "uzamknúť",
 "perms" => "práva",

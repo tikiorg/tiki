@@ -1308,6 +1308,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "محتواي اين صفحه تحت اين شرايط قرار دارد",
 "The original document is available at" => "مستند اصلي در اين‌جا قابل دسترسي است",
 "rename" => "تغيير نام",
+"Rename" => "تغيير نام",
 "unlock" => "بازكردن قفل",
 "lock" => "قفلش كن",
 "perms" => "حقوق دسترسي‌ها",

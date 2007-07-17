@@ -2899,6 +2899,7 @@ $lang=Array(
 "The content on this page is licensed under the terms of the" => "Obsah této stránky smí být šířen podle pravidel licence",
 "The original document is available at" => "Původní dokument je k dispozici na",
 "rename" => "Přejmenovat",
+"Rename" => "Přejmenovat",
 "unlock" => "odemknout",
 "lock" => "Zamknout",
 "perms" => "Práva",
