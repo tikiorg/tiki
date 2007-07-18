@@ -14,11 +14,11 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Bruno Pedro <bpedro@co.sapo.pt> 
+ * @author     Bruno Pedro <bpedro@co.sapo.pt>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: SOAP.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: SOAP.php,v 1.13 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.0
  */
@@ -83,7 +83,7 @@ require_once 'SOAP/Client.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.0
  */
@@ -170,6 +170,7 @@ class Auth_Container_SOAP extends Auth_Container
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_SOAP::fetchData() called.', AUTH_LOG_DEBUG);
         // check if all required options are set
         if (array_intersect($this->_requiredOptions, array_keys($this->_options)) != $this->_requiredOptions) {
             return false;

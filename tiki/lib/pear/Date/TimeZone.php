@@ -36,7 +36,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: TimeZone.php,v 1.5 2007-02-04 20:09:41 mose Exp $
+ * @version    CVS: Id: TimeZone.php,v 1.14 2006/11/22 01:03:12 firman Exp 
  * @link       http://pear.php.net/package/Date
  */
 

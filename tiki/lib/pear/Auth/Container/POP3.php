@@ -14,13 +14,13 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Stefan Ekman <stekman@sedata.org> 
+ * @author     Stefan Ekman <stekman@sedata.org>
  * @author     Martin Jansen <mj@php.net>
- * @author     Mika Tuupola <tuupola@appelsiini.net> 
+ * @author     Mika Tuupola <tuupola@appelsiini.net>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: POP3.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: POP3.php,v 1.12 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.0
  */
@@ -44,11 +44,11 @@ require_once 'Net/POP3.php';
  * @category   Authentication
  * @package    Auth
  * @author     Martin Jansen <mj@php.net>
- * @author     Mika Tuupola <tuupola@appelsiini.net> 
+ * @author     Mika Tuupola <tuupola@appelsiini.net>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.0
  */
@@ -77,7 +77,7 @@ class Auth_Container_POP3 extends Auth_Container
      *      String 'DIGEST-MD5','CRAM-MD5','LOGIN','PLAIN','APOP','USER'
      *                      - Attempt this authentication style first
      *                        then fallback to autodetection.
-     * @var mixed 
+     * @var mixed
      */
     var $method=true;
 
@@ -127,9 +127,11 @@ class Auth_Container_POP3 extends Auth_Container
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_POP3::fetchData() called.', AUTH_LOG_DEBUG);
         $pop3 =& new Net_POP3();
         $res = $pop3->connect($this->server, $this->port, $this->method);
         if (!$res) {
+            $this->log('Connection to POP3 server failed.', AUTH_LOG_DEBUG);
             return $res;
         }
         $result = $pop3->login($username, $password);

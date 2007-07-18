@@ -40,7 +40,7 @@
  * @copyright  1999-2006 Monte Ohrt, Pierre-Alain Joye, Daniel Convissor
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Calc.php,v 1.4 2007-02-04 20:09:41 mose Exp $
+ * @version    CVS: Id: Calc.php,v 1.35 2006/11/21 23:01:13 firman Exp 
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.2
  */

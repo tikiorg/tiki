@@ -43,7 +43,7 @@
  * @copyright  1997-2006 Allan Kent
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Human.php,v 1.4 2007-02-04 20:09:41 mose Exp $
+ * @version    CVS: Id: Human.php,v 1.6 2006/11/21 17:38:15 firman Exp 
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.3
  */

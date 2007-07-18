@@ -36,7 +36,7 @@
  * @copyright  1997-2006 Leandro Lucarella, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Span.php,v 1.3 2007-02-04 20:09:41 mose Exp $
+ * @version    CVS: Id: Span.php,v 1.9 2006/11/21 17:38:15 firman Exp 
  * @link       http://pear.php.net/package/Date
  * @since      File available since Release 1.4
  */

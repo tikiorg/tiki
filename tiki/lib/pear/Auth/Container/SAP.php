@@ -20,7 +20,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: SAP.php,v 1.1 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: SAP.php,v 1.5 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.4.0
  */
@@ -48,13 +48,13 @@ require_once 'PEAR.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.1 $
+ * @version    Release: 1.5.4  File: $Revision: 1.2 $
  * @since      Class available since Release 1.4.0
  */
 class Auth_Container_SAP extends Auth_Container {
 
     // {{{ properties
-    
+
     /**
      * @var array Default options
      */
@@ -116,6 +116,7 @@ class Auth_Container_SAP extends Auth_Container {
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_SAP::fetchData() called.', AUTH_LOG_DEBUG);
         $connection_options = $this->options;
         $connection_options['USER'] = $username;
         $connection_options['PASSWD'] = $password;
@@ -130,6 +131,7 @@ class Auth_Container_SAP extends Auth_Container {
             return false;
         } else {
             if (!empty($this->options['GETSSO2'])) {
+                $this->log('Attempting to retrieve SSO2 ticket.', AUTH_LOG_DEBUG);
                 if ($ticket = @saprfc_get_ticket($rfc)) {
                     $this->options['MYSAPSSO2'] = $ticket;
                     unset($this->options['GETSSO2']);
@@ -141,7 +143,7 @@ class Auth_Container_SAP extends Auth_Container {
             @saprfc_close($rfc);
             return true;
         }
-    
+
     }
 
     // }}}

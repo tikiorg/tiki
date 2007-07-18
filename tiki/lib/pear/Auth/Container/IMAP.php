@@ -14,17 +14,17 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Jeroen Houben <jeroen@terena.nl> 
+ * @author     Jeroen Houben <jeroen@terena.nl>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: IMAP.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: IMAP.php,v 1.18 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.0
  */
 
 /**
- * Include Auth_Container base class 
+ * Include Auth_Container base class
  */
 require_once "Auth/Container.php";
 
@@ -77,7 +77,7 @@ require_once "PEAR.php";
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.0
  */
@@ -148,6 +148,7 @@ class Auth_Container_IMAP extends Auth_Container
      * @access private
      */
     function _checkServer() {
+        $this->log('Auth_Container_IMAP::_checkServer() called.', AUTH_LOG_DEBUG);
         $fp = @fsockopen ($this->options['host'], $this->options['port'],
                           $errno, $errstr, $this->options['timeout']);
         if (is_resource($fp)) {
@@ -188,13 +189,16 @@ class Auth_Container_IMAP extends Auth_Container
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_IMAP::fetchData() called.', AUTH_LOG_DEBUG);
         $dsn = '{'.$this->options['host'].':'.$this->options['port'].$this->options['baseDSN'].'}';
         $conn = @imap_open ($dsn, $username, $password, OP_HALFOPEN);
         if (is_resource($conn)) {
+            $this->log('Successfully connected to IMAP server.', AUTH_LOG_DEBUG);
             $this->activeUser = $username;
             @imap_close($conn);
             return true;
         } else {
+            $this->log('Connection to IMAP server failed.', AUTH_LOG_DEBUG);
             $this->activeUser = '';
             return false;
         }

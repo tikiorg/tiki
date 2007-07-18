@@ -41,7 +41,7 @@
  * @copyright  1997-2006 Baba Buehler, Pierre-Alain Joye
  * @license    http://www.opensource.org/licenses/bsd-license.php
  *             BSD License
- * @version    CVS: $Id: Date.php,v 1.6 2007-02-06 04:24:52 mose Exp $
+ * @version    CVS: Id: Date.php,v 1.41 2006/11/22 00:28:03 firman Exp 
  * @link       http://pear.php.net/package/Date
  */
 
@@ -200,7 +200,7 @@ class Date
     {
         $this->tz = Date_TimeZone::getDefault();
         if (is_null($date)) {
-            $this->setDate(gmdate("Y-m-d H:i:s"));
+            $this->setDate(date("Y-m-d H:i:s"));
         } elseif (is_a($date, 'Date')) {
             $this->copy($date);
         } else {
@@ -250,7 +250,7 @@ class Date
             }
         } elseif (is_numeric($date)) {
             // UNIXTIME
-            $this->setDate(gmdate("Y-m-d H:i:s", $date));
+            $this->setDate(date("Y-m-d H:i:s", $date));
         } else {
             // unknown format
             $this->year       = 0;
@@ -391,16 +391,16 @@ class Date
                 $nextchar = substr($format,$strpos + 1,1);
                 switch ($nextchar) {
                 case "a":
-                    $output .= tra(Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year, $this->getWeekdayAbbrnameLength));
+                    $output .= Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year, $this->getWeekdayAbbrnameLength);
                     break;
                 case "A":
-                    $output .= tra(Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year));
+                    $output .= Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year);
                     break;
                 case "b":
-                    $output .= tra(Date_Calc::getMonthAbbrname($this->month));
+                    $output .= Date_Calc::getMonthAbbrname($this->month);
                     break;
                 case "B":
-                    $output .= tra(Date_Calc::getMonthFullname($this->month));
+                    $output .= Date_Calc::getMonthFullname($this->month);
                     break;
                 case "C":
                     $output .= sprintf("%02d",intval($this->year/100));
