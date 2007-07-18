@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-07-10 14:01:27 $
+# $Date: 2007-07-18 16:58:37 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -232,7 +232,8 @@ CREATE TABLE messu_messages (
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
   priority int(2) default NULL,
-  PRIMARY KEY  (msgId)
+  PRIMARY KEY  (msgId),
+  KEY userIsRead (user, isRead)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -330,7 +331,8 @@ CREATE TABLE tiki_actionlog_params (
   actionId int(8) NOT NULL,
   name varchar(40) NOT NULL,
   value text,
-  KEY  (actionId)
+  KEY (actionId),
+  KEY nameValue (name, value(200))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -382,6 +384,10 @@ CREATE TABLE tiki_articles (
   KEY body (body(255)),
   KEY author (author(32)),
   KEY nbreads (nbreads),
+  KEY topicId (topicId),
+  KEY publishDate (publishDate),
+  KEY expireDate (expireDate),
+  KEY type (type),
   FULLTEXT KEY ft (title,heading,body)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -408,7 +414,9 @@ CREATE TABLE tiki_article_types (
   show_lang varchar(1) default 'n',
   creator_edit varchar(1) default NULL,
   comment_can_rate_article char(1) default NULL,
-  PRIMARY KEY  (type)
+  PRIMARY KEY  (type),
+  KEY show_pre_publ (show_pre_publ),
+  KEY show_post_expire (show_post_expire)
 ) TYPE=MyISAM ;
 
 INSERT IGNORE INTO tiki_article_types(type) VALUES ('Article');
@@ -989,7 +997,8 @@ CREATE TABLE tiki_comments (
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
   KEY data (data(255)),
-  KEY object (object),
+  KEY objectType (object, objectType),
+  KEY commentDate (commentDate),
   KEY hits (hits),
   KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
@@ -1378,7 +1387,8 @@ CREATE TABLE tiki_forum_attachments (
   dir varchar(200) default NULL,
   created int(14) default NULL,
   path varchar(250) default NULL,
-  PRIMARY KEY  (attId)
+  PRIMARY KEY  (attId),
+  KEY threadId (threadId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1464,6 +1474,7 @@ CREATE TABLE tiki_forums (
   mandatory_contribution char(1) default NULL,
   threadStyle varchar(100) default NULL,
   commentsPerPage varchar(100) default NULL,
+  is_flat char(1) default NULL,
   PRIMARY KEY  (forumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1556,6 +1567,8 @@ CREATE TABLE tiki_galleries (
   KEY name (name),
   KEY description (description(255)),
   KEY hits (hits),
+  KEY parentgallery (parentgallery),
+  KEY visibleUser (visible, user),
   FULLTEXT KEY ft (name,description)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1783,7 +1796,8 @@ CREATE TABLE tiki_link_cache (
   url varchar(250) default NULL,
   data longblob,
   refresh int(14) default NULL,
-  PRIMARY KEY  (cacheId)
+  PRIMARY KEY  (cacheId),
+  KEY url (url)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 # --------------------------------------------------------
@@ -2041,10 +2055,12 @@ CREATE TABLE tiki_menu_options (
   perm varchar(255) default NULL,
   groupname varchar(255) default NULL,
   userlevel int(4) default 0,
-  PRIMARY KEY  (optionId)
+  PRIMARY KEY  (optionId),
+  UNIQUE KEY uniq_menu (menuId,name,url,position,section,perm)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','./',10,'','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Chat','tiki-chat.php',15,'feature_chat','tiki_p_chat','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contact us','tiki-contact.php',20,'feature_contact','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','');
@@ -2053,24 +2069,25 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Users map','tiki-gmap_usermap.php',36,'feature_gmap','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_userPreferences','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Messages','messu-mailbox.php',60,'feature_messages','tiki_p_messages','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tasks','tiki-user_tasks.php',65,'feature_tasks','tiki_p_tasks','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Bookmarks','tiki-user_bookmarks.php',70,'feature_user_bookmarks','tiki_p_create_bookmarks','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Modules','tiki-user_assigned_modules.php',75,'user_assigned_modules','tiki_p_configure_modules','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Newsreader','tiki-newsreader_servers.php',80,'feature_newsreader','tiki_p_newsreader','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_webmail','tiki_p_use_webmail','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_contacts','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Notepad','tiki-notepad_list.php',90,'feature_notepad','tiki_p_notepad','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My files','tiki-userfiles.php',95,'feature_userfiles','tiki_p_userfiles','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','User menu','tiki-usermenu.php',100,'feature_usermenu','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mini calendar','tiki-minical.php',105,'feature_minical','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My watches','tiki-user_watches.php',110,'feature_user_watches','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'feature_mytiki','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Messages','messu-mailbox.php',60,'feature_mytiki,feature_messages','tiki_p_messages','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tasks','tiki-user_tasks.php',65,'feature_mytiki,feature_tasks','tiki_p_tasks','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Bookmarks','tiki-user_bookmarks.php',70,'feature_mytiki,feature_user_bookmarks','tiki_p_create_bookmarks','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Modules','tiki-user_assigned_modules.php',75,'feature_mytiki,user_assigned_modules','tiki_p_configure_modules','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Newsreader','tiki-newsreader_servers.php',80,'feature_mytiki,feature_newsreader','tiki_p_newsreader','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Webmail','tiki-webmail.php',85,'feature_mytiki,feature_webmail','tiki_p_use_webmail','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_mytiki,feature_contacts','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Notepad','tiki-notepad_list.php',90,'feature_mytiki,feature_notepad','tiki_p_notepad','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','User menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mini calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','User processes','tiki-g-user_processes.php',152,'feature_workflow','tiki_p_use_workflow','');
@@ -2329,6 +2346,7 @@ CREATE TABLE tiki_minical_topics (
 
 DROP TABLE IF EXISTS tiki_modules;
 CREATE TABLE tiki_modules (
+  moduleId int(8) NOT NULL auto_increment,
   name varchar(200) NOT NULL default '',
   position char(1) default NULL,
   ord int(4) default NULL,
@@ -2338,7 +2356,9 @@ CREATE TABLE tiki_modules (
   rows int(4) default NULL,
   params varchar(255) default NULL,
   groups text,
-  PRIMARY KEY  (name, position, ord)
+  PRIMARY KEY  (name, position, ord),
+  KEY positionType (position, type),
+  KEY moduleId (moduleId)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
@@ -3033,7 +3053,9 @@ CREATE TABLE tiki_sessions (
   user varchar(200) default NULL,
   timestamp int(14) default NULL,
   tikihost varchar(200) default NULL,
-  PRIMARY KEY  (sessionId)
+  PRIMARY KEY  (sessionId),
+  KEY user (user),
+  KEY timestamp (timestamp)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -4100,7 +4122,8 @@ CREATE TABLE users_permissions (
   level varchar(80) default NULL,
   type varchar(20) default NULL,
   admin varchar(1) default NULL,
-  PRIMARY KEY  (permName)
+  PRIMARY KEY  (permName),
+  KEY type (type)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 # 
@@ -4186,6 +4209,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_edit_own_posts', 'Can edit own forum posts', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_attach', 'Can attach to forum posts', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_autoapp', 'Auto approve forum posts', 'editors', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_post', 'Can post in forums', 'registered', 'forums');
