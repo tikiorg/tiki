@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: Array.php,v 1.1 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: Array.php,v 1.5 2007/06/12 03:11:26 aashley Exp 
  * @since      File available since Release 1.4.0
  */
 
@@ -64,7 +64,7 @@ require_once "PEAR.php";
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.1 $
+ * @version    Release: 1.5.4  File: $Revision: 1.2 $
  * @since      File available since Release 1.4.0
  */
 
@@ -99,16 +99,16 @@ class Auth_Container_Array extends Auth_Container {
     {
         if (!is_array($data)) {
             PEAR::raiseError('The options for Auth_Container_Array must be an array');
-        } 
+        }
         if (isset($data['users']) && is_array($data['users'])) {
             $this->users = $data['users'];
         } else {
             $this->users = array();
-            PEAR::raiseError('Auth_Container_Array: no user data found inoptions array');
-        } 
+            PEAR::raiseError('Auth_Container_Array: no user data found in options array');
+        }
         if (isset($data['cryptType'])) {
             $this->cryptType = $data['cryptType'];
-        } 
+        }
     }
 
     // }}}
@@ -128,12 +128,13 @@ class Auth_Container_Array extends Auth_Container {
      */
     function fetchData($user, $pass)
     {
+        $this->log('Auth_Container_Array::fetchData() called.', AUTH_LOG_DEBUG);
         if (   isset($this->users[$user])
             && $this->verifyPassword($pass, $this->users[$user], $this->cryptType)) {
             return true;
         }
         return false;
-    } 
+    }
 
     // }}}
     // {{{ listUsers()
@@ -145,15 +146,16 @@ class Auth_Container_Array extends Auth_Container {
      */
     function listUsers()
     {
+        $this->log('Auth_Container_Array::listUsers() called.', AUTH_LOG_DEBUG);
         $ret = array();
         foreach ($this->users as $username => $password) {
             $ret[]['username'] = $username;
-        } 
+        }
         return $ret;
-    } 
+    }
 
     // }}}
 
-} 
+}
 
 ?>

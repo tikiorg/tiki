@@ -14,14 +14,14 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Stefan Ekman <stekman@sedata.org> 
+ * @author     Stefan Ekman <stekman@sedata.org>
  * @author     Martin Jansen <mj@php.net>
- * @author     Mika Tuupola <tuupola@appelsiini.net> 
+ * @author     Mika Tuupola <tuupola@appelsiini.net>
  * @author     Michael Wallner <mike@php.net>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: File.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: File.php,v 1.25 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  */
 
@@ -45,14 +45,14 @@ require_once "PEAR.php";
  *
  * @category   Authentication
  * @package    Auth
- * @author     Stefan Ekman <stekman@sedata.org> 
+ * @author     Stefan Ekman <stekman@sedata.org>
  * @author     Martin Jansen <mj@php.net>
- * @author     Mika Tuupola <tuupola@appelsiini.net> 
+ * @author     Mika Tuupola <tuupola@appelsiini.net>
  * @author     Michael Wallner <mike@php.net>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  */
 class Auth_Container_File extends Auth_Container
@@ -62,7 +62,7 @@ class Auth_Container_File extends Auth_Container
 
     /**
      * Path to passwd file
-     * 
+     *
      * @var string
      */
     var $pwfile = '';
@@ -85,7 +85,7 @@ class Auth_Container_File extends Auth_Container
      */
     function Auth_Container_File($filename) {
         $this->_setDefaults();
-        
+
         // Only file is a valid option here
         if(is_array($filename)) {
             $this->pwfile = $filename['file'];
@@ -107,19 +107,22 @@ class Auth_Container_File extends Auth_Container
      */
     function fetchData($user, $pass)
     {
+        $this->log('Auth_Container_File::fetchData() called.', AUTH_LOG_DEBUG);
         return File_Passwd::staticAuth($this->options['type'], $this->pwfile, $user, $pass);
     }
 
     // }}}
     // {{{ listUsers()
-    
+
     /**
      * List all available users
-     * 
+     *
      * @return   array
      */
     function listUsers()
     {
+        $this->log('Auth_Container_File::listUsers() called.', AUTH_LOG_DEBUG);
+
         $pw_obj = &$this->_load();
         if (PEAR::isError($pw_obj)) {
             return array();
@@ -131,10 +134,12 @@ class Auth_Container_File extends Auth_Container
         }
 
         foreach ($users as $key => $value) {
-            $retVal[] = array("username" => $key, 
+            $retVal[] = array("username" => $key,
                               "password" => $value['passwd'],
                               "cvsuser"  => $value['system']);
         }
+
+        $this->log('Found '.count($retVal).' users.', AUTH_LOG_DEBUG);
 
         return $retVal;
     }
@@ -153,6 +158,7 @@ class Auth_Container_File extends Auth_Container
      */
     function addUser($user, $pass, $additional='')
     {
+        $this->log('Auth_Container_File::addUser() called.', AUTH_LOG_DEBUG);
         $params = array($user, $pass);
         if (is_array($additional)) {
             foreach ($additional as $item) {
@@ -166,17 +172,17 @@ class Auth_Container_File extends Auth_Container
         if (PEAR::isError($pw_obj)) {
             return false;
         }
-        
+
         $res = call_user_func_array(array(&$pw_obj, 'addUser'), $params);
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         $res = $pw_obj->save();
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -191,21 +197,22 @@ class Auth_Container_File extends Auth_Container
      */
     function removeUser($user)
     {
+        $this->log('Auth_Container_File::removeUser() called.', AUTH_LOG_DEBUG);
         $pw_obj = &$this->_load();
         if (PEAR::isError($pw_obj)) {
             return false;
         }
-        
+
         $res = $pw_obj->delUser($user);
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         $res = $pw_obj->save();
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -216,54 +223,56 @@ class Auth_Container_File extends Auth_Container
      * Change password for user in the storage container
      *
      * @param string Username
-     * @param string The new password 
+     * @param string The new password
      */
     function changePassword($username, $password)
     {
+        $this->log('Auth_Container_File::changePassword() called.', AUTH_LOG_DEBUG);
         $pw_obj = &$this->_load();
         if (PEAR::isError($pw_obj)) {
             return false;
         }
-        
+
         $res = $pw_obj->changePasswd($username, $password);
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         $res = $pw_obj->save();
         if (PEAR::isError($res)) {
             return false;
         }
-        
+
         return true;
     }
 
     // }}}
     // {{{ _load()
-    
+
     /**
      * Load and initialize the File_Passwd object
-     * 
+     *
      * @return  object  File_Passwd_Cvs|PEAR_Error
      */
     function &_load()
     {
         static $pw_obj;
-        
+
         if (!isset($pw_obj)) {
+            $this->log('Instanciating File_Password object of type '.$this->options['type'], AUTH_LOG_DEBUG);
             $pw_obj = File_Passwd::factory($this->options['type']);
             if (PEAR::isError($pw_obj)) {
                 return $pw_obj;
             }
-            
+
             $pw_obj->setFile($this->pwfile);
-            
+
             $res = $pw_obj->load();
             if (PEAR::isError($res)) {
                 return $res;
             }
         }
-        
+
         return $pw_obj;
     }
 

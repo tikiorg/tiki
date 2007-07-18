@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: KADM5.php,v 1.1 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: KADM5.php,v 1.6 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.4.0
  */
@@ -48,7 +48,7 @@ require_once 'PEAR.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.1 $
+ * @version    Release: 1.5.4  File: $Revision: 1.2 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.4.0
  */
@@ -82,9 +82,9 @@ class Auth_Container_KADM5 extends Auth_Container {
         if (!extension_loaded('kadm5')) {
             return PEAR::raiseError("Cannot use Kerberos V authentication, KADM5 extension not loaded!", 41, PEAR_ERROR_DIE);
         }
-        
+
         $this->_setDefaults();
-        
+
         if (isset($options['hostname'])) {
             $this->options['hostname'] = $options['hostname'];
         }
@@ -97,7 +97,7 @@ class Auth_Container_KADM5 extends Auth_Container {
         if (isset($options['checkServer'])) {
             $this->options['checkServer'] = $options['checkServer'];
         }
-        
+
         if ($this->options['checkServer']) {
             $this->_checkServer();
         }
@@ -105,7 +105,7 @@ class Auth_Container_KADM5 extends Auth_Container {
 
     // }}}
     // {{{ fetchData()
-    
+
     /**
      * Try to login to the KADM5 server
      *
@@ -114,24 +114,25 @@ class Auth_Container_KADM5 extends Auth_Container {
      * @return  boolean
      */
     function fetchData($username, $password) {
+        $this->log('Auth_Container_KADM5::fetchData() called.', AUTH_LOG_DEBUG);
         if ( ($username == NULL) || ($password == NULL) ) {
             return false;
         }
-        
+
         $server = $this->options['hostname'];
         $realm = $this->options['realm'];
         $check = @kadm5_init_with_password($server, $realm, $username, $password);
-        
+
         if ($check == false) {
             return false;
         } else {
             return true;
         }
     }
-    
+
     // }}}
     // {{{ _setDefaults()
-    
+
     /**
      * Set some default options
      *
@@ -143,10 +144,10 @@ class Auth_Container_KADM5 extends Auth_Container {
         $this->options['timeout'] = 10;
         $this->options['checkServer'] = false;
     }
-    
+
     // }}}
     // {{{ _checkServer()
-    
+
     /**
      * Check if the given server and port are reachable
      *
@@ -162,7 +163,7 @@ class Auth_Container_KADM5 extends Auth_Container {
             return PEAR::raiseError($message, 41, PEAR_ERROR_DIE);
         }
     }
-    
+
     // }}}
 
 }

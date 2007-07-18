@@ -14,11 +14,11 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Lorenzo Alberton <l.alberton@quipo.it> 
+ * @author     Lorenzo Alberton <l.alberton@quipo.it>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: MDB.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: MDB.php,v 1.35 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.3
  */
@@ -44,7 +44,7 @@ require_once 'MDB.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.3
  */
@@ -109,6 +109,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function _connect($dsn)
     {
+        $this->log('Auth_Container_MDB::_connect() called.', AUTH_LOG_DEBUG);
         if (is_string($dsn) || is_array($dsn)) {
             $this->db =& MDB::connect($dsn, $this->options['db_options']);
         } elseif (is_subclass_of($dsn, 'mdb_common')) {
@@ -179,6 +180,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function query($query)
     {
+        $this->log('Auth_Container_MDB::query() called.', AUTH_LOG_DEBUG);
         $err = $this->_prepare();
         if ($err !== true) {
             return $err;
@@ -204,6 +206,7 @@ class Auth_Container_MDB extends Auth_Container
         $this->options['db_fields']   = '';
         $this->options['cryptType']   = 'md5';
         $this->options['db_options']  = array();
+        $this->options['db_where']    = '';
         $this->options['auto_quote']  = true;
     }
 
@@ -261,7 +264,7 @@ class Auth_Container_MDB extends Auth_Container
 
         return '';
     }
-    
+
     // }}}
     // {{{ fetchData()
 
@@ -283,6 +286,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function fetchData($username, $password, $isChallengeResponse=false)
     {
+        $this->log('Auth_Container_MDB::fetchData() called.', AUTH_LOG_DEBUG);
         // Prepare for a database query
         $err = $this->_prepare();
         if ($err !== true) {
@@ -309,6 +313,14 @@ class Auth_Container_MDB extends Auth_Container
                          $this->db->getTextValue($username)
                          );
 
+        // check if there is an optional parameter db_where
+        if ($this->options['db_where'] != '') {
+            // there is one, so add it to the query
+            $query .= " AND ".$this->options['db_where'];
+        }
+
+        $this->log('Running SQL against MDB: '.$query, AUTH_LOG_DEBUG);
+
         $res = $this->db->getRow($query, null, null, null, MDB_FETCHMODE_ASSOC);
 
         if (MDB::isError($res) || PEAR::isError($res)) {
@@ -322,7 +334,7 @@ class Auth_Container_MDB extends Auth_Container
         // Perform trimming here before the hashing
         $password = trim($password, "\r\n");
         $res[$this->options['passwordcol']] = trim($res[$this->options['passwordcol']], "\r\n");
-        
+
         // If using Challenge Response md5 the pass with the secret
         if ($isChallengeResponse) {
             $res[$this->options['passwordcol']] =
@@ -332,7 +344,7 @@ class Auth_Container_MDB extends Auth_Container
                 $res[$this->options['passwordcol']] = md5($res[$this->options['passwordcol']]);
             }
         }
-        
+
         if ($this->verifyPassword($password,
                                   $res[$this->options['passwordcol']],
                                   $this->options['cryptType'])) {
@@ -342,6 +354,8 @@ class Auth_Container_MDB extends Auth_Container
                     $key == $this->options['usernamecol']) {
                     continue;
                 }
+
+                $this->log('Storing additional field: '.$key, AUTH_LOG_DEBUG);
                 // Use reference to the auth object if exists
                 // This is because the auth session variable can change so a static
                 // call to setAuthData does not make sense
@@ -365,6 +379,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function listUsers()
     {
+        $this->log('Auth_Container_MDB::listUsers() called.', AUTH_LOG_DEBUG);
         $err = $this->_prepare();
         if ($err !== true) {
             return PEAR::raiseError($err->getMessage(), $err->getCode());
@@ -379,7 +394,7 @@ class Auth_Container_MDB extends Auth_Container
         } else {
             $sql_from = $this->options['final_usernamecol']
                 .', '.$this->options['final_passwordcol'];
-            
+
             if (strlen($fields = $this->_quoteDBFields()) > 0) {
                 $sql_from .= ', '.$fields;
             }
@@ -389,6 +404,14 @@ class Auth_Container_MDB extends Auth_Container
                          $sql_from,
                          $this->options['final_table']
                          );
+
+        // check if there is an optional parameter db_where
+        if ($this->options['db_where'] != '') {
+            // there is one, so add it to the query
+            $query .= " WHERE ".$this->options['db_where'];
+        }
+
+        $this->log('Running SQL against MDB: '.$query, AUTH_LOG_DEBUG);
 
         $res = $this->db->getAll($query, null, null, null, MDB_FETCHMODE_ASSOC);
 
@@ -400,6 +423,7 @@ class Auth_Container_MDB extends Auth_Container
                 $retVal[] = $user;
             }
         }
+        $this->log('Found '.count($retVal).' users.', AUTH_LOG_DEBUG);
         return $retVal;
     }
 
@@ -418,6 +442,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function addUser($username, $password, $additional = "")
     {
+        $this->log('Auth_Container_MDB::addUser() called.', AUTH_LOG_DEBUG);
         $err = $this->_prepare();
         if ($err !== true) {
             return PEAR::raiseError($err->getMessage(), $err->getCode());
@@ -457,6 +482,8 @@ class Auth_Container_MDB extends Auth_Container
                          $additional_value
                          );
 
+        $this->log('Running SQL against MDB: '.$query, AUTH_LOG_DEBUG);
+
         $res = $this->query($query);
 
         if (MDB::isError($res)) {
@@ -478,6 +505,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function removeUser($username)
     {
+        $this->log('Auth_Container_MDB::removeUser() called.', AUTH_LOG_DEBUG);
         $err = $this->_prepare();
         if ($err !== true) {
             return PEAR::raiseError($err->getMessage(), $err->getCode());
@@ -488,6 +516,14 @@ class Auth_Container_MDB extends Auth_Container
                          $this->options['final_usernamecol'],
                          $this->db->getTextValue($username)
                          );
+
+        // check if there is an optional parameter db_where
+        if ($this->options['db_where'] != '') {
+            // there is one, so add it to the query
+            $query .= " AND ".$this->options['db_where'];
+        }
+
+        $this->log('Running SQL against MDB: '.$query, AUTH_LOG_DEBUG);
 
         $res = $this->query($query);
 
@@ -508,6 +544,7 @@ class Auth_Container_MDB extends Auth_Container
      */
     function changePassword($username, $password)
     {
+        $this->log('Auth_Container_MDB::changePassword() called.', AUTH_LOG_DEBUG);
         $err = $this->_prepare();
         if ($err !== true) {
             return PEAR::raiseError($err->getMessage(), $err->getCode());
@@ -530,6 +567,14 @@ class Auth_Container_MDB extends Auth_Container
                          $this->options['final_usernamecol'],
                          $this->db->getTextValue($username)
                          );
+
+        // check if there is an optional parameter db_where
+        if ($this->options['db_where'] != '') {
+            // there is one, so add it to the query
+            $query .= " AND ".$this->options['db_where'];
+        }
+
+        $this->log('Running SQL against MDB: '.$query, AUTH_LOG_DEBUG);
 
         $res = $this->query($query);
 

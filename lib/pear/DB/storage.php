@@ -1,37 +1,45 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-// +----------------------------------------------------------------------+
-// | PHP Version 4                                                        |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Stig Bakken <stig@php.net>                                   |
-// +----------------------------------------------------------------------+
-//
-// $Id: storage.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
-//
-// DB_storage: a class that lets you return SQL data as objects that
-// can be manipulated and that updates the database accordingly.
-//
 
-require_once "PEAR.php";
-require_once "DB.php";
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * DB_storage provides an object interface to a table row.  It lets
- * you add, delete and change rows without using SQL.
+ * Provides an object interface to a table row
  *
- * @author Stig Bakken <stig@php.net>
+ * PHP versions 4 and 5
  *
- * @package DB
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   Database
+ * @package    DB
+ * @author     Stig Bakken <stig@php.net>
+ * @copyright  1997-2005 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: Id: storage.php,v 1.22 2005/07/10 13:38:51 danielc Exp 
+ * @link       http://pear.php.net/package/DB
+ */
+
+/**
+ * Obtain the DB class so it can be extended from
+ */
+require_once 'DB.php';
+
+/**
+ * Provides an object interface to a table row
+ *
+ * It lets you add, delete and change rows using objects rather than SQL
+ * statements.
+ *
+ * @category   Database
+ * @package    DB
+ * @author     Stig Bakken <stig@php.net>
+ * @copyright  1997-2005 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    Release: 1.7.12
+ * @link       http://pear.php.net/package/DB
  */
 class DB_storage extends PEAR
 {
@@ -158,7 +166,6 @@ class DB_storage extends PEAR
      */
     function setup($keyval)
     {
-        $qval = $this->_dbh->quote($keyval);
         $whereclause = $this->_makeWhere($keyval);
         $query = 'SELECT * FROM ' . $this->_table . ' WHERE ' . $whereclause;
         $sth = $this->_dbh->query($query);
@@ -169,7 +176,7 @@ class DB_storage extends PEAR
         if (DB::isError($row)) {
             return $row;
         }
-        if (empty($row)) {
+        if (!$row) {
             return $this->raiseError(null, DB_ERROR_NOT_FOUND, null, null,
                                      $query, null, true);
         }
@@ -220,7 +227,7 @@ class DB_storage extends PEAR
      */
     function toString()
     {
-        $info = get_class($this);
+        $info = strtolower(get_class($this));
         $info .= " (table=";
         $info .= $this->_table;
         $info .= ", keycolumn=";
@@ -267,11 +274,10 @@ class DB_storage extends PEAR
      */
     function dump()
     {
-        reset($this->_properties);
-        while (list($prop, $foo) = each($this->_properties)) {
+        foreach ($this->_properties as $prop => $foo) {
             print "$prop = ";
             print htmlentities($this->$prop);
-            print "<BR>\n";
+            print "<br />\n";
         }
     }
 
@@ -286,10 +292,9 @@ class DB_storage extends PEAR
      */
     function &create($table, &$data)
     {
-        $classname = get_class($this);
-        $obj = new $classname($table);
-        reset($data);
-        while (list($name, $value) = each($data)) {
+        $classname = strtolower(get_class($this));
+        $obj =& new $classname($table);
+        foreach ($data as $name => $value) {
             $obj->_properties[$name] = true;
             $obj->$name = &$value;
         }
@@ -346,7 +351,7 @@ class DB_storage extends PEAR
         }
         return DB_OK;
     }
-*/
+ */
 
     // }}}
     // {{{ set()
@@ -375,7 +380,11 @@ class DB_storage extends PEAR
             }
             if ($valid) {
                 $this->$property = $newvalue;
-                @$this->_changes[$property]++;
+                if (empty($this->_changes[$property])) {
+                    $this->_changes[$property] = 0;
+                } else {
+                    $this->_changes[$property]++;
+                }
             } else {
                 return $this->raiseError(null, DB_ERROR_INVALID, null,
                                          null, "invalid field: $property",
@@ -405,7 +414,8 @@ class DB_storage extends PEAR
         if (isset($this->_properties[$property])) {
             return $this->$property;
         }
-        return null;
+        $tmp = null;
+        return $tmp;
     }
 
     // }}}
@@ -417,7 +427,7 @@ class DB_storage extends PEAR
      */
     function _DB_storage()
     {
-        if (empty($this->_discard) && sizeof($this->_changes)) {
+        if (sizeof($this->_changes)) {
             $this->store();
         }
         $this->_properties = array();
@@ -435,7 +445,9 @@ class DB_storage extends PEAR
      */
     function store()
     {
-        while (list($name, $changed) = each($this->_changes)) {
+        $params = array();
+        $vars = array();
+        foreach ($this->_changes as $name => $foo) {
             $params[] = &$this->$name;
             $vars[] = $name . ' = ?';
         }
@@ -483,5 +495,12 @@ class DB_storage extends PEAR
 
     // }}}
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */
 
 ?>

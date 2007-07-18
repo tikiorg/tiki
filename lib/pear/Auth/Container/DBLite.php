@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: DBLite.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: DBLite.php,v 1.18 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.3.0
  */
@@ -45,7 +45,7 @@ require_once 'DB.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.3.0
  */
@@ -93,6 +93,7 @@ class Auth_Container_DBLite extends Auth_Container
         $this->options['db_fields']   = '';
         $this->options['cryptType']   = 'md5';
         $this->options['db_options']  = array();
+        $this->options['db_where']    = '';
         $this->options['auto_quote']  = true;
 
         if (is_array($dsn)) {
@@ -117,6 +118,7 @@ class Auth_Container_DBLite extends Auth_Container
      */
     function _connect(&$dsn)
     {
+        $this->log('Auth_Container_DBLite::_connect() called.', AUTH_LOG_DEBUG);
         if (is_string($dsn) || is_array($dsn)) {
             $this->db =& DB::connect($dsn, $this->options['db_options']);
         } elseif (is_subclass_of($dsn, "db_common")) {
@@ -218,7 +220,7 @@ class Auth_Container_DBLite extends Auth_Container
 
         return '';
     }
-    
+
     // }}}
     // {{{ fetchData()
 
@@ -237,6 +239,7 @@ class Auth_Container_DBLite extends Auth_Container
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_DBLite::fetchData() called.', AUTH_LOG_DEBUG);
         // Prepare for a database query
         $err = $this->_prepare();
         if ($err !== true) {
@@ -255,10 +258,19 @@ class Auth_Container_DBLite extends Auth_Container
                 $sql_from .= ', '.$fields;
             }
         }
-        
+
         $query = "SELECT ".$sql_from.
                 " FROM ".$this->options['final_table'].
                 " WHERE ".$this->options['final_usernamecol']." = ".$this->db->quoteSmart($username);
+
+        // check if there is an optional parameter db_where
+        if ($this->options['db_where'] != '') {
+            // there is one, so add it to the query
+            $query .= " AND ".$this->options['db_where'];
+        }
+
+        $this->log('Running SQL against DB: '.$query, AUTH_LOG_DEBUG);
+
         $res = $this->db->getRow($query, null, DB_FETCHMODE_ASSOC);
 
         if (DB::isError($res)) {
@@ -277,6 +289,9 @@ class Auth_Container_DBLite extends Auth_Container
                     $key == $this->options['usernamecol']) {
                     continue;
                 }
+
+                $this->log('Storing additional field: '.$key, AUTH_LOG_DEBUG);
+
                 // Use reference to the auth object if exists
                 // This is because the auth session variable can change so a static call to setAuthData does not make sence
                 if (is_object($this->_auth_obj)) {

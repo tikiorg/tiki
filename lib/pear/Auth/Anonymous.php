@@ -18,7 +18,7 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: Anonymous.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: Anonymous.php,v 1.6 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.3.0
  */
@@ -30,8 +30,8 @@ require_once 'Auth.php';
 
 /**
  * Anonymous Authentication
- * 
- * This class provides anonymous authentication if username and password 
+ *
+ * This class provides anonymous authentication if username and password
  * were not supplied
  *
  * @category   Authentication
@@ -40,11 +40,11 @@ require_once 'Auth.php';
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.3.0
  */
-class Auth_Anonymous extends Auth 
+class Auth_Anonymous extends Auth
 {
 
     // {{{ properties
@@ -65,10 +65,10 @@ class Auth_Anonymous extends Auth
 
     // }}}
     // {{{ Auth_Anonymous() [constructor]
-    
+
     /**
      * Pass all parameters to Parent Auth class
-     * 
+     *
      * Set up the storage driver.
      *
      * @param string    Type of the storage driver
@@ -87,10 +87,10 @@ class Auth_Anonymous extends Auth
 
     // }}}
     // {{{ login()
-    
+
     /**
      * Login function
-     * 
+     *
      * If no username & password is passed then login as the username
      * provided in $this->anonymous_username else call standard login()
      * function.
@@ -100,8 +100,8 @@ class Auth_Anonymous extends Auth
      * @see Auth::login()
      */
     function login() {
-        if (   $this->allow_anonymous 
-            && empty($this->username) 
+        if (   $this->allow_anonymous
+            && empty($this->username)
             && empty($this->password) ) {
             $this->setAuth($this->anonymous_username);
             if (is_callable($this->loginCallback)) {
@@ -115,7 +115,7 @@ class Auth_Anonymous extends Auth
 
     // }}}
     // {{{ forceLogin()
-    
+
     /**
      * Force the user to login
      *

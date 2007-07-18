@@ -14,11 +14,11 @@
  *
  * @category   Authentication
  * @package    Auth
- * @author     Stanislav Grozev <tacho@orbitel.bg> 
+ * @author     Stanislav Grozev <tacho@orbitel.bg>
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: vpopmail.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: vpopmail.php,v 1.10 2007/06/12 03:11:26 aashley Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.2.0
  */
@@ -41,7 +41,7 @@ require_once "PEAR.php";
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.2.0
  */
@@ -74,6 +74,7 @@ class Auth_Container_vpopmail extends Auth_Container {
      */
     function fetchData($username, $password)
     {
+        $this->log('Auth_Container_vpopmail::fetchData() called.', AUTH_LOG_DEBUG);
         $userdata = array();
         $userdata = preg_split("/@/", $username, 2);
         $result = @vpopmail_auth_user($userdata[0], $userdata[1], $password);

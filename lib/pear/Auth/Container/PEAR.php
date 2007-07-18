@@ -18,19 +18,19 @@
  * @author     Adam Ashley <aashley@php.net>
  * @copyright  2001-2006 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    CVS: $Id: PEAR.php,v 1.3 2006-12-27 10:17:07 mose Exp $
+ * @version    CVS: Id: PEAR.php,v 1.12 2007/07/02 05:09:43 aharvey Exp 
  * @link       http://pear.php.net/package/Auth
  * @since      File available since Release 1.3.0
  */
 
 /**
+ * Include PEAR HTTP_Client.
+ */
+require_once 'HTTP/Client.php';
+/**
  * Include Auth_Container base class
  */
 require_once 'Auth/Container.php';
-/**
- * Include PEAR XML_RPC
- */
-require_once 'XML/RPC.php';
 
 /**
  * Storage driver for authenticating against PEAR website
@@ -42,9 +42,10 @@ require_once 'XML/RPC.php';
  * @package    Auth
  * @author     Yavor Shahpasov <yavo@netsmart.com.cy>
  * @author     Adam Ashley <aashley@php.net>
- * @copyright  2001-2006 The PHP Group
+ * @author     Adam Harvey <aharvey@php.net>
+ * @copyright  2001-2007 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version    Release: 1.4.3  File: $Revision: 1.3 $
+ * @version    Release: 1.5.4  File: $Revision: 1.4 $
  * @link       http://pear.php.net/package/Auth
  * @since      Class available since Release 1.3.0
  */
@@ -57,17 +58,17 @@ class Auth_Container_Pear extends Auth_Container
      * Constructor
      *
      * Currently does nothing
-     * 
+     *
      * @return void
      */
     function Auth_Container_Pear()
     {
-    
+
     }
 
     // }}}
     // {{{ fetchData()
-    
+
     /**
      * Get user information from pear.php.net
      *
@@ -80,24 +81,35 @@ class Auth_Container_Pear extends Auth_Container
      */
     function fetchData($username, $password)
     {
-        $rpc = new XML_RPC_Client('/xmlrpc.php', 'pear.php.net');
-        $rpc_message = new XML_RPC_Message("user.info", array(new XML_RPC_Value($username, "string")) );
-        
-        // Error Checking howto ???
-        $result = $rpc->send($rpc_message);
-        $value = $result->value();
-        $userinfo = xml_rpc_decode($value);
-        if ($userinfo['password'] == md5($password)) {
-            $this->activeUser = $userinfo['handle'];
-            foreach ($userinfo as $uk=>$uv) {
-                $this->_auth_obj->setAuthData($uk, $uv);
-            }
-            return true;
+        $this->log('Auth_Container_PEAR::fetchData() called.', AUTH_LOG_DEBUG);
+
+        $client = new HTTP_Client;
+
+        $this->log('Auth_Container_PEAR::fetchData() getting salt.', AUTH_LOG_DEBUG);
+        $code = $client->get('https://pear.php.net/rest-login.php/getsalt');
+        if ($code != 200) {
+            return PEAR::raiseError('Bad response to salt request.', $code);
         }
-        return false;
+        $resp = $client->currentResponse();
+        $salt = $resp['body'];
+
+        $this->log('Auth_Container_PEAR::fetchData() calling validate.', AUTH_LOG_DEBUG);
+        $code = $client->post('https://pear.php.net/rest-login.php/validate',
+                              array('username' => $username,
+                                    'password' => md5($salt.md5($password))));
+        if ($code != 200) {
+            return PEAR::raiseError('Bad response to validate request.', $code);
+        }
+        $resp = $client->currentResponse();
+
+        list($code, $message) = explode(' ', $resp['body'], 1);
+        if ($code != 8) {
+            return PEAR::raiseError($message, $code);
+        }
+        return true;
     }
 
     // }}}
-    
+
 }
 ?>

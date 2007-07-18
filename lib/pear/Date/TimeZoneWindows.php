@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.2 2004-03-17 02:49:58 rossta Exp $
+// Id: TimeZoneWindows.php,v 1.2 2004/03/17 02:49:58 rossta Exp 
 //
 // Date_TimeZone Class Windows Support File
 //
