@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.31 2007-07-17 15:59:08 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.32 2007-07-18 14:05:01 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,38 +34,29 @@ if (isset($_REQUEST["user"])) {
 }
 
 if (isset($_REQUEST["remind"])) {
-	if (  $_REQUEST["mode"] == "user"  && !$userlib->user_exists($_REQUEST["username"])) {
+	if (!empty($_REQUEST['name'])) {
+		if (!$userlib->user_exists($_REQUEST['name'])) {
+			$showmsg = 'e';
+			$smarty->assign('msg', tra('Invalid or unknown username'). ': ' . $_REQUEST['name']);
+		} else {
+			if (!($_REQUEST['email'] = $userlib->get_user_email($_REQUEST['name']))) {
+				$showmsg = 'e';
+				$smarty->assign('msg', tra('Unable to send mail. User has not configured email'));
+			}
+		}
+	} else if (!empty($_REQUEST['email'])) {
+		if (!($_REQUEST['name'] = $userlib->get_user_by_email($_REQUEST['email']))) {
+			$showmsg = 'e';
+			$smarty->assign('msg', tra('Invalid or unknown email'). ': ' . $_REQUEST['email']);
+		}
+	} else {
+		$showmsg = 'e';
+	}
+	if (isset($showmsg) && $showmsg == 'e') {
 		$smarty->assign('showmsg', 'e');
-		$tmp = tra("Invalid or unknown username"). ": " . $_REQUEST["username"];
-		$smarty->assign('msg', $tmp);
 	} else {
 		include_once ('lib/webmail/tikimaillib.php');
-		if  ( $_REQUEST["mode"] == "user" )
-		{
-		$email = $userlib->get_user_email($_REQUEST["username"]);
-		$name=$_REQUEST["username"] ;
-		}
-		else 
-		{
-		 $email=$_REQUEST["username"] ;
-		 $name=$userlib->get_user_by_email($email); 
-		}
-		if ( $name == "" ) 
-		{
-		 $smarty->assign('showmsg', 'e');
-		 $tmp = tra("Invalid or unknown email"). ": " . $_REQUEST["username"];
-		 $smarty->assign('msg', $tmp);
-		}	
-		else 
-		{
-		if(empty($email)) { //only renew if i can mail the pass
-	                $smarty->assign('showmsg', 'e');
-
-       		         $tmp = tra("Unable to send mail. User has not configured email");
-               		 $tmp .= ": " . $name;
-               		 $smarty->assign('msg', $tmp);
-		} else {
-
+		$name = $_REQUEST['name'];
 		if ($feature_clear_passwords == 'y') {
 			$pass = $userlib->get_user_password($name);
 			$smarty->assign('clearpw', 'y');
@@ -92,7 +83,7 @@ if (isset($_REQUEST["remind"])) {
 		$mail = new TikiMail($name);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
 		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));
-		if (!$mail->send(array($email))) {
+		if (!$mail->send(array($_REQUEST['email']))) {
 			$smarty->assign('msg', tra("The mail can't be sent. Contact the administrator"));
 	    	$smarty->display("error.tpl");
     		die;
@@ -111,8 +102,6 @@ if (isset($_REQUEST["remind"])) {
 		$tmp .= tra("to the registered email address for");
 		$tmp .= " " . $name. ".";
 		$smarty->assign('msg', $tmp);
-		}
-	   }
 	}
 }
 
