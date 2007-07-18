@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.94 23 Jan 2007  (c) 2000-2007 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -75,7 +75,7 @@ class ADODB_mssql extends ADOConnection {
 	var $dataProvider = "mssql";
 	var $replaceQuote = "''"; // string to use to replace quotes
 	var $fmtDate = "'Y-m-d'";
-	var $fmtTimeStamp = "'Y-m-d h:i:sA'";
+	var $fmtTimeStamp = "'Y-m-d H:i:s'";
 	var $hasInsertID = true;
 	var $substr = "substring";
 	var $length = 'len';
@@ -112,19 +112,22 @@ class ADODB_mssql extends ADOConnection {
 	{
 	global $ADODB_FETCH_MODE;
 	
-		$stmt = $this->PrepareSP('sp_server_info');
-		$val = 2;
+	
 		if ($this->fetchMode === false) {
 			$savem = $ADODB_FETCH_MODE;
 			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 		} else 
 			$savem = $this->SetFetchMode(ADODB_FETCH_NUM);
+				
+		if (0) {
+			$stmt = $this->PrepareSP('sp_server_info');
+			$val = 2;
+			$this->Parameter($stmt,$val,'attribute_id');
+			$row = $this->GetRow($stmt);
+		}
 		
+		$row = $this->GetRow("execute sp_server_info 2");
 		
-		$this->Parameter($stmt,$val,'attribute_id');
-		$row = $this->GetRow($stmt);
-		
-		//$row = $this->GetRow("execute sp_server_info 2");
 		
 		if ($this->fetchMode === false) {
 			$ADODB_FETCH_MODE = $savem;
@@ -160,6 +163,8 @@ class ADODB_mssql extends ADOConnection {
 	
 	function CreateSequence($seq='adodbseq',$start=1)
 	{
+		
+		$this->Execute('BEGIN TRANSACTION adodbseq');
 		$start -= 1;
 		$this->Execute("create table $seq (id float(53))");
 		$ok = $this->Execute("insert into $seq with (tablock,holdlock) values($start)");
@@ -293,6 +298,17 @@ class ADODB_mssql extends ADOConnection {
 		return true;
 	}
 	
+	function SetTransactionMode( $transaction_mode ) 
+	{
+		$this->_transmode  = $transaction_mode;
+		if (empty($transaction_mode)) {
+			$this->Execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+			return;
+		}
+		if (!stristr($transaction_mode,'isolation')) $transaction_mode = 'ISOLATION LEVEL '.$transaction_mode;
+		$this->Execute("SET TRANSACTION ".$transaction_mode);
+	}
+	
 	/*
 		Usage:
 		
@@ -396,17 +412,17 @@ order by constraint_name, referenced_table_name, keyno";
 	{ 
 		if(@mssql_select_db("master")) { 
 				 $qry=$this->metaDatabasesSQL; 
-				 if($rs=@mssql_query($qry)){ 
+				 if($rs=@mssql_query($qry,$this->_connectionID)){ 
 						 $tmpAr=$ar=array(); 
 						 while($tmpAr=@mssql_fetch_row($rs)) 
 								 $ar[]=$tmpAr[0]; 
-						@mssql_select_db($this->databaseName); 
+						@mssql_select_db($this->database); 
 						 if(sizeof($ar)) 
 								 return($ar); 
 						 else 
 								 return(false); 
 				 } else { 
-						 @mssql_select_db($this->databaseName); 
+						 @mssql_select_db($this->database); 
 						 return(false); 
 				 } 
 		 } 
@@ -457,7 +473,8 @@ order by constraint_name, referenced_table_name, keyno";
  
 	function SelectDB($dbName) 
 	{
-		$this->databaseName = $dbName;
+		$this->database = $dbName;
+		$this->databaseName = $dbName; # obsolete, retained for compat with older adodb versions
 		if ($this->_connectionID) {
 			return @mssql_select_db($dbName);		
 		}
@@ -581,7 +598,7 @@ order by constraint_name, referenced_table_name, keyno";
 	{
 		if (!$this->_has_mssql_init) {
 			ADOConnection::outp( "Parameter: mssql_bind only available since PHP 4.1.0");
-			return $sql;
+			return false;
 		}
 
 		$isNull = is_null($var); // php 4.0.4 and above...
@@ -683,7 +700,7 @@ order by constraint_name, referenced_table_name, keyno";
 			}
 			$decl = $this->qstr($decl);
 			if ($this->debug) ADOConnection::outp("<font size=-1>sp_executesql N{$sql[1]},N$decl,$params</font>");
-			$rez = mssql_query("sp_executesql N{$sql[1]},N$decl,$params");
+			$rez = mssql_query("sp_executesql N{$sql[1]},N$decl,$params", $this->_connectionID);
 			
 		} else if (is_array($sql)) {
 			# PrepareSP()
@@ -735,6 +752,7 @@ class ADORecordset_mssql extends ADORecordSet {
 		if ($mode === false) { 
 			global $ADODB_FETCH_MODE;
 			$mode = $ADODB_FETCH_MODE;
+
 		}
 		$this->fetchMode = $mode;
 		return $this->ADORecordSet($id,$mode);
