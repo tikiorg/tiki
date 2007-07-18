@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.41 2007-07-17 16:21:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.42 2007-07-18 16:29:42 sylvieg Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -63,20 +63,22 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}Structure ID{/tr}</td>
-  <td  class="heading">&nbsp;</td>
+  <td  class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
 <tr>
   <td class="{cycle advance=false}">
-  <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}">
+  <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}edit structure{/tr}">
       {$channels[ix].pageName}
 	  {if $channels[ix].page_alias}
         ({$channels[ix].page_alias})
 	  {/if}	
-  </a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
+  </a>
   </td>
   <td class="{cycle}">
+<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}edit structure{/tr}"><img src='pics/icons/page_edit.png' alt="{tr}edit{/tr}" border='0' width='16' height='16' /></a>
+<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}view page{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
   {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}export pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}export pages{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $tiki_p_edit_structures == 'y'}<a title="{tr}dump tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}dump tree{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $channels[ix].editable == 'y'}<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>{/if}
