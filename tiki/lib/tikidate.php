@@ -34,14 +34,16 @@ class TikiDate extends Date {
 	 * Current UTC offset of server
 	 */
 	var $server_offset;
+	var $trad = array("January","February","March","April","May","June","July","August","September","October","Novembre","December","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Monday","Tuesday","Wednesday","Thirsday","Friday","Saturday","Sunday","Mon","Tue","Wed","Thu","Fri","Sat","Sun","of");
+	var $replace = NULL ;
 
 	/**
 	 * Default constructor
 	 * $_display_offset: desired offset for date display, in minutes
 	 */
 	function TikiDate($_display_offset = 0) {
-			Date::Date();
-		$this->display_offset = $_display_offset;
+			Date::Date(date("Y-m-d H:i:s Z"));
+		$this->display_offset = $_display_offset ;
 
 		$this->server_offset = intval(date("Z"));
 	}
@@ -112,6 +114,24 @@ class TikiDate extends Date {
 	 */
 	function getTzName(){
 			return $this->tz->shortname;
+	}
+
+	function format($format) {
+		$output = parent::format($format);
+
+		if ($this->replace == NULL) {
+		  $this->replace = array_map("tra",$this->trad);
+		}
+
+	  	return str_replace($this->trad,$this->replace,$output);
+	}
+
+	function setDate($date,$format = DATE_FORMAT_ISO) {
+		if (is_numeric($date)) {
+			$this->setDate(gmdate("Y-m-d H:i:s", $date));
+		} else {
+			parent::setDate($date,$format);
+		}
 	}
 }
 

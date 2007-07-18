@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.762 2007-07-16 19:24:30 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.763 2007-07-18 10:08:42 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7,10 +7,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 require_once ('Date.php');
-$tikidate = new Date();
 
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
+require_once('lib/init/tra.php');
+global $tikidate;
+$tikidate = new TikiDate();
 
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
