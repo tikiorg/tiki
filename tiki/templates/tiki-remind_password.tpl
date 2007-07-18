@@ -10,11 +10,18 @@
 {if $showfrm eq 'y'}
   <form action="tiki-remind_password.php" method="post">
   <table class="normal">
+  {if $login_is_email ne 'y'}
   <tr>
-    <td class="formcolor"><select name="mode" size=1><option selected value="user">{tr}username{/tr}<option value="email"> {tr}email{/tr}</select></td>
-    <td class="formcolor"><input type="text" name="username" /></td>
-    <td class="formcolor"><input type="submit" name="remind"
-                                 value="{tr}send me my password{/tr}" /></td>
+    <td class="formcolor">{tr}Username{/tr}</td>
+	<td class="formcolor"><input type="text" name="name" /></td>
+  </tr>
+  <tr><td class="formcolor" colspan="2">{tr}or{/tr}</td></tr>
+  {/if}
+  <tr>
+    <td class="formcolor">{tr}Email{/tr}</td>
+    <td class="formcolor"><input type="text" name="email" /></td>
+  </tr><tr>
+    <td class="formcolor" colspan="2"><input type="submit" name="remind" value="{tr}send me my password{/tr}" /></td>
   </tr>  
   </table>
   </form>
