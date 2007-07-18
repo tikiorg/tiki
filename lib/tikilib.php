@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.763 2007-07-18 10:08:42 sept_7 Exp $
+// CVS: $Id: tikilib.php,v 1.764 2007-07-18 16:48:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5056,7 +5056,7 @@ function add_pageview() {
 				$this->parse_htmlchar($data);
 			}
 	// Now replace a TOC
-	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([a-z]+))?\s?(maxdepth=(\d+))?\s?\}/i", $data, $tocs);
+	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([0-9a-z]+))?\s?(maxdepth=(\d+))?\s?\}/i", $data, $tocs);
 
     // Loop over all the case-specific versions of {toc} used
     // (if the user is consistent, this is a loop of count 1)
