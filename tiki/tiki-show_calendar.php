@@ -205,6 +205,8 @@ if ($calendarViewTikiCals) {
 	$listtikievents = array();
 }
 
+$adj=date('I',$viewstart)-date('I',$focusdate);
+$viewstart-=$adj*3600;
 
 define("weekInSeconds", 604800);
 $mloop = date("m", $viewstart);
