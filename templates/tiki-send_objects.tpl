@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.22 2007-02-23 16:58:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.23 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-send_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin send objects tpl{/tr}">
@@ -27,7 +27,7 @@
 {tr}Filter{/tr}
 </div>
 <div class="cbox-data">
-{tr}filter{/tr}:<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
+{tr}Filter{/tr}:<input type="text" name="find" value="{$find|escape}"/><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
 </div>
 </div>
 <br />

@@ -3,7 +3,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit user files{/tr}">
-<img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}help{/tr}" /></a>{/if}
+<img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-userfiles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">

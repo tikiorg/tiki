@@ -38,7 +38,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_survey_questions.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
    </form>
@@ -52,7 +52,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}options{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="odd,even}
 {section name=user loop=$channels}

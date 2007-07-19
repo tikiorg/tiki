@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.29 2007-07-19 09:32:42 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.30 2007-07-19 13:16:18 jyhem Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -7,7 +7,7 @@
 <h1><a class="pagetitle" href="tiki-edit_quiz.php">{tr}Admin quizzes{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Quizzes" target="tikihelp" class="tikihelp" title="{tr}Quizzes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=/tiki-edit_quiz.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin quizzes tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
@@ -127,7 +127,7 @@
    <td class="findtable">
    <form method="get" action="tiki-edit_quiz.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -163,7 +163,7 @@ Results need to be sortable so as to give admin quick idea of user participation
 </td>
 *}
 
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 <!-- end header data -->
 {section name=user loop=$channels}

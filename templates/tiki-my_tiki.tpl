@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.24 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.25 2007-07-19 13:16:19 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}MyTiki{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -30,7 +30,7 @@
   {cycle values="even,odd" print=false}
   {section name=ix loop=$user_pages}
   <tr>
-  <td class="{cycle advance=false}"><a class="link" title="{tr}view{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a></td>
+  <td class="{cycle advance=false}"><a class="link" title="{tr}View{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a></td>
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}</td>
   <td class="{cycle advance=false}">{$user_pages[ix].date|tiki_short_datetime}</td>
@@ -73,8 +73,8 @@
   {cycle values="even,odd" print=false}
    {section name=ix loop=$user_items}
   <tr><td class="{cycle advance=false}">
-  <a class="link" title="{tr}view{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].value}</a></td>
-   <td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-view_tracker.php?trackerId={$user_items[ix].trackerId}">{$user_items[ix].name}</a></td>
+  <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].value}</a></td>
+   <td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$user_items[ix].trackerId}">{$user_items[ix].name}</a></td>
   </tr>
   {/section}
   </table>
@@ -92,7 +92,7 @@
   {cycle values="even,odd" print=false}
   {section name=ix loop=$msgs}
   <tr><td class="{cycle advance=false}">
-  <a class="link" title="{tr}view{/tr}" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
+  <a class="link" title="{tr}View{/tr}" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
   </td>
   <td class="{cycle advance=false}">{$msgs[ix].user_from}</td><td class="{cycle}">{$msgs[ix].date|tiki_short_datetime}</td></tr>
   {/section}
@@ -127,7 +127,7 @@
   {cycle values="even,odd" print=false}
   {section name=ix loop=$user_blogs}
   <tr><td class="{cycle advance=false}">
-  <a class="link" title="{tr}view{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
+  <a class="link" title="{tr}View{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
   </td><td class="{cycle}" style="text-align:center;">
   <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
   </td></tr>

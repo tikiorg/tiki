@@ -1,6 +1,6 @@
 <h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}edit translations template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
@@ -8,9 +8,9 @@
 </h1>
 
 {if $type == "wiki page"}
-	<a href="tiki-index.php?page={$name|escape:url}" class="linkbut" title="{tr}view{/tr}">{tr}View page{/tr}</a>
+	<a href="tiki-index.php?page={$name|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a>
 {else}
-	<a href="tiki-read_article.php?articleId={$id}" class="linkbut" title="{tr}view{/tr}">{tr}View{/tr}</a>
+	<a href="tiki-read_article.php?articleId={$id}" class="linkbut" title="{tr}View{/tr}">{tr}View{/tr}</a>
 {/if}
 
 {if $error}

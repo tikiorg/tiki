@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.28 2007-07-17 16:21:46 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.29 2007-07-19 13:16:17 jyhem Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
 
-<a href="http://tikiwiki.org/tiki-index.php?page=TikiIntegrator" target="tikihelp" class="tikihelp" title="{tr}Tiki integrator{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=TikiIntegrator" target="tikihelp" class="tikihelp" title="{tr}Tiki integrator{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  

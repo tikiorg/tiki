@@ -88,7 +88,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_newsletter_subscriptions.php">
      <input type="text" name="find_g" value="{$find_g|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode_g" value="{$sort_mode_g|escape}" />
      <input type="hidden" name="nlId" value="{$nlId}" />
    </form>
@@ -97,7 +97,7 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset_g}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}group{/tr}</a></td><td class="heading">{tr}action{/tr}</td>
+<td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset_g}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}group{/tr}</a></td><td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$groups_g}
@@ -115,7 +115,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_newsletter_subscriptions.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="nlId" value="{$nlId}" />
    </form>
@@ -127,7 +127,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr} - {tr}user{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'valid_desc'}valid_asc{else}valid_desc{/if}">{tr}valid{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subscribed_desc'}subscribed_asc{else}subscribed_desc{/if}">{tr}subscribed{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

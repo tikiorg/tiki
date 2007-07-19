@@ -298,7 +298,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <tr class="formcolor" style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calpart">
 <td>{tr}Participants{/tr}
 {if $edit}
-<a href="#" onclick="flip('calparthelp');"><img src="pics/icons/help.png" width="16" height="16" border="0" alt="{tr}help{/tr}" /></a>
+<a href="#" onclick="flip('calparthelp');"><img src="pics/icons/help.png" width="16" height="16" border="0" alt="{tr}Help{/tr}" /></a>
 {/if}
 </td>
 <td>

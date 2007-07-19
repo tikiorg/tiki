@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.15 2007-06-03 10:33:17 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.16 2007-07-19 13:16:19 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}</h1>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}</h1>
 <br />
 {$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}users{/tr} {tr}like{/tr} "{$find}"{/if}
 <br /><br />
@@ -12,7 +12,7 @@
    <td class="findtable">
    <form method="get" action="tiki-list_users.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

@@ -35,7 +35,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_html_page_content.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="pageName" value="{$pageName|escape}" />
    </form>
@@ -49,7 +49,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

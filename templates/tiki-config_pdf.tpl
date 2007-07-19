@@ -112,7 +112,7 @@
 <input type="hidden" name="encoding" value="{$encoding|escape}" />
 <input type="hidden" name="method" value="{$method|escape}" />
 <input type="hidden" name="pdfversion" value="{$pdfversion|escape}" />
-<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
+<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
 </form>
 <br />
 <form action="tiki-config_pdf.php{if $page_ref_id ge '-1'}?page_ref_id={$page_ref_id}{/if}" method="post">

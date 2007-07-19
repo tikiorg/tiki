@@ -2,7 +2,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Related {/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin_related.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory admin related tpl{/tr}">
@@ -54,7 +54,7 @@
 <table class="normal">
   <tr>
     <td class="heading">{tr}category{/tr}</td>
-    <td class="heading">{tr}action{/tr}</td>
+    <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

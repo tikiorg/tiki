@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.20 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.21 2007-07-19 13:16:15 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -10,7 +10,7 @@
      <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 	 {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId}" />{/if}
      <input type="text" name="{$ext}find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      {if !empty($sort_mode)}<input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />{/if}
 	 {if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
    </form>

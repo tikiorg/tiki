@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.21 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.22 2007-07-19 13:16:18 jyhem Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -10,7 +10,7 @@
 <! -- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id141161" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id141161" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 <! -- link to tpl -->
 
@@ -61,7 +61,7 @@
  {if $feature_help eq 'y'}
 <! -- help link data -- >
   <a href="http://tikiwiki.org/tiki-index.php?page=QuizQuestionImport" target="tikihelp" class="tikihelp">
-  <img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
+  <img border="0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a>
  {/if}
 </h2>
 
@@ -95,7 +95,7 @@
    <td class="findtable">
    <form method="get" action="tiki-edit_quiz_questions.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="quizId" value="{$quizId|escape}" />
    </form>
@@ -129,7 +129,7 @@
 <td class="heading">{tr}maxScore{/tr}</td>
 
 
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}

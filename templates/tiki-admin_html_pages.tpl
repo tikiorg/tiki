@@ -2,7 +2,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}admin Html Pages{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Html Pages template{/tr}">
@@ -56,7 +56,7 @@
    <td>
    <form method="get" action="tiki-admin_html_pages.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -67,7 +67,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}last modif{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -78,7 +78,7 @@
 <td class="{cycle advance=true}">
    &nbsp;&nbsp;
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a>
-   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}"><img src="pics/icons/monitor.png" border="0" height="16" width="16" alt='{tr}view{/tr}' /></a>
+   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}"><img src="pics/icons/monitor.png" border="0" height="16" width="16" alt='{tr}View{/tr}' /></a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a> &nbsp;
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
    title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>

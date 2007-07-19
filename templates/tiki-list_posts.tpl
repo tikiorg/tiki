@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.30 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.31 2007-07-19 13:16:19 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_posts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list posts tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
@@ -19,7 +19,7 @@
    <td class="findtable">
    <form method="get" action="tiki-list_posts.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

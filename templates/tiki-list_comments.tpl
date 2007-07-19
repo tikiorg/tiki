@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.3 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.4 2007-07-19 13:16:19 jyhem Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -6,7 +6,7 @@
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" name="search" value="{tr}find{/tr}" />
+     <input type="submit" name="search" value="{tr}Find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </td>
 </tr>

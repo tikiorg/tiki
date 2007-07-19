@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.19 2007-07-19 09:32:43 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.20 2007-07-19 13:16:19 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
+<img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list trackers tpl{/tr}">
@@ -23,7 +23,7 @@
 <table class="findtable"><tr>
 <td>{tr}Find{/tr}</td>
 <td><input type="text" name="find" value="{$find|escape}" /></td>
-<td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
+<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 <td><input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
 </tr></table>
 </form>

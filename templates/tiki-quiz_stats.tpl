@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.10 2007-06-07 13:26:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.11 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id320349" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />
+<img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" />
 </a>
 {/if}
 {if $feature_view_tpl eq 'y'}
@@ -21,7 +21,7 @@
    <td class="findtable">
    <form method="get" action="tiki-quiz_stats.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="quizId" value="{$quizId|escape}" />
    </form>

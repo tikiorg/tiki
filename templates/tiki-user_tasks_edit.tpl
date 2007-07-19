@@ -34,7 +34,7 @@
     </span>
 {else}
     <span class="tabbut">
-	{html_image file='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}trash{/tr}'}
+	{html_image file='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}Trash{/tr}'}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">{tr}move into trash{/tr}</a>
     </span>
 {/if}
@@ -247,7 +247,7 @@
 		<div align="center">
 			<input type="submit" name="save" value="{tr}Save{/tr}" />
 			<input type="submit" name="preview" value="{tr}preview{/tr}" /> 
-			<input type="submit" name="reload" value="{tr}reload{/tr}" />
+			<input type="submit" name="reload" value="{tr}Reload{/tr}" />
 		</div>
 	</td>
 	{else}

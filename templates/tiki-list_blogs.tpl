@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.42 2007-07-19 09:32:43 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.43 2007-07-19 13:16:19 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
@@ -14,7 +14,7 @@
    <td class="findtable">
    <form method="get" action="tiki-list_blogs.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

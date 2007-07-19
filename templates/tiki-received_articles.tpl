@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.27 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.28 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Received Articles{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -127,7 +127,7 @@
    <td class="findtable">
    <form method="get" action="tiki-received_articles.php">
      <input type="text" name="find" />
-     <input type="submit" name="search" value="{tr}find{/tr}" />
+     <input type="submit" name="search" value="{tr}Find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -140,7 +140,7 @@
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedDate_desc'}receivedDate_asc{else}receivedDate_desc{/if}">{tr}Date{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromSite_desc'}receivedFromSite_asc{else}receivedFromSite_desc{/if}">{tr}Site{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$channels}
@@ -155,7 +155,7 @@
 <td class="{cycle advance=true}">
    <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
    <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
-   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
+   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}View{/tr}</a>-->
    <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
 </td>
 </tr>

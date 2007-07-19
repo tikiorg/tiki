@@ -55,7 +55,7 @@
 {if $subtree[ix].first or not $subtree[ix].last}
 <tr {if $page_ref_id eq $subtree[ix].page_ref_id}class="even"{else}class="odd"{/if}>
 {if $subtree[ix].pos eq ''}
-	<td class="heading"><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
+	<td class="heading"><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}View{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>
 		{if $editable == 'y'}
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
@@ -73,7 +73,7 @@
 		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'><img src="img/icons2/nav_down.gif" hspace="3" height="11" width="13" border="0" title="{tr}Next{/tr}" alt="{tr}Next{/tr}" /></a>
 	-->
 		{if $editable == 'y'}<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=1'><img src="pics/icons/resultset_previous.png" height="16" width="16" border="0" title="{tr}Promote{/tr}" alt="{tr}Promote{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=4'><img src="pics/icons/resultset_next.png" height="16" width="16" border="0" title="{tr}Demote{/tr}" alt="{tr}Demote{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=2'><img src="pics/icons/resultset_up.png" height="16" width="16" border="0" title="{tr}Previous{/tr}" alt="{tr}Previous{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'><img src="pics/icons/resultset_down.png" height="16" width="16" border="0" title="{tr}Next{/tr}" alt="{tr}Next{/tr}" style="margin-right:10px;"/>{/if}</a>
-		{if $subtree[ix].viewable == 'y'}<a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}&amp;structure={$structure_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>{else}&nbsp;{/if}
+		{if $subtree[ix].viewable == 'y'}<a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}&amp;structure={$structure_name|escape:"url"}' title="{tr}View{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>{else}&nbsp;{/if}
 		{if $subtree[ix].editable == 'y'}
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
@@ -136,7 +136,7 @@
   <td class="formcolor">
   {tr}Use pre-existing page{/tr}<br />
         <input type="text" name="find_objects" value="{$find_objects|escape}" />
-        <input type="submit" value="{tr}filter{/tr}" name="search_objects" />
+        <input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
         {if $feature_categories eq 'y'}	
 		<select name="categId">
 		<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>

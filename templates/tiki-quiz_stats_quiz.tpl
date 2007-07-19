@@ -4,7 +4,7 @@
 <! -- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id553044" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id553044" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 <! -- link to tpl -->
 

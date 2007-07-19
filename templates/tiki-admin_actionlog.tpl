@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.32 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.33 2007-07-19 13:16:16 jyhem Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_actionlog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
@@ -97,7 +97,7 @@
 <tr>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}user{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=lastModif_{if $sort_mode eq 'lastModif_desc'}asc{else}desc{/if}{$url}">{tr}date{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=action_{if $sort_mode eq 'action_desc'}asc{else}desc{/if}{$url}">{tr}action{/tr}</a></th>
+<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=action_{if $sort_mode eq 'action_desc'}asc{else}desc{/if}{$url}">{tr}Action{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=objectType_{if $sort_mode eq 'objectType_desc'}asc{else}desc{/if}{$url}">{tr}type{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=object_{if $sort_mode eq 'object_desc'}asc{else}desc{/if}{$url}">{tr}object{/tr}</a></th>
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}category{/tr}</a></th>{/if}
@@ -114,7 +114,7 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].action}{/tr}</td>
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].objectType}{/tr}</td>
-<td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}view{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
+<td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}View{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}
 <td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
@@ -339,7 +339,7 @@
 <th class="heading">{tr}recorded{/tr}</th>
 {/if}
 <th class="heading">{tr}viewed{/tr}</th>
-<th class="heading">{tr}action{/tr}</th><th class="heading">{tr}type{/tr}</th>
+<th class="heading">{tr}Action{/tr}</th><th class="heading">{tr}type{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogConf}

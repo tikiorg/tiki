@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.71 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.72 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Help for Assigning Permissions{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
@@ -67,7 +67,7 @@
 <td class="findtable">
 <form method="post" action="tiki-assignpermission.php#assign" name="permselects">
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" value="{tr}find{/tr}" name="search" />
+<input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <select name="type" onchange="permselects.submit()">
 <option value="">{tr}all{/tr}</a>

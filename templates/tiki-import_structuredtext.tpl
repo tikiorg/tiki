@@ -4,7 +4,7 @@
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}ImportingPagesAdmin" target="tikihelp" class="tikihelp" title="{tr}ImportingPagesPhpWikiPageAdmin{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 

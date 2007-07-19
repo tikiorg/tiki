@@ -6,7 +6,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Admin Processes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
@@ -100,7 +100,7 @@
 <option value="n">{tr}Inactive{/tr}</option>
 </select>
 
-<input type="submit" name="filter" value="{tr}filter{/tr}" />
+<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>
 <form action="tiki-g-admin_processes.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />

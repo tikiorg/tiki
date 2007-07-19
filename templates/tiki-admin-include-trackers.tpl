@@ -45,7 +45,7 @@ will not work with old library and conversely{/tr}.</td>
 <div class="admin">
 <form action="tiki-admin.php?page=trackers" method="post">
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" name="action" value="{tr}find{/tr}">
+<input type="submit" name="action" value="{tr}Find{/tr}">
 </form>
 {cycle values="odd,even" print=false}
 <table class="normal">

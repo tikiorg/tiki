@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
   <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}admin Webmail{/tr}">
-  <img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}help{/tr}" /></a>
+  <img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Replicate" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" width='16' height='16' /></a>{/if}
+<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width='16' height='16' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-replicate.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">

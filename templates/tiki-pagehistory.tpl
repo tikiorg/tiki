@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.32 2007-07-17 17:12:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.33 2007-07-19 13:16:20 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
-<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}view{/tr}">{tr}View page{/tr}</a></div>
+<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
 
 {if $preview}
 <h2>{tr}Preview of version{/tr}: {$preview}
@@ -28,8 +28,8 @@
 <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
 <table class="normal diff">
 <tr>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}view{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}view{/tr}">{$new.version}</a>{if $new.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}View{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}View{/tr}">{$new.version}</a>{if $new.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
 </tr>
 <tr>
   <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$old.user|userlink} - {/if}{$old.lastModif|tiki_short_datetime}</td>
@@ -150,7 +150,7 @@
 {if $feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
 {if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
 <td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
-<td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}view{/tr}">v</a>
+<td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}source{/tr}">s</a>
 {/if}
@@ -174,7 +174,7 @@
 {if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributors}{if !$smarty.section.ix.first},{/if}{$history[hist].contributors[ix].login|username}{/section}</td>{/if}
 <td class="{cycle advance=false} button">{$history[hist].version}</td>
 <td class="{cycle advance=false} button">
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}source{/tr}">s</a>
 {/if}

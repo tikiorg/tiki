@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.102 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.103 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -92,7 +92,7 @@
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}URL:{/tr}</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y' and $feature_wiki_userpage eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form">{if $userPageExists eq 'y'}<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}view{/tr}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form">{if $userPageExists eq 'y'}<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}View{/tr}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
 	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Edit{/tr}</a>)
 {else}{$feature_wiki_userpage_prefix}{$userinfo.login} (<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}create{/tr}</a>){/if}</td></tr>
   {/if}

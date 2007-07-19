@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.64 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.65 2007-07-19 13:16:16 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -362,7 +362,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_forums.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -378,12 +378,12 @@
 <td class="heading">{tr}ppd{/tr}</td>
 <!--<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>-->
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
@@ -392,7 +392,7 @@
 <!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle}">
-<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}view{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}view{/tr}" </a>
+<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}"><img border='0' height="16" width="18" src='pics/icons/table.png' alt="{tr}View{/tr}" </a>
 
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>

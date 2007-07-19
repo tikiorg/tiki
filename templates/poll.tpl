@@ -7,7 +7,7 @@
 <div id="polledit">
 <div class="pollnav">
 <span class="button2"><a href="#" onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" class="link">{tr}[-]{/tr}</a></span>
-<span class="button2"><a href="#" onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link">{tr}view{/tr}</a></span>
+<span class="button2"><a href="#" onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link">{tr}View{/tr}</a></span>
 </div>
 {if $ratings.title}<div>{$ratings.title}</div>{/if}
 <form method="post" action="tiki-index.php">

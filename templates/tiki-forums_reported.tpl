@@ -13,9 +13,9 @@
 <table>
 <tr>
 <td>
-	<small>{tr}find{/tr}</small>
+	<small>{tr}Find{/tr}</small>
 	<input size="8" type="text" name="find" value="{$find|escape}" />
-	<input type="submit" name="filter" value="{tr}filter{/tr}" />
+	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 </table>	

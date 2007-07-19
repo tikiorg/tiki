@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.51 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.52 2007-07-19 13:16:16 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
@@ -113,7 +113,7 @@
         <form method="get" action="tiki-admin_categories.php">
         <input type="text" name="find" />
         <input type="hidden" name="parentId" value="{$parentId|escape}" />
-        <input type="submit" value="{tr}find{/tr}" name="search" />
+        <input type="submit" value="{tr}Find{/tr}" name="search" />
         <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
         <input type="hidden" name="find_objects" value="{$find_objects|escape}" />
         </form>
@@ -170,7 +170,7 @@
         <form method="get" action="tiki-admin_categories.php">
         <input type="text" name="find_objects" />
         <input type="hidden" name="parentId" value="{$parentId|escape}" />
-        <input type="submit" value="{tr}filter{/tr}" name="search_objects" />
+        <input type="submit" value="{tr}Filter{/tr}" name="search_objects" />
         <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
         <input type="hidden" name="offset" value="{$offset|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />

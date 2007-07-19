@@ -97,8 +97,8 @@
 <tr>
 <td>
 <form method="post">
-{tr}find{/tr}: <input size="15" type="text" name="find" value="{$smarty.request.find|escape}" />
-<input type="submit" name="findb" value="{tr}find{/tr}" />
+{tr}Find{/tr}: <input size="15" type="text" name="find" value="{$smarty.request.find|escape}" />
+<input type="submit" name="findb" value="{tr}Find{/tr}" />
 </form>
 </td>
 <td>

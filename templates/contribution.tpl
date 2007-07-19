@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.14 2007-07-12 18:46:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.15 2007-07-19 13:16:15 jyhem Exp $ *}
 {if $feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">
@@ -11,7 +11,7 @@
 {assign var="help" value=$help|cat:$contributions[ix].name|cat:": "|cat:$contributions[ix].description|cat:"<br />"}
    {/section}
    </select>
-<a {popup text=$help|replace:'"':"'" width=500}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a {popup text=$help|replace:'"':"'" width=500}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 </td></tr>
 
 {if $feature_contributor_wiki eq 'y' and $section eq 'wiki page' and empty($in_comment)}

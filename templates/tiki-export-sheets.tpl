@@ -9,7 +9,7 @@
 <a href="tiki-sheets.php" class="linkbut">{tr}list sheets{/tr}</a>
 {/if}
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-view_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}view{/tr}</a>
+<a href="tiki-view_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}View{/tr}</a>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 <a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}Edit{/tr}</a>

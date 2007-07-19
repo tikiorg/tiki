@@ -2,7 +2,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}admin featured links{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_links.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin featured links template{/tr}">
@@ -24,7 +24,7 @@
 <td class="heading">{tr}hits{/tr}</td>
 <td class="heading">{tr}position{/tr}</td>
 <td class="heading">{tr}type{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$links}

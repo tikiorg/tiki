@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.88 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.89 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Trackers tpl{/tr}">
 <img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}Edit{/tr}" width='16' height='16' /></a>{/if}</h1>
@@ -43,7 +43,7 @@
 <td class="findtable">
 <input type="text" name="find" value="{$find|escape}" /></td>
 <td class="findtable">
-<input type="submit" value="{tr}find{/tr}" name="search" />
+<input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </td></tr></table>
 </form>
@@ -56,12 +56,12 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}last modif{/tr}</a></td>
 <td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'items_desc'}items_asc{else}items_desc{/if}">{tr}items{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr class="{cycle}">
-<td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}" title="{tr}view{/tr}">{$channels[user].name}</a></td>
+<td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}" title="{tr}View{/tr}">{$channels[user].name}</a></td>
 <td>{$channels[user].description}</td>
 <td>{$channels[user].created|tiki_short_date}</td>
 <td>{$channels[user].lastModif|tiki_short_date}</td>

@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Bookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
@@ -16,7 +16,7 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}Name{/tr}</td>
-  <td  class="heading">{tr}action{/tr}</td>
+  <td  class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
@@ -36,7 +36,7 @@
 <tr>
   <td  class="heading">{tr}Name{/tr}</td>
   <td  class="heading">{tr}url{/tr}</td>
-  <td class="heading">{tr}action{/tr}</td>
+  <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$urls}

@@ -3,7 +3,7 @@
 <h1><a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -124,7 +124,7 @@
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
+<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}Find{/tr}" name="search" /></td></tr></table>
 </form>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -155,7 +155,7 @@
 		{$items[ix].periods}
 	</td>
 	<td style="text-align:right;" class="{cycle}">
-		<a title="{tr}view{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="pics/icons/monitor.png" border='0' width='16' height='16' alt='{tr}view{/tr}' /></a>
+		<a title="{tr}View{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="pics/icons/monitor.png" border='0' width='16' height='16' alt='{tr}View{/tr}' /></a>
 	</td>
 
 </tr>

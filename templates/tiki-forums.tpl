@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.29 2007-07-19 09:32:42 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.30 2007-07-19 13:16:18 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -17,7 +17,7 @@
    <td class="findtable">
    <form method="get" action="tiki-forums.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

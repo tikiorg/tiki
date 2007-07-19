@@ -6,7 +6,7 @@
    <form method="get" action="{$url}">
      <input type="text" name="{$cur}_find" value="{$find|escape}" />
      <input type="hidden" name="{$bak}_find" value="{$find_bak|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="nlId" value="{$nlId}" />
      <input type="hidden" name="cookietab" value="{$tab}" />
@@ -24,7 +24,7 @@
 <td class="heading"><a class="tableheading" href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={if $sort_mode eq 'sent_desc'}sent_asc{else}sent_desc{/if}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}sent{/tr}</a></td>
 {/if}
 <td class="heading">{tr}error{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -38,7 +38,7 @@
 {/if}
 <td class="{cycle advance=false}">{if $channels[user].nbErrors > 0}<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}&amp;error={$channels[user].editionId}">{$channels[user].nbErrors}</a>{else}0{/if}</td>
 <td class="{cycle}">
-{if $url == "tiki-newsletter_archives.php"}<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}view{/tr}</a>&nbsp;{/if}
+{if $url == "tiki-newsletter_archives.php"}<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}View{/tr}</a>&nbsp;{/if}
 {if $channels[user].tiki_p_send_newsletters eq 'y'}<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}{else}&nbsp;{/if}</a>
 </td>
 </tr>

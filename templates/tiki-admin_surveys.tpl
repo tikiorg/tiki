@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.25 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.26 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
 <img border="0" src="pics/icons/shape_square_edit.png" alt="{tr}Edit{/tr}" width="16" height="16" /></a>{/if}</h1>
@@ -60,7 +60,7 @@
    <td>
    <form method="get" action="tiki-admin_surveys.php">
      <input type="text" name="find" size= "40" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -85,7 +85,7 @@
 *}
 <td class="heading">{tr}questions{/tr}</td>
 
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

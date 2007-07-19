@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.16 2007-07-19 09:32:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.17 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
-<img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}help{/tr}" /></a>{/if}
+<img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-sheets.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}sheets tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}
@@ -55,7 +55,7 @@
    <td class="findtable">
    <form method="get" action="tiki-sheets.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

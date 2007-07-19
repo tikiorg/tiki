@@ -8,6 +8,7 @@ $lang=Array(
 "Comment" => "評論",
 "Action" => "動作",
 "view" => "觀看",
+"View" => "觀看",
 "No records found" => "查無記錄",
 "Administration" => "系統管理",
 "Links/Commands" => "連結/命令",//perhaps not used
@@ -3182,5 +3183,7 @@ $lang=Array(
 "Displays the data using a monospace font" => "以定寬字顯示資料",
 "Sorts the plugin content in the wiki page" => "在 wiki 頁面中排序外掛模組內容",
 "Display Tiki objects that have not been categorized" => "顯示尚未分類的 Tiki 物件",
+// "reload" => "reload",
+// "Reload" => "Reload",
 "##end###" => "###end###");
 ?>

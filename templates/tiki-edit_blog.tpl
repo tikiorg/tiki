@@ -7,7 +7,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Edit Blog{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_blog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit blog tpl{/tr}">

@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -50,7 +50,7 @@
 </select>
 <label for="mess-mailcont">{tr}Containing{/tr}:</label>
 <input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
-<input type="submit" name="filter" value="{tr}filter{/tr}" />
+<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>
 <br />
 

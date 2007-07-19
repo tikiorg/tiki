@@ -88,7 +88,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_pages}
-<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}: {$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:40:"(...)"}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -105,7 +105,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_blogs}
-<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -114,7 +114,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_articles}
-<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-read_article.php?articleId={$user_articles[ix].articleId}">{$user_articles[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-read_article.php?articleId={$user_articles[ix].articleId}">{$user_articles[ix].title}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -123,7 +123,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_forum_comments}
-<tr><td class="{cycle}"><a class="link" title="{tr}view{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">{$user_forum_comments[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">{$user_forum_comments[ix].title}</a></td></tr>
 {/section}
 </table>
 {/if}

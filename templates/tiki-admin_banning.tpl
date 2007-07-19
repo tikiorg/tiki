@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.28 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.29 2007-07-19 13:16:16 jyhem Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -18,7 +18,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">

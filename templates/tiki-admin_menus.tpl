@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}admin menu builder{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}admin menu builder{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -50,7 +50,7 @@
    <td>
    <form method="get" action="tiki-admin_menus.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" id="menus_find" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" id="menus_find" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -63,7 +63,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading">{tr}options{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

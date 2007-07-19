@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_faqs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list faqs tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>
@@ -37,7 +37,7 @@
    <td class="findtable">
    <form method="get" action="tiki-list_faqs.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -51,7 +51,7 @@
 <td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
 <td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}questions{/tr}</a></td>
 {if $tiki_p_admin_faqs eq 'y'}
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}

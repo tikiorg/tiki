@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Chat+Admin" target="tikihelp" class="tikihelp" title="{tr}Chat Admin{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Chat+Admin" target="tikihelp" class="tikihelp" title="{tr}Chat Admin{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -41,7 +41,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_chat.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -53,7 +53,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}refresh{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=user loop=$channels}
