@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.20 2007-07-19 10:26:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.21 2007-07-19 10:46:54 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,13 +33,12 @@ global $tiki_p_admin;
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
   	require_once('lib/search/refresh-functions.php');
   	refresh_index_wiki_all();
-}
-if (!empty($_REQUEST['refresh_index_now'])) {
 	$smarty->assign('refresh_index_now', $_REQUEST['refresh_index_now']);
 }
 if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_tracker_index_now']) && $_REQUEST['refresh_tracker_index_now'] == 'y') {
   	require_once('lib/search/refresh-functions.php');
   	refresh_index_trackers();
+	$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
 }
 
 ask_ticket('admin-inc-search');
