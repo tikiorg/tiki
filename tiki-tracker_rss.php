@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.10 2007-06-16 16:01:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.11 2007-07-19 09:10:20 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,9 +93,11 @@ if ($output["data"]=="EMPTY") {
 		$data=null;
 	}
 	$tmp=null;
-	$changes["data"] = array_reverse($changes["data"]);
+	if (isset($changes['data'])) {
+		$changes["data"] = array_reverse($changes["data"]);
+		$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
+	}
 	
-	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 	$changes=null;
 }
 header("Content-type: ".$output["content-type"]);
