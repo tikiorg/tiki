@@ -10,7 +10,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h2>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h2>
+<h2>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}New{/tr}</a></h2>
 <form action="tiki-g-admin_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="roleId" value="{$info.roleId|escape}" />
@@ -20,7 +20,7 @@ Errors:<br />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}name{/tr}</td>
+  <td class="formcolor">{tr}Name{/tr}</td>
   <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
@@ -29,7 +29,7 @@ Errors:<br />
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /> </td>
+  <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /> </td>
 </tr>
 </table>
 </form>

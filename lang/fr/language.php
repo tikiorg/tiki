@@ -1828,6 +1828,7 @@ $lang=Array(
 "upload" => "envoyer",
 "active perms" => "perms activées",
 "perms" => "droits",
+"Perms" => "Droits",
 "No records found" => "Aucun résultat",
 "Exact&nbsp;match" => "Contient&nbsp;exactement",
 "any type" => "tout type",

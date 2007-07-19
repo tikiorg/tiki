@@ -4515,6 +4515,7 @@ $lang=Array(
 "lock" => "zárom",
 "Lock" => "Zárom",
 "perms" => "jogok",
+"Perms" => "Jogok",
 "history" => "változatok",
 "similar" => "hasonló oldalak",
 "undo" => "visszacsinál",

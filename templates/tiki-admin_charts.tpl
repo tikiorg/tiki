@@ -10,7 +10,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin charts template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
-<h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
+<h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}New{/tr}</a>
 </h2>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="chartId" value="{$info.chartId|escape}" />

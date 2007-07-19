@@ -105,7 +105,7 @@
 {if $feature_contribution eq 'y'}
 {include file="contribution.tpl"}
 {/if}
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}save and exit{/tr}" />
 </td></tr>

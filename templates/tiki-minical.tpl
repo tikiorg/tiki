@@ -209,7 +209,7 @@
 <input type="hidden" name="duration" value="60*60" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}save{/tr}" />
+      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}Save{/tr}" />
       {if $eventId}
       <input type="submit" name="remove2" value="{tr}Delete{/tr}" />
       {/if}

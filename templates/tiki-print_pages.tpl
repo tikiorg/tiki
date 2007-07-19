@@ -48,7 +48,7 @@
 <br />
 <form method="post" action="tiki-print_multi_pages.php">
 <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
-<input type="submit" name="print" value="{tr}print{/tr}" />
+<input type="submit" name="print" value="{tr}Print{/tr}" />
 </form>
 </div>
 </div>

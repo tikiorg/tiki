@@ -4301,6 +4301,7 @@ $lang=Array(
 "lock" => "锁定",
 "Lock" => "锁定",
 "perms" => "权限",
+"Perms" => "权限",
 "history" => "历史",
 "similar" => "相似",
 "undo" => "撤消",

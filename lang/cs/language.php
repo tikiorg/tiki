@@ -2905,6 +2905,7 @@ $lang=Array(
 "lock" => "Zamknout",
 "Lock" => "Zamknout",
 "perms" => "Práva",
+"Perms" => "Práva",
 "history" => "Historie",
 "similar" => "Podobné",
 "undo" => "Vrátit",

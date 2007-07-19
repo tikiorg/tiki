@@ -3262,6 +3262,7 @@ $lang=Array(
 "rename" => "rename",
 "Rename" => "Rename",
 "perms" => "perms",
+"Perms" => "Perms",
 "history" => "history",
 "undo" => "undo",
 "slides" => "slides",

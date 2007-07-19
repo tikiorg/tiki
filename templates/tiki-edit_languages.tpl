@@ -55,7 +55,7 @@
   {tr}Translate recorded{/tr}:<br />
   <table>
   <tr><td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10  maxlength=255></td>
-      <td align="center"><input type="submit" name="tran_search_sm" value="{tr}search{/tr}" /></td></tr>
+      <td align="center"><input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td></tr>
   {section name=it loop=$untranslated}
   <tr><td class="form">{tr}Original{/tr}:</td>
       <td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255></td>
@@ -79,7 +79,7 @@
   {tr}Edit translations{/tr}:<br />
   <table>
   <tr><td align="left" colspan=4><input name="tran_search" value="{$tran_search|escape}" size=10  maxlength=255 />
-      <input type="submit" name="tran_search_sm" value="{tr}search{/tr}" /></td></tr>
+      <input type="submit" name="tran_search_sm" value="{tr}Search{/tr}" /></td></tr>
   {section name=it loop=$untranslated}
   <tr><td class="form">{tr}Original{/tr}:</td>
       <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]}" size=30 maxlength=255 /></td>

@@ -2240,6 +2240,7 @@ $lang=Array(
 "lock" => "lukitse",
 "Lock" => "Lukitse",
 "perms" => "oikeud",
+"Perms" => "Oikeud",
 "history" => "historia",
 "similar" => "samanlainen",
 "undo" => "peru",

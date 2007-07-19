@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.62 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.63 2007-07-19 09:32:42 jyhem Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -106,7 +106,7 @@
 {include file=categorize.tpl}
 {include file=freetag.tpl}
 <tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -220,7 +220,7 @@
   {if $tiki_p_upload_images eq 'y'}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_images eq 'y' ) }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='pics/icons/upload.png' border='0' height="16" width="16" alt='{tr}upload{/tr}' title='{tr}upload{/tr}' /></a>
+    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='pics/icons/upload.png' border='0' height="16" width="16" alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
   {if ($galleries[changes].geographic eq 'y')}
     <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/wrench.png' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
   {/if}
@@ -231,7 +231,7 @@
     {if $galleries[changes].individual eq 'y'}
 	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' /></a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key.png' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="16" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key.png' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' height="16" width="16" border='0' /></a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}

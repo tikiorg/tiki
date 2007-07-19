@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.6 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.7 2007-07-19 09:32:36 jyhem Exp $ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -37,7 +37,7 @@
 		{/if}
 
 	  	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}{$comments_per_page_param}&amp;savenotepad={$comment.threadId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}save{/tr}'}</a>
+		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}{$comments_per_page_param}&amp;savenotepad={$comment.threadId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>
 		{/if}
 	
 		{if $user and $feature_user_watches eq 'y'}

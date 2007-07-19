@@ -19,7 +19,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h2>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h2>
+<h2>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}New{/tr}</a></h2>
 <form action="tiki-g-admin_activities.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="activityId" value="{$info.activityId|escape}" />
@@ -30,7 +30,7 @@ Errors:<br />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}name{/tr}</td>
+  <td class="formcolor">{tr}Name{/tr}</td>
   <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
@@ -130,7 +130,7 @@ Errors:<br />
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="save_act" value="{tr}save{/tr}" /> </td>
+  <td class="formcolor"><input type="submit" name="save_act" value="{tr}Save{/tr}" /> </td>
 </tr>
 
 </table>

@@ -25,7 +25,7 @@
 
 </h1>
 {include file=tiki-g-monitor_bar.tpl}
-<h2>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?WHERE={$Where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
+<h2>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?WHERE={$Where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}New{/tr}</a>
 </h2>
 {if $pid > 0}
 {include file=tiki-g-proc_bar.tpl}
@@ -73,7 +73,7 @@
   <td class="formcolor">
       <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
       <input size="16" name="userfile1" type="file" />
-      <input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" />
+      <input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />
   </td>
 </tr>
 </table>

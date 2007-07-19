@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.108 2007-06-16 16:02:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.109 2007-07-19 09:32:42 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -56,7 +56,7 @@
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
 {/if}
 {/if}
 {if $page_ref_id}
@@ -327,7 +327,7 @@ function searchrep() {
 {/if}
 &nbsp;<input type="hidden" name="page" value="{$page|escape}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />&nbsp;&nbsp;
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
 <input type="button" class="wikiaction" value="{tr}save draft{/tr}" onclick="save_draft()">
 {/if}

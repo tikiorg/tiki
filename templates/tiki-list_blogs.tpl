@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.41 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.42 2007-07-19 09:32:43 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
@@ -99,7 +99,7 @@
 	    {if $listpages[changes].individual eq 'y'}
 		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}active perms{/tr}' alt='{tr}active perms{/tr}' src='pics/icons/key_active.png' width='16' height='16' /></a>
 	    {else}
-		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}perms{/tr}' alt='{tr}perms{/tr}' src='pics/icons/key.png' width='16' height='16' /></a>
+		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}Perms{/tr}' alt='{tr}Perms{/tr}' src='pics/icons/key.png' width='16' height='16' /></a>
 	    {/if}
 	{/if}
         {if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}

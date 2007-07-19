@@ -81,7 +81,7 @@
   <input name="isValid" type="hidden" value="" />
   <tr>
     <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+    <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
   </tr>
   </table>
   </form>

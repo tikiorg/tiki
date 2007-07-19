@@ -18,7 +18,7 @@
 <tr><td class="formcolor">{tr}Publishing date{/tr}</td>
 <td class="formcolor">{html_select_date time=$publishDate end_year="+1" field_order=$display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
-<input type="submit" name="save" value="{tr}save{/tr}" />
+<input type="submit" name="save" value="{tr}Save{/tr}" />
 </td></tr>
 </table>
 </form>

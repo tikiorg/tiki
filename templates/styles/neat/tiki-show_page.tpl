@@ -64,7 +64,7 @@
 {/if}
 
 {if $feature_wiki_print eq 'y'}
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src='pics/icons/printer.png' border='0' alt='{tr}print{/tr}' width='16' height='16' /></a>
+<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
@@ -72,7 +72,7 @@
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' alt='{tr}save{/tr}' width='16' height='16' /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}' width='16' height='16' /></a>
 {/if}
 
 {if $user and $feature_user_watches eq 'y'}
@@ -139,7 +139,7 @@
 		<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="tablink">{tr}Lock{/tr}</a></span>
 	{/if}
 	{if $tiki_p_admin_wiki eq 'y'}
-		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}perms{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}Perms{/tr}</a></span>
 	{/if}
 {/if}
 

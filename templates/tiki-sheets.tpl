@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.15 2007-06-07 13:26:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.16 2007-07-19 09:32:44 jyhem Exp $ *}
 <h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
@@ -31,7 +31,7 @@
 <tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -90,7 +90,7 @@
     {if $sheets[changes].individual eq 'y'}
 	<img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' />
     {else}
-	<img src='pics/icons/key.png' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="16" border='0' />
+	<img src='pics/icons/key.png' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' height="16" width="16" border='0' />
     {/if}
     </a>
   {/if}

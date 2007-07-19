@@ -15,7 +15,7 @@
 <h2>{tr}Folders{/tr}</h2>
 <table class="normal">
 <tr>
-  <td class="heading">{tr}name{/tr}</td>
+  <td class="heading">{tr}Name{/tr}</td>
   <td  class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -34,7 +34,7 @@
 <h2>{tr}Bookmarks{/tr}</h2>
 <table class="normal">
 <tr>
-  <td  class="heading">{tr}name{/tr}</td>
+  <td  class="heading">{tr}Name{/tr}</td>
   <td  class="heading">{tr}url{/tr}</td>
   <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -63,13 +63,13 @@
 <tr>
   <td >
     <b>{tr}Add or edit folder{/tr}</b>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}new{/tr}</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}New{/tr}</a>
     {* form to add a category *}
     <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editfolder" value="{$editfolder|escape}" />
       <input type="hidden" name="parentId" value="{$parentId|escape}" />
-      <tr><td class="formcolor">{tr}name{/tr}:</td>
+      <tr><td class="formcolor">{tr}Name{/tr}:</td>
           <td class="formcolor"><input type="text" size = "40" name="foldername" value="{$foldername|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
@@ -82,7 +82,7 @@
   <td >
     {* form to add a url *}
     <b>{tr}Add or edit a URL{/tr}</b>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}new{/tr}</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}New{/tr}</a>
     <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editurl" value="{$editurl|escape}" />

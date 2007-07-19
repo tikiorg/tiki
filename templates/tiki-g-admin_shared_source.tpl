@@ -36,7 +36,7 @@ Errors:<br />
 
 
   <td class='formcolor'>
-  	<input type="submit" name='save' value="{tr}save{/tr}" />
+  	<input type="submit" name='save' value="{tr}Save{/tr}" />
   	<input type="submit" name='cancel' value="{tr}cancel{/tr}" />
   </td>
 </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.92 2007-07-17 17:05:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.93 2007-07-19 09:32:44 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -329,11 +329,11 @@ a moderator approves it.{/tr}</small>
   </td>
   {/if}	
   <td style="text-align:center;" class="{cycle advance=false}">
-  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}normal{/tr}" title="{tr}normal{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" title="{tr}announce{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" title="{tr}hot{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" title="{tr}sticky{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}locked{/tr}" title="{tr}locked{/tr}{if $newtopic}-{tr}new{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}normal{/tr}" title="{tr}normal{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" title="{tr}announce{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" title="{tr}hot{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" title="{tr}sticky{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}locked{/tr}" title="{tr}locked{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   </td>
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="{cycle advance=false}">

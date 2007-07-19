@@ -85,7 +85,7 @@
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+  <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 </tr>
 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.59 2007-06-25 14:46:22 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.60 2007-07-19 09:32:38 jyhem Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -165,7 +165,7 @@
 {include file=freetag.tpl}
 
 <tr class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <br />

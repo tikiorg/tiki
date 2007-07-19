@@ -6,7 +6,7 @@
 {/if}
 
 {if $feature_wiki_print eq 'y'}
-<span class="tabbut"><a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}" class="tablink">{tr}print{/tr}</a></span>
+<span class="tabbut"><a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}" class="tablink">{tr}Print{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
@@ -14,7 +14,7 @@
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<span class="tabbut"><a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1" class="tablink">{tr}save{/tr}</a></span>
+<span class="tabbut"><a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1" class="tablink">{tr}Save{/tr}</a></span>
 {/if}
 
 {if $feature_morcego eq "y" && $wiki_feature_3d eq "y"}
@@ -98,7 +98,7 @@
 	{/if}
 
 	{if $tiki_p_admin_wiki eq 'y'}
-		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}perms{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}Perms{/tr}</a></span>
 	{/if}
 {/if}
 

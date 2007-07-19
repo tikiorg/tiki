@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.17 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.18 2007-07-19 09:32:43 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -198,7 +198,7 @@
       <option value="remove_pages" >{tr}remove{/tr}</option>
     {/if}
     {if $feature_wiki_multiprint eq 'y'}
-      <option value="print_pages" >{tr}print{/tr}</option>
+      <option value="print_pages" >{tr}Print{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
   </select>                

@@ -52,7 +52,7 @@
       <td class="formcolor"><textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
   </tr>
   <tr><td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="upload" value="{tr}save{/tr}" /></td>
+      <td class="formcolor"><input type="submit" name="upload" value="{tr}Save{/tr}" /></td>
   </tr>
 </table>
 </form>
@@ -70,7 +70,7 @@
       <textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
   </tr>
   <tr><td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+      <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
   </tr>
 </table>
 </form>

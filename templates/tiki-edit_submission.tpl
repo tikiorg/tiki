@@ -152,7 +152,7 @@
 
 <div align="center">
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 </div>
 </form>
 <br />

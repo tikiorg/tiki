@@ -17,7 +17,7 @@
 {else}
 <tr class="formcolor"><td>{tr}Data{/tr}</td><td><textarea rows="20" cols="80" name="data">{$info.data|escape}</textarea></td></tr>
 {/if}
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 

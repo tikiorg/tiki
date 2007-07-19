@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.70 2007-06-08 10:56:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.71 2007-07-19 09:32:37 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -92,7 +92,7 @@
 <table class="sortable" id="assignperms">
 <tr>
 <th class="heading">&nbsp;</td>
-<th class="heading">{tr}name{/tr}</th>
+<th class="heading">{tr}Name{/tr}</th>
 <th class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
 <th class="heading">{tr}type{/tr}</th>
 <th class="heading">{tr}desc{/tr}</th>
@@ -114,7 +114,7 @@
 <td class="{cycle advance=false}" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
 <td class="{cycle advance=false}">{tr}{$perms[user].type}{/tr}</td>
 <td class="{cycle}">
-{if $perms[user].from_admin eq 'y'}<span  style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#258;background-color:#ace;">{tr}admin{/tr}</span>{/if}
+{if $perms[user].from_admin eq 'y'}<span  style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#258;background-color:#ace;">{tr}Admin{/tr}</span>{/if}
 {if $inherited_from_anon[user].hasPerm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#262;background-color:#ada;">{tr}inherited from{/tr}<a href="tiki-assignpermission.php?group=Anonymous"> Anonymous</a></span>{/if}
 {if $inherited_from_reg[user].hasPerm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#258;background-color:#acd;">{tr}inherited from{/tr}<a href="tiki-assignpermission.php?group=Registered"> Registered</a></span>{/if}
 {if $has_inherited_one_perm eq 'y'}<span style="float:right;font-size:80%;padding:1px 5px;border:1px solid #999;color:#852;background-color:#dca;">{tr}inherited{/tr}</span>{/if}

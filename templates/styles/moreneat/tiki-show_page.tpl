@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.64 2007-07-17 17:12:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.65 2007-07-19 09:32:46 jyhem Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -54,7 +54,7 @@
 {/if}
 
 {if $feature_wiki_print eq 'y'}
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='pics/icons/printer.png' border='0' alt='{tr}print{/tr}'}</a>
+<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}'}</a>
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
@@ -62,7 +62,7 @@
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1">{html_image file='pics/icons/disk.png' border='0' alt='{tr}save{/tr}'}</a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>
 {/if}
 
 {if $user and $feature_user_watches eq 'y'}
@@ -137,7 +137,7 @@
 		<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="tablink">{tr}Lock{/tr}</a></span>
 	{/if}
 	{if $tiki_p_admin_wiki eq 'y'}
-		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}perms{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="tablink">{tr}Perms{/tr}</a></span>
 	{/if}
 {/if}
 

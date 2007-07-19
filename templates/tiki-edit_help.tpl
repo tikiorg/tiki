@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.48 2007-04-25 18:39:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.49 2007-07-19 09:32:38 jyhem Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -52,7 +52,7 @@
 <tr><td><strong>{tr}Wiki File Attachments{/tr}:</strong></td><td> {literal}{{/literal}file name=file.ext desc="description text" page="wiki page name" showdesc=1} {tr}Creates a link to the named file.  If page is not given, the file must be attached to the current page.  If desc is not given, the file name is used for the link text, unless showdesc is used, which makes the file description be used for the link text.  If image=1 is given, the attachment is treated as an image and is displayed directly on the page; no link is generated.{/tr}</td></tr>
 <tr><td><strong>{tr}RSS feeds{/tr}:</strong></td><td> "{literal}{{/literal}rss id=n max=m{literal}}{/literal}" {tr}displays rss feed with id=n maximum=m items{/tr}</td></tr>
 <tr><td><strong>{tr}Dynamic content{/tr}:</strong></td><td> "{literal}{{/literal}content id=n}" {tr}Will be replaced by the actual value of the dynamic content block with id=n{/tr}</td></tr>
-<tr><td><strong>{tr}Dynamic variables{/tr}:</strong></td><td> "%{tr}name{/tr}%" {tr}Inserts an editable variable{/tr}</td></tr>
+<tr><td><strong>{tr}Dynamic variables{/tr}:</strong></td><td> "%{tr}Name{/tr}%" {tr}Inserts an editable variable{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents wiki parsing of the enclosed data.{/tr}</td></tr>
 <tr><td><strong>{tr}Preformated sections{/tr}:</strong></td><td> {tr}"~pp~ data ~/pp~" Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  "~pre~ data ~/pre~" also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text.{/tr}</td></tr>
 <tr><td><strong>{tr}Comments{/tr}:</strong></td><td> {tr}"~tc~ Tiki Comment ~/tc~" makes a Tiki comment.  It will be completely removed from the display, but saved in the file for future reference.  "~hc~ HTML Comment ~/hc~" makes an HTML comment.  It will be inserted as a comment in the output HTML; these are not normally displayed in browsers, but can be seen using "View Source" or similar.{/tr}</td></tr>

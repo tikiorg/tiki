@@ -4074,6 +4074,7 @@ $lang=Array(
 "lock" => "zaključaj",
 "Lock" => "Zaključaj",
 "perms" => "dozvole",
+"Perms" => "Dozvole",
 "history" => "Povijest",
 "similar" => "slično",
 "undo" => "vrati",

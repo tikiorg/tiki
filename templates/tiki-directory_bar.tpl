@@ -2,7 +2,7 @@
 <table>
 <tr>
 {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
-<td><div  class="button2"><a href="tiki-directory_admin.php" class="linkbut">{tr}admin{/tr}</a></div></td>
+<td><div  class="button2"><a href="tiki-directory_admin.php" class="linkbut">{tr}Admin{/tr}</a></div></td>
 {/if}
 {if $mid ne "tiki-directory_browse.tpl"}
 <td><div  class="button2"><a href="tiki-directory_browse.php" class="linkbut">{tr}browse{/tr}</a></div></td>

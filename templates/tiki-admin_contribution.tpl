@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.8 2007-07-17 16:47:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.9 2007-07-19 09:32:36 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -14,7 +14,7 @@
  <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name"{if $contribution.name} value="{$contribution.name|escape}"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor"><input type="text" name="description" size="80" maxlength="250"{if $contribution.description} value="{$contribution.description|escape}"{/if} /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="replace" value="{tr}save{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="replace" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -34,7 +34,7 @@
 <td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributors{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contributor_wiki" {if $feature_contributor_wiki eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}save{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 

@@ -141,7 +141,7 @@
 <h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}

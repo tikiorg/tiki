@@ -4979,6 +4979,7 @@ $lang=Array(
 "lock" => "zablokuj",
 "Lock" => "Zablokuj",
 "perms" => "uprawnienia",
+"Perms" => "Uprawnienia",
 "history" => "historia",
 "similar" => "podobne",
 "undo" => "cofnij",

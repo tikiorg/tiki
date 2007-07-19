@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.52 2007-07-16 22:18:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.53 2007-07-19 09:32:45 jyhem Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
-      <p style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}logout{/tr}</a></p>
+      <p style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}Logout{/tr}</a></p>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $https_login eq 'encouraged' || $https_login eq 'required' || $https_login eq 'force_nocheck'}{$base_url_https}{/if}{$login_url}" method="post"{if $desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
@@ -85,7 +85,7 @@
               <p style="text-align: center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></p>
             {/if}
           {/if}
-          <p style="text-align: center"><button type="submit" name="login">{tr}login{/tr}</button></p>
+          <p style="text-align: center"><button type="submit" name="login">{tr}Login{/tr}</button></p>
        </fieldset>
           
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}

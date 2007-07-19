@@ -200,7 +200,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
           <tr><td>admin</td></tr>
           <tr><td class="module">{tr}pass{/tr}:</td></tr>
           <tr><td><input type="password" name="pass" size="20" /></td></tr>
-          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+          <tr><td><input type="submit" name="login" value="{tr}Login{/tr}" /></td></tr>
           </table>
       </form>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.31 2007-07-17 16:47:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.32 2007-07-19 09:32:37 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -22,7 +22,7 @@
 <h2>{tr}List of topics{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}Image{/tr}</td>
 <td class="heading">{tr}Active?{/tr}</td>
 <td class="heading">{tr}Articles (subs){/tr}</td>

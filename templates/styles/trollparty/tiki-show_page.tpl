@@ -14,7 +14,7 @@
 {/if}
 
 {if $feature_wiki_print eq 'y'}
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}" class="linkbuttop">{tr}print{/tr}</a>
+<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page}" class="linkbuttop">{tr}Print{/tr}</a>
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
@@ -22,7 +22,7 @@
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1" class="linkbuttop">{tr}save{/tr}</a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1" class="linkbuttop">{tr}Save{/tr}</a>
 {/if}
 
 {if $user and $feature_user_watches eq 'y'}

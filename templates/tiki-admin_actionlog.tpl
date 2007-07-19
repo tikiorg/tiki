@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.31 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.32 2007-07-19 09:32:36 jyhem Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -173,7 +173,7 @@
 <th class="heading">{tr}user{/tr}</th>
 <th class="heading">{tr}connection time{/tr}</th>
 <th class="heading">{tr}connection seconds{/tr}</th>
-<th class="heading">{tr}login{/tr}</th>
+<th class="heading">{tr}Login{/tr}</th>
 </tr>
 {foreach key=auser item=time from=$logTimes}
 <tr>
