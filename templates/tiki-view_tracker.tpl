@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.145 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.146 2007-07-19 08:34:41 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -13,6 +13,9 @@
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}stop monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}stop monitor{/tr}" /></a>
 {/if}
 {/if}
+{if $rss_tracker eq "y"}
+<a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align="right" /></a>
+{/if}
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>{/if}
 {if $filtervalue}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
@@ -22,9 +25,6 @@
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
-{/if}
-{if $rss_tracker eq "y"}
-<span class="button2"><a href="tiki-tracker_rss.php?trackerId={$trackerId}" class="linkbut"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a></span>
 {/if}
 </div>
 
