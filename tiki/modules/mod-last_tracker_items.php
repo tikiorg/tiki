@@ -19,7 +19,7 @@ if ($feature_trackers == 'y') {
 	}
 	$modLastItems = array();
 	if (isset($module_params["trackerId"]) && isset($module_params["name"])) {
-		$tmp = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '', $status);
+		$tmp = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '','','', $status);
 		foreach ($tmp["data"] as $data) {
 			foreach ($data["field_values"] as $data2) {
 				if (isset($data2["name"])) {
