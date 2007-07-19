@@ -55,6 +55,9 @@
     <td>&nbsp;</td>
 	</tr>
 	{/if}
+	{if $refresh_tracker_index_now neq 'y'}
+	<tr><td><a href="tiki-admin.php?page=search&refresh_tracker_index_now=y" class="link" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a></td><td></td></tr>
+	{/if}
       <tr><td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
 	<td class="form">
