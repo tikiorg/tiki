@@ -28,7 +28,7 @@ class QuickTagsLib extends TikiLib {
 			   $mid = " where (`tagcategory` like ?)";
 			}
 			$bindvars[]=$category;
-	   }
+	        }
 		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quicktags` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -36,7 +36,8 @@ class QuickTagsLib extends TikiLib {
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$res['iconpath'] = $res['tagicon'];
-			if (!is_file($res['tagicon'])) $res['tagicon'] = 'images/ed_html.gif';
+			if (!is_file($res['tagicon'])) 
+                            $res['tagicon'] = 'pics/icons/page_white_code.png';
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -75,16 +76,19 @@ class QuickTagsLib extends TikiLib {
 	}
 
 	function list_icons($p) {
-    $back = array();
+          $back = array();
 		foreach($p as $path) {
 			$handle = opendir($path);
 			while ($file = readdir($handle)) {
-				if (((strtolower(substr($file, -4, 4)) == ".gif") or (strtolower(substr($file, -4, 4)) == ".png")) and (ereg("^[-_a-zA-Z0-9\.]*$", $file))) {
-					$back[] = $path.'/'.$file;
+				if (((strtolower(substr($file, -4, 4)) == ".gif") 
+                                      or (strtolower(substr($file, -4, 4)) == ".png")) 
+                                  and (ereg("^[-_a-zA-Z0-9\.]*$", $file))) 
+                                {
+				  $back[] = $path .'/'  .$file;
 				}
 			}
 		}
-    return $back;
+          return $back;
 	}
 
 }
