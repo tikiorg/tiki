@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.8 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.9 2007-07-19 09:32:36 jyhem Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}
@@ -76,7 +76,7 @@
 <tr><td class="button" colspan="2">
 <a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}" /></a>
 {tr}InterTiki Server{/tr} <b>{$k}</b></td></tr>
-<tr><td class="form">{tr}name{/tr}</td><td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td></tr>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td></tr>
 <tr><td class="form">{tr}host{/tr}</td><td><input type="text" name="interlist[{$k}][host]" value="{$i.host}" /></td></tr>
 <tr><td class="form">{tr}port{/tr}</td><td><input type="text" name="interlist[{$k}][port]" value="{$i.port}" /></td></tr>
 <tr><td class="form">{tr}path{/tr}</td><td><input type="text" name="interlist[{$k}][path]" value="{$i.path}" /></td></tr>
@@ -84,7 +84,7 @@
 {/foreach}
 {/if}
 <tr><td class="button" colspan="2">{tr}Add new server{/tr}</td></tr>
-<tr><td class="form">{tr}name{/tr}</td><td><input type="text" name="new[name]" value="" /></td></tr>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="new[name]" value="" /></td></tr>
 <tr><td class="form">{tr}host{/tr}</td><td><input type="text" name="new[host]" value="" /></td></tr>
 <tr><td class="form">{tr}port{/tr}</td><td><input type="text" name="new[port]" value="" /></td></tr>
 <tr><td class="form">{tr}path{/tr}</td><td><input type="text" name="new[path]" value="" /></td></tr>

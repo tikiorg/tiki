@@ -62,7 +62,7 @@
 </td></tr>
 {/if}
 {include file=categorize.tpl}
-<tr class="editblogform"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr class="editblogform"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <br />

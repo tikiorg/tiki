@@ -1568,6 +1568,7 @@ $lang=Array(
 // "lock" => "lock",
 // "Lock" => "Lock",
 // "perms" => "perms",
+// "Perms" => "Perms",
 // "history" => "history",
 // "similar" => "similar",
 // "undo" => "undo",

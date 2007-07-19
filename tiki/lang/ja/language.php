@@ -4599,6 +4599,7 @@ $lang=Array(
 "lock" => "ロック",
 "Lock" => "ロック",
 "perms" => "権限",
+"Perms" => "権限",
 "history" => "履歴",
 "similar" => "類似",
 "undo" => "取消",

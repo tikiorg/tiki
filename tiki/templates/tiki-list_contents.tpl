@@ -23,7 +23,7 @@
 <textarea rows="5" cols="40" name="description">{$description|escape}</textarea>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
-<input type="submit" name="save" value="{tr}save{/tr}" />
+<input type="submit" name="save" value="{tr}Save{/tr}" />
 </td></tr>
 </table>
 </form>

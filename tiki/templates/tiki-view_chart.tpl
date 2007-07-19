@@ -58,7 +58,7 @@
 	</td>
 	<td style="text-align:right;" class="{cycle advance=false}">
 	{if $items[ix].dif eq 'new'}
-	    <img src='pics/icons/new.png' border='0' alt='{tr}new{/tr}' width='16' height='16' />	
+	    <img src='pics/icons/new.png' border='0' alt='{tr}New{/tr}' width='16' height='16' />	
 	{else}
 		{if $items[ix].dif eq $max_dif}
 			{if $items[ix].dif > 0}+{/if}{$items[ix].dif}

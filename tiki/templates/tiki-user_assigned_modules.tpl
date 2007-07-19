@@ -30,7 +30,7 @@
 		<table  class="normal">
 			<tr>
 				<td class="heading">{tr}#{/tr}</td>
-				<td class="heading">{tr}name{/tr}</td>
+				<td class="heading">{tr}Name{/tr}</td>
 				<td  class="heading">{tr}act{/tr}</td>
 			</tr>
 			{cycle values="odd,even" print=false}
@@ -56,7 +56,7 @@
 		<table  class="normal">
 			<tr>
 				<td class="heading">{tr}#{/tr}</td>
-				<td class="heading">{tr}name{/tr}</td>
+				<td class="heading">{tr}Name{/tr}</td>
 				<td  class="heading">{tr}act{/tr}</td>
 			</tr>
 			{cycle values="odd,even" print=false}

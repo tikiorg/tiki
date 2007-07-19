@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.19 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.20 2007-07-19 09:32:38 jyhem Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -32,7 +32,7 @@ loc="page" crumbs=$crumbs}
 <option value="all">{tr}in entire directory{/tr}</option>
 <option value="cat">{tr}in current category{/tr}</option>
 </select>
-<input type="submit" value="{tr}search{/tr}" />
+<input type="submit" value="{tr}Search{/tr}" />
 </form>
 </div>
 

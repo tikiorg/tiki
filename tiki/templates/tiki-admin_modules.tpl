@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.51 2007-07-17 16:21:46 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.52 2007-07-19 09:32:37 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -34,7 +34,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <h2>{tr}User Modules{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -118,7 +118,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <table class="normal">
 <caption>{tr}Left Modules{/tr}</caption>
 <tr>
-<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
@@ -154,7 +154,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <table class="normal">
 <caption>{tr}Right Modules{/tr}</caption>
 <tr>
-<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>

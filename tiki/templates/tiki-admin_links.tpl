@@ -70,6 +70,6 @@
 <option value="n" {if $type eq 'n'}selected="selected"{/if}>{tr}open new window{/tr}</option>
 </select>
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

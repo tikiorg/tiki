@@ -1790,6 +1790,7 @@ $lang=Array(
 "error" => "error",
 "pdf" => "pdf",
 "perms" => "perms",
+"Perms" => "Perms",
 "similar" => "similar",
 "categories" => "categories",
 "Prefs" => "Prefs",

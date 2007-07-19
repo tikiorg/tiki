@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.8 2006-08-29 20:19:14 sylvieg Exp $ *}
-  {tikimodule title="{tr}login{/tr}" name="login-box"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.9 2007-07-19 09:32:46 jyhem Exp $ *}
+  {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
@@ -42,7 +42,7 @@
      {/if}
           <div class="module"><input type="text" name="user"  size="8" /> {tr}user{/tr}</div>
           <div class="module"><input type="password" name="pass" size="8" /> {tr}pass{/tr}</div>
-          <div class="module"><input type="submit" name="login" value="{tr}login{/tr}" style="width:100%;"/></div>
+          <div class="module"><input type="submit" name="login" value="{tr}Login{/tr}" style="width:100%;"/></div>
           {if $rememberme ne 'disabled'}
           <div class="module"><input type="checkbox" name="rme" value="on"/> {tr}Remember me{/tr}</div>
           {/if}

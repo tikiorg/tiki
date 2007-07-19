@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.27 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.28 2007-07-19 09:32:36 jyhem Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -98,7 +98,7 @@
 <tr>
 	<td class="formcolor">&nbsp;</td>
 	<td class="formcolor">
-		<input type="submit" name="save" value="{tr}save{/tr}" />
+		<input type="submit" name="save" value="{tr}Save{/tr}" />
 	</td>
 </tr>
 </table>

@@ -1183,6 +1183,7 @@ $lang=Array(
 "pdf" => "pdf",
 "backlinks" => "backlinks",
 "perms" => "perms",
+"Perms" => "Perms",
 "similar" => "similar",
 "undo" => "undo",
 "slides" => "slides",

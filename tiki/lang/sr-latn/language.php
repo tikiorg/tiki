@@ -3649,6 +3649,7 @@ $lang=Array(
 "lock" => "zaključaj",
 "Lock" => "Zaključaj",
 "perms" => "dozvole",
+"Perms" => "Dozvole",
 "history" => "istorija",
 "similar" => "slično",
 "undo" => "vrati",

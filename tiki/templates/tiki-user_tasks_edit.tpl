@@ -245,7 +245,7 @@
 	{/if}
 	<td class="formcolor" colspan="4" >
 		<div align="center">
-			<input type="submit" name="save" value="{tr}save{/tr}" />
+			<input type="submit" name="save" value="{tr}Save{/tr}" />
 			<input type="submit" name="preview" value="{tr}preview{/tr}" /> 
 			<input type="submit" name="reload" value="{tr}reload{/tr}" />
 		</div>

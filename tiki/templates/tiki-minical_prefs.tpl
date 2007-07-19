@@ -78,7 +78,7 @@
 <tr>
 	<td class="formcolor">&nbsp;</td>
 	<td class="formcolor">
-		<input type="submit" name="save" value="{tr}save{/tr}" />
+		<input type="submit" name="save" value="{tr}Save{/tr}" />
 	</td>
 </tr>	
 </table>

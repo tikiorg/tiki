@@ -3080,6 +3080,7 @@ $lang=Array(
 "Total" => "Total",
 "ID" => "ID",
 "perms" => "permissões",
+"Perms" => "Permissões",
 "Dls" => "Dls",
 "Overview" => "Visão geral",
 "Ip" => "Ip",

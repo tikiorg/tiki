@@ -26,7 +26,7 @@
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Upload from disk to change the image:{/tr}</td><td class="formcolor">{$filename}<br /><input name="userfile" type="file" />
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}save and go next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}cancel edit{/tr}</a></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}Save{/tr}" />&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}save and go next{/tr}" />&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}cancel edit{/tr}</a></td></tr>
 </table>
 </form>
 <br />

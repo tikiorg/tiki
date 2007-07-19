@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.30 2006-03-16 13:43:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.31 2007-07-19 09:32:47 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -147,7 +147,7 @@
     <a href="tiki-editpage.php?page=SandBox" class="linkmenu">{tr}sandbox{/tr}</a><br />
   {/if}
   {if $feature_wiki_multiprint eq 'y' and $tiki_p_view eq 'y'}
-    <a href="tiki-print_pages.php" class="linkmenu">{tr}print{/tr}</a><br />
+    <a href="tiki-print_pages.php" class="linkmenu">{tr}Print{/tr}</a><br />
   {/if}
   {if $tiki_p_send_pages eq 'y' and $feature_comm eq 'y'}
     <a href="tiki-send_objects.php" class="linkmenu">{tr}send{/tr}</a><br />

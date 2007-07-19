@@ -122,7 +122,7 @@
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
-	<td class="formcolor">{tr}name{/tr}</td>
+	<td class="formcolor">{tr}Name{/tr}</td>
 	<td class="formcolor"><input type="text" name="name" /></td>
 </tr>
 <tr>

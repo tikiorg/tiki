@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.27 2006-09-30 20:39:49 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.28 2007-07-19 09:32:37 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -98,7 +98,7 @@
 {/section}
 </table>
 <br />
-<input type="submit" name="update_type" value="{tr}save{/tr}" /><br />
+<input type="submit" name="update_type" value="{tr}Save{/tr}" /><br />
 <br />
 <input type="text" name="new_type" /><input type="submit" name="add_type" value="{tr}Create a new type{/tr}" />
 

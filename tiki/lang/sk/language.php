@@ -4170,6 +4170,7 @@ $lang=Array(
 "lock" => "uzamknúť",
 "Lock" => "Uzamknúť",
 "perms" => "práva",
+"Perms" => "Práva",
 "history" => "história",
 "similar" => "podobné",
 "undo" => "vrátiť",

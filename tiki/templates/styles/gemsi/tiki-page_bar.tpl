@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.17 2007-07-17 17:12:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.18 2007-07-19 09:32:46 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -26,7 +26,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {/if}
 
 {if $tiki_p_admin_wiki eq 'y'}
-<div class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}perms{/tr}</a></div>
+<div class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></div>
 {/if}
 
 {if $feature_history eq 'y' and $tiki_p_edit eq 'y' and $tiki_p_wiki_view_history eq 'y'}
@@ -55,7 +55,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {/if}
 
 {if $feature_wiki_print eq 'y'}
-<div class="button2"><a href="tiki-print.php?page={$page|escape:"url"}" class="linkbut">{tr}print{/tr}</a></div>
+<div class="button2"><a href="tiki-print.php?page={$page|escape:"url"}" class="linkbut">{tr}Print{/tr}</a></div>
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}

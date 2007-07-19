@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.56 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.57 2007-07-19 09:32:42 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -63,8 +63,8 @@
 			<tr>
 				<td class="formcolor">{tr}icon{/tr}</td>
 				<td class="formcolor">{tr}id{/tr}</td>
-				<td class="formcolor">{tr}name{/tr}</td>
-				<td class="formcolor">{tr}size{/tr}</td>
+				<td class="formcolor">{tr}Name{/tr}</td>
+				<td class="formcolor">{tr}Size{/tr}</td>
 				<td class="formcolor">{tr}description{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
 				<td class="formcolor">{tr}locked{/tr}<br /></td>
@@ -88,7 +88,7 @@
 		<table>
 			<tr>
 				<td class="formcolor">{tr}lastMod{/tr}</td>
-				<td class="formcolor">{tr}created{/tr}</td>
+				<td class="formcolor">{tr}Created{/tr}</td>
 				<td class="formcolor">{tr}creator{/tr}</td>
 				<td class="formcolor">{tr}author{/tr}</td>
 			</tr>
@@ -135,7 +135,7 @@
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>

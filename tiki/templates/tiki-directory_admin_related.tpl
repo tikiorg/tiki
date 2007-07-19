@@ -43,7 +43,7 @@
   </tr>
   <tr>
     <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="add" value="{tr}save{/tr}" />
+    <td class="formcolor"><input type="submit" name="add" value="{tr}Save{/tr}" />
   </tr>
 </table>
 </form>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.10 2007-07-17 17:12:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.11 2007-07-19 09:32:48 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -32,7 +32,7 @@
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="">{tr}Lock{/tr}</a></li>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
-<li><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="">{tr}perms{/tr}</a></li>
+<li><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="">{tr}Perms{/tr}</a></li>
 {/if}
 
 {if $feature_history eq 'y'}

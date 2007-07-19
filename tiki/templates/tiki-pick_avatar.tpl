@@ -87,6 +87,6 @@ function subavt() {
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 <input name="userfile1" type="file" />
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}Upload{/tr}" /></td></tr>
 </table>
 </form>

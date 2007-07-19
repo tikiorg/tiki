@@ -27,7 +27,7 @@ Text Search <input type="hidden" name="where" value="wikis" />
 <td style="text-align:right;">
 {if $user}
 <b>{$user}</a>
-<a href="tiki-logout.php">({tr}logout{/tr})</a>
+<a href="tiki-logout.php">({tr}Logout{/tr})</a>
 {else}
 <form action="tiki-login.php" method="post">
 {tr}Login{/tr}

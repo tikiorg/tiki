@@ -2461,6 +2461,7 @@ $lang=Array(
 "lock" => "vergrendelen",
 "Lock" => "Vergrendelen",
 "perms" => "perm.",
+"Perms" => "Perm.",
 "history" => "geschiedenis",
 "similar" => "vergelijkbaar",
 "undo" => "terugzetten",

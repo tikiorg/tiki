@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.37 2007-07-17 16:47:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.38 2007-07-19 09:32:45 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -120,7 +120,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   <td class="heading">{tr}sender{/tr}</td>
   <td class="heading">{tr}subject{/tr}</td>
   <td class="heading">{tr}date{/tr}</td>
-  <td class="heading">{tr}size{/tr}</td>
+  <td class="heading">{tr}Size{/tr}</td>
 </tr>
 {section name=ix loop=$list}
 {if $list[ix].isRead eq 'y'}

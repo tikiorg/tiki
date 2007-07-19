@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.17 2007-02-28 16:41:36 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.18 2007-07-19 09:32:45 jyhem Exp $ *}
 
 {if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
@@ -23,7 +23,7 @@
     <form name="bookmarks" action="{$ownurl}" method="post">
     <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
     <input style="font-size: 9px;" type="text" size="8" name="bookmark_urlname" />
-    <input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}new{/tr}" />
+    <input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}New{/tr}" />
     </form>
     {/tikimodule}
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.18 2007-07-17 16:33:13 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.19 2007-07-19 09:32:45 jyhem Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -97,7 +97,7 @@
 </td></tr>
 </table>
 <div align="center">
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> 
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> 
 </div>
 </form>
 {if $tiki_p_map_delete eq 'y'}

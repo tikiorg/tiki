@@ -3597,6 +3597,7 @@ $lang=Array(
 "click here" => "click here",
 "The content on this page is licensed under the terms of the" => "The content on this page is licensed under the terms of the",
 "perms" => "perms",
+"Perms" => "Perms",
 "The newsletter was sent to {\$sent} email addresses" => "The newsletter was sent to {\$sent} email addresses",
 "This newsletter will be sent to {\$subscribers} email addresses." => "This newsletter will be sent to {\$subscribers} email addresses.",
 "Newsletter" => "Newsletter",

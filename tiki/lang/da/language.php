@@ -4155,6 +4155,7 @@ $lang=Array(
 "lock" => "lås",
 "Lock" => "Lås",
 "perms" => "tilladelser",
+"Perms" => "Tilladelser",
 "history" => "historie",
 "similar" => "lignende",
 "undo" => "fortryd",

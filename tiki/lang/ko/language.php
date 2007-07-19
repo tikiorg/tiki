@@ -5135,6 +5135,7 @@ $lang=Array(
 "lock" => "잠금",
 "Lock" => "잠금",
 "perms" => "권한",
+"Perms" => "권한",
 "history" => "수정기록",
 "similar" => "유사",
 "undo" => "작업취소",
