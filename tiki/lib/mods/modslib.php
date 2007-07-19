@@ -405,7 +405,6 @@ class ModsLib {
 	var $types;
 
 	function ModsLib() { 
-		$this->feedback = array();
 		$this->types = array();
 		$this->feedback_listeners = array();
 	}
