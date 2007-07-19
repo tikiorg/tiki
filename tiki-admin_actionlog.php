@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.35 2007-07-19 19:46:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.36 2007-07-19 21:19:42 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -396,6 +396,11 @@ if (isset($_REQUEST['graph'])) {
 	$height = 200;
 	$widthUser = 50*$userStat['nbCols']+400;
 	$background = &new GD_GRenderer( max($widthUser,$widthWeek) , 6*$height, $ext );
+	include_once('lib/smarty_tiki/modifier.tiki_short_date.php');
+	$period =  ' ('.smarty_modifier_tiki_short_date($startDate);
+	$s = smarty_modifier_tiki_short_date($startDate);
+	$e = smarty_modifier_tiki_short_date($endDate);
+	$period = ($s != $e)? " ($s-$e)":($s);
 
 	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 	$graph = new $graphType;
@@ -404,8 +409,9 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Users Contributions Addition'));
+		$graph->setTitle(tra('Users Contributions Addition').$period);
 		$graph->draw($renderer);
+		$renderer->getStyle('Thin-Small');
 		imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0,$renderer->width, $renderer->height);
 		//echo "<pre>";print_r($graph); die;
 	}
@@ -417,7 +423,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Users Contributions Suppression'));
+		$graph->setTitle(tra('Users Contributions Suppression').$period);
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, $height, 0, 0, $renderer->width, $renderer->height);
 	}
@@ -430,9 +436,9 @@ if (isset($_REQUEST['graph'])) {
 		unset($series['totalVol']);
 		$graph->setData($series);
 		if ($_REQUEST['contribTime'] == 'd') {
-			$graph->setTitle(tra('Contributions Addition per Day'));
+			$graph->setTitle(tra('Contributions Addition per Day').$period);
 		} else {
-			$graph->setTitle(tra('Contributions Addition per Week'));
+			$graph->setTitle(tra('Contributions Addition per Week'.$period));
 		}
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 2*$height, 0, 0, $renderer->width, $renderer->height);
@@ -445,9 +451,9 @@ if (isset($_REQUEST['graph'])) {
 		unset($series['totalVol']);
 		$graph->setData($series);
 		if ($_REQUEST['contribTime'] == 'd') {
-			$graph->setTitle(tra('Contributions Suppression per Day'));
+			$graph->setTitle(tra('Contributions Suppression per Day').$period);
 		} else {
-			$graph->setTitle(tra('Contributions Suppression per Week'));
+			$graph->setTitle(tra('Contributions Suppression per Week').$period);
 		}
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 3*$height, 0, 0, $renderer->width, $renderer->height);
@@ -460,7 +466,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Total Contributions Addition'));
+		$graph->setTitle(tra('Total Contributions Addition').$period);
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 4*$height, 0, 0, $renderer->width, $renderer->height);
 	}
@@ -471,7 +477,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
-		$graph->setTitle(tra('Total Contributions Suppression'));
+		$graph->setTitle(tra('Total Contributions Suppression').$period);
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 5*$height, 0, 0, $renderer->width, $renderer->height);
 	}
