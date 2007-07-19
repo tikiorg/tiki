@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.45 2007-07-13 20:59:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.46 2007-07-19 18:20:17 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -640,17 +640,17 @@ class LogsLib extends TikiLib {
 							$contributions[$contrib['contributionId']]['stat'][$j]['nbUpdate'] = 0;
 						}
 					}
-					if ($action['add']) {
+					if (!empty($action['add'])) {
 						$contributions[$contrib['contributionId']]['stat'][$i]['add'] += $action['add'];
-						if (!$action['del'])
+						if (empty($action['del']))
 							++$contributions[$contrib['contributionId']]['stat'][$i]['nbAdd'];
 					}
-					if ($action['del']) {
+					if (!empty($action['del'])) {
 						$contributions[$contrib['contributionId']]['stat'][$i]['del'] += $action['del'];
-						if (!$action['add'])
+						if (empty($action['add']))
 							++$contributions[$contrib['contributionId']]['stat'][$i]['nbDel'];
 					}
-					if ($action['add'] && $action['del'])
+					if (!empty($action['add']) && !empty($action['del']))
 						++$contributions[$contrib['contributionId']]['stat'][$i]['nbUpdate'];
 				}
 			}
@@ -798,16 +798,28 @@ class LogsLib extends TikiLib {
 		$contributorActions = array();
 		foreach ($actions as $action) {
 			$bytes = $this->get_volume_action($action);
-			$action['add'] = $bytes['add'];
-			$action['del'] = $bytes['del'];
-			$action['comment'] = 'add='.$bytes['add']/$action['nbContributors'].'&del='.$bytes['del']/$action['nbContributors'];
+			$nbC = isset($action['nbContributors'])? $action['nbContributors']:1;
+			if (isset($bytes['add'])) {
+				$action['add'] = $bytes['add'];
+				$action['comment'] = 'add='.$bytes['add']/$nbC;
+			}
+			if (isset($byter['del'])) {
+				$action['del'] = $bytes['del'];
+				if (!empty($action['comment'])) {
+					$action['comment'] .= '&del='.$bytes['del']/$nbC;
+				} else {
+					$action['comment'] = 'del='.$bytes['del']/$nbC;
+				}
+			}
 			if (empty($users) || in_array($action['user'], $users)) {
 				$contributorActions[] = $action;
 			}
-			foreach ($action['contributors'] as $contributor) {
-				if (empty($users) || in_array($contributor['login'], $users)) {
-					$action['user'] = $contributor['login'];
-					$contributorActions[] = $action;
+			if (isset($action['contributors'])) {
+				foreach ($action['contributors'] as $contributor) {
+					if (empty($users) || in_array($contributor['login'], $users)) {
+						$action['user'] = $contributor['login'];
+						$contributorActions[] = $action;
+					}
 				}
 			}
 		}
