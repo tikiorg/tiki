@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.33 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.34 2007-07-19 13:16:17 jyhem Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -48,7 +48,7 @@
    <td class="findtable">
    <form method="get" action="tiki-assignuser.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="assign_user" value="{$assign_user|escape}" />
 	 {tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" />
@@ -61,7 +61,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-assignuser.php?assign_user={$assign_user|escape:url}&amp;offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-assignuser.php?assign_user={$assign_user|escape:url}&amp;offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}desc{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}

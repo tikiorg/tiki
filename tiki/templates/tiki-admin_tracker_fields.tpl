@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.53 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.54 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -65,7 +65,7 @@
 <td>
 <form method="get" action="tiki-admin_tracker_fields.php">
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" value="{tr}find{/tr}" name="search" />
+<input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 &nbsp;

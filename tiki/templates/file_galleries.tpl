@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.12 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.13 2007-07-19 13:16:15 jyhem Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -6,7 +6,7 @@
    <td class="findtable">
    <form method="get" action="{$smarty.server.PHP_SELF}">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	 {if isset($galleryId)}<input type="hidden" name="galleryId" value="{$galleryId}" />{/if}
    </form>

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.40 2007-07-19 09:32:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.41 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

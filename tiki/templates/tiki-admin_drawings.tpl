@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.27 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.28 2007-07-19 13:16:16 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Help on Drawings{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Help on Drawings{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -72,8 +72,8 @@
 {if not $smarty.request.ver}
 <a title="{tr}Edit{/tr}" class="link" href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
 {/if}
-<a title="{tr}view{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link">
-<img src='pics/icons/monitor.png' border='0' width='16' height='16' alt='{tr}view{/tr}' /></a> &nbsp;
+<a title="{tr}View{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link">
+<img src='pics/icons/monitor.png' border='0' width='16' height='16' alt='{tr}View{/tr}' /></a> &nbsp;
 {if $smarty.request.ver}
 	<a title="{tr}Delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link" >
 	<img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>

@@ -38,7 +38,7 @@
 	{if $tasklist[task_i].creator ne $user}
 		<img src='img/icons2/delete_all.gif' width='16' height='16' border='0' alt='{tr}Delete{/tr}' />
 	{else}
-		<img src='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}trash{/tr}' />
+		<img src='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}Trash{/tr}' />
 	{/if}
 {/if}
 {if (($tasklist[task_i].creator eq $tasklist[task_i].user) and ($tasklist[task_i].user eq $user)) }
@@ -113,7 +113,7 @@
           <option value="waiting_marked" >{tr}waiting{/tr}</option>
           <option value="open_marked" >{tr}open{/tr}</option>
           <option value="complete_marked" >{tr}completed{/tr}</option>
-          <option value="move_marked_to_trash">{tr}trash{/tr}</option>
+          <option value="move_marked_to_trash">{tr}Trash{/tr}</option>
           <option value="remove_marked_from_trash">{tr}undo trash{/tr}</option>
         </select>
 		<input type="submit" name="update_tasks" value="{tr}go{/tr}" />
@@ -131,7 +131,7 @@
 		&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox" />&lt;&lt; {tr}submitted{/tr}
 		&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox" />&gt;&lt; {tr}shared{/tr}
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox" />{tr}trash{/tr}
+		&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox" />{tr}Trash{/tr}
 		&nbsp;<input  name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox" />{tr}completed{/tr}
 		{if ($admin_mode)}
 		&nbsp;&nbsp;
@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td class="formcolor" colspan="6" style="text-align:center;">
-		<input type="submit" name="reload" value="{tr}reload{/tr}" />
+		<input type="submit" name="reload" value="{tr}Reload{/tr}" />
 	</td>
 </tr>
 

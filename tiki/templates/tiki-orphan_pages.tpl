@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.23 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.24 2007-07-19 13:16:20 jyhem Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -12,7 +12,7 @@
      <input type="text" name="find" value="{$find|escape}" />
      {tr}Exact&nbsp;match{/tr} <input type="checkbox" name="exact_match" {if $exact_match ne 'n'}checked="checked"{/if}/>
      {tr}Number of lines{/tr} <input type="text" name="numrows" value="{$maxRecords|escape}" size="3" />
-     <input type="submit" name="search" value="{tr}find{/tr}" />
+     <input type="submit" name="search" value="{tr}Find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

@@ -1,5 +1,5 @@
 <div style="margin:10px 30px;">
-<h1>{tr}Tiki installer{/tr} v1.10 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
+<h1>{tr}Tiki installer{/tr} v1.10 (CVS)<a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
 
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
@@ -10,7 +10,7 @@
 <table><tr><td width="180">
 <div class="box">
 <div class="box-title">
-<a title='{tr}help{/tr}' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
+<a title='{tr}Help{/tr}' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
 {tr}MultiTiki setup{/tr}</div>
 <div class="box-data">
 <div><a href="tiki-install.php">default</a></div><br />
@@ -38,7 +38,7 @@
 {if $multi} <h2> ({tr}MultiTiki{/tr}) {$multi|default:"default"} </h2> {/if}
 {* / multitiki --------------------------- *}
 
-<a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}reload{/tr}</a><br /><br />
+<a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reload{/tr}</a><br /><br />
 
 {* we do not have a valid db connection or db reset is requested *}
 

@@ -23,7 +23,7 @@
 		</td>
 	</tr>
 {/section}
-<tr><td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}Filter{/tr}" /></td></tr>
 </table>
 </form>
 {/strip}

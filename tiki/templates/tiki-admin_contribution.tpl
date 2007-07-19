@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.9 2007-07-19 09:32:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.10 2007-07-19 13:16:16 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}'></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_contributions.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a>{/if}</h1>

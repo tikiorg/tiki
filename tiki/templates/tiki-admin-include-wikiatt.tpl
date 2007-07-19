@@ -4,7 +4,7 @@
 <div class="admin">
 <form action="tiki-admin.php?page=wikiatt" method="post">
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" name="action" value="{tr}find{/tr}">
+<input type="submit" name="action" value="{tr}Find{/tr}">
 </form>
 {cycle values="odd,even" print=false}
 <table class="normal">

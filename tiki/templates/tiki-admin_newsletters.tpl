@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.31 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.32 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Newsletters" target="tikihelp" class="tikihelp" title="{tr}Newsletters{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
@@ -52,7 +52,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_newsletters.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -69,7 +69,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'editions_desc'}editions_asc{else}editions_desc{/if}">{tr}editions{/tr}</a></td>
 <td class="heading"><a class="tableheading">{tr}drafts{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastSent_desc'}lastSent_asc{else}lastSent_desc{/if}">{tr}last sent{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

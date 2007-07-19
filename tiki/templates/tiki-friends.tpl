@@ -2,7 +2,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
@@ -57,7 +57,7 @@
    <td class="findtable">
    <form method="get" action="tiki-friends.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

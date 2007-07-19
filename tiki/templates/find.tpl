@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.7 2007-07-17 14:17:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.8 2007-07-19 13:16:15 jyhem Exp $ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
@@ -62,7 +62,7 @@
 
 <td class="findtitle">{tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" /></td>
 
-<td class="findtitle"><input type="submit" name="search" value="{tr}find{/tr}" /></td>
+<td class="findtitle"><input type="submit" name="search" value="{tr}Find{/tr}" /></td>
 </tr>
 </table>
 

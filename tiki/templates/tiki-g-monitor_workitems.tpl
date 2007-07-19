@@ -13,7 +13,7 @@
 <table>
 <tr>
 <td>
-	<small>{tr}find{/tr}</small>
+	<small>{tr}Find{/tr}</small>
 </td>
 <td >
 	<small>{tr}proc{/tr}</small>
@@ -65,7 +65,7 @@
 </td>
 
 <td >	
-	<input type="submit" name="filter" value="{tr}filter{/tr}" />
+	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 </table>	

@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/AdminSecurity" target="tikihelp" class="tikihelp" title="{tr}security admin{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_security.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}security admin tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}

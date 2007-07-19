@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.26 2007-07-17 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.27 2007-07-19 13:16:16 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}admin hotwords{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin hotwords template{/tr}">
@@ -26,7 +26,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_hotwords.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -37,7 +37,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$words}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.60 2007-07-19 09:32:38 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.61 2007-07-19 13:16:18 jyhem Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -9,7 +9,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}

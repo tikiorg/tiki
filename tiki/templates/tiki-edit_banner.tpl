@@ -142,7 +142,7 @@
 <table class="normal">
 <tr>
 <td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=ix loop=$zones}

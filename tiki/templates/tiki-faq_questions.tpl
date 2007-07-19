@@ -48,7 +48,7 @@
 <td class="formcolor">{tr}Filter{/tr}</td>
 <td class="formcolor">
 <input type="text" name="filter" value="{$filter|escape}" />
-<input type="submit" name="filteruseq" value="{tr}filter{/tr}" />
+<input type="submit" name="filteruseq" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
    <td class="findtable">
    <form method="get" action="tiki-faq_questions.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -94,7 +94,7 @@
 </td>
 <td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a>
 </td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

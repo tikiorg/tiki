@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.28 2007-07-19 09:32:38 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.29 2007-07-19 13:16:18 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Sites{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory Sites tpl{/tr}">
@@ -91,7 +91,7 @@
 {/if}
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}valid{/tr}</a></td>
-    <td class="heading">{tr}action{/tr}</td>
+    <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

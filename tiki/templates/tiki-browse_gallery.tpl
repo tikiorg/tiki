@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.43 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.44 2007-07-19 13:16:18 jyhem Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -166,7 +166,7 @@
 <tr><td class="findtable">{tr}Find{/tr}
    <form method="get" action="tiki-browse_gallery.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="galleryId" value="{$galleryId}" />
    </form>

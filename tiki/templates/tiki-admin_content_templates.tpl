@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}admin content templates{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}admin content templates{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -73,7 +73,7 @@
    <td>
    <form method="get" action="tiki-admin_content_templates.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -84,7 +84,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}last modif{/tr}</a></td>
 <td class="heading">{tr}sections{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=user loop=$channels}

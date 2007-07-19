@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

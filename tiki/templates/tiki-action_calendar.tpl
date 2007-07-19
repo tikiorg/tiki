@@ -2,7 +2,7 @@
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
-<span class="button2"><a href="#" class="linkbut" onclick="toggle('filtercal');">{tr}filter{/tr}</a></span>
+<span class="button2"><a href="#" class="linkbut" onclick="toggle('filtercal');">{tr}Filter{/tr}</a></span>
 
 <span class="button2">
 {if $viewlist eq 'list'}

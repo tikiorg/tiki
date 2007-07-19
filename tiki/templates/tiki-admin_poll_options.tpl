@@ -34,7 +34,7 @@
 <td class="heading">{tr}position{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
 <td class="heading">{tr}votes{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$channels}

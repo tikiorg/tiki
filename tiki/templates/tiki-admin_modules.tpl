@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.52 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.53 2007-07-19 13:16:17 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}admin modules{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" width="16" height="16" /></a>{/if}
+<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin modules template{/tr}">
@@ -36,7 +36,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <tr>
 <td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$user_modules}
@@ -124,7 +124,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}rows{/tr}</td>
 <td class="heading">{tr}parameters{/tr}</td>
 <td class="heading">{tr}groups{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$left}
@@ -160,7 +160,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}rows{/tr}</td>
 <td class="heading">{tr}parameters{/tr}</td>
 <td class="heading">{tr}groups{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$right}

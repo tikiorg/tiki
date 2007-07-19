@@ -1,9 +1,9 @@
-{* $Id: tiki-syslog.tpl,v 1.12 2007-06-16 16:02:08 sylvieg Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.13 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Syslog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system logs{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" width="16" height="16" /></a>{/if}
+<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-syslog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system logs tpl{/tr}">
@@ -28,7 +28,7 @@
 <td class="findtable">
 <form method="get" action="tiki-syslog.php">
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" value="{tr}find{/tr}" name="search" />
+<input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="text" name="max" value="{$maxRecords|escape}" size="4" /> {tr}rows{/tr}
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>

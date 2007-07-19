@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.24 2007-03-06 16:48:09 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.25 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}admin Tiki Shoutbox{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y' and $tiki_p_edit_templates eq 'y'}
@@ -41,7 +41,7 @@
    <td class="findtable">
    <form method="get" action="tiki-shoutbox.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

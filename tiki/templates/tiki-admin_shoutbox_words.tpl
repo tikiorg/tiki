@@ -2,7 +2,7 @@
   
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ShoutboxWords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin shoutbox words{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}help{/tr}" height="16" width="16" /></a>{/if}
+<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" height="16" width="16" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_shoutbox_words.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin shoutbox words template{/tr}">
@@ -23,7 +23,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_shoutbox_words.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -33,7 +33,7 @@
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$words}

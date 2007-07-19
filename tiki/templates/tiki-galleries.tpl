@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.63 2007-07-19 09:32:42 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.64 2007-07-19 13:16:19 jyhem Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
@@ -130,7 +130,7 @@
    <td class="findtable">
    <form method="get" action="tiki-galleries.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -149,7 +149,7 @@
 {/if}
 {/foreach*}
 </select>
-<input type="submit" value="{tr}filter{/tr}" />
+<input type="submit" value="{tr}Filter{/tr}" />
 </form>
 </div>
 

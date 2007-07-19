@@ -18,7 +18,7 @@
 <tr><td class="findtable">
    <form method="get" action="tiki-notepad_list.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -47,7 +47,7 @@
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].size|kbsize}</td>
 <td style="text-align:center;"  class="{cycle}">
-<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link"><img src="pics/icons/magnifier.png" width="16" height="16" border="0" alt="{tr}view{/tr}" /></a>
+<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link"><img src="pics/icons/magnifier.png" width="16" height="16" border="0" alt="{tr}View{/tr}" /></a>
 <a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
 <a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}Save{/tr}" /></a>
 <a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>

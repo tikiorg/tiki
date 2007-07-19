@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.24 2007-07-17 16:21:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.25 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -13,7 +13,7 @@
 
 <form method="post" action="tiki-objectpermissions.php">
 <table class="normal">
-<tr><td class="heading"></td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
+<tr><td class="heading"></td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}Action{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
 <tr>

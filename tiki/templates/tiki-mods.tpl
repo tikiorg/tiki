@@ -161,7 +161,7 @@ function update_button_install() {
 {/foreach}
 </select>
 <input type="text" name="find" value="{$find|escape}" />
-<input type="submit" name="f" value="{tr}find{/tr}" />
+<input type="submit" name="f" value="{tr}Find{/tr}" />
 </form>
 
 <table cellspacing="0" cellpadding="2" border="0" class="normal">

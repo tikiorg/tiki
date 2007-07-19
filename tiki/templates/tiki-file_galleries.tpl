@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.57 2007-07-19 09:32:42 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.58 2007-07-19 13:16:18 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">

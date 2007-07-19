@@ -14,7 +14,7 @@
    <td class="findtable">
    <form method="get" action="tiki-lastchanges.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="days" value="0" />
    </form>
@@ -48,7 +48,7 @@
 {if $lastchanges[changes].version}
 (<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}">{tr}hist{/tr}</a> {tr}v{/tr}{$lastchanges[changes].version}</span>)
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}"
- title="{tr}view{/tr}">v</a>&nbsp;
+ title="{tr}View{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href="tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}" title="{tr}rollback{/tr}">b</a>&nbsp;
 {/if}

@@ -92,7 +92,7 @@ Errors:<br />
 		  		<td class="formcolor" >
 		  		{tr}Users{/tr}:
 				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
-				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
+				<input type="submit" name="findusers" value="{tr}Filter{/tr}" />	  
 		  		</td>
 		  		<td class="formcolor" >
 	  			{tr}Roles{/tr}:<br />		  		
@@ -199,7 +199,7 @@ Errors:<br />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 {tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
-<input type="submit" name="filter" value="{tr}find{/tr}" />
+<input type="submit" name="filter" value="{tr}Find{/tr}" />
 </form>
 <form action="tiki-g-admin_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />

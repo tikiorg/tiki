@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.76 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.77 2007-07-19 13:16:17 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Permissions Settings" target="tikihelp" class="tikihelp" title="{tr}admin groups{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
@@ -45,7 +45,7 @@
 <table class="findtable"><tr>
 <td><label for="groups_find">{tr}Find{/tr}</label></td>
 <td><input type="text" name="find" id="groups_find" value="{$find|escape}" /></td>
-<td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
+<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 <td>{tr}Number of displayed rows{/tr}</td>
 <td><input type="text" size="4" name="numrows" value="{$numrows|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>

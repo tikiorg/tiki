@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.8 2007-04-30 14:55:19 sylvieg Exp $  *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.9 2007-07-19 13:16:18 jyhem Exp $  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -12,7 +12,7 @@
 
 <h2>{tr}Current permissions for this category{/tr}:</h2>
 <table class="normal">
-<tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
+<tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}Action{/tr}</td></tr>
 {cycle print=false values="even,odd"}
 {section  name=pg loop=$category_perms}
 <tr>

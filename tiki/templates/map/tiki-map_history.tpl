@@ -117,7 +117,7 @@
 <td class="{cycle advance=false}">{$history[hist].ip}</td>
 <td class="{cycle advance=false} button">{$history[hist].version}</td>
 <td class="{cycle advance=false} button">
-&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>
+&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
 {if $default_wiki_diff_style eq "old"}
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>

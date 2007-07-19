@@ -1,17 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.42 2007-07-18 16:29:42 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.43 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Structures" target="tikihelp" class="tikihelp" title="{tr}Structures{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_structures.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin structures template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_structures.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin structures template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}</h1>
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
 <br />
-{tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}view{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>&nbsp;&nbsp;{tr}has just been created.{/tr}
+{tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}View{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>&nbsp;&nbsp;{tr}has just been created.{/tr}
 <br /><br />
 {/if}
 
@@ -63,13 +63,13 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}Structure ID{/tr}</td>
-  <td  class="heading">{tr}action{/tr}</td>
+  <td  class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
 <tr>
   <td class="{cycle advance=false}">
-  <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}edit structure{/tr}">
+  <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}">
       {$channels[ix].pageName}
 	  {if $channels[ix].page_alias}
         ({$channels[ix].page_alias})
@@ -77,11 +77,11 @@
   </a>
   </td>
   <td class="{cycle}">
-<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}edit structure{/tr}"><img src='pics/icons/page_edit.png' alt="{tr}edit{/tr}" border='0' width='16' height='16' /></a>
-<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}view page{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}view{/tr}" /></a>
+<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
+<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}View page{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>
   {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}export pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}export pages{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $tiki_p_edit_structures == 'y'}<a title="{tr}dump tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}dump tree{/tr}" border='0' width='16' height='16' /></a>{/if}
-  {if $channels[ix].editable == 'y'}<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' /></a>{/if}
+  {if $channels[ix].editable == 'y'}<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}Remove{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title="{tr}create webhelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="pics/icons/help.png" alt="{tr}create webhelp{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'} 
   <a title="{tr}view webhelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html"><img src="pics/icons/book_open.png" alt="{tr}view webhelp{/tr}" border='0' width='16' height='16' /></a>

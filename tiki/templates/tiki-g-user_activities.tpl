@@ -6,7 +6,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
@@ -28,7 +28,7 @@
 	<small>{tr}process{/tr}</small>
 </td>
 <td>
-	<small>{tr}find{/tr}</small>
+	<small>{tr}Find{/tr}</small>
 </td>
 
 <td >
@@ -49,7 +49,7 @@
 	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >	
-	<input type="submit" name="filter" value="{tr}filter{/tr}" />
+	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 </table>	

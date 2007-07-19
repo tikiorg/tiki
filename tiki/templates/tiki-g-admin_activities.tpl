@@ -204,7 +204,7 @@ Errors:<br />
 		</select>
 	</td>
 	<td>
-		<input type="submit" name="filter" value="{tr}filter{/tr}" />
+		<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 	</td>
 </tr>
 </table>	
@@ -292,7 +292,7 @@ Errors:<br />
 			<option value="{$items[ix].activityId|escape}" {if $filter_tran_name eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
 			{/section}
 			</select>
-<!--			<input type="submit" name="filter_tran" value="{tr}filter{/tr}" /> -->
+<!--			<input type="submit" name="filter_tran" value="{tr}Filter{/tr}" /> -->
 			</form>
 			
 			<form action="tiki-g-admin_activities.php" method="post">

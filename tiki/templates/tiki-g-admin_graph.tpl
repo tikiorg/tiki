@@ -5,7 +5,7 @@
 
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 
 
@@ -70,7 +70,7 @@
 <option value="n">{tr}Inactive{/tr}</option>
 </select>
 
-<input type="submit" name="filter" value="{tr}filter{/tr}" />
+<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </form>
 <form action="tiki-g-admin_graph.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />

@@ -5,7 +5,7 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaUserInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
@@ -24,7 +24,7 @@
 <table>
 <tr>
 <td>
-	<small>{tr}find{/tr}</small>
+	<small>{tr}Find{/tr}</small>
 </td>
 <td >
 	<small>{tr}proc{/tr}</small>
@@ -79,7 +79,7 @@
 </td>
 
 <td >	
-	<input type="submit" name="filter" value="{tr}filter{/tr}" />
+	<input type="submit" name="filter" value="{tr}Filter{/tr}" />
 </td>
 </tr>
 </table>	

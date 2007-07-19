@@ -3,7 +3,7 @@
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -126,7 +126,7 @@
    <div align="left">
 	<form method="get" action="tiki-user_tasks.php">
 		<input type="text" name="find" value="{$find|escape}" />
-		<input type="submit" value="{tr}find{/tr}" name="search" />
+		<input type="submit" value="{tr}Find{/tr}" name="search" />
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	</form>
    </div>
@@ -134,7 +134,7 @@
    <td class="findtable">
 	<div align="right">
 		<form method="get" action="tiki-user_tasks.php">
-			<img src="img/icons/trash.gif" title="{tr}trash{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}trash{/tr}" /> 
+			<img src="img/icons/trash.gif" title="{tr}Trash{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Trash{/tr}" /> 
 			&nbsp;
 			<input type="submit" value="{tr}empty trash{/tr}" name="emty_trash" />
 		</form>

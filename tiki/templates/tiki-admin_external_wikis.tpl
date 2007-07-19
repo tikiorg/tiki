@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -26,7 +26,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'extwiki_desc'}extwiki_asc{else}extwiki_desc{/if}">{tr}extwiki{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

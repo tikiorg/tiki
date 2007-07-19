@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.11 2007-06-07 13:26:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.12 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a></h1>
 
 <div class="navbar">
@@ -14,7 +14,7 @@
    <td class="findtable">
    <form method="get" action="tiki-survey_stats.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
    </form>

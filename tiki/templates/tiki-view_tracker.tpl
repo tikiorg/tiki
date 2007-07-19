@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.147 2007-07-19 09:32:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.148 2007-07-19 13:16:20 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -156,7 +156,7 @@ fields[{$c}] = '{$fid}'
 {/if}
 
 {if $filter_button eq 'y'}
-<td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td>
+<td><input type="submit" name="filter" value="{tr}Filter{/tr}" /></td>
 {/if}
 </tr>
 </table>

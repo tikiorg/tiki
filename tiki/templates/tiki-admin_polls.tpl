@@ -1,9 +1,9 @@
-{* $Id: tiki-admin_polls.tpl,v 1.29 2007-07-17 16:21:46 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.30 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}admin polls{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
@@ -46,7 +46,7 @@
    <td class="findtable">
    <form method="get" action="tiki-admin_polls.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -62,7 +62,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
 <td class="heading">{tr}options{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

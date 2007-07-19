@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.38 2007-07-19 09:32:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.39 2007-07-19 13:16:21 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
@@ -70,7 +70,7 @@
 <td class="heading">{tr}active{/tr}</td>
 <td class="heading">{tr}pop{/tr}</td>
 <td class="heading">{tr}user{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
@@ -263,7 +263,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
    <td>
    <form method="get" action="tiki-webmail.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <input type="hidden" name="locSection" value="contacts" />
    </form>

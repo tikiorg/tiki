@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.100 2007-07-17 16:21:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.101 2007-07-19 13:16:17 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Users Management" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
@@ -78,7 +78,7 @@
 <tr>
 <td>{tr}Find{/tr}</td>
 <td><input type="text" name="find" value="{$find|escape}" /></td>
-<td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
+<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 <td>{tr}Number of displayed rows{/tr}</td>
 <td><input type="text" size="4" name="numrows" value="{$numrows|escape}" /><td>
 </tr>
@@ -282,7 +282,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
-<tr class="formcolor"><td>{tr}Batch upload (CSV file):{/tr} <a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a></td><td><input type="file" name="csvlist"/><br /><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br /><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br /><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></td></tr>
+<tr class="formcolor"><td>{tr}Batch upload (CSV file):{/tr} <a {popup text='login,password,email,groups<br />user1,password1,email1,&quot;group1,group2&quot;<br />user2, password2,email2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a></td><td><input type="file" name="csvlist"/><br /><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br /><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br /><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td>
 <input type="hidden" name="newuser" value="1" />
 <input type="submit" name="submit" value="{tr}Add{/tr}" />

@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
   
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=AdminDSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=AdminDSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -30,7 +30,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'dsn_desc'}dsn_asc{else}dsn_desc{/if}">{tr}dsn{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

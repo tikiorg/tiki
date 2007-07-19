@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.10 2007-01-17 15:54:17 sylvieg Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.11 2007-07-19 13:16:20 jyhem Exp $ *}
 <h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
@@ -24,7 +24,7 @@
    <td class="findtable">
    <form method="get" action="tiki-poll_results.php">
      <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	 <input type="hidden" name="pollId" value="{$poll_info.pollId|escape}" />
 	 <input type="hidden" name="list" value="y" />

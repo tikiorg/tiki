@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.48 2007-07-19 09:32:37 jyhem Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.49 2007-07-19 13:16:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -150,7 +150,7 @@
    </form>
    </td>
 <td>{tr}Number of lines{/tr}</td><td><input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$maxRecords}{/if}" size="3" /></td>
-<td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
+<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 </tr>
 </table>
 
@@ -172,7 +172,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}permissions{/tr}</a></td>
 
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}group{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 
 {cycle values="odd,even" print=false}
