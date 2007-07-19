@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.181 2007-07-19 11:24:32 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.182 2007-07-19 20:55:18 lphuberdeau Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1325,3 +1325,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 #sylvieg 2007-07-19
 ALTER TABLE tiki_menu_options DROP KEY uniq_menu;
 ALTER TABLE tiki_menu_options ADD UNIQUE KEY uniq_menu (menuId,name(50),url(80),position,section(50),perm(50));
+
+#lphuberdeau 2007-07-19
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_share_page', 'Can use the share page interface', 'registered', 'wiki page');
