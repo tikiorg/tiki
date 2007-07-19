@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.180 2007-07-18 17:04:06 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.181 2007-07-19 11:24:32 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1322,3 +1322,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND
 DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='wiki';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','wiki');
 
+#sylvieg 2007-07-19
+ALTER TABLE tiki_menu_options DROP KEY uniq_menu;
+ALTER TABLE tiki_menu_options ADD UNIQUE KEY uniq_menu (menuId,name(50),url(80),position,section(50),perm(50));
