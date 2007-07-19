@@ -31,7 +31,7 @@
 <div  align="center">
 <table class="normal">
 <tr>
-<td class="heading">{tr}position{/tr}</td>
+<td class="heading">{tr}Position{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
 <td class="heading">{tr}votes{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>

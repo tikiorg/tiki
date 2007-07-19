@@ -24,7 +24,7 @@ Errors:<br />
   <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}description{/tr}</td>
+  <td class="formcolor">{tr}Description{/tr}</td>
   <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>
@@ -156,7 +156,7 @@ Errors:<br />
 		<td class="formcolor">
 			<select name="op">
 			<option value="add">{tr}Add{/tr}</option>
-			<option value="remove">{tr}remove{/tr}</option>
+			<option value="remove">{tr}Remove{/tr}</option>
 			</select>
 		</td>
 
@@ -243,11 +243,11 @@ Errors:<br />
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

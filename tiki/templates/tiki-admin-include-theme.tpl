@@ -51,8 +51,8 @@
                 {$styles[ix]}</option>
             {/section}
             </select>
-            &nbsp;<a href="javascript:previous_site_style();" title="{tr}prev{/tr}"><img src="img/icons2/nav_dot_right.gif" alt="&#9665;" height="11" width="8" border="0" /></a>
-            <a href="javascript:next_site_style();" title="{tr}next{/tr}"><img src="img/icons2/nav_dot_left.gif" alt="&#9655" height="11" width="8" border="0" /></a>&nbsp;
+            &nbsp;<a href="javascript:previous_site_style();" title="{tr}Prev{/tr}"><img src="img/icons2/nav_dot_right.gif" alt="&#9665;" height="11" width="8" border="0" /></a>
+            <a href="javascript:next_site_style();" title="{tr}Next{/tr}"><img src="img/icons2/nav_dot_left.gif" alt="&#9655" height="11" width="8" border="0" /></a>&nbsp;
             <input type="submit" name="style" value="{tr}Change style only{/tr}" />
         </td>
       </tr><tr>

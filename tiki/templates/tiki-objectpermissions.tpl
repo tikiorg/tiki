@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.25 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.26 2007-07-19 17:06:20 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -13,7 +13,7 @@
 
 <form method="post" action="tiki-objectpermissions.php">
 <table class="normal">
-<tr><td class="heading"></td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}Action{/tr}</td></tr>
+<tr><td class="heading"></td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td><td class="heading">{tr}Action{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
 <tr>
@@ -92,7 +92,7 @@
 <div class="rbox-data" name="tip">{tr}These permissions do not apply. Special permissions apply.{/tr}
 </div>
 {/if}<table class="normal">
-<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td></tr>
+<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td></tr>
 {cycle print=false values="even,odd"}
 {section  name=x loop=$categ_perms}
 	{section name=y loop=$categ_perms[x]}

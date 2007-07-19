@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.4 2007-07-19 13:16:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.5 2007-07-19 17:06:19 jyhem Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -80,11 +80,11 @@
 {if cant_pages ne 0}
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-list_comments.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}prev{/tr}</a>]
+[<a class="prevnext" href="tiki-list_comments.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" href="tiki-list_comments.php?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-list_comments.php?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Next{/tr}</a>]
 {/if}
 </div>
 {/if}

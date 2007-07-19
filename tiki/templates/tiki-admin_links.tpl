@@ -19,11 +19,11 @@
 <h2>{tr}List of featured links{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}url{/tr}</td>
+<td class="heading">{tr}Url{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
 <td class="heading">{tr}hits{/tr}</td>
-<td class="heading">{tr}position{/tr}</td>
-<td class="heading">{tr}type{/tr}</td>
+<td class="heading">{tr}Position{/tr}</td>
+<td class="heading">{tr}Type{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -36,7 +36,7 @@
 <td class="{cycle advance=false}">{$links[user].type}</td>
 <td class="{cycle}">
  <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a> &nbsp;
- <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}remove{/tr}" src="pics/icons/cross.png" width="16" height="16" /></a>
+ <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cross.png" width="16" height="16" /></a>
 </td>
 </tr>
 {sectionelse}

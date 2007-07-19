@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.87 2007-07-17 14:50:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.88 2007-07-19 17:06:16 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -151,13 +151,13 @@
 	<div class="mini">
 
 		{if $comments_prev_offset >= 0}
-		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}prev{/tr}</a>]&nbsp;
+		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Prev{/tr}</a>]&nbsp;
 		{/if}
 
 		{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
 
 		{if $comments_next_offset >= 0}
-		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}next{/tr}</a>]
+		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Next{/tr}</a>]
 		{/if}
 
 		{if $direct_pagination eq 'y'}
@@ -329,7 +329,7 @@
 		<tr><td class="even">
 			<b>{if $forum_mode eq 'y'}{tr}Posting replies{/tr}:{else}{tr}Posting comments{/tr}:{/if}</b><br />
 			<br />
-			{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}description{/tr}] {tr}for links{/tr}.<br />
+			{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}Description{/tr}] {tr}for links{/tr}.<br />
 			{tr}HTML tags are not allowed inside posts{/tr}.<br />
 		</td></tr>
 	</table>

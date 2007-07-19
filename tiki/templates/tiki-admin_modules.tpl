@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.53 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.54 2007-07-19 17:06:16 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -123,7 +123,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
 <td class="heading">{tr}parameters{/tr}</td>
-<td class="heading">{tr}groups{/tr}</td>
+<td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -159,7 +159,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
 <td class="heading">{tr}parameters{/tr}</td>
-<td class="heading">{tr}groups{/tr}</td>
+<td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}

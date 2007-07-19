@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.18 2007-07-19 09:32:46 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.19 2007-07-19 17:06:21 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -12,7 +12,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {if $page|lower ne 'sandbox'}
 
 {if $tiki_p_remove eq 'y'}
-<div class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}remove{/tr}</a></div>
+<div class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}Remove{/tr}</a></div>
 {/if}
 
 {if $tiki_p_rename eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.27 2007-05-31 09:42:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.28 2007-07-19 17:06:17 jyhem Exp $ *}
 
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -172,11 +172,11 @@
   <div align="center">
     <div class="mini">
       {if $prev_offset >= 0}
-        [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+        [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
+        &nbsp;[<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$next_offset}">{tr}Next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y'}
         <br />

@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.28 2007-07-12 21:43:05 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.29 2007-07-19 17:06:20 jyhem Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -112,14 +112,14 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 [<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_prev_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
->{tr}prev{/tr}</a>]&nbsp;
+>{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $tr_next_offset >= 0}
 &nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_next_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
->{tr}next{/tr}</a>]
+>{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

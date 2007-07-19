@@ -70,7 +70,7 @@
 </select>
 </td>
 <td class="{cycle}">
-<input type="submit" name="remove" value="{tr}remove{/tr}" />
+<input type="submit" name="remove" value="{tr}Remove{/tr}" />
 <input type="submit" name="update" value="{tr}update{/tr}" />
 </td>
 </form>
@@ -80,11 +80,11 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

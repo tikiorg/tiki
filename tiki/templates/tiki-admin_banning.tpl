@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.29 2007-07-19 13:16:16 jyhem Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.30 2007-07-19 17:06:16 jyhem Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -158,11 +158,11 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}prev{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}Prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

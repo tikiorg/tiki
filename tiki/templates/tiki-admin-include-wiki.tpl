@@ -49,7 +49,7 @@
           <option value=''></option>
           {/section}
           </select>
-    <input type="submit" name="removetag" value="{tr}remove{/tr}"/>          
+    <input type="submit" name="removetag" value="{tr}Remove{/tr}"/>          
     </form>
     <br />
     </div>

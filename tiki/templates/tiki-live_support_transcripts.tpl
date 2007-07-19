@@ -58,11 +58,11 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-live_support_transcripts.php?offset={$prev_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-live_support_transcripts.php?offset={$prev_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-live_support_transcripts.php?offset={$next_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-live_support_transcripts.php?offset={$next_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

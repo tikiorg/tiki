@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.11 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.12 2007-07-19 17:06:20 jyhem Exp $ *}
 <h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
@@ -44,11 +44,11 @@
 </table>	
 <div class="mini" align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

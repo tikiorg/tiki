@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.31 2007-07-19 13:16:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.32 2007-07-19 17:06:19 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
@@ -43,7 +43,7 @@
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' /></a>
 <a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a>
 </td>
 {else}
@@ -54,7 +54,7 @@
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a>
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' /></a>
 </td>
 {/if}
 </tr>
@@ -67,11 +67,11 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

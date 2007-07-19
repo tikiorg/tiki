@@ -88,18 +88,18 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 	if ($pmonth == 0) {$pyear -= 1; $pmonth += 12;}
 	if ($nmonth == 13) {$nyear += 1; $nmonth -= 12;}
 	$url="$father"."day=$day&amp;mon=$pmonth&amp;year=$pyear";
-	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}prev{/tr}\" title=\"{tr}prev{/tr}\"> &lt; </a>" );
+	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Prev{/tr}\" title=\"{tr}Prev{/tr}\"> &lt; </a>" );
 	print( $v );
 	$url="$father"."day=$day&amp;mon=$nmonth&amp;year=$nyear";
-	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}next{/tr}\" title=\"{tr}next{/tr}\"> &gt; </a>" );
+	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Next{/tr}\" title=\"{tr}Next{/tr}\"> &gt; </a>" );
 	print( "&nbsp;" );
 	$mong=$year-1;
 	$url="$father"."day=$day&amp;mon=$mon&amp;year=$mong";
-	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}prev{/tr}\" title=\"{tr}prev{/tr}\"> &lt; </a>" );
+	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Prev{/tr}\" title=\"{tr}Prev{/tr}\"> &lt; </a>" );
 	print( $year );
 	$mong=$year+1;
 	$url="$father"."day=$day&amp;mon=$mon&amp;year=$mong";
-	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}next{/tr}\" title=\"{tr}next{/tr}\"> &gt; </a>" );
+	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Next{/tr}\" title=\"{tr}Next{/tr}\"> &gt; </a>" );
 {/php}		 
 	</td>
 	</tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.3 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.4 2007-07-19 17:06:16 jyhem Exp $ *}
 <div class="content">
 
 	<div class="author">
@@ -79,7 +79,7 @@
 		{else}
 		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;thread_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
 		{/if}
-	>{html_image file="pics/icons/cross.png" border="0" alt='{tr}remove{/tr}'}</a>
+	>{html_image file="pics/icons/cross.png" border="0" alt='{tr}Remove{/tr}'}</a>
 	{/if}
 	<br />
 	{/section}

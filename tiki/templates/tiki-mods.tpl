@@ -214,7 +214,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
   {else}
 <td style="background:#acfeac;">{$installed.$type.$item->revision}</td>
   {/if}
-<td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}remove{/tr}</a>{/if}</td>
+<td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}Remove{/tr}</a>{/if}</td>
  {else}
 <td></td>
 <td colspan="3">{if $iswritable}<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}install{/tr}</a>{else}<b><s>{tr}Install{/tr}</s></b>{/if}</td>

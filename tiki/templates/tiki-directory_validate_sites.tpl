@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.24 2007-07-19 13:16:18 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.25 2007-07-19 17:06:17 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
   
       {if $feature_help eq 'y'}
@@ -16,7 +16,7 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_validate_sites.php" method="post" name="form_validate_sites">
-<input type="submit" name="del" value="{tr}remove{/tr}" />
+<input type="submit" name="del" value="{tr}Remove{/tr}" />
 <input type="submit" name="validate" value="{tr}validate{/tr}" />
 <script type="text/javascript">
 var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}];
@@ -25,7 +25,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
   <tr>
     <td class="heading"><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_validate_sites',CHECKBOX_LIST,this.checked);" /></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
+    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></td>
 {if $directory_country_flag eq 'y'}
     <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></td>
 {/if}
@@ -44,7 +44,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td  class="{cycle advance=false}">
    <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='pics/icons/page_edit.png'  height="16" width="16" border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-   <a class="link" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='pics/icons/cross.png' border='0' height="16" width="16" alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='pics/icons/cross.png' border='0' height="16" width="16" alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 </td>
 </tr>
 <tr>
@@ -62,11 +62,11 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-directory_validate_sites.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-directory_validate_sites.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-directory_validate_sites.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-directory_validate_sites.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

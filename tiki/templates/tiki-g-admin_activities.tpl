@@ -34,11 +34,11 @@ Errors:<br />
   <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}description{/tr}</td>
+  <td class="formcolor">{tr}Description{/tr}</td>
   <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>  
-  <td class="formcolor">{tr}type{/tr}</td>
+  <td class="formcolor">{tr}Type{/tr}</td>
   <td class="formcolor">
   <select name="type">
   <option value="start" {if $info.type eq 'start'}selected="selected"{/if}>{tr}start{/tr}</option>

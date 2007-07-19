@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.21 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.22 2007-07-19 17:06:20 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -58,8 +58,8 @@
 <table class="normal">
 <tr>
 <td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="{tr}x{/tr}"></td>
-<td class="heading">{tr}event{/tr}</td>
-<td class="heading">{tr}object{/tr}</td>
+<td class="heading">{tr}Event{/tr}</td>
+<td class="heading">{tr}Object{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$watches}

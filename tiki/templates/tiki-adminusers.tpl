@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.101 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.102 2007-07-19 17:06:16 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -147,7 +147,7 @@ title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt=
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
 {if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}edit included group{/tr}"{else}"{tr}Edit{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
-{if $what ne 'included'}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}" title="{tr}remove{/tr}">x</a>){/if}
+{if $what ne 'included'}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}" title="{tr}Remove{/tr}">x</a>){/if}
 {if $grs eq $users[user].default_group} {tr}default{/tr}{/if}<br />
 {/if}
 {/foreach}
@@ -172,7 +172,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
     <option value="" selected>-</option>
-    <option value="remove_users" >{tr}remove{/tr}</option>
+    <option value="remove_users" >{tr}Remove{/tr}</option>
     {if $feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}remove users and their userpages{/tr}</option>{/if}
     <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
     <option value="set_default_groups">{tr}set default groups{/tr}</option>
@@ -212,11 +212,11 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

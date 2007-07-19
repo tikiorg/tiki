@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.39 2007-07-19 13:16:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.40 2007-07-19 17:06:20 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -296,11 +296,11 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
@@ -398,17 +398,17 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
     <input type="hidden" name="attach3type" value="{$attach3type|escape}" />
     <table class="normal">
     {if $attach1}
-    <tr class="formcolor"><td>{tr}Attachment 1{/tr}</td><td>{$attach1} <input type="submit" name="remove_attach1" value="{tr}remove{/tr}" /></td></tr>
+    <tr class="formcolor"><td>{tr}Attachment 1{/tr}</td><td>{$attach1} <input type="submit" name="remove_attach1" value="{tr}Remove{/tr}" /></td></tr>
     {else}
     <tr class="formcolor"><td>{tr}Attachment 1{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile1" type="file" /></td></tr>
     {/if}
     {if $attach2}
-    <tr class="formcolor"><td>{tr}Attachment 2{/tr}</td><td>{$attach2} <input type="submit" name="remove_attach2" value="{tr}remove{/tr}" /></td></tr>
+    <tr class="formcolor"><td>{tr}Attachment 2{/tr}</td><td>{$attach2} <input type="submit" name="remove_attach2" value="{tr}Remove{/tr}" /></td></tr>
     {else}
     <tr class="formcolor"><td>{tr}Attachment 2{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile2" type="file" /></td></tr>
     {/if}
     {if $attach3}
-    <tr class="formcolor"><td>{tr}Attachment 3{/tr}</td><td>{$attach3} <input type="submit" name="remove_attach3" value="{tr}remove{/tr}" /></td></tr>
+    <tr class="formcolor"><td>{tr}Attachment 3{/tr}</td><td>{$attach3} <input type="submit" name="remove_attach3" value="{tr}Remove{/tr}" /></td></tr>
     {else}
     <tr class="formcolor"><td>{tr}Attachment 3{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile3" type="file" /></td></tr>
     {/if}

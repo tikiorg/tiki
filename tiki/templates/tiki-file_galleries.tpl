@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.58 2007-07-19 13:16:18 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.59 2007-07-19 17:06:17 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -65,7 +65,7 @@
 				<td class="formcolor">{tr}id{/tr}</td>
 				<td class="formcolor">{tr}Name{/tr}</td>
 				<td class="formcolor">{tr}Size{/tr}</td>
-				<td class="formcolor">{tr}description{/tr}</td>
+				<td class="formcolor">{tr}Description{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
 				<td class="formcolor">{tr}locked{/tr}<br /></td>
 			</tr>

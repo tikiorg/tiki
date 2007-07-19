@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.54 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.55 2007-07-19 17:06:16 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -79,10 +79,10 @@
 <tr class="heading">
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'position_desc'}fieldId_asc{else}fieldId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading">&nbsp;</td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}position{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Position{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}options{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}Options{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'isMain_desc'}isMain_asc{else}isMain_desc{/if}">{tr}isMain{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'isMultilingual_desc'}isMultilingual_asc{else}isMultilingual_desc{/if}">{tr}Multilingual{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;{if $max and $max ne $maxRecords}max={$max}&amp;{/if}{if $offset}offset={$offset}&amp;{/if}sort_mode={if $sort_mode eq 'isTblVisible_desc'}isTblVisible_asc{else}isTblVisible_desc{/if}">{tr}Tbl vis{/tr}</a></td>
@@ -113,7 +113,7 @@
 <td>{$channels[user].isMandatory}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}remove{/tr}"><img src="pics/icons/cross.png" border="0" alt="{tr}remove{/tr}" width='16' height='16' /></a> 
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" alt="{tr}Remove{/tr}" width='16' height='16' /></a> 
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}"><img src="pics/icons/resultset_down.png" border="0" alt="{tr}down{/tr}" title="{tr}down{/tr}" width='16' height='16' /></a>
 {/if}</td>
 </tr>
@@ -122,11 +122,11 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#list">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#list">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#list">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admin_tracker_fields.php?{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#list">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

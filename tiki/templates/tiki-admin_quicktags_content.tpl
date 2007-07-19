@@ -33,7 +33,7 @@
       </a>
       &nbsp;&nbsp;
       <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">
-        <img src='pics/icons/cross.png' alt="{tr}remove{/tr}" border='0' width='16' height='16' />
+        <img src='pics/icons/cross.png' alt="{tr}Remove{/tr}" border='0' width='16' height='16' />
       </a>
     </td>
   </tr>
@@ -42,13 +42,13 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-  [<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}prev{/tr}
+  [<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Prev{/tr}
   </a>]
   &nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

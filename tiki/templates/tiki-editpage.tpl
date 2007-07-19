@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.109 2007-07-19 09:32:42 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.110 2007-07-19 17:06:17 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -116,7 +116,7 @@
 {/if}
 {else}
 {if count($polls_templates)}
-{tr}type{/tr}
+{tr}Type{/tr}
 <select name="poll_template">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$polls_templates}
