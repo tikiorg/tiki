@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.46 2007-07-19 18:20:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.47 2007-07-19 19:46:00 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -661,7 +661,7 @@ class LogsLib extends TikiLib {
 		$tab = array();
 		foreach ($actions as $action) {
 			if (isset($action['contributions'])) {
-				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
+				if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'] && $action['categId'] != $previousAction['categId'])
 					continue;	// differ only by the categories
 				$previousAction = $action;
 				foreach ($action['contributions'] as $contrib) {
@@ -673,17 +673,17 @@ class LogsLib extends TikiLib {
 						$tab[$action['user']][$contrib['contributionId']]['stat']['nbDel'] = 0;
 						$tab[$action['user']][$contrib['contributionId']]['stat']['nbUpdate'] = 0;
 					}
-					if ($action['add']) {
-						$tab[$action['user']][$contrib['contributionId']]['stat']['add'] += $action['add'];
-						if (!$action['del'])
+					if ($action['contributorAdd']) {
+						$tab[$action['user']][$contrib['contributionId']]['stat']['add'] += $action['contributorAdd'];
+						if (!$action['contributorDel'])
 							++$tab[$action['user']][$contrib['contributionId']]['stat']['nbAdd'];
 					}
-					if ($action['del']) {
-						$tab[$action['user']][$contrib['contributionId']]['stat']['del'] += $action['del'];
-						if (!$action['add'])
+					if ($action['contributorDel']) {
+						$tab[$action['user']][$contrib['contributionId']]['stat']['del'] += $action['contributorDel'];
+						if (!$action['contributorAdd'])
 							++$tab[$action['user']][$contrib['contributionId']]['stat']['nbDel'];
 					}
-					if ($action['add'] && $action['del'])
+					if ($action['contributorAdd'] && $action['contributorDel'])
 						++$tab[$action['user']][$contrib['contributionId']]['stat']['nbUpdate'];
 				}				
 			}
@@ -801,14 +801,16 @@ class LogsLib extends TikiLib {
 			$nbC = isset($action['nbContributors'])? $action['nbContributors']:1;
 			if (isset($bytes['add'])) {
 				$action['add'] = $bytes['add'];
-				$action['comment'] = 'add='.$bytes['add']/$nbC;
+				$action['contributorAdd'] = round($bytes['add']/$nbC);
+				$action['comment'] = 'add='.$action['contributorAdd'];
 			}
-			if (isset($byter['del'])) {
+			if (isset($bytes['del'])) {
 				$action['del'] = $bytes['del'];
+				$action['contributorDel'] = round($bytes['del']/$nbC);
 				if (!empty($action['comment'])) {
-					$action['comment'] .= '&del='.$bytes['del']/$nbC;
+					$action['comment'] .= '&del='.$action['contributorDel'];
 				} else {
-					$action['comment'] = 'del='.$bytes['del']/$nbC;
+					$action['comment'] = 'del='.$action['contributorDel'];
 				}
 			}
 			if (empty($users) || in_array($action['user'], $users)) {
