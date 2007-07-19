@@ -39,27 +39,29 @@ function wikiplugin_rss($data,$params) {
 	extract($params,EXTR_SKIP);
 
 	if (!isset($max)) {$max='10';}
-	if (!isset($id)) { $id=1; }
+	if (!isset($id)) { return tra('You need to specify a RSS Id'); }
 	if (!isset($date)) { $date=0; }
 	if (!isset($desc)) { $desc=0; }
 	if (!isset($author)) { $author=0; }
 
 	$ids=explode(":",$id);
   
-  $items=array();
-  foreach ($ids as $val) {
-		$rssdata = $rsslib->get_rss_module_content($val);
+	$repl="";		
+	$items=array();
+	foreach ($ids as $val) {
+		if (!($rssdata = $rsslib->get_rss_module_content($val))) {
+			$repl = tra('RSS Id incorrect:').' '.$val;
+		}
 		$itemsrss = $rsslib->parse_rss_data($rssdata, $val);
 		$items=array_merge($items,$itemsrss);		
- }
+	}
  
- usort($items,"rss_sort");
- if (count($ids)>1) {
- 	$items=array_slice($items, count($ids));
- }
+	usort($items,"rss_sort");
+	if (count($ids)>1) {
+		$items=array_slice($items, count($ids));
+	}
  
-	$repl="";		
-	if ($items[0]["isTitle"]=="y") {
+	if (isset($items[0]) && $items[0]['isTitle'] == 'y') {
 		$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div><br />'; 
 		$items = array_slice ($items, 1);
 	}
