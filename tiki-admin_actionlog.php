@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.33 2007-07-19 12:26:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.34 2007-07-19 18:22:00 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -390,7 +390,7 @@ if (isset($_REQUEST['graph'])) {
 	require_once ('lib/graph-engine/graph.bar.php');
 	require_once ('lib/graph-engine/graph.multiline.php');
 	$ext = 'jpg';
-	$graph = 'BarStackGraphic';
+	$graphType = 'BarStackGraphic';
 	$widthWeek = 50*$contributionStat['nbCols']+400;
 	$widthTotal = 450;
 	$height = 200;
@@ -398,7 +398,7 @@ if (isset($_REQUEST['graph'])) {
 	$background = &new GD_GRenderer( max($widthUser,$widthWeek) , 6*$height, $ext );
 
 	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_contribution_user($userStat, 'add', $contributions);
 	//echo '<pre>XXX';print_r($userStat);;print_r($series); die;
 	if ($series['totalVol']) {
@@ -411,7 +411,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 
 	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_contribution_user($userStat, 'del', $contributions);
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
@@ -422,7 +422,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 
 	$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add', $contributions);
 	//echo '<pre>XXX';print_r($contributionStat);;print_r($series); die;
 	if ($series['totalVol']) {
@@ -438,7 +438,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 
    	$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_week_contribution_vol($contributionStat, 'del', $contributions);
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
@@ -453,7 +453,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 
 	$renderer = &new GD_GRenderer( $widthTotal, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
 	//echo "<pre>";print_r($contributionStat);print_r($series);die;
 	if ($series['totalVol']) {
@@ -465,7 +465,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 
 	$renderer = &new GD_GRenderer( $widthTotal, $height, $ext );
-	$graph = new $graph;
+	$graph = new $graphType;
 	$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
