@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.52 2007-07-19 13:16:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.53 2007-07-19 17:06:16 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -39,9 +39,9 @@
 <a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">
 <img border="0" src="pics/icons/cross.png" height="16" width="16" hspace="5" vspace="1" /></a>
 {if $catree[dx].has_perm eq 'y'}
-<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}permissions{/tr}" src="pics/icons/key_active.png" /></a>
+<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}Permissions{/tr}" src="pics/icons/key_active.png" /></a>
 {else}
-<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}permissions{/tr}" src="pics/icons/key.png" /></a>
+<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" /></a>
 {/if}
 <span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
@@ -125,7 +125,7 @@
       <tr>
         <td class="heading">&nbsp;</td>
         <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#objects">{tr}Name{/tr}</a></td>
-        <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}type{/tr}</a></td>
+        <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}Type{/tr}</a></td>
       </tr>
       {section name=ix loop=$objects}
       <tr>
@@ -139,11 +139,11 @@
       <div align="center">
         <div class="mini">
         {if $prev_offset >= 0}
-          [<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#objects">{tr}prev{/tr}</a>]&nbsp;
+          [<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Prev{/tr}</a>]&nbsp;
         {/if}
         {tr}Page{/tr}: {$actual_page}/{if $cant_pages eq 0}1{else}{$cant_pages}{/if}
         {if $next_offset >= 0}
-          &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#objects">{tr}next{/tr}</a>]
+          &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Next{/tr}</a>]
         {/if}
         </div>
       </div>

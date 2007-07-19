@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.72 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.73 2007-07-19 17:06:16 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -49,7 +49,7 @@
 <input type="hidden" name="type" value="{$type|escape}" />
 <select name="oper">
 <option value="assign">{tr}assign{/tr}</option>
-<option value="remove">{tr}remove{/tr}</option>
+<option value="remove">{tr}Remove{/tr}</option>
 </select>
 {tr}all permissions in level{/tr}:  
 <select name="level[]" multiple="yes" size="5">
@@ -94,7 +94,7 @@
 <th class="heading">&nbsp;</td>
 <th class="heading">{tr}Name{/tr}</th>
 <th class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
-<th class="heading">{tr}type{/tr}</th>
+<th class="heading">{tr}Type{/tr}</th>
 <th class="heading">{tr}desc{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}

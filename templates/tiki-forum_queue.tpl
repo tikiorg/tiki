@@ -48,7 +48,7 @@
 {/if}
 {if $msg_info.parentId eq 0}
 <tr>
-	<td class="formcolor">{tr}type{/tr}</td>
+	<td class="formcolor">{tr}Type{/tr}</td>
 	<td class="formcolor">
       <select name="type">
       <option value="n" {if $msg_info.type eq 'n'}selected="selected"{/if}>{tr}normal{/tr}</option>
@@ -85,7 +85,7 @@
 	<td class="formcolor">
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
 		<input type="submit" name="saveapp" value="{tr}save and approve{/tr}" />
-		<input type="submit" name="remove" value="{tr}remove{/tr}" />
+		<input type="submit" name="remove" value="{tr}Remove{/tr}" />
 		<input type="submit" name="topicize" value="{tr}convert to topic{/tr}" />
 	</td>
 </tr>
@@ -183,11 +183,11 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

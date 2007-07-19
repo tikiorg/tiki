@@ -8,6 +8,6 @@
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="version" value="{$version|escape}" />
 <input type="hidden" name="historyId" value="{$historyId|escape}" />
-<input type="submit" name="remove" value="{tr}remove{/tr}" />
+<input type="submit" name="remove" value="{tr}Remove{/tr}" />
 </form>
 

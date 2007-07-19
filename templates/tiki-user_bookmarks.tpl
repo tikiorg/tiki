@@ -24,7 +24,7 @@
   <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border='0' src='pics/icons/folder.png' alt='{tr}Folder in{/tr}' width='16' height='16' /></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
   <td class="{cycle}">
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}remove{/tr}' title='{tr}remove folder{/tr}' border='0' width='16' height='16' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' title='{tr}remove folder{/tr}' border='0' width='16' height='16' /></a>
   </td>
 </tr>
 {/section}
@@ -35,7 +35,7 @@
 <table class="normal">
 <tr>
   <td  class="heading">{tr}Name{/tr}</td>
-  <td  class="heading">{tr}url{/tr}</td>
+  <td  class="heading">{tr}Url{/tr}</td>
   <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -52,7 +52,7 @@
     {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='pics/icons/arrow_refresh.png' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' width='16' height='16' /></a>
     {/if}
-    &nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+    &nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
   </td>
 </tr>
 {/section}

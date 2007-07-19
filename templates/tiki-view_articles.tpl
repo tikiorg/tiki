@@ -136,11 +136,11 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="artprevnext" href="tiki-view_articles.php?offset={$prev_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="artprevnext" href="tiki-view_articles.php?offset={$prev_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="artprevnext" href="tiki-view_articles.php?offset={$next_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}next{/tr}</a>]
+&nbsp;[<a class="artprevnext" href="tiki-view_articles.php?offset={$next_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

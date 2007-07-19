@@ -31,11 +31,11 @@
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;<a class="link" href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].refresh|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}View{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}View{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}Remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
 {else}
 <td class="even">&nbsp;<a class="link" href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].refresh|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}View{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
+<td class="even">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}View{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}Remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
 </tr>
 {/if}
 {sectionelse}
@@ -46,11 +46,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-list_cache.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_cache.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-list_cache.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_cache.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

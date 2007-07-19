@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.30 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.31 2007-07-19 17:06:16 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -28,7 +28,7 @@
 <option value='c' {if $active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
 <option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
 <option value='t' {if $active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
-<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
+<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}Object{/tr}</option>
 </select>
 </td></tr>
 {include file=categorize.tpl}
@@ -61,7 +61,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
-<td class="heading">{tr}options{/tr}</td>
+<td class="heading">{tr}Options{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -79,7 +79,7 @@
 <td class="{cycle}">
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}Delete{/tr}</a>
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}Options{/tr}</a>
 </td>
 </tr>
 {sectionelse}
@@ -89,11 +89,11 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.18 2007-07-19 09:32:43 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.19 2007-07-19 17:06:19 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -195,7 +195,7 @@
   <select name="submit_mult" onchange="this.form.submit();">
     <option value="" selected="selected">{tr}with checked{/tr}:</option>
     {if $tiki_p_remove eq 'y'} 
-      <option value="remove_pages" >{tr}remove{/tr}</option>
+      <option value="remove_pages" >{tr}Remove{/tr}</option>
     {/if}
     {if $feature_wiki_multiprint eq 'y'}
       <option value="print_pages" >{tr}Print{/tr}</option>
@@ -218,11 +218,11 @@
 {if count($listpages) > 0}
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}prev{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}Prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}next{/tr}</a>]
+[<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href}>{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

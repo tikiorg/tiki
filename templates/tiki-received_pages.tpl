@@ -67,7 +67,7 @@
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' border='0' title='{tr}Edit{/tr}' width='16' height='16' /></a>
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='pics/icons/monitor.png' border='0' alt='{tr}View{/tr}' title='{tr}View{/tr}' width='16' height='16' /></a>
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' width='16' height='16' /></a> &nbsp;
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 </td>
 </tr>
 {/section}
@@ -75,11 +75,11 @@
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-received_pages.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-received_pages.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-received_pages.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-received_pages.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

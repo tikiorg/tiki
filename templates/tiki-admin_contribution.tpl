@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.10 2007-07-19 13:16:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.11 2007-07-19 17:06:16 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -63,7 +63,7 @@
 <td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</a></td>
 <td class="{cycle}">
 <a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> &nbsp;
-<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
+<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>
 </td>
 </tr>
 {sectionelse}

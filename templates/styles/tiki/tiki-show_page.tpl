@@ -81,7 +81,7 @@
 {/if}
 {if $page|lower ne 'sandbox'}
 	{if $tiki_p_remove eq 'y'}
-		<span class="tabbut"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="tablink">{tr}remove{/tr}</a></span>
+		<span class="tabbut"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="tablink">{tr}Remove{/tr}</a></span>
 	{/if}
 	{if $tiki_p_rename eq 'y'}
 		<span class="tabbut"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="tablink">{tr}Rename{/tr}</a></span>

@@ -59,9 +59,9 @@ function subavt() {
 <tr>
  <td class="formcolor">
  <div align="center">
-<a class="link" href="javascript:subavt();">{tr}prev{/tr}</a>
+<a class="link" href="javascript:subavt();">{tr}Prev{/tr}</a>
 <img id='avtimg' src="{$yours}" alt='{tr}Avatar Image{/tr}'/>
-<a class="link" href="javascript:addavt();">{tr}next{/tr}</a>
+<a class="link" href="javascript:addavt();">{tr}Next{/tr}</a>
 </div>
  </td>
 </tr>

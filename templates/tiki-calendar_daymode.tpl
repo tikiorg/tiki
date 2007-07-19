@@ -11,8 +11,8 @@
 {if $hrows[$h][hr].modifiable eq "y"}
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}Edit{/tr}">
 <img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}remove{/tr}">
-<img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}remove{/tr}" /></a>{/if}</span>
+<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}Remove{/tr}">
+<img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}Remove{/tr}" /></a>{/if}</span>
 {/if}
 <div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if}>
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}

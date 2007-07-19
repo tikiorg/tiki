@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.33 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.34 2007-07-19 17:06:16 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -42,14 +42,14 @@
 <td class="{cycle advance=false}">{$topics[user].active}</td>
 <td class="{cycle advance=false}">{$topics[user].arts} ({$topics[user].subs})</td>
 <td class="{cycle}">
-<a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' width='16' height='16' /></a>
+<a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}"><img border='0' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' width='16' height='16' /></a>
 <a class="link" href="tiki-admin_topics.php?removeall={$topics[user].topicId}">{tr}Remove with articles{/tr}</a>
 {if $topics[user].active eq 'n'}
 <a class="link" href="tiki-admin_topics.php?activate={$topics[user].topicId}"><img border="0" alt="{tr}activate{/tr}" title='{tr}active - click to deactivate{/tr}' src="pics/icons/accept.png" width='16' height='16' /></a>
 {else}
 <a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}"><img border="0" alt="{tr}deactivate{/tr}" title='{tr}inactive - click to activate{/tr}' src="pics/icons/delete.png" width='16' height='16' /></a>
 {/if}
-{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}"><img border="0" alt="{tr}permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{if $topics[user].individual eq 'y'}){/if}
+{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{if $topics[user].individual eq 'y'}){/if}
  <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' width='16' height='16' /></a>
 </td>
 </tr>

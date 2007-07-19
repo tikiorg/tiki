@@ -3,13 +3,13 @@
 <div align="center" class="mini">
 
 {if $prev_offset >= 0}
-<a class="prevnext" href="{$smarty.server.PHP_SELF}?offset={$prev_offset}{foreach key=arg item=val from=$urlquery}{if $val}&amp;{$arg|escape:"url"}={$val|escape:"url"}{/if}{/foreach}">[{tr}prev{/tr}]</a>&nbsp;
+<a class="prevnext" href="{$smarty.server.PHP_SELF}?offset={$prev_offset}{foreach key=arg item=val from=$urlquery}{if $val}&amp;{$arg|escape:"url"}={$val|escape:"url"}{/if}{/foreach}">[{tr}Prev{/tr}]</a>&nbsp;
 {/if}
 
 {tr}Page{/tr}: {$actual_page} / {$cant_pages}
 
 {if $next_offset >= 0}
-&nbsp;<a class="prevnext" href="{$smarty.server.PHP_SELF}?offset={$next_offset}{foreach key=arg item=val from=$urlquery}{if $val}&amp;{$arg|escape:"url"}={$val|escape:"url"}{/if}{/foreach}">[{tr}next{/tr}]</a>
+&nbsp;<a class="prevnext" href="{$smarty.server.PHP_SELF}?offset={$next_offset}{foreach key=arg item=val from=$urlquery}{if $val}&amp;{$arg|escape:"url"}={$val|escape:"url"}{/if}{/foreach}">[{tr}Next{/tr}]</a>
 {/if}
 
 {if $direct_pagination eq 'y'}

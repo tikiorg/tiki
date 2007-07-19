@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.21 2007-07-19 13:16:15 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.22 2007-07-19 17:06:16 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -261,11 +261,11 @@
 {if $maxRecords > 0 and $cant_pages > 0}
   <div class="mini" align="center">
       {if $prev_offset >= 0}
-        [<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$prev_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+        [<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$prev_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-      &nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$next_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+      &nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$next_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y' and $cant_pages > 1}
 	<br />

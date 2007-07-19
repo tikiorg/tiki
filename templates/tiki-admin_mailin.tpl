@@ -18,14 +18,14 @@
     <td class="heading">
       {tr}Account{/tr}
     </td>
-    <td class="heading">{tr}type{/tr}</td>
+    <td class="heading">{tr}Type{/tr}</td>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
     <tr>
       <td class="{cycle advance=false}" align="middle">
         <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add"><img border='0' width='16' height='16' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a> &nbsp;
-        <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" ><img border='0' width='16' height='16' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='pics/icons/cross.png' /></a>
+        <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" ><img border='0' width='16' height='16' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' /></a>
       </td>
       <td class="{cycle advance=false}">{$accounts[ix].account}</td>
       <td class="{cycle}">{tr}{$accounts[ix].type}{/tr}</td>
