@@ -34,7 +34,7 @@ class TikiDate extends Date {
 	 * Current UTC offset of server
 	 */
 	var $server_offset;
-	var $trad = array("January","February","March","April","May","June","July","August","September","October","Novembre","December","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Monday","Tuesday","Wednesday","Thirsday","Friday","Saturday","Sunday","Mon","Tue","Wed","Thu","Fri","Sat","Sun","of");
+	var $trad = array("January","February","March","April","May","June","July","August","September","October","Novembre","December","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Mon","Tue","Wed","Thu","Fri","Sat","Sun","of");
 	var $replace = NULL ;
 
 	/**
