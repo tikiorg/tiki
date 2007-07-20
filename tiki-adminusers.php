@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.73 2007-07-14 21:58:42 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.74 2007-07-20 21:05:36 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -450,6 +450,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
+$all_groups = $userlib->get_groups();
+$smarty->assign_by_ref('all_groups', $all_groups['data']);
 
 $smarty->assign('userinfo', $userinfo);
 $smarty->assign('userId', $_REQUEST["user"]);

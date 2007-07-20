@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.104 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.105 2007-07-20 21:05:36 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -90,8 +90,8 @@
 <td>{tr}Group (direct){/tr}</td>
 <td><select name="filterGroup">
 	<option value=""></option>
-{section name=ix loop=$groups}
-	<option value="{$groups[ix].groupName}" {if $filterGroup eq $groups[ix].groupName}selected{/if}>{$groups[ix].groupName}</option>
+{section name=ix loop=$all_groups}
+	<option value="{$all_groups[ix].groupName}" {if $filterGroup eq $all_groups[ix].groupName}selected{/if}>{$all_groups[ix].groupName}</option>
 {/section}
 </select></td>
 </tr><tr>

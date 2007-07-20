@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.229 2007-07-14 21:58:42 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.230 2007-07-20 21:05:35 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1031,7 +1031,7 @@ function get_included_groups($group, $recur=true) {
 	$result = $this->query($query, array($userid));
     }
 
-    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '', $details="y", $inGroups='') {
+    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_asc', $find = '', $initial = '', $details="y", $inGroups='') {
 
 	$mid = "";
 	$bindvars = array();
