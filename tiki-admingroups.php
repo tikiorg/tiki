@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.58 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.59 2007-07-20 12:04:22 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,13 +9,10 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-// PERMISSIONS: NEEDS p_admin
-if ($user != 'admin') {
-	if ($tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("You don't have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra("You don't have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 $cookietab = "1";
