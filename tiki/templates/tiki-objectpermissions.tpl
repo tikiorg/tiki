@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.26 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.27 2007-07-20 11:32:32 sylvieg Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -8,7 +8,8 @@
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
-{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}</div>
+{if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
+</div>
 </div>
 
 <form method="post" action="tiki-objectpermissions.php">
