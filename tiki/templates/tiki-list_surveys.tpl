@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.22 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.23 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-list_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-list_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' />
 </a>
 {/if}</h1>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.48 2007-05-25 20:06:30 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.49 2007-07-20 18:13:31 jyhem Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -18,7 +18,7 @@
   <p style="float:left;position:absolute;">
     <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}return to gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-      <a class="linkbut pixurl" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="">{tr}edit image{/tr}</a>
+      <a class="linkbut pixurl" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="">{tr}Edit Image{/tr}</a>
     {/if}
   </p>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.7 2007-06-01 18:36:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.8 2007-07-20 18:13:31 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>
 
@@ -9,7 +9,7 @@
 <a href="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}" class="linkbut" title="{tr}list gallery{/tr}">{tr}list gallery{/tr}</a>
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
-  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$gal_info.galleryId}" class="linkbut" title="{tr}edit gallery{/tr}">{tr}edit gallery{/tr}</a>
+  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$gal_info.galleryId}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
 {/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}

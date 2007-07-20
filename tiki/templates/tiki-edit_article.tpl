@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.61 2007-07-19 13:16:18 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.62 2007-07-20 18:13:31 jyhem Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -13,13 +13,13 @@
 {/if}
 
 {if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Article Tpl{/tr}">
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
 
 <div class="navbar">
 <a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
-<a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
+<a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
 {if $preview}

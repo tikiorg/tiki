@@ -3,7 +3,7 @@
 <h1><a class="pagetitle" href="tiki-admin_chart_items.php">{tr}Admin chart items{/tr}</a>
 </h1><br /><br />
 <a class="linkbut" href="tiki-admin_charts.php">{tr}charts{/tr}</a>
-<a class="linkbut" href="tiki-admin_charts.php?chartId={$chartId}">{tr}edit chart{/tr}</a>
+<a class="linkbut" href="tiki-admin_charts.php?chartId={$chartId}">{tr}Edit Chart{/tr}</a>
 <a class="linkbut" href="tiki-view_chart.php?chartId={$chartId}">{tr}View{/tr}</a>
 <h3>{tr}Add or edit an item{/tr} <a class="link" href="tiki-admin_chart_items.php?chartId=$chartId&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;itemId=0">{tr}New{/tr}</a>
 </h3>

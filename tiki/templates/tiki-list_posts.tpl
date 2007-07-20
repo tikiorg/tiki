@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.32 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.33 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
@@ -9,7 +9,7 @@
 </h1>
 
 <div class="navbar">
-<a class="linkbut" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
+<a class="linkbut" href="tiki-edit_blog.php">{tr}Edit Blog{/tr}</a>
 <a class="linkbut" href="tiki-blog_post.php">{tr}post{/tr}</a>
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 </div>

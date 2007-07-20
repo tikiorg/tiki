@@ -11,7 +11,7 @@
 {if $blogId > 0 }
 	<span class="button2">
 	<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">
-		{tr}view blog{/tr}
+		{tr}View Blog{/tr}
 	</a>
 	</span>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.148 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.149 2007-07-20 18:13:31 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -484,7 +484,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {if $tiki_p_admin_trackers eq 'y'}
 <div style="text-align:right;">
 <script type='text/javascript'>
-document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall2\">{tr}select all{/tr}</label>");
+document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall2\">{tr}Select All{/tr}</label>");
 </script>
 <select name="batchaction">
 <option value="">{tr}with checked{/tr}</option>
@@ -598,7 +598,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $fields[ix].type eq 'e'}
 {if !empty($fields[ix].options_array[2]) && ($fields[ix].options_array[2] eq '1' or $fields[ix].options_array[2] eq 'y')}
 <script type="text/javascript"> /* <![CDATA[ */
-document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$fields[ix].fieldId}[]\',this.checked)"/>{tr}select all{/tr}</div>');
+document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$fields[ix].fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
 /* ]]> */</script>
 {/if}
 {assign var=fca value=$fields[ix].options}

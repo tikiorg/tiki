@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.22 2007-07-17 16:21:46 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.23 2007-07-20 18:13:31 jyhem Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -16,7 +16,7 @@
       <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view this repository{/tr}</a>
+      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}View this Repository{/tr}</a>
     </div></td>
     
     <td>&nbsp;</td>

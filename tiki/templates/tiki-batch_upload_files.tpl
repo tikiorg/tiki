@@ -35,7 +35,7 @@
 {/foreach}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan='4'><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'files[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
 	/* ]]> */</script>
 </table>
 <br />

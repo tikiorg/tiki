@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.5 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.6 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -33,7 +33,7 @@
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-  document.write("<label for=\"clickall\">{tr}select all{/tr}</label>");
+  document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
   //-->                     
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
@@ -70,7 +70,7 @@
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-  document.write("<label for=\"clickall\">{tr}select all{/tr}</label>");
+  document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
   //-->                     
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
