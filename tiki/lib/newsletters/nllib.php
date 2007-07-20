@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.59 2007-07-09 21:45:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.60 2007-07-20 15:08:33 tombombadilom Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -13,14 +13,38 @@ class NlLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr, $author) {
+	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author) {
 		if ($nlId) {
-			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?  where `nlId`=?";
-			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$nlId));
+			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=? `frequency`=? where `nlId`=?";
+			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$frequency,$validateAddr,(int)$nlId));
 		} else {
-			$query = "insert into `tiki_newsletters`(`name`,`description`,`allowUserSub`,`allowAnySub`,`unsubMsg`,`validateAddr`,`lastSent`,`editions`,`users`,`created`,`author`) ";
-      $query.= " values(?,?,?,?,?,?,?,?,?,?,?)";
-			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$validateAddr,(int)$this->now,0,0,(int)$this->now, $author));
+			$query = "insert into `tiki_newsletters`(`name`,
+								`description`,
+								`created`,
+								`lastSent`,
+								`editions`,
+								`users`,
+								`allowUserSub`,
+								`allowTxt`,
+								`allowAnySub`,
+								`unsubMsg`,
+								`validateAddr`,
+								`frequency`,
+								`author`) ";
+      $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$result = $this->query($query, array($name,
+							$description,
+							(int)$this->now,
+							0,
+							0,
+							0,
+							$allowUserSub,
+							$allowTxt,
+							$allowAnySub,
+							$unsubMsg,
+							$validateAddr,
+							NULL,
+							$author));
 			$queryid = "select max(`nlId`) from `tiki_newsletters` where `created`=?";
 			$nlId = $this->getOne($queryid, array((int)$this->now));
 		}
