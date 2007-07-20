@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.21 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.22 2007-07-20 11:27:40 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,10 +15,16 @@ if (!isset(
 	die;
 }
 $perm = 'tiki_p_assign_perm_'.str_replace(' ', '_', $_REQUEST['objectType']);
+if ($_REQUEST['objectType'] == 'wiki page' && $wiki_creator_admin == 'y') {
+	include_once ('lib/wiki/wikilib.php');
+	$creator = $wikilib->get_creator($_REQUEST['objectName']);
+	if ($creator && $user && ($creator == $user)) {
+		$special_perm = 'y';
+	}
+}
 
-if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y'))) {
-	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this page"));
-
+if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') ||(isset($special_perm) && $special_perm == 'y'))) {
+	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
 	$smarty->display("error.tpl");
 	die;
 }
