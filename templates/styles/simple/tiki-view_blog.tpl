@@ -68,7 +68,7 @@
  ({tr}referenced by{/tr}: {$listpages[ix].trackbacks_from_count} {tr}posts{/tr} / {tr}references{/tr}: {$listpages[ix].trackbacks_to_count} {tr}posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
- [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{tr}view comments{/tr}</a>]
+ [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{tr}View Comments{/tr}</a>]
 {/if}
 </small>
 <a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/printer.png' style="border:0;" alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>

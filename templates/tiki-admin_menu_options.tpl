@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.50 2007-07-19 17:06:16 jyhem Exp $ *}
+ {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.51 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -203,7 +203,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {/section}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan=\"11\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
 	/* ]]> */</script>
 </table>
 <div align="left">

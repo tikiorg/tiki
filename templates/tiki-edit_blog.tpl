@@ -10,12 +10,12 @@
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_blog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit blog tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-edit_blog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Blog Tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
-<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>
+<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>
 </div>
 {if $category_needed eq 'y'}
 <div class="error">{tr}A category is mandatory{/tr}</div>

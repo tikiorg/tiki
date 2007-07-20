@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.102 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.103 2007-07-20 18:13:31 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -137,16 +137,16 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="thin">{if $users[user].user ne 'admin'}<input type="checkbox" name="checked[]" value="{$users[user].user}" {if $users[user].checked eq 'y'}checked="checked" {/if}/>{/if}</td>
 <td><a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="pics/icons/wrench.png" width='16' height='16' /></a>
 <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}"  
-title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}edit account settings{/tr}: {$users[user].user}" src="pics/icons/page_edit.png" width='16' height='16' /></a>
+title="{tr}Edit Account Settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}Edit Account Settings{/tr}: {$users[user].user}" src="pics/icons/page_edit.png" width='16' height='16' /></a>
 <a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}user information{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}user information{/tr}' /></a></td>
-<td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}edit account settings{/tr}">{$users[user].user}</a></td>
+<td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr}">{$users[user].user}</a></td>
 {if $login_is_email ne 'y'}<td>{$users[user].email}</td>{/if}
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
 <td class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{/if}</td>
 <td>
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
-{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}edit included group{/tr}"{else}"{tr}Edit{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
+{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit{/tr}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
 {if $what ne 'included'}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}" title="{tr}Remove{/tr}">x</a>){/if}
 {if $grs eq $users[user].default_group} {tr}default{/tr}{/if}<br />
 {/if}
@@ -162,7 +162,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<tr><td class=\"thin\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td class=\"form\" colspan=\"18\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+  document.write("<td class=\"form\" colspan=\"18\"><label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
   //-->                     
   </script>
   <tr>

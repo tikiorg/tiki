@@ -14,8 +14,8 @@
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit submissions tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<a href="tiki-edit_templates.php?template=tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Submissions Tpl{/tr}">
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
 
 <div class="navbar">

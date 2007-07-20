@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.29 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.30 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -8,7 +8,7 @@
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received articles tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}edit template{/tr}' /></a>
+<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}
 
 </h1>

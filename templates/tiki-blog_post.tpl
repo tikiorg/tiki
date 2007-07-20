@@ -10,7 +10,7 @@
 {/if}
 {/if}
 {if $blogId > 0 }
-<span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a></span>
 {/if}
 <span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a></span>
 </div>

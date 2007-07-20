@@ -3,7 +3,7 @@
 <a class="linkbut" href="tiki-g-admin_processes.php">{tr}admin processes{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_activities.php?pid={$pid}">{tr}admin activities{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_roles.php?pid={$pid}">{tr}admin roles{/tr}</a>
-<a class="linkbut" href="tiki-g-admin_processes.php?pid={$pid}">{tr}edit this process{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-g-admin_processes.php?pid={$pid}">{tr}Edit this Process{/tr}</a><br /><br />
 {tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
 
 process graph<br />

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.27 2007-07-20 11:32:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.28 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -29,7 +29,7 @@
 	<tr><td>
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write('<tr><td colspan="4"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}select all{/tr}</label></td></tr>');
+	document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
 	/* ]]> */</script>
 	</td></tr>
 {/if}

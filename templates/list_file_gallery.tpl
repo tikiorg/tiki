@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.22 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.23 2007-07-20 18:13:31 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -226,7 +226,7 @@
 {if $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan=\"{$nbCols}\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'file[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
 	/* ]]> */</script>
 {/if}
 </table>

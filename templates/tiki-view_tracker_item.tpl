@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.145 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.146 2007-07-20 18:13:32 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -364,7 +364,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $cur_field.type eq 'e'}
 {if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')} 
 <script type="text/javascript"> /* <![CDATA[ */
-document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}select all{/tr}</div>');
+document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
 /* ]]> */</script>
 {/if}
 {assign var=fca value=$cur_field.options}

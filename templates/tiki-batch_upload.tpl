@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.10 2007-02-13 14:27:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.11 2007-07-20 18:13:31 jyhem Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -34,7 +34,7 @@
 {/foreach}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan='4'><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'imgs[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
 	/* ]]> */</script>
 </table>
 <br />

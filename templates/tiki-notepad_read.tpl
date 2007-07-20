@@ -32,7 +32,7 @@
 {if $wiki_exists eq 'n'}
 <form action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
-<input type="submit" name="wikify" value="{tr}wiki create{/tr}"/>
+<input type="submit" name="wikify" value="{tr}Wiki Create{/tr}"/>
 <input size="20" type="text" name="wiki_name" value="{$info.name|escape}" />
 </form>
 {else}

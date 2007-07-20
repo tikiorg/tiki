@@ -2,7 +2,7 @@
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
 <h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pageTitle">{$quiz_info.name}</a></h2>
 <form action="tiki-edit_quiz_results.php" method="post">
