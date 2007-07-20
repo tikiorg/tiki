@@ -94,6 +94,10 @@ if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarV
 	$daystart = $tikilib->make_time(0,0,0,$focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
+
+/* $viewstart must be adjusted forward or backward 1 hour if the time from $viewstart to $focusdate crosses the DST switch */
+$adjustForDST = date('I',$viewstart) - date('I',$focusdate);
+$viewstart -= $adjustForDST * 3600;
 	
 if ($calendarViewMode == 'month' ||
 	 $calendarViewMode == 'quarter' ||
@@ -205,8 +209,6 @@ if ($calendarViewTikiCals) {
 	$listtikievents = array();
 }
 
-$adj=date('I',$viewstart)-date('I',$focusdate);
-$viewstart-=$adj*3600;
 
 define("weekInSeconds", 604800);
 $mloop = date("m", $viewstart);
