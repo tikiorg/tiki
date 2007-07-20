@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.5 2007-02-18 11:21:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.6 2007-07-20 17:33:58 jyhem Exp $ *}
 {if $feature_tasks eq 'y' and $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>"}{/if}
 {tikimodule title=$tpl_module_title name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations}
@@ -15,7 +15,7 @@
 {sectionelse}
 {/section}
     </select>
-    <input type="submit" class="wikiaction" name="modTasksSearch" value="{tr}go{/tr}" /> 
+    <input type="submit" class="wikiaction" name="modTasksSearch" value="{tr}Go{/tr}" /> 
 </form>
 </td></tr>
 {section name=iix loop=$public_tasks}

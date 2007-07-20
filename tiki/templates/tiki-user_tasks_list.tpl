@@ -116,10 +116,10 @@
           <option value="move_marked_to_trash">{tr}Trash{/tr}</option>
           <option value="remove_marked_from_trash">{tr}undo trash{/tr}</option>
         </select>
-		<input type="submit" name="update_tasks" value="{tr}go{/tr}" />
+		<input type="submit" name="update_tasks" value="{tr}Go{/tr}" />
 	</td>
 		<td class="formcolor" colspan="3" style="text-align:right;">
-		<input type="submit" name="update_percentage" value="{tr}go{/tr}" />
+		<input type="submit" name="update_percentage" value="{tr}Go{/tr}" />
 		<img src="img/icons2/arrow_fliped.gif" width="16" height="24" style="border:0" alt="arrow" />
 	</td>
 </tr>

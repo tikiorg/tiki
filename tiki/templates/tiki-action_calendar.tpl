@@ -7,7 +7,7 @@
 <span class="button2">
 {if $viewlist eq 'list'}
 <a href="{$myurl}?viewlist=table" class="linkbut" title="{tr}calendar view{/tr}">{tr}calendar view{/tr}</a>{else}
-<a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}list view{/tr}">{tr}list view{/tr}</a>{/if}
+<a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
 </span>
 
 </div>

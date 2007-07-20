@@ -84,7 +84,7 @@
 	<td class="formcolor">&nbsp;</td>
 	<td class="formcolor">
 		<input type="submit" name="save" value="{tr}Save{/tr}" />
-		<input type="submit" name="saveapp" value="{tr}save and approve{/tr}" />
+		<input type="submit" name="saveapp" value="{tr}Save and Approve{/tr}" />
 		<input type="submit" name="remove" value="{tr}Remove{/tr}" />
 		<input type="submit" name="topicize" value="{tr}convert to topic{/tr}" />
 	</td>

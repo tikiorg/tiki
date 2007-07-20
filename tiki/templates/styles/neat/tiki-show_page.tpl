@@ -68,7 +68,7 @@
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
-<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img src='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}' width='16' height='16' /></a>
+<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img src='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}' width='16' height='16' /></a>
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
@@ -77,7 +77,7 @@
 
 {if $user and $feature_user_watches eq 'y'}
   {if $user_watching_page eq 'n'}
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
+    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}Monitor this Page{/tr}' title='{tr}Monitor this Page{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
   {else}
     <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
   {/if}
@@ -176,7 +176,7 @@
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="tablink">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}
@@ -189,7 +189,7 @@
 {if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="tablink">
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-{tr}attach file{/tr}
+{tr}Attach File{/tr}
 {elseif $atts|@count == 1}
 <span class="highlight">{tr}1 file attached{/tr}</span>
 {else}

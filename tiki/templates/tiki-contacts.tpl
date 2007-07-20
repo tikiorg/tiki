@@ -6,7 +6,7 @@
 {if $view eq 'list'}
 <a href="{$myurl}?view=group" class="linkbut" title="{tr}group view{/tr}">{tr}group view{/tr}</a>
 {else}
-<a href="{$myurl}?view=list" class="linkbut" title="{tr}list view{/tr}">{tr}list view{/tr}</a>
+<a href="{$myurl}?view=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
 {/if}
 </span>
 </div>

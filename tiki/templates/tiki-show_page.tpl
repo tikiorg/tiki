@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.117 2007-07-19 09:32:44 jyhem Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.118 2007-07-20 17:33:57 jyhem Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -36,14 +36,14 @@
 	{/if}
 
 	{if $feature_wiki_pdf eq 'y'}
-		<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="pics/icons/page_white_acrobat.png" border="0" width="16" height="16" alt="{tr}pdf{/tr}" /></a>
+		<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="pics/icons/page_white_acrobat.png" border="0" width="16" height="16" alt="{tr}pdf{/tr}" /></a>
 	{/if}
 	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Save{/tr}" /></a>
 	{/if}
 	{if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_page eq 'n'}
-			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}monitor this page{/tr}" title="{tr}monitor this page{/tr}"}</a>
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}Monitor this Page{/tr}" title="{tr}Monitor this Page{/tr}"}</a>
 		{else}
 			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}stop monitoring this page{/tr}" title="{tr}stop monitoring this page{/tr}"}</a>
 		{/if}

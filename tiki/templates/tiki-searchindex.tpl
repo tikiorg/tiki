@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.16 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.17 2007-07-20 17:33:57 jyhem Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
@@ -80,7 +80,7 @@
 {else}
     <input type="hidden" name="where" value="{$where|escape}" />
 {/if}
-    <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
+    <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
 
 {if $words neq ''}

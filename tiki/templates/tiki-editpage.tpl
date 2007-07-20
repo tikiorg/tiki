@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.110 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.111 2007-07-20 17:33:57 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -329,7 +329,7 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />&nbsp;&nbsp;
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
-<input type="button" class="wikiaction" value="{tr}save draft{/tr}" onclick="save_draft()">
+<input type="button" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()">
 {/if}
 {if $page|lower ne 'sandbox'}
 <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />

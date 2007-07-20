@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.72 2007-07-19 20:58:55 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.73 2007-07-20 17:33:57 jyhem Exp $ *}
 
 <hr/>
 
@@ -65,7 +65,7 @@
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}Undo{/tr}</a></span>
 {/if}
 {if $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1" class="linkbut">{tr}make structure{/tr}</a></span>
+<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1" class="linkbut">{tr}Make Structure{/tr}</a></span>
 {/if}
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
@@ -93,7 +93,7 @@
 <span class="button2">
 <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}
@@ -117,7 +117,7 @@
     <span class="button2">
 <a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-{tr}attach file{/tr}
+{tr}Attach File{/tr}
 {elseif $atts|@count == 1}
 <span class="highlight">{tr}1 file attached{/tr}</span>
 {else}

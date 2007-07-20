@@ -37,7 +37,7 @@
 <table class="admin">
 	<tr><td class="form">{tr}Default view{/tr}:</td>
 	<td class="form">
-		<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>{tr}list view{/tr}
+		<input type='radio' name='user_contacts_default_view' value='list' {if $user_contacts_default_view eq 'list'}checked="checked"{/if}/>{tr}List View{/tr}
 		<input type='radio' name='user_contacts_default_view' value='group' {if $user_contacts_default_view neq 'list'}checked="checked"{/if}/>{tr}group view{/tr}
 	</td></tr>
 	<tr><td colspan="2" class="button">

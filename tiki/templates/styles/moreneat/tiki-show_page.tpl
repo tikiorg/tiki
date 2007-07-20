@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.66 2007-07-19 17:06:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.67 2007-07-20 17:33:58 jyhem Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -58,7 +58,7 @@
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
-<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">{html_image file='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}'}</a>
+<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">{html_image file='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}'}</a>
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
@@ -67,7 +67,7 @@
 
 {if $user and $feature_user_watches eq 'y'}
   {if $user_watching_page eq 'n'}
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='pics/icons/eye.png' /></a>
+    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}Monitor this Page{/tr}' title='{tr}Monitor this Page{/tr}' src='pics/icons/eye.png' /></a>
   {else}
     <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='pics/icons/no_eye.png' /></a>
   {/if}
@@ -175,7 +175,7 @@
 <span class="tabbut">
 <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="tablink">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}
@@ -192,7 +192,7 @@
 <span class="tabbut">
 <a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="tablink">
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-{tr}attach file{/tr}
+{tr}Attach File{/tr}
 {elseif $atts|@count == 1}
 <span class="highlight">{tr}1 file attached{/tr}</span>
 {else}
