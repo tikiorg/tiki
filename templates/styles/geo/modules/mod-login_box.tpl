@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.9 2007-07-19 09:32:46 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.10 2007-07-20 18:44:28 jyhem Exp $ *}
   {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
         <form action="{$login_url}" method="post">
-        {tr}user{/tr}:
+        {tr}User{/tr}:
         <input type="text" name="username" size="8" />
         <input type="submit" name="su" value="{tr}set{/tr}" />
         </form>
@@ -40,7 +40,7 @@
      <input type="hidden" name="zoofoo" value="" />
      <input type="hidden" name="response" value="" />
      {/if}
-          <div class="module"><input type="text" name="user"  size="8" /> {tr}user{/tr}</div>
+          <div class="module"><input type="text" name="user"  size="8" /> {tr}User{/tr}</div>
           <div class="module"><input type="password" name="pass" size="8" /> {tr}pass{/tr}</div>
           <div class="module"><input type="submit" name="login" value="{tr}Login{/tr}" style="width:100%;"/></div>
           {if $rememberme ne 'disabled'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.42 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.43 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <div class="navbar">
@@ -18,7 +18,7 @@
 	<img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align='right' /></a>
 	{/if}
 {/if}
-{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>{/if}
+{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
   <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
@@ -26,7 +26,7 @@
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
   {if $tiki_p_upload_files eq 'y'}
-    <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
+    <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}Upload File{/tr}</a>
   {/if}
   {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
     <a href="tiki-batch_upload_files.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a>

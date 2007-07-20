@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.8 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.9 2007-07-20 18:44:27 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>
 
 <table><tr>
 <td style="vertical-align:top;">
 
-{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a>{/if}
+{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
 <a href="tiki-list_file_gallery.php?galleryId={$gal_info.galleryId}" class="linkbut" title="{tr}list gallery{/tr}">{tr}list gallery{/tr}</a>
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
@@ -14,7 +14,7 @@
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
   {if $tiki_p_upload_files eq 'y'}
-    <a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}" class="linkbut">{tr}upload file{/tr}</a>
+    <a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}" class="linkbut">{tr}Upload File{/tr}</a>
   {/if}
   {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
     <a href="tiki-batch_upload_files.php?galleryId={$gal_info.galleryId}" class="linkbut">{tr}Directory batch{/tr}</a>

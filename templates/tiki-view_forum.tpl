@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.94 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.95 2007-07-20 18:44:27 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -241,7 +241,7 @@ a moderator approves it.{/tr}</small>
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected topics{/tr}' />
 	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}Unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
 	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}Lock{/tr}' title='{tr}lock selected topics{/tr}' />
-	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}delete selected topics{/tr}' />
+	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
 	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">

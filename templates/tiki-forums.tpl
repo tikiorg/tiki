@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.31 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.32 2007-07-20 18:44:27 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -36,7 +36,7 @@
 <tr>
 <td  class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 {if $forum_list_topics eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}Topics{/tr}</a></td>
 {/if}	
 {if $forum_list_posts eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>

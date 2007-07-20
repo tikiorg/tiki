@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.21 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.22 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
@@ -6,7 +6,7 @@
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list trackers tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=trackers" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>

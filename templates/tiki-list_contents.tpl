@@ -6,7 +6,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_contents.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin DynamicContent tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -14,7 +14,7 @@
 </div>
 <br />
 
-<h2>{tr}Create or edit content block{/tr}</h2><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
+<h2>{tr}Create or edit content block{/tr}</h2><a class="linkbut" href="tiki-list_contents.php">{tr}Create New Block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
 <table class="normal">

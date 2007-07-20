@@ -1,4 +1,4 @@
-<h1>{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}last version{/tr}{else}{tr}version{/tr}: {$version}{/if})</h1>
+<h1>{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version{/tr}: {$version}{/if})</h1>
 <br />
 <span class="button2"><a class="linkbut" href="tiki-index.php?page={$page|escape:'url'}">{tr}return to wikipage{/tr} <b>{$page}</b></a></span>
 <br />

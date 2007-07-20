@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.66 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.67 2007-07-20 18:44:23 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -349,7 +349,7 @@
 </tr>
 <tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
 <tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
-<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate {/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -371,10 +371,10 @@
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}topics{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}Topics{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}coms{/tr}</a></td>
-<td class="heading">{tr}users{/tr}</td>
-<td class="heading">{tr}age{/tr}</td>
+<td class="heading">{tr}Users{/tr}</td>
+<td class="heading">{tr}Age{/tr}</td>
 <td class="heading">{tr}ppd{/tr}</td>
 <!--<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>-->
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>

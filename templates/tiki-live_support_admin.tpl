@@ -10,7 +10,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin live support tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 
 </h1>
@@ -129,7 +129,7 @@
 <form method="post" action="tiki-live_support_admin.php">
 <table class="normal">
 	<tr>
-		<td class="formcolor">{tr}user{/tr}</td>
+		<td class="formcolor">{tr}User{/tr}</td>
 		<td class="formcolor">
 			<select name="user">
 				{section name=ix loop=$users}

@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.47 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.48 2007-07-20 18:44:27 jyhem Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
 
 <div class="navbar">
-<span class="button2"><a href="tiki-galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a></span>
+<span class="button2"><a href="tiki-galleries.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a></span>
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
     <span class="button2"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}Edit Gallery{/tr}</a></span>

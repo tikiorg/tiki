@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.25 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.26 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
   
       {if $feature_help eq 'y'}
@@ -7,7 +7,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_validate_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory validate sites tpl{/tr}">
-<img src="'pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}</h1>
+<img src="'pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.67 2007-07-20 17:33:58 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.68 2007-07-20 18:44:28 jyhem Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -328,7 +328,7 @@
 {else}
 <p class="editdate">
   {tr}Created by{/tr}: {$creator|userlink}
-  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+  {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
 {/if}
 

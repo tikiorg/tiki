@@ -11,7 +11,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-user_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Instances tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
 {include file=tiki-g-user_bar.tpl}
@@ -36,7 +36,7 @@
 	<small>{tr}act status{/tr}</small>
 </td>*}
 <td >
-	<small>{tr}user{/tr}</small>
+	<small>{tr}User{/tr}</small>
 </td>
 <td >
 	&nbsp;

@@ -39,7 +39,7 @@
 	/* ]]> */</script>
 </table>
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}remove file extension from image name{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}Remove File Extension from Image Name{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />
 <!--
 {if $permAddGallery eq "y"}

@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.13 2007-07-20 17:33:57 jyhem Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.14 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
@@ -34,7 +34,7 @@
 </table>
 </div>
 <table class="normal">
-<tr><td class="heading">{tr}user{/tr}</td><td class="heading">{tr}option{/tr}</td></tr>
+<tr><td class="heading">{tr}User{/tr}</td><td class="heading">{tr}option{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
 <tr><td class="{cycle advance=false}">{$list_votes[ix].user}</td><td class="{cycle}">{$list_votes[ix].title}</td></tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.146 2007-07-20 18:13:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.147 2007-07-20 18:44:27 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -6,9 +6,9 @@
 <div class="navbar">
 {if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
 {if $user_watching_tracker ne 'y'}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=add" title="{tr}monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}monitor{/tr}" /></a>
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=add" title="{tr}Monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Monitor{/tr}" /></a>
 {else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}stop monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}stop monitor{/tr}" /></a>
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Stop Monitor{/tr}" /></a>
 {/if}
 {/if}
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -167,7 +167,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <table class="normal">
 <tr class="formcolor"><td>{tr}Upload file{/tr}</td><td>{if $attach_file}{tr}Edit{/tr}: {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td></tr>
 <tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
 <tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}attach{/tr}"{/if} /></td></tr>
@@ -183,7 +183,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {/section}
 <td class="heading">{tr}filename{/tr}</td>
 <td class="heading">{tr}comment{/tr}</td>
-<td class="heading">{tr}version{/tr}</td>
+<td class="heading">{tr}Version{/tr}</td>
 <td class="heading">{tr}Description{/tr}</td>
 <td class="heading">&nbsp;</td>
 </tr>
@@ -468,7 +468,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="file" name="ins_{$cur_field.id}" /><br />
 {if $cur_field.value ne ''}
 <img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" /><br />
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}remove image{/tr}</a>
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}Remove Image{/tr}</a>
 {else}
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}

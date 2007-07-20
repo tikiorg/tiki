@@ -240,7 +240,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 {if $more->author}{tr}author{/tr}: {$more->author[0]}<br />{/if}
 {if $more->licence}{tr}licence{/tr}: {$more->licence}<br />{/if}
 
-{tr}last modification{/tr}: {$more->lastmodif}<br />
+{tr}Last Modification{/tr}: {$more->lastmodif}<br />
 {tr}by{/tr}: {$more->contributor[0]}<br />
 </div>
 </td><td>

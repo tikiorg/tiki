@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.53 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.54 2007-07-20 18:44:23 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -65,7 +65,7 @@
     <div class="cbox">
       <div class="cbox-title">
       {if $categId > 0}
-      {tr}Edit this category:{/tr} <b>{$name}</b> [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}create new{/tr}</a>]
+      {tr}Edit this category:{/tr} <b>{$name}</b> [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}Create New{/tr}</a>]
       {else}
       {tr}Add new category{/tr}
       {/if}
@@ -129,7 +129,7 @@
       </tr>
       {section name=ix loop=$objects}
       <tr>
-        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}remove from this category{/tr}"><img alt="{tr}remove from this category{/tr}" src="pics/icons/link_delete.png" border="0" width="16" height="16" /></a></td>
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}"><img alt="{tr}Remove from this Category{/tr}" src="pics/icons/link_delete.png" border="0" width="16" height="16" /></a></td>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
       </tr>

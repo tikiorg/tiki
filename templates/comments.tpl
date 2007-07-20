@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.88 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.89 2007-07-20 18:44:23 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -60,7 +60,7 @@
 			</span>
 
 			<span class="action">
-				<input type="submit" name="delsel" value="{tr}delete selected{/tr}" />
+				<input type="submit" name="delsel" value="{tr}Delete Selected{/tr}" />
 			</span>
 		</div>
 	</div>

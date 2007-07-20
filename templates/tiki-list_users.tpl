@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.17 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.18 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}</h1>
 <br />
-{$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}users{/tr} {tr}like{/tr} "{$find}"{/if}
+{$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}Users{/tr} {tr}like{/tr} "{$find}"{/if}
 <br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.40 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.41 2007-07-20 18:44:27 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -69,7 +69,7 @@
 <td class="heading">{tr}account{/tr}</td>
 <td class="heading">{tr}active{/tr}</td>
 <td class="heading">{tr}pop{/tr}</td>
-<td class="heading">{tr}user{/tr}</td>
+<td class="heading">{tr}User{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
