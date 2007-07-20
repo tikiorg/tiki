@@ -133,7 +133,7 @@
 </div>
 
 <div align="center" class="simplebox">
-<input type="submit" name="save" value="{tr}save the banner{/tr}" />
+<input type="submit" name="save" value="{tr}Save the Banner{/tr}" />
 </div>
 </form>
 <br /><br /><br /><br /><br /><br />

@@ -106,7 +106,7 @@
 <div class="button2">
       <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
 	{if $comments_cant == 0}
-          {tr}add comment{/tr}
+          {tr}Add Comment{/tr}
         {elseif $comments_cant == 1}
           <span class="highlight">{tr}1 comment{/tr}</span>
         {else}

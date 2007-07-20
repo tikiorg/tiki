@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.40 2007-06-22 13:44:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.41 2007-07-20 17:33:57 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <div class="navbar">
@@ -69,7 +69,7 @@
 <div class="button2">
 <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}

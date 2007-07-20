@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.78 2007-07-19 09:32:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.79 2007-07-20 17:33:57 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -7,7 +7,7 @@
 {if $user_watching eq 'y'}
 <a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}stop monitoring this page{/tr}" title="{tr}stop monitoring this page{/tr}"}</a>
 {else}
-<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}monitor this page{/tr}" title="{tr}monitor this page{/tr}"}</a>
+<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}Monitor this Page{/tr}" title="{tr}Monitor this Page{/tr}"}</a>
 {/if}
 {/if}
 
@@ -16,7 +16,7 @@
 <span class="button2"><a href="tiki-admin.php?page=calendar" class="linkbut">{tr}Configure/Options{/tr}</a></span>
 {/if}
 {if $tiki_p_add_events eq 'y'}
-<span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}add event{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar_edit_item.php"class="linkbut">{tr}Add Event{/tr}</a></span>
 {/if}
 
 {if count($listcals) >= 1}
@@ -39,7 +39,7 @@ none
 <span class="button2">
 {if $viewlist eq 'list'}
 <a href="{$myurl}?viewlist=table" class="linkbut" title="{tr}calendar view{/tr}">{tr}calendar view{/tr}</a>{else}
-<a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}list view{/tr}">{tr}list view{/tr}</a>{/if}
+<a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
 </span>
 
 </div>

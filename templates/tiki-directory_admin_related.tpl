@@ -20,7 +20,7 @@
 <option value="{$all_categs[ix].categId|escape}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
 {/section}
 </select>
-<input type="submit" name="go" value="{tr}go{/tr}" />
+<input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
 
 <h2>{tr}Add a related category{/tr}</h2>

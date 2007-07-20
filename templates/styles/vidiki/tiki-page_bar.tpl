@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.12 2007-07-19 17:06:22 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.13 2007-07-20 17:33:59 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -79,7 +79,7 @@
    <li>
 		<a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;">
 	{if $comments_cant == 0}
-          {tr}add comment{/tr}
+          {tr}Add Comment{/tr}
         {elseif $comments_cant == 1}
           <span class="highlight">{tr}1 comment{/tr}</span>
         {else}
@@ -110,7 +110,7 @@
          || $tiki_p_wiki_attach_files == 'y'
          && $tiki_p_wiki_view_attachments == 'n'
          && $tiki_p_wiki_admin_attachments == 'n'}
-          class="">{tr}attach file{/tr}
+          class="">{tr}Attach File{/tr}
         {elseif $atts_cnt == 1}
           class="active">{tr}1 file attached{/tr}
         {else}

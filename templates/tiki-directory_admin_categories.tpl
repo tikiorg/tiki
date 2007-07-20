@@ -21,7 +21,7 @@
 <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
 {/section}
 </select>
-<input type="submit" name="go" value="{tr}go{/tr}" />
+<input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
 
 {* Dislay a form to add or edit a category *}

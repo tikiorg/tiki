@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.30 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.31 2007-07-20 17:33:57 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
   
       {if $feature_help eq 'y'}
@@ -22,7 +22,7 @@
 <option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
 {/section}
 </select>
-<input type="submit" name="go" value="{tr}go{/tr}" />
+<input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
 
 {* Dislay a form to add or edit a site *}

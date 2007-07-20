@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-search_box.tpl,v 1.2 2006-08-29 20:19:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-search_box.tpl,v 1.3 2007-07-20 17:33:59 jyhem Exp $ *}
 
 {if $feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -33,7 +33,7 @@
     <option value="faqs">{tr}FAQs{/tr}</option>
     {/if}
     </select>
-    <button type="submit" class="wikiaction" name="search" >{tr}go{/tr}</button> 
+    <button type="submit" class="wikiaction" name="search" >{tr}Go{/tr}</button> 
     </form>
 {/tikimodule}
 {/if}

@@ -129,7 +129,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 <div class="button2">
 <a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}

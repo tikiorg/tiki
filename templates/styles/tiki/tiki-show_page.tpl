@@ -10,7 +10,7 @@
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
-<span class="tabbut"><a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}" class="tablink">{tr}pdf{/tr}</a></span>
+<span class="tabbut"><a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}" class="tablink">{tr}pdf{/tr}</a></span>
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
@@ -23,7 +23,7 @@
 
 {if $user and $feature_user_watches eq 'y'}
 {if $user_watching_page eq 'n'}
-<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add" class="tablink">{tr}monitor this page{/tr}</a></span>
+<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add" class="tablink">{tr}Monitor this Page{/tr}</a></span>
 {else}
 <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove" class="tablink">{tr}stop monitoring this page{/tr}</a></span>
 {/if}
@@ -137,7 +137,7 @@
 {if $show_page eq 'y' && $feature_wiki_comments == 'y' && $tiki_p_wiki_view_comments == 'y'}
 <span class="tabbut"><a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="tablink">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}add comment{/tr}
+{tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
 <span class="highlight">{tr}1 comment{/tr}</span>
 {else}
@@ -150,7 +150,7 @@
 {if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="tablink">
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-{tr}attach file{/tr}
+{tr}Attach File{/tr}
 {elseif $atts|@count == 1}
 <span class="highlight">{tr}1 file attached{/tr}</span>
 {else}

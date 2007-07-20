@@ -18,7 +18,7 @@
 {/if}
 
 {if $feature_wiki_pdf eq 'y'}
-<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page}" class="linkbuttop">{tr}pdf{/tr}</a>
+<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page}" class="linkbuttop">{tr}pdf{/tr}</a>
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
@@ -27,7 +27,7 @@
 
 {if $user and $feature_user_watches eq 'y'}
 	{if $user_watching_page eq 'n'}
-		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=add" class="linkbuttop">{tr}monitor this page{/tr}</a>
+		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=add" class="linkbuttop">{tr}Monitor this Page{/tr}</a>
 	{else}
 		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
 	{/if}

@@ -178,7 +178,7 @@ Errors:<br />
 			</select>	  		
 		</td>
 		<td class="formcolor">
-			<input type="submit" name="mapg" value="{tr}go{/tr}" />
+			<input type="submit" name="mapg" value="{tr}Go{/tr}" />
 		</td>
 
 	</tr>

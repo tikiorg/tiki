@@ -47,7 +47,7 @@
 {if $style_local eq 'n'}
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {/if}
-<input type="submit" name="saveTheme" value="{tr}save only in the theme:{/tr} {$style|replace:'.css':''}" />
+<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$style|replace:'.css':''}" />
 {if $style_local eq 'y'}
 <a class="blogt" href="tiki-edit_templates.php?template={$template}&amp;delete=y}"><img src="img/icons2/delete.gif" alt="{tr}Delete the copy in the theme:{/tr} {$style|replace:'.css':''}" border="0" title="{tr}Delete the copy in the theme:{/tr} {$style|replace:'.css':''}" /></a>
 {/if}

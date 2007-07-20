@@ -136,7 +136,7 @@
 		<form method="get" action="tiki-user_tasks.php">
 			<img src="img/icons/trash.gif" title="{tr}Trash{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Trash{/tr}" /> 
 			&nbsp;
-			<input type="submit" value="{tr}empty trash{/tr}" name="emty_trash" />
+			<input type="submit" value="{tr}Empty Trash{/tr}" name="emty_trash" />
 		</form>
 	</div>
    </td>

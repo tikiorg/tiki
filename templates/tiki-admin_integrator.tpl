@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.29 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.30 2007-07-20 17:33:57 jyhem Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
 
@@ -25,7 +25,7 @@
     </div></td>
     {if isset($repID) and $repID ne '0'}
     <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view repository{/tr}</a>
+      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}View Repository{/tr}</a>
     </div></td>
     {/if}
   </tr></table>

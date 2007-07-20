@@ -1,4 +1,4 @@
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.11 2007-07-19 09:32:47 jyhem Exp $ -->
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.12 2007-07-20 17:33:59 jyhem Exp $ -->
 {if $feature_blogposts_pings == 'y' && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -106,7 +106,7 @@
 <div class="button2">
       <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
 	{if $comments_cant == 0}
-          {tr}add comment{/tr}
+          {tr}Add Comment{/tr}
         {elseif $comments_cant == 1}
           <span class="highlight">{tr}1 comment{/tr}</span>
         {else}
