@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.8 2006-10-12 18:54:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.9 2007-07-20 14:04:07 sylvieg Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -46,6 +46,7 @@ function wikiplugin_miniquiz($data, $params) {
 		$info["$id"]['qresult'] = 'n';
 	}
 	$back = '';
+	$out = '';
 	
 	if ($tracker) {
 		$success_mess[] = "Wow !";
