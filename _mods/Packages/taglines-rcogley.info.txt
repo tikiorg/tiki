@@ -1,14 +1,11 @@
 contributor:
-$Author: damosoft $
+$Author: xavidp $
 
 revision: 
-$Revision: 1.2 $
+$Revision: 1.3 $
 
 lastmodif:
-$Date: 2005-09-08 15:15:46 $
-
-files: 
-taglines/rcogley/taglines.txt doc/rcogleytaglines.txt
+$Date: 2007-07-20 06:50:33 $
 
 author:
 R.Cogley
