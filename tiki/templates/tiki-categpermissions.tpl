@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.10 2007-07-19 17:06:17 jyhem Exp $  *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.11 2007-07-20 18:44:27 jyhem Exp $  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -19,8 +19,8 @@
   <td class="{cycle advance=false}">{$category_perms[pg].groupName}</td>
   <td class="{cycle advance=false}">{$category_perms[pg].permName}</td>
   <td class="{cycle}">
-    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category &amp; all its children{/tr}</a>)
-    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category only{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}Remove from this Category &amp; all its Children{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}Remove from this Category Only{/tr}</a>)
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.103 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.104 2007-07-20 18:44:27 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -173,7 +173,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   <select name="submit_mult">
     <option value="" selected>-</option>
     <option value="remove_users" >{tr}Remove{/tr}</option>
-    {if $feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}remove users and their userpages{/tr}</option>{/if}
+    {if $feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>{/if}
     <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
     <option value="set_default_groups">{tr}set default groups{/tr}</option>
   </select>

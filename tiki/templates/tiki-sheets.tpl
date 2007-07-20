@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.18 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.19 2007-07-20 18:44:27 jyhem Exp $ *}
 <h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
@@ -15,7 +15,7 @@
 {else}
 <h2>{tr}Edit this sheet:{/tr} {$title}</h2>
 {if $tiki_p_edit_sheet eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}create new sheet{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}Create New Sheet{/tr}</a></div>
 {/if}
 {/if}
 <div align="center">

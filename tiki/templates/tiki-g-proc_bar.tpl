@@ -35,9 +35,9 @@
 <div style="height:20px; padding-top:2px; padding-bottom:2px; border:1px solid black; background-color:white; color:black; font-size:10px;">
 <table  cellpadding='0' cellspacing='0'>
 <tr>
-	<td><a class="link" href="tiki-g-monitor_processes.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Process.gif' alt='{tr}monitor{/tr}' title='{tr}monitor processes{/tr}' /></td>	
-	<td><a class="link" href="tiki-g-monitor_activities.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}monitor{/tr}' title='{tr}monitor activities{/tr}' /></td>	
-	<td><a class="link" href="tiki-g-monitor_instances.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Instance.gif' alt='{tr}monitor{/tr}' title='{tr}monitor instances{/tr}' /></td>	
+	<td><a class="link" href="tiki-g-monitor_processes.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Process.gif' alt='{tr}Monitor{/tr}' title='{tr}monitor processes{/tr}' /></td>	
+	<td><a class="link" href="tiki-g-monitor_activities.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}Monitor{/tr}' title='{tr}monitor activities{/tr}' /></td>	
+	<td><a class="link" href="tiki-g-monitor_instances.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Instance.gif' alt='{tr}Monitor{/tr}' title='{tr}monitor instances{/tr}' /></td>	
 </tr>
 </table>
 </div>

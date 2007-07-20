@@ -24,7 +24,7 @@
   <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border='0' src='pics/icons/folder.png' alt='{tr}Folder in{/tr}' width='16' height='16' /></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
   <td class="{cycle}">
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' title='{tr}remove folder{/tr}' border='0' width='16' height='16' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' title='{tr}Remove Folder{/tr}' border='0' width='16' height='16' /></a>
   </td>
 </tr>
 {/section}

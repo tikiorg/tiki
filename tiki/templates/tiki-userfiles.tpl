@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit user files{/tr}">
+<a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit User Files{/tr}">
 <img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}

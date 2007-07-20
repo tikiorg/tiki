@@ -139,7 +139,7 @@
 </select>
 </td><td class="normal" align="center">
 <input type="submit" name="addpage" value="{tr}add page{/tr} ---&gt;" /><br />
-<input type="submit" name="rempage" value="&lt;--- {tr}remove page{/tr}" /><br />
+<input type="submit" name="rempage" value="&lt;--- {tr}Remove Page{/tr}" /><br />
 <input type="submit" name="clearpages" value="{tr}reset{/tr}" />
 </td><td class="normal" align="center">
 <select name="rempageName[]" size="10" multiple="multiple" style="min-width:150px;_width:150x;">

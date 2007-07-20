@@ -16,7 +16,7 @@
 </tr>
 {if $msg_info.parentId > 0}
 <tr>
-	<td class="formcolor">{tr}topic{/tr}</td>
+	<td class="formcolor">{tr}Topic{/tr}</td>
 	<td class="formcolor">
 		<select name="parentId">
 			{section name=ix loop=$topics}

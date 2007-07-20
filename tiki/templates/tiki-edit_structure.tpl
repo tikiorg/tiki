@@ -126,7 +126,7 @@
   </tr>
   <tr>
   <td class="formcolor">
-  {tr}create page{/tr}
+  {tr}Create Page{/tr}
   </td>
   <td class="formcolor">
   <input type="text" name="name" />

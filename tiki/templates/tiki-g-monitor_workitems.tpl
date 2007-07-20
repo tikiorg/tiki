@@ -25,7 +25,7 @@
 	<small>{tr}instance{/tr}</small>
 </td>
 <td >
-	<small>{tr}user{/tr}</small>
+	<small>{tr}User{/tr}</small>
 </td>
 <td >
 	&nbsp;

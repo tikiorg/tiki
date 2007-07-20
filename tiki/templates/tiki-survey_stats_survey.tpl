@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}Stats for survey{/tr}:{$survey_info.name}</a></h1>
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
-{if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a></span>
+{if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}&amp;clear={$surveyId}">{tr}clear stats{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span>{/if}
 <br /><br />

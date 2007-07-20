@@ -2,7 +2,7 @@
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span><br /><br />
 <h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_surveys.php?surveyId={$survey_info.surveyId}">{$survey_info.name}</a></h2>
 <form action="tiki-admin_survey_questions.php" method="post">

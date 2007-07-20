@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.59 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.60 2007-07-20 18:44:27 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -16,13 +16,13 @@
 
 <div class="navbar">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php">{tr}list galleries{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php">{tr}List Galleries{/tr}</a>
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new file gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New File Gallery{/tr}</a>
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1">{tr}duplicate file gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1">{tr}Duplicate File Gallery{/tr}</a>
 {/if}
 </div>
 

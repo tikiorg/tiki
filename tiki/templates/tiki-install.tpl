@@ -196,7 +196,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 			{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
           <table>
-          <tr><td class="module">{tr}user{/tr}:</td></tr>
+          <tr><td class="module">{tr}User{/tr}:</td></tr>
           <tr><td>admin</td></tr>
           <tr><td class="module">{tr}pass{/tr}:</td></tr>
           <tr><td><input type="password" name="pass" size="20" /></td></tr>

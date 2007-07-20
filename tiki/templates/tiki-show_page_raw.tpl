@@ -29,7 +29,7 @@
 {else}
 <p class="editdate">
   {tr}Created by{/tr}: {$creator}
-  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+  {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
 {/if}
 

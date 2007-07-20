@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.35 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.36 2007-07-20 18:44:23 jyhem Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -95,7 +95,7 @@
 {if $actionlogs}
 <table class="smallnormal">
 <tr>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}user{/tr}</a></th>
+<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=lastModif_{if $sort_mode eq 'lastModif_desc'}asc{else}desc{/if}{$url}">{tr}date{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=action_{if $sort_mode eq 'action_desc'}asc{else}desc{/if}{$url}">{tr}Action{/tr}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=objectType_{if $sort_mode eq 'objectType_desc'}asc{else}desc{/if}{$url}">{tr}Type{/tr}</a></th>
@@ -170,7 +170,7 @@
 {if $showLogin eq 'y' and $logTimes|@count ne 0}
 <table class="smallnormal">
 <tr>
-<th class="heading">{tr}user{/tr}</th>
+<th class="heading">{tr}User{/tr}</th>
 <th class="heading">{tr}connection time{/tr}</th>
 <th class="heading">{tr}connection seconds{/tr}</th>
 <th class="heading">{tr}Login{/tr}</th>
@@ -212,7 +212,7 @@
 <table class="smallnormal">
 <tr>
 <th class="heading">{tr}category{/tr}</th>
-<th class="heading">{tr}user{/tr}</th>
+<th class="heading">{tr}User{/tr}</th>
 {foreach  item=type from=$typeVol}
 <th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
 {/foreach}
@@ -236,7 +236,7 @@
 {if $statUser|@count ne 0}
 <table class="normal">
 <tr>
-<th class="heading">{tr}user{/tr}</th>
+<th class="heading">{tr}User{/tr}</th>
 {foreach key=title item=nb from=$statUser[0]}
 {if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
@@ -278,7 +278,7 @@
 <table class="normal">
 <tr>
 <th class="heading">{tr}category{/tr}</th>
-<th class="heading">{tr}user{/tr}</th>
+<th class="heading">{tr}User{/tr}</th>
 {foreach  key=title item=nb from=$statUser[0]}
 {if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}

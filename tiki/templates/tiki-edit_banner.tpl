@@ -31,9 +31,9 @@
    </table>
    </td>
    <td align="right"  class="form">
-   {tr}create zone{/tr}:
+   {tr}Create Zone{/tr}:
    <input type="text" name="zoneName" size="10" /><br />
-   <input type="submit" name="create_zone" value="{tr}create zone{/tr}" />
+   <input type="submit" name="create_zone" value="{tr}Create Zone{/tr}" />
    </td>
    </tr>
    

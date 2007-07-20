@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.90 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.91 2007-07-20 18:44:24 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -201,7 +201,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}downloads{/tr}</td>
 <td>{tr}comment{/tr}</td>
 <td>{tr}filesize{/tr}</td>
-<td>{tr}version{/tr}</td>
+<td>{tr}Version{/tr}</td>
 <td>{tr}filetype{/tr}</td>
 <td>{tr}longdesc{/tr}</td></tr>
 <tr>

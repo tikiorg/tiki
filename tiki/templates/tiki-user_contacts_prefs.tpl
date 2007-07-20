@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="tiki-user_contacts_prefs.php">{tr}User Contacts Preferences{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}User+Contacts+Prefs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit user contacts preferences{/tr}">
+<a href="{$helpurl}User+Contacts+Prefs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit User Contacts Preferences{/tr}">
 <img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}

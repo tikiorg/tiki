@@ -30,7 +30,7 @@
 {/if}
 { if $info.deleted }
     <span class="tabbut">
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">{tr}remove from trash{/tr}</a>
+    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">{tr}Remove from Trash{/tr}</a>
     </span>
 {else}
     <span class="tabbut">
@@ -71,14 +71,14 @@
 		{if ($info.task_version > 0) } 
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">&lt;&lt;</a>
   		{/if}
-		{tr}version{/tr}: <b>{$info.task_version+1}</b>
+		{tr}Version{/tr}: <b>{$info.task_version+1}</b>
 		{if $info.task_version < $info.last_version } 
 		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">&gt;&gt;</a>
   		{/if}
 		
 		&nbsp;&nbsp; 
 		
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}last version{/tr}: {$info.last_version+1}</a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.last_version}">{tr}Last Version{/tr}: {$info.last_version+1}</a>
 	</td>
 	<td class="formcolor" colspan="2" >
 		<div align="right">{tr}taskId{/tr}:
