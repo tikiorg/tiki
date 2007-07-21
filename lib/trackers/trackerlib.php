@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.214 2007-07-16 12:08:21 gillesm Exp $
+// CVS: $Id: trackerlib.php,v 1.215 2007-07-21 17:11:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -493,6 +493,7 @@ class TrackerLib extends TikiLib {
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $feature_categories, $language;
+
 		$cat_table = '';
 		$sort_tables = '';
 		$sort_join_clauses = '';
@@ -527,19 +528,61 @@ class TrackerLib extends TikiLib {
 				$csort_mode = 'tti.`'.$csort_mode.'` ';
 			}
 
-			if ( is_array($filterfield) ) {
-				for ( $i = count($filterfield) - 1 ; $i >= 0 ; --$i ) {
-					$j = ( $i > 0 ) ? '0' : '';
-					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = ttif$j.`itemId`";
-					$this->getSqlFilter(
-						$trackerId,
-						$filterfield[$i],
-						isset($exactvalue[$i]) ? $exactvalue[$i] : '',
-						isset($filtervalue[$i]) ? $filtervalue[$i] : '',
-						$cat_table, $mid, $bindvars, $i
-					);
+			if ( ! is_array($filterfield) ) {
+				$fv = $filtervalue;
+				$ff = $filterfield;
+				$nb_filtered_fields = 1;
+			} else $nb_filtered_fields = count($filterfield);
+
+			for ( $i = 0 ; $i < $nb_filtered_fields ; $i++ ) {
+				if ( is_array($filterfield) ) {
+					$ff = $filterfield[$i];
+					$fv = $filtervalue[$ff];
 				}
-			} else $this->getSqlFilter($trackerId, $filterfield, $exactvalue, $filtervalue, $cat_table, $mid, $bindvars);
+
+				$filter = $this->get_tracker_field($ff);
+
+				$j = ( $i > 0 ) ? '0' : '';
+				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
+				
+				if ( $ff ) {
+					$mid .= " AND ttif$i.`fieldId`=? ";
+					$bindvars[] = $ff;
+				}
+					
+				if ( $filter['type'] == 'e' && $feature_categories == 'y' ) { //category
+		
+					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
+						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( 0 ";
+					$value = empty($fv) ? $exactvalue : $fv;
+					if ( ! is_array($value) && $value != '' ) $value = array($value);
+					foreach ( $value as $catId ) {
+						$bindvars[] = $catId;
+						$mid .= ',?';
+					}
+					$mid .= " ) ";
+		
+				} else if ( $exactvalue ) {
+		
+					if ( is_array($exactvalue) ) {
+						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue),'?')).")";
+						$bindvars = array_merge($bindvars, $exactvalue);
+					} else {
+						$mid.= " AND ttif$i.`value`=? ";
+						$bindvars[] = $exactvalue;
+					}
+		
+				} elseif ( $ff && $fv ) {
+		
+					$mid .= " AND ttif$i.`value` like ? ";
+		
+					if ( substr($fv, 0, 1) == '*' ) $bindvars[] = '%'.substr($fv, 1);
+					elseif ( substr($fv, -1, 1) == '*' ) $bindvars[] = substr($fv, 0, strlen($fv)-1).'%';
+					else $bindvars[] = '%'.$fv.'%';
+		
+				}
+			}
 		} else {
 			list($csort_mode, $corder) = split('_', $sort_mode);
 			$sort_tables = '';
@@ -697,48 +740,6 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 
-	function getSqlFilter($trackerId, $filterfield, $exactvalue, $filtervalue, &$cat_table, &$mid, &$bindvars, $suffix='') {
-		global $feature_categories;
-		$filter = $this->get_tracker_field($filterfield);
-
-		if ($filter['type'] == 'e' && $feature_categories == 'y') { //category
-			$cat_table .= ", `tiki_objects` tob$filterfield, `tiki_category_objects` tco$filterfield ";
-			$mid .= " and tob$filterfield.`objectId`=tco$filterfield.`catObjectId` and tob$filterfield.`type`='tracker $trackerId' and tob$filterfield.`itemId`=tti.`itemId` and tco$filterfield.`categId` in ( 0 ";
-			$value = empty($filtervalue)? $exactvalue: $filtervalue;
-			if(!is_array($value) && $value != '') {
-					$value = array($value);
-				} 
-			foreach ($value as $catId) {
-				$bindvars[] = $catId;
-				$mid .= ',?';
-			}
-			$mid .= " ) ";
-			$mid .= " and ttif$suffix.`fieldId`=? ";
-			$bindvars[] = $filterfield;
-		} else if ($exactvalue) {
-			if (is_array($exactvalue)) {
-				$mid .= " and ttif$suffix.`value` in (".implode(',',array_fill(0,count($exactvalue),'?')).")";
-				$bindvars = array_merge($bindvars, $exactvalue);
-			} else {
-				$mid.= " and ttif$suffix.`value`=? ";
-				$bindvars[] = $exactvalue;
-			}
-			$mid .= " and ttif$suffix.`fieldId`=? ";
-			$bindvars[] = $filterfield;
-		} elseif ($filterfield && $filtervalue) {
-			$filter = $this->get_tracker_field($filterfield);
-			$mid.= " and ttif$suffix.`value` like ? ";
-			if (substr($filtervalue,0,1) == '*') {
-				$bindvars[] = '%'. substr($filtervalue,1);
-			} elseif (substr($filtervalue,-1,1) == '*') {
-				$bindvars[] = substr($filtervalue,0,strlen($filtervalue)-1). '%';
-			} else {
-				$bindvars[] = '%'.$filtervalue.'%';
-			}
-			$mid .= " and ttif$suffix.`fieldId`=? ";
-			$bindvars[] = $filterfield;
-		}
-	}
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
 		global $user;
 		global $smarty;
