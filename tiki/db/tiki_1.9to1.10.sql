@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.182 2007-07-19 20:55:18 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.183 2007-07-21 01:06:18 nkoth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1328,3 +1328,7 @@ ALTER TABLE tiki_menu_options ADD UNIQUE KEY uniq_menu (menuId,name(50),url(80),
 
 #lphuberdeau 2007-07-19
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_share_page', 'Can use the share page interface', 'registered', 'wiki page');
+
+#nkoth 2007-07-20
+DELETE FROM users_permissions WHERE permName='tiki_p_share_page';
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
