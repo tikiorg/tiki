@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.12 2007-07-16 14:06:22 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.13 2007-07-21 17:39:09 nyloth Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -160,7 +160,7 @@
 	{/if}
 
 {* -------------------- header ------------------------- *}
-(elseif $field_value.type eq 'h'}
+{elseif $field_value.type eq 'h'}
 	<h2>{$field_value.value}</h2>
 
 {* -------------------- subscription -------------------- *}
