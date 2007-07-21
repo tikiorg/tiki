@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.33 2007-05-31 16:50:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.34 2007-07-21 19:22:17 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,6 +91,7 @@ if (empty($info["user"])) {
 	$info["user"] = 'anonymous';
 }
 
+$smarty->assign_by_ref('lastVersion',$info["version"]);
 $smarty->assign_by_ref('lastUser', $info["user"]);
 
 if (isset($structure) && $structure == 'y' && isset($page_info['page_alias']) && $page_info['page_alias'] != '') $crumbpage = $page_info['page_alias'];
