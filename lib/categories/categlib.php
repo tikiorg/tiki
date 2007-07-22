@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.106 2007-07-02 04:27:54 sampaioprimo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.107 2007-07-22 07:30:25 nyloth Exp $
  *
  * \brief Categories support class
  *
@@ -845,24 +845,17 @@ class CategLib extends ObjectLib {
 		global $cachelib;
 		global $userlib;
 		
-//		if (!$cachelib->isCached("allcategs")) {			
-			$result = $this->get_all_categories_ext();
-			$ret = array();
-			foreach ($result as $res) {
-				
-				if ($userlib->user_has_permission($user, 'tiki_p_admin') || !$userlib->object_has_one_permission($res['categId'], 'category')) {
-					$ret[] = $res;				
-				} else {
-					if ($userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
-						$ret[] = $res;
-					}
+		$result = $this->get_all_categories_ext();
+		$ret = array();
+		foreach ($result as $res) {
+			if ($userlib->user_has_permission($user, 'tiki_p_admin') || !$userlib->object_has_one_permission($res['categId'], 'category')) {
+				$ret[] = $res;				
+			} else {
+				if ($userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
+					$ret[] = $res;
 				}
-
 			}
-//			$cachelib->cacheItem("allcategs.$user.$perm",serialize($ret));
-//		} else {
-//			$ret = unserialize($cachelib->getCached("allcategs.$user.$perm"));
-//		}
+		}
 		return $ret;
 	}
 
@@ -931,6 +924,10 @@ class CategLib extends ObjectLib {
 		    $query = "delete from `tiki_category_objects` where `catObjectId`=?";
 		    $result = $this->query($query,array((int) $catObjectId));
 			// must keep tiki_categorized object because poll or ... can use it
+	    
+		    // Refresh categories
+		    global $cachelib;
+		    $cachelib->invalidate('allcategs');
 		}
     }
 
