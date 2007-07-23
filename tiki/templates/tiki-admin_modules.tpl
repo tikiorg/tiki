@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.54 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.55 2007-07-23 14:38:10 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -66,7 +66,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {$preview_data}
 {/if}
 <form method="post" action="tiki-admin_modules.php#assign">
-{if !empty($info.moduleId)}<input type="hidden" name="moduleId" value="{$info.moduleId}" /> {/if}
+{if !empty($info.moduleId)}<input type="hidden" name="moduleId" value="{$info.moduleId}" />{elseif !empty($moduleId)}<input type="hidden" name="moduleId" value="{$moduleId}" />{/if}
 <table class="normal">
 <tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
