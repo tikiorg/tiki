@@ -8,6 +8,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/smarty_tiki/modifier.userlink.php');
 
+if (!function_exists('mod_since_last_visit_new_help')) {
+	function mod_since_last_visit_new_help() {
+		return "showuser=n&showtracker=n&calendar_focus=ignore";
+	}
+}
+
 if (!function_exists('since_last_visit_new')) {
 function since_last_visit_new($user, $params = null) {
   if (!$user) return false;
@@ -345,20 +351,22 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["polls"]["count"] = $count;
   }
   
-  $ret["items"]["users"]["label"] = tra("new users");
-  $ret["items"]["users"]["cname"] = "slvn_users_menu";
-  $query = "select `userId`, `login`, `registrationDate` from `users_users` where `registrationDate`>?";
-  $result = $tikilib->query($query, array((int)$last));
-  $count = 0;
-  while ($res = $result->fetchRow()) {
-      $ret["items"]["users"]["list"][$count]["href"]  = "tiki-user_information.php?userId=" . $res["userId"];
-      $ret["items"]["users"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["registrationDate"]);
-      $ret["items"]["users"]["list"][$count]["label"] = $res["login"]; 
-      $count++;
+  if (!isset($params['showuser']) || $params['showuser'] != 'n') {
+	$ret['items']['users']['label'] = tra('new users');
+	$ret['items']['users']['cname'] = 'slvn_users_menu';
+	$query = 'select `userId`, `login`, `registrationDate` from `users_users` where `registrationDate`>?';
+	$result = $tikilib->query($query, array((int)$last));
+	$count = 0;
+	while ($res = $result->fetchRow()) {
+		$ret['items']['users']['list'][$count]['href']  = 'tiki-user_information.php?userId=' . $res['userId'];
+		$ret['items']['users']['list'][$count]['title'] = $tikilib->get_short_datetime($res['registrationDate']);
+		$ret['items']['users']['list'][$count]['label'] = $res['login']; 
+		$count++;
+	}
+	$ret['items']['users']['count'] = $count;
   }
-  $ret["items"]["users"]["count"] = $count;
 
-  if ($tikilib->get_preference("feature_trackers") == 'y') {    
+  if ($tikilib->get_preference("feature_trackers") == 'y' && (!isset($params['showtracker']) || $params['showtracker'] != 'n')) {
     $ret["items"]["trackers"]["label"] = tra("new tracker items");
     $ret["items"]["trackers"]["cname"] = "slvn_trackers_menu";
 
