@@ -76,7 +76,7 @@
 {/if}
 
 {if $feature_wiki_discuss eq 'y'}
-  <span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
+  <span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}Discuss{/tr}</a></span>
 {/if}
 
 </div>
@@ -233,7 +233,7 @@
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" /></td>
 </tr>
 </table>
 </form>

@@ -44,7 +44,7 @@
 		{tr}Operator{/tr}
 		</td>
 		<td class="heading" colspan='2'>
-		{tr}stats{/tr}
+		{tr}Stats{/tr}
 		</td>		
 	</tr>
 {cycle values='odd,even' print=false}	
@@ -90,7 +90,7 @@
 		{tr}Operator{/tr}
 		</td>
 		<td class="heading" colspan='2'>
-		{tr}stats{/tr}
+		{tr}Stats{/tr}
 		</td>		
 	</tr>
 {section name=ix loop=$offline_operators}

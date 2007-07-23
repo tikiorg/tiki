@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.31 2007-07-19 09:32:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.32 2007-07-23 18:05:31 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -15,7 +15,7 @@
 
 
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
-  <a href="tiki-stats.php" class="linkmenu">{tr}stats{/tr}</a><br />
+  <a href="tiki-stats.php" class="linkmenu">{tr}Stats{/tr}</a><br />
 {/if}
 
 {if $feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
