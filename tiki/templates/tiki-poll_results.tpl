@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.14 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.15 2007-07-23 09:35:25 pkdille Exp $ *}
 <h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
@@ -42,7 +42,7 @@
 <tr><td colspan="2">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>	
-<div class="mini" align="center">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}

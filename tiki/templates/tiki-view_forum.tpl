@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.95 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.96 2007-07-23 09:35:25 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -403,7 +403,6 @@ a moderator approves it.{/tr}</small>
 {/section}
 </table>
 </form>
-  <div align="center">
   <div class="mini">
 
 {if $comments_cant_pages >1}
@@ -428,7 +427,6 @@ a moderator approves it.{/tr}</small>
 
   </div>
   <br />
-  </div>
 
 {if $forum_info.forum_last_n > 0}
 	{* Last n titles *}

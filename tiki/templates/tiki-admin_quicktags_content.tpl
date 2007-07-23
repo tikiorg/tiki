@@ -39,7 +39,6 @@
   </tr>
 {/section}
 </table>
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
   [<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Prev{/tr}
@@ -58,6 +57,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
-
 </div>

@@ -133,7 +133,6 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/section}
 
 {if $cant_pages and $cant_pages ne 0}
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="artprevnext" href="tiki-view_articles.php?offset={$prev_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Prev{/tr}</a>]&nbsp;
@@ -150,6 +149,5 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>
 {/if}

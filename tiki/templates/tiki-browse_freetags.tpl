@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.28 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.29 2007-07-23 09:35:25 pkdille Exp $ *}
 
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -169,7 +169,6 @@
   {/section}
   </table>
   <br />   
-  <div align="center">
     <div class="mini">
       {if $prev_offset >= 0}
         [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tag|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
@@ -188,7 +187,6 @@
         {/section}
       {/if}
    </div>
-  </div>
   {/if}
 </td></tr></table>
 {/if $feature_ajax}
