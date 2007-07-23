@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.37 2007-06-18 15:43:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.38 2007-07-23 14:35:15 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -194,7 +194,7 @@ if (isset($_REQUEST["send"])) {
 	include_once ('lib/webmail/tikimaillib.php');
 	check_ticket('send-newsletter');
 	set_time_limit(0);
-$mail = new TikiMail();	
+	$mail = new TikiMail();	
 	
 	if (stristr($_REQUEST["dataparsed"], "<body>") === false) {
 		$html = "<html><body>".$tikilib->parse_data($_REQUEST["dataparsed"])."</body></html>";
@@ -211,47 +211,53 @@ $mail = new TikiMail();
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
 	
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true,$txt);
-	$nllib->memo_subscribers_edition($editionId, $users);
-	foreach ($users as $us) {
-		$userEmail  = $us["login"];
-		$email = $us["email"];
-		if ($email == "") {
-			$errors[] = array("user"=>$userEmail, "email"=>"");
-			continue;
-		}
-		if ($userEmail == "")
-			$userEmail = $userlib->get_user_by_email($email);
-		if ($userEmail)
-			$mail->setUser($userEmail);
-		$mail->setFrom($tikilib->get_preference("sender_email",""));
-		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
-		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
- 		if ($nl_info["unsubMsg"] == 'y') {
-			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $userEmail, $languageEmail, $us["code"], $userEmail);
-			if (stristr($html, "</body>") === false)
-				$msg = $html.nl2br($unsubmsg);
-			else
-				$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
-		} else
-			$msg = $html;
-		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
-		$mail->buildMessage();
-		if ($mail->send(array($email))) {
-			$sent++;
-			$nllib->delete_edition_subscriber($editionId, $us);
-		} else {
-			$errors[] = array("user"=>$userEmail, "email"=>$email);
-			$nllib->mark_edition_subscriber($editionId, $us);
-		}
-	}
+	if ($_REQUEST["save only"]) {
+		$nllib->memo_subscribers_edition($editionId, $users);
+		foreach ($users as $us) {
+			$userEmail  = $us["login"];
+			$email = $us["email"];
+			if ($email == "") {
+				$errors[] = array("user"=>$userEmail, "email"=>"");
+				continue;
+			}
+			if ($userEmail == "")
+				$userEmail = $userlib->get_user_by_email($email);
+			if ($userEmail) {
+				$mail->setUser($userEmail);
+				$mail->setFrom($tikilib->get_preference("sender_email",""));
+				$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
+				$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
+ 				if ($nl_info["unsubMsg"] == 'y') {
+					$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $userEmail, $languageEmail, $us["code"], $userEmail);
+					if (stristr($html, "</body>") === false)
+						$msg = $html.nl2br($unsubmsg);
+					else
+						$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
+				} else {
+					$msg = $html;
+					$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
+					$mail->buildMessage();
+					if ($mail->send(array($email))) {
+						$sent++;
+						$nllib->delete_edition_subscriber($editionId, $us);
+					} else {
+						$errors[] = array("user"=>$userEmail, "email"=>$email);
+						$nllib->mark_edition_subscriber($editionId, $us);
+					}
+	
 
-	$smarty->assign('sent', $sent);
-	$smarty->assign('emited', 'y');
-	if (count($errors) > 0)
-		$smarty->assign_by_ref('errors', $errors);
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt);
-}
+					$smarty->assign('sent', $sent);
+					$smarty->assign('emited', 'y');
+					if (count($errors) > 0)
+						$smarty->assign_by_ref('errors', $errors);
+					$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt);
+			    }
+
+			}
+		}
+	} else {
+		$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true,$txt);		
+	}
 
 if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt))$txt="";
