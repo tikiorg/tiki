@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.25 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.26 2007-07-23 18:05:26 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">
@@ -44,7 +44,7 @@
 
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
 <a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
-<img border='0' title='{tr}stats{/tr}' alt='{tr}stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
+<img border='0' title='{tr}Stats{/tr}' alt='{tr}Stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
 
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
 <a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">

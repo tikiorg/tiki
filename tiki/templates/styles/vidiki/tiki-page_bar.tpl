@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.13 2007-07-20 17:33:59 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.14 2007-07-23 18:05:32 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -57,7 +57,7 @@
 <li><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="">{tr}Export{/tr}</a></li>
 {/if}
 {if $feature_wiki_discuss eq 'y'}
-<li><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="">{tr}discuss{/tr}</a></li>
+<li><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="">{tr}Discuss{/tr}</a></li>
 {/if}
 
 
