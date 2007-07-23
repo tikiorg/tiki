@@ -65,7 +65,7 @@ class TikiModAvailable extends TikiMod {
 		$out.= "'". addslashes($this->type) ."',";
 		$out.= "'". addslashes($this->name) ."',";
 		$out.= "'". addslashes($this->revision) ."',";
-		$out.= "'". is_array($this->description ? addslashes(implode(" ",$this->description)) : '') ."',";
+		$out.= "'". addslashes($this->description) ."',";
 		$out.= "'". addslashes($this->licence) ."',";
 		$out.= "'". addslashes($this->version[0]) ."',"; // probably buggy isn't it?
 		$out.= "'". addslashes($this->md5) ."',";
@@ -230,7 +230,7 @@ class TikiModInfo extends TikiModAvailable {
 				$this->docurl[] = trim($line);
 				break;
 			case 'description':
-				$this->description[] = trim($line);
+				$this->description .= empty($this->description) ? trim($line) : ' '.trim($line);
 				break;
 			case 'changelog':
 				$this->changelog[] = trim($line);
