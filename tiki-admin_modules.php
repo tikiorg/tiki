@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.49 2007-07-16 19:24:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.50 2007-07-23 14:38:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,6 +196,9 @@ if (isset($_REQUEST["preview"])) {
 		}
 	}
 
+	if (!empty($_REQUEST['moduleId'])) {
+		$smarty->assign_by_ref('moduleId', $_REQUEST['moduleId']);
+	}
 	$smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
 	$smarty->assign_by_ref('assign_params', $_REQUEST["assign_params"]);
 	$smarty->assign_by_ref('assign_position', $_REQUEST["assign_position"]);
