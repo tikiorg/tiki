@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.23 2007-06-18 15:43:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.24 2007-07-23 14:11:21 tombombadilom Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span></div>{/if}
@@ -118,6 +118,7 @@
 </div>
 {* --- tab with drafts --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+{** need to be finished }
 {assign var=channels value=$drafts}
 {assign var=view_editions value='n'}
 {assign var=offset value=$dr_offset}
@@ -136,6 +137,7 @@
 {assign var=tab value=2}
 <h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
 {include file=sent_newsletters.tpl }
+{ **}
 </div>
 
 {* --- tab with editions --- *}
