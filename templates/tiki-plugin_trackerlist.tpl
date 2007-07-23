@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.29 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.30 2007-07-23 09:35:25 pkdille Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -107,7 +107,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 
 {if $cant_pages > 1 or $tr_initial}
 <br />
-<div align="center" class="mini">
+<div class="mini">
 {if $tr_prev_offset >= 0}
 [<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_prev_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.13 2007-07-06 21:10:37 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.14 2007-07-23 09:35:25 pkdille Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -183,3 +183,10 @@ div#ajaxLoading {
 .nb_replies { white-space: nowrap; }
 .post_preview, .top_post { margin-bottom: 15px; }
 /*.post .postbody .signature { float: left; }*/
+
+/* Pagination for listings */
+/* This class already exists in tiki v1.9 but has to be changed as follows */
+/* to keep the same behaviour */
+.mini {
+        text-align :center;
+}

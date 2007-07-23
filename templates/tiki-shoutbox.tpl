@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.26 2007-07-19 17:06:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.27 2007-07-23 09:35:25 pkdille Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -65,7 +65,6 @@
 </div>
 {/section}
 
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-shoutbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -83,5 +82,4 @@
 {/section}
 {/if}
 
-</div>
 </div>

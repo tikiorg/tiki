@@ -80,7 +80,7 @@
 </table>
 </form>
 
-<div class="mini" align="center">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}

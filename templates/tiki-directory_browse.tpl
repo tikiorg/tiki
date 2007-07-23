@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.21 2007-07-19 17:06:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.22 2007-07-23 09:35:25 pkdille Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -125,7 +125,6 @@ loc="page" crumbs=$crumbs}
 </div>
 <br />
 {* next and prev links *}
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -142,7 +141,6 @@ loc="page" crumbs=$crumbs}
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>
 {/if}
 

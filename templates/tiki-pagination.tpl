@@ -1,6 +1,6 @@
 {if $cant_pages > 1}
 <br />
-<div align="center" class="mini">
+<div class="mini">
 
 {if $prev_offset >= 0}
 <a class="prevnext" href="{$smarty.server.PHP_SELF}?offset={$prev_offset}{foreach key=arg item=val from=$urlquery}{if $val}&amp;{$arg|escape:"url"}={$val|escape:"url"}{/if}{/foreach}">[{tr}Prev{/tr}]</a>&nbsp;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.3 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.4 2007-07-23 09:35:25 pkdille Exp $ *}
 <form action="" method="">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="tag" value="{$tag|escape}" />
@@ -26,7 +26,6 @@
 {/section}
 </table>
 
-  <div align="center">
     <div class="mini">
         [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}Prev{/tr}</a>]&nbsp;
       {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
@@ -37,4 +36,3 @@
 	<div class="prevnext" id="direct_pagination"></div>
       {/if}
    </div>
-  </div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.54 2007-07-20 18:44:23 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.55 2007-07-23 09:35:25 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -136,7 +136,6 @@
       {/section}
       </table>
       
-      <div align="center">
         <div class="mini">
         {if $prev_offset >= 0}
           [<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Prev{/tr}</a>]&nbsp;
@@ -146,7 +145,6 @@
           &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Next{/tr}</a>]
         {/if}
         </div>
-      </div>
 
       
       </div>

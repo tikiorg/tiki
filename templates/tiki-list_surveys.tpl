@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.24 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.25 2007-07-23 09:35:25 pkdille Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">
@@ -61,7 +61,7 @@
 <! -- the page advance... it's set to ten by default in maxRecords... -->
 
 <br />
-<div align="center" class="mini">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-list_surveys.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}

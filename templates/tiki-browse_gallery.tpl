@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.48 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.49 2007-07-23 09:35:25 pkdille Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -54,7 +54,6 @@
     | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
 
 <br /><br />
-<div align="center">
 <div class="mini">
       {if $prev_offset >= 0}
         [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;&nbsp;
@@ -63,7 +62,6 @@
       {if $next_offset >= 0}
       &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
       {/if}
-  </div>
 </div>
 
   <div class="thumbnails">
@@ -143,7 +141,6 @@
     </table>
   </div>
 
-<div align="center">
 <div class="mini">
       {if $prev_offset >= 0}
         [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;&nbsp;
@@ -160,7 +157,6 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-  </div>
 </div>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}

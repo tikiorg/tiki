@@ -88,7 +88,7 @@
 {/section}
 </table>
 <br />
-<div class="mini" style="text-align: center;">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="userprevnext" href="tiki-friends.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}

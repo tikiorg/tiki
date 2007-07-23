@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.23 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.24 2007-07-23 09:35:24 pkdille Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -259,7 +259,7 @@
 </form>
 
 {if $maxRecords > 0 and $cant_pages > 0}
-  <div class="mini" align="center">
+  <div class="mini">
       {if $prev_offset >= 0}
         [<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$prev_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
       {/if}

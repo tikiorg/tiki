@@ -124,7 +124,6 @@
 </tr>
 {/section}
 </table>
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-directory_admin_categories.php?parent={$parent}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -141,5 +140,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

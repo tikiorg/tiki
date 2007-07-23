@@ -93,7 +93,6 @@
 </div>
 {/section}
 <br />
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
@@ -110,7 +109,6 @@
 {$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
-</div>
 </div>
 
 {if $feature_blog_comments == 'y'

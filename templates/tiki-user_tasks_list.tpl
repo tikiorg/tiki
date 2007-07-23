@@ -148,7 +148,7 @@
 
 </table>
 </form>
-<div class="mini" align="center">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-user_tasks.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}

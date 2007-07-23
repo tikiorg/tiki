@@ -92,7 +92,6 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 </table>
 </form>
 <br />
-<div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="messu-archive.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}Prev{/tr}</a>]
@@ -101,5 +100,4 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 {if $next_offset >= 0}
 [<a class="prevnext" href="messu-archive.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}Next{/tr}</a>]
 {/if}
-</div>
 </div>
