@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_programmed_content.php,v 1.22 2007-07-16 21:27:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_programmed_content.php,v 1.23 2007-07-23 09:51:12 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,7 +58,7 @@ $smarty->assign('actual', '');
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-programmed-content');
 	$publishDate = TikiLib::make_time($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
-																   0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]));
+																   0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
 	$id = $dcslib->replace_programmed_content($_REQUEST["pId"], $_REQUEST["contentId"], $publishDate, $_REQUEST["data"]);
 	$smarty->assign('data', $_REQUEST["data"]);
