@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.38 2007-07-23 14:35:15 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.39 2007-07-23 14:44:36 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,9 @@ if ($feature_newsletters != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["nlId"])) $_REQUEST["nlId"] = 0;
+if (!isset($_REQUEST["nlId"])) {
+	$_REQUEST["nlId"] = 0;
+}
 $smarty->assign('nlId', $_REQUEST["nlId"]);
 
 $newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
@@ -37,8 +39,9 @@ if (!$newsletters["cant"]) {
 	die;
 }
 
-if(!isset($_REQUEST['cookietab'])) $_REQUEST['cookietab'] = 1;
-
+if(!isset($_REQUEST['cookietab'])) {
+	$_REQUEST['cookietab'] = 1;
+}
 $smarty->assign('newsletters', $newsletters["data"]);
 
 if ($_REQUEST["nlId"]) {
@@ -220,8 +223,9 @@ if (isset($_REQUEST["send"])) {
 				$errors[] = array("user"=>$userEmail, "email"=>"");
 				continue;
 			}
-			if ($userEmail == "")
+			if ($userEmail == "") {
 				$userEmail = $userlib->get_user_by_email($email);
+			}
 			if ($userEmail) {
 				$mail->setUser($userEmail);
 				$mail->setFrom($tikilib->get_preference("sender_email",""));
@@ -229,10 +233,11 @@ if (isset($_REQUEST["send"])) {
 				$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
  				if ($nl_info["unsubMsg"] == 'y') {
 					$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $userEmail, $languageEmail, $us["code"], $userEmail);
-					if (stristr($html, "</body>") === false)
+					if (stristr($html, "</body>") === false) {
 						$msg = $html.nl2br($unsubmsg);
-					else
+					} else {
 						$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
+					}
 				} else {
 					$msg = $html;
 					$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
@@ -248,16 +253,18 @@ if (isset($_REQUEST["send"])) {
 
 					$smarty->assign('sent', $sent);
 					$smarty->assign('emited', 'y');
-					if (count($errors) > 0)
+					if (count($errors) > 0) {
 						$smarty->assign_by_ref('errors', $errors);
+					}
 					$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt);
-			    }
+			    	}
 
 			}
 		}
 	} else {
 		$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $_REQUEST['editionId'], true,$txt);		
 	}
+}
 
 if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt))$txt="";
@@ -362,4 +369,3 @@ $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
 
 ?>
-
