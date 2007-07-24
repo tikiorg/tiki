@@ -2,7 +2,7 @@
 <a href="tiki-list_faqs.php" class="linkbut">{tr}List FAQs{/tr}</a>
 <a href="tiki-view_faq.php?faqId={$faqId}" class="linkbut">{tr}View FAQ{/tr}</a>
 <a href="tiki-list_faqs.php?faqId={$faqId}" class="linkbut">{tr}Edit this FAQ{/tr}</a>
-<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a><br />
+<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a><br />
 <br />
 <h2>{tr}Edit FAQ questions{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post" id="editpageform">

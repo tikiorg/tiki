@@ -6,7 +6,7 @@
 </div>
 
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-sheets.php" class="linkbut">{tr}list sheets{/tr}</a>
+<a href="tiki-sheets.php" class="linkbut">{tr}List Sheets{/tr}</a>
 {/if}
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 <a href="tiki-view_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}View{/tr}</a>

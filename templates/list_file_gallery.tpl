@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.24 2007-07-23 09:35:24 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.25 2007-07-24 14:40:28 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -109,7 +109,7 @@
 {/if}
 
 {if $gal_info.name eq ''}
-	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}" title="{tr}list{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
+	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}" title="{tr}List{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
 {/if}
 
 {if $gal_info.show_icon eq 'y'}

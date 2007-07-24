@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.28 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.29 2007-07-24 14:40:36 jyhem Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}
@@ -15,31 +15,31 @@
  <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
 {/if}
 {if $feature_galleries eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=galleries">{tr}galleries{/tr}</a>
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=images">{tr}images{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=galleries">{tr}Galleries{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=images">{tr}Images{/tr}</a>
 {/if}
 {if $feature_file_galleries eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=files">{tr}files{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=files">{tr}Files{/tr}</a>
 {/if}
 {if $feature_forums eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=forums">{tr}forums{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=forums">{tr}Forums{/tr}</a>
 {/if}
 {if $feature_faqs eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=faqs">{tr}faqs{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=faqs">{tr}FAQs{/tr}</a>
 {/if}
 {if $feature_blogs eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=blogs">{tr}blogs{/tr}</a>
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=posts">{tr}blog posts{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=blogs">{tr}Blogs{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=posts">{tr}Blog Posts{/tr}</a>
 {/if}
 {if $feature_directory eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=directory">{tr}directory{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=directory">{tr}Directory{/tr}</a>
 {/if}
 
 {if $feature_articles eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}articles{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}Articles{/tr}</a>
 {/if}
 {if $feature_trackers eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}trackers{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
 {/if}
 </div><!--nohighlight-->
 <br /><br />
@@ -52,30 +52,30 @@
     <select name="where">
     <option value="pages">{tr}entire site{/tr}</option>
     {if $feature_wiki eq 'y'}
-       <option value="wikis">{tr}wiki pages{/tr}</option>
+       <option value="wikis">{tr}Wiki Pages{/tr}</option>
     {/if}
     {if $feature_galleries eq 'y'}
-       <option value="galleries">{tr}galleries{/tr}</option>
-       <option value="images">{tr}images{/tr}</option>
+       <option value="galleries">{tr}Galleries{/tr}</option>
+       <option value="images">{tr}Images{/tr}</option>
     {/if}
     {if $feature_file_galleries eq 'y'}
-       <option value="files">{tr}files{/tr}</option>
+       <option value="files">{tr}Files{/tr}</option>
     {/if}
     {if $feature_forums eq 'y'}
-       <option value="forums">{tr}forums{/tr}</option>
+       <option value="forums">{tr}Forums{/tr}</option>
     {/if}
     {if $feature_faqs eq 'y'}
-       <option value="faqs">{tr}faqs{/tr}</option>
+       <option value="faqs">{tr}FAQs{/tr}</option>
     {/if}
     {if $feature_blogs eq 'y'}
-       <option value="blogs">{tr}blogs{/tr}</option>
-       <option value="posts">{tr}blog posts{/tr}</option>
+       <option value="blogs">{tr}Blogs{/tr}</option>
+       <option value="posts">{tr}Blog Posts{/tr}</option>
     {/if}
     {if $feature_directory eq 'y'}
-       <option value="directory">{tr}directory{/tr}</option>
+       <option value="directory">{tr}Directory{/tr}</option>
     {/if}
     {if $feature_articles eq 'y'}
-       <option value="articles">{tr}articles{/tr}</option>
+       <option value="articles">{tr}Articles{/tr}</option>
     {/if}
     </select>
 {else}

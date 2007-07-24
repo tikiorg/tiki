@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.96 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.97 2007-07-24 14:40:38 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -13,7 +13,7 @@
 <tr>
 <td>
 {if $tiki_p_forum_post_topic eq 'y'}
-<a class="linkbut" href="#" onclick="flip('forumpost');return false;">{tr}new topic{/tr}</a>
+<a class="linkbut" href="#" onclick="flip('forumpost');return false;">{tr}New Topic{/tr}</a>
 {/if}
 <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
 {if $tiki_p_admin_forum eq 'y'}
@@ -200,8 +200,8 @@ a moderator approves it.{/tr}</small>
     <tr class="formcolor">
       <td>{tr}Post{/tr}</td>
       <td>
-      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
-      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      <input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
       <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('forumpost');"/>
       </td>
     </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.89 2007-07-20 18:44:23 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.90 2007-07-24 14:40:27 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -184,7 +184,7 @@
 			{* posting, editing or previewing a reply: show form *}
 <div id='{$postclass}open' class="threadpost">
 		{else}
-<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="flip('{$postclass}');"/>
+<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');"/>
 <div id='{$postclass}' class="threadpost">
 		{/if}
 	{/if}
@@ -314,8 +314,8 @@
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
-				<input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
+				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
 				{if $forum_mode eq 'y'}
 				<input type="button" name="comments_cancelComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{/if}

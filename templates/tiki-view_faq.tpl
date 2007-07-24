@@ -10,7 +10,7 @@
 
 <a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>
 {if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a> {/if}
-{if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}{/if}</a><br /><br />
+{if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}{/if}</a><br /><br />
 <h2>{tr}Questions{/tr}</h2>
 <div class="faqlistquestions">
 <ol>

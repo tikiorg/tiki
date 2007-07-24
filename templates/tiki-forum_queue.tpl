@@ -134,7 +134,7 @@
 		{if $items[ix].parentId > 0}
 			[{tr}Topic{/tr}: {$items[ix].topic_title}]
 		{else}
-			[{tr}new topic{/tr}]
+			[{tr}New Topic{/tr}]
 		{/if}
 		<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title}</a></b>
 		by {$items[ix].user} on {$items[ix].timestamp|tiki_short_datetime}

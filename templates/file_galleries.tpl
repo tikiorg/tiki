@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.15 2007-07-23 09:35:24 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.16 2007-07-24 14:40:27 jyhem Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -67,19 +67,19 @@
 <tr>
 	{if $fgal_list_id eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}list{/tr}">{$galleries[changes].galleryId}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}List{/tr}">{$galleries[changes].galleryId}</a>
 		</td>
 	{/if}
 
 	{if $fgal_list_name eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}list{/tr}">{$galleries[changes].name}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}List{/tr}">{$galleries[changes].name}</a>
 		</td>
 	{/if}
 
 	{if $fgal_list_parent eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}" title="{tr}list{/tr}">{$galleries[changes].parentName|escape}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}" title="{tr}List{/tr}">{$galleries[changes].parentName|escape}</a>
 		</td>
 	{/if}
 
@@ -120,7 +120,7 @@
 	
 	<td class="{cycle}" nowrap="nowrap">
 	{if $tiki_p_view_file_gallery == 'y' or $tiki_p_admin_file_galleries eq 'y' or $tiki_p_admin eq 'y'}
-		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
+		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }

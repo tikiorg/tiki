@@ -14,7 +14,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
-<a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
+<a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
 <a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>
 </div>
 {if $category_needed eq 'y'}
@@ -62,7 +62,7 @@
 </td></tr>
 {/if}
 {include file=categorize.tpl}
-<tr class="editblogform"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="editblogform"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <br />

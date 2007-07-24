@@ -6,7 +6,7 @@
 <span style="float:right;">
 		{if $tiki_p_blog_post eq "y"}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
-		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='pics/icons/pencil_add.png' border='0' width='16' height='16' alt='{tr}Post{/tr}' title='{tr}post{/tr}' /></a>
+		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='pics/icons/pencil_add.png' border='0' width='16' height='16' alt='{tr}Post{/tr}' title='{tr}Post{/tr}' /></a>
 		{/if}
 		{/if}
 		{if $rss_blog eq "y"}

@@ -17,7 +17,7 @@
 {/if}
 <span class="button2">
 	<a class="linkbut" href="tiki-list_blogs.php">
-		{tr}list blogs{/tr}
+		{tr}List Blogs{/tr}
 	</a>
 </span>
 <div class="wikitext">
@@ -129,7 +129,7 @@
 {/if}
 <div class="editblogform">
 	<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
-	<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+	<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 	<input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
 </div>
 </div>

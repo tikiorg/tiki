@@ -76,7 +76,7 @@
   <tr><td class="formcolor">{tr}Mode{/tr}</td>
       <td class="formcolor">
         <select name="mode">
-          <option value="n" {if $info.mode eq 'n'}selected="selected"{/if}>{tr}new window{/tr}</option>
+          <option value="n" {if $info.mode eq 'n'}selected="selected"{/if}>{tr}New Window{/tr}</option>
           <option value="w" {if $info.mode eq 'w'}selected="selected"{/if}>{tr}replace window{/tr}</option>
         </select>
       </td>

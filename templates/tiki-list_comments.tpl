@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.6 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7 2007-07-24 14:40:36 jyhem Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -53,7 +53,7 @@
 {section name=ix loop=$comments}
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$comments[ix].threadId|escape}"/></td>
-<td class="{cycle advance=false}">{if $types eq "wiki page"}{$comments[ix].object|truncate:50:"...":true}{elseif $comments[ix].objectType eq 'post'}{tr}blog{/tr}{else}{$comments[ix].objectType}{/if}</td>
+<td class="{cycle advance=false}">{if $types eq "wiki page"}{$comments[ix].object|truncate:50:"...":true}{elseif $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{$comments[ix].objectType}{/if}</td>
 <td class="{cycle advance=false}"><a href="{$comments[ix].href}">{$comments[ix].title|truncate:50:"...":true}</a></td>
 <td class="{cycle advance=false}">{$comments[ix].userName}</td>
 <td class="{cycle advance=false}">{$comments[ix].user_ip}</td>
