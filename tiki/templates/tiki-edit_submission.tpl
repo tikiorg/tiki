@@ -19,7 +19,7 @@
 {/if}</h1>
 
 <div class="navbar">
-<a class="linkbut" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>
+<a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
@@ -151,7 +151,7 @@
 
 
 <div align="center">
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 </div>
 </form>

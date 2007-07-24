@@ -121,8 +121,8 @@
 	  <a class="link" href="tiki-g-admin_graph.php?pid={$items[ix].pId}">{tr}graph{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
 	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}Export{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}New Minor{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}New Major{/tr}</a><br />
 	</td>
 </tr>
 {sectionelse}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.23 2007-07-23 18:05:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.24 2007-07-24 14:40:36 jyhem Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -11,7 +11,7 @@
 &nbsp &nbsp &nbsp<a title="{tr}Help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=QuizEdit" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 </h1>
-<a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
+<a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_edit.php">{tr}admin quizzes{/tr}</a>
@@ -190,7 +190,7 @@
       <td class="formcolor">
       </td>
       <td class="formcolor">
-				<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+				<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 				<input type="submit" class="wikiaction" name="xmlview" value="{tr}xml view{/tr}" />
 				<input type="submit" class="wikiaction" name="textview" value="{tr}text view{/tr}" />
       </td>

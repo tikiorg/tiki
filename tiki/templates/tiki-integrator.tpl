@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-integrator.tpl,v 1.6 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-integrator.tpl,v 1.7 2007-07-24 14:40:36 jyhem Exp $ *}
 
 <div class="integrated-page">
   {$data}
@@ -16,7 +16,7 @@
     {/if}
 
     <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
+      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
     </div></td>
 
     {* Show config buttons only for admins *}

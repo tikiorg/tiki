@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.112 2007-07-23 18:05:26 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.113 2007-07-24 14:40:33 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -51,7 +51,7 @@
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 {if $preview}
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
@@ -326,7 +326,7 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" />
 {/if}
 &nbsp;<input type="hidden" name="page" value="{$page|escape}" />
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />&nbsp;&nbsp;
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
 <input type="button" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()">

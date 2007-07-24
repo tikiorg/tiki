@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.24 2007-07-19 07:23:28 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.25 2007-07-24 14:40:29 jyhem Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -39,7 +39,7 @@ function taginsert(area_name,tagid)
               {tr}center text{/tr}
               {tr}colored text{/tr}
               {tr}dynamic variable{/tr}
-              {tr}image{/tr}
+              {tr}Image{/tr}
               {tr}New wms Metadata{/tr}
               {tr}New Class{/tr}
               {tr}New Projection{/tr}

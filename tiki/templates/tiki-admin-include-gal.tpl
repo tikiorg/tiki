@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.30 2007-05-13 12:52:34 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.31 2007-07-24 14:40:28 jyhem Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -116,7 +116,7 @@
 {/if}
 {if $movedimgs}
 <tr class="form">
-<td colspan="3">{tr}Moved{/tr} {$movedimgs} {tr}images{/tr}</td>
+<td colspan="3">{tr}Moved{/tr} {$movedimgs} {tr}Images{/tr}</td>
 </tr>
 {/if}
 </table>

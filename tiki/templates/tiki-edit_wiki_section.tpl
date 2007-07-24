@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_wiki_section.tpl,v 1.4 2007-07-23 18:05:26 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_wiki_section.tpl,v 1.5 2007-07-24 14:40:33 jyhem Exp $ *}
 <h1><a href="tiki-edit_wiki_section.php?object={$object|escape:url}&amp;type={$type|escape:url}&amp;pos={$pos}&amp;cell={$cell}">{tr}Edit Section:{/tr}{$title}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}View object{/tr}</a>
 {if $preview}
@@ -23,7 +23,7 @@
 <input type="hidden" name="pos" value="{$pos}" />
 <input type="hidden" name="cell" value="{$cell}" />
 
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />&nbsp;&nbsp;
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
 <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 </td></tr>

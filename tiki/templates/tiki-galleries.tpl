@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.66 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.67 2007-07-24 14:40:36 jyhem Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -210,7 +210,7 @@
 {/if}
   <td class="{cycle}" nowrap="nowrap">
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
-  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="16" src='pics/icons/table.png' title='{tr}list{/tr}' alt='{tr}list{/tr}' /></a>
+  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="16" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
   {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }

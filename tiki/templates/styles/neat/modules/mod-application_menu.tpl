@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.38 2007-07-23 18:05:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.39 2007-07-24 14:40:40 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -80,7 +80,7 @@
     &nbsp;<a href="tiki-wiki_rankings.php" class="linkmenu">{tr}rankings{/tr}</a><br />
   {/if}
   {if $feature_listPages eq 'y' and $tiki_p_view eq 'y'}
-    &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}list pages{/tr}</a><br />
+    &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}List Pages{/tr}</a><br />
     &nbsp;<a href="tiki-orphan_pages.php" class="linkmenu">{tr}orphan pages{/tr}</a><br />
   {/if}
   {if $feature_sandbox eq 'y' and $tiki_p_view eq 'y'}

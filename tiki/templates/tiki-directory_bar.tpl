@@ -7,7 +7,7 @@
 {if $mid ne "tiki-directory_browse.tpl"}
 <td><div  class="button2"><a href="tiki-directory_browse.php" class="linkbut">{tr}browse{/tr}</a></div></td>
 {/if}
-<td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=created_desc" class="linkbut">{tr}new sites{/tr}</a></div></td>
+<td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=created_desc" class="linkbut">{tr}New Sites{/tr}</a></div></td>
 {if $directory_cool_sites eq "y"}
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=hits_desc" class="linkbut">{tr}cool sites{/tr}</a></div></td>
 {/if}

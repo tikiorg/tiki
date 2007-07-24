@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.30 2007-07-20 17:33:57 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31 2007-07-24 14:40:29 jyhem Exp $ *}
 
 <h1>{tr}Integrator{/tr}<h1>
 
@@ -18,10 +18,10 @@
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
+      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}new repository{/tr}</a>
+      <a href="tiki-admin_integrator.php" class="linkbut">{tr}New Repository{/tr}</a>
     </div></td>
     {if isset($repID) and $repID ne '0'}
     <td><div class="button2">

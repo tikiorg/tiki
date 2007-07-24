@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.62 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.63 2007-07-24 14:40:29 jyhem Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -18,7 +18,7 @@
 {/if}</h1>
 
 <div class="navbar">
-<a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
+<a class="linkbut" href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
 <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
@@ -164,13 +164,13 @@
 
 {include file=freetag.tpl}
 
-<tr class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+<tr class="formcolor"><td></td><td><input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <br />
 
 <div class="button2">
-<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
+<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
 </div>
 {include file=tiki-edit_help.tpl}

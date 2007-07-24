@@ -42,7 +42,7 @@
           <td class="form"><label for="directory-openlinks">{tr}Method to open directory links{/tr}</label></td>
           <td><select name="directory_open_links" id="directory-openlinks">
               <option value="r" {if $directory_open_links eq 'r'}selected="selected"{/if}>{tr}replace current window{/tr}</option>
-              <option value="n" {if $directory_open_links eq 'n'}selected="selected"{/if}>{tr}new window{/tr}</option>
+              <option value="n" {if $directory_open_links eq 'n'}selected="selected"{/if}>{tr}New Window{/tr}</option>
               <option value="f" {if $directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
               </select></td>
         </tr><tr>

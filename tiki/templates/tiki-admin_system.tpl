@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.25 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.26 2007-07-24 14:40:29 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -21,17 +21,17 @@
 <tr class="form">
 <td><b>./templates_c/</b></td>
 <td><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty{/tr}</a></td>
-<td>({$templates_c.cant} {tr}files{/tr} / {$templates_c.total|kbsize})</td>
+<td>({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize})</td>
 </tr>
 <tr class="form">
 <td><b>./modules/cache/</b></td>
 <td><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
-<td>({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
+<td>({$modules.cant} {tr}Files{/tr} / {$modules.total|kbsize})</td>
 </tr>
 <tr class="form">
 <td><b>./temp/cache/</b></td>
 <td><a href="tiki-admin_system.php?do=temp_cache" class="link">{tr}Empty{/tr}</a></td>
-<td>({$tempcache.cant} {tr}files{/tr} / {$tempcache.total|kbsize})</td>
+<td>({$tempcache.cant} {tr}Files{/tr} / {$tempcache.total|kbsize})</td>
 </tr>
 </table>
 {if count($templates)}
@@ -48,7 +48,7 @@
 <tr class="form">
 <td class="{cycle advance=false}"><b>{$key}</b></td>
 <td class="{cycle advance=false}"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
-<td class="{cycle}">({$item.cant} {tr}files{/tr} / {$item.total|kbsize})</td>
+<td class="{cycle}">({$item.cant} {tr}Files{/tr} / {$item.total|kbsize})</td>
 </tr>
 {/foreach}
 </table>

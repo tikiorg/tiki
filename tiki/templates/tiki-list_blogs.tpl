@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.45 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.46 2007-07-24 14:40:36 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
@@ -91,7 +91,7 @@
 	{if $tiki_p_blog_post eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_post eq 'y' ) }
 			{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
-				<a class="bloglink" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}"><img src='pics/icons/pencil_add.png' border='0' width='16' height='16' title='{tr}post{/tr}' alt='{tr}post{/tr}' /></a>
+				<a class="bloglink" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}"><img src='pics/icons/pencil_add.png' border='0' width='16' height='16' title='{tr}Post{/tr}' alt='{tr}Post{/tr}' /></a>
 			{/if}
 		{/if}
 	{/if}

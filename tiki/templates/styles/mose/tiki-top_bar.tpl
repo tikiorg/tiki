@@ -1,6 +1,6 @@
 <table cellpadding="0" cellspacing="0" border="0" id="topbar">
 <tr><td class="left" rowspan="2" valign="middle">
-<a href="{if $http_domain}http://{$http_domain}{$http_prefix}{else}{$crumbs[0]->url}{/if}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
+<a href="{if $http_domain}http://{$http_domain}{$http_prefix}{else}{$crumbs[0]->url}{/if}" title="{tr}Back to Homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
 </td>
 <td>
 <table style="float:right;font-size:80%;"><tr>

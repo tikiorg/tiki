@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.91 2007-07-20 18:44:24 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.92 2007-07-24 14:40:29 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -279,7 +279,7 @@ categories = {$catsdump}
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}Download CSV export{/tr}</td>
-<td>{tr}File: {/tr}{tr}tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
+<td>{tr}File: {/tr}{tr}Tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
 <br /><input type="radio" name="which" value="list"/> {tr}Fields searchable and visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}

@@ -12,7 +12,7 @@
 {if $blogId > 0 }
 <span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a></span>
 {/if}
-<span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></span>
 </div>
 
 {if $contribution_needed eq 'y'}
@@ -106,7 +106,7 @@
 {include file="contribution.tpl"}
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
-<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
 </td></tr>
 </table>
@@ -114,6 +114,6 @@
 <br />
 
 <div class="button2">
-<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}wiki help{/tr}</a>
+<a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
 </div>
 {include file=tiki-edit_help.tpl}

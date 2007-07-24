@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.23 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.24 2007-07-24 14:40:29 jyhem Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -7,7 +7,7 @@
       <a href="tiki-admin_integrator.php" class="linkbut">{tr}configure repositories{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
+      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
     </div></td>
 
     <td>&nbsp;</td>
@@ -23,7 +23,7 @@
     
     <td><div class="button2">
       <a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}" class="linkbut">
-        {tr}new rule{/tr}
+        {tr}New Rule{/tr}
       </a>
     </div></td>
     {if count($reps) gt 0}

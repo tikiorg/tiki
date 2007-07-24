@@ -214,7 +214,7 @@
 {/if}
 
 <input type="hidden" name="page" value="{$page|escape}" />
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" /></td>
 
 {if $feature_antibot eq 'y' && $anon_user eq 'y'}
 <tr><td class="formcolor">{tr}Anti-Bot verification code{/tr}:</td>
