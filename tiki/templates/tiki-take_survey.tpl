@@ -72,5 +72,5 @@
       {/if}
     </div>
   {/section}
-<input type="submit" value="{tr}send answers{/tr}" name="ans" />
+<input type="submit" value="{tr}Send Answers{/tr}" name="ans" />
 </form>
