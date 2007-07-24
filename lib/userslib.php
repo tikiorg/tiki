@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.231 2007-07-24 15:10:31 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.232 2007-07-24 18:39:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2436,7 +2436,7 @@ function get_included_groups($group, $recur=true) {
 		$smarty->assign('mail_apass', $apass);
 		$smarty->assign('mail_email', $email);
 		$smarty->assign('mail_again', $again);
-		include_once('lib/notifications/notificationemaillib.php');
+		include_once('lib/webmail/tikimaillib.php');
 		if ($validateRegistration == 'y') {
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
