@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.21 2007-07-23 18:05:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.22 2007-07-24 18:03:35 jyhem Exp $ *}
 
 <div id="page-bar">
 
-{if $cached_page eq 'y'}<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="linkbut">{tr}refresh{/tr}</a></div>{/if}
+{if $cached_page eq 'y'}<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="linkbut">{tr}Refresh{/tr}</a></div>{/if}
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')}
 <div class="button2"><a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" 

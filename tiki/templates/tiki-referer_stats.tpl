@@ -8,7 +8,7 @@
 <a href="tiki-edit_templates.php?template=tiki-referer_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Referer Stats tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}Clear Stats{/tr}</a><br /><br />
 
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -25,9 +25,9 @@
 
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}term{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}Word{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'last_desc'}last_asc{else}last_desc{/if}">{tr}last{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'last_desc'}last_asc{else}last_desc{/if}">{tr}Last{/tr}</a></td>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}

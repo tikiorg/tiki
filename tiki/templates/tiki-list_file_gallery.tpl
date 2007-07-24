@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.44 2007-07-24 15:23:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.45 2007-07-24 18:03:32 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <div class="navbar">
@@ -42,7 +42,7 @@
 {elseif $gal_info.type eq "vidcast"}
 <img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' />
 {else}
-<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' />
+<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}File Gallery{/tr}' />
 {/if}
 </td>
 <td style="vertical-align:top; text-align:left;" width="100%">

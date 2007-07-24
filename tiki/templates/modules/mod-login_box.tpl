@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.53 2007-07-19 09:32:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.54 2007-07-24 18:03:35 jyhem Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -73,7 +73,7 @@
 		{/if}</div>
 		<script type="text/javascript">document.getElementById('login-user').focus();</script>
           {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-          <div><label for="login-email">{tr}email{/tr}:</label><br />
+          <div><label for="login-email">{tr}eMail{/tr}:</label><br />
           <input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {/if}
           <div><label for="login-pass">{tr}Password{/tr}:</label><br />

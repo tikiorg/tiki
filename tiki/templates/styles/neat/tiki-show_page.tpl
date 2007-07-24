@@ -60,7 +60,7 @@
 {/if}
 
 {if $cached_page eq 'y'}
-<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' alt='{tr}refresh{/tr}' width='16' height='16' /></a>
+<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' alt='{tr}Refresh{/tr}' width='16' height='16' /></a>
 {/if}
 
 {if $feature_wiki_print eq 'y'}

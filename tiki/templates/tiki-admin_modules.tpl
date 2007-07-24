@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.58 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.59 2007-07-24 18:03:32 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -11,11 +11,11 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
-<a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
-<a class="linkbut" href="#leftmod">{tr}left modules{/tr}</a>
-<a class="linkbut" href="#rightmod">{tr}right modules{/tr}</a>
-<a class="linkbut" href="#editcreate">{tr}edit/create{/tr}</a>
-<a class="linkbut" href="tiki-admin_modules.php?clear_cache=1">{tr}clear cache{/tr}</a>
+<a class="linkbut" href="#assign">{tr}Assign Module{/tr}</a>
+<a class="linkbut" href="#leftmod">{tr}Left Modules{/tr}</a>
+<a class="linkbut" href="#rightmod">{tr}Right Modules{/tr}</a>
+<a class="linkbut" href="#editcreate">{tr}Edit/Create{/tr}</a>
+<a class="linkbut" href="tiki-admin_modules.php?clear_cache=1">{tr}Clear Cache{/tr}</a>
 </div>
 
 <div class="simplebox">
@@ -44,7 +44,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
 <td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}assign{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
              <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a></td>
 </tr>
 {sectionelse}
@@ -109,7 +109,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}"><input type="submit" name="assign" value="{tr}Assign{/tr}"></td></tr>
 </table>
 </form>
 <br />
@@ -250,7 +250,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}use poll{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}Use Poll{/tr}</a>
   </td>
 </tr>
 
@@ -266,7 +266,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
    {/section}
   </td>
   <td class="form">
-   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}use gallery{/tr}</a>
+   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}Use Gallery{/tr}</a>
   </td>
 </tr>
 
@@ -283,7 +283,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}use dynamic  content{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}Use Dynamic Content{/tr}</a>
   </td>
 </tr>
 <tr>
@@ -298,7 +298,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}use rss module{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}Use RSS Module{/tr}</a>
   </td>
 </tr>
 
@@ -314,7 +314,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}use menu{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}Use Menu{/tr}</a>
   </td>
 </tr>
 
@@ -331,7 +331,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}use phplayermenu{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}Use phplayermenu{/tr}</a>
   </td>
 </tr>
 
@@ -348,7 +348,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}use banner zone{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}Use Banner Zone{/tr}</a>
   </td>
 </tr>
 

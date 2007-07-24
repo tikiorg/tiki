@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.50 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.51 2007-07-24 18:03:32 jyhem Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -29,7 +29,7 @@
 <tr><td><strong>{tr}Text box{/tr}:</strong></td><td> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr}: "^{tr}Box content{/tr}^"</td></tr>
 <tr><td><strong>{tr}Title bar{/tr}:</strong></td><td> "-={tr}Title{/tr}=-" {tr}creates a title bar{/tr}.</td></tr>
 <tr><td><strong>{tr}Colored text{/tr}:</strong></td><td> "~~#FFEE33:{tr}some text{/tr}~~" {tr}or{/tr}  "~~yellow:{tr}some text{/tr}~~". {tr}Will display using the indicated HTML color or color name{/tr}</td></tr>
-<tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
+<tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td><strong>{tr}Headings{/tr}:</strong></td><td> "!", "!!", "!!!" {tr}make headings{/tr}</td></tr>
 <tr><td><strong>{tr}Show/Hide{/tr}:</strong></td><td> "!+", "!!-" {tr}show/hide heading section. + (shown) or - (hidden) by default{/tr}.</td></tr>
 {if $feature_wiki_tables eq 'new'}

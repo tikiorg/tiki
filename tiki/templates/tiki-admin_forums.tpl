@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.69 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.70 2007-07-24 18:03:32 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -201,7 +201,7 @@
 		<td class="formcolor">{tr}flag{/tr}</td>
 		<td class="formcolor">{tr}Posts{/tr}</td>
 		<td class="formcolor">{tr}user level{/tr}</td>
-		<td class="formcolor">{tr}email{/tr}</td>
+		<td class="formcolor">{tr}eMail{/tr}</td>
 		<td class="formcolor">{tr}online{/tr}</td>
 	</tr>
 	<tr>

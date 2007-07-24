@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.75 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.76 2007-07-24 18:03:32 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -28,7 +28,7 @@
 </td></tr>
 </table>
 <br />
-<div class="advanced">{tr}advanced feature{/tr}: {tr}level configuration{/tr}:
+<div class="advanced">{tr}Advanced feature{/tr}: {tr}level configuration{/tr}:
 {if $advanced_features ne 'y'}
 <a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}show{/tr}</a>
 {else}
@@ -48,7 +48,7 @@
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
 <select name="oper">
-<option value="assign">{tr}assign{/tr}</option>
+<option value="assign">{tr}Assign{/tr}</option>
 <option value="remove">{tr}Remove{/tr}</option>
 </select>
 {tr}all permissions in level{/tr}:  

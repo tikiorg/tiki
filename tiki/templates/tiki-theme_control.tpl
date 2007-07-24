@@ -52,7 +52,7 @@
     </select>
   </td>
   <td class="formcolor">
-    <input type="submit" name="assigcat" value="{tr}assign{/tr}" />
+    <input type="submit" name="assigcat" value="{tr}Assign{/tr}" />
   </td>
 </tr>
 </table>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.70 2007-07-24 15:23:52 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.71 2007-07-24 18:03:36 jyhem Exp $ *}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -50,7 +50,7 @@
 {/if}
 
 {if $cached_page eq 'y'}
-<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{html_image file='pics/icons/arrow_refresh.png' border='0' alt='{tr}refresh{/tr}'}</a>
+<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{html_image file='pics/icons/arrow_refresh.png' border='0' alt='{tr}Refresh{/tr}'}</a>
 {/if}
 
 {if $feature_wiki_print eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.16 2007-07-24 14:40:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.17 2007-07-24 18:03:31 jyhem Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -91,7 +91,7 @@
 
 	{if $fgal_list_type eq 'y'}
 		<td class="{cycle advance=false}">
-			{if $galleries[changes].type eq "default" }<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}file gallery{/tr}' title='{tr}file gallery{/tr}' />
+			{if $galleries[changes].type eq "default" }<img src='pics/large/file-manager48x48.png' border='0' alt='{tr}File Gallery{/tr}' title='{tr}File Gallery{/tr}' />
 			{elseif $galleries[changes].type eq "podcast" }<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt='{tr}podcast (audio){/tr}' title='{tr}podcast (audio){/tr}' />
 			{elseif $galleries[changes].type eq "vidcast" }<img src='pics/large/mplayer48x48.png' border='0' alt='{tr}podcast (video){/tr}' title='{tr}podcast (video){/tr}' />{/if}
 		</td>

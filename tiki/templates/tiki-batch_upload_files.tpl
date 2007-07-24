@@ -48,7 +48,7 @@
 {/if}
 -->
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc" /> {tr}use the last sub directory name as description{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subToDesc" value="true" id="subToDesc" /> {tr}Use the last sub directory name as description{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}<br />
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; {tr}Select a File Gallery{/tr}

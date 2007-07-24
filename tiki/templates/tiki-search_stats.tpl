@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-search_stats.tpl,v 1.21 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-search_stats.tpl,v 1.22 2007-07-24 18:03:34 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}Search Stats{/tr}">
@@ -8,7 +8,7 @@
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
-<a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}clear stats{/tr}</a>
+<a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
 </div>
 
 <table class="findtable">
@@ -27,11 +27,11 @@
 <table class="normal">
 <tr>
 <!-- term -->
-<td class="heading"><a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'term_desc'}term_asc{else}term_desc{/if}">{tr}term{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'term_desc'}term_asc{else}term_desc{/if}">{tr}Word{/tr}</a></td>
 
 <!-- searched -->
 <td class="heading">
-<a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}searched{/tr}</a></td>
+<a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Searched{/tr}</a></td>
 
 <!-- How can we increase the number of items displayed on a page? -->
 

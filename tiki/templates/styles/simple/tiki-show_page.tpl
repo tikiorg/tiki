@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.18 2007-07-24 15:23:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.19 2007-07-24 18:03:36 jyhem Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -20,7 +20,7 @@
 	<div style="float: left"><small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small></div>
 {/if}
 {if $cached_page eq 'y'}<div style="float: right"><small>({tr}cached{/tr})</small>
-<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt='{tr}refresh{/tr}' /></a></div>{/if}
+<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt='{tr}Refresh{/tr}' /></a></div>{/if}
 
 <div class="wikitopline" style="clear: both;">
 {if $feature_multilingual == 'y'}

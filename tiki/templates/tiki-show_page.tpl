@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.120 2007-07-24 15:23:50 jyhem Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.121 2007-07-24 18:03:34 jyhem Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -29,7 +29,7 @@
 		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt="{tr}3d browser{/tr}" /></a>
 	{/if}
 	{if $cached_page eq 'y'}
-		<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt="{tr}refresh{/tr}" /></a>
+		<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt="{tr}Refresh{/tr}" /></a>
 	{/if}
 	{if $feature_wiki_print eq 'y'}
 	<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="pics/icons/printer.png" border="0" width="16" height="16" alt="{tr}Print{/tr}" /></a>
