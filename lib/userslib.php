@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.230 2007-07-20 21:05:35 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.231 2007-07-24 15:10:31 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1850,25 +1850,30 @@ function get_included_groups($group, $recur=true) {
 	    $provpass = '';
 	}
 
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, `email_confirm`=? where `login`=?";
+	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=? where `login`=?";
 	$result = $this->query($query, array(
 		    $provpass,
 		    $hash,
 		    '',
+			NULL,
 			$this->now,
 		    $user
 		    ));
 	$cachelib->invalidate('userslist');
     }
 
-    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false) {
+    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL) {
 	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
-
+	
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
 	$hash = $this->hash_pass($pass);
+
+	if ($valid == 'n') {
+		$valid = $pass;
+	}
 
 	if ( $feature_clear_passwords == 'n' ) $pass = '';
 
@@ -1880,8 +1885,8 @@ function get_included_groups($group, $recur=true) {
 	$new_email_confirm = $this->now;
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`)
-	    values(?,?,?,?,?,?,?,?,?)";
+		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`)
+	    values(?,?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
 		    $pass,
@@ -1891,7 +1896,8 @@ function get_included_groups($group, $recur=true) {
 		    $hash,
 		    (int) $new_pass_confirm,
 			(int) $new_email_confirm,
-		    (int) $this->now
+		    (int) $this->now,
+			$valid
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
@@ -2417,6 +2423,55 @@ function get_included_groups($group, $recur=true) {
 		$ret = array();
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;									
+	}
+	function send_validation_email($name, $apass, $email, $again='') {
+		global $tikilib, $validateRegistration, $validateUsers, $sender_email, $smarty;
+		$foo = parse_url($_SERVER['REQUEST_URI']);
+		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
+		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
+		$machine = $tikilib->httpPrefix().$foo1;
+		$smarty->assign('mail_machine',$machine);
+		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
+		$smarty->assign('mail_user', $name);
+		$smarty->assign('mail_apass', $apass);
+		$smarty->assign('mail_email', $email);
+		$smarty->assign('mail_again', $again);
+		include_once('lib/notifications/notificationemaillib.php');
+		if ($validateRegistration == 'y') {
+			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
+			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
+			if ($sender_email == NULL or !$sender_email) {
+				include_once('lib/messu/messulib.php');
+				$messulib->post_message($contact_user, $contact_user, $contact_user, '', $mail_subject, $mail_data, 5);
+			} else {
+				$mail = new TikiMail();
+				$mail->setText($mail_data);
+				$mail->setSubject($mail_subject);
+				if (!$mail->send(array($sender_email))) {
+					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+					return false;
+				} elseif (empty($again)) {
+					$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
+				} else {
+					$smarty->assign('msg', tra('The administrator has not yet validated your account. Please wait.'));
+				}
+			}
+		} elseif ($validateUsers == 'y') {
+			$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+			$mail = new TikiMail();
+			$mail->setText($mail_data);
+			$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
+			$mail->setSubject($mail_data);
+			if (!$mail->send(array($email))) {
+				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+				return false;
+			} elseif (empty($again)) {
+				$smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
+			} else {
+				$smarty->assign('msg', tra('You must validate your account first. An email has been sent to you'));
+			}
+		}
+		return true;
 	}
 
 	function set_registrationChoice($groups, $flag) {

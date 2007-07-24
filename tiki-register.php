@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.87 2007-07-03 18:37:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.88 2007-07-24 15:10:30 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-07-03 18:37:45 $
+ * @date last-modified: $Date: 2007-07-24 15:10:30 $
  */
 
 // Initialization
@@ -181,53 +181,16 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 	
 	if ($email_valid == 'y') {
 		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
-			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
 			$apass = addslashes(md5($tikilib->genPass()));
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
-			$machine =$tikilib->httpPrefix().$foo1;
-			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
+			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], 'n');
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}	
-			
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
-			$smarty->assign('mail_machine',$machine);
-			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-			$smarty->assign('mail_user',$_REQUEST["name"]);
-			$smarty->assign('mail_apass',$apass);
-			$smarty->assign('mail_email',$_REQUEST['email']);
-			include_once("lib/notifications/notificationemaillib.php");
-			if (isset($validateRegistration) and $validateRegistration == 'y') {
-				$smarty->assign('msg',$smarty->fetch('mail/user_validation_waiting_msg.tpl'));
-				if ($sender_email == NULL or !$sender_email) {
-					include_once('lib/messu/messulib.php');
-					$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
-					$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-					$messulib->post_message($contact_user,$contact_user,$contact_user,'',$mail_subject,$mail_data,5);
-				} else {
-					$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
-					$mail = new TikiMail();
-					$mail->setText($mail_data);
-					$mail_data = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-					$mail->setSubject($mail_data);
-					if (!$mail->send(array($sender_email)))
-						$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
-				}
-			} else {
-				$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
-				$mail = new TikiMail();
-				$mail->setText($mail_data);
-				$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
-				$mail->setSubject($mail_data);
-				if (!$mail->send(array($_REQUEST["email"])))
-					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
-				else
-					$smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
-			}
 			$smarty->assign('showmsg','y');
 		} else {
-			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', 'n');
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}			
