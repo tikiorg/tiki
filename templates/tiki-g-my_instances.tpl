@@ -31,7 +31,7 @@
             {/if}
             {if $instance.isAutoRouted eq 'n' and $instance.actstatus eq 'completed'}
               {*send*}
-              <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$instance.instanceId}&amp;aid={$instance.activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
+              <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$instance.instanceId}&amp;aid={$instance.activityId}"><img border='0' title='{tr}Send Instance{/tr}' alt='{tr}Send Instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
             {else}
               <td><img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" /></td>
             {/if}

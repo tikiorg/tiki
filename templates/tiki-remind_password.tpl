@@ -21,7 +21,7 @@
     <td class="formcolor">{tr}Email{/tr}</td>
     <td class="formcolor"><input type="text" name="email" /></td>
   </tr><tr>
-    <td class="formcolor" colspan="2"><input type="submit" name="remind" value="{tr}send me my password{/tr}" /></td>
+    <td class="formcolor" colspan="2"><input type="submit" name="remind" value="{tr}Send me my Password{/tr}" /></td>
   </tr>  
   </table>
   </form>

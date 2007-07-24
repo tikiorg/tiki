@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 <a class="linkbut" href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a>
  <a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a> 
- <a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>
+ <a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}Send Newsletters{/tr}</a>
 <br /><br />
 <table class="normal">
 <tr>

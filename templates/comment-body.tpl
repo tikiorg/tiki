@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.4 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.5 2007-07-24 18:12:49 jyhem Exp $ *}
 <div class="content">
 
 	<div class="author">
@@ -38,7 +38,7 @@
 				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}"><img src="pics/icons/user_go.png" border="0" alt="{tr}private message{/tr}" title="{tr}private message{/tr}" /></a>
 			{/if}
 			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0}  
-				<a href="mailto:{$comment.user_email|escape:'hex'}"><img src="pics/icons/email.png" alt="{tr}send email to user{/tr}" title="{tr}send email to user{/tr}" border='0' /></a>
+				<a href="mailto:{$comment.user_email|escape:'hex'}"><img src="pics/icons/email.png" alt="{tr}Send eMail to User{/tr}" title="{tr}Send eMail to User{/tr}" border='0' /></a>
 			{/if}
 			</span>
 			<span class="infos">

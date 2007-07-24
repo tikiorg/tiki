@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.37 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.38 2007-07-24 18:12:49 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -11,7 +11,7 @@
 
 <div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}Send Newsletters{/tr}</a></span>
 </div>
 
 <h2>{tr}Create/edit newsletters{/tr}</h2>
@@ -90,7 +90,7 @@
 border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" /></a>
 <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0"  width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}subscriptions{/tr}"><img src="pics/icons/group.png" border="0" width="16" height="16" alt='{tr}subscriptions{/tr}' /></a>
-<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}send newsletter{/tr}"><img border="0" width="16" height="16" src="pics/icons/email.png" alt="{tr}send newsletter{/tr}" /></a>
+<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}"><img border="0" width="16" height="16" src="pics/icons/email.png" alt="{tr}Send Newsletter{/tr}" /></a>
 <a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}archives{/tr}"><img border="0" width="16" height="16" src="pics/icons/database.png" alt="{tr}archives{/tr}" /></a>
 </td>
 </tr>

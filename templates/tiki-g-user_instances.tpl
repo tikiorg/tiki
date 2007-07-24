@@ -147,7 +147,7 @@
       {/if}
 	  {if $items[ix].isAutoRouted eq 'n' and $items[ix].actstatus eq 'completed'}
 	  {*send*}
-	  <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
+	  <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}Send Instance{/tr}' alt='{tr}Send Instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
 	  {/if}
 	  {if $items[ix].isInteractive eq 'y' and $items[ix].status eq 'active'}
 	  {*run*}

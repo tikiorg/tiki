@@ -43,7 +43,7 @@
             {/if}
             {if $process.isAutoRouted eq 'n' and $process.actstatus eq 'completed'}
               {*send*}
-              <a href="tiki-g-user_instances.php?send=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a>
+              <a href="tiki-g-user_instances.php?send=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}Send Instance{/tr}' alt='{tr}Send Instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a>
             {else}
               <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
             {/if}

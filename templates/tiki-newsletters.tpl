@@ -84,7 +84,7 @@
 <td>{$channels[user].description}</td>
 <td>{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to newsletter{/tr}"><img src="img/icons2/icn_members.gif" border="0" width="16" height="16" alt='{tr}subscriptions{/tr}' /></a>{/if}
 {if $channels[user].tiki_p_admin_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Admin{/tr}"><img src="img/icons/config.gif" border="0"  width="16" height="16" alt="{tr}Admin{/tr}" /></a>{/if}
-{if $channels[user].tiki_p_send_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}send newsletter{/tr}"><img border="0" src="img/icons/email.gif" alt="{tr}send newsletter{/tr}" /></a>{/if}</td>
+{if $channels[user].tiki_p_send_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}"><img border="0" src="img/icons/email.gif" alt="{tr}Send Newsletter{/tr}" /></a>{/if}</td>
 </tr>
 {/if}
 {/section}
