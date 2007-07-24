@@ -96,7 +96,20 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
-
+{if ($mid eq 'tiki-editpage.tpl')}
+<script language="JavaScript">
+{literal}
+  var needToConfirm = true;
+  
+  window.onbeforeunload = confirmExit;
+  function confirmExit()
+  {
+    if (needToConfirm)
+      return "You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?";
+  }
+{/literal}
+</script>
+{/if}
 </head>
 
 <body {if isset($section) and $section eq 'wiki page' and $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.115 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.116 2007-07-24 23:26:21 ricks99 Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -51,12 +51,12 @@
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 {if $preview}
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 {/if}
 {/if}
 {if $page_ref_id}
@@ -96,7 +96,7 @@
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
 <tr class="formcolor"><td>{tr}Apply template{/tr}:</td><td>
-<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
+<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
 <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
@@ -323,7 +323,7 @@ function searchrep() {
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
 {if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
-<input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" />
+<input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm = false;" />
 {/if}
 &nbsp;<input type="hidden" name="page" value="{$page|escape}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
