@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.26 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.27 2007-07-24 23:41:54 ricks99 Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -65,7 +65,7 @@ function taginsert(area_name,tagid)
   <div>
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
     {section name=qtg loop=$quicktags}
-      <a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');">
+      <a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
         <img src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' title='{tr}{$quicktags[qtg].taglabel}{/tr}' border='0' />
       </a>
       {cycle name='cycle'|cat:$qtnum}
