@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.41 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.42 2007-07-24 15:23:51 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -270,7 +270,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
    </td>
 </tr>
 </table>
-<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}all{/tr}</a>
+<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}All{/tr}</a>
 {section name=ix loop=$letters}
 <a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
 {/section}
@@ -328,7 +328,7 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
     <input type="hidden" name="attach1type" value="{$attach1type|escape}" />
     <input type="hidden" name="attach2type" value="{$attach2type|escape}" />
     <input type="hidden" name="attach3type" value="{$attach3type|escape}" />
-    <input type="submit" name="send" value="{tr}send{/tr}" />
+    <input type="submit" name="send" value="{tr}Send{/tr}" />
     <table >
     <tr class="formcolor"><td><a title="{tr}select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
     <tr class="formcolor"><td>{tr}cc{/tr}</td><td><input id="cc" type="text" name="cc" value="{$cc|escape}" /></td><td>{tr}bcc{/tr}</td><td><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
@@ -374,7 +374,7 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
           <td><input type="text" name="addNickname[{$smarty.section.ix.index}]" /></td>
       </tr>
       {/section}
-      <tr><td>&nbsp;</td><td><input type="submit" name="add_contacts" value="{tr}add contacts{/tr}" /></td></tr>
+      <tr><td>&nbsp;</td><td><input type="submit" name="add_contacts" value="{tr}Add Contacts{/tr}" /></td></tr>
       </table>
       </form>
     {/if}

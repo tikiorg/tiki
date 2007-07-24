@@ -20,9 +20,9 @@
 		{if $user_watching_blog eq 'n'}
 		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img border='0' width='16' height='16' alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='pics/icons/eye.png' /></a>
 		{else}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border='0' width='16' height='16' alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='pics/icons/no_eye.png' /></a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border='0' width='16' height='16' alt='{tr}Stop Monitoring this Blog{/tr}' title='{tr}Stop Monitoring this Blog{/tr}' src='pics/icons/no_eye.png' /></a>
 		{/if}
 		{/if}
 </span>
-({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
+({$posts} {tr}Posts{/tr} | {$hits} {tr}Visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
 </div>

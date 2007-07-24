@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.31 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.32 2007-07-24 15:23:40 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -55,7 +55,7 @@
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {if $poll_list_categories eq 'y'}<td class="heading">{tr}categories{/tr}</td>{/if}
 {if $poll_list_objects eq 'y'}<td class="heading">{tr}objects{/tr}</td>{/if}
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-shoutbox.tpl,v 1.2 2006-08-29 20:19:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-shoutbox.tpl,v 1.3 2007-07-24 15:23:53 jyhem Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 	{tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}
@@ -7,7 +7,7 @@
 			<form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">
 				<div style="text-align: center">
 					<textarea rows="5" cols="16" class="tshoutbox" name="shout_msg"></textarea>
-					<button type="submit" name="shout_send">{tr}send{/tr}</button>
+					<button type="submit" name="shout_send">{tr}Send{/tr}</button>
 				</div>
 			</form>
 		{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.97 2007-07-24 14:40:38 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.98 2007-07-24 15:23:51 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -29,14 +29,14 @@
 {if $user_watching_forum eq 'n'}
 <a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics of this forum{/tr}'><img border='0' alt='{tr}monitor topics of this forum{/tr}' src='pics/icons/eye.png' /></a>
 {else}
-<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}stop monitoring topics of this forum{/tr}'><img border='0' alt='{tr}stop monitoring topics of this forum{/tr}' src='pics/icons/no_eye.png' /></a>
+<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
 {/if}
 {/if}
 {if $user and $feature_user_watches eq 'y'}
 	{if $user_watching_forum_topic_and_thread eq 'n'}
 		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics and threads of this forum{/tr}'><img border='0' alt='{tr}monitor topics and threads of this forum{/tr}' src='pics/icons/eye_magnifier.png' /></a>
 	{else}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}stop monitoring topics and threads of this forum{/tr}'><img border='0' alt='{tr}stop monitoring topics and threadsof this forum{/tr}' src='pics/icons/no_eye.png' /></a>
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
 	{/if}
 {/if}
 {if $feature_forum_local_search eq 'y' or $feature_forum_local_tiki_search eq 'y'}
@@ -297,7 +297,7 @@ a moderator approves it.{/tr}</small>
   {if $forum_info.topic_smileys eq 'y'}
   <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}emot{/tr}</a></td>
   {/if}
-  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
+  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
   {if $forum_info.topics_list_replies eq 'y'}
   	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
   {/if}
@@ -308,7 +308,7 @@ a moderator approves it.{/tr}</small>
   	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'average_desc'}average_asc{else}average_desc{/if}">{tr}pts{/tr}</a></td>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></td>
   {/if}
   {if $forum_info.topics_list_author eq 'y'}
   	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}" title="sort by">{tr}author{/tr}</a></td>

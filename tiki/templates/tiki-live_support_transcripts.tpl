@@ -6,7 +6,7 @@
 <table>
 <tr>
 	<td>{tr}Find{/tr}</td>
-	<td>{tr}username{/tr}</td>
+	<td>{tr}Username{/tr}</td>
 	<td>{tr}operator{/tr}</td>	
 	<td>&nbsp;</td>
 </tr>
@@ -15,7 +15,7 @@
 	<td><input type="text" name="find" value="{$find|escape}" /></td>
 	<td>
 		<select name="filter_user">
-			<option value="" {if $filter_user eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
+			<option value="" {if $filter_user eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$users}
 				<option value="{$users[ix]|escape}" {if $users[ix] eq $filter_user}selected="selected"{/if}>{$users[ix]}</option>
 			{/section}
@@ -23,7 +23,7 @@
 	</td>
 	<td>
 		<select name="filter_operator">
-			<option value="" {if $filter_operator eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
+			<option value="" {if $filter_operator eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$operators}
 				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$operators[ix]}</option>
 			{/section}
@@ -36,7 +36,7 @@
 <table class="normal">
 <tr>
 <td  class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}username{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}Username{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reason_desc'}reason_asc{else}reason_desc{/if}">{tr}reason{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}operator{/tr}</a></td>
 <td  class="heading">{tr}msgs{/tr}</td>

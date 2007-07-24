@@ -13,7 +13,7 @@
 <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='pics/icons/text_list_numbers.png' border='0' alt='{tr}Edit Items{/tr}' title='{tr}Edit Items{/tr}' width='16' height='16' /></a>
 {/if}
 <a href="tiki-charts.php"><img src='pics/icons/table.png' border='0' alt='{tr}List Charts{/tr}' title='{tr}List Charts{/tr}' /></a>
-<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='pics/icons/chart_line.png' alt='{tr}last chart{/tr}' title='{tr}last chart{/tr}' width='16' height='16' /></a>
+<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='pics/icons/chart_line.png' alt='{tr}Last Chart{/tr}' title='{tr}Last Chart{/tr}' width='16' height='16' /></a>
 {if $chart_info.frequency > 0}
     <br />
 	{if $prevPeriod > 0}

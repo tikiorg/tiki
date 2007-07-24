@@ -44,7 +44,7 @@
 			<tr><td class="form">{tr}Bottom Margin (mm){/tr}:</td><td class="form"><input id="bm" type="text" size="3" name="bottommargin" value="{$bottommargin|escape}"/></td></tr>
 
 			
-			<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
+			<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
 		</table>
 		</td>
 		<td>
@@ -138,7 +138,7 @@
 {/section}
 </select>
 </td><td class="normal" align="center">
-<input type="submit" name="addpage" value="{tr}add page{/tr} ---&gt;" /><br />
+<input type="submit" name="addpage" value="{tr}Add Page{/tr} ---&gt;" /><br />
 <input type="submit" name="rempage" value="&lt;--- {tr}Remove Page{/tr}" /><br />
 <input type="submit" name="clearpages" value="{tr}reset{/tr}" />
 </td><td class="normal" align="center">

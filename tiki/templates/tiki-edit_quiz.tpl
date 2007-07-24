@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.33 2007-07-24 14:40:33 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.34 2007-07-24 15:23:49 jyhem Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -14,7 +14,7 @@
 
 <div class="navbar">
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 </div>
 
 <h2>{tr}Create/edit quizzes{/tr}</h2>
@@ -120,7 +120,7 @@
 
 <!-- begin form for searching quizzes --->
 
-<h2>{tr}quizzes{/tr}</h2>
+<h2>{tr}Quizzes{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -154,12 +154,12 @@
 </td>
 
 <!-- I don't know why but these column head will not behave properly with sort -->
-<td class="heading">{tr}questions{/tr}</td>
-<td class="heading">{tr}results{/tr}</td>
+<td class="heading">{tr}Questions{/tr}</td>
+<td class="heading">{tr}Results{/tr}</td>
 
 {* still stuck on being able to sort by number of questions and results!
 Results need to be sortable so as to give admin quick idea of user participation
-<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}results{/tr}</a>
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}Results{/tr}</a>
 </td>
 *}
 
@@ -179,8 +179,8 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="odd">
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}Remove{/tr}</a>
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}questions{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}results{/tr}</a>
+   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}Questions{/tr}</a>
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}Results{/tr}</a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}Perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 </td>
 </tr>
@@ -196,8 +196,8 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="even">
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}Remove{/tr}</a>
    <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}questions{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}results{/tr}</a>
+   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}Questions{/tr}</a>
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}Results{/tr}</a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}Perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 </td>
 </tr>

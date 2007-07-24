@@ -9,7 +9,7 @@
 {tr}Search{/tr}: 
 <select name="how">
 <option value="or" {if $how eq 'or'}selected="selected"{/if}>{tr}any{/tr}</option>
-<option value="and" {if $how eq 'and'}selected="selected"{/if}>{tr}all{/tr}</option>
+<option value="and" {if $how eq 'and'}selected="selected"{/if}>{tr}All{/tr}</option>
 </select>
 <input type="text" name="words" value="{$words|escape}" size="30" />
 <input type="hidden" name="where" value="all" />

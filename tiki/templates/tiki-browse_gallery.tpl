@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.50 2007-07-24 14:40:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.51 2007-07-24 15:23:41 jyhem Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -34,7 +34,7 @@
 		{if $user_watching_gal eq 'n'}
 			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}monitor this gallery{/tr}">{html_image file='img/icons/icon_watch.png' border='0' alt="{tr}monitor this gallery{/tr}"}</a>
 		{else}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}stop monitoring this gallery{/tr}">{html_image file='img/icons/icon_unwatch.png' border='0' alt="{tr}stop monitoring this gallery{/tr}"}</a>
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}">{html_image file='img/icons/icon_unwatch.png' border='0' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
 		{/if}
 	{/if}
 </div>
@@ -81,7 +81,7 @@
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 			{if $showxysize=='y' || $showfilesize=='y'}({$item.numimages} Images){/if}
-			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]<br />{/if}
+			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br />{/if}
                         </small>
 	  </td>
          {if $key%$rowImages eq $rowImages2}
@@ -108,7 +108,7 @@
 		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
 		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
 		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
-		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]{/if}
+		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]{/if}
 	  {else}
 	  	{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}
 	  {/if}

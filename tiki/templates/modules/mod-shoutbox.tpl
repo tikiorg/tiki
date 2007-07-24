@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.29 2007-03-21 20:22:16 gillesm Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.30 2007-07-24 15:23:51 jyhem Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
@@ -9,7 +9,7 @@
       <div align="center">
         <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
 	<br />
-	<input type="submit" name="shout_send" value="{tr}send{/tr}" />
+	<input type="submit" name="shout_send" value="{tr}Send{/tr}" />
       </div><br />
       </form>
     {/if}

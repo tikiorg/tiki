@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.39 2007-07-24 14:40:40 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.40 2007-07-24 15:23:53 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -71,7 +71,7 @@
     &nbsp;<a href="tiki-index.php" class="linkmenu">{tr}home{/tr}</a><br />
   {/if}
   {if $feature_lastChanges eq 'y' and $tiki_p_view eq 'y'}
-    &nbsp;<a href="tiki-lastchanges.php" class="linkmenu">{tr}last changes{/tr}</a><br />
+    &nbsp;<a href="tiki-lastchanges.php" class="linkmenu">{tr}Last Changes{/tr}</a><br />
   {/if}
   {if $feature_dump eq 'y' and $tiki_p_view eq 'y' and $wiki_dump_exists eq 'y'}
     &nbsp;<a href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar" class="linkmenu">{tr}dump{/tr}</a><br />
@@ -90,7 +90,7 @@
     &nbsp;<a href="tiki-print_pages.php" class="linkmenu">{tr}Print{/tr}</a><br />
   {/if}
   {if $tiki_p_send_pages eq 'y' and $feature_comm eq 'y'}
-    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}send{/tr}</a><br />
+    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_received_pages eq 'y'}
     &nbsp;<a href="tiki-received_pages.php" class="linkmenu">{tr}received pages{/tr}</a><br />

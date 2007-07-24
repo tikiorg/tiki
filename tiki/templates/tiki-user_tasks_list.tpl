@@ -9,7 +9,7 @@
 			<div align="right">
 				{tr}Tasks per page{/tr}
 				<select name="tasks_maxRecords">
-				<option value="-1" {if $tasks_maxRecords eq -1} selected="selected"{/if}>{tr}all{/tr}</option>
+				<option value="-1" {if $tasks_maxRecords eq -1} selected="selected"{/if}>{tr}All{/tr}</option>
 				<option value="2" {if $tasks_maxRecords eq 2} selected="selected"{/if}>2</option>
 				<option value="5" {if $tasks_maxRecords eq 5} selected="selected"{/if}>5</option>
 				<option value="10" {if $tasks_maxRecords eq 10} selected="selected"{/if}>10</option>
@@ -23,7 +23,7 @@
 	</tr>
 <tr>
 <td class="heading" style="text-align:right;" >&nbsp;</td>
-<td class="heading" ><a class="tableheading" href="tiki-user_tasks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-user_tasks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-user_tasks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-user_tasks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'end_desc'}end_asc{else}end_desc{/if}">{tr}end{/tr}</a></td>
 <td style="text-align:right;" class="heading" ><a class="tableheading" href="tiki-user_tasks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'priority_desc'}priority_asc{else}priority_desc{/if}">{tr}priority{/tr}</a></td>

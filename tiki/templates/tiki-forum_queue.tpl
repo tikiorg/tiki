@@ -9,7 +9,7 @@
 <input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
 <table class="normal">
 <tr>
-	<td class="formcolor">{tr}title{/tr}</td>
+	<td class="formcolor">{tr}Title{/tr}</td>
 	<td class="formcolor">
 		<input type="text" name="title" value="{$msg_info.title|escape}" />
 	</td>

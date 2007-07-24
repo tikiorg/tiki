@@ -25,7 +25,7 @@
 {if $user_watching_page eq 'n'}
 <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add" class="tablink">{tr}Monitor this Page{/tr}</a></span>
 {else}
-<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove" class="tablink">{tr}stop monitoring this page{/tr}</a></span>
+<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove" class="tablink">{tr}Stop Monitoring this Page{/tr}</a></span>
 {/if}
 {/if}
 

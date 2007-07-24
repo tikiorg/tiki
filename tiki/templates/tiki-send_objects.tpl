@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.23 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.24 2007-07-24 15:23:50 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -49,8 +49,8 @@
 <option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName}</option>
 {/section}
 </select>
-<input type="submit" name="addpage" value="{tr}add page{/tr}" />
-<input type="submit" name="clearpages" value="{tr}clear{/tr}" />
+<input type="submit" name="addpage" value="{tr}Add Page{/tr}" />
+<input type="submit" name="clearpages" value="{tr}Clear{/tr}" />
 </div>
 </div>
 {/if}
@@ -74,8 +74,8 @@
 <option value="{$articles[ix].articleId|escape}">{$articles[ix].articleId}:{$articles[ix].title}</option>
 {/section}
 </select>
-<input type="submit" name="addarticle" value="{tr}add article{/tr}" />
-<input type="submit" name="cleararticles" value="{tr}clear{/tr}" />
+<input type="submit" name="addarticle" value="{tr}Add Article{/tr}" />
+<input type="submit" name="cleararticles" value="{tr}Clear{/tr}" />
 </div>
 </div>
 {/if}
@@ -88,11 +88,11 @@
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <table>
-<tr><td class="form">{tr}site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>
-<tr><td class="form">{tr}path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
-<tr><td class="form">{tr}username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
-<tr><td class="form">{tr}password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
-<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
+<tr><td class="form">{tr}Site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>
+<tr><td class="form">{tr}Path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
+<tr><td class="form">{tr}Username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
+<tr><td class="form">{tr}Password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
+<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
 </table>
 </div>
 </div>

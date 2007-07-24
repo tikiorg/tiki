@@ -41,8 +41,8 @@
 <option value="{$structures[ix].page_ref_id|escape}">{$structures[ix].pageName}</option>
 {/section}
 </select><br /><br />
-<input type="submit" name="addpage" value="{tr}add page{/tr}" />
-<input type="submit" name="addstructure" value="{tr}add structure{/tr}" />
+<input type="submit" name="addpage" value="{tr}Add Page{/tr}" />
+<input type="submit" name="addstructure" value="{tr}Add Structure{/tr}" />
 <input type="submit" name="clearpages" value="{tr}clear page list{/tr}" /><br />
 </form>
 <br />

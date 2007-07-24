@@ -15,7 +15,7 @@
 
 </h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a>
 {if $tiki_p_admin_quizzes eq 'y'}<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;clear={$quizId}">{tr}clear stats{/tr}</a>{/if}
@@ -48,7 +48,7 @@ Set the names of the table headings to reflect the names of the db
 <a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></td>
 <td class="heading">
 <! -- sort results -->
-<a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}result{/tr}</a></td>
+<a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}Result{/tr}</a></td>
 <td class="heading">{tr}P/F{/tr}</td>
 </tr>
 {section name=user loop=$channels}
@@ -58,7 +58,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="odd">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].timeTaken} secs</td>
 <td class="odd">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
-<td class="odd">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}result{/tr}</a>
+<td class="odd">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}Result{/tr}</a>
 {if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
@@ -69,7 +69,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="even">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="even">{$channels[user].timeTaken} secs</td>
 <td class="even">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
-<td class="even">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}result{/tr}</a>
+<td class="even">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}Result{/tr}</a>
 {if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>

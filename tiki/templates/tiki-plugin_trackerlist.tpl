@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.30 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.31 2007-07-24 15:23:50 jyhem Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -51,7 +51,7 @@
 	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}LastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<td class="heading" width="5%">{tr}coms{/tr}</td>
+<td class="heading" width="5%">{tr}Coms{/tr}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <td class="heading" width="5%">{tr}atts{/tr}</td>
