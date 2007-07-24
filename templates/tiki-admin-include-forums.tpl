@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.22 2007-07-13 08:54:25 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.23 2007-07-24 17:12:47 jyhem Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div>
@@ -18,7 +18,7 @@
               {/section}
               </select></td>
           <td><input type="submit" name="homeforumprefs"
-              value="{tr}ok{/tr}" /></td>
+              value="{tr}OK{/tr}" /></td>
         </tr></table>
       </form>
   </div>

@@ -29,7 +29,7 @@
 	<td style="text-align:right;"  class="heading">{tr}pos{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}pre{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}permanency{/tr}</td>
-	<td class="heading">{tr}item{/tr}</td>
+	<td class="heading">{tr}Item{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}chg{/tr}</td>
 	{if $chart_info.showVotes eq 'y'}
 	<td style="text-align:right;"  class="heading">{tr}votes{/tr}</td>

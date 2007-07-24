@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.31 2007-07-24 14:40:28 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.32 2007-07-24 17:12:47 jyhem Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -18,7 +18,7 @@
 <option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true}</option>
 {/section}
 </select></td>
-<td><input type="submit" name="galset" value="{tr}ok{/tr}" /></td></tr>
+<td><input type="submit" name="galset" value="{tr}OK{/tr}" /></td></tr>
 </table>
 </form>
 </div>

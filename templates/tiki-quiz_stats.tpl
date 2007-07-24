@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.14 2007-07-24 14:40:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.15 2007-07-24 17:12:49 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id320349" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
@@ -10,7 +10,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 <div class="navbar"><a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a>
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>

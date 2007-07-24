@@ -1,16 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.105 2007-07-20 21:05:36 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.106 2007-07-24 17:12:48 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Users Management" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
+<a href="{$helpurl}Users Management" target="tikihelp" class="tikihelp" title="{tr}Admin Users{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Users Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=login" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+<a href="tiki-admin.php?page=login" title="{tr}Admin Feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
 </h1>
 
@@ -177,7 +177,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
     <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
     <option value="set_default_groups">{tr}set default groups{/tr}</option>
   </select>
-  <input type="submit" value="{tr}ok{/tr}" />
+  <input type="submit" value="{tr}OK{/tr}" />
   {elseif $group_management_mode eq 'y'}
   <select name="group_management">
   	<option value="add">{tr}Assign selected to{/tr}</option>
@@ -188,14 +188,14 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   {section name=ix loop=$groups}
   	<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
   {/section}
-  </select><br /><input type="submit" value="{tr}ok{/tr}" /><div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
+  </select><br /><input type="submit" value="{tr}OK{/tr}" /><div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
   {elseif $set_default_groups_mode eq 'y'}
   {tr}Set the default group of the selected users to{/tr}:<br />
   <select name="checked_group" size="20">
   {section name=ix loop=$groups}
   	<option value="{$groups[ix].groupName|escape}" />{$groups[ix].groupName}</option>
   {/section}
-  </select><br /><input type="submit" value="{tr}ok{/tr}" />
+  </select><br /><input type="submit" value="{tr}OK{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
   </p>

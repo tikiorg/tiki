@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.152 2007-07-24 15:23:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.153 2007-07-24 17:12:50 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -491,7 +491,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 <option value="delete">{tr}Delete{/tr}</option>
 </select>
 <input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="submit" name="act" value="{tr}ok{/tr}" />
+<input type="submit" name="act" value="{tr}OK{/tr}" />
 </div>
 {/if}
 </form>

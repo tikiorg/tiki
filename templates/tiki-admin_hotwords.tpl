@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.28 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.29 2007-07-24 17:12:47 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}admin hotwords{/tr}">
+<a href="{$helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}Admin Hotwords{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin hotwords template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Hotwords Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
 <h2>{tr}Add Hotword{/tr}</h2>

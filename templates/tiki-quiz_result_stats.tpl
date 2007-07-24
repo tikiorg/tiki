@@ -19,7 +19,7 @@
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a><br /><br />
 
 <! -- begin table/ it has no internal linking... that needs fixing -->
 

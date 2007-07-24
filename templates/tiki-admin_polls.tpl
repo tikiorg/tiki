@@ -1,12 +1,12 @@
-{* $Id: tiki-admin_polls.tpl,v 1.32 2007-07-24 15:23:40 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.33 2007-07-24 17:12:47 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}admin polls{/tr}">
+<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}Admin Polls{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Polls Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 {if $tiki_p_admin eq 'y'}

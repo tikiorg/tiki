@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.29 2007-07-24 14:40:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.30 2007-07-24 17:12:49 jyhem Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=search" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+<a href="tiki-admin.php?page=search" title="{tr}Admin Feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
 </h1>
 {/if}

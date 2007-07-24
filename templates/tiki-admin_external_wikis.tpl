@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
   
 {if $feature_help eq 'y'}
-<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}Admin External Wikis{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

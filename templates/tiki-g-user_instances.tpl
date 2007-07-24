@@ -30,7 +30,7 @@
 	<small>{tr}proc{/tr}</small>
 </td>
 <td >
-	<small>{tr}status{/tr}</small>
+	<small>{tr}Status{/tr}</small>
 </td>
 {*<td >
 	<small>{tr}act status{/tr}</small>

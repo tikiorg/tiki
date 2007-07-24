@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.20 2007-07-24 15:23:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.21 2007-07-24 17:12:48 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -208,7 +208,7 @@
   //-->
   </script>
   <noscript>
-    <input type="submit" value="{tr}ok{/tr}" />
+    <input type="submit" value="{tr}OK{/tr}" />
   </noscript>
   </p>
 {/if}

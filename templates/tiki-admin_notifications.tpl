@@ -1,11 +1,11 @@
 <h1><a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Mail Notifications" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
+<a href="{$helpurl}Mail Notifications" target="tikihelp" class="tikihelp" title="{tr}Admin Email Notifications{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Notifications Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 {if empty($sender_email)}

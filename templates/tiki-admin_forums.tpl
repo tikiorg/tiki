@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.68 2007-07-24 15:23:40 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.69 2007-07-24 17:12:47 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -6,7 +6,7 @@
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Forums Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 <div class="navbar">
@@ -121,7 +121,7 @@
 				<td class="formcolor">{tr}Reads{/tr}</td>
 				<td class="formcolor">{tr}Points{/tr}</td>
 				<td class="formcolor">{tr}Last post{/tr}</td>
-				<td class="formcolor">{tr}author{/tr}</td>
+				<td class="formcolor">{tr}Author{/tr}</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if} /></td>

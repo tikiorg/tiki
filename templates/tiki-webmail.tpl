@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.42 2007-07-24 15:23:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.43 2007-07-24 17:12:50 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $feature_help eq 'y'}
@@ -10,7 +10,7 @@
 <img border="0" src="img/icons/info.gif" alt="{tr}Edit{/tr}" /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=webmail" title="{tr}admin feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}admin feature{/tr}"}</a>
+<a href="tiki-admin.php?page=webmail" title="{tr}Admin Feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
 </h1>
 

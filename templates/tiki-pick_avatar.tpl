@@ -52,7 +52,7 @@ function subavt() {
 {/literal}
 </script>
 
-<h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}items{/tr}</h2>
+<h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">
 <input id="avatar" type="hidden" name="avatar" value="{$yours|escape}" />
 <table class="normal">

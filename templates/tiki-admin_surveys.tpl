@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.29 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.30 2007-07-24 17:12:47 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
@@ -9,7 +9,7 @@
 
 <div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
 </div>
 
 {if $info.surveyId > 0}
@@ -78,7 +78,7 @@
 <!--  table: sort by description-->
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 <!--  table: sort by stat: which appears rediculous becuase there is nothing to sort-->
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}status{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}Status{/tr}</a></td>
 <!--  table: sort by question but it doesn't work and I don't know why-->
 {*
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</td>

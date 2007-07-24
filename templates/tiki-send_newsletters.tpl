@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.25 2007-07-24 15:23:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.26 2007-07-24 17:12:49 jyhem Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
-{if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a></span></div>{/if}
+{if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
 {assign var=area_name value="editnl"}
 {if $emited eq 'y'}
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />
