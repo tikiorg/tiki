@@ -9,7 +9,7 @@
 
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin live support tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Live Support tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 
@@ -141,7 +141,7 @@
 	<tr>
 		<td class="formcolor">&nbsp;</td>
 		<td class="formcolor">
-			<input type="submit" name="adduser" value="{tr}set as operator{/tr}" />
+			<input type="submit" name="adduser" value="{tr}Set as Operator{/tr}" />
 		</td>
 	</tr>
 </table>

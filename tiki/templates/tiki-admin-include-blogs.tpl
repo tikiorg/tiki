@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.25 2007-06-16 16:02:04 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.26 2007-07-24 17:12:47 jyhem Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -17,7 +17,7 @@
                 <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:$blog_list_title_len:"...":true}</option>
               {/section}
               </select></td>
-          <td><input type="submit" name="blogset" value="{tr}ok{/tr}" /></td>
+          <td><input type="submit" name="blogset" value="{tr}OK{/tr}" /></td>
         </tr></table>
       </form>
   </div>

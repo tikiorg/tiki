@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.32 2007-06-04 22:45:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-fgal.tpl,v 1.33 2007-07-24 17:12:47 jyhem Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -18,7 +18,7 @@
               {/section}
               </select></td>
 			<td><input type="submit" name="filegalset"
-              value="{tr}ok{/tr}" /></td>
+              value="{tr}OK{/tr}" /></td>
         </tr></table>
       </form>
   </div>

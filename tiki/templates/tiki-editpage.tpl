@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.114 2007-07-24 15:23:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.115 2007-07-24 17:12:48 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -112,7 +112,7 @@
 <a href="tiki-admin_poll_options.php?pollId={$poll_rated.info.pollId}">{$poll_rated.info.title}</a>
 <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page|escape:"url"}&amp;removepoll={$poll_rated.info.pollId}">{tr}disable{/tr}</a>
 {if $tiki_p_admin_poll eq 'y'}
-<span class="button2"><a class="linkbut" href="tiki-admin_polls.php">{tr}admin polls{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a></span>
 {/if}
 {else}
 {if count($polls_templates)}

@@ -237,7 +237,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 {if $more->devurl}Development : <br />{foreach key=ku item=iu from=$more->devurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}
 {if $more->help}{$more.help}<br />{/if}
 {if $more->help}{$more.help}<br />{/if}
-{if $more->author}{tr}author{/tr}: {$more->author[0]}<br />{/if}
+{if $more->author}{tr}Author{/tr}: {$more->author[0]}<br />{/if}
 {if $more->licence}{tr}licence{/tr}: {$more->licence}<br />{/if}
 
 {tr}Last Modification{/tr}: {$more->lastmodif}<br />

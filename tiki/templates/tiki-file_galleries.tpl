@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.60 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.61 2007-07-24 17:12:48 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}{if isset($edit_mode)}&amp;edit_mode=1{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
@@ -10,7 +10,7 @@
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}admin feature{/tr}" title="{tr}admin feature{/tr}" /></a>
+<a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}Admin Feature{/tr}" title="{tr}Admin Feature{/tr}" /></a>
 {/if}
 </h1>
 
@@ -90,7 +90,7 @@
 				<td class="formcolor">{tr}lastMod{/tr}</td>
 				<td class="formcolor">{tr}Created{/tr}</td>
 				<td class="formcolor">{tr}creator{/tr}</td>
-				<td class="formcolor">{tr}author{/tr}</td>
+				<td class="formcolor">{tr}Author{/tr}</td>
 			</tr>
 			<tr>
 				<td class="formcolor"><input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /></td>

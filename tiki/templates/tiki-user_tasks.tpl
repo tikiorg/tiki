@@ -90,7 +90,7 @@
 </table>
 </div>
 <br /><br />
-{if $admin_mode}<div align="center"><a class="highlight" >{tr}admin mode{/tr}</a></div><br />{/if}
+{if $admin_mode}<div align="center"><a class="highlight" >{tr}Admin Mode{/tr}</a></div><br />{/if}
 {* start ************ view  ***************}
 {if (($tiki_view_mode eq 'view') or ($tiki_view_mode eq 'preview'))}
 {include file=tiki-user_tasks_view.tpl}
