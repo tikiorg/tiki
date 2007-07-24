@@ -55,6 +55,7 @@ $calendarViewMode = $_SESSION['CalendarViewMode'];
 $calendarViewGroups = $_SESSION['CalendarViewGroups'];
 $calendarViewList = $_SESSION['CalendarViewList'];
 
+global $calendar_firstDayofWeek;
 if ($calendar_firstDayofWeek == 'user') {
   $strRef = "First day of week: Sunday (its ID is 0) - translators you need to localize this string!";
   //get_strings tra("First day of week: Sunday (its ID is 0) - translators you need to localize this string!");
@@ -266,6 +267,8 @@ if ($firstDayofWeek != 0) {
 $weeks = array();
 $cell = array();
 
+if (empty($myurl))
+	$myurl = 'tiki-calendar.php';
 $jscal_url = "$myurl?todate=%s";
 $smarty->assign('jscal_url', $jscal_url);
 
