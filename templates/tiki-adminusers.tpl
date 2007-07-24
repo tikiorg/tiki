@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.106 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.107 2007-07-24 18:03:32 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -82,7 +82,7 @@
 <td>{tr}Number of displayed rows{/tr}</td>
 <td><input type="text" size="4" name="numrows" value="{$numrows|escape}" /><td>
 </tr>
-<tr><td colspan="2"></td><td colspan="3"><a href="javascript:toggleBlock('search')" class="link"><img src="pics/icons/add.png" border='0' alt='{tr}more{/tr}' width='16' height='16' />&nbsp;{tr}more criteria{/tr}</a></td></tr>
+<tr><td colspan="2"></td><td colspan="3"><a href="javascript:toggleBlock('search')" class="link"><img src="pics/icons/add.png" border='0' alt='{tr}more{/tr}' width='16' height='16' />&nbsp;{tr}More Criteria{/tr}</a></td></tr>
 </table>
 <div  id="search" {if $filterGroup or $filterEmail}style="display:block;"{else}style="display:none;"{/if}>
 <table class="findtable">
@@ -237,7 +237,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
-{if $userinfo.login ne 'admin'}<a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:url}">{tr}assign to groups{/tr}: {$userinfo.login}</a>{/if}
+{if $userinfo.login ne 'admin'}<a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:url}">{tr}Assign to Groups{/tr}: {$userinfo.login}</a>{/if}
 {else}
 <h2>{tr}Add a new user{/tr}</h2>
 {/if}

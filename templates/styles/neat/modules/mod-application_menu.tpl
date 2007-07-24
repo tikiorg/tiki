@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.40 2007-07-24 15:23:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.41 2007-07-24 18:03:36 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -27,7 +27,7 @@
 {/if}
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-  &nbsp;<a href="tiki-calendar.php" class="linkmenu">{tr}calendar{/tr}</a><br />
+  &nbsp;<a href="tiki-calendar.php" class="linkmenu">{tr}Calendar{/tr}</a><br />
 {/if}
 
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}

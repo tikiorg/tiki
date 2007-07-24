@@ -37,7 +37,7 @@
 <tr><td class="formcolor">{tr}Email:{/tr}</td>        
     <td class="formcolor">
       <input type="text" id='femail' name="email" />
-      <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}use admin email{/tr}</a>
+      <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}Use Admin Email{/tr}</a>
     </td>
 </tr> 
 <tr><td class="formcolor">&nbsp;</td>
@@ -62,7 +62,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}">{tr}Event{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}">{tr}Object{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>

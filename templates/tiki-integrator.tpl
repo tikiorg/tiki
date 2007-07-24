@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-integrator.tpl,v 1.7 2007-07-24 14:40:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-integrator.tpl,v 1.8 2007-07-24 18:03:32 jyhem Exp $ *}
 
 <div class="integrated-page">
   {$data}
@@ -10,7 +10,7 @@
     {if $cached eq 'y'}
     <td><div class="button2">
       <a href="tiki-integrator.php?repID={$repID|escape}{if strlen($file) gt 0}&amp;file={$file}{/if}&amp;clear_cache" class="linkbut" title="{tr}Clear cached version and refresh cache{/tr}">
-        {tr}refresh{/tr}
+        {tr}Refresh{/tr}
       </a>
     </div></td>
     {/if}

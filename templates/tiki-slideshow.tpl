@@ -29,7 +29,7 @@
 {if $prev_slide > -1}
 <a class="buttons" accesskey="s" title="back to first [alt-s]" href="tiki-slideshow.php?page={$page|escape:url}&amp;slide={$prev_slide}">{$slide_prev_title|default:"previous"}</a>
 {else}
-<i>{tr}first{/tr}</i>
+<i>{tr}First{/tr}</i>
 {/if}
 </td>
 <td align="center"><a accesskey="p" title="previous [alt-p]" href="tiki-slideshow.php?page={$page|escape:url}" class="buttons">{$current_slide} of {$total_slides}</a></td>
@@ -37,7 +37,7 @@
 {if $next_slide < $total_slides}
 <a class="buttons" title="next [alt-space]" accesskey=" " href="tiki-slideshow.php?page={$page|escape:url}&amp;slide={$next_slide}">{$slide_next_title|default:"next"}</a>
 {else}
-<i>{tr}last{/tr}</i>
+<i>{tr}Last{/tr}</i>
 {/if}
 </td></tr>
 {/if}

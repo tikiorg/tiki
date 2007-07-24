@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.35 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.36 2007-07-24 18:03:32 jyhem Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -68,11 +68,11 @@
 {if $users[user].groupName != 'Anonymous' && $users[user].groupName != 'Registered'}
 <tr>
 <td class="{cycle advance=false}">{$users[user].groupName}
-{if $tiki_p_admin eq 'y'}<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}" title="{tr}assign perms to this group{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{/if}</td>
+{if $tiki_p_admin eq 'y'}<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}" title="{tr}Assign Perms to this Group{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{/if}</td>
 <td class="{cycle advance=false}">{tr}{$users[user].groupDesc}{/tr}</td>
 <td class="{cycle}">
 {if $users[user].what ne 'real'}
-<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}&amp;assign_user={$assign_user|escape:url}" title="{tr}assign user to group{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}assign{/tr}' /></a>
+<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}&amp;assign_user={$assign_user|escape:url}" title="{tr}Assign User to Group{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
 {else}
 <a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user|escape:url}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}unassign{/tr}' /></a>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.103 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.104 2007-07-24 18:03:35 jyhem Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -85,7 +85,7 @@
   </td></tr>
   {if $feature_maps eq 'y' or $feature_gmap eq 'y'}
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" />
-	{if $feature_gmap eq 'y'}<a href="tiki-gmap_locator.php?for=user{if $userinfo.login ne $user}&amp;view_user={$userinfo.login}{/if}">{tr}use google map locator{/tr}</a>{/if}</td></tr>
+	{if $feature_gmap eq 'y'}<a href="tiki-gmap_locator.php?for=user{if $userinfo.login ne $user}&amp;view_user={$userinfo.login}{/if}">{tr}Use Google Map locator{/tr}</a>{/if}</td></tr>
   <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   {/if}
 

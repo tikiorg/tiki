@@ -27,7 +27,7 @@
 
 
 {if $cached_page eq 'y'}
-<a title="{tr}refresh{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' width='16' height='16' alt='{tr}refresh{/tr}' /></a>
+<a title="{tr}Refresh{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' width='16' height='16' alt='{tr}Refresh{/tr}' /></a>
 {/if}
 
 {if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}

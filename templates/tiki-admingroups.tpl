@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.81 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.82 2007-07-24 18:03:32 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -124,7 +124,7 @@ title="{tr}Delete{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cr
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $groupname}
 <h2>{tr}Edit group{/tr} {$groupname}</h2>
-<a class="linkbut" href="tiki-assignpermission.php?group={$groupname}">{tr}assign permissions{/tr}</a>
+<a class="linkbut" href="tiki-assignpermission.php?group={$groupname}">{tr}Assign Permissions{/tr}</a>
 {else}
 <h2>{tr}Add new group{/tr}</h2>
 {/if}

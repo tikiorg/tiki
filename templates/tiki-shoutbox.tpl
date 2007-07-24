@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.28 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.29 2007-07-24 18:03:34 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -28,7 +28,7 @@
 <input type="hidden" name="msgId" value="{$msgId|escape}" />
 <input type="hidden" name="user" value="{$user}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

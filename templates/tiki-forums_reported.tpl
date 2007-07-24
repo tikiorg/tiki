@@ -31,7 +31,7 @@
 <table class="normal">
 <tr>
 <td  class="heading" ><input type="submit" name="del" value="x " /></td>
-<td class="heading" >{tr}message{/tr}</td>
+<td class="heading" >{tr}Message{/tr}</td>
 <td class="heading" >{tr}Reported by{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

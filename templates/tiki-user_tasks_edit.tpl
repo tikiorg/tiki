@@ -132,7 +132,7 @@
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$start_date prefix="start_" display_seconds=false use_24_hours=true}
 			&nbsp;<input name="use_start_date" {if $info.start or $taskId eq  0} checked="checked" {/if} type="checkbox" />
-			&nbsp;{tr}use start date and time{/tr}
+			&nbsp;{tr}Use start date and time{/tr}
 		</td>
 	</tr>
 	<tr><td  class="formcolor">{tr}End{/tr}</td>
@@ -141,7 +141,7 @@
 			&nbsp;-&nbsp;
 			{html_select_time minute_interval=10 time=$end_date prefix="end_" display_seconds=false use_24_hours=true}
 			&nbsp;<input name="use_end_date" {if $info.end} checked="checked" {/if} type="checkbox" />
-			&nbsp;{tr}use end date and time{/tr}
+			&nbsp;{tr}Use end date and time{/tr}
 		</td>
 	</tr>
 	<tr><td class="formcolor">{tr}Status{/tr}</td>

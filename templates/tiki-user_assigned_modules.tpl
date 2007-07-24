@@ -114,7 +114,7 @@
 </tr>
 <tr>
 <td class="formcolor">&nbsp;</td>
-<td class="formcolor"><input type="submit" name="assign" value="{tr}assign{/tr}" /></td>
+<td class="formcolor"><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td>
 </tr>
 </table>
 </form>

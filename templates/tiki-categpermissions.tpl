@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.11 2007-07-20 18:44:27 jyhem Exp $  *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.12 2007-07-24 18:03:32 jyhem Exp $  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -28,7 +28,7 @@
 </table>
 <h2>{tr}Assign permissions{/tr}</h2>
 <form method="post" action="tiki-categpermissions.php" class="form">
-{tr}assign{/tr}
+{tr}Assign{/tr}
 <input type="hidden" name="categId" value="{$catId|escape}" />
 <select name="perm">
 {section name=prm loop=$perms}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.57 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.58 2007-07-24 18:03:32 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -230,7 +230,7 @@
 				{/if}
 				{if $feature_polls eq 'y'}
         <tr>
-          <td class="form">{tr}poll{/tr}:</td>
+          <td class="form">{tr}Poll{/tr}:</td>
           <td class="form"><select name="pollId">{section name=ix loop=$polls}<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addpoll" value="{tr}Add{/tr}" /></td>
         </tr>        

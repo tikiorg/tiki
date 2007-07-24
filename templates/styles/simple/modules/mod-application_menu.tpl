@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.34 2007-07-24 15:23:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.35 2007-07-24 18:03:36 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -27,7 +27,7 @@
 {/if}
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-  <a href="tiki-calendar.php" class="linkmenu">{tr}calendar{/tr}</a><br />
+  <a href="tiki-calendar.php" class="linkmenu">{tr}Calendar{/tr}</a><br />
 {/if}
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y' and $feature_top_bar ne 'y'}
   <a href="javascript:toggle('debugconsole');" class="linkmenu">{tr}debugger console{/tr}</a><br />

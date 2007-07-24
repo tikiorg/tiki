@@ -45,7 +45,7 @@
     </select>
   </td>
   <td class="formcolor">
-    <input type="submit" name="assign" value="{tr}assign{/tr}" />
+    <input type="submit" name="assign" value="{tr}Assign{/tr}" />
   </td>
 </tr>
 </table>

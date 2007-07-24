@@ -50,7 +50,7 @@
   <td class="{cycle}">
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
     {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='pics/icons/arrow_refresh.png' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' width='16' height='16' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='pics/icons/arrow_refresh.png' alt="{tr}Refresh Cache{/tr}" title="{tr}Refresh Cache{/tr}" border='0' width='16' height='16' /></a>
     {/if}
     &nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
   </td>

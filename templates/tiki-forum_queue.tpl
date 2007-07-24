@@ -121,7 +121,7 @@
 <table class="normal">
 <tr>
 <td  class="heading" >&nbsp;</td>
-<td class="heading" >{tr}message{/tr}</td>
+<td class="heading" >{tr}Message{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

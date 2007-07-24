@@ -2,7 +2,7 @@
 <div class="tabt1">
 
 {if $cached_page eq 'y'}
-<span class="tabbut"><a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="tablink">{tr}refresh{/tr}</a></span>
+<span class="tabbut"><a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="tablink">{tr}Refresh{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_print eq 'y'}

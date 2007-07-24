@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.28 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.29 2007-07-24 18:03:32 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
@@ -53,7 +53,7 @@
 <input type="hidden" name="objectType" value="{$objectType|escape}" />
 <input type="hidden" name="objectId" value="{$objectId|escape}" />
 <input type="hidden" name="permType" value="{$permType|escape}" />
-<input type="submit" name="assign" value="{tr}assign{/tr}" />
+<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 
 {assign var=nbp value=$perms|@count}
 <select name="perm[]" multiple="multiple" size="{$nbp}">
@@ -67,7 +67,7 @@
 <option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 {/section}
 </select>
-<input type="submit" name="assign" value="{tr}assign{/tr}" />
+<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 {if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}
 {tr}and also to all pages of the sub-structure:{/tr} <input name="assignstructure" type="checkbox" />
 {/if}

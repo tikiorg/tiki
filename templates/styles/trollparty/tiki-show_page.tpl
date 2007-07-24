@@ -2,7 +2,7 @@
 <div class="button2top">
 {if $print_page ne 'y'}
 {if $cached_page eq 'y'}
-<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}cached{/tr}</a>
+<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}cached{/tr}</a>
 {/if}
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
