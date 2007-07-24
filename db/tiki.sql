@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-21 00:57:43 $
-# $Author: nkoth $
+# $Date: 2007-07-24 14:47:49 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4371,6 +4371,7 @@ CREATE TABLE users_users (
   avatarLibName varchar(200) default NULL,
   avatarType char(1) default NULL,
   score int(11) NOT NULL default 0,
+  valid varchar(32) default NULL,
   unsuccessful_logins int(14) default 0,
   PRIMARY KEY  (userId),
   KEY login (login),
