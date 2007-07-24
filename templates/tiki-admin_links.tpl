@@ -20,8 +20,8 @@
 <table class="normal">
 <tr>
 <td class="heading">{tr}Url{/tr}</td>
-<td class="heading">{tr}title{/tr}</td>
-<td class="heading">{tr}hits{/tr}</td>
+<td class="heading">{tr}Title{/tr}</td>
+<td class="heading">{tr}Hits{/tr}</td>
 <td class="heading">{tr}Position{/tr}</td>
 <td class="heading">{tr}Type{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>

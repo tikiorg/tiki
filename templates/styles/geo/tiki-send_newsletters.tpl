@@ -10,7 +10,7 @@
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <input type="hidden" name="subject" value="{$subject|escape}" />
 <input type="hidden" name="data" value="{$data|escape}" />
-<input type="submit" name="send" value="{tr}send{/tr}" />
+<input type="submit" name="send" value="{tr}Send{/tr}" />
 <input type="submit" name="preview" value="{tr}cancel{/tr}" />
 </form>
 {else}

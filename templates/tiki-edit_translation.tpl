@@ -92,7 +92,7 @@
 {if $trads|@count <= 1}
 	<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
 {else}
-	<input type="submit" class="wikiaction" name="set" value="{tr}add to the set{/tr}"/>
+	<input type="submit" class="wikiaction" name="set" value="{tr}Add to the Set{/tr}"/>
 {/if}
 {/if}
 

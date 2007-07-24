@@ -26,7 +26,7 @@
     <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" />
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
 		<input type="hidden" name="reply" value="{$reply}" />
-		<input type="submit" name="send" value="{tr}send{/tr}" /></td>
+		<input type="submit" name="send" value="{tr}Send{/tr}" /></td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>

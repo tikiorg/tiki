@@ -41,7 +41,7 @@
 <tr>
   <td class="heading">{tr}page{/tr}</td>
   <td class="heading">{tr}excerpt{/tr}</td>
-  <td class="heading">{tr}result{/tr}</td>
+  <td class="heading">{tr}Result{/tr}</td>
   <td class="heading">{tr}body{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

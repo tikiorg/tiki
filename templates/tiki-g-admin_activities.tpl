@@ -119,13 +119,13 @@ Errors:<br />
   <td class="formcolor">
   {if count($all_roles)}
   <select name="userole">
-  <option value="">{tr}add new{/tr}</option>
+  <option value="">{tr}Add New{/tr}</option>
   {section loop=$all_roles name=ix}
   <option value="{$all_roles[ix].roleId|escape}">{$all_roles[ix].name}</option>
   {/section}
   </select>
   {/if}
-  <input type="text" name="rolename" /><input type="submit" name="addrole" value="{tr}add role{/tr}" />
+  <input type="text" name="rolename" /><input type="submit" name="addrole" value="{tr}Add Role{/tr}" />
   </td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@ Errors:<br />
 	</td>
 	<td>
 		<select name="filter_type">
-		  <option value="">{tr}all{/tr}</option>
+		  <option value="">{tr}All{/tr}</option>
 		  <option value="start">{tr}start{/tr}</option>
 		  <option value="end" >{tr}end{/tr}</option>		  
 		  <option value="activity" >{tr}activity{/tr}</option>		  
@@ -183,21 +183,21 @@ Errors:<br />
 	</td>
 	<td>
 		<select name="filter_interactive">
-		<option value="">{tr}all{/tr}</option>
+		<option value="">{tr}All{/tr}</option>
 		<option value="y">{tr}Interactive{/tr}</option>
 		<option value="n">{tr}Automatic{/tr}</option>
 		</select>
 	</td>
 	<td>
 		<select name="filter_autoroute">
-		<option value="">{tr}all{/tr}</option>
+		<option value="">{tr}All{/tr}</option>
 		<option value="y">{tr}Auto routed{/tr}</option>
 		<option value="n">{tr}Manual{/tr}</option>
 		</select>
 	</td>
 	<td>
 		<select name="filter_role">
-		<option value="">{tr}all{/tr}</option>
+		<option value="">{tr}All{/tr}</option>
 		{section loop=$all_roles name=ix}
 		<option value="{$all_roles[ix].roleId|escape}">{$all_roles[ix].name}</option>
 		{/section}
@@ -287,7 +287,7 @@ Errors:<br />
 			<input type="hidden" name="where" value="{$where2|escape}" />
 			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 			{tr}From:{/tr}<select name="filter_tran_name" onchange="javascript:document.getElementById('filtran').submit();">
-			<option value="" {if $filter_tran_name eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
+			<option value="" {if $filter_tran_name eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$items}
 			<option value="{$items[ix].activityId|escape}" {if $filter_tran_name eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
 			{/section}

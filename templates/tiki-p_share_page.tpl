@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.1 2007-07-19 20:55:18 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.2 2007-07-24 15:23:50 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-index.php?page={$objectId}">{$objectId}</a></h1>
 <p>
@@ -53,8 +53,8 @@
 		<col width="200"/>
 		<col width="200"/>
 		<tr class="formcolor">
-			<td class="heading">{tr}add groups{/tr}</td>
-			<td class="heading">{tr}add users{/tr}</td>
+			<td class="heading">{tr}Add Groups{/tr}</td>
+			<td class="heading">{tr}Add Users{/tr}</td>
 		</tr>
 		<tr class="formcolor">
 			<td>
@@ -73,7 +73,7 @@
 			</td>
 		</tr>
 		<tr class="formcolor">
-			<td colspan="2" class="center"><input type="submit" name="add" value="{tr}add to list{/tr}"/></td>
+			<td colspan="2" class="center"><input type="submit" name="add" value="{tr}Add to List{/tr}"/></td>
 		</form>
 	</table>
 </form>

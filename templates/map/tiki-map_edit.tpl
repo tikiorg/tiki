@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.19 2007-07-19 09:32:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.20 2007-07-24 15:23:51 jyhem Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -9,7 +9,7 @@
 <tr>
 <td class="heading">{tr}Mapfile{/tr}</td>
 <td class="heading" width="20%">{tr}Actions{/tr}</td>
-<td class="heading" width="10%">{tr}hits{/tr}</td>
+<td class="heading" width="10%">{tr}Hits{/tr}</td>
 <td class="heading" width="10%">{tr}hits last 7 days{/tr}</td>
 </tr>
 {section name=user loop=$files}
@@ -28,7 +28,7 @@
  {if $user_watching_map[user] eq 'n'}
   	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}
-		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
+		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}Stop Monitoring this Map{/tr}' title='{tr}Stop Monitoring this Map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
 	{/if}
 {/if}
 </td>
@@ -54,7 +54,7 @@
  {if $user_watching_map[user] eq 'n'}
   	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}
-		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
+		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}Stop Monitoring this Map{/tr}' title='{tr}Stop Monitoring this Map{/tr}' src='pics/icons/no_eye.png' width='16' height='16' /></a>
 	{/if}
 {/if}	
 </td>

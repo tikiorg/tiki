@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.113 2007-07-24 14:40:33 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.114 2007-07-24 15:23:49 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -123,7 +123,7 @@
 <option value="{$polls_templates[ix].pollId|escape}"{if $polls_templates[ix].pollId eq $poll_template} selected="selected"{/if}>{tr}{$polls_templates[ix].title}{/tr}</option>
 {/section}
 </select>
-{tr}title{/tr}
+{tr}Title{/tr}
 <input type="text" name="poll_title" value="{$poll_title|escape}" size="22" />
 {else}
 {tr}There is no available poll template.{/tr}

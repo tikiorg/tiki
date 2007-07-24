@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.22 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.23 2007-07-24 15:23:41 jyhem Exp $ *}
 
 {* The heading and category path *}
 {if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
@@ -25,7 +25,7 @@ loc="page" crumbs=$crumbs}
 {tr}Find{/tr}: 
 <select name="how">
 <option value="or">{tr}any{/tr}</option>
-<option value="and">{tr}all{/tr}</option>
+<option value="and">{tr}All{/tr}</option>
 </select>
 <input type="text" name="words" size="30" />
 <select name="where">

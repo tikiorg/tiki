@@ -42,7 +42,7 @@
       <option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
     </select>
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
-    <input type="submit" name="send" value="{tr}send{/tr}" />
+    <input type="submit" name="send" value="{tr}Send{/tr}" />
     </td>
   </tr>
   <tr>

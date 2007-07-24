@@ -16,7 +16,7 @@
 		<td class="formcolor"><textarea cols="60" rows="5" name="addresses">{$addresses|escape}</textarea></td>
 	</tr>
 	<tr>
-		<td class="formcolor" colspan="2" style="text-align:center;"><input type="submit" name="send" value="{tr}send{/tr}" /></td>
+		<td class="formcolor" colspan="2" style="text-align:center;"><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
 	</tr>
 	</table>
 	</form>
@@ -45,7 +45,7 @@
 <tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
-({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}posts{/tr})
+({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}Posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}Posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]

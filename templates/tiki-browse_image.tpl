@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.50 2007-07-24 14:40:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.51 2007-07-24 15:23:41 jyhem Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -68,7 +68,7 @@
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}{$same_scale}"
-		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_last.png' border='none' alt='{tr}last image{/tr}' title='{tr}last image{/tr}'}</a>    
+		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_last.png' border='none' alt='{tr}Last Image{/tr}' title='{tr}Last Image{/tr}'}</a>    
   </div>
 
 {***** when sliding buttons *****}

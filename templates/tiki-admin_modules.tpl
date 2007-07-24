@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.56 2007-07-24 14:40:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.57 2007-07-24 15:23:40 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -35,7 +35,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <table class="normal">
 <tr>
 <td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}title{/tr}</td>
+<td class="heading">{tr}Title{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}

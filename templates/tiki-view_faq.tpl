@@ -34,7 +34,7 @@
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <a href="javascript:flip('faqsugg');" class="linkbut">
 {if $suggested_cant == 0}
-{tr}add suggestion{/tr}{elseif $suggested_cant == 1}
+{tr}Add Suggestion{/tr}{elseif $suggested_cant == 1}
 <span class="highlight">{tr}1 suggestion{/tr}</span>{else}
 <span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>{/if}</a>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.2 2007-03-16 13:28:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.3 2007-07-24 15:23:50 jyhem Exp $ *}
 <h1>{tr}Send a link to a friend{/tr}</h1>
 <span class="button2"><a href="{$url}" class="linkbut">{tr}back{/tr}</a></span>
 {if !empty($sent)}
@@ -39,7 +39,7 @@
 </tr>
 <tr>
 <td class="formcolor"></td>
-<td class="formcolor"><input type="submit" name="send" value="{tr}send{/tr}" /></td>
+<td class="formcolor"><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
 </tr>
 </table>
 </form>

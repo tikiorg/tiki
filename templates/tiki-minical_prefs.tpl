@@ -108,7 +108,7 @@
 <tr>
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor">
-	<input type="submit" name="addtopic" value="{tr}add topic{/tr}" />
+	<input type="submit" name="addtopic" value="{tr}Add Topic{/tr}" />
   </td>
 </tr></table>
 </form>

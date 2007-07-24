@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.19 2007-07-19 17:06:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.20 2007-07-24 15:23:50 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -184,7 +184,7 @@
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td colspan=\"{$cntcols}\"><label for=\"clickall\">{tr}all{/tr}</label></td></tr>");
+  document.write("<td colspan=\"{$cntcols}\"><label for=\"clickall\">{tr}All{/tr}</label></td></tr>");
   //-->                     
   </script>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_quizzes.tpl,v 1.22 2007-07-24 14:40:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_quizzes.tpl,v 1.23 2007-07-24 15:23:50 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id222862" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
@@ -11,7 +11,7 @@
 
 {if $tiki_p_view_quiz_stats eq 'y'}
 <div class="navbar">
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 </div>
 
 <table class="findtable">
@@ -51,10 +51,10 @@ in /var/www/html/tikiwiki/lib/tikidblib.php on line 133
 Fatal error: Call to a member function on a non-object in /var/www/html/tikiwiki/lib/tikidblib.php on line 151
 // code
 <td class="heading">
-<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questionsLimit_desc{/if}">{tr}questions{/tr}</a>
+<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questionsLimit_desc{/if}">{tr}Questions{/tr}</a>
 *}
 <!-- the question heading won't sort -->
-<td class="heading">{tr}questions{/tr}</td>
+<td class="heading">{tr}Questions{/tr}</td>
 
 </tr>
 {section name=user loop=$channels}
