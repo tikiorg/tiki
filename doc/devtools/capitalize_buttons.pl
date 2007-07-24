@@ -3,8 +3,8 @@
 #    Copyright Council of Europe - Conseil de l'Europe
 #Division  :  DIT / STI
 #Project   :  Espaces Collaboratifs Open-Source
-#Filename  :  jml_translate_buttons-vxx.pl
-#Author    :  Jean-Marc LIBS
+#Filename  :  capitalize_buttons.pl
+#Author    :  Jean-Marc LIBS (Jyhem)
 #Company   :  Council of Europe - Conseil de l'Europe
 #Date      :  2007-07-17
 #Language  :  Perl
@@ -27,12 +27,13 @@
 #Warning: This was written quickly as a use-once script. Use as inspiration, don't
 #         trust blindly
 #
-#Usage     :  perl jml_translate_buttons-vxx.pl word Word
+#Usage     :  perl capitalize_buttons.pl word Word
 #
 #Revision history :
 #  Date       Author  Description
 #  2007-07-17  JML    1: First version
 #  2007-07-20  JML    2: words can be expressions
+#  2007-07-23  JML    3: renaming, add license, add TODO, all for publication
 #
 #TODO:
 #translate all comments
