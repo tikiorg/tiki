@@ -8,7 +8,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 $calendarViewMode = $_SESSION['CalendarViewMode'];
 $calendarViewGroups = $_SESSION['CalendarViewGroups'];
-$calendarViewTikiCals = $_SESSION['CalendarViewTikiCals'];
+$calendarViewTikiCals = isset($_SESSION['CalendarViewTikiCals'])? $_SESSION['CalendarViewTikiCals']:array();
 $calendarViewList = $_SESSION['CalendarViewList'];
 
 $z = date("z");
