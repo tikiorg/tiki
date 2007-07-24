@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.117 2007-06-15 11:33:06 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.118 2007-07-24 14:47:49 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1251,3 +1251,33 @@ ALTER TABLE `tiki_links` ADD INDEX `toPage` (`toPage`);
 
 # 2006-06-09 nkoth - new preference eq 'y' to keep the default
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_import_page','y');
+
+#sylvieg
+ALTER TABLE tiki_pages CHANGE `cache` `cache` longtext;
+
+# 2007-07-06 xavidp - menu option inserted for users map (Google maps) when gmap enabled
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Users map','tiki-gmap_usermap.php',36,'feature_gmap','','');
+
+#2007-07-10 sylvieg - thx tibi
+ALTER TABLE users_permissions ADD INDEX type (type);
+ALTER TABLE tiki_articles ADD INDEX topicId (topicId);
+ALTER TABLE tiki_articles ADD INDEX publishDate (publishDate);
+ALTER TABLE tiki_articles ADD INDEX expireDate (expireDate);
+ALTER TABLE tiki_articles ADD INDEX type (type);
+ALTER TABLE tiki_forum_attachments ADD INDEX threadId (threadId);
+ALTER TABLE users_users ADD INDEX login (login);
+ALTER TABLE tiki_article_types ADD INDEX show_pre_publ (show_pre_publ);
+ALTER TABLE tiki_article_types ADD INDEX show_post_expire (show_post_expire);
+ALTER TABLE tiki_comments DROP KEY object;
+ALTER TABLE tiki_comments ADD INDEX objectType (object, objectType);
+ALTER TABLE tiki_comments ADD INDEX commentDate (commentDate);
+ALTER TABLE tiki_sessions ADD INDEX user (user);
+ALTER TABLE tiki_sessions ADD INDEX timestamp (timestamp);
+ALTER TABLE tiki_galleries ADD INDEX parentgallery (parentgallery);
+ALTER TABLE tiki_galleries ADD INDEX visibleUser (visible, user);
+ALTER TABLE tiki_modules ADD INDEX positionType (position, type);
+ALTER TABLE tiki_link_cache ADD INDEX url(url);
+ALTER TABLE messu_messages ADD INDEX  userIsRead (user, isRead);
+
+#2007-07-18
+ALTER TABLE users_users ADD valid varchar(32) default NULL;
