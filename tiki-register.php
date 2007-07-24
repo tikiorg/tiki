@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.88 2007-07-24 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.89 2007-07-24 18:34:33 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-07-24 15:10:30 $
+ * @date last-modified: $Date: 2007-07-24 18:34:33 $
  */
 
 // Initialization
@@ -183,14 +183,14 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
 		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
-			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], 'n');
+			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], false, 'n');
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}	
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('showmsg','y');
 		} else {
-			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', 'n');
+			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', false, 'n');
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}			
