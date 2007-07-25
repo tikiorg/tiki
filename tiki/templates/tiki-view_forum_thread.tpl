@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.79 2007-07-09 21:22:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.80 2007-07-25 02:33:19 sampaioprimo Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -29,7 +29,14 @@
 	{assign var="postclass" value="forumpost"}
 {/if}
 
-<div class="top_post">{include file="comment.tpl" first='y' comment=$thread_info thread_style='commentStyle_plain'}</div>
+<div class="top_post">
+  {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+    {include file="freetag_list.tpl"}
+  {/if}
+
+  {include file="comment.tpl" first='y' comment=$thread_info thread_style='commentStyle_plain'}
+</div>
+
 {include file="comments.tpl"}
 
 {**** Seems buggy

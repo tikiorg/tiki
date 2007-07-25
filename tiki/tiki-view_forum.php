@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.115 2007-07-13 08:54:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.116 2007-07-25 02:33:19 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,10 @@ if ($feature_categories == 'y') {
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
+}
+
+if ($feature_freetags == 'y') {
+	include_once('lib/freetag/freetaglib.php');
 }
 
 if ($feature_forums != 'y') {
@@ -87,8 +91,8 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
    		$is_categorized = TRUE;
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
-    	}
-   	} else {
+   	}
+	} else {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
@@ -283,7 +287,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    $smarty->display("error.tpl");
 		    die;
 		}
-
+	    
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
 		    print("<p>queued.\n");
@@ -292,7 +296,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
 			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $_REQUEST["comment_topictype"],
 			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"]);
-
+		
 		    // PROCESS ATTACHMENT HERE        
 		    if ($qId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
 				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -345,6 +349,15 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: ''
 					);
 			    // The thread *WAS* successfully created.
+
+			    // TAG Stuff
+			    $cat_type = 'forum post';
+			    $cat_objid = $threadId;
+			    $cat_desc = substr($_REQUEST["comments_data"],0,200);
+			    $cat_name = $_REQUEST["comments_title"];
+			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $threadId . "&forumId=" . $_REQUEST["forumId"];
+			    include_once ("freetag_apply.php");
+			    
 			    if( $threadId ) 
 			    {
 				// Deal with mail notifications.
@@ -375,6 +388,15 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
 			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 
+
+			    // TAG Stuff
+			    $cat_type = 'forum post';
+			    $cat_objid = $_REQUEST["comments_threadId"];
+			    $cat_desc = substr($_REQUEST["comments_data"],0,200);
+			    $cat_name = $_REQUEST["comments_title"];
+			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $_REQUEST["comments_threadId"] . "&forumId=" . $_REQUEST["forumId"];
+			    include_once ("freetag_apply.php");
+			    
 			    // PROCESS ATTACHMENT HERE
 			    if ($_REQUEST['comments_threadId'] && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
 					if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -658,6 +680,17 @@ if ($tiki_p_admin_forum == 'y') {
 
     $smarty->assign('reported', $commentslib->get_num_reported($_REQUEST['forumId']));
 }
+
+if ($feature_freetags == 'y') {
+    $cat_type = 'forum post';
+    $cat_objid = $_REQUEST["comments_threadId"];
+    include_once ("freetag_list.php");
+    //If in preview mode get the tags from the form and not from database
+    if (isset($_REQUEST["comments_previewComment"])) {
+	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
+    }
+}
+
 
 include_once("textareasize.php");
 
