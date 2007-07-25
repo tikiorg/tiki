@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.60 2007-05-04 09:25:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.61 2007-07-25 02:33:19 sampaioprimo Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -325,6 +325,9 @@ class BlogLib extends TikiLib {
 
 		$query = "delete from `tiki_blog_posts_images` where `postId`=?";
 		$this->query($query,array((int) $postId));
+
+		$this->remove_object('blog post', $postId);
+
 		return true;
 	}
 

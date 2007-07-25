@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.157 2007-07-11 22:14:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.158 2007-07-25 02:33:19 sampaioprimo Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2018,6 +2018,9 @@ class Comments extends TikiLib {
 	$query = "delete from `tiki_forum_attachments` where `threadId`=?";
 	$this->query($query, array( (int) $threadId ) );
 	$this->remove_reported($threadId);
+
+	$this->remove_object('forum post', $threadId);
+
 	return true;
     }
 

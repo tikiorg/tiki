@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.99 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.100 2007-07-25 02:33:19 sampaioprimo Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -197,6 +197,11 @@ a moderator approves it.{/tr}</small>
 	{if $feature_antibot eq 'y'}
 		{include file="antibot.tpl"}
 	{/if}
+   
+   {if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+     {include file=freetag.tpl}
+   {/if}
+
     <tr class="formcolor">
       <td>{tr}Post{/tr}</td>
       <td>
@@ -223,7 +228,6 @@ a moderator approves it.{/tr}</small>
 
 <br />
 {/if}
-
 
 <form method="post" action="tiki-view_forum.php">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
