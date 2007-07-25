@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.21 2007-07-20 17:33:58 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.22 2007-07-25 13:50:16 sylvieg Exp $ *}
 
 {if $feature_search eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}
@@ -32,6 +32,9 @@
     {/if}
     {if $feature_faqs eq 'y'}
     <option value="faqs">{tr}FAQs{/tr}</option>
+    {/if}
+    {if $feature_trackers eq 'y'}
+    <option value="trackers">{tr}Trackers{/tr}</option>
     {/if}
     </select>
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/> 
