@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2007-07-20 20:08:38 $
+-- $Date: 2007-07-26 14:11:13 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -5216,8 +5216,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_sendme_pages', 'Can send pages to this site', 'registered', 'comm');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_share_page', 'Can use the share page interface', 'registered', 'wiki page');
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_submit_article', 'Can submit articles', 'basic', 'cms');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_submit_link', 'Can submit sites to the directory', 'basic', 'directory');
@@ -5356,6 +5354,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
@@ -5408,6 +5408,7 @@ CREATE TABLE "users_users" (
   "avatarLibName" varchar(200) default NULL,
   "avatarType" char(1) default NULL,
   "score" number(11) default 0 NOT NULL,
+  "valid" varchar(32) default NULL,
   "unsuccessful_logins" number(14) default 0,
   PRIMARY KEY ("userId")
 )   ;
