@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.184 2007-07-25 22:16:50 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.185 2007-07-26 15:13:02 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1426,3 +1426,6 @@ INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('
 #nkoth 2007-07-20
 DELETE FROM users_permissions WHERE permName='tiki_p_share_page';
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
+
+#2007-07-18 sylvieg
+ALTER TABLE users_users ADD valid varchar(32) default NULL;
