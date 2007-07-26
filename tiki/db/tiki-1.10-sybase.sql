@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-07-20 20:08:38 $
+-- $Date: 2007-07-26 14:11:14 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6470,10 +6470,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_share_page', 'Can use the share page interface', 'registered', 'wiki page')
-go
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_submit_article', 'Can submit articles', 'basic', 'cms')
 go
 
@@ -6750,6 +6746,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -6815,6 +6815,7 @@ CREATE TABLE "users_users" (
   "avatarLibName" varchar(200) default NULL NULL,
   "avatarType" char(1) default NULL NULL,
   "score" numeric(11,0) default 0 NOT NULL,
+  "valid" varchar(32) default NULL NULL,
   "unsuccessful_logins" numeric(14,0) default 0,
   PRIMARY KEY ("userId")
 )   
