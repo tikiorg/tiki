@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.47 2007-07-19 19:46:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.48 2007-07-26 14:24:34 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -396,7 +396,7 @@ class LogsLib extends TikiLib {
 		else
 			return '';
 	}
-	function get_action_stat_user($actions) {
+	function get_stat_actions_per_user($actions) {
 		$stats = array();
 		$actions2 = array();
 		foreach ($actions as $action) {
@@ -418,6 +418,32 @@ class LogsLib extends TikiLib {
 		}
 		sort($stats); // will sort on the first field user
 		return $stats;
+	}
+	function get_stat_contributions_per_group($actions, $selectedGroups) {
+		global $tikilib;
+		$statGroups = array();
+		foreach ($actions as $action) {
+			if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
+					continue;	// differ only by the categories
+			$previousAction = $action;
+			$groups = $tikilib->get_user_groups($action['user']);
+			foreach ($groups as $key=>$group) {
+				if ($selectedGroups[$key] != 'y')
+					continue;
+				foreach ($action['contributions'] as $contribution) {
+					if (!isset($statGroups[$group])) {
+						$statGroups[$group][$contribution['name']]['add'] = 0;
+						$statGroups[$group][$contribution['name']]['del'] = 0;
+						$statGroups[$group][$contribution['name']]['dif'] = 0;
+					}
+					$statGroups[$group][$contribution['name']]['add'] += $action['contributorAdd'];
+					$statGroups[$group][$contribution['name']]['del'] += $action['contributorDel'];
+					$statGroups[$group][$contribution['name']]['dif'] += $action['contributorAdd'] - $action['contributorDel'];
+				}
+			}
+		}
+		ksort($statGroups);
+		return $statGroups;
 	}
 	function get_action_stat_categ($actions, $categNames) {
 		$stats = array();
@@ -510,12 +536,10 @@ class LogsLib extends TikiLib {
 		}
 		return $types;
 	}
-	function get_action_stat_user_categ($actions, $categNames) {
+	function get_actions_per_user_categ($actions, $categNames) {
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
-			if ($action['categId'] == 0)
-				continue;
 			$key = $action['categId'].'/'.$action['user'];;
 			if (!array_key_exists($key, $stats)) {
 				$stats[$key]['category'] = $categNames[$action['categId']];
@@ -657,7 +681,7 @@ class LogsLib extends TikiLib {
 		}
 		return (array('nbCols'=>$nbCols, 'data'=>$contributions));
 	}
-	function get_stat_user($actions) {
+	function get_stat_contributions_per_user($actions) {
 		$tab = array();
 		foreach ($actions as $action) {
 			if (isset($action['contributions'])) {
@@ -688,6 +712,7 @@ class LogsLib extends TikiLib {
 				}				
 			}
 		}
+		ksort($tab);
 		return array('data'=>$tab, 'nbCols'=>sizeof($tab));;
 	}
 	function get_colors($nb) {
@@ -717,7 +742,7 @@ class LogsLib extends TikiLib {
 		$ret['color'] = $this->get_colors($contributions['cant']);
 		$iy = 0;
 		foreach ($contributions['data'] as $contribution) {
-			$ret['label'][] = $contribution['name'];
+			$ret['label'][] = utf8_decode($contribution['name']);
 			$vol = 0;
 			for ($ix = 0; $ix < $contributionStat['nbCols']; ++$ix) {
 				if (!empty($contributionStat['data'][$contribution['contributionId']]['stat'][$ix])) {
@@ -738,7 +763,7 @@ class LogsLib extends TikiLib {
 		$ret['color'] = $this->get_colors($contributions['cant']);
 		$iy = 0;
 		foreach ($contributions['data'] as $contribution) {
-			$ret['label'][] = $contribution['name'];
+			$ret['label'][] = utf8_decode($contribution['name']);
 			for ($ix = 0; $ix < $contributionStat['nbCols']; ++$ix) {
 				if (empty($contributionStat['data'][$contribution['contributionId']]) || empty($contributionStat['data'][$contribution['contributionId']]['stat'][$ix])) {
 					$ret["y$iy"][] = 0;
@@ -755,12 +780,12 @@ class LogsLib extends TikiLib {
 		$ret = array();
 		$ret['totalVol'] = 0;
 		foreach ($userStat['data'] as $user=>$stats) {
-			$ret['x'][] = $user;
+			$ret['x'][] = utf8_decode($user);
 		}
 		$ret['color'] = $this->get_colors($contributions['cant']);
 		$iy = 0;
 		foreach ($contributions['data'] as $contribution) {
-			$ret['label'][] = $contribution['name'];
+			$ret['label'][] = utf8_decode($contribution['name']);
 			foreach ($userStat['data'] as $user=>$stats) {
 				if (empty($stats[$contribution['contributionId']])) {
 					$ret["y$iy"][] = 0;
@@ -826,6 +851,27 @@ class LogsLib extends TikiLib {
 			}
 		}
 		return $contributorActions;
+	}
+	function list_logsql($sort_mode='created_desc', $offset=0, $maxRecords=-1) {
+		global $log_sql;
+		if ($log_sql != 'y')
+			return null;
+		$query = 'select * from `adodb_logsql` order by '.$this->convert_sortmode($sort_mode);
+		$result = $this->query($query, array(), $maxRecords, $offset);
+		$query_cant = 'select count(*) from `adodb_logsql`';
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval['data'] = $ret;
+		$retval['cant'] = $cant;
+		return $retval;
+	}
+	function clean_logsql() {
+		$query = 'delete * from  `adodb_logsql`';
+		$this->query($query, array());
 	}
 
 }

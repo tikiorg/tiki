@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.37 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.38 2007-07-26 14:24:34 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -52,14 +52,14 @@
 {else}
 <input type="hidden" name="selectedUsers[]" value="{$auser|escape}">
 {/if}
-{if $tiki_p_admin eq 'y'}
+{if $groups|@count >= 1}
 <tr class="formcolor">
 <td>{tr}Group:{/tr}</td>
 <td><select multiple="multiple" size="{if $groups|@count < 5}{math equation=x+y x=$groups|@count y=1}{else}5{/if}" name="selectedGroups[]">
 <option value="">&nbsp;</option>
-{section name=ix loop=$groups}
-<option value="{$groups[ix]|escape}" {if $selectedGroups[ix] eq 'y'}selected="selected"{/if}>{$groups[ix]|escape}</option>
-{/section}
+{foreach from=$groups key=ix item=group}
+<option value="{$group|escape}" {if $selectedGroups[$ix] eq 'y'}selected="selected"{/if}>{$group}</option>
+{/foreach}
 </select>
 </td>
 </tr>
@@ -166,18 +166,20 @@
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
 </h2>
+<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 
 {if $showLogin eq 'y' and $logTimes|@count ne 0}
 <table class="smallnormal">
+<caption>{tr}Login{/tr}</caption>
 <tr>
-<th class="heading">{tr}User{/tr}</th>
+{if $selectedUsers|@count gt 1}<th class="heading">{tr}User{/tr}</th>{/if}
 <th class="heading">{tr}connection time{/tr}</th>
 <th class="heading">{tr}connection seconds{/tr}</th>
 <th class="heading">{tr}Login{/tr}</th>
 </tr>
 {foreach key=auser item=time from=$logTimes}
 <tr>
-<td class="{cycle advance=false}">{$auser}</td>
+{if $selectedUsers|@count gt 1}<td class="{cycle advance=false}">{$auser}</td>{/if}
 <td class="{cycle advance=false}">{$time.days} {tr}days{/tr} {$time.hours} {tr}hours{/tr} {$time.mins} {tr}mns{/tr}</td>
 <td class="{cycle advance=false}">{$time.time}</td>
 <td class="{cycle}">{$time.nbLogins}</td>
@@ -188,8 +190,9 @@
 
 {if $showCateg eq 'y' and $volCateg|@count ne 0}
 <table class="smallnormal">
+<caption>{tr}Volumn per category{/tr}</caption>
 <tr>
-<th class="heading">{tr}category{/tr}</th>
+<th class="heading">{tr}Category{/tr}</th>
 {foreach  item=type from=$typeVol}
 <th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
 {/foreach}
@@ -210,8 +213,9 @@
 
 {if $showCateg eq 'y' and $volUserCateg|@count ne 0}
 <table class="smallnormal">
+<caption>{tr}Volumn per category and per user{/tr}</caption>
 <tr>
-<th class="heading">{tr}category{/tr}</th>
+<th class="heading">{tr}Category{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
 {foreach  item=type from=$typeVol}
 <th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
@@ -230,19 +234,19 @@
 </tr>
 {/foreach}
 </table>
-<i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
 {/if}
 
-{if $statUser|@count ne 0}
+{if $userActions|@count ne 0}
 <table class="normal">
+<caption>{tr}Number of actions per user{/tr}</caption>
 <tr>
 <th class="heading">{tr}User{/tr}</th>
-{foreach key=title item=nb from=$statUser[0]}
+{foreach key=title item=nb from=$userActions[0]}
 {if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
-{foreach item=stat from=$statUser}
+{foreach item=stat from=$userActions}
 <tr>
 <td class="{cycle advance=false}">{$stat.user}</td>
 {foreach key=a item=nb from=$stat}
@@ -256,9 +260,10 @@
 
 {if $showCateg eq 'y'}
 <table class="normal">
+<caption>{tr}Number of actions per category{/tr}</caption>
 <tr>
-<th class="heading">{tr}category{/tr}</th>
-{foreach  key=title item=nb from=$statUser[0]}
+<th class="heading">{tr}Category{/tr}</th>
+{foreach  key=title item=nb from=$userActions[0]}
 {if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
@@ -276,10 +281,11 @@
 
 {if $showCateg eq 'y' && $statUserCateg|@count ne 0}
 <table class="normal">
+<caption>{tr}Number of actions per category and per user{/tr}</caption>
 <tr>
-<th class="heading">{tr}category{/tr}</th>
+<th class="heading">{tr}Category{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
-{foreach  key=title item=nb from=$statUser[0]}
+{foreach  key=title item=nb from=$userActions[0]}
 {if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
@@ -296,8 +302,35 @@
 </table>
 {/if}
 
-{if isset($contributionStat)}
+{if $feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 <table>
+<caption>{tr}Volumn per group and per contribution{/tr}</caption>
+<tr><th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
+{foreach from=$groupContributions key=group item=contributions}
+{if $tiki_p_admin eq 'y' or ($group ne 'Anonymous' and $group ne 'Registered')}
+{foreach from=$contributions key=contribution item=stat}
+<tr><td class="{cycle advance=false}">{$group}</td><td class="{cycle advance=false}">{$contribution}</td><td class="{cycle advance=false}">{$stat.add}</td><td class="{cycle advance=false}">{$stat.del}</td></tr><!-- {cycle} -->
+{/foreach}
+{/if}
+{/foreach}
+</table>
+{/if}
+
+{if $feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
+<table>
+<caption>{tr}Volumn per user and per contribution{/tr}</caption>
+<tr><th class="heading">{tr}User{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
+{foreach from=$userContributions key=user item=contributions}
+{foreach from=$contributions key=contribution item=stat}
+<tr><td class="{cycle advance=false}">{$user}</td><td class="{cycle advance=false}">{$stat.name}</td><td class="{cycle advance=false}">{$stat.stat.add}</td><td class="{cycle advance=false}">{$stat.stat.del}</td></tr><!-- {cycle} -->
+{/foreach}
+{/foreach}
+</table>
+{/if}
+
+{if $feature_contribution eq 'y' && isset($contributionStat)}
+<table>
+<caption>{tr}Volumn per contribution and time{/tr}</caption>
 <tr><th class="heading">{tr}Contribution{/tr}</th>
 <th class="heading" colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th></tr>
 <tr><td class="heading"></td>
