@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.6 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.7 2007-07-26 10:23:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -33,12 +33,12 @@ if (isset($_REQUEST['del'])) {
 if (isset($_REQUEST['delk'])) {
 	check_ticket('admin-inc-intertiki');
 	$known_hosts = unserialize($tikilib->get_preference("known_hosts",''));
-	$_REQUEST["intertikiserver"] = true;
 	foreach ($known_hosts as $k=>$i) {
 		if ($k != $_REQUEST['delk']) {
 			$_REQUEST['known_hosts'][$k] = $i;
 		}
-	}
+	$_REQUEST['known_hosts'] = serialize($_REQUEST['known_hosts']);
+	simple_set_value('known_hosts');	}
 }
 
 if (isset($_REQUEST["intertikiclient"])) {
@@ -75,7 +75,7 @@ $known_hosts = unserialize($tikilib->get_preference("known_hosts",''));
 
 $smarty->assign("interlist", $interlist);
 $smarty->assign("known_hosts", $known_hosts);
-$smarty->assign("intertiki_server", $tikilib->get_preference("intertiki_server", "n"));
+$smarty->assign("feature_intertiki_server", $tikilib->get_preference("feature_intertiki_server", "n"));
 
 ask_ticket('admin-inc-intertiki');
 ?>
