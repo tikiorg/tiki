@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.36 2007-07-19 21:19:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.37 2007-07-26 14:24:34 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -125,6 +125,7 @@ if ($tiki_p_admin == 'y') {
 } else {
 	$users = array($userlib->get_user_id($user) => $user);
  	$groups = $tikilib->get_user_groups($user);
+	$groups = array_diff($groups, array('Registered', 'Anonymous'));
 	$_REQUEST['selectedUsers'] = array($user);
 }
 $smarty->assign_by_ref('users', $users);
@@ -202,8 +203,12 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
 
 	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
-	$statUser = $logslib->get_action_stat_user($contributorActions);
-	$smarty->assign_by_ref('statUser', $statUser);
+	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
+	$smarty->assign_by_ref('userActions', $userActions);
+	$groupContributions = $logslib->get_stat_contributions_per_group($contributorActions, $selectedGroups);
+	$smarty->assign_by_ref('groupContributions', $groupContributions);
+	$userContributions = $logslib->get_stat_contributions_per_user($contributorActions);
+	$smarty->assign_by_ref('userContributions', $userContributions['data']);
 	if ($showCateg) {
 		$statCateg = $logslib->get_action_stat_categ($actions, $categNames);
 		$smarty->assign_by_ref('statCateg', $statCateg);
@@ -217,7 +222,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$smarty->assign_by_ref('volUserCateg', $volUserCateg);
 		$typeVol = $logslib->get_action_vol_type($volCateg);
 		$smarty->assign_by_ref('typeVol', $typeVol);
-		$statUserCateg = $logslib->get_action_stat_user_categ($contributorActions, $categNames);
+		$statUserCateg = $logslib->get_actions_per_user_categ($contributorActions, $categNames);
 		$smarty->assign_by_ref('statUserCateg', $statUserCateg);
 	}
 	for ($i = 0; $i < sizeof($actions); ++$i) {
@@ -381,7 +386,6 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 
 if (isset($_REQUEST['graph'])) {
 	$contributions = $contributionlib->list_contributions(0, -1);
-	$userStat = $logslib->get_stat_user($contributorActions);
 	require_once ('lib/sheet/grid.php');
 	require_once ('lib/graph-engine/gd.php');
 	require_once ('lib/graph-engine/pdflib.php');
@@ -394,7 +398,7 @@ if (isset($_REQUEST['graph'])) {
 	$widthWeek = 50*$contributionStat['nbCols']+400;
 	$widthTotal = 600;
 	$height = 200;
-	$widthUser = 50*$userStat['nbCols']+400;
+	$widthUser = 50*$userContributions['nbCols']+400;
 	$background = &new GD_GRenderer( max($widthUser,$widthWeek) , 6*$height, $ext );
 	include_once('lib/smarty_tiki/modifier.tiki_short_date.php');
 	$period =  ' ('.smarty_modifier_tiki_short_date($startDate);
@@ -404,22 +408,22 @@ if (isset($_REQUEST['graph'])) {
 
 	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 	$graph = new $graphType;
-	$series = $logslib->draw_contribution_user($userStat, 'add', $contributions);
-	//echo '<pre>XXX';print_r($userStat);print_r($series); die;
+	$series = $logslib->draw_contribution_user($userContributions, 'add', $contributions);
+	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
 		$graph->setTitle(tra('Users Contributions Addition').$period);
+		$graph->setParam('font','1');
 		$graph->draw($renderer);
-		$renderer->getStyle('Thin-Small');
 		imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0,$renderer->width, $renderer->height);
 		//echo "<pre>";print_r($graph); die;
 	}
 
 	$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 	$graph = new $graphType;
-	$series = $logslib->draw_contribution_user($userStat, 'del', $contributions);
-	//echo '<pre>XXX';print_r($userStat);print_r($series); die;
+	$series = $logslib->draw_contribution_user($userContributions, 'del', $contributions);
+	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 	if ($series['totalVol']) {
 		unset($series['totalVol']);
 		$graph->setData($series);
