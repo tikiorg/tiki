@@ -1113,6 +1113,7 @@ $lang=Array(
 "Last Created FAQs" => "最近建立 FAQS",
 "Top Visited FAQs" => "最熱門 FAQs",
 "Quick edit a Wiki page" => "快速編輯 Wiki 頁面",
+"Quick Edit a Wiki Page" => "快速編輯 Wiki 頁面",
 "Bookmarks" => "書籤",
 "mark" => "標計",
 "new" => "增加",
