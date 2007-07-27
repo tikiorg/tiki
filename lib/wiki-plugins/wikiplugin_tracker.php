@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.66 2007-06-16 16:02:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.67 2007-07-27 13:58:25 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -480,7 +480,7 @@ function wikiplugin_tracker($data, $params) {
 						foreach ($cats as $cat) {
 							$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
 							$t = (isset($f["options_array"][1]) && $f["options_array"][1] == 'radio')? 'radio': 'checkbox';
-							$back .= '<input type="'.$t.'" name="ins_cat_'.$i++.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input>';
+							$back .= '<input type="'.$t.'" name="ins_cat_'.$i++.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input><br />';
 						}
 					} elseif ($f['type'] == 'c') {
 						$back .="<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
