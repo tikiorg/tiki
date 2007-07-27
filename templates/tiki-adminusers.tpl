@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.107 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.108 2007-07-27 15:08:39 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -138,7 +138,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td><a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="pics/icons/wrench.png" width='16' height='16' /></a>
 <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}"  
 title="{tr}Edit Account Settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}Edit Account Settings{/tr}: {$users[user].user}" src="pics/icons/page_edit.png" width='16' height='16' /></a>
-<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}user information{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}user information{/tr}' /></a></td>
+<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}User Information{/tr}' /></a></td>
 <td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr}">{$users[user].user}</a></td>
 {if $login_is_email ne 'y'}<td>{$users[user].email}</td>{/if}
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
