@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.215 2007-07-21 17:11:47 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.216 2007-07-27 22:43:02 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -778,13 +778,18 @@ class TrackerLib extends TikiLib {
 			$del_categs = array_diff($old_categs, $ins_categs);
 			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
 		}
-
-		$the_data = tra('Status:').' ';
-		$statusTypes = $this->status_types();
-		if (isset($oldStatus) && $oldStatus != $status) {
-			$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
+		if (!empty($oldStatus) || !empty($status)) {
+			$the_data = tra('Status:').' ';
+			$statusTypes = $this->status_types();
+			if (isset($oldStatus) && $oldStatus != $status) {
+				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
+			}
+			if (!empty($status)) {
+				$the_data .= $statusTypes[$status]['label'] . "\n\n";
+			}
+		} else {
+			$the_data = '';
 		}
-		$the_data .= $statusTypes[$status]['label'] . "\n\n";
 
 		foreach($ins_fields["data"] as $i=>$array) {
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
@@ -1326,8 +1331,9 @@ class TrackerLib extends TikiLib {
 				    {
 				       $mandatory_fields[] = $f;
 				    }
-				}elseif (!isset($f['value']) or strlen($f['value']) == 0) {
-				
+				} elseif (isset($f['type']) &&  ($f['type'] == 'u' || $f['type'] == 'g') && $f['options_array'][0] == 1) {
+					;
+				} elseif (!isset($f['value']) or strlen($f['value']) == 0) {
 					$mandatory_fields[] = $f;
 				}
 			}
