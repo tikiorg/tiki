@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.39 2007-03-06 20:48:36 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.40 2007-07-27 14:21:17 jyhem Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -156,7 +156,7 @@ function wikiplugin_split($data, $params, $pos) {
 				$result .= '<div class="split"><div style="float:right">';
 $result .= "$pos-$icell-".htmlspecialchars(substr($data,$pos, 10));
  				$result .= '<a href="tiki-edit_wiki_section.php?object='.$object.'&amp;type='.$type.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
-  	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('edit').'" title="'.tra('edit').'" border="0" width="16" height="16" /></a></div><br />';
+  	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" border="0" width="16" height="16" /></a></div><br />';
  				$ind += strlen($i);
 				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))
 					++$ind;
