@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.147 2007-07-20 18:44:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.148 2007-07-27 18:41:49 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -335,6 +335,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 {elseif $cur_field.options}
 <a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
+<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" />
 {/if}
 
 {elseif $cur_field.type eq 'I'}
