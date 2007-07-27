@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.12 2007-03-22 17:54:54 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/hec.css,v 1.13 2007-07-27 13:38:14 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -253,7 +253,6 @@ DIV#tiki-bot {
 #centercolumn {
 	margin : 0;
 	width : 100%;
-	background-image: url(hec/h_hec.gif);
 	background-repeat: no-repeat;
 	background-position: right top;
 	padding: 0px;
