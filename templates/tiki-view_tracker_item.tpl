@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.148 2007-07-27 18:41:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.149 2007-07-27 22:43:02 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -328,14 +328,13 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $cur_field.type eq 'u'}
 {if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-<option value="">{tr}None{/tr}</option>
+{if !$cur_field.isMandatory}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
 <option value="{$one|escape}" {if $cur_field.value}{if $cur_field.value eq $one}selected="selected"{/if}{/if}>{$one}</option>
 {/foreach}
 </select>
 {elseif $cur_field.options}
 <a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
-<input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" />
 {/if}
 
 {elseif $cur_field.type eq 'I'}
@@ -348,7 +347,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $cur_field.type eq 'g'}
 {if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-<option value="">{tr}None{/tr}</option>
+{if !$cur_field.isMandatory}<option value="">{tr}None{/tr}</option>{/if}
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}" {if $cur_field.value|default:$cur_field.pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
