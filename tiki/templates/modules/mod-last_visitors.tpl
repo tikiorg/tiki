@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.9 2007-06-02 15:25:57 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.10 2007-07-27 16:47:00 jyhem Exp $ *}
 
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` visitors{/tr}" assign="tpl_module_title"}
 {else}
-{eval var="{tr}Last visitors{/tr}" assign="tpl_module_title"}
+{eval var="{tr}Last Visitors{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations}
