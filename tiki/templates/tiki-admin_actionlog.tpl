@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.38 2007-07-26 14:24:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.39 2007-07-30 19:29:25 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -76,7 +76,8 @@
 <td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if} /> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
-<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" /></td></tr>
+<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" />
+{if $feature_jpgraph eq 'y'}{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" checked="checked" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" />{/if}</td></tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 {/if}

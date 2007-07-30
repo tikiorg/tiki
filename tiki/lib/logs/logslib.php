@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.48 2007-07-26 14:24:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.49 2007-07-30 19:29:25 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -428,7 +428,7 @@ class LogsLib extends TikiLib {
 			$previousAction = $action;
 			$groups = $tikilib->get_user_groups($action['user']);
 			foreach ($groups as $key=>$group) {
-				if ($selectedGroups[$key] != 'y')
+				if (isset($selectedGroups) && $selectedGroups[$key] != 'y')
 					continue;
 				foreach ($action['contributions'] as $contribution) {
 					if (!isset($statGroups[$group])) {
@@ -719,7 +719,6 @@ class LogsLib extends TikiLib {
 		$colors[] = 'red';	if (!--$nb) return $colors;
 		$colors[] = 'yellow';	if (!--$nb) return $colors;
 		$colors[] = 'blue';	if (!--$nb) return $colors;
-		$colors[] = 'fuschia';	if (!--$nb) return $colors;
 		$colors[] = 'gray';	if (!--$nb) return $colors;
 		$colors[] = 'green';	if (!--$nb) return $colors;
 		$colors[] = 'aqua';	if (!--$nb) return $colors;
@@ -792,6 +791,28 @@ class LogsLib extends TikiLib {
 				} else {
 					$ret["y$iy"][] = $stats[$contribution['contributionId']]['stat']["$type"];
 					$ret['totalVol'] += $stats[$contribution['contributionId']]['stat']["$type"];
+				}
+			}
+			++$iy;
+		}
+		return $ret;
+	}
+	function draw_contribution_group($groupContributions, $type='add', $contributions) {
+		$ret = array();
+		$ret['totalVol'] = 0;
+		foreach ($groupContributions as $group=>$stats) {
+			$ret['x'][] = utf8_decode($group);
+		}
+		$ret['color'] = $this->get_colors($contributions['cant']);
+		$iy = 0;
+		foreach ($contributions['data'] as $contribution) {
+			$ret['label'][] = utf8_decode($contribution['name']);
+			foreach ($groupContributions as $group=>$stats) {
+				if (empty($stats[$contribution['name']])) {
+					$ret["y$iy"][] = 0;
+				} else {
+					$ret["y$iy"][] = $stats[$contribution['name']][$type];
+					$ret['totalVol'] += $stats[$contribution['name']][$type];
 				}
 			}
 			++$iy;
@@ -872,6 +893,23 @@ class LogsLib extends TikiLib {
 	function clean_logsql() {
 		$query = 'delete * from  `adodb_logsql`';
 		$this->query($query, array());
+	}
+	function graph_to_jpgraph(&$jpgraph, $series, $accumulated = false) {
+		$jpgraph->SetScale('textlin');
+		$jpgraph->xaxis->SetTickLabels($series['x']);
+		$plot = array();
+		for ($i = 0; isset($series["y$i"]); ++$i) {
+			$plot[$i] = new BarPlot($series["y$i"]);
+			$plot[$i]->SetFillColor($series['color'][$i]);
+			$plot[$i]->SetLegend($series['label'][$i]);
+		}
+		if ($accumulated) {
+			$gbplot = new AccBarPlot($plot);
+		} else {
+			$gbplot = new GroupBarPlot($plot);
+		}
+		//$jpgraph ->legend->Pos( 0.5,0.5,"right" ,"center");
+		$jpgraph->Add( $gbplot);
 	}
 
 }
