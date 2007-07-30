@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.188 2007-07-11 14:35:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.189 2007-07-30 01:58:12 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -576,23 +576,20 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 }
 
 // Display category path or not (like {catpath()})
-if (isset($is_categorized) && $is_categorized) {
+if ($feature_categories == 'y' && $categlib->is_categorized('wiki page',$page)) {
     $smarty->assign('is_categorized','y');
-    if(isset($feature_categorypath) and $feature_categories == 'y') {
-	if ($feature_categorypath == 'y') {
-	    $cats = $categlib->get_object_categories('wiki page',$objId);
+    if ($feature_categoryobjects == 'y' || $feature_categorypath == 'y') {
+		$cats = $categlib->get_object_categories('wiki page',$page);
+    }
+	if ($feature_categorypath == 'y') {	
 	    $display_catpath = $categlib->get_categorypath($cats);
 	    $smarty->assign('display_catpath',$display_catpath);
-	}
-    }
-    // Display current category objects or not (like {category()})
-    if (isset($feature_categoryobjects) and $feature_categories == 'y') {
-	if ($feature_categoryobjects == 'y') {
-	    $catids = $categlib->get_object_categories('wiki page', $objId);
-	    $display_catobjects = $categlib->get_categoryobjects($catids);
+	}    
+    // Display current category objects or not (like {category()})    
+	if ($feature_categoryobjects == 'y') {	    
+	    $display_catobjects = $categlib->get_categoryobjects($cats);
 	    $smarty->assign('display_catobjects',$display_catobjects);
-	}
-    }
+	}    
 } else {
     $smarty->assign('is_categorized','n');
 }
