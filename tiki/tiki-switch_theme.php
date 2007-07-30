@@ -14,7 +14,7 @@ if (isset($_GET['theme'])){
 	$new_theme = $_GET['theme'];
 	if ($feature_userPreferences == 'y' && $user && $change_theme == 'y') {  
 		$tikilib->set_user_preference($user,'theme',$new_theme);
-	} else {
+	} elseif ($change_theme == 'y') {
 		$_SESSION['style'] = $new_theme;
 	}
 }
