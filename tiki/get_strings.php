@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.47 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.48 2007-07-31 18:22:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,6 +18,7 @@
  * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
  * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
  * \param sort ='n' don't sort the filenames 
+ * \param completion=y produce only the completion status
  */
 
 
@@ -78,14 +79,15 @@ function removephpslashes ($string) {
 
 function hardwire_file ($file)
 {
-  global $files;
+	global $files, $completion;
   $files[] = $file;
-  print "File (hardwired): $file<br />";
+  if (!$completion)
+	  print "File (hardwired): $file<br />";
 }
 
 function collect_files ($dir)
 {
-  global $files;
+	global $files, $completion;
   $handle = opendir ($dir);
   while (false !== ($file = readdir ($handle))) {
     // Skip current and parent directory
@@ -101,7 +103,8 @@ function collect_files ($dir)
 
     $filepath = $dir . '/' . $file;
     if (preg_match ("/.*\.(tpl|php)$/", $file)) {
-      print("File: $filepath<br />");
+	  if (!$completion)
+		  print("File: $filepath<br />");
       $files[] = $filepath; 
     }
     else {
@@ -170,7 +173,9 @@ if($tiki_p_admin != 'y') {
   die("You need to be admin to run this script");
 }
 
-echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br />\n";
+$completion = isset($_REQUEST['completion']) && $_REQUEST['completion']=='y';
+if (!$completion)
+	echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br />\n";
 $tiki_timer->start("files");
 
 $comments = isset ($_REQUEST['comments']);
@@ -182,7 +187,6 @@ $group_w  = isset ($_REQUEST['groupwrite']);
 
 $nohelp     = isset ($_REQUEST['nohelp']);
 $nosections = isset ($_REQUEST['nosections']);
-
 
 // Get the language(s)
 $languages = Array();
@@ -224,7 +228,7 @@ hardwire_file ('./img/flags/flagnames.php');
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
-if (!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') {
+if ((!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') && !$completion) {
 	echo "Sorting files...";
 	flush();
 	sort($files);
@@ -276,18 +280,20 @@ foreach ($languages as $sel) {
     $old_umask = umask (0); 
   }
 
-  $fw = fopen("lang/$sel/new_language.php",'w');
+  if (!$completion) {
+	$fw = fopen("lang/$sel/new_language.php",'w');
   
-  print("&lt;");
-  fwrite($fw,"<");
-  writeFile_and_User ($fw, "?php");
+	print("&lt;");
+	fwrite($fw,"<");
+	writeFile_and_User ($fw, "?php");
   // The comment coding:utf-8 is for the benefit of emacs
   // and must be on the very first line in the file
   // we leave this comment in even if comments are off since
   // editing files with the wrong encoding causes commical effects at best.
-  writeFile_and_User ($fw, " // -*- coding:utf-8 -*-\n");
+	writeFile_and_User ($fw, " // -*- coding:utf-8 -*-\n");
+  }
 
-  if (!$nohelp) {
+  if (!$nohelp && !$completion) {
     // Good to have instructions for translators in the release file.
     // The comments get filtered away by Smarty anyway
     writeFile_and_User ($fw, "// parameters:\n");
@@ -334,12 +340,11 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// Usefull mode when preparing a translation for distribution.\n\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?nohelp&nosections\n");
     writeFile_and_User ($fw, "// Prepare all languages for release \n\n");
+
+
+	// Start generating the lang array
+	writeFile_and_User ($fw, "\n\$lang=Array(\n");  
   }
-
-
-  // Start generating the lang array
-  writeFile_and_User ($fw, "\n\$lang=Array(\n");  
-  
   foreach ($files as $file) {
     $data = file_get_contents($file);
 
@@ -465,6 +470,10 @@ foreach ($languages as $sel) {
       }
     }
   }
+  if ($completion) {
+	  echo "Completion: ".round((count($translated)*100)/(count($translated)+count($to_translate))). '%';
+	  continue;
+  }
 
   unset ($unused['']);
   if (count ($unused) > 0) {
@@ -586,8 +595,8 @@ foreach ($languages as $sel) {
     umask($old_umask); // Reset umask back to original value
   }
 }
-
-echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br />\n";
-echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br />\n";
-
+if (!$completion) {
+	echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br />\n";
+	echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br />\n";
+ }
 ?>
