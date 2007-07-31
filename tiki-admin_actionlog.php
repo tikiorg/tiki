@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.39 2007-07-31 14:28:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.40 2007-07-31 16:04:58 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -400,6 +400,8 @@ if (isset($_REQUEST['graph'])) {
 		$ext = 'jpeg';
 		$background = new MGraph();
 		$background->SetImgFormat($ext);
+		$background->SetFrame(true, 'black');
+		$background->SetMargin(10,10,10,10);
 		$legendWidth = 0;
 		foreach ($contributions['data'] as $contribution) {
 			$legendWidth = max($legendWidth, strlen($contribution['name'])*7); 
@@ -432,19 +434,25 @@ if (isset($_REQUEST['graph'])) {
 	$accumulated = (isset($_REQUEST['barPlot']) && $_REQUEST['barPlot'] == 'acc')? true: false;
 
 	$series = $logslib->draw_contribution_user($userContributions, 'add', $contributions);
-	$title = tra('Users Contributions Addition').$period;
+	if ($series['totalVol']) {
+	if ($tiki_p_admin == 'y') {
+		$title = tra('Users Contributions Addition').$period;
+	} else {
+		$title = sprintf(tra('%s Contributions Addition'), $user).$period;
+	}
 	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthUser, $height, 'userContributionsAdd');
+		$graph = new Graph($widthUser, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
 		$graph->title->Set($title);
-		$graph->xaxis->SetTitle(tra('Users'), 'center');
+		if ($tiki_p_admin == 'y')
+			$graph->xaxis->SetTitle(tra('Users'), 'center');
 		$graph->yaxis->title->Set(tra($_REQUEST['unit']));
 		$graph->setFrame(true, 'darkgreen',2);
 		$background->Add($graph, 0, 0);
-	}elseif ($series['totalVol']) {
+	}else {
 		$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 		$graph = new $graphType;
 		$graph->setData($series);
@@ -452,21 +460,28 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 0, 0, 0,$renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_contribution_user($userContributions, 'del', $contributions);
-	$title = tra('Users Contributions Suppression').$period;
+	if ($series['totalVol']) {
+	if ($tiki_p_admin == 'y') {
+		$title = tra('Users Contributions Suppression').$period;
+	} else {
+		$title = sprintf(tra('%s Contributions Suppression'), $user).$period;
+	}
 	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthUser, $height, 'userContributionsDel');
+		$graph = new Graph($widthUser, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
 		$graph->title->Set($title);
-		$graph->xaxis->SetTitle(tra('Users'), 'center');
+		if ($tiki_p_admin == 'y')
+			$graph->xaxis->SetTitle(tra('Users'), 'center');
 		$graph->yaxis->title->Set(tra($_REQUEST['unit']));
 		$graph->setFrame(true, 'red',2);
 		$background->Add($graph, 0, ($height+$space));
-	}elseif ($series['totalVol']) {
+	}else {
 		$renderer = &new GD_GRenderer( $widthUser, $height, $ext );
 		$graph = new $graphType;
 		$graph->setData($series);
@@ -474,8 +489,10 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, ($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_week_contribution_vol($contributionStat, 'add', $contributions);
+	if ($series['totalVol']) {
 	if ($_REQUEST['contribTime'] == 'd') {
 		$title = tra('Contributions Addition per Day').$period;
 		$title2 = tra('Days');
@@ -485,7 +502,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 	//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthWeek, $height, 'weekContributionsAdd');
+		$graph = new Graph($widthWeek, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -494,7 +511,7 @@ if (isset($_REQUEST['graph'])) {
 		$graph->yaxis->title->Set(tra($_REQUEST['unit']));
 		$graph->setFrame(true, 'darkgreen',2);
 		$background->Add($graph, 0, 2*($height+$space));
-	}elseif ($series['totalVol']) {
+	}else {
 		$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
 		$graph = new $graphType;
 		unset($series['totalVol']);
@@ -503,8 +520,10 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 2*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_week_contribution_vol($contributionStat, 'del', $contributions);
+	if ($series['totalVol']) {
 	if ($_REQUEST['contribTime'] == 'd') {
 		$title = tra('Contributions Suppression per Day').$period;
 		$title2 = tra('Days');
@@ -514,7 +533,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 	//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthWeek, $height, 'weekContributionsDel');
+		$graph = new Graph($widthWeek, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -523,7 +542,7 @@ if (isset($_REQUEST['graph'])) {
 		$graph->yaxis->title->Set(tra($_REQUEST['unit']));
 		$graph->setFrame(true, 'red',2);
 		$background->Add($graph, 0, 3*($height+$space));
-	}elseif ($series['totalVol']) {
+	}else {
 		$renderer = &new GD_GRenderer( $widthWeek, $height, $ext );
 		$graph = new $graphType;
 		unset($series['totalVol']);
@@ -536,12 +555,14 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 3*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_contribution_vol($contributionStat, 'add', $contributions);
+	if ($series['totalVol']) {
 	$title = tra('Total Contributions Addition').$period;
 	//echo "<pre>";print_r($contributionStat);print_r($series);die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthTotal, $height, 'contributionsAdd');
+		$graph = new Graph($widthTotal, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -557,12 +578,14 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 4*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_contribution_vol($contributionStat, 'del', $contributions);
+	if ($series['totalVol']) {
 	$title = tra('Total Contributions Suppression').$period;
 	//echo "<pre>";print_r($contributionStat);print_r($series);die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthTotal, $height, 'contributionsDel');
+		$graph = new Graph($widthTotal, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -578,12 +601,14 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 5*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_contribution_group($groupContributions, 'add', $contributions);
+	if ($series['totalVol']) {
 	$title = tra('Groups Addition').$period;
 	//echo "<pre>";print_r($groupContributions);print_r($series);die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthGroup, $height, 'contributionsAdd');
+		$graph = new Graph($widthGroup, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -600,12 +625,14 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 6*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	$series = $logslib->draw_contribution_group($groupContributions, 'del', $contributions);
+	if ($series['totalVol']) {
 	$title = tra('Groups Suppression').$period;
 	//echo "<pre>";print_r($groupContributions);print_r($series);die;
 	if ($feature_jpgraph == 'y') {
-		$graph = new Graph($widthGroup, $height, 'contributionsAdd');
+		$graph = new Graph($widthGroup, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated);
 		$graph->img->SetMargin(40,40+$legendWidth,40,40);
@@ -622,9 +649,10 @@ if (isset($_REQUEST['graph'])) {
 		$graph->draw($renderer);
 		imagecopy($background->gd, $renderer->gd, 0, 7*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
+	}
 
 	if ($feature_jpgraph == 'y') {
-		echo $background->Stroke();
+		$background->Stroke();
 	} else {
 		ob_start();
 		$background->httpOutput( "graph.$ext" );
