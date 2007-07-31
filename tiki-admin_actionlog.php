@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.38 2007-07-30 19:29:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.39 2007-07-31 14:28:52 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -156,14 +156,14 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		foreach ($groups as $key=>$g) {
 			if (in_array($g, $_REQUEST['selectedGroups'])) {
 				$url .= "&amp;selectedGroups[]=$g";
-				$selectedGroups[$key] = 'y';
+				$selectedGroups[$g] = 'y';
 				if ($tiki_p_admin == 'y') {
 					$members = $userlib->get_group_users($g);
 					foreach ($members as $m)
 						$_REQUEST['selectedUsers'][] = $m;
 				}
 			} else {
-				$selectedGroups[$key] = 'n';
+				$selectedGroups[$g] = 'n';
 			}
 		}
 		$smarty->assign_by_ref('selectedGroups', $selectedGroups);
@@ -201,11 +201,18 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$smarty->assign('endDate', $endDate);
 
 	$actions = $logslib->list_actions('', '', $_REQUEST['selectedUsers'], 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
-
 	$contributorActions = $logslib->split_actions_per_contributors($actions, $_REQUEST['selectedUsers']);
+	if (!empty($_REQUEST['selectedUsers'])) {
+		$allActions = $logslib->list_actions('', '', '', 0, -1, 'lastModif_desc', '', $startDate, $endDate, $_REQUEST['categId']);
+		$allContributorsActions = $logslib->split_actions_per_contributors($actions, '');
+	} else {
+		$allActions = $actions;
+		$allContributorsActions = $contributorActions;
+	}
+
 	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
 	$smarty->assign_by_ref('userActions', $userActions);
-	$groupContributions = $logslib->get_stat_contributions_per_group($contributorActions, $selectedGroups);
+	$groupContributions = $logslib->get_stat_contributions_per_group($allContributorsActions, $selectedGroups);
 	$smarty->assign_by_ref('groupContributions', $groupContributions);
 	$userContributions = $logslib->get_stat_contributions_per_user($contributorActions);
 	$smarty->assign_by_ref('userContributions', $userContributions['data']);
@@ -390,9 +397,10 @@ if (isset($_REQUEST['graph'])) {
 		require_once('lib/jpgraph/src/jpgraph.php');
 		require_once('lib/jpgraph/src/jpgraph_bar.php');
 		require_once('lib/jpgraph/src/jpgraph_mgraph.php');
-		$background = new MGraph();
 		$ext = 'jpeg';
-		$legenWidth = 0;
+		$background = new MGraph();
+		$background->SetImgFormat($ext);
+		$legendWidth = 0;
 		foreach ($contributions['data'] as $contribution) {
 			$legendWidth = max($legendWidth, strlen($contribution['name'])*7); 
 		}
@@ -420,7 +428,7 @@ if (isset($_REQUEST['graph'])) {
 	$period =  ' ('.smarty_modifier_tiki_short_date($startDate);
 	$s = smarty_modifier_tiki_short_date($startDate);
 	$e = smarty_modifier_tiki_short_date($endDate);
-	$period = ($s != $e)? " ($s-$e)":($s);
+	$period = ($s != $e)? " ($s-$e)": " ($s)";
 	$accumulated = (isset($_REQUEST['barPlot']) && $_REQUEST['barPlot'] == 'acc')? true: false;
 
 	$series = $logslib->draw_contribution_user($userContributions, 'add', $contributions);
@@ -615,14 +623,14 @@ if (isset($_REQUEST['graph'])) {
 		imagecopy($background->gd, $renderer->gd, 0, 7*($height+$space), 0, 0, $renderer->width, $renderer->height);
 	}
 
-	ob_start();
 	if ($feature_jpgraph == 'y') {
-		$background->Stroke();	
+		echo $background->Stroke();
 	} else {
+		ob_start();
 		$background->httpOutput( "graph.$ext" );
+		$content = ob_get_contents();
+		ob_end_flush();
 	}
-	$content = ob_get_contents();
-	ob_end_flush();
 	die;
 }	
 

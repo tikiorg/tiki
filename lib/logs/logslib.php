@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.49 2007-07-30 19:29:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.50 2007-07-31 14:28:53 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -426,9 +426,14 @@ class LogsLib extends TikiLib {
 			if (!empty($previousAction) && $action['lastModif'] == $previousAction['lastModif'] && $action['user'] == $previousAction['user'] && $action['object'] == $previousAction['object'] && $action['objectType'] == $previousAction['objectType'])
 					continue;	// differ only by the categories
 			$previousAction = $action;
-			$groups = $tikilib->get_user_groups($action['user']);
+			if (empty($action['user'])) {
+				$groups = array('Anonymous');
+			} else {
+				$groups = $tikilib->get_user_groups($action['user']);
+				$groups = array_diff($groups, array('Anonymous'));
+			}
 			foreach ($groups as $key=>$group) {
-				if (isset($selectedGroups) && $selectedGroups[$key] != 'y')
+				if (isset($selectedGroups) && $selectedGroups[$group] != 'y')
 					continue;
 				foreach ($action['contributions'] as $contribution) {
 					if (!isset($statGroups[$group])) {

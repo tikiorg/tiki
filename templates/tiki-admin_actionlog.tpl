@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.39 2007-07-30 19:29:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.40 2007-07-31 14:28:53 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -58,7 +58,7 @@
 <td><select multiple="multiple" size="{if $groups|@count < 5}{math equation=x+y x=$groups|@count y=1}{else}5{/if}" name="selectedGroups[]">
 <option value="">&nbsp;</option>
 {foreach from=$groups key=ix item=group}
-<option value="{$group|escape}" {if $selectedGroups[$ix] eq 'y'}selected="selected"{/if}>{$group}</option>
+<option value="{$group|escape}" {if $selectedGroups[$group] eq 'y'}selected="selected"{/if}>{$group}</option>
 {/foreach}
 </select>
 </td>
@@ -90,7 +90,7 @@
 <a name="List" />
 <h2>{tr}List{/tr}
 {if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=auser from=$users}{if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}{/foreach}{/if}
-{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
+{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$group] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
 </h2>
 {if $actionlogs}
@@ -164,7 +164,7 @@
 <a name="Statistic" />
 <h2>{tr}Statistic{/tr}
 {if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=auser from=$users}{if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}{/foreach}{/if}
-{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$ix] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
+{if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$group] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
 </h2>
 <i>{tr}Volumes are equally distributed on each contributors/author{/tr}</i>
@@ -189,7 +189,7 @@
 </table>
 {/if}
 
-{if $showCateg eq 'y' and $volCateg|@count ne 0}
+{if $showCateg eq 'y' and $volCateg|@count ne 0 and tiki_p_admin eq 'y'}
 <table class="smallnormal">
 <caption>{tr}Volumn per category{/tr}</caption>
 <tr>
@@ -259,7 +259,7 @@
 </table>
 {/if}
 
-{if $showCateg eq 'y'}
+{if $showCateg eq 'y' and tiki_p_admin eq 'y'}
 <table class="normal">
 <caption>{tr}Number of actions per category{/tr}</caption>
 <tr>
@@ -305,14 +305,12 @@
 
 {if $feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 <table>
-<caption>{tr}Volumn per group and per contribution{/tr}</caption>
+<caption>{if $selectedUsers}{tr}Volumn per the users'group and per contribution{/tr}{else}{tr}Volumn per group and per contribution{/tr}{/if}</caption>
 <tr><th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
 {foreach from=$groupContributions key=group item=contributions}
-{if $tiki_p_admin eq 'y' or ($group ne 'Anonymous' and $group ne 'Registered')}
 {foreach from=$contributions key=contribution item=stat}
 <tr><td class="{cycle advance=false}">{$group}</td><td class="{cycle advance=false}">{$contribution}</td><td class="{cycle advance=false}">{$stat.add}</td><td class="{cycle advance=false}">{$stat.del}</td></tr><!-- {cycle} -->
 {/foreach}
-{/if}
 {/foreach}
 </table>
 {/if}
@@ -331,7 +329,7 @@
 
 {if $feature_contribution eq 'y' && isset($contributionStat)}
 <table>
-<caption>{tr}Volumn per contribution and time{/tr}</caption>
+<caption>{if $selectedUsers}{tr}Volumn per users'contribution and time{/tr}{else}{tr}Volumn per contribution and time{/tr}{/if}</caption>
 <tr><th class="heading">{tr}Contribution{/tr}</th>
 <th class="heading" colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th></tr>
 <tr><td class="heading"></td>
