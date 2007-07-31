@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.40 2007-07-31 14:28:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.41 2007-07-31 19:48:41 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $feature_help eq 'y'}
@@ -25,7 +25,8 @@
 {* -------------------------------------------------- tab with report --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Report" />
-<form method="post" action="tiki-admin_actionlog.php#Report">
+<form method="get" action="tiki-admin_actionlog.php#Report">
+{* a get method to be able when you right click on the image to save it and not to save the tiki-admin_aqctionlog.php without param *}
 <h2>{tr}Filter{/tr}</h2>
 {if empty($nbViewedConfs)}
 <div class="simplebox highlight">{tr}Please select some actions to view.{/tr}</div>
@@ -77,7 +78,7 @@
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" />
-{if $feature_jpgraph eq 'y'}{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" checked="checked" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" />{/if}</td></tr>
+{if $feature_jpgraph eq 'y'}<br />{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" checked="checked" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" />{/if}</td></tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 {/if}
