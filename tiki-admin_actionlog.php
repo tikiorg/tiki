@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.40 2007-07-31 16:04:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.41 2007-07-31 20:17:22 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -125,9 +125,14 @@ if ($tiki_p_admin == 'y') {
 } else {
 	$users = array($userlib->get_user_id($user) => $user);
  	$groups = $tikilib->get_user_groups($user);
-	$groups = array_diff($groups, array('Registered', 'Anonymous'));
+	$groups = array_diff($groups, array('Anonymous'));
 	$_REQUEST['selectedUsers'] = array($user);
+	$selectedGroups = array();
+	foreach ($groups as $g) {
+		$selectedGroups[$g] = 'y';
+	}
 }
+
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
 $categories = $categlib->list_categs();
@@ -393,6 +398,18 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 
 if (isset($_REQUEST['graph'])) {
 	$contributions = $contributionlib->list_contributions(0, -1);
+	$legendWidth = 0;
+	foreach ($contributions['data'] as $contribution) {
+		$legendWidth = max($legendWidth, strlen($contribution['name'])*7); 
+	}
+	$legendWidth += 20;
+	$widthWeek = 70*$contributionStat['nbCols']+100+$legendWidth;
+	$widthTotal = 70+100+$legendWidth;
+	$height = 200;
+	$widthUser = 70*$userContributions['nbCols']+100+$legendWidth;
+	$widthGroup = 70*count($groupContributions)+100+$legendWidth;
+	$space = 20;
+	//echo "$legendWidth _ $widthWeek _ $widthTotal _ $widthUser _ $widthGroup";die;
 	if ($feature_jpgraph == 'y') {
 		require_once('lib/jpgraph/src/jpgraph.php');
 		require_once('lib/jpgraph/src/jpgraph_bar.php');
@@ -402,11 +419,6 @@ if (isset($_REQUEST['graph'])) {
 		$background->SetImgFormat($ext);
 		$background->SetFrame(true, 'black');
 		$background->SetMargin(10,10,10,10);
-		$legendWidth = 0;
-		foreach ($contributions['data'] as $contribution) {
-			$legendWidth = max($legendWidth, strlen($contribution['name'])*7); 
-		}
-		$legendWidth += 20;
 	} else {
 		require_once ('lib/sheet/grid.php');
 		require_once ('lib/graph-engine/gd.php');
@@ -420,12 +432,6 @@ if (isset($_REQUEST['graph'])) {
 		$ext = 'jpg';
 		$legendWidth = 300;
 	}
-	$widthWeek = 50*$contributionStat['nbCols']+200+$legendWidth;
-	$widthTotal = 600;
-	$height = 200;
-	$widthUser = 50*$userContributions['nbCols']+200+$legendWidth;
-	$widthGroup = 50*count($groupContributions)+200+$legendWidth;
-	$space = 20;
 	include_once('lib/smarty_tiki/modifier.tiki_short_date.php');
 	$period =  ' ('.smarty_modifier_tiki_short_date($startDate);
 	$s = smarty_modifier_tiki_short_date($startDate);
