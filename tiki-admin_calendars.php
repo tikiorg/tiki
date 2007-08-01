@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.31 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.32 2007-08-01 10:09:25 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,9 +77,11 @@ if ($feature_categories == 'y') {
 	$cat_objid = $_REQUEST["calendarId"];
 	include_once ("categorize_list.php");
 	$cs = $categlib->get_object_categories('calendar', $cat_objid);
-	for ($i = count($categories) - 1; $i >= 0; --$i) {
-		if (in_array($categories[$i]['categId'], $cs)) {
-			$categories[$i]['incat'] = 'y';
+	if (!empty($cs)) {
+		for ($i = count($categories) - 1; $i >= 0; --$i) {
+			if (in_array($categories[$i]['categId'], $cs)) {
+				$categories[$i]['incat'] = 'y';
+			}
 		}
 	}
 }
