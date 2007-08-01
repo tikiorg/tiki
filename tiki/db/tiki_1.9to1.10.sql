@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.185 2007-07-26 15:13:02 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.186 2007-08-01 10:53:57 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -620,13 +620,13 @@ ALTER TABLE `tiki_tracker_item_fields` ADD FULLTEXT KEY ft (value);
 CREATE TABLE IF NOT EXISTS `tiki_webmail_contacts_ext` (
   `contactId` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
-  `value` varchar(256) NOT NULL,
+  `value` varchar(255) NOT NULL,
   `hidden` tinyint(1) NOT NULL,
   KEY `contactId` (`contactId`)
 ) ENGINE=MyISAM;
 CREATE TABLE IF NOT EXISTS `tiki_webmail_contacts_fields` (
   `user` VARCHAR( 200 ) NOT NULL ,
-  `fieldname` VARCHAR( 256 ) NOT NULL ,
+  `fieldname` VARCHAR( 255 ) NOT NULL ,
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
 
@@ -1429,3 +1429,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #2007-07-18 sylvieg
 ALTER TABLE users_users ADD valid varchar(32) default NULL;
+
+#2007-08-01
+ALTER TABLE tiki_webmail_contacts_ext CHANGE value value VARCHAR(255) NOT NULL;
+AlTER TABLE tiki_webmail_contacts_fields CHANGE fieldname fieldname VARCHAR( 255 ) NOT NULL;
