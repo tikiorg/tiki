@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.186 2007-08-01 10:53:57 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.187 2007-08-01 11:21:28 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -558,6 +558,15 @@ alter table tiki_files change lockedby lockedby varchar(200) not null default ''
 alter table tiki_file_galleries change user user varchar(200) not null default '';
 alter table tiki_drawings change user user varchar(200) not null default '';
 alter table tiki_copyrights change userName userName varchar(200) not null default '';
+ALTER TABLE tiki_comments DROP KEY parentId;
+ALTER TABLE tiki_comments DROP KEY parentId_2;
+ALTER TABLE tiki_comments DROP KEY parentId_3;
+ALTER TABLE tiki_comments DROP KEY parentId_4;
+ALTER TABLE tiki_comments DROP KEY parentId_5;
+ALTER TABLE tiki_comments DROP KEY parentId_6;
+ALTER TABLE tiki_comments DROP KEY parentId_8;
+ALTER TABLE tiki_comments DROP KEY no_repeats;
+ALTER TABLE tiki_comments ADD UNIQUE KEY no_repeats(parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40));
 alter table tiki_comments change userName userName varchar(200) not null default '';
 alter table tiki_charts_votes change user user varchar(200) not null default '';
 alter table tiki_calendars change user user varchar(200) not null default '';
@@ -686,16 +695,6 @@ UPDATE users_permissions set permName='tiki_p_batch_upload_file_dir' where permN
 #sylvieg 2007/05/15
 ALTER TABLE tiki_forums  CHANGE name name varchar(255);
 ALTER TABLE tiki_comments CHANGE title title varchar(255);
-ALTER TABLE tiki_comments DROP KEY parentId;
-ALTER TABLE tiki_comments DROP KEY parentId_2;
-ALTER TABLE tiki_comments DROP KEY parentId_3;
-ALTER TABLE tiki_comments DROP KEY parentId_4;
-ALTER TABLE tiki_comments DROP KEY parentId_5;
-ALTER TABLE tiki_comments DROP KEY parentId_6;
-ALTER TABLE tiki_comments DROP KEY parentId_8;
-ALTER TABLE tiki_comments DROP KEY tc_pi;
-ALTER TABLE tiki_comments DROP KEY no_repeats;
-ALTER TABLE tiki_comments ADD UNIQUE KEY no_repeats(parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40));
 
 #sylvieg 2007/05/23
 ALTER TABLE users_users ADD email_due int(14) default NULL AFTER pass_due;
