@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.232 2007-07-24 18:39:19 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.233 2007-08-01 17:49:59 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2113,8 +2113,11 @@ function get_included_groups($group, $recur=true) {
 		    "",
 		    $user
 		    ));
-			return true;
-    }
+	// invalidate le cache pour que l'admin puisse se logger apres une fresh install		
+    global $cachelib; require_once('lib/cache/cachelib.php');
+	$cachelib->invalidate('user_details_'.$user);
+	return true;
+	}
 
 	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='') {
 		global $cachelib;  
