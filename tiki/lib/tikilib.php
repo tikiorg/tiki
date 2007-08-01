@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.764 2007-07-18 16:48:07 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.765 2007-08-01 20:00:15 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5838,7 +5838,7 @@ if (!$simple_wiki) {
 	    }
 
 	    // Replace monospaced text
-	    $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+	    $line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
 	    // Replace bold text
 	    $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
 	    // Replace italic text
