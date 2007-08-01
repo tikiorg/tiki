@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-07-25 22:16:50 $
-# $Author: pkdille $
+# $Date: 2007-08-01 10:53:57 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4873,7 +4873,7 @@ DROP TABLE IF EXISTS tiki_webmail_contacts_ext;
 CREATE TABLE `tiki_webmail_contacts_ext` (
   `contactId` int(11) NOT NULL,
   `fieldId` int(10) unsigned NOT NULL,
-  `value` varchar(256) NOT NULL,
+  `value` varchar(255) NOT NULL,
   `hidden` tinyint(1) NOT NULL,
   KEY `contactId` (`contactId`)
 ) ENGINE=MyISAM;
@@ -4882,7 +4882,7 @@ DROP TABLE IF EXISTS tiki_webmail_contacts_fields;
 CREATE TABLE `tiki_webmail_contacts_fields` (
   `fieldId` int(10) unsigned NOT NULL auto_increment,
   `user` VARCHAR( 200 ) NOT NULL ,
-  `fieldname` VARCHAR( 256 ) NOT NULL ,
+  `fieldname` VARCHAR( 255 ) NOT NULL ,
   `order` int(2) NOT NULL default '0',
   `show` char(1) NOT NULL default 'n',
   PRIMARY KEY ( `fieldId` ),
