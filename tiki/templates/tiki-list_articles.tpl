@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.46 2007-08-01 20:25:14 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.47 2007-08-02 13:06:48 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -61,7 +61,7 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}">{tr}Reads{/tr}<
 {if $art_list_img eq 'y'}
 	<td class="heading">{tr}Img{/tr}</td>
 {/if}
-<td  class="heading">{tr}Action{/tr}</td>
+{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage)}<td  class="heading">{tr}Action{/tr}</td>{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
@@ -144,4 +144,4 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}">{tr}Reads{/tr}<
 {/if}
 </div>
 {/if}
-</div>
+
