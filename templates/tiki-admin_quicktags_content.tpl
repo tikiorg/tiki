@@ -2,19 +2,19 @@
 <table class="normal">
   <tr>
     <td class="heading">
-      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}{/ajax_href}}>{tr}Label{/tr}
+      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}{/ajax_href}}>{tr}Label{/tr}
       </a>
     </td>
     <td class="heading">
-      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}{/ajax_href}}>{tr}Insert{/tr}
+      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}{/ajax_href}}>{tr}Insert{/tr}
       </a>
     </td>
     <td class="heading">
-      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}{/ajax_href}}>{tr}Icon{/tr}
+      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}{/ajax_href}}>{tr}Icon{/tr}
       </a>
     </td>
     <td class="heading">
-      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagcategory_desc'}tagcategory_asc{else}tagcategory_desc{/if}{/ajax_href}}>{tr}Category{/tr}
+      <a class="tableheading" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?sort_mode={if $sort_mode eq 'tagcategory_desc'}tagcategory_asc{else}tagcategory_desc{/if}{/ajax_href}}>{tr}Category{/tr}
       </a>
     </td>
     <td class="heading">{tr}Action{/tr}</td>
