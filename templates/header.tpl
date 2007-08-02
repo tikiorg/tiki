@@ -105,7 +105,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
   function confirmExit()
   {
     if (needToConfirm)
-      return "You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?";
+      return "{tr}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";
   }
 {/literal}
 </script>
