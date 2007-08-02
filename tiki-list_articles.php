@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.33 2007-04-02 17:21:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.34 2007-08-02 13:06:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -154,6 +154,15 @@ if ($feature_multilingual == 'y') {
 	$smarty->assign_by_ref('languages', $languages);
 	$avls = unserialize($tikilib->get_preference("available_languages"));
 	$smarty->assign_by_ref('available_languages', $avls);
+}
+
+if ($tiki_p_edit_article != 'y' && $tiki_p_remove_article != 'y') { //check one editable
+	foreach ($listpages['data'] as $page) {
+		if ($page['author'] == $user && $page['creator_edit'] == 'y') {
+			$smarty->assign('oneEditPage', 'y');
+			break;
+		}
+	}
 }
 
 include_once ('tiki-section_options.php');
