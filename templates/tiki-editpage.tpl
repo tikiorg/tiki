@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.116 2007-07-24 23:26:21 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.117 2007-08-02 11:41:54 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -326,8 +326,8 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm = false;" />
 {/if}
 &nbsp;<input type="hidden" name="page" value="{$page|escape}" />
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> &nbsp;&nbsp;
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />&nbsp;&nbsp;
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp;
 {if $feature_ajax eq 'y'}
 <input type="button" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()">
 {/if}
