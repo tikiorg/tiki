@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.50 2007-07-31 14:28:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.51 2007-08-02 22:19:26 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -899,8 +899,9 @@ class LogsLib extends TikiLib {
 		$query = 'delete * from  `adodb_logsql`';
 		$this->query($query, array());
 	}
-	function graph_to_jpgraph(&$jpgraph, $series, $accumulated = false) {
+	function graph_to_jpgraph(&$jpgraph, $series, $accumulated = false, $color='whitesmoke', $colorLegend='white') {
 		$jpgraph->SetScale('textlin');
+		$jpgraph->setMarginColor($color);
 		$jpgraph->xaxis->SetTickLabels($series['x']);
 		$plot = array();
 		for ($i = 0; isset($series["y$i"]); ++$i) {
@@ -914,6 +915,7 @@ class LogsLib extends TikiLib {
 			$gbplot = new GroupBarPlot($plot);
 		}
 		//$jpgraph ->legend->Pos( 0.5,0.5,"right" ,"center");
+		$jpgraph->legend->SetFillColor($colorLegend);
 		$jpgraph->Add( $gbplot);
 	}
 
