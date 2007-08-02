@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.47 2007-08-02 13:06:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.48 2007-08-02 13:12:27 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -106,15 +106,10 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}">{tr}Reads{/tr}<
 	<td class="{cycle advance=false}">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 {/if}
 <td class="{cycle}">
-	{if $tiki_p_read_article eq 'y'}
-		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}" title="{$listpages[changes].title|escape}">{tr}Read{/tr}</a>
-	{/if}
 {if $tiki_p_edit_article eq 'y' or ($listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
-	<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a> &nbsp;
-{/if}
+<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>{/if}
 {if $tiki_p_remove_article eq 'y'}
-	<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
-{/if}
+&nbsp;<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>{/if}
 </td>
 </tr>
 {sectionelse}
