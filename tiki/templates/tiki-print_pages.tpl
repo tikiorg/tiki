@@ -2,24 +2,23 @@
 
 <div class="cbox">
 <div class="cbox-title">
-{tr}Filter{/tr}
+{tr}Print Wiki Pages{/tr}
+</div>
+<div class="cbox-data">
+<table class="findtable">
+<tr><td class="findtable">{tr}Find{/tr}</td>
+<td class="findtable">
 </div>
 <div class="cbox-data">
 <form action="tiki-print_pages.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
-{tr}Filter{/tr}:<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}Filter{/tr}" /><br />
+<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}Find{/tr}" /><br />
 </form>
-</div>
-</div>
-<br />
+</td>
+</tr>
+</table>
 
-
-<div class="cbox">
-<div class="cbox-title">
-{tr}Print Wiki Pages{/tr}
-</div>
-<div class="cbox-data">
 <form action="tiki-print_pages.php" method="post">
 <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
@@ -57,7 +56,7 @@
 {/section}
 </ul>
 <br />
-<input type="submit" name="clearpages" value="{tr}clear{/tr}" />
+<input type="submit" name="clearpages" value="{tr}Clear{/tr}" />
 {/if}
 </form>
 {if $printpages}{* only show print button if there is something to print *}
