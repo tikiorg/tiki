@@ -12,7 +12,7 @@
  * Read the entire license text here: http://www.gnu.org/licenses/lgpl.html
  */
 
-// $Id: calendar.js,v 1.4 2005-05-18 11:01:00 mose Exp $
+// $Id: calendar.js,v 1.5 2007-08-03 12:42:17 sept_7 Exp $
 
 /** The Calendar object constructor. */
 Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
@@ -1635,6 +1635,15 @@ Date.parseDate = function(str, fmt) {
 		    case "%M":
 			min = parseInt(a[i], 10);
 			break;
+		    case "%s":
+			temps = new Date();
+			temps.setTime(parseInt(str)*1000);
+			y = temps.getFullYear();
+			m = temps.getMonth();
+			d = temps.getDate();
+			hr = temps.getHours();
+			min = temps.getMinutes();
+		        break;
 		}
 	}
 	if (isNaN(y)) y = today.getFullYear();
