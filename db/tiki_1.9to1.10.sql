@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.188 2007-08-02 13:41:46 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.189 2007-08-03 10:04:30 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1434,8 +1434,8 @@ ALTER TABLE tiki_webmail_contacts_ext CHANGE value value VARCHAR(255) NOT NULL;
 AlTER TABLE tiki_webmail_contacts_fields CHANGE fieldname fieldname VARCHAR( 255 ) NOT NULL;
 
 #2007-08-02 sylvieg
-DELETE FROM tiki_quicktags WHERE taginsert='*text'; 
+DELETE FROM tiki_quicktags WHERE taginsert='*text' and tagcategory='wiki'; 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
-DELETE FROM tiki_quicktags WHERE taginsert='#text'; 
+DELETE FROM tiki_quicktags WHERE taginsert='#text' and tagcategory='wiki'; 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
 
