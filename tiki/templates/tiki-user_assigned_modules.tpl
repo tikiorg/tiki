@@ -39,11 +39,11 @@
 				<td class="{cycle advance=false}">{$modules_l[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_l[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].name}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].name}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].name}"><img src='pics/icons/resultset_next.png' alt='{tr}right{/tr}' title='{tr}move to right column{/tr}' border='0' width='16' height='16' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_next.png' alt='{tr}right{/tr}' title='{tr}move to right column{/tr}' border='0' width='16' height='16' /></a>
 				  {if $modules_l[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box' and $modules_l[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
   				  {/if}
 				</td>
 			</tr>
@@ -65,11 +65,11 @@
 				<td class="{cycle advance=false}">{$modules_r[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_r[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].name}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].name}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].name}"><img src='pics/icons/resultset_previous.png' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' width='16' height='16' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_up.png' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_down.png' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' width='16' height='16' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_previous.png' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' width='16' height='16' /></a>
 				  {if $modules_r[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box' and $modules_r[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].name}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' width='16' height='16' /></a> 
   				  {/if}
 				</td>
 			</tr>
@@ -88,7 +88,7 @@
 <td class="formcolor">
 <select name="module">
 {section name=ix loop=$assignables}
-<option value="{$assignables[ix].name|escape}">{$assignables[ix].name}</option>
+<option value="{$assignables[ix].moduleId|escape}">{$assignables[ix].name}</option>
 {/section}
 </select>
 </td>
