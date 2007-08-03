@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.51 2007-08-03 18:45:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.52 2007-08-03 20:08:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -105,10 +105,10 @@ if (!empty($_REQUEST['edit_assign'])) {
 	}
 }
 
-if (!empty($_REQUEST['unassign']) && !empty($_REQUEST['edit_assign'])) {
+if (!empty($_REQUEST['unassign'])) {
 	check_ticket('admin-modules');
+	$info = $modlib->get_assigned_module($_REQUEST['unassign']);
 	$modlib->unassign_module($_REQUEST['unassign']);
-	$info = $modlib->get_assigned_module($_REQUEST['edit_assign']);
 	$logslib->add_log('adminmodules','unassigned module '.$info['name']);
 }
 

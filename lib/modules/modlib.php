@@ -34,10 +34,14 @@ class ModLib extends TikiLib {
 		} else {
 			$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
+			if ($type == "D" || $type == "P") {
+				$query = 'select `moduleId` from `tiki_modules` where `name`=? and `title`=? and `position`=? and `ord`=? and `cache_time`=? and `rows`=? and `groups`=? and `params`=? and `type`=?';
+				$moduleId = $this->getOne($query, array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
+			}
 		}
 		if ($type == "D" || $type == "P") {
 			global $usermoduleslib;
-			$usermoduleslib->add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
+			$usermoduleslib->add_module_users($moduleId, $name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
 		}
 		return true;
 	}

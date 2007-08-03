@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.17 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.18 2007-08-03 20:08:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,7 +75,7 @@ if (isset($_REQUEST["right"])) {
 
 $orders = array();
 
-for ($i = 1; $i < 20; $i++) {
+for ($i = 1; $i < 50; $i++) {
 	$orders[] = $i;
 }
 
