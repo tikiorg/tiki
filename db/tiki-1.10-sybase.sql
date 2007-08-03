@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-07-26 14:11:14 $
+-- $Date: 2007-08-03 18:03:25 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -7018,6 +7018,14 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
+INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki')
+go
+
+
+INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki')
+go
+
+
 
 -- maps
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps')
@@ -7082,7 +7090,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text|nocache]','pics/icons/world_link.png','newsletters')
 go
 
 
@@ -8132,7 +8140,7 @@ go
 CREATE TABLE `tiki_webmail_contacts_ext` (
   `contactId` numeric(11,0) NOT NULL,
   `fieldId` numeric(10,0) NOT NULL,
-  `value` varchar(256) NOT NULL,
+  `value` varchar(255) NOT NULL,
   `hidden` numeric(1,0) NOT NULL,
   KEY `contactId` (`contactId`)
 ) ENGINE=MyISAM
@@ -8147,7 +8155,7 @@ go
 CREATE TABLE `tiki_webmail_contacts_fields` (
   `fieldId numeric(10 ,0) identity,
   `user` VARCHAR( 200 ) NOT NULL ,
-  `fieldname` VARCHAR( 256 ) NOT NULL ,
+  `fieldname` VARCHAR( 255 ) NOT NULL ,
   `order` numeric(2,0) default '0' NOT NULL,
   `show` char(1) default 'n' NOT NULL,
   PRIMARY KEY ( `fieldId` ),

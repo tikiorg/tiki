@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2007-07-26 14:11:13 $
+-- $Date: 2007-08-03 18:03:25 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -5284,6 +5284,10 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','wiki');
 
+INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
+
+INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki');
+
 
 -- maps
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps');
@@ -5318,7 +5322,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','newsletters');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','newsletters');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text|nocache]','pics/icons/world_link.png','newsletters');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','newsletters');
 
@@ -5924,7 +5928,7 @@ DROP TABLE IF EXISTS 'tiki_webmail_contacts_ext';
 CREATE TABLE tiki_webmail_contacts_ext (
   contactId bigint NOT NULL,
   fieldId bigint unsigned NOT NULL,
-  value varchar(256) NOT NULL,
+  value varchar(255) NOT NULL,
   hidden smallint NOT NULL,
   KEY contactId (contactId)
 ) ENGINE=MyISAM;
@@ -5935,7 +5939,7 @@ DROP TABLE IF EXISTS 'tiki_webmail_contacts_fields';
 CREATE TABLE tiki_webmail_contacts_fields (
   fieldId INTEGER,
   user VARCHAR( 200 ) NOT NULL ,
-  fieldname VARCHAR( 256 ) NOT NULL ,
+  fieldname VARCHAR( 255 ) NOT NULL ,
   order smallint NOT NULL default '0',
   show char(1) NOT NULL default 'n',
   PRIMARY KEY ( fieldId ),
