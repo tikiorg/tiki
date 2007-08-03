@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.189 2007-08-03 10:04:30 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.190 2007-08-03 18:42:17 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1438,4 +1438,7 @@ DELETE FROM tiki_quicktags WHERE taginsert='*text' and tagcategory='wiki';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
 DELETE FROM tiki_quicktags WHERE taginsert='#text' and tagcategory='wiki'; 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
+#2007-08-03 sylvieg
+ALTER TABLE tiki_user_assigned_modules ADD moduleId int(8) FIRST;
+UPDATE tiki_user_assigned_modules tuam set moduleId= (SELECT moduleId FROM tiki_modules tm WHERE tuam.name = tm.name  LIMIT 1);
 

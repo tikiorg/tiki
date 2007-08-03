@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-03 17:03:30 $
-# $Author: niclone $
+# $Date: 2007-08-03 18:42:16 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3598,6 +3598,7 @@ CREATE TABLE tiki_user_answers_uploads (
 
 DROP TABLE IF EXISTS tiki_user_assigned_modules;
 CREATE TABLE tiki_user_assigned_modules (
+  moduleId int(8) NOT NULL,
   name varchar(200) NOT NULL default '',
   position char(1) default NULL,
   ord int(4) default NULL,
