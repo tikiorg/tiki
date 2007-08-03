@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.135 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.136 2007-08-03 16:03:43 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -340,7 +340,15 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// or that has never used the login step in this tiki.
 	// Example : If using the same PHP SESSION cookies for more than one tiki.
 	$user_details = $userlib->get_user_details($user);
-	if ( ! is_array($user_details) || ! is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0 ) $user = NULL;
+	if ( ! is_array($user_details) || ! is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0 ) {
+		global $cachelib;
+		require_once("lib/cache/cachelib.php");
+		$cachelib->invalidate('user_details_'.$user);
+		$user_details = $userlib->get_user_details($user);
+		if ( ! is_array($user_details) || ! is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0 ) {
+			$user = NULL;
+		}
+	}
 	unset($user_details);
 
 } else {
