@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.12 2007-02-12 11:12:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.13 2007-08-04 10:34:30 sylvieg Exp $
 /* A plugin vote based on tracker
  */
 /* fields is optionnal - all the fields except the type suer, group, ip will be used
  */
 function wikiplugin_vote_help() {
 	$help = tra("Displays some stat of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>n|y,show_bar=>n|y,status=>o|c|p|op|oc|pc|opc,float=>right|left, show_stat=n|y, show_stat_only_after=n|y)}Title{VOTE}~/np~";
+	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>n|y,show_bar=>n|y,status=>o|c|p|op|oc|pc|opc,float=>right|left, show_stat=n|y, show_stat_only_after=n|y, show_creator=y|n)}Title{VOTE}~/np~";
 	return $help;
 }
 function wikiplugin_vote($data, $params) {
@@ -42,6 +42,10 @@ function wikiplugin_vote($data, $params) {
 			$params['fields'] = implode(':', $ff);
 		}
 	}
+	if (isset($show_creator) && $show_creator == 'y') {
+		$tracker = $trklib->get_tracker($trackerId);
+		$smarty->assign_by_ref('tracker_creator', $tracker['user']);
+	} 
 	$smarty->assign('options', '');
 	if ($tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 		$options = $trklib->get_tracker_options($trackerId);
