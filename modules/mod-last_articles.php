@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_articles.php,v 1.15 2007-04-02 17:21:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_articles.php,v 1.16 2007-08-04 10:29:21 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (!function_exists('mod_last_articles_help')) {
 	function mod_last_articles_help() {
-		return "type=Article|Event|..., topicId=1,topic=xx,categId=1,lang=en";
+		return "type=Article|Event|...&topicId=1&topic=xx&categId=1&lang=en";
 	}
 }
 // Parameter absurl set if the last_article url is absolute or not [y|n].
