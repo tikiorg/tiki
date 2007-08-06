@@ -119,10 +119,10 @@ class RankLib extends TikiLib {
 		`tiki_comments`,`tiki_forums` where
 		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
 		order by `commentDate` desc"; 
-		//limit ".$limit;
-	//todo(tibi needs help): make this database proof!!
+//todo(tibi) this will save a lot of time but after this step the not permitted forums will be filtered out. so you might end up with less than limit.
+	//		$result = $this->query($query,array(),$limit);
 
-		$result = $this->query($query,array(),$limit);
+		$result = $this->query($query,array());
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
