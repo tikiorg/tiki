@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.1 2007-08-06 13:13:38 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.2 2007-08-06 13:53:54 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -255,36 +255,36 @@ class MyPageWindow {
 			 'position'  => false,
 			 'container' => false,
 			 );
-
+	
 	switch ($this->params['contenttype']) {
 	case 'iframe':
 	    $winparams['type']="iframe";
 	    $winparams['url']=$this->params['content'];
 	    break;
 	}
-
+	
 	$js =$v."=new Windoo(".phptojsarray($winparams).");\n";
 	$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 	$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 	$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
-
-
+	
+	
 	switch ($this->params['contenttype']) {
-
+	    
 	case 'iframe':
 	    // don't do nothing here for the special iframe case
 	    break;
-
+	    
 	default:
 	    if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
 		require_once("components/comp-".$this->params['contenttype'].".php");
 		$classname="Comp_".$this->params['contenttype'];
 		$comp=new $classname($this->params['content']);
-		$js.=$v.".setHTMLContent(".phptojsarray($comp->getHTML()).");\n";
+		$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
 	    }
 	    break;
 	}
-
+	
 
 	$js.=$v.".show();\n";
 
