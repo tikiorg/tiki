@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.2 2007-08-06 13:53:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.3 2007-08-06 14:51:33 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -24,7 +24,7 @@ function phptojsarray($array, $offset="") {
   } else if (is_numeric($array)) {
     $str="".$array;
   } else if (is_string($array)) {
-    $str="'".str_replace(array("\n", "\r"), array("\\n", "\\r"), addslashes($array))."'";
+    $str="'".str_replace(array("\n", "\r", "</"), array("\\n", "\\r", "<'+'/"), addslashes($array))."'";
   } else if (is_null($array)) {
     $str="null";
   } else {
