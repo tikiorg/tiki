@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.158 2007-07-25 02:33:19 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.159 2007-08-06 21:58:03 tibistibi Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1196,14 +1196,18 @@ class Comments extends TikiLib {
 
     // FORUMS END
     function get_comment($id, $message_id=null) {
+	$query = "select tc.*,tup.posts as user_posts,tup.level as user_level,count(tfa.`filename`) as nr_attachments  from `tiki_comments` as tc left join `tiki_forum_attachments` as tfa on tfa.threadId=tc.threadId, `tiki_user_postings` as tup ";
 	if ($message_id) {
-		$query = "select * from `tiki_comments` where `message_id`=?";
+	              
+		$query .= " where tc.`message_id`=? ";
+		$query .= " and tc.userName=tup.user group by tfa.`filename` ";
 		$result = $this->query($query, array($message_id ) );
-	}
-	else {
-		$query = "select * from `tiki_comments` where `threadId`=?";
+	}else {
+		$query .= " where tc.`threadId`=? ";
+		$query .= " and tc.userName=tup.user group by tfa.`filename` ";
 		$result = $this->query($query, array( (int) $id ) );
 	}
+
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
 	   $this->add_comments_extras($res);
@@ -1219,13 +1223,13 @@ class Comments extends TikiLib {
 	    global $feature_contribution;
 
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
-
+//tibi:this is already done one up
 	    // these could be cached or probably queried along with the original query of the tiki_comments table
-	    $result2=$this->query("select `posts`, `level` from `tiki_user_postings` where `user`=?",
-	    	array( $res['userName'] ) );
-            $res2=$result2->fetchRow();
-	    $res['user_posts'] = $res2['posts'];
-	    $res['user_level'] = $res2['level'];
+//	    $result2=$this->query("select `posts`, `level` from `tiki_user_postings` where `user`=?",
+//	    	array( $res['userName'] ) );
+ //           $res2=$result2->fetchRow();
+//	    $res['user_posts'] = $res2['posts'];
+//	    $res['user_level'] = $res2['level'];
 
 	    // 'email is public' never has 'y' value, because it is now used to choose the email scrambling method
 	    // ... so, we need to test if it's not equal to 'n'
@@ -1234,10 +1238,12 @@ class Comments extends TikiLib {
 	    } else {
 		$res['user_email'] = '';
 	    }
-
-	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
+	//only fetch when needed.
+		if($res['nr_attachments']>0){
+			$res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
+		}
 	    // is the 'is_reported' really used? can be queried with orig table i think
-	    $res['is_reported'] = $this->is_reported($res['threadId']);
+//	    $res['is_reported'] = $this->is_reported($res['threadId']);
 	    $res['user_online'] = 'n';
 	    if ($res['userName']) {
 		$res['user_online'] = $this->is_user_online($res['userName'])? 'y' : 'n';
@@ -1552,11 +1558,13 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`  from `tiki_comments` as tc1
+	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tup.posts as user_posts,tup.level as user_level  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		and tc1.`parentId` = ?
 		and tc2.`parentId` = ?
-		$mid 
+		, `tiki_user_postings` as tup 
+		$mid
+		and tup.user = tc1.userName 
 		and (tc1.`in_reply_to` = ?
 		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null or tc2.parentid = 0))
 		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
@@ -1566,10 +1574,12 @@ class Comments extends TikiLib {
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
-	    $query = "select * from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select tc1.*, tup.posts as user_posts,tup.level as user_level  " .
+	    		"from `tiki_comments` as tc1, `tiki_user_postings` as tup $mid  $time_cond and tup.user = tc1.userName " .
+	    		"order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
 	    $bind_mid_cant = $bind_mid;
 	}
-
+	
 	// $end_time = microtime(true);
 
 	// print "TIME2 in get_comments: ".($end_time - $start_time)."\n";
