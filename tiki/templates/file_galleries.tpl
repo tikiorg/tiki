@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.17 2007-07-24 18:03:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.18 2007-08-06 15:27:45 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -16,9 +16,14 @@
 </div>
 {/if}
 
+<form>
 <table class="normal">
 <tr>
 {assign var='cntcol' value=1}
+{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
+	{assign var='cntcol' value=$cntcol+1}
+	<td class="heading">&nbsp;</td>
+{/if}
 {if $fgal_list_id eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'galleryId_desc'}galleryId_asc{else}galleryId_desc{/if}">{tr}ID{/tr}</a></td>
@@ -65,6 +70,11 @@
 {section name=changes loop=$galleries}
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_file_galleries eq 'y'}
 <tr>
+	{if $tiki_p_admin_file_galleries eq 'y' or tiki_p_assign_perm_file_gallery eq 'y'}
+		<td class="{cycle advance=false}">
+			<input type="checkbox" name="checked[]" value="{$galleries[changes].id|escape}" {if $smarty.request.checked and in_array($galleries[changes].id,$smarty.request.checked)}checked="checked"{/if} />
+		</td>
+	{/if}
 	{if $fgal_list_id eq 'y'}
 		<td class="{cycle advance=false}">
 			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}List{/tr}">{$galleries[changes].galleryId}</a>
@@ -156,7 +166,36 @@
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
+{if $tiki_p_admin_file_galleries eq 'y' or tiki_p_assign_perm_file_gallery eq 'y'}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write('<tr><td colspan="{$cntcol}">
+	<input type="checkbox" id="clickall"
+ 	onclick="switchCheckboxes(this.form,\'checkedPerms[]\',this.checked)"/>');
+	document.write('<label for="clickall">{tr}select all{/tr}</label>
+	</td></tr>');
+function test(){}
+	/* ]]> */</script>
+{/if}
 </table>
+{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y'}
+	<div>
+	{tr}Perform action with checked:{/tr} 
+	<select name="batchaction" onchange="show('groups');">
+		<option value="">{tr}with checked{/tr}</option>
+		{if $tiki_p_admin_file_galleries eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
+		{if $tiki_p_assign_perm_file_gallery eq 'y'}{foreach from=$perms item=perm}<option value="assign_{$perm.permName|escape}">{tr}Assign:{/tr} {$perm.permName|escape}</option>{/foreach}{/if}
+	</select>
+	<span style="display:none" id="groups">
+	<select name="groups[]" multiple="multiple" size="5"}
+	{section name=grp loop=$groups}
+	<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
+	{/section}
+	</select>
+	</span>
+	<input type="submit" name="act" value="{tr}OK{/tr}" />
+	</div>
+{/if}
+</form>
 
 {if $maxRecords > 0}
 	<div class="mini">
