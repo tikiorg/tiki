@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.49 2007-06-05 14:13:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.50 2007-08-06 15:27:44 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -285,13 +285,11 @@
 			$smarty->display("error.tpl");
 			die;
 		}
-	  if($tiki_p_admin_file_galleries != 'y') {
-	     if(!$user || $info["user"]!=$user) {
+		if ($tiki_p_admin_file_galleries != 'y' && (!$user || $info["user"] != $user)) {
 	       $smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
 	       $smarty->display("error.tpl");
-	       die;  
-	     }
-	  }
+	       die;
+		}
 		$area = 'delfilegal';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -300,7 +298,34 @@
 		  key_get($area, tra('Remove file gallery: ').' '.$info['name']);
 		}
 	}
-	
+	if (isset($_REQUEST['batchaction']) &&  $_REQUEST['batchaction'] == 'delsel_x' && isset($_REQUEST['checked'])) {
+		check_ticket('fgal');
+		if ($tiki_p_admin_file_galleries != 'y') {
+			$smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
+			$smarty->display("error.tpl");
+			die;  
+		}
+		foreach($_REQUEST['checked'] as $id) {
+			$filegallib->remove_file_gallery($id);
+		}
+	}
+	if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] != 'delsel_x' && isset($_REQUEST['checked']) && isset($_REQUEST['groups'])) {
+		check_ticket('fgal');
+		if ($tiki_p_admin_file_galleries != 'y' && $tiki_p_assign_perm_file_gallery != 'y') {
+			$smarty->assign('msg',tra("Permission denied you cannot assign permissions for this object"));
+			$smarty->display("error.tpl");
+			die;  
+		}
+		$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
+		foreach ($perms['data'] as $perm) {
+			if ($_REQUEST['batchaction'] == 'assign_'.$perm['permName']) {
+				foreach($_REQUEST['checked'] as $id) {
+					foreach ($_REQUEST['groups'] as $group)
+						$userlib->assign_object_permission($group, $id, 'file gallery', $perm['permName']);
+				}
+			}
+		}
+	}
 	if(!isset($_REQUEST["sort_mode"])) {
 	  $sort_mode = !empty($fgal_sort_mode)? $fgal_sort_mode: 'created_desc'; 
 	} else {
@@ -387,11 +412,19 @@
 
 	$smarty->assign_by_ref('galleries',$galleries["data"]);
 
-	if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
+	if ($tiki_p_admin_file_galleries == 'y') {
 		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
 		$smarty->assign_by_ref('users', $users['data']);
 	}
-$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Filename')=>'filename', tra('Size')=>'filesize', tra('Owner') => 'user',tra('Downloads') => 'downloads', tra('ID') => 'fileId');
+	if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_assign_perm_file_gallery == 'y') {
+		if (!isset($perms)) {
+			$perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
+		}
+		$smarty->assign_by_ref('perms', $perms['data']);
+		$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+		$smarty->assign_by_ref('groups', $groups['data']);
+	}
+	$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Filename')=>'filename', tra('Size')=>'filesize', tra('Owner') => 'user',tra('Downloads') => 'downloads', tra('ID') => 'fileId');
 	$smarty->assign_by_ref('options_sortorder', $options_sortorder);
 	
 	$cat_type='file gallery';
