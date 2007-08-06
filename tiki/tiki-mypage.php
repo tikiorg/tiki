@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.1 2007-08-06 13:13:37 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.2 2007-08-06 19:27:30 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,10 @@ function mypage_init() {
     $mypage=new MyPage($id_mypage);
     $smarty->assign('mypagejswindows', $mypage->getJSCode());
     $smarty->assign('id_mypage', $id_mypage);
+    // deactivate left and right columns 
+    $smarty->assign('feature_right_column', 'n');
+    $smarty->assign('feature_left_column', 'n');
+
 
     mypage_ajax_init();
 
