@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.3 2007-08-06 14:51:33 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.4 2007-08-06 18:52:48 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -245,6 +245,26 @@ class MyPageWindow {
     function getJSCode() {
 	global $tikilib;
 
+	// check perms
+	switch ($this->params['contenttype']) {
+	case 'iframe':
+	    // don't do nothing here for the special iframe case
+	    break;
+	default:
+	    if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
+			require_once("components/comp-".$this->params['contenttype'].".php");
+			$classname="Comp_".$this->params['contenttype'];
+			$comp=new $classname($this->params['content']);
+			$compperms = $comp->get_perm_object();
+			if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']]) || $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
+				return '';
+			}
+	    } else {
+			return '';
+		}
+	    break;
+	}
+
 	$v="tikimypagewin[".$this->id."]";
 
 	$winparams=array('left'      => (int)$this->params['left'],
@@ -276,12 +296,7 @@ class MyPageWindow {
 	    break;
 	    
 	default:
-	    if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
-		require_once("components/comp-".$this->params['contenttype'].".php");
-		$classname="Comp_".$this->params['contenttype'];
-		$comp=new $classname($this->params['content']);
 		$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
-	    }
 	    break;
 	}
 	
