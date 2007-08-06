@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.36 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.37 2007-08-06 15:13:39 sylvieg Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -65,7 +65,7 @@
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
-{if $users[user].groupName != 'Anonymous' && $users[user].groupName != 'Registered'}
+{if $users[user].groupName != 'Anonymous'}
 <tr>
 <td class="{cycle advance=false}">{$users[user].groupName}
 {if $tiki_p_admin eq 'y'}<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:url}" title="{tr}Assign Perms to this Group{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{/if}</td>
@@ -73,7 +73,7 @@
 <td class="{cycle}">
 {if $users[user].what ne 'real'}
 <a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}&amp;assign_user={$assign_user|escape:url}" title="{tr}Assign User to Group{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
-{else}
+{elseif $users[user].groupName ne "Registered"}
 <a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user|escape:url}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}unassign{/tr}' /></a>
 {/if}
 </td></tr>
