@@ -20,12 +20,18 @@ class Comp_wiki {
 	return $tikilib->parse_data($pageinfo['data'], $pageinfo['is_html']);
     }
 
-	function get_perm_object() {
-		global $tikilib;
-		$ps = $tikilib->get_perm_object($this->page, 'wiki page', false);
-		$ps['tiki_p_view_wiki'] = $ps['tiki_p_view'];
-		return $ps;
-	}
+    function getPermObject() {
+	global $tikilib;
+	$ps = $tikilib->get_perm_object($this->page, 'wiki page', false);
+	$ps['tiki_p_view_wiki'] = $ps['tiki_p_view'];
+	return $ps;
+    }
 }
+
+/* For the emacs weenies in the crowd.
+Local Variables:
+   c-basic-offset: 4
+End:
+*/
 
 ?>
