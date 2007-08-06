@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.7 2007-08-06 19:29:49 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.8 2007-08-06 19:34:06 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -279,7 +279,7 @@ class MyPageWindow {
 		require_once("components/comp-".$this->params['contenttype'].".php");
 		$classname="Comp_".$this->params['contenttype'];
 		$comp=new $classname($this->params['content']);
-		$compperms = $comp->get_perm_object();
+		$compperms = $comp->getPermObject();
 		if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
 		    || $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
 
