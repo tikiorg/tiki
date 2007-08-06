@@ -118,11 +118,11 @@ class RankLib extends TikiLib {
 		$query = "select * from
 		`tiki_comments`,`tiki_forums` where
 		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
-		order by `commentDate` desc 
-		limit ".$limit;
+		order by `commentDate` desc"; 
+		//limit ".$limit;
 	//todo(tibi needs help): make this database proof!!
 
-		$result = $this->query($query,array());
+		$result = $this->query($query,array(),$limit);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
