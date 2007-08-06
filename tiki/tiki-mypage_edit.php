@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_edit.php,v 1.1 2007-08-06 19:16:14 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_edit.php,v 1.2 2007-08-06 21:47:19 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,15 +10,15 @@ require_once ('tiki-setup.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
 
+if (strlen($user) <= 0) {
+    $id_users=0;
+} else {
+    $id_users=$userlib->get_user_id($user);
+}
+
 
 function mypageedit_populate() {
-    global $smarty, $user, $userlib;
-
-    if (strlen($user) <= 0) {
-	die();
-    } else {
-	$id_users=$userlib->get_user_id($user);
-    }
+    global $smarty, $id_users;
 
     $lpp=25;
     $showpage=isset($_REQUEST['showpage']) ? (int)$_REQUEST['showpage'] : 0;
@@ -35,10 +35,27 @@ function mypageedit_populate() {
     $smarty->assign("mypages", $pages);
 }
 
+function mypage_ajax_init() {
+    global $ajaxlib;
+
+    //$ajaxlib->debugOn();
+    $ajaxlib->setRequestURI("tiki-mypage_ajax.php");
+    $ajaxlib->registerFunction("mypage_update");
+    $ajaxlib->registerFunction("mypage_create");
+    $ajaxlib->registerFunction("mypage_fillinfos");
+    $ajaxlib->processRequests();
+}
+
 function mypageedit_init() {
-    global $smarty;
+    global $smarty, $headerlib;
 
     mypageedit_populate();
+    mypage_ajax_init();
+
+    $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
+    $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
+    $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.alphacube.css");
+    $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
 
     $smarty->assign("mid", "tiki-mypage_edit.tpl");
     $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.2 2007-08-06 19:27:30 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.3 2007-08-06 21:47:19 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,12 @@
 require_once ('tiki-setup.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
+
+if (strlen($user) <= 0) {
+    $id_users=0;
+} else {
+    $id_users=$userlib->get_user_id($user);
+}
 
 function mypage_ajax_init() {
     global $ajaxlib;
@@ -22,8 +28,7 @@ function mypage_ajax_init() {
 }
 
 function mypage_init() {
-    global $smarty;
-    global $headerlib;
+    global $smarty, $headerlib, $id_users;
 
     $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
     $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
@@ -31,8 +36,9 @@ function mypage_init() {
     $headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
 
 
-    $id_mypage=1;
-    $mypage=new MyPage($id_mypage);
+    $id_mypage=isset($_REQUEST['id_mypage']) ? (int)$_REQUEST['id_mypage'] : 0;
+
+    $mypage=new MyPage($id_mypage, $id_users);
     $smarty->assign('mypagejswindows', $mypage->getJSCode());
     $smarty->assign('id_mypage', $id_mypage);
     // deactivate left and right columns 
