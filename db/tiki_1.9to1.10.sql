@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.191 2007-08-06 13:21:28 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.192 2007-08-06 19:17:24 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1467,3 +1467,8 @@ CREATE TABLE `tiki_mypagewin` (
   PRIMARY KEY  (`id`),
   KEY `id_mypage` (`id_mypage`)
 ) ENGINE=MyISAM;
+
+#2007-07-06 niclone
+ALTER TABLE `tiki_mypage` ADD `name` VARCHAR( 255 ) NOT NULL ,
+ADD `description` VARCHAR( 255 ) NOT NULL ;
+ALTER TABLE `tiki_mypage` ADD INDEX ( `name` ) ;
