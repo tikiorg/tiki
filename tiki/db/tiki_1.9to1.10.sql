@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.190 2007-08-03 18:42:17 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.191 2007-08-06 13:21:28 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1442,3 +1442,28 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 ALTER TABLE tiki_user_assigned_modules ADD moduleId int(8) FIRST;
 UPDATE tiki_user_assigned_modules tuam set moduleId= (SELECT moduleId FROM tiki_modules tm WHERE tuam.name = tm.name  LIMIT 1);
 
+#2007-08-06 niclone
+CREATE TABLE `tiki_mypage` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_users` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `id_users` (`id_users`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypagewin` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_mypage` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `inbody` enum('n','y') NOT NULL default 'n',
+  `modal` enum('n','y') NOT NULL default 'n',
+  `left` int(11) NOT NULL,
+  `top` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `contenttype` enum('iframe','wiki') default NULL,
+  `content` text,
+  PRIMARY KEY  (`id`),
+  KEY `id_mypage` (`id_mypage`)
+) ENGINE=MyISAM;
