@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.8 2007-08-06 19:34:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.9 2007-08-06 21:47:19 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -39,13 +39,19 @@ function phptojsarray($array, $offset="") {
  */
 class MyPage {
     var $id;
+    var $id_users;
     var $windows;
     var $lastid;
+    var $params;
+    var $modified;
 
-    function MyPage($id=NULL) {
+    function MyPage($id=NULL, $id_users) {
 	$this->id=$id;
+	$this->id_users=$id_users;
 	$this->windows=array();
 	$this->lastid=0;
+	$this->params=array();
+	$this->modified=array();
 	$this->checkout();
     }
 
@@ -109,6 +115,15 @@ class MyPage {
 	return $pages;
     }
 
+    function setParam($param, $value) {
+	$this->params[$param]=$value;
+	$this->modified[$param]=true;
+    }
+
+    function getParam($param) {
+	return $this->params[$param];
+    }
+
     function checkout() {
 	global $tikilib;
 
@@ -117,9 +132,9 @@ class MyPage {
 	if (!is_null($this->id)) {
 	    $res=$tikilib->query("SELECT * FROM tiki_mypage WHERE `id`=?", array($this->id));
 	    if ($line = $res->fetchRow()) {
-		
+		$this->params=$line;
 	    } else { // bad... no mypage found
-		$this->id=NULL;
+		$this->id=0;
 		return FALSE;
 	    }
 
@@ -136,7 +151,35 @@ class MyPage {
 
 	if (is_null($this->id)) {
 	    // create a new mypage id
+
+	    $res=$tikilib->query("INSERT INTO tiki_mypage (`id_users`) values (?)",
+				 array($this->id_users));
+	    if (!$res) return;
+
+	    $id=$tikilib->getOne("SELECT LAST_INSERT_ID()");
+	    if (!$id) return;
+	    
+	    $this->id=$id;
+
+	    // now run again for update ;)
+	    return $this->commit();
+
 	} else {
+	    if (count($this->modified) > 0) {
+		$l=array();
+		$r=array();
+		foreach($this->modified as $k => $v) {
+		    $l[]="`$k`=?";
+		    $r[]=$this->params[$k];
+		}
+
+		$query="UPDATE tiki_mypage SET ".implode(',', $l)." WHERE `id`=?";
+		$r[]=$this->id;
+
+		$res=$tikilib->query($query, $r);
+
+		$this->modified=array();
+	    }
 	}
     }
 
