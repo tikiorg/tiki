@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.6 2007-08-06 19:25:30 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.7 2007-08-06 19:29:49 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -273,18 +273,21 @@ class MyPageWindow {
 	case 'iframe':
 	    // don't do nothing here for the special iframe case
 	    break;
+
 	default:
 	    if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
-			require_once("components/comp-".$this->params['contenttype'].".php");
-			$classname="Comp_".$this->params['contenttype'];
-			$comp=new $classname($this->params['content']);
-			$compperms = $comp->get_perm_object();
-			if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']]) || $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
-				return '';
-			}
-	    } else {
-			return '';
+		require_once("components/comp-".$this->params['contenttype'].".php");
+		$classname="Comp_".$this->params['contenttype'];
+		$comp=new $classname($this->params['content']);
+		$compperms = $comp->get_perm_object();
+		if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
+		    || $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
+
+		    return 'alert("You don\'t have permission to view this part of content");';
 		}
+	    } else {
+		return 'alert("Component not available: '.$this->params['contenttype'].'");';
+	    }
 	    break;
 	}
 
@@ -312,17 +315,9 @@ class MyPageWindow {
 	$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
 	
 	
-	switch ($this->params['contenttype']) {
-	    
-	case 'iframe':
-	    // don't do nothing here for the special iframe case
-	    break;
-	    
-	default:
+	if ($this->params['contenttype'] != 'iframe') {
 		$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
-	    break;
 	}
-	
 
 	$js.=$v.".show();\n";
 
