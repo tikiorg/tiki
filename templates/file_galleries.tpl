@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.18 2007-08-06 15:27:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.19 2007-08-06 16:09:50 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -173,7 +173,6 @@
  	onclick="switchCheckboxes(this.form,\'checkedPerms[]\',this.checked)"/>');
 	document.write('<label for="clickall">{tr}select all{/tr}</label>
 	</td></tr>');
-function test(){}
 	/* ]]> */</script>
 {/if}
 </table>
