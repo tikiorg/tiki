@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-03 18:42:16 $
-# $Author: sylvieg $
+# $Date: 2007-08-06 13:13:38 $
+# $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4891,3 +4891,30 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   PRIMARY KEY ( `fieldId` ),
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
+
+# ---------- mypage ----------------
+CREATE TABLE `tiki_mypage` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_users` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `id_users` (`id_users`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypagewin` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_mypage` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `inbody` enum('n','y') NOT NULL default 'n',
+  `modal` enum('n','y') NOT NULL default 'n',
+  `left` int(11) NOT NULL,
+  `top` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `contenttype` enum('iframe','wiki') default NULL,
+  `content` text,
+  PRIMARY KEY  (`id`),
+  KEY `id_mypage` (`id_mypage`)
+) ENGINE=MyISAM;
+# ------------------------------------
