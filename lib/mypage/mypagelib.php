@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.4 2007-08-06 18:52:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.5 2007-08-06 19:16:14 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -80,10 +80,33 @@ class MyPage {
 	if (!isset($this->windows[$id_win])) return;
 
 	if ($id_win > 0) {
-	    $tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?", array($id_win, $this->id));
+	    $tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
+			    array($id_win, $this->id));
 	}
 
 	unset($this->windows[$id_win]);
+    }
+
+    /* static */
+    function countPages($id_users) {
+	global $tikilib;
+	
+	$pages=array();
+	return $tikilib->getOne("SELECT COUNT(*) FROM tiki_mypage WHERE `id_users`=?",
+				array((int)$id_users));
+    }
+
+    /* static */
+    function listPages($id_users, $offset=-1, $limit=-1) {
+	global $tikilib;
+	
+	$pages=array();
+	$res=$tikilib->query("SELECT * FROM tiki_mypage WHERE `id_users`=?",
+			     array((int)$id_users), $limit, $offset);
+	while ($line = $res->fetchRow())
+	    $pages[]=$line;
+
+	return $pages;
     }
 
     function checkout() {
