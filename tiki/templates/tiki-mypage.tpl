@@ -3,7 +3,7 @@
 <script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
 {/literal}
 
-<div style='border: solid 3px blue; width: {$mypage_width}; height: {$mypage_height};'>
+<div style='width: {$mypage_width}; height: {$mypage_height};'>
 <div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height};'>
  <div id='mypage_tools'>
   <a href='#'>New IFrame</a>
