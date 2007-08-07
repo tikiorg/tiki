@@ -8,7 +8,7 @@ tikimypagewin=[];
 
 </script>
 {/literal}
-
+<div id="container" style="margin: auto; width: 1000px; display: block; height: 500px; margin-bottom: 0">
 <div id='mypage_tools'>
  <a href='#'>New IFrame</a>
 </div>
@@ -25,7 +25,7 @@ tikimypagewin=[];
  Title: <input id='mypage_newwiki_pagename' type='text' value='' /><br />
  <input id='mypage_newwiki_submit' type='button' value='Create'>
 </div>
-
+</div>
 {literal}
 <script type="text/javascript">
 
