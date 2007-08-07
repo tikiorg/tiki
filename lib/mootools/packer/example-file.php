@@ -1,12 +1,6 @@
 <?php
 // you can pass this script to PHP CLI to convert your file.
 
-// adapt these 2 paths to your files.
-$src = 'myScript-src.js';
-$out = 'myScript.js';
-
-// or uncomment these lines to use the argc and argv passed by CLI :
-/*
 if ($argc >= 3) {
 	$src = $argv[1];
 	$out = $argv[2];
@@ -15,7 +9,6 @@ if ($argc >= 3) {
 	echo 'example :', "\n", 'php example-file.php myScript-src.js myPackedScript.js',"\n";
 	return;
 }
-*/
 
 require 'class.JavaScriptPacker.php';
 
