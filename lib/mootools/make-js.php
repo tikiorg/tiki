@@ -3,13 +3,13 @@
 
 require_once("packer/class.JavaScriptPacker.php");
 
-function compact_files($header, $files, $destination) {
+function compact_files($header, $srcdir, $files, $destination) {
 
     $t1 = microtime(true);
 
     $content='';
     foreach($files as $src) {
-	$src="src/$src";
+	$src="$srcdir/$src";
 	$content.=file_get_contents($src);
     }
 
@@ -25,6 +25,7 @@ function compact_files($header, $files, $destination) {
 
 
 compact_files("//MooTools, My Object Oriented Javascript Tools. Copyright (c) 2006 Valerio Proietti, <http://mad4milk.net>, MIT Style License.\n\r\n\r",
+	      "src",
 	      array(
 		    "Core/Core.js",
 		    "Class/Class.js",
@@ -68,6 +69,23 @@ compact_files("//MooTools, My Object Oriented Javascript Tools. Copyright (c) 20
 		    "Plugins/Group.js",
 		    "Plugins/Accordion.js"),
 	      "mootools.js");
+
+
+compact_files("//Windoo: Mootools window class <http://code.google.com/p/windoo>. Copyright (c) 2007 Yevgen Gorshkov, MIT Style License.\n\r\n\r",
+	      "extensions/windoo/src",
+	      array(
+		    "Effects/Fx.Overlay.js",
+		    "Windoo/Windoo.Core.js",
+		    "Windoo/Windoo.Manager.js",
+		    "Windoo/Windoo.Drag.js",
+		    "Windoo/Windoo.Dialog.js",
+		    "Windoo/Windoo.Panel.js",
+		    "Windoo/Windoo.Ajax.js",
+		    "Windoo/Windoo.Themes.js",
+		    "Drag/Drag.Multi.js",
+		    "Drag/Drag.Resize.js",
+		    "Drag/Drag.ResizeImage.js"),
+	      "extensions/windoo/windoo.js");
 
 
 ?>
