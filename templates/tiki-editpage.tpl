@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.117 2007-08-02 11:41:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.118 2007-08-07 15:00:07 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -332,7 +332,7 @@ function searchrep() {
 <input type="button" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()">
 {/if}
 {if $page|lower ne 'sandbox'}
-<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
+<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
 {/if}
 {/if}
 </td></tr>
