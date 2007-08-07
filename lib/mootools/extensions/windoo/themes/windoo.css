@@ -3,9 +3,6 @@ div.windoo {
 	position:absolute;
 	overflow:hidden;
 }
-div.windoo .windoo-drag {
-	cursor:move;
-}
 div.windoo div.windoo-body {
 	position:relative;
 	overflow:auto;
