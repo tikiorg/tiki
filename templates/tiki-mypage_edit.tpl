@@ -51,8 +51,19 @@
 function changepage() {
 }
 
-var content_mypageeditdiv=$('mypageeditdiv');
 var curmodal=0;
+
+function initMypageEdit() {
+	var content=$('mypageeditdiv');
+	curmodal=new Windoo({
+		"modal": true,
+		"width": 300,
+		"height": 150,
+		"container": false,
+		"destroyOnClose": false
+	}).adopt(content);
+	content.style.display='';
+}
 
 function showMypageEdit(id) {
 	if (id > 0) {
@@ -64,19 +75,12 @@ function showMypageEdit(id) {
 		$('mypageedit_description').value='';
 		$('mypageedit_submit').value='Create';
 	}
-	content_mypageeditdiv.style.display='';
-	curmodal=new Windoo({
-		"modal": true,
-		"width": 300,
-		"height": 150,
-		"container": false
-	}).adopt(content_mypageeditdiv)
-	.show();
+
+	curmodal.show();
 }
 
 function closeMypageEdit() {
 	curmodal.close();
-	curmodal=0;
 }
 
 function saveMypageEdit() {
@@ -89,6 +93,8 @@ function saveMypageEdit() {
 
 	closeMypageEdit();	
 }
+
+initMypageEdit();
 
 </script>
 {/literal}
