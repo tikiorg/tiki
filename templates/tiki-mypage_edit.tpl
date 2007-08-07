@@ -45,6 +45,7 @@
  <td>
   <span id='mypagespan_width_{$mypage.id}'>{$mypage.width}</span> x 
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
+ </td>
  <td>
   <a href='tiki-mypage.php?id_mypage={$mypage.id}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
