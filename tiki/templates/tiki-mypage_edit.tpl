@@ -106,7 +106,7 @@ function saveMypageEdit() {
 					$('mypageedit_width').value,
 					$('mypageedit_height').value
 				   );
-	} else {
+	} else {
 		xajax_mypage_create($('mypageedit_name').value,
 				    $('mypageedit_description').value,
 				    $('mypageedit_width').value,
