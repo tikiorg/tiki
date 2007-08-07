@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.10 2007-08-07 09:54:52 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.11 2007-08-07 14:02:55 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -371,7 +371,7 @@ class MyPageWindow {
 			 'height'    => (int)$this->params['height'],
 			 'title'     => $this->params['title'],
 			 'position'  => false,
-			 'container' => false,
+			 'container' => 'mypage',
 			 );
 	
 	switch ($this->params['contenttype']) {

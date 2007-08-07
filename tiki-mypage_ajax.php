@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.2 2007-08-06 21:47:19 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.3 2007-08-07 14:02:54 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,7 @@ function mypage_win_create($id_mypage, $contenttype, $title, $content) {
     return $objResponse;
 }
 
-function mypage_update($id_mypage, $name, $description) {
+function mypage_update($id_mypage, $name, $description, $width, $height) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -84,15 +84,19 @@ function mypage_update($id_mypage, $name, $description) {
     $mypage=new MyPage((int)$id_mypage, $id_users);
     $mypage->setParam('name', $name);
     $mypage->setParam('description', $description);
+    $mypage->setParam('width', (int)$width);
+    $mypage->setParam('height', (int)$height);
     $mypage->commit();
 
     $objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
     $objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
+    $objResponse->addAssign('mypagespan_width_'.$id_mypage, 'innerHTML', $mypage->getParam('width'));
+    $objResponse->addAssign('mypagespan_height_'.$id_mypage, 'innerHTML', $mypage->getParam('height'));
 
     return $objResponse;
 }
 
-function mypage_create($name, $description) {
+function mypage_create($name, $description, $width, $height) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -100,6 +104,8 @@ function mypage_create($name, $description) {
     $mypage=new MyPage(NULL, $id_users);
     $mypage->setParam('name', $name);
     $mypage->setParam('description', $description);
+    $mypage->setParam('width', (int)$width);
+    $mypage->setParam('height', (int)$height);
     $mypage->commit();
 
     $objResponse->addScript("window.location.reload()");
@@ -117,6 +123,8 @@ function mypage_fillinfos($id_mypage) {
     $objResponse->addAssign('mypageedit_id', 'value', $id_mypage);
     $objResponse->addAssign('mypageedit_name', 'value', $mypage->getParam('name'));
     $objResponse->addAssign('mypageedit_description', 'value', $mypage->getParam('description'));
+    $objResponse->addAssign('mypageedit_width', 'value', $mypage->getParam('width'));
+    $objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
 
     return $objResponse;
 }
