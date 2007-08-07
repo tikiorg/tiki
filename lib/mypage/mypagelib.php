@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.11 2007-08-07 14:02:55 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.12 2007-08-07 17:31:20 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -337,7 +337,7 @@ class MyPageWindow {
 	$this->setParam('title', $title);
     }
 
-    function getJSCode() {
+    function getJSCode($editable=true) {
 	global $tikilib;
 
 	// check perms
@@ -371,8 +371,18 @@ class MyPageWindow {
 			 'height'    => (int)$this->params['height'],
 			 'title'     => $this->params['title'],
 			 'position'  => false,
+			 'theme'     => 'aero',
 			 'container' => 'mypage',
 			 );
+
+	if (!$editable) {
+	    $winparams['theme']      = 'nada';
+	    $winparams['resizable']  = false;
+	    $winparams['draggable']  = false;
+	    $winparams['buttons']    = array('close'    => false,
+					     'minimize' => false,
+					     'maximize' => false);
+	}
 	
 	switch ($this->params['contenttype']) {
 	case 'iframe':
