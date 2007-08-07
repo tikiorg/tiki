@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.9 2007-08-06 21:47:19 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.10 2007-08-07 09:54:52 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -127,6 +127,11 @@ class MyPage {
     function checkout() {
 	global $tikilib;
 
+	/*
+	 * TODO:
+	 * here we may check for mypage read permissions
+	 */
+
 	$this->windows=array();
 
 	if (!is_null($this->id)) {
@@ -150,6 +155,12 @@ class MyPage {
 	global $tikilib;
 
 	if (is_null($this->id)) {
+	    
+	    /*
+	     * TODO:
+	     * here we may check for mypage create permissions
+	     */
+
 	    // create a new mypage id
 
 	    $res=$tikilib->query("INSERT INTO tiki_mypage (`id_users`) values (?)",
@@ -165,6 +176,12 @@ class MyPage {
 	    return $this->commit();
 
 	} else {
+
+	    /*
+	     * TODO:
+	     * here we may check for mypage write permissions
+	     */
+
 	    if (count($this->modified) > 0) {
 		$l=array();
 		$r=array();
@@ -240,8 +257,14 @@ class MyPageWindow {
 
 	if ($this->id < 0) {
 	    // create a new mypagewin id
+
+	    /*
+	     * TODO:
+	     * we may check for create permission
+	     */
 	    
-	    $res=$tikilib->query("INSERT INTO tiki_mypagewin (`id_mypage`) values (?)", array($this->mypage->id));
+	    $res=$tikilib->query("INSERT INTO tiki_mypagewin (`id_mypage`) values (?)",
+				 array($this->mypage->id));
 	    if (!$res) return;
 
 	    $id=$tikilib->getOne("SELECT LAST_INSERT_ID()");
@@ -255,6 +278,12 @@ class MyPageWindow {
 	    return $this->commit();
 
 	} else {
+
+	    /*
+	     * TODO:
+	     * we may check for write permission
+	     */
+
 	    if (count($this->modified) > 0) {
 		$l=array();
 		$r=array();
