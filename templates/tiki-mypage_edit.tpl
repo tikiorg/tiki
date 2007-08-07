@@ -34,7 +34,7 @@
  <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name}</span></td>
  <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description}</span></td>
  <td>
-  <a href='tiki-mypage.php?mypageid={$mypage.id}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
+  <a href='tiki-mypage.php?id_mypage={$mypage.id}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
  </td>
 </tr>
