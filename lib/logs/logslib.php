@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.51 2007-08-02 22:19:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.52 2007-08-08 20:21:08 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -917,6 +917,18 @@ class LogsLib extends TikiLib {
 		//$jpgraph ->legend->Pos( 0.5,0.5,"right" ,"center");
 		$jpgraph->legend->SetFillColor($colorLegend);
 		$jpgraph->Add( $gbplot);
+	}
+	function insert_image($galleryId, $graph, $ext, $title, $period) {
+		global $tmpDir, $user;
+		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+		$filename = $tmpDir.md5(rand().time()).'.'.$ext;
+		$graph->Stroke($filename);
+		$info = getimagesize($filename);
+		$size = filesize($filename);
+		$fp = fopen($filename, "rb");
+		$data = fread($fp, $size);
+		fclose($fp);
+		$imagegallib->insert_image($_REQUEST['galleryId'], $title.$period, '', $title.$period.'.'.$ext, 'image/'.$ext, $data, $size, $info[0], $info[1], $user, '', '');
 	}
 
 }
