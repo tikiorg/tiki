@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.19 2007-08-06 16:09:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.20 2007-08-08 13:11:42 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -168,11 +168,8 @@
 {/section}
 {if $tiki_p_admin_file_galleries eq 'y' or tiki_p_assign_perm_file_gallery eq 'y'}
 	<script type="text/javascript"> /* <![CDATA[ */
-	document.write('<tr><td colspan="{$cntcol}">
-	<input type="checkbox" id="clickall"
- 	onclick="switchCheckboxes(this.form,\'checkedPerms[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}select all{/tr}</label>
-	</td></tr>');
+	document.write('<tr><td colspan="{$cntcol}"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checkedPerms[]\',this.checked)"/>');
+	document.write('<label for="clickall">{tr}select all{/tr}</label></td></tr>');
 	/* ]]> */</script>
 {/if}
 </table>
