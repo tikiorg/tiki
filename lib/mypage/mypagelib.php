@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.13 2007-08-08 11:22:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.14 2007-08-08 13:50:55 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -75,8 +75,31 @@ class MyPage {
 	unset($this->windows[$from]);
     }
 
+    function destroy() {
+	global $tikilib;
+
+	/*
+	 * TODO:
+	 * check here if user have the permission to destroy a mypage
+	 */
+
+        // we firstly destroy every windows that this mypage contain
+	foreach($this->windows as $window) {
+	    $this->destroyWindow($window);
+	}
+	
+	// finally, we destroy this mypage
+	$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
+			array($this->id));
+    }
+
     function destroyWindow($window) {
 	global $tikilib;
+
+	/*
+	 * TODO:
+	 * check here if user have the permission to destroy a window
+	 */
 
 	$id_win=0;
 	if (is_object($window)) {
@@ -252,6 +275,10 @@ class MyPageWindow {
 		}
 	    }
 	}
+    }
+
+    function destroy() {
+	$this->mypage->destroyWindow($this);
     }
 
     function commit() {
