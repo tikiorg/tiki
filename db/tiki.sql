@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-08-07 22:01:10 $
+# $Date: 2007-08-08 18:25:21 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4344,6 +4344,7 @@ CREATE TABLE users_usergroups (
 # --------------------------------------------------------
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Registered','Users logged into the system');
+INSERT INTO users_groups (groupName,groupDesc) VALUES ('Admins','Administrator and accounts managers.');
 # --------------------------------------------------------
 
 #
@@ -4388,6 +4389,8 @@ CREATE TABLE users_users (
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
 INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
+INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
+INSERT INTO users_grouppermissions (groupName, permName) VALUES ('Admins','tiki_p_admin');
 # --------------------------------------------------------
 # 
 
