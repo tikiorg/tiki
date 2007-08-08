@@ -10,12 +10,12 @@
  <div id='sideBar' style='position: absolute; width: auto; height: auto; top: 200px; right: 7px; z-index: 255;'>
 
   <a href="#" id="sideBarTab" style='float:left; height:137px; width:28px; border: 0;'>
-   <img src="img/cord.png" alt="sideBar" title="sideBar" style='width: 28px; height: 137px; border: 0;'/>
+   <img src="img/cord.png" alt="Tools" title="Tools" style='width: 28px; height: 137px; border: 0;'/>
   </a>
 	
   <div id="sideBarContents" style="width:0px; overflow: hidden !important; background: white;">
    <div id="sideBarContentsInner" style="width: 200px;">
-    <h2>side<span>bar</span></h2>
+    <h2>Tools</h2>
 
     <ul>
 
