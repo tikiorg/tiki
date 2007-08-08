@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.12 2007-08-07 17:31:20 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.13 2007-08-08 11:22:54 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,27 +13,29 @@ if ($feature_ajax != 'y') {
 /*
  * convert an array recursively to a javascript array
  */
-function phptojsarray($array, $offset="") {
-  if (is_array($array)) {
-    $offset.="  ";
-    $str="{\n".$offset."'COUNT' : ".count($array);
-    foreach($array as $k => $v) {
-      $str.=",\n".$offset."'$k' : ".phptojsarray($v, $offset);
+function phptojsarray($var, $offset="") {
+    if (is_array($var)) {
+	$offset.="  ";
+	$str="{\n".$offset."'COUNT' : ".count($var);
+	foreach($var as $k => $v) {
+	    $str.=",\n".$offset."'$k' : ".phptojsarray($v, $offset);
+	}
+	$str.=" }";
+    } else if (is_numeric($var)) {
+	$str="".$var;
+    } else if (is_bool($var)) {
+	$str=($var ? 'true' : 'false');
+    } else if (is_string($var)) {
+	$str="'".str_replace(array("\n", "\r", "</"), array("\\n", "\\r", "<'+'/"), addslashes($var))."'";
+    } else if (is_null($var)) {
+	$str="null";
+    } else {
+	$str="null";
     }
-    $str.=" }";
-  } else if (is_numeric($array)) {
-    $str="".$array;
-  } else if (is_string($array)) {
-    $str="'".str_replace(array("\n", "\r", "</"), array("\\n", "\\r", "<'+'/"), addslashes($array))."'";
-  } else if (is_null($array)) {
-    $str="null";
-  } else {
-    $str="null";
-  }
-
-  return $str;
+    
+    return $str;
 }
-
+    
 /*
  * MyPage object is the container of MyPageWindow
  */
