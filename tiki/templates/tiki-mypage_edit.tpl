@@ -47,8 +47,9 @@
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
  </td>
  <td>
-  <a href='tiki-mypage.php?id_mypage={$mypage.id}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
+  <a href='tiki-mypage.php?id_mypage={$mypage.id}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
+  <a href='#' onclick='deleteMypage({$mypage.id});'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
  </td>
 </tr>
 {/foreach}
@@ -115,6 +116,10 @@ function saveMypageEdit() {
 	}
 
 	closeMypageEdit();	
+}
+
+function deleteMypage(id) {
+	xajax_mypage_delete(id);
 }
 
 initMypageEdit();

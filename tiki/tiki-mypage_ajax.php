@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.3 2007-08-07 14:02:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.4 2007-08-08 13:50:54 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,6 +113,19 @@ function mypage_create($name, $description, $width, $height) {
     return $objResponse;
 }
 
+function mypage_delete($id_mypage) {
+    global $id_users;
+
+    $objResponse = new xajaxResponse();
+
+    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage->destroy();
+
+    $objResponse->addScript("window.location.reload()");
+
+    return $objResponse;
+}
+
 function mypage_fillinfos($id_mypage) {
     global $id_users;
 
@@ -138,6 +151,7 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mypage_win_create");
     $ajaxlib->registerFunction("mypage_update");
     $ajaxlib->registerFunction("mypage_create");
+    $ajaxlib->registerFunction("mypage_delete");
     $ajaxlib->registerFunction("mypage_fillinfos");
     $ajaxlib->processRequests();
 }
