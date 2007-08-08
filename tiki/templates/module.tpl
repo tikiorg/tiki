@@ -1,8 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.32 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.33 2007-08-08 22:34:50 sylvieg Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
 	<div class="box box-{$module_name|escape}">
+{if $module_decorations ne 'n'}
 		<div class="box-title">
 {if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
 			<table width="100%"><tr>
@@ -41,6 +42,7 @@
 {/if}
 {/if}
 		</div>
+{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="box-data">
 {$module_content}
 {$module_error}
