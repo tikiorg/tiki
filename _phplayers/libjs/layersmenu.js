@@ -33,6 +33,7 @@ function seeThroughElements(show)
 	} else {
 		foobar = 'hidden';
 	}
+	if (toBeHidden == null)	return;
 	for (i=0; i<toBeHidden.length; i++) {
 		toBeHidden[i].style.visibility = foobar;
 	}

@@ -1,0 +1,4 @@
+in layersmanu.js line 36
+add
+if (toBeHidden == null)	return;
+to avoid IE6 to bark if none on the phplayers menu is displayed and the widow is resized
