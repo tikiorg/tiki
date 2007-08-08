@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.37 2007-06-16 16:01:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.38 2007-08-08 20:59:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'webmail';
 require_once ('tiki-setup.php');
 
 include_once ('lib/webmail/webmaillib.php');
@@ -878,7 +879,6 @@ if ($_REQUEST["locSection"] == 'contacts') {
 
 include_once ('tiki-mytiki_shared.php');
 
-$section = 'webmail';
 include_once ('tiki-section_options.php');
 
 ask_ticket('webmail');
