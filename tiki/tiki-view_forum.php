@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.116 2007-07-25 02:33:19 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.117 2007-08-08 13:18:18 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -290,7 +290,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	    
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
-		    print("<p>queued.\n");
 		    $smarty->assign('was_queued', 'y');
 
 		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
