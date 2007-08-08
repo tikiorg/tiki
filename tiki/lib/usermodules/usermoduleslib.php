@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.33 2007-08-04 10:27:30 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.34 2007-08-08 21:07:12 sylvieg Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -227,10 +227,9 @@ class UserModulesLib extends TikiLib {
 		$this->query("update `tiki_user_assigned_modules` set `type`=? where `moduleId`=?",array($type,$name)) ;
 		// for the user who doesn't have this module
 		$query = "select distinct t1.`user` from `tiki_user_assigned_modules` as t1 left join `tiki_user_assigned_modules` as t2 on t1.`user`=t2.`user` and t2.`moduleId`=? where t2.`moduleId` is null";   
-		$result = $this->query($query,array($name));
+		$result = $this->query($query,array($moduleId));
 		while ($res = $result->fetchRow()) {
  			$user = $res["user"];
-//DH Fix
 			$query = "insert into `tiki_user_assigned_modules`(`moduleId`, `user`,`name`,`position`,`ord`,`type`)
 			values(?,?,?,?,?,?)";
  			$this->query($query,array($moduleId, $user,$name,$position,(int) $order,$type));
