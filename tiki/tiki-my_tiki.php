@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.25 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.26 2007-08-08 20:59:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'mytiki';
 require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
@@ -89,7 +90,6 @@ if ($feature_workflow == 'y' && $tiki_p_use_workflow == 'y' && $tikilib->get_use
 	$smarty->assign('mytiki_workflow', $tikilib->get_user_preference($user, 'mytiki_workflow'), 'y');
 }
 
-$section = 'mytiki';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
