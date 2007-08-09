@@ -6,6 +6,7 @@
 <div style='width: {$mypage_width}; height: {$mypage_height};'>
 <div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; overflow: hidden;'>
 
+{if $editit}
  <!-- sidebar -->
  <div id='sideBar' style='position: absolute; width: auto; height: auto; top: 200px; right: 7px; z-index: 255;'>
 
@@ -28,13 +29,8 @@
    </div>
   </div>
  </div> <!-- sidebar -->
+{/if}
 
-
- <div style='padding-top: 200px;'>
- </div>
-
- <div style='padding-top: 300px;'>
- </div>
 </div>
 </div>
 
