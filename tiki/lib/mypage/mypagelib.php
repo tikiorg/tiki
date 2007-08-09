@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.15 2007-08-08 14:15:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.16 2007-08-09 12:16:09 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -49,7 +49,7 @@ class MyPage {
 	
 	function MyPage($id=NULL, $id_users) {
 		$this->id=$id;
-		$this->id_users=$id_users;
+		$this->id_users=$id_users; //the viewer
 		$this->windows=array();
 		$this->lastid=0;
 		$this->params=array();
@@ -78,10 +78,9 @@ class MyPage {
 	function destroy() {
 		global $tikilib;
 		
-		/*
-		 * TODO:
-		 * check here if user have the permission to destroy a mypage
-		 */
+		if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+			return "alert(tra('You do not have permissions to delete the page'))";
+		}
 		
 		// we firstly destroy every windows that this mypage contain
 		foreach($this->windows as $window) {
@@ -152,11 +151,6 @@ class MyPage {
 	function checkout() {
 		global $tikilib;
 		
-		/*
-		 * TODO:
-		 * here we may check for mypage read permissions
-		 */
-		
 		$this->windows=array();
 		
 		if (!is_null($this->id)) {
@@ -166,6 +160,10 @@ class MyPage {
 			} else { // bad... no mypage found
 				$this->id=0;
 				return FALSE;
+			}
+			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
+			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+				return "alert(tra('You do not have permissions to view the page'))";
 			}
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
@@ -181,10 +179,9 @@ class MyPage {
 		
 		if (is_null($this->id)) {
 			
-			/*
-			 * TODO:
-			 * here we may check for mypage create permissions
-			 */
+			if ($this->perms['tiki_p_edit_mypage'] != 'y' && $this->perms['tiki_p_edit_own_mypage'] != 'y') {
+				return "alert(tra('You do not have permissions to edit the page'))";
+			}
 			
 			// create a new mypage id
 			
@@ -202,10 +199,9 @@ class MyPage {
 			
 		} else {
 			
-			/*
-			 * TODO:
-			 * here we may check for mypage write permissions
-			 */
+			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+				return "alert(tra('You do not have permissions to edit the page'))";
+			}
 			
 			if (count($this->modified) > 0) {
 				$l=array();
@@ -384,7 +380,7 @@ class MyPageWindow {
 				if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
 					|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
 
-					return 'alert("You don\'t have permission to view this part of content");';
+					return 'alert("You do not have permission to view this part of content");';
 				}
 			} else {
 				return 'alert("Component not available: '.$this->params['contenttype'].'");';
