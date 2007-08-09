@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.21 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.22 2007-08-09 12:54:23 sylvieg Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -25,7 +25,9 @@
   <td class="heading">&nbsp;</td>
 {assign var='cntcol' value='1'}
 {/if}
+{if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
   <td class="heading">&nbsp;</td>
+{/if}
 {if $wiki_list_name eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
 	<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{if !empty($maxRecords)}&amp;maxRecords={$maxRecords}{/if}{/ajax_href}>{tr}Page{/tr}</a></td>
@@ -94,11 +96,16 @@
 {if $checkboxes_on eq 'y'}
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
+{if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
 <td class="{cycle advance=false}">
 {if $tiki_p_edit eq 'y'}
-&nbsp;<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
+<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
+{/if}
+{if $tiki_p_assign_perm_wiki_page eq 'y'}
+<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
 {/if}
 </td>
+{/if}
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$wiki_list_name_len:"...":true}</a>
 	</td>
