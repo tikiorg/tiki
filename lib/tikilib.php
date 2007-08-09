@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.765 2007-08-01 20:00:15 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.766 2007-08-09 12:16:40 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3658,6 +3658,15 @@ function add_pageview() {
 	function get_perm_object($objectId, $objectType, $global=true) {
 		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
 		$ret = array();
+		if (empty($objectId)) {
+			if (!$global) {
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+				foreach ($perms['data'] as $perm) {
+					$ret[$perm['permName']] = 'y';
+				}
+			}
+			return $ret;
+		}
 		if ($tiki_p_admin == 'y') {
 			if (!$global) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
@@ -3665,12 +3674,13 @@ function add_pageview() {
 					$ret[$perm['permName']] = 'y';
 				}
 			}
+			return $ret;
 			/* else : all the perms have already been set in tiki-setup_base */
 		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
 				$permName = $perm['permName'];
-				global $$permName;
+				global $$permName;//TODO: do not request for each perm but for all the perms at the same time
 				if ($userlib->object_has_permission($user, $objectId, $objectType, $permName)) {
 					$ret[$permName] = 'y';
 					if ($global) {
@@ -3750,6 +3760,8 @@ function add_pageview() {
 			return 'surveys';
 		case 'newsletter':
 			return 'newsletters';
+		case 'mypage';
+			return 'mypage';
 		/* TODO */
 		default:
 			return $objectType;
@@ -3782,6 +3794,8 @@ function add_pageview() {
 			return 'tiki_p_admin_surveys';
 		case 'newsletter':
 			return 'tiki_p_admin_newsletters';
+		case 'mypage':
+			return 'tiki_p_admin_mypage';
 		/* TODO */
 		default:
 			return "tiki_p_admin_$objectType";
@@ -3884,6 +3898,12 @@ function add_pageview() {
 				$ret['tiki_p_subscribe_newsletters'] = 'y';
 			}
 			break;
+		case 'mypage':
+			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret['tiki_p_view_mypage'] = 'y';
+			}
+			break;
+			
 		/* TODO */
 		default:
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
