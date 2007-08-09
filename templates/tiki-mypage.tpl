@@ -116,7 +116,7 @@ function extendContract(){
 		isExtended = 1;
 		
 		// make expand tab arrow image face left (inwards)
-		$('sideBarTab').childNodes[0].src = $('sideBarTab').childNodes[0].src.replace(/(\.[^.]+)$/, '-active$1');
+		//$('sideBarTab').childNodes[0].src = $('sideBarTab').childNodes[0].src.replace(/(\.[^.]+)$/, '-active$1');
 		
 	}
 	else{
@@ -129,7 +129,7 @@ function extendContract(){
 		
 		// make expand tab arrow image face right (outwards)
 		
-		$('sideBarTab').childNodes[0].src = $('sideBarTab').childNodes[0].src.replace(/-active(\.[^.]+)$/, '$1');
+		//$('sideBarTab').childNodes[0].src = $('sideBarTab').childNodes[0].src.replace(/-active(\.[^.]+)$/, '$1');
 	}
 
 }
