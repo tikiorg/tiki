@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.5 2007-08-09 17:42:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.6 2007-08-09 18:08:54 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,9 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
     $objResponse = new xajaxResponse();
 
     $mypage=new MyPage((int)$id_mypage, $id_users);
-    $mypage->destroyWindow((int)$id_mypagewin);
+    $err=$mypage->destroyWindow((int)$id_mypagewin);
+    
+    if (!empty($err)) $objResponse->addScript("alert('".addslashes($err)."');");
 
     return $objResponse;
 }

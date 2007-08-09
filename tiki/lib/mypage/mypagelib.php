@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.18 2007-08-09 17:42:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.19 2007-08-09 18:08:55 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -107,7 +107,7 @@ class MyPage {
 		
 		if ($id_win > 0) {
 			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-				return "alert(tra('You do not have permissions to delete the page'))";
+				return tra('You do not have permissions to delete this component');
 			}
 			$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
 							array($id_win, $this->id));
@@ -438,7 +438,7 @@ class MyPageWindow {
 		$js =$v."=new Windoo(".phptojsarray($winparams).");\n";
 		$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 		$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
-		$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
+		$js.=$v.".addEvent('onBeforeClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); return false; });\n";
 	
 	
 		if ($this->params['contenttype'] != 'iframe') {
