@@ -5,7 +5,14 @@ echo "2 params file=file_name and max=max_line_length ( for php5.0.4 max is mand
 echo "The file must be a csv file and must contain all or some of the fields: name, hits, data, lastModif, comment, user, ip, description,lang,category<br />";
 echo "A cvs file has a first line describing the fields separated by comma, and each next line is a data with the values of the fields separated by comma ( if a value has a comma put the value between double-quotes and if it has double-quote, double the double-quotes<br />";
 echo "The page is only created if it does not exist. The category must exist. The category can be added to an alerady existing page<br />";
+echo "You must be admin to use this batch<br />";
 ini_set('max_execution_time', 0);
+
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}	
 
 if (empty($_REQUEST['file'] )) {
 	echo "Syntax batch_load_pages.php?file=pages.csv&max=30000";
