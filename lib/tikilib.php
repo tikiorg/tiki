@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.766 2007-08-09 12:16:40 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.767 2007-08-09 18:49:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3667,11 +3667,16 @@ function add_pageview() {
 			}
 			return $ret;
 		}
+		
 		if ($tiki_p_admin == 'y') {
 			if (!$global) {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
 					$ret[$perm['permName']] = 'y';
+				}
+				global $categlib; include_once('lib/categories/categlib.php');
+				if ($userlib->object_has_one_permission($objectId, $objectType) || ($feature_categories == 'y' && $categlib->get_object_categories_perms($user, $objectType, $objectId))) {
+					$ret['has_special_perm'] = 'y';
 				}
 			}
 			return $ret;
@@ -3707,6 +3712,7 @@ function add_pageview() {
 					}
 				}
 			}
+			$ret['has_special_perm'] = 'y';
 			return $ret; // special perms - do not look further
 		} elseif ($feature_categories == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
@@ -3721,6 +3727,7 @@ function add_pageview() {
 						$ret[$perm] = $value;
 					}
 				}
+				$ret['has_special_perm'] = 'y';
 				return $ret; // categ perm - do not look further
 			}
 		}
