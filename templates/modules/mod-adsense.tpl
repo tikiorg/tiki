@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-adsense.tpl,v 1.3 2005-08-18 16:23:07 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-adsense.tpl,v 1.4 2007-08-09 10:40:11 sylvieg Exp $ *}
 {* look comments in tikiwiki/modules/mod-adsense.php for usage *}
 <center>
 {if $client}
@@ -38,7 +38,7 @@
 {elseif $display == '180*150_as'}
     google_ad_width = 180;
     google_ad_height = 150;
-    google_ad_format = "180x15_as";
+    google_ad_format = "180x150_as";
 {elseif $display == '125*125_as'}
     google_ad_width = 125;
     google_ad_height = 125;
