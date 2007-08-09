@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.16 2007-08-09 12:16:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.17 2007-08-09 17:23:44 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -46,7 +46,8 @@ class MyPage {
 	var $lastid;
 	var $params;
 	var $modified;
-	
+	var $perms;
+
 	function MyPage($id=NULL, $id_users) {
 		$this->id=$id;
 		$this->id_users=$id_users; //the viewer
@@ -95,11 +96,6 @@ class MyPage {
 	function destroyWindow($window) {
 		global $tikilib;
 		
-		/*
-		 * TODO:
-		 * check here if user have the permission to destroy a window
-		 */
-		
 		$id_win=0;
 		if (is_object($window)) {
 			$id_win=$window->id;
@@ -110,6 +106,9 @@ class MyPage {
 		if (!isset($this->windows[$id_win])) return;
 		
 		if ($id_win > 0) {
+			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+				return "alert(tra('You do not have permissions to delete the page'))";
+			}
 			$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
 							array($id_win, $this->id));
 		}
@@ -129,7 +128,7 @@ class MyPage {
 	/* static */
 	function listPages($id_users, $offset=-1, $limit=-1) {
 		global $tikilib;
-		
+
 		$pages=array();
 		$res=$tikilib->query("SELECT * FROM tiki_mypage WHERE `id_users`=?",
 							 array((int)$id_users), $limit, $offset);
@@ -168,18 +167,21 @@ class MyPage {
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
-				$this->windows[$line['id']]=new MyPageWindow($this, $line['id'], $line);
+				$mypagewindow=new MyPageWindow($this, $line['id'], $line);
+				if ($mypagewindow->perms['tiki_p_view_component'] == 'y' || $this->id_users == $this->getParam('id_users') || $this->perms['tiki_p_admin_mypage'] == 'y') {
+					$this->windows[$line['id']] = $mypagewindow;
+				}
 			}
 			
 		}
 	}
 	
 	function commit() {
-		global $tikilib;
+		global $tikilib, $tiki_p_edit_mypage, $tiki_p_edit_own_mypage;
 		
 		if (is_null($this->id)) {
 			
-			if ($this->perms['tiki_p_edit_mypage'] != 'y' && $this->perms['tiki_p_edit_own_mypage'] != 'y') {
+			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
 				return "alert(tra('You do not have permissions to edit the page'))";
 			}
 			
@@ -236,12 +238,14 @@ class MyPageWindow {
 	var $id;
 	var $params;
 	var $modified;
+	var $perms;
 	
 	/*
 	 * this constructor may be called only by the MyPage class
 	 * you should not create a new instance of this object directly
 	 */
 	function MyPageWindow($mypage, $id, $line) {
+		global $tikilib;
 		$this->mypage=$mypage;
 		$this->id=$id;
 		$this->params=$line;
@@ -270,23 +274,25 @@ class MyPageWindow {
 					break;
 				}
 			}
+		} else {
+			$this->perms = $tikilib->get_perm_object($this->id, 'component', false);
 		}
 	}
 	
 	function destroy() {
+
 		$this->mypage->destroyWindow($this);
 	}
 	
 	function commit() {
 		global $tikilib;
 		
+		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->myspace->getParam('id_users'))) {
+			return "alert(tra('You do not have permissions to edit the component'))";
+		}
+			
 		if ($this->id < 0) {
 			// create a new mypagewin id
-			
-			/*
-			 * TODO:
-			 * we may check for create permission
-			 */
 			
 			$res=$tikilib->query("INSERT INTO tiki_mypagewin (`id_mypage`) values (?)",
 								 array($this->mypage->id));
@@ -303,11 +309,6 @@ class MyPageWindow {
 			return $this->commit();
 			
 		} else {
-			
-			/*
-			 * TODO:
-			 * we may check for write permission
-			 */
 			
 			if (count($this->modified) > 0) {
 				$l=array();
@@ -365,7 +366,6 @@ class MyPageWindow {
 	function getJSCode($editable=true) {
 		global $tikilib;
 
-		// check perms
 		switch ($this->params['contenttype']) {
 		case 'iframe':
 			// don't do nothing here for the special iframe case
