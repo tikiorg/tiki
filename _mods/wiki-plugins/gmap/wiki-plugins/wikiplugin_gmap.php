@@ -159,7 +159,7 @@ function wikiplugin_gmap($data, $params) {
     		$image = '';
     		// no image here required, so leave it as blank in case it is needed later on.
     		$thetext = addslashes($image).tra('Page').': '.htmlspecialchars($bk["fromPage"],ENT_QUOTES).'<br />Lat: '.$t_lat.'&deg;<br /> Long: '.$t_lon.'&deg;<br />'.$t_desc;
-    		$href = 'index-e?page='.urlencode($bk["fromPage"]);
+    		$href = 'tiki-index.php?page='.urlencode($bk["fromPage"]);
 				$out[] = array($t_lat,$t_lon,$thetext,$href);
 			}
 		}
@@ -195,7 +195,7 @@ function wikiplugin_gmap($data, $params) {
    			$image = '';
    			// no image here required, so leave it as blank in case it is needed later on.
    			$thetext = addslashes($image).tra('Page').': '.$gr["pos"].'. '.htmlspecialchars($gr["pageName"],ENT_QUOTES).'<br />Lat: '.$t_lat.'&deg;<br /> Long: '.$t_lon.'&deg;<br />'.$t_desc;
-   			$href = 'index-e?page_ref_id='.$gr["page_ref_id"];
+   			$href = 'tiki-index.php?page_ref_id='.$gr["page_ref_id"];
 				$out[] = array($t_lat,$t_lon,$thetext,$href);
 			}
 		}
