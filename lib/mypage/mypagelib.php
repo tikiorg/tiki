@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.23 2007-08-09 20:09:30 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.24 2007-08-09 20:26:03 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -403,25 +403,24 @@ class MyPageWindow {
 	function getJSCode($editable=true) {
 		global $tikilib;
 
-		switch ($this->params['contenttype']) {
-		case 'iframe':
-			// don't do nothing here for the special iframe case
-			break;
-
-		default:
-			$comp=$this->getComponent();
-			if (!$comp) {
-				return 'alert("Component not available: '.$this->params['contenttype'].'");';
-			}
-
-			$compperms = $comp->getPermObject();
-			if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
-				|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
-
-				return 'alert("You do not have permission to view this part of content");';
-			}
-			break;
+		$comp=$this->getComponent();
+		if (!$comp) {
+			return 'alert("Component not available: '.$this->params['contenttype'].'");';
 		}
+
+		$compperms = $comp->getPermObject();
+		if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
+			|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
+			
+			return 'alert("You do not have permission to view this part of content");';
+		}
+
+		if ($editable && (!isset($compperms['tiki_p_edit_'.$this->params['contenttype']])
+			|| $compperms['tiki_p_edit_'.$this->params['contenttype']] != 'y')) {
+			
+			$editable=false;
+		}
+
 
 		$v="tikimypagewin[".$this->id."]";
 
@@ -444,11 +443,9 @@ class MyPageWindow {
 											 'maximize' => false);
 		}
 	
-		switch ($this->params['contenttype']) {
-		case 'iframe':
+		if ($this->params['contenttype'] == 'iframe') {
 			$winparams['type']="iframe";
 			$winparams['url']=$this->params['content'];
-			break;
 		}
 	
 		$js =$v."=new Windoo(".phptojsarray($winparams).");\n";

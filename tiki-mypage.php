@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.9 2007-08-09 20:09:29 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.10 2007-08-09 20:26:02 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,8 +55,10 @@ function mypage_init() {
 		die("mypage not found");
 	}
 
+	// TODO: verify that we have permission to edit it
 	if (isset($_REQUEST['edit']) && $_REQUEST['edit'] == 1) $editit=true;
 	else $editit=false;
+	$smarty->assign('editit', $editit);
 
 	$smarty->assign('mypagejswindows', $mypage->getJSCode($editit));
 	$smarty->assign('id_mypage', $id_mypage);
