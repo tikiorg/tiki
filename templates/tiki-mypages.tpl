@@ -5,7 +5,7 @@
 
 <div id='mypageeditdiv' style='display: none;'>
  <input id='mypageedit_id' type='hidden' value=''>
- <table>
+ <table class="normal">
   <tr>
    <th>Name</th>
    <td><input id='mypageedit_name' type='text' name='name' value=''></td>
@@ -31,15 +31,15 @@
 
 <input type='button' value='Create' onclick='showMypageEdit(0);'>
 
-<table>
+<table class="normal">
 <tr>
- <th>name</th>
- <th>description</th>
- <th>dimensions</th>
- <th>action</th>
+ <th class="heading">name</th>
+ <th class="heading">description</th>
+ <th class="heading">dimensions</th>
+ <th class="heading">action</th>
 </tr>
 {foreach from=$mypages item=mypage}
-<tr>
+<tr class="odd">
  <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name}</span></td>
  <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description}</span></td>
  <td>
