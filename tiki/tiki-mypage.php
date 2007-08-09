@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.6 2007-08-08 14:15:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.7 2007-08-09 17:42:22 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,8 @@ function mypage_ajax_init() {
 	$ajaxlib->registerFunction("mypage_win_setrect");
 	$ajaxlib->registerFunction("mypage_win_destroy");
 	$ajaxlib->registerFunction("mypage_win_create");
+    $ajaxlib->registerFunction("mypage_win_prepareConfigure");
+    $ajaxlib->registerFunction("mypage_win_configure");
 	$ajaxlib->processRequests();
 }
 
@@ -50,6 +52,8 @@ function mypage_init() {
 
 	$smarty->assign('mypage_width', $width);
 	$smarty->assign('mypage_height', $height);
+
+	$smarty->assign('components', $mypage->getAvailableComponents());
 
 	// deactivate left and right columns 
 	$smarty->assign('feature_right_column', 'n');

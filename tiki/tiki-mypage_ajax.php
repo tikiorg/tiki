@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.4 2007-08-08 13:50:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.5 2007-08-09 17:42:22 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,7 +57,7 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
     return $objResponse;
 }
 
-function mypage_win_create($id_mypage, $contenttype, $title, $content) {
+function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -67,13 +67,45 @@ function mypage_win_create($id_mypage, $contenttype, $title, $content) {
 
     $mywin->setTitle($title);
     $mywin->setContentType($contenttype);
-    $mywin->setContent($content);
-
+    $comp=$mywin->getComponent();
+    $conf=$comp->configure($form_config);
+    $mywin->setContent($conf);
     $mywin->commit();
 
     $objResponse->addScript($mywin->getJSCode());
 
     return $objResponse;
+}
+
+function mypage_win_configure($id_mypage, $id_win, $form) {
+    global $id_users;
+
+    $objResponse = new xajaxResponse();
+
+    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mywin=$mypage->newWindow();
+    $comp=$mywin->getComponent();
+    $conf=$comp->configure($form);
+    $mywin->setContent($conf);
+    $mywin->commit();
+
+    return $objResponse;
+}
+
+function mypage_win_prepareConfigure($id_mypage, $compname) {
+    global $id_users;
+    
+    $objResponse = new xajaxResponse();
+
+    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mywin=$mypage->newWindow(); // berk
+    $mywin->setContentType($compname); // berk
+    $comp=$mywin->getComponent(); // berk
+
+    $objResponse->addAssign('mypage_divconfigure', 'innerHTML',
+			    $comp->getConfigureDiv());
+
+    return $objResponse;    
 }
 
 function mypage_update($id_mypage, $name, $description, $width, $height) {
@@ -149,6 +181,8 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mypage_win_setrect");
     $ajaxlib->registerFunction("mypage_win_destroy");
     $ajaxlib->registerFunction("mypage_win_create");
+    $ajaxlib->registerFunction("mypage_win_prepareConfigure");
+    $ajaxlib->registerFunction("mypage_win_configure");
     $ajaxlib->registerFunction("mypage_update");
     $ajaxlib->registerFunction("mypage_create");
     $ajaxlib->registerFunction("mypage_delete");
