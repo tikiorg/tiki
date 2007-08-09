@@ -5,7 +5,8 @@ Description:	Creates a Google Map to map a geo-coded location of a wiki page, ba
 				See notes below for requirements and additional instructions.
 Author:			Nelson Ko (nelson@wordmaster.org)
 License:		LGPL
-Version:		1.0 ( 2007-06-30)
+Version:		1.2 ( 2007-08-07 ) Critical bugfix to wrong URL when marker is clicked leading to 404.
+Previous Versions: 1.0/1.1 ( 2007-06-30)
 
 Syntax:
 
