@@ -18,11 +18,18 @@ class Comp_wiki {
 	return $tikilib->parse_data($pageinfo['data'], $pageinfo['is_html']);
     }
 
-    function getPermObject() {
+    /*
+     * $for can be only 'view' actually
+     */
+    function getPerm($for) {
 	global $tikilib;
-	$ps = $tikilib->get_perm_object($this->page, 'wiki page', false);
-	$ps['tiki_p_view_wiki'] = $ps['tiki_p_view'];
-	return $ps;
+	switch($for) {
+	case 'view':
+	    $ps = $tikilib->get_perm_object($this->page, 'wiki page', false);
+	    return (isset($ps['tiki_p_view']) && ($ps['tiki_p_view'] == 'y'));
+	default:
+	    return false;
+	}
     }
 
     function getConfigureDiv() {

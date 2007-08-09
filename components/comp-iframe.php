@@ -16,12 +16,11 @@ class Comp_iframe {
 	// should be never call
     }
 
-    function getPermObject() {
-	// TODO: I don't know what to do here.
-	global $tikilib;
-	$ps = $tikilib->get_perm_object($this->page, 'iframe page', false);
-	$ps['tiki_p_view_iframe'] = $ps['tiki_p_view'];
-	return $ps;
+    /*
+     * $for can be only 'view' actually
+     */
+    function getPerm($for) {
+	return true;
     }
 
     function getConfigureDiv() {
