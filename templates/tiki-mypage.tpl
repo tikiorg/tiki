@@ -54,9 +54,10 @@ tikimypagewin=[];
 //
 // initialize buttons
 //
+var mypage_winconf=null;
 
 function mypage_newComponent(compname) {
-	new Windoo({
+	mypage_winconf=new Windoo({
 		"modal": true,
 		"width": 700,
 		"height": 400,
@@ -74,7 +75,7 @@ function mypage_newComponent(compname) {
 		"buttons": {
 			"minimize": false
 		},
-		"destroyOnClose": false,
+		"destroyOnClose": true,
 		"container": false,
 		"resizable": false,
 		"draggable": false,
@@ -90,6 +91,10 @@ function mypage_newComponent(compname) {
 
 function mypage_configuresubmit() {
 	xajax_mypage_win_create('{/literal}{$id_mypage}{literal}', $('mypage_config_contenttype').value, "untitled", xajax.getFormValues("mypage_formconfigure"));
+	if (mypage_winconf) {
+		mypage_winconf.close();
+		mypage_winconf=null;
+	}
 }
 
 ////////////
