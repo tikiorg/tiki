@@ -51,7 +51,6 @@
   <a href='tiki-mypage.php?id_mypage={$mypage.id}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
   <a href='#' onclick='deleteMypage({$mypage.id});' title='{tr}delete entry{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete entry{/tr}' /></a>
-  {if $tiki_p_assign_perm_mypage eq 'y'}<a href='tiki-objectpermissions.php?objectName={$mypage.name|escape:"url"}&amp;objectType=mypage&amp;permType=mypage&amp;objectId={$mypage.id}'  title='{tr}perms{/tr}'><img src="{if $mypage.perms.has_special_perm eq 'y'}pics/icons/key_active.png{else}pics/icons/key.png{/if}" border="0" height="16" width="16" alt='{tr}perms{/tr}' /></a>{/if}
  </td>
 </tr>
 {/foreach}

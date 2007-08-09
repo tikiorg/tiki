@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.25 2007-08-09 21:29:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.26 2007-08-09 21:33:59 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -188,10 +188,7 @@ class MyPage {
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
-				$mypagewindow=new MyPageWindow($this, $line['id'], $line);
-				if ($mypagewindow->perms['tiki_p_view_component'] == 'y' || $this->id_users == $this->getParam('id_users') || $this->perms['tiki_p_admin_mypage'] == 'y') {
-					$this->windows[$line['id']] = $mypagewindow;
-				}
+				$this->windows[$line['id']]=new MyPageWindow($this, $line['id'], $line);
 			}
 			
 		}
@@ -263,7 +260,6 @@ class MyPageWindow {
 	var $params;
 	var $modified;
 	var $comp;
-	var $perms;
 	
 	/*
 	 * this constructor may be called only by the MyPage class
@@ -300,8 +296,6 @@ class MyPageWindow {
 					break;
 				}
 			}
-		} else {
-			$this->perms = $tikilib->get_perm_object($this->id, 'component', false);
 		}
 	}
 	

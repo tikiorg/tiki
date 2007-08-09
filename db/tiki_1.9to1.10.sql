@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.195 2007-08-09 18:34:38 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.196 2007-08-09 21:33:59 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1481,3 +1481,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage', 'Can list mypages', 'admin', 'mypage');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage_component', 'Can list components', 'basic', 'component');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_component', 'Can view a component', 'basic', 'component');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_component', 'Can assign perms to component', 'admin', 'component');
+DELETE FROM users_permissions where type = 'component';
