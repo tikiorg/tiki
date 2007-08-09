@@ -38,10 +38,6 @@
 </div>
 </div>
 
-<form id='zob'>
-<input type='text' name='zob' value="truc">
-</form>
-
 {literal}
 <script type="text/javascript">
 
