@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.22 2007-08-09 19:36:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.23 2007-08-09 20:09:30 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -239,10 +239,10 @@ class MyPage {
 		}
 	}
 	
-	function getJSCode() {
+	function getJSCode($editable=false) {
 		$js="/* windows creation */\n";
 		foreach($this->windows as $win) {
-			$js.=$win->getJSCode();
+			$js.=$win->getJSCode($editable);
 		}
 		$js.="/* end of windows creation */\n";
 		return $js;
