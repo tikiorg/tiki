@@ -30,7 +30,8 @@ class Comp_wiki {
     }
 
     function configure($form) {
-	return $form['pagename'];
+	$this->page=$form['pagename'];
+	return $this->page;
     }
 }
 

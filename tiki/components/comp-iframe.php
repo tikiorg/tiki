@@ -29,7 +29,8 @@ class Comp_iframe {
     }
 
     function configure($form) {
-	return $form['url'];
+	$this->page=$form['url'];
+	return $this->page;
     }
 }
 
