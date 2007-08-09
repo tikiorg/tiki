@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.24 2007-08-09 20:26:03 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.25 2007-08-09 21:29:05 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -400,28 +400,16 @@ class MyPageWindow {
 		return NULL;
 	}
 
-	function getJSCode($editable=true) {
+	function getJSCode($editable=false) {
 		global $tikilib;
 
 		$comp=$this->getComponent();
-		if (!$comp) {
+		if (!$comp)
 			return 'alert("Component not available: '.$this->params['contenttype'].'");';
-		}
-
-		$compperms = $comp->getPermObject();
-		if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
-			|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
-			
+		
+		if (!$comp->getPerm('view'))
 			return 'alert("You do not have permission to view this part of content");';
-		}
-
-		if ($editable && (!isset($compperms['tiki_p_edit_'.$this->params['contenttype']])
-			|| $compperms['tiki_p_edit_'.$this->params['contenttype']] != 'y')) {
-			
-			$editable=false;
-		}
-
-
+		
 		$v="tikimypagewin[".$this->id."]";
 
 		$winparams=array('left'	     => (int)$this->params['left'],
