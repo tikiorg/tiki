@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.21 2007-08-09 18:35:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.22 2007-08-09 19:36:05 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -58,6 +58,25 @@ class MyPage {
 		$this->checkout();
 	}
 	
+	/*static*/
+	function getMyPage_byId($id, $id_users) {
+		$mypage=new MyPage($id, $id_users);
+		if (!$mypage->id) return NULL;
+		else return $mypage;
+	}
+
+	/*static*/
+	function getMyPage_byName($name, $id_users) {
+		global $tikilib;
+
+		$res=$tikilib->query("SELECT `id` FROM tiki_mypage WHERE `name`=?", array($name));
+		if ($line = $res->fetchRow()) {
+			return new MyPage($line['id'], $id_users);
+		} else {
+			return NULL;
+		}
+	}
+
 	function getWindows() {
 	}
 	

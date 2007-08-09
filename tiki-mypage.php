@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.7 2007-08-09 17:42:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.8 2007-08-09 19:36:05 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,8 +40,21 @@ function mypage_init() {
 
 
 	$id_mypage=isset($_REQUEST['id_mypage']) ? (int)$_REQUEST['id_mypage'] : 0;
+	$mypage=NULL;
+	if (!$id_mypage) {
+		$pagename=isset($_REQUEST['mypage']) ? $_REQUEST['mypage'] : '';
+		if (!empty($pagename)) {
+			$mypage=MyPage::getMyPage_byName($pagename, $id_users);			
+		}
+	} else {
+		$mypage=MyPage::getMyPage_byId($id_mypage, $id_users);
+	}
 
-	$mypage=new MyPage($id_mypage, $id_users);
+	if (!$mypage) {
+		// TODO: display a cleaner error
+		die("mypage not found");
+	}
+
 	$smarty->assign('mypagejswindows', $mypage->getJSCode());
 	$smarty->assign('id_mypage', $id_mypage);
 
