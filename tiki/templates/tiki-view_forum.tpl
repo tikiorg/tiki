@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.100 2007-07-25 02:33:19 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.101 2007-08-09 08:41:16 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -58,8 +58,8 @@
 
 {if $was_queued eq 'y'}
 <div class="wikitext">
-<small>{tr}Your message has been queued for approval, the message will be posted after
-a moderator approves it.{/tr}</small>
+{tr}Your message has been queued for approval, the message will be posted after
+a moderator approves it.{/tr}
 </div>
 {/if}
 
@@ -250,9 +250,9 @@ a moderator approves it.{/tr}</small>
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
-	<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a></small><br />
+	<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a><br />
 	{/if}
-	<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a></small>
+	<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a>
 	</td>
 </tr>
 {if $smarty.request.movesel_x} 
