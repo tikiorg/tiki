@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.17 2007-08-09 17:23:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.18 2007-08-09 17:42:22 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -231,6 +231,14 @@ class MyPage {
 		$js.="/* end of windows creation */\n";
 		return $js;
 	}
+
+	/*
+	 * one day, i'll make a libcomponents...
+	 */
+	function getAvailableComponents() {
+		return array('iframe', 'wiki');
+	}
+
 }
 
 class MyPageWindow {
@@ -238,6 +246,7 @@ class MyPageWindow {
 	var $id;
 	var $params;
 	var $modified;
+	var $comp;
 	var $perms;
 	
 	/*
@@ -250,6 +259,7 @@ class MyPageWindow {
 		$this->id=$id;
 		$this->params=$line;
 		$this->modified=array();
+		$this->comp=NULL;
 		
 		if ($this->id < 0) {
 			
@@ -363,6 +373,17 @@ class MyPageWindow {
 		$this->setParam('title', $title);
 	}
 
+	function getComponent() {
+		if ($this->comp) return $this->comp;
+		if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
+			require_once("components/comp-".$this->params['contenttype'].".php");
+			$classname="Comp_".$this->params['contenttype'];
+			$this->comp=new $classname($this->params['content']);
+			return $this->comp;
+		}
+		return NULL;
+	}
+
 	function getJSCode($editable=true) {
 		global $tikilib;
 
@@ -372,18 +393,16 @@ class MyPageWindow {
 			break;
 
 		default:
-			if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
-				require_once("components/comp-".$this->params['contenttype'].".php");
-				$classname="Comp_".$this->params['contenttype'];
-				$comp=new $classname($this->params['content']);
-				$compperms = $comp->getPermObject();
-				if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
-					|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
-
-					return 'alert("You do not have permission to view this part of content");';
-				}
-			} else {
+			$comp=$this->getComponent();
+			if (!$comp) {
 				return 'alert("Component not available: '.$this->params['contenttype'].'");';
+			}
+
+			$compperms = $comp->getPermObject();
+			if (!isset($compperms['tiki_p_view_'.$this->params['contenttype']])
+				|| $compperms['tiki_p_view_'.$this->params['contenttype']] != 'y') {
+
+				return 'alert("You do not have permission to view this part of content");';
 			}
 			break;
 		}

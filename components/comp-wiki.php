@@ -2,7 +2,6 @@
 
 class Comp_wiki {
     var $page;
-	var $contenttype;
 
     /*
      * construct a simple wiki component (only display wiki content, not edit)
@@ -10,7 +9,6 @@ class Comp_wiki {
      */
     function Comp_wiki($content) {
 	$this->page=$content;
-	$this->contenttype = 'wiki';
     }
 
     function getHTMLContent() {
@@ -25,6 +23,14 @@ class Comp_wiki {
 	$ps = $tikilib->get_perm_object($this->page, 'wiki page', false);
 	$ps['tiki_p_view_wiki'] = $ps['tiki_p_view'];
 	return $ps;
+    }
+
+    function getConfigureDiv() {
+	return "Title: <input name='pagename' type='text' value='' />";
+    }
+
+    function configure($form) {
+	return $form['pagename'];
     }
 }
 

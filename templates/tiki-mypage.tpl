@@ -18,20 +18,11 @@
     <h2>Tools</h2>
 
     <ul>
-
+     {foreach from=$components item=component}
      <li>
-      <p>IFrame:</p>
-      Title: <input id='mypage_newiframe_title' type='text' value='' /><br />
-      URL:   <input id='mypage_newiframe_url' type='text' value='' /><br />
-      <input id='mypage_newiframe_submit' type='button' value='Create'>
+      <a href='#' onclick='mypage_newComponent("{$component}");'>{$component|escape}</a>
      </li>
-
-     <li>
-      <p>wiki:</p>
-      Title: <input id='mypage_newwiki_pagename' type='text' value='' /><br />
-      <input id='mypage_newwiki_submit' type='button' value='Create'>
-     </li>
-
+     {/foreach}
     </ul>
 
    </div>
@@ -47,6 +38,10 @@
 </div>
 </div>
 
+<form id='zob'>
+<input type='text' name='zob' value="truc">
+</form>
+
 {literal}
 <script type="text/javascript">
 
@@ -60,19 +55,42 @@ tikimypagewin=[];
 // initialize buttons
 //
 
-$('mypage_newiframe_submit').addEvent('click', function() {
-	var title=$('mypage_newiframe_title').value;
-	var url=$('mypage_newiframe_url').value;
+function mypage_newComponent(compname) {
+	new Windoo({
+		"modal": true,
+		"width": 700,
+		"height": 400,
+		"top": 100,
+		"left": 300,
+		"resizeLimit": {
+			"x": {
+				"0": 400
+			},
+			"y": {
+				"0": 130,
+				"1": 600
+			}
+		},
+		"buttons": {
+			"minimize": false
+		},
+		"destroyOnClose": false,
+		"container": false,
+		"resizable": false,
+		"draggable": false,
+		"theme": "aero",
+		"shadow": false
+	}).setHTML("<form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='Create' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' valye='' />")
+	.show();
 
-	xajax_mypage_win_create({/literal}{$id_mypage}{literal}, 'iframe', title, url);
-});
+	$('mypage_config_contenttype').value=compname;
+	xajax_mypage_win_prepareConfigure('{/literal}{$id_mypage}{literal}', compname);
 
-$('mypage_newwiki_submit').addEvent('click', function() {
-	var pagename=$('mypage_newwiki_pagename').value;
+}
 
-	xajax_mypage_win_create({/literal}{$id_mypage}{literal}, 'wiki', pagename, pagename);
-});
-
+function mypage_configuresubmit() {
+	xajax_mypage_win_create('{/literal}{$id_mypage}{literal}', $('mypage_config_contenttype').value, "untitled", xajax.getFormValues("mypage_formconfigure"));
+}
 
 ////////////
 //
