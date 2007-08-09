@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-09 18:34:37 $
-# $Author: niclone $
+# $Date: 2007-08-09 18:35:29 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4329,6 +4329,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage', 'Can list mypages', 'registered', 'mypage');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_component', 'Can list components', 'basic', 'component');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_component', 'Can view a component', 'basic', 'component');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_component', 'Can assign perms to component', 'admin', 'component');
 # --------------------------------------------------------
 
 #
