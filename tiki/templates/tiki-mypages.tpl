@@ -33,10 +33,10 @@
 
 <table class="normal">
 <tr>
- <th class="heading">name</th>
- <th class="heading">description</th>
- <th class="heading">dimensions</th>
- <th class="heading">action</th>
+ <th class="heading">{tr}Name{/tr}</th>
+ <th class="heading">{tr}Description{/tr}</th>
+ <th class="heading">{tr}Dimensions{/tr}</th>
+ <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {foreach from=$mypages item=mypage}
 <tr class="odd">
@@ -50,6 +50,7 @@
   <a href='tiki-mypage.php?id_mypage={$mypage.id}' title='{tr}view{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});' title='{tr}edit{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit{/tr}' /></a>
   <a href='#' onclick='deleteMypage({$mypage.id});' title='{tr}delete{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete{/tr}' /></a>
+  {if $tiki_p_assign_perm_mypage eq 'y'}<a href='tiki-objectpermissions.php?objectName={$mypage.name|escape:"url"}&amp;objectType=mypage&amp;permType=mypage&amp;objectId={$mypage.id}"'  title='{tr}perms{/tr}'><img src="{if $mypage.perms.has_special_perm eq 'y'}pics/icons/key_active.png{else}pics/icons/key.png{/if}" border="0" height="16" width="16" alt='{tr}perms{/tr}' /></a>{/if}
  </td>
 </tr>
 {/foreach}
