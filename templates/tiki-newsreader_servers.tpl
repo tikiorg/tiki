@@ -13,8 +13,9 @@
 
 
 
-
+{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
+{/if}
 <h2>{tr}Select a news server to browse{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

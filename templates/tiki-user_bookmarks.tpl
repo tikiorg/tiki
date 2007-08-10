@@ -7,10 +7,11 @@
 <a href="tiki-edit_templates.php?template=tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-
+{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 <br />
 <br />
+{/if}
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
 <h2>{tr}Folders{/tr}</h2>
 <table class="normal">

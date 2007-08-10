@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.104 2007-07-24 18:03:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.105 2007-08-10 13:39:43 tombombadilom Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -19,7 +19,7 @@
 
 
 
-{if $userwatch eq $user or $userwatch eq ""}{include file=tiki-mytiki_bar.tpl}{/if}
+{if $userwatch eq $user or $userwatch eq ""}{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}{include file=tiki-mytiki_bar.tpl}{/if}{/if}
 <br />
 {if $tikifeedback}
 <div class="simplebox highlight">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>

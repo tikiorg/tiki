@@ -1,6 +1,7 @@
 <h1><a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></h1>
+{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
-
+{/if}
 <div style="float:right;margin-right:10px;">
 <table border='0' cellpadding='0' cellspacing='0'>
 <tr><td><small>{tr}quota{/tr}&nbsp;{$percentage}%</small></td><td>

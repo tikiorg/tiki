@@ -1,4 +1,7 @@
 <div>
+{if $feature_mootools}
+{include file="tiki-mytiki_mootabs.tpl"}
+{else}
 <table>
 <tr>
 
@@ -94,5 +97,6 @@
 {/if}
 
 </tr></table>
+{/if}
 </div>
 
