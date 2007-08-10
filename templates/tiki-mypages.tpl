@@ -62,7 +62,7 @@
 </select>
 
 {literal}
-<script>
+<script type="text/javascript">
 function changepage() {
 }
 
