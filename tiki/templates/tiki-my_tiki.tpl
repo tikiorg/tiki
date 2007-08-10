@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.26 2007-07-20 18:13:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.27 2007-08-10 13:39:43 tombombadilom Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -11,7 +11,9 @@
 <a href="tiki-edit_templates.php?template=tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
-
+{if $mootab}
+{include file=tiki-mytiki_mootabs.tpl}
+{else}
 {include file=tiki-mytiki_bar.tpl}
 <br />
 
@@ -147,3 +149,4 @@
 {/capture}
 {$smarty.capture.my}
 {if $smarty.capture.my|strip:'' eq ''}{tr}To display the objects you participate:{/tr} <a href="tiki-user_preferences.php?tab3#MyTiki">{tr}My Tiki{/tr}</a>{/if}
+{/if}

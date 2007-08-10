@@ -10,10 +10,10 @@
 <a href="tiki-edit_templates.php?template=tiki-user_tasks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Tasks tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-
+{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-
+{/if}
 <span class="button2"><a class="linkbut" href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
 </span>
 <span class="button2"><a class="linkbut" href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
