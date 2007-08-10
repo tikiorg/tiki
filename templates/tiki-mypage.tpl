@@ -72,7 +72,8 @@ function mypage_newComponent(compname) {
 		"resizable": false,
 		"draggable": false,
 		"theme": "aero",
-		"shadow": false
+		"shadow": false,
+		"title": "New "+compname+" :"
 	}).setHTML("<p>Titre: <input type='text' id='mypage_configure_title' value=''></p><form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='Create' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' valye='' />")
 	.show();
 
