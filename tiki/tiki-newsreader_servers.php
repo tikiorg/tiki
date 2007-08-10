@@ -1,13 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.24 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.25 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'newsreader';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/newsreader/newslib.php');
 
 if (!$user) {
@@ -30,7 +32,6 @@ if ($tiki_p_newsreader != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 if (!isset($_REQUEST["serverId"]))
 	$_REQUEST["serverId"] = 0;
 
@@ -120,6 +121,17 @@ include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('news-server');
+if ($feature_ajax == "y") {
+function user_newsreaders_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-newsreader_servers.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_newsreaders_ajax();
+$smarty->assign("mootab",'y');
+}
 
 $smarty->assign('mid', 'tiki-newsreader_servers.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.20 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.21 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,9 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/userfiles/userfileslib.php');
 
 if ($feature_userfiles != 'y') {
@@ -31,7 +33,6 @@ if ($tiki_p_userfiles != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 $quota = $userfileslib->userfiles_quota($user);
 $limit = $userfiles_quota * 1024 * 1000;
 
@@ -180,7 +181,17 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-files');
-
+if ($feature_ajax == "y") {
+function user_files_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-userfiles.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_files_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");
 

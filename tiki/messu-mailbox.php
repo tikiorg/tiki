@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.23 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.24 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,9 @@
 $section = 'user_messages';
 require_once ('tiki-setup.php');
 
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/messu/messulib.php');
 
 if (!$user) {
@@ -38,7 +41,6 @@ if ($tiki_p_messages != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 $maxRecords = $messulib->get_user_preference($user, 'mess_maxRecords', 20);
 
 // auto-archiving of read mails?
@@ -198,6 +200,17 @@ include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('messu-mailbox');
 
+if ($feature_ajax == "y") {
+function user_messages_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("messu-mailbox.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_messages_ajax();
+
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'messu-mailbox.tpl');
 $smarty->display("tiki.tpl");
 

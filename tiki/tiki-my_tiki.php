@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.26 2007-08-08 20:59:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.27 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,9 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/tasks/tasklib.php');
 
@@ -19,7 +21,7 @@ if (!$user) {
 	$smarty->display("error.tpl");
 	die;
 }
-
+$smarty->assign("mootab",'y');
 $userwatch = $user;
 
 if (isset($_REQUEST["view_user"])) {
@@ -36,6 +38,7 @@ if (isset($_REQUEST["view_user"])) {
 	}
 }
 $smarty->assign('userwatch', $userwatch);
+
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'pageName_asc';
@@ -92,6 +95,16 @@ if ($feature_workflow == 'y' && $tiki_p_use_workflow == 'y' && $tikilib->get_use
 
 include_once ('tiki-section_options.php');
 
+if ($feature_ajax == "y") {
+function mytiki_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerTemplate("user_profile_s.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+mytiki_ajax();
+}
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
 $smarty->display("tiki.tpl");
 

@@ -1,11 +1,14 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.44 2007-08-08 20:21:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.45 2007-08-10 13:33:22 tombombadilom Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
 require_once ('tiki-setup.php');
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once('lib/logs/logslib.php');
 include_once('lib/userslib.php');
 include_once('lib/commentslib.php');
@@ -746,6 +749,19 @@ if (isset($_REQUEST['time']))
 	$smarty->assign('time', $_REQUEST['time']);
 if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);
+
+if ($feature_ajax == "y") {
+function user_actionlog_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-admin_actionlog.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_actionlog_ajax();
+$smarty->assign("mootab",'y');
+}
+
 // Display the template
 $smarty->assign('mid', 'tiki-admin_actionlog.tpl');
 $smarty->display("tiki.tpl");
