@@ -1,13 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.24 2007-08-08 20:59:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.25 2007-08-10 15:03:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'calendar';
 require_once('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once('lib/minical/minicallib.php');
 
 if ($feature_minical != 'y') {
@@ -275,7 +277,16 @@ include_once ('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 ask_ticket('minical');
-
+if ($feature_ajax == "y") {
+function user_minical_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-minical.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_minical_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-minical.tpl');
 $smarty->display("tiki.tpl");
 
