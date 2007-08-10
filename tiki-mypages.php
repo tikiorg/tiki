@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.2 2007-08-09 11:31:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.3 2007-08-10 14:42:47 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,7 @@ function mypage_ajax_init() {
 
 	//$ajaxlib->debugOn();
 	$ajaxlib->setRequestURI("tiki-mypage_ajax.php");
+	$ajaxlib->registerTemplate("tiki-mypages.tpl");
 	$ajaxlib->registerFunction("mypage_update");
 	$ajaxlib->registerFunction("mypage_create");
 	$ajaxlib->registerFunction("mypage_delete");
