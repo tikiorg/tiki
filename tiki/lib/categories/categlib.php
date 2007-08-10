@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.107 2007-07-22 07:30:25 nyloth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.108 2007-08-10 13:34:07 guidoscherp Exp $
  *
  * \brief Categories support class
  *
@@ -144,7 +144,7 @@ class CategLib extends ObjectLib {
 	
 	}
 	function get_category_name($categId,$real=false) {
-	       
+	    if ( $categId==0 ) return 'Top';   
 		$query = "select `name`,`parentId` from `tiki_categories` where `categId`=?";
 		$result=$this->query($query,array((int) $categId)) ;
 		$res = $result->fetchRow();
@@ -163,6 +163,11 @@ class CategLib extends ObjectLib {
 	
 	function remove_category($categId) {
 		global $cachelib;
+
+		$parentId=$this->get_category_parent($categId);
+		$categoryName=$this->get_category_name($categId);
+		$categoryPath=$this->get_category_path_string_with_root($categId);
+		$description=$this->get_category_description($categId);
 
 		$query = "delete from `tiki_categories` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
@@ -197,15 +202,38 @@ class CategLib extends ObjectLib {
 		}
 		$cachelib->invalidate('allcategs');
 		$cachelib->invalidate("allcategs$categId");
+	
+		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
+			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
+			"action"=>"category removed");		
+		$this->notify($values);
+
+		$this->remove_category_from_watchlists($categId);
+					
 		return true;
 	}
 
 	function update_category($categId, $name, $description, $parentId) {
 		global $cachelib;
+
+		$oldCategory=$this->get_category($categId);
+		$oldCategoryName=$oldCategory['name'];
+		$oldCategoryPath=$this->get_category_path_string_with_root($categId);
+		$oldDescription=$oldCategory['description'];
+		$oldParentId=$oldCategory['parentId'];
+		$oldParentName=$this->get_category_name($oldParentId);
+
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 		$cachelib->invalidate('allcategs');
 		$cachelib->invalidate('childcategs'.$parentId);
+
+		$this->update_category_cache($categId);
+		$values= array("categoryId"=>$categId, "categoryName"=>$name, "categoryPath"=>$this->get_category_path_string_with_root($categId),
+			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
+			"action"=>"category updated","oldCategoryName"=>$oldCategoryName, "oldCategoryPath"=>$oldCategoryPath,
+			"oldDescription"=>$oldDescription, "oldParentId" => $parentId, "oldParentName" => $oldParentName);			
+		$this->notify($values);		
 	}
 
 	function add_category($parentId, $name, $description) {
@@ -216,6 +244,10 @@ class CategLib extends ObjectLib {
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->invalidate('allcategs');
 		$cachelib->invalidate('childcategs'.$parentId);
+		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
+			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
+			"action"=>"category created");		
+		$this->notify($values);		 	
 		return $id;
 	}
 
@@ -579,6 +611,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 	
 	function categorize_tracker($trackerId, $categId) {
@@ -595,6 +628,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_quiz($quizId, $categId) {
@@ -611,6 +645,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_article($articleId, $categId) {
@@ -626,6 +661,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_faq($faqId, $categId) {
@@ -641,6 +677,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_blog($blogId, $categId) {
@@ -656,6 +693,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_directory($directoryId, $categId) {
@@ -671,6 +709,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_gallery($galleryId, $categId) {
@@ -686,6 +725,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_file_gallery($galleryId, $categId) {
@@ -701,6 +741,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_forum($forumId, $categId) {
@@ -720,6 +761,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	function categorize_poll($pollId, $categId) {
@@ -738,6 +780,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 	
 	function categorize_calendar($calendarId, $categId) {
@@ -756,6 +799,7 @@ class CategLib extends ObjectLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+		return $catObjectId;
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
@@ -1143,7 +1187,189 @@ class CategLib extends ObjectLib {
 		$query = 'select `categId` from `tiki_categories` where `parentId`=? and `name`=?';
 		return ($this->getOne($query, array((int)$parentId, $name)));
 	}
+
+	/**
+	 * Sets watch entries for the given user and category. 
+	 */
+	function watch_category($user, $categId, $categName) {
+		global $tikilib;		
+		        
+        $name = $this->get_category_path_string_with_root($categId);
+        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $name, 
+			"tiki-browse_categories.php?parentId=".$categId."&deep=off");			                         
+	}
+
+
+	/**
+	 * Sets watch entries for the given user and category. Also includes
+	 * all descendant categories for which the user has view permissions.
+	 */
+	function watch_category_and_descendants($user, $categId, $categName) {
+		global $tikilib;
+		
+        $tikilib->add_user_watch($user, 'category_changed', $categId, 'Category', $categName, 
+			"tiki-browse_categories.php?parentId=".$categId."&deep=off");
+                         
+		$descendants = $this->get_category_descendants($categId);
+		foreach ($descendants as $descendant) {
+			if ($descendant != 0 && $this->has_view_permission($user,$descendant)) {
+				$name = $this->get_category_path_string_with_root($descendant);
+				$tikilib->add_user_watch($user, 'category_changed', $descendant, 'Category', $name, 
+					"tiki-browse_categories.php?parentId=".$descendant."&deep=off");
+			}
+		}		
+	}
+
+
+	/**
+	 * Removes the watch entry for the given user and category.
+	 */
+	function unwatch_category($user, $categId) {
+		global $tikilib;		
+		
+		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+	}
+
+
+	/**
+	 * Removes the watch entry for the given user and category. Also
+	 * removes all entries for the descendants of the category.
+	 */
+	function unwatch_category_and_descendants($user, $categId) {
+		global $tikilib;		
+		
+		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$descendants = $this->get_category_descendants($categId);
+		foreach ($descendants as $descendant) {
+			$tikilib->remove_user_watch($user, 'category_changed', $descendant);
+		}
+	}
+
+	/**
+	 * Removes the category from all watchlists.
+	 */
+	 function remove_category_from_watchlists($categId) {
+	 	$query = 'delete from `tiki_user_watches` where `object`=? and `type`=?';
+	 	$this->query($query, array((int) $categId, 'Category'));
+	 }
+	
+	
+	/**
+	 * Returns the path of the given category as a String in the format:
+	 * "Root Category (TOP) > 1st Subcategory > 2nd Subcategory::..."	
+	 */	
+	function get_category_path_string_with_root($categId) {		
+		$path = $this->get_category_path($categId);
+		$name = '';
+		$tepath = array ();
+		$tepath[] = "Top";
+		foreach ($path as $pathelem) {
+			$tepath[] = $pathelem['name'];
+		}
+		$name = implode(" > ", $tepath);
+		return $name;
+	}
+
+	/**
+	 * Returns the description of the category.	
+	 */	
+	function get_category_description($categId) {
+		$query = "select `description` from `tiki_categories` where `categId`=?";
+		return $this->getOne($query,array((int) $categId));
+	}
+
+	/**
+	 * Returns the parentId of the category.	
+	 */	
+	function get_category_parent($categId) {
+		$query = "select `parentId` from `tiki_categories` where `categId`=?";
+		return $this->getOne($query,array((int) $categId));
+	}
+
+
+	/**
+	 * Returns true if the given user has view permission for the category.
+	 */
+	function has_view_permission($user, $categoryId) {
+		global $userlib;
+							
+		return ($userlib->user_has_permission($user,'tiki_p_admin')
+				|| ($userlib->user_has_permission($user,'tiki_p_view_categories') && !$userlib->object_has_one_permission($categoryId,"category"))
+				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_view_categories") 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
+				);
+	}
+
+	/**
+	 * Notify the users, watching this category, about changes.
+	 * The Array $values contains a selection of the following items:
+	 * categoryId, categoryName, categoryPath, description, parentId, parentName, action
+	 * oldCategoryName, oldCategoryPath, oldDescription, oldParendId, oldParentName,
+	 * objectName, objectType, objectUrl 
+	 */
+	function notify ($values) {					
+		global $feature_user_watches;
+        
+        if ($feature_user_watches == 'y') {        	       
+			include_once('lib/notifications/notificationemaillib.php');			
+          	$foo = parse_url($_SERVER["REQUEST_URI"]);          	
+          	$machine = $this->httpPrefix(). dirname( $foo["path"]);          	
+          	$values['event']="category_changed";          	
+          	sendCategoryEmailNotification($values);          	
+        }
+	}
+
+	/**
+	 * Updates the information of the category that is stored in the cache.
+	 */
+	function update_category_cache($categId) {	   
+		$query = "select * from `tiki_categories` where `categId`=?";
+		$result = $this->query($query,array((int) $categId));
+		if (!$result->numRows()) {
+		   $this->category_cache[$categId] = false;
+		}
+		$this->category_cache[$categId] = $result->fetchRow();
+	}
+
+	/**
+	 * Returns a categorized object.
+	 */
+	function get_categorized_object($cat_type, $cat_objid) {
+	    global $objectlib;
+		return $objectlib->get_object($cat_type, $cat_objid);		
+	}
+
+	/**
+	 * Returns a categorized object, identified via the $cat_objid.
+	 */
+	function get_categorized_object_via_category_object_id($cat_objid) {
+	    global $objectlib;
+		return $objectlib->get_object_via_objectid($cat_objid);		
+	}
+	
+	/**
+	 * Returns the categories that contain the object and are in the user's watchlist.
+	 */
+	function get_watching_categories($objId, $objType, $user) {					
+		global $tikilib;
+		
+		$categories=$this->get_object_categories($objType, $objId);
+		$watchedCategories=$tikilib->get_user_watches($user,"category_changed");		
+		$result=array();
+		foreach ($categories as $cat) {						
+			foreach ($watchedCategories as $wc ) {				
+				if ( $wc['object'] == $cat) {									
+					$result[]=$cat;	
+				}
+			}			
+		}
+		return $result;
+	}
+	
 }
+
+
 
 global $dbTiki;
 $categlib = new CategLib($dbTiki);

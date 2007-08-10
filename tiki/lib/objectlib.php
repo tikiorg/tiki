@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.8 2007-02-09 12:31:22 niclone Exp $
+// CVS: $Id: objectlib.php,v 1.9 2007-08-10 13:34:06 guidoscherp Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -126,6 +126,19 @@ class ObjectLib extends TikiLib {
 		$query = 'delete from `tiki_objects` where `itemId`=?  and `type`=?';
 		$this->query($query, array($itemId, $type));
 	}
+	
+	function get_object($type, $itemId) {
+		$query = 'select * from `tiki_objects` where `itemId`=?  and `type`=?';
+		$result = $this->query($query,array((int) $itemId, $type));
+		return $result->fetchRow();
+	}
+
+	function get_object_via_objectid($objectId) {
+		$query = 'select * from `tiki_objects` where `objectId`=?';
+		$result = $this->query($query,array((int) $objectId));
+		return $result->fetchRow();
+	}	
+	
 }
 global $dbTiki;
 $objectlib = new ObjectLib($dbTiki);
