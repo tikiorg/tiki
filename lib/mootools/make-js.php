@@ -87,6 +87,11 @@ compact_files("//Windoo: Mootools window class <http://code.google.com/p/windoo>
 					"Drag/Drag.ResizeImage.js"),
 			  "extensions/windoo/windoo.js");
 
+compact_files("//mooRainbow: Mootools color picker, from: http://w00fz.altervista.org/mooRainbow/\n\r\n\r",
+			  "extensions/mooRainbow",
+			  array("mooRainbow.js"),
+			  "extensions/mooRainbow/mooRainbow_compressed.js");
+
 /* For the emacs weenies in the crowd.
 Local Variables:
    tab-width: 4
