@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.18 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.19 2007-08-10 14:51:46 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,9 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/bookmarks/bookmarklib.php');
 
 if ($tiki_p_create_bookmarks != 'y') {
@@ -32,7 +34,6 @@ if ($feature_user_bookmarks != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
 }
@@ -141,7 +142,17 @@ include_once ('tiki-mytiki_shared.php');
 ask_ticket('user-bookmarks');
 
 include_once('tiki-section_options.php');
-
+if ($feature_ajax == "y") {
+function user_bookmarks_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_bookmarks.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_bookmarks_ajax();
+$smarty->assign("mootab",'y');
+}
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');
 $smarty->display("tiki.tpl");
