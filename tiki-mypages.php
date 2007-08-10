@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.3 2007-08-10 14:42:47 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.4 2007-08-10 16:14:37 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,6 +37,10 @@ function mypageedit_populate() {
 
 function mypage_ajax_init() {
 	global $ajaxlib;
+
+	$smarty->assign("mootools",'y');
+	$smarty->assign("mootab",'y');
+	$smarty->assign("mootools_windoo",'y');
 
 	//$ajaxlib->debugOn();
 	$ajaxlib->setRequestURI("tiki-mypage_ajax.php");

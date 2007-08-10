@@ -1,8 +1,3 @@
-{literal}
-<script type="text/javascript" src="lib/mootools/mootools.js"></script>
-<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
-{/literal}
-
 <div id='mypageeditdiv' style='display: none;'>
  <input id='mypageedit_id' type='hidden' value=''>
  <table class="normal">
