@@ -16,11 +16,12 @@
 		htmlelement=user_information}tiki-user_information.php{/ajax_href}>{tr}My Infos{/tr}</a></h5>
 		<div id="user_information">
 		</div>
-
+		{if $feature_ajax eq "y" && $feature_mootools eq "y"}
 		<h5><a {ajax_href template=tiki-mypages.tpl
 		htmlelement=user_pages}tiki-mypages.php{/ajax_href}>{tr}My Pages{/tr}</a></h5>
 		<div id="user_pages">
 		</div>
+		{/if}
 
 		{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 		<h5><a {ajax_href template=messu-mailbox.tpl
