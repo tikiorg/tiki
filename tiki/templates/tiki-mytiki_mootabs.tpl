@@ -17,11 +17,6 @@
 		<div id="user_information">
 		</div>
 
-		<h5><a {ajax_href template=user_profile_s.tpl
-		htmlelement=user_profile}user_profile.php{/ajax_href}>{tr}My Profile{/tr}</a></h5>
-		<div id="user_profile">
-		</div>
-		
 		<h5><a {ajax_href template=tiki-mypages.tpl
 		htmlelement=user_pages}tiki-mypages.php{/ajax_href}>{tr}My Pages{/tr}</a></h5>
 		<div id="user_pages">
