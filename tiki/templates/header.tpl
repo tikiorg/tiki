@@ -95,6 +95,13 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$rssfeed_default_version}" />
 {/if}
 
+{if $feature_mootools eq "y"}
+<script type="text/javascript" src="lib/mootools/mootools.js"></script>
+{if $mootab eq "y"}
+<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
+{/if}
+{/if}
+
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
 <script language="JavaScript">
