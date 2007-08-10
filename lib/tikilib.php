@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.767 2007-08-09 18:49:21 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.768 2007-08-10 13:34:06 guidoscherp Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -255,6 +255,16 @@ class TikiLib extends TikiDB {
 	}
 
     /*shared*/
+    function get_user_event_watches($user, $event, $object) {
+        $query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+        $result = $this->query($query,array($user,$event,$object));
+        if (!$result->numRows())
+                return false;
+        $res = $result->fetchRow();
+        return $res;
+    }
+
+    /*shared*/
     function get_event_watches($event, $object, $info=null) {
 	global $feature_user_watches_translations, $dbTiki;
 	$ret = array();
@@ -295,64 +305,125 @@ class TikiLib extends TikiDB {
 	$query = "select * from `tiki_user_watches` where $mid";
 	$result = $this->query($query,$bindvars);
 
-	if (!$result->numRows()) {
-	    return $ret;
-	}
-
+	if ($result->numRows()) {
+	    
 	while ($res = $result->fetchRow()) {
-            switch($event) {
-                case 'wiki_page_changed':
-                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
-                                  $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
-                    break;
-                case 'tracker_modified':
-                    $res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_tracker');
-                    break;
-                case 'tracker_item_modified':
-										global $trackerId;
-                    $res['perm'] = $this->user_has_perm_on_object($res['user'],$trackerId,'tracker','tiki_p_view_tracker');
-                    break;
-                case 'blog_post':
-                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
-                                  $this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
-                    break;
-                case 'map_changed':
-                    $res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
-                    break;
-                case 'forum_post_topic':
-                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
-                                 $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
-                    break;
-                case 'forum_post_thread':
-                    $res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
-                                  $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
-                    break;
-		case 'file_gallery_changed':
-                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_view_file_gallery') ||
-                                  $this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_download_files'));
-                    break;
-		case 'article_submitted':
-		case 'topic_article_created':
-		    global $userlib, $topicId;
-		    $res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
-		                   (empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
-		    break;
-		case 'calendar_changed':
-			$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
-			break;
-		case 'image_gallery_changed':
-			$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
-			break;
-		default:
-			// for security we deny all others.
-			$res['perm']=FALSE;
-			 break;
+		switch($event) {
+			case 'wiki_page_changed':
+				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
+				              $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
+				break;
+			case 'tracker_modified':
+				$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_tracker');
+				break;
+			case 'tracker_item_modified':
+				global $trackerId;
+				$res['perm'] = $this->user_has_perm_on_object($res['user'],$trackerId,'tracker','tiki_p_view_tracker');
+				break;
+			case 'blog_post':
+				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
+				$this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
+				break;
+			case 'map_changed':
+				$res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
+				break;
+			case 'forum_post_topic':
+				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
+				$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+				break;
+			case 'forum_post_thread':
+				$res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
+				$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+				break;
+			case 'file_gallery_changed':
+				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_view_file_gallery') ||
+				              $this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_download_files'));                    	
+				break;
+			case 'article_submitted':
+			case 'topic_article_created':
+				global $userlib, $topicId;
+				$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
+				              (empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
+				break;
+			case 'calendar_changed':
+				$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
+				break;
+			case 'image_gallery_changed':
+				$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
+				break;
+			case 'category_changed':
+				global $categlib;
+				$res['perm']= $categlib->has_view_permission($res['user'],$object);
+				break;				
+			default:
+				// for security we deny all others.
+				$res['perm']=FALSE;
+				break;
 		}
+						
 		if($res['perm']) {
 			$ret[] = $res;
 		}
-
+	}			
 	}
+
+    // Also include users that are watching a category to which this object belongs to.
+    if ( $event != 'category_changed' )  {    	
+        global $feature_categories;                
+        if ($feature_categories == 'y') {
+            global $categlib;            
+            $objectType="";
+            switch($event) {
+                case 'wiki_page_changed': $objectType="wiki page"; break;
+                case 'blog_post': $objectType="blog"; break;
+                case 'map_changed': $objectType="map_changed"; break;
+                case 'forum_post_topic': $objectType="forum"; break;
+                case 'forum_post_thread': $objectType="forum"; break;
+				case 'file_gallery_changed': $objectType="file gallery"; break;
+			 	case 'article_submitted': $objectType="topic"; break;			
+			 	case 'image_gallery_changed': $objectType="image gallery"; break;
+			 	case 'tracker_modified': $objectType="tracker"; break; 	
+			 	case 'tracker_item_modified': $objectType="tracker"; break;
+			 	case 'calendar_changed': $objectType="calendar"; break;
+            }
+            if ( $objectType != "") {
+             
+	            // If a forum post was changed, check the categories of the forum.  
+    	        if ( $event == "forum_post_thread" ) {
+        	    	include_once ("lib/commentslib.php");
+            		global $commentslib;            	
+            		$object = $commentslib->get_comment_forum_id($object);
+            	}
+
+	            // If a tracker item was changed, check the categories of the tracker.  
+    	        if ( $event == "tracker_item_modified" ) {
+        	    	include_once ("lib/trackers/trackerlib.php");
+            		global $trklib;            	
+            		$object = $trklib->get_tracker_for_item($object);
+            	}
+            	              
+	            $categs = $categlib->get_object_categories($objectType, $object);
+                        
+    	        foreach ($categs as $category) {           		                 
+        	        $watching_users = $this->get_event_watches('category_changed', $category);
+
+	                // Add all users that are not already included
+    	            foreach ($watching_users as $wu) {
+        	            $included = false;
+	                    foreach ($ret as $item) {
+    	                    if ($item['user'] == $wu['user']) {
+        	                    $included = true;
+            	            }
+                    	}
+	                    if (!$included) {
+    	                    $ret[] = $wu;
+        	            }
+            	    }
+         	   	}
+            }
+        }
+    }
+		
 	return $ret;
     }
 

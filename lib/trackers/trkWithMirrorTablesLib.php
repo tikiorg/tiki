@@ -114,6 +114,14 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		// TODO
 		return "TEXT";
 	}
+
+	/**
+	 * Returns the trackerId of the tracker possessing the item ($itemId)
+	 */
+	function get_tracker_for_item($itemId) {
+		$query = "select t1.`trackerId` from `tiki_trackers` t1, `tiki_tracker_items` t2 where t1.`trackerId`=t2.`trackerId` and `itemId`=?";		
+		return $this->getOne($query,array((int) $itemId));			
+	}
 	
 	// 
 	function get_tracker_values_specs($trackerId, &$explicit, &$tableDsn) {

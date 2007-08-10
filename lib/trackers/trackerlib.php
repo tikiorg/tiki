@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.216 2007-07-27 22:43:02 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.217 2007-08-10 13:34:07 guidoscherp Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1720,6 +1720,14 @@ class TrackerLib extends TikiLib {
 		$this->clear_tracker_cache($trackerId);
 
 		return true;
+	}
+	
+	/**
+	 * Returns the trackerId of the tracker possessing the item ($itemId)
+	 */
+	function get_tracker_for_item($itemId) {
+		$query = "select t1.`trackerId` from `tiki_trackers` t1, `tiki_tracker_items` t2 where t1.`trackerId`=t2.`trackerId` and `itemId`=?";		
+		return $this->getOne($query,array((int) $itemId));			
 	}
 
 	function get_tracker_options($trackerId) {

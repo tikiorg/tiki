@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.160 2007-08-06 22:53:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.161 2007-08-10 13:34:06 guidoscherp Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1211,6 +1211,16 @@ class Comments extends TikiLib {
 
 	return $res;
     }
+
+
+	/**
+	* Returns the forum-id for a comment
+	*/
+	function get_comment_forum_id($commentId) {
+		$query = "select object from `tiki_comments` where `threadId`=?";
+		$result = $this->getOne($query, array($commentId) );
+		return $result;
+	}
 
     function add_comments_extras(&$res) { 
 	    // this function adds some extras to the referenced array. 

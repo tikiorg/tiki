@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.28 2007-07-05 22:57:23 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.29 2007-08-10 13:34:07 guidoscherp Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -348,6 +348,118 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
                         $mail->send(array($not['email']));
                 }
         }
+}
+
+/**
+ * Sends E-Mail notifications for a created/changed/removed category.
+ * The Array $values contains a selection of the following items:
+ * event, categoryId, categoryName, categoryPath, description, parentId, parentName, action,
+ * oldCategoryName, oldCategoryPath, oldDescription, oldParendId, oldParentName,
+ * objectName, objectType, objectUrl
+ */
+function sendCategoryEmailNotification($values) {        
+        $event=$values['event'];
+        $action=$values['action'];
+        $categoryId=$values['categoryId'];
+        $categoryName=$values['categoryName'];
+        $categoryPath=$values['categoryPath'];
+        $description=$values['description'];
+		$parentId=$values['parentId'];
+		$parentName=$values['parentName'];
+		
+		if ($action == 'category updated'){
+        	$oldCategoryName=$values['oldCategoryName'];
+        	$oldCategoryPath=$values['oldCategoryPath'];
+        	$oldDescription=$values['oldDescription'];
+			$oldParentId=$values['oldParentId'];
+			$oldParentName=$values['oldParentName'];
+		} else 	if ($action == 'object entered category' || $action == 'object leaved category'){
+			$objectName=$values['objectName'];
+			$objectType=$values['objectType'];
+			$objectUrl=$values['objectUrl'];
+		}
+
+        
+        //$event, $categoryId, $categoryName, $categoryPath, 
+		//$description, $parentId, $parentName, $action
+        global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email,$user;
+
+        $nots = array();
+        $defaultLanguage = $tikilib->get_preference("language", "en");
+
+        // Users watching this gallery
+		if ($feature_user_watches == 'y') {
+			if ($action == 'category created') {                                
+				$nots = $tikilib->get_event_watches($event, $parentId);
+			} else if ($action == 'category removed') { 
+                $nots = $tikilib->get_event_watches($event, $categoryId);
+                $nots = array_merge($nots,$nots = $tikilib->get_event_watches($event, $parentId));                
+			} else {
+				$nots = $tikilib->get_event_watches($event, $categoryId);
+			} 
+                
+			for ($i = count($nots) - 1; $i >=0; --$i) {
+				$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
+			}
+		}
+
+        if (count($nots)) {        		
+                include_once('lib/webmail/tikimaillib.php');
+                $mail = new TikiMail();
+                
+                $smarty->assign('categoryId', $categoryId);
+                $smarty->assign('categoryName', $categoryName);
+                $smarty->assign('categoryPath', $categoryPath);
+                $smarty->assign('description', $description);
+                $smarty->assign('parentId', $parentId);
+                $smarty->assign('parentName', $parentName);                
+                $smarty->assign('mail_date', date("U"));
+                $smarty->assign('author', $user);                
+                
+                $foo = parse_url($_SERVER["REQUEST_URI"]);
+                $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+                $smarty->assign('mail_machine', $machine);
+
+				$nots_send = array(); 
+                foreach ($nots as $not) {
+               			if ($nots_send[$not['user']]) break;               			
+               			$nots_send[$not['user']] = true;
+                        $mail->setUser($not['user']);
+                        if ($action == 'category created') {                                                        
+                        	$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_category_created_subject.tpl");
+                        	$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_created.tpl");
+                        } else if ($action == 'category removed'){
+                        	$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_category_removed_subject.tpl");
+                        	$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_removed.tpl");
+                        } else if ($action == 'category updated'){
+                        	$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_category_updated_subject.tpl");                        	                                                	                        
+
+							$smarty->assign('oldCategoryName',$oldCategoryName);
+           			    	$smarty->assign('oldCategoryPath',$oldCategoryPath);
+               				$smarty->assign('oldDescription',$oldDescription);
+               				$smarty->assign('oldParentId', $oldParentId);
+               				$smarty->assign('oldParentName',$oldParentName);                									                        	
+                        	$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_category_updated.tpl");                         	                        	
+                        } else if ($action == 'object entered category') {
+                        	$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_object_entered_category_subject.tpl");
+							$smarty->assign('objectName',$objectName);
+							$smarty->assign('objectType',$objectType);							
+							$smarty->assign('objectUrl',$objectUrl);                      
+                        	$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_object_entered_category.tpl");
+                        } else if ($action == 'object leaved category') {
+                        	$mail_subject = $smarty->fetchLang($not['language'], "mail/user_watch_object_leaved_category_subject.tpl");
+							$smarty->assign('objectName',$objectName);
+							$smarty->assign('objectType',$objectType);							
+							$smarty->assign('objectUrl',$objectUrl);                      
+                        	$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_object_leaved_category.tpl");
+                        }                        
+                                                
+                        $mail->setSubject($mail_subject);                        
+                        $mail->setText($mail_data);
+                        $mail->buildMessage();
+                        $mail->send(array($not['email']));
+                }
+        }        
 }
 
 ?>
