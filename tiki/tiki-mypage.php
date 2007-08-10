@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.12 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.13 2007-08-10 14:53:03 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
 
 
-if ($feature_ajax == "y" && $feature_mootools == "y") {
+if ($feature_ajax != "y" || $feature_mootools != "y") {
 	$smarty->assign('msg', tra("ajax and mootools features mandatory for that feature"));
 	$smarty->assign('errortype', '402');
 	$smarty->display("error.tpl");
@@ -37,7 +37,6 @@ function mypage_ajax_init() {
 	$ajaxlib->processRequests();
 }
 
-$smarty->assign("mootab",'y');
 function mypage_init() {
 	global $smarty, $headerlib, $id_users;
 
@@ -47,6 +46,13 @@ function mypage_init() {
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.nada.css");
 
+	$smarty->assign("mootools",'y');
+	$smarty->assign("mootab",'y');
+	$smarty->assign("mootools_windoo",'y');
+
+	//$headerlib->add_js("lib/mootools/mootools.js");
+	//$headerlib->add_js("lib/mootools/extensions/windoo/windoo.js");
+	//$headerlib->add_js("lib/mootools/extensions/tabs/SimpleTabs.js");
 
 	$id_mypage=isset($_REQUEST['id_mypage']) ? (int)$_REQUEST['id_mypage'] : 0;
 	$mypage=NULL;

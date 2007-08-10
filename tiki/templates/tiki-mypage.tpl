@@ -1,8 +1,3 @@
-{literal}
-<script type="text/javascript" src="lib/mootools/mootools.js"></script>
-<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
-{/literal}
-
 <div style='width: {$mypage_width}; height: {$mypage_height};'>
 <div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; overflow: hidden;'>
 
