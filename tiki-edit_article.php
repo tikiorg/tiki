@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.69 2007-06-25 14:46:22 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.70 2007-08-10 13:42:39 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 $section = 'cms';
 require_once ('tiki-setup.php');
-
+include_once ('lib/categories/categlib.php');
 include_once ('lib/articles/artlib.php');
 
 if ($feature_freetags == 'y') {

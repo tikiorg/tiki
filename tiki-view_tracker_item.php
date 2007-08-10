@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.132 2007-07-13 14:33:38 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.133 2007-08-10 13:42:40 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once('lib/categories/categlib.php');
 include_once ("lib/filegals/filegallib.php");
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/notifications/notificationlib.php');
@@ -973,6 +974,21 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
   if ($user and $tikilib->user_watches($user, 'tracker_item_modified', $_REQUEST['itemId'], 'tracker '.$_REQUEST["trackerId"])) {
     $smarty->assign('user_watching_tracker', 'y');
   }
+    
+    // Check, if the user is watching this trackers' item by a category.
+	if ($feature_categories == 'y') {    			
+	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['trackerId'],'tracker',$user);	    
+	    $smarty->assign('category_watched','n');
+	 	if (count($watching_categories_temp) > 0) {
+	 		$smarty->assign('category_watched','y');
+	 		$watching_categories=array();	 			 	
+	 		foreach ($watching_categories_temp as $wct ) {
+	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+	 		}		 		 	
+	 		$smarty->assign('watching_categories', $watching_categories);
+	 	}    
+	}
+  
 }
 
 if ($tracker_info["useComments"] == 'y') {

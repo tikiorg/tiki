@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.117 2007-08-08 13:18:18 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.118 2007-08-10 13:42:39 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -645,6 +645,21 @@ if ($feature_user_watches == 'y') {
 	} else {
 		$smarty->assign('user_watching_forum_topic_and_thread', 'n');
 	}
+
+    // Check, if the user is watching this forum by a category.    
+	if ($feature_categories == 'y') {    
+	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["forumId"],'forum',$user);	    
+	    $smarty->assign('category_watched','n');
+	 	if (count($watching_categories_temp) > 0) {
+	 		$smarty->assign('category_watched','y');
+	 		$watching_categories=array();	 			 	
+	 		foreach ($watching_categories_temp as $wct ) {
+	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+	 		}		 		 	
+	 		$smarty->assign('watching_categories', $watching_categories);
+	 	}    
+	} 		
+	
 }
 
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {

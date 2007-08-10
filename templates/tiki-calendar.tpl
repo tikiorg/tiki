@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.80 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.81 2007-08-10 13:42:40 guidoscherp Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -43,6 +43,20 @@ none
 </span>
 
 </div>
+
+<br />
+
+<div class="navbar" align="right">
+	{if $user and $feature_user_watches eq 'y'}
+		{if $category_watched eq 'y'}
+			{tr}Watched by categories{/tr}:
+			{section name=i loop=$watching_categories}
+				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+			{/section}
+		{/if}	
+	{/if}
+</div>
+
 <h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar:{/tr} {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
 
 {if count($listcals) >= 1}

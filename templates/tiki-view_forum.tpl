@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.101 2007-08-09 08:41:16 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.102 2007-08-10 13:42:41 guidoscherp Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -26,11 +26,11 @@
 <a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
-{if $user_watching_forum eq 'n'}
-<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics of this forum{/tr}'><img border='0' alt='{tr}monitor topics of this forum{/tr}' src='pics/icons/eye.png' /></a>
-{else}
-<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
-{/if}
+		{if $user_watching_forum eq 'n'}
+			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics of this forum{/tr}'><img border='0' alt='{tr}monitor topics of this forum{/tr}' src='pics/icons/eye.png' /></a>
+		{else}
+			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
+		{/if}			
 {/if}
 {if $user and $feature_user_watches eq 'y'}
 	{if $user_watching_forum_topic_and_thread eq 'n'}
@@ -39,6 +39,18 @@
 		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
 	{/if}
 {/if}
+
+<div class="navbar" align="right" >
+	{if $user and $feature_user_watches eq 'y'}
+		{if $category_watched eq 'y'}
+			{tr}Watched by categories{/tr}:
+			{section name=i loop=$watching_categories}
+				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+			{/section}
+		{/if}	
+	{/if}
+</div>
+
 {if $feature_forum_local_search eq 'y' or $feature_forum_local_tiki_search eq 'y'}
 <form  class="forms" method="get" action="{if $feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
 <input name="highlight" size="30" type="text" />

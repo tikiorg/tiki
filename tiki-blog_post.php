@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.61 2007-04-17 16:27:40 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.62 2007-08-10 13:42:39 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 $section = 'blogs';
 require_once ('tiki-setup.php');
-
+include_once ('lib/categories/categlib.php');
 include_once ('lib/blogs/bloglib.php');
 
 if ($feature_freetags == 'y') {

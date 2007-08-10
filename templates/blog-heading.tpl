@@ -26,3 +26,14 @@
 </span>
 ({$posts} {tr}Posts{/tr} | {$hits} {tr}Visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
 </div>
+
+<div class="bloginfo" align="right" >
+{if $user and $feature_user_watches eq 'y'}
+	{if $category_watched eq 'y'}
+		{tr}Watched by categories{/tr}:
+		{section name=i loop=$watching_categories}
+			<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+		{/section}
+	{/if}		
+{/if}
+</div>

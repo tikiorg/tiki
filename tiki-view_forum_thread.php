@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.94 2007-07-25 02:33:19 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.95 2007-08-10 13:42:40 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -308,6 +308,21 @@ if ($feature_user_watches == 'y') {
     if ($user && $tikilib->user_watches($user, 'forum_post_thread', $_REQUEST['comments_parentId'], 'forum topic')) {
 	$smarty->assign('user_watching_topic', 'y');
     }
+    
+    // Check, if the user is watching this forum's topic and thread by a category.
+	if ($feature_categories == 'y') {    			
+	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["forumId"],'forum',$user);	    
+	    $smarty->assign('category_watched','n');
+	 	if (count($watching_categories_temp) > 0) {
+	 		$smarty->assign('category_watched','y');
+	 		$watching_categories=array();	 			 	
+	 		foreach ($watching_categories_temp as $wct ) {
+	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+	 		}		 		 	
+	 		$smarty->assign('watching_categories', $watching_categories);
+	 	}    
+	} 	
+    
 }
 
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {

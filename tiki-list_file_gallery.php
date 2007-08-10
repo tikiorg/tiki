@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.43 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.44 2007-08-10 13:42:40 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -374,6 +374,19 @@ if($feature_user_watches == 'y') {
     if($user && $tikilib->user_watches($user,'file_gallery_changed',$galleryId, 'File Gallery')) {
         $smarty->assign('user_watching_file_gallery','y');
     }
+    // Check, if the user is watching this file gallery by a category.    
+	if ($feature_categories == 'y') { 		  
+	    $watching_categories_temp=$categlib->get_watching_categories($galleryId,'file gallery',$user);	    
+	    $smarty->assign('category_watched','n');
+	 	if (count($watching_categories_temp) > 0) {
+	 		$smarty->assign('category_watched','y');
+	 		$watching_categories=array();	 			 	
+	 		foreach ($watching_categories_temp as $wct ) {								 	
+	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+	 		}		 		 	
+	 		$smarty->assign('watching_categories', $watching_categories);
+	 	}    
+	} 	        
 }
 
 

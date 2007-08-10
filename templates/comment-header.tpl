@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.8 2007-07-24 15:23:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.9 2007-08-10 13:42:41 guidoscherp Exp $ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -46,6 +46,13 @@
 		{else}
 		<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}Stop Monitoring this Topic{/tr}' title='{tr}Stop Monitoring this Topic{/tr}'}</a>
 		{/if}
+		<br />
+		{if $category_watched eq 'y'}
+			{tr}Watched by categories{/tr}:
+			{section name=i loop=$watching_categories}
+				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+			{/section}
+		{/if}	
 		{/if}
 	</div>
 	{/if}

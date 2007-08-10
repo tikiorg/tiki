@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.51 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.52 2007-08-10 13:42:41 guidoscherp Exp $ *}
 {if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -37,6 +37,17 @@
 			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}">{html_image file='img/icons/icon_unwatch.png' border='0' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
 		{/if}
 	{/if}
+</div>
+
+<div class="navbar" align="right">
+    {if $user and $feature_user_watches eq 'y'}
+        {if $category_watched eq 'y'}
+            {tr}Watched by categories{/tr}:
+            {section name=i loop=$watching_categories}
+			    <a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+            {/section}
+        {/if}			
+    {/if}
 </div>
 
 {if strlen($description) > 0}

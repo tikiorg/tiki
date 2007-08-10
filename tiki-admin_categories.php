@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.46 2007-06-16 16:01:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.47 2007-08-10 13:42:40 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,16 @@ if (isset($_REQUEST["addpage"]) && $_REQUEST["parentId"] != 0) {
 	// add multiple pages at once
 	foreach ($_REQUEST['pageName'] as $value) {
 		$categlib->categorize_page($value, $_REQUEST["parentId"]);
+		$category=$categlib->get_category($_REQUEST["parentId"]);		
+		$categorizedObject=$categlib->get_categorized_object('wiki page',$value);		
+		// Notify the users watching this category.		
+		$values= array("categoryId"=>$_REQUEST["parentId"], "categoryName"=>$category['name'], 
+			"categoryPath"=>$categlib->get_category_path_string_with_root($_REQUEST["parentId"]),
+			"description"=>$category['description'], "parentId" => $category['parentId'], 
+			"parentName" => $categlib->get_category_name($category['parentId']),
+			"action"=>"object entered category", "objectName"=>$categorizedObject['name'],
+			"objectType"=>$categorizedObject['type'], "objectUrl"=>$categorizedObject['href']);		
+		$categlib->notify($values);						
 	}
 }
 
@@ -61,60 +71,83 @@ if (isset($_REQUEST["addpoll"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a poll
 	$categlib->categorize_poll($_REQUEST["pollId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('poll',$_REQUEST["pollId"]);	
+	
 }
 
 if (isset($_REQUEST["addfaq"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a faq
 	$categlib->categorize_faq($_REQUEST["faqId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('faq',$_REQUEST["faqId"]);
 }
 
 if (isset($_REQUEST["addtracker"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a tracker
 	$categlib->categorize_tracker($_REQUEST["trackerId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('tracker',$_REQUEST["trackerId"]);
 }
 
 if (isset($_REQUEST["addquiz"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a quiz
 	$categlib->categorize_quiz($_REQUEST["quizId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('quiz',$_REQUEST["quizId"]);
 }
 
 if (isset($_REQUEST["addforum"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a forum
 	$categlib->categorize_forum($_REQUEST["forumId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('forum',$_REQUEST["forumId"]);
 }
 
 if (isset($_REQUEST["addgallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an image gallery
 	$categlib->categorize_gallery($_REQUEST["galleryId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('image gallery',$_REQUEST["galleryId"]);
 }
 
 if (isset($_REQUEST["addfilegallery"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a file gallery
 	$categlib->categorize_file_gallery($_REQUEST["file_galleryId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('file gallery',$_REQUEST["file_galleryId"]);
 }
 
 if (isset($_REQUEST["addarticle"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize an article
 	$categlib->categorize_article($_REQUEST["articleId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('article',$_REQUEST["articleId"]);
 }
 
 if (isset($_REQUEST["addblog"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a blog
 	$categlib->categorize_blog($_REQUEST["blogId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('blog',$_REQUEST["blogId"]);
 }
 
 if (isset($_REQUEST["adddirectory"]) && $_REQUEST["parentId"] != 0) {
 	check_ticket('admin-categories');
 	// Here we categorize a directory category
 	$categlib->categorize_directory($_REQUEST["directoryId"], $_REQUEST["parentId"]);
+	$categorizedObject=$categlib->get_categorized_object('directory',$_REQUEST["directoryId"]);
+}
+
+if ( isset($categorizedObject) && !isset($_REQUEST["addpage"]) ) {
+	$category=$categlib->get_category($_REQUEST["parentId"]);		
+	// Notify the users watching this category.		
+	$values= array("categoryId"=>$_REQUEST["parentId"], "categoryName"=>$category['name'], 
+		"categoryPath"=>$categlib->get_category_path_string_with_root($_REQUEST["parentId"]),
+		"description"=>$category['description'], "parentId" => $category['parentId'], 
+		"parentName" => $categlib->get_category_name($category['parentId']),
+		"action"=>"object entered category", "objectName"=>$categorizedObject['name'],
+		"objectType"=>$categorizedObject['type'], "objectUrl"=>$categorizedObject['href']);		
+	$categlib->notify($values);					
 }
 
 if (isset($_REQUEST["categId"])) {
@@ -130,7 +163,17 @@ if (isset($_REQUEST["removeObject"])) {
 	$area = 'delcategobject';
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
+		$category=$categlib->get_category($_REQUEST["parentId"]);		
+		$categorizedObject=$categlib->get_categorized_object_via_category_object_id($_REQUEST["removeObject"]);		
 		$categlib->remove_object_from_category($_REQUEST["removeObject"], $_REQUEST["parentId"]);
+		// Notify the users watching this category.		
+		$values= array("categoryId"=>$_REQUEST["parentId"], "categoryName"=>$category['name'], 
+			"categoryPath"=>$categlib->get_category_path_string_with_root($_REQUEST["parentId"]),
+			"description"=>$category['description'], "parentId" => $category['parentId'], 
+			"parentName" => $categlib->get_category_name($category['parentId']),
+			"action"=>"object leaved category", "objectName"=>$categorizedObject['name'],
+			"objectType"=>$categorizedObject['type'], "objectUrl"=>$categorizedObject['href']);		
+		$categlib->notify($values);				
 	} else {
 		key_get($area);
 	}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.35 2007-06-26 21:00:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.36 2007-08-10 13:42:39 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -165,6 +165,34 @@ if ($offset > 0) {
 $section = 'categories';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');
+
+if($feature_user_watches == 'y') {
+    if($user && isset($_REQUEST['watch_event'])) {
+            
+        if($_REQUEST['watch_action']=='add_desc') {
+        	$name = tra("Top");                           
+            if ($_REQUEST['watch_object'] != 0) {
+               $name = $categlib->get_category_path_string_with_root($_REQUEST['watch_object']);
+            }            
+            $categlib->watch_category_and_descendants($user, $_REQUEST['watch_object'], $name);
+        } else if ($_REQUEST['watch_action']=='add') { 
+        	$name = tra("Top");                           
+            if ($_REQUEST['watch_object'] != 0) { 
+               $name = $categlib->get_category_path_string_with_root($user, $_REQUEST['watch_object']);
+            }            
+            $categlib->watch_category($user, $_REQUEST['watch_object'], $name);
+        } else if  ($_REQUEST['watch_action']=='remove_desc') {
+            $categlib->unwatch_category_and_descendants($user, $_REQUEST['watch_object']);
+        }  else if  ($_REQUEST['watch_action']=='remove') {
+            $categlib->unwatch_category($user, $_REQUEST['watch_object']);
+        }
+           
+    }
+    $smarty->assign('user_watching_category','n');    
+    if($user && $watch = $tikilib->get_user_event_watches($user, 'category_changed', $_REQUEST['parentId'])) {
+        $smarty->assign('user_watching_category','y');
+    }
+}
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

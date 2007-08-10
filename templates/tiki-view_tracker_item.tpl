@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.150 2007-08-01 21:02:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.151 2007-08-10 13:42:41 guidoscherp Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -22,6 +22,17 @@
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
 {/if}
+</div>
+
+<div class="navbar" align="right">
+	{if $user and $feature_user_watches eq 'y'}
+		{if $category_watched eq 'y'}
+			{tr}Watched by categories{/tr}:
+			{section name=i loop=$watching_categories}
+				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+			{/section}
+		{/if}	
+	{/if}
 </div>
 
 {if $tiki_p_view_trackers eq 'y'}
