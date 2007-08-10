@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.45 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.46 2007-08-10 13:42:41 guidoscherp Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 
 <div class="navbar">
@@ -33,6 +33,17 @@
   {/if}
 {/if}
 
+</div>
+
+<div class="navbar" align="right">
+    {if $user and $feature_user_watches eq 'y'}
+        {if $category_watched eq 'y'}
+            {tr}Watched by categories{/tr}:
+            {section name=i loop=$watching_categories}
+			    <a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+            {/section}
+        {/if}			
+    {/if}
 </div>
 
 <table>

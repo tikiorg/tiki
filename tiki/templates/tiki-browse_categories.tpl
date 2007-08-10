@@ -1,10 +1,20 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.29 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.30 2007-08-10 13:42:41 guidoscherp Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
 {if $tiki_p_admin_categories eq 'y'}
 <div class="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}Admin the Category System{/tr}">{tr}Admin Category{/tr}</a></div>
 {/if}
+{if $user and $feature_user_watches eq 'y'}
+	{if $user_watching_category eq 'n'}
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}watch only this category{/tr}' title='{tr}watch only this category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}watch this category and their descendants{/tr}' title='{tr}watch this category and their descendants{/tr}'}</a>
+	{else}
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}stop watching only this category{/tr}' title='{tr}stop watching only this category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove_desc">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}stop watching this category and their descendants{/tr}' title='{tr}stop watching this category and their descendants{/tr}'}</a>
+	{/if}
+{/if}  
+<br /><br />
 {tr}Browse in{/tr}:<br />
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}

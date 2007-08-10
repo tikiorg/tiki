@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.121 2007-07-24 18:03:34 jyhem Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.122 2007-08-10 13:42:41 guidoscherp Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -21,7 +21,7 @@
 	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
 {/if}
 {if $print_page ne 'y'}
-	<td style="vertical-align:top;text-align:right;width:142px;wrap:nowrap">
+	<td style="vertical-align:top;text-align:right;width:350px;wrap:nowrap">
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}       
@@ -43,9 +43,9 @@
 	{/if}
 	{if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_page eq 'n'}
-			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}Monitor this Page{/tr}" title="{tr}Monitor this Page{/tr}"}</a>
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Page{/tr}' title='{tr}Monitor this Page{/tr}'}</a>
 		{else}
-			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}Stop Monitoring this Page{/tr}" title="{tr}Stop Monitoring this Page{/tr}"}</a>
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}Stop Monitoring this Page{/tr}' title='{tr}Stop Monitoring this Page{/tr}'}</a>
 		{/if}
 	{/if}
 	</td>
@@ -88,6 +88,17 @@
 
 {/if}{* <-- end of if $print_page ne 'y' *}
 </tr></table>
+</div>
+
+<div class="navbar" align="right">
+    {if $user and $feature_user_watches eq 'y'}
+        {if $category_watched eq 'y'}
+            {tr}Watched by categories{/tr}:
+            {section name=i loop=$watching_categories}
+			    <a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+            {/section}
+        {/if}			
+    {/if}
 </div>
 
 {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}

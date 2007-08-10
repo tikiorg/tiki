@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.153 2007-07-24 17:12:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.154 2007-08-10 13:42:40 guidoscherp Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -26,6 +26,17 @@
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
 {/if}
+</div>
+
+<div class="navbar" align="right">
+	{if $user and $feature_user_watches eq 'y'}
+		{if $category_watched eq 'y'}
+			{tr}Watched by categories{/tr}:
+			{section name=i loop=$watching_categories}
+				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+			{/section}
+		{/if}	
+	{/if}
 </div>
 
 {if !empty($tracker_info.description)}

@@ -1,8 +1,9 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.14 2007-02-13 14:25:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.15 2007-08-10 13:42:39 guidoscherp Exp $
 
 $section = 'galleries';
 require_once ('tiki-setup.php');
+include_once ('lib/categories/categlib.php');
 include_once ('lib/imagegals/imagegallib.php');
 
 if ($feature_galleries != 'y') {

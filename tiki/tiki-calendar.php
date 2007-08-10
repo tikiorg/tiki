@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.71 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.72 2007-08-10 13:42:40 guidoscherp Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -311,6 +311,21 @@ if($feature_user_watches == 'y' && $user && count($_SESSION['CalendarViewGroups'
 	} else {
 		$smarty->assign('user_watching', 'n');
 	}
+
+    // Check, if a user is watching this calendar.
+	if ($feature_categories == 'y') {    			
+	    $watching_categories_temp=$categlib->get_watching_categories($calId,'calendar',$user);	    
+	    $smarty->assign('category_watched','n');
+	 	if (count($watching_categories_temp) > 0) {
+	 		$smarty->assign('category_watched','y');
+	 		$watching_categories=array();	 			 	
+	 		foreach ($watching_categories_temp as $wct ) {
+	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
+	 		}		 		 	
+	 		$smarty->assign('watching_categories', $watching_categories);
+	 	}    
+	}
+		
 }
 
 $section = 'calendar';
