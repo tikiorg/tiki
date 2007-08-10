@@ -1,13 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.24 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.25 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/notepad/notepadlib.php');
 include_once ('lib/userfiles/userfileslib.php');
 
@@ -170,7 +172,16 @@ include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('notepad-list');
-
+if ($feature_ajax == "y") {
+function user_notepad_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-notepad_list.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_notepad_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-notepad_list.tpl');
 $smarty->display("tiki.tpl");
 

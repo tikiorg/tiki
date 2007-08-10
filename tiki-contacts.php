@@ -6,6 +6,9 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/webmail/contactlib.php');
 
 if ($feature_contacts != 'y') {
@@ -17,7 +20,6 @@ if ($feature_contacts != 'y') {
 if (!isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
 }
-
 $smarty->assign('contactId', $_REQUEST["contactId"]);
 
 $exts=$contactlib->get_ext_list($user);
@@ -49,7 +51,6 @@ if ($_REQUEST["contactId"]) {
 	$info["nickname"] = '';
 	$info["groups"] = array();
 }
-
 $smarty->assign('info', $info);
 $smarty->assign('exts', $traducted_exts);
 
@@ -176,7 +177,16 @@ if ($offset > 0) {
 include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
-
+if ($feature_ajax == "y") {
+function user_contacts_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-contacts.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_contacts_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid','tiki-contacts.tpl');
 $smarty->display('tiki.tpl');
 ?>

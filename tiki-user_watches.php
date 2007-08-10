@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.19 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.20 2007-08-10 13:33:22 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,9 @@
 
 $section = 'mytiki';
 include_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 if (!$user) {
 	$smarty->assign('msg', tra("You must log in to use this feature"));
 	$smarty->assign('errortype', '402');
@@ -22,6 +24,7 @@ if ($feature_user_watches != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
 
 if (isset($_REQUEST['hash'])) {
   $area = 'deluserwatch';
@@ -104,6 +107,17 @@ if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
 }
 
 ask_ticket('user-watches');
+if ($feature_ajax == "y") {
+function user_watches_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_watches.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_watches_ajax();
+$smarty->assign("mootab",'y');
+}
 
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

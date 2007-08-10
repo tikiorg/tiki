@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.18 2007-08-03 20:08:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.19 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,9 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/usermodules/usermoduleslib.php');
 
 if ($tiki_p_configure_modules != 'y') {
@@ -32,6 +34,7 @@ if (!$user) {
 	$smarty->display("error.tpl");
 	die;
 }
+
 
 if (isset($_REQUEST["recreate"])) {
 	check_ticket('user-modules');
@@ -102,7 +105,16 @@ $smarty->assign_by_ref('modules', $modules);
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-modules');
-
+if ($feature_ajax == "y") {
+function user_modules_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_assigned_modules.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_modules_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-user_assigned_modules.tpl');
 $smarty->display("tiki.tpl");
 

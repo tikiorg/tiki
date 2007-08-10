@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.42 2007-07-08 22:57:22 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.43 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,9 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/registration/registrationlib.php');
@@ -45,7 +47,6 @@ if (isset($_REQUEST['userId'])) {
 		die;
 	}
 }
-
 $smarty->assign('userwatch', $userwatch);
 
 // Custom fields
@@ -159,11 +160,20 @@ if ( $user_tracker_infos ) {
 }
 
 ask_ticket('user-information');
-
+if ($feature_ajax == "y") {
+function user_information_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_information.tpl");
+    $ajaxlib->registerTemplate("tiki-my_tiki.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_information_ajax();
+$smarty->assign("mootab",'y');
+}
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-user_information.tpl');
 $smarty->display("tiki.tpl");
-
 ?>

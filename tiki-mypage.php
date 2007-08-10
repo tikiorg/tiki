@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.11 2007-08-10 11:43:29 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.12 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,14 @@ require_once ('tiki-setup.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
 
+
+if ($feature_ajax == "y" && $feature_mootools == "y") {
+	$smarty->assign('msg', tra("ajax and mootools features mandatory for that feature"));
+	$smarty->assign('errortype', '402');
+	$smarty->display("error.tpl");
+	die;
+
+}
 if (strlen($user) <= 0) {
 	$id_users=0;
 } else {

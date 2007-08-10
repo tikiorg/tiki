@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.95 2007-07-15 21:40:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.96 2007-08-10 13:33:20 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,9 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 //include_once('lib/registration/registrationlib.php');
@@ -490,7 +493,16 @@ $smarty->assign_by_ref('cookietab',$cookietab);
 include_once ('tiki-section_options.php');
 
 ask_ticket('user-prefs');
-
+if ($feature_ajax == "y") {
+function user_preferences_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_preferences.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_preferences_ajax();
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-user_preferences.tpl');
 $smarty->display("tiki.tpl");
 
