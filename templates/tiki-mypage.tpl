@@ -15,19 +15,26 @@
   </a>
 	
   <div id="sideBarContents" style="width:0px; overflow: hidden !important; background: white;">
-   <div id="sideBarContentsInner" style="width: 200px;">
-    <h2>Tools</h2>
-
-    <ul>
-     {foreach from=$components item=component}
-     <li>
-      <a href='#' onclick='mypage_newComponent("{$component}");'>{$component|escape}</a>
-     </li>
-     {/foreach}
-    </ul>
-
+   <div id="sideBarContentsInner" style="width: 250px;">
+	<div id="container" >
+		<div id="tab-block-1" >
+			<h5>Tools</h5>
+    			<div id="components_list">
+    				<ul>
+     				{foreach from=$components item=component}
+     					<li>
+      					<a href='#' onclick='mypage_newComponent("{$component}");'>{$component|escape}</a>
+     					</li>
+     				{/foreach}
+    				</ul>
+    			</div>
+    			<h5>Colors</h5>
+    			<div id="components_colors">
+    			</div>
+   		</div>
+  	</div>
    </div>
-  </div>
+   </div>
  </div> <!-- sidebar -->
 {/if}
 
@@ -36,7 +43,19 @@
 
 {literal}
 <script type="text/javascript">
-
+var tabs1 = new SimpleTabs($('tab-block-1'), {
+	entrySelector: 'h5',
+	onSelect: function(toggle, container) {
+		toggle.addClass('tab-selected');
+		container.effect('opacity').start(0, 1); // 1) first start the effect
+		container.setStyle('display', ''); // 2) then show the element, to prevent flickering
+		},
+	onShow: function(toggle, container, index) {
+			toggle.addClass('tab-selected');
+			container.effect('opacity').start(0, 7); // 1) first start the effect
+			container.setStyle('display', '');
+		}
+});
 // open saved windows
 tikimypagewin=[];
 {/literal}{$mypagejswindows}{literal}
