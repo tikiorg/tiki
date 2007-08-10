@@ -1,13 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.25 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.26 2007-08-10 14:49:39 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-
+if ($feature_ajax == "y") {
+require_once ('lib/ajax/ajaxlib.php');
+}
 include_once ('lib/tasks/tasklib.php');
 include_once ('lib/messu/messulib.php');
 
@@ -31,7 +33,6 @@ if ($tiki_p_tasks != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 
 if (isset($tiki_p_tasks_admin) && $tiki_p_tasks_admin == 'y') {
 	$task_admin = true;
@@ -788,7 +789,17 @@ $smarty->assign('img_me_waiting_width', $img_me_waiting_width);
 $smarty->assign('img_not_accepted', $img_not_accepted);
 $smarty->assign('img_not_accepted_height', $img_not_accepted_height);
 $smarty->assign('img_not_accepted_width', $img_not_accepted_width);
+if ($feature_ajax == "y") {
+function user_tasks_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-user_tasks.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+user_tasks_ajax();
 
+$smarty->assign("mootab",'y');
+}
 $smarty->assign('mid', 'tiki-user_tasks.tpl');
 $smarty->display("tiki.tpl");
 
