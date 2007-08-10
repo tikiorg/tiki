@@ -94,9 +94,9 @@
 		{/if}
 
 		{if $feature_minical eq 'y' and $tiki_p_minical eq 'y'}
-		<h5><a {ajax_href template=tiki-minicals.tpl
-		htmlelement=user_minicals}tiki-minicals{/ajax_href}><img  border="0" src="img/mytiki/minical.gif" alt="{tr}Mini Calendar{/tr}" />{tr}Mini Calendar{/tr}</a></h5>
-		<div id="user_minicals">
+		<h5><a {ajax_href template=tiki-minical.tpl
+		htmlelement=user_minical}tiki-minical.php{/ajax_href}><img  border="0" src="img/mytiki/minical.gif" alt="{tr}Mini Calendar{/tr}" />{tr}Mini Calendar{/tr}</a></h5>
+		<div id="user_minical">
 		</div>
 		{/if}
 
