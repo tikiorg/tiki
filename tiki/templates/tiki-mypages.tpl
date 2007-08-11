@@ -1,3 +1,4 @@
+<h1>{tr}My {if $smarty.request.type}{$smarty.request.type} {/if}Pages{/tr}</h1>
 <div id='mypageeditdiv' style='display: none;'>
  <input id='mypageedit_id' type='hidden' value=''>
  <table class="normal">
