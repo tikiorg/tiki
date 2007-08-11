@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.196 2007-08-09 21:33:59 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.197 2007-08-11 16:36:33 tombombadilom Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -16,6 +16,7 @@
 # and may safely ignore any error messages that appear.
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pear_wiki_parser','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mootools','n');
 
 #2005-06-22 rlpowell: available_languages was getting truncated if all languages were selected
 ALTER TABLE `tiki_preferences` CHANGE value value text;
