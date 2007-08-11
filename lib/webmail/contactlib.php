@@ -137,7 +137,24 @@ class ContactLib extends TikiLib {
 		}
 		return false;
 	}
-
+	function get_contact_email($email, $user) {
+		$result=$this->query("Select `contactId` from tiki_webmail_contacts where `email`=?",array($email));
+		while ($res = $result->fetchRow()){
+			if ($this->is_a_user_contact($res, $user, false)) {
+				$contactId=$res;
+			}
+		}
+		$info=$this->get_contact($contatId, $user);
+		foreach($info['ext'] as $k => $v) {
+	    		if (!in_array($k, array_keys($exts))) {
+				$exts[$k]=$v;
+				$traducted_exts[$k]['tra']=tra($info['fieldname']);
+				$traducted_exts[$k]['art']=$info['fieldname'];
+				$traducted_exts[$k]['id']=$k;
+	    		}
+		}
+		return $info['ext'];
+	}
 	function get_contact($contactId, $user) {
 		if ( $this->is_a_user_contact($contactId, $user, true) ) {
 			$query = "select * from `tiki_webmail_contacts` where `contactId`=?";
