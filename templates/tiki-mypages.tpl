@@ -10,7 +10,29 @@
    <th>Description</th>
    <td><input id='mypageedit_description' type='text' name='description' value=''></td>
   </tr>
-
+  <tr>
+   <th>Access</th>
+   <td><img width="20" height="20" align="top" src="styles/netineo/unlock.png"/>
+   <input class="register" type="radio" checked="" value="0" name="PageType"/>
+     
+     <img width="20" height="20" align="top" src="styles/netineo/lock.png"/>
+      
+      <input class="register" type="radio" value="1" name="PageType"/>
+   </td>
+  </tr>
+<tr>
+   <th>Object Type</th>
+   <td><select id="mypageedit_type" name="type">
+   	<option id="wiki" value="wiki">{tr}Wiki{/tr}</option>
+   	<option id="blog" value="blog">{tr}Blog{/tr}</option>
+   	<option id="channel" value="channel">{tr}Channel{/tr}</option>
+   	<option id="program" value="program">{tr}Program{/tr}</option>
+   </select>
+   </td>
+  </tr>
+  {if $feature_categories eq "y"}
+	{include file=categorize.tpl}
+  {/if}
   <tr>
    <th>Dimensions</th>
    <td>
@@ -83,7 +105,7 @@ function showMypageEdit(id) {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_description').value='';
-		$('mypageedit_width').value='0';
+		$('mypageedit_width').value='1000';
 		$('mypageedit_height').value='500';
 		$('mypageedit_submit').value='Create';
 	}
