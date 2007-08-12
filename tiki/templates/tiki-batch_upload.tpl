@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.13 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.14 2007-08-12 04:28:38 mose Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -13,7 +13,7 @@
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
 
 {$totimg} {tr}available images{/tr} {$dirsize} <br /><br />
-<form method="get" action="tiki-batch_upload.php" name="f">
+<form method="post" action="tiki-batch_upload.php" name="f">
 <table border="0" class="normal" id="imagelist" width="100%">
 <tr>
 <th width="42" class="heading"></th>
