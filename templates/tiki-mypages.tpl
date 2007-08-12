@@ -141,7 +141,13 @@ function deleteMypage(id) {
 	xajax_mypage_delete(id);
 }
 
+{/literal}
+{if $feature_phplayers eq 'y'}{* this is an ugly hack ... *}
+window.onload=initMypageEdit;
+{else}
 window.addEvent('domready', initMypageEdit);
+{/if}
+{literal}
 
 </script>
 {/literal}
