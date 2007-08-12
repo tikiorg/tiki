@@ -141,7 +141,7 @@ function deleteMypage(id) {
 	xajax_mypage_delete(id);
 }
 
-initMypageEdit();
+window.addEvent('domready', initMypageEdit);
 
 </script>
 {/literal}
