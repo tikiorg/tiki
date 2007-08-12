@@ -267,6 +267,7 @@ function LMPopUp(menuName, isCurrent)
 
 function resizeHandler()
 {
+	if (window_onresize_orig) window_onresize_orig();
 	if (NS4) {
 		window.location.reload();
 	}
@@ -281,6 +282,7 @@ function resizeHandler()
 //	moveLayers();
 	layersMoved = 0;
 }
+var window_onresize_orig=window.onresize;
 window.onresize = resizeHandler;
 
 function yaresizeHandler()
@@ -297,12 +299,14 @@ function yaresizeHandler()
 }
 function loadHandler()
 {
+	if (window_onload_orig) window_onload_orig();
 	if (Konqueror22 || Opera56) {
 		origWidth  = window.innerWidth;
 		origHeight = window.innerHeight;
 		yaresizeHandler();
 	}
 }
+var window_onload_orig=window.onload;
 window.onload = loadHandler;
 
 function fixieflm(menuName)
