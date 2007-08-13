@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.26 2007-08-09 21:33:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.27 2007-08-13 19:58:26 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -249,7 +249,154 @@ class MyPage {
 	 * one day, i'll make a libcomponents...
 	 */
 	function getAvailableComponents() {
-		return array('iframe', 'wiki');
+		return array('iframe', 'wiki', 'blah', 'pouet', 'coin', 'truc', 'forum', 'newsletter', 'video');
+	}
+
+	/* static */
+	function countMypageTypes() {
+		global $tikilib;
+		
+		$pages=array();
+		return $tikilib->getOne("SELECT COUNT(*) FROM tiki_mypage_types");
+	}
+	
+	/* static */
+	function listMypageTypes($offset=-1, $limit=-1) {
+		global $tikilib;
+
+		$lines=array();
+		$res=$tikilib->query("SELECT ".
+							 " mpt.id as id, ".
+							 " mpt.name as name, ".
+							 " mpt.description as description, ".
+							 " mpt.section as section, ".
+							 " mpt.permissions as permissions, ".
+							 " mptc.compname as compname, ".
+							 " mptc.mincount as mincount, ".
+							 " mptc.maxcount as maxcount ".
+							 "FROM tiki_mypage_types as mpt ".
+							 "LEFT JOIN tiki_mypage_types_components as mptc ".
+							 "ON mptc.id_mypage_types = mpt.id ".
+							 "ORDER BY mpt.id ",
+							 array(), $limit, $offset);
+		$lastid=0;
+		$lastline=NULL;
+		while ($line = $res->fetchRow()) {
+			if ($line['id'] != $lastid) {
+				if ($lastline !== NULL) $lines[]=$lastline;
+				$lastid=$line['id'];
+				$lastline=array('id' => $line['id'],
+								'name' => $line['name'],
+								'description' => $line['description'],
+								'section' => $line['section'],
+								'permissions' => $line['permissions'],
+								'components' => array());
+			}
+			$lastline['components'][]=array('compname' => $line['compname'],
+											'mincount' => $line['mincount'],
+											'maxcount' => $line['maxcount']);
+		}
+		if ($lastline !== NULL) $lines[]=$lastline;
+		
+		return $lines;
+	}
+
+	/* static */
+	function getMypageType($id) {
+		global $tikilib;
+
+		$lines=array();
+		$res=$tikilib->query("SELECT ".
+							 " mpt.id as id, ".
+							 " mpt.name as name, ".
+							 " mpt.description as description, ".
+							 " mpt.section as section, ".
+							 " mpt.permissions as permissions, ".
+							 " mptc.compname as compname, ".
+							 " mptc.mincount as mincount, ".
+							 " mptc.maxcount as maxcount ".
+							 "FROM tiki_mypage_types as mpt ".
+							 "LEFT JOIN tiki_mypage_types_components as mptc ".
+							 "ON mptc.id_mypage_types = mpt.id ".
+							 "WHERE mpt.id=? ".
+							 "ORDER BY mpt.id ",
+							 array((int)$id));
+		$lastid=0;
+		$lastline=NULL;
+		while ($line = $res->fetchRow()) {
+			if ($line['id'] != $lastid) {
+				if ($lastline !== NULL) $lines[]=$lastline;
+				$lastid=$line['id'];
+				$lastline=array('id' => $line['id'],
+								'name' => $line['name'],
+								'description' => $line['description'],
+								'section' => $line['section'],
+								'permissions' => $line['permissions'],
+								'components' => array());
+			}
+			$lastline['components'][]=array('compname' => $line['compname'],
+											'mincount' => $line['mincount'],
+											'maxcount' => $line['maxcount']);
+		}
+		if ($lastline !== NULL) $lines[]=$lastline;
+		
+		if (count($lines) == 1) return $lines[0];
+		else return NULL;
+	}
+
+	/* static */
+	function deleteMypageType($id) {
+		global $tikilib;
+
+		$res=$tikilib->query("DELETE FROM tiki_mypage_types_components ".
+							 "WHERE id_mypage_types=?", array((int)$id));
+
+		$res=$tikilib->query("DELETE FROM tiki_mypage_types ".
+							 "WHERE id=?", array((int)$id));
+	}
+	
+	/* static */
+	function createMypageType() {
+		global $tikilib;
+
+		$res=$tikilib->query("INSERT INTO tiki_mypage_types () VALUES ()");
+		return $tikilib->getOne("SELECT LAST_INSERT_ID()");
+	}
+
+	/* static */
+	function updateMypageType($id, $vals) {
+		global $tikilib;
+
+		$cols=array("name", "description", "section", "permissions");
+
+		$tvals=$vals;
+		// we remove unauthorized cols
+		foreach($tvals as $k => $v)
+			if (!in_array($k, $cols)) unset($tvals[$k]);
+
+		if (count($tvals) > 0) {
+			$l=array();
+			$r=array();
+			foreach($tvals as $k => $v) {
+				$l[]="`$k`=?";
+				$r[]=$v;
+			}
+			
+			$query="UPDATE tiki_mypage_types SET ".implode(', ', $l)." WHERE `id`=?";
+			$r[]=(int)$id;
+			
+			$res=$tikilib->query($query, $r);
+		}
+
+		if (isset($vals['components'])) {
+			$res=$tikilib->query("DELETE FROM tiki_mypage_types_components ".
+								 "WHERE id_mypage_types=?", array((int)$id));
+			foreach($vals['components'] as $component) {
+				$res=$tikilib->query("INSERT INTO tiki_mypage_types_components".
+									 " (`id_mypage_types`, `name`)".
+									 " VALUES (?,?)", array((int)$id, $component));
+			}
+		}
 	}
 
 }

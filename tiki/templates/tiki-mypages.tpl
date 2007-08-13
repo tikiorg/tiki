@@ -3,16 +3,16 @@
  <input id='mypageedit_id' type='hidden' value=''>
  <table class="normal">
   <tr>
-   <th>Name</th>
+   <th>{tr}Name{/tr}</th>
    <td><input id='mypageedit_name' type='text' name='name' value=''></td>
   </tr>
 
   <tr>
-   <th>Description</th>
+   <th>{tr}Description{/tr}</th>
    <td><input id='mypageedit_description' type='text' name='description' value=''></td>
   </tr>
   <tr>
-   <th>Access</th>
+   <th>{tr}Access{/tr}</th>
    <td><img width="20" height="20" align="top" src="styles/netineo/unlock.png"/>
    <input class="register" type="radio" checked="" value="0" name="PageType"/>
      
@@ -21,8 +21,8 @@
       <input class="register" type="radio" value="1" name="PageType"/>
    </td>
   </tr>
-<tr>
-   <th>Object Type</th>
+  <tr>
+   <th>{tr}Object Type{/tr}</th>
    <td><select id="mypageedit_type" name="type">
    	<option id="wiki" value="wiki">{tr}Wiki{/tr}</option>
    	<option id="blog" value="blog">{tr}Blog{/tr}</option>
@@ -35,7 +35,7 @@
 	{include file=categorize.tpl}
   {/if}
   <tr>
-   <th>Dimensions</th>
+   <th>{tr}Dimensions{/tr}</th>
    <td>
     <input id='mypageedit_width' type='text' name='width' value='' style='width: 55px'> x 
     <input id='mypageedit_height' type='text' name='height' value='' style='width: 55px'>
