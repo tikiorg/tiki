@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.16 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.17 2007-08-13 08:57:47 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,9 @@ if (isset($_REQUEST['qId'])) {
 		if (!isset($_REQUEST['topic_title']))
 			$_REQUEST['topic_title'] = '';
 
+		if (!isset($_REQUEST['in_reply_to']))
+			$_REQUEST['in_reply_to'] = '';
+
 		if (!isset($_REQUEST['parentId']))
 			$_REQUEST['parentId'] = $msg_info['parentId'];
 
@@ -129,7 +132,7 @@ if (isset($_REQUEST['qId'])) {
 
 		$commentslib->replace_queue($_REQUEST['qId'], $_REQUEST['forumId'], 'forum' . $_REQUEST['forumId'], $_REQUEST['parentId'],
 			$user, $_REQUEST['title'], $_REQUEST['data'], $_REQUEST['type'], $_REQUEST['topic_smiley'], $_REQUEST['summary'],
-			$_REQUEST['topic_title']);
+			$_REQUEST['topic_title'], $_REQUEST['in_reply_to']);
 		unset ($_REQUEST['qId']);
 	}
 
@@ -160,6 +163,9 @@ if (isset($_REQUEST['qId'])) {
 		if (!isset($_REQUEST['topic_title']))
 			$_REQUEST['topic_title'] = '';
 
+		if (!isset($_REQUEST['in_reply_to']))
+			$_REQUEST['in_reply_to'] = '';
+
 		if (!isset($_REQUEST['parentId']))
 			$_REQUEST['parentId'] = $msg_info['parentId'];
 
@@ -171,7 +177,7 @@ if (isset($_REQUEST['qId'])) {
 
 		$commentslib->replace_queue($_REQUEST['qId'], $_REQUEST['forumId'], 'forum' . $_REQUEST['forumId'], $_REQUEST['parentId'],
 			$user, $_REQUEST['title'], $_REQUEST['data'], $_REQUEST['type'], $_REQUEST['topic_smiley'], $_REQUEST['summary'],
-			$_REQUEST['topic_title']);
+			$_REQUEST['topic_title'], $_REQUEST['in_reply_to']);
 		$commentslib->approve_queued($_REQUEST['qId']);
 		unset ($_REQUEST['qId']);
 	}
@@ -193,11 +199,14 @@ if (isset($_REQUEST['qId'])) {
 		if (!isset($_REQUEST['topic_title']))
 			$_REQUEST['topic_title'] = '';
 
+		if (!isset($_REQUEST['in_reply_to']))
+			$_REQUEST['in_reply_to'] = '';
+
 		$_REQUEST['parentId'] = 0;
 		$_REQUEST['type'] = 'n';
 		$commentslib->replace_queue($_REQUEST['qId'], $_REQUEST['forumId'], 'forum' . $_REQUEST['forumId'], $_REQUEST['parentId'],
 			$user, $_REQUEST['title'], $_REQUEST['data'], $_REQUEST['type'], $_REQUEST['topic_smiley'], $_REQUEST['summary'],
-			$_REQUEST['topic_title']);
+			$_REQUEST['topic_title'], $_REQUEST['in_reply_to']);
 		unset ($_REQUEST['qId']);
 	}
 }

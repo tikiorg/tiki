@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-09 21:33:59 $
-# $Author: sylvieg $
+# $Date: 2007-08-13 08:57:47 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1501,6 +1501,7 @@ CREATE TABLE tiki_forums_queue (
   topic_smiley varchar(80) default NULL,
   topic_title varchar(240) default NULL,
   summary varchar(240) default NULL,
+  in_reply_to varchar(128) default NULL,
   PRIMARY KEY  (qId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

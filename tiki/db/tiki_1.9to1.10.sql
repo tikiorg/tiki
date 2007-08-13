@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.197 2007-08-11 16:36:33 tombombadilom Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.198 2007-08-13 08:57:48 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1485,3 +1485,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_component', 'Can assign perms to component', 'admin', 'component');
 DELETE FROM users_permissions where type = 'component';
+
+#2007-08-13 nyloth
+ALTER TABLE tiki_forums_queue ADD COLUMN `in_reply_to` varchar(128) default NULL;

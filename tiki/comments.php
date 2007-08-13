@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.77 2007-07-14 18:18:53 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.78 2007-08-13 08:57:47 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -227,45 +227,81 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 
 	    if ( empty($_REQUEST["comments_parentId"]) ) $_REQUEST["comments_parentId"] = 0;
 
+	    $object = explode(':', $comments_objectId );
+	    if( $object[0] == 'forum' && ! empty($_REQUEST["comments_grandParentId"] )) {
+		$parent_id = $_REQUEST["comments_grandParentId"];
+	    } else {
+		$parent_id = $_REQUEST["comments_parentId"];
+	    }
+
+	    if ( isset($_REQUEST["comments_reply_threadId"]) && ! empty($_REQUEST["comments_reply_threadId"]) ) {
+		$reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
+		$in_reply_to = $reply_info["message_id"];
+	    } else {
+		$in_reply_to = '';
+	    }
+
 	    // Remove HTML tags and empty lines at the end of the posted comment
 	    $_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"]));
 
-	    if ( $_REQUEST["comments_threadId"] == 0 ) {
+	    if ( $tiki_p_forum_autoapp != 'y'
+		 && ( $forum_info['approval_type'] == 'queue_all' || ( ! $user && $forum_info['approval_type'] == 'queue_anon' ) )
+	    ) {
 
-		if ( isset($_REQUEST["comments_reply_threadId"]) && ! empty($_REQUEST["comments_reply_threadId"]) ) {
-		    $reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
-		    $in_reply_to = $reply_info["message_id"];
-		} else {
-		    $in_reply_to = '';
-		}
-		$message_id = '';
+		    $smarty->assign('was_queued', 'y');
 
-		$object = explode(':', $comments_objectId );
-		if( $object[0] == 'forum' && ! empty($_REQUEST["comments_grandParentId"] )) {
-		    $parent_id = $_REQUEST["comments_grandParentId"];
-		} else {
-		    $parent_id = $_REQUEST["comments_parentId"];
-		}
-		$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
-			$user,
-			$_REQUEST["comments_title"],
-			$_REQUEST["comments_data"],
-			$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
-		if ($object[0] != "forum") {
-			$smarty->assign("comments_parentId", 0); // to display all the comments
-			$_REQUEST["comments_parentId"] = 0;
-		}
-		$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"]; // to have the right re:
-		$smarty->assign("comments_reply_threadId", $_REQUEST["comments_parentId"]); // without the flag
+		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, $parent_id,
+			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], 'n', '', '', $thread_info['title'], $in_reply_to);
+
+		    // PROCESS ATTACHMENT HERE
+		    if ( $qId && isset($_FILES['userfile1']) && ! empty($_FILES['userfile1']['name']) ) {
+			    if ( is_uploaded_file($_FILES['userfile1']['tmp_name']) ) {
+				    check_ticket('view-forum');
+				    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+				    $commentslib->add_thread_attachment(
+					    $forum_info, $qId, $fp, '',
+					    $_FILES['userfile1']['name'],
+					    $_FILES['userfile1']['type'],
+					    $_FILES['userfile1']['size']
+				    );
+			    } else {
+				$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+				$smarty->display("error.tpl");
+				die;
+			    }
+		    }
+		    //END ATTACHMENT PROCESSING
+
 	    } else {
 
-		$qId = $_REQUEST["comments_threadId"];
-		if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
-			|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
-			|| ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]))) {
-		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
-			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
-		}
+		    $smarty->assign('was_queued', 'n');
+
+		    if ( $_REQUEST["comments_threadId"] == 0 ) {
+
+			$message_id = '';
+	
+			$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
+				$user,
+				$_REQUEST["comments_title"],
+				$_REQUEST["comments_data"],
+				$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
+			if ($object[0] != "forum") {
+				$smarty->assign("comments_parentId", 0); // to display all the comments
+				$_REQUEST["comments_parentId"] = 0;
+			}
+			$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"]; // to have the right re:
+			$smarty->assign("comments_reply_threadId", $_REQUEST["comments_parentId"]); // without the flag
+		    } else {
+
+			$qId = $_REQUEST["comments_threadId"];
+			if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
+				|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
+				|| ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]))) {
+			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
+				    $_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
+			}
+		    }
+
 	    }
 		if (isset($_REQUEST['contributions']))
 			unset($_REQUEST['contributions']);
