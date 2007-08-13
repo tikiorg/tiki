@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.8 2007-08-09 20:23:30 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.9 2007-08-13 19:58:26 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -182,6 +182,60 @@ function mypage_fillinfos($id_mypage) {
     return $objResponse;
 }
 
+function mptype_fillinfos($id_mptype) {
+    global $id_users;
+    
+    $objResponse = new xajaxResponse();
+
+    /*
+     * TODO: check if user has permissions
+     */
+        
+    $mptype=MyPage::getMypageType($id_mptype);
+
+    if ($mptype) {
+	$objResponse->addAssign('mptype_id', 'value', (int)$id_mptype);
+	$objResponse->addAssign('mptype_name', 'value', $mptype['name']);
+	$objResponse->addAssign('mptype_description', 'value', $mptype['description']);
+	$objResponse->addAssign('mptype_section', 'value', is_null($mptype['section']) ? '' : $mptype['section']);
+	$objResponse->addAssign('mptype_permissions', 'value', is_null($mptype['permissions']) ? '' : $mptype['permissions']);
+	foreach($mptype['components'] as $component)
+	    $objResponse->addAssign('mptype_components_'.$component['compname'], 'selected', '1');
+    } else {
+	$objResponse->addScript("alert('non');");
+    }
+
+    return $objResponse;
+}
+
+function mptype_delete($id_mptype) {
+    global $id_users;
+
+    $objResponse = new xajaxResponse();
+
+    MyPage::deleteMyPageType($id_mptype);
+
+    return $objResponse;
+}
+
+function mptype_create($vals) {
+    global $id_users;
+
+    $id=MyPage::createMyPageType();
+
+    return mptype_update($id, $vals);
+}
+
+function mptype_update($id, $vals) {
+    global $id_users;
+
+    $objResponse = new xajaxResponse();
+
+    MyPage::updateMyPageType($id, $vals);
+
+    return $objResponse;
+}
+
 function mypage_ajax_init() {
     global $ajaxlib;
 
@@ -191,10 +245,16 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mypage_win_create");
     $ajaxlib->registerFunction("mypage_win_prepareConfigure");
     $ajaxlib->registerFunction("mypage_win_configure");
+
     $ajaxlib->registerFunction("mypage_update");
     $ajaxlib->registerFunction("mypage_create");
     $ajaxlib->registerFunction("mypage_delete");
     $ajaxlib->registerFunction("mypage_fillinfos");
+
+    $ajaxlib->registerFunction("mptype_fillinfos");
+    $ajaxlib->registerFunction("mptype_delete");
+    $ajaxlib->registerFunction("mptype_create");
+    $ajaxlib->registerFunction("mptype_update");
     $ajaxlib->processRequests();
 }
 
@@ -203,5 +263,11 @@ function mypage_ajax_init() {
 
 mypage_ajax_init();
 
+/* For the emacs weenies in the crowd.
+Local Variables:
+   tab-width: 4
+   c-basic-offset: 4
+End:
+*/
 
 ?>
