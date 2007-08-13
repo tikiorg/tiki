@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.102 2007-08-10 13:42:41 guidoscherp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.103 2007-08-13 09:25:25 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -69,9 +69,11 @@
 {/if}
 
 {if $was_queued eq 'y'}
-<div class="wikitext">
+<div class="rbox">
+<div class="rbox-data" name="warning">
 {tr}Your message has been queued for approval, the message will be posted after
 a moderator approves it.{/tr}
+</div>
 </div>
 {/if}
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.80 2007-07-25 02:33:19 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.81 2007-08-13 09:25:25 nyloth Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -7,8 +7,10 @@
 {/if}
 
 {if $was_queued eq 'y'}
-<div class="wikitext" style="font-size: smaller;">
+<div class="rbox">
+<div class="rbox-data" name="warning">
 	{tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
+</div>
 </div>
 {/if}
 
