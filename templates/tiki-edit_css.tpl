@@ -1,4 +1,13 @@
-<h1><a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a>
+
+      {if $feature_help eq 'y'}
+<a href="{$helpurl}Edit+CSS" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-edit_css.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit CSS{/tr}">
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit CSS{/tr}' /></a>{/if}</h1>
+
 <div>
 <form method="post" action="tiki-edit_css.php">
 {tr}Style Sheet{/tr} : 
@@ -8,7 +17,6 @@
 <a href="tiki-edit_css.php?editstyle={$editstyle}" class="link">{tr}Cancel{/tr}</a>
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
 <textarea name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>
-</div>
 </div>
 {else}
 <select name="editstyle">
@@ -21,7 +29,7 @@
 <input type="submit" name="display" value="{tr}display{/tr}" />
 <input type="submit" name="edit" value="{tr}Edit{/tr}" /><br />
 <div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
-</div>
+
 {section name=l loop=$css}
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
 <div style="float:right;">{$css[l].id}</div>
@@ -42,6 +50,6 @@
 </div>
 {/section}
 {/if}
-</div>
 
 </form>
+</div>
