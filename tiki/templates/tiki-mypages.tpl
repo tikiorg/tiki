@@ -73,15 +73,17 @@
 </tr>
 {/foreach}
 </table>
-<select onselect='changepage();'>
+<select id='mypage_page_select' onchange='changepage();'>
  {foreach from=$pagesnum key=k item=v}
- <option value='{$k}'>{$v} / {$pcount}</option>
+ <option value='{$k}'{if $showpage == $k} selected{/if}>{$v} / {$pcount}</option>
  {/foreach}
 </select>
 
 {literal}
 <script type="text/javascript">
 function changepage() {
+	var p=$('mypage_page_select').value;
+	window.location='?showpage='+p;
 }
 
 var curmodal=0;
