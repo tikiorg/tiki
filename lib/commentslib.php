@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.161 2007-08-10 13:34:06 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.162 2007-08-13 08:57:48 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -502,7 +502,7 @@ class Comments extends TikiLib {
 
     /* queue management */
     function replace_queue($qId, $forumId, $object, $parentId, $user, $title, $data, $type = 'n', $topic_smiley = '', $summary = '',
-	    $topic_title = '') {
+	    $topic_title = '', $in_reply_to = '') {
 	// timestamp
 
 	$hash2 = md5($title . $data);
@@ -524,22 +524,23 @@ class Comments extends TikiLib {
 	    `topic_title`=?,
 	    `topic_smiley`=?,
 	    `summary` = ?,
-	    `timestamp` = ?
+	    `timestamp` = ?,
+	    `in_reply_to` = ?
 		where `qId`=?
 		";
 
-	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,(int)$this->now,$qId));
+	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,(int)$this->now,$in_reply_to,$qId));
 	    return $qId;
 	} else {
 	    $query = "insert into
 		`tiki_forums_queue`(`object`, `parentId`, `user`,
 			`title`, `data`, `type`, `topic_smiley`, `summary`,
-			`timestamp`, `topic_title`, `hash`, `forumId`)
-		values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			`timestamp`, `topic_title`, `hash`, `forumId`, `in_reply_to`)
+		values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	    $this->query($query, array($object, $parentId, $user,
 			$title, $data, $type, $topic_smiley, $summary, (int)$this->now,
-			$topic_title, $hash2, $forumId));
+			$topic_title, $hash2, $forumId, $in_reply_to));
 	    $qId = $this->getOne("select max(`qId`) from
 		    `tiki_forums_queue` where `hash`=? and
 		    `timestamp`=?",array($hash2,(int)$this->now));
@@ -610,7 +611,7 @@ class Comments extends TikiLib {
 	$threadId = $this->post_new_comment(
 		'forum:' . $info['forumId'], $info['parentId'],
 		$info['user'], $info['title'], $info['data'], 
-		$message_id, '', //in_reply_to
+		$message_id, $info['in_reply_to'],
 		$info['type'],
 		$info['summary'], $info['topic_smiley']
 		);

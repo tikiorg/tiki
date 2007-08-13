@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.118 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.119 2007-08-13 08:57:47 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -267,9 +267,9 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		&& ! ( $feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']) )
 	  ) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
-		//Replace things between square brackets by links
-		// no need to strip, & replaced by &lt; on display anyway
-		#$_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
+    
+		// Remove HTML tags and empty lines at the end of the posted comment
+		$_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"])); 
 
 		if ($tiki_p_admin_forum != 'y') {
 		    $_REQUEST["comment_topictype"] = 'n';
@@ -294,7 +294,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
 			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $_REQUEST["comment_topictype"],
-			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"]);
+			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"], '');
 		
 		    // PROCESS ATTACHMENT HERE        
 		    if ($qId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {

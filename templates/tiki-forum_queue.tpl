@@ -6,6 +6,7 @@
 <h3>{tr}Edit queued message{/tr}</h3>
 <form method="post" action="tiki-forum_queue.php">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}" />
 <input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
 <table class="normal">
 <tr>
