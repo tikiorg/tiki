@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.28 2007-08-14 09:41:38 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.29 2007-08-14 16:42:23 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -400,7 +400,7 @@ class MyPage {
 								 "WHERE id_mypage_types=?", array((int)$id));
 			foreach($vals['components'] as $component) {
 				$res=$tikilib->query("INSERT INTO tiki_mypage_types_components".
-									 " (`id_mypage_types`, `name`)".
+									 " (`id_mypage_types`, `compname`)".
 									 " VALUES (?,?)", array((int)$id, $component));
 			}
 		}
