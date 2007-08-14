@@ -23,11 +23,11 @@
   </tr>
   <tr>
    <th>{tr}Object Type{/tr}</th>
-   <td><select id="mypageedit_type" name="type">
-   	<option id="wiki" value="wiki">{tr}Wiki{/tr}</option>
-   	<option id="blog" value="blog">{tr}Blog{/tr}</option>
-   	<option id="channel" value="channel">{tr}Channel{/tr}</option>
-   	<option id="program" value="program">{tr}Program{/tr}</option>
+   <td>
+    <select id="mypageedit_type" name="type">
+    {foreach from=$mptypes item=mptype}
+   	<option value="{$mptype.name|escape}">{$mptype.name|escape}</option>
+    {/foreach}
    </select>
    </td>
   </tr>
