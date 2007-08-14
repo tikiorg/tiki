@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.199 2007-08-14 18:17:32 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.200 2007-08-14 18:34:23 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1488,3 +1488,7 @@ DELETE FROM users_permissions where type = 'component';
 
 #2007-08-13 nyloth
 ALTER TABLE tiki_forums_queue ADD COLUMN `in_reply_to` varchar(128) default NULL;
+
+#2007-08-14 niclone
+ALTER TABLE `tiki_mypage` ADD `id_types` INT NOT NULL AFTER `id_users`;
+ALTER TABLE `tiki_mypage` ADD INDEX `id_types` ( `id_types` );
