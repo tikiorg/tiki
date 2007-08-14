@@ -69,7 +69,7 @@
 
 </div>
 
-<input type='button' value='Create' onclick='showMptype(0);'>
+<input type='button' value='Create' onclick='showMptypeEdit(0);'>
 
 <table class="normal">
 <tr>
@@ -134,13 +134,14 @@ function showMptypeEdit(id) {
 
 	if (id > 0) {
 		xajax_mptype_fillinfos(id);
-		$('mptype_submit').value='Modify';
+		$('mptype_submit').value='{/literal}{tr}Modify{/tr}{literal}';
 	} else {
 		$('mptype_id').value=0;
 		$('mptype_name').value='';
 		$('mptype_description').value='';
 		$('mptype_section').value='';
 		$('mptype_permissions').value='';
+		$('mptype_submit').value='{/literal}{tr}Create{/tr}{literal}';
 	}
 
 	curmodal.show();
