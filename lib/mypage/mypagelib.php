@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.29 2007-08-14 16:42:23 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.30 2007-08-14 19:48:34 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -149,7 +149,14 @@ class MyPage {
 		global $tikilib;
 
 		$pages=array();
-		$res=$tikilib->query("SELECT * FROM tiki_mypage WHERE `id_users`=?",
+		$res=$tikilib->query("SELECT mp.*, ".
+							 "mpt.name as type_name, ".
+							 "mpt.description as type_description, ".
+							 "mpt.section as type_section, ".
+							 "mpt.permissions as type_permissions ".
+							 "FROM tiki_mypage mp ".
+							 "LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
+							 "WHERE `id_users`=?",
 							 array((int)$id_users), $limit, $offset);
 		while ($line = $res->fetchRow()) {
 			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', false);

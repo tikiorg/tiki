@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.11 2007-08-14 17:36:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.12 2007-08-14 19:48:34 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -116,7 +116,7 @@ function mypage_win_prepareConfigure($id_mypage, $compname) {
     return $objResponse;    
 }
 
-function mypage_update($id_mypage, $name, $description, $width, $height) {
+function mypage_update($id_mypage, $name, $type, $description, $width, $height) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -126,17 +126,19 @@ function mypage_update($id_mypage, $name, $description, $width, $height) {
     $mypage->setParam('description', $description);
     $mypage->setParam('width', (int)$width);
     $mypage->setParam('height', (int)$height);
+    $mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
     $mypage->commit();
 
     $objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
     $objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
     $objResponse->addAssign('mypagespan_width_'.$id_mypage, 'innerHTML', $mypage->getParam('width'));
     $objResponse->addAssign('mypagespan_height_'.$id_mypage, 'innerHTML', $mypage->getParam('height'));
+    $objResponse->addAssign('mypagespan_type_'.$id_mypage, 'innerHTML', $mypage->getParam('id_types'));
 
     return $objResponse;
 }
 
-function mypage_create($name, $description, $width, $height) {
+function mypage_create($name, $type, $description, $width, $height) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -146,6 +148,7 @@ function mypage_create($name, $description, $width, $height) {
     $mypage->setParam('description', $description);
     $mypage->setParam('width', (int)$width);
     $mypage->setParam('height', (int)$height);
+    $mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
     $mypage->commit();
 
     $objResponse->addScript("window.location.reload()");
