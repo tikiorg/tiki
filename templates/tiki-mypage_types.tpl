@@ -87,9 +87,9 @@
  <td><span id='mptype_section_{$mptype.id}'>{$mptype.section}</span></td>
  <td><span id='mptype_permissions_{$mptype.id}'>{$mptype.permissions}</span></td>
  <td>
-  {foreach from=$mptype.components item=component}
+  <span id='mptype_components_{$mptype.id}'>{foreach from=$mptype.components item=component}
    {$component.compname|escape}
-  {/foreach}
+  {/foreach}</span>
  </td>
  <td>
   <a href='#' onclick='showMptypeEdit({$mptype.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
@@ -139,9 +139,8 @@ function showMptypeEdit(id) {
 		$('mptype_id').value=0;
 		$('mptype_name').value='';
 		$('mptype_description').value='';
-		$('mptype_width').value='1000';
-		$('mptype_height').value='500';
-		$('mptype_submit').value='Create';
+		$('mptype_section').value='';
+		$('mptype_permissions').value='';
 	}
 
 	curmodal.show();
@@ -157,13 +156,13 @@ function saveMptypeEdit() {
 	var components=new Array();
 	for (var i=0; i<$('mptype_components').options.length; i++) {
 		if ($('mptype_components').options[i].selected)
-			components=Array.push(components, $('mptype_components').options[i].value);
+			components.push($('mptype_components').options[i].value);
 	}
 
 	var groups=new Array();
 	for (var i=0; i<$('mptype_groups').options.length; i++) {
 		if ($('mptype_groups').options[i].selected)
-			groups=Array.push(groups, $('mptype_groups').options[i].value);
+			groups.push($('mptype_groups').options[i].value);
 	}
 
 	var vals={
@@ -171,14 +170,14 @@ function saveMptypeEdit() {
 		'description' : $('mptype_description').value,
 		'section' : $('mptype_section').value,
 		'permissions' : $('mptype_permissions').value,
-		'components' : components,
-		'groups' : groups
+		'components': components,
+		'groups': groups,
 	};
 
 	if (id > 0) {
-		xajax_mptype_update(id, vals);
+		xajax_mptype_update(id, vals, components, groups);
 	} else {
-		xajax_mptype_create(vals);
+		xajax_mptype_create(vals, components, groups);
 	}
 
 	closeMptypeEdit();	
