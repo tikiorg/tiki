@@ -103,14 +103,14 @@ function initMypageEdit() {
 function showMypageEdit(id) {
 	if (id > 0) {
 		xajax_mypage_fillinfos(id);
-		$('mypageedit_submit').value='Modify';
+		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
 	} else {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_description').value='';
 		$('mypageedit_width').value='1000';
 		$('mypageedit_height').value='500';
-		$('mypageedit_submit').value='Create';
+		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
 	}
 
 	curmodal.show();
