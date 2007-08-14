@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.27 2007-08-13 19:58:26 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.28 2007-08-14 09:41:38 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -249,7 +249,14 @@ class MyPage {
 	 * one day, i'll make a libcomponents...
 	 */
 	function getAvailableComponents() {
-		return array('iframe', 'wiki', 'blah', 'pouet', 'coin', 'truc', 'forum', 'newsletter', 'video');
+		$r=array();
+		$d=opendir("components");
+		if ($d === FALSE) return $r;
+		while (($file = readdir($d)) !== false) {
+			if (preg_match('/^comp-[a-zA-Z0-9_-]+\.php$/', $file))
+				$r[]=substr($file, 5, -4);
+        }
+		return $r;
 	}
 
 	/* static */
