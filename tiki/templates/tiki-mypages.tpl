@@ -24,9 +24,9 @@
   <tr>
    <th>{tr}Object Type{/tr}</th>
    <td>
-    <select id="mypageedit_type" name="type">
+    <select id="mypageedit_type">
     {foreach from=$mptypes item=mptype}
-   	<option value="{$mptype.name|escape}">{$mptype.name|escape}</option>
+   	<option value="{$mptype.id|escape}">{$mptype.name|escape}</option>
     {/foreach}
    </select>
    </td>
@@ -53,6 +53,7 @@
 <tr>
  <th class="heading">{tr}Name{/tr}</th>
  <th class="heading">{tr}Description{/tr}</th>
+ <th class="heading">{tr}Type{/tr}</th>
  <th class="heading">{tr}Dimensions{/tr}</th>
  <th class="heading">{tr}Action{/tr}</th>
 </tr>
@@ -60,6 +61,7 @@
 <tr class="odd">
  <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name}</span></td>
  <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description}</span></td>
+ <td><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name}</span></td>
  <td>
   <span id='mypagespan_width_{$mypage.id}'>{$mypage.width}</span> x 
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
@@ -108,6 +110,7 @@ function showMypageEdit(id) {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_description').value='';
+		$('mypageedit_type').selectedIndex='0';
 		$('mypageedit_width').value='0';
 		$('mypageedit_height').value='500';
 		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
@@ -124,12 +127,14 @@ function saveMypageEdit() {
 	var id=$('mypageedit_id').value;
 	if (id > 0) {
 		xajax_mypage_update(id, $('mypageedit_name').value,
+					$('mypageedit_type').value,
 					$('mypageedit_description').value,
 					$('mypageedit_width').value,
 					$('mypageedit_height').value
 				   );
 	} else {
 		xajax_mypage_create($('mypageedit_name').value,
+				    $('mypageedit_type').value,
 				    $('mypageedit_description').value,
 				    $('mypageedit_width').value,
 				    $('mypageedit_height').value
