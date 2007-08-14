@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.198 2007-08-13 08:57:48 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.199 2007-08-14 18:17:32 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1472,7 +1472,7 @@ CREATE TABLE `tiki_mypagewin` (
 #2007-07-06 niclone
 ALTER TABLE `tiki_mypage` ADD `name` VARCHAR( 255 ) NOT NULL ,
 ADD `description` VARCHAR( 255 ) NOT NULL ;
-ALTER TABLE `tiki_mypage` ADD INDEX ( `name` ) ;
+ALTER TABLE `tiki_mypage` ADD INDEX `name` ( `name` ) ;
 
 #2007-08-07 sylvieg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage');
