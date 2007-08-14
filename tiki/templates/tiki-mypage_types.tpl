@@ -175,9 +175,9 @@ function saveMptypeEdit() {
 	};
 
 	if (id > 0) {
-		xajax_mptype_update(id, vals, components, groups);
+		xajax_mptype_update(id, vals);
 	} else {
-		xajax_mptype_create(vals, components, groups);
+		xajax_mptype_create(vals);
 	}
 
 	closeMptypeEdit();	
