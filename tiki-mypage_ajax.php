@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.12 2007-08-14 19:48:34 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.13 2007-08-15 13:40:02 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,24 +24,28 @@ if (0) {
 }
 
 if (0) {
-        $jax=xajaxResponseManager::getInstance();
-        $objResponse = new xajaxResponse();
-        //$objResponse->addAlert($outp);
-        $jax->append($objResponse);
-        $jax->send();
+	$jax=xajaxResponseManager::getInstance();
+	$objResponse = new xajaxResponse();
+	//$objResponse->addAlert($outp);
+	$jax->append($objResponse);
+	$jax->send();
 }
 
 
 function mypage_win_setrect($id_mypage, $id_mypagewin, $rect) {
     global $id_users;
-
+	
     $objResponse = new xajaxResponse();
-
+	
     $mypage=new MyPage((int)$id_mypage, $id_users);
     $mywin=$mypage->getWindow((int)$id_mypagewin);
 
-    $mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
-    $mywin->commit();
+	if ($mywin) {
+		$mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
+		$mywin->commit();
+	} else {
+		$objResponse->addScript("alert('Window not found');");
+	}
 
     return $objResponse;
 }
@@ -55,13 +59,13 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
     $err=$mypage->destroyWindow((int)$id_mypagewin);
     
     if (!empty($err)) {
-	$objResponse->addScript("alert('".addslashes($err)."');");
+		$objResponse->addScript("alert('".addslashes($err)."');");
 	
-	// hack... re-open the windows
-	$win=$mypage->getWindow((int)$id_mypagewin);
-	$objResponse->addScript($win->getJSCode(true));
+		// hack... re-open the windows
+		$win=$mypage->getWindow((int)$id_mypagewin);
+		$objResponse->addScript($win->getJSCode(true));
     }
-
+	
     return $objResponse;
 }
 
@@ -111,7 +115,7 @@ function mypage_win_prepareConfigure($id_mypage, $compname) {
     $comp=$mywin->getComponent(); // berk
 
     $objResponse->addAssign('mypage_divconfigure', 'innerHTML',
-			    $comp->getConfigureDiv());
+							$comp->getConfigureDiv());
 
     return $objResponse;    
 }
@@ -197,15 +201,15 @@ function mptype_fillinfos($id_mptype) {
     $mptype=MyPage::getMypageType($id_mptype);
 
     if ($mptype) {
-	$objResponse->addAssign('mptype_id', 'value', (int)$id_mptype);
-	$objResponse->addAssign('mptype_name', 'value', $mptype['name']);
-	$objResponse->addAssign('mptype_description', 'value', $mptype['description']);
-	$objResponse->addAssign('mptype_section', 'value', is_null($mptype['section']) ? '' : $mptype['section']);
-	$objResponse->addAssign('mptype_permissions', 'value', is_null($mptype['permissions']) ? '' : $mptype['permissions']);
-	foreach($mptype['components'] as $component)
-	    $objResponse->addAssign('mptype_components_'.$component['compname'], 'selected', '1');
+		$objResponse->addAssign('mptype_id', 'value', (int)$id_mptype);
+		$objResponse->addAssign('mptype_name', 'value', $mptype['name']);
+		$objResponse->addAssign('mptype_description', 'value', $mptype['description']);
+		$objResponse->addAssign('mptype_section', 'value', is_null($mptype['section']) ? '' : $mptype['section']);
+		$objResponse->addAssign('mptype_permissions', 'value', is_null($mptype['permissions']) ? '' : $mptype['permissions']);
+		foreach($mptype['components'] as $component)
+			$objResponse->addAssign('mptype_components_'.$component['compname'], 'selected', '1');
     } else {
-	$objResponse->addScript("alert('non');");
+		$objResponse->addScript("alert('non');");
     }
 
     return $objResponse;
