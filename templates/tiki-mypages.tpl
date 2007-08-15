@@ -67,8 +67,8 @@
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
  </td>
  <td>
-  <a href='tiki-mypage.php?id_mypage={$mypage.id}' title='{tr}view content{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view content{/tr}' /></a>
-  <a href='tiki-mypage.php?id_mypage={$mypage.id}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
+  <a href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}' title='{tr}view content{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view content{/tr}' /></a>
+  <a href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
   <a href='#' onclick='deleteMypage({$mypage.id});' title='{tr}delete entry{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete entry{/tr}' /></a>
  </td>
