@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.234 2007-08-02 10:02:49 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.235 2007-08-15 17:24:47 jonnybradley Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2018,7 +2018,7 @@ function get_included_groups($group, $recur=true) {
 		list($check,$expire,$userCookie) = explode('.',$hash);
 		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'])) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=? and `user`=?';
-			$user = $this->getOne($query, array('cookie',$hash,$userCookie));
+			$user = $this->getOne($query, array('cookie',"$check.$expire",$userCookie));
 			if ($user) {
 				if ($expire < $this->now) {
 					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
