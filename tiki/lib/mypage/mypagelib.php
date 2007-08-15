@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.30 2007-08-14 19:48:34 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.31 2007-08-15 13:48:25 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -469,7 +469,7 @@ class MyPageWindow {
 		global $tikilib;
 		
 		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->myspace->getParam('id_users'))) {
-			return "alert(tra('You do not have permissions to edit the component'))";
+			return tra('You do not have permissions to edit the component');
 		}
 			
 		if ($this->id < 0) {
