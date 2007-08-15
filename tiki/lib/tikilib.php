@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.768 2007-08-10 13:34:06 guidoscherp Exp $
+// CVS: $Id: tikilib.php,v 1.769 2007-08-15 17:40:02 jonnybradley Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5642,23 +5642,18 @@ function add_pageview() {
 		$target = 'target="_blank"';
 	    }
 
-		if (isset($_SERVER['SERVER_NAME'])) {
+		if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
 			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 		}
-	    if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]))
+	    if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://'))
 	    {
-		$target = '';
+			$target = '';
 	    } else {
 	    	global $feature_wiki_ext_icon;
 	    	if ($feature_wiki_ext_icon == 'y') {
 		    	$class = 'class="wiki external"';
 		    	$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 	    	}
-	    }
-
-	    if (!strstr($link, '//'))
-	    {
-		$target = '';
 	    }
 
 	    // The (?<!\[) stuff below is to give users an easy way to
