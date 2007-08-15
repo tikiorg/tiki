@@ -162,7 +162,9 @@ function sideBarOpacity(from, to){
 }
 
 function init(){
+	{/literal}{if $editit}{literal}
 	$('sideBarTab').addEvent('click', function(){extendContract()});
+	{/literal}{/if}{literal}
 }
 
 window.addEvent('load', function(){init()});
