@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.31 2007-08-15 13:48:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.32 2007-08-15 14:22:04 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -47,6 +47,7 @@ class MyPage {
 	var $params;
 	var $modified;
 	var $perms;
+	var $lasterror;
 
 	function MyPage($id=NULL, $id_users) {
 		$this->id=$id;
@@ -55,13 +56,14 @@ class MyPage {
 		$this->lastid=0;
 		$this->params=array();
 		$this->modified=array();
+		$this->lasterror=NULL;
 		$this->checkout();
 	}
 	
 	/*static*/
 	function getMyPage_byId($id, $id_users) {
 		$mypage=new MyPage($id, $id_users);
-		if (!$mypage->id) return NULL;
+		if (strlen($mypage->lasterror)) return $mypage->lasterror;
 		else return $mypage;
 	}
 
@@ -81,6 +83,7 @@ class MyPage {
 	}
 	
 	function getWindow($id) {
+		if (!isset($this->windows[$id])) return tra("window not found");
 		return $this->windows[$id];
 	}
 	
@@ -99,7 +102,8 @@ class MyPage {
 		global $tikilib;
 		
 		if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-			return "alert(tra('You do not have permissions to delete the page'))";
+			$this->lasterror=tra('You do not have permissions to delete the page');
+			return $this->lasterror;
 		}
 		
 		// we firstly destroy every windows that this mypage contain
@@ -126,7 +130,8 @@ class MyPage {
 		
 		if ($id_win > 0) {
 			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-				return tra('You do not have permissions to delete this component');
+				$this->lasterror=tra('You do not have permissions to delete this component');
+				return $this->lasterror;
 			}
 			$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
 							array($id_win, $this->id));
@@ -190,7 +195,8 @@ class MyPage {
 			}
 			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
 			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-				return "alert(tra('You do not have permissions to view the page'))";
+				$this->lasterror=tra('You do not have permissions to view the page');
+				return $this->lasterror;
 			}
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
@@ -206,7 +212,8 @@ class MyPage {
 		
 		if (is_null($this->id)) {
 			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
-				return "alert(tra('You do not have permissions to edit the page'))";
+				$this->lasterror=tra('You do not have permissions to edit the page');
+				return $this->lasterror;
 			}
 			
 			// create a new mypage id
@@ -421,7 +428,8 @@ class MyPageWindow {
 	var $params;
 	var $modified;
 	var $comp;
-	
+	var $lasterror;
+
 	/*
 	 * this constructor may be called only by the MyPage class
 	 * you should not create a new instance of this object directly
@@ -461,15 +469,15 @@ class MyPageWindow {
 	}
 	
 	function destroy() {
-
-		$this->mypage->destroyWindow($this);
+		return $this->mypage->destroyWindow($this);
 	}
 	
 	function commit() {
 		global $tikilib;
 		
 		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->myspace->getParam('id_users'))) {
-			return tra('You do not have permissions to edit the component');
+			$this->lasterror=tra('You do not have permissions to edit the component');
+			return $this->lasterror;
 		}
 			
 		if ($this->id < 0) {
@@ -559,12 +567,16 @@ class MyPageWindow {
 		global $tikilib;
 
 		$comp=$this->getComponent();
-		if (!$comp)
-			return 'alert("Component not available: '.$this->params['contenttype'].'");';
-		
-		if (!$comp->getPerm('view'))
-			return 'alert("You do not have permission to view this part of content");';
-		
+		if (!$comp) {
+			$this->lasterror=tra('Component not available: ').$this->params['contenttype'];
+			return $this->lasterror;
+		}
+
+		if (!$comp->getPerm('view')) {
+			$this->lasterror=tra("You do not have permission to view this part of content");
+			return $this->lasterror;
+		}
+
 		$v="tikimypagewin[".$this->id."]";
 
 		$winparams=array('left'	     => (int)$this->params['left'],

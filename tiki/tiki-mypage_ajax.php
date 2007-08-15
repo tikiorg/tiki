@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.14 2007-08-15 13:48:24 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.15 2007-08-15 14:22:03 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,20 +31,30 @@ if (0) {
 	$jax->send();
 }
 
+function mypage_error($err) {
+    $objResponse = new xajaxResponse();
+	$objResponse->addScript("alert('".addslashes($err)."');");
+    return $objResponse;
+}
 
 function mypage_win_setrect($id_mypage, $id_mypagewin, $rect) {
     global $id_users;
 	
     $objResponse = new xajaxResponse();
 	
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $mywin=$mypage->getWindow((int)$id_mypagewin);
+	if (is_string($mypage))
+		return mypage_error($mywin);
 
 	if ($mywin) {
 		$mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
 		$mywin->commit();
 	} else {
-		$objResponse->addScript("alert('Window not found');");
+		return mypage_error(tra("Window not found"));
 	}
 
     return $objResponse;
@@ -55,11 +65,14 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $err=$mypage->destroyWindow((int)$id_mypagewin);
     
     if (!empty($err)) {
-		$objResponse->addScript("alert('".addslashes($err)."');");
+		$objResponse=mypage_error($err);
 	
 		// hack... re-open the windows
 		$win=$mypage->getWindow((int)$id_mypagewin);
@@ -74,8 +87,13 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $mywin=$mypage->newWindow();
+	if (is_string($mywin))
+		return mypage_error($mywin);
 
     $mywin->setTitle($title);
     $mywin->setContentType($contenttype);
@@ -84,11 +102,10 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     $mywin->setContent($conf);
     $err=$mywin->commit();
 	if (strlen($err)) {
-		$objResponse->addScript("alert('".addslashes($err)."');");
 		$mywin->destroy();
-	} else {
-		$objResponse->addScript($mywin->getJSCode(true));
+		return mypage_error($err);
 	}
+	$objResponse->addScript($mywin->getJSCode(true));
 
     return $objResponse;
 }
@@ -98,12 +115,24 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $mywin=$mypage->newWindow();
+	if (is_string($mywin))
+		return mypage_error($mywin);
+
     $comp=$mywin->getComponent();
+	if (is_string($comp))
+		return mypage_error($comp);
+
     $conf=$comp->configure($form);
     $mywin->setContent($conf);
-    $mywin->commit();
+    $err=$mywin->commit();
+	if (strlen($err)) {
+		return mypage_error($err);
+	}
 
     return $objResponse;
 }
@@ -113,7 +142,10 @@ function mypage_win_prepareConfigure($id_mypage, $compname) {
     
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $mywin=$mypage->newWindow(); // berk
     $mywin->setContentType($compname); // berk
     $comp=$mywin->getComponent(); // berk
@@ -129,13 +161,19 @@ function mypage_update($id_mypage, $name, $type, $description, $width, $height) 
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
     $mypage->setParam('name', $name);
     $mypage->setParam('description', $description);
     $mypage->setParam('width', (int)$width);
     $mypage->setParam('height', (int)$height);
     $mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
-    $mypage->commit();
+    $err=$mypage->commit();
+	if (strlen($err)) {
+		return mypage_error($err);
+	}
 
     $objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
     $objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
@@ -152,14 +190,21 @@ function mypage_create($name, $type, $description, $width, $height) {
     $objResponse = new xajaxResponse();
 
     $mypage=new MyPage(NULL, $id_users);
-    $mypage->setParam('name', $name);
-    $mypage->setParam('description', $description);
-    $mypage->setParam('width', (int)$width);
-    $mypage->setParam('height', (int)$height);
-    $mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
-    $mypage->commit();
+    $mypage=MyPage::getMyPage_byId(NULL, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
 
-    $objResponse->addScript("window.location.reload()");
+	$mypage->setParam('name', $name);
+	$mypage->setParam('description', $description);
+	$mypage->setParam('width', (int)$width);
+	$mypage->setParam('height', (int)$height);
+	$mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
+	$err=$mypage->commit();
+	if (strlen($err)) {
+		return mypage_error($err);
+	}
+	
+	$objResponse->addScript("window.location.reload()");
 
     return $objResponse;
 }
@@ -169,10 +214,15 @@ function mypage_delete($id_mypage) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
-    $mypage->destroy();
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
 
-    $objResponse->addScript("window.location.reload()");
+    $err=$mypage->destroy();
+	if (strlen($err))
+		return mypage_error($err);
+
+	$objResponse->addScript("window.location.reload()");
 
     return $objResponse;
 }
@@ -182,7 +232,9 @@ function mypage_fillinfos($id_mypage) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage((int)$id_mypage, $id_users);
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
 
     $objResponse->addAssign('mypageedit_id', 'value', $id_mypage);
     $objResponse->addAssign('mypageedit_name', 'value', $mypage->getParam('name'));
