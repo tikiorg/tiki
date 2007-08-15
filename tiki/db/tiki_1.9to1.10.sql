@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.200 2007-08-14 18:34:23 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.201 2007-08-15 13:10:34 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1492,3 +1492,22 @@ ALTER TABLE tiki_forums_queue ADD COLUMN `in_reply_to` varchar(128) default NULL
 #2007-08-14 niclone
 ALTER TABLE `tiki_mypage` ADD `id_types` INT NOT NULL AFTER `id_users`;
 ALTER TABLE `tiki_mypage` ADD INDEX `id_types` ( `id_types` );
+
+#2007-08-15 niclone
+CREATE TABLE `tiki_mypage_types` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(256) collate utf8_bin NOT NULL,
+  `description` varchar(255) collate utf8_bin NOT NULL,
+  `section` varchar(255) collate utf8_bin default NULL,
+  `permissions` varchar(255) collate utf8_bin default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypage_types_components` (
+  `id_mypage_types` int(11) NOT NULL,
+  `compname` varchar(255) collate utf8_bin NOT NULL,
+  `mincount` int(11) NOT NULL default '1',
+  `maxcount` int(11) NOT NULL default '1',
+  KEY `id_mypage_types` (`id_mypage_types`)
+) ENGINE=MyISAM;

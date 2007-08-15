@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-13 08:57:47 $
-# $Author: nyloth $
+# $Date: 2007-08-15 13:10:33 $
+# $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4930,4 +4930,23 @@ CREATE TABLE `tiki_mypagewin` (
   PRIMARY KEY  (`id`),
   KEY `id_mypage` (`id_mypage`)
 ) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypage_types` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(256) collate utf8_bin NOT NULL,
+  `description` varchar(255) collate utf8_bin NOT NULL,
+  `section` varchar(255) collate utf8_bin default NULL,
+  `permissions` varchar(255) collate utf8_bin default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypage_types_components` (
+  `id_mypage_types` int(11) NOT NULL,
+  `compname` varchar(255) collate utf8_bin NOT NULL,
+  `mincount` int(11) NOT NULL default '1',
+  `maxcount` int(11) NOT NULL default '1',
+  KEY `id_mypage_types` (`id_mypage_types`)
+) ENGINE=MyISAM;
+
 # ------------------------------------
