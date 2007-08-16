@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.44 2007-08-10 13:42:40 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.45 2007-08-16 06:49:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,8 @@ if (empty($_REQUEST['galleryId']) || !($gal_info = $tikilib->get_file_gallery($_
 $podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
 
 $smarty->assign('individual', 'n');
+
+$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', true);
 
 if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'file gallery')) {
 	$smarty->assign('individual', 'y');

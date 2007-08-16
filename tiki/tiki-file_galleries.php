@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.50 2007-08-06 15:27:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.51 2007-08-16 06:49:15 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -9,16 +9,19 @@
 	  $smarty->display("error.tpl");
 	  die;  
 	}
-	
+
+	if(!isset($_REQUEST["galleryId"])) {
+	  $_REQUEST["galleryId"]=0;
+	}
+
+	$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', true);
+
 	if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') || (!isset($tiki_p_list_file_galleries) && $tiki_p_view_file_gallery != 'y')) {
 	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
 	  $smarty->display("error.tpl");
 	  die;
 	}
 	
-	if(!isset($_REQUEST["galleryId"])) {
-	  $_REQUEST["galleryId"]=0;
-	}
 	$smarty->assign('individual','n');
 	if($userlib->object_has_one_permission($_REQUEST["galleryId"],'file gallery')) {
 	  $smarty->assign('individual','y');
