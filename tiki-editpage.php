@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.172 2007-07-10 14:36:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.173 2007-08-16 06:49:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -540,9 +540,8 @@ $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
 
 // Permissions
-// if this page has at least one permission then we apply individual group/page permissions
-// if not then generic permissions apply
-if (!($tiki_p_admin == 'y' || $tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user) || $isUserPage)) {
+$tikilib->get_perm_object($page, 'wiki page', true);
+if (!( $tiki_p_edit == 'y' || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user) || $isUserPage )) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
