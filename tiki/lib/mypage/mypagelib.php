@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.32 2007-08-15 14:22:04 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.33 2007-08-16 10:57:28 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -475,7 +475,7 @@ class MyPageWindow {
 	function commit() {
 		global $tikilib;
 		
-		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->myspace->getParam('id_users'))) {
+		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->mypage->getParam('id_users'))) {
 			$this->lasterror=tra('You do not have permissions to edit the component');
 			return $this->lasterror;
 		}
@@ -590,7 +590,7 @@ class MyPageWindow {
 						 );
 
 		if (!$editable) {
-			$winparams['theme']	  = 'nada';
+			//$winparams['theme']	  = 'nada';
 			$winparams['resizable']  = false;
 			$winparams['draggable']  = false;
 			$winparams['buttons']	 = array('close'	=> false,
