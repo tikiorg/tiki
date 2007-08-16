@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.769 2007-08-15 17:40:02 jonnybradley Exp $
+// CVS: $Id: tikilib.php,v 1.770 2007-08-16 06:44:31 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3794,6 +3794,7 @@ function add_pageview() {
 					if ($global) {
 						global $$perm;
 						$$perm = $value;
+						$smarty->assign($perm, $value);
 					} else {
 						$ret[$perm] = $value;
 					}
