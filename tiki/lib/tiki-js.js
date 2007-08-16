@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.77 2007-03-07 15:08:49 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.78 2007-08-16 18:33:22 sampaioprimo Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -857,8 +857,26 @@ function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
         str = str + "}";
     }
     else
-        str = "{img src=\"img/wiki_up/" + filename + "\" }";
+        str = "{img src=\"img/wiki_up/" + filename + "\" }\n";
     insertAt(elementId, str);
+}
+
+/* add new upload image form in page edition */
+var img_form_count = 2;
+function addImgForm() {
+	var new_text = document.createElement('span');
+	new_text.setAttribute('id','picfile' + img_form_count);
+	new_text.innerHTML = '<input name=\'picfile' + img_form_count + '\' type=\'file\' onchange=\'javascript:insertImgFile("editwiki","picfile' + img_form_count + '","hasAlreadyInserted","img")\'/><br />';
+	document.getElementById('new_img_form').appendChild(new_text);
+	
+	var new_input = document.createElement('input');
+	new_input.setAttribute('type', 'hidden');
+	new_input.setAttribute('name', 'img_form_count');
+	new_input.setAttribute('value', img_form_count);
+	document.getElementById('new_img_form').appendChild(new_input);
+
+	needToConfirm = true;
+	img_form_count ++;
 }
 
 /*

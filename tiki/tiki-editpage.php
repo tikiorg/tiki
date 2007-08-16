@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.173 2007-08-16 06:49:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.174 2007-08-16 18:33:21 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -247,15 +247,17 @@ $wiki_up = "img/wiki_up";
 if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
 // Upload pictures here
 if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
-  if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
-    $picname = $_FILES['picfile1']['name'];
-
-		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) { 
-			move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
-			chmod("$wiki_up/$picname", 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
-		}
-    //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
-  }
+	for ($i = 1; $i <= $_REQUEST['img_form_count']; $i++) {	
+		if (isset($_FILES["picfile" . $i]) && is_uploaded_file($_FILES["picfile" . $i]['tmp_name'])) {
+		    $picname = $_FILES["picfile" . $i]['name'];
+		
+				if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) { 
+					move_uploaded_file($_FILES["picfile" . $i]['tmp_name'], "$wiki_up/$picname");
+					chmod("$wiki_up/$picname", 0644); // seems necessary on some system (see move_uploaded_file doc on php.net
+				}
+		    //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
+		 }
+	}
 }
 
 if ($feature_wiki_attachments == 'y' && isset($_REQUEST["attach"]) && ($tiki_p_wiki_attach_files == 'y' || $tiki_p_wiki_admin_attachments == 'y')) {
