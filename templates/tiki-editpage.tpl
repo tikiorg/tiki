@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.118 2007-08-07 15:00:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.119 2007-08-16 18:33:21 sampaioprimo Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -274,6 +274,8 @@ function searchrep() {
 <input type="hidden" name="hasAlreadyInserted" value="" />
 <input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
 <input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
+<div id="new_img_form"></div>
+<a href="javascript:addImgForm()" onclick="needToConfirm = false;">Add another image</a>
 </td></tr>
 {/if}
 {if $feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
