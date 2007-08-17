@@ -125,20 +125,18 @@ function closeMypageEdit() {
 
 function saveMypageEdit() {
 	var id=$('mypageedit_id').value;
+	var vals={
+		'name': $('mypageedit_name').value,
+		'description': $('mypageedit_description').value,
+		'id_types': $('mypageedit_type').value,
+		'width': $('mypageedit_width').value,
+		'height': $('mypageedit_height').value
+	};
+
 	if (id > 0) {
-		xajax_mypage_update(id, $('mypageedit_name').value,
-					$('mypageedit_type').value,
-					$('mypageedit_description').value,
-					$('mypageedit_width').value,
-					$('mypageedit_height').value
-				   );
+		xajax_mypage_update(id, vals);
 	} else {
-		xajax_mypage_create($('mypageedit_name').value,
-				    $('mypageedit_type').value,
-				    $('mypageedit_description').value,
-				    $('mypageedit_width').value,
-				    $('mypageedit_height').value
-				   );
+		xajax_mypage_create(vals);
 	}
 
 	closeMypageEdit();	
