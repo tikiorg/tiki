@@ -155,6 +155,7 @@ function htmlspecialchars(ch) {
 	return ch;
 }
 
+var mptypes={/literal}{$mptypes_js}{literal};
 function updateMypageParams(id, vals) {
 	for (var k in vals) {
 		switch(k) {
@@ -169,8 +170,10 @@ function updateMypageParams(id, vals) {
 				$('mypagespan_'+k+'_'+id).innerHTML=htmlspecialchars(vals[k]);
 				break;
 			case 'type':
-			case 'id_type': // TODO: convert id_type to type !
 				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(vals[k]);
+				break;
+			case 'id_types':
+				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(mptypes[vals[k]]);
 				break;
 		}
 	}
