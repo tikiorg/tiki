@@ -46,23 +46,30 @@
 
 {literal}
 <script type="text/javascript">
-var tabs1 = new SimpleTabs($('tab-block-1'), {
-	entrySelector: 'h5',
-	onSelect: function(toggle, container) {
-		toggle.addClass('tab-selected');
-		container.effect('opacity').start(0, 1); // 1) first start the effect
-		container.setStyle('display', ''); // 2) then show the element, to prevent flickering
-		},
-	onShow: function(toggle, container, index) {
-			toggle.addClass('tab-selected');
-			container.effect('opacity').start(0, 7); // 1) first start the effect
-			container.setStyle('display', '');
-		}
-});
-// open saved windows
-tikimypagewin=[];
-{/literal}{$mypagejswindows}{literal}
 
+function initSimpleTabs() {
+	var tabs1 = new SimpleTabs($('tab-block-1'), {
+		entrySelector: 'h5',
+		onSelect: function(toggle, container) {
+			toggle.addClass('tab-selected');
+			container.effect('opacity').start(0, 1); // 1) first start the effect
+			container.setStyle('display', ''); // 2) then show the element, to prevent flickering
+			},
+		onShow: function(toggle, container, index) {
+				toggle.addClass('tab-selected');
+				container.effect('opacity').start(0, 7); // 1) first start the effect
+				container.setStyle('display', '');
+			}
+	});
+}
+
+////////////////////
+
+var tikimypagewin=[];
+function initSavedWindows() {
+	// open saved windows
+	{/literal}{$mypagejswindows}{literal}
+}
 
 //////////////////////
 //
@@ -175,8 +182,6 @@ function initSideBar(){
 	{/literal}{/if}{literal}
 }
 
-window.addEvent('load', function(){initSideBar()});
-
 ///////////////////////////
 
 
@@ -190,6 +195,16 @@ window.addEvent('load', function(){initSideBar()});
 	});
 
 
+////////////////////////////
+
+function initMyPage() {
+	initSavedWindows();
+	initSimpleTabs();
+	initSideBar();
+}
+
+window.addEvent('domready', function(){initMyPage()});
+//window.addEvent('load', function(){initMyPage()}); // <- check if work better with IE+phplayers
 
 </script>
 {/literal}
