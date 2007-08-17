@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.19 2007-08-17 13:26:55 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.20 2007-08-17 18:34:23 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,7 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     $mywin->setContentType($contenttype);
     $comp=$mywin->getComponent();
     $conf=$comp->configure($form_config);
-    $mywin->setContent($conf);
+    $mywin->setConfig($conf);
     $err=$mywin->commit();
 	if (strlen($err)) {
 		$mywin->destroy();
@@ -119,7 +119,12 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-    $mywin=$mypage->newWindow();
+	if ($id_win) {
+		$mywin=$mypage->getWindow((int)$id_win);
+	} else {
+		$mywin=$mypage->newWindow();
+	}
+
 	if (is_string($mywin))
 		return mypage_error($mywin);
 
@@ -128,7 +133,7 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 		return mypage_error($comp);
 
     $conf=$comp->configure($form);
-    $mywin->setContent($conf);
+    $mywin->setConfig($conf);
     $err=$mywin->commit();
 	if (strlen($err)) {
 		return mypage_error($err);
@@ -137,7 +142,7 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
     return $objResponse;
 }
 
-function mypage_win_prepareConfigure($id_mypage, $compname) {
+function mypage_win_prepareConfigure($id_mypage, $id_win, $compname=null) {
     global $id_users;
     
     $objResponse = new xajaxResponse();
@@ -146,12 +151,26 @@ function mypage_win_prepareConfigure($id_mypage, $compname) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-    $mywin=$mypage->newWindow(); // berk
-    $mywin->setContentType($compname); // berk
-    $comp=$mywin->getComponent(); // berk
+	if ($id_win && strlen($compname)) {
+		$mywin=$mypage->newWindow(); // berk
+		$mywin->setContentType($compname); // berk
+		$comp=$mywin->getComponent(); // berk
+	} else {
+		$mywin=$mypage->getWindow($id_win);
+		if (is_string($mywin))
+			return mypage_error($mywin);
+
+		$comp=$mywin->getComponent();
+		if (is_string($comp))
+			return mypage_error($comp);
+	}
 
     $objResponse->addAssign('mypage_divconfigure', 'innerHTML',
 							$comp->getConfigureDiv());
+	
+	if ($id_win && strlen($compname)) {
+		$comp->destroy(); // berk
+	}
 
     return $objResponse;    
 }

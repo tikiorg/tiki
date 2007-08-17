@@ -15,14 +15,21 @@
 		<div id="tab-block-1" >
 			<h5>Tools</h5>
     			<div id="components_list">
+				<h6>New Component:</h6>
     				<ul>
      				{foreach from=$components item=component}
      					<li>
-      					<a href='#' onclick='mypage_newComponent("{$component}");'>{$component|escape}</a>
+      					<a href='#' onclick='mypage_editComponent("{$component}", true);'>{$component|escape}</a>
      					</li>
      				{/foreach}
     				</ul>
+
+				<h6>Configure selected component:</h6>
+				<ul><li>
+					<a href='#' onclick='mypage_editComponent(lastFocusedWindoo, false);'><span id='mypage_configcomp_span'></span></a>
+				</li></ul>
     			</div>
+
     			<h5>Colors</h5>
     			<div id="components_colors">
 				<ul>
@@ -65,6 +72,7 @@ function initSimpleTabs() {
 
 ////////////////////
 
+var lastFocusedWindoo=0;
 var tikimypagewin=[];
 function initSavedWindows() {
 	// open saved windows
@@ -77,7 +85,14 @@ function initSavedWindows() {
 //
 var mypage_winconf=null;
 
-function mypage_newComponent(compname) {
+function mypage_editComponent(compname, asnew) {
+	var compid=0;
+
+	if (!asnew) {
+		compid=compname;
+		compname=tikimypagewin[compid].options.title;
+	}
+
 	mypage_winconf=new Windoo({
 		"modal": true,
 		"width": 700,
@@ -102,17 +117,33 @@ function mypage_newComponent(compname) {
 		"draggable": false,
 		"theme": "aero",
 		"shadow": false,
-		"title": "New "+compname+" :"
-	}).setHTML("<p>Titre: <input type='text' id='mypage_configure_title' value=''></p><form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='Create' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' valye='' />")
+		"title": (asnew ? "New " : "Edit ")+compname+" :"
+	}).setHTML((asnew ? "<p>Titre: <input type='text' id='mypage_configure_title' value=''></p>" : "")+"<form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='"+(asnew ? "Create" : "Update")+"' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' value='' /><input type='hidden' id='mypage_config_compid' value='' />")
 	.show();
 
-	$('mypage_config_contenttype').value=compname;
-	xajax_mypage_win_prepareConfigure('{/literal}{$id_mypage}{literal}', compname);
-
+	if (asnew) {
+		$('mypage_config_contenttype').value=compname;
+		$('mypage_config_compid').value=0;
+		xajax_mypage_win_prepareConfigure('{/literal}{$id_mypage}{literal}', 0, compname);
+	} else {
+		$('mypage_config_contenttype').value='';
+		$('mypage_config_compid').value=compid;
+		xajax_mypage_win_prepareConfigure('{/literal}{$id_mypage}{literal}', compid);
+	}
 }
 
 function mypage_configuresubmit() {
-	xajax_mypage_win_create('{/literal}{$id_mypage}{literal}', $('mypage_config_contenttype').value, $('mypage_configure_title').value, xajax.getFormValues("mypage_formconfigure"));
+	compid=$('mypage_config_compid').value;
+
+	if (compid) {
+		xajax_mypage_win_configure('{/literal}{$id_mypage}{literal}', compid, xajax.getFormValues("mypage_formconfigure"));
+	} else {
+		xajax_mypage_win_create('{/literal}{$id_mypage}{literal}',
+			$('mypage_config_contenttype').value,
+			$('mypage_configure_title').value,
+			xajax.getFormValues("mypage_formconfigure"));
+	}
+
 	if (mypage_winconf) {
 		mypage_winconf.close();
 		mypage_winconf=null;
@@ -199,6 +230,20 @@ function initColorPicker() {
 }
 
 ////////////////////////////
+
+function htmlspecialchars(ch) {
+	ch = ch.replace(/&/g,"&amp;");
+	ch = ch.replace(/\"/g,"&quot;");
+	ch = ch.replace(/\'/g,"&#039;");
+	ch = ch.replace(/</g,"&lt;");
+	ch = ch.replace(/>/g,"&gt;");
+	return ch;
+}
+
+function windooFocusChanged(id) {
+	lastFocusedWindoo=id;
+	$('mypage_configcomp_span').innerHTML=htmlspecialchars(tikimypagewin[id].options.title);
+}
 
 function initMyPage() {
 	initSavedWindows();
