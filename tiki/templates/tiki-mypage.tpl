@@ -25,6 +25,14 @@
     			</div>
     			<h5>Colors</h5>
     			<div id="components_colors">
+				<ul>
+					<li>
+						Background:
+						<span id='myRainbow' style='cursor: pointer;'>
+							[&nbsp;&nbsp;&nbsp;&nbsp;]
+						</span>
+					</li>
+				</ul>
     			</div>
    		</div>
   	</div>
@@ -161,15 +169,26 @@ function sideBarOpacity(from, to){
 		});
 }
 
-function init(){
+function initSideBar(){
 	{/literal}{if $editit}{literal}
 	$('sideBarTab').addEvent('click', function(){extendContract()});
 	{/literal}{/if}{literal}
 }
 
-window.addEvent('load', function(){init()});
+window.addEvent('load', function(){initSideBar()});
 
 ///////////////////////////
+
+
+	var r = new MooRainbow('myRainbow', {
+		'startColor': [58, 142, 246],
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			$('myRainbow').style.background=color.hex;
+			$('mypage').style.background=color.hex;
+		},
+	});
+
 
 
 </script>
