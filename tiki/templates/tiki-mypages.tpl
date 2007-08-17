@@ -67,8 +67,8 @@
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
  </td>
  <td>
-  <a href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}' title='{tr}view content{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view content{/tr}' /></a>
-  <a href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
+  <a id='mypage_viewurl_{$mypage.id}' href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}' title='{tr}view content{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view content{/tr}' /></a>
+  <a id='mypage_editurl_{$mypage.id}' href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
   <a href='#' onclick='showMypageEdit({$mypage.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
   <a href='#' onclick='deleteMypage({$mypage.id});' title='{tr}delete entry{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete entry{/tr}' /></a>
  </td>
@@ -144,6 +144,36 @@ function saveMypageEdit() {
 
 function deleteMypage(id) {
 	xajax_mypage_delete(id);
+}
+
+function htmlspecialchars(ch) {
+	ch = ch.replace(/&/g,"&amp;");
+	ch = ch.replace(/\"/g,"&quot;");
+	ch = ch.replace(/\'/g,"&#039;");
+	ch = ch.replace(/</g,"&lt;");
+	ch = ch.replace(/>/g,"&gt;");
+	return ch;
+}
+
+function updateMypageParams(id, vals) {
+	for (var k in vals) {
+		switch(k) {
+			case 'name':
+				$('mypagespan_name_'+id).innerHTML=htmlspecialchars(vals[k]);
+				$('mypage_viewurl_'+id).href="tiki-mypage.php?mypage="+encodeURI(vals[k]);
+				$('mypage_editurl_'+id).href="tiki-mypage.php?mypage="+encodeURI(vals[k])+"&edit=1";
+				break;
+			case 'description':
+			case 'width':
+			case 'height':
+				$('mypagespan_'+k+'_'+id).innerHTML=htmlspecialchars(vals[k]);
+				break;
+			case 'type':
+			case 'id_type': // TODO: convert id_type to type !
+				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(vals[k]);
+				break;
+		}
+	}
 }
 
 {/literal}

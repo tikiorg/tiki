@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.18 2007-08-17 11:14:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.19 2007-08-17 13:26:55 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,16 +174,12 @@ function mypage_update($id_mypage, $vals) {
 		return mypage_error($err);
 	}
 
-    if (array_key_exists('name', $vals))
-		$objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
-	if (array_key_exists('description', $vals))
-		$objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
-	if (array_key_exists('width', $vals))
-		$objResponse->addAssign('mypagespan_width_'.$id_mypage, 'innerHTML', $mypage->getParam('width'));
-	if (array_key_exists('height', $vals))
-		$objResponse->addAssign('mypagespan_height_'.$id_mypage, 'innerHTML', $mypage->getParam('height'));
-	if (array_key_exists('type', $vals))
-		$objResponse->addAssign('mypagespan_type_'.$id_mypage, 'innerHTML', $mypage->getParam('id_types'));
+	$newvals=array();
+	foreach($vals as $k => $v) {
+		$newvals[$k]=$mypage->getParam($k);
+	}
+
+	$objResponse->call("updateMypageParams", $id_mypage, $newvals);
 
     return $objResponse;
 }
