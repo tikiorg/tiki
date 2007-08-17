@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.7 2007-08-14 17:47:32 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.8 2007-08-17 13:45:51 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,15 @@ function mypageedit_init() {
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.nada.css");
 
-	$smarty->assign("mptypes", MyPage::listMyPageTypes());
+	$mptypes=MyPage::listMyPageTypes();
+	$smarty->assign("mptypes", $mptypes);
+
+	$mptypes_js=array();
+	foreach($mptypes as $v) {
+		$mptypes_js[$v['id']]=$v['name'];
+	}
+	$mptypes_js=phptojsarray($mptypes_js);
+	$smarty->assign('mptypes_js', $mptypes_js);
 
 	$smarty->assign("mid", "tiki-mypages.tpl");
 	$smarty->display("tiki.tpl");
