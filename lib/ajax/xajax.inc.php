@@ -29,7 +29,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * 
  * @package xajax
- * @version $Id: xajax.inc.php,v 1.5 2007-08-17 12:23:05 niclone Exp $
+ * @version $Id: xajax.inc.php,v 1.6 2007-08-17 12:28:10 niclone Exp $
  * @copyright Copyright (c) 2005-2006  by Jared White & J. Max Wilson
  * @license http://www.gnu.org/copyleft/lesser.html#SEC3 LGPL License
  */
@@ -1030,7 +1030,11 @@ class xajax
 		}
 
 		// Add the path and the query string
-		$sURL.= $aURL['path'].@$aURL['query'];
+		if (array_key_exists("query",$aURL)) {
+			$sURL.= $aURL['path'].$aURL['query'];
+		} else {
+			$sURL.= $aURL['path'];
+		}
 
 		// Clean up
 		unset($aURL);
