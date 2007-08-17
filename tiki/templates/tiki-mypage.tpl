@@ -1,5 +1,5 @@
 <div style='width: {$mypage_width}; height: {$mypage_height};'>
-<div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; {if $mypage_bgcolor}background: {$mypage_bgcolor}{/if}; overflow: hidden;'>
+<div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; background: {$mypage_bgcolor}; overflow: hidden;'>
 
 {if $editit}
  <!-- sidebar -->
@@ -28,7 +28,7 @@
 				<ul>
 					<li>
 						Background:
-						<span id='myRainbow' style='cursor: pointer;'>
+						<span id='myRainbow' style='cursor: pointer; background: {$mypage_bgcolor};'>
 							[&nbsp;&nbsp;&nbsp;&nbsp;]
 						</span>
 					</li>
@@ -188,7 +188,7 @@ function initSideBar(){
 
 function initColorPicker() {
 	var r = new MooRainbow('myRainbow', {
-		'startColor': [58, 142, 246],
+		'startColor': new Color('{/literal}{$mypage_bgcolor}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
 			$('myRainbow').style.background=color.hex;
