@@ -179,12 +179,14 @@ function sideBarOpacity(from, to){
 function initSideBar(){
 	{/literal}{if $editit}{literal}
 	$('sideBarTab').addEvent('click', function(){extendContract()});
+	initColorPicker();
 	{/literal}{/if}{literal}
 }
 
 ///////////////////////////
 
 
+function initColorPicker() {
 	var r = new MooRainbow('myRainbow', {
 		'startColor': [58, 142, 246],
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
@@ -193,7 +195,7 @@ function initSideBar(){
 			$('mypage').style.background=color.hex;
 		},
 	});
-
+}
 
 ////////////////////////////
 
