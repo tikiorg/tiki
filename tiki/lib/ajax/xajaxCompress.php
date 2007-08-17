@@ -1,7 +1,45 @@
 <?php
-// xajaxCompressJavascript() compresses the javascript code for more efficient delivery
-// used internally 
-// $sJS is a string containing the javascript code to compress
+/**
+ * xajaxCompress.php :: function to compress Javascript
+ *
+ * xajax version 0.2.4
+ * copyright (c) 2005 by Jared White & J. Max Wilson
+ * http://www.xajaxproject.org
+ *
+ * xajax is an open source PHP class library for easily creating powerful
+ * PHP-driven, web-based Ajax Applications. Using xajax, you can asynchronously
+ * call PHP functions and update the content of your your webpage without
+ * reloading the page.
+ *
+ * xajax is released under the terms of the LGPL license
+ * http://www.gnu.org/copyleft/lesser.html#SEC3
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * @package xajax
+ * @version $Id: xajaxCompress.php,v 1.2 2007-08-17 12:23:05 niclone Exp $
+ * @copyright Copyright (c) 2005-2006  by Jared White & J. Max Wilson
+ * @license http://www.gnu.org/copyleft/lesser.html#SEC3 LGPL License
+ */
+
+/**
+ * Compresses the Javascript code for more efficient delivery.
+ * (used internally)
+ * 
+ * @param string contains the Javascript code to compress
+ */
 function xajaxCompressJavascript($sJS)
 {
 	//remove windows cariage returns
