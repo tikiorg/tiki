@@ -1,5 +1,5 @@
 <div style='width: {$mypage_width}; height: {$mypage_height};'>
-<div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; overflow: hidden;'>
+<div id='mypage' style='position: absolute; width: {$mypage_width}; height: {$mypage_height}; {if $mypage_bgcolor}background: {$mypage_bgcolor}{/if}; overflow: hidden;'>
 
 {if $editit}
  <!-- sidebar -->
@@ -193,6 +193,7 @@ function initColorPicker() {
 		'onComplete': function(color) {
 			$('myRainbow').style.background=color.hex;
 			$('mypage').style.background=color.hex;
+			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgcolor': color.hex });
 		},
 	});
 }
