@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.16 2007-08-17 09:01:14 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.17 2007-08-17 09:54:34 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,11 +174,16 @@ function mypage_update($id_mypage, $vals) {
 		return mypage_error($err);
 	}
 
-    $objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
-    $objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
-    $objResponse->addAssign('mypagespan_width_'.$id_mypage, 'innerHTML', $mypage->getParam('width'));
-    $objResponse->addAssign('mypagespan_height_'.$id_mypage, 'innerHTML', $mypage->getParam('height'));
-    $objResponse->addAssign('mypagespan_type_'.$id_mypage, 'innerHTML', $mypage->getParam('id_types'));
+    if (in_array('name', $vals))
+		$objResponse->addAssign('mypagespan_name_'.$id_mypage, 'innerHTML', $mypage->getParam('name'));
+	if (in_array('description', $vals))
+		$objResponse->addAssign('mypagespan_description_'.$id_mypage, 'innerHTML', $mypage->getParam('description'));
+	if (in_array('width', $vals))
+		$objResponse->addAssign('mypagespan_width_'.$id_mypage, 'innerHTML', $mypage->getParam('width'));
+	if (in_array('height', $vals))
+		$objResponse->addAssign('mypagespan_height_'.$id_mypage, 'innerHTML', $mypage->getParam('height'));
+	if (in_array('type', $vals))
+		$objResponse->addAssign('mypagespan_type_'.$id_mypage, 'innerHTML', $mypage->getParam('id_types'));
 
     return $objResponse;
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.15 2007-08-17 08:45:41 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.16 2007-08-17 09:54:34 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ function mypage_ajax_init() {
 	$ajaxlib->registerFunction("mypage_win_create");
     $ajaxlib->registerFunction("mypage_win_prepareConfigure");
     $ajaxlib->registerFunction("mypage_win_configure");
+	$ajaxlib->registerFunction("mypage_update");
 	$ajaxlib->processRequests();
 }
 
@@ -69,6 +70,8 @@ function mypage_init() {
 		die("mypage not found");
 	}
 
+	$id_mypage=$mypage->id;
+
 	// TODO: verify that we have permission to edit it
 	if (isset($_REQUEST['edit']) && $_REQUEST['edit'] == 1) $editit=true;
 	else $editit=false;
@@ -84,6 +87,8 @@ function mypage_init() {
 
 	$smarty->assign('mypage_width', $width);
 	$smarty->assign('mypage_height', $height);
+
+	$smarty->assign('mypage_bgcolor', $mypage->getParam('bgcolor'));
 
 	$smarty->assign('components', $mypage->getAvailableComponents());
 
