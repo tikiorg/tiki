@@ -59,9 +59,9 @@
 </tr>
 {foreach from=$mypages item=mypage}
 <tr class="odd">
- <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name}</span></td>
- <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description}</span></td>
- <td><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name}</span></td>
+ <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name|escape}</span></td>
+ <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description|escape}</span></td>
+ <td><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name|escape}</span></td>
  <td>
   <span id='mypagespan_width_{$mypage.id}'>{$mypage.width}</span> x 
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
