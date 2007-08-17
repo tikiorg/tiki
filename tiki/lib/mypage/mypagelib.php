@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.35 2007-08-17 09:43:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.36 2007-08-17 18:34:24 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -469,6 +469,7 @@ class MyPageWindow {
 				case 'width':
 				case 'height':
 				case 'contenttype':
+				case 'config':
 				case 'content':
 					$this->modified[$k]=true;
 					break;
@@ -542,6 +543,10 @@ class MyPageWindow {
 		$this->setParam('content', $content);
 	}
 	
+	function setConfig($config) {
+		$this->setParam('config', $config);
+	}
+	
 	function setPosition($left, $top) {
 		$this->setParam('left', (int)$left);
 		$this->setParam('top', (int)$top);
@@ -566,7 +571,7 @@ class MyPageWindow {
 		if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
 			require_once("components/comp-".$this->params['contenttype'].".php");
 			$classname="Comp_".$this->params['contenttype'];
-			$this->comp=new $classname($this->params['content']);
+			$this->comp=new $classname($this->params['config']);
 			return $this->comp;
 		}
 		return NULL;
@@ -609,14 +614,14 @@ class MyPageWindow {
 	
 		if ($this->params['contenttype'] == 'iframe') {
 			$winparams['type']="iframe";
-			$winparams['url']=$this->params['content'];
+			$winparams['url']=$this->params['config'];
 		}
 	
 		$js =$v."=new Windoo(".phptojsarray($winparams).");\n";
 		$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 		$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 		$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
-	
+		$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
 	
 		if ($this->params['contenttype'] != 'iframe') {
 			$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
