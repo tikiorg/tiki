@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.15 2007-08-15 14:22:03 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.16 2007-08-17 09:01:14 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -156,7 +156,7 @@ function mypage_win_prepareConfigure($id_mypage, $compname) {
     return $objResponse;    
 }
 
-function mypage_update($id_mypage, $name, $type, $description, $width, $height) {
+function mypage_update($id_mypage, $vals) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -165,11 +165,10 @@ function mypage_update($id_mypage, $name, $type, $description, $width, $height) 
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-    $mypage->setParam('name', $name);
-    $mypage->setParam('description', $description);
-    $mypage->setParam('width', (int)$width);
-    $mypage->setParam('height', (int)$height);
-    $mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
+	foreach($vals as $k => $v) {
+		$err=$mypage->setParam($k, $v);
+		if (strlen($err)) return mypage_error($err);
+	}
     $err=$mypage->commit();
 	if (strlen($err)) {
 		return mypage_error($err);
@@ -184,7 +183,7 @@ function mypage_update($id_mypage, $name, $type, $description, $width, $height) 
     return $objResponse;
 }
 
-function mypage_create($name, $type, $description, $width, $height) {
+function mypage_create($vals) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -194,11 +193,10 @@ function mypage_create($name, $type, $description, $width, $height) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-	$mypage->setParam('name', $name);
-	$mypage->setParam('description', $description);
-	$mypage->setParam('width', (int)$width);
-	$mypage->setParam('height', (int)$height);
-	$mypage->setParam('id_types', (int)$type); // TODO: verify that we have permissions to choose this type !
+	foreach($vals as $k => $v) {
+		$err=$mypage->setParam($k, $v);
+		if (strlen($err)) return mypage_error($err);
+	}
 	$err=$mypage->commit();
 	if (strlen($err)) {
 		return mypage_error($err);
