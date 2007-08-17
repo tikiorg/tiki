@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-08-15 13:10:33 $
+# $Date: 2007-08-17 10:17:12 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4910,9 +4910,11 @@ CREATE TABLE `tiki_mypage` (
   `height` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
+  `bgcolor` varchar(16) default NULL,
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
+  KEY `id_types` (`id_types`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE `tiki_mypagewin` (
@@ -4933,17 +4935,17 @@ CREATE TABLE `tiki_mypagewin` (
 
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(256) collate utf8_bin NOT NULL,
-  `description` varchar(255) collate utf8_bin NOT NULL,
-  `section` varchar(255) collate utf8_bin default NULL,
-  `permissions` varchar(255) collate utf8_bin default NULL,
+  `name` varchar(256) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `section` varchar(255) default NULL,
+  `permissions` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE `tiki_mypage_types_components` (
   `id_mypage_types` int(11) NOT NULL,
-  `compname` varchar(255) collate utf8_bin NOT NULL,
+  `compname` varchar(255) NOT NULL,
   `mincount` int(11) NOT NULL default '1',
   `maxcount` int(11) NOT NULL default '1',
   KEY `id_mypage_types` (`id_mypage_types`)
