@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.9 2007-08-21 15:05:53 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.10 2007-08-21 22:04:41 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,7 +71,7 @@ function mypageedit_init() {
 
 	$mptypes_js=array();
 	foreach($mptypes as $v) {
-		$mptypes_js[$v['id']]=$v['name'];
+		$mptypes_js[$v['id']]=$v;
 	}
 	$mptypes_js=phptojsarray($mptypes_js);
 	$smarty->assign('mptypes_js', $mptypes_js);

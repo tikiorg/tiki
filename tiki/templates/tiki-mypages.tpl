@@ -21,10 +21,10 @@
       <input class="register" type="radio" value="1" name="PageType"/>
    </td>
   </tr>
-  <tr>
+  <tr id='mypageedit_tr_type'>
    <th>{tr}Object Type{/tr}</th>
    <td>
-    <select id="mypageedit_type">
+    <select id="mypageedit_type" onchange='mypageTypeChange(this.value);'>
     {foreach from=$mptypes item=mptype}
    	<option value="{$mptype.id|escape}">{$mptype.name|escape}</option>
     {/foreach}
@@ -34,7 +34,7 @@
   {if $feature_categories eq "y"}
 	{include file=categorize.tpl}
   {/if}
-  <tr>
+  <tr id='mypageedit_tr_dimensions'>
    <th>{tr}Dimensions{/tr}</th>
    <td>
     <input id='mypageedit_width' type='text' name='width' value='' style='width: 55px'> x 
@@ -146,6 +146,12 @@ function deleteMypage(id) {
 	xajax_mypage_delete(id);
 }
 
+function mypageTypeChange(id) {
+	mptype=mptypes[id];
+	$('mypageedit_tr_dimensions').style.display=(mptype.fix_dimensions == 'yes' ? 'none' : '');
+	//$('mypageedit_tr_bgcolor').style.display=(mptype.fix_bgcolor == 'yes' ? 'none' : '');
+}
+
 function htmlspecialchars(ch) {
 	ch = ch.replace(/&/g,"&amp;");
 	ch = ch.replace(/\"/g,"&quot;");
@@ -173,7 +179,7 @@ function updateMypageParams(id, vals) {
 				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(vals[k]);
 				break;
 			case 'id_types':
-				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(mptypes[vals[k]]);
+				$('mypagespan_type_'+id).innerHTML=htmlspecialchars(mptypes[vals[k].name]);
 				break;
 		}
 	}
