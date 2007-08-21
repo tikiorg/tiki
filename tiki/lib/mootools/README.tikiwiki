@@ -1,6 +1,6 @@
 RELEASE: 1.11
-mootools.js is build via http://mootools.net/download
-all components where checked, here is the list:
+mootools.js is build using make-js.php in this directory
+all components where checked, here is the list (you can see it in make-js.php)
 
 .-- Class
 |   |-- Class.Extras.js
