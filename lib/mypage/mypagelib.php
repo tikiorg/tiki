@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.37 2007-08-21 15:05:53 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.38 2007-08-21 20:33:04 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -362,6 +362,11 @@ class MyPage {
 							 " mpt.description as description, ".
 							 " mpt.section as section, ".
 							 " mpt.permissions as permissions, ".
+							 " mpt.def_width as def_width, ".
+							 " mpt.def_height as def_height, ".
+							 " mpt.fix_dimensions as fix_dimensions, ".
+							 " mpt.def_bgcolor as def_bgcolor, ".
+							 " mpt.fix_bgcolor as fix_bgcolor, ".
 							 " mptc.compname as compname, ".
 							 " mptc.mincount as mincount, ".
 							 " mptc.maxcount as maxcount ".
@@ -417,7 +422,9 @@ class MyPage {
 	function updateMypageType($id, $vals) {
 		global $tikilib;
 
-		$cols=array("name", "description", "section", "permissions");
+		$cols=array("name", "description", "section", "permissions",
+					"def_width", "def_height", "fix_dimensions",
+					"def_bgcolor", "fix_bgcolor");
 
 		$tvals=$vals;
 		// we remove unauthorized cols
