@@ -66,7 +66,7 @@
 <td class="{cycle advance=false}">
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' border='0' title='{tr}Edit{/tr}' width='16' height='16' /></a>
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='pics/icons/monitor.png' border='0' alt='{tr}View{/tr}' title='{tr}View{/tr}' width='16' height='16' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' width='16' height='16' /></a> &nbsp;
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}Accept{/tr}' title='{tr}Accept{/tr}' width='16' height='16' /></a> &nbsp;
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 </td>
 </tr>

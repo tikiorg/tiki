@@ -172,8 +172,8 @@
 {/section}
 <tr>
 	<td style='text-align:center;' class="heading" colspan='16'>
-		<input type="submit" name="rej" value="{tr}reject{/tr}" />
-		<input type="submit" name="app" value="{tr}approve{/tr}" />
+		<input type="submit" name="rej" value="{tr}Reject{/tr}" />
+		<input type="submit" name="app" value="{tr}Approve{/tr}" />
 	</td>
 </tr>
 </table>

@@ -29,7 +29,7 @@
 <tr>
   <td class="userlistodd">{$pending_user|userlink}</td>
   <td class="userlistodd">{$time|date_format}</td>
-  <td class="userlistodd"><a href="tiki-friends.php?accept={$pending_user}">{tr}accept{/tr}</a>|<a href="tiki-friends.php?refuse={$pending_user}">{tr}refuse{/tr}</a></td>
+  <td class="userlistodd"><a href="tiki-friends.php?accept={$pending_user}">{tr}Accept{/tr}</a>|<a href="tiki-friends.php?refuse={$pending_user}">{tr}Refuse{/tr}</a></td>
 </tr>
 {/foreach}
 </table>
