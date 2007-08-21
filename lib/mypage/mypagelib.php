@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.36 2007-08-17 18:34:24 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.37 2007-08-21 15:05:53 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -141,28 +141,48 @@ class MyPage {
 	}
 	
 	/* static */
-	function countPages($id_users) {
+	function countPages($id_users, $type=NULL) {
 		global $tikilib;
 		
-		$pages=array();
-		return $tikilib->getOne("SELECT COUNT(*) FROM tiki_mypage WHERE `id_users`=?",
-								array((int)$id_users));
+		$query="SELECT count(*) ".
+			"FROM tiki_mypage mp ".
+			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
+			"WHERE `id_users`=?";
+		$r=array((int)$id_users);
+
+		if ($type !== NULL) {
+			$query.=" AND mpt.name=?";
+			$r[]=$type;
+		}
+
+		$res=$tikilib->query($query, $r, $limit, $offset);
+
+		return $tikilib->getOne($query, $r);
 	}
 	
 	/* static */
-	function listPages($id_users, $offset=-1, $limit=-1) {
+	function listPages($id_users, $type=NULL, $offset=-1, $limit=-1) {
 		global $tikilib;
 
 		$pages=array();
-		$res=$tikilib->query("SELECT mp.*, ".
-							 "mpt.name as type_name, ".
-							 "mpt.description as type_description, ".
-							 "mpt.section as type_section, ".
-							 "mpt.permissions as type_permissions ".
-							 "FROM tiki_mypage mp ".
-							 "LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
-							 "WHERE `id_users`=?",
-							 array((int)$id_users), $limit, $offset);
+
+		$query="SELECT mp.*, ".
+			"mpt.name as type_name, ".
+			"mpt.description as type_description, ".
+			"mpt.section as type_section, ".
+			"mpt.permissions as type_permissions ".
+			"FROM tiki_mypage mp ".
+			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
+			"WHERE `id_users`=?";
+		$r=array((int)$id_users);
+
+		if ($type !== NULL) {
+			$query.=" AND mpt.name=?";
+			$r[]=$type;
+		}
+
+		$res=$tikilib->query($query, $r, $limit, $offset);
+
 		while ($line = $res->fetchRow()) {
 			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', false);
 			$pages[]=$line;
