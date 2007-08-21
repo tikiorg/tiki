@@ -1,3 +1,12 @@
+
+{if $feature_search_stats eq 'y'}
+	<div class="rbox" name="tip">
+		<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+		<div class="rbox-data" name="tip">{tr}Search stats{/tr} {tr}can be seen on page{/tr} <a class='rbox-link' target='tikihelp' href='tiki-search_stats.php'>{tr}Search stats{/tr}</a> {tr}in Admin menu{/tr}</div>
+	</div>
+	<br /> 
+{/if}
+
 <div class="cbox">
   <div class="cbox-title">
     {tr}{$crumbs[$crumb]->description}{/tr}
@@ -9,22 +18,19 @@
 	<tr>
           <td class="form">
         {if $feature_help eq 'y'}<a href="{$helpurl}Referer+Search+Highlighting" target="tikihelp" class="tikihelp" title="{tr}Referer Search Highlighting{/tr}">{/if}
-                {tr}Referer Search Highlighting{/tr}
+                {tr}Referer Search Highlighting{/tr}:
                 {if $feature_help eq 'y'}</a>{/if}
-                :</td>
+                </td>
         <td><input type="checkbox" name="feature_referer_highlight"
                 {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
         </tr>
-<tr><td class="heading" colspan="2" align="center">{tr}Database search{/tr}</td></tr>
-
-	<tr>
-          <td class="heading" colspan="2">{tr}Search features{/tr}</td>
-        </tr><tr>
+<tr><th class="heading" colspan="2" align="center">{tr}Database Search using MySQL 'Full-Text' Feature{/tr}</th></tr>
+        <tr>
 	  <td class="form">
-	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Full Text Search{/tr}">{/if}
-		{tr}Full Text Search{/tr}
+	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Activate MySQL Full-Text feature{/tr}">{/if}
+		{tr}Activate MySQL 'Full-Text' feature{/tr}:
 		{if $feature_help eq 'y'}</a>{/if}
-	        :</td>
+	        </td>
           <td><input type="checkbox" name="feature_search_fulltext"
                 {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
         </tr>
@@ -33,20 +39,21 @@
         </tr><tr>
 	<td class="form">
 	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
-		{tr}Ignore individual object permissions{/tr}
+		{tr}Ignore individual object permissions{/tr}:
 		{if $feature_help eq 'y'}</a>{/if}
-	        :</td>
+	        </td>
           <td><input type="checkbox" name="feature_search_show_forbidden_obj"
                 {if $feature_search_show_forbidden_obj eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 	<td class="form">
 	{if $feature_help eq 'y'}<a href="{$helpurl}Search+Admin" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
-		{tr}Ignore category viewing restrictions{/tr}
+		{tr}Ignore category viewing restrictions{/tr}:
 		{if $feature_help eq 'y'}</a>{/if}
-	        :</td>
+	        </td>
           <td><input type="checkbox" name="feature_search_show_forbidden_cat"
                 {if $feature_search_show_forbidden_cat eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr><td class="heading" colspan="2" align="center">{tr}Database independant search or Tiki search{/tr}</td></tr>
+        </tr><tr><th class="heading" colspan="2" align="center">{tr}Database Independant Full Text Search or Tiki Search{/tr}</th></tr>
+	<tr><td>{tr}This is activated by default if MySQL 'Full-Text' feature is not activated above{/tr}</td><td>&nbsp;</td></tr>
 	{if $refresh_index_now neq 'y'}
 	<tr>
 	<td>
@@ -56,15 +63,15 @@
 	</tr>
 	{/if}
 	{if $refresh_tracker_index_now neq 'y' and $trk_with_mirror_tables neq 'y'}
-	<tr><td><a href="tiki-admin.php?page=search&refresh_tracker_index_now=y" class="link" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a></td><td></td></tr>
+	<tr><td><a href="tiki-admin.php?page=search&refresh_tracker_index_now=y" class="link" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a></td><td>&nbsp;</td></tr>
 	{/if}
       <tr><td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
 	<td class="form">
 {if $feature_help eq 'y'}<a href="{$helpurl}Search+Stats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
-                        {tr}Search stats{/tr}
+                        {tr}Search stats{/tr}:
                         {if $feature_help eq 'y'}</a>{/if}
-                        :</td>
+                        </td>
         <td><input type="checkbox" name="feature_search_stats"
             {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
 	</td>

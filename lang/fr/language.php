@@ -25,10 +25,10 @@
 //              parameter)
 // Examples:
 // http://www.neonchart.com/get_strings.php?lang=sv
-// Will translate langauage 'sv' and (almost) avoiding comment generation
+// Will translate language 'sv' and (almost) avoiding comment generation
 
 // http://www.neonchart.com/get_strings.php?lang=sv&comments
-// Will translate langauage 'sv' and generate all possible comments.
+// Will translate language 'sv' and generate all possible comments.
 // This is the most usefull mode when working on a translation.
 
 // http://www.neonchart.com/get_strings.php?lang=sv&nohelp&nosections
@@ -3636,12 +3636,14 @@ $lang=Array(
 "You can see users rank by score in the module users_rank, for that go to" => "Vous pouvez voir le classement des utilisateurs dans le modules users_rank, pour cela allez à",
 "Admin modules" => "Administrer les modules",
 "Referer Search Highlighting" => "Mise en relief de la chaîne recherchée",
-"Database search" => "Recherche faite par la base de donnèes",
+"Database search" => "Recherche faite par la base de données",
+"Database Search using MySQL 'Full-Text' Feature{/tr}" => "Recherche exploitant la fonctionnalité 'texte intégral' (Full-Text) de MySQL",
 "Search features" => "Fonctionnalités de la recherche",
 "Full Text Search" => "Recherche en texte intégral",
-"Performance issues" => "Problèmes de performance",
+"Activate MySQL 'Full-Text' feature" => "Activer la fonctionnalité 'texte intégral' (Full-Text) de MySQL",
+"Performance issues" => "Améliorations de performance",
 "Ignore individual object permissions" => "Ignorer les droits individuels sur les objets",
-"Database independant search or Tiki search" => "Recherche faite par Tiki indèpendante de la base de donnèes",
+"Database independant Full Text search or Tiki search" => "Recherche en texte intégral faite par Tiki indépendante de la base de données",
 "Refresh wiki search index now" => "Refaire la table d'index des pages Wiki maintenant",
 "SearchStats" => "Statistiques des recherches",
 "Settings for searching content" => "Configuration pour chercher le contenu",
