@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.14 2007-03-08 16:24:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.15 2007-08-21 09:17:35 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ $smarty->assign('where',$where);
 $smarty->assign('where2',tra($where));
 $filter = array();
 
-if($where=='pages') {
+if($where=='wikis') {
   if ($feature_wiki != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
     $smarty->display("error.tpl");
