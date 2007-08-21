@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.8 2007-08-17 13:45:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.9 2007-08-21 15:05:53 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,14 +19,16 @@ if (strlen($user) <= 0) {
 
 function mypageedit_populate() {
 	global $smarty, $id_users;
+	
+	$mypage_type=isset($_REQUEST['type']) ? $_REQUEST['type'] : NULL;
 
 	$lpp=25;
 	$showpage=isset($_REQUEST['showpage']) ? (int)$_REQUEST['showpage'] : 0;
 
-	$tcount=MyPage::countPages($id_users);
+	$tcount=MyPage::countPages($id_users, $mypage_type);
 	$pcount=(int)(($tcount-1) / $lpp) + 1;
 	$offset=$showpage * $lpp;
-	$pages=MyPage::listPages($id_users, $offset, $lpp);
+	$pages=MyPage::listPages($id_users, $mypage_type, $offset, $lpp);
 
 	$pagesnum=array(); for($i=0; $i < $pcount; $i++) $pagesnum[$i]=$i+1;
 	$smarty->assign("pagesnum", $pagesnum);
