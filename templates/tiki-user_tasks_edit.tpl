@@ -20,8 +20,8 @@
 {if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
 { if ($info.taskId > 0 and $info.creator ne $info.user) }
     <span class="tabbut">
-    {html_image file='img/icons2/tick.gif' width='15' height='15' border='0' alt='{tr}accept{/tr}'}
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}accept{/tr}</a>
+    {html_image file='img/icons2/tick.gif' width='15' height='15' border='0' alt='{tr}Accept{/tr}'}
+    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
     </span>
     <span class="tabbut">
     {html_image file='img/icons2/error.gif' width='14' height='14' border='0' alt='{tr}red{/tr}'}

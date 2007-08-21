@@ -2512,6 +2512,7 @@ $lang=Array(
 "attachment" => "附件",
 "No messages queued yet" => "尚無訊息佇列",
 "reject" => "駁回",
+"Reject" => "駁回",
 "adm" => "adm",
 "Reported messages for" => "回報訊息",
 "Reported by" => "回報自",
