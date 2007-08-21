@@ -21,7 +21,7 @@
       <input class="register" type="radio" value="1" name="PageType"/>
    </td>
   </tr>
-  <tr id='mypageedit_tr_type'>
+  <tr id='mypageedit_tr_type' {if $id_types}style='display: none;'{/if}>
    <th>{tr}Object Type{/tr}</th>
    <td>
     <select id="mypageedit_type" onchange='mypageTypeChange(this.value);'>
@@ -53,16 +53,16 @@
 <tr>
  <th class="heading">{tr}Name{/tr}</th>
  <th class="heading">{tr}Description{/tr}</th>
- <th class="heading">{tr}Type{/tr}</th>
- <th class="heading">{tr}Dimensions{/tr}</th>
+ <th class="heading" {if $id_types}style='display: none;'{/if}>{tr}Type{/tr}</th>
+ <th class="heading" {if $id_types && $mptypes[$id_types].fix_dimensions=='yes'}style='display: none;'{/if}>{tr}Dimensions{/tr}</th>
  <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {foreach from=$mypages item=mypage}
 <tr class="odd">
  <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name|escape}</span></td>
  <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description|escape}</span></td>
- <td><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name|escape}</span></td>
- <td>
+ <td {if $id_types}style='display: none;'{/if}><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name|escape}</span></td>
+ <td {if $id_types && $mptypes[$id_types].fix_dimensions=='yes'}style='display: none;'{/if}>
   <span id='mypagespan_width_{$mypage.id}'>{$mypage.width}</span> x 
   <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
  </td>
@@ -110,10 +110,11 @@ function showMypageEdit(id) {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_description').value='';
-		$('mypageedit_type').selectedIndex='0';
+		$('mypageedit_type').selectedIndex={/literal}{$id_types}{literal};
 		$('mypageedit_width').value='0';
 		$('mypageedit_height').value='500';
 		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
+		mypageTypeChange({/literal}{$id_types}{literal});
 	}
 
 	curmodal.show();
