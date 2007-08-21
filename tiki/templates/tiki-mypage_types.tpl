@@ -26,6 +26,23 @@
   </tr>
 
   <tr>
+   <th>{tr}Default Dimensions{/tr}</th>
+   <td>
+    <input id='mptype_def_width' type='text' name='width' value='' style='width: 55px'> x 
+    <input id='mptype_def_height' type='text' name='height' value='' style='width: 55px'><br />
+    <input id='mptype_fix_dimensions' type='checkbox' value='yes' /> Not editable
+   </td>
+  </tr>
+
+  <tr>
+   <th>{tr}Default background color{/tr}</th>
+   <td>
+    <input id='mptype_def_bgcolor' type='text' name='permissions' value='' /><br />
+    <input id='mptype_fix_bgcolor' type='checkbox' value='yes' /> Not editable
+   </td>
+  </tr>
+
+  <tr>
    <th>{tr}Components{/tr}</th>
    <td>
     <!-- tom don't like my multiselect snif :(
@@ -141,6 +158,11 @@ function showMptypeEdit(id) {
 		$('mptype_description').value='';
 		$('mptype_section').value='';
 		$('mptype_permissions').value='';
+		$('mptype_def_width').value='';
+		$('mptype_def_height').value='';
+		$('mptype_fix_dimensions').checked='';
+		$('mptype_def_bgcolor').value='';
+		$('mptype_fix_bgcolor').checked='';
 		$('mptype_submit').value='{/literal}{tr}Create{/tr}{literal}';
 	}
 
@@ -171,6 +193,11 @@ function saveMptypeEdit() {
 		'description' : $('mptype_description').value,
 		'section' : $('mptype_section').value,
 		'permissions' : $('mptype_permissions').value,
+		'def_width' : $('mptype_def_width').value,
+		'def_height' : $('mptype_def_height').value,
+		'fix_dimensions' : $('mptype_fix_dimensions').checked ? 'yes' : 'no',
+		'def_bgcolor' : $('mptype_def_bgcolor').value,
+		'fix_bgcolor' : $('mptype_fix_bgcolor').value ? 'yes' : 'no',
 		'components': components,
 		'groups': groups,
 	};
