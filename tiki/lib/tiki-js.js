@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.78 2007-08-16 18:33:22 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.79 2007-08-21 10:43:26 luciash Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -394,18 +394,20 @@ function tikitabs(focus,max) {
 	for (var i = 1; i < max; i++) {
 		var tabname = 'tab' + i;
 		var content = 'content' + i;
-		//if (document.getElementById(tabname) != 'undefined') {
+		if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
 			if (i == focus) {
 				//show(tabname);
 				show(content);
 				setCookie('tab',focus);
 				document.getElementById(tabname).style.borderColor="black";
+				document.getElementById(tabname).style.borderWidth="1px";
 			} else {
 				//hide(tabname);
 				hide(content);
-				document.getElementById(tabname).style.borderColor="white";
+				document.getElementById(tabname).style.borderColor="transparent";
+				document.getElementById(tabname).style.borderWidth="0";
 			}
-		//}
+		}
 	}
 }
 
