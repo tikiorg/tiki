@@ -106,15 +106,21 @@ function showMypageEdit(id) {
 	if (id > 0) {
 		xajax_mypage_fillinfos(id);
 		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
+		curmodal.setTitle("Edit... ");
 	} else {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_description').value='';
-		$('mypageedit_type').selectedIndex={/literal}{$id_types}{literal};
+		{/literal}{if $id_types}{literal}
+		  $('mypageedit_type').value={/literal}{$id_types}{literal};
+		{/literal}{else}{literal}
+		  $('mypageedit_type').selectedIndex=0;
+		{/literal}{/if}{literal}
 		$('mypageedit_width').value='0';
 		$('mypageedit_height').value='500';
 		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
-		mypageTypeChange({/literal}{$id_types}{literal});
+		mypageTypeChange($('mypageedit_type').value);
+		curmodal.setTitle("New...");
 	}
 
 	curmodal.show();
@@ -148,9 +154,11 @@ function deleteMypage(id) {
 }
 
 function mypageTypeChange(id) {
-	mptype=mptypes[id];
-	$('mypageedit_tr_dimensions').style.display=(mptype.fix_dimensions == 'yes' ? 'none' : '');
-	//$('mypageedit_tr_bgcolor').style.display=(mptype.fix_bgcolor == 'yes' ? 'none' : '');
+	if (id) {
+		mptype=mptypes[id];
+		$('mypageedit_tr_dimensions').style.display=(mptype.fix_dimensions == 'yes' ? 'none' : '');
+		//$('mypageedit_tr_bgcolor').style.display=(mptype.fix_bgcolor == 'yes' ? 'none' : '');
+	}
 }
 
 function htmlspecialchars(ch) {
