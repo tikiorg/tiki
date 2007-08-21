@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.55 2007-06-02 16:12:22 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.56 2007-08-21 08:21:18 luciash Exp $
  *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -275,6 +275,26 @@ ul, ol {
 }
 #caltable .calfocus a, #caltable .calfocuson a { /* calendar focus date links */
   text-decoration: none;
+}
+/* content of calendar day */
+.calcontent {
+      min-height: 7em;
+      height: auto !important;
+      height: 7em;
+      min-width: 7em;
+      width: auto !important;
+      width: 7em;
+}
+
+/* Tiki debugger console */
+#debugconsole {
+	background-color: #def;
+	border: solid 1px #000;
+	left: 50%; top: 50%;
+	margin-left: -300px; margin-top: -150px;
+	overflow: auto;
+	position: absolute;
+	width: 600px; height: 300px;
 }
 
 #mod-assistant {
@@ -678,10 +698,7 @@ div.articlebody {
 
 .mdksubmenu {
   display: table;
-  z-index: 999;
   position: absolute;
-  left: 0;
-  top: 0;
   background-color: #FFFFFF;
   margin-left: 15px;
   visibility: hidden;
@@ -691,15 +708,12 @@ div.articlebody {
 }
 
 .mdksubframe  {
-  z-index: 1000;
-  position: relative;
   display: block;
   border: 0px solid #000000;
 }
 
 .mdkitem  {
   border-top: 1px solid #aaccee;
-  position: relative;
   text-align: left;
   white-space: nowrap;
 }
@@ -707,7 +721,7 @@ div.articlebody {
 .mdkitem a  {
   background-color: #f0f9ff;
   padding: 2px 5px 2px 5px;
-  position: relative;
+  position: relative;/* this is important to display arrows in menus */
   display: block;
   text-decoration: none;
 }
@@ -724,6 +738,7 @@ div.articlebody {
   color: #000;
 }
 
+/* display arrows in menus */
 .mdkitem .mdkfwdarr {
   position: absolute;
   top: 5px;
@@ -732,18 +747,27 @@ div.articlebody {
 
 
 /* tiki tabs */
-
+#page-bar {
+	border-bottom: solid 1px #000;
+	display: block;
+	float: left;
+	width: 100%;
+}
 .tabmark {
-  display: inline;
-  font-size: 85%;
-  background-color: #abcdef;
-  border: 1px solid #abcdef;
-  margin: 0px;
-  margin-right: 5px;
-  padding: 1px 0px 1px 0px;
+	display: block;
+	float: left;
+	font-size: 85%;
+	background-color: #abcdef;
+	border: solid 1px transparent;
+	border-bottom: none;
+	margin: 0px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-bottom: -1px;
+	padding: 1px 0px 1px 0px;
 }
 .tabmark a { 
-  border-bottom : 0;
+  border-bottom: solid 1px transparent;
   color: #000;
   padding: 1px 5px 1px 5px;
   text-decoration: none;
@@ -758,9 +782,9 @@ div.articlebody {
 }
 
 .tabcontent {
-  z-index : 200;
-  position: relative;
-  border: 1px solid #abcdef;
+  border: 1px solid #000;
+  border-top: none;
+  clear: left;
   padding: 6px 2px 2px 2px;
   margin-bottom: 25px;
   background-color: #f0f9ff;
