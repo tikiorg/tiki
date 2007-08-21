@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.20 2007-08-17 18:34:23 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.21 2007-08-21 21:14:35 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -280,6 +280,11 @@ function mptype_fillinfos($id_mptype) {
 		$objResponse->addAssign('mptype_description', 'value', $mptype['description']);
 		$objResponse->addAssign('mptype_section', 'value', is_null($mptype['section']) ? '' : $mptype['section']);
 		$objResponse->addAssign('mptype_permissions', 'value', is_null($mptype['permissions']) ? '' : $mptype['permissions']);
+		$objResponse->addAssign('mptype_def_width', 'value', is_null($mptype['def_width']) ? '' : $mptype['def_width']);
+		$objResponse->addAssign('mptype_def_height', 'value', is_null($mptype['def_height']) ? '' : $mptype['def_height']);
+		$objResponse->addAssign('mptype_fix_dimensions', 'checked', $mptype['fix_dimensions'] == 'yes' ? true : false);
+		$objResponse->addAssign('mptype_def_bgcolor', 'value', is_null($mptype['def_bgcolor']) ? '' : $mptype['def_bgcolor']);
+		$objResponse->addAssign('mptype_fix_bgcolor', 'checked', $mptype['fix_bgcolor'] == 'yes' ? true : false);
 		foreach($mptype['components'] as $component)
 			$objResponse->addAssign('mptype_components_'.$component['compname'], 'selected', '1');
     } else {
