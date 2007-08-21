@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-08-17 10:17:12 $
+# $Date: 2007-08-21 20:33:05 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4928,7 +4928,8 @@ CREATE TABLE `tiki_mypagewin` (
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `contenttype` enum('iframe','wiki') default NULL,
-  `content` text,
+  `config` blob,
+  `content` blob,
   PRIMARY KEY  (`id`),
   KEY `id_mypage` (`id_mypage`)
 ) ENGINE=MyISAM;
@@ -4939,6 +4940,11 @@ CREATE TABLE `tiki_mypage_types` (
   `description` varchar(255) NOT NULL,
   `section` varchar(255) default NULL,
   `permissions` varchar(255) default NULL,
+  `def_height` int(11) default NULL,
+  `def_width` int(11) default NULL,
+  `fix_dimensions` enum('no','yes') NOT NULL,
+  `def_bgcolor` varchar(8) default NULL,
+  `fix_bgcolor` enum('no','yes') NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
