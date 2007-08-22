@@ -5010,6 +5010,7 @@ $lang=Array(
 "Image Name" => "Nome da Imagem",
 "Image size" => "Tamanho da imagem",
 "imagescale" => "escaladeimagem",
+"Image Scale" => "Escaladeimagem",
 "Move image" => "Mover a imagem",
 "You can view this image in your browser using" => "Você pode visualizar esta imagem em seu navegador usando",
 "End" => "Fim",

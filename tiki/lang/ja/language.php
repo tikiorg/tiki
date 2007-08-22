@@ -3560,6 +3560,7 @@ $lang=Array(
 "Stop" => "stop",
 "Image size" => "Image size",
 "imagescale" => "imagescale",
+"Image Scale" => "imagescale",
 "details" => "details",
 "h" => "h",
 "+" => "+",

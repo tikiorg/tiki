@@ -3045,6 +3045,7 @@ $lang=Array(
 // "Height of inner Heading" => "Height of inner Heading",
 // "tbheight" => "tbheight",
 // "imagescale" => "imagescale",
+// "Image Scale" => "Imagescale",
 // "Automatic Page Breaks" => "Automatic Page Breaks",
 // "Select Wiki Pages" => "Select Wiki Pages",
 // "add page" => "add page",

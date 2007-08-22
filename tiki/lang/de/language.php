@@ -4408,6 +4408,7 @@ $lang=Array(
 "Image Name" => "Bildname",
 "Image size" => "Bildgr&ouml;sse",
 "imagescale" => "Bildskalierung",
+"Image Scale" => "Bildskalierung",
 "Move image" => "Bild verschieben",
 "You can view this image in your browser using" => "Sie k&ouml;nnen dieses Bild in Ihrem Browser betrachten",
 "You can include the image in an HTML page using one of these lines" => "Das Bild kann wie folgt in eine HTML-Seite eingebunden werden",

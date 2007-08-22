@@ -2470,6 +2470,7 @@ $lang=Array(
 // "Click to zoom" => "Click to zoom",
 // "Image size" => "Image size",
 // "imagescale" => "imagescale",
+// "Image Scale" => "imagescale",
 // "You can include the image in an HTML page using one of these lines" => "You can include the image in an HTML page using one of these lines",
 // "You can include the image in a tiki page using one of these lines" => "You can include the image in a tiki page using one of these lines",
 // "Browse related users" => "Browse related users",

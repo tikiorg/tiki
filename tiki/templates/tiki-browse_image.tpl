@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.52 2007-08-22 09:17:34 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.53 2007-08-22 09:27:18 jyhem Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -105,7 +105,7 @@
 	<tr><td class="odd">{tr}Image Name{/tr}:</td><td class="odd">{$name}</td></tr>
 	<tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
 	<tr><td class="odd">{tr}Image size{/tr}:</td><td class="odd">{$xsize}x{$ysize}</td></tr>
-	<tr><td class="even">{tr}imagescale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
+	<tr><td class="even">{tr}Image Scale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
 	<tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
 	<tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
 	{if $feature_maps eq 'y' and $gal_info.geographic eq 'y'}

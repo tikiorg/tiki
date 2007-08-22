@@ -5153,6 +5153,7 @@ $lang=Array(
 "Image Name" => "Billednavn",
 "Image size" => "Billed størrelse",
 "imagescale" => "billed størrelse",
+"Image Scale" => "Billed størrelse",
 "Move image" => "Flyt billede",
 "You can view this image in your browser using" => "Du kan se dette billede i din browser ved hjælp af",
 "End" => "Afslut",

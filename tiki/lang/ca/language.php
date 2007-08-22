@@ -4910,6 +4910,7 @@ $lang=Array(
 "Image Name" => "Nom de la imatge",
 "Image size" => "Mida de la imatge",
 "imagescale" => "escala de la imatge",
+"Image Scale" => "Escala de la imatge",
 "Move image" => "Moure la imatge",
 "You can view this image in your browser using" => "Podeu visualitzar aquesta imatge en el vostre cercador emprant",
 "Edit/Create" => "Edita/Crea",

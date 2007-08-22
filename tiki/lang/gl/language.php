@@ -906,6 +906,7 @@ $lang=Array(
 "Chair" => "Cadeira",
 "tbheight" => "altura da táboa",
 "imagescale" => "escala da imaxe",
+"Image Scale" => "Escala da imaxe",
 "URL:" => "URL:",
 "cType" => "cTipo",
 "editor" => "editor",

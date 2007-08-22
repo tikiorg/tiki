@@ -4013,6 +4013,7 @@ $lang=Array(
 "Image Name" => "Kuvan Nimi",
 "Image size" => "Kuvan koko",
 "imagescale" => "kuvamuunnos",
+"Image Scale" => "Kuvamuunnos",
 "Latitude (WGS84/decimal degrees)" => "Latitude (WGS84/desimaali astetta)",
 "Longitude (WGS84/decimal degrees)" => "Longitude (WGS84/desimaali astetta)",
 "Move image" => "Siirrä kuva",
