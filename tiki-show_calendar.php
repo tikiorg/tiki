@@ -243,7 +243,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			$e = 0;
 
 			foreach ($listevents["$dday"] as $le) {
-				$le['modifiable'] = in_array($le['calendarId'], $modifiable)? "y": "n";
+				$le['modifiable'] = isset($modifiable) && in_array($le['calendarId'], $modifiable)? "y": "n";
 				$leday["{$le['time']}$e"] = $le;
 
 				$smarty->assign_by_ref('cellhead', $le["head"]);
