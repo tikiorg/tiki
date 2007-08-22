@@ -1503,6 +1503,7 @@ $lang=Array(
 "admin" => "admin",
 "level" => "level",
 "imagescale" => "imagescale",
+"Image Scale" => "Imagescale",
 "h" => "h",
 "+" => "+",
 "Location" => "Location",

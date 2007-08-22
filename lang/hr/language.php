@@ -5105,6 +5105,7 @@ $lang=Array(
 "Image Name" => "Naziv Slike",
 "Image size" => "Veličina slike",
 "imagescale" => "skalaslike",
+"Image Scale" => "Skalaslike",
 "Move image" => "Pomakni slike",
 "You can view this image in your browser using" => "Ovu sliku možete vidjeti u vašem pregledniku koristeći",
 "End" => "Kraj",

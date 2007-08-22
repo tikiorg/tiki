@@ -1340,6 +1340,7 @@ $lang=Array(
 "Directory batch" => "Directory batch",
 "popup" => "popup",
 "imagescale" => "imagescale",
+"Image Scale" => "Imagescale",
 "h" => "h",
 "zoom" => "zoom",
 "+" => "+",

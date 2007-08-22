@@ -2450,6 +2450,7 @@ $lang=Array(
 "Height of inner Heading" => "內層標題大小",
 "tbheight" => "表格大小",
 "imagescale" => "影像比率",
+"Image Scale" => "影像比率",
 "Select Wiki Pages" => "選擇 Wiki 頁面",
 "reset" => "重新設定",
 "Add a related category" => "加入相關類別",

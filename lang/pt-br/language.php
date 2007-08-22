@@ -5156,6 +5156,7 @@ $lang=Array(
 "Image Name" => "Nome da Imagem",
 "Image size" => "Tamanho da imagem",
 "imagescale" => "escaladeimagem",
+"Image Scale" => "Escaladeimagem",
 "Latitude (WGS84/decimal degrees)" => "Latitude (WGS84/decimal graus)",
 "Longitude (WGS84/decimal degrees)" => "Longitude (WGS84/decimal graus)",
 "Move image" => "Mover a imagem",

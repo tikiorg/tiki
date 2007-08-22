@@ -4992,6 +4992,7 @@ $lang=Array(
 "Image Name" => "Bildnamn",
 "Image size" => "Bildstorlek",
 "imagescale" => "bildskala",
+"Image Scale" => "Bildskala",
 "Move image" => "Flyta bilden",
 "You can view this image in your browser using" => "Du kan se denna bild i din webbläsare med",
 "End" => "Slut",

@@ -3611,6 +3611,7 @@ $lang=Array(
 // "Image Name" => "Image Name",
 // "Image size" => "Image size",
 // "imagescale" => "imagescale",
+// "Image Scale" => "Imagescale",
 // "Move image" => "Move image",
 // "You can view this image in your browser using" => "You can view this image in your browser using",
 // "You can include the image in an HTML page using one of these lines" => "You can include the image in an HTML page using one of these lines",

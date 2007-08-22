@@ -4132,6 +4132,7 @@ $lang=Array(
 "Image Name" => "Naam Afbeelding",
 "Image size" => "Afbeeldinggrootte",
 "imagescale" => "schaal afbeelding",
+"Image Scale" => "Schaal afbeelding",
 "Move image" => "Afbeelding verplaatsten",
 "You can view this image in your browser using" => "U kan deze afbeelding in uw browser bekijken met",
 "You can include the image in an HTML page using one of these lines" => "U kan de afbeelding in een HTML-pagina insluiten via &eacute;&eacute;n van volgende lijnen",

@@ -5016,6 +5016,7 @@ $lang=Array(
 "Image Name" => "Назва зображення",
 "Image size" => "Розмір зображення",
 "imagescale" => "масштаб зображ.",
+"Image Scale" => "масштаб зображ.",
 "Move image" => "Перемістити зображення",
 "You can view this image in your browser using" => "Ви можете побачити це зображення в своєму переглядачі, скористувавшись",
 "End" => "Кінець",

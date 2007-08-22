@@ -3927,6 +3927,7 @@ $lang=Array(
 "stop" => "stop",
 "Stop" => "Stop",
 "imagescale" => "imagescale",
+"Image Scale" => "Imagescale",
 "End" => "End",
 "h" => "h",
 "+" => "+",

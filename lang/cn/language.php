@@ -5709,6 +5709,7 @@ $lang=Array(
 "Image Name" => "图像名称",
 "Image size" => "图像大小",
 "imagescale" => "图像比例",
+"Image Scale" => "图像比例",
 "Move image" => "移动图像",
 "You can view this image in your browser using" => "你可查看此图像在你的浏览器中使用",
 "You can include the image in an HTML page using one of these lines" => "你可用以下之一的代码把这个图像包含在一个HTML页面里",

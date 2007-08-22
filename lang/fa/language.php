@@ -3046,6 +3046,7 @@ $lang=Array(
 "Height of inner Heading" => "ارتفاع سرصفحه‌ي مياني",
 "tbheight" => "ارتفاع جدول",
 "imagescale" => "مقياس تصوير",
+"Image Scale" => "مقياس تصوير",
 "Automatic Page Breaks" => "جدا كردن خودكار صفحات",
 "Select Wiki Pages" => "انتخاب صفحات ويكي",
 "add page" => "صفحه را اضافه كن",
