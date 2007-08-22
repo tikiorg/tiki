@@ -5018,6 +5018,7 @@ $lang=Array(
 "similar" => "עמודים דומים",
 "undo" => "ביטול שינוי אחרון",
 "slides" => "שיקופיות",
+"Slides" => "שיקופיות",
 "export" => "יצוא",
 "comments" => "הערות",
 "Page generated in" => "עמוד זה נוצר ב",

@@ -2949,6 +2949,7 @@ $lang=Array(
 "similar" => "similaire",
 "Undo" => "Annuler",
 "slides" => "diapositives",
+"Slides" => "Diapositives",
 "Export" => "Exporter",
 "Discuss" => "Discussion",
 "Add Comment" => "Commenter",

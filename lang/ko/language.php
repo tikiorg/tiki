@@ -5338,6 +5338,7 @@ $lang=Array(
 "similar" => "유사",
 "undo" => "작업취소",
 "slides" => "슬라이드",
+"Slides" => "슬라이드",
 "export" => "추출",
 "discuss" => "토론",
 "Discuss" => "토론",

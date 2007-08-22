@@ -4769,6 +4769,7 @@ $lang=Array(
 "similar" => "類似",
 "undo" => "取消",
 "slides" => "スライド",
+"Slides" => "スライド",
 "export" => "出力",
 "add comment" => "コメントする",
 "Add Comment" => "コメントする",

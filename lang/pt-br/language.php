@@ -2154,6 +2154,7 @@ $lang=Array(
 "del" => "del",
 "pdf" => "pdf",
 "slides" => "slides",
+"Slides" => "Slides",
 "Backups" => "Backups",
 "chat" => "chat",
 "rankings" => "rankings",

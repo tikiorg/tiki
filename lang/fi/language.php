@@ -2274,6 +2274,7 @@ $lang=Array(
 "similar" => "samanlainen",
 "undo" => "peru",
 "slides" => "kuvat",
+"Slides" => "Kuvat",
 "export" => "vie",
 "discuss" => "pohtia",
 "Discuss" => "Pohtia",

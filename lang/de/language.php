@@ -2758,6 +2758,7 @@ $lang=Array(
 "similar" => "&auml;hnlich",
 "undo" => "r&uuml;ckg&auml;ngig",
 "slides" => "Dias",
+"Slides" => "Dias",
 "export" => "exportieren",
 "discuss" => "diskutieren",
 "Discuss" => "Diskutieren",

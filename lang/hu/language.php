@@ -4664,6 +4664,7 @@ $lang=Array(
 "similar" => "hasonló oldalak",
 "undo" => "visszacsinál",
 "slides" => "bemutató",
+"Slides" => "Bemutató",
 "export" => "exportálom",
 "discuss" => "megbeszél",
 "Discuss" => "Megbeszél",

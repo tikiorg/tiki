@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.22 2007-07-24 18:03:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.23 2007-08-22 08:22:33 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -44,9 +44,9 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
-<div class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}slides{/tr}</a></div>
+<div class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}Slides{/tr}</a></div>
 {elseif $structure eq 'y'}
-<div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}slides{/tr}</a></div>
+<div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}Slides{/tr}</a></div>
 {/if}
 {/if}
 

@@ -2918,6 +2918,7 @@ $lang=Array(
 "perms" => "perms",
 "Perms" => "Perms",
 "slides" => "slides",
+"Slides" => "Slides",
 "chat" => "chat",
 "rankings" => "rankings",
 "powered by" => "powered by",

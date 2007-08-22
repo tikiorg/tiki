@@ -3268,6 +3268,7 @@ $lang=Array(
 "history" => "historial",
 "undo" => "desfès",
 "slides" => "diapos",
+"Slides" => "Diapos",
 "export" => "exporta",
 "discuss" => "debat",
 "Discuss" => "Debat",

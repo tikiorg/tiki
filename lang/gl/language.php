@@ -776,6 +776,7 @@ $lang=Array(
 "similar" => "similar",
 "undo" => "desfacer",
 "slides" => "diapositivas",
+"Slides" => "Diapositivas",
 "Data" => "Data",
 "Click" => "Clic",
 "Watches" => "Monitores",

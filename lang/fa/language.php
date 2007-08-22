@@ -1340,6 +1340,7 @@ $lang=Array(
 "similar" => "مشابهات",
 "undo" => "برگشت عمل",
 "slides" => "اسلايدها",
+"Slides" => "اسلايدها",
 "export" => "صدور",
 "discuss" => "بحث",
 "Discuss" => "بحث",
