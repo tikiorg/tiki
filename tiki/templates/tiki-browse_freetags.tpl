@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.29 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.30 2007-08-22 16:46:53 nyloth Exp $ *}
 
 {if $feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -143,7 +143,7 @@
 <td width="200">
 {if $freetags_browse_show_cloud eq 'y'}
 {foreach from=$most_popular_tags item=popular_tag}
-<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" style="padding:0 2px;{if $tag eq $popular_tag.tag}color:#000;background-color:#eec;{/if}">{$popular_tag.tag}</a> 
+<a class="freetag_{$popular_tag.size} {if $tag eq $popular_tag.tag}highlight{/if}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" style="padding:0 2px;">{$popular_tag.tag}</a> 
 {/foreach}
 {/if}
 </td><td>
