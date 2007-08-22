@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_theme.tpl,v 1.16 2007-06-03 22:04:58 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_theme.tpl,v 1.17 2007-08-22 17:38:09 jyhem Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Style{/tr}: $user_style"}{/if}
 {tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations}
 	{if $change_theme ne 'n' or $user eq ''}
@@ -12,7 +12,7 @@
 		{/section}
 		</select>
 		<noscript>
-			<button type="submit">{tr}switch{/tr}</button>
+			<button type="submit">{tr}Switch{/tr}</button>
 		</noscript>
 	</form>
 	{else}

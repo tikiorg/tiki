@@ -20,7 +20,7 @@
     <input type="hidden" name="regcode" value="{$smarty.post.regcode}"/>
     <input type="hidden" name="novalidation" value="yes"/>
     {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
-    <input type="submit" name="register" value="{tr}register{/tr}" />
+    <input type="submit" name="register" value="{tr}Register{/tr}" />
   </form>
 
 {else}
@@ -93,7 +93,7 @@
       {/if}
       
       <tr><td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" name="register" value="{tr}register{/tr}" /></td>
+      <td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
       </tr>
     </table>
   </form>

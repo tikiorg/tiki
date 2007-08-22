@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.54 2007-07-24 18:03:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.55 2007-08-22 17:38:09 jyhem Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -17,7 +17,7 @@
           <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
           title="{tr}parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
          {/if}
-          <p style="text-align: center"><button type="submit" name="actsu">{tr}switch{/tr}</button></p>
+          <p style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></p>
          </fieldset>
         </form>
       {/if}
@@ -89,13 +89,13 @@
        </fieldset>
           
           {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}
-            <p>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</p>
+            <p>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</p>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y' and $change_password eq 'y'}
             <p><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></p>
           {/if}
           {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister eq 'y'}
-            <p><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></p>
+            <p><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></p>
           {/if}
           {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister ne 'y'}
           &nbsp;

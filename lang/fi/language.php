@@ -2377,6 +2377,7 @@ $lang=Array(
 "Mini Calendar" => "Mini Kalenteri",
 "Edit mapfiles" => "Muokkaa karttatiedostoja",
 "switch" => "kytkin",
+"Switch" => "Kytkin",
 "on:" => ":",
 "reads" => "lukijaa",
 "Article image" => "Artikkeli kuva",

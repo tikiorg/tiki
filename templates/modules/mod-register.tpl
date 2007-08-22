@@ -9,7 +9,7 @@
 <input type="hidden" name="name" value="{$login}"/>
 <input type="hidden" name="pass" value="{$password}"/>
 <input type="hidden" name="novalidation" value="yes"/>
-<input type="submit" name="register" value="{tr}register{/tr}" />
+<input type="submit" name="register" value="{tr}Register{/tr}" />
 </form>
 {else}
 {if $rnd_num_reg eq 'y'}
@@ -30,7 +30,7 @@
 <tr><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor"><input id='pass1' type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Repeat password{/tr}:</td><td class="formcolor"><input id='pass2' type="password" name="passAgain" /></td></tr>
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="register" value="{tr}register{/tr}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td></tr>
 </table>
 </form>
 <br />
