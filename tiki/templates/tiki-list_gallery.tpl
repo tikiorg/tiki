@@ -4,15 +4,15 @@
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
     <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}Edit Gallery{/tr}</a>
-    <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="linkbut">{tr}rebuild thumbnails{/tr}</a>
+    <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="linkbut">{tr}Rebuild Thumbnails{/tr}</a>
   {/if}
   {if $tiki_p_upload_images eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-        <a href="tiki-upload_image.php?galleryId={$galleryId}" class="linkbut">{tr}upload image{/tr}</a>
+        <a href="tiki-upload_image.php?galleryId={$galleryId}" class="linkbut">{tr}Upload Image{/tr}</a>
     {/if}
   {/if}
 {/if}
-<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}browse gallery{/tr}</a>
+<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse Gallery{/tr}</a>
 </div>
 
 <div class="galdesc">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.25 2007-07-24 14:40:28 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.26 2007-08-22 09:17:34 jyhem Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -236,7 +236,7 @@
 <div style="float:left">
 {tr}Perform action with checked:{/tr} 
 {if !isset($file_info)}
-	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
+	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
 <input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 </div>
@@ -250,7 +250,7 @@
 			{/if}
 		{/section}
 	</select>
-	<input type='submit' name='movesel' value='{tr}move{/tr}' />
+	<input type='submit' name='movesel' value='{tr}Move{/tr}' />
 </div>
 {/if}
 </div>

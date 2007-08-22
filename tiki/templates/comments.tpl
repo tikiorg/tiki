@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.90 2007-07-24 14:40:27 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.91 2007-08-22 09:17:34 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -56,7 +56,7 @@
 					{/if}
 				{/section}
 				</select>
-				<input type="submit" name="movesel" value="{tr}move{/tr}" />
+				<input type="submit" name="movesel" value="{tr}Move{/tr}" />
 			</span>
 
 			<span class="action">
