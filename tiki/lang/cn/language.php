@@ -4405,6 +4405,7 @@ $lang=Array(
 "similar" => "相似",
 "undo" => "撤消",
 "slides" => "幻灯片",
+"Slides" => "幻灯片",
 "export" => "导出",
 "discuss" => "讨论",
 "Discuss" => "讨论",

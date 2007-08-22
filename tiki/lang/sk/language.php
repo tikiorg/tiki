@@ -4311,6 +4311,7 @@ $lang=Array(
 "similar" => "podobné",
 "undo" => "vrátiť",
 "slides" => "slideshow",
+"Slides" => "Slideshow",
 "add comment" => "pridať komentár",
 "Add Comment" => "Pridať komentár",
 "1 comment" => "1 komentár",

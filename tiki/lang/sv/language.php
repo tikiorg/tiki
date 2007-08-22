@@ -3901,6 +3901,7 @@ $lang=Array(
 "similar" => "liknande",
 "undo" => "ångra",
 "slides" => "bildspel",
+"Slides" => "Bildspel",
 "export" => "exportera",
 "discuss" => "diskutera",
 "Discuss" => "Diskutera",

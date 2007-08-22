@@ -1341,6 +1341,7 @@ $lang=Array(
 // "similar" => "similar",
 // "undo" => "undo",
 // "slides" => "slides",
+// "Slides" => "Slides",
 // "export" => "export",
 // "discuss" => "discuss",
 // "Discuss" => "Discuss",

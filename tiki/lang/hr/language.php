@@ -4206,6 +4206,7 @@ $lang=Array(
 "similar" => "slično",
 "undo" => "vrati",
 "slides" => "slideovi",
+"Slides" => "Slideovi",
 "export" => "izvoz",
 "discuss" => "diskutiraj",
 "Discuss" => "Diskutiraj",

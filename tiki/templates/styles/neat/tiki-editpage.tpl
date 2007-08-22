@@ -66,9 +66,9 @@
 {/if}
 
 {if $show_slideshow eq 'y'}
-  <span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
+  <span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}Slides{/tr}</a></span>
 {elseif $structure eq 'y'}
-  <span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
+  <span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}Slides{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}

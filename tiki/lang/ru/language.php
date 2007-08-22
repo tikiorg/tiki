@@ -4487,6 +4487,7 @@ $lang=Array(
 "similar" => "подобные",
 "undo" => "откат",
 "slides" => "слайды",
+"Slides" => "слайды",
 "export" => "экспорт",
 "discuss" => "обсудить",
 "Discuss" => "обсудить",

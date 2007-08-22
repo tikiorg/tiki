@@ -2970,6 +2970,7 @@ $lang=Array(
 "similar" => "Podobné",
 "undo" => "Vrátit",
 "slides" => "Snímky",
+"Slides" => "Snímky",
 "export" => "Export",
 "discuss" => "diskutuj",
 "Discuss" => "Diskutuj",

@@ -118,9 +118,9 @@
 
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
-	<span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
+	<span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}Slides{/tr}</a></span>
 {elseif $structure eq 'y'}
-	<span class="tabbut"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}}" class="tablink">{tr}slides{/tr}</a></span>
+	<span class="tabbut"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}}" class="tablink">{tr}Slides{/tr}</a></span>
 {/if}
 {/if}
 

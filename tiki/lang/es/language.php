@@ -1203,6 +1203,7 @@ $lang=Array(
 "similar" => "similar",
 "undo" => "undo",
 "slides" => "slides",
+"Slides" => "Slides",
 "Data" => "Data",
 "Click" => "Click",
 "Watches" => "Watches",

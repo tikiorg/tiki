@@ -4285,6 +4285,7 @@ $lang=Array(
 "similar" => "lignende",
 "undo" => "fortryd",
 "slides" => "lysbilleder",
+"Slides" => "Lysbilleder",
 "export" => "eksporter",
 "discuss" => "diskuter",
 "Discuss" => "Diskuter",

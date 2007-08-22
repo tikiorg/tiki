@@ -1387,6 +1387,7 @@ $lang=Array(
 // "perms" => "perms",
 // "Perms" => "perms",
 // "slides" => "slides",
+// "Slides" => "slides",
 // "1 comment" => "1 comment",
 // "comments" => "comments",
 // "1 file attached" => "1 file attached",

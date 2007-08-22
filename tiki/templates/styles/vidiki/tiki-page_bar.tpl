@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.15 2007-07-24 14:40:40 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.16 2007-08-22 08:22:33 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -48,9 +48,9 @@
 {/if}
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
-<li><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="">{tr}slides{/tr}</a></li>
+<li><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="">{tr}Slides{/tr}</a></li>
 {elseif $structure eq 'y'}
-<li><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="">{tr}slides{/tr}</a></li>
+<li><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="">{tr}Slides{/tr}</a></li>
 {/if}
 {/if}
 {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}

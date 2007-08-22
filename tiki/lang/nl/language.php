@@ -2511,6 +2511,7 @@ $lang=Array(
 "similar" => "vergelijkbaar",
 "undo" => "terugzetten",
 "slides" => "dia's",
+"Slides" => "Dia's",
 "export" => "exporteren",
 "discuss" => "discussieer",
 "Discuss" => "Discussieer",

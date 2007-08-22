@@ -1529,6 +1529,7 @@ $lang=Array(
 "Subscribe" => "訂閱",
 "similar" => "相似",
 "slides" => "幻燈片",
+"Slides" => "幻燈片",
 "export" => "匯出",
 "Pick your avatar" => "選擇你的頭像",
 "Pick user Avatar" => "選擇使用者的頭像",

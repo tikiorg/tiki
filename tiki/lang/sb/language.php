@@ -3345,6 +3345,7 @@ $lang=Array(
 "history" => "history",
 "undo" => "undo",
 "slides" => "slides",
+"Slides" => "Slides",
 "export" => "export",
 "discuss" => "discuss",
 "Discuss" => "Discuss",
