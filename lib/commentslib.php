@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.162 2007-08-13 08:57:48 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.163 2007-08-22 19:46:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1925,7 +1925,7 @@ class Comments extends TikiLib {
 	// print( "<pre>result:" );
 	// print_r( $result );
 	// print( "</pre>" );
-
+	echo "GGG".$result;die;
 	// Check if we were passed a message-id.
 	if ( ! $message_id )
 	{
@@ -1995,11 +1995,12 @@ class Comments extends TikiLib {
     }
 
     // Check if a particular topic exists.
-    function check_for_topic( $title )
+    function check_for_topic( $title, $data )
     {
+	$hash = md5($title . $data);
 	$threadId = $this->getOne("select `threadId` from
-		`tiki_comments` where `title`=?
-		order by threadid asc", array( $title ) );
+		`tiki_comments` where `hash`=?
+		order by threadid asc", array( $hash ) );
 	return $threadId;
     }
 
