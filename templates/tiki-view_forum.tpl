@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.103 2007-08-13 09:25:25 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.104 2007-08-22 09:17:34 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -256,7 +256,7 @@ a moderator approves it.{/tr}
 </tr>
 <tr>	
 	<td class="odd" colspan="3">
-	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected topics{/tr}' />
+	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}Move{/tr}' title='{tr}move selected topics{/tr}' />
 	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}Unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
 	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}Lock{/tr}' title='{tr}lock selected topics{/tr}' />
 	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
@@ -280,7 +280,7 @@ a moderator approves it.{/tr}
 			{/if}
 		{/section}
 	</select>
-	<input type='submit' name='movesel' value='{tr}move{/tr}' />
+	<input type='submit' name='movesel' value='{tr}Move{/tr}' />
 	
 	</td>
 </tr>

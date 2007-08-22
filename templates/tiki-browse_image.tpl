@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.51 2007-07-24 15:23:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.52 2007-08-22 09:17:34 jyhem Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -16,7 +16,7 @@
 <div id="{$rootid}browse_image">
   <h2><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h2>
   <p style="float:left;position:absolute;">
-    <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}return to gallery{/tr}</a>
+    <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}Return to Gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
       <a class="linkbut pixurl" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="">{tr}Edit Image{/tr}</a>
     {/if}
@@ -30,40 +30,40 @@
 
 {* --- first image --- *}
 	<a href="{$url_base}{$firstId}{$same_scale}"
-		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_first.png' border='none' alt='{tr}first image{/tr}' title='{tr}first image{/tr}'}</a>
+		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_first.png' border='none' alt='{tr}First Image{/tr}' title='{tr}First Image{/tr}'}</a>
 
 {* --- previous scale --- *}
 	{if $scaleinfo.prevscale}
-   	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt='{tr}smaller{/tr}' title='{tr}smaller{/tr}'}</a>
+   	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt='{tr}Smaller{/tr}' title='{tr}Smaller{/tr}'}</a>
 	{/if}
 
 {* --- original size --- *}
 	{if $resultscale}
-	  <a href="{$url_base}{$imageId}&amp;scalesize=0" class="gallink">{html_image file='img/icons/zoom_equal.gif' border='none' alt='{tr}original size{/tr}' title='{tr}original size{/tr}'}</a>
+	  <a href="{$url_base}{$imageId}&amp;scalesize=0" class="gallink">{html_image file='img/icons/zoom_equal.gif' border='none' alt='{tr}Original Size{/tr}' title='{tr}Original Size{/tr}'}</a>
 	{/if}
 
 {* --- next scale --- *}
 	{if $scaleinfo.nextscale}
-	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt='{tr}bigger{/tr}' title='{tr}bigger{/tr}'}</a>
+	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt='{tr}Bigger{/tr}' title='{tr}Bigger{/tr}'}</a>
 	{/if}
 	    
 {* --- previous image --- *}
 	<a href="{$url_base}{$previmg}{$same_scale}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{html_image file='pics/icons/resultset_previous.png' border='none' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}'}</a>
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{html_image file='pics/icons/resultset_previous.png' border='none' alt='{tr}Prev Image{/tr}' title='{tr}Prev Image{/tr}'}</a>
 
 {* --- popup launch --- *}
 	{if !$popup}
 	  <a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="gallink">
-        {html_image file='img/icons2/admin_unhide.gif' border='none' alt='{tr}Popup window{/tr}' title='{tr}popup window{/tr}'}</a>
+        {html_image file='img/icons2/admin_unhide.gif' border='none' alt='{tr}Popup window{/tr}' title='{tr}Popup Window{/tr}'}</a>
 	{/if}
 
 {* --- next image --- *}
 	<a href="{$url_base}{$nextimg}{$same_scale}"
-    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{html_image file='pics/icons/resultset_next.png' border='none' alt='{tr}next image{/tr}' title='{tr}next image{/tr}'}</a>
+    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{html_image file='pics/icons/resultset_next.png' border='none' alt='{tr}Next Image{/tr}' title='{tr}Next Image{/tr}'}</a>
 
 {* --- launch slideshow --- *}
 	{if $listImgId}
-	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons2/cycle_next.gif' border='none' alt='{tr}slideshow forward{/tr}' title='{tr}slideshow forward{/tr}'}</a>
+	  <a href="javascript:thepix.toggle('start')">{html_image file='img/icons2/cycle_next.gif' border='none' alt='{tr}Slideshow Forward{/tr}' title='{tr}Slideshow Forward{/tr}'}</a>
 	{/if}
 
 {* --- last image --- *}
@@ -75,7 +75,7 @@
   <div class="slideshow" style="display: none;" align="center">
 
 {* --- stop --- *}
-	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons2/admin_delete.gif' border='none' alt='{tr}stop{/tr}' title='{tr}stop{/tr}'}</a>
+	<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons2/admin_delete.gif' border='none' alt='{tr}Stop{/tr}' title='{tr}Stop{/tr}'}</a>
 {* --- toggle cyclic --- *}
 	<a href="javascript:thepix.toggle('toTheEnd')">{html_image file='img/icons/ico_redo.gif' border='none' alt='{tr}Cyclic{/tr}' title='{tr}Cyclic{/tr}'}</a>
 {* --- toggle back/forward --- *}
@@ -105,7 +105,7 @@
 	<tr><td class="odd">{tr}Image Name{/tr}:</td><td class="odd">{$name}</td></tr>
 	<tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
 	<tr><td class="odd">{tr}Image size{/tr}:</td><td class="odd">{$xsize}x{$ysize}</td></tr>
-	<tr><td class="even">{tr}imagescale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}original size{/tr}{/if}</td></tr>
+	<tr><td class="even">{tr}imagescale{/tr}:</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
 	<tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
 	<tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
 	{if $feature_maps eq 'y' and $gal_info.geographic eq 'y'}
@@ -126,7 +126,7 @@
 	      <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 	    {/section}
 		</select>
-		<input type="submit" name="move_image" value="{tr}move{/tr}" />
+		<input type="submit" name="move_image" value="{tr}Move{/tr}" />
 	  </form>
 	  </td></tr>
 	{/if}

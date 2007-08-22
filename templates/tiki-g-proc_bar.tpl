@@ -13,7 +13,7 @@
 		<table cellpadding='0' cellspacing='2'>
 		<tr>
 			{if $proc_info.isActive eq 'y'}
-			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;deactivate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/stop.gif' alt='{tr}stop{/tr}' title='{tr}stop{/tr}' /></a></td>						
+			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;deactivate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/stop.gif' alt='{tr}Stop{/tr}' title='{tr}Stop{/tr}' /></a></td>						
 			{else}
 			{if $proc_info.isValid eq 'y'}
 			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;activate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/refresh2.gif' alt='{tr}activate{/tr}' title='{tr}activate{/tr}' /></a></td>									
