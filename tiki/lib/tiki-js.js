@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.79 2007-08-21 10:43:26 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.80 2007-08-22 13:15:56 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -870,13 +870,6 @@ function addImgForm() {
 	new_text.setAttribute('id','picfile' + img_form_count);
 	new_text.innerHTML = '<input name=\'picfile' + img_form_count + '\' type=\'file\' onchange=\'javascript:insertImgFile("editwiki","picfile' + img_form_count + '","hasAlreadyInserted","img")\'/><br />';
 	document.getElementById('new_img_form').appendChild(new_text);
-	
-	var new_input = document.createElement('input');
-	new_input.setAttribute('type', 'hidden');
-	new_input.setAttribute('name', 'img_form_count');
-	new_input.setAttribute('value', img_form_count);
-	document.getElementById('new_img_form').appendChild(new_input);
-
 	needToConfirm = true;
 	img_form_count ++;
 }
