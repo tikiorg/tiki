@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.119 2007-08-13 08:57:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.120 2007-08-22 19:46:20 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -329,7 +329,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 			// Check if the thread/topic already exist
 			$threadId = $commentslib->check_for_topic(
-				$_REQUEST["comments_title"]
+				$_REQUEST["comments_title"],
+				$_REQUEST["comments_data"]
 				);
 
 			// The thread/topic does not already exist
@@ -363,6 +364,9 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
 			    }
+			} else {
+				$smarty->assign('duplic', 'y');
+				unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 			}
 
 
@@ -445,7 +449,8 @@ if (isset($_REQUEST["comments_postComment"]))
 {
     // Check if the thread/topic already existis
     $threadId = $commentslib->check_for_topic(
-	    $_REQUEST["comments_title"]
+		$_REQUEST["comments_title"],
+		$_REQUEST["comments_data"]
 	    );
 
     // If it does, send the user there with no delay.
