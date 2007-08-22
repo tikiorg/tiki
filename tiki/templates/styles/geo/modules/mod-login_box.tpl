@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.10 2007-07-20 18:44:28 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.11 2007-08-22 17:38:09 jyhem Exp $ *}
   {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
@@ -47,14 +47,14 @@
           <div class="module"><input type="checkbox" name="rme" value="on"/> {tr}Remember me{/tr}</div>
           {/if}
           {if $allowRegister eq 'y' and $forgotPass eq 'y'}
-            <div class="module"><a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a></div>
+            <div class="module"><a class="linkmodule" href="tiki-register.php">{tr}Register{/tr}</a></div>
 						<div class="module"><a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a></div>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y'}
             <div class="module"><a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a></div>
           {/if}
           {if $forgotPass ne 'y' and $allowRegister eq 'y'}
-            <div class="bottom"><a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a></div>
+            <div class="bottom"><a class="linkmodule" href="tiki-register.php">{tr}Register{/tr}</a></div>
           {/if}
           {if $http_login_url ne '' or $https_login_url ne ''}
             <div class="module"><a class="linkmodule" href="{$http_login_url}">{tr}standard{/tr}</a> |

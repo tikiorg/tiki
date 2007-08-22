@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang.tpl,v 1.2 2006-02-17 15:10:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang.tpl,v 1.3 2007-08-22 17:38:09 jyhem Exp $ *}
 
 {tikimodule title="{tr}Language: {/tr}`$language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
 	{if $change_language ne 'n' or $user eq ''}
@@ -13,7 +13,7 @@
 		{/section}
 		</select>
 		<noscript>
-			<button type="submit">{tr}switch{/tr}</button>
+			<button type="submit">{tr}Switch{/tr}</button>
 		</noscript>
 	</form>
 	{else}

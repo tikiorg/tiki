@@ -44,7 +44,7 @@ Errors:<br />
   <option value="start" {if $info.type eq 'start'}selected="selected"{/if}>{tr}start{/tr}</option>
   <option value="end" {if $info.type eq 'end'}selected="selected"{/if}>{tr}end{/tr}</option>		  
   <option value="activity" {if $info.type eq 'activity'}selected="selected"{/if}>{tr}activity{/tr}</option>		  
-  <option value="switch" {if $info.type eq 'switch'}selected="selected"{/if}>{tr}switch{/tr}</option>		  
+  <option value="switch" {if $info.type eq 'switch'}selected="selected"{/if}>{tr}Switch{/tr}</option>		  
   <option value="split" {if $info.type eq 'split'}selected="selected"{/if}>{tr}split{/tr}</option>		  
   <option value="join" {if $info.type eq 'join'}selected="selected"{/if}>{tr}join{/tr}</option>		  
   <option value="standalone" {if $info.type eq 'standalone'}selected="selected"{/if}>{tr}standalone{/tr}</option>		  
@@ -175,7 +175,7 @@ Errors:<br />
 		  <option value="start">{tr}start{/tr}</option>
 		  <option value="end" >{tr}end{/tr}</option>		  
 		  <option value="activity" >{tr}activity{/tr}</option>		  
-		  <option value="switch" >{tr}switch{/tr}</option>		  
+		  <option value="switch" >{tr}Switch{/tr}</option>		  
 		  <option value="split" >{tr}split{/tr}</option>		  
 		  <option value="join" >{tr}join{/tr}</option>		  
 		  <option value="standalone" >{tr}standalone{/tr}</option>		  
