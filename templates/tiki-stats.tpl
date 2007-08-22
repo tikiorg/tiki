@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.29 2007-05-04 16:47:16 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.30 2007-08-22 07:35:23 jyhem Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -171,11 +171,11 @@
 <tr>
 {if $smarty.section.i.index % 2}
 <td class="even">{$best_objects_stats[i]->object}</td>
-<td class="even">{$best_objects_stats[i]->type}</td>
+<td class="even">{tr}{$best_objects_stats[i]->type}{/tr}</td>
 <td class="even">{$best_objects_stats[i]->hits}</td>
 {else}
 <td class="odd">{$best_objects_stats[i]->object}</td>
-<td class="odd">{$best_objects_stats[i]->type}</td>
+<td class="odd">{tr}{$best_objects_stats[i]->type}{/tr}</td>
 <td class="odd">{$best_objects_stats[i]->hits}</td>
 {/if}
 </tr>
@@ -192,11 +192,11 @@
 <tr>
 {if $smarty.section.i.index % 2}
 <td class="even">{$best_objects_stats_lastweek[i]->object}</td>
-<td class="even">{$best_objects_stats_lastweek[i]->type}</td>
+<td class="even">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
 <td class="even">{$best_objects_stats_lastweek[i]->hits}</td>
 {else}
 <td class="odd">{$best_objects_stats_lastweek[i]->object}</td>
-<td class="odd">{$best_objects_stats_lastweek[i]->type}</td>
+<td class="odd">{tr}{$best_objects_stats_lastweek[i]->type}{/tr}</td>
 <td class="odd">{$best_objects_stats_lastweek[i]->hits}</td>
 {/if}
 </tr>
