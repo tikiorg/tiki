@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.25 2007-08-23 19:11:01 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.26 2007-08-23 19:34:34 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -261,7 +261,7 @@ function mypage_delete($id_mypage) {
     return $objResponse;
 }
 
-function mypage_fillinfos($id_mypage, $id_type=NULL) {
+function mypage_fillinfos($id_mypage, $id_types=NULL) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -280,15 +280,16 @@ function mypage_fillinfos($id_mypage, $id_type=NULL) {
 		$objResponse->addScript('mypageTypeChange('.(int)$mypage->getParam('id_types').');');
 	}
 
-	if ($mypage) $id_type=(int)$mypage->getParam('id_types');
-	else $id_type=(int)$id_type;
+	if ($mypage) $id_types=(int)$mypage->getParam('id_types');
+	else $id_types=(int)$id_types;
 
 	$conf=NULL;
-	$type=MyPage::getMypageType($id_type);
+	$type=MyPage::getMypageType($id_types);
 	if (is_array($type))
 		$conf=MyPage::getTypeHTMLConfig($type['name']);
 	if ($conf === NULL) $conf='';
 	
+	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', '');
 	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', $conf);
 
     return $objResponse;
