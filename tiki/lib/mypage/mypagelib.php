@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.40 2007-08-23 17:27:12 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.41 2007-08-23 18:16:01 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -48,6 +48,7 @@ class MyPage {
 	var $modified;
 	var $perms;
 	var $lasterror;
+	var $typeclass;
 
 	function MyPage($id=NULL, $id_users) {
 		$this->id=$id;
@@ -57,6 +58,7 @@ class MyPage {
 		$this->params=array();
 		$this->modified=array();
 		$this->lasterror=NULL;
+		$this->typeclass=NULL;
 		$this->checkout();
 	}
 	
@@ -496,6 +498,14 @@ class MyPage {
 		return NULL;		
 	}
 
+	function getTypeClass() {
+		if ($this->typeclass) return $this->typeclass;
+		$type=MyPage::getMypageType((int)$this->getParam('id_types'));
+		if (!is_array($type)) return NULL;
+		$classname=MyPage::getTypeClassName($type['name']);
+		if ($classname === NULL) return NULL;
+		return $this->typeclass=new $classname($this);
+	}
 }
 
 class MyPageWindow {

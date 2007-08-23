@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.23 2007-08-23 17:27:12 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.24 2007-08-23 18:16:00 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -175,7 +175,7 @@ function mypage_win_prepareConfigure($id_mypage, $id_win, $compname=null) {
     return $objResponse;    
 }
 
-function mypage_update($id_mypage, $vals) {
+function mypage_update($id_mypage, $vals, $form) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -193,6 +193,14 @@ function mypage_update($id_mypage, $vals) {
 		return mypage_error($err);
 	}
 
+	if (is_array($form)) {
+		$typeclass=$mypage->getTypeClass();
+		if ($typeclass) {
+			$err=$typeclass->configure($form);
+			if (strlen($err)) return mypage_error($err);
+		}
+	}
+
 	$newvals=array();
 	foreach($vals as $k => $v) {
 		$newvals[$k]=$mypage->getParam($k);
@@ -203,7 +211,7 @@ function mypage_update($id_mypage, $vals) {
     return $objResponse;
 }
 
-function mypage_create($vals) {
+function mypage_create($vals, $form) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
@@ -222,6 +230,14 @@ function mypage_create($vals) {
 		return mypage_error($err);
 	}
 	
+	if (is_array($form)) {
+		$typeclass=$mypage->getTypeClass();
+		if ($typeclass) {
+			$err=$typeclass->configure($form);
+			if (strlen($err)) return mypage_error($err);
+		}
+	}
+
 	$objResponse->addScript("window.location.reload()");
 
     return $objResponse;
