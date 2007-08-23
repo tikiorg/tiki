@@ -1,5 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.19 2007-08-23 15:07:03 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a></h1>
-<a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a><br /><br />
+<div class="navbar">
+<a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>
+</div>
+
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="bannerId" value="{$bannerId|escape}" />
 <div class="simplebox">
@@ -136,7 +140,8 @@
 <input type="submit" name="save" value="{tr}Save the Banner{/tr}" />
 </div>
 </form>
-<br /><br /><br /><br /><br /><br />
+<br /><br />
+
 <div align="left" class="simplebox">
 <h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 <table class="normal">
@@ -148,7 +153,7 @@
 {section name=ix loop=$zones}
 <tr>
 <td class="{cycle advance=false}">{$zones[ix].zone}</td>
-<td class="{cycle}"><a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone}">remove</a></td>
+<td class="{cycle}"><a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a></td>
 </tr>
 {/section}
 </table>
