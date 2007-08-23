@@ -106,8 +106,8 @@ function initMypageEdit() {
 }
 
 function showMypageEdit(id) {
+	xajax_mypage_fillinfos(id);
 	if (id > 0) {
-		xajax_mypage_fillinfos(id);
 		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
 		curmodal.setTitle("Edit... ");
 	} else {
