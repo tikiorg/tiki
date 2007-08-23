@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.26 2007-08-23 19:34:34 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.27 2007-08-23 19:58:56 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -266,6 +266,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL) {
 
     $objResponse = new xajaxResponse();
 
+	$conf=NULL;
 	if ($id_mypage) {
 		$mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
 		if (is_string($mypage))
@@ -278,18 +279,18 @@ function mypage_fillinfos($id_mypage, $id_types=NULL) {
 		$objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
 		$objResponse->addAssign('mypageedit_type', 'value', $mypage->getParam('id_types'));
 		$objResponse->addScript('mypageTypeChange('.(int)$mypage->getParam('id_types').');');
+
+		$conf=$mypage->getTypeHTMLConfig();
+	} else {
+		$type=MyPage::getMypageType($id_types);
+		if (is_array($type)) {
+			$conf=MyPage::getTypeHTMLConfig($type['name']);
+		}
 	}
 
-	if ($mypage) $id_types=(int)$mypage->getParam('id_types');
-	else $id_types=(int)$id_types;
-
-	$conf=NULL;
-	$type=MyPage::getMypageType($id_types);
-	if (is_array($type))
-		$conf=MyPage::getTypeHTMLConfig($type['name']);
 	if ($conf === NULL) $conf='';
 	
-	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', '');
+	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', ''); // this fixe a bug that don't really update value of input field
 	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', $conf);
 
     return $objResponse;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.43 2007-08-23 19:18:13 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.44 2007-08-23 19:58:56 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -485,12 +485,17 @@ class MyPage {
 	}
 
 	/* static */
-	function getTypeHTMLConfig($type) {
-		$classname=MyPage::getTypeClassName($type);
-		if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
-			return call_user_func(array($classname, 'getHTMLConfig'));
-		else
-			return NULL;
+	function getTypeHTMLConfig($type=NULL) {
+		if (isset($this)) {
+			$typeclass=$this->getTypeClass();
+			return $typeclass->getHTMLConfig();
+		} else {
+			$classname=MyPage::getTypeClassName($type);
+			if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
+				return call_user_func(array($classname, 'getHTMLConfig'));
+			else
+				return NULL;
+		}
 	}
 
 	/* static */
