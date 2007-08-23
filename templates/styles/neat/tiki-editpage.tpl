@@ -58,7 +58,7 @@
 {/if}
 
 {if $feature_likePages eq 'y'}
-  <span class="tabbut"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="tablink">{tr}similar{/tr}</a></span>
+  <span class="tabbut"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="tablink">{tr}Similar{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}

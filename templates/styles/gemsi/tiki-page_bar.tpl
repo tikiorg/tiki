@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.23 2007-08-22 08:22:33 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.24 2007-08-23 16:21:45 jyhem Exp $ *}
 
 <div id="page-bar">
 
@@ -35,7 +35,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 {/if}
 
 {if $feature_likePages eq 'y'}
-<div class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}similar{/tr}</a></div>
+<div class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}Similar{/tr}</a></div>
 {/if}
 
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}

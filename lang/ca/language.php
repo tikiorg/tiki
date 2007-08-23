@@ -2319,6 +2319,7 @@ $lang=Array(
 "Create page:" => "Crea plana:",
 "index" => "índex",
 "show" => "mostrar",
+"Show" => "Mostrar",
 "hide" => "oculta",
 "Table Of Contents" => "Taula de continguts",
 "Unknown language" => "Llenguatge desconegut",

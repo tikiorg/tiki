@@ -152,7 +152,7 @@ function _renValRad( name )
 	</tr>
 {/section}
 	<tr>
-		<td class="formcolor" colspan="2"><input type="submit" value="{tr}show{/tr}" /></td>
+		<td class="formcolor" colspan="2"><input type="submit" value="{tr}Show{/tr}" /></td>
 	</tr>
 </table>
 {$dataGrid}

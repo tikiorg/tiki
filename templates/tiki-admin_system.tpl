@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.27 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.28 2007-08-23 16:21:44 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -55,7 +55,7 @@
 {/if}
 <br />
 <div class="advanced">{tr}Advanced feature{/tr}: {tr}Fix UTF-8 Errors in Tables{/tr}:
-<a href="javascript:toggle('fixutf8')">{tr}show{/tr}/{tr}hide{/tr}</a>
+<a href="javascript:toggle('fixutf8')">{tr}Show{/tr}/{tr}Hide{/tr}</a>
 <br /><br />
 <div id="fixutf8" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Fix UTF-8 Errors in Tables{/tr}</h2>

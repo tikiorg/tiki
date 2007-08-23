@@ -2008,6 +2008,7 @@ $lang=Array(
 "new" => "neu",
 "Create page:" => "Seite erstellen:",
 "show" => "zeigen",
+"Show" => "Zeigen",
 "hide" => "verstecken",
 "Unknown language" => "unbekannte Sprache",
 "Click here to confirm your action" => "Zur Best&auml;tigung hier klicken",
