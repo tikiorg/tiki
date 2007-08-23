@@ -78,9 +78,9 @@
 	<td class="{cycle advance=false}">{$ext.fieldname|escape}</td>
   	<td class="{cycle advance=true}">
 		{if $ext.show eq 'y'}
-		<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}hide{/tr}"><img src="pics/icons/no_eye.png" border="0" height="16" width="16" alt='{tr}hide{/tr}' /></a>
+		<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}"><img src="pics/icons/no_eye.png" border="0" height="16" width="16" alt='{tr}Hide{/tr}' /></a>
 		{else}
-		<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}show{/tr}"><img src="pics/icons/eye.png" border="0" height="16" width="16" alt='{tr}show{/tr}' /></a>
+		<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}"><img src="pics/icons/eye.png" border="0" height="16" width="16" alt='{tr}Show{/tr}' /></a>
 		{/if}
 		<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
 	</td>

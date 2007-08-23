@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.16 2007-08-22 08:22:33 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.17 2007-08-23 16:21:47 jyhem Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -41,7 +41,7 @@
 {/if}
 
 {if $feature_likePages eq 'y'}
-<li><a href="tiki-likepages.php?page={$page|escape:"url"}" class="">{tr}similar{/tr}</a></li>
+<li><a href="tiki-likepages.php?page={$page|escape:"url"}" class="">{tr}Similar{/tr}</a></li>
 {/if}
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="">{tr}Undo{/tr}</a></li>

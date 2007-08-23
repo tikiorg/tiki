@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.76 2007-08-22 08:22:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.77 2007-08-23 16:21:45 jyhem Exp $ *}
 
 <hr/>
 
@@ -26,7 +26,7 @@
     {if $feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
       <span class="button2" >
       <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
-        {tr}source{/tr}
+        {tr}Source{/tr}
       </a>
       </span>
     {/if}
@@ -47,7 +47,7 @@
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
 {/if}
 {if $tiki_p_share_page eq 'y'}
-<span class="button2"><a href="tiki-p_share_page.php?objectId={$page|escape:"url"}&amp;objectType=wiki+page" class="linkbut">{tr}share page{/tr}</a></span>
+<span class="button2"><a href="tiki-p_share_page.php?objectId={$page|escape:"url"}&amp;objectType=wiki+page" class="linkbut">{tr}Share Page{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
 <span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></span>
@@ -59,7 +59,7 @@
 {/if}
 
 {if $feature_likePages eq 'y'}
-<span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}similar{/tr}</a></span>
+<span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}Similar{/tr}</a></span>
 {/if}
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}Undo{/tr}</a></span>
@@ -99,7 +99,7 @@
 {else}
 <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
 {/if}
-<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}hide{/tr})</span>
+<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
 </a>
     </span>
    
@@ -124,7 +124,7 @@
 <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
 {/if}
 <span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
-'y'}inline{else}none{/if};">({tr}hide{/tr})</span>
+'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
 </a>
     </span>
   

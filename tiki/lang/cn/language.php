@@ -1412,6 +1412,7 @@ $lang=Array(
 // "Create page:" => "Create page:",
 // "index" => "index",
 // "show" => "show",
+// "Show" => "show",
 // "hide" => "hide",
 // "Table Of Contents" => "Table Of Contents",
 // "Unknown language" => "Unknown language",

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.26 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.27 2007-08-23 16:21:45 jyhem Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -24,8 +24,8 @@
 		<tr class="formcolor">
 			<td>{tr}Status{/tr}</td>
 			<td width="85%" {if $cols} colspan="{$cols}"{/if}>
-        [ <a class="link" href="javascript:show('status');">{tr}show{/tr}</a>
- 				| <a class="link" href="javascript:hide('status');">{tr}hide{/tr}</a> ]
+        [ <a class="link" href="javascript:show('status');">{tr}Show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('status');">{tr}Hide{/tr}</a> ]
  				<div id="status" style="display:none;">
 					<table class="normal">
 						<tr>
@@ -56,8 +56,8 @@
 		<tr class="formcolor">
 			<td>{tr}General Options{/tr}</td>
 			<td width="85%" {if $cols} colspan="{$cols}"{/if}>
-        [ <a class="link" href="javascript:show('general');">{tr}show{/tr}</a>
- 				| <a class="link" href="javascript:hide('general');">{tr}hide{/tr}</a> ]
+        [ <a class="link" href="javascript:show('general');">{tr}Show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('general');">{tr}Hide{/tr}</a> ]
  				<div id="general" style="display:none;">
 					<table class="normal">
 						<tr class="formcolor">
@@ -92,8 +92,8 @@
 		<tr class="formcolor">
 			<td>{tr}Test-time Options{/tr}</td>
 			<td {if $cols} colspan="{$cols}"{/if}>
-				[ <a class="link" href="javascript:show('test-time');">{tr}show{/tr}</a>
- 				| <a class="link" href="javascript:hide('test-time');">{tr}hide{/tr}</a> ]
+				[ <a class="link" href="javascript:show('test-time');">{tr}Show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('test-time');">{tr}Hide{/tr}</a> ]
  				<div id="test-time" style="display:none;">
 					<table class="normal">
 						<tr>
@@ -123,8 +123,8 @@
 		<tr class="formcolor">
 			<td>{tr}Grading and Feedback{/tr}</td>
 			<td {if $cols} colspan="{$cols}"{/if}>
-				[ <a class="link" href="javascript:show('feedback');">{tr}show{/tr}</a>
- 				| <a class="link" href="javascript:hide('feedback');">{tr}hide{/tr}</a> ]
+				[ <a class="link" href="javascript:show('feedback');">{tr}Show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('feedback');">{tr}Hide{/tr}</a> ]
  				<div id="feedback" style="display:none;">
 					<table class="normal">
 						<tr>
@@ -149,8 +149,8 @@
 		<tr class="formcolor">
 			<td>{tr}Extra Options{/tr}</td>
 			<td {if $cols} colspan={$cols}{/if}>
-				[ <a class="link" href="javascript:show('after-test');">{tr}show{/tr}</a>
- 				| <a class="link" href="javascript:hide('after-test');">{tr}hide{/tr}</a> ]
+				[ <a class="link" href="javascript:show('after-test');">{tr}Show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('after-test');">{tr}Hide{/tr}</a> ]
  				<div id="after-test" style="display:none;">
 					<table class="normal">
 						<tr>

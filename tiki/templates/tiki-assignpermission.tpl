@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.76 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.77 2007-08-23 16:21:44 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -30,9 +30,9 @@
 <br />
 <div class="advanced">{tr}Advanced feature{/tr}: {tr}level configuration{/tr}:
 {if $advanced_features ne 'y'}
-<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}show{/tr}</a>
+<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}Show{/tr}</a>
 {else}
-<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}hide{/tr}</a>
+<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}Hide{/tr}</a>
 {/if}<br /><br />
 
 <div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>

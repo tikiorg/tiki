@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.33 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.34 2007-08-23 16:21:45 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -152,7 +152,7 @@
 <td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
 <td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}source{/tr}">s</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}Source{/tr}">s</a>
 {/if}
 </td>
 {if $default_wiki_diff_style ne "old" and $history}
@@ -176,7 +176,7 @@
 <td class="{cycle advance=false} button">
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}source{/tr}">s</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}Source{/tr}">s</a>
 {/if}
 {if $default_wiki_diff_style eq "old"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>

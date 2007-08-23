@@ -565,6 +565,7 @@ $lang=Array(
 // "Create page:" => "Create page:",
 // "index" => "index",
 // "show" => "show",
+// "Show" => "Show",
 // "hide" => "hide",
 // "Table Of Contents" => "Table Of Contents",
 // "Click here to confirm your action" => "Click here to confirm your action",
