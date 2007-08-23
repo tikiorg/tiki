@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.163 2007-08-22 19:46:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.164 2007-08-23 10:36:44 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1925,7 +1925,7 @@ class Comments extends TikiLib {
 	// print( "<pre>result:" );
 	// print_r( $result );
 	// print( "</pre>" );
-	echo "GGG".$result;die;
+
 	// Check if we were passed a message-id.
 	if ( ! $message_id )
 	{
