@@ -106,8 +106,8 @@ function initMypageEdit() {
 }
 
 function showMypageEdit(id) {
-	xajax_mypage_fillinfos(id);
 	if (id > 0) {
+		xajax_mypage_fillinfos(id);
 		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
 		curmodal.setTitle("Edit... ");
 	} else {
@@ -116,8 +116,10 @@ function showMypageEdit(id) {
 		$('mypageedit_description').value='';
 		{/literal}{if $id_types}{literal}
 		  $('mypageedit_type').value={/literal}{$id_types}{literal};
+		  xajax_mypage_fillinfos(0, {/literal}{$id_types}{literal});
 		{/literal}{else}{literal}
 		  $('mypageedit_type').selectedIndex=0;
+		  xajax_mypage_fillinfos(0, $('mypageedit_type').value);
 		{/literal}{/if}{literal}
 		$('mypageedit_width').value='0';
 		$('mypageedit_height').value='500';
