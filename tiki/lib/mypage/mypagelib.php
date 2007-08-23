@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.41 2007-08-23 18:16:01 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.42 2007-08-23 18:27:57 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -259,7 +259,11 @@ class MyPage {
 			$this->id=$id;
 			
 			// now run again for update ;)
-			return $this->commit();
+			$res=$this->commit();
+			if (is_string($res)) return $res;
+			$typeclass=$this->getTypeClass();
+			$typeclass->create();
+			return $res;
 			
 		} else {
 			
