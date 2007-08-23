@@ -43,7 +43,7 @@
   </tr>
  </table>
 
- <div id='mypageedit_typeconf'></div>
+ <form id='form_mypageedit_typeconf'><div id='mypageedit_typeconf'></div></form>
 
  <br />
  <input type='button' value='Cancel' onclick='closeMypageEdit();'>
@@ -144,9 +144,9 @@ function saveMypageEdit() {
 	};
 
 	if (id > 0) {
-		xajax_mypage_update(id, vals);
+		xajax_mypage_update(id, vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	} else {
-		xajax_mypage_create(vals);
+		xajax_mypage_create(vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	}
 
 	closeMypageEdit();	
