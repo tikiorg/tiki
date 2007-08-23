@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.42 2007-08-23 18:27:57 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.43 2007-08-23 19:18:13 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -107,7 +107,10 @@ class MyPage {
 			$this->lasterror=tra('You do not have permissions to delete the page');
 			return $this->lasterror;
 		}
-		
+
+		$typeclass=$this->getTypeClass();
+		if ($typeclass) $typeclass->destroy();
+
 		// we firstly destroy every windows that this mypage contain
 		foreach($this->windows as $window) {
 			$this->destroyWindow($window);
@@ -262,7 +265,7 @@ class MyPage {
 			$res=$this->commit();
 			if (is_string($res)) return $res;
 			$typeclass=$this->getTypeClass();
-			$typeclass->create();
+			if ($typeclass) $typeclass->create();
 			return $res;
 			
 		} else {
