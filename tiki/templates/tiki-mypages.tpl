@@ -42,6 +42,9 @@
    </td>
   </tr>
  </table>
+
+ <div id='mypageedit_typeconf'></div>
+
  <br />
  <input type='button' value='Cancel' onclick='closeMypageEdit();'>
  <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
@@ -95,7 +98,7 @@ function initMypageEdit() {
 	curmodal=new Windoo({
 		"modal": true,
 		"width": 300,
-		"height": 200,
+		"height": 500,
 		"container": false,
 		"destroyOnClose": false
 	}).adopt(content);

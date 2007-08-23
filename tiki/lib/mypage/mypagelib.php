@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.39 2007-08-21 21:14:35 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.40 2007-08-23 17:27:12 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -475,6 +475,27 @@ class MyPage {
 		}
 	}
 
+	/* static */
+	function getTypeHTMLConfig($type) {
+		$classname=MyPage::getTypeClassName($type);
+		if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
+			return call_user_func(array($classname, 'getHTMLConfig'));
+		else
+			return NULL;
+	}
+
+	/* static */
+	function getTypeClassName($type) {
+		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $type))
+			return NULL;
+		if (file_exists("lib/mypage/types/type-".$type.".php")) {
+			require_once("lib/mypage/types/type-".$type.".php");
+			$classname="Mypagetype_".$type;
+			return $classname;
+		}
+		return NULL;		
+	}
+
 }
 
 class MyPageWindow {
@@ -614,6 +635,8 @@ class MyPageWindow {
 
 	function getComponent() {
 		if ($this->comp) return $this->comp;
+		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $this->params['contenttype']))
+			return NULL;
 		if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
 			require_once("components/comp-".$this->params['contenttype'].".php");
 			$classname="Comp_".$this->params['contenttype'];
