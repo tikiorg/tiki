@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.44 2007-08-23 19:58:56 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.45 2007-08-23 23:38:53 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -263,7 +263,12 @@ class MyPage {
 			
 			// now run again for update ;)
 			$res=$this->commit();
-			if (is_string($res)) return $res;
+			if (is_string($res)) {
+				$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
+								array($this->id));
+				$this->id=NULL;
+				return $res;
+			}
 			$typeclass=$this->getTypeClass();
 			if ($typeclass) $typeclass->create();
 			return $res;
@@ -271,6 +276,12 @@ class MyPage {
 		} else {
 			
 			if (count($this->modified) > 0) {
+				if (isset($this->modified['name'])) {
+					$c=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE name=?',
+										array($this->params['name']));
+					if ($c != 0)
+						return tra(sprintf('Name "%s" is already exists', $this->params['name']));
+				}
 				$l=array();
 				$r=array();
 				foreach($this->modified as $k => $v) {
@@ -488,7 +499,7 @@ class MyPage {
 	function getTypeHTMLConfig($type=NULL) {
 		if (isset($this)) {
 			$typeclass=$this->getTypeClass();
-			return $typeclass->getHTMLConfig();
+			return ($typeclass !== NULL ? $typeclass->getHTMLConfig() : NULL);
 		} else {
 			$classname=MyPage::getTypeClassName($type);
 			if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
