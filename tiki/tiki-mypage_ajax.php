@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.24 2007-08-23 18:16:00 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.25 2007-08-23 19:11:01 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -261,25 +261,30 @@ function mypage_delete($id_mypage) {
     return $objResponse;
 }
 
-function mypage_fillinfos($id_mypage) {
+function mypage_fillinfos($id_mypage, $id_type=NULL) {
     global $id_users;
 
     $objResponse = new xajaxResponse();
 
-    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
-		return mypage_error($mypage);
+	if ($id_mypage) {
+		$mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+		if (is_string($mypage))
+			return mypage_error($mypage);
 
-    $objResponse->addAssign('mypageedit_id', 'value', $id_mypage);
-    $objResponse->addAssign('mypageedit_name', 'value', $mypage->getParam('name'));
-    $objResponse->addAssign('mypageedit_description', 'value', $mypage->getParam('description'));
-    $objResponse->addAssign('mypageedit_width', 'value', $mypage->getParam('width'));
-    $objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
-    $objResponse->addAssign('mypageedit_type', 'value', $mypage->getParam('id_types'));
-    $objResponse->addScript('mypageTypeChange('.(int)$mypage->getParam('id_types').');');
-	
+		$objResponse->addAssign('mypageedit_id', 'value', $id_mypage);
+		$objResponse->addAssign('mypageedit_name', 'value', $mypage->getParam('name'));
+		$objResponse->addAssign('mypageedit_description', 'value', $mypage->getParam('description'));
+		$objResponse->addAssign('mypageedit_width', 'value', $mypage->getParam('width'));
+		$objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
+		$objResponse->addAssign('mypageedit_type', 'value', $mypage->getParam('id_types'));
+		$objResponse->addScript('mypageTypeChange('.(int)$mypage->getParam('id_types').');');
+	}
+
+	if ($mypage) $id_type=(int)$mypage->getParam('id_types');
+	else $id_type=(int)$id_type;
+
 	$conf=NULL;
-	$type=MyPage::getMypageType((int)$mypage->getParam('id_types'));
+	$type=MyPage::getMypageType($id_type);
 	if (is_array($type))
 		$conf=MyPage::getTypeHTMLConfig($type['name']);
 	if ($conf === NULL) $conf='';
