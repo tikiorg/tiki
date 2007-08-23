@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.25 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.26 2007-08-23 15:13:21 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Admin Banners{/tr}">
@@ -41,43 +41,25 @@
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'clicks_desc'}clicks_asc{else}clicks_desc{/if}">{tr}Clicks{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</a></td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;{$listpages[changes].bannerId}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].client}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].zone}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].which}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].useDates}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].maxImpressions}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].impressions}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].clicks}&nbsp;</td>
-<td class="odd">
+<td class="{cycle advance=false}">{$listpages[changes].bannerId}</td>
+<td class="{cycle advance=false}">{$listpages[changes].client}</td>
+<td class="{cycle advance=false}">{$listpages[changes].zone}</td>
+<td class="{cycle advance=false}">{$listpages[changes].created|tiki_short_date}</td>
+<td class="{cycle advance=false}">{$listpages[changes].which}</td>
+<td class="{cycle advance=false}">{$listpages[changes].useDates}</td>
+<td class="{cycle advance=false}">{$listpages[changes].maxImpressions}</td>
+<td class="{cycle advance=false}">{$listpages[changes].impressions}</td>
+<td class="{cycle advance=false}">{$listpages[changes].clicks}</td>
+<td class="{cycle}">
 {if $tiki_p_admin_banners eq 'y'}
-<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}"><img src='pics/icons/page_edit.png' border='0'  width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'></a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}
 <a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
 </td>
-{else}
-<td class="even">&nbsp;{$listpages[changes].bannerId}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].client}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].zone}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].which}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].useDates}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].maxImpressions}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].impressions}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].clicks}&nbsp;</td>
-<td class="even">
-{if $tiki_p_admin_banners eq 'y'}
-<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
-{/if}
-<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
-</td>
-{/if}
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="10">
