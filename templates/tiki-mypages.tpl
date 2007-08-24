@@ -126,8 +126,8 @@ function showMypageEdit(id) {
 		  $('mypageedit_type').selectedIndex=0;
 		  xajax_mypage_fillinfos(0, $('mypageedit_type').value);
 		{/literal}{/if}{literal}
-		$('mypageedit_width').value='0';
-		$('mypageedit_height').value='500';
+		$('mypageedit_width').value=mptypes[$('mypageedit_type').value].def_width;
+		$('mypageedit_height').value=mptypes[$('mypageedit_type').value].def_height;
 		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
 		mypageTypeChange($('mypageedit_type').value);
 		curmodal.setTitle("New...");
