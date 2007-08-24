@@ -251,8 +251,8 @@ function initMyPage() {
 	initSideBar();
 }
 
-window.addEvent('domready', function(){initMyPage()});
-//window.addEvent('load', function(){initMyPage()}); // <- check if work better with IE+phplayers
+//window.addEvent('domready', function(){initMyPage()});
+window.addEvent('load', function(){initMyPage()}); // <-work better with phplayers
 
 </script>
 {/literal}
