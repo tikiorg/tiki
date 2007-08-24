@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.48 2007-08-24 01:13:29 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.49 2007-08-24 23:09:08 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -283,8 +283,8 @@ class MyPage {
 			
 			if (count($this->modified) > 0) {
 				if (isset($this->modified['name'])) {
-					$c=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE name=?',
-										array($this->params['name']));
+					$c=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE `name`=? AND `id`!=?',
+										array($this->params['name'], $this->id));
 					if ($c != 0)
 						return tra(sprintf('Name "%s" is already exists', $this->params['name']));
 				}
