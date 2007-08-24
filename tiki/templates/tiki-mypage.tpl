@@ -251,8 +251,13 @@ function initMyPage() {
 	initSideBar();
 }
 
-//window.addEvent('domready', function(){initMyPage()});
-window.addEvent('load', function(){initMyPage()}); // <-work better with phplayers
+{/literal}
+{if $feature_phplayers eq 'y'}{* this is an ugly hack ... *}
+window.addEvent('load', initMyPage); // <-work better with phplayers
+{else}
+window.addEvent('domready', initMyPage);
+{/if}
+{literal}
 
 </script>
 {/literal}
