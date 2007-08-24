@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.46 2007-08-24 00:09:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.47 2007-08-24 01:11:49 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -691,12 +691,12 @@ class MyPageWindow {
 		$comp=$this->getComponent();
 		if (!$comp) {
 			$this->lasterror=tra('Component not available: ').$this->params['contenttype'];
-			return $this->lasterror;
+			return 'alert("'.escape($this->lasterror).'");';
 		}
 
 		if (!$comp->getPerm('view')) {
 			$this->lasterror=tra("You do not have permission to view this part of content");
-			return $this->lasterror;
+			return 'alert("'.escape($this->lasterror).'");';
 		}
 
 		$v="tikimypagewin[".$this->id."]";
