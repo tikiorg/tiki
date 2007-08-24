@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.27 2007-08-23 19:58:56 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.28 2007-08-24 00:09:51 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -261,6 +261,13 @@ function mypage_delete($id_mypage) {
     return $objResponse;
 }
 
+function mypage_isNameFree($name) {
+    $objResponse = new xajaxResponse();
+	$r=MyPage::isNameFree($name);
+	$objResponse->assign('mypageedit_name_unique', 'innerHTML', $r ? '' : tra('name already exists'));
+	return $objResponse;
+}
+
 function mypage_fillinfos($id_mypage, $id_types=NULL) {
     global $id_users;
 
@@ -274,6 +281,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL) {
 
 		$objResponse->addAssign('mypageedit_id', 'value', $id_mypage);
 		$objResponse->addAssign('mypageedit_name', 'value', $mypage->getParam('name'));
+		$objResponse->addAssign('mypageedit_name_orig', 'value', $mypage->getParam('name'));
 		$objResponse->addAssign('mypageedit_description', 'value', $mypage->getParam('description'));
 		$objResponse->addAssign('mypageedit_width', 'value', $mypage->getParam('width'));
 		$objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
@@ -381,11 +389,13 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mypage_create");
     $ajaxlib->registerFunction("mypage_delete");
     $ajaxlib->registerFunction("mypage_fillinfos");
+    $ajaxlib->registerFunction("mypage_isNameFree");
 
     $ajaxlib->registerFunction("mptype_fillinfos");
     $ajaxlib->registerFunction("mptype_delete");
     $ajaxlib->registerFunction("mptype_create");
     $ajaxlib->registerFunction("mptype_update");
+	
     $ajaxlib->processRequests();
 }
 

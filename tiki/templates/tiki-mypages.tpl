@@ -4,7 +4,11 @@
  <table class="normal">
   <tr>
    <th>{tr}Name{/tr}</th>
-   <td><input id='mypageedit_name' type='text' name='name' value=''></td>
+   <td>
+    <input id='mypageedit_name' type='text' name='name' value='' onkeyup='isNameFree();'>
+    <input id='mypageedit_name_orig' type='hidden' name='name' value=''>
+    <div id='mypageedit_name_unique' style='color: red;'></div>
+   </td>
   </tr>
 
   <tr>
@@ -113,6 +117,7 @@ function showMypageEdit(id) {
 	} else {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
+		$('mypageedit_name_orig').value='';
 		$('mypageedit_description').value='';
 		{/literal}{if $id_types}{literal}
 		  $('mypageedit_type').value={/literal}{$id_types}{literal};
@@ -156,6 +161,14 @@ function saveMypageEdit() {
 
 function deleteMypage(id) {
 	xajax_mypage_delete(id);
+}
+
+function isNameFree() {
+	name=$('mypageedit_name').value;
+	name_orig=$('mypageedit_name_orig').value;
+	if ((name == '') || (name == name_orig))
+		$('mypageedit_name_unique').innerHTML='';
+	else xajax_mypage_isNameFree(name);
 }
 
 function mypageTypeChange(id) {
