@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.55 2007-08-22 17:38:09 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.56 2007-08-24 17:01:54 jyhem Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -15,7 +15,7 @@
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
          {if $feature_help eq 'y'}
           <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
-          title="{tr}parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
+          title="{tr}Paramaters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
          {/if}
           <p style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></p>
          </fieldset>
@@ -102,12 +102,12 @@
           {/if}
           {if $feature_switch_ssl_mode eq 'y' && ($https_login eq 'allowed' || $https_login eq 'encouraged')}
           <p>
-            <a class="linkmodule" href="{$base_url_http}{$login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
-            <a class="linkmodule" href="{$base_url_https}{$login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}secure{/tr}</a>
+            <a class="linkmodule" href="{$base_url_http}{$login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a> |
+            <a class="linkmodule" href="{$base_url_https}{$login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}Secure{/tr}</a>
           </p>
           {/if}
           {if $feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
-                <p><label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label>?
+                <p><label for="login-stayssl">{tr}Stay in ssl Mode{/tr}:</label>?
                 <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></p>
           {/if}
 

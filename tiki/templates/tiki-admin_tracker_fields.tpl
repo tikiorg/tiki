@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.55 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.56 2007-08-24 17:01:53 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -70,7 +70,7 @@
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 &nbsp;
 <input type="text" name="max" value="{$max|escape}" size="5"/>
-{tr}rows{/tr}
+{tr}Rows{/tr}
 </form>
 </td>
 </tr>
@@ -114,7 +114,7 @@
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}
 <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" alt="{tr}Remove{/tr}" width='16' height='16' /></a> 
-<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}"><img src="pics/icons/resultset_down.png" border="0" alt="{tr}down{/tr}" title="{tr}down{/tr}" width='16' height='16' /></a>
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;fieldId={$channels[user].fieldId}&amp;up=1{if $offset > 1}&amp;offset={$offset}{/if}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}"><img src="pics/icons/resultset_down.png" border="0" alt="{tr}Down{/tr}" title="{tr}Down{/tr}" width='16' height='16' /></a>
 {/if}</td>
 </tr>
 {/section}

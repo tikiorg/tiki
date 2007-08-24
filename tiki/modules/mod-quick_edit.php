@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-$smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Quick edit a Wiki page"));
+$smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Quick Edit a Wiki Page"));
 
 
 if (isset($module_params["templateId"])) {
