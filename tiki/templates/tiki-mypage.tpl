@@ -133,9 +133,9 @@ function mypage_editComponent(compname, asnew) {
 }
 
 function mypage_configuresubmit() {
-	compid=$('mypage_config_compid').value;
+	var compid=$('mypage_config_compid').value;
 
-	if (compid) {
+	if (compid > 0) {
 		xajax_mypage_win_configure('{/literal}{$id_mypage}{literal}', compid, xajax.getFormValues("mypage_formconfigure"));
 	} else {
 		xajax_mypage_win_create('{/literal}{$id_mypage}{literal}',
