@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.45 2007-08-23 23:38:53 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.46 2007-08-24 00:09:51 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -145,6 +145,12 @@ class MyPage {
 		unset($this->windows[$id_win]);
 	}
 	
+	function isNameFree($name) {
+		global $tikilib;
+		$r=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE name=?', $name);
+		return $r == 0 ? true : false;
+	}
+
 	/* static */
 	function countPages($id_users, $type=NULL) {
 		global $tikilib;
