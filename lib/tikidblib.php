@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.31 2007-07-03 15:01:13 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.32 2007-08-24 22:55:34 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -171,7 +171,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB, $smarty;
+    global $ADODB_LASTDB, $smarty, $feature_ajax, $ajaxlib;
 
     trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br /><pre>\n" . $query . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
@@ -192,12 +192,25 @@ function sql_error($query, $values, $result) {
     //if($result===false) echo "<br>\$result is false";
     //if($result===null) echo "<br>\$result is null";
     //if(empty($result)) echo "<br>\$result is empty";
-    require_once('tiki-setup.php');
-    if ($smarty) {
-      $smarty->assign('msg',$outp);
-      $smarty->display("error.tpl");
+
+    if (($feature_ajax == 'y') && $ajaxlib->canProcessRequests()) { // this was a xajax request -> return a xajax answer
+	$objResponse = new xajaxResponse();
+	$page ="<html><head>";
+	$page.=" <title>Tiki SQL Error (xajax)</title>";
+	$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
+	$page.="</head><body>$outp</body></html>";
+	$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
+	$objResponse->addScript("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
+				"bugwin.document.write('$page');");
+	echo $objResponse->getOutput();
     } else {
-      echo $outp;
+	require_once('tiki-setup.php');
+	if ($smarty) {
+	    $smarty->assign('msg',$outp);
+	    $smarty->display("error.tpl");
+	} else {
+	    echo $outp;
+	}
     }
     // -- debugging stuff: after php 5.1.1 will disclose db user and password
     // echo "<pre>";
