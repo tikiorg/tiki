@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.11 2007-08-22 17:38:09 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.12 2007-08-24 17:01:55 jyhem Exp $ *}
   {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
@@ -57,11 +57,11 @@
             <div class="bottom"><a class="linkmodule" href="tiki-register.php">{tr}Register{/tr}</a></div>
           {/if}
           {if $http_login_url ne '' or $https_login_url ne ''}
-            <div class="module"><a class="linkmodule" href="{$http_login_url}">{tr}standard{/tr}</a> |
-            <a class="linkmodule" href="{$https_login_url}">{tr}secure{/tr}</a></div>
+            <div class="module"><a class="linkmodule" href="{$http_login_url}">{tr}Standard{/tr}</a> |
+            <a class="linkmodule" href="{$https_login_url}">{tr}Secure{/tr}</a></div>
           {/if}
           {if $show_stay_in_ssl_mode eq 'y'}
-             <div class="module">{tr}stay in ssl mode{/tr}:&nbsp;
+             <div class="module">{tr}Stay in ssl Mode{/tr}:&nbsp;
                 <input type="checkbox" name="stay_in_ssl_mode" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></div>
           {/if}
       {if $show_stay_in_ssl_mode ne 'y'}

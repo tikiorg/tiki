@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.34 2007-08-23 16:21:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.35 2007-08-24 17:01:53 jyhem Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
@@ -9,10 +9,10 @@
 			<table width="100%"><tr>
 				<td width="11"><a title="{tr}Move module up{/tr}" 
 				href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img 
-				src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}up{/tr}]" /></a></td>
+				src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}Up{/tr}]" /></a></td>
 				<td width="11"><a title="{tr}Move module down{/tr}" 
 				href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img 
-				src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}down{/tr}]" /></a></td>
+				src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}Down{/tr}]" /></a></td>
 				<td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{/if}>
 <span class="box-titletext">{$module_title}</span>
 </td>

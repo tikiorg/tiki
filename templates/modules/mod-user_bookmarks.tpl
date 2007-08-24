@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.18 2007-07-19 09:32:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.19 2007-08-24 17:01:54 jyhem Exp $ *}
 
 {if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
@@ -13,7 +13,7 @@
 	<tr><td class="module">
 	<a class="linkmodule" href="{$modb_urls[ix].url}">{$modb_urls[ix].name}</a>
 	{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-	    (<a href="tiki-user_cached_bookmark.php?urlid={$modb_urls[ix].urlId}" class="linkmodule" target="_blank"><small>{tr}cache{/tr}</small></a>)
+	    (<a href="tiki-user_cached_bookmark.php?urlid={$modb_urls[ix].urlId}" class="linkmodule" target="_blank"><small>{tr}Cache{/tr}</small></a>)
 	{/if}
 	(<a class="linkmodule" href="{$ownurl}{$modb_sep}bookmark_removeurl={$modb_urls[ix].urlId}"><small>x</small></a>)
 	</td></tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.37 2007-08-06 15:13:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.38 2007-08-24 17:01:53 jyhem Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -74,7 +74,7 @@
 {if $users[user].what ne 'real'}
 <a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}&amp;assign_user={$assign_user|escape:url}" title="{tr}Assign User to Group{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
 {elseif $users[user].groupName ne "Registered"}
-<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user|escape:url}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}unassign{/tr}' /></a>
+<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;maxRecords={$maxRecords}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user|escape:url}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Unassign{/tr}' /></a>
 {/if}
 </td></tr>
 {/if}

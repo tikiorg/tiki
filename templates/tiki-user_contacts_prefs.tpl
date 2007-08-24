@@ -67,12 +67,12 @@
   <tr>
   	<td class="{cycle advance=false}" width="2%">
 		{if not $smarty.foreach.e.first}
-		<a href="?ext_up={$ext.fieldId}" title="{tr}up{/tr}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt='{tr}up{/tr}' /></a>
+		<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt='{tr}Up{/tr}' /></a>
 		{/if}
 	</td>
   	<td class="{cycle advance=false}" width="2%">
 		{if not $smarty.foreach.e.last}
-		<a href="?ext_down={$ext.fieldId}" title="{tr}down{/tr}"><img src="pics/icons/resultset_down.png" border="0" height="16" width="16" alt='{tr}down{/tr}' /></a>
+		<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}"><img src="pics/icons/resultset_down.png" border="0" height="16" width="16" alt='{tr}Down{/tr}' /></a>
 		{/if}
 	</td>
 	<td class="{cycle advance=false}">{$ext.fieldname|escape}</td>
