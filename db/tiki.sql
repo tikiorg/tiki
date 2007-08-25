@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-08-21 20:33:05 $
+# $Date: 2007-08-25 14:10:42 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4927,7 +4927,7 @@ CREATE TABLE `tiki_mypagewin` (
   `top` int(11) NOT NULL,
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
-  `contenttype` enum('iframe','wiki') default NULL,
+  `contenttype` varchar(31) default NULL,
   `config` blob,
   `content` blob,
   PRIMARY KEY  (`id`),
