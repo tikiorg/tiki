@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.29 2007-08-24 00:46:56 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.30 2007-08-25 10:57:08 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,6 +85,10 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
 function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     global $id_users;
 
+	if (is_array($form_config)) // it seem that xajax add some backslashes here
+		foreach($form_config as $k => $v)
+			$form_config[$k]=stripslashes($v);
+
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
@@ -112,6 +116,10 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
 
 function mypage_win_configure($id_mypage, $id_win, $form) {
     global $id_users;
+
+	if (is_array($form)) // it seem that xajax add some backslashes here
+		foreach($form as $k => $v)
+			$form[$k]=stripslashes($v);
 
     $objResponse = new xajaxResponse();
 
@@ -178,6 +186,10 @@ function mypage_win_prepareConfigure($id_mypage, $id_win, $compname=null) {
 function mypage_update($id_mypage, $vals, $form) {
     global $id_users;
 
+	if (is_array($form)) // it seem that xajax add some backslashes here
+		foreach($form as $k => $v)
+			$form[$k]=stripslashes($v);
+
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
@@ -213,6 +225,10 @@ function mypage_update($id_mypage, $vals, $form) {
 
 function mypage_create($vals, $form) {
     global $id_users;
+
+	if (is_array($form)) // it seem that xajax add some backslashes here
+		foreach($form as $k => $v)
+			$form[$k]=stripslashes($v);
 
     $objResponse = new xajaxResponse();
 
