@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.52 2007-08-25 20:12:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.53 2007-08-25 20:33:23 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -270,6 +270,9 @@ class MyPage {
 			
 			$this->id=$id;
 			
+			$typeclass=$this->getTypeClass();
+			if ($typeclass) $typeclass->create();
+
 			// now run again for update ;)
 			$res=$this->commit();
 			if (is_string($res)) {
@@ -278,8 +281,6 @@ class MyPage {
 				$this->id=NULL;
 				return $res;
 			}
-			$typeclass=$this->getTypeClass();
-			if ($typeclass) $typeclass->create();
 			return $res;
 			
 		} else {
