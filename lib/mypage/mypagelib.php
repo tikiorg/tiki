@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.49 2007-08-24 23:09:08 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.50 2007-08-25 11:39:21 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -145,6 +145,7 @@ class MyPage {
 		unset($this->windows[$id_win]);
 	}
 	
+	/* static */
 	function isNameFree($name) {
 		global $tikilib;
 		$r=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE name=?', $name);
@@ -317,6 +318,7 @@ class MyPage {
 	/*
 	 * one day, i'll make a libcomponents...
 	 */
+	/* static */
 	function getAvailableComponents() {
 		$r=array();
 		$d=opendir("components");
@@ -672,13 +674,35 @@ class MyPageWindow {
 		$this->setParam('title', $title);
 	}
 
+	/* static or not static */
+	function getComponentConfigureDiv($compname=NULL) {
+		if ($this) { // we are not static
+			$comp=$this->getComponent();
+			if ($comp) return $comp->getConfigureDiv();
+			return NULL;
+		} else if (!empty($compname)) { // we are static
+			$classname=MyPageWindow::getComponentClass($compname);
+			if (($classname !== NULL) && is_callable(array($classname, 'getConfigureDiv')))
+				return call_user_func(array($classname, 'getConfigureDiv'));
+		}
+		return NULL;
+	}
+	
+	/* static */
+	function getComponentClass($compname) {
+		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $compname))
+			return NULL;
+		if (file_exists("components/comp-".$compname.".php")) {
+			require_once("components/comp-".$compname.".php");
+			$classname="Comp_".$compname;
+			return $classname;
+		}
+	}
+
 	function getComponent() {
 		if ($this->comp) return $this->comp;
-		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $this->params['contenttype']))
-			return NULL;
-		if (file_exists("components/comp-".$this->params['contenttype'].".php")) {
-			require_once("components/comp-".$this->params['contenttype'].".php");
-			$classname="Comp_".$this->params['contenttype'];
+		$classname=MyPageWindow::getComponentClass($this->params['contenttype']);
+		if ($classname) {
 			$this->comp=new $classname($this->params['config']);
 			return $this->comp;
 		}
