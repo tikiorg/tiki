@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.32 2007-08-25 13:19:46 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.33 2007-08-25 20:20:35 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -200,10 +200,6 @@ function mypage_update($id_mypage, $vals, $form) {
 		$err=$mypage->setParam($k, $v);
 		if (strlen($err)) return mypage_error($err);
 	}
-    $err=$mypage->commit();
-	if (strlen($err)) {
-		return mypage_error($err);
-	}
 
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
@@ -211,6 +207,11 @@ function mypage_update($id_mypage, $vals, $form) {
 			$err=$typeclass->configure($form);
 			if (strlen($err)) return mypage_error($err);
 		}
+	}
+
+    $err=$mypage->commit();
+	if (strlen($err)) {
+		return mypage_error($err);
 	}
 
 	$newvals=array();
@@ -241,11 +242,7 @@ function mypage_create($vals, $form) {
 		$err=$mypage->setParam($k, $v);
 		if (strlen($err)) return mypage_error($err);
 	}
-	$err=$mypage->commit();
-	if (strlen($err)) {
-		return mypage_error($err);
-	}
-	
+
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
 		if ($typeclass) {
@@ -254,6 +251,11 @@ function mypage_create($vals, $form) {
 		}
 	}
 
+	$err=$mypage->commit();
+	if (strlen($err)) {
+		return mypage_error($err);
+	}
+	
 	$objResponse->addScript("window.location.reload()");
 
     return $objResponse;
