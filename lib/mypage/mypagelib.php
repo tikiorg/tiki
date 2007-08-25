@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.50 2007-08-25 11:39:21 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.51 2007-08-25 13:19:47 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -587,6 +587,8 @@ class MyPageWindow {
 	}
 	
 	function destroy() {
+		$comp=$this->getComponent();
+		if ($comp) $comp->destroy();
 		return $this->mypage->destroyWindow($this);
 	}
 	
@@ -613,8 +615,16 @@ class MyPageWindow {
 			$this->mypage->_update_id_win($oldid, $this->id);
 			
 			// now run again for update ;)
-			return $this->commit();
-			
+			$r=$this->commit();
+			if (is_string($r)) {
+				$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=?", array($this->id));
+				$this->id=$oldid;
+				$this->mypage->_update_id_win($this->id, $oldid);
+				return $r;
+			}
+			$comp=$this->getComponent();
+			if ($comp) $comp->create();
+
 		} else {
 			
 			if (count($this->modified) > 0) {
@@ -638,6 +648,10 @@ class MyPageWindow {
 	function setParam($param, $value) {
 		$this->params[$param]=$value;
 		$this->modified[$param]=true;
+	}
+	
+	function getParam($param) {
+		return $this->params[$param];
 	}
 	
 	/*
@@ -676,7 +690,7 @@ class MyPageWindow {
 
 	/* static or not static */
 	function getComponentConfigureDiv($compname=NULL) {
-		if ($this) { // we are not static
+		if (isset($this)) { // we are not static
 			$comp=$this->getComponent();
 			if ($comp) return $comp->getConfigureDiv();
 			return NULL;
@@ -703,7 +717,7 @@ class MyPageWindow {
 		if ($this->comp) return $this->comp;
 		$classname=MyPageWindow::getComponentClass($this->params['contenttype']);
 		if ($classname) {
-			$this->comp=new $classname($this->params['config']);
+			$this->comp=new $classname($this);
 			return $this->comp;
 		}
 		return NULL;
