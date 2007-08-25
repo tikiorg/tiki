@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.51 2007-08-25 13:19:47 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.52 2007-08-25 20:12:05 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -207,10 +207,12 @@ class MyPage {
 		$allowed=array('id_users', 'id_types', 'width', 'height',
 					   'name', 'description', 'bgcolor');
 
+		$typeclass=$this->getTypeClass();
 		if (in_array($param, $allowed)) {
 			// TODO: verify permissions when changing id_users or id_types !
 			$this->params[$param]=$value;
 			$this->modified[$param]=true;
+			if ($typeclass) $typeclass->mypage_setParam($param, $value);
 		} else {
 			$this->lasterror=tra("Parameter not found :").$param;
 			return $this->lasterror;
@@ -300,9 +302,12 @@ class MyPage {
 				$r[]=$this->id;
 				
 				$res=$tikilib->query($query, $r);
-				
-				$this->modified=array();
+
+				$typeclass=$this->getTypeClass();
 			}
+
+			if ($typeclass) $typeclass->commit();
+			$this->modified=array();
 		}
 	}
 	
