@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.203 2007-08-21 20:33:06 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.204 2007-08-25 14:10:42 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1525,3 +1525,6 @@ ALTER TABLE `tiki_mypage_types` ADD `def_height` INT NULL,
 	ADD `fix_dimensions` ENUM( 'no', 'yes' ) NOT NULL,
 	ADD `def_bgcolor` VARCHAR( 8 ) NULL,
 	ADD `fix_bgcolor` ENUM( 'no', 'yes' ) NOT NULL;
+
+#2007-08-25 niclone
+ALTER TABLE `tiki_mypagewin` CHANGE `contenttype` `contenttype` VARCHAR(31) NULL DEFAULT NULL;
