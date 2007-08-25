@@ -102,6 +102,7 @@ class Comp_wiki {
 	
 	return true;
     }
+
 }
 
 /* For the emacs weenies in the crowd.
