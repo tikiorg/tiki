@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.31 2007-08-25 11:39:19 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.32 2007-08-25 13:19:46 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,8 +102,7 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     $mywin->setTitle($title);
     $mywin->setContentType($contenttype);
     $comp=$mywin->getComponent();
-    $conf=$comp->configure($form_config);
-    $mywin->setConfig($conf);
+    $comp->configure($form_config);
     $err=$mywin->commit();
 	if (strlen($err)) {
 		$mywin->destroy();
@@ -140,13 +139,18 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 	if (is_string($comp))
 		return mypage_error($comp);
 
-    $conf=$comp->configure($form);
-    $mywin->setConfig($conf);
+    $reload=$comp->configure($form);
     $err=$mywin->commit();
 	if (strlen($err)) {
 		return mypage_error($err);
 	}
 
+	if ($reload) {
+		if ($mywin->getParam('contenttype') == 'iframe')
+			$objResponse->addScriptCall("tikimypagewin[$id_win].setURL", $mywin->getParam('config'));
+		else
+			$objResponse->addScriptCall("tikimypagewin[$id_win].setHTML", $comp->getHTMLContent());
+	}
     return $objResponse;
 }
 
