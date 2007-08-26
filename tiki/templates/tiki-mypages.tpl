@@ -1,19 +1,19 @@
 <h1>{tr}My {if $smarty.request.type}{$smarty.request.type} {/if}Pages{/tr}</h1>
-<div id='mypageeditdiv' style='display: none;'>
+<div id='mypageeditdiv' style='display: none; border: padding-left: 7px; padding-right: 7px;'>
  <input id='mypageedit_id' type='hidden' value=''>
  <table class="normal">
   <tr>
    <th>{tr}Name{/tr}</th>
    <td>
-    <input id='mypageedit_name' type='text' name='name' value='' onkeyup='isNameFree();'>
-    <input id='mypageedit_name_orig' type='hidden' name='name' value=''>
+    <input id='mypageedit_name' type='text' name='name' value='' style='width: 100%' onkeyup='isNameFree();' />
+    <input id='mypageedit_name_orig' type='hidden' name='name' value='' />
     <div id='mypageedit_name_unique' style='color: red;'></div>
    </td>
   </tr>
 
   <tr>
    <th>{tr}Description{/tr}</th>
-   <td><input id='mypageedit_description' type='text' name='description' value=''></td>
+   <td><input id='mypageedit_description' type='text' name='description' value='' style='width: 100%' /></td>
   </tr>
   <tr>
    <th>{tr}Access{/tr}</th>
@@ -41,17 +41,18 @@
   <tr id='mypageedit_tr_dimensions'>
    <th>{tr}Dimensions{/tr}</th>
    <td>
-    <input id='mypageedit_width' type='text' name='width' value='' style='width: 55px'> x 
-    <input id='mypageedit_height' type='text' name='height' value='' style='width: 55px'>
+    <input id='mypageedit_width' type='text' name='width' value='' style='width: 40px'> x 
+    <input id='mypageedit_height' type='text' name='height' value='' style='width: 40px'> ({tr}pixels{/tr})
    </td>
   </tr>
  </table>
 
  <form id='form_mypageedit_typeconf'><div id='mypageedit_typeconf'></div></form>
 
- <br />
- <input type='button' value='Cancel' onclick='closeMypageEdit();'>
- <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
+ <div style='text-align: right'>
+  <input type='button' value='Cancel' onclick='closeMypageEdit();'>
+  <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
+ </div>
 </div>
 
 <input type='button' value='Create' onclick='showMypageEdit(0);'>
@@ -101,7 +102,7 @@ function initMypageEdit() {
 	var content=$('mypageeditdiv');
 	curmodal=new Windoo({
 		"modal": true,
-		"width": 300,
+		"width": 500,
 		"height": 500,
 		"container": false,
 		"destroyOnClose": false
