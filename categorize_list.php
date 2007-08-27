@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.26 2007-06-30 12:13:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.27 2007-08-27 15:43:49 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,8 +8,11 @@
 
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 require_once('tiki-setup.php');  
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $smarty->assign('mandatory_category', '-1');
 if ($feature_categories == 'y') {
