@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.54 2007-08-27 01:05:10 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.55 2007-08-27 09:57:40 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -260,6 +260,9 @@ class MyPage {
 				return $this->lasterror;
 			}
 			
+			$this->params['created']=$tikilib->now;
+			$this->modified['created']=1;
+
 			// create a new mypage id
 			
 			$res=$tikilib->query("INSERT INTO tiki_mypage (`id_users`) values (?)",
@@ -293,6 +296,10 @@ class MyPage {
 					if ($c != 0)
 						return tra(sprintf('Name "%s" is already exists', $this->params['name']));
 				}
+
+				$this->params['modified']=$tikilib->now;
+				$this->modified['modified']=1;
+
 				$l=array();
 				$r=array();
 				foreach($this->modified as $k => $v) {
@@ -464,7 +471,8 @@ class MyPage {
 	function createMypageType() {
 		global $tikilib;
 
-		$res=$tikilib->query("INSERT INTO tiki_mypage_types () VALUES ()");
+		$res=$tikilib->query("INSERT INTO tiki_mypage_types (created,modified) VALUES (?,?)",
+							 array($tikilib->now, $tikilib->now));
 		return $tikilib->getOne("SELECT LAST_INSERT_ID()");
 	}
 
@@ -474,8 +482,9 @@ class MyPage {
 
 		$cols=array("name", "description", "section", "permissions",
 					"def_width", "def_height", "fix_dimensions",
-					"def_bgcolor", "fix_bgcolor");
+					"def_bgcolor", "fix_bgcolor", "modified");
 
+		$vals['modified']=$tikilib->now;
 		$tvals=$vals;
 		// we remove unauthorized cols
 		foreach($tvals as $k => $v)
@@ -610,6 +619,9 @@ class MyPageWindow {
 		if ($this->id < 0) {
 			// create a new mypagewin id
 			
+			$this->params['created']=$tikilib->now;
+			$this->modified['created']=1;
+
 			$res=$tikilib->query("INSERT INTO tiki_mypagewin (`id_mypage`) values (?)",
 								 array($this->mypage->id));
 			if (!$res) return;
@@ -635,6 +647,9 @@ class MyPageWindow {
 		} else {
 			
 			if (count($this->modified) > 0) {
+				$this->params['modified']=$tikilib->now;
+				$this->modified['modified']=1;
+
 				$l=array();
 				$r=array();
 				foreach($this->modified as $k => $v) {

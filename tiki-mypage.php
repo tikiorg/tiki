@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.17 2007-08-17 10:15:50 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.18 2007-08-27 09:57:40 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,9 +65,8 @@ function mypage_init() {
 		$mypage=MyPage::getMyPage_byId($id_mypage, $id_users);
 	}
 
-	if (!$mypage) {
-		// TODO: display a cleaner error
-		die("mypage not found");
+	if (!$mypage || is_string($mypage)) {
+		die("mypage not found : ".$mypage);
 	}
 
 	$id_mypage=$mypage->id;
