@@ -75,7 +75,7 @@
 		<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}"><img src="pics/icons/resultset_down.png" border="0" height="16" width="16" alt='{tr}Down{/tr}' /></a>
 		{/if}
 	</td>
-	<td class="{cycle advance=false}">{$ext.fieldname|escape}</td>
+	<td class="{cycle advance=false}">{tr}{$ext.fieldname|escape}{/tr}</td>
   	<td class="{cycle advance=true}">
 		{if $ext.show eq 'y'}
 		<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}"><img src="pics/icons/no_eye.png" border="0" height="16" width="16" alt='{tr}Hide{/tr}' /></a>
