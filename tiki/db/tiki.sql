@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-08-25 14:10:42 $
+# $Date: 2007-08-27 09:57:41 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4906,6 +4906,9 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
 CREATE TABLE `tiki_mypage` (
   `id` int(11) NOT NULL auto_increment,
   `id_users` int(11) NOT NULL,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL,
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -4920,6 +4923,9 @@ CREATE TABLE `tiki_mypage` (
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
   `id_mypage` int(11) NOT NULL,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
   `inbody` enum('n','y') NOT NULL default 'n',
   `modal` enum('n','y') NOT NULL default 'n',
@@ -4936,6 +4942,8 @@ CREATE TABLE `tiki_mypagewin` (
 
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
   `description` varchar(255) NOT NULL,
   `section` varchar(255) default NULL,
