@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.27 2007-08-27 15:43:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.28 2007-08-27 16:41:33 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 require_once('tiki-setup.php');  
+global $feature_categories, $userlib;
 
 $smarty->assign('mandatory_category', '-1');
 if ($feature_categories == 'y') {
