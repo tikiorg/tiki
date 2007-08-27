@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.55 2007-08-27 09:57:40 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.56 2007-08-27 10:04:28 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -320,6 +320,18 @@ class MyPage {
 		}
 	}
 	
+	/*
+	 * increment viewed count
+	 */
+	function viewed() {
+		global $tikilib;
+		if ($this->id > 0) {
+			$this->params['viewed']++;
+			$tikilib->query('UPDATE tiki_mypage SET `viewed`=? WHERE `id`=?',
+							array($this->params['viewed'], $this->id));
+		}
+	}
+
 	function getJSCode($editable=false) {
 		$js="/* windows creation */\n";
 		foreach($this->windows as $win) {
