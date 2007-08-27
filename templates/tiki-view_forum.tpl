@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.105 2007-08-22 19:46:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.106 2007-08-27 12:28:10 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -108,18 +108,18 @@ a moderator approves it.{/tr}
 
   {if $warning eq 'y'}
   <br /><br />
-  <div class="commentsedithelp"><br /><b>{tr}You have to enter a title and text{/tr}!</b><br /><br />
+  <div class="simplebox highlight"><br /><b>{tr}You have to enter a title and text{/tr}!</b><br /><br />
   </div>
   <br />
   {/if}
 {if $contribution_needed eq 'y'}
   <br /><br />
-  <div class="commentsedithelp"><br /><b>{tr}A contribution is mandatory{/tr}</b><br /><br />
+  <div class="simplebox highlight"><br /><b>{tr}A contribution is mandatory{/tr}</b><br /><br />
   </div>
   <br />
   {/if}
 {if $duplic eq 'y'}
-<div class="commentsedithelp"><br /><b>{tr}Another post with the same title and content already exists{/tr}</b><br /><br /></div>
+<div class="simplebox highlight"><br /><b>{tr}Another post with the same title and content already exists.{/tr} {tr}Please change your title or content then click Post.{/tr}</b><br /><br /></div>
 {/if}
 
 <div id="forumpost" style="display:{if $comments_threadId > 0 or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
