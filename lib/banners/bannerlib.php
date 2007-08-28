@@ -29,8 +29,8 @@ class BannerLib extends TikiLib {
 		//
 		$query = "select count(*) from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
     		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-    		`impressions`<`maxImpressions` and `zone`=?";
-    		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',$zone);
+    		(`impressions`<`maxImpressions` or `maxImpressions`=?) and `zone`=?";
+		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,$zone);
 		$rows=$this->getOne($query,$bindvars);
 
 		if (!$rows)
@@ -41,7 +41,7 @@ class BannerLib extends TikiLib {
 
 		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		`impressions`<`maxImpressions` and `zone`=?";
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?)and `zone`=?";
 		$result = $this->query($query,$bindvars,1,$bid);
 
 		$res = $result->fetchRow();
