@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.35 2007-08-28 13:36:39 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.36 2007-08-28 13:54:20 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -171,7 +171,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB, $smarty, $feature_ajax;
+    global $ADODB_LASTDB, $smarty, $feature_ajax, $ajaxlib;
 
     trigger_error($ADODB_LASTDB . " error:  " . htmlspecialchars($this->db->ErrorMsg()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
@@ -185,54 +185,58 @@ function sql_error($query, $values, $result) {
     $outp.= "<tr class='formcolor'><td colspan='2'><tt>".htmlspecialchars($query)."</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
-	if (is_null($v)) $v='<i>NULL</i>';
-	else $v=htmlspecialchars($v);
-	$outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>$v</td></tr>";
+		if (is_null($v)) $v='<i>NULL</i>';
+		else $v=htmlspecialchars($v);
+		$outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>$v</td></tr>";
     }
     $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($this->db->ErrorMsg())."</td></tr>\n";
-
+	
     $q=$query;
     foreach($values as $v) {
-	if (is_null($v)) $v='NULL';
-	else $v="'".addslashes($v)."'";
-	$pos=strpos($q, '?');
-	if ($pos !== FALSE)
-	    $q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+		if (is_null($v)) $v='NULL';
+		else $v="'".addslashes($v)."'";
+		$pos=strpos($q, '?');
+		if ($pos !== FALSE)
+			$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
     }
-
+	
     $outp.= "<tr class='heading'><td colspan='2'>Builded query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
     $outp.= "</table>";
     //if($result===false) echo "<br>\$result is false";
     //if($result===null) echo "<br>\$result is null";
     //if(empty($result)) echo "<br>\$result is empty";
-
+	
+    $showviaajax=false;
     if ($feature_ajax == 'y') {
-		global $ajaxlib;include_once('lib/ajax/xajax.inc.php');
-	}
-	if (($feature_ajax == 'y') && $ajaxlib->canProcessRequests()) { // this was a xajax request -> return a xajax answer
-	$objResponse = new xajaxResponse();
-	$page ="<html><head>";
-	$page.=" <title>Tiki SQL Error (xajax)</title>";
-	$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
-	$page.="</head><body>$outp</body></html>";
-	$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
-	$objResponse->addScript("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
-				"bugwin.document.write('$page');");
-	echo $objResponse->getOutput();
-    } else {
+		global $ajaxlib;
+		include_once('lib/ajax/xajax.inc.php');
+		if ($ajaxlib && $ajaxlib->canProcessRequests()) {
+			// this was a xajax request -> return a xajax answer
+			$objResponse = new xajaxResponse();
+			$page ="<html><head>";
+			$page.=" <title>Tiki SQL Error (xajax)</title>";
+			$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
+			$page.="</head><body>$outp</body></html>";
+			$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
+			$objResponse->addScript("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
+									"bugwin.document.write('$page');");
+			echo $objResponse->getOutput();
+			die();
+		}
+    }
+
 	require_once('tiki-setup.php');
 	if ($smarty) {
-	    $smarty->assign('msg',$outp);
-	    $smarty->display("error.tpl");
+		$smarty->assign('msg',$outp);
+		$smarty->display("error.tpl");
 	} else {
-	    echo $outp;
+		echo $outp;
 	}
-    }
     // -- debugging stuff: after php 5.1.1 will disclose db user and password
     // echo "<pre>";
     // var_dump(debug_backtrace());
     // echo "</pre>";
-    die;
+    die();
 }
 
 function ifNull($narg1,$narg2) {
