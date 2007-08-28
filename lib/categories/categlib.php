@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.110 2007-08-28 15:18:29 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.111 2007-08-28 21:22:52 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1377,6 +1377,7 @@ class CategLib extends ObjectLib {
 			$removed_categories = array_diff($old_categories, $categories);						
 		}
 
+		$this->add_object($objType, $objId, $desc, $name, $href);
 		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
 			return;
 		}
