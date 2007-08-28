@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.33 2007-08-28 11:40:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.34 2007-08-28 13:28:44 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -173,21 +173,30 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 function sql_error($query, $values, $result) {
     global $ADODB_LASTDB, $smarty, $feature_ajax;
 
-    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br /><pre>\n" . $query . "\n</pre><br />", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . htmlspecialchars($this->db->ErrorMsg()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
-    $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
+    $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
     $outp.= "<br /><table class='form'>";
-   	$outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
-		$outp.= "<tr class='formcolor'><td>File</td><td>".basename($_SERVER['SCRIPT_NAME'])."</td></tr>";
-		$outp.= "<tr class='formcolor'><td>Url</td><td>".basename($_SERVER['REQUEST_URI'])."</td></tr>";
-		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
-		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
+    $outp.= "<tr class='formcolor'><td>File</td><td>".htmlspecialchars(basename($_SERVER['SCRIPT_NAME']))."</td></tr>";
+    $outp.= "<tr class='formcolor'><td>Url</td><td>".htmlspecialchars(basename($_SERVER['REQUEST_URI']))."</td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+    $outp.= "<tr class='formcolor'><td colspan='2'><tt>".htmlspecialchars($query)."</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
-      $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
+      $outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>".htmlspecialchars($v)."</td></tr>";
     }
-    $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td>Error Message</td><td>".$this->db->ErrorMsg()."</td></tr>\n";
+    $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($this->db->ErrorMsg())."</td></tr>\n";
+
+    $q=$query;
+    foreach($values as $v) {
+	$pos=strpos($q, '?');
+	if ($pos !== FALSE)
+	    $q=substr($q, 0, $pos)."'".addslashes($v)."'".substr($q, $pos+1);
+    }
+
+    $outp.= "<tr class='heading'><td colspan='2'>Builded query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
     $outp.= "</table>";
     //if($result===false) echo "<br>\$result is false";
     //if($result===null) echo "<br>\$result is null";
