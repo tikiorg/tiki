@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.109 2007-08-27 20:06:51 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.110 2007-08-28 15:18:29 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1368,30 +1368,29 @@ class CategLib extends ObjectLib {
 	}
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $feature_user_watches;
-		if ($feature_user_watches == 'y') { //todo: optimize by doing this only if categ watched
-			$old_categories = $this->get_object_categories($objType, $objId);
+		$old_categories = $this->get_object_categories($objType, $objId);
+		if (empty($categories)) {
 			$new_categories = array();
 			$removed_categories = $old_categories;
-		}
-
-		if (!empty($old_categories)) {
-			$this->uncategorize_object($objType, $objId);
-		}
-		if (!empty($categories))  {
+		} else {
 			$new_categories = array_diff($categories, $old_categories);
 			$removed_categories = array_diff($old_categories, $categories);						
-			foreach ($categories as $category) {
-				if ($category) {
-					if (!($catObjectId = $this->is_categorized($objType, $objId))) {
-						$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
-					}
-					$this->categorize($catObjectId, $category);
+		}
+
+		if (empty($new_categories) and empty($removed_categories)) { //nothing changed
+			return;
+		}
+		$this->uncategorize_object($objType, $objId);
+		foreach ($categories as $category) {
+			if ($category) {
+				if (!($catObjectId = $this->is_categorized($objType, $objId))) {
+					$catObjectId = $this->add_categorized_object($objType, $objId, $desc, $name, $href);
 				}
+				$this->categorize($catObjectId, $category);
 			}
 		}
 
 		if ($feature_user_watches == 'y') {
-			$categorizedObject = $this->get_categorized_object($objType, $objId);
 			foreach ($new_categories as $categId) {			
 		   		$category = $this->get_category($categId);
 				$values = array('categoryId'=>$categId, 'categoryName'=>$category['name'], 'categoryPath'=>$this->get_category_path_string_with_root($categId),
@@ -1400,7 +1399,7 @@ class CategLib extends ObjectLib {
 				$this->notify($values);								
 			}
 			foreach ($removed_categories as $categId) {
-				$category = $this->get_category($categhId);	
+				$category = $this->get_category($categId);	
 				$values= array('categoryId'=>$categId, 'categoryName'=>$category['name'], 'categoryPath'=>$this->get_category_path_string_with_root($cat),
 					'description'=>$category['description'], 'parentId'=>$category['parentId'], 'parentName'=>$this->get_category_name($category['parentId']),
 				 	'action'=>'object leaved category', 'objectName'=>$name, 'objectType'=>$objType, 'objectUrl'=>$href);
