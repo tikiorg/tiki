@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.34 2007-08-28 13:28:44 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.35 2007-08-28 13:36:39 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -185,15 +185,19 @@ function sql_error($query, $values, $result) {
     $outp.= "<tr class='formcolor'><td colspan='2'><tt>".htmlspecialchars($query)."</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
-      $outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>".htmlspecialchars($v)."</td></tr>";
+	if (is_null($v)) $v='<i>NULL</i>';
+	else $v=htmlspecialchars($v);
+	$outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>$v</td></tr>";
     }
     $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($this->db->ErrorMsg())."</td></tr>\n";
 
     $q=$query;
     foreach($values as $v) {
+	if (is_null($v)) $v='NULL';
+	else $v="'".addslashes($v)."'";
 	$pos=strpos($q, '?');
 	if ($pos !== FALSE)
-	    $q=substr($q, 0, $pos)."'".addslashes($v)."'".substr($q, $pos+1);
+	    $q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
     }
 
     $outp.= "<tr class='heading'><td colspan='2'>Builded query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
