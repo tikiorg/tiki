@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.32 2007-08-24 22:55:34 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.33 2007-08-28 11:40:30 sylvieg Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -171,7 +171,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB, $smarty, $feature_ajax, $ajaxlib;
+    global $ADODB_LASTDB, $smarty, $feature_ajax;
 
     trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br /><pre>\n" . $query . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
@@ -193,7 +193,10 @@ function sql_error($query, $values, $result) {
     //if($result===null) echo "<br>\$result is null";
     //if(empty($result)) echo "<br>\$result is empty";
 
-    if (($feature_ajax == 'y') && $ajaxlib->canProcessRequests()) { // this was a xajax request -> return a xajax answer
+    if ($feature_ajax == 'y') {
+		global $ajaxlib;include_once('lib/ajax/xajax.inc.php');
+	}
+	if (($feature_ajax == 'y') && $ajaxlib->canProcessRequests()) { // this was a xajax request -> return a xajax answer
 	$objResponse = new xajaxResponse();
 	$page ="<html><head>";
 	$page.=" <title>Tiki SQL Error (xajax)</title>";
