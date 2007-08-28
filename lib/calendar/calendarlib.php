@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.73 2007-06-16 16:01:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.74 2007-08-28 14:51:50 niclone Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -142,7 +142,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	/* tsart ans tstop are in user time - the data base is in server time */
-	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
+	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
 		global $user;
 
 		if (sizeOf($calIds) == 0) {
@@ -172,15 +172,15 @@ class CalendarLib extends TikiLib {
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $this->get_item($res["calitemId"]);
+			$ret[] = $this->get_item($res["calitemId"], $customs);
 		}
 		return $ret;
 	}
 
-	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
+	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
 		global $user, $tiki_p_change_events;
 		$ret = array();
-		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
+		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
 		foreach ($list as $res) {
 			$mloop = TikiLib::date_format("%m", $res['start']);
 			$dloop = TikiLib::date_format("%d", $res['start']);
@@ -225,14 +225,20 @@ class CalendarLib extends TikiLib {
 		return $ret;
 	}
 
-	function get_item($calitemId) {
+	function get_item($calitemId, $customs=array()) {
 		global $user;
+
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
 		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`nlId` as `nlId`, ";
 		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, ";
 		$query.= "t.`customlocations` as `customlocations`, t.`customcategories` as `customcategories`, t.`customlanguages` as `customlanguages`, t.`custompriorities` as `custompriorities`, ";
 		$query.= "t.`customsubscription` as `customsubscription`, ";
-		$query.= "t.`customparticipants` as `customparticipants`  from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
+		$query.= "t.`customparticipants` as `customparticipants` ";
+
+		foreach($customs as $k=>$v)
+		    $query.=", i.`$k` as `$v`";
+
+		$query.= "from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
 		$query.= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` where `calitemId`=?";
 		$result = $this->query($query,array((int)$calitemId));
 		$res = $result->fetchRow();
@@ -261,7 +267,7 @@ class CalendarLib extends TikiLib {
 		return $res;
 	}
 
-	function set_item($user, $calitemId, $data) {
+	function set_item($user, $calitemId, $data, $customs=array()) {
 		global $user;
 		if (!isset($data['calendarId'])) {
 			return false;
@@ -349,21 +355,48 @@ class CalendarLib extends TikiLib {
 			$data['nlId'] = 0;
 		}
 
+		$data['user']=$user;
+
+		$realcolumns=array('calitemId', 'calendarId', 'start', 'end', 'locationId', 'categoryId', 'nlId','priority',
+				   'status', 'url', 'lang', 'name', 'description', 'user', 'created', 'lastmodif');
+		foreach($customs as $custom) $realcolumns[]=$custom;
+
 		if ($calitemId) {
 			$new = false;
-			$query = "update `tiki_calendar_items` set `calendarId`=?,`user`=?,`start`=?,`end`=? ,`locationId`=? ,`categoryId`=?,`priority`=?,`status`=?,`url`=?,";
-			$query.= "`nlId`=?,`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
-			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["priority"],
-			                $data["status"],$data["url"],$data["nlId"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
-			$result = $this->query($query,$bindvars);
+			$data['lastmodif']=$this->now;
+
+			$l=array();
+			$r=array();
+
+			foreach($data as $k=>$v) {
+			    if (!in_array($k, $realcolumns)) continue;
+			    $l[]="`$k`=?";
+			    $r[]=$v;
+			}
+
+			$query='UPDATE `tiki_calendar_items` SET '.implode(',', $l).' WHERE `calitemId`=?';
+			$r[]=(int)$calitemId;
+
+			$result = $this->query($query,$r);
 		} else {
 			$new = true;
-			$now=time();
-			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`,  ";
-			$query.= " `priority`, `status`, `url`, `nlId`, `lang`, `name`, `description`, `created`, `lastmodif`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["nlId"],$data["lang"],$data["name"],$data["description"],(int)$now,(int)$now);
-			$result = $this->query($query,$bindvars);
-			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$now));
+			$data['lastmodif']=$this->now;
+			$data['created']=$this->now;
+
+			$l=array();
+			$r=array();
+			$z=array();
+
+			foreach($data as $k=>$v) {
+			    if (!in_array($k, $realcolumns)) continue;
+			    $l[]="`$k`";
+			    $z[]='?';
+			    $r[]=$v;
+			}
+
+			$query = 'INSERT INTO `tiki_calendar_items` ('.implode(',', $l).') VALUES ('.implode(',', $z).')';
+			$result = $this->query($query, $r);
+			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$this->now));
 		}
 
 		if ($calitemId) {
