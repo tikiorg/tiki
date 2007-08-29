@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-03 20:10:57 $
-# $Author: sylvieg $
+# $Date: 2007-08-29 22:31:35 $
+# $Author: kerrnel22 $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1309,10 +1309,10 @@ CREATE TABLE tiki_file_galleries (
   max_desc int(8) default NULL,
   show_created char(1) default NULL,
   show_dl char(1) default NULL,
-  parentId int(14) NOT NULL default -1,
+  parentId int(14) NOT NULL default '-1',
   lockable char(1) default 'n',
   show_lockedby char(1) default NULL,
-  archives int(4) default -1,
+  archives int(4) default '-1',
   sort_mode char(20) default NULL,
   show_modified char(1) default NULL,
   show_author char(1) default NULL,
@@ -1552,7 +1552,7 @@ CREATE TABLE tiki_galleries (
   sortorder varchar(20) NOT NULL default 'created',
   sortdirection varchar(4) NOT NULL default 'desc',
   galleryimage varchar(20) NOT NULL default 'first',
-  parentgallery int(14) NOT NULL default -1,
+  parentgallery int(14) NOT NULL default '-1',
   showname char(1) NOT NULL default 'y',
   showimageid char(1) NOT NULL default 'n',
   showdescription char(1) NOT NULL default 'n',
