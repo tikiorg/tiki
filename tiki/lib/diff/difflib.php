@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.14 2006-02-01 21:06:13 jdrexler Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.15 2007-08-29 12:40:53 sept_7 Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -7,8 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once("lib/diff/Diff.php");
-include_once("lib/diff/Renderer.php");
+require_once("lib/diff/Diff.php");
+require_once("lib/diff/Renderer.php");
 
 /* @brief modif tiki for the renderer lib	*/
 class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer {
@@ -80,8 +80,18 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer {
 }
 
 function diff2($page1, $page2, $type='sidediff') {
-	$page1 = split("\n", $page1);
-	$page2 = split("\n", $page2);
+	if ($type == 'htmldiff') {
+		global $tikilib;
+		//$search = "#(<[^>]+>|\s*[^\s<]+\s*|</[^>]+>)#";
+		$search = "#(<[^>]+>|[,\"':\s]+|[^\s,\"':<]+|</[^>]+>)#";
+		preg_match_all($search,$page1,$out,PREG_PATTERN_ORDER);
+		$page1 = $out[0];
+		preg_match_all($search,$page2,$out,PREG_PATTERN_ORDER);
+		$page2 = $out[0];
+	} else {
+		$page1 = split("\n", $page1);
+		$page2 = split("\n", $page2);
+	}
 	$z = new Text_Diff($page1, $page2);
 	if ($z->isEmpty()) {
 		$html = '';
@@ -110,6 +120,9 @@ function diff2($page1, $page2, $type='sidediff') {
 		} else if ($type == 'bytes') {
 			require_once('renderer_bytes.php');
 			$renderer = new Text_Diff_Renderer_bytes();
+		} else if ($type == 'htmldiff') {
+			require_once('renderer_htmldiff.php');
+			$renderer = new Text_Diff_Renderer_htmldiff(sizeof($page1));
 		} else {
 			return "";
 		}
