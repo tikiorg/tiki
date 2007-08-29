@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.43 2007-07-11 17:25:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.44 2007-08-29 12:40:51 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,14 +85,22 @@ if (isset($source)) {
 		$source = $rversion;
 	}
 	if ($source == $info["version"] || $source == 0 ) {
-		$smarty->assign('sourced', nl2br($info["data"]));
+		if ($info['is_html'] == 1 ) {
+			$smarty->assign('sourced', $info["data"]);
+		} else {
+			$smarty->assign('sourced', nl2br($info["data"]));
+		}
 		$smarty->assign('source', $info['version']);
 
 	}
 	else {
 		$version = $histlib->get_version($page, $source);
 		if ($version) {
-			$smarty->assign('sourced', nl2br($version["data"]));
+			if ($info['is_html'] == 1 ) {
+				$smarty->assign('sourced', $info["data"]);
+			} else {
+				$smarty->assign('sourced', nl2br($version["data"]));
+			}
 			$smarty->assign('source', $source);
 		}
 	}
@@ -143,8 +151,7 @@ if (isset($_REQUEST["compare"])) {
 	if ($oldver == 0 || $oldver == $info["version"]) {
 		$old = & $info;
 		$smarty->assign_by_ref('old', $info);
-	}
-	else {
+	} else {
 		// fetch the required page from history, including its content
 		if ($histlib->version_exists($page, $oldver)) {
 			$old = $histlib->get_page_from_history($page,$oldver,true);
@@ -154,8 +161,7 @@ if (isset($_REQUEST["compare"])) {
 	if ($newver == 0 || $newver == $info["version"]) {
 		$new =& $info;
 		$smarty->assign_by_ref('new', $info);
-	}
-	else {
+	} else {
 		// fetch the required page from history, including its content
 		if ($histlib->version_exists($page, $newver)) {
 			$new = $histlib->get_page_from_history($page,$newver,true);
@@ -163,16 +169,16 @@ if (isset($_REQUEST["compare"])) {
 		}
 	}
 
-	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old")
+	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old") {
 		$_REQUEST["diff_style"] = 'unidiff';
+	}
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
 		$old["data"] = $tikilib->parse_data($old["data"]);
 		$new["data"] = $tikilib->parse_data($new["data"]);
-	}
-	else {
+	} else {
 		require_once('lib/diff/difflib.php');
-		if ($info['is_html'] == 1) {
+		if ($info['is_html'] == 1 and $_REQUEST["diff_style"] != "htmldiff") {
 			$search[] = "~</(table|td|th|div|p)>~";
 			$replace[] = "\n";
 			$search[] = "~<(hr|br) />~";
@@ -180,11 +186,14 @@ if (isset($_REQUEST["compare"])) {
 			$old['data'] = strip_tags(preg_replace($search,$replace,$old['data']),'<h1><h2><h3><h4><b><i><u><span>');
 			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']),'<h1><h2><h3><h4><b><i><u><span>');
 		}
+		if ($_REQUEST["diff_style"] == "htmldiff") {
+			$old["data"] = $tikilib->parse_data($old["data"],$info['is_html'] == 1 );
+			$new["data"] = $tikilib->parse_data($new["data"],$info['is_html'] == 1 );
+		}
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
-}
-else
+} else
 	$smarty->assign('diff_style', '');
 
 if($info["flag"] == 'L')
