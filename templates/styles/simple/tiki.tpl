@@ -91,12 +91,15 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	</head>
 
 {* ---- BODY ---- *}
-	<body{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+	<body{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $show_comzone eq 'y'} javascript:flip('comzone');{/if}">
 {if $minical_reminders>100}
 		<iframe style="width: 0; height: 0; border: 0" src="tiki-minical_reminders.php"></iframe>
 {/if}
 	
 {if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
+
+{* main content follows here *}
+		<div id="main"{if $feature_bidi eq 'y'} dir="rtl"{/if}><!-- START of main content -->
 
 {if $feature_siteidentity eq 'y'}
 {* Site identity header section *}
@@ -105,8 +108,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 		</div><!-- END of header -->
 {/if}
 
-{* main content follows here *}
-		<div id="main"{if $feature_bidi eq 'y'} dir="rtl"{/if}><!-- START of main content -->
 {if $feature_top_bar eq 'y'}
 			<div id="tiki-top"><!-- START of Tiki top bar -->
 	{include file="tiki-top_bar.tpl"}
@@ -172,8 +173,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 			</div><!-- END of column 3 -->
 {/if}
 
-		</div><!-- END of main content -->
-
 {if $feature_bot_bar eq 'y'}
 		<div id="footer">
 			<div class="footerbgtrap">
@@ -183,6 +182,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 			</div>
 		</div>
 {/if}
+
+		</div><!-- END of main content -->
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 	{* Include debugging console. Note it should be processed as near as possible to the end of file *}
