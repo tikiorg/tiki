@@ -36,7 +36,7 @@
    </td>
   </tr>
   {if $feature_categories eq "y"}
-	{include file=categorize.tpl}
+	<tr><th>{tr}Categorize{/tr}</th><td id='mypageedit_categorize_tpl'>{$mypageedit_categorize_tpl}</td></tr>
   {/if}
   <tr id='mypageedit_tr_dimensions'>
    <th>{tr}Dimensions{/tr}</th>
@@ -143,6 +143,16 @@ function closeMypageEdit() {
 
 function saveMypageEdit() {
 	var id=$('mypageedit_id').value;
+	if ($('cat-check').value == 'on') {
+	var vals={
+		'name': $('mypageedit_name').value,
+		'description': $('mypageedit_description').value,
+		'id_types': $('mypageedit_type').value,
+		'width': $('mypageedit_width').value,
+		'height': $('mypageedit_height').value,
+		'categories': $('cat_categories').value
+	};
+	} else {
 	var vals={
 		'name': $('mypageedit_name').value,
 		'description': $('mypageedit_description').value,
@@ -151,6 +161,7 @@ function saveMypageEdit() {
 		'height': $('mypageedit_height').value
 	};
 
+	}
 	if (id > 0) {
 		xajax_mypage_update(id, vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	} else {

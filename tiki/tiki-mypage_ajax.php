@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.33 2007-08-25 20:20:35 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.34 2007-08-29 13:25:05 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,10 +196,7 @@ function mypage_update($id_mypage, $vals, $form) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-	foreach($vals as $k => $v) {
-		$err=$mypage->setParam($k, $v);
-		if (strlen($err)) return mypage_error($err);
-	}
+	$mypage->setParams($id_mypage, $vals);
 
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
@@ -238,10 +235,8 @@ function mypage_create($vals, $form) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-	foreach($vals as $k => $v) {
-		$err=$mypage->setParam($k, $v);
-		if (strlen($err)) return mypage_error($err);
-	}
+	$err=$mypage->setParams($id_mypage, $vals);
+	if ($err) return mypage_error($err);
 
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
@@ -287,7 +282,7 @@ function mypage_isNameFree($name) {
 }
 
 function mypage_fillinfos($id_mypage, $id_types=NULL) {
-    global $id_users;
+    global $id_users, $smarty;
 
     $objResponse = new xajaxResponse();
 
@@ -305,7 +300,8 @@ function mypage_fillinfos($id_mypage, $id_types=NULL) {
 		$objResponse->addAssign('mypageedit_height', 'value', $mypage->getParam('height'));
 		$objResponse->addAssign('mypageedit_type', 'value', $mypage->getParam('id_types'));
 		$objResponse->addScript('mypageTypeChange('.(int)$mypage->getParam('id_types').');');
-
+		$cat_type = 'mypage';
+		$cat_objid = $id_mypage;
 		$conf=$mypage->getTypeHTMLConfig();
 	} else {
 		$type=MyPage::getMypageType($id_types);
@@ -318,6 +314,8 @@ function mypage_fillinfos($id_mypage, $id_types=NULL) {
 	
 	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', ''); // this fixe a bug that don't really update value of input field
 	$objResponse->addAssign('mypageedit_typeconf', 'innerHTML', $conf);
+	include('categorize_list.php');
+	$objResponse->addAssign('mypageedit_categorize_tpl', 'innerHTML', $smarty->fetch('netineo_categorize.tpl'));
 
     return $objResponse;
 }
@@ -393,6 +391,34 @@ function mptype_update($id, $vals) {
     return $objResponse;
 }
 
+function comp_function($id_mypage, $id_win, $args) {
+	global $id_users;
+
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
+	$mywin=$mypage->getWindow((int)$id_win);
+	if (is_string($mywin))
+		return mypage_error($mywin);
+
+    $comp=$mywin->getComponent();
+	if (is_string($comp))
+		return mypage_error($comp);
+
+	return $comp->ajax($args);
+}
+
+function mypage_ajax_catchall($funcname, $args) {
+    $objResponse = new xajaxResponse();
+
+	$blah=var_export($args, true);
+	
+	//$objResponse->addScript("alert('".str_replace("\n", '\n', addslashes($blah))."');");
+
+	return $objResponse;
+}
+
 function mypage_ajax_init() {
     global $ajaxlib;
 
@@ -413,6 +439,10 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mptype_delete");
     $ajaxlib->registerFunction("mptype_create");
     $ajaxlib->registerFunction("mptype_update");
+
+    $ajaxlib->registerFunction("comp_function");
+
+	$ajaxlib->registerCatchAllFunction("mypage_ajax_catchall");
 	
     $ajaxlib->processRequests();
 }
