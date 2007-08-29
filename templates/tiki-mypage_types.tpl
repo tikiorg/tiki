@@ -99,7 +99,7 @@
 </tr>
 {foreach from=$mptypes item=mptype}
 <tr class="odd">
- <td><span id='mptype_name_{$mptype.id}'>{$mptype.name}</span></td>
+ <td><span id='mptype_name_{$mptype.id}'><a href="tiki-mypages.php?type={$mptype.name}">{$mptype.name}</a></span></td>
  <td><span id='mptype_description_{$mptype.id}'>{$mptype.description}</span></td>
  <td><span id='mptype_section_{$mptype.id}'>{$mptype.section}</span></td>
  <td><span id='mptype_permissions_{$mptype.id}'>{$mptype.permissions}</span></td>

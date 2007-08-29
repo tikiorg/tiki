@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.56 2007-08-27 10:04:28 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.57 2007-08-29 13:25:06 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -204,10 +204,16 @@ class MyPage {
 		return $pages;
 	}
 	
+	function setParams($id_mypage, $vals) {
+		foreach($vals as $k=>$v) {
+			$err=$this->setParam($k, $v);
+			if ($err) return $err;
+		}
+	}
 	function setParam($param, $value) {
 		$allowed=array('id_users', 'id_types', 'width', 'height',
-					   'name', 'description', 'bgcolor');
-
+					   'name', 'description', 'bgcolor', 'categories');
+		
 		$typeclass=$this->getTypeClass();
 		if (in_array($param, $allowed)) {
 			// TODO: verify permissions when changing id_users or id_types !
@@ -303,6 +309,7 @@ class MyPage {
 				$l=array();
 				$r=array();
 				foreach($this->modified as $k => $v) {
+					if ($k=='categories') continue; // categories is handled separatly
 					$l[]="`$k`=?";
 					$r[]=$this->params[$k];
 				}
@@ -311,6 +318,13 @@ class MyPage {
 				$r[]=$this->id;
 				
 				$res=$tikilib->query($query, $r);
+
+				if ($this->modified['categories'] || $this->modified['name'] || $this->modified['description']) {
+					global $categlib; include_once ('lib/categories/categlib.php');
+					$categlib->update_object_categories($this->params['categories'], $this->id, 'mypage',
+														$this->params['description'], $this->params['name'],
+														"tiki-mypage.php?id_mypage=".$this->id);
+				}
 
 				$typeclass=$this->getTypeClass();
 			}
@@ -622,12 +636,12 @@ class MyPageWindow {
 	
 	function commit() {
 		global $tikilib;
-		
+		/*		
 		if ($this->mypage->perms['tiki_p_view_mypage'] != 'y' && !($this->mypage->perms['tiki_p_edit_own_mypage'] == 'y' && $this->mypage->id_users == $this->mypage->getParam('id_users'))) {
 			$this->lasterror=tra('You do not have permissions to edit the component');
 			return $this->lasterror;
 		}
-			
+		*/
 		if ($this->id < 0) {
 			// create a new mypagewin id
 			
@@ -781,7 +795,20 @@ class MyPageWindow {
 						 'position'  => false,
 						 'theme'	 => 'aero',
 						 'container' => 'mypage',
+						 'buttons'   => array()
 						 );
+
+		if (is_callable(array($comp, 'isResizeable'))) {
+			if (!$comp->isResizeable()) {
+				$winparams['resizable']  = false;
+				$winparams['buttons']['maximize'] = false;
+				$winparams['buttons']['minimize'] = false;
+			}
+		}
+
+		if (is_callable(array($comp, 'isResizeable'))) {
+			if (!$comp->isCloseable()) $winparams['buttons']['close'] = false;
+		}
 
 		if (!$editable) {
 			//$winparams['theme']	  = 'nada';
