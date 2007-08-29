@@ -50,7 +50,7 @@
 
 </div>
 </div>
-
+<span style="float: right"><a href="tiki-mypage.php?mypage={$pagename}&edit=1">Edit</a> | <a href="tiki-mypage.php?mypage={$pagename|escape:url}">View</a> | {if $tiki_p_admin} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}</span>
 {literal}
 <script type="text/javascript">
 
