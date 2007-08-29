@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.81 2007-08-10 13:42:40 guidoscherp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.82 2007-08-29 02:08:34 sampaioprimo Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -57,7 +57,7 @@ none
 	{/if}
 </div>
 
-<h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar:{/tr} {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
+<h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
 
 {if count($listcals) >= 1}
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
