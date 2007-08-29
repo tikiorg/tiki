@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.30 2007-04-26 13:34:02 sylvieg Exp $
+// CVS: $Id: tiki-download_file.php,v 1.31 2007-08-29 14:15:26 sept_7 Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
@@ -131,7 +131,9 @@ header("Content-type: $type");
 
 // Added by Jenolan  31/8/2003 /////////////////////////////////////////////
 // File galleries should always be attachments (files) not inline (textual)
+if (!isset($_GET['display'])) {
 header( "Content-Disposition: attachment; filename=\"$file\"" );
+}
 //header( "Content-Disposition: inline; filename=$file" );
 
 if( $info["path"] )

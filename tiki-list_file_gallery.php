@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.45 2007-08-16 06:49:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.46 2007-08-29 14:15:26 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -407,8 +407,14 @@ if ($feature_actionlog == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $galleryId, 'file gallery');
 }
+if (isset($_GET['filegals_manager'])) {
+  $smarty->assign('filegals_manager','y');
+  $smarty->assign('mid','tiki-list_file_gallery.tpl');
+  $smarty->display("tiki_full.tpl");
+} else {
 // Display the template
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 $smarty->display("tiki.tpl");
+}
 
 ?>

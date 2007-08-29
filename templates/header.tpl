@@ -130,14 +130,14 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {if $feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
-{if $feature_siteidentity eq 'y'}
+{if $feature_siteidentity eq 'y' and $filegals_manager ne 'y'}
 {* Site identity header section *}
 	<div id="siteheader">
 		{include file="tiki-site_header.tpl"}
 	</div>
 {/if}
 
-{if $feature_fullscreen eq 'y'}
+{if $feature_fullscreen eq 'y' and $filegals_manager ne 'y'}
 {if $smarty.session.fullscreen eq 'y'}
 <a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=n" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Cancel Fullscreen{/tr}</a>
 {else}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.107 2007-08-08 15:32:06 tombombadilom Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.108 2007-08-29 14:15:26 sept_7 Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -297,6 +297,11 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_use_quoteplugin"
             {if $feature_use_quoteplugin eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {tr}Use Quote plugin rather than &ldquo;>&rdquo; for quoting{/tr} </td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="feature_filegals_manager"
+            {if $feature_filegals_manager eq 'y'}checked="checked"{/if}/></td>
+    <td class="form">{tr}Use File Galleries for images inclusion{/tr}</td>
   </tr>
 {* ---------- Administration features ------------ *}
   <tr>

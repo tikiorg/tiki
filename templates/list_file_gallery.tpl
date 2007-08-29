@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.27 2007-08-22 12:55:36 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.28 2007-08-29 14:15:26 sept_7 Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -7,6 +7,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="{$smarty.server.PHP_SELF}">
+     {if $filegals_manager eq 'y'}
+     <input type="hidden" name="filegals_manager" value="{$filegals_manager}" />
+     {/if}
      <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
 	 {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId}" />{/if}
      <input type="text" name="{$ext}find" value="{$find|escape}" />
@@ -19,7 +22,7 @@
 </table>
 {/if}
 
-<form  name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
+<form  name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
 	<input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
     <input type="hidden" name="{$ext}find" value="{$find|escape}" />
     {if !empty($sort_mode)}<input type="hidden" name="{$ext}sort_mode" value="{$sort_mode|escape}" />{/if}
@@ -34,60 +37,60 @@
 <td  class="heading">&nbsp;</td>
 {/if}
 {if $gal_info.show_id eq 'y'}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}ID{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.name eq ''}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}Gallery{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Gallery{/tr}</a></td>
 	{assign var=nb value=`$nb+1`}
 {/if}
 {if $gal_info.show_icon eq 'y'}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filetype_desc'}filetype_asc{else}filetype_desc{/if}">{tr}Type{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filetype_desc'}filetype_asc{else}filetype_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Type{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'n'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Name{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'f'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Filename{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Filename{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_size eq 'y'}
-	<td  style="text-align:right;" class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></td>
+	<td  style="text-align:right;" class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Filesize{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_description eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Description{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_created eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Uploaded{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Uploaded{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_creator eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Creator{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Creator{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_author eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}Author{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Author{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Modified{/tr}</a></td>
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModifUser_desc'}lastModifUser_asc{else}lastModifUser_desc{/if}">{tr}Last editor{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Modified{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModifUser_desc'}lastModifUser_asc{else}lastModifUser_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Last editor{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if isset($gal_info.show_comment) and $gal_info.show_comment eq 'y'}
-	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Comment{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Comment{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_dl eq 'y'}
-	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
+	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Dls{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 {if $gal_info.show_lockedby eq 'y' and $gal_info.lockable eq 'y'}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lockedby_desc'}lockedby_asc{else}lockedby_desc{/if}">{tr}Locked by{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lockedby_desc'}lockedby_asc{else}lockedby_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Locked by{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
 <td  class="heading">{tr}Actions{/tr}</td>
@@ -109,7 +112,7 @@
 {/if}
 
 {if $gal_info.name eq ''}
-	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}" title="{tr}List{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
+	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
 {/if}
 
 {if $gal_info.show_icon eq 'y'}
@@ -125,7 +128,11 @@
 			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 				<a class="fgalname" href="{$download_path}{$files[changes].path}">
 			{else}
+				{if $filegals_manager eq 'y'}
+				<a class="fgalname" href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].fileId}&display');javascript:window.close() ;">
+				{else}
 				<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}">
+				{/if}
 			{/if}
 		{/if}
 		{$files[changes].name|escape}
@@ -138,7 +145,11 @@
 			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 				<a class="fgalname" href="{$download_path}{$files[changes].path}">
 			{else}
+				{if $filegals_manager eq 'y'}
+				<a class="fgalname" href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].fileId}&display');javascript:window.close() ;">
+				{else}
 				<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}">
+				{/if}
 			{/if}
 		{/if}
 		{$files[changes].filename|escape}
@@ -209,7 +220,7 @@
 		or ($files[changes].lockedby and $files[changes].lockedby eq $user)
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
 		{if $files[changes].archiveId == 0}
-			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}"><img src='pics/icons/page_edit.png' border='0' {if $gal_info.lockable eq 'y' and $files[changes].lockedby}alt='{tr}edit/unlock{/tr}'{else}alt='{tr}Edit{/tr}'{/if} {if $gal_info.lockable eq 'y' and $files[changes].lockedby}title='{tr}edit/unlock{/tr}'{else}title='{tr}Edit{/tr}'{/if} /></a>
+			<a class="link" href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].fileId}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/page_edit.png' border='0' {if $gal_info.lockable eq 'y' and $files[changes].lockedby}alt='{tr}edit/unlock{/tr}'{else}alt='{tr}Edit{/tr}'{/if} {if $gal_info.lockable eq 'y' and $files[changes].lockedby}title='{tr}edit/unlock{/tr}'{else}title='{tr}Edit{/tr}'{/if} /></a>
 		{/if}
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y'

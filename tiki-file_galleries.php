@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.51 2007-08-16 06:49:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.52 2007-08-29 14:15:26 sept_7 Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -438,8 +438,13 @@
 	include_once('tiki-section_options.php');
 	
 ask_ticket('fgal');
-	
+if (isset($_GET['filegals_manager'])) {
+  $smarty->assign('filegals_manager','y');
+  $smarty->assign('mid','tiki-file_galleries.tpl');
+  $smarty->display("tiki_full.tpl");
+} else {
 	// Display the template
 	$smarty->assign('mid','tiki-file_galleries.tpl');
 	$smarty->display("tiki.tpl");
+}
 ?>

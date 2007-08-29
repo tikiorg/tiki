@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.122 2007-08-28 12:46:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.123 2007-08-29 14:15:26 sept_7 Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -161,7 +161,7 @@
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$pagedata|escape}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$pagedata|escape:htmlall}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 {else}
@@ -267,15 +267,28 @@ function searchrep() {
 </td></tr>
 {/if}
 
+<script type="text/javascript">
+  {literal}
+  function SetUrl(url) {
+    str = "{img src=" + url + " }\n";
+    insertAt('editwiki', str);
+  }
+  {/literal}
+</script>
+
 {if $wysiwyg neq 'y'}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
+{if $feature_filegals_manager eq 'y'}
+<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-file_galleries.php?filegals_manager','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;">
+{else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />
 <input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
 <input name="picfile1" type="file" onchange="javascript:insertImgFile('editwiki','picfile1','hasAlreadyInserted','img')"/>
 <div id="new_img_form"></div>
 <a href="javascript:addImgForm()" onclick="needToConfirm = false;">{tr}Add another image{/tr}</a>
+{/if}
 </td></tr>
 {/if}
 {if $feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}

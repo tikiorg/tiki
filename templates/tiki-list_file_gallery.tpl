@@ -1,12 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.48 2007-08-23 16:21:45 jyhem Exp $ *}
-<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.49 2007-08-29 14:15:26 sept_7 Exp $ *}
+<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
+{if $filegals_manager eq 'y'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
+</div>
+<br />
+{/if}
 
 <div class="navbar">
 {if $user and $feature_user_watches eq 'y'}
 	{if $user_watching_file_gallery eq 'n'}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Gallery{/tr}' title='{tr}Monitor this Gallery{/tr}' align='right'}</a>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager eq 'y'}&filegals_manager{/if}>{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Gallery{/tr}' title='{tr}Monitor this Gallery{/tr}' align='right'}</a>
 	{else}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}Stop Monitoring this Gallery{/tr}' title='{tr}Stop Monitoring this Gallery{/tr}' align='right'}</a>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager eq 'y'}&filegals_manager{/if}">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}Stop Monitoring this Gallery{/tr}' title='{tr}Stop Monitoring this Gallery{/tr}' align='right'}</a>
 	{/if}
 {/if}  
 {if $rss_file_gallery eq 'y'}
@@ -18,18 +25,18 @@
 	<img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align='right' /></a>
 	{/if}
 {/if}
-{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
+{if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
-  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
+  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}?filegals_manager{/if}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
 {/if}
 
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
   {if $tiki_p_upload_files eq 'y'}
-    <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}Upload File{/tr}</a>
+    <a href="tiki-upload_file.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Upload File{/tr}</a>
   {/if}
   {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-    <a href="tiki-batch_upload_files.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a>
+    <a href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Directory batch{/tr}</a>
   {/if}
 {/if}
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.20 2007-08-08 13:11:42 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.21 2007-08-29 14:15:26 sept_7 Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -8,6 +8,9 @@
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}Find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     {if $filegals_manager eq 'y'}
+     <input type="hidden" name="filegals_manager" value="{$filegals_manager}" />
+     {/if}
 	 {if isset($galleryId)}<input type="hidden" name="galleryId" value="{$galleryId}" />{/if}
    </form>
    </td>
@@ -26,35 +29,35 @@
 {/if}
 {if $fgal_list_id eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'galleryId_desc'}galleryId_asc{else}galleryId_desc{/if}">{tr}ID{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'galleryId_desc'}galleryId_asc{else}galleryId_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}ID{/tr}</a></td>
 {/if}
 {if $fgal_list_name eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Name{/tr}</a></td>
 {/if}
 {if $fgal_list_parent eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}parent_asc{else}parent_desc{/if}">{tr}Parent{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}parent_asc{else}parent_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Parent{/tr}</a></td>
 {/if}
 {if $fgal_list_description eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Description{/tr}</a></td>
 {/if}
 {if $fgal_list_type eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Type{/tr}</a></td>
 {/if}
 {if $fgal_list_created eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Created{/tr}</a></td>
 {/if}
 {if $fgal_list_lastmodif eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last modified{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Last modified{/tr}</a></td>
 {/if}
 {if $fgal_list_user eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $fgal_list_files eq 'y'}	
 	{assign var='cntcol' value=$cntcol+1}
@@ -62,7 +65,7 @@
 {/if}
 {if $fgal_list_hits eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
+	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Hits{/tr}</a></td>
 {/if}
 <td  class="heading">{tr}Actions{/tr}</td>
 </tr>
@@ -77,19 +80,19 @@
 	{/if}
 	{if $fgal_list_id eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}List{/tr}">{$galleries[changes].galleryId}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{$galleries[changes].galleryId}</a>
 		</td>
 	{/if}
 
 	{if $fgal_list_name eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}" title="{tr}List{/tr}">{$galleries[changes].name}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{$galleries[changes].name}</a>
 		</td>
 	{/if}
 
 	{if $fgal_list_parent eq 'y'}
 		<td class="{cycle advance=false}">
-			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}" title="{tr}List{/tr}">{$galleries[changes].parentName|escape}</a>
+			<a class="fgalname" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].parentId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{$galleries[changes].parentName|escape}</a>
 		</td>
 	{/if}
 
@@ -130,32 +133,32 @@
 	
 	<td class="{cycle}" nowrap="nowrap">
 	{if $tiki_p_view_file_gallery == 'y' or $tiki_p_admin_file_galleries eq 'y' or $tiki_p_admin eq 'y'}
-		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
+		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 		{/if}
 	{/if}
 
 	{if $tiki_p_upload_files eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
 			{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}"><img src='pics/icons/upload.png' border='0' width='16' height='16' alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/upload.png' border='0' width='16' height='16' alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
 			{/if}
 		{/if}
 	{/if}
 
 	{if $tiki_p_admin eq 'y' || $galleries[changes].individual_tiki_p_assign_perm_file_gallery eq 'y' || ($galleries[changes].individual eq 'n' and $tiki_p_assign_perm_file_gallery eq 'y')}
 	    {if $galleries[changes].individual eq 'y'}
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}"><img border='0' width='16' height='16' src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' /></a>
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img border='0' width='16' height='16' src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' /></a>
 	    {else}
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
 	    {/if}
 	{/if}
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
                 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
                 {/if}
         {/if}
 	</td>
