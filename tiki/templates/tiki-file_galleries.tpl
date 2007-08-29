@@ -1,27 +1,34 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.62 2007-08-06 14:53:16 sylvieg Exp $ *}
-<h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{/if}">{tr}File Galleries{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.63 2007-08-29 14:15:26 sept_7 Exp $ *}
+<h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager eq 'y'}?filegals_manager{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
-{if $tiki_p_admin eq 'y'}
+{if $tiki_p_admin eq 'y' and $filegals_manager ne 'y'}
 <a href="tiki-admin.php?page=fgal"><img src='pics/icons/wrench.png' border='0' alt="{tr}Admin Feature{/tr}" title="{tr}Admin Feature{/tr}" /></a>
 {/if}
 </h1>
+{if $filegals_manager eq 'y'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
+</div>
+<br />
+{/if}
 
 <div class="navbar">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php">{tr}List Galleries{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}">{tr}List Galleries{/tr}</a>
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New File Gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Create New File Gallery{/tr}</a>
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1">{tr}Duplicate File Gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Duplicate File Gallery{/tr}</a>
 {/if}
 </div>
 
@@ -36,7 +43,7 @@
 <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
 {/if}
 <div  align="center">
-<form action="tiki-file_galleries.php" method="post">
+<form action="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
@@ -151,7 +158,7 @@
 
 {if $tiki_p_create_file_galleries eq 'y' and $dup_mode eq 'y'}
 <h2>{tr}Duplicate File Gallery{/tr}</h2>
-<form action="tiki-file_galleries.php" method="post">
+<form action="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" size="50" name="name" value="{$name|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>

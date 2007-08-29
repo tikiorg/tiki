@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.43 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.44 2007-08-29 14:15:25 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,7 +141,7 @@ class Smarty_Tikiwiki extends Smarty {
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
 	function display($resource_name, $cache_id=null, $compile_id = null) {
-		if (($tpl = $this->get_template_vars('mid')) && $resource_name == 'tiki.tpl' || $resource_name == 'tiki-print.tpl') {
+		if (($tpl = $this->get_template_vars('mid')) && $resource_name == 'tiki.tpl' || $resource_name == 'tiki-print.tpl' || $resource_name == 'tiki_full.tpl') {
 			$data = $this->fetch($tpl, $cache_id, $compile_id);//must get the mid because the modules can overwrite smarty variables
 			$this->assign('mid_data', $data);
 			include_once('tiki-modules.php');

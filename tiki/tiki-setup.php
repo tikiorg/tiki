@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.456 2007-07-16 14:06:22 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.457 2007-08-29 14:15:26 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1057,6 +1057,9 @@ $sections['html_pages']['key'] = 'pageId';
 $sections['html_pages']['itemkey'] = '';
 $pref['feature_html_pages'] = 'n';
 
+# use filegals for image inclusion
+$pref['feature_filegals_manager'] = 'n';
+
 # contact & mail
 $pref['feature_contact'] = 'n';
 $pref['contact_user'] = 'admin';
@@ -1333,6 +1336,7 @@ $url_scheme = $https_mode ? 'https' : 'http';
 $url_host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
 $url_port = $https_mode ? $https_port : $http_port;
 $url_path = $tikiroot;
+$base_host = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');
 $base_url = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$url_path;
 $base_url_http = 'http://'.$url_host.(($http_port!='')?":$http_port":'').$url_path;
 $base_url_https = 'https://'.$url_host.(($https_port!='')?":$https_port":'').$url_path;
@@ -1344,6 +1348,7 @@ $smarty->assign('url_host', $url_host);
 $smarty->assign('url_port', $url_port);
 $smarty->assign('url_path', $url_path);
 
+$smarty->assign('base_host', $base_host);
 $smarty->assign('base_url', $base_url);
 $smarty->assign('base_url_http', $base_url_http);
 $smarty->assign('base_url_https', $base_url_https);

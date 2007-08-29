@@ -1,5 +1,6 @@
 var _TikiPath = '{$tikipath}' ;
 var _TikiRoot = '{$tikiroot}' ;
+var _TikiBaseHost = '{$base_host}' ;
 var _FileBrowserLanguage      = 'php' ;
 var _QuickUploadLanguage      = 'php' ;
 var _FileBrowserExtension     = 'php' ;
@@ -29,7 +30,11 @@ FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
 FCKConfig.FormatOutput = true ;
 
+{if $feature_filegals_manager eq 'y'}
+FCKConfig.ImageBrowserURL = _TikiRoot + 'tiki-file_galleries.php?filegals_manager';
+{else}
 FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php' ;
+{/if}
 
 FCKConfig.PluginsPath = _TikiRoot + 'lib/fckeditor_tiki/plugins' ;
 
@@ -43,6 +48,11 @@ FCKConfig.LinkBrowser = false;
 FCKConfig.LinkUpload = false;
 FCKConfig.ProcessHTMLEntities = false;
 
+{if $feature_filegals_manager eq 'y'}
+FCKConfig.ImageDlgHideAdvanced = true ;
+FCKConfig.ImageUpload = false ;
+FCKConfig.ImageDlgHideLink = true ;
+{/if}
 FCKConfig.Plugins.Add( 'tikiimage' ) ;
 FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
 FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;

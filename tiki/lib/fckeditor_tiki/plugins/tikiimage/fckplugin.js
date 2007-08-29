@@ -202,7 +202,10 @@ FCKXHtml.TagProcessors['img'] = function( node, htmlNode ) {
 			}
 		}
 		if ( htmlNode.alt ) extra = extra + ' alt=' + htmlNode.alt ;
-		node = FCKXHtml.XML.createTextNode( '{img src=' + htmlNode.src + ' ' + extra + '}' ) ;
+		// we clean the src of the image if the image is local to the
+		// server
+		var reg = new RegExp ("^(?:"+_TikiBaseHost+")?([\"'])?([^\"']*)([\"'])?.*","gi");
+		node = FCKXHtml.XML.createTextNode( '{img src=' + htmlNode.src.replace(reg,'$2') + ' ' + extra + '}' ) ;
 	} else {
 		FCKXHtml._AppendChildNodes( node, htmlNode, false ) ;
 	}
