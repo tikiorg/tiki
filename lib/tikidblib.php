@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.36 2007-08-28 13:54:20 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.37 2007-08-30 09:06:27 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -325,7 +325,7 @@ function convert_sortmode($sort_mode) {
         return '';
     }
     // parse $sort_mode for evil stuff
-    $sort_mode = preg_replace('/[^A-Za-z_,]/', '', $sort_mode);
+    $sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
     if ($sort_mode == 'random') {
 	$map = array("postgres7" => "RANDOM()",
@@ -374,6 +374,7 @@ function convert_sortmode($sort_mode) {
 	    $sort = preg_replace('/_asc$/', '` asc', $sort);
 	    $sort = preg_replace('/_desc$/', '` desc', $sort);
 	    $sort = '`' . $sort;
+	    $sort = str_replace('.', '`.`', $sort);
 	    break;
 	}
 	$sorts[$k]=$sort;
