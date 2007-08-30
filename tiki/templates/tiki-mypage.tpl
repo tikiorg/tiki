@@ -3,7 +3,7 @@
 
 {if $editit}
  <!-- sidebar -->
- <div id='sideBar' style='position: absolute; width: auto; height: auto; top: 200px; right: 7px; z-index: 255;'>
+ <div id='sideBar' style='position: absolute; width: auto; height: auto; top: 0px; right: 0px; z-index: 255;'>
 
   <a href="#" id="sideBarTab" style='float:left; height:137px; width:28px; border: 0;'>
    <img src="img/cord.png" alt="Tools" title="Tools" style='width: 28px; height: 137px; border: 0;'/>
@@ -225,7 +225,7 @@ function initColorPicker() {
 			$('myRainbow').style.background=color.hex;
 			$('mypage').style.background=color.hex;
 			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgcolor': color.hex });
-		},
+		}
 	});
 }
 
@@ -243,6 +243,10 @@ function htmlspecialchars(ch) {
 function windooFocusChanged(id) {
 	lastFocusedWindoo=id;
 	$('mypage_configcomp_span').innerHTML=htmlspecialchars(tikimypagewin[id].options.title);
+}
+
+function windooStartDrag(id) {
+	if (isExtended) extendContract();
 }
 
 function initMyPage() {
