@@ -92,7 +92,7 @@ class ArtLib extends TikiLib {
 	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, 
 	$imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
-		global $smarty;
+		global $smarty, $tiki_p_autoapprove_submission;
 		global $tikilib;
 		global $dbTiki;
 		global $sender_email;
@@ -156,36 +156,36 @@ class ArtLib extends TikiLib {
 			$id = $this->getOne($query, array( (int) $this->now, $title, $hash ) );
 		}
 
-		#workaround to "pass" $topicId to get_event_watches
-		$GLOBALS["topicId"] = $topicId;
-		$emails = $tikilib->get_event_watches('article_submitted', '*');
-		$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-		$emails3 = array();
-		foreach ($emails as $n) {
+		if ($tiki_p_autoapprove_submission != 'y') {
+			#workaround to "pass" $topicId to get_event_watches
+			$GLOBALS["topicId"] = $topicId;
+			$emails = $tikilib->get_event_watches('article_submitted', '*');
+			$emails2 = $tikilib->get_event_watches('topic_article_created', $topicId);
+			$emails3 = array();
+			foreach ($emails as $n) {
 			$emails3[] = $n['email'];
-		}
-		foreach ($emails2 as $n) {
-			if (!in_array($n['emails'], $emails3))
-				$emails[] = $n;
-		}
-		if (!isset($_SERVER["SERVER_NAME"])) {
-			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-		}
-		if (count($emails)) {
-			include_once("lib/notifications/notificationemaillib.php");
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = $tikilib->httpPrefix(). $foo["path"];
-
-			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_title', $title);
-			$smarty->assign('mail_heading', $heading);
-			$smarty->assign('mail_body', $body);
-			$smarty->assign('mail_date', $this->now);
-			$smarty->assign('mail_machine', $machine);
-			$smarty->assign('mail_subId', $id);
-			sendEmailNotification($emails, "watch", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
+			}
+			foreach ($emails2 as $n) {
+				if (!in_array($n['emails'], $emails3))
+					$emails[] = $n;
+			}
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			if (count($emails)) {
+				include_once("lib/notifications/notificationemaillib.php");
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = $tikilib->httpPrefix(). $foo["path"];
+				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_title', $title);
+				$smarty->assign('mail_heading', $heading);
+				$smarty->assign('mail_body', $body);
+				$smarty->assign('mail_date', $this->now);
+				$smarty->assign('mail_machine', $machine);
+				$smarty->assign('mail_subId', $id);
+				sendEmailNotification($emails, "watch", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
+			}
 		}
 
 		return $id;
