@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.57 2007-08-29 13:25:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.58 2007-08-30 15:46:20 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -357,17 +357,45 @@ class MyPage {
 
 	/*
 	 * one day, i'll make a libcomponents...
+	 *
+	 * if called by the static way, it will return every available component
+	 * if called by the instance way, it will return every available component for this type of mypage
 	 */
-	/* static */
+	/* static or not static ! */
 	function getAvailableComponents() {
 		$r=array();
 		$d=opendir("components");
 		if ($d === FALSE) return $r;
+
+		if (isset($this)) $cft=$this->getComponentsFromTypes();
+		else $cft=NULL;
+
 		while (($file = readdir($d)) !== false) {
-			if (preg_match('/^comp-[a-zA-Z0-9_-]+\.php$/', $file))
-				$r[]=substr($file, 5, -4);
+			if (preg_match('/^comp-[a-zA-Z0-9_-]+\.php$/', $file)) {
+				$compname=substr($file, 5, -4);
+				if ($cft !== NULL) {
+					foreach($cft as $l) {
+						if ($l['compname'] == $compname)
+							$r[]=$compname;
+					}
+				} else $r[]=$compname;
+			}
         }
 		return $r;
+	}
+
+	function getComponentsFromTypes() {
+		global $tikilib;
+		$query="select c.compname, c.mincount, c.maxcount ".
+			" FROM tiki_mypage_types t ".
+			" LEFT JOIN tiki_mypage_types_components c ON c.id_mypage_types=t.id ".
+			" WHERE t.id=?";
+		$result=$tikilib->query($query, array($this->getParam('id_types')));
+		$lines=array();
+		while ($line=$result->fetchRow()) {
+			$lines[]=$line;
+		}
+		return $lines;
 	}
 
 	/* static */
