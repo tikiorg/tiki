@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.58 2007-08-30 15:46:20 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.59 2007-08-30 19:14:54 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -857,6 +857,7 @@ class MyPageWindow {
 		$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
 		$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
 		$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
+		$js.=$v.".addEvent('onStartDrag', function() { windooStartDrag(".$this->id."); });\n";
 	
 		if ($this->params['contenttype'] != 'iframe') {
 			$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
