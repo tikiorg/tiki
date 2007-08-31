@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.770 2007-08-16 06:44:31 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.771 2007-08-31 15:07:39 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6197,11 +6197,11 @@ if (!$simple_wiki) {
 		    $max = 99;
 
 		$rssdata = $rsslib->get_rss_module_content($id);
-		$items = $rsslib->parse_rss_data($rssdata, $id);
-		if (!$items) {
+		if (!$rssdata) {
 			$data = str_replace($rsss[0][$i], 'Undefined rss id ' . $id, $data);
 			continue;
 		}
+		$items = $rsslib->parse_rss_data($rssdata, $id);
 
 		$repl="";
 		if (isset($items[0]) && $items[0]["isTitle"]=="y") {
