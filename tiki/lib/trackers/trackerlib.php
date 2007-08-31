@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.217 2007-08-10 13:34:07 guidoscherp Exp $
+// CVS: $Id: trackerlib.php,v 1.218 2007-08-31 12:09:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -204,7 +204,7 @@ class TrackerLib extends TikiLib {
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
-		$emails = $this->get_notification_emails($trackerId, $itemId, $options);
+		$emails = $this->get_notification_emails($trackerId, $itemId, $options, '');
 
 		if (count($emails > 0)) {
 			$smarty->assign('mail_date', $this->now);
@@ -1030,7 +1030,7 @@ class TrackerLib extends TikiLib {
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
 
-			$emails = $this->get_notification_emails($trackerId, $itemId, $options);
+			$emails = $this->get_notification_emails($trackerId, $itemId, $options, $ins_fields);
 
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -1838,7 +1838,7 @@ class TrackerLib extends TikiLib {
 		$type['u'] = array(
 			'label'=>tra('user selector'),
 			'opt'=>true,
-			'help'=>tra('User Selector: use options for automatic field feeding : you can use 1 for author login or 2 for modificator login.'));
+			'help'=>tra('User Selector options: automatic field feeding,email - feeding=1 for author login or feeding=2 for modificator login - email=1 to send an email to the user if the tracker is modified'));
 		$type['g'] = array(
 			'label'=>tra('group selector'),
 			'opt'=>true,
@@ -2100,10 +2100,10 @@ class TrackerLib extends TikiLib {
 		}
 		return $field;
 	}
-	function get_notification_emails($trackerId, $itemId, $options) {
+	function get_notification_emails($trackerId, $itemId, $options, $ins_fields='') {
 		global $userlib;
 		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
-		$emails = array();
+		$emails = $this->get_local_notifications($ins_fields);
 		foreach ($watchers as $w) {
 			$emails[] = $userlib->get_user_email($w['user']);
 		}
@@ -2146,6 +2146,22 @@ class TrackerLib extends TikiLib {
 		$allFields['data'] = $tmp;
 		$allFields['cant'] = sizeof($tmp);
 		return $allFields;
+	}
+	function get_local_notifications($ins_fields) {
+		global $userlib;
+		$emails = array();
+		if (empty($ins_fields['data'])) {
+			return emails;
+		}
+		foreach ($ins_fields['data'] as $f) {
+			if ($f['type'] == 'u' && isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
+				$email = $userlib->get_user_email($f['value']);
+				if (!empty($email)) {
+					$emails[] = $email;
+				}
+			}
+		}
+		return $emails;
 	}
 
 }
