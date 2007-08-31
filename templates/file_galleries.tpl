@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.22 2007-08-31 04:24:09 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.23 2007-08-31 11:41:47 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -182,7 +182,7 @@
 	<select name="batchaction" onchange="show('groups');">
 		<option value="">{tr}with checked{/tr}</option>
 		{if $tiki_p_admin_file_galleries eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
-		{if $tiki_p_assign_perm_file_gallery eq 'y'}{foreach from=$perms item=perm}<option value="assign_{$perm.permName|escape}">{tr}Assign{/tr}: {$perm.permName|escape}</option>{/foreach}{/if}
+		{if $tiki_p_assign_perm_file_gallery eq 'y'}{foreach from=$perms item=perm}<option value="assign_{$perm.permName|escape}">{tr}Assign:{/tr} {$perm.permName|escape}</option>{/foreach}{/if}
 	</select>
 	<span style="display:none" id="groups">
 	<select name="groups[]" multiple="multiple" size="5"}
