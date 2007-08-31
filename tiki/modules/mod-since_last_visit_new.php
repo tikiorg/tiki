@@ -174,6 +174,28 @@ function since_last_visit_new($user, $params = null) {
     }
     $ret["items"]["articles"]["count"] = $count;
   }
+  
+  if ($tikilib->get_preference("feature_submissions") == 'y' && $userlib->user_has_permission($user, "tiki_p_edit_submission")) {    
+    $ret["items"]["submissions"]["label"] = tra("new submissions");
+    $ret["items"]["submissions"]["cname"] = "slvn_submissions_menu";
+
+    $query = "select `subId`,`title`,`publishDate`,`authorName` from `tiki_submissions` where `created`>? and `expireDate`>?";
+	$bindvars = array((int)$last,time());
+    
+    $result = $tikilib->query($query, $bindvars);
+
+    $count = 0;
+    while ($res = $result->fetchRow())
+    {
+        if ($userlib->user_has_perm_on_object($user,$res['subId'], 'submission', 'tiki_p_edit_submission')) {
+           $ret["items"]["submissions"]["list"][$count]["href"]  = "tiki-edit_submission.php?subId=" . $res["subId"];
+           $ret["items"]["submissions"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["publishDate"]) ." ". tra("by") ." ". $res["authorName"];
+           $ret["items"]["submissions"]["list"][$count]["label"] = $res["title"]; 
+           $count++;
+        }
+    }
+    $ret["items"]["submissions"]["count"] = $count;
+  }
 
   if ($tikilib->get_preference("feature_faqs") == 'y') {    
     $ret["items"]["faqs"]["label"] = tra("new FAQs");
