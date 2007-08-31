@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.125 2007-08-30 12:56:39 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.126 2007-08-31 08:45:04 sept_7 Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -266,15 +266,6 @@ function searchrep() {
 {/if}
 </td></tr>
 {/if}
-
-<script type="text/javascript">
-  {literal}
-  function SetUrl(url) {
-    str = "{img src=" + url + " }\n";
-    insertAt('editwiki', str);
-  }
-  {/literal}
-</script>
 
 {if $wysiwyg neq 'y'}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
