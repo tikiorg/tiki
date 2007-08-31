@@ -421,6 +421,12 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["calendar"]["count"] = $count;
   }
 
+  //get the total of items
+  $ret["cant"] = 0;
+  foreach ($ret["items"] as $item) {
+	  $ret["cant"] += $item["count"];
+  }
+
   return $ret;
 
 }
