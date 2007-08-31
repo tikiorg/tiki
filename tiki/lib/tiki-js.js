@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.80 2007-08-22 13:15:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81 2007-08-31 08:45:03 sept_7 Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -1122,4 +1122,10 @@ if (this.iewin) {
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
 
+/* Function to add image from filegals in non wysiwyg editor */
+/* must be here when ajax is activated                       */
+function SetUrl(url) {
+  str = "{img src=" + url + " }\n";
+  insertAt('editwiki', str);
+}
 
