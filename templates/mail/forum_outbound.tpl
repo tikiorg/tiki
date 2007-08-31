@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/forum_outbound.tpl,v 1.1 2007-04-25 17:01:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/forum_outbound.tpl,v 1.2 2007-08-31 04:24:10 sampaioprimo Exp $ *}
 {$title}
 
-{tr}Author:{/tr} {$author}
+{tr}Author{/tr}: {$author}
 
 {$data}
 {if $reply_link}
