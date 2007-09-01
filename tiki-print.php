@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.34 2007-07-21 19:22:17 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.35 2007-09-01 06:29:26 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ if ($info["flag"] == 'L') {
 	$smarty->assign('lock', false);
 }
 
-$pdata = $tikilib->parse_data($info["data"]);
+$pdata = $tikilib->parse_data($info["data"],$info["is_html"]);
 $smarty->assign_by_ref('parsed', $pdata);
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
 
