@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2007-08-03 18:03:25 $
+-- $Date: 2007-09-02 12:18:21 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1773,6 +1773,7 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_smiley" varchar(80) default NULL,
   "topic_title" varchar(240) default NULL,
   "summary" varchar(240) default NULL,
+  "in_reply_to" varchar(128) default NULL,
   PRIMARY KEY ("qId")
 )   ;
 
@@ -4374,6 +4375,7 @@ END;
 DROP TABLE "tiki_user_assigned_modules";
 
 CREATE TABLE "tiki_user_assigned_modules" (
+  "moduleId" number(8) NOT NULL,
   "name" varchar(200) default '' NOT NULL,
   "position" char(1) default NULL,
   "ord" number(4) default NULL,
@@ -5356,6 +5358,18 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_own_mypage', 'Can view/edit only one\'s own mypages', 'registered', 'mypage');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_mypage', 'Can edit any mypage', 'registered', 'mypage');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_mypage', 'Can admin any mypage', 'admin', 'mypage','y');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_mypage', 'Can list mypages', 'registered', 'mypage');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
@@ -5375,6 +5389,8 @@ CREATE TABLE "users_usergroups" (
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
 
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
+
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administrator and accounts managers.');
 
 -- --------------------------------------------------------
 --
@@ -5428,6 +5444,10 @@ INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin'
 UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogin";
 
 INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
+
+INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
+
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','tiki_p_admin');
 
 -- --------------------------------------------------------
 -- 
@@ -5561,9 +5581,9 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','wiki');
 
-INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
 
-INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki');
 
 
 -- maps
@@ -6240,5 +6260,74 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   "INDEX" ( `user` )
 ) ENGINE = MyISAM ;
 
+
+-- ---------- mypage ----------------
+CREATE TABLE `tiki_mypage` (
+  `id` number(11) NOT NULL auto_increment,
+  `id_users` number(11) NOT NULL,
+  `created` number(11) NOT NULL,
+  `modified` number(11) NOT NULL,
+  `viewed` number(11) NOT NULL,
+  `width` number(11) NOT NULL,
+  `height` number(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `bgcolor` varchar(16) default NULL,
+  PRIMARY KEY ("`id`")
+  KEY `id_users` (`id_users`),
+  KEY `name` (`name`)
+  KEY `id_types` (`id_types`)
+) ENGINE=MyISAM;
+
+
+CREATE TABLE `tiki_mypagewin` (
+  `id` number(11) NOT NULL auto_increment,
+  `id_mypage` number(11) NOT NULL,
+  `created` number(11) NOT NULL,
+  `modified` number(11) NOT NULL,
+  `viewed` number(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `inbody` enum('n','y') default 'n' NOT NULL,
+  `modal` enum('n','y') default 'n' NOT NULL,
+  `left` number(11) NOT NULL,
+  `top` number(11) NOT NULL,
+  `width` number(11) NOT NULL,
+  `height` number(11) NOT NULL,
+  `contenttype` varchar(31) default NULL,
+  `config` blob,
+  `content` blob,
+  PRIMARY KEY ("`id`")
+  KEY `id_mypage` (`id_mypage`)
+) ENGINE=MyISAM;
+
+
+CREATE TABLE `tiki_mypage_types` (
+  `id` number(11) NOT NULL auto_increment,
+  `created` number(11) NOT NULL,
+  `modified` number(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `section` varchar(255) default NULL,
+  `permissions` varchar(255) default NULL,
+  `def_height` number(11) default NULL,
+  `def_width` number(11) default NULL,
+  `fix_dimensions` enum('no','yes') NOT NULL,
+  `def_bgcolor` varchar(8) default NULL,
+  `fix_bgcolor` enum('no','yes') NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
+
+CREATE TABLE `tiki_mypage_types_components` (
+  `id_mypage_types` number(11) NOT NULL,
+  `compname` varchar(255) NOT NULL,
+  `mincount` number(11) default '1' NOT NULL,
+  `maxcount` number(11) default '1' NOT NULL,
+  KEY `id_mypage_types` (`id_mypage_types`)
+) ENGINE=MyISAM;
+
+
+-- ------------------------------------
 ;
 
