@@ -1,5 +1,9 @@
 <h1><a href="tiki-admin_layout.php" class="pagetitle">{tr}Admin layout{/tr}</a></h1>
 
+<div class="navbar">
+<a class="linkbut" href="tiki-theme_control.php">Theme control</a>
+</div>
+
 {section name=ix loop=$sections}
 <a name="{$sections[ix].name|escape}"></a>
 {assign var=first value=false}
