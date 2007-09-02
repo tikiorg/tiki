@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-29 22:31:35 $
-# $Author: kerrnel22 $
+# $Date: 2007-09-02 12:18:20 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1309,10 +1309,10 @@ CREATE TABLE tiki_file_galleries (
   max_desc int(8) default NULL,
   show_created char(1) default NULL,
   show_dl char(1) default NULL,
-  parentId int(14) NOT NULL default '-1',
+  parentId int(14) NOT NULL default -1,
   lockable char(1) default 'n',
   show_lockedby char(1) default NULL,
-  archives int(4) default '-1',
+  archives int(4) default -1,
   sort_mode char(20) default NULL,
   show_modified char(1) default NULL,
   show_author char(1) default NULL,
@@ -1501,6 +1501,7 @@ CREATE TABLE tiki_forums_queue (
   topic_smiley varchar(80) default NULL,
   topic_title varchar(240) default NULL,
   summary varchar(240) default NULL,
+  in_reply_to varchar(128) default NULL,
   PRIMARY KEY  (qId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1552,7 +1553,7 @@ CREATE TABLE tiki_galleries (
   sortorder varchar(20) NOT NULL default 'created',
   sortdirection varchar(4) NOT NULL default 'desc',
   galleryimage varchar(20) NOT NULL default 'first',
-  parentgallery int(14) NOT NULL default '-1',
+  parentgallery int(14) NOT NULL default -1,
   showname char(1) NOT NULL default 'y',
   showimageid char(1) NOT NULL default 'n',
   showdescription char(1) NOT NULL default 'n',
@@ -4322,6 +4323,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_own_mypage', 'Can view/edit only one\'s own mypages', 'registered', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_mypage', 'Can edit any mypage', 'registered', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_mypage', 'Can admin any mypage', 'admin', 'mypage','y');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage', 'Can list mypages', 'registered', 'mypage');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
 # --------------------------------------------------------
 
 #
@@ -4340,6 +4347,7 @@ CREATE TABLE users_usergroups (
 # --------------------------------------------------------
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Registered','Users logged into the system');
+INSERT INTO users_groups (groupName,groupDesc) VALUES ('Admins','Administrator and accounts managers.');
 # --------------------------------------------------------
 
 #
@@ -4384,6 +4392,8 @@ CREATE TABLE users_users (
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
 INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
+INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
+INSERT INTO users_grouppermissions (groupName, permName) VALUES ('Admins','tiki_p_admin');
 # --------------------------------------------------------
 # 
 
@@ -4891,3 +4901,68 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   PRIMARY KEY ( `fieldId` ),
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
+
+# ---------- mypage ----------------
+CREATE TABLE `tiki_mypage` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_users` int(11) NOT NULL,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `bgcolor` varchar(16) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `id_users` (`id_users`),
+  KEY `name` (`name`)
+  KEY `id_types` (`id_types`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypagewin` (
+  `id` int(11) NOT NULL auto_increment,
+  `id_mypage` int(11) NOT NULL,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `viewed` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `inbody` enum('n','y') NOT NULL default 'n',
+  `modal` enum('n','y') NOT NULL default 'n',
+  `left` int(11) NOT NULL,
+  `top` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `contenttype` varchar(31) default NULL,
+  `config` blob,
+  `content` blob,
+  PRIMARY KEY  (`id`),
+  KEY `id_mypage` (`id_mypage`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypage_types` (
+  `id` int(11) NOT NULL auto_increment,
+  `created` int(11) NOT NULL,
+  `modified` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `section` varchar(255) default NULL,
+  `permissions` varchar(255) default NULL,
+  `def_height` int(11) default NULL,
+  `def_width` int(11) default NULL,
+  `fix_dimensions` enum('no','yes') NOT NULL,
+  `def_bgcolor` varchar(8) default NULL,
+  `fix_bgcolor` enum('no','yes') NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_mypage_types_components` (
+  `id_mypage_types` int(11) NOT NULL,
+  `compname` varchar(255) NOT NULL,
+  `mincount` int(11) NOT NULL default '1',
+  `maxcount` int(11) NOT NULL default '1',
+  KEY `id_mypage_types` (`id_mypage_types`)
+) ENGINE=MyISAM;
+
+# ------------------------------------

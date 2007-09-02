@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-08-03 18:03:25 $
+-- $Date: 2007-09-02 12:18:22 $
 -- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1960,6 +1960,7 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_smiley" varchar(80) default NULL NULL,
   "topic_title" varchar(240) default NULL NULL,
   "summary" varchar(240) default NULL NULL,
+  "in_reply_to" varchar(128) default NULL NULL,
   PRIMARY KEY ("qId")
 )   
 go
@@ -5272,6 +5273,7 @@ go
 
 
 CREATE TABLE "tiki_user_assigned_modules" (
+  "moduleId" numeric(8,0) NOT NULL,
   "name" varchar(200) default '' NOT NULL,
   "position" char(1) default NULL NULL,
   "ord" numeric(4,0) default NULL NULL,
@@ -6750,6 +6752,30 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_own_mypage', 'Can view/edit only one\'s own mypages', 'registered', 'mypage')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_mypage', 'Can edit any mypage', 'registered', 'mypage')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_mypage', 'Can admin any mypage', 'admin', 'mypage','y')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_mypage', 'Can list mypages', 'registered', 'mypage')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -6777,6 +6803,10 @@ go
 
 
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system')
+go
+
+
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administrator and accounts managers.')
 go
 
 
@@ -6839,6 +6869,14 @@ go
 
 
 INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator')
+go
+
+
+INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins')
+go
+
+
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','tiki_p_admin')
 go
 
 
@@ -7018,11 +7056,11 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki')
 go
 
 
-INSERT INTO "tikii_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('list numbers', '--text', 'pics/icons/text_list_numbers.png', 'wiki')
 go
 
 
@@ -8164,6 +8202,83 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
 go
 
 
+
+-- ---------- mypage ----------------
+CREATE TABLE `tiki_mypage` (
+  `id numeric(11 ,0) identity,
+  `id_users` numeric(11,0) NOT NULL,
+  `created` numeric(11,0) NOT NULL,
+  `modified` numeric(11,0) NOT NULL,
+  `viewed` numeric(11,0) NOT NULL,
+  `width` numeric(11,0) NOT NULL,
+  `height` numeric(11,0) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `bgcolor` varchar(16) default NULL NULL,
+  PRIMARY KEY ("`id`")
+  KEY `id_users` (`id_users`),
+  KEY `name` (`name`)
+  KEY `id_types` (`id_types`)
+) ENGINE=MyISAM
+go
+
+
+
+CREATE TABLE `tiki_mypagewin` (
+  `id numeric(11 ,0) identity,
+  `id_mypage` numeric(11,0) NOT NULL,
+  `created` numeric(11,0) NOT NULL,
+  `modified` numeric(11,0) NOT NULL,
+  `viewed` numeric(11,0) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `inbody` enum('n','y') default 'n' NOT NULL,
+  `modal` enum('n','y') default 'n' NOT NULL,
+  `left` numeric(11,0) NOT NULL,
+  `top` numeric(11,0) NOT NULL,
+  `width` numeric(11,0) NOT NULL,
+  `height` numeric(11,0) NOT NULL,
+  `contenttype` varchar(31) default NULL NULL,
+  `config` image,
+  `content` image,
+  PRIMARY KEY ("`id`")
+  KEY `id_mypage` (`id_mypage`)
+) ENGINE=MyISAM
+go
+
+
+
+CREATE TABLE `tiki_mypage_types` (
+  `id numeric(11 ,0) identity,
+  `created` numeric(11,0) NOT NULL,
+  `modified` numeric(11,0) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `section` varchar(255) default NULL NULL,
+  `permissions` varchar(255) default NULL NULL,
+  `def_height` numeric(11,0) default NULL NULL,
+  `def_width` numeric(11,0) default NULL NULL,
+  `fix_dimensions` enum('no','yes') NOT NULL,
+  `def_bgcolor` varchar(8) default NULL NULL,
+  `fix_bgcolor` enum('no','yes') NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `name` (`name`)
+) ENGINE=MyISAM
+go
+
+
+
+CREATE TABLE `tiki_mypage_types_components` (
+  `id_mypage_types` numeric(11,0) NOT NULL,
+  `compname` varchar(255) NOT NULL,
+  `mincount` numeric(11,0) default '1' NOT NULL,
+  `maxcount` numeric(11,0) default '1' NOT NULL,
+  KEY `id_mypage_types` (`id_mypage_types`)
+) ENGINE=MyISAM
+go
+
+
+
+-- ------------------------------------
 
 go
 
