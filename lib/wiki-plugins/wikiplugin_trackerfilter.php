@@ -1,8 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.11 2007-04-02 17:21:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.12 2007-09-02 15:25:12 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
-  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}{TRACKERFILTER}~/np~";
+  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
@@ -38,7 +38,9 @@ function wikiplugin_trackerfilter($data, $params) {
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
 		$dataRes .= '<br />';
-		}
+	} else {
+		$data = '';
+	}
 	if (!isset($filters)) {
 		$smarty->assign('msg', tra("missing parameters"));
 		return $dataRes.$smarty->fetch("error_simple.tpl");
@@ -146,7 +148,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$smarty->assign('filters', $filters);
 	$smarty->assign('trackerId', $trackerId);
-	$data = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
-	return $dataRes.$data;
+	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
+	return $data.$dataRes.$dataF;
 }
 ?>
