@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-08-27 09:57:41 $
-# $Author: niclone $
+# $Date: 2007-09-02 12:16:37 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4944,7 +4944,7 @@ CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
   `created` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
-  `name` varchar(256) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `section` varchar(255) default NULL,
   `permissions` varchar(255) default NULL,

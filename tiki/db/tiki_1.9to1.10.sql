@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.205 2007-08-27 09:57:41 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.206 2007-09-02 12:16:38 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1496,7 +1496,7 @@ ALTER TABLE `tiki_mypage` ADD INDEX `id_types` ( `id_types` );
 #2007-08-15 niclone
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(256) collate utf8_bin NOT NULL,
+  `name` varchar(255) collate utf8_bin NOT NULL,
   `description` varchar(255) collate utf8_bin NOT NULL,
   `section` varchar(255) collate utf8_bin default NULL,
   `permissions` varchar(255) collate utf8_bin default NULL,
@@ -1533,3 +1533,6 @@ ALTER TABLE `tiki_mypagewin` CHANGE `contenttype` `contenttype` VARCHAR(31) NULL
 ALTER TABLE `tiki_mypage` ADD `created` INT NOT NULL AFTER `id_types`, ADD `modified` INT NOT NULL AFTER `created`, ADD `viewed` INT NOT NULL AFTER `modified`;
 ALTER TABLE `tiki_mypagewin` ADD `created` INT NOT NULL AFTER `id_mypage`, ADD `modified` INT NOT NULL AFTER `created`, ADD `viewed` INT NOT NULL AFTER `modified`;
 ALTER TABLE `tiki_mypage_types` ADD `created` INT NOT NULL AFTER `id`, ADD `modified` INT NOT NULL AFTER `created`;
+
+#2007-09-02 sylvieg
+ALTER TABLE  `tiki_mypage_types` CHANGE `name` `name` varchar(255) collate utf8_bin NOT NULL;
