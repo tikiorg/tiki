@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-09-02 12:18:20 $
-# $Author: sylvieg $
+# $Date: 2007-09-02 20:22:11 $
+# $Author: parkercroft $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4917,8 +4917,7 @@ CREATE TABLE `tiki_mypage` (
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
-  KEY `id_types` (`id_types`)
-) ENGINE=MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
