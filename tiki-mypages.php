@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.16 2007-09-03 13:31:18 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.17 2007-09-03 13:54:35 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,9 +87,6 @@ function mypageedit_init() {
 			if ($mptype['name']==$mptype_name) {
 				$id_types=$mptype['id'];
 				$typeclassname=MyPage::getTypeClassName($mptype['name']);
-				if ($typeclassname !== NULL && is_callable(array($typeclassname, 'blah'))) {
-					call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);
-				}
 				break;
 			}
 		}
@@ -120,7 +117,8 @@ function mypageedit_init() {
 						 .'<a href="#" onclick="showMypageEdit({$mypage.id});" title="{tr}edit entry{/tr}"><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt="{tr}edit entry{/tr}" /></a>'
 						 .'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
 
-	if ($id_types > 0) {
+	if ($typeclassname !== NULL && is_callable(array($typeclassname, 'customizeColumns'))) {
+		call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);
 	}
 
 
