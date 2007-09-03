@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.82 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.83 2007-09-03 20:02:32 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="{$helpurl}Permissions Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
+<a href="{$helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
@@ -18,6 +18,7 @@
 <div class="navbar">
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php?clean=y" class="linkbut">{tr}Clear cache{/tr}</a></span>
 {if $groupname}
 <span class="button2"><a href="tiki-admingroups.php?add=1{if $feature_tabs ne 'y'}#2{/if}" class="linkbut">{tr}Add new group{/tr}</a></span>
 {/if}
@@ -91,8 +92,7 @@ class="prevnext">{tr}All{/tr}</a>
 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /> {$users[user].permcant}</a>
 </td>
 <td style="width: 20px;">
-{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
-title="{tr}Delete{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
+{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
 </td>
 </tr>
 {/section}
@@ -130,9 +130,9 @@ title="{tr}Delete{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cr
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
-<tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
+<tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
-<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}</i></td><td>
+<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}<br />{tr}The group will have all the permissions of the included groups{/tr}</i></td><td>
 {if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
 {foreach key=gr item=yn from=$inc}{if $yn eq 'y'}{$gr|escape} {/if}{/foreach}<br />
 {/if}
