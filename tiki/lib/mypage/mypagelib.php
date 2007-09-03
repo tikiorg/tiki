@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.59 2007-08-30 19:14:54 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.60 2007-09-03 17:40:08 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -864,6 +864,10 @@ class MyPageWindow {
 		}
 		
 		$js.=$v.".show();\n";
+
+		if (is_callable(array($comp, 'getOnOpenJSCode'))) {
+			$js.=$comp->getOnOpenJSCode().";\n";
+		}
 		
 		return $js;
 	}
