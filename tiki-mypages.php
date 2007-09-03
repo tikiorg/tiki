@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.18 2007-09-03 14:07:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.19 2007-09-03 14:39:51 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,11 +59,17 @@ function mypage_ajax_init() {
 }
 
 function mypageedit_addcolumn($title, $hidden=false,
-							  $header_tpl=NULL, $content_tpl=NULL) {
+							  $header_tpl=NULL, $content_tpl=NULL, $position=NULL) {
 	global $mp_columns;
-	$mp_columns[]=array('title' => $title, 'hidden' => $hidden,
-						'header_tpl' => $header_tpl,
-						'content_tpl' => $content_tpl);
+	if ($position !== NULL) {
+		for ($i=count($mp_columns); $i>$position; $i--) {
+			$mp_columns[$i]=$mp_columns[$i - 1];
+		}
+	} else $position=count($mp_columns);
+
+	$mp_columns[$position]=array('title' => $title, 'hidden' => $hidden,
+								 'header_tpl' => $header_tpl,
+								 'content_tpl' => $content_tpl);
 }
 
 function mypageedit_init() {
