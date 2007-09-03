@@ -59,27 +59,16 @@
 
 <table class="normal">
 <tr>
- <th class="heading">{tr}Name{/tr}</th>
- <th class="heading">{tr}Description{/tr}</th>
- <th class="heading" {if $id_types}style='display: none;'{/if}>{tr}Type{/tr}</th>
- <th class="heading" {if $id_types && $mptypes[$id_types].fix_dimensions=='yes'}style='display: none;'{/if}>{tr}Dimensions{/tr}</th>
- <th class="heading">{tr}Action{/tr}</th>
+ {foreach from=$mp_columns item=col}
+  <th class="heading" {if $col.hidden}style='display: none;'{/if}>{if $col.header_tpl}{eval var=$col.header_tpl}{else}{tr}{$col.title}{/tr}{/if}</th>
+ {/foreach}
 </tr>
+
 {foreach from=$mypages item=mypage}
 <tr class="odd">
- <td><span id='mypagespan_name_{$mypage.id}'>{$mypage.name|escape}</span></td>
- <td><span id='mypagespan_description_{$mypage.id}'>{$mypage.description|escape}</span></td>
- <td {if $id_types}style='display: none;'{/if}><span id='mypagespan_type_{$mypage.id}'>{$mypage.type_name|escape}</span></td>
- <td {if $id_types && $mptypes[$id_types].fix_dimensions=='yes'}style='display: none;'{/if}>
-  <span id='mypagespan_width_{$mypage.id}'>{$mypage.width}</span> x 
-  <span id='mypagespan_height_{$mypage.id}'>{$mypage.height}</span>
- </td>
- <td>
-  <a id='mypage_viewurl_{$mypage.id}' href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}' title='{tr}view content{/tr}'><img src="pics/icons/page.png" border="0" height="16" width="16" alt='{tr}view content{/tr}' /></a>
-  <a id='mypage_editurl_{$mypage.id}' href='tiki-mypage.php?mypage={$mypage.name|escape:'url'}&amp;edit=1' title='{tr}edit content{/tr}'><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt='{tr}edit content{/tr}' /></a>
-  <a href='#' onclick='showMypageEdit({$mypage.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
-  <a href='#' onclick='deleteMypage({$mypage.id});' title='{tr}delete entry{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete entry{/tr}' /></a>
- </td>
+ {foreach from=$mp_columns item=col}
+  <td {if $col.hidden}style='display: none;'{/if}>{eval var=$col.content_tpl}</td>
+ {/foreach}
 </tr>
 {/foreach}
 </table>

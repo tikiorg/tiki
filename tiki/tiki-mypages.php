@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.13 2007-08-24 00:09:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.14 2007-09-03 13:14:54 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,7 @@ if (strlen($user) <= 0) {
 	$id_users=$userlib->get_user_id($user);
 }
 
+$mp_columns=array();
 
 function mypageedit_populate() {
 	global $smarty, $id_users;
@@ -55,17 +56,17 @@ function mypage_ajax_init() {
 	$ajaxlib->processRequests();
 }
 
+function mypageedit_addcolumn($title, $hidden=false,
+							  $header_tpl=NULL, $content_tpl=NULL) {
+	global $mp_columns;
+	$mp_columns[]=array('title' => $title, 'hidden' => $hidden,
+						'header_tpl' => $header_tpl,
+						'content_tpl' => $content_tpl);
+}
+
 function mypageedit_init() {
 	global $smarty, $headerlib;
-
-	mypageedit_populate();
-	mypage_ajax_init();
-
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.alphacube.css");
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.nada.css");
+	global $mp_columns;
 
 	$mptypes=MyPage::listMyPageTypes();
 	foreach($mptypes as $k => $v) $mptypes_by_id[$v['id']]=$v;
@@ -79,17 +80,60 @@ function mypageedit_init() {
 	$smarty->assign('mptypes_js', $mptypes_js);
 
 	$id_types=0;
+	$typeclassname=NULL;
 	if (isset($_REQUEST['type'])) {
 		$mptype_name=$_REQUEST['type'];
 		foreach($mptypes as $mptype) {
 			if ($mptype['name']==$mptype_name) {
 				$id_types=$mptype['id'];
+				$typeclassname=MyPage::getTypeClassName($mptype['name']);
+				if ($typeclassname !== NULL && is_callable(array($typeclassname, 'blah'))) {
+					call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);
+				}
 				break;
 			}
 		}
 	}
 
 	$smarty->assign('id_types', $id_types);
+
+	mypageedit_addcolumn('name', false,
+						 '{tr}Name{/tr}',
+						 '<span id="mypagespan_name_{$mypage.id}">{$mypage.name|escape}</span>');
+
+	mypageedit_addcolumn('description', false,
+						 '{tr}Description{/tr}',
+						 '<span id="mypagespan_description_{$mypage.id}">{$mypage.description|escape}</span>');
+
+	mypageedit_addcolumn('type', $id_types > 0 ? true : false,
+						 '{tr}Type{/tr}',
+						 '<span id="mypagespan_type_{$mypage.id}">{$mypage.type_name|escape}</span>');
+
+	mypageedit_addcolumn('dimensions', $mptypes[$id_types]['fix_dimensions'] == 'yes' ? true : false,
+						 '{tr}Dimensions{/tr}',
+						 '<span id="mypagespan_width_{$mypage.id}">{$mypage.width}</span> x <span id="mypagespan_height_{$mypage.id}">{$mypage.height}</span>');
+
+	mypageedit_addcolumn('action', false,
+						 '{tr}Action{/tr}',
+						 '<a id="mypage_viewurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}" title="{tr}view content{/tr}"><img src="pics/icons/page.png" border="0" height="16" width="16" alt="{tr}view content{/tr}" /></a>'
+						 .'<a id="mypage_editurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}&amp;edit=1" title="{tr}edit content{/tr}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}edit content{/tr}" /></a>'
+						 .'<a href="#" onclick="showMypageEdit({$mypage.id});" title="{tr}edit entry{/tr}"><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt="{tr}edit entry{/tr}" /></a>'
+						 .'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
+
+	if ($id_types > 0) {
+	}
+
+
+	$smarty->assign('mp_columns', $mp_columns);
+
+	mypageedit_populate();
+	mypage_ajax_init();
+
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.alphacube.css");
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.nada.css");
 
 	$smarty->assign("mid", "tiki-mypages.tpl");
 	$smarty->display("tiki.tpl");
