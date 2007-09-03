@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.17 2007-09-03 13:54:35 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.18 2007-09-03 14:07:25 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if (strlen($user) <= 0) {
 
 $mp_columns=array();
 
-function mypageedit_populate() {
+function mypageedit_populate($typeclassname) {
 	global $smarty, $id_users;
 	
 	$mypage_type=isset($_REQUEST['type']) ? $_REQUEST['type'] : NULL;
@@ -30,6 +30,8 @@ function mypageedit_populate() {
 	$pcount=(int)(($tcount-1) / $lpp) + 1;
 	$offset=$showpage * $lpp;
 	$pages=MyPage::listPages($id_users, $mypage_type, $offset, $lpp);
+	if (is_callable(array($typeclassname, "customizeMypagesListing")))
+		call_user_func(array($typeclassname, "customizeMypagesListing"), &$pages);
 
 	$pagesnum=array(); for($i=0; $i < $pcount; $i++) $pagesnum[$i]=$i+1;
 	$smarty->assign("pagesnum", $pagesnum);
@@ -124,7 +126,7 @@ function mypageedit_init() {
 
 	$smarty->assign('mp_columns', $mp_columns);
 
-	mypageedit_populate();
+	mypageedit_populate($typeclassname);
 	mypage_ajax_init();
 
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
