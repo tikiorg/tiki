@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.15 2007-09-03 13:26:46 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.16 2007-09-03 13:31:18 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,7 +109,7 @@ function mypageedit_init() {
 						 '{tr}Type{/tr}',
 						 '<span id="mypagespan_type_{$mypage.id}">{$mypage.type_name|escape}</span>');
 
-	mypageedit_addcolumn('dimensions', (($id_types > 0) && ($mptypes[$id_types]['fix_dimensions'] == 'yes')) ? true : false,
+	mypageedit_addcolumn('dimensions', (($id_types > 0) && ($mptypes_by_id[$id_types]['fix_dimensions'] == 'yes')) ? true : false,
 						 '{tr}Dimensions{/tr}',
 						 '<span id="mypagespan_width_{$mypage.id}">{$mypage.width}</span> x <span id="mypagespan_height_{$mypage.id}">{$mypage.height}</span>');
 
