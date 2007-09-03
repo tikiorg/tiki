@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.59 2007-07-20 12:04:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.60 2007-09-03 19:50:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,6 +110,11 @@ if (isset($_REQUEST["action"])) {
 	}
 }
 
+if (isset($_REQUEST['clean'])) {
+	global $cachelib;require_once("lib/cache/cachelib.php");
+	check_ticket('admin-groups');
+	$cachelib->invalidate('grouplist');
+}
 if (!isset($_REQUEST["numrows"])) {
 	$numrows = $maxRecords;
 } else {
