@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.111 2007-08-28 21:22:52 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.112 2007-09-04 17:14:53 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -252,6 +252,8 @@ class CategLib extends ObjectLib {
 	}
 
 	function is_categorized($type, $itemId) {
+		if (empty($itemId))
+			return 0;
 		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=?";
 		$bindvars=array($type,$itemId);
 		settype($bindvars["1"],"string");
