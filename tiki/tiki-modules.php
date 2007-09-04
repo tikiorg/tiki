@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.66 2007-08-08 22:34:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.67 2007-09-04 14:33:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
 global $modseparateanon, $user, $userlib, $user_assigned_modules, $tiki_p_configure_modules;
-global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section;
+global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section, $page;
 
 clearstatcache();
 
@@ -65,6 +65,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
 		$pass="n";
 	} elseif (isset($module_params['section']) && (!isset($section) || $section != $module_params['section'])) {
+		$pass = 'n';
+	} elseif (isset($module_params['page']) && (!isset($section) || $section != 'wiki page' || !isset($page) || $page != $module_params['page'])) {
 		$pass = 'n';
 	}
 	elseif ($modallgroups != 'y') {
