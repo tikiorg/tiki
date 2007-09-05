@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.771 2007-08-31 15:07:39 mose Exp $
+// CVS: $Id: tikilib.php,v 1.772 2007-09-05 21:49:12 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6058,7 +6058,6 @@ if (!$simple_wiki) {
 			// use header but replace non-word character sequences
 			// with one underscore (for XHTML 1.0 compliance)
 			$thisid=ereg_replace("[^a-zA-Z0-9]+","_",substr($line,$hdrlevel+$addremove));
-			$anchor="<a name='$thisid'></a>";
 
 			// Is any {maketoc} present on page?
 			if (count($tocs[0]) > 0) {
@@ -6069,9 +6068,9 @@ if (!$simple_wiki) {
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			global $feature_wiki_show_hide_before;
 			if ($feature_wiki_show_hide_before == 'y')
-			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . $aclose." ". substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
+			$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . $aclose." ". substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
 			else
-			$line = $anchor . "<h" . ($hdrlevel+1) . ' class="showhide_heading">' . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
+			$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
 		    } elseif (!strcmp($line, $wiki_page_separator)) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
