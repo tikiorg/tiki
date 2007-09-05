@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.46 2007-07-20 18:44:23 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.47 2007-09-05 16:34:11 sylvieg Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -16,12 +16,12 @@
 {/if}
 
 {if $askremove eq 'y'}
-<br />
+<div class="simplebox highlight">
 {tr}You will remove structure{/tr}: {$removename|escape}<br />
 <a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a>
 {if $tiki_p_remove == 'y'}
 <br /><a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
-<br /><br />
+</div>
 {/if}
 {/if}
 
