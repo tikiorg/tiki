@@ -881,6 +881,23 @@ function list_structures($offset, $maxRecords, $sort_mode, $find, $exact_match =
   }
   return $pages;
   }
+  function move_to_structure($page_ref_id, $structure_id, $begin=true) {
+	$page_info = $this->s_get_page_info($page_ref_id);
+	$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+	$this->query($query, array((int)$page_info["pos"], (int)$page_info["parent_id"]));
+	if ($begin) {
+		$query = "update `tiki_structures` set `pos`=`pos`+1 where `parent_id`=?";
+		$this->query($query, array($structure_id));
+		$pos = 1;
+		$query = "update `tiki_structures` set `parent_id`=?, `pos`=? where `page_ref_id`=?";
+		$this->query($query, array($structure_id, $pos+1, $page_ref_id));
+	} else {
+		$query = "select max(`pos`) from `tiki_structures` where `parent_id`=?";
+		$pos = $this->getOne($query, array($structure_id));
+		$query = "update `tiki_structures` set `parent_id`=?, `pos`=? where `page_ref_id`=?";
+		$this->query($query, array($structure_id, $pos+1, $page_ref_id));
+	}
+  }
 }
 global $dbTiki;
 $structlib = new StructLib($dbTiki);

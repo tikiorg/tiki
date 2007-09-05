@@ -100,13 +100,25 @@
   <tr>
   <td class="formcolor">{tr}Page alias{/tr}</td>
   <td class="formcolor">
-  <input type="text" name="pageAlias" value="{$pageAlias}" />  <input type="submit" name="create" value="{tr}update{/tr}" />
+  <input type="text" name="pageAlias" value="{$pageAlias}" />  <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
   </tr>
   <tr>
-  <td class="formcolor">{tr}Move{/tr}</td>
+  <td class="formcolor">{tr}Move in this structure{/tr}</td>
   <td class="formcolor">
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=1'><img src="pics/icons/resultset_previous.png" height="16" width="16" border="0" title="{tr}Promote{/tr}" alt="{tr}Promote{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=4'><img src="pics/icons/resultset_next.png" height="16" width="16" border="0" title="{tr}Demote{/tr}" alt="{tr}Demote{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=2'><img src="pics/icons/resultset_up.png" height="16" width="16" border="0" title="{tr}Previous{/tr}" alt="{tr}Previous{/tr}" /></a><a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=3'><img src="pics/icons/resultset_down.png" height="16" width="16" border="0" title="{tr}Next{/tr}" alt="{tr}Next{/tr}" style="margin-right:10px;"/></a>
+</td></tr>
+<tr><td class="formcolor">{tr}Move to another structure{/tr}</td>
+<td class="formcolor">
+<select name="structure_id">
+{section name=ix loop=$structures}
+{if $structures[ix].page_ref_id ne $page_ref_id}
+<option value="{$structures[ix].page_ref_id}">{$structures[ix].pageName}</option>
+{/if}
+{/section}
+</select>
+{tr}at the beginning{/tr}<input type="radio" name="begin" value="1" checked="checked" /> {tr}at the end{/tr}<input type="radio" name="begin" value="0" />
+ <input type="submit" name="move_to" value="{tr}Move{/tr}" />
   </td>
   </tr>
 </table>
@@ -157,7 +169,7 @@
   <tr>
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor">
-  <input type="submit" name="create" value="{tr}update{/tr}" />
+  <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
   </tr>
 </tr>
@@ -170,7 +182,7 @@
 <table class="normal">
 {include file=categorize.tpl}
 </table>
-<input type="submit" name="recategorize" value="{tr}update{/tr}" />
+<input type="submit" name="recategorize" value="{tr}Update{/tr}" />
 &nbsp;&nbsp;{tr}Remove existing categories from ALL pages before recategorizing{/tr}: <input type="checkbox" name="cat_override" />
 </form>
 {/if}

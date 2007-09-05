@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.41 2007-06-06 04:28:19 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.42 2007-09-05 17:49:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,6 +25,12 @@ if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+if (isset($_REQUEST['move_to'])) {
+	echo "GGG";
+	check_ticket('edit-structure');
+	$structlib->move_to_structure($_REQUEST['page_ref_id'], $_REQUEST['structure_id'], $_REQUEST['begin']);
 }
 
 $structure_info = $structlib->s_get_structure_info($_REQUEST["page_ref_id"]);
@@ -226,6 +232,8 @@ if (!empty($_REQUEST['categId'])) {
 $listpages = $tikilib->list_pages(0, 50, 'pageName_asc', $find_objects, '', true, true, false, false, $filter);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
+$structures = $structlib->list_structures(0, -1, 'pageName_asc');
+$smarty->assign_by_ref('structures', $structures['data']);
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 $smarty->assign('subtree', $subtree);
