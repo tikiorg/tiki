@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.42 2007-09-05 17:49:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.43 2007-09-05 17:52:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,7 +28,6 @@ if (!isset($_REQUEST["page_ref_id"])) {
 }
 
 if (isset($_REQUEST['move_to'])) {
-	echo "GGG";
 	check_ticket('edit-structure');
 	$structlib->move_to_structure($_REQUEST['page_ref_id'], $_REQUEST['structure_id'], $_REQUEST['begin']);
 }
