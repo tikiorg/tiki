@@ -98,7 +98,6 @@ function showMypageEdit(id) {
 		"width": 700,
 		"height": 550,
 		"container": false,
-		"destroyOnClose": false
 	}).adopt($('mypageeditdiv'));
 
 	if (id > 0) {
@@ -128,10 +127,9 @@ function showMypageEdit(id) {
 }
 
 function closeMypageEdit() {
-	curmodal.close();
 	$('mypageeditdivparking').adopt($('mypageeditdiv'));
-	curmodal.destroy();
-	curmodal=NULL;
+	curmodal.close();
+	curmodal=null;
 }
 
 function saveMypageEdit() {
