@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.61 2007-09-06 14:18:50 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.62 2007-09-06 14:23:04 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -120,6 +120,9 @@ class MyPage {
 			return $this->lasterror;
 		}
 
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
 		$typeclass=$this->getTypeClass();
 		if ($typeclass) $typeclass->destroy();
 
@@ -145,6 +148,9 @@ class MyPage {
 		
 		if (!isset($this->windows[$id_win])) return;
 		
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
 		if ($id_win > 0) {
 			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
 				$this->lasterror=tra('You do not have permissions to delete this component');
@@ -675,6 +681,9 @@ class MyPageWindow {
 	}
 	
 	function destroy() {
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
 		$comp=$this->getComponent();
 		if ($comp) $comp->destroy();
 		return $this->mypage->destroyWindow($this);
