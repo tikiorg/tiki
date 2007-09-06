@@ -1,5 +1,6 @@
 <h1>{tr}My {if $smarty.request.type}{$smarty.request.type} {/if}Pages{/tr}</h1>
-<div id='mypageeditdiv' style='display: none; border: padding-left: 7px; padding-right: 7px;'>
+<div id='mypageeditdivparking' style='display: none;'>
+<div id='mypageeditdiv' style='border: padding-left: 7px; padding-right: 7px;'>
  <input id='mypageedit_id' type='hidden' value=''>
  <table class="normal">
   <tr>
@@ -54,6 +55,7 @@
   <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
  </div>
 </div>
+</div>
 
 <input type='button' value='Create' onclick='showMypageEdit(0);'>
 
@@ -88,18 +90,17 @@ function changepage() {
 var curmodal=0;
 
 function initMypageEdit() {
-	var content=$('mypageeditdiv');
-	curmodal=new Windoo({
-		"modal": true,
-		"width": 500,
-		"height": 500,
-		"container": false,
-		"destroyOnClose": false
-	}).adopt(content);
-	content.style.display='';
 }
 
 function showMypageEdit(id) {
+	curmodal=new Windoo({
+		"modal": true,
+		"width": 700,
+		"height": 550,
+		"container": false,
+		"destroyOnClose": false
+	}).adopt($('mypageeditdiv'));
+
 	if (id > 0) {
 		xajax_mypage_fillinfos(id);
 		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
@@ -128,6 +129,9 @@ function showMypageEdit(id) {
 
 function closeMypageEdit() {
 	curmodal.close();
+	$('mypageeditdivparking').adopt($('mypageeditdiv'));
+	curmodal.destroy();
+	curmodal=NULL;
 }
 
 function saveMypageEdit() {
