@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.95 2007-05-28 19:12:41 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.96 2007-09-06 00:31:29 sampaioprimo Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1839,10 +1839,12 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function add_gallery_scale($galleryId, $scale) {
-		$query = "insert into `tiki_galleries_scales`(`galleryId`,`scale`)
+	        $old_scale = $this->getOne("select scale from tiki_galleries_scales where galleryId = ? AND scale = ?", array((int)$galleryId, (int)$scale));
+		if ($scale != $old_scale) {
+		    $query = "insert into `tiki_galleries_scales`(`galleryId`,`scale`)
             values(?,?)";
-
-		$result = $this->query($query,array((int)$galleryId,(int)$scale));
+		    $result = $this->query($query,array((int)$galleryId,(int)$scale));
+		}
 	}
 
 	function remove_gallery_scale($galleryId, $scale= 0) {
