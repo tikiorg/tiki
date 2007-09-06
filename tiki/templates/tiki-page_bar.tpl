@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.77 2007-08-23 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.78 2007-09-06 20:29:43 mose Exp $ *}
 
 <hr/>
 
@@ -91,7 +91,7 @@
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
 <span class="button2">
-<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+<a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
 {tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
@@ -115,7 +115,7 @@
 
   
     <span class="button2">
-<a href="#" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
+<a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
 {tr}Attach File{/tr}
 {elseif $atts|@count == 1}
@@ -139,10 +139,12 @@
 </div>
 
 {if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
+<a name="attachments"></a>
 {include file=attachments.tpl}
 {/if}
 
 {if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
+<a name="comments"></a>
 {include file=comments.tpl}
 {/if}
 
