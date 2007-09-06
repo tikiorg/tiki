@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.35 2007-09-03 23:07:32 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.36 2007-09-06 14:18:50 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,8 +51,12 @@ function mypage_win_setrect($id_mypage, $id_mypagewin, $rect) {
 		return mypage_error($mywin);
 
 	if ($mywin) {
-		$mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
-		$mywin->commit();
+		$err=$mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
+		if (is_string($err))
+			return mypage_error($err);
+		$err=$mywin->commit();
+		if (is_string($err))
+			return mypage_error($err);
 	} else {
 		return mypage_error(tra("Window not found"));
 	}
@@ -146,10 +150,16 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 	}
 
 	if ($reload) {
-		if ($mywin->getParam('contenttype') == 'iframe')
-			$objResponse->addScriptCall("tikimypagewin[$id_win].setURL", $mywin->getParam('config'));
-		else
-			$objResponse->addScriptCall("tikimypagewin[$id_win].setHTML", $comp->getHTMLContent());
+// 		if ($mywin->getParam('contenttype') == 'iframe')
+// 			$objResponse->addScriptCall("tikimypagewin[$id_win].setURL", $mywin->getParam('config'));
+// 		else
+// 			$objResponse->addScriptCall("tikimypagewin[$id_win].setHTML", $comp->getHTMLContent());
+
+// 		$objResponse->addScriptCall("tikimypagewin[$id_win].setSize",
+// 									$mywin->getParam('width'), $mywin->getParam('height'));
+
+		$objResponse->addScript("tikimypagewin[$id_win].destroy();");
+		$objResponse->addScript($mywin->getJSCode(true));
 	}
     return $objResponse;
 }
