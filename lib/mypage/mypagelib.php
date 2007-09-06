@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.60 2007-09-03 17:40:08 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.61 2007-09-06 14:18:50 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -56,7 +56,8 @@ class MyPage {
 		$this->id_users=$id_users; //the viewer
 		$this->windows=array();
 		$this->lastid=0;
-		$this->params=array();
+		$this->params=array('id_users' => $id_users);
+		//$this->params=array();
 		$this->modified=array();
 		$this->lasterror=NULL;
 		$this->typeclass=NULL;
@@ -80,6 +81,16 @@ class MyPage {
 		} else {
 			return NULL;
 		}
+	}
+
+	function getPerm($for) {
+		switch ($for) {
+		case 'edit':
+			return ((int)$this->id_users == (int)$this->params['id_users']);
+		case 'view':
+			return true;
+		}
+		return false;
 	}
 
 	function getWindows() {
@@ -211,6 +222,9 @@ class MyPage {
 		}
 	}
 	function setParam($param, $value) {
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
 		$allowed=array('id_users', 'id_types', 'width', 'height',
 					   'name', 'description', 'bgcolor', 'categories');
 		
@@ -239,6 +253,7 @@ class MyPage {
 			$res=$tikilib->query("SELECT * FROM tiki_mypage WHERE `id`=?", array($this->id));
 			if ($line = $res->fetchRow()) {
 				$this->params=$line;
+				$this->modified=array();
 			} else { // bad... no mypage found
 				$this->id=0;
 				return FALSE;
@@ -260,6 +275,9 @@ class MyPage {
 	function commit() {
 		global $tikilib, $tiki_p_edit_mypage, $tiki_p_edit_own_mypage;
 		
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
 		if (is_null($this->id)) {
 			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
 				$this->lasterror=tra('You do not have permissions to edit the page');
@@ -661,6 +679,18 @@ class MyPageWindow {
 		if ($comp) $comp->destroy();
 		return $this->mypage->destroyWindow($this);
 	}
+
+
+	function getPerm($for) {
+		switch ($for) {
+		case 'edit':
+			return $this->mypage->getPerm('edit');
+		case 'view':
+			return $this->mypage->getPerm('edit');
+		}
+		return false;
+	}
+
 	
 	function commit() {
 		global $tikilib;
@@ -670,6 +700,11 @@ class MyPageWindow {
 			return $this->lasterror;
 		}
 		*/
+		
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
+
+
 		if ($this->id < 0) {
 			// create a new mypagewin id
 			
@@ -722,6 +757,8 @@ class MyPageWindow {
 	}
 	
 	function setParam($param, $value) {
+		if (!$this->getPerm('edit'))
+			return $this->lasterror=tra('You are not the owner of this page');
 		$this->params[$param]=$value;
 		$this->modified[$param]=true;
 	}
@@ -734,34 +771,47 @@ class MyPageWindow {
 	 * $contenttype: must be 'iframe' or 'wiki'
 	 */
 	function setContentType($contenttype) {
-		$this->setParam('contenttype', $contenttype);
+		return $this->setParam('contenttype', $contenttype);
 	}
 	
 	function setContent($content) {
-		$this->setParam('content', $content);
+		return $this->setParam('content', $content);
 	}
 	
 	function setConfig($config) {
-		$this->setParam('config', $config);
+		return $this->setParam('config', $config);
 	}
 	
 	function setPosition($left, $top) {
-		$this->setParam('left', (int)$left);
-		$this->setParam('top', (int)$top);
+		$err=$this->setParam('left', (int)$left);
+		if (is_string($err)) return $err;
+		return $this->setParam('top', (int)$top);
 	}
 
 	function setSize($width, $height) {
-		$this->setParam('width', (int)$width);
-		$this->setParam('height', (int)$height);
+		$err=$this->setParam('width', (int)$width);
+		if (is_string($err)) return $err;
+		return $this->setParam('height', (int)$height);
 	}
 
 	function setRect($left, $top, $width, $height) {
-		$this->setPosition($left, $top);
-		$this->setSize($width, $height);
+		$err=$this->setPosition($left, $top);
+		if (is_string($err)) return $err;
+		return $this->setSize($width, $height);
 	}
 
 	function setTitle($title) {
-		$this->setParam('title', $title);
+		return $this->setParam('title', $title);
+	}
+
+	/* static */
+	function isComponentConfigurable($compname=NULL) {
+		if (!empty($compname)) {
+			$classname=MyPageWindow::getComponentClass($compname);
+			if (($classname !== NULL) && is_callable(array($classname, 'isConfigurable')))
+				return call_user_func(array($classname, 'isConfigurable'));
+		}
+		return false;
 	}
 
 	/* static or not static */
@@ -839,7 +889,7 @@ class MyPageWindow {
 		}
 
 		if (!$editable) {
-			//$winparams['theme']	  = 'nada';
+			$winparams['theme']	  = 'nada';
 			$winparams['resizable']  = false;
 			$winparams['draggable']  = false;
 			$winparams['buttons']	 = array('close'	=> false,
@@ -853,12 +903,14 @@ class MyPageWindow {
 		}
 	
 		$js =$v."=new Windoo(".phptojsarray($winparams).");\n";
-		$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
-		$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
-		$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
-		$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
-		$js.=$v.".addEvent('onStartDrag', function() { windooStartDrag(".$this->id."); });\n";
-	
+		if ($editable) {
+			$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
+			$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
+			$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
+			$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
+			$js.=$v.".addEvent('onStartDrag', function() { windooStartDrag(".$this->id."); });\n";
+		}
+
 		if ($this->params['contenttype'] != 'iframe') {
 			$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
 		}
