@@ -97,7 +97,7 @@ function showMypageEdit(id) {
 		"modal": true,
 		"width": 700,
 		"height": 550,
-		"container": false,
+		"container": false
 	}).adopt($('mypageeditdiv'));
 
 	if (id > 0) {
