@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.26 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.27 2007-09-07 21:38:54 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -295,7 +295,8 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
 			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"], $_REQUEST["zone"]);
 
-		$smarty->assign('bannerId', $bannerId);
+		header("location:tiki-list_banners.php");
+		
 	}
 }
 
