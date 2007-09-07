@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.38 2007-09-07 10:03:18 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.39 2007-09-07 10:04:58 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -210,7 +210,7 @@ function sql_error($query, $values, $result) {
 	    }
 	    return $o;
 	}
-	$outp.= "<tr class='headeing'><th>Stack Trace</th><td>".mydumpstack(xdebug_get_function_stack())."</td></tr>";
+	$outp.= "<tr class='heading'><th>Stack Trace</th><td>".mydumpstack(xdebug_get_function_stack())."</td></tr>";
     }
 
     $outp.= "</table>";
