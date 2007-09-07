@@ -1571,6 +1571,7 @@ $lang=Array(
 // "Max:" => "Max:",
 // "Set topics preferences" => "Set topics preferences",
 // "show topics preferences" => "show topics preferences",
+// "Show topics preferences" => "Show topics preferences",
 // "hide topics preferences" => "hide topics preferences",
 // "Set thread preferences" => "Set thread preferences",
 // "show threads preferences" => "show threads preferences",
