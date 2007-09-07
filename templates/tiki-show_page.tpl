@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.122 2007-08-10 13:42:41 guidoscherp Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.123 2007-09-07 07:26:04 pkdille Exp $ *} 
 {if $feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -212,8 +212,8 @@
 
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 
+<p class="editdate"> {* begining editdate *}
 {if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
-<p class="editdate">
   {tr}Last edited by{/tr} {$lastUser|userlink}
   {section name=author loop=$contributors}
    {if $smarty.section.author.first}, {tr}based on work by{/tr}
@@ -225,9 +225,8 @@
    {$contributors[author]|userlink}
   {/section}.<br />                                         
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-</p>
 {elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
-<p class="editdate">
+<br />
   {tr}Contributors to this page{/tr}: {$lastUser|userlink}
   {section name=author loop=$contributors}
    {if !$smarty.section.author.last},
@@ -236,30 +235,31 @@
    {$contributors[author]|userlink}
   {/section}.<br />
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-</p>
 {elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
 {else}
-<p class="editdate">
-  {tr}Created by{/tr}: {$creator|userlink}
+<br />
+  {tr}Created by{/tr}: {$creator|userlink}.
   {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-</p>
 {/if}
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
-      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+      <br />
+      {tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.
     {/if}
   {else}
-    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+    <br />
+    {tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.
   {/if}
 {/if}
 
 {if $print_page eq 'y'}
-  <div class="editdate" align="center"><p>
+    <br />
     {tr}The original document is available at{/tr} <a href="{$base_url}tiki-index.php?page={$page|escape:"url"}">{$base_url}tiki-index.php?page={$page|escape:"url"}</a>
-  </p></div>
 {/if}
+
+</p> {* end editdate *}
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
