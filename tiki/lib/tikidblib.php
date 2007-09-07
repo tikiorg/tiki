@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.37 2007-08-30 09:06:27 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.38 2007-09-07 10:03:18 niclone Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -201,6 +201,18 @@ function sql_error($query, $values, $result) {
     }
 	
     $outp.= "<tr class='heading'><td colspan='2'>Builded query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
+
+    if (function_exists('xdebug_get_function_stack')) {
+	function mydumpstack($stack) {
+	    $o='';
+	    foreach($stack as $line) {
+		$o.='* '.$line['file']." : ".$line['line']." -> ".$line['function']."(".var_export($line['params'], true).")<br />";
+	    }
+	    return $o;
+	}
+	$outp.= "<tr class='headeing'><th>Stack Trace</th><td>".mydumpstack(xdebug_get_function_stack())."</td></tr>";
+    }
+
     $outp.= "</table>";
     //if($result===false) echo "<br>\$result is false";
     //if($result===null) echo "<br>\$result is null";
