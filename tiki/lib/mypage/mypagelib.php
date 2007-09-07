@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.62 2007-09-06 14:23:04 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.63 2007-09-07 11:06:06 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -47,26 +47,32 @@ class MyPage {
 	var $lastid;
 	var $params;
 	var $modified;
-	var $perms;
+// 	var $perms;
 	var $lasterror;
 	var $typeclass;
 
+	/* never call this constructor directly */
 	function MyPage($id=NULL, $id_users) {
 		$this->id=$id;
 		$this->id_users=$id_users; //the viewer
 		$this->windows=array();
 		$this->lastid=0;
-		$this->params=array('id_users' => $id_users);
-		//$this->params=array();
+		$this->params=array();
 		$this->modified=array();
 		$this->lasterror=NULL;
 		$this->typeclass=NULL;
-		$this->checkout();
+	}
+
+	function getMyPage_new($id_users) {
+		$mypage=new MyPage(NULL, $id_users);
+		$mypage->params['id_users']=(int)$id_users;
+		return $mypage;
 	}
 	
 	/*static*/
 	function getMyPage_byId($id, $id_users) {
 		$mypage=new MyPage($id, $id_users);
+		$mypage->checkout();
 		if (strlen($mypage->lasterror)) return $mypage->lasterror;
 		else return $mypage;
 	}
@@ -77,15 +83,21 @@ class MyPage {
 
 		$res=$tikilib->query("SELECT `id` FROM tiki_mypage WHERE `name`=?", array($name));
 		if ($line = $res->fetchRow()) {
-			return new MyPage($line['id'], $id_users);
+			$mypage=new MyPage($line['id'], $id_users);
+			$mypage->checkout();
+			if (strlen($mypage->lasterror)) return $mypage->lasterror;
+			else return $mypage;
 		} else {
-			return NULL;
+			return "mypage '$name' not found";
 		}
 	}
 
 	function getPerm($for) {
+		global $tiki_p_admin;
 		switch ($for) {
 		case 'edit':
+			if ($tiki_p_admin == 'y') return true;
+			//echo "(".$this->id_users." / ".$this->params['id_users'].")";
 			return ((int)$this->id_users == (int)$this->params['id_users']);
 		case 'view':
 			return true;
@@ -115,10 +127,10 @@ class MyPage {
 	function destroy() {
 		global $tikilib;
 		
-		if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-			$this->lasterror=tra('You do not have permissions to delete the page');
-			return $this->lasterror;
-		}
+// 		if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+// 			$this->lasterror=tra('You do not have permissions to delete the page');
+// 			return $this->lasterror;
+// 		}
 
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=tra('You are not the owner of this page');
@@ -152,10 +164,10 @@ class MyPage {
 			return $this->lasterror=tra('You are not the owner of this page');
 
 		if ($id_win > 0) {
-			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-				$this->lasterror=tra('You do not have permissions to delete this component');
-				return $this->lasterror;
-			}
+// 			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+// 				$this->lasterror=tra('You do not have permissions to delete this component');
+// 				return $this->lasterror;
+// 			}
 			$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
 							array($id_win, $this->id));
 		}
@@ -173,12 +185,18 @@ class MyPage {
 	/* static */
 	function countPages($id_users, $type=NULL) {
 		global $tikilib;
+		global $tiki_p_admin;
 		
 		$query="SELECT count(*) ".
 			"FROM tiki_mypage mp ".
-			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
-			"WHERE `id_users`=?";
-		$r=array((int)$id_users);
+			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id WHERE (1=1)";
+		$r=array();
+
+
+		if (($id_users!=-1) || ($tiki_p_admin != 'y')) {
+			$query.=" AND `id_users`=?";
+			$r[]=(int)$id_users;
+		}
 
 		if ($type !== NULL) {
 			$query.=" AND mpt.name=?";
@@ -193,6 +211,7 @@ class MyPage {
 	/* static */
 	function listPages($id_users, $type=NULL, $offset=-1, $limit=-1) {
 		global $tikilib;
+		global $tiki_p_admin;
 
 		$pages=array();
 
@@ -202,9 +221,13 @@ class MyPage {
 			"mpt.section as type_section, ".
 			"mpt.permissions as type_permissions ".
 			"FROM tiki_mypage mp ".
-			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id ".
-			"WHERE `id_users`=?";
-		$r=array((int)$id_users);
+			"LEFT JOIN tiki_mypage_types mpt ON mp.id_types = mpt.id WHERE (1=1)";
+		$r=array();
+
+		if (($id_users!=-1) || ($tiki_p_admin != 'y')) {
+			$query.=" AND `id_users`=?";
+			$r[]=(int)$id_users;
+		}
 
 		if ($type !== NULL) {
 			$query.=" AND mpt.name=?";
@@ -214,7 +237,7 @@ class MyPage {
 		$res=$tikilib->query($query, $r, $limit, $offset);
 
 		while ($line = $res->fetchRow()) {
-			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', false);
+// 			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', false);
 			$pages[]=$line;
 		}
 
@@ -265,10 +288,10 @@ class MyPage {
 				return FALSE;
 			}
 			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
-			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-				$this->lasterror=tra('You do not have permissions to view the page');
-				return $this->lasterror;
-			}
+// 			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
+// 				$this->lasterror=tra('You do not have permissions to view the page');
+// 				return $this->lasterror;
+// 			}
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
@@ -285,10 +308,10 @@ class MyPage {
 			return $this->lasterror=tra('You are not the owner of this page');
 
 		if (is_null($this->id)) {
-			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
-				$this->lasterror=tra('You do not have permissions to edit the page');
-				return $this->lasterror;
-			}
+// 			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
+// 				$this->lasterror=tra('You do not have permissions to edit the page');
+// 				return $this->lasterror;
+// 			}
 			
 			$this->params['created']=$tikilib->now;
 			$this->modified['created']=1;
