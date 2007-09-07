@@ -18,10 +18,10 @@
   </tr>
   <tr>
    <th>{tr}Access{/tr}</th>
-   <td><img width="20" height="20" align="top" src="styles/netineo/unlock.png"/>
+   <td><img width="20" height="20" align="top" src="styles/netineo2/unlock.png"/>
    <input class="register" type="radio" checked="" value="0" name="PageType"/>
      
-     <img width="20" height="20" align="top" src="styles/netineo/lock.png"/>
+     <img width="20" height="20" align="top" src="styles/netineo2/lock.png"/>
       
       <input class="register" type="radio" value="1" name="PageType"/>
    </td>
@@ -57,6 +57,14 @@
 </div>
 </div>
 
+{if $mypage_admin}
+{tr}view{/tr}: <select onchange='mypage_change_type(this.value);'>
+  <option value=''>{tr}all types{/tr}</option>
+ {foreach from=$mptypes item=mptype}
+  <option value='{$mptype.name|escape}' {if $id_types==$mptype.id}selected{/if}>{$mptype.name|escape}</option>
+ {/foreach}
+</select> | 
+{/if}
 <input type='button' value='Create' onclick='showMypageEdit(0);'>
 
 <table class="normal">
@@ -84,7 +92,18 @@
 <script type="text/javascript">
 function changepage() {
 	var p=$('mypage_page_select').value;
-	window.location='?showpage='+p;
+	var url='?showpage='+p;
+	{/literal}{if $mypage_admin}url+='&admin';{/if}{literal}
+	{/literal}{if $mptype_name}url+='&type={$mptype_name|escape:javascript}';{/if}{literal}
+	window.location=url;	
+}
+
+function mypage_change_type(name) {
+	var url='?showpage=0';
+	if (name != '')
+		url+='&type='+escape(name);
+	{/literal}{if $mypage_admin}url+='&admin';{/if}{literal}
+	window.location=url;
 }
 
 var curmodal=0;

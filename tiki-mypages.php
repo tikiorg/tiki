@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.19 2007-09-03 14:39:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.20 2007-09-07 11:06:48 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,18 +20,25 @@ $mp_columns=array();
 
 function mypageedit_populate($typeclassname) {
 	global $smarty, $id_users;
-	
+	global $tiki_p_admin;
+
 	$mypage_type=isset($_REQUEST['type']) ? $_REQUEST['type'] : NULL;
 
 	$lpp=25;
 	$showpage=isset($_REQUEST['showpage']) ? (int)$_REQUEST['showpage'] : 0;
 
-	$tcount=MyPage::countPages($id_users, $mypage_type);
+	$use_id_users=$id_users;
+	if (($tiki_p_admin == 'y') && (isset($_REQUEST['admin']))) {
+		$use_id_users=-1;
+		$smarty->assign('mypage_admin', 1);
+	} else $smarty->assign('mypage_admin', 0);
+
+	$tcount=MyPage::countPages($use_id_users, $mypage_type);
 	$pcount=(int)(($tcount-1) / $lpp) + 1;
 	$offset=$showpage * $lpp;
-	$pages=MyPage::listPages($id_users, $mypage_type, $offset, $lpp);
-	if (is_callable(array($typeclassname, "customizeMypagesListing")))
-		call_user_func(array($typeclassname, "customizeMypagesListing"), &$pages);
+	$pages=MyPage::listPages($use_id_users, $mypage_type, $offset, $lpp);
+ 	if (is_callable(array($typeclassname, "customizeMypagesListing")))
+ 		call_user_func(array($typeclassname, "customizeMypagesListing"), &$pages);
 
 	$pagesnum=array(); for($i=0; $i < $pcount; $i++) $pagesnum[$i]=$i+1;
 	$smarty->assign("pagesnum", $pagesnum);
@@ -94,6 +101,8 @@ function mypageedit_init() {
 		foreach($mptypes as $mptype) {
 			if ($mptype['name']==$mptype_name) {
 				$id_types=$mptype['id'];
+				$smarty->assign('id_types', $id_types);
+				$smarty->assign('mptype_name', $mptype['name']);
 				$typeclassname=MyPage::getTypeClassName($mptype['name']);
 				break;
 			}
