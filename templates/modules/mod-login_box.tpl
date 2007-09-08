@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.56 2007-08-24 17:01:54 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.57 2007-09-08 18:03:07 lphuberdeau Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -126,5 +126,14 @@
 			{/if}
       </form>
     {/if}
+	{if $feature_openid eq 'y'}
+		<form method="get" action="tiki-login_openid.php">
+			<fieldset>
+				<legend>{tr}OpenID Login{/tr}</legend>
+				<input type="text" name="openid_url"/>
+				<input type="submit" value="{tr}Go{/tr}"/>
+			</fieldset>
+		</form>
+	{/if}
 {/tikimodule}
 {/if}
