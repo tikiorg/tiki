@@ -1,14 +1,34 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.2 2007-09-08 19:30:38 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.3 2007-09-08 22:47:41 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+// As a side note beyond the standard heading. Most of the code in this file was taken
+// directly from the OpenID library example files. The code was modified to suit the
+// specific needs.
+
 // Initialization
 require_once ('tiki-setup.php');
+
+/**
+ * Require the OpenID consumer code.
+ */
+require_once "Auth/OpenID/Consumer.php";
+
+/**
+ * Require the "file store" module, which we'll need to store
+ * OpenID information.
+ */
+require_once "Auth/OpenID/FileStore.php";
+
+/**
+ * Require the Simple Registration extension API.
+ */
+require_once "Auth/OpenID/SReg.php";
 
 if ($feature_openid != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_openid");
@@ -17,36 +37,57 @@ if ($feature_openid != 'y') {
 	die;
 }
 
-function displayError($message) {
+function getAccountsMatchingIdentifier( $identifier ) // {{{
+{
+	global $tikilib;
+
+	$result = $tikilib->query( "SELECT login FROM users_users WHERE openid_url = ?", array( $identifier ) );
+
+	$userlist = array();
+	while( $row = $result->fetchRow() )
+		$userlist[] = $row['login'];
+
+	return $userlist;
+} // }}}
+
+function loginUser( $identifier ) // {{{
+{
+	$_SESSION['tiki-user-tikiwiki'] = $identifier;
+} // }}}
+
+function filterExistingInformation( &$data, &$messages ) // {{{
+{
+	global $tikilib;
+
+	$result = $tikilib->query( "SELECT COUNT(*) FROM users_users WHERE login = ?", array( $data['nickname'] ) );
+
+	$count = reset( $result->fetchRow() );
+
+	if( $count > 0 )
+	{
+		$data['nickname'] = '';
+		$messages[] = tra( 'Your default nickname is already in use. A new one has to be selected.' );
+	}
+} // }}}
+
+	function displayRegistrationForms( $data, $messages ) // {{{
+	{
+		global $smarty;
+
+		$smarty->assign( 'mid', 'tiki-openid_register.tpl' );
+		$smarty->display('tiki.tpl');
+	} // }}}
+
+function displayError($message) { // {{{
 	global $smarty;
 
 	$smarty->assign('msg', tra("Failure").": " . $message);
 
 	$smarty->display("error.tpl");
 	die;
-}
+} // }}}
 
-function doIncludes() {
-    /**
-     * Require the OpenID consumer code.
-     */
-    require_once "Auth/OpenID/Consumer.php";
-
-    /**
-     * Require the "file store" module, which we'll need to store
-     * OpenID information.
-     */
-    require_once "Auth/OpenID/FileStore.php";
-
-    /**
-     * Require the Simple Registration extension API.
-     */
-    require_once "Auth/OpenID/SReg.php";
-}
-
-doIncludes();
-
-function &getStore() {
+function &getStore() { // {{{
     /**
      * This is where the example will store its OpenID information.
      * You should change this path if you want the example store to be
@@ -63,51 +104,50 @@ function &getStore() {
     }
 
     return new Auth_OpenID_FileStore($store_path);
-}
+} // }}}
 
-function &getConsumer() {
+function &getConsumer() { // {{{
     /**
      * Create a consumer object using the store object created
      * earlier.
      */
     $store = getStore();
     return new Auth_OpenID_Consumer($store);
-}
+} // }}}
 
-function getOpenIDURL() {
+function getOpenIDURL() { // {{{
     // Render a default page if we got a submission without an openid
     // value.
     if (empty($_GET['openid_url'])) {
-		// TODO : Do something better
         displayError( 'Call the page properly' );
     }
 
     return $_GET['openid_url'];
-}
+} // }}}
 
-function getScheme() {
+function getScheme() { // {{{
     $scheme = 'http';
     if (isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on') {
         $scheme .= 's';
     }
     return $scheme;
-}
+} // }}}
 
-function getReturnTo() {
+function getReturnTo() { // {{{
     return sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
-}
+} // }}}
 
-function getTrustRoot() {
+function getTrustRoot() { // {{{
     return sprintf("%s://%s:%s%s",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
-}
+} // }}}
 
-function runAuth() {
+function runAuth() { // {{{
     $openid = getOpenIDURL();
     $consumer = getConsumer();
 
@@ -169,9 +209,9 @@ function runAuth() {
             print implode("\n", $page_contents);
         }
     }
-}
+} // }}}
 
-function runFinish() {
+function runFinish() { // {{{
     $consumer = getConsumer();
 
     // Complete the authentication process using the server's
@@ -200,6 +240,10 @@ function runFinish() {
         $sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 
         $sreg = $sreg_resp->contents();
+
+		// Sanitize identifier. Just consider slashes at the end are never good.
+		if( substr( $data['identifier'], -1 ) == '/' )
+			$data['identifier'] = substr( $data['identifier'], 0, -1 );
 
         if (@$sreg['email'])
             $data['email'] = $sreg['email'];
@@ -233,7 +277,7 @@ function runFinish() {
 			displayRegisatrationForms( $data, $messages );
 		}
     }
-}
+} // }}}
 
 if( isset( $_GET['action'] ) && $_GET['action'] == 'return' )
 	runFinish();
