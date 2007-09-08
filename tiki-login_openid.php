@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.1 2007-09-08 18:03:08 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.2 2007-09-08 19:30:38 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -94,16 +94,14 @@ function getScheme() {
 }
 
 function getReturnTo() {
-	$dirname = dirname( $_SERVER['REQUEST_URI'] );
-
-    return sprintf("%s://%s:%s%s/$dirname/tiki-login_openid.php?action=return",
+    return sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
 }
 
 function getTrustRoot() {
-    return sprintf("%s://%s:%s%s/",
+    return sprintf("%s://%s:%s%s",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
@@ -122,10 +120,10 @@ function runAuth() {
     }
 
     $sreg_request = Auth_OpenID_SRegRequest::build(
-                                     // Required
-                                     array('nickname', 'email'),
-                                     // Optional
-                                     array('fullname'));
+		// Required
+		array(),
+		// Optional
+		array('nickname', 'email'));
 
     if ($sreg_request) {
         $auth_request->addExtension($sreg_request);
@@ -191,35 +189,50 @@ function runFinish() {
         // This means the authentication succeeded; extract the
         // identity URL and Simple Registration data (if it was
         // returned).
-        $openid = $response->identity_url;
-        $esc_identity = htmlspecialchars($openid, ENT_QUOTES);
 
-        $success = sprintf('You have successfully verified ' .
-                           '<a href="%s">%s</a> as your identity.',
-                           $esc_identity, $esc_identity);
-
-        if ($response->endpoint->canonicalID) {
-            $success .= '  (XRI CanonicalID: '.$response->endpoint->canonicalID.') ';
-        }
+		$data = array(
+			'identifier' => $response->identity_url,
+			'email' => '',
+			'fullname' => '',
+			'nickname' => '',
+		);
 
         $sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 
         $sreg = $sreg_resp->contents();
 
-        if (@$sreg['email']) {
-            $success .= "  You also returned '".$sreg['email']."' as your email.";
-        }
+        if (@$sreg['email'])
+            $data['email'] = $sreg['email'];
+        if (@$sreg['nickname'])
+            $data['nickname'] = $sreg['nickname'];
 
-        if (@$sreg['nickname']) {
-            $success .= "  Your nickname is '".$sreg['nickname']."'.";
-        }
+		// If OpenID identifier exists in the database
+		$list = getAccountsMatchingIdentifier( $data['identifier'] );
+		if( count( $list ) > 0 )
+		{
+			// If Single account
+			if( count( $list ) == 1 )
+			{
+				// Login the user
+				loginUser( $list[0] );
+			}
+			else // Else Multiple account
+			{
+				// Display user selection list
+				displaySelectionList( $list );
+			}
+		}
+		else
+		{
+			$messages = array();
 
-        if (@$sreg['fullname']) {
-            $success .= "  Your fullname is '".$sreg['fullname']."'.";
-        }
+			// Check for entries that already exist in the database and filter them out
+			filterExistingInformation( $data, $messages );
+
+			// Display register and attach forms
+			displayRegisatrationForms( $data, $messages );
+		}
     }
-
-    echo $success;
 }
 
 if( isset( $_GET['action'] ) && $_GET['action'] == 'return' )
