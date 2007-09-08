@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.208 2007-09-06 12:20:45 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.209 2007-09-08 19:10:07 lphuberdeau Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1542,4 +1542,8 @@ ALTER TABLE `tiki_received_pages` ADD `parent` VARCHAR( 255 ) NULL , ADD `positi
 
 #2007-09-06 mose problem of collision beetween 'page' in mod-menupage and mod-tracker
 update `tiki_modules` set params=replace(params,'page=','pagemenu=') where name like 'menupage%';
+
+#2007-09-08 openid support
+ALTER TABLE `users_users` ADD `openid_url` VARCHAR( 255 ) NULL ;
+ALTER TABLE `users_users` ADD INDEX ( `openid_url` ) ;
 
