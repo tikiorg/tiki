@@ -1,8 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.57 2007-09-08 18:03:07 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.58 2007-09-09 16:06:16 lphuberdeau Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
-
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
       <p style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}Logout{/tr}</a></p>
@@ -21,6 +20,20 @@
          </fieldset>
         </form>
       {/if}
+	  {if $feature_openid eq 'y' and $openid_userlist|@count gt 1}
+        <form method="get" action="tiki-login_openid.php">
+		  <fieldset>
+		  	<legend>{tr}Switch user{/tr}</legend>
+			<select name="select">
+			{foreach item=username from=$openid_userlist}
+				<option{if $username eq $user} selected="selected"{/if}>{$username}</option>
+			{/foreach}
+			</select>
+			<input type="hidden" name="action" value="select"/>
+			<input type="submit" value="{tr}Go{/tr}"/>
+		  </fieldset>
+		</form>
+	  {/if}
       {elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
 		<b><a class="linkmodule" href="tiki-login.php?user">{tr}Login through CAS{/tr}</a></b>
 		{if $cas_skip_admin eq 'y'}
@@ -126,7 +139,7 @@
 			{/if}
       </form>
     {/if}
-	{if $feature_openid eq 'y'}
+	{if $feature_openid eq 'y' and !$user}
 		<form method="get" action="tiki-login_openid.php">
 			<fieldset>
 				<legend>{tr}OpenID Login{/tr}</legend>
