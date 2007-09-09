@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.239 2007-09-09 17:25:09 lphuberdeau Exp $
+// CVS: $Id: userslib.php,v 1.240 2007-09-09 18:03:45 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -789,6 +789,12 @@ class UsersLib extends TikiLib {
 
 	$res = $result->fetchRow();
 	$user = $res['login'];
+
+	// Temporary escape of the process until the email confirmation gets repaired
+	// In the case the account was created with OpenID, no need to confirm the account
+	// beyond this point.
+	if( !empty( $res['openid_url'] ) && empty( $res['hash'] ) )
+		return array(USER_VALID, $user);
 
 	// next verify the password with every hashes methods
 	if ($feature_challenge == 'n' || empty($response)) {
