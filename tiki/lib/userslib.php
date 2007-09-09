@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.237 2007-09-09 16:11:05 nkoth Exp $
+// CVS: $Id: userslib.php,v 1.238 2007-09-09 17:06:20 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1869,8 +1869,11 @@ function get_included_groups($group, $recur=true) {
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
-	$hash = $this->hash_pass($pass);
-
+	if ($openid_url == NULL)
+		$hash = $this->hash_pass($pass);
+	else
+		$hash = '';
+		
 	if ($valid == 'n') {
 		$valid = $pass;
 	}
