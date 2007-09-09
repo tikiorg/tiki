@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.236 2007-09-09 01:19:34 nkoth Exp $
+// CVS: $Id: userslib.php,v 1.237 2007-09-09 16:11:05 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1862,7 +1862,7 @@ function get_included_groups($group, $recur=true) {
 	$cachelib->invalidate('userslist');
     }
 
-    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL) {
+    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
 	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
 	
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
@@ -1885,8 +1885,8 @@ function get_included_groups($group, $recur=true) {
 	$new_email_confirm = $this->now;
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`)
-	    values(?,?,?,?,?,?,?,?,?,?)";
+		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`, `openid_url`)
+	    values(?,?,?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
 		    $pass,
@@ -1897,7 +1897,8 @@ function get_included_groups($group, $recur=true) {
 		    (int) $new_pass_confirm,
 			(int) $new_email_confirm,
 		    (int) $this->now,
-			$valid
+			$valid,
+			$openid_url
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
@@ -2204,6 +2205,13 @@ function get_included_groups($group, $recur=true) {
 	    $bindvars[] = strip_tags($u['email']);
 	}
 
+    if (@$u['openid_url']) {
+	    if (isset($_SESSION['openid_url'])) {
+		$q[] = "`openid_url` = ?";
+		$bindvars[] = $u['openid_url'];
+	    }
+    }
+	    
 	if (sizeof($q) > 0) {
 	    $query = "update `users_users` set " . implode(",", $q). " where " .
 		$this->convert_binary(). " `login` = ?";
