@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.89 2007-07-24 18:34:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.90 2007-09-09 16:10:30 nkoth Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-07-24 18:34:33 $
+ * @date last-modified: $Date: 2007-09-09 16:10:30 $
  */
 
 // Initialization
@@ -57,9 +57,9 @@ if ($nbChoiceGroups) {
 	}
 }
 
-if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST['pass'])) {
+if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST['pass']) || isset($_SESSION['openid_url']))) {
   check_ticket('register');
-  if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
+  if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
     die;
@@ -121,14 +121,14 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
 
   //Validate password here
-  if(strlen($_REQUEST["pass"])<$min_pass_length) {
+  if(strlen($_REQUEST["pass"])<$min_pass_length && !isset($_SESSION['openid_url'])) {
     $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
     $smarty->display("error.tpl");
     die; 	
   }
   
   // Check this code
-  if($pass_chr_num == 'y') {
+  if(!isset($_SESSION['openid_url']) && $pass_chr_num == 'y') {
     if (!preg_match("/[0-9]/",$_REQUEST["pass"]) || !preg_match("/[A-Za-z]/",$_REQUEST["pass"])) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("error.tpl");
@@ -180,17 +180,23 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && isset($_REQUEST[
   }
 	
 	if ($email_valid == 'y') {
+		if (isset($_SESSION['openid_url'])) {
+			$openid_url = $_SESSION['openid_url'];
+		} else {
+			$openid_url = '';
+		}
 		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
-			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], false, 'n');
+			
+			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], false, 'n', $openid_url);
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}	
 			$logslib->add_log('register','created account '.$_REQUEST["name"]);
 			$smarty->assign('showmsg','y');
 		} else {
-			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', false, 'n');
+			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'', false, 'n', $openid_url);
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
 				$userlib->set_default_group($_REQUEST['name'], $_REQUEST['chosenGroup']);
 			}			
