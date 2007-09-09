@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.209 2007-09-08 19:10:07 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.210 2007-09-09 16:22:21 nkoth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1456,7 +1456,7 @@ CREATE TABLE `tiki_mypage` (
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
   `id_mypage` int(11) NOT NULL,
-  `title` varchar(256) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `inbody` enum('n','y') NOT NULL default 'n',
   `modal` enum('n','y') NOT NULL default 'n',
   `left` int(11) NOT NULL,

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-09-02 20:22:11 $
-# $Author: parkercroft $
+# $Date: 2007-09-09 16:21:33 $
+# $Author: nkoth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4925,7 +4925,7 @@ CREATE TABLE `tiki_mypagewin` (
   `created` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `viewed` int(11) NOT NULL,
-  `title` varchar(256) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `inbody` enum('n','y') NOT NULL default 'n',
   `modal` enum('n','y') NOT NULL default 'n',
   `left` int(11) NOT NULL,
