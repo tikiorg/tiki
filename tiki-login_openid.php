@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.6 2007-09-09 16:46:44 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.7 2007-09-09 18:49:04 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -178,10 +178,15 @@ function getScheme() { // {{{
 } // }}}
 
 function getReturnTo() { // {{{
-    return sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return",
+    $string = sprintf("%s://%s:%s%s/tiki-login_openid.php?action=return",
                    getScheme(), $_SERVER['SERVER_NAME'],
                    $_SERVER['SERVER_PORT'],
                    dirname($_SERVER['PHP_SELF']));
+
+	if( isset( $_GET['action'] ) && $_GET['action'] == 'force' )
+		$string .= '&force=true';
+
+	return $string;
 } // }}}
 
 function getTrustRoot() { // {{{
@@ -306,7 +311,7 @@ function runFinish() { // {{{
 		$_SESSION['openid_userlist'] = $list;
 		$smarty->assign( 'openid_userlist', $list );
 
-		if( count( $list ) > 0 )
+		if( count( $list ) > 0 && !isset($_GET['force']) )
 		{
 			// If Single account
 			if( count( $list ) == 1 )
@@ -351,6 +356,8 @@ if( isset( $_GET['action'] ) )
 		runFinish();
 	elseif( $_GET['action'] == 'select' && isset( $_GET['select'] ) )
 		runSelect();
+	elseif( $_GET['action'] == 'force' )
+		runAuth();
 	else
 		displayError( tra('unknown action') );
 }
