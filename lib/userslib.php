@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.235 2007-08-15 17:24:47 jonnybradley Exp $
+// CVS: $Id: userslib.php,v 1.236 2007-09-09 01:19:34 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2428,7 +2428,7 @@ function get_included_groups($group, $recur=true) {
 		return $ret;									
 	}
 	function send_validation_email($name, $apass, $email, $again='') {
-		global $tikilib, $validateRegistration, $validateUsers, $sender_email, $smarty;
+		global $tikilib, $validateRegistration, $validateUsers, $sender_email, $smarty, $contact_user;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
 		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
@@ -2446,6 +2446,7 @@ function get_included_groups($group, $recur=true) {
 			if ($sender_email == NULL or !$sender_email) {
 				include_once('lib/messu/messulib.php');
 				$messulib->post_message($contact_user, $contact_user, $contact_user, '', $mail_subject, $mail_data, 5);
+				$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
 			} else {
 				$mail = new TikiMail();
 				$mail->setText($mail_data);
