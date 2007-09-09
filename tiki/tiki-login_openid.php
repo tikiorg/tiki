@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.3 2007-09-08 22:47:41 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.4 2007-09-09 00:39:26 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -70,9 +70,12 @@ function filterExistingInformation( &$data, &$messages ) // {{{
 	}
 } // }}}
 
-	function displayRegistrationForms( $data, $messages ) // {{{
+	function displayRegisatrationForms( $data, $messages ) // {{{
 	{
 		global $smarty;
+
+		$smarty->assign( 'username', $data['nickname'] );
+		$smarty->assign( 'email', $data['email'] );
 
 		$smarty->assign( 'mid', 'tiki-openid_register.tpl' );
 		$smarty->display('tiki.tpl');
@@ -249,6 +252,8 @@ function runFinish() { // {{{
             $data['email'] = $sreg['email'];
         if (@$sreg['nickname'])
             $data['nickname'] = $sreg['nickname'];
+
+		$_SESSION['openid_url'] = $data['identifier'];
 
 		// If OpenID identifier exists in the database
 		$list = getAccountsMatchingIdentifier( $data['identifier'] );
