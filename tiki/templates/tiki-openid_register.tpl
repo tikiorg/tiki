@@ -5,9 +5,12 @@
 	<col width="50%"/>
 	<tr>
 		<td>
+			<p>
+				{tr}Create a new TikiWiki account from OpenID{/tr}
+			</p>
 			<form method="post" action="tiki-register.php">
 				<fieldset>
-					<legend>{tr}Register a new account{/tr}</legend>
+					<legend>{tr}Register{/tr}</legend>
 					<div>
 						<label for="openid_nickname">{tr}Username{/tr}</label>
 						<input id="openid_nickname" type="text" name="name" value="{$username}"/>
@@ -21,6 +24,9 @@
 			</form>
 		</td>
 		<td>
+			<p>
+				{tr}Associate OpenID with an existing TikiWiki account{/tr}
+			</p>
 			{include file="modules/mod-login_box.tpl"}
 		</td>
 	</tr>

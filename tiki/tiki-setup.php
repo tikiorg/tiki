@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.457 2007-08-29 14:15:26 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.458 2007-09-09 15:41:20 lphuberdeau Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1905,4 +1905,16 @@ $smarty->assign_by_ref('wysiwyg',$_SESSION['wysiwyg']);
 
 $smarty->assign_by_ref('phpErrors',$phpErrors);
 $smarty->assign_by_ref('cookie',$_SESSION['tiki_cookie_jar']);
+
+// OpenID support
+if( isset( $_SESSION['openid_userlist'] ) && isset( $_SESSION['openid_url'] ) )
+{
+	$smarty->assign( 'openid_url', $_SESSION['openid_url'] );
+	$smarty->assign( 'openid_userlist', $_SESSION['openid_userlist'] );
+}
+else
+{
+	$smarty->assign( 'openid_url', '' );
+	$smarty->assign( 'openid_userlist', array() );
+}
 ?>

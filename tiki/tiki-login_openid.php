@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.4 2007-09-09 00:39:26 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.5 2007-09-09 15:41:20 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -37,6 +37,23 @@ if ($feature_openid != 'y') {
 	die;
 }
 
+function setupFromAddress() // {{{
+{
+	global $url_scheme, $url_host, $url_port, $base_url;
+	// Remember where the page was requested from (from tiki-login.php)
+	if ( ! isset($_SESSION['loginfrom']) ) {
+		$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $tikiIndex );
+		if ( ! ereg('^http', $_SESSION['loginfrom']) ) {
+			if ( $_SESSION['loginfrom']{0} == '/' ) $_SESSION['loginfrom'] = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$_SESSION['loginfrom'];
+			else $_SESSION['loginfrom'] = $base_url.$_SESSION['loginfrom'];
+		}
+	}
+
+	if( strpos( $_SESSION['loginfrom'], 'openid' ) !== false )
+		$_SESSION['loginfrom'] = $base_url;
+
+} // }}}
+
 function getAccountsMatchingIdentifier( $identifier ) // {{{
 {
 	global $tikilib;
@@ -53,6 +70,9 @@ function getAccountsMatchingIdentifier( $identifier ) // {{{
 function loginUser( $identifier ) // {{{
 {
 	$_SESSION['tiki-user-tikiwiki'] = $identifier;
+	header('location: '.$_SESSION['loginfrom']);
+	unset( $_SESSION['loginfrom'] );
+	exit;
 } // }}}
 
 function filterExistingInformation( &$data, &$messages ) // {{{
@@ -74,10 +94,29 @@ function filterExistingInformation( &$data, &$messages ) // {{{
 	{
 		global $smarty;
 
+		// Default values for the registration form
 		$smarty->assign( 'username', $data['nickname'] );
 		$smarty->assign( 'email', $data['email'] );
 
+		// Changing some system values to get the login box to display properly in the context
+		$smarty->assign( 'rememberme', 'disabled' );
+		$smarty->assign( 'forgotPass', 'n' );
+		$smarty->assign( 'allowRegister', 'n' );
+		$smarty->assign( 'change_password', 'n' );
+		$smarty->assign( 'feature_openid', 'n' );
+		$smarty->assign( 'feature_switch_ssl_mode', 'n' );
+
+		// Display
 		$smarty->assign( 'mid', 'tiki-openid_register.tpl' );
+		$smarty->display('tiki.tpl');
+	} // }}}
+
+	function displaySelectionList( $data, $messages ) // {{{
+	{
+		global $smarty;
+
+		// Display
+		$smarty->assign( 'mid', 'tiki-openid_select.tpl' );
 		$smarty->display('tiki.tpl');
 	} // }}}
 
@@ -151,6 +190,8 @@ function getTrustRoot() { // {{{
 } // }}}
 
 function runAuth() { // {{{
+	setupFromAddress();
+
     $openid = getOpenIDURL();
     $consumer = getConsumer();
 
@@ -215,6 +256,8 @@ function runAuth() { // {{{
 } // }}}
 
 function runFinish() { // {{{
+	global $smarty;
+
     $consumer = getConsumer();
 
     // Complete the authentication process using the server's
@@ -224,10 +267,10 @@ function runFinish() { // {{{
     // Check the response status.
     if ($response->status == Auth_OpenID_CANCEL) {
         // This means the authentication was cancelled.
-        $msg = 'Verification cancelled.';
+        displayError( 'Verification cancelled.' );
     } else if ($response->status == Auth_OpenID_FAILURE) {
         // Authentication failed; display the error message.
-        $msg = "OpenID authentication failed: " . $response->message;
+        displayError( "OpenID authentication failed: " . $response->message );
     } else if ($response->status == Auth_OpenID_SUCCESS) {
         // This means the authentication succeeded; extract the
         // identity URL and Simple Registration data (if it was
@@ -257,6 +300,10 @@ function runFinish() { // {{{
 
 		// If OpenID identifier exists in the database
 		$list = getAccountsMatchingIdentifier( $data['identifier'] );
+
+		$_SESSION['openid_userlist'] = $list;
+		$smarty->assign( 'openid_userlist', $list );
+
 		if( count( $list ) > 0 )
 		{
 			// If Single account
@@ -284,8 +331,27 @@ function runFinish() { // {{{
     }
 } // }}}
 
-if( isset( $_GET['action'] ) && $_GET['action'] == 'return' )
-	runFinish();
+function runSelect() // {{{
+{
+	setupFromAddress();
+
+	$user = $_GET['select'];
+
+	if( in_array( $user, $_SESSION['openid_userlist'] ) )
+		loginUser( $user );
+	else
+		displayError( tra('The selected account is not associated with your identity.') );
+} // }}}
+
+if( isset( $_GET['action'] ) )
+{
+	if( $_GET['action'] == 'return' )
+		runFinish();
+	elseif( $_GET['action'] == 'select' && isset( $_GET['select'] ) )
+		runSelect();
+	else
+		displayError( tra('unknown action') );
+}
 else
 	runAuth();
 
