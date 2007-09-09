@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-09-09 16:21:33 $
+# $Date: 2007-09-09 16:24:48 $
 # $Author: nkoth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4382,10 +4382,12 @@ CREATE TABLE users_users (
   score int(11) NOT NULL default 0,
   valid varchar(32) default NULL,
   unsuccessful_logins int(14) default 0,
+  openid_url varchar(255) default NULL,
   PRIMARY KEY  (userId),
   KEY login (login),
   KEY score (score),
-  KEY registrationDate (registrationDate)
+  KEY registrationDate (registrationDate),
+  KEY openid_url (openid_url)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### Administrator account
