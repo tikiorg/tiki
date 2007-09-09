@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.14 2007-07-23 09:35:25 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15 2007-09-09 23:18:07 marclaporte Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -190,3 +190,16 @@ div#ajaxLoading {
 .mini {
         text-align :center;
 }
+
+
+
+
+/* OpenID  */
+.openid_url {
+background-image: url(../../img/icons/login-OpenID-bg.gif);
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-color: #ffffff;
+padding-left: 18px;
+}
+
