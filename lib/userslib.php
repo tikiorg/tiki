@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.241 2007-09-09 18:26:34 lphuberdeau Exp $
+// CVS: $Id: userslib.php,v 1.242 2007-09-09 19:11:12 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1869,21 +1869,21 @@ function get_included_groups($group, $recur=true) {
     }
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
-	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords;
+	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords, $validateRegistration;
 	
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
+	$lastLogin = null;
 	if (empty($openid_url))
 	{
 		$hash = $this->hash_pass($pass);
-		$lastLogin = null;
 	}
 	else
 	{
 		$hash = '';
-		$lastLogin = time();
+		if (!isset($validateRegistration) || $validateRegistration != 'y')  $lastLogin = time();
 	}
 		
 	if ($valid == 'n') {
