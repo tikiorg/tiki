@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.238 2007-09-09 17:06:20 nkoth Exp $
+// CVS: $Id: userslib.php,v 1.239 2007-09-09 17:25:09 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1869,7 +1869,7 @@ function get_included_groups($group, $recur=true) {
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
-	if ($openid_url == NULL)
+	if (empty($openid_url))
 		$hash = $this->hash_pass($pass);
 	else
 		$hash = '';
@@ -2550,6 +2550,11 @@ function get_included_groups($group, $recur=true) {
 		} else {
 			$smarty->assign('msg', 'It is time to confirm your email. You will receive an mail with the instruction to follow');
 		}
+	}
+
+	function assign_openid( $username, $openid ) {
+		// This won't update the database unless the openid is different
+		$this->query("UPDATE `users_users` SET openid_url = ? WHERE login = ? AND ( openid_url <> ? OR openid_url IS NULL )", array( $openid, $username, $openid ));
 	}
 }
 
