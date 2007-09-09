@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.240 2007-09-09 18:03:45 lphuberdeau Exp $
+// CVS: $Id: userslib.php,v 1.241 2007-09-09 18:26:34 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1876,9 +1876,15 @@ function get_included_groups($group, $recur=true) {
 
 	// Generate a unique hash; this is also done below in set_user_fields()
 	if (empty($openid_url))
+	{
 		$hash = $this->hash_pass($pass);
+		$lastLogin = null;
+	}
 	else
+	{
 		$hash = '';
+		$lastLogin = time();
+	}
 		
 	if ($valid == 'n') {
 		$valid = $pass;
@@ -1894,8 +1900,8 @@ function get_included_groups($group, $recur=true) {
 	$new_email_confirm = $this->now;
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`, `openid_url`)
-	    values(?,?,?,?,?,?,?,?,?,?,?)";
+		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`, `openid_url`, `lastLogin`)
+	    values(?,?,?,?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
 		    $pass,
@@ -1907,7 +1913,8 @@ function get_included_groups($group, $recur=true) {
 			(int) $new_email_confirm,
 		    (int) $this->now,
 			$valid,
-			$openid_url
+			$openid_url,
+			$lastLogin
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
