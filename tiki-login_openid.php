@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.5 2007-09-09 15:41:20 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.6 2007-09-09 16:46:44 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -69,7 +69,9 @@ function getAccountsMatchingIdentifier( $identifier ) // {{{
 
 function loginUser( $identifier ) // {{{
 {
-	$_SESSION['tiki-user-tikiwiki'] = $identifier;
+	global $user_cookie_site;
+	
+	$_SESSION[$user_cookie_site] = $identifier;
 	header('location: '.$_SESSION['loginfrom']);
 	unset( $_SESSION['loginfrom'] );
 	exit;
