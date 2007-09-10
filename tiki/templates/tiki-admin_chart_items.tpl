@@ -32,7 +32,7 @@
 
 	<tr class="formcolor">
 		<td>&nbsp;</td>
-		<td><input type="submit" name="save" value="{if $itemId > 0}{tr}Update{/tr}{else}{tr}create{/tr}{/if}" /></td>
+		<td><input type="submit" name="save" value="{if $itemId > 0}{tr}Update{/tr}{else}{tr}Create{/tr}{/if}" /></td>
 	</tr>
 </table>
 </form>

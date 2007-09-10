@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.78 2007-09-10 07:53:10 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.79 2007-09-10 15:53:39 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -40,7 +40,7 @@
 <form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
-{tr}Create level{/tr}: <input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
+{tr}Create level{/tr}: <input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}Create{/tr}" />
 </form>
 <br />
 <br />
