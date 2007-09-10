@@ -3319,6 +3319,7 @@ $lang=Array(
 "Edit Chart" => "Bewerk rangschikking",
 "Add or edit an item" => "Toevoegen/bewerken item",
 "update" => "bijwerken",
+"Update" => "Bijwerken",
 "Chart items" => "Rangschikking items",
 "No items defined yet" => "Nog geen items gedefinieerd",
 "Admin charts" => "Rangschikkingen beheren",

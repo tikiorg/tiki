@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor">	{if $acts.actstatus eq 'running'}<input type="submit" name="save" value="{tr}update{/tr}" />{/if}</td>
+	<td class="formcolor">	{if $acts.actstatus eq 'running'}<input type="submit" name="save" value="{tr}Update{/tr}" />{/if}</td>
 </tr>
 </table>
 </form>

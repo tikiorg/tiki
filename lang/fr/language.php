@@ -3909,6 +3909,7 @@ $lang=Array(
 "Add or edit an item" => "Ajouter/modifier un item",
 "URL" => "Adresse Web",
 "update" => "mettre à jour",
+"Update" => "Mettre à jour",
 "Chart items" => "Items de palmarès",
 "No items defined yet" => "Aucun item n'a encore été défini",
 "Admin charts" => "Administrer les palmarès",

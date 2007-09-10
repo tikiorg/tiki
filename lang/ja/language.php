@@ -5162,6 +5162,7 @@ $lang=Array(
 "Edit Chart" => "チャートを編集",
 "Add or edit an item" => "アイテムの追加・変更",
 "update" => "更新",
+"Update" => "更新",
 "Active" => "アクティブ",
 "Voting system" => "投票システム",
 "Vote items" => "投票アイテム",

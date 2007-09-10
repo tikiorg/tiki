@@ -5610,6 +5610,7 @@ $lang=Array(
 "image gal" => "그림자료실",
 "file gal" => "파일자료실",
 "update" => "갱신",
+"Update" => "갱신",
 "All items" => "모든 아이템",
 "Top 10 items" => "상위 10 아이템",
 "Top 20 items" => "상위 20 아이템",

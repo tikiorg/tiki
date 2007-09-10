@@ -3110,6 +3110,7 @@ $lang=Array(
 "Edit Chart" => "Muuta kaavio",
 "Add or edit an item" => "Lisää tai muuta osaa",
 "update" => "päivitä",
+"Update" => "Päivitä",
 "Chart items" => "Kaavion osat",
 "No items defined yet" => "Ei määritelyjä osia vielä",
 "Admin charts" => "Ylläpidä kaavioita",

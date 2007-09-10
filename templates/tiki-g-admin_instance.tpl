@@ -81,7 +81,7 @@
 </tr>	
 <tr>
 	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor"><input type="submit" name="save" value="{tr}update{/tr}" /></td>
+	<td class="formcolor"><input type="submit" name="save" value="{tr}Update{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -112,7 +112,7 @@
 {/foreach}
 <tr>
 	<td class="odd">&nbsp;</td>
-	<td class="odd"><input type="submit" name="saveprops" value="{tr}update{/tr}" /></td>
+	<td class="odd"><input type="submit" name="saveprops" value="{tr}Update{/tr}" /></td>
 </tr>
 
 </table>

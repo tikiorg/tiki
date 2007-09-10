@@ -5076,6 +5076,7 @@ $lang=Array(
 "Edit Chart" => "Slágerlista szerkesztése",
 "Add or edit an item" => "Elem hozzáadása/szerkesztése",
 "update" => "hozzáadom",
+"Update" => "Hozzáadom",
 "Chart items" => "Slágerlista elemek",
 "No items defined yet" => "Nincsenek elemek definiálva",
 "Admin charts" => "Sláger témák adminisztrációja",

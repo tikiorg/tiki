@@ -114,7 +114,7 @@
 
 	<tr>
 		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor"><input type="submit" name="save" value="{if $chartId > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
+		<td class="formcolor"><input type="submit" name="save" value="{if $chartId > 0}{tr}Update{/tr}{else}{tr}create{/tr}{/if}" /></td>
 	</tr>
 </table>
 </form>

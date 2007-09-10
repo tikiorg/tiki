@@ -158,7 +158,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
 			{/section}
 			</select>
-			<input type="submit" name="update" value="{tr}update{/tr}" />
+			<input type="submit" name="update" value="{tr}Update{/tr}" />
 		    </td></tr>
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:

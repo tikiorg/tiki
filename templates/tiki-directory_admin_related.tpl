@@ -71,7 +71,7 @@
 </td>
 <td class="{cycle}">
 <input type="submit" name="remove" value="{tr}Remove{/tr}" />
-<input type="submit" name="update" value="{tr}update{/tr}" />
+<input type="submit" name="update" value="{tr}Update{/tr}" />
 </td>
 </form>
 </tr>
