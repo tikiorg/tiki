@@ -4289,6 +4289,7 @@ $lang=Array(
 "Edit Chart" => "Izmeni grafik",
 "Add or edit an item" => "Dodaj ili promeni stvar",
 "update" => "obnovi",
+"Update" => "Obnovi",
 "Chart items" => "Stavke u grafiku",
 "No items defined yet" => "Zapisi nisu još definisani",
 "Admin charts" => "Admnistriraj grafik",

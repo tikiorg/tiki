@@ -269,7 +269,7 @@ Errors:<br />
 {/section}
 <tr>
 <td class="heading" colspan="7" style="text-align:center;">
-<input type="submit" name="update_act" value="{tr}update{/tr}" />
+<input type="submit" name="update_act" value="{tr}Update{/tr}" />
 </td>
 </tr>
 </table>

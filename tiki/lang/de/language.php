@@ -3661,6 +3661,7 @@ $lang=Array(
 "Edit Chart" => "Hitliste bearbeiten",
 "Add or edit an item" => "Eintrag hinzuf&uuml;gen/bearbeiten",
 "update" => "aktualisieren",
+"Update" => "Aktualisieren",
 "Chart items" => "Eintr&auml;ge in Hitlisten",
 "No items defined yet" => "Noch keine Eintr&auml;ge vorhanden",
 "Admin charts" => "Hitlisten verwalten",

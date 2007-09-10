@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.77 2007-08-23 16:21:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.78 2007-09-10 07:53:10 jyhem Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $feature_help eq 'y'}
@@ -55,7 +55,7 @@
 <select name="level[]" multiple="yes" size="5">
 {html_options output=$levels values=$levels selected=$perms[user].level}
 </select>
-<input type="submit" name="allper" value="{tr}update{/tr}" />
+<input type="submit" name="allper" value="{tr}Update{/tr}" />
 </form>
 </div>
 </div>
@@ -88,7 +88,7 @@
 <form action="tiki-assignpermission.php" method="post">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
-<input type="submit" name="update" value="{tr}update{/tr}" /><br />
+<input type="submit" name="update" value="{tr}Update{/tr}" /><br />
 <table class="sortable" id="assignperms">
 <tr>
 <th class="heading">&nbsp;</td>
@@ -122,5 +122,5 @@
 </tr>
 {/section}
 </table>
-<input type="submit" name="update" value="{tr}update{/tr}" />
+<input type="submit" name="update" value="{tr}Update{/tr}" />
 </form>

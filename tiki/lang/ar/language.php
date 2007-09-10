@@ -2416,6 +2416,7 @@ $lang=Array(
 // "Add or edit an item" => "Add or edit an item",
 // "URL" => "URL",
 // "update" => "update",
+// "Update" => "update",
 // "Chart items" => "Chart items",
 // "No items defined yet" => "No items defined yet",
 // "Admin charts" => "Admin charts",

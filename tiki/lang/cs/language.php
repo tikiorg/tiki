@@ -3686,6 +3686,7 @@ $lang=Array(
 "Edit Chart" => "Upravit graf",
 "Add or edit an item" => "Přidat nebo upravit položku",
 "update" => "obnovit",
+"Update" => "Obnovit",
 "Chart items" => "Hodnocené položky",
 "No items defined yet" => "Žádné položky zatím nebyly definovány",
 "Admin charts" => "Administrace žebříčků",

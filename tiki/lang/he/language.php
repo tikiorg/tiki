@@ -5285,6 +5285,7 @@ $lang=Array(
 "file gal" => "ספרית קבצים",
 "URL" => "כתובת URL",
 "update" => "@update@",
+"Update" => "@update@",
 "Active" => "פעיל",
 "Chat Administration" => "ניהול צ'אט",
 "Create/edit channel" => "יצירת/עריכת ערוץ",

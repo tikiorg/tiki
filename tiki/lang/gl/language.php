@@ -2884,6 +2884,7 @@ $lang=Array(
 "Edit Chart" => "Editar chart",
 "Add or edit an item" => "Engadir ou editar un ítem",
 "update" => "actualizar",
+"Update" => "Actualizar",
 "Chart items" => "Ítems de chart",
 "No items defined yet" => "Aínda non hai ítems definidos",
 "View template" => "Ver modelo",
