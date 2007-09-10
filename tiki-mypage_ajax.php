@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.37 2007-09-10 17:41:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.38 2007-09-10 22:34:45 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -358,7 +358,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 			$cat_objid = $id_mypage;
 		}
 		$conf=$mypage->getTypeHTMLConfig();
-		$type=MyPage::getMypageType($id_types);
+		$type=NULL;
 	} else {
 		$type=MyPage::getMypageType($id_types);
 		if (is_array($type)) {
