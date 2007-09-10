@@ -1,60 +1,72 @@
-<h1>{tr}My {if $smarty.request.type}{$smarty.request.type} {/if}Pages{/tr}</h1>
-<div id='mypageeditdivparking' style='display: none;'>
-<div id='mypageeditdiv' style='border: padding-left: 7px; padding-right: 7px;'>
- <input id='mypageedit_id' type='hidden' value=''>
- <table class="normal">
-  <tr>
-   <th>{tr}Name{/tr}</th>
-   <td>
-    <input id='mypageedit_name' type='text' name='name' value='' style='width: 100%' onkeyup='isNameFree();' />
-    <input id='mypageedit_name_orig' type='hidden' name='name' value='' />
-    <div id='mypageedit_name_unique' style='color: red;'></div>
-   </td>
-  </tr>
+<div id="mytiki">
+ <div class="titlebar">{tr}My {if $smarty.request.type}{$smarty.request.type}{/if}s{/tr}</div>
+ <div id='mypageeditdivparking' style='display: none;'>
+  <div id='mypageeditdiv' style='border: padding-left: 7px; padding-right: 7px;'>
+   <input id='mypageedit_id' type='hidden' value=''>
+   <table class="normal">
+    <tr>
+     <th width='180px'>{tr}Name{/tr}</th>
+     <td>
+      <input id='mypageedit_name' type='text' name='name' value='' style='width: 100%' onkeyup='isNameFree();' />
+      <input id='mypageedit_name_orig' type='hidden' name='name' value='' />
+      <div id='mypageedit_name_unique' style='color: red;'></div>
+     </td>
+    </tr>
 
-  <tr>
-   <th>{tr}Description{/tr}</th>
-   <td><input id='mypageedit_description' type='text' name='description' value='' style='width: 100%' /></td>
-  </tr>
-  <tr>
-   <th>{tr}Access{/tr}</th>
-   <td><img width="20" height="20" align="top" src="styles/netineo2/unlock.png"/>
-   <input class="register" type="radio" checked="" value="0" name="PageType"/>
+    <tr>
+     <th>{tr}Description{/tr}</th>
+     <td><textarea id='mypageedit_description' name='description' style='width: 100%; height: 64px;'></textarea></td>
+    </tr>
+    <tr>
+     <th>{tr}Access{/tr}</th>
+     <td><img width="20" height="20" align="top" src="styles/netineo2/unlock.png"/>
+     <input class="register" type="radio" checked="" value="0" name="PageType"/>
      
-     <img width="20" height="20" align="top" src="styles/netineo2/lock.png"/>
+      <img width="20" height="20" align="top" src="styles/netineo2/lock.png"/>
       
       <input class="register" type="radio" value="1" name="PageType"/>
-   </td>
-  </tr>
-  <tr id='mypageedit_tr_type' {if $id_types}style='display: none;'{/if}>
-   <th>{tr}Object Type{/tr}</th>
-   <td>
-    <select id="mypageedit_type" onchange='mypageTypeChange(this.value);'>
-    {foreach from=$mptypes item=mptype}
-   	<option value="{$mptype.id|escape}">{$mptype.name|escape}</option>
-    {/foreach}
-   </select>
-   </td>
-  </tr>
-  {if $feature_categories eq "y"}
-	<tr><th>{tr}Categorize{/tr}</th><td id='mypageedit_categorize_tpl'>{$mypageedit_categorize_tpl}</td></tr>
-  {/if}
-  <tr id='mypageedit_tr_dimensions'>
-   <th>{tr}Dimensions{/tr}</th>
-   <td>
-    <input id='mypageedit_width' type='text' name='width' value='' style='width: 40px'> x 
-    <input id='mypageedit_height' type='text' name='height' value='' style='width: 40px'> ({tr}pixels{/tr})
-   </td>
-  </tr>
- </table>
+     </td>
+    </tr>
+    <tr id='mypageedit_tr_type' {if $id_types}style='display: none;'{/if}>
+     <th>{tr}Object Type{/tr}</th>
+     <td>
+      <select id="mypageedit_type" onchange='mypageTypeChange(this.value);'>
+      {foreach from=$mptypes item=mptype}
+       <option value="{$mptype.id|escape}">{$mptype.name|escape}</option>
+      {/foreach}
+     </select>
+     </td>
+    </tr>
+    {if $feature_categories eq "y"}
+     <tr><th>{tr}Categorize{/tr}</th><td id='mypageedit_categorize_tpl'>{$mypageedit_categorize_tpl}</td></tr>
+    {/if}
+    <tr id='mypageedit_tr_dimensions' style='display: none;'>
+     <th>{tr}Dimensions{/tr}</th>
+     <td>
+      <input id='mypageedit_width' type='text' name='width' value='' style='width: 40px'> x 
+      <input id='mypageedit_height' type='text' name='height' value='' style='width: 40px'> ({tr}pixels{/tr})
+     </td>
+    </tr>
 
- <form id='form_mypageedit_typeconf'><div id='mypageedit_typeconf'></div></form>
+    <tr id='mypageedit_tr_template' style='display: none;'>
+     <th>{tr}Template{/tr}</th>
+     <td>
+      <select id='mypageedit_template'>
+       <option value='0'>No template</option>
+      </select>
+     </td>
+    </tr>
 
- <div style='text-align: right'>
-  <input type='button' value='Cancel' onclick='closeMypageEdit();'>
-  <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
+   </table>
+
+   <form id='form_mypageedit_typeconf'><div id='mypageedit_typeconf'></div></form>
+
+   <div style='text-align: right'>
+    <input type='button' value='Cancel' onclick='closeMypageEdit();'>
+    <input id='mypageedit_submit' type='button' value='Modify' onclick='saveMypageEdit();'>
+   </div>
+  </div>
  </div>
-</div>
 </div>
 
 {if $mypage_admin}
@@ -114,7 +126,7 @@ function initMypageEdit() {
 function showMypageEdit(id) {
 	curmodal=new Windoo({
 		"modal": true,
-		"width": 700,
+		"width": 600,
 		"height": 550,
 		"container": false
 	}).adopt($('mypageeditdiv'));
@@ -122,16 +134,22 @@ function showMypageEdit(id) {
 	if (id > 0) {
 		xajax_mypage_fillinfos(id);
 		$('mypageedit_submit').value='{/literal}{tr}Modify{/tr}{literal}';
-		curmodal.setTitle("Edit... ");
+		{/literal}{if $id_types}{literal}
+		  curmodal.setTitle({/literal}"{tr}Edit{/tr} "+mptypes[{$id_types}].name{literal});
+		{/literal}{else}{literal}
+		  curmodal.setTitle({/literal}"{tr}Edit{/tr}..."{literal});
+		{/literal}{/if}{literal}
 	} else {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
 		$('mypageedit_name_orig').value='';
 		$('mypageedit_description').value='';
 		{/literal}{if $id_types}{literal}
+		  curmodal.setTitle({/literal}"{tr}New{/tr} "+mptypes[{$id_types}].name{literal});
 		  $('mypageedit_type').value={/literal}{$id_types}{literal};
 		  xajax_mypage_fillinfos(0, {/literal}{$id_types}{literal});
 		{/literal}{else}{literal}
+		  curmodal.setTitle({/literal}"{tr}New{/tr}..."{literal});
 		  $('mypageedit_type').selectedIndex=0;
 		  xajax_mypage_fillinfos(0, $('mypageedit_type').value);
 		{/literal}{/if}{literal}
@@ -139,7 +157,6 @@ function showMypageEdit(id) {
 		$('mypageedit_height').value=mptypes[$('mypageedit_type').value].def_height;
 		$('mypageedit_submit').value='{/literal}{tr}Create{/tr}{literal}';
 		mypageTypeChange($('mypageedit_type').value);
-		curmodal.setTitle("New...");
 	}
 
 	curmodal.show();
@@ -154,22 +171,22 @@ function closeMypageEdit() {
 function saveMypageEdit() {
 	var id=$('mypageedit_id').value;
 	if ($('cat-check').value == 'on') {
-	var vals={
-		'name': $('mypageedit_name').value,
-		'description': $('mypageedit_description').value,
-		'id_types': $('mypageedit_type').value,
-		'width': $('mypageedit_width').value,
-		'height': $('mypageedit_height').value,
-		'categories': $('cat_categories').value
-	};
+		var vals={
+			'name': $('mypageedit_name').value,
+			'description': $('mypageedit_description').value,
+			'id_types': $('mypageedit_type').value,
+			'width': $('mypageedit_width').value,
+			'height': $('mypageedit_height').value,
+			'categories': $('cat_categories').value
+		};
 	} else {
-	var vals={
-		'name': $('mypageedit_name').value,
-		'description': $('mypageedit_description').value,
-		'id_types': $('mypageedit_type').value,
-		'width': $('mypageedit_width').value,
-		'height': $('mypageedit_height').value
-	};
+		var vals={
+			'name': $('mypageedit_name').value,
+			'description': $('mypageedit_description').value,
+			'id_types': $('mypageedit_type').value,
+			'width': $('mypageedit_width').value,
+			'height': $('mypageedit_height').value
+		};
 
 	}
 	if (id > 0) {
@@ -178,7 +195,6 @@ function saveMypageEdit() {
 		xajax_mypage_create(vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	}
 
-	closeMypageEdit();	
 }
 
 function deleteMypage(id) {
@@ -199,6 +215,8 @@ function mypageTypeChange(id) {
 		$('mypageedit_tr_dimensions').style.display=(mptype.fix_dimensions == 'yes' ? 'none' : '');
 		//$('mypageedit_tr_bgcolor').style.display=(mptype.fix_bgcolor == 'yes' ? 'none' : '');
 	}
+	xajax_mypage_fillinfos($('mypageedit_id').value, id, true);
+
 }
 
 function htmlspecialchars(ch) {
