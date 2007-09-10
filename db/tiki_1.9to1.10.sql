@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.210 2007-09-09 16:22:21 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.211 2007-09-10 16:18:58 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1547,3 +1547,5 @@ update `tiki_modules` set params=replace(params,'page=','pagemenu=') where name 
 ALTER TABLE `users_users` ADD `openid_url` VARCHAR( 255 ) NULL ;
 ALTER TABLE `users_users` ADD INDEX ( `openid_url` ) ;
 
+#2007-09-10 niclone
+alter table tiki_mypage_types add column `templateuser` int not null;

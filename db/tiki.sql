@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-09-09 16:24:48 $
-# $Author: nkoth $
+# $Date: 2007-09-10 16:18:58 $
+# $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4954,6 +4954,7 @@ CREATE TABLE `tiki_mypage_types` (
   `fix_dimensions` enum('no','yes') NOT NULL,
   `def_bgcolor` varchar(8) default NULL,
   `fix_bgcolor` enum('no','yes') NOT NULL,
+  `templateuser` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
