@@ -45,6 +45,7 @@ $lang=Array(
 "Again" => "再次輸入",
 "Repeat password" => "再次輸入密碼",
 "change" => "更改",
+"Change" => "更改",
 "name" => "名稱",
 "desc" => "描述",
 "action" => "動作",
