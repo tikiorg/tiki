@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.20 2007-09-07 11:06:48 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.21 2007-09-10 17:41:51 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,7 @@ function mypage_ajax_init() {
 	$ajaxlib->processRequests();
 }
 
-function mypageedit_addcolumn($title, $hidden=false,
+function &mypageedit_addcolumn($title, $hidden=false,
 							  $header_tpl=NULL, $content_tpl=NULL, $position=NULL) {
 	global $mp_columns;
 	if ($position !== NULL) {
@@ -74,9 +74,11 @@ function mypageedit_addcolumn($title, $hidden=false,
 		}
 	} else $position=count($mp_columns);
 
-	$mp_columns[$position]=array('title' => $title, 'hidden' => $hidden,
-								 'header_tpl' => $header_tpl,
-								 'content_tpl' => $content_tpl);
+	$l=array('title' => $title, 'hidden' => $hidden,
+			 'header_tpl' => $header_tpl,
+			 'content_tpl' => $content_tpl);
+	$mp_columns[$position]=&$l;
+	return $l;
 }
 
 function mypageedit_init() {
@@ -127,12 +129,12 @@ function mypageedit_init() {
 						 '{tr}Dimensions{/tr}',
 						 '<span id="mypagespan_width_{$mypage.id}">{$mypage.width}</span> x <span id="mypagespan_height_{$mypage.id}">{$mypage.height}</span>');
 
-	mypageedit_addcolumn('action', false,
-						 '{tr}Action{/tr}',
-						 '<a id="mypage_viewurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}" title="{tr}view content{/tr}"><img src="pics/icons/page.png" border="0" height="16" width="16" alt="{tr}view content{/tr}" /></a>'
-						 .'<a id="mypage_editurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}&amp;edit=1" title="{tr}edit content{/tr}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}edit content{/tr}" /></a>'
-						 .'<a href="#" onclick="showMypageEdit({$mypage.id});" title="{tr}edit entry{/tr}"><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt="{tr}edit entry{/tr}" /></a>'
-						 .'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
+	$l=mypageedit_addcolumn('action', false,
+							'{tr}Action{/tr}',
+							'<a id="mypage_viewurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}" title="{tr}view content{/tr}"><img src="pics/icons/page.png" border="0" height="16" width="16" alt="{tr}view content{/tr}" /></a>'
+							.'<a id="mypage_editurl_{$mypage.id}" href="tiki-mypage.php?mypage={$mypage.name|escape:"url"}&amp;edit=1" title="{tr}edit content{/tr}"><img src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}edit content{/tr}" /></a>'
+							.'<a href="#" onclick="showMypageEdit({$mypage.id});" title="{tr}edit entry{/tr}"><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt="{tr}edit entry{/tr}" /></a>'
+							.'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
 
 	if ($typeclassname !== NULL && is_callable(array($typeclassname, 'customizeColumns'))) {
 		call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);

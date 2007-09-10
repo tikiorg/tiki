@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.63 2007-09-07 11:06:06 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.64 2007-09-10 17:41:51 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -63,6 +63,7 @@ class MyPage {
 		$this->typeclass=NULL;
 	}
 
+	/*static*/
 	function getMyPage_new($id_users) {
 		$mypage=new MyPage(NULL, $id_users);
 		$mypage->params['id_users']=(int)$id_users;
@@ -92,6 +93,25 @@ class MyPage {
 		}
 	}
 
+	function cloneWith($mypage_src) {
+		$mypage_dst=$this;
+
+		/* copy mypage params */
+		$copys=array('width', 'height', 'bgcolor');
+		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
+		$mypage_dst->commit();
+		
+		$typeclass_src=$mypage_src->getTypeClass();
+		$typeclass_dst=$mypage_dst->getTypeClass();
+
+		$typeclass_dst->cloneWith($typeclass_src);
+
+		foreach($mypage_src->windows as $window_src) {
+			$window_dst=$mypage_dst->newWindow();
+			$window_dst->cloneWith($window_src);
+		}
+	}
+
 	function getPerm($for) {
 		global $tiki_p_admin;
 		switch ($for) {
@@ -106,11 +126,21 @@ class MyPage {
 	}
 
 	function getWindows() {
+		return $this->windows;
 	}
 	
 	function getWindow($id) {
 		if (!isset($this->windows[$id])) return tra("window not found");
 		return $this->windows[$id];
+	}
+
+	function getWindowsOfType($type) {
+		$windows=array();
+		foreach ($this->windows as $window) {
+			if ($window->getParam('contenttype') == $type)
+				$windows[]=$window;
+		}
+		return $windows;
 	}
 	
 	function newWindow() {
@@ -135,20 +165,20 @@ class MyPage {
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=tra('You are not the owner of this page');
 
+		// we firstly destroy every windows that this mypage contain
+		foreach($this->windows as $window) {
+			$window->destroy();
+		}
+		
 		$typeclass=$this->getTypeClass();
 		if ($typeclass) $typeclass->destroy();
 
-		// we firstly destroy every windows that this mypage contain
-		foreach($this->windows as $window) {
-			$this->destroyWindow($window);
-		}
-		
 		// finally, we destroy this mypage
 		$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
 						array($this->id));
 	}
 	
-	function destroyWindow($window) {
+	function _destroyWindow($window) {
 		global $tikilib;
 		
 		$id_win=0;
@@ -209,7 +239,7 @@ class MyPage {
 	}
 	
 	/* static */
-	function listPages($id_users, $type=NULL, $offset=-1, $limit=-1) {
+	function listPages($id_users, $type=NULL, $offset=-1, $limit=-1, $sort_mode='mp.name') {
 		global $tikilib;
 		global $tiki_p_admin;
 
@@ -234,6 +264,13 @@ class MyPage {
 			$r[]=$type;
 		}
 
+		$sortstr='';
+		if (is_array($sort_mode)) {
+			foreach($sort_mode as $k => $v) $sort_mode[$k]=$tikilib->convert_sortmode($v);
+			$sortstr=implode(', ', $sort_mode);
+		} else $sortstr=$sort_mode;
+
+		$query.=" ORDER BY ".$sortstr;
 		$res=$tikilib->query($query, $r, $limit, $offset);
 
 		while ($line = $res->fetchRow()) {
@@ -256,6 +293,11 @@ class MyPage {
 
 		$allowed=array('id_users', 'id_types', 'width', 'height',
 					   'name', 'description', 'bgcolor', 'categories');
+
+		if ($param == 'categories') {
+			if (is_null($value)) $value=array();
+			else if (!is_array($value)) $value=array($value);
+		}
 		
 		$typeclass=$this->getTypeClass();
 		if (in_array($param, $allowed)) {
@@ -269,8 +311,21 @@ class MyPage {
 		}
 	}
 	
+	function _getcateg() {
+		global $categlib; include_once ('lib/categories/categlib.php');
+
+		if (array_key_exists('categories', $this->params)) return $this->params;
+ 	    $cat=$categlib->get_object_categories('mypage', $this->id, -1);
+		return $cat;
+	}
+
 	function getParam($param) {
-		return $this->params[$param];
+		if ($param=='categories') {
+			if (array_key_exists($param['categories']))
+				return $param['categories'];
+			else
+				return $param['categories']=$this->_getcateg();
+		} else return $this->params[$param];
 	}
 	
 	function checkout() {
@@ -285,7 +340,7 @@ class MyPage {
 				$this->modified=array();
 			} else { // bad... no mypage found
 				$this->id=0;
-				return FALSE;
+				return $this->lasterror="MyPage not found";
 			}
 			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
 // 			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
@@ -297,7 +352,6 @@ class MyPage {
 			while ($line = $res->fetchRow()) {
 				$this->windows[$line['id']]=new MyPageWindow($this, $line['id'], $line);
 			}
-			
 		}
 	}
 	
@@ -347,7 +401,7 @@ class MyPage {
 					$c=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE `name`=? AND `id`!=?',
 										array($this->params['name'], $this->id));
 					if ($c != 0)
-						return tra(sprintf('Name "%s" is already exists', $this->params['name']));
+						return $this->lasterror=tra(sprintf('Name "%s" already exists', $this->params['name']));
 				}
 
 				$this->params['modified']=$tikilib->now;
@@ -360,7 +414,10 @@ class MyPage {
 					$l[]="`$k`=?";
 					$r[]=$this->params[$k];
 				}
-				
+
+				if (count($this->getParam('categories')) == 0)
+					return $this->lasterror=tra('A category is mandatory');
+
 				$query="UPDATE tiki_mypage SET ".implode(',', $l)." WHERE `id`=?";
 				$r[]=$this->id;
 				
@@ -368,9 +425,11 @@ class MyPage {
 
 				if ($this->modified['categories'] || $this->modified['name'] || $this->modified['description']) {
 					global $categlib; include_once ('lib/categories/categlib.php');
-					$categlib->update_object_categories($this->params['categories'], $this->id, 'mypage',
-														$this->params['description'], $this->params['name'],
-														"tiki-mypage.php?id_mypage=".$this->id);
+					foreach($this->params['categories'] as $categid) {
+						$categlib->update_object_categories($categid, $this->id, 'mypage',
+															$this->params['description'], $this->params['name'],
+															"tiki-mypage.php?id_mypage=".$this->id);
+					}
 				}
 
 				$typeclass=$this->getTypeClass();
@@ -469,6 +528,7 @@ class MyPage {
 							 " mpt.fix_dimensions as fix_dimensions, ".
 							 " mpt.def_bgcolor as def_bgcolor, ".
 							 " mpt.fix_bgcolor as fix_bgcolor, ".
+							 " mpt.templateuser as templateuser, ".
 							 " mptc.compname as compname, ".
 							 " mptc.mincount as mincount, ".
 							 " mptc.maxcount as maxcount ".
@@ -493,6 +553,7 @@ class MyPage {
 								'fix_dimensions' => $line['fix_dimensions'],
 								'def_bgcolor' => $line['def_bgcolor'],
 								'fix_bgcolor' => $line['fix_bgcolor'],
+								'templateuser' => $line['templateuser'],
 								'components' => array());
 			}
 			$lastline['components'][]=array('compname' => $line['compname'],
@@ -520,6 +581,7 @@ class MyPage {
 							 " mpt.fix_dimensions as fix_dimensions, ".
 							 " mpt.def_bgcolor as def_bgcolor, ".
 							 " mpt.fix_bgcolor as fix_bgcolor, ".
+							 " mpt.templateuser as templateuser, ".
 							 " mptc.compname as compname, ".
 							 " mptc.mincount as mincount, ".
 							 " mptc.maxcount as maxcount ".
@@ -545,6 +607,7 @@ class MyPage {
 								'fix_dimensions' => $line['fix_dimensions'],
 								'def_bgcolor' => $line['def_bgcolor'],
 								'fix_bgcolor' => $line['fix_bgcolor'],
+								'templateuser' => $line['templateuser'],
 								'components' => array());
 			}
 			$lastline['components'][]=array('compname' => $line['compname'],
@@ -583,7 +646,7 @@ class MyPage {
 
 		$cols=array("name", "description", "section", "permissions",
 					"def_width", "def_height", "fix_dimensions",
-					"def_bgcolor", "fix_bgcolor", "modified");
+					"def_bgcolor", "fix_bgcolor", "modified", "templateuser");
 
 		$vals['modified']=$tikilib->now;
 		$tvals=$vals;
@@ -702,6 +765,23 @@ class MyPageWindow {
 			}
 		}
 	}
+
+	function cloneWith($win_src) {
+		$win_dst=$this;
+
+		$copys=array('title', 'inbody',
+					 'modal', 'left', 'top', 'width', 'height', 'contenttype', 'config', 'content');
+		foreach($copys as $copy) $win_dst->setParam($copy, $win_src->getParam($copy));
+		$win_dst->commit();
+
+		$comp_src=$win_src->getComponent();
+		$comp_dst=$win_dst->getComponent();
+
+		if ($comp_src && $comp_dst
+			&& is_callable(array($comp_src, 'cloneWith'))) {
+			$comp_dst->cloneWith($comp_dst);
+		}
+	}
 	
 	function destroy() {
 		if (!$this->getPerm('edit'))
@@ -709,7 +789,7 @@ class MyPageWindow {
 
 		$comp=$this->getComponent();
 		if ($comp) $comp->destroy();
-		return $this->mypage->destroyWindow($this);
+		return $this->mypage->_destroyWindow($this);
 	}
 
 
