@@ -78,6 +78,18 @@
    </td>
   </tr>
 
+  <tr>
+    <th>{tr}Template user{/tr}</th>
+    <td>
+     <select id='mptype_templateuser'>
+      <option value='0'>{tr}No templates{/tr}</option>
+      {foreach from=$mpt_users item=mpt_user}
+       <option value='{$mpt_user.userId}'>{$mpt_user.user|escape}</option>
+      {/foreach}
+     </select>
+    </td>
+  </tr>
+
  </table>
  <br />
  <input type='button' value='Cancel' onclick='closeMptypeEdit();'>
@@ -163,6 +175,7 @@ function showMptypeEdit(id) {
 		$('mptype_fix_dimensions').checked='';
 		$('mptype_def_bgcolor').value='';
 		$('mptype_fix_bgcolor').checked='';
+		$('mptype_templateuser').selectedIndex=0;
 		$('mptype_submit').value='{/literal}{tr}Create{/tr}{literal}';
 	}
 
@@ -198,8 +211,9 @@ function saveMptypeEdit() {
 		'fix_dimensions' : $('mptype_fix_dimensions').checked ? 'yes' : 'no',
 		'def_bgcolor' : $('mptype_def_bgcolor').value,
 		'fix_bgcolor' : $('mptype_fix_bgcolor').value ? 'yes' : 'no',
+		'templateuser' : $('mptype_templateuser').value,
 		'components': components,
-		'groups': groups,
+		'groups': groups
 	};
 
 	if (id > 0) {
