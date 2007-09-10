@@ -65,7 +65,7 @@
 <tr>
 <td class="formcolor">&nbsp;</td>
 <td class="formcolor">
-<input type="submit" name="useq" value="{tr}use{/tr}" />
+<input type="submit" name="useq" value="{tr}Use{/tr}" />
 </td>
 </tr>
 </table>

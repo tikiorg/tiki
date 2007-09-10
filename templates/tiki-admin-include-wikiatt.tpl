@@ -29,7 +29,7 @@
 <td>{if $attachements[x].path}file{else}db{/if}</td>
 <td>{$attachements[x].created|tiki_short_date}</td>
 <td>{$attachements[x].downloads}</td>
-<td><a href="tiki-admin.php?page=wikiatt&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}change{/tr}</a></td>
+<td><a href="tiki-admin.php?page=wikiatt&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}Change{/tr}</a></td>
 </tr>
 {/section}
 </table>
