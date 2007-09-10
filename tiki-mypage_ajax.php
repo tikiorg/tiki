@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.38 2007-09-10 22:34:45 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.39 2007-09-10 23:20:59 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -232,6 +232,7 @@ function mypage_update($id_mypage, $vals, $form) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
+	if (array_key_exists('id_types', $vals)) unset($vals['id_types']);
 	$mypage->setParams($id_mypage, $vals);
 
 	if (is_array($form)) {
@@ -269,10 +270,11 @@ function mypage_create($vals, $form) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=new MyPage(NULL, $id_users);
-    $mypage=MyPage::getMyPage_new($id_users);
+    $mypage=MyPage::getMyPage_new($id_users, $vals['id_types']);
 	if (is_string($mypage))
 		return mypage_error($mypage);
+
+	unset($vals['id_types']);
 
 	$err=$mypage->setParams($id_mypage, $vals);
 	if ($err) return mypage_error($err);
