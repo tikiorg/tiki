@@ -21,7 +21,7 @@
     
     <form action="tiki-admin.php?page=wiki" method="post">
     {tr}Tag name{/tr}: <input  maxlength="20" size="10" type="text" name="tagname"/>
-    <input type="submit" name="createtag" value="{tr}create{/tr}"/>
+    <input type="submit" name="createtag" value="{tr}Create{/tr}"/>
     </form>
     
     <br />

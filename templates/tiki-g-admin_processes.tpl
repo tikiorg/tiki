@@ -60,7 +60,7 @@
 	</tr>
 	<tr>
 		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor"><input type="submit" name="save" value="{if $pid > 0}{tr}Update{/tr}{else}{tr}create{/tr}{/if}" /></td>
+		<td class="formcolor"><input type="submit" name="save" value="{if $pid > 0}{tr}Update{/tr}{else}{tr}Create{/tr}{/if}" /></td>
 	</tr>
 </table>
 </form>

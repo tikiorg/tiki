@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.105 2007-08-10 13:39:43 tombombadilom Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.106 2007-09-10 15:53:39 jyhem Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -94,7 +94,7 @@
   {if $feature_wiki eq 'y' and $feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form">{if $userPageExists eq 'y'}<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}" title="{tr}View{/tr}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
 	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Edit{/tr}</a>)
-{else}{$feature_wiki_userpage_prefix}{$userinfo.login} (<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}create{/tr}</a>){/if}</td></tr>
+{else}{$feature_wiki_userpage_prefix}{$userinfo.login} (<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}Create{/tr}</a>){/if}</td></tr>
   {/if}
 	{if $userTracker eq 'y' && $usertrackerId}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">

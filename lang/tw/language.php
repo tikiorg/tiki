@@ -368,6 +368,7 @@ $lang=Array(
 "Language" => "語言",
 "Dumps" => "傾印",
 "create" => "建立",
+"Create" => "建立",
 "Sandbox" => "沙池",
 "Maximum number of articles in home" => "首頁最大文章數",
 "Admin Hotwords" => "管理熱門單字",

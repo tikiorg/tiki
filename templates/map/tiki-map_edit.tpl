@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.20 2007-07-24 15:23:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.21 2007-09-10 15:53:39 jyhem Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -74,7 +74,7 @@
 <h3>{tr}Create a new mapfile{/tr}</h3>
 <form action="tiki-map_edit.php" method="post">
 <input type="text" name="newmapfile" size="20" />
-<input type="submit" name="create" value="{tr}create{/tr}" />
+<input type="submit" name="create" value="{tr}Create{/tr}" />
 {/if}
 {/if}
 {if $mode eq 'editing'}
