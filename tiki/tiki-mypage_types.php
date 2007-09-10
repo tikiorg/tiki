@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_types.php,v 1.1 2007-08-13 19:58:26 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_types.php,v 1.2 2007-09-10 17:31:44 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,12 @@ require_once ('tiki-setup.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
 
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die();
+}
+
 if (strlen($user) <= 0) {
     $id_users=0;
 } else {
@@ -17,7 +23,7 @@ if (strlen($user) <= 0) {
 }
 
 function mypagetypes_populate() {
-    global $smarty, $id_users;
+    global $smarty, $id_users, $userlib;
 
     $lpp=25;
     $showpage=isset($_REQUEST['showpage']) ? (int)$_REQUEST['showpage'] : 0;
@@ -35,6 +41,8 @@ function mypagetypes_populate() {
 
     $smarty->assign("components", MyPage::getAvailableComponents());
     $smarty->assign("groups", array("Anonymous", "Registered", "Hack", "c'est ou getGroups??"));
+	$mpt_users=$userlib->get_users();
+	$smarty->assign("mpt_users", $mpt_users['data']);
 }
 
 function mypage_ajax_init() {
