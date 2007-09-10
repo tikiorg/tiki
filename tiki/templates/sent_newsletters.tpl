@@ -39,7 +39,7 @@
 <td class="{cycle advance=false}">{if $channels[user].nbErrors > 0}<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}&amp;error={$channels[user].editionId}">{$channels[user].nbErrors}</a>{else}0{/if}</td>
 <td class="{cycle}">
 {if $url == "tiki-newsletter_archives.php"}<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}View{/tr}</a>&nbsp;{/if}
-{if $channels[user].tiki_p_send_newsletters eq 'y'}<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}{else}&nbsp;{/if}</a>
+{if $channels[user].tiki_p_send_newsletters eq 'y'}<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{tr}Use{/tr}{else}&nbsp;{/if}</a>
 </td>
 </tr>
 {/section}

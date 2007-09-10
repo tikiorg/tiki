@@ -69,7 +69,7 @@ function subavt() {
  <td class="formcolor">
    <div align="center">
 	 <input type="submit" name="rand" value="{tr}random{/tr}" />
-	 <input type="submit" name="uselib" value="{tr}use{/tr}" /> 
+	 <input type="submit" name="uselib" value="{tr}Use{/tr}" /> 
 	 <input type="submit" name="reset" value="{tr}no avatar{/tr}" /> 
 	 </div>
  </td>

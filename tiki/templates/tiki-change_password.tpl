@@ -19,7 +19,7 @@
 </tr>  
 <tr>
   <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="change" value="{tr}change{/tr}" /></td>
+  <td class="formcolor"><input type="submit" name="change" value="{tr}Change{/tr}" /></td>
 </tr>  
 </table>
 </form>

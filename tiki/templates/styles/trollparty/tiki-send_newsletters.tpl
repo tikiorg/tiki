@@ -77,7 +77,7 @@
 <td class="odd">{$channels[user].sent|tiki_short_datetime}</td>
 <td class="odd">
    <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}">{tr}Remove{/tr}</a>
-   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>
+   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}Use{/tr}</a>
 </td>
 </tr>
 {/section}
