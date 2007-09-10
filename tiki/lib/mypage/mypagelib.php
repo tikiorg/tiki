@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.64 2007-09-10 17:41:51 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.65 2007-09-10 23:20:59 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -50,6 +50,7 @@ class MyPage {
 // 	var $perms;
 	var $lasterror;
 	var $typeclass;
+	var $clonning;
 
 	/* never call this constructor directly */
 	function MyPage($id=NULL, $id_users) {
@@ -61,12 +62,22 @@ class MyPage {
 		$this->modified=array();
 		$this->lasterror=NULL;
 		$this->typeclass=NULL;
+		$this->clonning=false;
 	}
 
 	/*static*/
-	function getMyPage_new($id_users) {
+	function getMyPage_new($id_users, $id_types) {
 		$mypage=new MyPage(NULL, $id_users);
 		$mypage->params['id_users']=(int)$id_users;
+		$mypage->params['id_types']=(int)$id_types;
+		$mypage->modified['id_types']=true;
+		
+		$type=MyPage::getMypageType((int)$id_types);
+		if (!is_array($type)) return tra("mypage type unaivalable");
+		$classname=MyPage::getTypeClassName($type['name']);
+		if ($classname !== NULL)
+			$mypage->typeclass=call_user_func(array($classname, 'getInstance_new'), $mypage);
+
 		return $mypage;
 	}
 	
@@ -91,6 +102,33 @@ class MyPage {
 		} else {
 			return "mypage '$name' not found";
 		}
+	}
+
+	/*static*/
+	function getMyPage_clone($mypage_src, $id_users) {
+		$id_types=$mypage_src->getParam('id_types');
+		$mypage_dst=new MyPage(NULL, $id_users);
+		$mypage_dst->params['id_users']=(int)$id_users;
+		$mypage_dst->params['id_types']=$id_types;
+		$mypage_dst->modified['id_types']=true;
+		
+		$type=MyPage::getMypageType((int)$id_types);
+		if (!is_array($type)) return tra("mypage type unaivalable");
+		$classname=MyPage::getTypeClassName($type['name']);
+		if ($classname !== NULL)
+			$mypage_dst->typeclass=call_user_func(array($classname, 'getInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
+
+		/* copy mypage params */
+		$copys=array('width', 'height', 'bgcolor', 'name', 'description', 'categories');
+		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
+		$mypage_dst->commit();
+		
+		foreach($mypage_src->windows as $window_src) {
+			$window_dst=$mypage_dst->newWindow();
+			$window_dst->cloneWith($window_src);
+		}
+		$mypage_dst->clonning=false;
+		return $mypage_dst;
 	}
 
 	function cloneWith($mypage_src) {
@@ -291,7 +329,7 @@ class MyPage {
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=tra('You are not the owner of this page');
 
-		$allowed=array('id_users', 'id_types', 'width', 'height',
+		$allowed=array('width', 'height',
 					   'name', 'description', 'bgcolor', 'categories');
 
 		if ($param == 'categories') {
@@ -715,7 +753,7 @@ class MyPage {
 		if (!is_array($type)) return NULL;
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname === NULL) return NULL;
-		return $this->typeclass=new $classname($this);
+		return $this->typeclass=call_user_func(array($classname, 'getInstance_load'), $this);
 	}
 }
 
