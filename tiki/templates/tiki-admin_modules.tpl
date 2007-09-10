@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.60 2007-08-24 17:01:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.61 2007-09-10 17:09:40 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -364,7 +364,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');">{tr}use{/tr} {tr}wiki{/tr} {tr}structure{/tr}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');">{tr}Use Wiki Structure{/tr}</a>
   </td>
 </tr>
 

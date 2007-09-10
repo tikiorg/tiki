@@ -4278,6 +4278,7 @@ $lang=Array(
 "Use phplayermenu" => "Utiliser phplayermenu",
 "Banner zones" => "Zones de bannière",
 "Use Banner Zone" => "Utiliser cette bannière",
+"Use Wiki Structure" => "Utiliser cette structure Wiki",
 "Admin newsletter subscriptions" => "Administrer les inscriptions à une newsletter",
 "List Newsletters" => "Liste des newsletters",
 "Admin Newsletters" => "Administrer les newsletters",
