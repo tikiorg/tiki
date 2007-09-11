@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.67 2007-09-11 13:55:16 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.68 2007-09-11 16:54:27 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -403,7 +403,8 @@ class MyPage {
 			$this->id=$id;
 			
 			$typeclass=$this->getTypeClass();
-			if ($typeclass) $typeclass->create();
+			if (is_object($typeclass)) $typeclass->create();
+			else return $this->lasterror="commit failed: $typeclass";
 
 			// now run again for update ;)
 			$res=$this->commit();
@@ -762,7 +763,7 @@ class MyPageWindow {
 	 * this constructor may be called only by the MyPage class
 	 * you should not create a new instance of this object directly
 	 */
-	function MyPageWindow($mypage, $id, $line) {
+	function MyPageWindow($mypage, $id) {
 		$this->mypage=$mypage;
 		$this->id=$id;
 		$this->params=$line;
@@ -898,7 +899,6 @@ class MyPageWindow {
 			}
 			$comp=$this->getComponent();
 			if (is_object($comp) && is_callable(array($comp, 'create'))) $comp->create();
-			else var_dump($comp);
 
 		} else {
 			
