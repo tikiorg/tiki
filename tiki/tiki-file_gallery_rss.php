@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.32 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.33 2007-09-11 15:39:31 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ if ($rss_file_gallery != 'y') {
         require_once ('tiki-rss_error.php');
 }
 
-if ($tiki_p_view_file_gallery != 'y' or !$tikilib->user_has_perm_on_object($user,$_REQUEST['galleryId'],'file gallery','tiki_p_view_file_gallery')) {
+if ($tiki_p_admin_file_galleries != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST['galleryId'],'file gallery','tiki_p_view_file_gallery')) {
         $errmsg=tra("Permission denied you cannot view this section");
         require_once ('tiki-rss_error.php');
 }
