@@ -192,6 +192,25 @@ class PollLibShared extends TikiLib {
 		return $ret;		
 	}
 
+
+	function clone_poll($pollId) {
+		$poll=$this->get_poll($pollId);
+		if (!is_array($poll)) return false;
+
+		/* copy the poll */
+		$poll['pollId']=0;
+		$poll['publishDate']=$this->now;
+		$pollId_new=$this->replace_poll(0, $poll['title'], $poll['active'], $poll['publishDate']);
+
+		/* copy the poll options */
+		$options=$this->list_poll_options($pollId);
+		foreach($options as $option) {
+			$this->replace_poll_option($pollId_new, 0, $option['title'], $option['position']);
+		}
+
+		return $pollId_new;
+	}
+
 }
 global $dbTiki;
 $polllib = new PollLibShared($dbTiki);
