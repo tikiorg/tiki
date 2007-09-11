@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.21 2007-08-29 13:25:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.22 2007-09-11 10:25:52 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,7 +103,9 @@ function mypage_init() {
 
 
 	mypage_ajax_init();
-
+	
+	if (!$editit) $smarty->assign('site_header', 'n');
+	$smarty->assign('slidebar', 'y');
 	$smarty->assign("mid", "tiki-mypage.tpl");
 	$smarty->display("tiki.tpl");
 

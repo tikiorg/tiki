@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.65 2007-09-10 23:20:59 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.66 2007-09-11 10:25:52 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -76,7 +76,7 @@ class MyPage {
 		if (!is_array($type)) return tra("mypage type unaivalable");
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
-			$mypage->typeclass=call_user_func(array($classname, 'getInstance_new'), $mypage);
+			$mypage->typeclass=call_user_func(array($classname, 'newInstance_new'), $mypage);
 
 		return $mypage;
 	}
@@ -116,7 +116,7 @@ class MyPage {
 		if (!is_array($type)) return tra("mypage type unaivalable");
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
-			$mypage_dst->typeclass=call_user_func(array($classname, 'getInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
+			$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
 
 		/* copy mypage params */
 		$copys=array('width', 'height', 'bgcolor', 'name', 'description', 'categories');
@@ -124,30 +124,11 @@ class MyPage {
 		$mypage_dst->commit();
 		
 		foreach($mypage_src->windows as $window_src) {
-			$window_dst=$mypage_dst->newWindow();
-			$window_dst->cloneWith($window_src);
+			$window_dst=MyPageWindow::newInstance_clone($mypage_dst, --$mypage_dst->lastid, $window_src);
+			$mypage_dst->windows[$mypage_dst->lastid]=$window_dst;
 		}
 		$mypage_dst->clonning=false;
 		return $mypage_dst;
-	}
-
-	function cloneWith($mypage_src) {
-		$mypage_dst=$this;
-
-		/* copy mypage params */
-		$copys=array('width', 'height', 'bgcolor');
-		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
-		$mypage_dst->commit();
-		
-		$typeclass_src=$mypage_src->getTypeClass();
-		$typeclass_dst=$mypage_dst->getTypeClass();
-
-		$typeclass_dst->cloneWith($typeclass_src);
-
-		foreach($mypage_src->windows as $window_src) {
-			$window_dst=$mypage_dst->newWindow();
-			$window_dst->cloneWith($window_src);
-		}
 	}
 
 	function getPerm($for) {
@@ -181,8 +162,8 @@ class MyPage {
 		return $windows;
 	}
 	
-	function newWindow() {
-		$win=new MyPageWindow($this, --$this->lastid, array());
+	function newWindow($contenttype) {
+		$win=MyPageWindow::newInstance_new($this, --$this->lastid, $contenttype);
 		$this->windows[$this->lastid]=$win;
 		return $win;
 	}
@@ -388,7 +369,7 @@ class MyPage {
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
-				$this->windows[$line['id']]=new MyPageWindow($this, $line['id'], $line);
+				$this->windows[$line['id']]=MyPageWindow::newInstance_load($this, $line);
 			}
 		}
 	}
@@ -753,7 +734,8 @@ class MyPage {
 		if (!is_array($type)) return NULL;
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname === NULL) return NULL;
-		return $this->typeclass=call_user_func(array($classname, 'getInstance_load'), $this);
+
+		return $this->typeclass=call_user_func(array($classname, 'newInstance_load'), $this);
 	}
 }
 
@@ -770,57 +752,73 @@ class MyPageWindow {
 	 * you should not create a new instance of this object directly
 	 */
 	function MyPageWindow($mypage, $id, $line) {
-		global $tikilib;
 		$this->mypage=$mypage;
 		$this->id=$id;
 		$this->params=$line;
 		$this->modified=array();
 		$this->comp=NULL;
-		
-		if ($this->id < 0) {
-			
-			// some default values...
-			if (!isset($this->params['top'])) $this->params['top']=0;
-			if (!isset($this->params['left'])) $this->params['left']=0;
-			if (!isset($this->params['width'])) $this->params['width']=100;
-			if (!isset($this->params['height'])) $this->params['height']=100;
-			
-			foreach($this->params as $k => $v) {
-				switch($k) {
-				case 'title':
-				case 'inbody':
-				case 'modal':
-				case 'left':
-				case 'top':
-				case 'width':
-				case 'height':
-				case 'contenttype':
-				case 'config':
-				case 'content':
-					$this->modified[$k]=true;
-					break;
-				}
-			}
-		}
 	}
 
-	function cloneWith($win_src) {
-		$win_dst=$this;
+	/*
+	 * construct a new instance for creating new window, should be called only by MyPage
+	 */
+	/* static */
+	function newInstance_new($mypage, $id, $contenttype) {
+		$win=new MyPageWindow($mypage, $id);
+		$win->params['contenttype']=$contenttype;
+		$win->modified['contenttype']=true;
 
-		$copys=array('title', 'inbody',
-					 'modal', 'left', 'top', 'width', 'height', 'contenttype', 'config', 'content');
-		foreach($copys as $copy) $win_dst->setParam($copy, $win_src->getParam($copy));
-		$win_dst->commit();
+			// some default values...
+		$win->setParam('top',0);
+		$win->setParam('left',0);
+		$win->setParam('width',100);
+		$win->setParam('height',100);
+
+		return $win;
+	}
+
+	/*
+	 * construct a new instance for an existing window, should be called only by MyPage
+	 */
+	/* static */
+	function newInstance_load($mypage, $line) {
+		$win=new MyPageWindow($mypage, $line['id']);
+		$win->params['contenttype']=$line['contenttype'];
+		$win->modified['contenttype']=true;
+
+		$allowed=array('title', 'inbody', 'modal', 'left', 'top', 'width', 'height', 'config', 'content');
+		foreach($line as $k => $v) {
+			if (in_array($k, $allowed))
+				$win->setParam($k, $v);
+		}
+
+		return $win;
+	}
+
+	/*
+	 * construct a new instance for clonning an existing window, should be called only by MyPage
+	 */
+	/* static */
+	function newInstance_clone($mypage, $id, $win_src) {
+		$win=new MyPageWindow($mypage, $id);
+		$win->params['contenttype']=$win_src->getParam('contenttype');
+		$win->modified['contenttype']=true;
+
+		$allowed=array('title', 'inbody', 'modal', 'left', 'top', 'width', 'height', 'config', 'content');
+		foreach($allowed as $k => $v) {
+				$win->setParam($k, $win_src->getParam($v));
+		}
 
 		$comp_src=$win_src->getComponent();
-		$comp_dst=$win_dst->getComponent();
 
-		if ($comp_src && $comp_dst
-			&& is_callable(array($comp_src, 'cloneWith'))) {
-			$comp_dst->cloneWith($comp_dst);
+		$classname=MyPageWindow::getComponentClass($win_src->getParam('contenttype'));
+		if ($classname) {
+			$win->comp=call_user_func(array($classname, 'newInstance_clone'), $this, $comp_src);
 		}
+
+		return $win;
 	}
-	
+
 	function destroy() {
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=tra('You are not the owner of this page');
@@ -993,7 +991,7 @@ class MyPageWindow {
 		if ($this->comp) return $this->comp;
 		$classname=MyPageWindow::getComponentClass($this->params['contenttype']);
 		if ($classname) {
-			$this->comp=new $classname($this);
+			$this->comp=call_user_func(array($classname, 'newInstance_load'), $this);
 			return $this->comp;
 		}
 		return NULL;

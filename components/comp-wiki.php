@@ -10,6 +10,20 @@ class Comp_wiki {
 	$this->mypagewin=$mypagewin;
     }
 
+    /* static */
+    function newInstance_new($mypagewin) {
+	return new Comp_wiki($mypagewin);
+    }
+
+    /* static */
+    function newInstance_load($mypagewin) {
+	return new Comp_wiki($mypagewin);
+    }
+
+    /* static */
+    function newInstance_clone($mypagewin, $clone) {
+	return new Comp_wiki($mypagewin);
+    }
 
     /*
      * called when the user create a new component on the mypage

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.39 2007-09-10 23:20:59 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.40 2007-09-11 10:25:52 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,12 +114,11 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-    $mywin=$mypage->newWindow();
+    $mywin=$mypage->newWindow($contenttype);
 	if (is_string($mywin))
 		return mypage_error($mywin);
 
     $mywin->setTitle($title);
-    $mywin->setContentType($contenttype);
     $comp=$mywin->getComponent();
     $comp->configure($form_config);
     $err=$mywin->commit();
@@ -145,12 +144,7 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
-	if ($id_win) {
-		$mywin=$mypage->getWindow((int)$id_win);
-	} else {
-		$mywin=$mypage->newWindow();
-	}
-
+	$mywin=$mypage->getWindow((int)$id_win);
 	if (is_string($mywin))
 		return mypage_error($mywin);
 
