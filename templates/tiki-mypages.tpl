@@ -1,11 +1,11 @@
 <div id="mytiki">
  <div class="titlebar">{tr}My {if $smarty.request.type}{$smarty.request.type}{/if}s{/tr}</div>
  <div id='mypageeditdivparking' style='display: none;'>
-  <div id='mypageeditdiv' style='border: padding-left: 7px; padding-right: 7px;'>
+  <div class="mypage_configure" id='mypageeditdiv' style='border: padding-left: 7px; padding-right: 7px;'>
    <input id='mypageedit_id' type='hidden' value=''>
    <table class="normal">
     <tr>
-     <th width='180px'>{tr}Name{/tr}</th>
+     <th>{tr}Name{/tr}</th>
      <td>
       <input id='mypageedit_name' type='text' name='name' value='' style='width: 100%' onkeyup='isNameFree();' />
       <input id='mypageedit_name_orig' type='hidden' name='name' value='' />
@@ -17,16 +17,7 @@
      <th>{tr}Description{/tr}</th>
      <td><textarea id='mypageedit_description' name='description' style='width: 100%; height: 64px;'></textarea></td>
     </tr>
-    <tr>
-     <th>{tr}Access{/tr}</th>
-     <td><img width="20" height="20" align="top" src="styles/netineo2/unlock.png"/>
-     <input class="register" type="radio" checked="" value="0" name="PageType"/>
-     
-      <img width="20" height="20" align="top" src="styles/netineo2/lock.png"/>
-      
-      <input class="register" type="radio" value="1" name="PageType"/>
-     </td>
-    </tr>
+
     <tr id='mypageedit_tr_type' {if $id_types}style='display: none;'{/if}>
      <th>{tr}Object Type{/tr}</th>
      <td>
