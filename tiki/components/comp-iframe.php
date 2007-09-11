@@ -10,6 +10,21 @@ class Comp_iframe {
 	$this->mypagewin=$mypagewin;
     }
 
+    /* static */
+    function newInstance_new($mypagewin) {
+	return new Comp_iframe($mypagewin);
+    }
+
+    /* static */
+    function newInstance_load($mypagewin) {
+	return new Comp_iframe($mypagewin);
+    }
+
+    /* static */
+    function newInstance_clone($mypagewin, $clone) {
+	return new Comp_iframe($mypagewin);
+    }
+
     /*
      * called when the user create a new component on the mypage
      */
