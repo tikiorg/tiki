@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.35 2007-08-10 14:14:14 tombombadilom Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.36 2007-09-11 19:30:42 niclone Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1816,4 +1816,10 @@ table.default	td {
 .center {text-align: center;}
 .justify {text-align: justify;}
 .right {text-align: right;}
+
+/**** mypage ****/
+.mypage_configure th {
+ width: 180px;
+}
+
 /* end of css file */
