@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.68 2007-09-11 16:54:27 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.69 2007-09-11 19:25:04 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -807,9 +807,8 @@ class MyPageWindow {
 		$allowed=array('title', 'inbody', 'modal', 'left', 'top', 'width', 'height', 'config', 'content');
 		foreach($line as $k => $v) {
 			if (in_array($k, $allowed))
-				$win->setParam($k, $v);
+				$win->params[$k]=$v;
 		}
-
 		return $win;
 	}
 
