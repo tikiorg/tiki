@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.66 2007-09-11 10:25:52 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.67 2007-09-11 13:55:16 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -119,7 +119,7 @@ class MyPage {
 			$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
 
 		/* copy mypage params */
-		$copys=array('width', 'height', 'bgcolor', 'name', 'description', 'categories');
+		$copys=array('width', 'height', 'bgcolor', 'description', 'categories');
 		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
 		$mypage_dst->commit();
 		
@@ -190,7 +190,7 @@ class MyPage {
 		}
 		
 		$typeclass=$this->getTypeClass();
-		if ($typeclass) $typeclass->destroy();
+		if (is_object($typeclass)) $typeclass->destroy();
 
 		// finally, we destroy this mypage
 		$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
@@ -323,7 +323,7 @@ class MyPage {
 			// TODO: verify permissions when changing id_users or id_types !
 			$this->params[$param]=$value;
 			$this->modified[$param]=true;
-			if ($typeclass) $typeclass->mypage_setParam($param, $value);
+			if (is_object($typeclass)) $typeclass->mypage_setParam($param, $value);
 		} else {
 			$this->lasterror=tra("Parameter not found :").$param;
 			return $this->lasterror;
@@ -369,7 +369,9 @@ class MyPage {
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
-				$this->windows[$line['id']]=MyPageWindow::newInstance_load($this, $line);
+				$instance=MyPageWindow::newInstance_load($this, $line);
+				if (!is_object($instance)) return $this->lasterror="can't load window: $instance";
+				$this->windows[$line['id']]=$instance;
 			}
 		}
 	}
@@ -454,8 +456,13 @@ class MyPage {
 				$typeclass=$this->getTypeClass();
 			}
 
-			if ($typeclass) $typeclass->commit();
+			if (is_object($typeclass)) $typeclass->commit();
 			$this->modified=array();
+
+			foreach($this->windows as $window) {
+				if (!is_object($window)) return "window is not an object: $window";
+				$window->commit();
+			}
 		}
 	}
 	
@@ -706,7 +713,7 @@ class MyPage {
 	function getTypeHTMLConfig($type=NULL) {
 		if (isset($this)) {
 			$typeclass=$this->getTypeClass();
-			return ($typeclass !== NULL ? $typeclass->getHTMLConfig() : NULL);
+			return (is_object($typeclass) ? $typeclass->getHTMLConfig() : NULL);
 		} else {
 			$classname=MyPage::getTypeClassName($type);
 			if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
@@ -731,11 +738,15 @@ class MyPage {
 	function getTypeClass() {
 		if ($this->typeclass) return $this->typeclass;
 		$type=MyPage::getMypageType((int)$this->getParam('id_types'));
-		if (!is_array($type)) return NULL;
+		if (!is_array($type)) return "class not found: $type";
 		$classname=MyPage::getTypeClassName($type['name']);
-		if ($classname === NULL) return NULL;
+		if ($classname === NULL) return "class ".$type['name']." not found";
+		$this->typeclass=call_user_func(array($classname, 'newInstance_load'), $this);
 
-		return $this->typeclass=call_user_func(array($classname, 'newInstance_load'), $this);
+		if (!is_object($this->typeclass))
+			return $this->lasterror="typeclass returned: ".$this->typeclass. " (classname: $classname)";
+
+		return $this->typeclass;
 	}
 }
 
@@ -774,6 +785,12 @@ class MyPageWindow {
 		$win->setParam('width',100);
 		$win->setParam('height',100);
 
+		$classname=MyPageWindow::getComponentClass($contenttype);
+		if ($classname) {
+			$win->comp=call_user_func(array($classname, 'newInstance_new'), $win);
+			if (!is_object($win->comp)) return tra("component error: ").$win->comp;
+		} else return tra("component not found");
+
 		return $win;
 	}
 
@@ -805,16 +822,17 @@ class MyPageWindow {
 		$win->modified['contenttype']=true;
 
 		$allowed=array('title', 'inbody', 'modal', 'left', 'top', 'width', 'height', 'config', 'content');
-		foreach($allowed as $k => $v) {
-				$win->setParam($k, $win_src->getParam($v));
+		foreach($allowed as $k) {
+				$win->setParam($k, $win_src->getParam($k));
 		}
 
 		$comp_src=$win_src->getComponent();
 
 		$classname=MyPageWindow::getComponentClass($win_src->getParam('contenttype'));
 		if ($classname) {
-			$win->comp=call_user_func(array($classname, 'newInstance_clone'), $this, $comp_src);
-		}
+			$win->comp=call_user_func(array($classname, 'newInstance_clone'), $win, $comp_src);
+			if (!is_object($win->comp)) return tra("can't make new instance of component: ").$win->comp;
+		} else return tra('class of component not found');
 
 		return $win;
 	}
@@ -824,7 +842,7 @@ class MyPageWindow {
 			return $this->lasterror=tra('You are not the owner of this page');
 
 		$comp=$this->getComponent();
-		if ($comp) $comp->destroy();
+		if (is_object($comp)) $comp->destroy();
 		return $this->mypage->_destroyWindow($this);
 	}
 
@@ -879,7 +897,8 @@ class MyPageWindow {
 				return $r;
 			}
 			$comp=$this->getComponent();
-			if ($comp) $comp->create();
+			if (is_object($comp) && is_callable(array($comp, 'create'))) $comp->create();
+			else var_dump($comp);
 
 		} else {
 			
@@ -901,6 +920,9 @@ class MyPageWindow {
 				
 				$this->modified=array();
 			}
+
+			$comp=$this->getComponent();
+			if (is_object($comp) && is_callable(array($comp, 'commit'))) $comp->commit();
 		}
 	}
 	
@@ -1001,12 +1023,12 @@ class MyPageWindow {
 		global $tikilib;
 
 		$comp=$this->getComponent();
-		if (!$comp) {
-			$this->lasterror=tra('Component not available: ').$this->params['contenttype'];
+		if (!is_object($comp)) {
+			$this->lasterror=tra('Component not available: ').$this->params['contenttype']." -> ".$comp;
 			return 'alert("'.addslashes($this->lasterror).'");';
 		}
 
-		if (!$comp->getPerm('view')) {
+		if (is_callable(array($comp, 'getPerm')) && !$comp->getPerm('view')) {
 			$this->lasterror=tra("You do not have permission to view this part of content");
 			return 'alert("'.addslashes($this->lasterror).'");';
 		}
@@ -1074,7 +1096,7 @@ class MyPageWindow {
 }
 
 /* For the emacs weenies in the crowd.
-Local Variables:
+Local Variables:5B
    tab-width: 4
    c-basic-offset: 4
 End:

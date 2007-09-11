@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.40 2007-09-11 10:25:52 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.41 2007-09-11 13:55:15 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -231,7 +231,7 @@ function mypage_update($id_mypage, $vals, $form) {
 
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
-		if ($typeclass) {
+		if (is_object($typeclass)) {
 			$err=$typeclass->configure($form, false);
 			if (strlen($err)) return mypage_error($err);
 		}
@@ -264,11 +264,26 @@ function mypage_create($vals, $form) {
 
     $objResponse = new xajaxResponse();
 
-    $mypage=MyPage::getMyPage_new($id_users, $vals['id_types']);
+	if (array_key_exists('template', $vals) && ((int)$vals['template'] > 0)) {
+		$type=MyPage::getMypageType((int)$vals['id_types']);
+		if (!is_array($type)) return mypage_error("type unaivalable: $type");
+		$mypage_src=MyPage::getMyPage_byId((int)$vals['template'], $id_users);
+		if (!is_object($mypage_src)) return mypage_error("template unaivalable: $mypage_src");
+
+		if ((int)$type['templateuser'] != (int)$mypage_src->getParam('id_users'))
+			return mypage_error('template permission denied');
+
+		$mypage=MyPage::getMyPage_clone($mypage_src, $id_users);
+	} else {
+		$mypage=MyPage::getMyPage_new($id_users, (int)$vals['id_types']);
+	}
+
+
 	if (is_string($mypage))
 		return mypage_error($mypage);
 
 	unset($vals['id_types']);
+	unset($vals['template']);
 
 	$err=$mypage->setParams($id_mypage, $vals);
 	if ($err) return mypage_error($err);
@@ -377,9 +392,9 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 	/* templates update */
 	if (is_array($type)) {
 		$templates=MyPage::listPages($type['templateuser'], $type['name']);
-		$templates_html="<option id='0'>".tra("Without template")."</option>";
+		$templates_html="<option value='0'>".tra("Without template")."</option>";
 		foreach($templates as $template)
-			$templates_html.="<option id='".$template['id']."'>".htmlspecialchars($template['name'])."</option>";
+			$templates_html.="<option value='".$template['id']."'>".htmlspecialchars($template['name'])."</option>";
 		$objResponse->addAssign('mypageedit_template', 'innerHTML', $templates_html);
 		$objResponse->addScript('$("mypageedit_tr_template").style.display="";');
 	} else {

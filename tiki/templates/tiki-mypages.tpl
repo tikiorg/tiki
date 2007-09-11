@@ -139,6 +139,7 @@ function showMypageEdit(id) {
 		{/literal}{else}{literal}
 		  curmodal.setTitle({/literal}"{tr}Edit{/tr}..."{literal});
 		{/literal}{/if}{literal}
+		$('mypageedit_template').selectedIndex=0;
 	} else {
 		$('mypageedit_id').value=0;
 		$('mypageedit_name').value='';
@@ -170,28 +171,22 @@ function closeMypageEdit() {
 
 function saveMypageEdit() {
 	var id=$('mypageedit_id').value;
-	if ($('cat-check').value == 'on') {
-		var vals={
-			'name': $('mypageedit_name').value,
-			'description': $('mypageedit_description').value,
-			'id_types': $('mypageedit_type').value,
-			'width': $('mypageedit_width').value,
-			'height': $('mypageedit_height').value,
-			'categories': $('cat_categories').value
-		};
-	} else {
-		var vals={
-			'name': $('mypageedit_name').value,
-			'description': $('mypageedit_description').value,
-			'id_types': $('mypageedit_type').value,
-			'width': $('mypageedit_width').value,
-			'height': $('mypageedit_height').value
-		};
 
-	}
+	var vals={
+		'name': $('mypageedit_name').value,
+		'description': $('mypageedit_description').value,
+		'id_types': $('mypageedit_type').value,
+		'width': $('mypageedit_width').value,
+		'height': $('mypageedit_height').value
+	};
+
+	if ($('cat-check').value == 'on')
+		vals['categories']=$('cat_categories').value;
+
 	if (id > 0) {
 		xajax_mypage_update(id, vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	} else {
+		vals['template']=$('mypageedit_template').value;
 		xajax_mypage_create(vals, xajax.getFormValues('form_mypageedit_typeconf'));
 	}
 
