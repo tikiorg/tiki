@@ -34,8 +34,26 @@
     			<div id="components_colors">
 				<ul>
 					<li>
+						Windows Text:
+						<span id='myRainbow_wintext' style='cursor: pointer; background: {$mypage_wintextcolor};'>
+							[&nbsp;&nbsp;&nbsp;&nbsp;]
+						</span>
+					</li>
+					<li>
+						Windows Title:
+						<span id='myRainbow_wintitle' style='cursor: pointer; background: {$mypage_wintitlecolor};'>
+							[&nbsp;&nbsp;&nbsp;&nbsp;]
+						</span>
+					</li>
+					<li>
+						Windows Background:
+						<span id='myRainbow_winbg' style='cursor: pointer; background: {$mypage_winbgcolor};'>
+							[&nbsp;&nbsp;&nbsp;&nbsp;]
+						</span>
+					</li>
+					<li>
 						Background:
-						<span id='myRainbow' style='cursor: pointer; background: {$mypage_bgcolor};'>
+						<span id='myRainbow_bg' style='cursor: pointer; background: {$mypage_bgcolor};'>
 							[&nbsp;&nbsp;&nbsp;&nbsp;]
 						</span>
 					</li>
@@ -217,12 +235,81 @@ function initSideBar(){
 ///////////////////////////
 
 
+function addStyleRule(selector,rule) {
+	var stylepos=[ document.styleSheets.length - 1, 0 ];
+	if (document.all) {
+		stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
+		document.styleSheets[stylepos[0]].addRule(selector,rule);
+	} else if (document.getElementById) {
+		stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
+		document.styleSheets[stylepos[0]].insertRule(selector + '{' + rule + '}', stylepos[1]);
+ 	}
+	return stylepos;
+}
+
+function updateStyleRule(stylepos, selector, rule) {
+	if (document.all) {
+		document.styleSheets[stylepos[0]].removeRule(stylepos[1]);
+		stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
+		document.styleSheets[stylepos[0]].addRule(selector,rule);
+	} else if (document.getElementById) {
+		document.styleSheets[stylepos[0]].deleteRule(stylepos[1]);
+		stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
+		document.styleSheets[stylepos[0]].insertRule(selector + '{' + rule + '}', stylepos[1]);
+ 	}
+	return stylepos;
+}
+
+var style_winbg;
+var style_wintitle;
+var style_wintext;
+
+function initCSSStyle() {
+	style_wintext=addStyleRule('.windoo-body div,h1,h2,h3,h4,h5,p,td,th,a', 'color: {/literal}{$mypage_wintextcolor}{literal}');
+	style_wintitle=addStyleRule('.title-text', 'color: {/literal}{$mypage_wintitlecolor}{literal}');
+	style_winbg=addStyleRule('.windoo-body','background: {/literal}{$mypage_winbgcolor}{literal}');
+}
+
 function initColorPicker() {
-	var r = new MooRainbow('myRainbow', {
+	var r_wintext = new MooRainbow('myRainbow_wintext', {
+		'id': 'moorainbox_wintext',
+		'startColor': new Color('{/literal}{$mypage_wintextcolor}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			$('myRainbow_wintext').style.background=color.hex;
+			//$('mypage').style.background=color.hex;
+			style_wintext=updateStyleRule(style_wintext, '.windoo-body div,h1,h2,h3,h4,h5,p,td,th,a', 'color: '+color.hex);
+			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color.hex });
+		}
+	});
+	var r_wintitle = new MooRainbow('myRainbow_wintitle', {
+		'id': 'moorainbox_wintitle',
+		'startColor': new Color('{/literal}{$mypage_wintitlecolor}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			$('myRainbow_wintitle').style.background=color.hex;
+			//$('mypage').style.background=color.hex;
+			style_wintitle=updateStyleRule(style_wintitle, '.title-text', 'color: '+color.hex);
+			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitle': color.hex });
+		}
+	});
+	var r_winbg = new MooRainbow('myRainbow_winbg', {
+		'id': 'moorainbox_winbg',
+		'startColor': new Color('{/literal}{$mypage_winbgcolor}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			$('myRainbow_winbg').style.background=color.hex;
+			//$('mypage').style.background=color.hex;
+			style_winbg=updateStyleRule(style_winbg, '.windoo-body', 'background-color: '+color.hex+'; background: '+color.hex);
+			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgcolor': color.hex });
+		}
+	});
+	var r_bg = new MooRainbow('myRainbow_bg', {
+		'id': 'moorainbox_bg',
 		'startColor': new Color('{/literal}{$mypage_bgcolor}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
-			$('myRainbow').style.background=color.hex;
+			$('myRainbow_bg').style.background=color.hex;
 			$('mypage').style.background=color.hex;
 			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgcolor': color.hex });
 		}
@@ -250,6 +337,7 @@ function windooStartDrag(id) {
 }
 
 function initMyPage() {
+	initCSSStyle();
 	initSavedWindows();
 	initSimpleTabs();
 	initSideBar();
