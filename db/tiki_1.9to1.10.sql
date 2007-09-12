@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.211 2007-09-10 16:18:58 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.212 2007-09-12 01:50:57 niclone Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1549,3 +1549,8 @@ ALTER TABLE `users_users` ADD INDEX ( `openid_url` ) ;
 
 #2007-09-10 niclone
 alter table tiki_mypage_types add column `templateuser` int not null;
+
+#2007-09-12 niclone
+alter table tiki_mypage add column `winbgcolor` varchar(16) null;
+alter table tiki_mypage add column `wintitlecolor` varchar(16) null;
+alter table tiki_mypage add column `wintextcolor` varchar(16) null;

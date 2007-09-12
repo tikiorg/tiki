@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.23 2007-09-12 01:24:39 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.24 2007-09-12 01:50:57 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,18 @@ function mypage_init() {
 	$bgcolor=$mypage->getParam('bgcolor');
 	if ($bgcolor === NULL) $bgcolor='#eeeeee';
 	$smarty->assign('mypage_bgcolor', $bgcolor);
+
+	$wintextcolor=$mypage->getParam('wintextcolor');
+	if ($wintextcolor === NULL) $wintextcolor='#000000';
+	$smarty->assign('mypage_wintextcolor', $wintextcolor);
+
+	$wintitlecolor=$mypage->getParam('wintitlecolor');
+	if ($wintitlecolor === NULL) $wintitlecolor='#ffffff';
+	$smarty->assign('mypage_wintitlecolor', $wintitlecolor);
+
+	$winbgcolor=$mypage->getParam('winbgcolor');
+	if ($winbgcolor === NULL) $winbgcolor='#ffffff';
+	$smarty->assign('mypage_winbgcolor', $winbgcolor);
 
 	$smarty->assign('components', $mypage->getAvailableComponents());
 

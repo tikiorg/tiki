@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-09-10 16:18:58 $
+# $Date: 2007-09-12 01:50:57 $
 # $Author: niclone $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4916,6 +4916,9 @@ CREATE TABLE `tiki_mypage` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `bgcolor` varchar(16) default NULL,
+  `winbgcolor` varchar(16) default NULL,
+  `wintitlecolor` varchar(16) default NULL,
+  `wintextcolor` varchar(16) default NULL,
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)

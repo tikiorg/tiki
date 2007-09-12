@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.70 2007-09-12 01:21:41 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.71 2007-09-12 01:50:57 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -338,7 +338,7 @@ class MyPage {
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=tra('You are not the owner of this page');
 
-		$allowed=array('width', 'height',
+		$allowed=array('width', 'height', 'wintitlecolor', 'wintextcolor', 'winbgcolor',
 					   'name', 'description', 'bgcolor', 'categories');
 
 		if ($param == 'categories') {
@@ -1135,7 +1135,7 @@ class MyPageWindow {
 }
 
 /* For the emacs weenies in the crowd.
-Local Variables:5B
+Local Variables:
    tab-width: 4
    c-basic-offset: 4
 End:
