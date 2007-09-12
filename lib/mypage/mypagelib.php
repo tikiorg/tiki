@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.69 2007-09-11 19:25:04 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.70 2007-09-12 01:21:41 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -77,7 +77,7 @@ class MyPage {
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
 			$mypage->typeclass=call_user_func(array($classname, 'newInstance_new'), $mypage);
-
+		
 		return $mypage;
 	}
 	
@@ -86,7 +86,16 @@ class MyPage {
 		$mypage=new MyPage($id, $id_users);
 		$mypage->checkout();
 		if (strlen($mypage->lasterror)) return $mypage->lasterror;
-		else return $mypage;
+		
+		$typeclass=$mypage->getTypeClass();
+		if (!is_object($typeclass)) {
+			if (is_string($typeclass)) {
+				return $typeclass; // return the error returner by type
+			} else {
+				return "an error occured while making the type instance";
+			}
+		}
+		return $mypage;
 	}
 
 	/*static*/
@@ -98,7 +107,18 @@ class MyPage {
 			$mypage=new MyPage($line['id'], $id_users);
 			$mypage->checkout();
 			if (strlen($mypage->lasterror)) return $mypage->lasterror;
-			else return $mypage;
+
+			$typeclass=$mypage->getTypeClass();
+			if (!is_object($typeclass)) {
+				if (is_string($typeclass)) {
+					return $typeclass; // return the error returner by type
+				} else {
+					return "an error occured while making the type instance";
+				}
+			}
+
+			return $mypage;
+
 		} else {
 			return "mypage '$name' not found";
 		}
@@ -117,6 +137,14 @@ class MyPage {
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
 			$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
+
+		if (!is_object($typeclass)) {
+			if (is_string($typeclass)) {
+				return $typeclass; // return the error returner by type
+			} else {
+				return "an error occured while making the type instance";
+			}
+		}
 
 		/* copy mypage params */
 		$copys=array('width', 'height', 'bgcolor', 'description', 'categories');
@@ -315,7 +343,10 @@ class MyPage {
 
 		if ($param == 'categories') {
 			if (is_null($value)) $value=array();
-			else if (!is_array($value)) $value=array($value);
+			else if (!is_array($value)) {
+				if (empty($value)) $value=array();
+				else $value=array($value);
+			}
 		}
 		
 		$typeclass=$this->getTypeClass();
@@ -333,7 +364,7 @@ class MyPage {
 	function _getcateg() {
 		global $categlib; include_once ('lib/categories/categlib.php');
 
-		if (array_key_exists('categories', $this->params)) return $this->params;
+		if (array_key_exists('categories', $this->params)) return $this->params['categories'];
  	    $cat=$categlib->get_object_categories('mypage', $this->id, -1);
 		return $cat;
 	}
@@ -391,6 +422,13 @@ class MyPage {
 			$this->params['created']=$tikilib->now;
 			$this->modified['created']=1;
 
+			// verify that we have a category if mandatory
+			global $feature_mypage_mandatory_category;
+			$categories = $this->getParam('categories');
+			if (($feature_mypage_mandatory_category > 0) && (count($categories) == 0)) {
+				return $this->lasterror = tra('A category is mandatory');
+			}
+
 			// create a new mypage id
 			
 			$res=$tikilib->query("INSERT INTO tiki_mypage (`id_users`) values (?)",
@@ -425,7 +463,6 @@ class MyPage {
 					if ($c != 0)
 						return $this->lasterror=tra(sprintf('Name "%s" already exists', $this->params['name']));
 				}
-
 				$this->params['modified']=$tikilib->now;
 				$this->modified['modified']=1;
 
@@ -437,8 +474,11 @@ class MyPage {
 					$r[]=$this->params[$k];
 				}
 
-				if (count($this->getParam('categories')) == 0)
-					return $this->lasterror=tra('A category is mandatory');
+				global $feature_mypage_mandatory_category;
+				$categories = $this->getParam('categories');
+				if ($feature_mypage_mandatory_category > 0 && count($categories) == 0) {
+					return $this->lasterror = tra('A category is mandatory');
+				}
 
 				$query="UPDATE tiki_mypage SET ".implode(',', $l)." WHERE `id`=?";
 				$r[]=$this->id;
@@ -745,7 +785,7 @@ class MyPage {
 		$this->typeclass=call_user_func(array($classname, 'newInstance_load'), $this);
 
 		if (!is_object($this->typeclass))
-			return $this->lasterror="typeclass returned: ".$this->typeclass. " (classname: $classname)";
+			return $this->lasterror=$this->typeclass;
 
 		return $this->typeclass;
 	}
