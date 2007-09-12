@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.133 2007-08-10 13:42:40 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.134 2007-09-12 14:44:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -752,6 +752,9 @@ if ($_REQUEST["itemId"]) {
 							foreach ($links as $link) {
 								$ins_fields["data"][$i]['links'][$link] = $trklib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
 							}							
+							if (count($links) == 1 && is_numeric($ins_fields["data"][$i]['links'][$link])) { //if later a computed field use this field
+								$info[$fields['data'][$i]['fieldId']] = $ins_fields["data"][$i]['links'][$link];
+							}
 							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
 						}					
 					}
