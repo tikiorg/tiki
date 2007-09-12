@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.78 2007-09-06 20:29:43 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.79 2007-09-12 12:01:50 pkdille Exp $ *}
 
 <hr/>
 
@@ -16,11 +16,10 @@
       <span class="button2" >
       <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href} class="linkbut">
         {if $beingEdited eq 'y'}
-          <span class="highlight">{tr}Edit{/tr}</span>
+          <span class="highlight">{tr}Edit{/tr}</span></a>
         {else}
-          {tr}Edit{/tr}
+          {tr}Edit{/tr}</a>
         {/if}
-      </a>
       </span>
 {else}
     {if $feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
