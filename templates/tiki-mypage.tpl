@@ -5,11 +5,9 @@
  <!-- sidebar -->
  <div id='sideBar' style='position: absolute; width: auto; height: auto; top: 0px; right: 0px; z-index: 255;'>
 
-  <a href="#" id="sideBarTab" style='float:left; height:137px; width:28px; border: 0;'>
-   <img src="img/cord.png" alt="Tools" title="Tools" style='width: 28px; height: 137px; border: 0;'/>
-  </a>
+  <a href="#" id="sideBarTab" style='float:left; height:137px; width:28px; border: 0;'></a>
 	
-  <div id="sideBarContents" style="width:0px; overflow: hidden !important; background: white;">
+  <div id="sideBarContents" style="width:0px; overflow: hidden !important;">
    <div id="sideBarContentsInner" style="width: 250px;">
 	<div id="container" >
 		<div id="tab-block-1" >
@@ -68,7 +66,16 @@
 
 </div>
 </div>
-<span style="float: right"><a href="tiki-mypage.php?mypage={$pagename}&edit=1">Edit</a> | <a href="tiki-mypage.php?mypage={$pagename|escape:url}">View</a> | {if $tiki_p_admin} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}</span>
+
+<span style="float: right">
+{if $editit}
+<a href="tiki-mypage.php?mypage={$pagename|escape:url}">View</a>
+{else}
+<a href="tiki-mypage.php?mypage={$pagename}&edit=1">Edit</a>
+{/if}
+{if $tiki_p_admin} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}
+</span>
+
 {literal}
 <script type="text/javascript">
 
@@ -187,7 +194,7 @@ function extendContract(){
 		
 		sideBarSlide(0, height, 0, width);
 		
-		sideBarOpacity(0, 1);
+		sideBarOpacity(0, 0.8);
 	
 		isExtended = 1;
 		
