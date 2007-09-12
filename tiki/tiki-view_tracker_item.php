@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.134 2007-09-12 14:44:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.135 2007-09-12 15:34:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -831,6 +831,7 @@ if ($_REQUEST["itemId"]) {
 					$calc = preg_replace('/#([0-9]+)/','$info[\1]',$fields["data"][$i]['options']);
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
+					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;
