@@ -260,12 +260,12 @@ function updateStyleRule(stylepos, selector, rule) {
 	return stylepos;
 }
 
-var style_winbg;
-var style_wintitle;
 var style_wintext;
+var style_wintitle;
+var style_winbg;
 
 function initCSSStyle() {
-	style_wintext=addStyleRule('.windoo-body div,h1,h2,h3,h4,h5,p,td,th,a', 'color: {/literal}{$mypage_wintextcolor}{literal}');
+	style_wintext=addStyleRule('.windoo-body *', 'color: {/literal}{$mypage_wintextcolor}{literal}');
 	style_wintitle=addStyleRule('.title-text', 'color: {/literal}{$mypage_wintitlecolor}{literal}');
 	style_winbg=addStyleRule('.windoo-body','background: {/literal}{$mypage_winbgcolor}{literal}');
 }
@@ -278,7 +278,7 @@ function initColorPicker() {
 		'onComplete': function(color) {
 			$('myRainbow_wintext').style.background=color.hex;
 			//$('mypage').style.background=color.hex;
-			style_wintext=updateStyleRule(style_wintext, '.windoo-body div,h1,h2,h3,h4,h5,p,td,th,a', 'color: '+color.hex);
+			style_wintext=updateStyleRule(style_wintext, '.windoo-body *', 'color: '+color.hex);
 			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color.hex });
 		}
 	});
