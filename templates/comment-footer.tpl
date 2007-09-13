@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.3 2007-07-11 22:14:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.4 2007-09-13 13:16:41 jyhem Exp $ *}
 <div class="postfooter">
 	<div class="status">
 	{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}
@@ -36,7 +36,7 @@
 	{/if}
 	
 	{if $first eq 'y'}
-                <span class="post_reads"><b>{tr}reads{/tr}</b>: {$comment.hits}</span>
+                <span class="post_reads"><b>{tr}Reads{/tr}</b>: {$comment.hits}</span>
 	{else}
 		<span class="back_to_top"><a href="#tiki-top">{html_image file="img/icon_back_top.gif" border='0' alt="{tr}top of page{/tr}"}</a></span>
 	{/if}

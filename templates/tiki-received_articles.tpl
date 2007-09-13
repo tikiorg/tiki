@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.32 2007-08-21 10:01:56 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.33 2007-09-13 13:16:41 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -16,7 +16,7 @@
 <h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">
 <span class="titlea">{$title}</span><br />
-<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
+<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}Reads{/tr})</span>
 </div>
 <div class="articleheading">
 <table  cellpadding="0" cellspacing="0">
