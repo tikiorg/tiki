@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.26 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.27 2007-09-13 13:46:58 jyhem Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
@@ -28,7 +28,7 @@
 <input type="hidden" name="cookietab" value="3" />
 <input type="hidden" name="datatxt" value="{$datatxt|escape}" />
 <input type="submit" name="send" value="{tr}Send{/tr}" />
-<input type="submit" name="preview" value="{tr}cancel{/tr}" />
+<input type="submit" name="preview" value="{tr}Cancel{/tr}" />
 </form>
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$subject}</div>

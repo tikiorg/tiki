@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.92 2007-09-13 13:16:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.93 2007-09-13 13:46:58 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -317,7 +317,7 @@
 				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
 				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
 				{if $forum_mode eq 'y'}
-				<input type="button" name="comments_cancelComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/>
+				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{/if}
 			</td>
 		</tr>
