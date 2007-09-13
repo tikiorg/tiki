@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.19 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.20 2007-09-13 13:12:33 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $feature_help eq 'y'}
@@ -45,9 +45,9 @@
 {if $feature_community_list_country eq 'y'}
 	<td class="odd">
 	{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
-  {html_image file='img/flags/Other.gif' border='0' hspace='4' vspace='1' alt='{tr}flag{/tr}' title='{tr}flag{/tr}'}
+  {html_image file='img/flags/Other.gif' border='0' hspace='4' vspace='1' alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}'}
   {else}
-  {html_image file="img/flags/$listuserscountry[changes].gif" hspace='4' vspace='1' alt='{tr}flag{/tr}' title='{tr}flag{/tr}'}
+  {html_image file="img/flags/$listuserscountry[changes].gif" hspace='4' vspace='1' alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}'}
   &nbsp;{tr}{$listuserscountry[changes]}{/tr}
   {/if}
 	&nbsp;</td>
