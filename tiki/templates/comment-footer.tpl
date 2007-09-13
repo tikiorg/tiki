@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.5 2007-09-13 16:58:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.6 2007-09-13 17:07:47 jyhem Exp $ *}
 <div class="postfooter">
 	<div class="status">
 	{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}
@@ -9,12 +9,12 @@
 		</span>
 	{/if}
 	{if $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' or $forum_mode neq 'y'}
+		<span class="score">
+		<b>{tr}Score{/tr}</b>: {$comment.average|string_format:"%.2f"}
 		{if $comment.userName ne $user and (
 			   ( $forum_mode neq 'y' and $tiki_p_vote_comments eq 'y' )
 			or ( $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' and ( $tiki_p_forum_vote eq 'y' or $tiki_p_admin_forum eq 'y' ) )
 		) }
-		<span class="score">
-		<b>{tr}Score{/tr}</b>: {$comment.average|string_format:"%.2f"}
 		<b>{tr}Vote{/tr}</b>:
 
 		{if $first eq 'y'}
