@@ -5689,6 +5689,7 @@ $lang=Array(
 "Wiki Overwrite" => "перезаписати вікі",
 "Assign permissions to " => "Надати дозволи для ",
 "back" => "назад",
+"Back" => "назад",
 "Current permissions for this object" => "Дозволи для об'єкту на даний момент",
 "Assign permissions to this object" => "Надати дозволи для цього об'єкту",
 "Published" => "Опубліковано",

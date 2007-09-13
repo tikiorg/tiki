@@ -5759,6 +5759,7 @@ $lang=Array(
 "Wiki Overwrite" => "Wiki felülírása",
 "Assign permissions to " => "Engedélyek adása ennek: ",
 "back" => "vissza",
+"Back" => "Vissza",
 "Current permissions for this object" => "Az objektum jelenlegi engedélyei",
 "Assign permissions to this object" => "Engedélyek hozzárendelése ehhez az objektumhoz",
 "Published" => "Kiadott",

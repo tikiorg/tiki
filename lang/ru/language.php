@@ -5868,6 +5868,7 @@ $lang=Array(
 "Wiki Overwrite" => "обновить wiki",
 "Assign permissions to " => "Назначить права доступа для ",
 "back" => "назад",
+"Back" => "назад",
 "Current permissions for this object" => "Текущие права доступа для объекта",
 "Assign permissions to this object" => "Назначить права доступа к объекту",
 "Published" => "Опубликовано",

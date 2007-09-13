@@ -5713,6 +5713,7 @@ $lang=Array(
 "Wiki Overwrite" => "écraser la page Wiki",
 "Assign permissions to " => "Attribuer des droits d'accès : ",
 "back" => "retour",
+"Back" => "Retour",
 "Current permissions for this object" => "Droits d'accès à cet objet",
 "Assign permissions to this object" => "Attribuer de nouveaux droits d'accès à cet objet",
 "perms help" => "aide pour les droits d'accés",

@@ -5290,6 +5290,7 @@ $lang=Array(
 "Wiki Overwrite" => "Přepsat wiki",
 "Assign permissions to " => "Přiřadit práva pro ",
 "back" => "Zpět",
+"Back" => "Zpět",
 "Current permissions for this object" => "Současná práva pro tento objekt",
 "Assign permissions to this object" => "Přiřadit práva pro tento objekt",
 "Published" => "Zveřejněno",

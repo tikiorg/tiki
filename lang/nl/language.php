@@ -5131,6 +5131,7 @@ $lang=Array(
 "Wiki Overwrite" => "Wiki overschrijf",
 "Assign permissions to " => "Permissies toekennen aan ",
 "back" => "terug",
+"Back" => "Terug",
 "Current permissions for this object" => "Huidige permissies voor dit object",
 "Assign permissions to this object" => "Permissies toekennen aan dit object",
 "Published" => "Gepubliceerd",

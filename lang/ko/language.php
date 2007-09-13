@@ -3793,6 +3793,7 @@ $lang=Array(
 // "Wiki Overwrite" => "wiki overwrite",
 // "Assign permissions to " => "Assign permissions to ",
 // "back" => "back",
+// "Back" => "back",
 // "Current permissions for this object" => "Current permissions for this object",
 // "Assign permissions to this object" => "Assign permissions to this object",
 // "Published" => "Published",

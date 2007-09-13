@@ -5998,6 +5998,7 @@ $lang=Array(
 "Write note" => "Napisz natatkę",
 "Assign permissions to " => "Przydziel uprawnienia do ",
 "back" => "powróć",
+"Back" => "Powróć",
 "Assign permissions to this object" => "Przydziel uprawnienia do tego obiektu",
 "Published" => "Opublikowano",
 "Votes" => "Głosów",

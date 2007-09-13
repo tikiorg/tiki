@@ -5740,6 +5740,7 @@ $lang=Array(
 "Wiki Overwrite" => "Sobrescrever wiki",
 "Assign permissions to " => "Definir permissões a ",
 "back" => "voltar",
+"Back" => "Voltar",
 "Current permissions for this object" => "Permissões atuais para este objeto",
 "Assign permissions to this object" => "Definir permissões para este objeto",
 "Published" => "Publicado",

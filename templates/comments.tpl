@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.93 2007-09-13 13:46:58 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.94 2007-09-13 15:36:36 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -118,7 +118,7 @@
 				<label for="comments-search">{tr}Search{/tr}:</label>
 				<input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}" />
 
-				<input type="submit" name="comments_setOptions" value="{tr}set{/tr}" />
+				<input type="submit" name="comments_setOptions" value="{tr}Set{/tr}" />
 
 			</span>
 		</div>

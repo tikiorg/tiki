@@ -3959,6 +3959,7 @@ $lang=Array(
 "wiki overwrite" => "wiki overwrite",
 "Wiki Overwrite" => "wiki overwrite",
 "back" => "back",
+"Back" => "back",
 "Published" => "Published",
 "Average" => "Average",
 "Vote poll" => "Vote poll",

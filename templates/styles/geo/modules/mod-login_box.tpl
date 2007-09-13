@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.12 2007-08-24 17:01:55 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.13 2007-09-13 15:36:37 jyhem Exp $ *}
   {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
@@ -7,7 +7,7 @@
         <form action="{$login_url}" method="post">
         {tr}User{/tr}:
         <input type="text" name="username" size="8" />
-        <input type="submit" name="su" value="{tr}set{/tr}" />
+        <input type="submit" name="su" value="{tr}Set{/tr}" />
         </form>
       {/if}
     {else}

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.3 2007-07-24 15:23:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.4 2007-09-13 15:36:36 jyhem Exp $ *}
 <h1>{tr}Send a link to a friend{/tr}</h1>
-<span class="button2"><a href="{$url}" class="linkbut">{tr}back{/tr}</a></span>
+<span class="button2"><a href="{$url}" class="linkbut">{tr}Back{/tr}</a></span>
 {if !empty($sent)}
 <div class="simplebox highlight">
 {tr}The link was sent to the following addresses:{/tr}<br />

@@ -5864,6 +5864,7 @@ $lang=Array(
 "Wiki Overwrite" => "Sobrescriu wiki",
 "Assign permissions to " => "Assignar permisos a ",
 "back" => "enrera",
+"Back" => "Enrera",
 "Current permissions for this object" => "Permisos actuals per aquest objecte",
 "Assign permissions to this object" => "Assigna permisos a aquest objecte",
 "Published" => "Publicada",

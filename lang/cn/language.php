@@ -6485,6 +6485,7 @@ $lang=Array(
 "Wiki Overwrite" => "wiki 覆写",
 "Assign permissions to " => "授权给 ",
 "back" => "返回",
+"Back" => "返回",
 "Current permissions for this object" => "此对象当前的权限",
 "Assign permissions to this object" => "指定权限给此对象",
 "Published" => "发表",

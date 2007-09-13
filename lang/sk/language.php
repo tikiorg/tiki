@@ -5749,6 +5749,7 @@ $lang=Array(
 "Write note" => "Napísať poznámku",
 "Assign permissions to " => "Priradiť práva pre ",
 "back" => "späť",
+"Back" => "Späť",
 "Current permissions for this object" => "Súčasné práva pre tento objekt",
 "Assign permissions to this object" => "Priradiť práva tomuto objektu",
 "Published" => "Zverejnené",

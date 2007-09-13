@@ -5078,6 +5078,7 @@ $lang=Array(
 "Wiki Overwrite" => "Wiki päällekirjoitus",
 "Assign permissions to " => "Liitä oikeudet ",
 "back" => "takaisin",
+"Back" => "Takaisin",
 "Current permissions for this object" => "Kohteen nykyiset oikeudet",
 "Assign permissions to this object" => "Liitä oikeudet tälle kohteelle",
 "Published" => "Julkaistu",
