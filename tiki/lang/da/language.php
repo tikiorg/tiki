@@ -5837,6 +5837,7 @@ $lang=Array(
 "Wiki Overwrite" => "Overskriv wiki",
 "Assign permissions to " => "Giv tilladelser til ",
 "back" => "tilbage",
+"Back" => "Tilbage",
 "Current permissions for this object" => "Aktuelle adgangskriterier for dette objekt",
 "Assign permissions to this object" => "Tildel adgangsrettigheder til dette objekt",
 "Published" => "Offentliggjort",

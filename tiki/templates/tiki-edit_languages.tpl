@@ -37,7 +37,7 @@
       <td class="form">{tr}Edit translations{/tr}</td></tr>
   <tr><td><input align="right" type="radio" name="whataction" value="edit_rec_sw" {if $whataction eq 'edit_rec_sw'}checked="checked"{/if}/></td>
       <td class="form">{tr}Translate recorded{/tr}</td></tr>
-  <tr><td align="center" colspan=2><input type="submit" name="langaction" value="{tr}set{/tr}" /></td></tr>
+  <tr><td align="center" colspan=2><input type="submit" name="langaction" value="{tr}Set{/tr}" /></td></tr>
   </table>
   </div>
   {if $whataction eq 'add_tran_sw'}

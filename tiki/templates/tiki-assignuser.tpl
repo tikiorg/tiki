@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.39 2007-08-30 14:54:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.40 2007-09-13 15:36:36 jyhem Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -37,7 +37,7 @@
 <input type="hidden" value="{$maxRecords}" name="maxRecords" />
 <input type="hidden" value="{$offset}" name="offset" />
 <input type="hidden" value="{$sort_mode}" name="sort_mode" />
-<input type="submit" value="{tr}set{/tr}" name="set_default" />
+<input type="submit" value="{tr}Set{/tr}" name="set_default" />
 </form>
 </td></tr>
 </table>

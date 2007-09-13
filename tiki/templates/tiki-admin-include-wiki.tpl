@@ -130,7 +130,7 @@
      <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>
     <td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage|escape}" />
-    <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
+    <input type="submit" name="setwikihome" value="{tr}Set{/tr}" />
     </td>
     </tr></table>
     </form>
@@ -176,7 +176,7 @@
     </select><br />
 		{tr}Page name display stripper: choose a character that will be used as a delimiter to strip a final part of the page name (only concerns display){/tr}<br />
 		<input type="text" name="wiki_pagename_strip" value="{$wiki_pagename_strip}" />
-    <input type="submit" name="setwikiregex" value="{tr}set{/tr}" />
+    <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
     </form>
     </div>
   </div>

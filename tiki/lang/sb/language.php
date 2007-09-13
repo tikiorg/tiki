@@ -5818,6 +5818,7 @@ $lang=Array(
 "Wiki Create" => "Wiki mekem",
 "Assign permissions to " => "Assign olketa permission go long ",
 "back" => "baek",
+"Back" => "Baek",
 "Current permissions for this object" => "Olketa current permission fo disfala object",
 "Assign permissions to this object" => "Assign olketa permission go long disfala object",
 "Assign permissions to page" => "Assign olketa pamison go long pej",

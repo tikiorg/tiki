@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.151 2007-08-10 13:42:41 guidoscherp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.152 2007-09-13 15:36:36 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -39,7 +39,7 @@
 {* ------- return/next/previous tab --- *}
 <div class="navbar">
 <span class="button2">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}back{/tr} {tr}items list{/tr}</a></span>
+<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}Back{/tr} {tr}items list{/tr}</a></span>
 <span class="button2">
 {if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
@@ -264,7 +264,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} & {tr}back{/tr} {tr}items list{/tr}" />
+<input type="submit" name="save_return" value="{tr}Save{/tr} & {tr}Back{/tr} {tr}items list{/tr}" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}
 {/if}
 {* ------------------- *}
@@ -553,7 +553,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} & {tr}back{/tr} {tr}items list{/tr}" /> <span>
+<input type="submit" name="save_return" value="{tr}Save{/tr} & {tr}Back{/tr} {tr}items list{/tr}" /> <span>
 {/if}
 </td></tr>
 </table>

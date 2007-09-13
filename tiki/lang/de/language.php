@@ -5206,6 +5206,7 @@ $lang=Array(
 "Write note" => "Notiz schreiben",
 "Assign permissions to " => "Berechtigungen vergeben f&uuml;r ",
 "back" => "zur&uuml;ck",
+"Back" => "Zur&uuml;ck",
 "Current permissions for this object" => "Aktuelle Berechtigungen f&uuml;r dieses Objekt",
 "Assign permissions to this object" => "Diesem Objekt Berechtigungen zuweisen",
 "Published" => "Ver&ouml;ffentlicht",

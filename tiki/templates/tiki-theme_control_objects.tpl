@@ -28,7 +28,7 @@
 <option value="{$types[ix]|escape}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
 {/section}
 </select>
-<!--<input type="submit" name="settype" value="{tr}set{/tr}" />-->
+<!--<input type="submit" name="settype" value="{tr}Set{/tr}" />-->
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}Object{/tr}</td>

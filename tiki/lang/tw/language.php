@@ -892,6 +892,7 @@ $lang=Array(
 "Published" => "發表",
 "Votes" => "投票",
 "back" => "返回",
+"Back" => "返回",
 "Current permissions for this object" => "此物件目前的權限",
 "Assign permissions to this object" => "指定此物件的權限",
 "Wiki Pages" => "Wiki 頁面",

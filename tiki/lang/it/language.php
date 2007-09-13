@@ -5946,6 +5946,7 @@ $lang=Array(
 "Write note" => "Scrivi nota",
 "Assign permissions to " => "Assegna permessi a ",
 "back" => "indietro",
+"Back" => "Indietro",
 "Current permissions for this object" => "Permessi correnti per questo oggetto",
 "Assign permissions to this object" => "Assegna permessi a questo oggetto",
 "Published" => "Pubblicato",

@@ -166,7 +166,7 @@
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><input type="submit" name="set_auto" value="{tr}set{/tr}" /></td>
+      <td><input type="submit" name="set_auto" value="{tr}Set{/tr}" /></td>
     </tr>
   </table>
 </form>

@@ -5881,6 +5881,7 @@ $lang=Array(
 "First" => "ראשון",
 "Assign permissions to " => "הקצאת הרשאות עבור ",
 "back" => "אחורה",
+"Back" => "אחורה",
 "Current permissions for this object" => "הרשאות נוכחיות",
 "Assign permissions to this object" => "הקצאת הרשאות",
 "Published" => "פורסם בתאריך",

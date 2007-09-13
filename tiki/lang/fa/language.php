@@ -4062,6 +4062,7 @@ $lang=Array(
 "Wiki Overwrite" => "نوشتن ويكي(جايگزيني روي قبلي‌ها)",
 "Assign permissions to " => "تخصيص حقوق دسترسي به ",
 "back" => "بازگشت",
+"Back" => "بازگشت",
 "Current permissions for this object" => "حقوق دسترسي كنوني براي اين شيئ",
 "Assign permissions to this object" => " تخصيص حقوق دسترسي به اين شيئ",
 "Published" => "تاريخ انتشار",

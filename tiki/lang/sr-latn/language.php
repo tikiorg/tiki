@@ -5617,6 +5617,7 @@ $lang=Array(
 "Wiki Overwrite" => "Wiki prebriši",
 "Assign permissions to " => "Dodeli dozvole ",
 "back" => "nazad",
+"Back" => "Nazad",
 "Current permissions for this object" => "Trenutne dozvole za ovaj objekat",
 "Assign permissions to this object" => "Dodeli dozvole ovom objektu",
 "Published" => "Objavljeno",
