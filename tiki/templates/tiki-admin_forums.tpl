@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.71 2007-09-07 18:48:01 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.72 2007-09-13 13:12:33 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $feature_help eq 'y'}
@@ -197,12 +197,12 @@
 	<td class="formcolor">
 	<table >
 	<tr>
-		<td class="formcolor">{tr}avatar{/tr}</td>
-		<td class="formcolor">{tr}flag{/tr}</td>
+		<td class="formcolor">{tr}Avatar{/tr}</td>
+		<td class="formcolor">{tr}Flag{/tr}</td>
 		<td class="formcolor">{tr}Posts{/tr}</td>
-		<td class="formcolor">{tr}user level{/tr}</td>
+		<td class="formcolor">{tr}User Level{/tr}</td>
 		<td class="formcolor">{tr}eMail{/tr}</td>
-		<td class="formcolor">{tr}online{/tr}</td>
+		<td class="formcolor">{tr}Online{/tr}</td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} /></td>

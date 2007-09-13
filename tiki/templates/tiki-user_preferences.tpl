@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.107 2007-09-10 16:51:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.108 2007-09-13 13:12:33 jyhem Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -49,9 +49,9 @@
 
   <tr><td class="{cycle advance=false}">{tr}Country{/tr}:</td><td class="{cycle}">
   {if $country == "None"}
-  <img src="img/flags/Other.gif" border="0" width="16" height="13" alt='{tr}flag{/tr}' title='{tr}flag{/tr}' />
+  <img src="img/flags/Other.gif" border="0" width="16" height="13" alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}' />
   {else}
-  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
+  <img alt="{tr}Flag{/tr}" title="{tr}Flag{/tr}" src="img/flags/{$country}.gif" />
   {/if}
 <select name="country">
   <option value="Other" {if $country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
