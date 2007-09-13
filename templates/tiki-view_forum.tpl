@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.107 2007-09-13 13:16:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.108 2007-09-13 13:46:58 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -224,7 +224,7 @@ a moderator approves it.{/tr}
       <td>
       <input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
-      <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('forumpost');"/>
+      <input type="button" name="comments_postComment" value="{tr}Cancel{/tr}" onclick="hide('forumpost');"/>
       </td>
     </tr>
     </table>
