@@ -14,7 +14,7 @@
 <span class="titleb">
 {if $show_author eq 'y' && $authorName}{tr}By:{/tr} {$authorName} {/if}
 {if $show_pubdate eq 'y' && $publishDate}{tr}on:{/tr} {$publishDate|tiki_short_datetime} {/if}
-{if $show_reads eq 'y'}({$reads} {tr}reads{/tr}){/if}
+{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 </span><br />
 </div>
 

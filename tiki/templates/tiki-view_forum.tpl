@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.106 2007-08-27 12:28:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.107 2007-09-13 13:16:41 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -320,10 +320,10 @@ a moderator approves it.{/tr}
   {/if}
   <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
   {if $forum_info.topics_list_replies eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
+  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}Replies{/tr}</a></td>
   {/if}
   {if $forum_info.topics_list_reads eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}reads{/tr}</a></td>
+  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Reads{/tr}</a></td>
   {/if}
   {if $forum_info.topics_list_pts eq 'y'}
   	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'average_desc'}average_asc{else}average_desc{/if}">{tr}pts{/tr}</a></td>

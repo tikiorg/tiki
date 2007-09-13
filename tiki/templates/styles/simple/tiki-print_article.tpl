@@ -1,11 +1,11 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-print_article.tpl,v 1.5 2006-08-29 20:19:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-print_article.tpl,v 1.6 2007-09-13 13:16:41 jyhem Exp $ *}
 {* Index we display a wiki page here *}
 
 <div id="tiki-main">
 <div class="articletitle">
 <span class="titlea">{$title}</span><br />
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
+<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}Reads{/tr})</span><br />
 </div>
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
