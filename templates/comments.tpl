@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.95 2007-09-13 16:58:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.96 2007-09-13 17:07:47 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -96,9 +96,24 @@
 				<select name="thread_sort_mode" id="comments-sort">
 					<option value="commentDate_desc" {if $thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
 					<option value="commentDate_asc" {if $thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+					{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}	
+					<option value="points_desc" {if $thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+					{/if}
 					<option value="title_desc" {if $thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
 					<option value="title_asc" {if $thread_sort_mode eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 				</select>
+
+				{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y') or $forum_mode neq 'y'}
+				<label for="comments-thresh">{tr}Threshold{/tr}:</label>
+				<select name="comments_threshold" id="comments-thresh">
+					<option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
+					<option value="0.01" {if $comments_threshold eq '0.01'}selected="selected"{/if}>0</option>
+					<option value="1" {if $comments_threshold eq 1}selected="selected"{/if}>1</option>
+					<option value="2" {if $comments_threshold eq 2}selected="selected"{/if}>2</option>
+					<option value="3" {if $comments_threshold eq 3}selected="selected"{/if}>3</option>
+					<option value="4" {if $comments_threshold eq 4}selected="selected"{/if}>4</option>
+				</select>
+				{/if}
 
 				<label for="comments-search">{tr}Search{/tr}:</label>
 				<input type="text" size="7" name="comments_commentFind" id="comments-search" value="{$comments_commentFind|escape}" />
