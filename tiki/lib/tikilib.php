@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.773 2007-09-13 14:53:48 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.774 2007-09-13 15:21:28 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1952,7 +1952,6 @@ function add_pageview() {
 		$group = '';
 		// gallery id available
 		if (is_array($galleryId)) {
-			echo "BBB";
 			$bindvars = $galleryId;
 			$mid = 'where tf.`galleryId` in ('.implode(',',array_fill(0,count($galleryId),'?')).')';
 		} elseif ($galleryId>=0) {
@@ -1984,7 +1983,6 @@ function add_pageview() {
 		$mid .= " and tf.`archiveId`= 0 ";
 
 		$query = "select tf.* $select from `tiki_files` tf $join $mid $group order by tf.".$this->convert_sortmode($sort_mode);
-		echo $query;
 		$query_cant = "select count(*) from `tiki_files` tf $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
