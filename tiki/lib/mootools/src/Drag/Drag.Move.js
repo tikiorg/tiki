@@ -81,7 +81,7 @@ Drag.Move = Drag.Base.extend({
 		if (this.overed != overed){
 			if (this.overed) this.overed.fireEvent('leave', [this.element, this]);
 			this.overed = overed ? overed.fireEvent('over', [this.element, this]) : null;
-		}
+		} else if (overed) overed.fireEvent('drag', [this.element, this]);
 		return this;
 	},
 
