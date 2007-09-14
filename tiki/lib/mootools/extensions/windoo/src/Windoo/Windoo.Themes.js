@@ -62,3 +62,22 @@ Windoo.Themes.nada = {
 	'complexShadow': true,
 	'shadowDisplace': {'left': 0, 'top': 0, 'width': 0, 'height': 0, 'delta': 0}
 };
+
+/*
+Property: Windoo.Themes.mypage
+	Modified 'mypage' theme from 'aero' theme
+*/
+
+Windoo.Themes.mypage = {
+	'name': 'mypage',
+	'padding': {'top': 16, 'right': 4, 'bottom': 4, 'left': 4},
+	'resizeLimit': {'x': [175], 'y': [58]},
+	'className': 'windoo windoo-mypage',
+	'sizerClass': 'sizer',
+	'classPrefix': 'windoo',
+	'ghostClass': 'windoo-ghost windoo-mypage-ghost windoo-hover',
+	'hoverClass': 'windoo-hover',
+	'shadow': 'simple window-shadow-mypage-simple',
+	'shadeBackground': 'transparent url(windoo/s.gif)',
+	'shadowDisplace': {'left': 2, 'top': 2, 'width': 0, 'height': 0}
+};
