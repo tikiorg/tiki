@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.459 2007-09-12 10:12:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.460 2007-09-14 12:05:13 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1159,6 +1159,13 @@ $pref['feature_multimedia']='n';
 #mypage
 $pref['feature_mypage_mandatory_category'] = -1;
 
+#swffix
+$sections['swffix']['feature'] = 'feature_swffix';
+$sections['workflow']['key'] = '';
+$sections['workflow']['itemkey'] = '';
+$pref['feature_swffix'] = 'n';
+
+#
 # unsorted features
 $pref['anonCanEdit'] = 'n';
 $pref['cacheimages'] = 'n';

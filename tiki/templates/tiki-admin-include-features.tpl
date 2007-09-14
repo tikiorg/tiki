@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.108 2007-08-29 14:15:26 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.109 2007-09-14 12:05:17 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -241,7 +241,14 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> <a href="{$helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</td> 
     <td>&nbsp;</td> 
 </tr>
-
+<tr>
+    <td><input type="checkbox" name="feature_swffix" {if $feature_swffix eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> <a href="{$helpurl}Swffix" target="tikihelp" class="tikihelp" title="{tr}Swffix{/tr}"> {tr}Swffix{/tr} </td>
+    <td>&nbsp;</td> 
+    <td>&nbsp;</td>
+    <td class="form">&nbsp;</td>
+    <td>&nbsp;</td> 
+</tr>
 {* ---------- Content features ------------ *}
   <tr>
     <td class="heading" colspan="5"
