@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.25 2007-09-14 19:53:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.26 2007-09-14 23:35:22 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,10 +43,11 @@ function mypage_init() {
 	global $smarty, $headerlib, $id_users;
 
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
-	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
+	//$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
 	//$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.alphacube.css");
 	//$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aqua.css");
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.nada.css");
+	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.mypage.css");
 
 	$headerlib->add_jsfile("lib/mootools/extensions/mooRainbow/mooRainbow_compressed.js");
 	$headerlib->add_cssfile("lib/mootools/extensions/mooRainbow/mooRainbow-mypage.css");

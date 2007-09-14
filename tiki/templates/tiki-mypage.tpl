@@ -138,7 +138,7 @@ function mypage_editComponent(compname, asnew) {
 		"container": false,
 		"resizable": false,
 		"draggable": false,
-		"theme": "aero",
+		"theme": "mypage",
 		"shadow": false,
 		"title": (asnew ? "New " : "Edit ")+compname+" :"
 	}).setHTML((asnew ? "<p>Titre: <input type='text' id='mypage_configure_title' value=''></p>" : "")+"<form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='"+(asnew ? "Create" : "Update")+"' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' value='' /><input type='hidden' id='mypage_config_compid' value='' />")
