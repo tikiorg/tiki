@@ -11,7 +11,7 @@
    <div id="sideBarContentsInner" style="width: 250px;">
 	<div id="container" >
 		<div id="tab-block-1" >
-			<h5>Tools</h5>
+			<h5>{tr}Tools{/tr}</h5>
     			<div id="components_list">
 				<h6>New Component:</h6>
     				<ul>
@@ -28,9 +28,9 @@
 				</li></ul>
     			</div>
 
-    			<h5>Colors</h5>
+    			<h5>{tr}Style{/tr}</h5>
     			<div id="components_colors">
-				<ul>
+				<ul style='padding-left: 16px'>
 					<li>
 						Windows Text:
 						<span id='myRainbow_wintext' style='cursor: pointer; background: {$mypage_wintextcolor};'>
@@ -44,16 +44,14 @@
 						</span>
 					</li>
 					<li>
-						Windows Background:
-						<span id='myRainbow_winbg' style='cursor: pointer; background: {$mypage_winbgcolor};'>
-							[&nbsp;&nbsp;&nbsp;&nbsp;]
-						</span>
+					 Windows Background:
+					 <div><input type='radio' id='radio_winbg_color' name='radio_winbg' />Color: <span id='myRainbow_winbg' style='cursor: pointer; background: {$mypage->getParam('winbgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
+					 <div><input type='radio' id='radio_winbg_image' name='radio_winbg' />Image (url): <input id='input_winbgimage' type='text' style='width: 144px'><input type='button' value='ok' onclick="mypageSetwinbgimage($('input_winbgimage').value, true, true)" /></div>
 					</li>
 					<li>
-						Background:
-						<span id='myRainbow_bg' style='cursor: pointer; background: {$mypage_bgcolor};'>
-							[&nbsp;&nbsp;&nbsp;&nbsp;]
-						</span>
+					 Background:
+					 <div><input type='radio' id='radio_bg_color' name='radio_bg' />Color: <span id='myRainbow_bg' style='cursor: pointer; background: {$mypage->getParam('bgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
+					 <div><input type='radio' id='radio_bg_image' name='radio_bg' />Image (url): <input id='input_bgimage' type='text' style='width: 145px'><input type='button' value='ok' onclick="mypageSetbgimage($('input_bgimage').value, true, true)" /></div>
 					</li>
 				</ul>
     			</div>
@@ -241,84 +239,135 @@ function initSideBar(){
 
 ///////////////////////////
 
+var stylepos_wintext;
+var stylepos_wintitle;
+var stylepos_winbg;
 
-function addStyleRule(selector,rule) {
-	var stylepos=[ document.styleSheets.length - 1, 0 ];
+function mypageSetbgcolor(color, selectit, saveit) {
+	$('myRainbow_bg').style.background=color;
+	if (selectit) {
+		$('mypage').style.background=color;
+		$('radio_bg_color').checked=true;
+	}
+	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'color', 'bgcolor': color });
+}
+
+function mypageSetbgimage(imageurl, selectit, saveit) {
+	$('input_bgimage').value=imageurl;
+	if (selectit) {
+		$('mypage').style.background="url('"+htmlspecialchars(imageurl)+"')";
+		$('radio_bg_image').checked=true;
+	}
+	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'imageurl', 'bgimage': imageurl });
+}
+
+function mypageSetwinbgcolor(color, selectit, saveit) {
+	$('myRainbow_winbg').style.background=color;
+	if (selectit) {
+		stylepos_winbg=updateStyleRule('.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+		$('radio_winbg_color').checked=true;
+	}
+	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
+}
+
+function mypageSetwinbgimage(imageurl, selectit, saveit) {
+	$('input_winbgimage').value=imageurl;
+	if (selectit) {
+		stylepos_winbg=updateStyleRule('.windoo-body', "background: url('"+htmlspecialchars(imageurl)+"')", stylepos_winbg);
+		$('radio_winbg_image').checked=true;
+	}
+	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'imageurl', 'winbgimage': imageurl });
+}
+
+function mypageSetwintitlecolor(color, selectit, saveit) {
+	$('myRainbow_wintitle').style.background=color;
+	if (selectit)
+		stylepos_wintitle=updateStyleRule('.title-text', 'color: '+color, stylepos_wintitle);
+	if (saveit)
+		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitle': color });
+}
+
+function mypageSetwintextcolor(color, selectit, saveit) {
+	$('myRainbow_wintext').style.background=color;
+	if (selectit)
+		stylepos_wintext=updateStyleRule('.windoo-body *', 'color: '+color, stylepos_wintext);
+	if (saveit)
+		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color });
+}
+
+function updateStyleRule(selector, rule, stylepos) {
 	if (document.all) {
+		if (stylepos)
+			document.styleSheets[stylepos[0]].removeRule(stylepos[1]);
+		else
+			var stylepos=[ document.styleSheets.length - 1, 0 ];
 		stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
 		document.styleSheets[stylepos[0]].addRule(selector,rule);
 	} else if (document.getElementById) {
+		if (stylepos)
+			document.styleSheets[stylepos[0]].deleteRule(stylepos[1]);
+		else
+			var stylepos=[ document.styleSheets.length - 1, 0 ];
+
 		stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
 		document.styleSheets[stylepos[0]].insertRule(selector + '{' + rule + '}', stylepos[1]);
  	}
 	return stylepos;
 }
-
-function updateStyleRule(stylepos, selector, rule) {
-	if (document.all) {
-		document.styleSheets[stylepos[0]].removeRule(stylepos[1]);
-		stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
-		document.styleSheets[stylepos[0]].addRule(selector,rule);
-	} else if (document.getElementById) {
-		document.styleSheets[stylepos[0]].deleteRule(stylepos[1]);
-		stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
-		document.styleSheets[stylepos[0]].insertRule(selector + '{' + rule + '}', stylepos[1]);
- 	}
-	return stylepos;
-}
-
-var style_wintext;
-var style_wintitle;
-var style_winbg;
 
 function initCSSStyle() {
-	style_wintext=addStyleRule('.windoo-body *', 'color: {/literal}{$mypage_wintextcolor}{literal}');
-	style_wintitle=addStyleRule('.title-text', 'color: {/literal}{$mypage_wintitlecolor}{literal}');
-	style_winbg=addStyleRule('.windoo-body','background: {/literal}{$mypage_winbgcolor}{literal}');
+	{/literal}
+	var bgtype='{$mypage->getParam('bgtype')|escape:'javascript'}';
+	var bgimage='{$mypage->getParam('bgimage')|escape:'javascript'}';
+	var bgcolor='{$mypage->getParam('bgcolor')|escape:'javascript'}';
+
+	var winbgtype='{$mypage->getParam('winbgtype')|escape:'javascript'}';
+	var winbgimage='{$mypage->getParam('winbgimage')|escape:'javascript'}';
+	var winbgcolor='{$mypage->getParam('winbgcolor')|escape:'javascript'}';
+	
+	mypageSetwintitlecolor('{$mypage->getParam('wintitlecolor')|escape:'javascript'}', true, false);
+	mypageSetwintextcolor('{$mypage->getParam('wintextcolor')|escape:'javascript'}', true, false);
+
+	mypageSetbgcolor(bgcolor, bgtype=='color', false);
+	mypageSetbgimage(bgimage, bgtype=='imageurl', false);
+
+	mypageSetwinbgcolor(winbgcolor, winbgtype=='color', false);
+	mypageSetwinbgimage(winbgimage, winbgtype=='imageurl', false);
+
+	{literal}
 }
 
 function initColorPicker() {
 	var r_wintext = new MooRainbow('myRainbow_wintext', {
 		'id': 'moorainbox_wintext',
-		'startColor': new Color('{/literal}{$mypage_wintextcolor}{literal}', 'hex'),
+		'startColor': new Color('{/literal}{$mypage->getParam('wintextcolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
-			$('myRainbow_wintext').style.background=color.hex;
-			//$('mypage').style.background=color.hex;
-			style_wintext=updateStyleRule(style_wintext, '.windoo-body *', 'color: '+color.hex);
-			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color.hex });
+			mypageSetwintextcolor(color.hex, true, true);
 		}
 	});
 	var r_wintitle = new MooRainbow('myRainbow_wintitle', {
 		'id': 'moorainbox_wintitle',
-		'startColor': new Color('{/literal}{$mypage_wintitlecolor}{literal}', 'hex'),
+		'startColor': new Color('{/literal}{$mypage->getParam('wintitlecolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
-			$('myRainbow_wintitle').style.background=color.hex;
-			//$('mypage').style.background=color.hex;
-			style_wintitle=updateStyleRule(style_wintitle, '.title-text', 'color: '+color.hex);
-			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitle': color.hex });
+			mypageSetwintitlecolor(color.hex, true, true);
 		}
 	});
 	var r_winbg = new MooRainbow('myRainbow_winbg', {
 		'id': 'moorainbox_winbg',
-		'startColor': new Color('{/literal}{$mypage_winbgcolor}{literal}', 'hex'),
+		'startColor': new Color('{/literal}{$mypage->getParam('winbgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
-			$('myRainbow_winbg').style.background=color.hex;
-			//$('mypage').style.background=color.hex;
-			style_winbg=updateStyleRule(style_winbg, '.windoo-body', 'background-color: '+color.hex+'; background: '+color.hex);
-			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgcolor': color.hex });
+			mypageSetwinbgcolor(color.hex, true, true);
 		}
 	});
 	var r_bg = new MooRainbow('myRainbow_bg', {
 		'id': 'moorainbox_bg',
-		'startColor': new Color('{/literal}{$mypage_bgcolor}{literal}', 'hex'),
+		'startColor': new Color('{/literal}{$mypage->getParam('bgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
 		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
 		'onComplete': function(color) {
-			$('myRainbow_bg').style.background=color.hex;
-			$('mypage').style.background=color.hex;
-			xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgcolor': color.hex });
+			mypageSetbgcolor(color.hex, true, true);
 		}
 	});
 }
