@@ -77,8 +77,9 @@
  {/foreach}
 </tr>
 
+{cycle values="odd,even" print=false}
 {foreach from=$mypages item=mypage}
-<tr class="odd">
+<tr class="{cycle}">
  {foreach from=$mp_columns item=col}
   <td {if $col.hidden}style='display: none;'{/if}>{eval var=$col.content_tpl}</td>
  {/foreach}

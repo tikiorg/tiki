@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.71 2007-09-12 01:50:57 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.72 2007-09-14 19:53:05 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -147,7 +147,8 @@ class MyPage {
 		}
 
 		/* copy mypage params */
-		$copys=array('width', 'height', 'bgcolor', 'description', 'categories');
+		$copys=array('width', 'height', 'bgcolor', 'description', 'categories', 'winbgcolor', 'bgimage', 'winbgimage',
+					 'bgtype', 'winbgtype');
 		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
 		$mypage_dst->commit();
 		
@@ -339,7 +340,8 @@ class MyPage {
 			return $this->lasterror=tra('You are not the owner of this page');
 
 		$allowed=array('width', 'height', 'wintitlecolor', 'wintextcolor', 'winbgcolor',
-					   'name', 'description', 'bgcolor', 'categories');
+					   'name', 'description', 'bgcolor', 'categories', 'bgimage', 'winbgimage',
+					   'bgtype', 'winbgtype');
 
 		if ($param == 'categories') {
 			if (is_null($value)) $value=array();
@@ -369,13 +371,18 @@ class MyPage {
 		return $cat;
 	}
 
-	function getParam($param) {
+	function getParam($param, $default=NULL) {
 		if ($param=='categories') {
 			if (array_key_exists($param['categories']))
 				return $param['categories'];
 			else
 				return $param['categories']=$this->_getcateg();
-		} else return $this->params[$param];
+		} else {
+			if (!isset($this->params[$param]))
+				return $default;
+			else
+				return $this->params[$param];
+		}
 	}
 	
 	function checkout() {

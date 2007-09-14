@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.43 2007-09-12 02:11:43 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.44 2007-09-14 19:53:05 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -384,6 +384,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 
 	/* categories update */
 	if (!$update_only_type) {
+		$cat_type = 'mypage';
 		include('categorize_list.php');
 		$smarty->assign('mandatory_category', 'y');
 		$objResponse->addAssign('mypageedit_categorize_tpl', 'innerHTML', $smarty->fetch('netineo_categorize.tpl'));
