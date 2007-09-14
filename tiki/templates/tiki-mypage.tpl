@@ -299,17 +299,18 @@ function updateStyleRule(selector, rule, stylepos) {
 	if (document.all) {
 		if (stylepos)
 			document.styleSheets[stylepos[0]].removeRule(stylepos[1]);
-		else
-			var stylepos=[ document.styleSheets.length - 1, 0 ];
-		stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
+		else {
+			stylepos=[ document.styleSheets.length - 1, 0 ];
+			stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
+		}
 		document.styleSheets[stylepos[0]].addRule(selector,rule);
 	} else if (document.getElementById) {
 		if (stylepos)
 			document.styleSheets[stylepos[0]].deleteRule(stylepos[1]);
-		else
-			var stylepos=[ document.styleSheets.length - 1, 0 ];
-
-		stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
+		else {
+			stylepos=[ document.styleSheets.length - 1, 0 ];
+			stylepos[1]=document.styleSheets[stylepos[0]].cssRules.length;
+		}
 		document.styleSheets[stylepos[0]].insertRule(selector + '{' + rule + '}', stylepos[1]);
  	}
 	return stylepos;
