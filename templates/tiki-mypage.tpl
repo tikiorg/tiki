@@ -284,7 +284,7 @@ function mypageSetwintitlecolor(color, selectit, saveit) {
 	if (selectit)
 		stylepos_wintitle=updateStyleRule('.title-text', 'color: '+color, stylepos_wintitle);
 	if (saveit)
-		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitle': color });
+		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitlecolor': color });
 }
 
 function mypageSetwintextcolor(color, selectit, saveit) {
