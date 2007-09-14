@@ -23,14 +23,16 @@ function compact_files($header, $srcdir, $files, $destination) {
 	file_put_contents($destination, $packed);
 }
 
-
-compact_files("//MooTools, My Object Oriented Javascript Tools. Copyright (c) 2006 Valerio Proietti, <http://mad4milk.net>, MIT Style License.\n\r\n\r",
-			  "src",
-			  array(
-					"Core/Core.js",
-					"Class/Class.js",
-					"Class/Class.Extras.js",
-					"Native/Array.js",
+function compact_module($modulename) {
+	switch($modulename) {
+	case 'mootools':
+		compact_files("//MooTools, My Object Oriented Javascript Tools. Copyright (c) 2006 Valerio Proietti, <http://mad4milk.net>, MIT Style License.\n\r\n\r",
+					  "src",
+					  array(
+							"Core/Core.js",
+							"Class/Class.js",
+							"Class/Class.Extras.js",
+							"Native/Array.js",
 					"Native/String.js",
 					"Native/Function.js",
 					"Native/Number.js",
@@ -69,10 +71,11 @@ compact_files("//MooTools, My Object Oriented Javascript Tools. Copyright (c) 20
 					"Plugins/Group.js",
 					"Plugins/Accordion.js"),
 			  "mootools.js");
+		break;
 
-
-compact_files("//Windoo: Mootools window class <http://code.google.com/p/windoo>. Copyright (c) 2007 Yevgen Gorshkov, MIT Style License.\n\r\n\r",
-			  "extensions/windoo/src",
+	case 'windoo':
+		compact_files("//Windoo: Mootools window class <http://code.google.com/p/windoo>. Copyright (c) 2007 Yevgen Gorshkov, MIT Style License.\n\r\n\r",
+					  "extensions/windoo/src",
 			  array(
 					"Effects/Fx.Overlay.js",
 					"Windoo/Windoo.Core.js",
@@ -86,11 +89,47 @@ compact_files("//Windoo: Mootools window class <http://code.google.com/p/windoo>
 					"Drag/Drag.Resize.js",
 					"Drag/Drag.ResizeImage.js"),
 			  "extensions/windoo/windoo.js");
+		break;
 
-compact_files("//mooRainbow: Mootools color picker, from: http://w00fz.altervista.org/mooRainbow/\n\r\n\r",
-			  "extensions/mooRainbow",
-			  array("mooRainbow.js"),
-			  "extensions/mooRainbow/mooRainbow_compressed.js");
+	case 'moorainbow':		
+		compact_files("//mooRainbow: Mootools color picker, from: http://w00fz.altervista.org/mooRainbow/\n\r\n\r",
+					  "extensions/mooRainbow",
+					  array("mooRainbow.js"),
+					  "extensions/mooRainbow/mooRainbow_compressed.js");
+		break;
+	}
+}
+
+function show_help() {
+	global $modules;
+	echo "Usage: \n";
+	echo "php make-js.php [-h|-a|MODULES..]\n";
+	echo "  -a: make all\n";
+	echo "  -h: show this help\n";
+	echo "  MODULES: list of modules to compact\n";
+	echo "available modules are: ".implode(', ', $modules)."\n";
+}
+
+$modules=array('mootools', 'windoo', 'moorainbow');
+
+unset($argv[0]);
+foreach($argv as $arg) {
+	switch($arg) {
+	case '-h':
+	case '--help':
+		show_help();
+		break;
+		
+	case '-a':
+		foreach($modules as $module) compact_module($module);
+		break;
+		
+	default:
+		if (in_array($arg, $modules)) compact_module($arg);
+		else echo "Warning: skiping unknow option/module: $arg\n";
+		break;
+	}
+}
 
 /* For the emacs weenies in the crowd.
 Local Variables:
