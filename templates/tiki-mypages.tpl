@@ -120,7 +120,8 @@ function showMypageEdit(id) {
 		"modal": true,
 		"width": 600,
 		"height": 550,
-		"container": false
+		"container": false,
+		"theme": "mypage"
 	}).adopt($('mypageeditdiv'));
 
 	if (id > 0) {
