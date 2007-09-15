@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.73 2007-09-14 23:35:22 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.74 2007-09-15 00:04:36 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1105,7 +1105,7 @@ class MyPageWindow {
 		}
 
 		if (!$editable) {
-			$winparams['theme']	  = 'nada';
+			$winparams['theme']	  = 'mypage_view';
 			$winparams['resizable']  = false;
 			$winparams['draggable']  = false;
 			$winparams['buttons']	 = array('close'	=> false,
