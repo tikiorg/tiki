@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.74 2007-09-15 00:04:36 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.75 2007-09-15 03:19:14 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,6 +10,9 @@ global $feature_ajax;
 if ($feature_ajax != 'y') {
 	die("feature ajax is required for mypage");
 }
+
+define('MYPAGEBORDER_W', 10);
+define('MYPAGEBORDER_H', 20);
 
 /*
  * convert an array recursively to a javascript array
