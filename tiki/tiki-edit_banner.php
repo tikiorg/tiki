@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.27 2007-09-07 21:38:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.28 2007-09-15 08:58:07 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,6 +68,20 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("Dsun", $info["sun"]);
 	$smarty->assign("use", $info["which"]);
 	$smarty->assign("zone", $info["zone"]);
+	if ($info["which"] == 'useFlash') {
+		$matches=array();
+		preg_match('/SWFFix\.embedSWF\([\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'")]*)[\'" ]*/', $info["HTMLData"], $matches);
+		$smarty->assign("movieUrl", $matches[1]);
+		$smarty->assign("movieId", $matches[2]);
+		$smarty->assign("movieWidth", $matches[3]);
+		$smarty->assign("movieHeight", $matches[4]);
+		$smarty->assign("movieVersion", $matches[5]);
+		$smarty->assign("movieInstallUrl", $matches[6]);
+		$smarty->assign("movieFlashVars", $matches[7]);
+		$smarty->assign("movieParams", $matches[8]);
+		$smarty->assign("movieAttributes", $matches[9]);
+	
+	}
 	$smarty->assign("HTMLData", $info["HTMLData"]);
 	$smarty->assign("fixedURLdata", $info["fixedURLData"]);
 	$smarty->assign("textData", $info["textData"]);
@@ -290,6 +304,9 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	}
 
 	if (!isset($_REQUEST["create_zone"])) {
+		if ($_REQUEST["use"] == "useFlash") {
+			$_REQUEST["HTMLData"]=$bannerlib->embed_flash($_REQUEST["movieUrl"],$_REQUEST["movieId"],$_REQUEST["movieInstallUrl"],$_REQUEST["movieWidth"],$_REQUEST["movieHeight"],$_REQUEST["movieVersion"],"","","");
+		}
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
