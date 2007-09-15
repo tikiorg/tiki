@@ -138,7 +138,7 @@ function mypage_editComponent(compname, asnew) {
 		"container": false,
 		"resizable": false,
 		"draggable": false,
-		"theme": "mypage",
+		"theme": "aero",
 		"shadow": false,
 		"title": (asnew ? "New " : "Edit ")+compname+" :"
 	}).setHTML((asnew ? "<p>Titre: <input type='text' id='mypage_configure_title' value=''></p>" : "")+"<form id='mypage_formconfigure'><div id='mypage_divconfigure'></div></form><input type='button' value='"+(asnew ? "Create" : "Update")+"' onclick='mypage_configuresubmit();'><input type='hidden' id='mypage_config_contenttype' value='' /><input type='hidden' id='mypage_config_compid' value='' />")
@@ -267,7 +267,7 @@ function mypageSetwinbgcolor(color, selectit, saveit) {
 		if (selectit) $('radio_winbg_color').checked=true;
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
 	{/literal}{/if}{literal}
-	if (selectit) stylepos_winbg=updateStyleRule('.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	if (selectit) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
 }
 
 function mypageSetwinbgimage(imageurl, selectit, saveit) {
@@ -276,7 +276,7 @@ function mypageSetwinbgimage(imageurl, selectit, saveit) {
 		if (selectit) $('radio_winbg_image').checked=true;
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'imageurl', 'winbgimage': imageurl });
 	{/literal}{/if}{literal}
-	if (selectit) stylepos_winbg=updateStyleRule('.windoo-body', "background: url('"+htmlspecialchars(imageurl)+"')", stylepos_winbg);
+	if (selectit) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: url('"+htmlspecialchars(imageurl)+"')", stylepos_winbg);
 }
 
 function mypageSetwintitlecolor(color, selectit, saveit) {
@@ -325,7 +325,7 @@ function initCSSStyle() {
 	var winbgtype='{$mypage->getParam('winbgtype')|escape:'javascript'}';
 	var winbgimage='{$mypage->getParam('winbgimage')|escape:'javascript'}';
 	var winbgcolor='{$mypage->getParam('winbgcolor')|escape:'javascript'}';
-	
+
 	mypageSetwintitlecolor('{$mypage->getParam('wintitlecolor')|escape:'javascript'}', true, false);
 	mypageSetwintextcolor('{$mypage->getParam('wintextcolor')|escape:'javascript'}', true, false);
 
