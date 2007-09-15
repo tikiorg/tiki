@@ -53,8 +53,8 @@ class HeaderLib {
 	}
 
 	function add_css($rules,$rank=0) {
-		if (empty($this->css[$rank]) or !in_array($script,$this->css[$rank])) {
-			$this->css[$rank][] = $script;
+		if (empty($this->css[$rank]) or !in_array($rules,$this->css[$rank])) {
+			$this->css[$rank][] = $rules;
 		}
 	}
 
