@@ -26,6 +26,11 @@
 
 class GRenderer // {{{1
 {
+	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
+	{
+		die( "Abstract Function Call" );
+	}
+
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		die( "Abstract Function Call" );
@@ -61,11 +66,6 @@ class GRenderer // {{{1
 		return null;
 	}
 
-	function httpHeaders( $filename ) // {{{2
-	{
-		die( "Abstract Function Call" );
-	}
-	
 	function httpOutput( $filename ) // {{{2
 	{
 		die( "Abstract Function Call" );
@@ -115,6 +115,18 @@ class Fake_GRenderer extends GRenderer // {{{1
 		$this->height = $bottom - $top;
 	}
 	
+	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
+	{
+		$this->renderer->addLink(
+			$target,
+			$left * $this->width + $this->left,
+			$top * $this->height + $this->top,
+			$right * $this->width + $this->left,
+			$bottom * $this->height + $this->top,
+			$title
+		);
+	}
+
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->renderer->drawLine(
@@ -205,11 +217,11 @@ class Graphic // {{{1
 		$this->title = $title;
 	}
 
-	function addLegend( $color, $value ) // {{{2
+	function addLegend( $color, $value, $url = null ) // {{{2
 	{
 		// $color name
 		// $value label
-		$this->legend[] = array( $color, $value );
+		$this->legend[] = array( $color, $value, $url );
 	}
 
 	function getRequiredSeries() // {{{2
@@ -386,7 +398,7 @@ class Graphic // {{{1
 
 		foreach( $this->legend as $key => $info )
 		{
-			list( $color, $value ) = $info;
+			list( $color, $value, $url ) = $info;
 			$this->_drawLegendBox( 
 				new Fake_GRenderer( 
 					$renderer, 
@@ -402,11 +414,21 @@ class Graphic // {{{1
 				$renderer->drawText( 
 					$value, 
 					$x + $box_size + $padding, 
-					$x + $box_size + $padding + $item_size[$key] + $padding, 
+					$x + $box_size + $padding + $item_size[$key],
 					$y + $text_offset, 
 					$legend_font );
 				
+				if( ! empty( $url ) )
+					$renderer->addLink(
+						$url,
+						$x + $padding,
+						$y + $box_offset,
+						$x + $box_size + $padding + $item_size[$key],
+						$y + $box_offset + $box_size,
+						$value );
+
 				$x += $box_size + $padding * 2 + $item_size[$key];
+
 				break;
 			case 'vertical':
 				$renderer->drawText( 
@@ -416,6 +438,15 @@ class Graphic // {{{1
 					$y + $text_offset, 
 					$legend_font );
 				
+				if( ! empty( $url ) )
+					$renderer->addLink(
+						$url,
+						$x,
+						$y + $box_offset,
+						$x + $width,
+						$y + $box_offset + $box_size,
+						$value);
+
 				$y += $padding + $single_height;
 				break;
 			}
