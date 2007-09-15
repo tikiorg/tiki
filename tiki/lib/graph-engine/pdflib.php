@@ -37,6 +37,10 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		}
 	}
 	
+	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
+	{
+	}
+
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->_convertPosition( $x1, $y1 );
@@ -165,13 +169,7 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpHeaders( $filename ) // {{{2
-	{
-		header( "Content-type: application/pdf" );
-		header( "Content-Disposition: inline; filename=$filename" );
-	}
-
-	function httpOutput( $filename = 'chart.pdf' ) // {{{2
+	function httpOutput( $filename ) // {{{2
 	{
 		pdf_end_page( $this->pdf );
 		pdf_close( $this->pdf );
@@ -179,7 +177,9 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		$buf = pdf_get_buffer( $this->pdf );
 		$len = strlen( $buf );
 
-		$this->httpHeaders( $filename );
+		header( "Content-type: application/pdf" );
+		header( "Content-Length: $len" );
+		header( "Content-Disposition: inline; filename=$name" );
 		echo $buf;
 
 		pdf_delete( $this->pdf );

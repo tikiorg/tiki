@@ -81,24 +81,16 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 			$data['color'] = array();
 			for( $i = 0; $count > $i; ++$i )
 				$data['color'][] = $this->_getColor();
-		} else {
-			for( $i = 0; $count > $i; ++$i )
-				if (!isset($data['color'][$i]))
-					$data['color'][$i] = $this->_getColor();
 		}
 
 		if( !isset( $data['style'] ) )
-			for( $i = 0; $count > $i; ++$i ) {
-				if (isset($data['color'][$i])) {
-					$data['style'][] = 'FillStroke-' . $data['color'][$i];
-				} else {
-					$data['style'][] = 'FillStroke-' . $this->_getColor();
-				}
-			}
+			for( $i = 0; $count > $i; ++$i )
+				$data['style'][] = 'FillStroke-' . $data['color'][$i];
 
 		if( isset( $data['label'] ) )
 			foreach( $data['label'] as $key => $label )
-				$this->addLegend( $data['color'][$key], $label );
+				$this->addLegend( $data['color'][$key], $label, 
+					(isset($data['link']) && isset($data['link'][$key])) ? $data['link'][$key] : 0 );
 
 		foreach( $columns as $key => $line )
 		{

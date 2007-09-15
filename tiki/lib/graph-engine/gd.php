@@ -19,6 +19,8 @@ class GD_GRenderer extends GRenderer // {{{1
 	var $width;
 	var $height;
 
+	var $imageMap;
+
 	function GD_GRenderer( $width = 0, $height = 0, $format = 'png' ) // {{{2
 	{
 		// Null size does not create a graphic.
@@ -37,6 +39,16 @@ class GD_GRenderer extends GRenderer // {{{1
 		$this->height = $height;
 	}
 	
+	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
+	{
+		$this->_convertPosition( $left, $top );
+		$this->_convertPosition( $right, $bottom );
+		$target = htmlspecialchars( $target );
+		$title = htmlspecialchars( $title );
+
+		$this->imageMap .= "<area shape=\"rect\" coords=\"$left,$top,$right,$bottom\" href=\"$target\" alt=\"$title\" title=\"$title\"/>\n";
+	}
+
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->_convertPosition( $x1, $y1 );
@@ -129,31 +141,16 @@ class GD_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpHeaders( $filename ) // {{{2
+	function httpOutput( $filename ) // {{{2
 	{
 		switch( $this->format )
 		{
 		case 'png':
 			header("Content-type: image/png");
-			break;
-		case 'jpg':
-			header("Content-type: image/jpeg");
-			break;
-		default:
-			echo "Unknown Format: {$this->format}\n";
-		}
-	}
-	
-	function httpOutput( $filename ) // {{{2
-	{
-		$this->httpHeaders( $filename );
-
-		switch( $this->format )
-		{
-		case 'png':
 			imagepng( $this->gd );
 			break;
 		case 'jpg':
+			header("Content-type: image/jpeg");
 			imagejpeg( $this->gd );
 			break;
 		default:
@@ -180,6 +177,11 @@ class GD_GRenderer extends GRenderer // {{{1
 		fwrite( $stream, ob_get_contents() );
 		ob_end_clean();
 		imagedestroy( $this->gd );
+	}
+
+	function getMapContent() // {{{2
+	{
+		return $this->imageMap;
 	}
 
 	function _convertLength( $value, $type ) // {{{2

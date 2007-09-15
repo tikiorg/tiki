@@ -30,14 +30,17 @@ class PS_GRenderer extends GRenderer // {{{1
 			$this->height = $size[1];
 			
 			$this->ps = ps_new();
-			ps_set_parameter($this->ps, "FontAFM", "Foobar=lib/pdflib/fonts/Helvetica.afm");
 			ps_open_file( $this->ps, '' );
 			ps_begin_page( $this->ps, $this->width, $this->height );
 
-			$this->font = ps_findfont( $this->ps, 'Foobar', '', 0 );
+			$this->font = ps_findfont( $this->ps, 'Helvetica', '', 0 );
 		}
 	}
 	
+	function addLink( $target, $left, $top, $right, $bottom, $title = null ) // {{{2
+	{
+	}
+
 	function drawLine( $x1, $y1, $x2, $y2, $style ) // {{{2
 	{
 		$this->_convertPosition( $x1, $y1 );
@@ -167,13 +170,7 @@ class PS_GRenderer extends GRenderer // {{{1
 		return $this->styles[$name] = $this->_findStyle( $name );
 	}
 
-	function httpHeaders( $filename ) // {{{2
-	{
-		header( "Content-type: application/ps" );
-		header( "Content-Disposition: inline; filename=$filename" );
-	}
-	
-	function httpOutput( $filename = 'chart.ps' ) // {{{2
+	function httpOutput( $filename ) // {{{2
 	{
 		ps_end_page( $this->ps );
 		ps_close( $this->ps );
@@ -181,7 +178,9 @@ class PS_GRenderer extends GRenderer // {{{1
 		$buf = ps_get_buffer( $this->ps );
 		$len = strlen( $buf );
 
-		$this->httpHeaders( $filename );
+		header( "Content-type: application/ps" );
+		header( "Content-Length: $len" );
+		header( "Content-Disposition: inline; filename=$name" );
 		echo $buf;
 
 		ps_delete( $this->ps );
@@ -260,9 +259,6 @@ class PS_GRenderer extends GRenderer // {{{1
 			break;
 		case 'Text':
 			$style['fill'] = $this->_getColor( 'Black' );
-			if( !isset( $parts[1] ) )
-				$parts[1] = '';
-
 			switch( $parts[1] )
 			{
 			case 'Center':
