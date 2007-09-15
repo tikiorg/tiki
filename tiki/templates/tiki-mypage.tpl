@@ -244,55 +244,55 @@ var stylepos_wintitle;
 var stylepos_winbg;
 
 function mypageSetbgcolor(color, selectit, saveit) {
-	$('myRainbow_bg').style.background=color;
-	if (selectit) {
-		$('mypage').style.background=color;
-		$('radio_bg_color').checked=true;
-	}
-	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'color', 'bgcolor': color });
+	{/literal}{if $editit}{/literal}
+		$('myRainbow_bg').style.background=color;
+		if (selectit) $('radio_bg_color').checked=true;
+		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'color', 'bgcolor': color });
+	{/literal}{/if}{literal}
+	if (selectit) $('mypage').style.background=color;
 }
 
 function mypageSetbgimage(imageurl, selectit, saveit) {
-	$('input_bgimage').value=imageurl;
-	if (selectit) {
-		$('mypage').style.background="url('"+htmlspecialchars(imageurl)+"')";
-		$('radio_bg_image').checked=true;
-	}
-	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'imageurl', 'bgimage': imageurl });
+	{/literal}{if $editit}{/literal}
+		$('input_bgimage').value=imageurl;
+		if (selectit) $('radio_bg_image').checked=true;
+		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'imageurl', 'bgimage': imageurl });
+	{/literal}{/if}{literal}
+	if (selectit) $('mypage').style.background="url('"+htmlspecialchars(imageurl)+"')";
 }
 
 function mypageSetwinbgcolor(color, selectit, saveit) {
-	$('myRainbow_winbg').style.background=color;
-	if (selectit) {
-		stylepos_winbg=updateStyleRule('.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
-		$('radio_winbg_color').checked=true;
-	}
-	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
+	{/literal}{if $editit}{/literal}
+		$('myRainbow_winbg').style.background=color;
+		if (selectit) $('radio_winbg_color').checked=true;
+		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
+	{/literal}{/if}{literal}
+	if (selectit) stylepos_winbg=updateStyleRule('.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
 }
 
 function mypageSetwinbgimage(imageurl, selectit, saveit) {
-	$('input_winbgimage').value=imageurl;
-	if (selectit) {
-		stylepos_winbg=updateStyleRule('.windoo-body', "background: url('"+htmlspecialchars(imageurl)+"')", stylepos_winbg);
-		$('radio_winbg_image').checked=true;
-	}
-	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'imageurl', 'winbgimage': imageurl });
+	{/literal}{if $editit}{/literal}
+		$('input_winbgimage').value=imageurl;
+		if (selectit) $('radio_winbg_image').checked=true;
+		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'imageurl', 'winbgimage': imageurl });
+	{/literal}{/if}{literal}
+	if (selectit) stylepos_winbg=updateStyleRule('.windoo-body', "background: url('"+htmlspecialchars(imageurl)+"')", stylepos_winbg);
 }
 
 function mypageSetwintitlecolor(color, selectit, saveit) {
-	$('myRainbow_wintitle').style.background=color;
-	if (selectit)
-		stylepos_wintitle=updateStyleRule('.title-text', 'color: '+color, stylepos_wintitle);
-	if (saveit)
-		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitlecolor': color });
+	{/literal}{if $editit}{/literal}
+		$('myRainbow_wintitle').style.background=color;
+		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitlecolor': color });
+	{/literal}{/if}{literal}
+	if (selectit) stylepos_wintitle=updateStyleRule('.title-text', 'color: '+color, stylepos_wintitle);
 }
 
 function mypageSetwintextcolor(color, selectit, saveit) {
-	$('myRainbow_wintext').style.background=color;
-	if (selectit)
-		stylepos_wintext=updateStyleRule('.windoo-body *', 'color: '+color, stylepos_wintext);
-	if (saveit)
-		xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color });
+	{/literal}{if $editit}{/literal}
+		$('myRainbow_wintext').style.background=color;
+		if (selectit) stylepos_wintext=updateStyleRule('.windoo-body *', 'color: '+color, stylepos_wintext);
+	{/literal}{/if}{literal}
+	if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintextcolor': color });
 }
 
 function updateStyleRule(selector, rule, stylepos) {
