@@ -58,7 +58,6 @@
    </div>
   </div>
  </div>
-</div>
 
 {if $mypage_admin}
 {tr}view{/tr}: <select onchange='mypage_change_type(this.value);'>
@@ -91,7 +90,7 @@
  <option value='{$k}'{if $showpage == $k} selected{/if}>{$v} / {$pcount}</option>
  {/foreach}
 </select>
-
+</div>
 {literal}
 <script type="text/javascript">
 function changepage() {
