@@ -45,13 +45,15 @@
 					</li>
 					<li>
 					 Windows Background:
-					 <div><input type='radio' id='radio_winbg_color' name='radio_winbg' />Color: <span id='myRainbow_winbg' style='cursor: pointer; background: {$mypage->getParam('winbgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
-					 <div><input type='radio' id='radio_winbg_image' name='radio_winbg' />Image (url): <input id='input_winbgimage' type='text' style='width: 144px'><input type='button' value='ok' onclick="mypageSetwinbgimage($('input_winbgimage').value, true, true)" /></div>
+					 <div><input type='radio' id='radio_winbg_transparent' name='radio_winbg' onclick='mypageSetwinbgcolor(null, true, true);' />{tr}Transparent{/tr}</div>
+					 <div><input type='radio' id='radio_winbg_color' name='radio_winbg' />{tr}Color{/tr}: <span id='myRainbow_winbg' style='cursor: pointer; background: {$mypage->getParam('winbgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
+					 <div><input type='radio' id='radio_winbg_image' name='radio_winbg' onclick="mypageSetwinbgimage($('input_winbgimage').value, true, true)" />{tr}Image (url){/tr}: <input id='input_winbgimage' type='text' style='width: 144px'><input type='button' value='ok' onclick="mypageSetwinbgimage($('input_winbgimage').value, true, true)" /></div>
 					</li>
 					<li>
 					 Background:
-					 <div><input type='radio' id='radio_bg_color' name='radio_bg' />Color: <span id='myRainbow_bg' style='cursor: pointer; background: {$mypage->getParam('bgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
-					 <div><input type='radio' id='radio_bg_image' name='radio_bg' />Image (url): <input id='input_bgimage' type='text' style='width: 145px'><input type='button' value='ok' onclick="mypageSetbgimage($('input_bgimage').value, true, true)" /></div>
+					 <div><input type='radio' id='radio_bg_transparent' name='radio_bg' onclick='mypageSetbgcolor(null, true, true);' />{tr}Transparent{/tr}</div>
+					 <div><input type='radio' id='radio_bg_color' name='radio_bg' />{tr}Color{/tr}: <span id='myRainbow_bg' style='cursor: pointer; background: {$mypage->getParam('bgcolor')|escape:'javascript'};'>[&nbsp;&nbsp;&nbsp;&nbsp;]</span></div>
+					 <div><input type='radio' id='radio_bg_image' name='radio_bg' onclick="mypageSetbgimage($('input_bgimage').value, true, true)"/>{tr}Image (url){/tr}: <input id='input_bgimage' type='text' style='width: 145px'><input type='button' value='ok' onclick="mypageSetbgimage($('input_bgimage').value, true, true)" /></div>
 					</li>
 				</ul>
     			</div>
@@ -77,6 +79,7 @@
 {literal}
 <script type="text/javascript">
 
+{/literal}{if $editit}{literal}
 function initSimpleTabs() {
 	var tabs1 = new SimpleTabs($('tab-block-1'), {
 		entrySelector: 'h5',
@@ -91,15 +94,6 @@ function initSimpleTabs() {
 				container.setStyle('display', '');
 			}
 	});
-}
-
-////////////////////
-
-var lastFocusedWindoo=0;
-var tikimypagewin=[];
-function initSavedWindows() {
-	// open saved windows
-	{/literal}{$mypagejswindows}{literal}
 }
 
 //////////////////////
@@ -238,22 +232,64 @@ function initSideBar(){
 }
 
 ///////////////////////////
+function initColorPicker() {
+	var r_wintext = new MooRainbow('myRainbow_wintext', {
+		'id': 'moorainbox_wintext',
+		'startColor': new Color('{/literal}{$mypage->getParam('wintextcolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			mypageSetwintextcolor(color.hex, true, true);
+		}
+	});
+	var r_wintitle = new MooRainbow('myRainbow_wintitle', {
+		'id': 'moorainbox_wintitle',
+		'startColor': new Color('{/literal}{$mypage->getParam('wintitlecolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			mypageSetwintitlecolor(color.hex, true, true);
+		}
+	});
+	var r_winbg = new MooRainbow('myRainbow_winbg', {
+		'id': 'moorainbox_winbg',
+		'startColor': new Color('{/literal}{$mypage->getParam('winbgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			mypageSetwinbgcolor(color.hex, true, true);
+		}
+	});
+	var r_bg = new MooRainbow('myRainbow_bg', {
+		'id': 'moorainbox_bg',
+		'startColor': new Color('{/literal}{$mypage->getParam('bgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
+		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
+		'onComplete': function(color) {
+			mypageSetbgcolor(color.hex, true, true);
+		}
+	});
+}
+{/literal}{/if}{literal}
+///////////////////////////
 
 var stylepos_wintext;
 var stylepos_wintitle;
 var stylepos_winbg;
 
 function mypageSetbgcolor(color, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
-		$('myRainbow_bg').style.background=color;
-		if (selectit) $('radio_bg_color').checked=true;
+	{/literal}{if $editit}{literal}
+		if (color != null) $('myRainbow_bg').style.background=color;
+		if (selectit) {
+			if (color == null) $('radio_bg_transparent').checked=true;
+			else $('radio_bg_color').checked=true;
+		}
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'color', 'bgcolor': color });
 	{/literal}{/if}{literal}
-	if (selectit) $('mypage').style.background=color;
+	if (selectit) {
+		if (color == null) $('mypage').style.background='none 100%';
+		else $('mypage').style.background=color;
+	}
 }
 
 function mypageSetbgimage(imageurl, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
+	{/literal}{if $editit}{literal}
 		$('input_bgimage').value=imageurl;
 		if (selectit) $('radio_bg_image').checked=true;
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'bgtype' : 'imageurl', 'bgimage': imageurl });
@@ -262,16 +298,22 @@ function mypageSetbgimage(imageurl, selectit, saveit) {
 }
 
 function mypageSetwinbgcolor(color, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
-		$('myRainbow_winbg').style.background=color;
-		if (selectit) $('radio_winbg_color').checked=true;
+	{/literal}{if $editit}{literal}
+		if (color != null) $('myRainbow_winbg').style.background=color;
+		if (selectit) {
+			if (color == null) $('radio_winbg_transparent').checked=true;
+			else $('radio_winbg_color').checked=true;
+		}
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
 	{/literal}{/if}{literal}
-	if (selectit) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	if (selectit) {
+		if (color == null) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: none", stylepos_winbg);
+		else stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	}
 }
 
 function mypageSetwinbgimage(imageurl, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
+	{/literal}{if $editit}{literal}
 		$('input_winbgimage').value=imageurl;
 		if (selectit) $('radio_winbg_image').checked=true;
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'imageurl', 'winbgimage': imageurl });
@@ -280,7 +322,7 @@ function mypageSetwinbgimage(imageurl, selectit, saveit) {
 }
 
 function mypageSetwintitlecolor(color, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
+	{/literal}{if $editit}{literal}
 		$('myRainbow_wintitle').style.background=color;
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'wintitlecolor': color });
 	{/literal}{/if}{literal}
@@ -288,7 +330,7 @@ function mypageSetwintitlecolor(color, selectit, saveit) {
 }
 
 function mypageSetwintextcolor(color, selectit, saveit) {
-	{/literal}{if $editit}{/literal}
+	{/literal}{if $editit}{literal}
 		$('myRainbow_wintext').style.background=color;
 		if (selectit) stylepos_wintext=updateStyleRule('.windoo-body *', 'color: '+color, stylepos_wintext);
 	{/literal}{/if}{literal}
@@ -326,6 +368,10 @@ function initCSSStyle() {
 	var winbgimage='{$mypage->getParam('winbgimage')|escape:'javascript'}';
 	var winbgcolor='{$mypage->getParam('winbgcolor')|escape:'javascript'}';
 
+	/* workarround for null values not converted by xajax */
+	if (bgcolor == '') bgcolor=null;
+	if (winbgcolor == '') winbgcolor=null;
+
 	mypageSetwintitlecolor('{$mypage->getParam('wintitlecolor')|escape:'javascript'}', true, false);
 	mypageSetwintextcolor('{$mypage->getParam('wintextcolor')|escape:'javascript'}', true, false);
 
@@ -336,41 +382,6 @@ function initCSSStyle() {
 	mypageSetwinbgimage(winbgimage, winbgtype=='imageurl', false);
 
 	{literal}
-}
-
-function initColorPicker() {
-	var r_wintext = new MooRainbow('myRainbow_wintext', {
-		'id': 'moorainbox_wintext',
-		'startColor': new Color('{/literal}{$mypage->getParam('wintextcolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
-		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
-		'onComplete': function(color) {
-			mypageSetwintextcolor(color.hex, true, true);
-		}
-	});
-	var r_wintitle = new MooRainbow('myRainbow_wintitle', {
-		'id': 'moorainbox_wintitle',
-		'startColor': new Color('{/literal}{$mypage->getParam('wintitlecolor', '#000000')|escape:'javascript'}{literal}', 'hex'),
-		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
-		'onComplete': function(color) {
-			mypageSetwintitlecolor(color.hex, true, true);
-		}
-	});
-	var r_winbg = new MooRainbow('myRainbow_winbg', {
-		'id': 'moorainbox_winbg',
-		'startColor': new Color('{/literal}{$mypage->getParam('winbgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
-		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
-		'onComplete': function(color) {
-			mypageSetwinbgcolor(color.hex, true, true);
-		}
-	});
-	var r_bg = new MooRainbow('myRainbow_bg', {
-		'id': 'moorainbox_bg',
-		'startColor': new Color('{/literal}{$mypage->getParam('bgcolor', '#ffffff')|escape:'javascript'}{literal}', 'hex'),
-		'imgPath': 'lib/mootools/extensions/mooRainbow/images/',
-		'onComplete': function(color) {
-			mypageSetbgcolor(color.hex, true, true);
-		}
-	});
 }
 
 ////////////////////////////
@@ -393,11 +404,20 @@ function windooStartDrag(id) {
 	if (isExtended) extendContract();
 }
 
+var lastFocusedWindoo=0;
+var tikimypagewin=[];
+function initSavedWindows() {
+	// open saved windows
+	{/literal}{$mypagejswindows}{literal}
+}
+
 function initMyPage() {
 	initCSSStyle();
 	initSavedWindows();
+	{/literal}{if $editit}
 	initSimpleTabs();
 	initSideBar();
+	{/if}{literal}
 }
 
 {/literal}

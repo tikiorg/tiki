@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.44 2007-09-14 19:53:05 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.45 2007-09-16 15:26:53 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ function mypage_error($err) {
 		$err.= str_replace("\n", '\n', "\n".mydumpstack(xdebug_get_function_stack()));
     }
 	*/
-	$objResponse->addScript("alert('".addslashes($err)."');");
+	$objResponse->addScript("alert('".str_replace("\n", '\n', addslashes($err))."');");
     return $objResponse;
 }
 
@@ -225,6 +225,10 @@ function mypage_update($id_mypage, $vals, $form) {
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
 	if (is_string($mypage))
 		return mypage_error($mypage);
+
+	foreach($vals as $k => $val) {
+		if ($val == 'null') $vals[$k]=NULL; // hack because xajax don't return real null :(
+	}
 
 	if (array_key_exists('id_types', $vals)) unset($vals['id_types']);
 	$mypage->setParams($id_mypage, $vals);
