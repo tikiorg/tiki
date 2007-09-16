@@ -18,15 +18,7 @@ $info["country"] = 'None';
 $info["isValid"] = 'n';
 $smarty->assign_by_ref('info',$info);
 
-$countries=Array();
-$h=opendir("img/flags");
-while($file=readdir($h)) {
-  if(is_file('img/flags/'.$file)) {
-    $name=explode('.',$file);
-    $countries[]=$name[0];
-  }
-}
-closedir($h);
+$countries = $tikilib->get_flags();
 $smarty->assign_by_ref('countries',$countries);
 
 // Display the template

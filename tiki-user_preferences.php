@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.97 2007-09-10 16:51:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.98 2007-09-16 22:07:22 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -373,20 +373,8 @@ $user_items = $tikilib->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items', $user_items);
 
 // Get flags here
-$flags = array();
-$h = opendir("img/flags/");
-
-while ($file = readdir($h)) {
-	if (strstr($file, ".gif")) {
-		$parts = explode('.', $file);
-
-		$flags[] = $parts[0];
-	}
-}
-
-closedir ($h);
-sort ($flags);
-$smarty->assign('flags', $flags);
+$flags = $tikilib->get_flags();
+$smarty->assign_by_ref('flags', $flags);
 
 // Get preferences
 $langUser = $tikilib->get_user_preference($userwatch, 'language', $language);
