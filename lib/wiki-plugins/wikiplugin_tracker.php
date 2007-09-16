@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.67 2007-07-27 13:58:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.68 2007-09-16 22:10:42 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -240,12 +240,26 @@ function wikiplugin_tracker($data, $params) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
 
-			/*} else if (!empty($tracker['oneUserItem']) && $tracker['oneUserItem'] == 'y' && ($itemId = $trklib->get_user_item($trackerId, $tracker))) {
-				$flds['data'] = @@;
-			*/
-			}
-			// initialize fields with blank values
-			else {
+			} else if (!empty($values)) { // assign default values for each filedId specify
+				if (!is_array($values)) {
+					$values = array($values);
+				}
+				if (isset($fields)) {
+					$fl = split(':', $fields);
+					for ($j = 0; $j < count($fl); $j++) {
+						for ($i = 0; $i < count($flds['data']); $i++) {
+							if ($flds['data'][$i]['fieldId'] == $fl[$j]) { 
+								$flds['data'][$i]['value'] = $values[$j];
+							}	
+						}
+					}
+				} else { // values contains all the fields value in the default order
+					$i = 0;
+					foreach ($values as $value) {
+						$flds['data'][$i++]['value'] = $value;
+					}
+				}
+			} else { // initialize fields with blank values
 				for($i = 0; $i < count($flds['data']); $i++) {
 					$flds['data'][$i]['value'] = '';
 				}
@@ -384,7 +398,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</td><td>";
 						$back.= '<select name="track['.$f["fieldId"].']">';
-						$flags = $trklib->get_flags();
+						$flags = $tikilib->get_flags();
 						foreach ($flags as $flag) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
 							if (!isset($f['options']) ||  $f['options'] != '1')
