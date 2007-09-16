@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.19 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.20 2007-09-16 22:07:22 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -209,18 +209,7 @@ if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { //
 }
 $smarty->assign('categs', $categs);
 
-$countries = array();
-$h = opendir("img/flags");
-
-while ($file = readdir($h)) {
-	if (is_file('img/flags/' . $file) && preg_match('/\.gif$/', $file)) {
-		$name = explode('.', $file);
-
-		$countries[] = $name[0];
-	}
-}
-
-closedir ($h);
+$countries = $tikilib->get_flags();
 usort($countries, 'country_sort');
 $smarty->assign_by_ref('countries', $countries);
 

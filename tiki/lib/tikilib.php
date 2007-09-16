@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.774 2007-09-13 15:21:28 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.775 2007-09-16 22:07:20 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7014,6 +7014,20 @@ if (!$simple_wiki) {
 		case 4: return tra('You must select a file.');
 		default: return tra('The file you are trying upload was only partially uploaded.');
 		}
+	}
+
+	function get_flags() {
+		$flags = array();
+		$h = opendir("img/flags/");
+		while ($file = readdir($h)) {
+			if (strstr($file, ".gif")) {
+				$parts = explode('.', $file);
+				$flags[] = $parts[0];
+			}
+		}
+		closedir ($h);
+		sort($flags);
+		return $flags;
 	}
 
 }

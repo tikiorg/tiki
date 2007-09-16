@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.218 2007-08-31 12:09:06 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.219 2007-09-16 22:07:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2072,19 +2072,6 @@ class TrackerLib extends TikiLib {
 			$this->query($query, array($newTrackerId, $name, $val));
 		}
 		return $newTrackerId;
-	}
-	function get_flags() {
-		$flags = array();
-		$h = opendir("img/flags/");
-		while ($file = readdir($h)) {
-			if (strstr($file, ".gif")) {
-				$parts = explode('.', $file);
-				$flags[] = $parts[0];
-			}
-		}
-		closedir ($h);
-		sort($flags, SORT_STRING);
-		return $flags;	
 	}
 	// look for default value: a default value is 2 consecutive same value
 	function set_default_dropdown_option($field) {
