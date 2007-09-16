@@ -2,7 +2,7 @@ div.windoo-mypage div.windoo-body {
 	margin:16px 4px 0;
 	padding:0;
 	background:#fff;
-	border:solid #8DB2E3 1px;
+	border:solid #333 1px;
 	border-style:none solid solid;
 }
 div.windoo-mypage-ie .windoo-body {
@@ -23,16 +23,16 @@ div.windoo-mypage .windoo-se {
 
 
 div.windoo-mypage div.windoo-frame {
-	opacity:0.8;
-	filter:Alpha(opacity=80);
+/*	opacity:0;
+	filter:Alpha(opacity=0);*/
 }
 div.windoo-mypage div.windoo-frame .top-left {
 	padding:0 0 0 3px;
-	background:transparent url(windoo.mypage/hd-sprite.gif) no-repeat scroll left -41px;
+	background: url(windoo.mypage/hd-sprite.gif) no-repeat scroll left -41px;
 }
 div.windoo-mypage div.windoo-frame .top-right {
 	padding:0 3px 0 0;
-	background:transparent url(windoo.mypage/hd-sprite.gif) no-repeat scroll right 0;
+	background: url(windoo.mypage/hd-sprite.gif) no-repeat scroll right 0;
 }
 div.windoo-mypage div.windoo-frame .title {
 	background:#CFC6C1 url(windoo.mypage/hd-sprite.gif) repeat-x scroll 0 -82px;
@@ -48,18 +48,16 @@ div.windoo-mypage div.windoo-frame .title-text {
 	text-align:left;
 }
 div.windoo-mypage div.windoo-frame .bot-left {
-	padding:0 0 0 7px;
-	background:transparent url(windoo.mypage/bg-left.gif) no-repeat scroll left bottom;
+	padding:0 0 0 4px;
+	background: url(windoo.mypage/bg-left.gif) no-repeat scroll left bottom;
 }
 div.windoo-mypage div.windoo-frame .bot-right {
-	padding:0 7px 0 0;
-	background:transparent url(windoo.mypage/bg-right.gif) no-repeat scroll right bottom;
+	padding:0 4px 0 0;
+	background: url(windoo.mypage/bg-right.gif) no-repeat scroll right bottom;
 }
 div.windoo-mypage div.windoo-frame .strut {
-	background:transparent url(windoo.mypage/bg-center.gif) repeat-x scroll center bottom;
-	text-align:left;
+	background: url(windoo.mypage/border-4-000.png) repeat-x scroll center bottom;
 }
-
 
 div.windoo-mypage a.windoo-button {
 	width:23px;
@@ -79,8 +77,8 @@ div.windoo-mypage a.windoo-close:hover {
 }
 div.windoo-mypage a.windoo-close-disabled, div.windoo-mypage a.windoo-close-disabled:hover {
 	background-position:-69px 0;
-	opacity:.3;
-	filter:Alpha(opacity=30);
+/*	opacity:.3;
+	filter:Alpha(opacity=30);*/
 }
 div.windoo-mypage a.windoo-maximize {
 	top:0px;
@@ -92,8 +90,8 @@ div.windoo-mypage a.windoo-maximize:hover {
 }
 div.windoo-mypage a.windoo-maximize-disabled, div.windoo-mypage a.windoo-maximize-disabled:hover {
 	background-position:-46px 0;
-	opacity:.3;
-	filter:Alpha(opacity=30);
+/*	opacity:.3;
+	filter:Alpha(opacity=30);*/
 }
 div.windoo-mypage a.windoo-minimize {
 	top:0px;
@@ -105,8 +103,8 @@ div.windoo-mypage a.windoo-minimize:hover {
 }
 div.windoo-mypage a.windoo-minimize-disabled, div.windoo-mypage a.windoo-minimize-disabled:hover {
 	background-position:0 0;
-	opacity:.3;
-	filter:Alpha(opacity=30);
+/*	opacity:.3;
+	filter:Alpha(opacity=30);*/
 }
 div.windoo-mypage a.windoo-restore {
 	display:none;
@@ -119,8 +117,8 @@ div.windoo-mypage a.windoo-restore:hover {
 }
 div.windoo-mypage a.windoo-restore-disabled, div.windoo-mypage a.windoo-restore-disabled:hover {
 	background-position:-46px 0;
-	opacity:.3;
-	filter:Alpha(opacity=30);
+/*	opacity:.3;
+	filter:Alpha(opacity=30);*/
 }
 
 div.windoo-mypage a.windoo-menu {
