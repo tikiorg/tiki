@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.27 2007-06-27 15:38:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.28 2007-09-17 17:10:08 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -163,7 +163,7 @@ function refresh_index($object_type, $object_id = null) {
 
 			foreach ( $f_id as $k_id => $v_id ) $id .= (($id!='')?'#':'').$res[(is_string($k_id)?$k_id:$v_id)];
 			foreach ( $f_content as $k_content => $v_content ) $content .= ' '.$res[(is_string($k_content)?$k_content:$v_content)];
-			if ( $f_index_type != '' ) $index_type = $res[$f_index_type];
+			if ( isset($f_index_type) && $f_index_type != '' ) $index_type = $res[$f_index_type];
 			if ( is_array($filtering_expr) ) foreach ( $filtering_expr as $expr ) eval($expr);
 
 			if ( $content != '' && $index_type != '' && $id != '' ) insert_index(search_index($content), $index_type, $id);

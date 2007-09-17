@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.219 2007-09-16 22:07:22 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.220 2007-09-17 17:10:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -940,7 +940,7 @@ class TrackerLib extends TikiLib {
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 						$this->query($query,array((int) $new_itemId,(int) $fieldId,''));
 					}
-				} elseif (($ins_fields["data"][$i]["isMultilingual"] == 'y') && ($ins_fields["data"][$i]["type"] =='a' || $ins_fields["data"][$i]["type"]=='t')){
+				} elseif ((isset($ins_fields['data'][$i]['isMultilingual']) && $ins_fields['data'][$i]['isMultilingual'] == 'y') && ($ins_fields['data'][$i]['type'] =='a' || $ins_fields['data'][$i]['type']=='t')){
 				 
                                 global $multilinguallib;
                                 include_once('lib/multilingual/multilinguallib.php');
