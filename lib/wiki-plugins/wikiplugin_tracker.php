@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.68 2007-09-16 22:10:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.69 2007-09-17 19:59:16 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -398,6 +398,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</td><td>";
 						$back.= '<select name="track['.$f["fieldId"].']">';
+						$back .= '<option value=""></option>';
 						$flags = $tikilib->get_flags();
 						foreach ($flags as $flag) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
