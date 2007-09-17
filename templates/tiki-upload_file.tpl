@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.35 2007-08-29 14:15:26 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.36 2007-09-17 18:12:08 sampaioprimo Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -84,7 +84,7 @@
 			<div align="center">
 				{$uploads[ix].name} ({$uploads[ix].size|kbsize})<br />
 				<div class="wikitext">
-					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].$dllink}">{$uploads[ix].dllink}</a><br /><br />
+					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
 					{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="5">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
 				</div>
 			</div>
