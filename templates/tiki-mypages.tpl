@@ -118,7 +118,7 @@ function showMypageEdit(id) {
 	curmodal=new Windoo({
 		"modal": true,
 		"width": 600,
-		"height": 550,
+		"height": 430,
 		"container": false,
 		"theme": "mypage"
 	}).adopt($('mypageeditdiv'));
@@ -152,13 +152,15 @@ function showMypageEdit(id) {
 		mypageTypeChange($('mypageedit_type').value);
 	}
 
+	curmodal.addEvent('onClose', function() {
+		$('mypageeditdivparking').adopt($('mypageeditdiv'));
+		curmodal=null;
+	});
 	curmodal.show();
 }
 
 function closeMypageEdit() {
-	$('mypageeditdivparking').adopt($('mypageeditdiv'));
 	curmodal.close();
-	curmodal=null;
 }
 
 function saveMypageEdit() {
