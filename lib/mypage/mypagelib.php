@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.75 2007-09-15 03:19:14 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.76 2007-09-18 16:06:32 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1094,6 +1094,12 @@ class MyPageWindow {
 						 'container' => 'mypage',
 						 'buttons'   => array()
 						 );
+
+		/*
+		$winparams['effects'] = array('show' => array('options' => array('duration' => 0, 'opacity' => array('1','1'))),
+									  'close' => array('options' => array('duration' => 0, 'opacity' => array('0','0'))),
+									  'hide' => array('options' => array('duration' => 0, 'opacity' => array('0','0'))));
+		*/
 
 		if (is_callable(array($comp, 'isResizeable'))) {
 			if (!$comp->isResizeable()) {
