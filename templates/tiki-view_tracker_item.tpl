@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.152 2007-09-13 15:36:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.153 2007-09-18 21:47:00 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -426,7 +426,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
         </table>
         {/if}
 {elseif $cur_field.type eq 'f'}
-{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$display_field_order} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}
+{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
 
 {elseif $cur_field.type eq 'r'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
@@ -510,7 +510,11 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 
 {elseif $cur_field.type eq 'j'}
+{if $cur_field.options_array[0] eq 'd'}
+{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="n"}
+{else}
 {jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
+{/if}
 {/if}
 
 {if $cur_field.description}

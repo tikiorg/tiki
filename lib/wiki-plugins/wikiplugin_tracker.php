@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.70 2007-09-18 20:34:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.71 2007-09-18 21:47:00 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -530,12 +530,20 @@ function wikiplugin_tracker($data, $params) {
 							$onemandatory = true;
 						}
 						$back .= "</td><td>";
-						include('lib/smarty_tiki/function.html_select_date.php');
-						include('lib/smarty_tiki/function.html_select_time.php');
+						include_once('lib/smarty_tiki/function.html_select_date.php');
+						include_once('lib/smarty_tiki/function.html_select_time.php');
 						$params['prefix'] = 'track_'.$f['fieldId'];
+						if (isset($f['options_array'][1])) {
+							$params['start_year'] = $f['options_array'][1];
+						}
+						if (isset($f['options_array'][2])) {
+							$params['end_year'] = $f['options_array'][2];
+						}
 						$back .= smarty_function_html_select_date($params, $smarty);
-						$params['display_seconds'] = false;
-						$back .= smarty_function_html_select_time($params, $smarty);
+						if (empty($f['options_array'][0]) || $f['options_array'][0] != 'd') {
+							$params['display_seconds'] = false;
+							$back .= smarty_function_html_select_time($params, $smarty);
+						}
 					} elseif ($f['type'] == 'j') {
 						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
@@ -546,6 +554,11 @@ function wikiplugin_tracker($data, $params) {
 						include_once('lib/smarty_tiki/function.jscalendar.php');
 						$params['id'] = 'track['.$f['fieldId'].']';
 						$params['fieldname'] = 'track['.$f['fieldId'].']';
+						if (empty($f['options_array'][0]) || $f['options_array'][0] != 'd') {
+							$params['showtime'] = 'y';
+						} else {
+							$params['showtime'] = 'n';
+						}
 						$back .= smarty_function_jscalendar_body($params,$smarty);
 					} else {
 					}

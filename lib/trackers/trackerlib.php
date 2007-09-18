@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.220 2007-09-17 17:10:07 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.221 2007-09-18 21:47:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1853,10 +1853,12 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('Country Selector options: 1|2 where 1 show only country name and 2 show only country flag. By default show both country name and flag') );
 		$type['f'] = array(
 			'label'=>tra('date and time'),
-			'opt'=>false);
+			'opt'=>true,
+			'help'=>tra('Date Time options: date_time,year0,year1 where date_time=d|dt(default), d displays only date, year0 is the first year, year1 the last'));
 		$type['j'] = array(
 			'label'=>tra('jscalendar'),
-			'opt'=>false);
+			'opt'=>true,
+			'help'=>tra('Jscalendar options: date_time where date_time=d|dt(default), d displays only date'));
 		$type['i'] = array(
 			'label'=>tra('image'),
 			'opt'=>true,
