@@ -307,8 +307,13 @@ function mypageSetwinbgcolor(color, selectit, saveit) {
 		if (saveit) xajax_mypage_update({/literal}{$id_mypage}{literal}, { 'winbgtype' : 'color', 'winbgcolor': color });
 	{/literal}{/if}{literal}
 	if (selectit) {
-		if (color == null) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: none", stylepos_winbg);
-		else stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body,div.windoo-mypage_view div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	{/literal}{if $editit}{literal}
+		if (color == null) stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body', "background: none", stylepos_winbg);
+		else stylepos_winbg=updateStyleRule('div.windoo-mypage div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	{/literal}{else}{literal}
+		if (color == null) stylepos_winbg=updateStyleRule('div.windoo-mypage_view div.windoo-body', "background: none", stylepos_winbg);
+		else stylepos_winbg=updateStyleRule('div.windoo-mypage_view div.windoo-body', "background: "+htmlspecialchars(color), stylepos_winbg);
+	{/literal}{/if}{literal}
 	}
 }
 
@@ -345,7 +350,7 @@ function updateStyleRule(selector, rule, stylepos) {
 			stylepos=[ document.styleSheets.length - 1, 0 ];
 			stylepos[1]=document.styleSheets[stylepos[0]].rules.length;
 		}
-		document.styleSheets[stylepos[0]].addRule(selector,rule);
+		document.styleSheets[stylepos[0]].addRule(selector,rule, stylepos[1]);
 	} else if (document.getElementById) {
 		if (stylepos)
 			document.styleSheets[stylepos[0]].deleteRule(stylepos[1]);
