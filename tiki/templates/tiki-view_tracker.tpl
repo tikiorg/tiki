@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.155 2007-08-31 12:09:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.156 2007-09-18 21:47:00 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -287,7 +287,7 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
 
 {if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
-{if $items[user].field_values[ix].value}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{else}&nbsp;{/if}
+{if $items[user].field_values[ix].value}{if $items[user].field_values[ix].options_array[0] eq 'd'}{$items[user].field_values[ix].value|tiki_short_date|truncate:255:"..."|default:"&nbsp;"}{else}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{/if}{else}&nbsp;{/if}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
@@ -700,7 +700,11 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- jscalendar ------------------- *}
 {elseif $fields[ix].type eq 'j'}
+{if $fields[ix].options_array[0] eq 'd'}
+{jscalendar date=$now id=$fields[ix].ins_id fieldname=$fields[ix].ins_id showtime="n"}
+{else}
 {jscalendar date=$now id=$fields[ix].ins_id fieldname=$fields[ix].ins_id showtime="y"}
+{/if}
 
 {* -------------------- item link -------------------- *}
 {elseif $fields[ix].type eq 'r'}

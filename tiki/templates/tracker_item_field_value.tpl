@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.13 2007-07-21 17:39:09 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.14 2007-09-18 21:47:00 sylvieg Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -81,7 +81,13 @@
 
 {* -------------------- date -------------------- *}
 {elseif $field_value.type eq 'f' or $field_value.type eq 'j'}
-	{if $field_value.value}{$field_value.value|tiki_short_datetime}{else}&nbsp;{/if}
+	{if $field_value.value}
+		{if $field_value.options_array[0] eq 'd'}
+			{$field_value.value|tiki_short_date}
+		{else}
+			{$field_value.value|tiki_short_datetime}
+		{/if}
+	{else}&nbsp;{/if}
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}
