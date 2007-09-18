@@ -6,12 +6,26 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if (!function_exists('mod_forums_last_topics_help')) {
+        function mod_forums_last_topics_help() {
+                return 'forumId=id1:id2';
+        }
+}
+
 // Parameter absurl set if the last_topics url is absolute or not [y|n].
 // If not set, default = relative
 
 global $ranklib; include_once ('lib/rankings/ranklib.php');
 
-$ranking = $ranklib->forums_ranking_last_topics($module_rows);
+if (isset($module_params['forumId'])) {
+	if (strstr($module_params['forumId'], ':')) {
+		$ranking = $ranklib->forums_ranking_last_topics($module_rows, explode(':',$module_params['forumId']));
+	} else {
+		$ranking = $ranklib->forums_ranking_last_topics($module_rows, $module_params['forumId']);
+	}
+} else {	
+	$ranking = $ranklib->forums_ranking_last_topics($module_rows);
+}
 $smarty->assign('modForumsLastTopics', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
