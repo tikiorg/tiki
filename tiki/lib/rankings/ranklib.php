@@ -84,14 +84,24 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function forums_ranking_last_topics($limit) {
+	function forums_ranking_last_topics($limit, $forumId='') {
 		global $user;
+		if (is_array($forumId)) {
+			$bindvars = $forumId;
+			$mid = ' and tf.`forumId` in ('.implode(',',array_fill(0,count($forumId),'?')).')';
+		} elseif (!empty($forumId)) {
+			$bindvars=array((int) $forumId);
+		    $mid = ' and tf.`forumId`=?';
+		} else {
+			$bindvars = array();
+			$mid = '';
+		}
 		$query = "select * from
-		`tiki_comments`,`tiki_forums` where
+		`tiki_comments`,`tiki_forums` tf where
 		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum' and
-		`parentId`=0 order by `commentDate` desc";
+		`parentId`=0 $mid order by `commentDate` desc";
 
-		$result = $this->query($query,array());
+		$result = $this->query($query, $bindvars);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
