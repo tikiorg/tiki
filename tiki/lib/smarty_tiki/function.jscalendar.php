@@ -7,6 +7,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_jscalendar($params, &$smarty) {
+	echo smarty_function_jscalendar_body($params, $smarty);
+}
+
+function smarty_function_jscalendar_body($params, &$smarty) {
 	global $headerlib,$firstDayofWeek,$tikilib;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');
@@ -111,7 +115,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 	$back.= "} );\n";
 	$back.= "</script>\n";
 
-	echo $back;
+	return $back;
 
 }
 

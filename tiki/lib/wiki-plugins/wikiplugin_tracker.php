@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.69 2007-09-17 19:59:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.70 2007-09-18 20:34:15 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -94,6 +94,16 @@ function wikiplugin_tracker($data, $params) {
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
 					// isn't fully filled.
+					if ($flds['data'][$cpt]['type'] == 'f') {
+						$ins_id = 'track_'.$fl['fieldId'];
+						if (empty($_REQUEST['$ins_id'.'Hour'])) {
+							$_REQUEST['$ins_id'.'Hour'] = 0;
+						}
+						if (empty($_REQUEST['$ins_id'.'Minute'])) {
+							$_REQUEST['$ins_id'.'Minute'] = 0;
+						}
+						$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
+					} 
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
@@ -513,6 +523,30 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back .= "</td><td>";
 						$back .= '<input type="file" name="track['.$f["fieldId"].']" />';
+					} elseif ($f['type'] == 'f') {
+						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$onemandatory = true;
+						}
+						$back .= "</td><td>";
+						include('lib/smarty_tiki/function.html_select_date.php');
+						include('lib/smarty_tiki/function.html_select_time.php');
+						$params['prefix'] = 'track_'.$f['fieldId'];
+						$back .= smarty_function_html_select_date($params, $smarty);
+						$params['display_seconds'] = false;
+						$back .= smarty_function_html_select_time($params, $smarty);
+					} elseif ($f['type'] == 'j') {
+						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
+							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$onemandatory = true;
+						}
+						$back .= "</td><td>";
+						include_once('lib/smarty_tiki/function.jscalendar.php');
+						$params['id'] = 'track['.$f['fieldId'].']';
+						$params['fieldname'] = 'track['.$f['fieldId'].']';
+						$back .= smarty_function_jscalendar_body($params,$smarty);
 					} else {
 					}
 					if (!empty($f['description']) && $f['type'] != 'h')
