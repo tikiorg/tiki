@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.72 2007-09-19 15:28:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.73 2007-09-19 18:11:13 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -96,13 +96,17 @@ function wikiplugin_tracker($data, $params) {
 					// isn't fully filled.
 					if ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
-						if (empty($_REQUEST['$ins_id'.'Hour'])) {
-							$_REQUEST['$ins_id'.'Hour'] = 0;
+						if (isset($_REQUEST['$ins_id'.'Day'])) {
+							if (empty($_REQUEST['$ins_id'.'Hour'])) {
+								$_REQUEST['$ins_id'.'Hour'] = 0;
+							}
+							if (empty($_REQUEST['$ins_id'.'Minute'])) {
+								$_REQUEST['$ins_id'.'Minute'] = 0;
+							}
+							$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
+						} else {
+							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}
-						if (empty($_REQUEST['$ins_id'.'Minute'])) {
-							$_REQUEST['$ins_id'.'Minute'] = 0;
-						}
-						$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 					} 
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
