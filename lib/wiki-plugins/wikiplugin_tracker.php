@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.71 2007-09-18 21:47:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.72 2007-09-19 15:28:22 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -539,6 +539,9 @@ function wikiplugin_tracker($data, $params) {
 						if (isset($f['options_array'][2])) {
 							$params['end_year'] = $f['options_array'][2];
 						}
+						if (isset($f['value'])) {
+							$params['time'] = $f['value'];
+						}
 						$back .= smarty_function_html_select_date($params, $smarty);
 						if (empty($f['options_array'][0]) || $f['options_array'][0] != 'd') {
 							$params['display_seconds'] = false;
@@ -558,6 +561,9 @@ function wikiplugin_tracker($data, $params) {
 							$params['showtime'] = 'y';
 						} else {
 							$params['showtime'] = 'n';
+						}
+						if (isset($f['value'])) {
+							$params['date'] = $f['value'];
 						}
 						$back .= smarty_function_jscalendar_body($params,$smarty);
 					} else {
