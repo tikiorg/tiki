@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.73 2007-09-19 18:11:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.74 2007-09-20 11:02:44 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -96,7 +96,7 @@ function wikiplugin_tracker($data, $params) {
 					// isn't fully filled.
 					if ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
-						if (isset($_REQUEST['$ins_id'.'Day'])) {
+						if (isset($_REQUEST[$ins_id.'Day'])) {
 							if (empty($_REQUEST['$ins_id'.'Hour'])) {
 								$_REQUEST['$ins_id'.'Hour'] = 0;
 							}
