@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.61 2007-09-20 16:42:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.62 2007-09-20 17:23:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -188,7 +188,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			$fp = fopen($tmp_dest, "rb");
 
 			if (!$fp) {
-				$errors[] = tra('Cannot read file');
+				$errors[] = tra('Cannot read file:').' '.$tmp_dest;
 			}
 
 			$data = '';
@@ -219,7 +219,9 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 				if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 					$data .= fread($fp, 8192 * 16);
 				} else {
-					$data = fread($fp, 8192 * 16);
+					if (($data = fread($fp, 8192 * 16)) === false) {
+						$errors[] = tra('Cannot read the file:').' '.$tmp_dest;
+					}
 
 					fwrite($fw, $data);
 				}
@@ -246,9 +248,12 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 				break;
 			}
 
+			if (!$size) {
+				$errors[] = tra('Warning: Empty file:').'  '.$name;
+			}
 			if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 				if (!isset($data) || strlen($data) < 1) {
-					$errors[] = tra('Upload was not successful'). ': ' . $name;
+					$errors[] = tra('Warning: Empty file:'). ' ' . $name;
 				}
 			}
 
