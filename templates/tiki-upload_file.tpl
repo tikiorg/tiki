@@ -1,17 +1,41 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.37 2007-09-20 17:21:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.38 2007-09-20 20:03:51 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
 {if count($galleries) > 0}
-	{if !empty($galleryId)}<div class="navbar"><a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Browse gallery{/tr}</a>{/if}</div>
+	{if !empty($galleryId)}
+	<div class="navbar"><a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Browse gallery{/tr}</a>{if count($uploads) > 0}
+	<a href="#upload" class="linkbut" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>{/if}
+	</div>
+	{/if}
 
 {if count($errors) > 0}
 <div class="simplebox highlight">
-<h3>{tr}Errors detected{/tr}</h3>
+<h2>{tr}Errors detected{/tr}</h2>
 	{section name=ix loop=$errors}
 		{$errors[ix]}<br />
 	{/section}
 </div>
+{/if}
+
+{if count($uploads) > 0}
+	<h2>{tr}The following file was successfully uploaded{/tr}:</h2><br
+	{section name=ix loop=$uploads}
+		<div align="center">
+			<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b><br />
+			<div class="wikitext">
+				{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
+				{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
+			</div>
+		</div>
+	{/section}
+<h2>{tr}Upload File{/tr}</h2>
+{elseif $fileChangedMessage}
+	<div align="center">
+		<div class="wikitext">
+		{$fileChangedMessage}
+		</div>
+	</div>
 {/if}
 
 {if !$editFileId}
@@ -26,7 +50,7 @@
 
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" method="post">
-	<table class="normal">
+	<table id="upload" class="normal">
 	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
 	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
 	{if $editFileId}<input type="hidden" name="galleryId" value="{$galleryId}"/>
@@ -78,30 +102,10 @@
 	</table>
 	</form>
 	</div>
-	<br />
-	<hr/>
 	
-	{if count($uploads) > 0}
-		<h3>{tr}The following file was successfully uploaded{/tr}:</h3><br />
-		{section name=ix loop=$uploads}
-			<div align="center">
-				{$uploads[ix].name} ({$uploads[ix].size|kbsize})<br />
-				<div class="wikitext">
-					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
-					{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="5">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
-				</div>
-			</div>
-		{/section}
-	{elseif $fileChangedMessage}
-	<div align="center">
-		<div class="wikitext">
-		{$fileChangedMessage}
-		</div>
-	</div>
-	{/if}
 {else}
-	<a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}">{tr}You have to 
-create a gallery first!{/tr}</a>
+	<div class="simplebox highlight"><a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}">{tr}You have to 
+create a gallery first!{/tr}</a></div>
 {/if}
 
 

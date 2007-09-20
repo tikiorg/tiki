@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.62 2007-09-20 17:23:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.63 2007-09-20 20:03:51 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,11 +249,11 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			}
 
 			if (!$size) {
-				$errors[] = tra('Warning: Empty file:').'  '.$name;
+				$errors[] = tra('Warning: Empty file:').'  '.$name.'. '.tra('Please re-upload your file');
 			}
 			if (($fgal_use_db == 'y') && (!$podCastGallery)) {
 				if (!isset($data) || strlen($data) < 1) {
-					$errors[] = tra('Warning: Empty file:'). ' ' . $name;
+					$errors[] = tra('Warning: Empty file:'). ' ' . $name.'. '.tra('Please re-upload your file');
 				}
 			}
 
