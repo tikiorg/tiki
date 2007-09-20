@@ -1,9 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.36 2007-09-17 18:12:08 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.37 2007-09-20 17:21:44 sylvieg Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
 {if count($galleries) > 0}
 	{if !empty($galleryId)}<div class="navbar"><a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Browse gallery{/tr}</a>{/if}</div>
+
+{if count($errors) > 0}
+<div class="simplebox highlight">
+<h3>{tr}Errors detected{/tr}</h3>
+	{section name=ix loop=$errors}
+		{$errors[ix]}<br />
+	{/section}
+</div>
+{/if}
 
 {if !$editFileId}
 	{if $feature_file_galleries_batch eq 'y'}
@@ -71,12 +80,6 @@
 	</div>
 	<br />
 	<hr/>
-	{if count($errors) > 0}
-		<h3>{tr}Errors detected{/tr}</h3>
-		{section name=ix loop=$errors}
-			{$errors[ix]}<br />
-		{/section}
-	{/if}
 	
 	{if count($uploads) > 0}
 		<h3>{tr}The following file was successfully uploaded{/tr}:</h3><br />
