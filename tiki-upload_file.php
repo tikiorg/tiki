@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.60 2007-08-29 14:15:26 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.61 2007-09-20 16:42:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/filegals/filegallib.php');
+@ini_set('max_execution_time', 0); //will not work in safe_mode is on
 
 if ($feature_file_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
