@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.52 2007-08-29 14:15:26 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.53 2007-09-21 16:12:55 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -262,6 +262,10 @@
 			include_once("categorize.php");
 			$categlib->build_cache();
 		}
+	  if (isset($_REQUEST['viewitem'])) {
+		  header("location: tiki-list_file_gallery.php?galleryId=$fgid");
+		  die;
+	  }
 	  $smarty->assign('edit_mode','n');
 	}
 	
