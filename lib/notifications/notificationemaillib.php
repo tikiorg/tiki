@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.29 2007-08-10 13:34:07 guidoscherp Exp $
+// $Id: notificationemaillib.php,v 1.30 2007-09-21 21:28:40 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -149,7 +149,8 @@ function testEmailInList($nots, $email) {
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='') {
-	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
+	global $tikilib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
+	global $notificationlib; include_once('lib/notifications/notificationlib.php');
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
 
@@ -169,29 +170,25 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	// admin notifications
-	if ($notificationlib) {
-	    // If it's a minor change, get only the minor change watches.
-	    if( $minor )
-	    {
+    // If it's a minor change, get only the minor change watches.
+	if( $minor ){
 		$emails = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', 'wikipage' . $pageName); // look for pageName and any page
-	    // else if it's not minor change, get both watch types.
-	    } else {
+	} else { // else if it's not minor change, get both watch types.
 		$emails1 = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName); // look for pageName and any page
 		$emails2 = $notificationlib->get_mail_events('wiki_page_changes_incl_minor', 'wikipage' . $pageName); // look for pageName and any page
 		$emails = array_merge( $emails1, $emails2 );
-	    }
+	}
 
-	    foreach ($emails as $email) {
+	foreach ($emails as $email) {
 		if ($wiki_watch_editor != "y" && $email == $edit_user)
 		    continue;
 		if (!testEmailInList($nots, $email)) {
 		    $not = array('email' =>  $email);
 		    if ($not['user'] = $userlib->get_user_by_email($email))
-			$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
-		    else
-			$not['language'] = $defaultLanguage;
+				$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
+			else
+				$not['language'] = $defaultLanguage;
 		    $nots[] = $not;
-			}
 		}
 	}
 
