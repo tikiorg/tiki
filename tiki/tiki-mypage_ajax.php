@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.45 2007-09-16 15:26:53 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.46 2007-09-21 17:01:13 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -397,14 +397,15 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 	/* templates update */
 	if (is_array($type)) {
 		$templates=MyPage::listPages($type['templateuser'], $type['name']);
-		$templates_html="<option value='0'>".tra("Without template")."</option>";
+		$templates_html="<select id='mypageedit_template'><option value='0'>".tra("Without template")."</option>";
 		foreach($templates as $template)
 			$templates_html.="<option value='".$template['id']."'>".htmlspecialchars($template['name'])."</option>";
+		$templates_html.="</select>";
 
 		if (count($templates) == 0) {
 			$objResponse->addScript('$("mypageedit_tr_template").style.display="none";');
 		} else {
-			$objResponse->addAssign('mypageedit_template', 'innerHTML', $templates_html);
+			$objResponse->addAssign('mypageedit_td_template', 'innerHTML', $templates_html);
 			$objResponse->addScript('$("mypageedit_tr_template").style.display="";');
 		}
 	} else {
@@ -504,6 +505,20 @@ function comp_function($id_mypage, $id_win, $args) {
 	return $comp->ajax($args);
 }
 
+function type_function($id_mypage, $args) {
+	global $id_users;
+
+    $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
+	if (is_string($mypage))
+		return mypage_error($mypage);
+
+    $typeobj=$mypage->getTypeClass();
+	if (is_string($typeobj))
+		return mypage_error($typeobj);
+
+	return $typeobj->ajax($args);
+}
+
 function mypage_ajax_catchall($funcname, $args) {
     $objResponse = new xajaxResponse();
 
@@ -536,6 +551,7 @@ function mypage_ajax_init() {
     $ajaxlib->registerFunction("mptype_update");
 
     $ajaxlib->registerFunction("comp_function");
+    $ajaxlib->registerFunction("type_function");
 
 	$ajaxlib->registerCatchAllFunction("mypage_ajax_catchall");
 	

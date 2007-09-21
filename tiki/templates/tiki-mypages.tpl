@@ -41,7 +41,7 @@
 
     <tr id='mypageedit_tr_template' style='display: none;'>
      <th>{tr}Template{/tr}</th>
-     <td>
+     <td id='mypageedit_td_template'>
       <select id='mypageedit_template'>
        <option value='0'>No template</option>
       </select>
@@ -187,7 +187,8 @@ function saveMypageEdit() {
 }
 
 function deleteMypage(id) {
-	xajax_mypage_delete(id);
+	if (confirm("{/literal}{tr}Are you sure you want to delete this entry ?{/tr}{literal}" ))
+		xajax_mypage_delete(id);
 }
 
 function isNameFree() {
