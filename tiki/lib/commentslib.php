@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.164 2007-08-23 10:36:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.165 2007-09-21 20:00:29 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -372,9 +372,7 @@ class Comments extends TikiLib {
 	    //unset ($parts);
 	    //$this->parse_output($output, $parts, 0);
 
-	    // print( "<pre>" );
-	    // print_r( $output );
-	    // print( "</pre>" );
+	    //print( "<pre>" );print_r( $output );print_r( "</pre>" );
 
 	    if (isset($output["text"][0])) {
 		$body = $output["text"][0];
@@ -382,7 +380,11 @@ class Comments extends TikiLib {
 		$body = $output['parts'][0]["text"][0];
 	    } elseif (isset($output['body'])) {
 		$body = $output['body'];
-	    } else {
+		} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
+			$body = strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0]));
+		} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
+			$body = $output['parts'][0]['parts'][0]['text'][0];
+  	    } else {
 		$body = "";
 	    }
 
@@ -492,7 +494,7 @@ class Comments extends TikiLib {
 	    }
 
 
-	    $pop3->deleteMsg( 1 );
+		$pop3->deleteMsg( 1 );
 
 	    $pop3->disconnect();
 
