@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.127 2007-09-22 08:06:20 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.128 2007-09-22 15:41:52 pkdille Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -328,12 +328,24 @@ function searchrep() {
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
+<td>&nbsp;</td>
+<td>
 <input type="hidden" name="page" value="{$page|escape}" />
-{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}<input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm = false;" />&nbsp;{/if}
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />&nbsp;
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" />&nbsp;
-{if $feature_ajax eq 'y'}<input type="submit" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()" />&nbsp;{/if}
-{if $page|lower ne 'sandbox'}<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />{/if}
+
+{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
+  <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm=false;" />
+{/if}
+
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
+
+{if $feature_ajax eq 'y'}
+  <input type="submit" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
+{/if}
+
+{if $page|lower ne 'sandbox'}
+  <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
+{/if}
 {/if}
 </td></tr>
 </table>
