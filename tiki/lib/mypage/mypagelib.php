@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.76 2007-09-18 16:06:32 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.77 2007-09-22 13:45:47 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -140,10 +140,11 @@ class MyPage {
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
 			$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
+		else return "can't clone '".$type['name']."'";
 
-		if (!is_object($typeclass)) {
+		if (!is_object($mypage_dst->typeclass)) {
 			if (is_string($typeclass)) {
-				return $typeclass; // return the error returner by type
+				return $mypage_dst->typeclass; // return the error returner by type
 			} else {
 				return "an error occured while making the type instance";
 			}
@@ -195,6 +196,10 @@ class MyPage {
 	}
 	
 	function newWindow($contenttype) {
+		// actually, we only allow one component of one contenttype per mypage.
+		$wins=$this->getWindowsOfType($contenttype);
+		if (count($wins)) return tra("You cannot have more than one windows of this type.");
+
 		$win=MyPageWindow::newInstance_new($this, --$this->lastid, $contenttype);
 		$this->windows[$this->lastid]=$win;
 		return $win;
@@ -1120,6 +1125,10 @@ class MyPageWindow {
 			$winparams['buttons']	 = array('close'	=> false,
 											 'minimize' => false,
 											 'maximize' => false);
+		} else {
+			if (is_callable(array($comp, 'isConfigurable')) && $comp->isConfigurable()) {
+				$winparams['buttons']['menu'] = true;
+			}
 		}
 	
 		if ($this->params['contenttype'] == 'iframe') {
@@ -1134,6 +1143,7 @@ class MyPageWindow {
 			$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
 			$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
 			$js.=$v.".addEvent('onStartDrag', function() { windooStartDrag(".$this->id."); });\n";
+			$js.=$v.".addEvent('onMenu', function() { mypage_editComponent(".$this->id."); });\n";
 		}
 
 		if ($this->params['contenttype'] != 'iframe') {
