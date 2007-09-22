@@ -122,7 +122,11 @@ div.windoo-mypage a.windoo-restore-disabled, div.windoo-mypage a.windoo-restore-
 }
 
 div.windoo-mypage a.windoo-menu {
-	display:none;
+	top: 0px;
+	left: 0px;
+	width: 16px;
+	background: url('../../../../../pics/icons/pencil.png');
+	background-position: 0 0;
 }
 
 div.windoo-mypage-minimized {
