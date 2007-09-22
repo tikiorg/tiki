@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.126 2007-08-31 08:45:04 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.127 2007-09-22 08:06:20 pkdille Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -151,7 +151,7 @@
 </tr>
 {/if}
 {if $feature_wiki_description eq 'y'}
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" type="text" name="description" value="{$description|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor">
 {if $wysiwyg ne 'y'}
@@ -161,7 +161,7 @@
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$pagedata|escape:'html':'utf-8'}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 {else}
@@ -201,7 +201,7 @@ function searchrep() {
 
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
 
@@ -214,11 +214,11 @@ function searchrep() {
 {/section}
 </select>
 </td></tr>
-{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:95%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
+{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:98%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
 {/if}
 
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">

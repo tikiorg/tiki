@@ -12,10 +12,11 @@
 <td{if $cols} colspan="{$cols}"{/if}>
 <div id="freetager">
 {if $feature_help eq 'y'}
-<div class="simplebox">{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together.{/tr}</div>
+{tr}Put tags separated by spaces. For tags with more than one word, use no spaces and put words together.{/tr}
 {/if}
 
-<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" size="60" /><br />
+<input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%" />
+<br />
 {foreach from=$tag_suggestion item=t}
 <a href="javascript:addTag('{$t|escape:'javascript'}');">{$t}</a> 
 {/foreach}
