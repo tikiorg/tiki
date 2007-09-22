@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.53 2007-09-22 08:00:42 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.54 2007-09-22 16:07:44 pkdille Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -72,7 +72,7 @@
   </div>
 <br />
 
-Note that plugin arguments can be closed in double quotes (&quot;); this allows them to contain , or = or &gt;.
+{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.
 
 <table width="100%">
 {section name=i loop=$plugins}
