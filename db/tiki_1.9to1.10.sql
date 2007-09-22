@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.213 2007-09-14 19:53:06 niclone Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.214 2007-09-22 21:16:48 pkdille Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1560,3 +1560,8 @@ alter table tiki_mypage add column `bgimage` varchar(255) NULL;
 alter table tiki_mypage add column `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
 alter table tiki_mypage add column `winbgimage` varchar(255) NULL;
 alter table tiki_mypage add column `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
+
+# 2007-09-22 pkdille
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Search stats' and url='tiki-search_stats.php' and position='1125' and section='feature_search' and perm='tiki_p_admin';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Search stats' and url='tiki-search_stats.php' and position='1125' and section='feature_search_stats' and perm='tiki_p_admin';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','');
