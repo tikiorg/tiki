@@ -17,15 +17,10 @@
     				<ul>
      				{foreach from=$components item=component}
      					<li>
-      					<a href='#' onclick='mypage_editComponent("{$component}", true);'>{$component|escape}</a>
+      					<a href='#' onclick='mypage_addComponent("{$component}");'>{$component|escape}</a>
      					</li>
      				{/foreach}
     				</ul>
-
-				<h6>Configure selected component:</h6>
-				<ul><li>
-					<a href='#' onclick='mypage_editComponent(lastFocusedWindoo, false);'><span id='mypage_configcomp_span'></span></a>
-				</li></ul>
     			</div>
 
     			<h5>{tr}Style{/tr}</h5>
@@ -165,6 +160,10 @@ function mypage_configuresubmit() {
 		mypage_winconf.close();
 		mypage_winconf=null;
 	}
+}
+
+function mypage_addComponent(compname) {
+	xajax_mypage_win_create('{/literal}{$id_mypage}{literal}', compname);
 }
 
 ////////////
@@ -402,11 +401,43 @@ function htmlspecialchars(ch) {
 
 function windooFocusChanged(id) {
 	lastFocusedWindoo=id;
-	$('mypage_configcomp_span').innerHTML=htmlspecialchars(tikimypagewin[id].options.title);
 }
 
 function windooStartDrag(id) {
 	if (isExtended) extendContract();
+}
+
+function hideAllWins() {
+	for (var i in tikimypagewin) {
+		if ((typeof(i) == 'number') || ((typeof(i) == 'string') && (parseInt(i) == i))) {
+	      		tikimypagewin[i].hide();
+		}
+	}
+}
+
+function showAllWins() {
+	for (var i in tikimypagewin) {
+		if ((typeof(i) == 'number') || ((typeof(i) == 'string') && (parseInt(i) == i))) {
+	      		tikimypagewin[i].show();
+		}
+	}
+}
+
+function closeAllWins() {
+	for (var i in tikimypagewin) {
+		if ((typeof(i) == 'number') || ((typeof(i) == 'string') && (parseInt(i) == i))) {
+	      		tikimypagewin[i].close();
+		}
+	}
+}
+
+function destroyAllWins() {
+	for (var i in tikimypagewin) {
+		if ((typeof(i) == 'number') || ((typeof(i) == 'string') && (parseInt(i) == i))) {
+	      		tikimypagewin[i].destroy();
+		}
+	}
+	tikimypagewin=[];
 }
 
 var lastFocusedWindoo=0;
