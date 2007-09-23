@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.76 2007-06-08 18:07:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.77 2007-09-23 07:55:22 pkdille Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -117,9 +117,9 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Force to use chars and nums in passwords{/tr}:</td><td><input type="checkbox" name="pass_chr_num" {if $pass_chr_num eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Minimum password length{/tr}:</td><td><input type="text" name="min_pass_length" value="{$min_pass_length|escape}" /></td></tr>
-<tr><td class="form">{tr}Password invalid after days{/tr}:</td><td><input type="text" name="pass_due" value="{$pass_due|escape}" /><i>-1 for never</i></td></tr>
-<tr><td class="form">{tr}Re-validate user by email after days{/tr}:</td><td><input type="text" name="email_due" value="{$email_due|escape}" /><i>-1 for never</i></td></tr>
-<tr><td class="form">{tr}Re-validate user by email after unsuccessful logins{/tr}:</td><td><input type="text" name="unsuccessful_logins" value="{$unsuccessful_logins|escape}" /><i>-1 for never</i></td></tr>
+<tr><td class="form">{tr}Password invalid after days{/tr}:</td><td><input type="text" name="pass_due" value="{$pass_due|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
+<tr><td class="form">{tr}Re-validate user by email after days{/tr}:</td><td><input type="text" name="email_due" value="{$email_due|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
+<tr><td class="form">{tr}Re-validate user by email after unsuccessful logins{/tr}:</td><td><input type="text" name="unsuccessful_logins" value="{$unsuccessful_logins|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
 <tr><td class="form">{tr}HTTPS login{/tr}:</td><td class="form">
 <select name="https_login">
 <option value="disabled"{if $https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
