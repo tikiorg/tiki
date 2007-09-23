@@ -46,7 +46,7 @@
 {else}
 	{if ($tasklist[task_i].user eq $user) }
 		{*recived task*}
-		&gt;&gt;
+		<img src="pics/icons/task_received.png" title="{tr}received{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}received{/tr}" />
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
 			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}' />
 		{else}
@@ -62,7 +62,7 @@
 		{/if}
 	{elseif ($tasklist[task_i].creator eq $user) }
 		{*submitted task*}
-		&lt;&lt;
+		<img src="pics/icons/task_submitted.png" title="{tr}submitted{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}submitted{/tr}" />
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
 			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}not accepted by one user{/tr}'  border='0' alt='{tr}not accepted user{/tr}' />
 		{else}
@@ -82,7 +82,7 @@
 		{/if}
 	{else}
 		{*shared task*}
-		&gt;&lt;
+		<img src="pics/icons/task_shared.png" title="{tr}shared{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}shared{/tr}" />
 	{/if}
 {/if}
 	</td>
@@ -127,9 +127,9 @@
 	<td class="formcolor" colspan="6" style="text-align:center;">
 		&nbsp;&nbsp;{tr}show:{/tr}
 		&nbsp;<input  name="show_private" {if $show_private} checked="checked" {/if} type="checkbox" />{tr}private{/tr}
-		&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox" />&gt;&gt; {tr}received{/tr}
-		&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox" />&lt;&lt; {tr}submitted{/tr}
-		&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox" />&gt;&lt; {tr}shared{/tr}
+		{if $tiki_p_tasks_receive eq 'y'}&nbsp;<input  name="show_received" {if $show_received} checked="checked" {/if} type="checkbox" />{tr}received{/tr}{/if}
+		{if $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_submitted" {if $show_submitted} checked="checked" {/if} type="checkbox" />{tr}submitted{/tr}{/if}
+		{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}&nbsp;<input  name="show_shared" {if $show_shared} checked="checked" {/if} type="checkbox" />{tr}shared{/tr}{/if}
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;<input  name="show_trash" {if $show_trash} checked="checked" {/if} type="checkbox" />{tr}Trash{/tr}
 		&nbsp;<input  name="show_completed" {if $show_completed} checked="checked" {/if} type="checkbox" />{tr}completed{/tr}

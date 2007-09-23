@@ -31,30 +31,36 @@
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <table width="100%">
+{if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<strong>&gt;&gt;:</strong> 
+		<img src="pics/icons/task_received.png" title="{tr}received{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}received{/tr}" /> 
 	</td>
 	<td>
 		{tr}Received task{/tr}. {tr}You received this task, please read and execute it{/tr}.
 	</td>
 </tr>
+{/if}
+{if $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<strong>&lt;&lt;:</strong> 
+		<img src="pics/icons/task_submitted.png" title="{tr}submitted{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}submitted{/tr}" /> 
 	</td>
 	<td>
 		{tr}Send task{/tr}. {tr}You send this task to a other user{/tr}.
 	</td>
 </tr>
+{/if}
+{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<strong>&gt;&lt;:</strong> 
+		<img src="pics/icons/task_shared.png" title="{tr}shared{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}shared{/tr}" /> 
 	</td>
 	<td>
 		{tr}Shared task{/tr}. {tr}This task is public to a special group{/tr}.
 	</td>
 </tr>
+{/if}
 <tr>
 	<td>
 		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}accepted by task user and creator{/tr}' border='0' alt='{tr}accepted user and creator{/tr}' />:
@@ -71,6 +77,7 @@
 		{tr}Task is rejected by one user{/tr}.
 	</td>
 </tr>
+{if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
 		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}waiting for me{/tr}" title="{tr}waiting for me{/tr}"}
@@ -79,6 +86,8 @@
 		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.
 	</td>
 </tr>
+{/if}
+{if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
 		<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt="{tr}waiting for other user{/tr}" title="{tr}waiting for other user{/tr}" />
@@ -87,6 +96,7 @@
 		{tr}Task is not accepted/rejected by other user{/tr}.
 	</td>
 </tr>
+{/if}
 </table>
 </div>
 <br /><br />
