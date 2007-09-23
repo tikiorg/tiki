@@ -69,11 +69,11 @@
 		&nbsp;&nbsp; <b>{$info.created|date_format:"%d/%m/%Y -- %H:%M"}</b>
 		&nbsp;&nbsp; 
 		{if ($info.task_version > 0) } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">&lt;&lt;</a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}previous{/tr}" /></a>
   		{/if}
 		{tr}Version{/tr}: <b>{$info.task_version+1}</b>
 		{if $info.task_version < $info.last_version } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">&gt;&gt;</a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}next{/tr}" /></a>
   		{/if}
 		
 		&nbsp;&nbsp; 
