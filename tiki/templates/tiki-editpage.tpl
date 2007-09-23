@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.128 2007-09-22 15:41:52 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.129 2007-09-23 14:51:41 jyhem Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -327,7 +327,7 @@ function searchrep() {
 {include file="contribution.tpl"}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
-<tr class="formcolor"><td>&nbsp;</td><td>
+<tr class="formcolor">
 <td>&nbsp;</td>
 <td>
 <input type="hidden" name="page" value="{$page|escape}" />
