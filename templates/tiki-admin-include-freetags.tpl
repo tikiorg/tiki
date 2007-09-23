@@ -14,7 +14,7 @@
     <form action="tiki-admin.php?page=freetags" method="post">
       <table class="admin">
         <tr>
-          <td colspan="2" class="heading">General</td>
+          <td colspan="2" class="heading">{tr}General{/tr}</td>
         </tr>
         <tr>
           <td class="form">{tr}Show Tag Cloud{/tr}: </td>
@@ -46,9 +46,10 @@
     {tr}Freetag 3D Browser Configuration{/tr}
     </div>
     <div class="cbox-data">
+    <form action="tiki-admin.php?page=freetags" method="post">
     <table class="admin">
       <tr>
-        <td colspan="2" class="heading">General</td>
+        <td colspan="2" class="heading">{tr}General{/tr}</td>
       </tr>
       <tr>
         <td class="form">{tr}Enable freetags 3D browser{/tr}:</td>
@@ -67,7 +68,7 @@
 	<td><input type="text" name="freetags_3d_height" value="{$freetags_3d_height|escape}" size="3" /></td>
       </tr>
       <tr>
-        <td colspan="2" class="heading">Graph appearance</td>
+        <td colspan="2" class="heading">{tr}Graph appearance{/tr}</td>
       </tr>
       <tr>
         <td class="form">{tr}Navigation depth{/tr}: </td>
@@ -94,7 +95,7 @@
 	<td><input type="text" name="freetags_3d_missing_page_color" value="{$freetags_3d_missing_page_color|escape}" size="7" /></td>
       </tr> *}
       <tr>
-        <td colspan="2" class="heading">Camera settings</td>
+        <td colspan="2" class="heading">{tr}Camera settings{/tr}</td>
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
@@ -114,7 +115,7 @@
       </tr>
       {* new fields *}
       <tr>
-        <td colspan="2" class="heading">Physics engine</td>
+        <td colspan="2" class="heading">{tr}Physics engine{/tr}</td>
      </tr>
       <tr>
         <td class="form">{tr}Friction constant{/tr}: </td>
