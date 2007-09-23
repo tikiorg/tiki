@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.78 2007-09-23 13:22:56 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.79 2007-09-23 19:42:55 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -169,6 +169,7 @@ class MyPage {
 		switch ($for) {
 		case 'edit':
 			if ($tiki_p_admin == 'y') return true;
+			if ($this->id_users <= 0) return false;
 			//echo "(".$this->id_users." / ".$this->params['id_users'].")";
 			return ((int)$this->id_users == (int)$this->params['id_users']);
 		case 'view':
