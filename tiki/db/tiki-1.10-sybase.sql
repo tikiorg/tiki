@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-09-02 12:18:22 $
--- $Author: sylvieg $
+-- $Date: 2007-09-23 18:15:38 $
+-- $Author: jyhem $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -3364,7 +3364,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','')
 go
 
 
@@ -6847,6 +6847,7 @@ CREATE TABLE "users_users" (
   "score" numeric(11,0) default 0 NOT NULL,
   "valid" varchar(32) default NULL NULL,
   "unsuccessful_logins" numeric(14,0) default 0,
+  "openid_url" varchar(255) default NULL NULL,
   PRIMARY KEY ("userId")
 )   
 go
@@ -6857,6 +6858,8 @@ go
 CREATE  INDEX "users_users_score" ON "users_users"("score")
 go
 CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate")
+go
+CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url")
 go
 -- --------------------------------------------------------
 ------ Administrator account
@@ -8215,10 +8218,22 @@ CREATE TABLE `tiki_mypage` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `bgcolor` varchar(16) default NULL NULL,
-  PRIMARY KEY ("`id`")
+  `winbgcolor` varchar(16) default NULL NULL,
+  `wintitlecolor` varchar(16) default NULL NULL,
+  `wintextcolor` varchar(16) default NULL NULL,
+  `bgimage` varchar(255) default NULL NULL,
+  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL
+go
+
+
+  `winbgimage` varchar(255) default NULL NULL,
+  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL
+go
+
+
+  PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
-  KEY `id_types` (`id_types`)
 ) ENGINE=MyISAM
 go
 
@@ -8230,7 +8245,7 @@ CREATE TABLE `tiki_mypagewin` (
   `created` numeric(11,0) NOT NULL,
   `modified` numeric(11,0) NOT NULL,
   `viewed` numeric(11,0) NOT NULL,
-  `title` varchar(256) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `inbody` enum('n','y') default 'n' NOT NULL,
   `modal` enum('n','y') default 'n' NOT NULL,
   `left` numeric(11,0) NOT NULL,
@@ -8260,6 +8275,7 @@ CREATE TABLE `tiki_mypage_types` (
   `fix_dimensions` enum('no','yes') NOT NULL,
   `def_bgcolor` varchar(8) default NULL NULL,
   `fix_bgcolor` enum('no','yes') NOT NULL,
+  `templateuser` numeric(11,0) NOT NULL,
   PRIMARY KEY ("`id`")
   KEY `name` (`name`)
 ) ENGINE=MyISAM

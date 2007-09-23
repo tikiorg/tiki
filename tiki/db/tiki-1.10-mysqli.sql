@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-09-02 20:22:11 $
-# $Author: parkercroft $
+# $Date: 2007-09-23 18:15:38 $
+# $Author: jyhem $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2236,7 +2236,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Mail notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Theme control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Chat','tiki-admin_chat.php',1140,'feature_chat','tiki_p_admin_chat','');
@@ -4382,10 +4382,12 @@ CREATE TABLE users_users (
   score int(11) NOT NULL default 0,
   valid varchar(32) default NULL,
   unsuccessful_logins int(14) default 0,
+  openid_url varchar(255) default NULL,
   PRIMARY KEY  (userId),
   KEY login (login),
   KEY score (score),
-  KEY registrationDate (registrationDate)
+  KEY registrationDate (registrationDate),
+  KEY openid_url (openid_url)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### Administrator account
@@ -4914,10 +4916,17 @@ CREATE TABLE `tiki_mypage` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `bgcolor` varchar(16) default NULL,
+  `winbgcolor` varchar(16) default NULL,
+  `wintitlecolor` varchar(16) default NULL,
+  `wintextcolor` varchar(16) default NULL,
+  `bgimage` varchar(255) default NULL,
+  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
+  `winbgimage` varchar(255) default NULL,
+  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
-) ENGINE = MyISAM;
+) ENGINE=MyISAM;
 
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
@@ -4925,7 +4934,7 @@ CREATE TABLE `tiki_mypagewin` (
   `created` int(11) NOT NULL,
   `modified` int(11) NOT NULL,
   `viewed` int(11) NOT NULL,
-  `title` varchar(256) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `inbody` enum('n','y') NOT NULL default 'n',
   `modal` enum('n','y') NOT NULL default 'n',
   `left` int(11) NOT NULL,
@@ -4952,6 +4961,7 @@ CREATE TABLE `tiki_mypage_types` (
   `fix_dimensions` enum('no','yes') NOT NULL,
   `def_bgcolor` varchar(8) default NULL,
   `fix_bgcolor` enum('no','yes') NOT NULL,
+  `templateuser` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
