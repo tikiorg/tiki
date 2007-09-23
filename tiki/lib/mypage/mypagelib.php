@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.77 2007-09-22 13:45:47 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.78 2007-09-23 13:22:56 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1135,22 +1135,14 @@ class MyPageWindow {
 			$winparams['type']="iframe";
 			$winparams['url']=$this->params['config'];
 		}
-	
-		$js =$v."=new Windoo(".phptojsarray($winparams).");\n";
-		if ($editable) {
-			$js.=$v.".addEvent('onResizeComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
-			$js.=$v.".addEvent('onDragComplete', function(){ state=$v.getState(); xajax_mypage_win_setrect(".$this->mypage->id.", ".$this->id.", state.outer); });\n";
-			$js.=$v.".addEvent('onClose', function(){ xajax_mypage_win_destroy(".$this->mypage->id.", ".$this->id."); });\n";
-			$js.=$v.".addEvent('onFocus', function(){ windooFocusChanged(".$this->id."); });\n";
-			$js.=$v.".addEvent('onStartDrag', function() { windooStartDrag(".$this->id."); });\n";
-			$js.=$v.".addEvent('onMenu', function() { mypage_editComponent(".$this->id."); });\n";
-		}
-
-		if ($this->params['contenttype'] != 'iframe') {
-			$js.=$v.".setHTML(".phptojsarray($comp->getHTMLContent()).");\n";
-		}
 		
-		$js.=$v.".show();\n";
+		$js = "mypagewin_create(".$this->mypage->id.", ".$this->id.", ".phptojsarray($this->params['contenttype']).", ".
+			phptojsarray($winparams);
+
+		if ($this->params['contenttype'] != 'iframe') $js.=", ".phptojsarray($comp->getHTMLContent());
+		else $js.=", ";
+
+		$js.=");";
 
 		if (is_callable(array($comp, 'getOnOpenJSCode'))) {
 			$js.=$comp->getOnOpenJSCode().";\n";

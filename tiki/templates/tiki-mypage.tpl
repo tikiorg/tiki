@@ -16,7 +16,7 @@
 				<h6>New Component:</h6>
     				<ul>
      				{foreach from=$components item=component}
-     					<li>
+     					<li id='elem_addComponent_{$component|escape}'>
       					<a href='#' onclick='mypage_addComponent("{$component}");'>{$component|escape}</a>
      					</li>
      				{/foreach}
@@ -440,6 +440,41 @@ function destroyAllWins() {
 	tikimypagewin=[];
 }
 
+function mypagewin_create(id_mypage, id_mypagewin, comptype, options, content) {
+	var win=new Windoo(options);
+
+	{/literal}{if editit}{literal}
+	win.addEvent('onResizeComplete', function() {
+		xajax_mypage_win_setrect(id_mypage, id_mypagewin, this.getState().outer);
+	});
+	win.addEvent('onDragComplete', function() {
+		xajax_mypage_win_setrect(id_mypage, id_mypagewin, this.getState().outer);
+	});
+	win.addEvent('onClose', function() {
+		if ($('elem_addComponent_'+comptype))
+			$('elem_addComponent_'+comptype).setStyle('display', '');
+		xajax_mypage_win_destroy(id_mypage, id_mypagewin);
+	});
+	win.addEvent('onFocus', function() {
+		windooFocusChanged(id_mypagewin);
+	});
+	win.addEvent('onStartDrag', function() {
+		windooStartDrag(id_mypagewin);
+	});
+	win.addEvent('onMenu', function() {
+		mypage_editComponent(id_mypagewin);
+	});
+
+	if ($('elem_addComponent_'+comptype))
+		$('elem_addComponent_'+comptype).setStyle('display', 'none');
+	{/literal}{/if}{literal}
+
+	if (comptype != 'iframe') win.setHTML(content);
+
+	tikimypagewin[id_mypagewin]=win;
+	win.show();
+}
+
 var lastFocusedWindoo=0;
 var tikimypagewin=[];
 function initSavedWindows() {
@@ -449,11 +484,11 @@ function initSavedWindows() {
 
 function initMyPage() {
 	initCSSStyle();
-	initSavedWindows();
 	{/literal}{if $editit}
 	initSimpleTabs();
 	initSideBar();
 	{/if}{literal}
+	initSavedWindows();
 }
 
 {/literal}
