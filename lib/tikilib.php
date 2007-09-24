@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.775 2007-09-16 22:07:20 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.776 2007-09-24 12:29:58 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4416,7 +4416,7 @@ function add_pageview() {
     // that textarea won't leave alone.
     function parse_htmlchar(&$data) {
 	// cleaning some user input
-	$data = preg_replace("/&(?!([a-z]{1,7};))/", "&amp;", $data);
+	$data = preg_replace("/&(?!([a-z]{1,7};))/i", "&amp;", $data);
 
 	// oft-used characters (case insensitive)
 	$data = preg_replace("/~bs~/i", "&#92;", $data);
