@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.76 2007-09-25 16:07:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.77 2007-09-25 16:16:50 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -418,7 +418,7 @@ function wikiplugin_tracker($data, $params) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
 							if (!isset($f['options']) ||  $f['options'] != '1')
 								$selected .= ' style="background-image:url(\'img/flags/'.$flag.'.gif\');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"';
-							$back.= '<option value="'.$flag.'" '.$selected.'>'.$flag.'</option>';
+							$back.= '<option value="'.$flag.'" '.$selected.'>'.tra($flag).'</option>';
 						}
 						$back.= "</select>";
 					// textarea
