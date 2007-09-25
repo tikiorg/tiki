@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.14 2007-09-18 21:47:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.15 2007-09-25 15:19:47 sylvieg Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -91,7 +91,13 @@
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}
-	{$field_value.value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
+	{if $field_value.value eq 'y' or $field_value.value eq 'on'}
+		{tr}Yes{/tr}
+	{elseif $field_value.value eq 'n'}
+		{tr}No{/tr}
+	{else}
+		{$field_value.value}
+	{/if}
 
 {* -------------------- item link -------------------- *}
 {elseif $field_value.type eq 'r'}
