@@ -1,4 +1,4 @@
- {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.52 2007-08-24 17:01:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.53 2007-09-25 22:49:05 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -36,6 +36,17 @@
 {/foreach}
 </select>
 </td></tr>
+{if $feature_userlevels eq 'y'}
+<tr class="formcolor"><td>{tr}Level{/tr}:</td><td colspan="3">
+<select name="level">
+<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
+{foreach key=levn item=lev from=$userlevels}
+<option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>
+{/foreach}
+</select>
+</td>
+</tr>
+{/if}
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
@@ -172,6 +183,9 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Permissions{/tr}</a></td>
 
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Group{/tr}</a></td>
+{if $feature_userlevels eq 'y'}
+<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'level_desc'}level_asc{else}level_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Level{/tr}</a></td>
+{/if}
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 
@@ -189,6 +203,10 @@ title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" 
 <td class="{cycle advance=false}">{$channels[user].section}</td>
 <td class="{cycle advance=false}">{$channels[user].perm}</td>
 <td class="{cycle advance=false}">{$channels[user].groupname}</td>
+{if $feature_userlevels eq 'y'}
+{assign var=it value=$channels[user].userlevel}
+<td class="{cycle advance=false}">{$userlevels.$it}</td>
+{/if}
 <td class="{cycle advance=false}">
 {if $channels[user].position > 1 }
 <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options"

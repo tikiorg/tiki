@@ -64,13 +64,13 @@ class MenuLib extends TikiLib {
 		return $max;
 	}
 
-	function replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname) {
+	function replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname, $level=0) {
 		if ($optionId) {
-			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?  where `optionId`=?";
-			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$optionId);
+			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?  where `optionId`=?";
+			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$optionId);
 		} else {
-			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`) values(?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname);
+			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`) values(?,?,?,?,?,?,?,?,?)";
+			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level);
 		}
 
 		$result = $this->query($query, $bindvars);
