@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.778 2007-09-25 18:22:14 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.779 2007-09-25 23:43:21 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1755,7 +1755,7 @@ function add_pageview() {
     }
 
     /*shared*/
-    function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false) {
+    function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0) {
 	  global $smarty,$user, $tiki_p_admin;
 	$ret = array();
 	$retval = array();
@@ -1766,6 +1766,10 @@ function add_pageview() {
 	    $bindvars[] = '%'. $find . '%';
 	} else {
 	    $mid = " where `menuId`=? ";
+	}
+	if ($level) {
+		$mid.= " and `userlevel`<=?";
+		$bindvars[] = $level;
 	}
 	$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_menu_options` $mid";
