@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-09-23 18:15:38 $
--- $Author: jyhem $
+-- $Date: 2007-09-25 02:12:49 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -2975,6 +2975,21 @@ CREATE TABLE "tiki_newsletter_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "code" varchar(32) default NULL,
   PRIMARY KEY ("nlId","groupName")
+) ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table tiki_newsletter_included
+--
+-- Creation: Sep 25, 2007
+-- Last update: Sep 25, 2007
+--
+DROP TABLE "tiki_newsletter_included";
+
+CREATE TABLE "tiki_newsletter_included" (
+  "nlId" number(12) default '0' NOT NULL,
+  "includedId" number(12) default '0' NOT NULL,
+  PRIMARY KEY ("nlId","includedId")
 ) ;
 
 -- --------------------------------------------------------

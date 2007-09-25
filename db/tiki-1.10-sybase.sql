@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-09-23 18:15:38 $
--- $Author: jyhem $
+-- $Date: 2007-09-25 02:12:50 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -3683,6 +3683,27 @@ CREATE TABLE "tiki_newsletter_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "code" varchar(32) default NULL NULL,
   PRIMARY KEY ("nlId","groupName")
+) 
+go
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table tiki_newsletter_included
+--
+-- Creation: Sep 25, 2007
+-- Last update: Sep 25, 2007
+--
+
+-- DROP TABLE "tiki_newsletter_included"
+go
+
+
+CREATE TABLE "tiki_newsletter_included" (
+  "nlId" numeric(12,0) default '0' NOT NULL,
+  "includedId" numeric(12,0) default '0' NOT NULL,
+  PRIMARY KEY ("nlId","includedId")
 ) 
 go
 
