@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.22 2007-06-25 13:33:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.23 2007-09-25 23:45:51 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,6 +81,8 @@ if (isset($_REQUEST["remove"])) {
 			$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["subuser"], "y");
 		elseif (isset($_REQUEST["group"]))
 			$nllib->remove_newsletter_group($_REQUEST["remove"], $_REQUEST["group"]);
+		elseif (isset($_REQUEST["included"]))
+			$nllib->remove_newsletter_included($_REQUEST["remove"], $_REQUEST["included"]);
 	} else {
 		key_get($area);
 	}
@@ -158,6 +160,10 @@ if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['grou
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_group($_REQUEST["nlId"], $_REQUEST['group']);
 }
+if (isset($_REQUEST["addincluded"]) && isset($_REQUEST['included']) && $_REQUEST['included'] != ""){
+	check_ticket('admin-nl-subsriptions');
+	$nllib->add_included($_REQUEST["nlId"], $_REQUEST['included']);
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'subscribed_desc';
@@ -227,6 +233,12 @@ if ($offset_g > 0) {
 }
 $smarty->assign_by_ref('groups_g', $groups_g["data"]);
 $smarty->assign("nb_groups", $groups_g["cant"]);
+
+
+$included_n = $nllib->list_newsletter_included($_REQUEST["nlId"], 0, -1);
+$smarty->assign('included_n',$included_n);
+$smarty->assign('nb_included',count($included_n));
+
 /* --------------------------------------- */
 
 // Fill array with possible number of questions per page
@@ -246,6 +258,9 @@ $smarty->assign_by_ref('groups', $groups);
 
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
+
+$newsletters = $nllib->list_newsletters(0,-1,"created_desc",false);
+$smarty->assign_by_ref('newsletters', $newsletters['data']);
 
 /*
 $cat_type='newsletter';

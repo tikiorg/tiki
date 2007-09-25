@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.29 2007-09-14 22:18:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.30 2007-09-25 23:45:51 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
@@ -83,22 +83,26 @@
 </table>
 </form>
 
+<h2>{tr}Add subscribers of another newsletter{/tr}</h2>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
+<table class="normal">
+<tr><td class="formcolor" width="30%">{tr}Group{/tr}:</td><td class="formcolor" colspan="2">
+<select name="included">
+<option value="">---</option>
+{section name=x loop=$newsletters}
+<option value="{$newsletters[x].nlId|escape}">{$newsletters[x].name|escape}</option>
+{/section}
+</select><br />
+</td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="addincluded" value="{tr}Add{/tr}" /></td></tr>
+</table>
+</form>
+
 <h2>{tr}Subscriptions{/tr}</h2>
 {* groups------------------------------------ *}
 {if $nb_groups > 0}
 <div  align="center">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_newsletter_subscriptions.php">
-     <input type="text" name="find_g" value="{$find_g|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode_g" value="{$sort_mode_g|escape}" />
-     <input type="hidden" name="nlId" value="{$nlId}" />
-   </form>
-   </td>
-</tr>
-</table>
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset_g}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}Group{/tr}</a></td><td class="heading">{tr}Action{/tr}</td>
@@ -110,9 +114,29 @@
 <td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 </tr>
 {/section}
+</table>
 </div>
 {/if}
 {* /groups------------------------------------ *}
+
+{* included------------------------------------ *}
+{if $nb_included > 0}
+<div  align="center">
+<table class="normal">
+<tr>
+<td class="heading"><a class="tableheading" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset_g}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a></td><td class="heading">{tr}Action{/tr}</td>
+</tr>
+{cycle values="odd,even" print=false}
+{foreach key=incId item=incName from=$included_n}
+<tr>
+<td class="{cycle advance=false}">{$incName|escape}</td>
+<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$nlId}&amp;included={$incId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+</tr>
+{/foreach}
+</table>
+</div>
+{/if}
+{* /included------------------------------------ *}
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
