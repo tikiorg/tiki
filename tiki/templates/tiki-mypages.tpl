@@ -118,7 +118,7 @@ function showMypageEdit(id) {
 	curmodal=new Windoo({
 		"modal": true,
 		"width": 600,
-		"height": 430,
+		"height": 435,
 		"container": false,
 		"theme": "mypage"
 	}).adopt($('mypageeditdiv'));
@@ -207,6 +207,11 @@ function mypageTypeChange(id) {
 	}
 	xajax_mypage_fillinfos($('mypageedit_id').value, id, true);
 
+}
+
+function mypageTemplateChange(id_template) {
+	if (id_template == 0) return;
+	xajax_mypage_fillinfos(0, 0, false, id_template);
 }
 
 function htmlspecialchars(ch) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.46 2007-09-21 17:01:13 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.47 2007-09-25 15:35:19 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -347,7 +347,7 @@ function mypage_isNameFree($name) {
 	return $objResponse;
 }
 
-function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
+function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false, $set_template=NULL) {
     global $id_users, $smarty;
 
     $objResponse = new xajaxResponse();
@@ -375,9 +375,20 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 		$conf=$mypage->getTypeHTMLConfig();
 		$type=NULL;
 	} else {
-		$type=MyPage::getMypageType($id_types);
-		if (is_array($type)) {
-			$conf=MyPage::getTypeHTMLConfig($type['name']);
+		if ((int)$set_template > 0) {
+			$template=MyPage::getMyPage_byId((int)$set_template, $id_users);
+			if (!is_object($template)) return mypage_error($template);
+			$id_types=$template->getParam('id_types');
+			$type=MyPage::getMypageType($id_types);
+			if (!is_array($type)) return mypage_error($type);
+			if ((int)$type['templateuser'] != (int)$template->getParam('id_users'))
+				return mypage_error('bad template user');
+			$conf=$template->getTypeHTMLConfig();
+		} else {
+			$type=MyPage::getMypageType($id_types);
+			if (is_array($type)) {
+				$conf=MyPage::getTypeHTMLConfig($type['name']);
+			}
 		}
 	}
 
@@ -397,7 +408,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false) {
 	/* templates update */
 	if (is_array($type)) {
 		$templates=MyPage::listPages($type['templateuser'], $type['name']);
-		$templates_html="<select id='mypageedit_template'><option value='0'>".tra("Without template")."</option>";
+		$templates_html="<select id='mypageedit_template' onchange=\"mypageTemplateChange(this.value);\"><option value='0'>".tra("Without template")."</option>";
 		foreach($templates as $template)
 			$templates_html.="<option value='".$template['id']."'>".htmlspecialchars($template['name'])."</option>";
 		$templates_html.="</select>";
