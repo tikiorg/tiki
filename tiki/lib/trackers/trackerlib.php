@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.221 2007-09-18 21:47:00 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.222 2007-09-25 21:46:05 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1946,14 +1946,7 @@ class TrackerLib extends TikiLib {
 		else
 				$cat_name = $mainfield;
 		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
-		$categlib->uncategorize_object($cat_type, $cat_objid);
-		foreach ($ins_categs as $cats) {
-			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-			if (!$catObjectId) {
-				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-			}
-			$categlib->categorize($catObjectId, $cats);
-		}
+		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
 	function move_up_last_fields($trackerId, $position, $delta=1) {
 		$query = 'update `tiki_tracker_fields`set `position`= `position`+ ? where `trackerId` = ? and `position` >= ?';
