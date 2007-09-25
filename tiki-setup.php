@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.460 2007-09-14 12:05:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.461 2007-09-25 22:49:03 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -664,6 +664,8 @@ $pref['trk_with_mirror_tables'] = 'n';
 $sections['mytiki']['feature'] = '';
 $sections['mytiki']['key'] = 'user';
 $sections['mytiki']['itemkey'] = '';
+$pref['feature_userlevels'] = 'n';
+$pref['userlevels'] = array('1'=>tra('Simple'),'2'=>tra('Advanced'));
 $pref['userbreadCrumb'] = 4;
 $pref['user_assigned_modules'] = 'n';
 $pref['user_flip_modules'] = 'module';
@@ -1892,6 +1894,15 @@ if ($feature_freetags == 'y' and isset($section) and isset($sections[$section]))
 	}
 	$smarty->assign('freetags',$tags);
 	$headerlib->add_cssfile('css/freetags.css');
+}
+
+if ($feature_userlevels == 'y') {
+	$mylevel = $tikilib->get_user_preference($user,'mylevel',1);
+	if (isset($_REQUEST['level']) and isset($userlevels[$_REQUEST['level']]) and $user) {
+		$tikilib->set_user_preference($user,"mylevel",$_REQUEST['level']);
+		$mylevel = $_REQUEST['level'];
+	}
+	$smarty->assign('mylevel',$mylevel);
 }
 
 if ($feature_fullscreen == 'y') {

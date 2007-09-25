@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.109 2007-09-15 20:30:34 frank_p Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.110 2007-09-25 22:49:05 mose Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $feature_help eq 'y'}
@@ -294,6 +294,15 @@
   {if $tiki_p_use_workflow eq 'y'}
     <tr><td class="{cycle advance=false}">{tr}My workflow{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_workflow" {if $mytiki_workflow eq 'y'}checked="checked"{/if} /></td></tr>
   {/if}
+{/if}
+
+{if $feature_userlevels eq 'y'}
+	<tr><td class="form">{tr}My level{/tr}</td><td class="form">
+	<select name="mylevel">
+	{foreach key=levn item=lev from=$userlevels}
+	<option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
+	{/foreach}
+	</select>
 {/if}
 <tr>
   <td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td>
