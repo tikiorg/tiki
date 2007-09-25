@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.777 2007-09-25 12:56:47 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.778 2007-09-25 18:22:14 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2323,7 +2323,6 @@ function add_pageview() {
 	$query_cant = "select count(distinct u.`login`) from `users_users` u $find_join_cant $mid_cant";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars2);
-	echo $query.'<br>',$query_cant;
 
 	$ret = array();
 	while ($res = $result->fetchRow()) {
