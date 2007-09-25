@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.214 2007-09-22 21:16:48 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.215 2007-09-25 02:12:50 mose Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1565,3 +1565,11 @@ alter table tiki_mypage add column `winbgtype` enum ('color', 'imageurl') defaul
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Search stats' and url='tiki-search_stats.php' and position='1125' and section='feature_search' and perm='tiki_p_admin';
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Search stats' and url='tiki-search_stats.php' and position='1125' and section='feature_search_stats' and perm='tiki_p_admin';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','');
+
+# 2007-09-25 mose
+CREATE TABLE tiki_newsletter_included (
+  nlId int(12) NOT NULL default '0',
+  includedId int(12) NOT NULL default '0',
+  PRIMARY KEY  (nlId,includedId)
+) TYPE=MyISAM;
+
