@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.60 2007-07-20 15:08:33 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.61 2007-09-25 23:45:51 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -58,57 +58,6 @@ class NlLib extends TikiLib {
 		$result = $this->query($query,array((int)$nlId));
 	}
 
-	function list_author_newsletters($offset=0, $maxRecords=-1, $sort_mode, $find='', $update='', $perms='',$userName) {
-		global $user, $tikilib;
-		$bindvars = array();
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?) and `author` =?";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-			$bindvars[] = $userName;
-		} else {
-			$mid = " where `author` =?";
-			$bindvars[] = $userName;
-		}
-
-		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = 0;
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$res['tiki_p_admin_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
-			$res['tiki_p_send_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
-			$res['tiki_p_subscribe_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
-			if (!empty($perms)) {
-				$hasPerm = false;
-				if (is_array($perms)) {
-					foreach ($perms as $perm) {
-			 			if ($res[$perm] == 'y') {
-							$hasPerm = true;
-							break;
-						}
-					}
-				} else {
-					$hasPerm = $res[$perm];
-				}
-				if (!$hasPerm)
-					continue;
-			}
-			++$cant;
-			$ok = count($this->get_all_subscribers($res["nlId"], ""));
-			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));
-			$res["users"] = $ok + $notok;
-			$res["confirmed"] = $ok;
-			$ret[] = $res;
-		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-	
 	/* get only the email subscribers */
 	function get_subscribers($nlId) {
 		$query = "select `email` from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=? and isUser !='y'";
@@ -183,7 +132,17 @@ class NlLib extends TikiLib {
 				}
 			}
 		}
-//echo "<pre>Subscribers:";print_r($ret); echo "</pre>";
+
+		$incnl = $this->list_newsletter_included($nlId);
+		foreach ($incnl as $incid=>$incname) {
+			$incall = $this->get_all_subscribers($incid,'');
+			foreach ($incall as $res) {
+				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail) && !in_array($res['login'], $unsub_groupusers)) {
+					$ret[] = $res;
+				}
+			}
+		}
+//if ($nlId == '13') { echo "<pre>Subscribers:";print_r($ret); echo "</pre>"; }
 		return $ret;
 	}
 
@@ -196,6 +155,11 @@ class NlLib extends TikiLib {
 	function remove_newsletter_group($nlId, $group) {
 		$query = "delete from `tiki_newsletter_groups` where `nlId`=? and `groupName`=?";
 		$result = $this->query($query, array((int)$nlId,$group), -1, -1, false);
+	}
+
+	function remove_newsletter_included($nlId, $includedId) {
+		$query = "delete from `tiki_newsletter_included` where `nlId`=? and `includedId`=?";
+		$this->query($query, array((int)$nlId,$includedId), -1, -1, false);
 	}
 
 	function newsletter_subscribe($nlId, $add, $isUser='n', $validateAddr='', $addEmail='') {
@@ -369,6 +333,13 @@ class NlLib extends TikiLib {
 		$result = $this->query($query,array((int)$nlId,$group,$code));
 	}
 
+	function add_included($nlId, $includedId) {
+		$query = "delete from `tiki_newsletter_included` where `nlId`=? and `includedId`=?";
+		$this->query($query,array((int)$nlId,(int)$includedId), -1, -1, false);
+		$query = "insert into `tiki_newsletter_included` (`nlId`,`includedId`) values(?,?)";
+		$this->query($query,array((int)$nlId,(int)$includedId));
+	}
+
 	function add_group_users($nlId, $group, $validateAddr='', $addEmail='') {
 		$groups =  array_merge(array($group),$this->get_groups_all($group));
 		$mid = implode(" or ",array_fill(0,count($groups),"`groupName`=?"));
@@ -447,8 +418,8 @@ class NlLib extends TikiLib {
 					continue;
 			}
 			++$cant;
-			$ok = count($this->get_all_subscribers($res["nlId"], ""));
-			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res["nlId"]));
+			$ok = count($this->get_all_subscribers($res['nlId'], ""));
+			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res['nlId']));
 			$res["users"] = $ok + $notok;
 			$res["confirmed"] = $ok;
 			$ret[] = $res;
@@ -555,7 +526,7 @@ class NlLib extends TikiLib {
 		}
 
 		$query = "select * from `tiki_newsletter_groups` $mid order by ".$this->convert_sortmode("$sort_mode");
-		$query_cant = "select count(*) from tiki_newsletter_groups $mid";
+		$query_cant = "select count(*) from `tiki_newsletter_groups` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -567,6 +538,31 @@ class NlLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+
+	function list_newsletter_included($nlId) {
+		$query = "select a.`includedId`,b.`name` from `tiki_newsletter_included` a left join `tiki_newsletters` b on a.`includedId`=b.`nlId` where a.`nlId`=? ";
+		$result = $this->query($query,array((int)$nlId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[$res['includedId']] = $res['name'];
+		}
+		return $ret;
+	}
+
+	function list_newsletter_all_included($nlId,$check=array()) {
+		$query = "select a.`includedId`,b.`name` from `tiki_newsletter_included` a left join `tiki_newsletters` b on a.`includedId`=b.`nlId` where a.`nlId`=? ";
+		$result = $this->query($query,array((int)$nlId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			if (!in_array($res['includedId'],$check)) {
+				$check[] = $res['includedId'];
+				$ret[$res['includedId']] = $res['name'];
+				$back = $this->list_newsletter_all_included($res['includedId'],$check);
+				$ret = $back + $check;
+			}
+		}
+		return array_unique($ret);
 	}
 
 	function get_unsub_msg($nlId, $email, $lang, $code='', $user='') {
