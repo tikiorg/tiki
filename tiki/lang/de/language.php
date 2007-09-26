@@ -4660,6 +4660,7 @@ $lang=Array(
 "Cancel" => "Abbrechen",
 "choose a stylesheet" => "Stylesheet ausw&auml;hlen",
 "try" => "ausprobieren",
+"Try" => "Ausprobieren",
 "display" => "anzeigen",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Dateien mit angeh&auml;ngtem -{\$user} sind editierbar, andere sind schreibgesch&uuml;tzt, aber als Vorlage verwendbar.",
 "Show Plugins Help" => "Zeige PlugIn Hilfe",

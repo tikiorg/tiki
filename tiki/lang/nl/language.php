@@ -4396,6 +4396,7 @@ $lang=Array(
 "Cancel" => "Annuleer",
 "choose a stylesheet" => "Kies een stylesheet",
 "try" => "probeer",
+"Try" => "Probeer",
 "display" => "tonen",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Bestanden met namen gevolgd door -{\$user} zijn wijzigbaar, andere kunnen enkel gekopieerd worden en als model dienen.",
 "Show Plugins Help" => "Toon Plugins Help",

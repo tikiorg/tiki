@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.30 2007-08-22 07:35:23 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.31 2007-09-26 13:37:54 jyhem Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -224,7 +224,7 @@
 <form action="tiki-stats.php" method="post">
 {tr}Show chart for the last {/tr}
 <input type="text" name="days" size="10" value="{$days|escape}" /> {tr}days (0=all){/tr}
-<input type="submit" name="pv_chart" value="{tr}display{/tr}" />
+<input type="submit" name="pv_chart" value="{tr}Display{/tr}" />
 </form>
 {if $pv_chart eq 'y'} 
 <br /> 

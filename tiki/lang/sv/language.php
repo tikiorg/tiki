@@ -5218,6 +5218,7 @@ $lang=Array(
 "Cancel" => "Avbryt",
 "choose a stylesheet" => "välj en stilmall",
 "try" => "försök",
+"Try" => "Försök",
 "display" => "visa",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Filer med namn bifogade av -{\$user} kan modifieras, andra filer kan bara dupliceras och användas som förlaga.",
 "Show Plugins Help" => "Visa insticksmodulhjälp",

@@ -5156,6 +5156,7 @@ $lang=Array(
 "Cancel" => "Cancel·lar",
 "choose a stylesheet" => "escull un full d'estil",
 "try" => "prova",
+"Try" => "Prova",
 "display" => "pantalla",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Arxius amb noms pujats per -{\$user} són modificables, altres, només són duplicables i són fets servir com a model.",
 "Show Plugins Help" => "Mostra l'ajuda dels Plugins",

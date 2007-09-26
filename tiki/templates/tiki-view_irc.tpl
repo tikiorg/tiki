@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_irc.tpl,v 1.8 2007-03-06 19:30:40 sylvieg Exp $
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_irc.tpl,v 1.9 2007-09-26 13:37:54 jyhem Exp $
 Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 All Rights Reserved. See copyright.txt for details and a complete list of authors.
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,7 +17,7 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
         <select name="log" onchange="this.form.submit()">
           {html_options options="$irc_log_options" selected="$irc_log_selected"}
         </select>
-       <input type="submit" value="{tr}display{/tr}" />
+       <input type="submit" value="{tr}Display{/tr}" />
    </td>
 
    <td valign='bottom'>{tr}Filter{/tr}</td>

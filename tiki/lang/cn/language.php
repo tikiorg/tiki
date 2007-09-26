@@ -5943,6 +5943,7 @@ $lang=Array(
 "Cancel" => "取消",
 "choose a stylesheet" => "选择样式表",
 "try" => "尝试",
+"Try" => "尝试",
 "display" => "显示",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "文件名附加有 -{\$user} 的可修改, 其他只能做为样本复制",
 "Show Plugins Help" => "显示外挂模块说明",

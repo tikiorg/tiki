@@ -3023,6 +3023,7 @@ $lang=Array(
 // "Style Sheet" => "Style Sheet",
 // "choose a stylesheet" => "choose a stylesheet",
 // "try" => "try",
+// "Try" => "try",
 // "display" => "display",
 // "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model.",
 // "For more information, please see <a href=\"{\$helpurl}Wiki Page Editor\">Wiki Page Editor</a>" => "For more information, please see <a href=\"{\$helpurl}Wiki Page Editor\">Wiki Page Editor</a>",

@@ -4666,6 +4666,7 @@ $lang=Array(
 "Cancel" => "Zrušit",
 "choose a stylesheet" => "Vybrat stylový předpis (CSS)",
 "try" => "zkus",
+"Try" => "Zkus",
 "display" => "zobraz",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Soubory s názvy, které následuje -{\$user}, jsou upravitelné. Ostatní soubory je možné pouze duplikovat a&nbsp;mohou být použity jako základ pro nový styl.",
 "Show Plugins Help" => "Zobrazit nápovědu k zásuvným modulům (plug-inům)",

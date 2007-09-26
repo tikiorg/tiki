@@ -4294,6 +4294,7 @@ $lang=Array(
 "Cancel" => "Peruuta",
 "choose a stylesheet" => "valitse tyyliarkki",
 "try" => "kokeile",
+"Try" => "Kokeile",
 "display" => "näytä",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Tiedoston nimien kanssa lisännyt -{\$user} muokattavissa, muut voivat kopioida tai käyttää mallina.",
 "Show Plugins Help" => "Näyttää Plugi Avun",

@@ -3235,6 +3235,7 @@ $lang=Array(
 "Cancel" => "لغو",
 "choose a stylesheet" => "يك سبك نگارش انتخاب كنيد",
 "try" => "تلاش",
+"Try" => "تلاش",
 "display" => "نمايش",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "پرونده‌هايي كه با -{\$user} آغاز مي‌شوند، قابل تغيير هستند، باقي تنها قابل كپي‌كردن و استفاده به عنوان مدل هستند.",
 "wiki help" => "كمك از ويكي",

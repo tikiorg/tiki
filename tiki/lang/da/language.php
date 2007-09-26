@@ -5357,6 +5357,7 @@ $lang=Array(
 "Cancel" => "Fortryd",
 "choose a stylesheet" => "vælg et stylesheet",
 "try" => "test",
+"Try" => "Test",
 "display" => "vis",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Fil-navne med -{\$user} endelsen er redigerbare, andre er kun kopierbare og kan bruges som modeller.",
 "Show Plugins Help" => "Vis Plugins Hjælp",

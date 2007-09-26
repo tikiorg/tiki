@@ -5857,6 +5857,7 @@ $lang=Array(
 "Cancel" => "Anuluj",
 "choose a stylesheet" => "wybierz arkusz stylu",
 "try" => "spróbuj",
+"Try" => "Spróbuj",
 "display" => "wyświetl",
 "Creates a box with the data" => "Tworzy ramkę z treścią",
 "Box content" => "Zawartość ramki",

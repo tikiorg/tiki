@@ -5321,6 +5321,7 @@ $lang=Array(
 "Cancel" => "Zrušit",
 "choose a stylesheet" => "vybrať stylesheet",
 "try" => "skús",
+"Try" => "Skús",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Súbory s názvami, za ktorými nasleduje -{\$user} sú modifikovateľné, ostatné je možno použiť ako model",
 "Show Plugins Help" => "Zobraziť help k plug-inom",
 "some text" => "nejaký text",

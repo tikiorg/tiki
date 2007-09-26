@@ -2593,6 +2593,7 @@ $lang=Array(
 // "Cancel" => "Cancel",
 // "choose a stylesheet" => "choose a stylesheet",
 // "try" => "try",
+// "Try" => "try",
 // "Show Plugins Help" => "Show Plugins Help",
 // "For more information, please see <a href=\"{\$helpurl}Wiki Page Editor\">Wiki Page Editor</a>" => "For more information, please see <a href=\"{\$helpurl}Wiki Page Editor\">Wiki Page Editor</a>",
 // "Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines." => "Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.",

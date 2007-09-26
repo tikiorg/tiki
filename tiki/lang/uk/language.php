@@ -5231,6 +5231,7 @@ $lang=Array(
 "Blog heading" => "Заголовок журналу",
 "Cancel" => "Скасувати",
 "try" => "випробувати",
+"Try" => "випробувати",
 "display" => "показати",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Файли, назви яких містять -{\$user} можуть змінюватися користувачами, інші можна тільки скопіювати і використовувати як зразок.",
 "Show Plugins Help" => "Показати підказку по модулям",
