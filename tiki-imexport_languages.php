@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.19 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.20 2007-09-26 20:27:53 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,13 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
-if ($lang_use_db != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
-
-	$smarty->display("error.tpl");
-	die;
-}
 
 if ($tiki_p_edit_languages != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
@@ -79,7 +72,11 @@ if (isset($_REQUEST["export"])) {
 	$data = "<?php\n\$lang=Array(\n";
 
 	while ($res = $result->fetchRow()) {
-		$data = $data . "\"" . $res["source"] . "\" => \"" . $res["tran"] . "\",\n";
+	    $source = str_replace('"', '\\"', $res['source']);
+	    $source = str_replace('$', '\\$', $source);
+	    $tran = str_replace('"', '\\"', $res['tran']);
+	    $tran = str_replace('$', '\\$', $tran);
+	    $data = $data . "\"" . $source . "\" => \"" . $tran . "\",\n";
 	}
 
 	$data = $data . ");\n?>";
