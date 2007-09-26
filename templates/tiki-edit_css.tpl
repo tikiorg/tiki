@@ -25,8 +25,8 @@
 <option value="{$list[t]|escape}"{if $list[t] eq $editstyle} selected="selected"{/if}>{$list[t]}</option>
 {/section}
 </select>
-<input type="submit" name="try" value="{tr}try{/tr}" />
-<input type="submit" name="display" value="{tr}display{/tr}" />
+<input type="submit" name="try" value="{tr}Try{/tr}" />
+<input type="submit" name="display" value="{tr}Display{/tr}" />
 <input type="submit" name="edit" value="{tr}Edit{/tr}" /><br />
 <div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
 

@@ -3975,6 +3975,7 @@ $lang=Array(
 "Style Sheet" => "Style Sheet",
 "Cancel" => "Cancel",
 "try" => "try",
+"Try" => "Try",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model.",
 "col" => "col",
 "Multi-page pages" => "Multi-page pages",

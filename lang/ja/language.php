@@ -3627,6 +3627,7 @@ $lang=Array(
 "Style Sheet" => "Style Sheet",
 "choose a stylesheet" => "choose a stylesheet",
 "try" => "try",
+"Try" => "try",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model.",
 "Show Plugins Help" => "Show Plugins Help",
 "some text" => "some text",

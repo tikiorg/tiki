@@ -3062,6 +3062,7 @@ $lang=Array(
 // "Cancel" => "Cancel",
 // "choose a stylesheet" => "choose a stylesheet",
 // "try" => "try",
+// "Try" => "try",
 // "display" => "display",
 // "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model.",
 // "Show Plugins Help" => "Show Plugins Help",

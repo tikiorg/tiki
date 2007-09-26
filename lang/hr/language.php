@@ -5312,6 +5312,7 @@ $lang=Array(
 "Cancel" => "Otkaži",
 "choose a stylesheet" => "odaberi stranicu sa stilovima",
 "try" => "pokušaj",
+"Try" => "Pokušaj",
 "display" => "prikaz",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Datoteke sa imenima koja se završavaju sa -{\$user} se mogu menjati, a ostali se mogu samo kopirati i koristiti kao model.",
 "Show Plugins Help" => "Prikaži pomoć za pluginove",

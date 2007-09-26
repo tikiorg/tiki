@@ -5439,6 +5439,7 @@ $lang=Array(
 "Cancel" => "Kanselem",
 "choose a stylesheet" => "siusim wanfala stylesheet",
 "try" => "trae",
+"Try" => "Trae",
 "display" => "somaot",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File wea garem olketa nem wea -{\$user} hemi appendem baebae save modifaem, olketa narafala bae save mekem semsem kaen nomoa an bae save iusim olsem model.",
 "Show Plugins Help" => "Som Help blong olketa Plugin",

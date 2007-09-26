@@ -5412,6 +5412,7 @@ $lang=Array(
 "Cancel" => "Cancelar",
 "choose a stylesheet" => "escolher um style sheet",
 "try" => "experimentar",
+"Try" => "Experimentar",
 "display" => "exibir",
 "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Arquivos com nomes terminados em -{\$user} são modificáveis, os demais são apenas duplicáveis e podem ser utilizados como modelos.",
 "Show Plugins Help" => "Exibir Auxílio para Plugins",
