@@ -332,7 +332,7 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 {tr}in{/tr}
 <span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
-{if $id}
+{if !$id}
 {tr}or{/tr}
 <input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
 <input type="submit" name="act" value="{tr}Duplicate to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value+'&amp;calitemId={$id}&amp;duplicate=1';return false;" />
