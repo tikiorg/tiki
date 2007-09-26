@@ -229,7 +229,14 @@ class BannerLib extends TikiLib {
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates,$this->now,$zone,$hourFrom,$hourTo,
 				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$bannerId);
 
-			$result = $this->query($query,$bindvars);
+				$result = $this->query($query,$bindvars);
+
+				/* invalid cache */
+				global $tikilib, $tikidomain;
+				$bannercachefile = $tikilib->get_preference("tmpdir", "temp");
+				if ($tikidomain) { $bannercachefile.= "/$tikidomain"; }
+				$bannercachefile.= "/banner.".(int)$bannerId;
+				unlink($bannercachefile);
 		} else {
 			$query = "insert into `tiki_banners`(`client`, `url`, `title`, `alt`, `which`, `imageData`, `imageType`, `HTMLData`,
                 `fixedURLData`, `textData`, `fromDate`, `toDate`, `useDates`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`,
