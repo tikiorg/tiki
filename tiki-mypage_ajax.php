@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.47 2007-09-25 15:35:19 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.48 2007-09-27 13:27:25 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,7 @@ function mypage_error($err) {
 		$err.= str_replace("\n", '\n', "\n".mydumpstack(xdebug_get_function_stack()));
     }
 	*/
+	if (is_myerror($err)) $err=$err->getErrorString();
 	$objResponse->addScript("alert('".str_replace("\n", '\n', addslashes($err))."');");
     return $objResponse;
 }
@@ -56,19 +57,19 @@ function mypage_win_setrect($id_mypage, $id_mypagewin, $rect) {
     $objResponse = new xajaxResponse();
 	
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
     $mywin=$mypage->getWindow((int)$id_mypagewin);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mywin);
 
 	if ($mywin) {
 		$err=$mywin->setRect($rect['left'], $rect['top'], $rect['width'], $rect['height']);
-		if (is_string($err))
+		if (is_myerror($err))
 			return mypage_error($err);
 		$err=$mywin->commit();
-		if (is_string($err))
+		if (is_myerror($err))
 			return mypage_error($err);
 	} else {
 		return mypage_error(tra("Window not found"));
@@ -83,14 +84,14 @@ function mypage_win_destroy($id_mypage, $id_mypagewin) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	$win=$mypage->getWindow((int)$id_mypagewin);
-	if (is_string($win)) return mypage_error($err);
+	if (is_myerror($win)) return mypage_error($win);
 	if ($win) $err=$win->destroy();
     
-    if (!empty($err)) {
+    if (is_myerror($err)) {
 		$objResponse=mypage_error($err);
 	
 		// hack... re-open the windows
@@ -111,18 +112,18 @@ function mypage_win_create($id_mypage, $contenttype, $title, $form_config) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
     $mywin=$mypage->newWindow($contenttype);
-	if (is_string($mywin))
+	if (is_myerror($mywin))
 		return mypage_error($mywin);
 
     $mywin->setTitle($title);
     $comp=$mywin->getComponent();
     $comp->configure($form_config);
     $err=$mywin->commit();
-	if (strlen($err)) {
+	if (is_myerror($err)) {
 		$mywin->destroy();
 		return mypage_error($err);
 	}
@@ -141,15 +142,15 @@ function mypage_win_configure($id_mypage, $id_win, $form) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	$mywin=$mypage->getWindow((int)$id_win);
-	if (is_string($mywin))
+	if (is_myerror($mywin))
 		return mypage_error($mywin);
 
     $comp=$mywin->getComponent();
-	if (is_string($comp))
+	if (is_myerror($comp))
 		return mypage_error($comp);
 
     $reload=$comp->configure($form);
@@ -179,7 +180,7 @@ function mypage_win_prepareConfigure($id_mypage, $id_win, $compname=null) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	if (!$id_win && strlen($compname)) {
@@ -189,11 +190,11 @@ function mypage_win_prepareConfigure($id_mypage, $id_win, $compname=null) {
 			$confdiv=NULL;
 	} else {
 		$mywin=$mypage->getWindow($id_win);
-		if (is_string($mywin))
+		if (is_myerror($mywin))
 			return mypage_error($mywin);
 		
 		$comp=$mywin->getComponent();
-		if (is_string($comp))
+		if (is_myerror($comp))
 			return mypage_error($comp);
 		
 		if (is_callable(array($comp, 'isConfigurable')) && $comp->isConfigurable())
@@ -223,7 +224,7 @@ function mypage_update($id_mypage, $vals, $form) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	foreach($vals as $k => $val) {
@@ -235,9 +236,9 @@ function mypage_update($id_mypage, $vals, $form) {
 
 	if (is_array($form)) {
 		$typeclass=$mypage->getTypeClass();
-		if (is_object($typeclass)) {
+		if (!is_myerror($typeclass)) {
 			$err=$typeclass->configure($form, false);
-			if (strlen($err)) return mypage_error($err);
+			if (is_myerror($err)) return mypage_error($err);
 		}
 	}
 
@@ -270,9 +271,9 @@ function mypage_create($vals, $form) {
 
 	if (array_key_exists('template', $vals) && ((int)$vals['template'] > 0)) {
 		$type=MyPage::getMypageType((int)$vals['id_types']);
-		if (!is_array($type)) return mypage_error("type unaivalable: $type");
+		if (is_myerror($type)) return mypage_error($type);
 		$mypage_src=MyPage::getMyPage_byId((int)$vals['template'], $id_users);
-		if (!is_object($mypage_src)) return mypage_error("template unaivalable: $mypage_src");
+		if (is_myerror($mypage_src)) return mypage_error($mypage_src);
 
 		if ((int)$type['templateuser'] != (int)$mypage_src->getParam('id_users'))
 			return mypage_error('template permission denied');
@@ -283,7 +284,7 @@ function mypage_create($vals, $form) {
 	}
 
 
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	unset($vals['id_types']);
@@ -297,12 +298,12 @@ function mypage_create($vals, $form) {
 	if (is_array($form)) {
 		if ($typeclass) {
 			$err=$typeclass->configure($form, true);
-			if (strlen($err)) return mypage_error($err);
+			if (is_myerror($err)) return mypage_error($err);
 		}
 	}
 
 	$err=$mypage->commit();
-	if (strlen($err)) {
+	if (is_myerror($err)) {
 		return mypage_error($err);
 	}
 	
@@ -328,11 +329,11 @@ function mypage_delete($id_mypage) {
     $objResponse = new xajaxResponse();
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
     $err=$mypage->destroy();
-	if (strlen($err))
+	if (is_myerror($err))
 		return mypage_error($err);
 
 	$objResponse->addScript("window.location.reload()");
@@ -355,7 +356,7 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false, $
 	$conf=NULL;
 	if ($id_mypage) {
 		$mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-		if (is_string($mypage))
+		if (is_myerror($mypage))
 			return mypage_error($mypage);
 
 		$id_types=$mypage->getParam('id_types');
@@ -377,10 +378,10 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false, $
 	} else {
 		if ((int)$set_template > 0) {
 			$template=MyPage::getMyPage_byId((int)$set_template, $id_users);
-			if (!is_object($template)) return mypage_error($template);
+			if (is_myerror($template)) return mypage_error($template);
 			$id_types=$template->getParam('id_types');
 			$type=MyPage::getMypageType($id_types);
-			if (!is_array($type)) return mypage_error($type);
+			if (is_myerror($type)) return mypage_error($type);
 			if ((int)$type['templateuser'] != (int)$template->getParam('id_users'))
 				return mypage_error('bad template user');
 			$conf=$template->getTypeHTMLConfig();
@@ -502,15 +503,15 @@ function comp_function($id_mypage, $id_win, $args) {
 	global $id_users;
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
 	$mywin=$mypage->getWindow((int)$id_win);
-	if (is_string($mywin))
+	if (is_myerror($mywin))
 		return mypage_error($mywin);
 
     $comp=$mywin->getComponent();
-	if (is_string($comp))
+	if (is_myerror($comp))
 		return mypage_error($comp);
 
 	return $comp->ajax($args);
@@ -520,11 +521,11 @@ function type_function($id_mypage, $args) {
 	global $id_users;
 
     $mypage=MyPage::getMyPage_byId((int)$id_mypage, $id_users);
-	if (is_string($mypage))
+	if (is_myerror($mypage))
 		return mypage_error($mypage);
 
     $typeobj=$mypage->getTypeClass();
-	if (is_string($typeobj))
+	if (is_myerror($typeobj))
 		return mypage_error($typeobj);
 
 	return $typeobj->ajax($args);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.79 2007-09-23 19:42:55 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.80 2007-09-27 13:27:25 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -39,6 +39,29 @@ function phptojsarray($var, $offset="") {
 	
 	return $str;
 }
+define ('MYERROR_ENOENT', 2);
+define ('MYERROR_EIO', 5);
+define ('MYERROR_EACCESS', 13);
+define ('MYERROR_EINVAL', 22);
+
+class MyError {
+	var $code;
+	var $str;
+	function MyError($code, $str) {
+		$this->code=$code;
+		$this->str=$str;
+	}
+	function getErrorString() {
+		return $this->str;
+	}
+	function getErrorCode() {
+		return $this->code;
+	}
+}
+
+function is_myerror($obj) {
+	return (is_object($obj) && is_a($obj, 'MyError'));
+}
 
 /*
  * MyPage object is the container of MyPageWindow
@@ -76,7 +99,7 @@ class MyPage {
 		$mypage->modified['id_types']=true;
 		
 		$type=MyPage::getMypageType((int)$id_types);
-		if (!is_array($type)) return tra("mypage type unaivalable");
+		if (!is_array($type)) return new MyError(MYERROR_EINVAL, tra("mypage type unaivalable"));
 		$classname=MyPage::getTypeClassName($type['name']);
 		if ($classname !== NULL)
 			$mypage->typeclass=call_user_func(array($classname, 'newInstance_new'), $mypage);
@@ -88,16 +111,11 @@ class MyPage {
 	function getMyPage_byId($id, $id_users) {
 		$mypage=new MyPage($id, $id_users);
 		$mypage->checkout();
-		if (strlen($mypage->lasterror)) return $mypage->lasterror;
+		if ($mypage->lasterror) return $mypage->lasterror;
 		
 		$typeclass=$mypage->getTypeClass();
-		if (!is_object($typeclass)) {
-			if (is_string($typeclass)) {
-				return $typeclass; // return the error returner by type
-			} else {
-				return "an error occured while making the type instance";
-			}
-		}
+		if (is_myerror($typeclass)) return $typeclass;
+
 		return $mypage;
 	}
 
@@ -109,21 +127,15 @@ class MyPage {
 		if ($line = $res->fetchRow()) {
 			$mypage=new MyPage($line['id'], $id_users);
 			$mypage->checkout();
-			if (strlen($mypage->lasterror)) return $mypage->lasterror;
+			if ($mypage->lasterror) return $mypage->lasterror;
 
 			$typeclass=$mypage->getTypeClass();
-			if (!is_object($typeclass)) {
-				if (is_string($typeclass)) {
-					return $typeclass; // return the error returner by type
-				} else {
-					return "an error occured while making the type instance";
-				}
-			}
+			if (is_myerror($typeclass)) return $typeclass;
 
 			return $mypage;
 
 		} else {
-			return "mypage '$name' not found";
+			return new MyError(MYERROR_ENOENT, "mypage '$name' not found");
 		}
 	}
 
@@ -136,19 +148,11 @@ class MyPage {
 		$mypage_dst->modified['id_types']=true;
 		
 		$type=MyPage::getMypageType((int)$id_types);
-		if (!is_array($type)) return tra("mypage type unaivalable");
+		if (!is_array($type)) return new MyError(MYERROR_EINVAL, tra("mypage type unaivalable"));
 		$classname=MyPage::getTypeClassName($type['name']);
-		if ($classname !== NULL)
-			$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
-		else return "can't clone '".$type['name']."'";
-
-		if (!is_object($mypage_dst->typeclass)) {
-			if (is_string($typeclass)) {
-				return $mypage_dst->typeclass; // return the error returner by type
-			} else {
-				return "an error occured while making the type instance";
-			}
-		}
+		if (is_myerror($classname)) return $classname;
+		$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
+		if (is_my_error($mypage_dst->typeclass)) return $mypage_dst->typeclass;
 
 		/* copy mypage params */
 		$copys=array('width', 'height', 'bgcolor', 'description', 'categories', 'winbgcolor', 'bgimage', 'winbgimage',
@@ -170,7 +174,6 @@ class MyPage {
 		case 'edit':
 			if ($tiki_p_admin == 'y') return true;
 			if ($this->id_users <= 0) return false;
-			//echo "(".$this->id_users." / ".$this->params['id_users'].")";
 			return ((int)$this->id_users == (int)$this->params['id_users']);
 		case 'view':
 			return true;
@@ -183,7 +186,7 @@ class MyPage {
 	}
 	
 	function getWindow($id) {
-		if (!isset($this->windows[$id])) return tra("window not found");
+		if (!isset($this->windows[$id])) return new MyError(MYERROR_ENOENT, tra("window not found"));
 		return $this->windows[$id];
 	}
 
@@ -199,7 +202,7 @@ class MyPage {
 	function newWindow($contenttype) {
 		// actually, we only allow one component of one contenttype per mypage.
 		$wins=$this->getWindowsOfType($contenttype);
-		if (count($wins)) return tra("You cannot have more than one windows of this type.");
+		if (count($wins)) return new MyError(MYERROR_EINVAL, tra("You cannot have more than one windows of this type."));
 
 		$win=MyPageWindow::newInstance_new($this, --$this->lastid, $contenttype);
 		$this->windows[$this->lastid]=$win;
@@ -215,12 +218,12 @@ class MyPage {
 		global $tikilib;
 		
 // 		if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-// 			$this->lasterror=tra('You do not have permissions to delete the page');
+// 			$this->lasterror=new MyError(MYERROR_EACCESS, tra('You do not have permissions to delete the page'));
 // 			return $this->lasterror;
 // 		}
 
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 		// we firstly destroy every windows that this mypage contain
 		foreach($this->windows as $window) {
@@ -228,7 +231,7 @@ class MyPage {
 		}
 		
 		$typeclass=$this->getTypeClass();
-		if (is_object($typeclass)) $typeclass->destroy();
+		if (!is_myerror($typeclass)) $typeclass->destroy();
 
 		// finally, we destroy this mypage
 		$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
@@ -248,11 +251,11 @@ class MyPage {
 		if (!isset($this->windows[$id_win])) return;
 		
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 		if ($id_win > 0) {
 // 			if ($this->perms['tiki_p_edit_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-// 				$this->lasterror=tra('You do not have permissions to delete this component');
+// 				$this->lasterror=new MyError(MYERROR_EACCESS, tra('You do not have permissions to delete this component'));
 // 				return $this->lasterror;
 // 			}
 			$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=? AND `id_mypage`=?",
@@ -346,7 +349,7 @@ class MyPage {
 	}
 	function setParam($param, $value) {
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 		$allowed=array('width', 'height', 'wintitlecolor', 'wintextcolor', 'winbgcolor',
 					   'name', 'description', 'bgcolor', 'categories', 'bgimage', 'winbgimage',
@@ -365,10 +368,9 @@ class MyPage {
 			// TODO: verify permissions when changing id_users or id_types !
 			$this->params[$param]=$value;
 			$this->modified[$param]=true;
-			if (is_object($typeclass)) $typeclass->mypage_setParam($param, $value);
+			if (!is_myerror($typeclass)) $typeclass->mypage_setParam($param, $value);
 		} else {
-			$this->lasterror=tra("Parameter not found :").$param;
-			return $this->lasterror;
+			return $this->lasterror=new MyError(MYERROR_EINVAL, tra("Parameter not found :").$param);
 		}
 	}
 	
@@ -406,18 +408,17 @@ class MyPage {
 				$this->modified=array();
 			} else { // bad... no mypage found
 				$this->id=0;
-				return $this->lasterror="MyPage not found";
+				return $this->lasterror=new MyError(MYERROR_ENOENT, "MyPage not found");
 			}
 			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
 // 			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
-// 				$this->lasterror=tra('You do not have permissions to view the page');
-// 				return $this->lasterror;
+// 				return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You do not have permissions to view the page'));
 // 			}
 			
 			$res=$tikilib->query("SELECT * FROM tiki_mypagewin WHERE `id_mypage`=?", array($this->id));
 			while ($line = $res->fetchRow()) {
 				$instance=MyPageWindow::newInstance_load($this, $line);
-				if (!is_object($instance)) return $this->lasterror="can't load window: $instance";
+				if (is_myerror($instance)) return $instance;
 				$this->windows[$line['id']]=$instance;
 			}
 		}
@@ -427,12 +428,11 @@ class MyPage {
 		global $tikilib, $tiki_p_edit_mypage, $tiki_p_edit_own_mypage;
 		
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 		if (is_null($this->id)) {
 // 			if ($tiki_p_edit_mypage != 'y' && $tiki_p_edit_own_mypage != 'y') {
-// 				$this->lasterror=tra('You do not have permissions to edit the page');
-// 				return $this->lasterror;
+// 				return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You do not have permissions to edit the page'));;
 // 			}
 			
 			$this->params['created']=$tikilib->now;
@@ -442,27 +442,27 @@ class MyPage {
 			global $feature_mypage_mandatory_category;
 			$categories = $this->getParam('categories');
 			if (($feature_mypage_mandatory_category > 0) && (count($categories) == 0)) {
-				return $this->lasterror = tra('A category is mandatory');
+				return $this->lasterror = new MyError(MYERROR_EINVAL, tra('A category is mandatory'));
 			}
 
 			// create a new mypage id
 			
 			$res=$tikilib->query("INSERT INTO tiki_mypage (`id_users`) values (?)",
 								 array($this->id_users));
-			if (!$res) return;
+			if (!$res) return $this->lasterror = new MyError(MYERROR_EIO, 'commit failed');
 			
 			$id=$tikilib->getOne("SELECT LAST_INSERT_ID()");
-			if (!$id) return;
+			if (!$id) return $this->lasterror = new MyError(MYERROR_EIO, 'commit error');
 			
 			$this->id=$id;
 			
 			$typeclass=$this->getTypeClass();
-			if (is_object($typeclass)) $typeclass->create();
-			else return $this->lasterror="commit failed: $typeclass";
+			if (!is_myerror($typeclass)) $typeclass->create();
+			else return $this->lasterror = new MyError(MYERROR_EIO, "commit failed: $typeclass");
 
 			// now run again for update ;)
 			$res=$this->commit();
-			if (is_string($res)) {
+			if (is_myerror($res)) {
 				$tikilib->query("DELETE FROM tiki_mypage WHERE `id`=?",
 								array($this->id));
 				$this->id=NULL;
@@ -477,7 +477,7 @@ class MyPage {
 					$c=$tikilib->getOne('SELECT COUNT(*) FROM tiki_mypage WHERE `name`=? AND `id`!=?',
 										array($this->params['name'], $this->id));
 					if ($c != 0)
-						return $this->lasterror=tra(sprintf('Name "%s" already exists', $this->params['name']));
+						return $this->lasterror=new MyError(MYERROR_EINVAL, tra(sprintf('Name "%s" already exists', $this->params['name'])));
 				}
 				$this->params['modified']=$tikilib->now;
 				$this->modified['modified']=1;
@@ -493,7 +493,7 @@ class MyPage {
 				global $feature_mypage_mandatory_category;
 				$categories = $this->getParam('categories');
 				if ($feature_mypage_mandatory_category > 0 && count($categories) == 0) {
-					return $this->lasterror = tra('A category is mandatory');
+					return $this->lasterror = new MyError(MYERROR_EINVAL, tra('A category is mandatory'));
 				}
 
 				$query="UPDATE tiki_mypage SET ".implode(',', $l)." WHERE `id`=?";
@@ -510,14 +510,13 @@ class MyPage {
 					}
 				}
 
-				$typeclass=$this->getTypeClass();
 			}
 
-			if (is_object($typeclass)) $typeclass->commit();
+			$typeclass=$this->getTypeClass();
+			if (!is_myerror($typeclass)) $typeclass->commit();
 			$this->modified=array();
 
 			foreach($this->windows as $window) {
-				if (!is_object($window)) return "window is not an object: $window";
 				$window->commit();
 			}
 		}
@@ -770,10 +769,11 @@ class MyPage {
 	function getTypeHTMLConfig($type=NULL) {
 		if (isset($this)) {
 			$typeclass=$this->getTypeClass();
-			return (is_object($typeclass) ? $typeclass->getHTMLConfig() : NULL);
+			return (is_myerror($typeclass) ? NULL : $typeclass->getHTMLConfig());
 		} else {
 			$classname=MyPage::getTypeClassName($type);
-			if (($classname !== NULL) && is_callable(array($classname, 'getHTMLConfig')))
+			if (is_myerror($classname)) return NULL;
+			if (is_callable(array($classname, 'getHTMLConfig')))
 				return call_user_func(array($classname, 'getHTMLConfig'));
 			else
 				return NULL;
@@ -783,25 +783,23 @@ class MyPage {
 	/* static */
 	function getTypeClassName($type) {
 		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $type))
-			return NULL;
+			return new MyError(MYERROR_EINVAL, tra("bad type name"));
 		if (file_exists("lib/mypage/types/type-".$type.".php")) {
 			require_once("lib/mypage/types/type-".$type.".php");
 			$classname="Mypagetype_".$type;
 			return $classname;
 		}
-		return NULL;		
+		return new MyError(MYERROR_ENOENT, tra("type class not found"));
 	}
 
 	function getTypeClass() {
 		if ($this->typeclass) return $this->typeclass;
 		$type=MyPage::getMypageType((int)$this->getParam('id_types'));
-		if (!is_array($type)) return "class not found: $type";
+		if (is_myerror($type)) return $type;
 		$classname=MyPage::getTypeClassName($type['name']);
-		if ($classname === NULL) return "class ".$type['name']." not found";
+		if (is_myerror($classname)) return $classname;
 		$this->typeclass=call_user_func(array($classname, 'newInstance_load'), $this);
-
-		if (!is_object($this->typeclass))
-			return $this->lasterror=$this->typeclass;
+		if (is_myerror($this->typeclass)) return $this->typeclass;
 
 		return $this->typeclass;
 	}
@@ -843,10 +841,9 @@ class MyPageWindow {
 		$win->setParam('height',100);
 
 		$classname=MyPageWindow::getComponentClass($contenttype);
-		if ($classname) {
-			$win->comp=call_user_func(array($classname, 'newInstance_new'), $win);
-			if (!is_object($win->comp)) return tra("component error: ").$win->comp;
-		} else return tra("component not found");
+		if (is_myerror($classname)) return $classname;
+		$win->comp=call_user_func(array($classname, 'newInstance_new'), $win);
+		if (is_myerror($win->comp)) return $win->comp;
 
 		return $win;
 	}
@@ -857,6 +854,8 @@ class MyPageWindow {
 	/* static */
 	function newInstance_load($mypage, $line) {
 		$win=new MyPageWindow($mypage, $line['id']);
+		if (is_myerror($win)) return $win;
+
 		$win->params['contenttype']=$line['contenttype'];
 		$win->modified['contenttype']=true;
 
@@ -874,6 +873,8 @@ class MyPageWindow {
 	/* static */
 	function newInstance_clone($mypage, $id, $win_src) {
 		$win=new MyPageWindow($mypage, $id);
+		if (is_myerror($win)) return $win;
+
 		$win->params['contenttype']=$win_src->getParam('contenttype');
 		$win->modified['contenttype']=true;
 
@@ -883,22 +884,24 @@ class MyPageWindow {
 		}
 
 		$comp_src=$win_src->getComponent();
+		if (is_myerror($comp_src)) return $comp_src;
 
 		$classname=MyPageWindow::getComponentClass($win_src->getParam('contenttype'));
-		if ($classname) {
-			$win->comp=call_user_func(array($classname, 'newInstance_clone'), $win, $comp_src);
-			if (!is_object($win->comp)) return tra("can't make new instance of component: ").$win->comp;
-		} else return tra('class of component not found');
+		if (is_myerror($classname)) return $classname;
+
+		$win->comp=call_user_func(array($classname, 'newInstance_clone'), $win, $comp_src);
+		if (is_myerror($win->comp)) return $win->comp;
 
 		return $win;
 	}
 
 	function destroy() {
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 		$comp=$this->getComponent();
-		if (is_object($comp)) $comp->destroy();
+		if (is_myerror($comp)) return $comp;
+
 		return $this->mypage->_destroyWindow($this);
 	}
 
@@ -924,7 +927,7 @@ class MyPageWindow {
 		*/
 		
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 
 
 		if ($this->id < 0) {
@@ -935,10 +938,10 @@ class MyPageWindow {
 
 			$res=$tikilib->query("INSERT INTO tiki_mypagewin (`id_mypage`) values (?)",
 								 array($this->mypage->id));
-			if (!$res) return;
+			if (!$res) return new MyError(MYERROR_EIO, 'commit failed');
 			
 			$id=$tikilib->getOne("SELECT LAST_INSERT_ID()");
-			if (!$id) return;
+			if (!$id) return new MyError(MYERROR_EIO, 'commit failed');
 			
 			$oldid=$this->id;
 			$this->id=$id;
@@ -946,14 +949,14 @@ class MyPageWindow {
 			
 			// now run again for update ;)
 			$r=$this->commit();
-			if (is_string($r)) {
+			if (is_myerror($r)) {
 				$tikilib->query("DELETE FROM tiki_mypagewin WHERE `id`=?", array($this->id));
 				$this->id=$oldid;
 				$this->mypage->_update_id_win($this->id, $oldid);
 				return $r;
 			}
 			$comp=$this->getComponent();
-			if (is_object($comp) && is_callable(array($comp, 'create'))) $comp->create();
+			if (!is_myerror($comp) && is_callable(array($comp, 'create'))) $comp->create();
 
 		} else {
 			
@@ -977,13 +980,13 @@ class MyPageWindow {
 			}
 
 			$comp=$this->getComponent();
-			if (is_object($comp) && is_callable(array($comp, 'commit'))) $comp->commit();
+			if (!is_myerror($comp) && is_callable(array($comp, 'commit'))) $comp->commit();
 		}
 	}
 	
 	function setParam($param, $value) {
 		if (!$this->getPerm('edit'))
-			return $this->lasterror=tra('You are not the owner of this page');
+			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
 		$this->params[$param]=$value;
 		$this->modified[$param]=true;
 	}
@@ -1009,19 +1012,19 @@ class MyPageWindow {
 	
 	function setPosition($left, $top) {
 		$err=$this->setParam('left', (int)$left);
-		if (is_string($err)) return $err;
+		if (is_myerror($err)) return $err;
 		return $this->setParam('top', (int)$top);
 	}
 
 	function setSize($width, $height) {
 		$err=$this->setParam('width', (int)$width);
-		if (is_string($err)) return $err;
+		if (is_myerror($err)) return $err;
 		return $this->setParam('height', (int)$height);
 	}
 
 	function setRect($left, $top, $width, $height) {
 		$err=$this->setPosition($left, $top);
-		if (is_string($err)) return $err;
+		if (is_myerror($err)) return $err;
 		return $this->setSize($width, $height);
 	}
 
@@ -1033,7 +1036,7 @@ class MyPageWindow {
 	function isComponentConfigurable($compname=NULL) {
 		if (!empty($compname)) {
 			$classname=MyPageWindow::getComponentClass($compname);
-			if (($classname !== NULL) && is_callable(array($classname, 'isConfigurable')))
+			if (!is_myerror($classname) && is_callable(array($classname, 'isConfigurable')))
 				return call_user_func(array($classname, 'isConfigurable'));
 		}
 		return false;
@@ -1043,11 +1046,11 @@ class MyPageWindow {
 	function getComponentConfigureDiv($compname=NULL) {
 		if (isset($this)) { // we are not static
 			$comp=$this->getComponent();
-			if ($comp) return $comp->getConfigureDiv();
+			if (!is_myerror($comp)) return $comp->getConfigureDiv();
 			return NULL;
 		} else if (!empty($compname)) { // we are static
 			$classname=MyPageWindow::getComponentClass($compname);
-			if (($classname !== NULL) && is_callable(array($classname, 'getConfigureDiv')))
+			if (!is_myerror($classname) && is_callable(array($classname, 'getConfigureDiv')))
 				return call_user_func(array($classname, 'getConfigureDiv'));
 		}
 		return NULL;
@@ -1056,36 +1059,36 @@ class MyPageWindow {
 	/* static */
 	function getComponentClass($compname) {
 		if (!preg_match('/^[a-zA-Z0-9_-]+$/', $compname))
-			return NULL;
+			return new MyError(MYERROR_EINVAL, tra("component name is invalid"));
 		if (file_exists("components/comp-".$compname.".php")) {
 			require_once("components/comp-".$compname.".php");
 			$classname="Comp_".$compname;
 			return $classname;
 		}
+		return new MyError(MYERROR_ENOENT, tra("component class not found"));
 	}
 
 	function getComponent() {
 		if ($this->comp) return $this->comp;
 		$classname=MyPageWindow::getComponentClass($this->params['contenttype']);
-		if ($classname) {
-			$this->comp=call_user_func(array($classname, 'newInstance_load'), $this);
-			return $this->comp;
-		}
-		return NULL;
+		if (is_myerror($classname)) return $classname;
+
+		$this->comp=call_user_func(array($classname, 'newInstance_load'), $this);
+		return $this->comp;
 	}
 
 	function getJSCode($editable=false) {
 		global $tikilib;
 
 		$comp=$this->getComponent();
-		if (!is_object($comp)) {
-			$this->lasterror=tra('Component not available: ').$this->params['contenttype']." -> ".$comp;
-			return 'alert("'.addslashes($this->lasterror).'");';
+		if (is_myerror($comp)) {
+			$this->lasterror=$comp;
+			return 'alert("'.addslashes($this->lasterror->getErrorString()).'");';
 		}
 
 		if (is_callable(array($comp, 'getPerm')) && !$comp->getPerm('view')) {
-			$this->lasterror=tra("You do not have permission to view this part of content");
-			return 'alert("'.addslashes($this->lasterror).'");';
+			$this->lasterror=new MyError(MYERROR_EACCESS, tra("You do not have permission to view this part of content"));
+			return 'alert("'.addslashes($this->lasterror->getErrorString()).'");';
 		}
 
 		$v="tikimypagewin[".$this->id."]";
