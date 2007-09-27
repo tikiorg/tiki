@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.30 2007-09-27 11:50:46 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.31 2007-09-27 13:27:25 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,6 +43,10 @@ function mypage_ajax_init() {
 function mypage_init() {
 	global $smarty, $headerlib, $id_users;
 
+	// deactivate left and right columns 
+	$smarty->assign('feature_right_column', 'n');
+	$smarty->assign('feature_left_column', 'n');
+
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
 	//$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.alphacube.css");
@@ -70,8 +74,8 @@ function mypage_init() {
 		$mypage=MyPage::getMyPage_byId($id_mypage, $id_users);
 	}
 
-	if (!$mypage || is_string($mypage)) {
-		$smarty->assign('msg', tra("mypage not found").": ".$mypage);
+	if (!$mypage || is_myerror($mypage)) {
+		$smarty->assign('msg', tra("can't open mypage").": ".$mypage->getErrorString());
 		$smarty->display("error.tpl");
 		die();
 	}
@@ -115,11 +119,6 @@ function mypage_init() {
 	$smarty->assign('components', $mypage->getAvailableComponents());
 
 	$smarty->assign('mypage', $mypage);
-
-	// deactivate left and right columns 
-	$smarty->assign('feature_right_column', 'n');
-	$smarty->assign('feature_left_column', 'n');
-
 
 	mypage_ajax_init();
 	

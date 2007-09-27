@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.23 2007-09-15 17:14:07 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.24 2007-09-27 13:27:25 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,7 +136,7 @@ function mypageedit_init() {
 							.'<a href="#" onclick="showMypageEdit({$mypage.id});" title="{tr}edit entry{/tr}"><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt="{tr}edit entry{/tr}" /></a>'
 							.'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
 
-	if ($typeclassname !== NULL && is_callable(array($typeclassname, 'customizeColumns'))) {
+	if (!is_myerror($typeclassname) && is_callable(array($typeclassname, 'customizeColumns'))) {
 		call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);
 	}
 
