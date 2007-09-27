@@ -111,6 +111,8 @@ class PollLibShared extends TikiLib {
   }
 	
 	function remove_poll($pollId) {
+    $query = "delete from `tiki_poll_objects` where `pollId`=?";
+    $result = $this->query($query,array((int) $pollId));
     $query = "delete from `tiki_polls` where `pollId`=?";
     $result = $this->query($query,array((int) $pollId));
     $query = "delete from `tiki_poll_options` where `pollId`=?";
