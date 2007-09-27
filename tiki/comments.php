@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.78 2007-08-13 08:57:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.79 2007-09-27 17:02:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,9 +118,9 @@ foreach ($comments_vars as $c_name) {
 	if ($comments_first) {
 	    $comments_first = 0;
 
-	    $comments_t_query .= "?$c_name=" . $_REQUEST["$c_name"];
+	    $comments_t_query .= "?$c_name=" . urlencode($_REQUEST["$c_name"]);
 	} else {
-	    $comments_t_query .= "&amp;$c_name=" . $_REQUEST["$c_name"];
+	    $comments_t_query .= "&amp;$c_name=" . urlencode($_REQUEST["$c_name"]);
 	}
     }
 }
