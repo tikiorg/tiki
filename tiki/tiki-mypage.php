@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.29 2007-09-22 13:47:28 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.30 2007-09-27 11:50:46 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,7 +71,9 @@ function mypage_init() {
 	}
 
 	if (!$mypage || is_string($mypage)) {
-		die("mypage not found : ".$mypage);
+		$smarty->assign('msg', tra("mypage not found").": ".$mypage);
+		$smarty->display("error.tpl");
+		die();
 	}
 
 	$mypage->viewed(); // increment viewed count
