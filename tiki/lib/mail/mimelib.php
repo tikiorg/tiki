@@ -34,7 +34,7 @@ class mime {
 			$hdr_value = trim(substr($line, strpos($line, ':')+1));
 			if (substr($hdr_value,0,1) == ' ') $hdr_value = substr($hdr_value, 1);
 			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
-			if (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $line, $matches)) {
+			while (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $hdr_value, $matches)) {
 				list(,$encoded,$charset,$encoding,$text) = $matches;
 				switch ($encoding) {
 				case 'B':
