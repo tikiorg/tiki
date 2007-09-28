@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.165 2007-09-21 20:00:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.166 2007-09-28 15:20:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -381,7 +381,7 @@ class Comments extends TikiLib {
 	    } elseif (isset($output['body'])) {
 		$body = $output['body'];
 		} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
-			$body = strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0]));
+			$body = html_entity_decode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
 		} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
 			$body = $output['parts'][0]['parts'][0]['text'][0];
   	    } else {
@@ -400,9 +400,6 @@ class Comments extends TikiLib {
 			    )
 			)
 		    );
-
-	    if (stristr($aux['Subject'], "=?iso-8859-1?") == $aux['Subject'])
-		$title = utf8_encode($title);
 
 	    //Todo: check permissions
 	    $message_id = substr($output['header']["message-id"], 1,
