@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.32 2007-09-27 13:36:43 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.33 2007-09-28 12:17:53 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,6 +61,7 @@ function mypage_init() {
 	$smarty->assign("mootools",'y');
 	$smarty->assign("mootab",'y');
 	$smarty->assign("mootools_windoo",'y');
+	$smarty->assign("section",'mypage');
 
 	$id_mypage=isset($_REQUEST['id_mypage']) ? (int)$_REQUEST['id_mypage'] : 0;
 	$mypage=NULL;
