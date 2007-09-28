@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.39 2007-09-07 10:04:58 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.40 2007-09-28 22:21:32 sylvieg Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -200,7 +200,7 @@ function sql_error($query, $values, $result) {
 			$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
     }
 	
-    $outp.= "<tr class='heading'><td colspan='2'>Builded query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
+    $outp.= "<tr class='heading'><td colspan='2'>Built query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
 
     if (function_exists('xdebug_get_function_stack')) {
 	function mydumpstack($stack) {
