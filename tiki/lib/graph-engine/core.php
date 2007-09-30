@@ -200,16 +200,43 @@ class Fake_GRenderer extends GRenderer // {{{1
 	}
 } // }}}1
 
+class DataHandler // {{{
+{
+	/**
+	 * Provides means to hook into the data display sequence to add decorations
+	 * or external behaviour.
+	 *
+	 * Called every time a data entry is displayed by the engine. Handlers are
+	 * registered by Graphic::addDataHandler(). No implementations are provided
+	 * with the distribution.
+	 *
+	 * @param renderer		The renderer instance on which the rendering is performed.
+	 *						This instance may not be cached for other purposes.
+	 * @param positionData	Indicates the coordinate of the data to be rendered. 
+	 *						Coordinates are renderer-specific. This value is provided
+	 *						as an associative array. (x,y) is provided for single-point
+	 *						data. (top,left,bottom,right) is provided for regions.
+	 * @param series		The key of the source series of the data.
+	 * @param entryIndex	The zero-based index of the entry in the series.
+	 */
+	function handle( $renderer, $positionData, $series, $entryIndex )
+	{
+		die( "Abstract Function Call" );
+	}
+} // }}}
+
 class Graphic // {{{1
 {
 	var $legend;
 	var $title;
 	var $parameters;
+	var $dataHandlers;
 
 	function Graphic() // {{{2
 	{
 		$this->legend = array();
 		$this->parameters = array();
+		$this->dataHandlers = array();
 	}
 	
 	function setTitle( $title ) // {{{2
@@ -222,6 +249,12 @@ class Graphic // {{{1
 		// $color name
 		// $value label
 		$this->legend[] = array( $color, $value, $url );
+	}
+
+	function addDataHandler( $handler ) // {{{2
+	{
+		if( $handler instanceof DataHandler )
+			$this->dataHandlers[] = $handler;
 	}
 
 	function getRequiredSeries() // {{{2
@@ -493,6 +526,12 @@ class Graphic // {{{1
 	{
 		// Planning some user-preferences, until then, defaults.
 		return array_merge( $this->_default(), $this->parameters );
+	}
+
+	function _notify( $renderer, $positionData, $series, $index ) // {{{2
+	{
+		foreach( $this->dataHandlers as $handler )
+			$handler->handle( $renderer, $positionData, $series, $index );
 	}
 } // }}}1
 
