@@ -4,11 +4,15 @@ require_once 'graph-engine/abstract.gridbased.php';
 class BarBasedGraphic extends GridBasedGraphic // {{{1
 {
 	var $columns;
+	var $styleMap;
+	var $columnMap;
 
 	function BarBasedGraphic() // {{{2
 	{
 		GridBasedGraphic::GridBasedGraphic();
 		$this->columns = array();
+		$this->styleMap = array();
+		$this->columnMap = array();
 	}
 	
 	function getRequiredSeries() // {{{2
@@ -95,10 +99,12 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 		foreach( $columns as $key => $line )
 		{
 			$style = $data['style'][$key];
+			$this->styleMap[$style] = "y$key";
 
 			foreach( $line as $key => $value )
 			{
 				$x = $data['x'][$key];
+				$this->columnMap[$x] = $key;
 
 				if( !isset( $this->columns[$x] ) )
 					$this->columns[$x] = array();
@@ -130,7 +136,17 @@ class BarBasedGraphic extends GridBasedGraphic // {{{1
 				$ren = &new Fake_GRenderer( $renderer, $range[0], 0, $range[1], 1 );
 				break;
 			}
-			$this->_drawColumn( $ren, $values, $zero );
+			$positions = $this->_drawColumn( $ren, $values, $zero );
+
+			if( is_array( $positions ) )
+			{
+				$index = $this->columnMap[$label];
+				foreach( $positions as $style => $positionData )
+				{
+					$series = $this->styleMap[$style];
+					$this->_notify( $ren, $positionData, $series, $index );
+				}
+			}
 		}
 	}
 
@@ -260,6 +276,7 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 		$width = $layout['multi-columns-width'] / $count;
 		$pad = ( 1 - $layout['multi-columns-width'] ) / 2;
 
+		$positions = array();
 		$i = 0;
 		foreach( $values as $style=>$value )
 		{
@@ -267,8 +284,12 @@ class MultibarGraphic extends BarBasedGraphic // {{{1
 			
 			if( $value == 0 ) continue;
 
-			$this->_drawBox( $renderer, $base, $zero, $base + $width, $this->dependant->getLocation( $value ), $style );
+			$bottom = $this->dependant->getLocation( $value );
+			$this->_drawBox( $renderer, $base, $zero, $base + $width, $bottom, $style );
+			$positions[$style] = array( 'left' => $base, 'top' => $zero, 'right' => $base + $width, 'bottom' => $bottom );
 		}
+
+		return $positions;
 	}
 
 	function _default() // {{{2
