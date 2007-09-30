@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.25 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.26 2007-09-30 10:11:52 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -53,6 +53,24 @@
 <input type="submit" name="clearpages" value="{tr}Clear{/tr}" />
 </div>
 </div>
+
+{if count($structures)}
+<div class="cbox">
+<div class="cbox-title">
+{tr}Send a structure{/tr}
+</div>
+<div class="cbox-data">
+<b>{tr}Structure{/tr}</b>:
+<select name="structure">
+<option value=""></option>
+{foreach item=struct from=$structures}
+<option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
+{/foreach}
+</select><br />
+</div>
+</div>
+{/if}
+
 {/if}
 
 <br />

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.25 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.26 2007-09-30 10:11:51 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ("XML/Server.php");
+include_once ('lib/structures/structlib.php');
 
 if ($feature_comm != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_comm");
@@ -86,6 +87,9 @@ if (isset($_REQUEST["cleararticles"])) {
 	$sendarticles = array();
 }
 
+$structures = $structlib->list_structures(0, -1, 'pageName_asc', $find);
+$smarty->assign_by_ref('structures', $structures["data"]);
+
 $msg = '';
 
 if (isset($_REQUEST["send"])) {
@@ -94,6 +98,41 @@ if (isset($_REQUEST["send"])) {
 	$client = new XML_RPC_Client($_REQUEST["path"], $_REQUEST["site"], 80);
 
 	$client->setDebug(0);
+
+	if (isset($_REQUEST["structure"]) and $_REQUEST["structure"]) {
+		$subtree = $structlib->get_subtree($_REQUEST["structure"]);		
+		var_dump($subtree);die;
+		foreach ($subtree as $spage) {
+			if ($spage['pageName']) {
+				$spage_info = $tikilib->get_page_info($spage['pageName']);
+				$searchMsg = new XML_RPC_Message('sendStructurePage', array(
+					new XML_RPC_Value($_SERVER["SERVER_NAME"], "string"),
+					new XML_RPC_Value($_REQUEST["username"], "string"),
+					new XML_RPC_Value($_REQUEST["password"], "string"),
+					new XML_RPC_Value($_REQUEST["structure"], "string"),
+					new XML_RPC_Value($spage['pageName'], "string"),
+					new XML_RPC_Value(base64_encode($page_info["data"]), "string"),
+					new XML_RPC_Value($page_info["comment"], "string"),
+					new XML_RPC_Value($page_info["description"], "string"),
+					new XML_RPC_Value($spage['pos'], "string"),
+					new XML_RPC_Value($spage['page_alias'], "string")
+				));
+			}
+		}
+		$result = $client->send($searchMsg);
+		if (!$result) {
+			$errorMsg = 'Cannot login to server maybe the server is down';
+			$msg .= tra($errorMsg);
+		} else {
+			if (!$result->faultCode()) {
+				$msg .= tra('Structure'). ' '.$_REQUEST["structure"].': ' . $page . tra(' successfully sent'). "<br />";
+			} else {
+				$errorMsg = $result->faultString(); 
+				$msg .= tra('Structure'). ' '.$_REQUEST["structure"].': ' . $page . tra(' not sent') . '!' . "<br />";
+				$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
+			}
+		}
+	}
 
 	foreach ($sendpages as $page) {
 		$page_info = $tikilib->get_page_info($page);
