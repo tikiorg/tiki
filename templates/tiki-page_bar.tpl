@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.79 2007-09-12 12:01:50 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.80 2007-09-30 07:23:12 pkdille Exp $ *}
 
 <hr/>
 
@@ -89,45 +89,50 @@
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
-<span class="button2">
-<a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
-{if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}Add Comment{/tr}
-{elseif $comments_cant == 1}
-<span class="highlight">{tr}1 comment{/tr}</span>
-{else}
-<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+  {strip}
+  <span class="button2">
+    <a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+      {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+        {tr}Add Comment{/tr}
+      {elseif $comments_cant == 1}
+        <span class="highlight">{tr}1 comment{/tr}</span>
+      {else}
+        <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+      {/if}
+    <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
+    </a>
+  </span>
+  {/strip}   
 {/if}
-<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
-</a>
+
+{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
+
+{if $feature_wiki_attachments == 'y'
+  && (
+        $tiki_p_wiki_view_attachments  == 'y'
+      &&  count($atts) > 0
+      ||  $tiki_p_wiki_attach_files      == 'y'
+      ||  $tiki_p_wiki_admin_attachments == 'y'
+    )
+}
+
+{strip}
+  <span class="button2">
+    <a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
+    {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
+      {tr}Attach File{/tr}
+    {elseif $atts|@count == 1}
+      <span class="highlight">{tr}1 file attached{/tr}</span>
+    {else}
+      <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
+    {/if}
+    <span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
+'y'}inline{else}none{/if};">({tr}Hide{/tr})
     </span>
-   
-  {/if}
-
-  {* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
-
-    {if $feature_wiki_attachments      == 'y'
-  && ($tiki_p_wiki_view_attachments  == 'y'
-  &&  count($atts) > 0
-  ||  $tiki_p_wiki_attach_files      == 'y'
-  ||  $tiki_p_wiki_admin_attachments == 'y')}
-
-  
-    <span class="button2">
-<a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
-{if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-{tr}Attach File{/tr}
-{elseif $atts|@count == 1}
-<span class="highlight">{tr}1 file attached{/tr}</span>
-{else}
-<span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
-{/if}
-<span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
-'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
-</a>
-    </span>
-  
-  {/if}{* attachments *}
+    </a>
+  </span>
+{/strip}
+{/if}{* attachments *}
 
   {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <span class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}Translation{/tr}</a></span>
