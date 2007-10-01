@@ -196,7 +196,7 @@ function isNameFree() {
 	name_orig=$('mypageedit_name_orig').value;
 	if ((name == '') || (name == name_orig))
 		$('mypageedit_name_unique').innerHTML='';
-	else xajax_mypage_isNameFree(name);
+	else xajax_mypage_isNameFree(name, mptypes[$('mypageedit_type').value].name);
 }
 
 function mypageTypeChange(id) {

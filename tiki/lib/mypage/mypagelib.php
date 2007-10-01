@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.80 2007-09-27 13:27:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.81 2007-10-01 09:55:44 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -347,6 +347,27 @@ class MyPage {
 			if ($err) return $err;
 		}
 	}
+
+	function checkParam($param, $value, $type=NULL) {
+		switch($param) {
+		case 'name':
+			if (strlen($value) <= 0) return tra('Name is empty');
+			break;
+		}
+
+		if ($this) {
+			$typeclass=$this->getTypeClass();
+			if (!is_myerror($typeclass) && is_callable(array($typeclass, 'checkParam')))
+				return $typeclass->checkParam($param, $value);
+		} else if (!empty($type)) {
+			$tcn=MyPage::getTypeClassName($type);
+			if (!is_myerror($tcn) && is_callable(array($tcn, 'checkParam'))) {
+				return call_user_func(array($tcn, 'checkParam'), $param, $value);
+			}
+		}
+		return false;
+	}
+
 	function setParam($param, $value) {
 		if (!$this->getPerm('edit'))
 			return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You are not the owner of this page'));
@@ -362,7 +383,10 @@ class MyPage {
 				else $value=array($value);
 			}
 		}
-		
+
+		$err=$this->checkParam($param, $value);
+		if ($err) return $this->lasterror=$err;
+
 		$typeclass=$this->getTypeClass();
 		if (in_array($param, $allowed)) {
 			// TODO: verify permissions when changing id_users or id_types !
