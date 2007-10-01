@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.779 2007-09-25 23:43:21 mose Exp $
+// CVS: $Id: tikilib.php,v 1.780 2007-10-01 07:24:53 niclone Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -373,7 +373,7 @@ class TikiLib extends TikiDB {
     if ( $event != 'category_changed' )  {    	
         global $feature_categories;                
         if ($feature_categories == 'y') {
-            global $categlib;            
+            global $categlib; require_once('lib/categories/categlib.php');
             $objectType="";
             switch($event) {
                 case 'wiki_page_changed': $objectType="wiki page"; break;
@@ -403,7 +403,7 @@ class TikiLib extends TikiDB {
             		global $trklib;            	
             		$object = $trklib->get_tracker_for_item($object);
             	}
-            	              
+
 	            $categs = $categlib->get_object_categories($objectType, $object);
                         
     	        foreach ($categs as $category) {           		                 
