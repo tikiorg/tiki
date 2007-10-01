@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.33 2007-09-28 12:17:53 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.34 2007-10-01 08:55:06 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,7 @@ function mypage_ajax_init() {
 
 function mypage_init() {
 	global $smarty, $headerlib, $id_users;
+	global $tiki_p_admin;
 
 	// deactivate left and right columns 
 	$smarty->assign('feature_right_column', 'n');
@@ -90,6 +91,12 @@ function mypage_init() {
 	if (isset($_REQUEST['edit']) && $_REQUEST['edit'] == 1) $editit=true;
 	else $editit=false;
 	$smarty->assign('editit', $editit);
+
+	if (($tiki_p_admin != 'y') && $editit && ((int)$mypage->getParam('id_users') != $id_users)) {
+		$smarty->assign('msg', tra("You are not the owner of this page"));
+		$smarty->display("error.tpl");
+		die();
+	}
 
 	$smarty->assign('mypagejswindows', $mypage->getJSCode($editit));
 	$smarty->assign('id_mypage', $id_mypage);
