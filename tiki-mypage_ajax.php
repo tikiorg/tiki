@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.48 2007-09-27 13:27:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.49 2007-10-01 09:55:43 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -341,10 +341,15 @@ function mypage_delete($id_mypage) {
     return $objResponse;
 }
 
-function mypage_isNameFree($name) {
+function mypage_isNameFree($name, $type) {
     $objResponse = new xajaxResponse();
-	$r=MyPage::isNameFree($name);
-	$objResponse->assign('mypageedit_name_unique', 'innerHTML', $r ? '' : tra('name already exists'));
+	$r=MyPage::checkParam('name', $name, $type);
+	if ($r !== false) 
+		$objResponse->assign('mypageedit_name_unique', 'innerHTML', $r);
+	else {
+		$r=MyPage::isNameFree($name);
+		$objResponse->assign('mypageedit_name_unique', 'innerHTML', $r ? '' : tra('name already exists'));
+	}
 	return $objResponse;
 }
 
