@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.24 2007-09-27 13:27:25 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.25 2007-10-01 07:54:43 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,16 @@
 require_once ('tiki-setup.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
+
+/*
+ * TODO: one day, it may be possible to list anonymous mypages. So a tiki permission for anonymous would be welcome here
+ */
+if (!$user) {
+	$smarty->assign('msg', tra("You are not logged in"));
+
+	$smarty->display("error.tpl");
+	die();
+}
 
 if (strlen($user) <= 0) {
 	$id_users=0;
