@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.18 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.19 2007-10-01 15:30:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,10 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
+if (isset($_REQUEST['numrows'])) {
+	$maxRecords = $_REQUEST['numrows'];
+	$smarty->assign('numrows', $maxRecords);
+ }
 
 $smarty->assign('find', $find);
 
