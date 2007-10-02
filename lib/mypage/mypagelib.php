@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.81 2007-10-01 09:55:44 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.82 2007-10-02 15:33:39 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -152,13 +152,13 @@ class MyPage {
 		$classname=MyPage::getTypeClassName($type['name']);
 		if (is_myerror($classname)) return $classname;
 		$mypage_dst->typeclass=call_user_func(array($classname, 'newInstance_clone'), $mypage_dst, $mypage_src->getTypeClass());
-		if (is_my_error($mypage_dst->typeclass)) return $mypage_dst->typeclass;
+		if (is_myerror($mypage_dst->typeclass)) return $mypage_dst->typeclass;
 
 		/* copy mypage params */
 		$copys=array('width', 'height', 'bgcolor', 'description', 'categories', 'winbgcolor', 'bgimage', 'winbgimage',
 					 'bgtype', 'winbgtype');
 		foreach($copys as $copy) $mypage_dst->setParam($copy, $mypage_src->getParam($copy));
-		$mypage_dst->commit();
+		//$mypage_dst->commit();
 		
 		foreach($mypage_src->windows as $window_src) {
 			$window_dst=MyPageWindow::newInstance_clone($mypage_dst, --$mypage_dst->lastid, $window_src);
