@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.26 2007-09-30 10:11:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.27 2007-10-02 17:27:06 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $feature_help eq 'y'}
@@ -60,13 +60,18 @@
 {tr}Send a structure{/tr}
 </div>
 <div class="cbox-data">
-<b>{tr}Structure{/tr}</b>:
+<div class="simplebox">
+<b>{tr}Structures{/tr}</b>: 
+{section name=ix loop=$sendstructures_names}
+{$sendstructures_names[ix]}&nbsp;
+{/section}
+</div>
 <select name="structure">
-<option value=""></option>
 {foreach item=struct from=$structures}
 <option value="{$struct.page_ref_id|escape}">{$struct.pageName|escape}{if $struct.page_alias} (alias: {$struct.page_alias}){/if}</option>
 {/foreach}
-</select><br />
+</select><input type="submit" name="addstructure" value="{tr}Add Structure{/tr}" />
+<input type="submit" name="clearstructures" value="{tr}Clear{/tr}" />
 </div>
 </div>
 {/if}
@@ -104,6 +109,7 @@
 </div>
 <div class="cbox-data">
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
+<input type="hidden" name="sendstructures" value="{$form_sendstructures|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <table>
 <tr><td class="form">{tr}Site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>

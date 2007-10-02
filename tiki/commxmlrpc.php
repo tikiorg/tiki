@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.21 2007-09-30 10:11:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22 2007-10-02 17:27:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.21 2007-09-30 10:11:51 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22 2007-10-02 17:27:05 sylvieg Exp $
 include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 
@@ -24,24 +24,26 @@ if ($tikilib->get_preference("feature_comm", 'n') != 'y') {
 
 $map = array(
 	"sendPage" => array("function" => "sendPage"),
+	"sendStructurePage" => array("function" => "sendStructurePage"),
 	"sendArticle" => array("function" => "sendArticle")
 );
 
 $s = new XML_RPC_Server($map);
 
-function sendStructure($id) {
+function sendStructurePage($params) {
 	global $tikilib, $userlib, $commlib;
 	include_once ('lib/structures/structlib.php');
 	$site = $params->getParam(0); $site = $site->scalarval();
 	$user = $params->getParam(1); $user = $user->scalarval();
 	$pass = $params->getParam(2); $pass = $pass->scalarval();
-	$stid = $params->getParam(3); $stid = $stid->scalarval();
-	$name = $params->getParam(4); $name = $name->scalarval();
-	$data = $params->getParam(5); $data = $data->scalarval();
-	$comm = $params->getParam(6); $comm = $comm->scalarval();
-	$desc = $params->getParam(7); $desc = $desc->scalarval();
-	$pos = $params->getParam(8); $pos = $pos->scalarval();
-	$alias = $params->getParam(9); $alias = $alias->scalarval();
+	$sName = $params->getParam(3); $sName = $sName->scalarval();
+	$pName = $params->getParam(4); $pName = $pName->scalarval();
+	$name = $params->getParam(5); $name = $name->scalarval();
+	$data = $params->getParam(6); $data = $data->scalarval();
+	$comm = $params->getParam(7); $comm = $comm->scalarval();
+	$desc = $params->getParam(8); $desc = $desc->scalarval();
+	$pos = $params->getParam(9); $pos = $pos->scalarval();
+	$alias = $params->getParam(10); $alias = $alias->scalarval();
 
 	list($ok, $user, $error) = $userlib->validate_user($user, $pass, '', '');
 	if (!$ok) {
@@ -55,16 +57,7 @@ function sendStructure($id) {
 
 	// Store the page in the tiki_received_pages_table
 	$data = base64_decode($data);
-	// todo add 2 fields in tiki_received_pages for structureId, position and alias needed for identifying structured pages
-	//      this should not interfere with normal page sending
-	// todo write $commlib->receive_structured_page() and uncomment following line
-	//      this method should add a new entry in tiki_received_pages modified as stated above
-	// todo modify tiki-received_pages.php so it don't display pages with an stid, but rather only display the rootpage
-	//      so you can in one click accept a whole structure. 
-	// todo manage a collision detection and an optional prefixing and suffixing of pages, 
-	//      make received page acceptaion enabled only if no collision found, or if suffix or prefix is setup, for all pages or only for conflicting ones
-
-	// $commlib->receive_structured_page($name, $data, $comm, $site, $user, $desc, $stid, $pos, $alias);
+	$commlib->receive_structure_page($name, $data, $comm, $site, $user, $desc, $sName, $pName, $pos, $alias);
 
 	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
 }

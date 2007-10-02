@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.16 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.17 2007-10-02 17:27:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('pageName', $_REQUEST["pageName"]);
 	$smarty->assign('data', $_REQUEST["data"]);
 	$smarty->assign('comment', $_REQUEST["comment"]);
-	$smarty->assign('receivedPageId', $_REQUEST["receivedPageId"]);
+	$smarty->assign('receivedPageId', 0);
 	$smarty->assign('parsed', $tikilib->parse_data($_REQUEST["data"]));
 }
 
@@ -114,7 +114,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $tikilib->list_received_pages($offset, $maxRecords, $sort_mode, $find);
+$channels = $tikilib->list_received_pages($offset, $maxRecords, $sort_mode, $find, 'p');
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -134,6 +134,14 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+if (!isset($_REQUEST['sort_modes'])) {
+	$sort_modes = 'receivedDate_desc';
+} else {
+	$sort_modes = $_REQUEST['sort_modes'];
+}
+$structures = $tikilib->list_received_pages(0, -1, $sort_modes, '', 's');
+$smarty->assign_by_ref('structures', $structures['data']);
 
 ask_ticket('received-pages');
 
