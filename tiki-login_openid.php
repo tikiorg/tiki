@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.7 2007-09-09 18:49:04 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.8 2007-10-02 18:14:38 nkoth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -30,8 +30,8 @@ require_once "Auth/OpenID/FileStore.php";
  */
 require_once "Auth/OpenID/SReg.php";
 
-if ($feature_openid != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_openid");
+if ($auth_method != 'openid') {
+	$smarty->assign('msg', tra("Authentication method is not OpenID"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -105,7 +105,7 @@ function filterExistingInformation( &$data, &$messages ) // {{{
 		$smarty->assign( 'forgotPass', 'n' );
 		$smarty->assign( 'allowRegister', 'n' );
 		$smarty->assign( 'change_password', 'n' );
-		$smarty->assign( 'feature_openid', 'n' );
+		$smarty->assign( 'auth_method', 'tiki' );
 		$smarty->assign( 'feature_switch_ssl_mode', 'n' );
 
 		// Display
