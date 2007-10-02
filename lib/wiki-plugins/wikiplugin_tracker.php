@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.79 2007-09-28 18:12:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.80 2007-10-02 11:04:56 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -296,6 +296,16 @@ function wikiplugin_tracker($data, $params) {
 					if (substr($l,0,1) == '-') {
 						$l = substr($l,1);
 						$optional[] = $l;
+					}
+					$ok = false;
+					foreach ($flds['data'] as $f) {
+						if ($f['fieldId'] == $l) {
+							$ok = true;
+							break;
+						}
+					}
+					if (!$ok) {
+						$back .= tra('Incorrect fieldId:').' '.$l;
 					}
 					$outf[] = $l;
 				}
