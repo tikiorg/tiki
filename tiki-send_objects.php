@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.26 2007-09-30 10:11:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.27 2007-10-02 17:27:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,6 +48,12 @@ if (!isset($_REQUEST["sendpages"])) {
 	$sendpages = unserialize(urldecode($_REQUEST['sendpages']));
 }
 
+if (!isset($_REQUEST['sendstructures'])) {
+	$sendstructures = array();
+} else {
+	$sendstructures = unserialize(urldecode($_REQUEST['sendstructures']));
+}
+
 if (!isset($_REQUEST["sendarticles"])) {
 	$sendarticles = array();
 } else {
@@ -77,6 +83,16 @@ if (isset($_REQUEST["clearpages"])) {
 	$sendpages = array();
 }
 
+if (isset($_REQUEST['addstructure'])) {
+	if (!in_array($_REQUEST['structure'], $sendstructures)) {
+		$sendstructures[] = $_REQUEST['structure'];
+	}
+}
+
+if (isset($_REQUEST['clearstructures'])) {
+	$sendstructures = array();
+}
+
 if (isset($_REQUEST["addarticle"])) {
 	if (!in_array($_REQUEST["articleId"], $sendarticles)) {
 		$sendarticles[] = $_REQUEST["articleId"];
@@ -96,40 +112,41 @@ if (isset($_REQUEST["send"])) {
 	check_ticket('send-objects');
 	// Create XMLRPC object
 	$client = new XML_RPC_Client($_REQUEST["path"], $_REQUEST["site"], 80);
-
 	$client->setDebug(0);
 
-	if (isset($_REQUEST["structure"]) and $_REQUEST["structure"]) {
-		$subtree = $structlib->get_subtree($_REQUEST["structure"]);		
-		var_dump($subtree);die;
-		foreach ($subtree as $spage) {
-			if ($spage['pageName']) {
-				$spage_info = $tikilib->get_page_info($spage['pageName']);
-				$searchMsg = new XML_RPC_Message('sendStructurePage', array(
-					new XML_RPC_Value($_SERVER["SERVER_NAME"], "string"),
-					new XML_RPC_Value($_REQUEST["username"], "string"),
-					new XML_RPC_Value($_REQUEST["password"], "string"),
-					new XML_RPC_Value($_REQUEST["structure"], "string"),
-					new XML_RPC_Value($spage['pageName'], "string"),
-					new XML_RPC_Value(base64_encode($page_info["data"]), "string"),
-					new XML_RPC_Value($page_info["comment"], "string"),
-					new XML_RPC_Value($page_info["description"], "string"),
-					new XML_RPC_Value($spage['pos'], "string"),
-					new XML_RPC_Value($spage['page_alias'], "string")
-				));
-			}
-		}
-		$result = $client->send($searchMsg);
-		if (!$result) {
-			$errorMsg = 'Cannot login to server maybe the server is down';
-			$msg .= tra($errorMsg);
-		} else {
-			if (!$result->faultCode()) {
-				$msg .= tra('Structure'). ' '.$_REQUEST["structure"].': ' . $page . tra(' successfully sent'). "<br />";
+	foreach ($sendstructures as $structure) {
+		$spages = $structlib->s_get_structure_pages($structure);
+		$pos = 0;
+		foreach ($spages as $spage) {
+			$listPageNames[$spage['page_ref_id']] = $spage['pageName'];
+			$page_info = $tikilib->get_page_info($spage['pageName']);
+			$pos++;
+			$searchMsg = new XML_RPC_Message('sendStructurePage', array(
+				new XML_RPC_Value($_SERVER["SERVER_NAME"], "string"),
+				new XML_RPC_Value($_REQUEST["username"], "string"),
+				new XML_RPC_Value($_REQUEST["password"], "string"),
+				new XML_RPC_Value($spages[0]['pageName'], "string"),
+				new XML_RPC_Value($listPageNames[$spage['parent_id']], "string"),
+				new XML_RPC_Value($spage['pageName'], "string"),
+				new XML_RPC_Value(base64_encode($page_info["data"]), "string"),
+				new XML_RPC_Value($page_info["comment"], "string"),
+				new XML_RPC_Value($page_info["description"], "string"),
+				new XML_RPC_Value($pos, "string"),
+				new XML_RPC_Value($spage['page_alias'], "string")
+			));
+
+			$result = $client->send($searchMsg);
+			if (!$result) {
+				$errorMsg = 'Cannot login to server maybe the server is down';
+				$msg .= tra($errorMsg);
 			} else {
-				$errorMsg = $result->faultString(); 
-				$msg .= tra('Structure'). ' '.$_REQUEST["structure"].': ' . $page . tra(' not sent') . '!' . "<br />";
-				$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
+				if (!$result->faultCode()) {
+					$msg .= tra('Page'). ' '.$spage['pageName'].': ' . $page . tra(' successfully sent'). "<br />";
+				} else {
+					$errorMsg = $result->faultString(); 
+					$msg .= tra('Page'). ' '.$spage['pageName'].': ' . $page . tra(' not sent') . '!' . "<br />";
+					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
+				}
 			}
 		}
 	}
@@ -147,7 +164,6 @@ if (isset($_REQUEST["send"])) {
 				new XML_RPC_Value($page_info["comment"], "string"),
 				new XML_RPC_Value($page_info["description"], "string")
 			));
-
 			$result = $client->send($searchMsg);
 					
 			if (!$result) {
@@ -200,10 +216,10 @@ if (isset($_REQUEST["send"])) {
 				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-				    $msg .= tra('page'). ': ' . $page . tra(' successfully sent'). "<br />";
+				    $msg .= tra('Article'). ': ' . $page . tra(' successfully sent'). "<br />";
 				} else {
 				    $errorMsg = $result->faultString();
-				    $msg .= tra('page'). ': ' . $page . tra(' not sent') . '!' . "<br />";
+				    $msg .= tra('Article'). ': ' . $page . tra(' not sent') . '!' . "<br />";
 				    $msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
@@ -214,11 +230,21 @@ if (isset($_REQUEST["send"])) {
 $smarty->assign('msg', $msg);
 
 $smarty->assign('sendpages', $sendpages);
+foreach ($sendstructures as $key=>$id) {
+	foreach ($structures['data'] as $structure) {
+		if ($structure['page_ref_id'] == $id) {
+			$sendstructures_names[$key] = $structure['pageName'];
+		}
+	}
+}
+$smarty->assign('sendstructures_names', $sendstructures_names);
 $smarty->assign('sendarticles', $sendarticles);
 $form_sendpages = urlencode(serialize($sendpages));
+$form_sendstructures = urlencode(serialize($sendstructures));
 $form_sendarticles = urlencode(serialize($sendarticles));
-$smarty->assign('form_sendarticles', $form_sendarticles);
 $smarty->assign('form_sendpages', $form_sendpages);
+$smarty->assign('form_sendstructures', $form_sendstructures);
+$smarty->assign('form_sendarticles', $form_sendarticles);
 
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
 $articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, $tikilib->now, $user);

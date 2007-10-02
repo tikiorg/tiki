@@ -13,13 +13,43 @@ class CommLib extends TikiLib {
 
 	function accept_page($receivedPageId) {
 		$info = $this->get_received_page($receivedPageId);
-
-		if ($this->page_exists($info["pageName"]))
-			return false;
-
-		$this->create_page($info["pageName"], 0, $info["data"], $this->now, $info["comment"], $info["receivedFromUser"], $info["receivedFromSite"], $info["description"]);
-		$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
-		$result = $this->query($query,array((int)$receivedPageId));
+		if ($info['structureName'] == $info['pageName']) {
+			global $tikilib;
+			global $structlib; include_once('lib/structures/structlib.php');
+			$pages = $tikilib->list_received_pages(0, -1, 'pageName_asc', '', 's', $info['structureName']);
+			foreach ($pages['data'] as $page) {
+				$names[] = $page['pageName'];
+			}
+			$query = "select count(*) from `tiki_pages` where `pageName` in (".implode(',',array_fill(0,count($names),'?')).")";
+			if ($this->getOne($query, $names))
+				return false;
+			foreach ($pages['data'] as $key=>$page) {
+				$parent_id = null;
+				$after_ref_id = 0;
+				if ($page['parentName']) {
+					foreach ($pages['data'] as $p) {
+						if ($p['pageName'] == $page['parentName']) {
+							$parent_id = $p['page_ref_id'];
+						}
+						if ($p['pageName'] == $page['pageName']) {
+							break;
+						}
+						if ($p['parentName'] == $page['parentName']) {
+							$after_ref_id = $p['page_ref_id'];
+						}
+					}
+				}
+				$pages['data'][$key]['page_ref_id'] = $structlib->s_create_page($parent_id, $after_ref_id, $page['pageName'], $page['page_alias']);
+			}
+			$query = "delete from `tiki_received_pages` where `structureName`=?";
+			$this->query($query, $info['structureName']);
+		} elseif (empty($info['structureName'])) {
+			if ($this->page_exists($info["pageName"]))
+				return false;
+			$this->create_page($info["pageName"], 0, $info["data"], $this->now, $info["comment"], $info["receivedFromUser"], $info["receivedFromSite"], $info["description"]);
+			$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
+			$this->query($query,array((int)$receivedPageId));
+			}
 		return true;
 	}
 
@@ -63,18 +93,19 @@ class CommLib extends TikiLib {
 	}
 
 	function remove_received_page($receivedPageId) {
-		$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
-		$result = $this->query($query,array((int)$receivedPageId));
+		$info = $this->get_received_page($receivedPageId);
+		if ($info['structureName'] == $info['pageName']) {
+			$query = "delete from `tiki_received_pages` where `structureName`=?";
+			$this->query($query,array($info['structureName']));
+		} elseif (empty($info['structureName'])) {
+			$query = "delete from `tiki_received_pages` where `receivedPageId`=?";
+			$this->query($query,array((int)$receivedPageId));
+		}
 	}
 
 	function remove_received_article($receivedArticleId) {
 		$query = "delete from `tiki_received_articles` where `receivedArticleId`=?";
 		$result = $this->query($query,array((int)$receivedArticleId));
-	}
-
-	function rename_received_page($receivedPageId, $name) {
-		$query = "update `tiki_received_pages` set `pageName`=? where `receivedPageId`=?";
-		$result = $this->query($query,array($name,(int)$receivedPageId));
 	}
 
 	function get_received_page($receivedPageId) {
@@ -103,8 +134,17 @@ class CommLib extends TikiLib {
 	}
 
 	function update_received_page($receivedPageId, $pageName, $data, $comment) {
+		$info = $this->get_received_page($receivedPageId);
+		if ($info['pageName'] != $pageName && !empty($info['structureName'])) {
+			if ($info['pageName'] == $info['structureName']) {
+				$query = "update `tiki_received_pages` set `structureName`=? where `structureName`=?";
+				$this->query($query, array($pageName, $info['pageName']));
+			}
+			$query = "update `tiki_received_pages` set `parentName`=? where `parentName`=?";
+			$this->query($query, array($pageName, $info['pageName']));
+		}
 		$query = "update `tiki_received_pages` set `pageName`=?, `data`=?, `comment`=? where `receivedPageId`=?";
-		$result = $this->query($query,array($pageName,$data,$comment,(int)$receivedPageId));
+		$this->query($query,array($pageName,$data,$comment,(int)$receivedPageId));
 	}
 
 	function receive_article($site, $user, $title, $authorName, $size, $use_image, $image_name, $image_type, $image_size, $image_x,
@@ -120,11 +160,19 @@ class CommLib extends TikiLib {
 
 	function receive_page($pageName, $data, $comment, $site, $user, $description) {
 		// Remove previous page sent from the same site-user (an update)
-		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=?";
-		$result = $this->query($query,array($pageName,$site,$user));
+		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=? and `structureName`=?";
+		$result = $this->query($query,array($pageName,$site,$user,''));
 		// Now insert the page
 		$query = "insert into `tiki_received_pages`(`pageName`,`data`,`comment`,`receivedFromSite`, `receivedFromUser`, `receivedDate`,`description`) values(?,?,?,?,?,?,?)";
 		$result = $this->query($query,array($pageName,$data,$comment,$site,$user,(int)$this->now,$description));
+	}
+
+	function receive_structure_page($pageName, $data, $comment, $site, $user, $description, $structureName, $parentName, $pos, $alias) {
+		global $tikilib;
+		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=? and `structureName`=?";
+		$this->query($query,array($pageName,$site,$user,$structureName));
+		$query = "insert into `tiki_received_pages`(`pageName`,`data`,`comment`,`receivedFromSite`, `receivedFromUser`, `receivedDate`,`description`,`structureName`, `parentName`, `page_alias`, `pos`) values(?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query,array($pageName,$data,$comment,$site,$user,(int)$tikilib->now,$description,$structureName, $parentName,$alias,$pos));		
 	}
 
 // Functions for the communication center end ////

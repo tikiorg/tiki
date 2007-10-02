@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.215 2007-09-25 02:12:50 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.216 2007-10-02 17:27:07 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1573,3 +1573,9 @@ CREATE TABLE tiki_newsletter_included (
   PRIMARY KEY  (nlId,includedId)
 ) TYPE=MyISAM;
 
+# 2007-10-01 sylvieg
+ALTER TABLE tiki_received_pages ADD COLUMN  structureName varchar(250) default NULL;
+ALTER TABLE tiki_received_pages ADD COLUMN  parentName varchar(250) default NULL;
+ALTER TABLE tiki_received_pages ADD COLUMN  page_alias varchar(250) default '';
+ALTER TABLE tiki_received_pages ADD COLUMN  pos int(4) default NULL;
+ALTER TABLE tiki_received_pages ADD KEY structureName (`structureName`);

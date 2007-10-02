@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.780 2007-10-01 07:24:53 niclone Exp $
+// CVS: $Id: tikilib.php,v 1.781 2007-10-02 17:27:03 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1711,30 +1711,38 @@ function add_pageview() {
     }
 
     /*shared*/
-    function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
+    function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find='', $type='', $structureName='') {
 	$bindvars = array();
+	if ($type == 's')
+		$mid = ' `structureName` is not null ';
+	elseif ($type == 'p')
+		$mid = ' `structureName` is null ';
+	else
+		$mid = '';
 	if ($find) {
 	    $findesc = '%'.$find.'%';
-	    $mid = " where (`pagename` like ? or `data` like ?)";
-	    $bindvbars[] = $findesc;
-	    $bindvbars[] = $findesc;
-	} else {
-	    $mid = "";
+		if ($mid)
+			$mid .= ' and ';
+	    $mid .= "(`pagename` like ? or `data` like ?)";
+	    $bindvars[] = $findesc;
+	    $bindvars[] = $findesc;
 	}
+	if ($structureName) {
+		if ($mid)
+			$mid .= ' and ';
+		$mid .= ' `structureName`=? ';
+		$bindvars[] = $structureName;
+	}
+	if ($mid)
+		$mid = "where $mid";
 
-	$query = "select * from `tiki_received_pages` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc,".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_received_pages` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    if ($this->page_exists($res["pageName"])) {
-		$res["exists"] = 'y';
-	    } else {
-		$res["exists"] = 'n';
-	    }
-
 	    $ret[] = $res;
 	}
 

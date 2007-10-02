@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-09-25 02:12:50 $
-# $Author: mose $
+# $Date: 2007-10-02 17:27:06 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2868,7 +2868,12 @@ CREATE TABLE tiki_received_pages (
   receivedFromSite varchar(200) default NULL,
   receivedFromUser varchar(200) default NULL,
   receivedDate int(14) default NULL,
-  PRIMARY KEY  (receivedPageId)
+  structureName  varchar(250) default NULL,
+  parentName  varchar(250) default NULL,
+  page_alias varchar(250) default '',
+  pos int(4) default NULL,
+  PRIMARY KEY  (receivedPageId),
+  KEY structureName (structureName)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
