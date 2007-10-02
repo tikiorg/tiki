@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.60 2007-09-09 23:18:07 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.61 2007-10-02 18:14:37 nkoth Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
@@ -20,7 +20,7 @@
          </fieldset>
         </form>
       {/if}
-	  {if $feature_openid eq 'y' and $openid_userlist|@count gt 1}
+	  {if $auth_method eq 'openid' and $openid_userlist|@count gt 1}
         <form method="get" action="tiki-login_openid.php">
 		  <fieldset>
 		  	<legend>{tr}Switch user{/tr}</legend>
@@ -139,7 +139,7 @@
 			{/if}
       </form>
     {/if}
-	{if $feature_openid eq 'y' and !$user}
+	{if $auth_method eq 'openid' and !$user}
 		<form method="get" action="tiki-login_openid.php">
 			<fieldset>
 				<legend>{tr}OpenID Login{/tr}</legend>
@@ -148,7 +148,7 @@
 
 				<div>
 					<input type="checkbox" name="action" value="force" id="openid_force"/>
-					<label for="openid_force">{tr}No login, force register/assign{/tr}</label>
+					<label for="openid_force">{tr}Force assign of new OpenID user link{/tr}</label>
 				</div>
 			</fieldset>
 		</form>

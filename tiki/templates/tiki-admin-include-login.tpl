@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.77 2007-09-23 07:55:22 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.78 2007-10-02 18:14:37 nkoth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -25,6 +25,7 @@
 <option value="pam" {if $auth_method eq 'pam'} selected="selected"{/if}>{tr}Tiki and PAM{/tr}</option>
 <option value="cas" {if $auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option>
 <option value="shib" {if $auth_method eq 'shib'} selected="selected"{/if}>{tr}Shibboleth{/tr}</option>
+<option value="openid" {if $auth_method eq 'openid'} selected="selected"{/if}>{tr}OpenID{/tr}</option>
 <!--option value="http" {if $auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
