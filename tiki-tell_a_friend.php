@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.4 2007-04-02 17:32:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.5 2007-10-02 16:02:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,7 +42,7 @@ if (isset($_REQUEST['send'])) {
 	foreach ($emails as $email) {
 		include_once('lib/registration/registrationlib.php');
 		if (function_exists('validate_email')) {
-			$ok = validate_email($email, 'y');
+			$ok = validate_email($email, 'n');
 		} else {
 			$ret = $registrationlib->SnowCheckMail($email,'','mini');
 			$ok = $ret[0];
