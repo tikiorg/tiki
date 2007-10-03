@@ -23,7 +23,7 @@ if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_
 	$return=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $1",$return);
 	$return=str_replace("{tr}Error{/tr}","Error",$return);
 }
- $return = preg_replace_callback('/(?s)(\{tr[^\}]*\})(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $return));
+  $return = preg_replace_callback('/(?s)(\{tr\})(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $return));
   return $return;
 }
 
@@ -32,7 +32,6 @@ function _translate_lang($key) {
   global $lang;
   global $lang_use_db;
   if ($lang_use_db!='y') {
-    include_once("lang/$language/language.php");
     if(isset($lang[$key[2]])) {
         if ($key[1] == "{tr}") {
           return $lang[$key[2]];// no more possible translation in block.tr.php
