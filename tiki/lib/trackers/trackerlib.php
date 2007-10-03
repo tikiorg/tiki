@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.222 2007-09-25 21:46:05 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.223 2007-10-03 14:13:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -426,11 +426,11 @@ class TrackerLib extends TikiLib {
 		$sort_mode = "value_asc";
 		$cache = md5('trackerfield'.$fieldId.$status);
 		if ($this->is_multilingual($fieldId) == 'y') { 
-                global $multilinguallib;
-                include_once('lib/multilingual/multilinguallib.php');
-                $multi_languages=$multilinguallib->getSystemLanguage();
-                $cache = md5('trackerfield'.$fieldId.$status.$language);
-                }else unset($multi_languages);
+			global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
+			$multi_languages=$multilinguallib->getSystemLanguage();
+			$cache = md5('trackerfield'.$fieldId.$status.$language);
+		} else
+			unset($multi_languages);
                 
 		
 		if (!$cachelib->isCached($cache)) {
@@ -439,11 +439,11 @@ class TrackerLib extends TikiLib {
 			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);
 			$mid.= " and (".implode('=? or ',array_fill(0,count($fieldIdArray),'ttif.`fieldId`'))."=?) ";
 			if ($this->is_multilingual($fieldId) == 'y'){
-			   $mid.=" and ttif.`lang`=?";
-			   $bindvars = array_merge($sts,$fieldIdArray,array((string)$language));
+				$mid.=" and ttif.`lang`=?";
+				$bindvars = array_merge($sts,$fieldIdArray,array((string)$language));
 			}else {
-			   $bindvars = array_merge($sts,$fieldIdArray);
-			   }
+				$bindvars = array_merge($sts,$fieldIdArray);
+			}
 			
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif ";
 			$query.= " WHERE  $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
@@ -674,14 +674,8 @@ class TrackerLib extends TikiLib {
 					break;
 				case 'l':
 					$optsl = split(',', $fopt['options']);
-					$fopt['links'] = array();
-					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) ) {
-						$links = $this->get_items_list($optsl[0], $optsl[1], $lst);
-						foreach ( $links as $link ) {
-							$fopt['links'][$link] = $this->get_item_value($optsl[0], $link, $optsl[3]);
-						}
-						$fopt['trackerId'] = $optsl[0];
-					}
+					$optsl[1] = split(':', $optsl[1]);
+					$fopt['links'] = $this->get_join_values($res['itemId'], array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
 					break;
 				}
 
@@ -2133,7 +2127,7 @@ class TrackerLib extends TikiLib {
 		global $userlib;
 		$emails = array();
 		if (empty($ins_fields['data'])) {
-			return emails;
+			return $emails;
 		}
 		foreach ($ins_fields['data'] as $f) {
 			if ($f['type'] == 'u' && isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
@@ -2145,7 +2139,28 @@ class TrackerLib extends TikiLib {
 		}
 		return $emails;
 	}
-
+	function get_join_values($itemId, $fieldIds) {
+		$select[] = "`tiki_tracker_item_fields` t0";
+		$where[] = " t0.`itemId`=?";
+		$bindVars[] = $itemId;
+		for ($i = 0; $i < count($fieldIds)-1; $i = $i+2) {
+			$j = $i + 1;
+			$k = $j + 1;
+			$select[] = "`tiki_tracker_item_fields` t$j";
+			$select[] = "`tiki_tracker_item_fields` t$k";
+			$where[] = "t$i.`value`=t$j.`value` and t$i.`fieldId`=? and t$j.`fieldId`=?";
+			$bindVars[] = $fieldIds[$i];
+			$bindVars[] = $fieldIds[$j];
+			$where[] = "t$j.`itemId`=t$k.`itemId` and t$k.`fieldId`=?";
+			$bindVars[] = $fieldIds[$k];
+		}
+		$query = "select t$k.* from ".implode(',',$select).' where '.implode(' and ',$where);
+		$result = $this->query($query, $bindVars);
+		while ($res = $result->fetchRow()) {
+			$ret[$res['itemId']] = $res['value'];
+		}
+		return $ret;
+	}
 }
 
 global $dbTiki, $tikilib;
