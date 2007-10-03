@@ -54,7 +54,7 @@
    <form method="get" action="tiki-admin_notifications.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}Find{/tr}" name="search" />
-	 {tr}Number of displayed rows{/tr}<input type="text" size="4" name="numrows" value="{$numrows|escape}" />
+	 {tr}Number of displayed rows{/tr}<input type="text" size="4" name="numrows" value="{if $numrows}{$numrows}{else}{$maxRecords}{/if}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
