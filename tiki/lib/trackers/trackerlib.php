@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.223 2007-10-03 14:13:45 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.224 2007-10-03 18:08:38 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -674,8 +674,11 @@ class TrackerLib extends TikiLib {
 					break;
 				case 'l':
 					$optsl = split(',', $fopt['options']);
-					$optsl[1] = split(':', $optsl[1]);
-					$fopt['links'] = $this->get_join_values($res['itemId'], array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
+					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) ) {
+						$optsl[1] = split(':', $optsl[1]);
+						$fopt['links'] = $this->get_join_values($res['itemId'], array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
+						$fopt['trackerId'] = $optsl[0];
+					}
 					break;
 				}
 
