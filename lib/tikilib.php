@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.782 2007-10-03 14:55:46 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.783 2007-10-03 20:43:55 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1414,6 +1414,7 @@ function add_pageview() {
     /*shared*/
     function list_faqs($offset, $maxRecords, $sort_mode, $find) {
 
+	$mid = '';
 	if ( $find ) {
 	    $findesc = '%' . $find . '%';
 	    $mid = ' where (`title` like ? or `description` like ?)';
