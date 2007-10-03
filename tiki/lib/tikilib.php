@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.781 2007-10-02 17:27:03 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.782 2007-10-03 14:55:46 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1789,7 +1789,7 @@ function add_pageview() {
 		if (isset($res['section']) and $res['section']) {
 		    $sections = split(",",$res['section']);
 		    foreach ($sections as $sec) {
-			if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
+			if (!isset($GLOBALS["$sec"]) or $GLOBALS["$sec"] != 'y') {
 			    $display = false;
 			    break;
 			}
@@ -1799,7 +1799,7 @@ function add_pageview() {
 		    if (isset($res['perm']) and $res['perm']) {
 			$sections = split(",",$res['perm']);
 			foreach ($sections as $sec) {
-			    if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
+			    if (!isset($GLOBALS["$sec"]) or $GLOBALS["$sec"] != 'y') {
 				$display = false;
 				break;
 			    }
