@@ -10,23 +10,29 @@ function tra($content, $lg='') {
 	if ($content) {
 		if ($lang_use_db != 'y') {
 			global $lang;
-				if ($lg != "") {
-					if (is_file("lang/$lg/language.php")) {
-						$l = $lg;
-					} else {
-						$l = $language;
-					}
-				} elseif (is_file("lang/$language/language.php")) {
-					$l = $language;
+			if ($lg != "") {
+				if (is_file("lang/$lg/language.php")) {
+					$l = $lg;
 				} else {
-					$l = false;
+					$l = $language;
 				}
-				if ($l) {
-					include_once("lang/$l/language.php");
-					if (is_file("lang/$l/custom.php")) {
-						include_once("lang/$l/custom.php");
-					}
+			} elseif (is_file("lang/$language/language.php")) {
+				$l = $language;
+			} else {
+				$l = false;
+			}
+			if ($l) {
+				global ${"lang_$l"};
+				if (!isset(${"lang_$l"})) {
+				  include_once("lang/$l/language.php");
+				  if (is_file("lang/$l/custom.php")) {
+					include_once("lang/$l/custom.php");
+				  }
+				  ${"lang_$l"} = $lang;
+				  unset($lang);
 				}
+				$lang = &${"lang_$l"};
+			}
 			if (isset($lang[$content])) {
 				return $lang[$content];
 			} else {
