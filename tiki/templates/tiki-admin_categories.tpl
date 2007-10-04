@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.58 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.59 2007-10-04 12:45:45 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -28,7 +28,7 @@
 {assign var=after value=$smarty.section.dx.index_next}
 {assign var=before value=$smarty.section.dx.index_prev}
 {if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
-<div id="id{$catree[$before].categId}" style="display:none;">
+<div id="id{$catree[$before].categId}" style="display:{if $catree[$before].incat eq 'y'}inline{else}none{/if};">
 {/if}
 <div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}">
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
