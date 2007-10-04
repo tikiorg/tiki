@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.30 2007-09-21 21:28:40 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.31 2007-10-04 17:57:18 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -154,9 +154,14 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
 
-	// Users watching this forum or this post
 	if ($feature_user_watches == 'y' && $event == 'wiki_page_changed') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
+		global $structlib; include_once('lib/structures/structlib.php');
+		$nots2 = $structlib->get_watches($pageName);
+		if (!empty($nots2)) {
+			$nots = array_merge($nots, $nots2);
+		}
+		
 		if ($wiki_watch_editor != "y") {
 			for ($i = count($nots) - 1; $i >=0; --$i)
 				if ($nots[$i]['user'] == $edit_user) {

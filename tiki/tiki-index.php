@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.191 2007-09-05 15:12:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.192 2007-10-04 17:57:06 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -534,19 +534,27 @@ if($feature_wiki_footnotes == 'y') {
 $smarty->assign('wiki_extras','y');
 
 // Watches
-if($feature_user_watches == 'y') {
-    if($user && isset($_REQUEST['watch_event'])) {
-	check_ticket('index');
-	if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
-	} else {
-	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+if ($feature_user_watches == 'y') {
+	if($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('index');
+		if($_REQUEST['watch_action']=='add') {
+			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
+		} elseif($_REQUEST['watch_action'] == 'add_desc') {
+			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+		} else {
+			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+		}
 	}
-    }
-    $smarty->assign('user_watching_page','n');
-    if ($user && $tikilib->user_watches($user,'wiki_page_changed',$page, 'wiki page')) {
-	$smarty->assign('user_watching_page','y');
-    }
+	$smarty->assign('user_watching_page','n');
+	$smarty->assign('user_watching_structure','n');
+	if ($user) {
+		if ($tikilib->user_watches($user, 'wiki_page_changed', $page, 'wiki page')) {
+			$smarty->assign('user_watching_page', 'y');
+		}
+		if ($tikilib->user_watches($user, 'structure_page_changed', $page_info['page_ref_id'], 'structure')) {
+			$smarty->assign('user_watching_structure', 'y');
+		}
+	}
     // Check, if the user is watching this page by a category.    
 	if ($feature_categories == 'y') {    
 	    $watching_categories_temp=$categlib->get_watching_categories($page,"wiki page",$user);	    

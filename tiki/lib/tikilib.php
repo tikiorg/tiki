@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.783 2007-10-03 20:43:55 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.784 2007-10-04 17:57:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -252,8 +252,21 @@ class TikiLib extends TikiDB {
 
     /*shared*/
 	function user_watches($user, $event, $object, $type) {
-		$query = "select count(*) from `tiki_user_watches` where `user`=? and `event`=? and `object`=? and `type`=?";
-		return $this->getOne($query,array($user,$event,$object,$type));
+		if (is_array($event)) {
+			$query = "select `event` from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event` in (".implode(',',array_fill(0, count($event),'?')).")";
+			$result = $this->query($query, array_merge(array($user,$object,$type),$event));
+			if (!$result->numRows()) {
+                return false;
+			}
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$ret[] = $res['event'];
+			}
+			return $ret;
+		} else {
+			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event`=? ";
+			return $this->getOne($query,array($user,$object,$type,$event));
+		}
 	}
 
     /*shared*/
