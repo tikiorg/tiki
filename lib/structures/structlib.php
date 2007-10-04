@@ -319,6 +319,35 @@ class StructLib extends TikiLib {
     return $structure_path;
 	}
 
+	function get_watches($pageName='', $page_ref_id=0) {
+		$query = "SELECT ts.`parent_id`,tuw.`email`,tuw.`user`, tuw.`event`";
+		$query .= " FROM `tiki_structures` ts";
+		$query .= " LEFT JOIN `tiki_user_watches` tuw ON (tuw.`object`=ts.`page_ref_id` AND tuw.`event`=?)";
+		if (empty($page_ref_id)) {
+			$query .= " LEFT JOIN `tiki_pages` tp ON ( tp.`page_id`=ts.`page_id`)";
+			$query .= " WHERE tp.`pageName`=?";
+			$result = $this->query($query, array('structure_page_changed', $pageName));
+		} else {
+			$query .= " WHERE ts.`page_ref_id`=?";
+			$result = $this->query($query, array('structure_page_changed', $page_ref_id));
+		}
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$parent_id = $res['parent_id'];
+			unset($res['parent_id']);
+			if (!empty($res['email']) || !empty($res['user'])) {
+				$ret[] = $res;
+			}
+		}
+		if (!empty($parent_id)) {
+			$ret2 = $this->get_watches('', $parent_id);
+			if (!empty($ret2)) {
+				$ret = array_merge($ret2, $ret);
+			}
+		}
+		return $ret;
+	}
+
   /**Returns a structure_info array
 
      See get_page_info for details of array
