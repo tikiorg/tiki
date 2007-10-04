@@ -185,7 +185,7 @@ class StructLib extends TikiLib {
     $ret = null;
     // If the page doesn't exist then create a new wiki page!
 	$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
-      $created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '');
+	$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '');
 		// if were not trying to add a duplicate structure head
 		if ($created or isset($parent_id)) {
             //Get the page Id
@@ -228,6 +228,7 @@ class StructLib extends TikiLib {
 
 
 	function get_subtree($page_ref_id, $level = 0, $parent_pos = '') {
+		global $tikilib;
     $ret = array();
     $pos = 1;
     //The structure page is used as a title
@@ -245,6 +246,9 @@ class StructLib extends TikiLib {
         $aux['flag'] = 'L';
         $aux['user'] = $is_locked;
       }
+	  $perms = $tikilib->get_perm_object($struct_info['pageName'], 'wiki page', false);
+	  $aux['editable'] = $perms['tiki_p_edit'];
+	  $aux['viewable'] = $perms['tiki_p_view'];
       $ret[] = $aux;
       $level++;
     }
@@ -682,7 +686,7 @@ function s_get_structure_pages($page_ref_id) {
 	return $ret;
 }
 
-function list_structures($offset, $maxRecords, $sort_mode, $find, $exact_match = true, $filter = '') {
+function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_match = true, $filter = '') {
 
 		if ($find) {
 			if (!$exact_match && $find) {
