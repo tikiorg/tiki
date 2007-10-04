@@ -38,10 +38,10 @@
 <br />
 {section name=ix loop=$items}
 <div class="dirsite">
-{if $directory_country_flag eq 'y'}
+{if $prefs.directory_country_flag eq 'y'}
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
 {/if}
-<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
+<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br />
 <span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
@@ -66,10 +66,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-directory_search.php?words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-directory_search.php?parent={$parent}&amp;words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

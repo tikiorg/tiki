@@ -1,11 +1,11 @@
-{* $Id: tiki-admin_polls.tpl,v 1.33 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.34 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}Admin Polls{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}Admin Polls{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Polls Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
@@ -21,7 +21,7 @@
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$prefs.title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
@@ -33,7 +33,7 @@
 </td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
-{html_select_date time=$publishDate end_year="+1" field_order=$display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
@@ -56,8 +56,8 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-{if $poll_list_categories eq 'y'}<td class="heading">{tr}categories{/tr}</td>{/if}
-{if $poll_list_objects eq 'y'}<td class="heading">{tr}objects{/tr}</td>{/if}
+{if $prefs.poll_list_categories eq 'y'}<td class="heading">{tr}categories{/tr}</td>{/if}
+{if $prefs.poll_list_objects eq 'y'}<td class="heading">{tr}objects{/tr}</td>{/if}
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
@@ -69,9 +69,9 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].pollId}</td>
 <td class="{cycle advance=false}"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
-{if $poll_list_categories eq 'y'}<td class="{cycle advance=false}">
+{if $prefs.poll_list_categories eq 'y'}<td class="{cycle advance=false}">
 {section name=cat loop=$channels[user].categories}{$channels[user].categories[cat].name}{if !$smarty.section.cat.last}<br />{/if}{/section}</td>{/if}
-{if $poll_list_objects eq 'y'}<td class="{cycle advance=false}">{section name=obj loop=$channels[user].objects}<a href="{$channels[user].objects[obj].href}">{$channels[user].objects[obj].name}</a>{if !$smarty.section.obj.last}<br />{/if}{/section}</td>{/if}
+{if $prefs.poll_list_objects eq 'y'}<td class="{cycle advance=false}">{section name=obj loop=$channels[user].objects}<a href="{$channels[user].objects[obj].href}">{$channels[user].objects[obj].name}</a>{if !$smarty.section.obj.last}<br />{/if}{/section}</td>{/if}
 <td class="{cycle advance=false}">{$channels[user].active}</td>
 <td class="{cycle advance=false}">{$channels[user].votes}</td>
 <td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
@@ -95,10 +95,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

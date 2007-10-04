@@ -1,6 +1,6 @@
-{if $feature_gmap eq 'y'}
+{if $prefs.feature_gmap eq 'y'}
 <h1><a href="tiki-gmap_locator.php{$extraquery}" class="pagetitle">Google Map Locator</a></h1>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmap_key}"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
 
 <div class="wikitext">
 <table>
@@ -20,9 +20,9 @@
 <tr><td>
 <form action="tiki-gmap_locator.php{$extraquery}" method="post">
 {if $watch}<input type="hidden" name="view_user" value="{$watch}" />{/if}
-<input type="hidden" name="default[x]" value="{$gmap_defaultx}" id="defx" />
-<input type="hidden" name="default[y]" value="{$gmap_defaulty}" id="defy" />
-<input type="hidden" name="default[z]" value="{$gmap_defaultz}" id="defz" />
+<input type="hidden" name="default[x]" value="{$prefs.gmap_defaultx}" id="defx" />
+<input type="hidden" name="default[y]" value="{$prefs.gmap_defaulty}" id="defy" />
+<input type="hidden" name="default[z]" value="{$prefs.gmap_defaultz}" id="defz" />
 <input type="submit" name="act" value="{tr}Save current view as default{/tr}" />
 </form>
 </td>
@@ -43,7 +43,7 @@ function load() {literal}{{/literal}
   map.addControl(new GLargeMapControl());
   map.addControl(new GMapTypeControl());
   map.addControl(new GScaleControl());
-  map.setCenter(new GLatLng({$gmap_defaulty}, {$gmap_defaultx}), {$gmap_defaultz});
+  map.setCenter(new GLatLng({$prefs.gmap_defaulty}, {$prefs.gmap_defaultx}), {$prefs.gmap_defaultz});
 
 {if $input eq 'y'}
 {if $pointx and $pointy}

@@ -492,7 +492,7 @@ function initMyPage() {
 }
 
 {/literal}
-{if $feature_phplayers eq 'y'}{* this is an ugly hack ... *}
+{if $prefs.feature_phplayers eq 'y'}{* this is an ugly hack ... *}
 window.addEvent('load', initMyPage); // <-work better with phplayers
 {else}
 window.addEvent('domready', initMyPage);

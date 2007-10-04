@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.61 2007-09-10 17:09:40 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62 2007-10-04 22:17:38 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Modules{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Modules{/tr}">
 <img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Modules Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
@@ -21,14 +21,14 @@
 <div class="simplebox">
 
 <b>{tr}Note 1{/tr}</b>: {tr}When you allowed users to configure modules via {/tr}
-<a href="tiki-user_assigned_modules.php">{tr}MyTiki{/tr}&nbsp;{$site_crumb_seper}&nbsp;{tr}Modules{/tr}</a>
+<a href="tiki-user_assigned_modules.php">{tr}MyTiki{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Modules{/tr}</a>
 {tr} then make sure you select {/tr}
 &quot;<em>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</em>&quot;
 {tr} or {/tr}&quot;<em>{tr}Displayed now, can't be unassigned{/tr}</em>&quot;.
 {tr}Only that way you can be sure users will notice new modules you assign later{/tr}.<br />
 <b>{tr}Note 2{/tr}</b>: {tr}If you assign modules to groups make sure that you
 have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups always{/tr}</em>&quot;
-{tr} on page {/tr}<a class="rbox-link" href="tiki-admin.php?page=general">{tr}Admin{/tr}&nbsp;{$site_crumb_seper}&nbsp;{tr}General{/tr}</a>.
+{tr} on page {/tr}<a class="rbox-link" href="tiki-admin.php?page=general">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}General{/tr}</a>.
 </div>
 
 <h2>{tr}User Modules{/tr}</h2>
@@ -99,7 +99,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {/section}
 </select>
 </td></tr>
-{if $user_assigned_modules eq 'y'}
+{if $prefs.user_assigned_modules eq 'y'}
 <tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
 <select name="assign_type">
 <option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</option>
@@ -318,7 +318,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
 </tr>
 
-{if $feature_phplayers eq "y"}
+{if $prefs.feature_phplayers eq "y"}
 <tr>
   <td class="form">
     {tr}phpLayersMenus{/tr}:

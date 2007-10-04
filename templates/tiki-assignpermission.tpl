@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.79 2007-09-10 15:53:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Help for Assigning Permissions{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Help for Assigning Permissions{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Article Tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>

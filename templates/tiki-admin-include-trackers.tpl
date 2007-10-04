@@ -10,9 +10,9 @@
 <form action="tiki-admin.php?page=trackers" method="post">
 <table class="admin">
 
-<tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
 
-<tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<br /><input type="text" name="t_use_dir" value="{$t_use_dir|escape}" size="50" /> </td></tr>
+<tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<br /><input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /> </td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="trkset" value="{tr}Change preferences{/tr}" /></td></tr>    
 </table>
@@ -26,7 +26,7 @@
 <form action="tiki-admin.php?page=trackers" method="post">
 <table class="admin">
 
-<tr><td class="form">{tr}Use trackers with mirror tables{/tr}:</td><td><input type="checkbox" name="trk_with_mirror_tables" {if $trk_with_mirror_tables eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use trackers with mirror tables{/tr}:</td><td><input type="checkbox" name="trk_with_mirror_tables" {if $prefs.trk_with_mirror_tables eq 'y'}checked="checked"{/if}/></td></tr>
 <tr>
 <td class="form">{tr}Values are stored in a dedicated table for each tracker, then you can easily manipulate them outside Tikiwiki{/tr}</td>
 <td class="form">{tr}WARNING : Old and New trackers cannot coexist. Trackers created with new library

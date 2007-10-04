@@ -1,11 +1,11 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a>
   
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}ThemeControl{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}ThemeControl{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
@@ -98,10 +98,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-theme_control.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-theme_control.php?tasks_useDates={$tasks_useDates}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

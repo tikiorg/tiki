@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.47 2007-09-05 16:34:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.48 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Structures" target="tikihelp" class="tikihelp" title="{tr}Structures{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Structures" target="tikihelp" class="tikihelp" title="{tr}Structures{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_structures.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin structures template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 {/if}</h1>
@@ -79,7 +79,7 @@
   <td class="{cycle}">
 <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
 <a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}' title="{tr}View page{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>
-  {if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}Export Pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}Export Pages{/tr}" border='0' width='16' height='16' /></a>{/if}
+  {if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}Export Pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/disk.png' alt="{tr}Export Pages{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $tiki_p_edit_structures == 'y'}<a title="{tr}Dump Tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/chart_organisation.png' alt="{tr}Dump Tree{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $channels[ix].editable == 'y'}<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='pics/icons/cross.png' alt="{tr}Remove{/tr}" border='0' width='16' height='16' /></a>{/if}
   {if $feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title="{tr}Create WebHelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="pics/icons/help.png" alt="{tr}Create WebHelp{/tr}" border='0' width='16' height='16' /></a>{/if}
@@ -93,16 +93,16 @@
 
 <div class="mini">
       {if $prev_offset >= 0}
-        [<a class="galprevnext" href="tiki-admin_structures.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;maxRecords={$maxRecords}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Prev{/tr}</a>]&nbsp; 
+        [<a class="galprevnext" href="tiki-admin_structures.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;maxRecords={$prefs.maxRecords}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Prev{/tr}</a>]&nbsp; 
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-      &nbsp;[<a class="galprevnext" href="tiki-admin_structures.php?offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;maxRecords={$maxRecords}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Next{/tr}</a>]
+      &nbsp;[<a class="galprevnext" href="tiki-admin_structures.php?offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;maxRecords={$prefs.maxRecords}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Next{/tr}</a>]
       {/if}
-      {if $direct_pagination eq 'y'}
+      {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_structures.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

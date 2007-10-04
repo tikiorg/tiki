@@ -1,4 +1,4 @@
-{if $feature_featuredLinks eq 'y'}
+{if $prefs.feature_featuredLinks eq 'y'}
   {tikimodule title="{tr}Featured links{/tr}" name="featured_links"}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$featuredLinks}

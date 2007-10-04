@@ -1,10 +1,10 @@
 <h1><a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
   
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}Admin Content Templates{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}Admin Content Templates{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Content Templates Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
@@ -19,7 +19,7 @@
 <h2>{tr}Create new template{/tr}</h2>
 {/if}
 <form action="tiki-admin_content_templates.php" method="post">
-{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 {if $wysiwyg ne 'y'}
 <span class="button2"><a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
@@ -30,19 +30,19 @@
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
-{if $feature_cms_templates eq 'y'}
+{if $prefs.feature_cms_templates eq 'y'}
 <tr><td class="formcolor">{tr}Use in CMS{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $feature_wiki_templates eq 'y'}
+{if $prefs.feature_wiki_templates eq 'y'}
 <tr><td class="formcolor">{tr}Use in Wiki{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $feature_newsletters eq 'y'}
+{if $prefs.feature_newsletters eq 'y'}
 <tr><td class="formcolor">{tr}Use in newsletters{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $feature_events eq 'y'}
+{if $prefs.feature_events eq 'y'}
 <tr><td class="formcolor">{tr}Use in events{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $feature_html_pages eq 'y'}
+{if $prefs.feature_html_pages eq 'y'}
 <tr><td class="formcolor">{tr}Use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 <tr>
@@ -119,10 +119,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -1,1 +1,1 @@
-{tr}Welcome to{/tr} {$siteTitle}
+{tr}Welcome to{/tr} {$prefs.siteTitle}

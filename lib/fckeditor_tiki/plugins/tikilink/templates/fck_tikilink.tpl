@@ -112,9 +112,9 @@ function Ok() {
 </td></tr></table>
 </div>
 
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="fck_tikilink.php?find={$find}&amp;offset={$selector_offset}">{smarty.section.foo.index_next}</a>
 {/section}
 {/if}

@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
+    <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
     {include file="bidi.tpl"}
     <title>{tr}Live support:Console{/tr}</title>
     {literal}

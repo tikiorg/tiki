@@ -60,28 +60,28 @@
 {if $edit}
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
 <tr><td style="border:0;padding-top:2px;">
-{if $feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar ne 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;">
-{if $feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y'}
 {jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
 {else}
-{html_select_date prefix="start_date_" time=$calitem.start field_order=$display_field_order}
+{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order}
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;" class="html_select_time">
-{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
+{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td></tr>
 <tr><td style="border:0;">
-{if $feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar ne 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
 {/if}
 </td><td style="border:0;">
@@ -101,22 +101,22 @@
 <input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:block;" id="end_date"> 
 <tr><td style="border:0;padding-top:2px;">
-{if $feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar ne 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;">
-{if $feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y'}
 {jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 {else}
-{html_select_date prefix="end_date_" time=$calitem.start field_order=$display_field_order}
+{html_select_date prefix="end_date_" time=$calitem.start field_order=$prefs.display_field_order}
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>
 <td rowspan="2" style="border:0;" class="html_select_time">
-{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$calendar_timespan hour_minmax=$hour_minmax}
+{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
@@ -124,7 +124,7 @@
 <td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a></td>
 </tr>
 <tr><td style="border:0;">
-{if $feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar ne 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
 {/if}
 </td><td style="border:0;">
@@ -138,7 +138,7 @@
 <tr><td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td><td style="border:0;" rowspan="2" class="html_select_time">
-{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$calendar_timespan}
+{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
 </td><td style="border:0;padding-top:2px;">
 <a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
 </td>

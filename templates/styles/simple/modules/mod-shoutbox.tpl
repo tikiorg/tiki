@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-shoutbox.tpl,v 1.3 2007-07-24 15:23:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-shoutbox.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
 
-{if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
+{if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 	{tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}
 		{if $tiki_p_post_shoutbox eq 'y'}
 			{js_maxlength textarea=shout_msg maxlength=255}

@@ -4,12 +4,12 @@
 
 
   
-      {if $feature_help eq 'y'}
+      {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_graph.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Graph tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
@@ -144,10 +144,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

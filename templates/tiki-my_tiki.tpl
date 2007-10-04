@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.28 2007-09-14 21:09:09 frank_p Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29 2007-10-04 22:17:41 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}MyTiki{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}MyTiki{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
@@ -18,7 +18,7 @@
 <br />
 
 {capture name=my}
-{if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
+{if $prefs.feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My pages{/tr}{else}{tr}User Pages{/tr}{/if}</div>
@@ -45,7 +45,7 @@
 </div>
 {/if}
 
-{if $feature_galleries eq 'y' and $mytiki_gals eq 'y'}
+{if $prefs.feature_galleries eq 'y' and $mytiki_gals eq 'y'}
 <div id="content2" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My galleries{/tr}{else}{tr}User Galleries{/tr}{/if}</div>
@@ -65,7 +65,7 @@
 </div>
 {/if}
 
-{if $feature_trackers eq 'y' and $mytiki_items eq 'y'}
+{if $prefs.feature_trackers eq 'y' and $mytiki_items eq 'y'}
 <div id="content3" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My items{/tr}{else}{tr}Assigned items{/tr}{/if}</div>
@@ -85,7 +85,7 @@
 </div>
 {/if}
 
-{if $feature_messages eq 'y' and $mytiki_msgs eq 'y'}
+{if $prefs.feature_messages eq 'y' and $mytiki_msgs eq 'y'}
 <div id="content4" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Unread Messages{/tr}</div>
@@ -103,7 +103,7 @@
 </div>
 {/if}
 
-{if $feature_tasks eq 'y' and $mytiki_tasks eq 'y'}
+{if $prefs.feature_tasks eq 'y' and $mytiki_tasks eq 'y'}
 <div id="content5" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}User tasks{/tr}{/if}</div>
@@ -121,7 +121,7 @@
 
 
 
-{if $feature_blogs eq 'y' && $mytiki_blogs eq 'y'}
+{if $prefs.feature_blogs eq 'y' && $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
   <div class="cbox">
   <div class="cbox-title">{if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}</div>
@@ -139,7 +139,7 @@
 </div>
 {/if}
 
-{if $feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
+{if $prefs.feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
   <div id="content7" class="content">
       {include file="tiki-g-my_activities.tpl"}
       <br /><br />

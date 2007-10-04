@@ -1,6 +1,6 @@
 <table cellpadding="0" cellspacing="0" border="0" id="topbar">
 <tr><td class="left" rowspan="2" valign="middle">
-<a href="{if $http_domain}http://{$http_domain}{$http_prefix}{else}{$crumbs[0]->url}{/if}" title="{tr}Back to Homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
+<a href="{if $http_domain}http://{$http_domain}{$http_prefix}{else}{$crumbs[0]->url}{/if}" title="{tr}Back to Homepage{/tr} {$prefs.siteTitle}" class="linkh">{$prefs.siteTitle}</a>
 </td>
 <td>
 <table style="float:right;font-size:80%;"><tr>
@@ -40,7 +40,7 @@ Text Search <input type="hidden" name="where" value="wikis" />
 </td></tr></table>
 </td>
 <td class="right"><div style="font-size:80%">
-{if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
 <a href="tiki-calendar.php" class="link">{$smarty.now|tiki_short_datetime}</a>
 {else}
 {$smarty.now|tiki_short_datetime}
@@ -48,7 +48,7 @@ Text Search <input type="hidden" name="where" value="wikis" />
 </div></td></tr>
 <tr>
 <td colspan="2">
-{if $feature_phplayers eq 'y' and $feature_siteidentity eq 'y' and $feature_sitemenu eq 'y'}
+{if $prefs.feature_phplayers eq 'y' and $prefs.feature_siteidentity eq 'y' and $prefs.feature_sitemenu eq 'y'}
 <div id="plm_menu">
 {phplayers id=42 type=horiz}
 </div>

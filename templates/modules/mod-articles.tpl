@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.7 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.8 2007-10-04 22:17:46 nyloth Exp $ *}
 
-{if $feature_articles eq 'y'}
+{if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}$module_title{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="articles" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">

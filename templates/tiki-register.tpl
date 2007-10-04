@@ -1,6 +1,6 @@
 <h2>{tr}Register as a new user{/tr}</h2>
 <br />
-{if $feature_ajax eq 'y'}
+{if $prefs.feature_ajax eq 'y'}
   <script src="lib/registration/register_ajax.js" type="text/javascript"></script>
 {/if}
 
@@ -25,7 +25,7 @@
 
 {else}
 
-  {if $rnd_num_reg eq 'y'}
+  {if $prefs.rnd_num_reg eq 'y'}
     <small>{tr}Your registration code:{/tr}</small>
     <img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
     <br />
@@ -37,39 +37,39 @@
       <tr><td class="formcolor">{tr}Username{/tr}:</td>
       <td class="formcolor">
         <input style="float:left" type="text" name="name" id="name"
-	  {if $feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
-          {if $feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
-		{if $login_is_email eq 'y'}
+	  {if $prefs.feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
+          {if $prefs.feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
+		{if $prefs.login_is_email eq 'y'}
 		({tr}Use your email as login{/tr})
 		{else}
-	  {if $lowercase_username eq 'y'}({tr}lowercase only{/tr}){/if}</td>
+	  {if $prefs.lowercase_username eq 'y'}({tr}lowercase only{/tr}){/if}</td>
 		{/if}
       </tr>
 
-      {if $useRegisterPasscode eq 'y'}
+      {if $prefs.useRegisterPasscode eq 'y'}
         <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td>
 	<td class="formcolor"><input type="password" name="passcode" /></td></tr>
       {/if}
-      {if $rnd_num_reg eq 'y'}
+      {if $prefs.rnd_num_reg eq 'y'}
         <tr><td class="formcolor">{tr}Registration code{/tr}:</td>
         <td class="formcolor"><input type="text" maxlength="8" size="8" name="regcode" /></td></tr>
       {/if}
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
       <td class="formcolor"><input id='pass1' type="password" name="pass"
-        {if $feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/></td>
+        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/></td>
       </tr>
 
       <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
       <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain"
-        {if $feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $feature_ajax eq'y'}<div style="float:left" id="checkpass"></div>{/if}</td>
+        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left" id="checkpass"></div>{/if}</td>
       </tr>
 
-{if $login_is_email ne 'y'}
+{if $prefs.login_is_email ne 'y'}
       <tr><td class="formcolor">{tr}Email{/tr}:</td>
       <td class="formcolor"><input style="float:left" type="text" id="email" name="email"
-        {if $validateUsers eq 'y' and $feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}
-        {if $validateUsers eq 'y' and $validateEmail ne 'y'}<br />
+        {if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $prefs.feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}
+        {if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}<br />
         <div style="float:left">{tr}A valid email is mandatory to register{/tr}</div>{/if}</td>
       </tr>
 {/if}

@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.68 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.69 2007-10-04 22:17:40 nyloth Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
 {/if}
@@ -40,10 +40,10 @@
 {else}
 <input type="hidden" name="visible" value="on" />
 {/if}
-{if $feature_maps eq 'y'}
+{if $prefs.feature_maps eq 'y'}
 <tr><td class="formcolor">{tr}Geographic{/tr}:</td><td class="formcolor"><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $preset_galleries_scale ne 'y'}
+{if $prefs.preset_galleries_scale ne 'y'}
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
@@ -82,7 +82,7 @@
 {/foreach}
 </select>
 </td></tr>
-{if $preset_galleries_scale ne 'y'}
+{if $prefs.preset_galleries_scale ne 'y'}
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 
 {tr}Global default{/tr} {$scaleSizeGalleries}x{$scaleSizeGalleries} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleSizeGalleries}" {if $defaultscale==$scaleSizeGalleries}checked="checked"{/if} />{tr}default scale{/tr}<br />
@@ -155,26 +155,26 @@
 
 <table class="normal">
 <tr>
-{if $gal_list_name eq 'y'}
+{if $prefs.gal_list_name eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading">{tr}Parent{/tr}</td>
 {/if}
-{if $gal_list_description eq 'y'}
+{if $prefs.gal_list_description eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 {/if}
-{if $gal_list_created eq 'y'}
+{if $prefs.gal_list_created eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
-{if $gal_list_lastmodif eq 'y'}
+{if $prefs.gal_list_lastmodif eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last modified{/tr}</a></td>
 {/if}
-{if $gal_list_user eq 'y'}
+{if $prefs.gal_list_user eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
-{if $gal_list_imgs eq 'y'}
+{if $prefs.gal_list_imgs eq 'y'}
 <td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></td>
 {/if}
-{if $gal_list_visits eq 'y'}
+{if $prefs.gal_list_visits eq 'y'}
 <td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
 <td  class="heading">{tr}Actions{/tr}</td>
@@ -184,28 +184,28 @@
 {if ($filter eq 'topgal' and $galleries[changes].parentgallery eq -1) or ($filter eq 'parentgal' and $galleries[changes].parentgal eq 'y') or ($filter eq '')}
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
-{if $gal_list_name eq 'y'}
+{if $prefs.gal_list_name eq 'y'}
   <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].galleryId}">{$galleries[changes].name}</a></td><td class="{cycle advance=false}">
   {if $galleries[changes].parentgallery ne -1 }<a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].parentgallery}">{$galleries[changes].parentgalleryName}</a>{/if}
   {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
   </td>
 {/if}
-{if $gal_list_description eq 'y'}
+{if $prefs.gal_list_description eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].description}</td>
 {/if}
-{if $gal_list_created eq 'y'}
+{if $prefs.gal_list_created eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}</td>
 {/if}
-{if $gal_list_lastmodif eq 'y'}
+{if $prefs.gal_list_lastmodif eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
 {/if}
-{if $gal_list_user eq 'y'}
+{if $prefs.gal_list_user eq 'y'}
   <td class="{cycle advance=false}">{$galleries[changes].user|userlink}</td>
 {/if}
-{if $gal_list_imgs eq 'y'}
+{if $prefs.gal_list_imgs eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].images}</td>
 {/if}
-{if $gal_list_visits eq 'y'}
+{if $prefs.gal_list_visits eq 'y'}
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
 {/if}
   <td class="{cycle}" nowrap="nowrap">
@@ -251,7 +251,7 @@
 {/section}
 </table>
 <br />
-{if $feature_maps eq 'y'}{$map_error}{/if}
+{if $prefs.feature_maps eq 'y'}{$map_error}{/if}
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="galprevnext" href="tiki-galleries.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -260,10 +260,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="galprevnext" href="tiki-galleries.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-galleries.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

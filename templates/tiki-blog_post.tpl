@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1>
 
 <div class="navbar">
-{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 {if $wysiwyg ne 'y'}
 <span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
@@ -41,17 +41,17 @@
 </select>
 </td></tr>
 {assign var=area_name value="blogedit"}
-{if $feature_smileys eq 'y' && not $wysiwyg}
+{if $prefs.feature_smileys eq 'y' && not $wysiwyg}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
    {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
 {/if}
 {if $blog_data.use_title eq 'y' || !$blogId}
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-<input type="text" size="80" name="title" value="{$title|escape}" />
+<input type="text" size="80" name="title" value="{$prefs.title|escape}" />
 </td></tr>
 {/if}
-{if $wysiwyg eq 'n' and $wysiwyg_optional eq 'y'}
+{if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
 <tr><td class="editblogform">{tr}Data{/tr}
 <br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
 <br />
@@ -96,13 +96,13 @@
 {/if}
 <tr><td class="editblogform">{tr}Mark entry as private:{/tr}</td>
   <td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td></tr>
-{if $blog_spellcheck eq 'y'}
+{if $prefs.blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-{if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file=freetag.tpl}
 {/if}
-{if $feature_contribution eq 'y'}
+{if $prefs.feature_contribution eq 'y'}
 {include file="contribution.tpl"}
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />

@@ -1,6 +1,6 @@
 {* $Header$ *}
 
-{if $feature_forums eq 'y'}
+{if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` forum posts{/tr}" assign="tpl_module_title"}

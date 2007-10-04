@@ -1,15 +1,15 @@
 <h1>{if $template}<a class="pagetitle" href="tiki-edit_templates.php?mode=listing&template={$template}">{tr}Edit templates{/tr}: {$template}</a>{else}<a class="pagetitle" href="tiki-edit_templates.php">{tr}Edit templates{/tr}</a>{/if}
 
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Edit+Templates" target="tikihelp" class="tikihelp" title="{tr}EditTemplates{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Edit+Templates" target="tikihelp" class="tikihelp" title="{tr}EditTemplates{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}EditTemplates tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 <div class="navbar">
-{if $feature_editcss eq 'y'}
+{if $prefs.feature_editcss eq 'y'}
 <span class="button2"><a href="tiki-edit_css.php" class="linkbut">{tr}Edit CSS{/tr}</a></span>
 {/if}
 {if $mode eq 'editing'}
@@ -43,13 +43,13 @@
 <textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">
 <input type="hidden" name="template" value="{$template|escape}" />
-{if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-{if $style_local eq 'n'}
+{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
+{if $prefs.style_local eq 'n'}
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {/if}
-<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$style|replace:'.css':''}" />
-{if $style_local eq 'y'}
-<a class="blogt" href="tiki-edit_templates.php?template={$template}&amp;delete=y}"><img src="img/icons2/delete.gif" alt="{tr}Delete the copy in the theme:{/tr} {$style|replace:'.css':''}" border="0" title="{tr}Delete the copy in the theme:{/tr} {$style|replace:'.css':''}" /></a>
+<input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}" />
+{if $prefs.style_local eq 'y'}
+<a class="blogt" href="tiki-edit_templates.php?template={$template}&amp;delete=y}"><img src="img/icons2/delete.gif" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" border="0" title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" /></a>
 {/if}
 {/if}
 </div>

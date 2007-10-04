@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.15 2007-09-25 15:19:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.16 2007-10-04 22:17:43 nyloth Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -61,12 +61,12 @@
 
 {* -------------------- Multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
-	{assign var='Height' value="$MultimediaDefaultHeight"}
-	{assign var='Lenght' value="$MultimediaDefaultLength"}
+	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
+	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
 	{if $field_value.value ne ''}	
 	{if  $field_value.options_array[1] ne '' } { $Lenght=$field_value.options_array[1] }{/if}
 	{if  $field_value.options_array[2] ne '' } { $Height=$field_value.options_array[2] }{/if}
-	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$VideoHeight}{/if}
+	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
 	{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
 	{/if}
 
@@ -203,9 +203,9 @@
 
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
-	{if $feature_gmap eq 'y'}
+	{if $prefs.feature_gmap eq 'y'}
 	Google Map : X = {$field_value.x} ; Y = {$field_value.y} ; Zoom = {$field_value.z}
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmap_key}" type="text/javascript">
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}" type="text/javascript">
 	</script>
 	<div id="map" style="width: 500px; height: 400px;border: 1px solid #000;">
 	</div>

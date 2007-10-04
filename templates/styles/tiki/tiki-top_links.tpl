@@ -1,4 +1,4 @@
-{if $feature_featuredLinks eq 'y'}
+{if $prefs.feature_featuredLinks eq 'y'}
 <div id="toplinks">
 {section name=ix loop=$featuredLinks}
 {if $featuredLinks[ix].type eq 'f'}

@@ -19,7 +19,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-{if $feature_maps eq 'y' and $gal_info.geographic eq 'y'}
+{if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
 <tr><td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
 {/if}

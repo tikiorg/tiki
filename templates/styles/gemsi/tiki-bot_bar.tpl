@@ -1,4 +1,4 @@
-{if $feature_bot_bar_debug eq 'y'}
+{if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats">
 [ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; 
 [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; 

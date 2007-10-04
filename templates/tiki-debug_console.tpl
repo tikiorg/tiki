@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.7 2007-06-16 16:02:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.8 2007-10-04 22:17:39 nyloth Exp $ *}
 
-{if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
+{if $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
 
 {* Command prompt form *}

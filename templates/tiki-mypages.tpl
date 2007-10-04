@@ -28,7 +28,7 @@
      </select>
      </td>
     </tr>
-    {if $feature_categories eq "y"}
+    {if $prefs.feature_categories eq "y"}
      <tr><th>{tr}Categorize{/tr}</th><td id='mypageedit_categorize_tpl'>{$mypageedit_categorize_tpl}</td></tr>
     {/if}
     <tr id='mypageedit_tr_dimensions' style='display: none;'>
@@ -248,7 +248,7 @@ function updateMypageParams(id, vals) {
 }
 
 {/literal}
-{if $feature_phplayers eq 'y'}{* this is an ugly hack ... *}
+{if $prefs.feature_phplayers eq 'y'}{* this is an ugly hack ... *}
 window.addEvent('load', initMypageEdit);
 {else}
 window.addEvent('domready', initMypageEdit);

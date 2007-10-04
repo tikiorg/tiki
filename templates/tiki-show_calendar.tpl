@@ -4,7 +4,7 @@
 <div class="tabrow">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap" rowspan="2">
-{if $feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y'}
 <form action="tiki-calendar.php" method="post" name="f">
 <span title="{tr}Date Selector{/tr}" id="datrigger" class="daterow" >{$focusdate|tiki_long_date}</span>
 <span class="date">&lt;- {tr}click to navigate{/tr}</span>

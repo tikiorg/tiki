@@ -1,19 +1,19 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Configure Newsreader{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Configure Newsreader{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-newsreader_servers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}configure newsreader server tpl{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
 
 
 
-{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
+{if $prefs.feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 {/if}
 <h2>{tr}Select a news server to browse{/tr}</h2>
@@ -55,10 +55,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-newsreader_servers.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-newsreader_servers.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

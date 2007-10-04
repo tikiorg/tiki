@@ -3,7 +3,7 @@
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=calendar"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt='{tr}Configure/Options{/tr}' /></a>
 {/if} 
 </h1>
-{* {if $feature_tabs eq 'y'}
+{* {if $prefs.feature_tabs eq 'y'}
 <div class="tabs">
 <span id="tab1" class="tab tabActive">{tr}List Calendars{/tr}</span>
 <span id="tab2" class="tab">{tr}Create/edit Calendars{/tr}</span>
@@ -76,10 +76,10 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Permissions{
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
@@ -151,7 +151,7 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Permissions{
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if} />
 </td></tr>
-{if $feature_newsletters eq 'y'}
+{if $prefs.feature_newsletters eq 'y'}
 <tr class="formcolor"><td>{tr}Custom Subscription List{/tr}:</td><td>
 <select name="customsubscription">
 <option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>

@@ -1,4 +1,4 @@
-{if $feature_left_column eq 'n' and $feature_right_column eq 'n'}
+{if $prefs.feature_left_column eq 'n' and $prefs.feature_right_column eq 'n'}
   {assign var=xtitle value=1}
 {else} {assign var=xtitle value=0} {/if}
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -6,12 +6,12 @@
   <td{if $xtitle} width="30%"{/if}>
     <h1><a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a>
 
-      {if $feature_help eq 'y'}
+      {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Games" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Games{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_games.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}games tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 

@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.29 2007-07-19 13:16:17 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.30 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.15 2007-07-24 17:12:49 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.16 2007-10-04 22:17:42 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a></h1>
 
 <div class="navbar">
@@ -48,10 +48,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-survey_stats.php?surveyId={$surveyId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-survey_stats.php?surveyId={$surveyId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -1,11 +1,11 @@
 <h1><a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical_prefs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Preferences Doc tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
@@ -65,12 +65,12 @@
 	<td class="formcolor">{tr}Reminders{/tr}</td>
 	<td class="formcolor">
 	<select name="minical_reminders">
-    <option value="0" {if $minical_reminders eq 0}selected="selected"{/if}>{tr}no reminders{/tr}</option>
-    <option value="60" {if $minical_reminders eq 60}selected="selected"{/if}>1 min</option>
-    <option value="120" {if $minical_reminders eq 120}selected="selected"{/if}>2 min</option>
-    <option value="300" {if $minical_reminders eq 300}selected="selected"{/if}>5 min</option>
-    <option value="600" {if $minical_reminders eq 600}selected="selected"{/if}>10 min</option>
-    <option value="900" {if $minical_reminders eq 900}selected="selected"{/if}>15 min</option>
+    <option value="0" {if $prefs.minical_reminders eq 0}selected="selected"{/if}>{tr}no reminders{/tr}</option>
+    <option value="60" {if $prefs.minical_reminders eq 60}selected="selected"{/if}>1 min</option>
+    <option value="120" {if $prefs.minical_reminders eq 120}selected="selected"{/if}>2 min</option>
+    <option value="300" {if $prefs.minical_reminders eq 300}selected="selected"{/if}>5 min</option>
+    <option value="600" {if $prefs.minical_reminders eq 600}selected="selected"{/if}>10 min</option>
+    <option value="900" {if $prefs.minical_reminders eq 900}selected="selected"{/if}>15 min</option>
 	</select>
 	</td>
 </tr>

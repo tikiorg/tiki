@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.94 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Trackers tpl{/tr}">
 <img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}Edit{/tr}" width='16' height='16' /></a>{/if}</h1>
 
@@ -16,7 +16,7 @@
 {/if}
 </div>
 
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Trackers{/tr}</a></span>
@@ -33,7 +33,7 @@
 {cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* --- tab with list --- *}
 <a name="view"></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 
 <div  align="center">
@@ -84,7 +84,7 @@
 
 {* --- tab with form --- *}
 <a name="mod"></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
 <div class="simplebox">
@@ -99,12 +99,12 @@
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl colsCategorize=2}
-{if $feature_categories}
+{if $prefs.feature_categories}
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Auto create corresponding categories{/tr}</td><td>
 <input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} /></td></tr>
 {/if}
 
-{if $trk_with_mirror_tables eq 'y'}
+{if $prefs.trk_with_mirror_tables eq 'y'}
 <tr class="formcolor"><td class="auto" colspan="2">
 {tr}Use "explicit" names in the mirror table{/tr}<br />
 <em>{tr}tracker name must be unique, field names must be unique 
@@ -216,7 +216,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </tr></table>
 </div>
 </td></tr>
-<tr class="formcolor"><td colspan="2">{tr}Items can be created only during a certain time{/tr}</td><td>{tr}After:{/tr} <input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> {html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$display_field_order} <span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>&nbsp;{$siteTimeZone}<br />{tr}Before:{/tr}  <input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> {html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$display_field_order} <span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
+<tr class="formcolor"><td colspan="2">{tr}Items can be created only during a certain time{/tr}</td><td>{tr}After:{/tr} <input type="checkbox" name="start"{if $info.start} checked="checked"{/if} /> {html_select_date prefix="start_" time=$info.start start_year="0" end_year="+10" field_order=$prefs.display_field_order} <span dir="ltr">{html_select_time prefix="start_" time=$info.start display_seconds=false}</span>&nbsp;{$siteTimeZone}<br />{tr}Before:{/tr}  <input type="checkbox" name="end"{if $info.end} checked="checked"{/if} /> {html_select_date prefix="end_" time=$info.end start_year="0" end_year="+10" field_order=$prefs.display_field_order} <span dir="ltr">{html_select_time prefix="end_" time=$info.end display_seconds=false}</span>
 &nbsp;{$siteTimeZone}
 </td></tr>
 
@@ -235,7 +235,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </div>
 
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Import/export trackers{/tr}</h2>
 
 <form action="tiki-admin_trackers.php" method="post">
@@ -298,7 +298,7 @@ categories = {$catsdump}
 </div>
 
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Duplicate tracker{/tr}</h2>
 
 <form action="tiki-admin_trackers.php" method="post">

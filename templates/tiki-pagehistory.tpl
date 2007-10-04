@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.35 2007-08-29 12:40:52 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.36 2007-10-04 22:17:42 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -105,8 +105,8 @@
 <form action="tiki-pagehistory.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
-<div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}{if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}, {tr}s=source{/tr} {/if}{if $default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>
-{if $default_wiki_diff_style ne "old"}
+<div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>
+{if $prefs.default_wiki_diff_style ne "old"}
 <div style=" text-align:right;"><select name="diff_style">
 	<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
@@ -128,13 +128,13 @@
 {if $tiki_p_remove eq 'y'}<th class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></th>{/if}
 <th class="heading">{tr}Date{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
-{if $feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
+{if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
 <th class="heading">{tr}Comment{/tr}</th>
-{if $feature_contribution eq 'y'}<th class="heading">{tr}Contribution{/tr}</th>{/if}
-{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<th class="heading">{tr}Contributors{/tr}</th>{/if}
+{if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}Contribution{/tr}</th>{/if}
+{if $prefs.feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<th class="heading">{tr}Contributors{/tr}</th>{/if}
 <th class="heading">{tr}Version{/tr}</th>
 <th class="heading">{tr}Action{/tr}</th>
-{if $default_wiki_diff_style != "old" and $history}
+{if $prefs.default_wiki_diff_style != "old" and $history}
 <th class="heading" colspan="2">
 <input type="submit" name="compare" value="{tr}compare{/tr}" /><br />
 </th>
@@ -146,17 +146,17 @@
 {/if}
 <td class="odd">{$info.lastModif|tiki_short_datetime}</td>
 {if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user}</td>{/if}
-{if $feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
+{if $prefs.feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
 <td class="odd">{if $info.comment}{$info.comment}{else}&nbsp;{/if}</td>
-{if $feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
-{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
+{if $prefs.feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
+{if $prefs.feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
 <td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
 <td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
-{if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
+{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}Source{/tr}">s</a>
 {/if}
 </td>
-{if $default_wiki_diff_style ne "old" and $history}
+{if $prefs.default_wiki_diff_style ne "old" and $history}
 <td class="odd button"><input type="radio" name="oldver" value="0" title="{tr}compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} /></td>
 <td class="odd button"><input type="radio" name="newver" value="0" title="{tr}compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if}  /></td>
 {/if}
@@ -169,17 +169,17 @@
 {/if}
 <td class="{cycle advance=false}">{$history[hist].lastModif|tiki_short_datetime}</td>
 {if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$history[hist].user}</td>{/if}
-{if $feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$history[hist].ip}</td>{/if}
+{if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$history[hist].ip}</td>{/if}
 <td class="{cycle advance=false}">{if $history[hist].comment}{$history[hist].comment}{else}&nbsp;{/if}</td>
-{if $feature_contribution eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$history[hist].contributions[ix].name|escape}{/section}</td>{/if}
-{if $feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributors}{if !$smarty.section.ix.first},{/if}{$history[hist].contributors[ix].login|username}{/section}</td>{/if}
+{if $prefs.feature_contribution eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$history[hist].contributions[ix].name|escape}{/section}</td>{/if}
+{if $prefs.feature_contribution eq 'y' and $feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributors}{if !$smarty.section.ix.first},{/if}{$history[hist].contributors[ix].login|username}{/section}</td>{/if}
 <td class="{cycle advance=false} button">{$history[hist].version}</td>
 <td class="{cycle advance=false} button">
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
-{if $tiki_p_wiki_view_source eq "y" and $feature_source eq "y"}
+{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}Source{/tr}">s</a>
 {/if}
-{if $default_wiki_diff_style eq "old"}
+{if $prefs.default_wiki_diff_style eq "old"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
 {/if}
@@ -188,7 +188,7 @@
 {/if}
 &nbsp;
 </td>
-{if $default_wiki_diff_style ne "old"}
+{if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
 <input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}older version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
 </td>

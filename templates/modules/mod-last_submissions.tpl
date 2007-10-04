@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.13 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.14 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $feature_submissions eq 'y'}
+{if $prefs.feature_submissions eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="<a href=\"tiki-list_submissions.php\">{tr}Last `$module_rows` submissions{/tr}</a>" assign="tpl_module_title"}

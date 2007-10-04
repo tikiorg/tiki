@@ -7,7 +7,7 @@
 {else}
 	<h3>{$post_info.created|tiki_short_datetime}</h3>
 {/if}
-{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$tags.data item=tag}
 	<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
@@ -27,7 +27,7 @@
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='pics/icons/page_edit.png' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' width='16' height='16' /></a>
 <a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='pics/icons/cross.png' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
-{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}' width='16' height='16' /></a>
 {/if}
 </td></tr></table>
@@ -44,13 +44,13 @@
 	</div>
 {/if}
 
-{if $blogues_feature_copyrights  eq 'y' and $wikiLicensePage}
-  {if $wikiLicensePage == $page}
+{if $blogues_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+  {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
     {/if}
   {else}
-    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
 <hr/>
@@ -59,7 +59,7 @@
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
 ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}Posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}Posts{/tr})
-{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 {/if}
@@ -94,7 +94,7 @@
 </table>
 {/if}
 
-{if $feature_blogposts_comments == 'y'
+{if $prefs.feature_blogposts_comments == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)

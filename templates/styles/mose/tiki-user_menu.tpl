@@ -11,15 +11,15 @@
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {if $chdata.url}
-{if $feature_menusfolderstyle eq 'y'}
+{if $prefs.feature_menusfolderstyle eq 'y'}
 <a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="styles/mose/fo.gif" border="0" name="menu{$cname}icn" alt=''/></a>&nbsp;
 {else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>{/if} 
 <a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
-{if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
+{if $prefs.feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 {else}
-{if $feature_menusfolderstyle eq 'y'}
+{if $prefs.feature_menusfolderstyle eq 'y'}
 <a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="styles/mose/fo.gif" border="0" name="menu{$cname}icn" alt=''/>&nbsp;
-{else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $feature_menusfolderstyle ne 'y'}[+]{/if}</a> 
+{else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $prefs.feature_menusfolderstyle ne 'y'}[+]{/if}</a> 
 {/if}
 </div>
 {assign var=opensec value='y'}
@@ -56,7 +56,7 @@
 <script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's'}
-  {if $feature_menusfolderstyle eq 'y'}
+  {if $prefs.feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {else}
     setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');

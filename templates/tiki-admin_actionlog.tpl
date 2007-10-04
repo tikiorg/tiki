@@ -1,18 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.42 2007-08-08 20:21:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.43 2007-10-04 22:17:37 nyloth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_actionlog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Groups Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' />
 </a>
 {/if}
 </h1>
 
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2" print=false advance=false}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Report{/tr}</a></span>
@@ -23,7 +23,7 @@
 {cycle name=content values="1,2" print=false advance=false reset=true}
 
 {* -------------------------------------------------- tab with report --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Report" />
 <form method="get" action="tiki-admin_actionlog.php#Report">
 {* a get method to be able when you right click on the image to save it and not to save the tiki-admin_aqctionlog.php without param *}
@@ -34,10 +34,10 @@
 <table class="smallnormal">
 <tr class="formcolor">
 <td>{tr}Start date:{/tr}</td>
-<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$display_field_order}</td>
+<td>{html_select_date time=$startDate prefix="startDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
 </tr><tr class="formcolor">
 <td>{tr}End date:{/tr}</td>
-<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$display_field_order}</td>
+<td>{html_select_date time=$endDate prefix="endDate_" end_year="-10" field_order=$prefs.display_field_order}</td>
 </tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor">
@@ -110,9 +110,9 @@
 {if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}category{/tr}</a></th>{/if}
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-{if $feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
+{if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
 {if $feature_contributor_wiki eq 'y'}<th class="heading">{tr}contributor{/tr}</th>{/if}
-{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}
+{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -126,7 +126,7 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}{if $actionlogs[ix].del} diffdeleted{/if}">{if $actionlogs[ix].del or $actionlogs[ix].del eq '0'}{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
-{if $feature_contribution eq 'y'}
+{if $prefs.feature_contribution eq 'y'}
 <td class="{cycle advance=false}">
 {section name=iy loop=$actionlogs[ix].contributions}
 {if !$smarty.section.iy.first}, {/if}
@@ -141,7 +141,7 @@
 {/section}
 </td>
 {/if}
-{if $feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit Contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}Edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
+{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit Contribution{/tr}"><img src="pics/icons/page_edit.png" alt="{tr}Edit{/tr}" width="16" heigth="16" border="0"></a>{else}&nbsp;{/if}</td>{/if}
 {/if}
 <!-- {cycle} -->
 </tr>
@@ -249,7 +249,7 @@
 <tr>
 <th class="heading">{tr}User{/tr}</th>
 {foreach key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
@@ -271,7 +271,7 @@
 <tr>
 <th class="heading">{tr}Category{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categId item=stat from=$statCateg}
@@ -293,7 +293,7 @@
 <th class="heading">{tr}Category{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categUser item=stat from=$statUserCateg}
@@ -309,7 +309,7 @@
 </table>
 {/if}
 
-{if $feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
+{if $prefs.feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 <table>
 <caption>{if $selectedUsers}{tr}Volumn per the users'group and per contribution{/tr}{else}{tr}Volumn per group and per contribution{/tr}{/if}</caption>
 <tr><th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
@@ -321,7 +321,7 @@
 </table>
 {/if}
 
-{if $feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
+{if $prefs.feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
 <table>
 <caption>{tr}Volumn per user and per contribution{/tr}</caption>
 <tr><th class="heading">{tr}User{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
@@ -333,7 +333,7 @@
 </table>
 {/if}
 
-{if $feature_contribution eq 'y' && isset($contributionStat)}
+{if $prefs.feature_contribution eq 'y' && isset($contributionStat)}
 <table>
 <caption>{if $selectedUsers}{tr}Volumn per users'contribution and time{/tr}{else}{tr}Volumn per contribution and time{/tr}{/if}</caption>
 <tr><th class="heading">{tr}Contribution{/tr}</th>
@@ -366,7 +366,7 @@
 </div>{* tab *}
 
 {* -------------------------------------------------- tab with setting --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Setting" />
 <h2>{tr}Setting{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_most_read_topics.tpl,v 1.10 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_most_read_topics.tpl,v 1.11 2007-10-04 22:17:46 nyloth Exp $ *}
 
-{if $feature_forums eq 'y'}
+{if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="`$module_rows` {tr}Most read topics{/tr}" assign="tpl_module_title"}

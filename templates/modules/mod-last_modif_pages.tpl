@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.27 2007-05-31 18:29:22 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.28 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $feature_wiki eq 'y'}
+{if $prefs.feature_wiki eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="<a href=\"tiki-lastchanges.php\">{tr}Last `$module_rows` Page Changes{/tr}</a>" assign="tpl_module_title"}

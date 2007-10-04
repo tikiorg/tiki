@@ -16,7 +16,7 @@
 				<select name="language" id="general-lang">
 					{section name=ix loop=$languages}
 					<option value="{$languages[ix].value|escape}"
-					{if $language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+					{if $prefs.language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
 				</select>
 			</td>
@@ -25,19 +25,19 @@
 		
 			<td class="form"><label for="feature_multilingual">{tr}Multilingual{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_multilingual" id="feature_multilingual"
-			{if $feature_multilingual eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_multilingual eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 		
 		
 			<td class="form"><label for="feature_best_language">{tr}Best Language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_best_language" id="feature_best_language"
-			{if $feature_best_language eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 		
 		
 			<td class="form"><label for="feature_detect_language">{tr}Detect browser language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_detect_language" id="feature_detect_language"
-			{if $feature_detect_language eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_detect_language eq 'y'}checked="checked"{/if}/></td>
 		</tr><tr>
 		
 		
@@ -45,19 +45,19 @@
 			<td>
 			<table><tr>
 			<td style="width: 20px"><input type="checkbox" name="change_language" id="change_language"
-			{if $change_language eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.change_language eq 'y'}checked="checked"{/if}/></td>
 			<td>
 			
-			<div id="select_available_languages" {if count($available_languages) > 0}style="display:none;"{else}style="display:block;"{/if}>
+			<div id="select_available_languages" {if count($prefs.available_languages) > 0}style="display:none;"{else}style="display:block;"{/if}>
 				<a class="link" href="javascript:show('available_languages');hide('select_available_languages');">{tr}Restrict available languages{/tr}</a>
 			</div>
 			
-      <div id="available_languages" {if count($available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
+      <div id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
         {tr}Available languages:{/tr}<br />
         <select name="available_languages[]" multiple="multiple" size="5">
           {section name=ix loop=$languages}
             <option value="{$languages[ix].value|escape}"
-              {if in_array($languages[ix].value, $available_languages)}selected="selected"{/if}>
+              {if in_array($languages[ix].value, $prefs.available_languages)}selected="selected"{/if}>
               {$languages[ix].name}
             </option>
           {/section}
@@ -72,14 +72,14 @@
 		
 		<td class="form"><label for="feature_user_watches_translations">{tr}User Watches Translations{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_user_watches_translations" id="feature_user_watches_translations"
-			{if $feature_user_watches_translations eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 		
 
 		<td class="form"><label for="lang_use_db">{tr}Use database for translation{/tr}:</label></td>
 			<td><input type="checkbox" name="lang_use_db" id="lang_use_db"
-			{if $lang_use_db eq 'y'}checked="checked"{/if}/></td>
-			{if $lang_use_db eq 'y'}
+			{if $prefs.lang_use_db eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.lang_use_db eq 'y'}
 		</tr><tr>
 		
 		
@@ -90,20 +90,20 @@
 		
 			<td class="form"><label for="record_untranslated">{tr}Record untranslated{/tr}:</label></td>
 			<td><input type="checkbox" name="record_untranslated" id="record_untranslated"
-			{if $record_untranslated eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.record_untranslated eq 'y'}checked="checked"{/if}/></td>
 			{/if}
 		</tr><tr>
 		
 		
 			<td class="form"><label for="feature_babelfish">{tr}Show Babelfish Translation URLs{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_babelfish" id="feature_babelfish"
-			{if $feature_babelfish eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_babelfish eq 'y'}checked="checked"{/if}/></td>
 		</tr><tr>
 		
 		
 			<td class="form"><label for="feature_babelfish_logo">{tr}Show Babelfish Translation Logo{/tr}:</label></td>		
 			<td><input type="checkbox" name="feature_babelfish_logo" id="feature_babelfish_logo"
-			{if $feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
+			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
 		</tr><tr>
 
 

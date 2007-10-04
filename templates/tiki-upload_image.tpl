@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.41 2007-07-19 13:16:20 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42 2007-10-04 22:17:43 nyloth Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-upload_image.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Image Gallery tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
@@ -19,7 +19,7 @@
 <a href="tiki-galleries.php" class="linkbut">
 {/if}
 {tr}Browse gallery{/tr}</a></span>
-  {if $feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
+  {if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
       <span class="button2"><a href="tiki-batch_upload.php{if $galleryId}?galleryId={$galleryId}{/if}" class="linkbut">{tr}Directory batch{/tr}</a></span>
     {/if}
@@ -36,7 +36,7 @@
 	<input type="text" size ="50" name="name" /><br />{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
 	</td>
 	</tr>
-  {if $feature_maps eq 'y' && $geogallery eq 'y'}
+  {if $prefs.feature_maps eq 'y' && $geogallery eq 'y'}
   <tr><td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
   {/if}

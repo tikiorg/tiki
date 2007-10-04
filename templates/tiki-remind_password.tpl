@@ -10,7 +10,7 @@
 {if $showfrm eq 'y'}
   <form action="tiki-remind_password.php" method="post">
   <table class="normal">
-  {if $login_is_email ne 'y'}
+  {if $prefs.login_is_email ne 'y'}
   <tr>
     <td class="formcolor">{tr}Username{/tr}</td>
 	<td class="formcolor"><input type="text" name="name" /></td>
@@ -28,4 +28,4 @@
 {/if}
 
 <br /><br />
-<a href="{$tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>
+<a href="{$prefs.tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>

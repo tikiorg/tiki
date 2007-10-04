@@ -49,10 +49,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/smartiki/babelfish.tpl,v 1.1 2004-01-26 06:19:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/smartiki/babelfish.tpl,v 1.2 2007-10-04 22:17:50 nyloth Exp $ *}
 
-{if $feature_babelfish eq 'y'}
+{if $prefs.feature_babelfish eq 'y'}
 
 <form>
 <select name="babel" class="small">

@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.30 2007-08-10 13:42:41 guidoscherp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.31 2007-10-04 22:17:38 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
 {if $tiki_p_admin_categories eq 'y'}
 <div class="navbar"><a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}Admin the Category System{/tr}">{tr}Admin Category{/tr}</a></div>
 {/if}
-{if $user and $feature_user_watches eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_category eq 'n'}
 		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}watch only this category{/tr}' title='{tr}watch only this category{/tr}'}</a>
 		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}watch this category and their descendants{/tr}' title='{tr}watch this category and their descendants{/tr}'}</a>
@@ -17,45 +17,45 @@
 <br /><br />
 {tr}Browse in{/tr}:<br />
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}All{/tr}</a>
-{if $feature_wiki eq 'y'}
+{if $prefs.feature_wiki eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=wiki+page&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'wiki page'}<span class="highlight">{/if}{tr}Wiki pages{/tr}{if $type eq 'wiki page'}</span>{/if}</a>
 {/if}
-{if $feature_galleries eq 'y'}
+{if $prefs.feature_galleries eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=image+gallery&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'image gallery'}<span class="highlight">{/if}{tr}Image galleries{/tr}{if $type eq 'image gallery'}</span>{/if}</a>
 {/if}
-{if $feature_galleries eq 'y'}
+{if $prefs.feature_galleries eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=image&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'image'}<span class="highlight">{/if}{tr}Images{/tr}{if $type eq 'image'}</span>{/if}</a>
 {/if}
-{if $feature_file_galleries eq 'y'}
+{if $prefs.feature_file_galleries eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=file+gallery&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'file gallery'}<span class="highlight">{/if}{tr}File galleries{/tr}{if $type eq 'file gallery'}</span>{/if}</a>
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=file&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'file'}<span class="highlight">{/if}{tr}Files{/tr}{if $type eq 'file'}</span>{/if}</a>
 {/if}
-{if $feature_blogs eq 'y'}
+{if $prefs.feature_blogs eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=blog&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'blog'}<span class="highlight">{/if}{tr}Blogs{/tr}{if $type eq 'blog'}</span>{/if}</a>
 {/if}
-{if $feature_trackers eq 'y'}
+{if $prefs.feature_trackers eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=tracker&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'tracker'}<span class="highlight">{/if}{tr}Trackers{/tr}{if $type eq 'tracker'}</span>{/if}</a>
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=trackerItem&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'trackerItem'}<span class="highlight">{/if}{tr}Trackers Items{/tr}{if $type eq 'trackerItem'}</span>{/if}</a>
 {/if}
-{if $feature_quizzes eq 'y'}
+{if $prefs.feature_quizzes eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=quiz&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'quiz'}<span class="highlight">{/if}{tr}Quizzes{/tr}{if $type eq 'quiz'}</span>{/if}</a>
 {/if}
-{if $feature_polls eq 'y'}
+{if $prefs.feature_polls eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=poll&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'poll'}<span class="highlight">{/if}{tr}Polls{/tr}{if $type eq 'poll'}</span>{/if}</a>
 {/if}
-{if $feature_surveys eq 'y'}
+{if $prefs.feature_surveys eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=survey&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'survey'}<span class="highlight">{/if}{tr}Surveys{/tr}{if $type eq 'survey'}</span>{/if}</a>
 {/if}
-{if $feature_directory eq 'y'}
+{if $prefs.feature_directory eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=directory&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'directory'}<span class="highlight">{/if}{tr}Directory{/tr}{if $type eq 'directory'}</span>{/if}</a>
 {/if}
-{if $feature_faqs eq 'y'}
+{if $prefs.feature_faqs eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=faq&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'faq'}<span class="highlight">{/if}{tr}FAQs{/tr}{if $type eq 'faq'}</span>{/if}</a>
 {/if}
-{if $feature_sheet eq 'y'}
+{if $prefs.feature_sheet eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=sheet&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'sheet'}<span class="highlight">{/if}{tr}Sheets{/tr}{if $type eq 'sheet'}</span>{/if}</a>
 {/if}
-{if $feature_articles eq 'y'}
+{if $prefs.feature_articles eq 'y'}
 <a class="linkbut" href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=article&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{if $type eq 'article'}<span class="highlight">{/if}{tr}Articles{/tr}{if $type eq 'article'}</span>{/if}</a>
 {/if}
 <br /><br />
@@ -135,10 +135,10 @@
     {if $next_offset >= 0}
       &nbsp;[<a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;type={$type}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
     {/if}
-    {if $direct_pagination eq 'y'}
+    {if $prefs.direct_pagination eq 'y'}
       <br />
       {section loop=$cant_pages name=foo}
-        {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+        {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
         <a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;type={$type}&amp;parentId={$parentId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
           {$smarty.section.foo.index_next}
         </a>&nbsp;

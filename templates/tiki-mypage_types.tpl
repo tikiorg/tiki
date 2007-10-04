@@ -230,7 +230,7 @@ function deleteMptype(id) {
 }
 
 {/literal}
-{if $feature_phplayers eq 'y'}{* this is an ugly hack ... *}
+{if $prefs.feature_phplayers eq 'y'}{* this is an ugly hack ... *}
 window.onload=initMptypeEdit;
 {else}
 window.addEvent('domready', initMptypeEdit);

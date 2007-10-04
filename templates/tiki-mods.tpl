@@ -14,7 +14,7 @@
 <span class="button2"><a href="tiki-mods_admin.php" class="linkbut">{tr}Mods Configuration{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}" class="linkbut">{tr}Update remote index{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}" class="linkbut">{tr}Rebuild local list{/tr}</a></span>
-{if $feature_mods_provider eq 'y'}
+{if $prefs.feature_mods_provider eq 'y'}
 <span class="button3">
 <span class="button2"><a href="tiki-mods.php?republishall=1{$findarg}{$typearg}" class="linkbut">{tr}Republish all{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?publishall=1{$findarg}{$typearg}" class="linkbut">{tr}Publish all{/tr}</a></span>
@@ -166,7 +166,7 @@ function update_button_install() {
 
 <table cellspacing="0" cellpadding="2" border="0" class="normal">
 {foreach key=type item=i from=$display}
-<tr><td colspan="{if $feature_mods_provider eq 'y'}3{else}2{/if}">
+<tr><td colspan="{if $prefs.feature_mods_provider eq 'y'}3{else}2{/if}">
 <span class="button2"><a href="tiki-mods.php?type={$type|escape:"url"}{$findarg}" class="linkbut" title="{tr}Display only this type{/tr}">{$type}</a></span>
 </td><td colspan="7">&nbsp;</td>
 </tr>
@@ -174,7 +174,7 @@ function update_button_install() {
 {foreach key=item item=it from=$display.$type}
 <tr class="{if $focus and $focus eq $display.$type.$item->name}focus{else}{cycle}{/if}">
 
-{if $feature_mods_provider eq 'y'}
+{if $prefs.feature_mods_provider eq 'y'}
  {assign var=mod value=$public.$type.$item->modname}
  {if $public.$type.$item}
   {if ModsLib::revision_compare($dist.$mod->revision,$local.$type.$item->revision) < 0}
@@ -230,7 +230,7 @@ href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$finda
 </tr>
 
 {if $focus and $focus eq $local.$type.$item->modname}
-<tr class="{cycle}"><td colspan="{if $feature_mods_provider eq 'y'}9{else}8{/if}">
+<tr class="{cycle}"><td colspan="{if $prefs.feature_mods_provider eq 'y'}9{else}8{/if}">
 <table><tr><td>
 <div class="simplebox">
 {if $more->docurl}Documentation :<br />{foreach key=ku item=iu from=$more->docurl}<a href="{$iu}">{$iu}</a><br />{/foreach}{/if}

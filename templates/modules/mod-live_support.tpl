@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.13 2007-02-18 11:21:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.14 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $feature_live_support eq 'y'}
+{if $prefs.feature_live_support eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Live support{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="live_support" flip=$module_params.flip decorations=$module_params.decorations}
 {if $modsupport > 0}

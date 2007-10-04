@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.15 2007-02-18 11:21:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.16 2007-10-04 22:17:47 nyloth Exp $ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations}
@@ -15,7 +15,7 @@
 </div>
 {/foreach}
 {foreach key=ix item=online_user from=$online_users}
-{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $online_user.allowMsgs eq 'n'}
 <img src="img/icons/icon_ultima_no.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="-&gt;" />
 {else}
@@ -39,7 +39,7 @@
 {/if}
 </div>
 {foreach key=ix item=online_user from=$online_users}
-{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $online_user.allowMsgs eq 'n'}
 <img src="img/icons/icon_ultima_no.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="-&gt;" />
 {else}

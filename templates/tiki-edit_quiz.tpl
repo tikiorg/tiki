@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.35 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.36 2007-10-04 22:17:40 nyloth Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
 {* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
 
 <h1><a class="pagetitle" href="tiki-edit_quiz.php">{tr}Admin quizzes{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Quizzes" target="tikihelp" class="tikihelp" title="{tr}Quizzes{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Quizzes" target="tikihelp" class="tikihelp" title="{tr}Quizzes{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=/tiki-edit_quiz.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Quizzes tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
@@ -51,7 +51,7 @@
 <!-- the publishing info does not work... don't trust it -->
 <td>{tr}Publish Date{/tr}</td>
 <td>
-{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td>
@@ -59,7 +59,7 @@
 <tr class="formcolor">
 <td>{tr}Expiration Date{/tr}</td>
 <td>
-{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td>
@@ -215,10 +215,10 @@ Results need to be sortable so as to give admin quick idea of user participation
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-edit_quiz.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-edit_quiz.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

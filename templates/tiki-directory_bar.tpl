@@ -8,7 +8,7 @@
 <td><div  class="button2"><a href="tiki-directory_browse.php" class="linkbut">{tr}Browse{/tr}</a></div></td>
 {/if}
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=created_desc" class="linkbut">{tr}New Sites{/tr}</a></div></td>
-{if $directory_cool_sites eq "y"}
+{if $prefs.directory_cool_sites eq "y"}
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=hits_desc" class="linkbut">{tr}cool sites{/tr}</a></div></td>
 {/if}
 {if $tiki_p_submit_link eq 'y' or $tiki_p_autosubmit_link eq 'y'}

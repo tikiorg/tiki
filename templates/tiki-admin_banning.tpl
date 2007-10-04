@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.31 2007-07-24 17:12:47 jyhem Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.32 2007-10-04 22:17:37 nyloth Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -16,11 +16,11 @@
 
 <h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin banning tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
@@ -80,13 +80,13 @@
 <tr>
 	<td class="formcolor">{tr}Rule active from{/tr}</td>
 	<td class="formcolor">
-		{html_select_date prefix="date_from" time="$info.date_from" field_order=$display_field_order}
+		{html_select_date prefix="date_from" time="$info.date_from" field_order=$prefs.display_field_order}
 	</td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Rule active until{/tr}</td>
 	<td class="formcolor">
-		{html_select_date prefix="date_to" time="$info.date_to" field_order=$display_field_order}
+		{html_select_date prefix="date_to" time="$info.date_to" field_order=$prefs.display_field_order}
 	</td>
 </tr>
 <tr>
@@ -164,10 +164,10 @@
 {if $next_offset >= 0}
 [<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_banning.php?offset={$selector_offset}&amp;find={$find}">
 {$smarty.section.foo.index_next}</a>
 {/section}

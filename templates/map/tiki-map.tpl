@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.39 2007-07-17 16:33:13 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40 2007-10-04 22:17:46 nyloth Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -194,8 +194,8 @@
 			<input id="maxx" type="hidden" name="maxx" value="{$maxx}" />
 			<input id="maxy" type="hidden" name="maxy" value="{$maxy}" />
 			<input id="size" type="hidden" name="oldsize" value="{$size}" />
-			<a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
-			<a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a><br />
+			<a href="tiki-index.php?page={$prefs.map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
+			<a href="tiki-index.php?page={$prefs.map_comments}"><small>{tr}Comments{/tr}</small></a><br />
 		</td></tr>
 	<tr><td><div id="resultBox">{$map_querymsg}</div></td></tr>	
 		</table>
@@ -211,7 +211,7 @@
 		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
 		   <tr><td>
     			<div class="separator">
-			{if $feature_menusfolderstyle eq 'y'}
+			{if $prefs.feature_menusfolderstyle eq 'y'}
 				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
 			{else}
 			<a class="separator" href="javascript:toggle('layermenu');"><b>[+/-]</b></a>
@@ -239,7 +239,7 @@
 				<td class="even" colspan="5">
 				{/if}
 				<div class="separator">
-					{if $feature_menusfolderstyle eq 'y'}
+					{if $prefs.feature_menusfolderstyle eq 'y'}
 					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
 					{else}
 					

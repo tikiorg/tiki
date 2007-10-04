@@ -1,6 +1,6 @@
 {* $Header$ *}
 
-{if $feature_calendar eq 'y'}
+{if $prefs.feature_calendar eq 'y'}
 {if !isset($tpl_module_title)}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Upcoming `$module_rows` events{/tr}" assign="tpl_module_title"}
@@ -12,7 +12,7 @@
 	{if isset($module_params.date_format)}
 		{assign var=date_format value=$module_params.date_format}
 	{else}
-		{assign var=date_format value="$short_date_format $short_time_format"}
+		{assign var=date_format value="`$prefs.short_date_format` `$prefs.short_time_format`"}
 	{/if}
 	<table border="0" cellpadding="{if isset($module_params.cellpadding)}{$module_params.cellpadding}{else}0{/if}" cellspacing="{if isset($module_params.cellspacing)}{$module_params.cellspacing}{else}0{/if}">
 	{assign var=old_date_value value=""}

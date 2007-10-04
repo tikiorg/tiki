@@ -1,6 +1,6 @@
 <form name="um">
 <b>{$user}</b>
-{if $feature_usermenu eq 'y'}
+{if $prefs.feature_usermenu eq 'y'}
 <select name="umenu" onchange="go(this);">
 <option value="">{tr}User Bookmarks{/tr}</option>
 <option value="">----</option>
@@ -14,45 +14,45 @@
 <select name="mytiki" onchange="go(this);">
 <option value="">{tr}MyTiki{/tr}</option>
 <option value="">----</option>
-{if $feature_userPreferences eq 'y'}
+{if $prefs.feature_userPreferences eq 'y'}
 <option value="tiki-user_preferences.php">{tr}Preferences{/tr}</a>
 {/if}
-{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <option value="messu-mailbox.php">{tr}Messages{/tr}</option>
 {/if}
-{if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
+{if $prefs.feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
 <option value="tiki-userfiles.php">{tr}User files{/tr}</option>
 {/if}
-{if $feature_minical eq 'y'}
+{if $prefs.feature_minical eq 'y'}
 <option value="tiki-minical.php">{tr}Calendar{/tr}</option>
 {/if}
-{if $feature_usermenu eq 'y'}
+{if $prefs.feature_usermenu eq 'y'}
 <option value="tiki-usermenu.php">{tr}Favorites{/tr}</option>
 {/if}
-{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
+{if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <option value="tiki-user_tasks.php">{tr}Tasks{/tr}</option>
 {/if}
-{if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
+{if $prefs.feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 <option value="tiki-user_bookmarks.php">{tr}Bookmarks{/tr}</option>
 {/if}
-{if $feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
+{if $prefs.feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
 <option value="tiki-newsreader_servers.php">{tr}Newsreader{/tr}</option>
 {/if}
-{if $user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
+{if $prefs.user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
 <option value="tiki-user_assigned_modules.php">{tr}Modules{/tr}</option>
 {/if}
-{if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
+{if $prefs.feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
 <option value="tiki-webmail.php">{tr}Webmail{/tr}</option>
 {/if}
-{if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+{if $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <option value="tiki-notepad_list.php">{tr}Notepad{/tr}</option>
 {/if}
-{if $feature_user_watches eq 'y'}
+{if $prefs.feature_user_watches eq 'y'}
 <option value="tiki-user_watches.php">{tr}Watches{/tr}</option>
 {/if}
 <option value="">----</option>
 <option value="">{tr}MyTiki{/tr}</option>
-{if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
+{if $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
 <option value="">----</option>
 <option value="javascript:toggle('debugconsole');">{tr}debug{/tr}</option>
 {/if}

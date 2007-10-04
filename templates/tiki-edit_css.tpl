@@ -1,10 +1,10 @@
 <h1><a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a>
 
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Edit+CSS" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Edit+CSS" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_css.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit CSS{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 

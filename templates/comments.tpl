@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.96 2007-09-13 17:07:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.97 2007-10-04 22:17:35 nyloth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
 {else}
 <span id="comments" />
 <div id="comzone"
-{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or (isset($show_comzone) and $show_comzone eq 'y')}
+{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y')}
 	style="display:block;"
 {else}
 	style="display:none;"
@@ -66,7 +66,7 @@
 	</div>
 	{/if}
 
-	{if $forum_mode neq 'y' or $forum_thread_user_settings eq 'y'}
+	{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
 	<div class="forum_actions">
 		<div class="headers">
 		</div>
@@ -160,7 +160,7 @@
 		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Next{/tr}</a>]
 		{/if}
 
-		{if $direct_pagination eq 'y'}
+		{if $prefs.direct_pagination eq 'y'}
 		<br />
 		{section loop=$comments_cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}
@@ -265,7 +265,7 @@
 		{/if}
 		{* End: Xenfasa adding and testing article ratings in comments here *}
 
-		{if $feature_smileys eq 'y'}
+		{if $prefs.feature_smileys eq 'y'}
 		<tr>
 			<td class="formcolor"><label>{tr}Smileys{/tr}</label></td>
 			<td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost2"}</td>
@@ -281,7 +281,7 @@
 				{if $quicktags}{include file=tiki-edit_help_tool.tpl area_name='editpost2'}{/if}
 			</td>
 			<td class="formcolor">
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $feature_forum_replyempty ne 'y' }{$comment_data|escape}{/if}</textarea>
+				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' }{$comment_data|escape}{/if}</textarea>
 				<input type="hidden" name="rows" value="{$rows}"/>
 				<input type="hidden" name="cols" value="{$cols}"/>
 			</td>
@@ -296,11 +296,11 @@
 		</tr>
 		{/if}
 
-		{if $feature_contribution eq 'y'}
+		{if $prefs.feature_contribution eq 'y'}
 			{include file="contribution.tpl" in_comment="y"}
 		{/if}
 
-		{if $feature_antibot eq 'y'}
+		{if $prefs.feature_antibot eq 'y'}
 			{include file="antibot.tpl"}
 		{/if}
 

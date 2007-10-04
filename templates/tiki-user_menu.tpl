@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.29 2007-04-30 22:24:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.30 2007-10-04 22:17:43 nyloth Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -28,7 +28,7 @@ $smarty->assign('opensec', $opensec);
 <div class="separator{$sep}">
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-	{if $feature_menusfolderstyle eq 'y'}
+	{if $prefs.feature_menusfolderstyle eq 'y'}
 	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>
 	{else}
 	<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>
@@ -41,7 +41,7 @@ $smarty->assign('opensec', $opensec);
 {/if}
 {tr}{$chdata.name}{/tr}
 </a>
-{if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
+{if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $prefs.feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 </div> {* separator *}
 
 {assign var=opensec value=$opensec+1}
@@ -79,7 +79,7 @@ while ($opensec) {
 <script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type ne 'o' and $chdata.type ne '-'}
-  {if $feature_menusfolderstyle eq 'y'}
+  {if $prefs.feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {else}
     setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');

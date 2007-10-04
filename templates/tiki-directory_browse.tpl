@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.24 2007-08-24 17:01:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.25 2007-10-04 22:17:40 nyloth Exp $ *}
 
 {* The heading and category path *}
-{if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
+{if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
 <h1><a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a></h1>
 {else}
 <div id="pageheader">
@@ -14,7 +14,7 @@ loc="page" crumbs=$crumbs}
 {include file=tiki-directory_bar.tpl}
 
 {* The category path *}
-{if $feature_siteidentity ne 'y' or $feature_breadcrumbs ne 'y'}
+{if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
 {/if}
 <div class="description">{$parent_info.description}</div>
@@ -103,12 +103,12 @@ loc="page" crumbs=$crumbs}
 <br />
 {section name=ix loop=$items}
 <div class="dirsite">
-{if $directory_country_flag eq 'y'}
+{if $prefs.directory_country_flag eq 'y'}
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
 {/if}
-<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
+<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}Edit{/tr}</a>]{/if} 
-{if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}Cache{/tr}</a>){/if}
+{if $prefs.cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}Cache{/tr}</a>){/if}
 <br />
 <span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
@@ -133,10 +133,10 @@ loc="page" crumbs=$crumbs}
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset*2}&amp;sort_mode={$sort_mode}"> {*selector_offset is calculated wrong internal; temporary bug fix by w-o-g*}
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

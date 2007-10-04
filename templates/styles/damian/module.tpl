@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.9 2006-12-28 19:05:50 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.10 2007-10-04 22:17:48 nyloth Exp $ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">
 <div class="box-title">
 {* Draw module controls for logged user only *}
-{if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
+{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 <table>
   <tr>
     <td width="11">

@@ -3,13 +3,13 @@
 <h1><a class="pagetitle" href="tiki-g-user_processes.php">{tr}User processes{/tr}</a>
 
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}GalaxiaUserProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Processes{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}GalaxiaUserProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Processes{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-user_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Processes tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
@@ -88,10 +88,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

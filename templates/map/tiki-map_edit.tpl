@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.21 2007-09-10 15:53:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.22 2007-10-04 22:17:46 nyloth Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
 <a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
@@ -24,7 +24,7 @@
 <img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width='16' height='16' />
 </a>
 {/if}
-{if $user and $feature_user_watches eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
   	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}
@@ -50,7 +50,7 @@
 <img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width='16' height='16' />
 </a>
 {/if}
-{if $user and $feature_user_watches eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
   	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='pics/icons/eye.png' width='16' height='16' /></a>
 	{else}

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.30 2007-07-24 15:23:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.31 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
+{if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}
     {if $tiki_p_post_shoutbox eq 'y' and $user}

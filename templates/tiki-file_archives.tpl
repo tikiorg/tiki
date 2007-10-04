@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.10 2007-07-24 14:40:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.11 2007-10-04 22:17:40 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>
 
@@ -16,7 +16,7 @@
   {if $tiki_p_upload_files eq 'y'}
     <a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}" class="linkbut">{tr}Upload File{/tr}</a>
   {/if}
-  {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
+  {if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
     <a href="tiki-batch_upload_files.php?galleryId={$gal_info.galleryId}" class="linkbut">{tr}Directory batch{/tr}</a>
   {/if}
 {/if}

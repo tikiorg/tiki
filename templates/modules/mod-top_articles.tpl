@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_articles.tpl,v 1.12 2007-02-18 11:21:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_articles.tpl,v 1.13 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $feature_articles eq 'y'}
+{if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Top `$module_rows` articles{/tr}" assign="tpl_module_title"}

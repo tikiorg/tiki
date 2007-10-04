@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.33 2007-09-13 13:16:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.34 2007-10-04 22:17:42 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Received Articles{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received articles tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}
@@ -15,7 +15,7 @@
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">
-<span class="titlea">{$title}</span><br />
+<span class="titlea">{$prefs.title}</span><br />
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}Reads{/tr})</span>
 </div>
 <div class="articleheading">
@@ -50,7 +50,7 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$prefs.title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
@@ -105,7 +105,7 @@
 {/if}
 <tr><td class="formcolor">{tr}Created{/tr}:</td><td class="formcolor">{$created|tiki_short_datetime}</td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}:</td><td class="formcolor">
-{html_select_date time=$publishDate end_year="+1" field_order=$display_field_order} at {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
 <tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="25" cols="40" name="body">{$body|escape}</textarea></td></tr>
@@ -170,10 +170,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-received_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-received_articles.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

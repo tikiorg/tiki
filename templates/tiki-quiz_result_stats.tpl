@@ -2,12 +2,12 @@
 
 <! -- the help link info -->
 
-      {if $feature_help eq 'y'}
+      {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id960083" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 <! -- link to tpl -->
 
-     {if $feature_view_tpl eq 'y'}
+     {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?=tiki-quiz_result_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
 {/if}
 

@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.80 2007-09-30 07:23:12 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.81 2007-10-04 22:17:42 nyloth Exp $ *}
 
 <hr/>
 
 <div id="page-bar">
 {if $edit_page eq 'y'}
-  {if $wysiwyg eq 'n' or $wysiwyg_wiki_parsed eq 'y' or $wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
+  {if $wysiwyg eq 'n' or $prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
     <span class="button2">
       <a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
     </span>
@@ -22,7 +22,7 @@
         {/if}
       </span>
 {else}
-    {if $feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
+    {if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
       <span class="button2" >
       <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
         {tr}Source{/tr}
@@ -39,10 +39,10 @@
 {if $tiki_p_rename eq 'y' && $editable}
 <span class="button2"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="linkbut">{tr}Rename{/tr}</a></span>
 {/if}
-{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
+{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="linkbut">{tr}Unlock{/tr}</a></span>
 {/if}
-{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
+{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
 {/if}
 {if $tiki_p_share_page eq 'y'}
@@ -52,38 +52,38 @@
 <span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></span>
 {/if}
 
-{if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
 <span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}History{/tr}</a></span>
 {/if}
 {/if}
 
-{if $feature_likePages eq 'y'}
+{if $prefs.feature_likePages eq 'y'}
 <span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}Similar{/tr}</a></span>
 {/if}
-{if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
+{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}Undo{/tr}</a></span>
 {/if}
 {if $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1" class="linkbut">{tr}Make Structure{/tr}</a></span>
 {/if}
-{if $wiki_uses_slides eq 'y'}
+{if $prefs.wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
 <span class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}Slides{/tr}</a></span>
 {elseif $structure eq 'y'}
 <span class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}Slides{/tr}</a></span>
 {/if}
 {/if}
-{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 <span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}Export{/tr}</a></span>
 {/if}
-{if $feature_wiki_discuss eq 'y'}
-<span class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}Discuss{/tr}</a></span>
+{if $prefs.feature_wiki_discuss eq 'y'}
+<span class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}Discuss{/tr}</a></span>
 {/if}
 
 {if $show_page == 'y'} {* Show this buttons only if page view mode *}
 
   {* don't show comments if feature disabled or not enough rights *}
-  {if $feature_wiki_comments == 'y'
+  {if $prefs.feature_wiki_comments == 'y'
 	&& $tiki_p_wiki_view_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
@@ -107,7 +107,7 @@
 
 {* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
 
-{if $feature_wiki_attachments == 'y'
+{if $prefs.feature_wiki_attachments == 'y'
   && (
         $tiki_p_wiki_view_attachments  == 'y'
       &&  count($atts) > 0
@@ -134,7 +134,7 @@
 {/strip}
 {/if}{* attachments *}
 
-  {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
+  {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <span class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}Translation{/tr}</a></span>
   {/if}
 {/if}
@@ -142,12 +142,12 @@
 {/if}
 </div>
 
-{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 <a name="attachments"></a>
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
+{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
 <a name="comments"></a>
 {include file=comments.tpl}
 {/if}

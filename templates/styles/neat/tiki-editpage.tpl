@@ -42,7 +42,7 @@
 {/if}
 
 {if $page|lower ne 'sandbox'}
-  {if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
+  {if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y'))}
     {if $lock}
       <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="tablink">{tr}Unlock{/tr}</a></span>
     {else}
@@ -52,16 +52,16 @@
 {/if}
 
 {if $page|lower ne 'sandbox'}
-  {if $feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+  {if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
     <span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}History{/tr}</a></span>
   {/if}
 {/if}
 
-{if $feature_likePages eq 'y'}
+{if $prefs.feature_likePages eq 'y'}
   <span class="tabbut"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="tablink">{tr}Similar{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
+{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
   <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="tablink">{tr}Undo{/tr}</a></span>
 {/if}
 
@@ -71,12 +71,12 @@
   <span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}Slides{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
         <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}Export{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_discuss eq 'y'}
-  <span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}Discuss{/tr}</a></span>
+{if $prefs.feature_wiki_discuss eq 'y'}
+  <span class="tabbut"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}Discuss{/tr}</a></span>
 {/if}
 
 </div>
@@ -95,7 +95,7 @@
 {/if}
 {include file=structures.tpl}
 
-{if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}:</td><td class="formcolor">
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
@@ -105,7 +105,7 @@
 </select>
 </td></tr>
 {/if}
-{if $feature_smileys eq 'y'}
+{if $prefs.feature_smileys eq 'y'}
 <tr><td class="formcolor">{tr}Smileys{/tr}:</td><td class="formcolor">
 <table>
      <tr>
@@ -138,7 +138,7 @@
 </tr>
 {/if}
 <!--<a class="link" href="javascript:insertAt('editwiki',"''text here''");">i</a>-->
-{if $feature_wiki_description eq 'y'}
+{if $prefs.feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
 <tr>
@@ -157,7 +157,7 @@
 {editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 {/if}
 </tr>
-{if $feature_wiki_footnotes eq 'y'}
+{if $prefs.feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr><td class="formcolor">{tr}My Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
 {/if}
@@ -166,7 +166,7 @@
 {if $page|lower ne 'sandbox'}
 <tr><td class="formcolor">{tr}Edit Summary{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
 {/if}
-{if $wiki_feature_copyrights  eq 'y'}
+{if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr><td class="formcolor">{tr}Copyright{/tr}:</td><td class="formcolor">
 <table border="0">
 <tr><td class="formcolor">{tr}Title:{/tr}</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td></tr>
@@ -175,22 +175,22 @@
 </table>
 </td>
 {/if}
-{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
+{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
 <tr><td class="formcolor">{tr}Allow HTML{/tr}: </td><td class="formcolor"><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 {/if}
-{if $wiki_spellcheck eq 'y'}
+{if $prefs.wiki_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
 <tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input name="userfile1" type="file" />
-{if $feature_wiki_export eq 'y'}
+{if $prefs.feature_wiki_export eq 'y'}
 <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 {/if}
 </td></tr>
 {/if}
-{if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
+{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr><td class="formcolor">{tr}Upload picture{/tr}</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />
@@ -198,17 +198,17 @@
 <input name="picfile1" type="file" onchange="javascript:insertImg('editwiki','picfile1','hasAlreadyInserted')"/>
 </td></tr>
 {/if}
-{if $feature_wiki_icache eq 'y'}
+{if $prefs.feature_wiki_icache eq 'y'}
 <tr><td class="formcolor">{tr}Cache{/tr}</td><td class="formcolor">
     <select name="wiki_cache">
-    <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
-    <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
-    <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
-    <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
-    <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-    <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
+    <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
+    <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+    <option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
+    <option value="600" {if $prefs.wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
+    <option value="900" {if $prefs.wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
+    <option value="1800" {if $prefs.wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
+    <option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
+    <option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
     </select> 
 </td></tr>
 {/if}
@@ -216,17 +216,17 @@
 <input type="hidden" name="page" value="{$page|escape}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" /></td>
 
-{if $feature_antibot eq 'y' && $anon_user eq 'y'}
+{if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 <tr><td class="formcolor">{tr}Anti-Bot verification code{/tr}:</td>
 <td class="formcolor"><img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/></td></tr>
 <tr><td class="formcolor">{tr}Enter the code you see above{/tr}:</td>
 <td class="formcolor"><input type="text" maxlength="8" size="8" name="antibotcode" /></td></tr>
 {/if}
 
-{if $wiki_feature_copyrights  eq 'y'}
-<tr><td class="formcolor">{tr}License{/tr}:</td><td class="formcolor"><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td>
-{if $wikiSubmitNotice neq ""}
-<tr><td class="formcolor">{tr}Important{/tr}:</td><td class="formcolor"><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
+{if $prefs.wiki_feature_copyrights  eq 'y'}
+<tr><td class="formcolor">{tr}License{/tr}:</td><td class="formcolor"><a href="tiki-index.php?page={$prefs.wikiLicensePage}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td>
+{if $prefs.wikiSubmitNotice neq ""}
+<tr><td class="formcolor">{tr}Important{/tr}:</td><td class="formcolor"><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
 {/if}
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">

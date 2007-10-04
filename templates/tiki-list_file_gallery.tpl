@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.49 2007-08-29 14:15:26 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50 2007-10-04 22:17:41 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 {if $filegals_manager eq 'y'}
 <div class="rbox" name="tip">
@@ -9,14 +9,14 @@
 {/if}
 
 <div class="navbar">
-{if $user and $feature_user_watches eq 'y'}
+{if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_file_gallery eq 'n'}
 		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager eq 'y'}&filegals_manager{/if}>{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Gallery{/tr}' title='{tr}Monitor this Gallery{/tr}' align='right'}</a>
 	{else}
 		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager eq 'y'}&filegals_manager{/if}">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}Stop Monitoring this Gallery{/tr}' title='{tr}Stop Monitoring this Gallery{/tr}' align='right'}</a>
 	{/if}
 {/if}  
-{if $rss_file_gallery eq 'y'}
+{if $prefs.rss_file_gallery eq 'y'}
 	{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
 	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
 	<img src='img/rss_podcast_80_15.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align='right' /></a>
@@ -35,7 +35,7 @@
   {if $tiki_p_upload_files eq 'y'}
     <a href="tiki-upload_file.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Upload File{/tr}</a>
   {/if}
-  {if $feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
+  {if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
     <a href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="linkbut">{tr}Directory batch{/tr}</a>
   {/if}
 {/if}
@@ -43,7 +43,7 @@
 </div>
 
 <div class="navbar" align="right">
-    {if $user and $feature_user_watches eq 'y'}
+    {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
             {tr}Watched by categories{/tr}:
             {section name=i loop=$watching_categories}
@@ -76,7 +76,7 @@
 {/if}
 
 
-{if $feature_file_galleries_comments == 'y'
+{if $prefs.feature_file_galleries_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'

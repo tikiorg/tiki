@@ -1,5 +1,5 @@
 {*Smarty template*}
-<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
+<link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 <table class="email">
         <tr>
 	    	<td class="heading">{tr}From{/tr}:</td>
@@ -11,7 +11,7 @@
 	</tr>
 	<tr>
 		<td class="heading">{tr}Subject{/tr}:</td>
-		<td class="formcolor" colspan="3">{$title}</td>
+		<td class="formcolor" colspan="3">{$prefs.title}</td>
 	</tr>
 	<tr>
 		{*<td class="body">{tr}Body{/tr}:</td>*}

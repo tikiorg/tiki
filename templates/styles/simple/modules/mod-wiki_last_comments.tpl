@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-wiki_last_comments.tpl,v 1.3 2005-09-07 12:35:42 sylvieg Exp $ *}
-{if $feature_wiki eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-wiki_last_comments.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
+{if $prefs.feature_wiki eq 'y'}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Last `$module_rows` wiki comments{/tr}" assign="tpl_module_title"}
 	{else}

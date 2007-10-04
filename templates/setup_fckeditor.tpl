@@ -23,14 +23,14 @@ FCKConfig.StylesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikistyles.xml';
 FCKConfig.TemplatesXmlPath = _TikiRoot + 'lib/fckeditor_tiki/tikitemplates.xml';
 
 FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
-FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$wysiwyg_toolbar_skin}/' ;
-FCKConfig.DefaultLanguage   = '{$language}' ;
-FCKConfig.AutoDetectLanguage   = {if $feature_detect_language eq 'y'}true{else}false{/if} ;
+FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$prefs.wysiwyg_toolbar_skin}/' ;
+FCKConfig.DefaultLanguage   = '{$prefs.language}' ;
+FCKConfig.AutoDetectLanguage   = {if $prefs.feature_detect_language eq 'y'}true{else}false{/if} ;
 FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
 FCKConfig.FormatOutput = true ;
 
-{if $feature_filegals_manager eq 'y'}
+{if $prefs.feature_filegals_manager eq 'y'}
 FCKConfig.ImageBrowserURL = _TikiRoot + 'tiki-file_galleries.php?filegals_manager';
 {else}
 FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php' ;
@@ -48,7 +48,7 @@ FCKConfig.LinkBrowser = false;
 FCKConfig.LinkUpload = false;
 FCKConfig.ProcessHTMLEntities = false;
 
-{if $feature_filegals_manager eq 'y'}
+{if $prefs.feature_filegals_manager eq 'y'}
 FCKConfig.ImageDlgHideAdvanced = true ;
 FCKConfig.ImageUpload = false ;
 FCKConfig.ImageDlgHideLink = true ;

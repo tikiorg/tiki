@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.17 2007-08-23 16:21:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.18 2007-10-04 22:17:51 nyloth Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -25,39 +25,39 @@
 {if $tiki_p_rename eq 'y' && $editable}
 <li><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="">{tr}Rename{/tr}</a></li>
 {/if}
-{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
+{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="">{tr}Unlock{/tr}</a></li>
 {/if}
-{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
+{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="">{tr}Lock{/tr}</a></li>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
 <li><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="">{tr}Perms{/tr}</a></li>
 {/if}
 
-{if $feature_history eq 'y'}
+{if $prefs.feature_history eq 'y'}
 <li><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="">{tr}History{/tr}</a></li>
 {/if}
 {/if}
 
-{if $feature_likePages eq 'y'}
+{if $prefs.feature_likePages eq 'y'}
 <li><a href="tiki-likepages.php?page={$page|escape:"url"}" class="">{tr}Similar{/tr}</a></li>
 {/if}
-{if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
+{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <li><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="">{tr}Undo{/tr}</a></li>
 {/if}
-{if $wiki_uses_slides eq 'y'}
+{if $prefs.wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
 <li><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="">{tr}Slides{/tr}</a></li>
 {elseif $structure eq 'y'}
 <li><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="">{tr}Slides{/tr}</a></li>
 {/if}
 {/if}
-{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 <li><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="">{tr}Export{/tr}</a></li>
 {/if}
-{if $feature_wiki_discuss eq 'y'}
-<li><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="">{tr}Discuss{/tr}</a></li>
+{if $prefs.feature_wiki_discuss eq 'y'}
+<li><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="">{tr}Discuss{/tr}</a></li>
 {/if}
 
 
@@ -70,7 +70,7 @@
 {if $show_page == 'y'} {* Show this buttons only if page view mode *}
 
   {* don't show comments if feature disabled or not enough rights *}
-  {if $feature_wiki_comments == 'y'
+  {if $prefs.feature_wiki_comments == 'y'
 	&& $tiki_p_wiki_view_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
@@ -93,7 +93,7 @@
   {* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
 
   {php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
-  {if $feature_wiki_attachments      == 'y'
+  {if $prefs.feature_wiki_attachments      == 'y'
   && ($tiki_p_wiki_view_attachments  == 'y'
   &&  count($atts) > 0
   ||  $tiki_p_wiki_attach_files      == 'y'
@@ -121,7 +121,7 @@
   </li>
   {/if}{* attachments *}
 
-  {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
+  {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <li><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="">{tr}Translation{/tr}</a></li>
   {/if}
 
@@ -130,10 +130,10 @@
 </ul>
 </div>
 <br />
-{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y'}
+{if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y'}
 {include file=comments.tpl}
 {/if}

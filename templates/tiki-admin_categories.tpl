@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.59 2007-10-04 12:45:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.60 2007-10-04 22:17:37 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Categories tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
 
@@ -179,7 +179,7 @@
       <form action="tiki-admin_categories.php" method="post">
       <input type="hidden" name="parentId" value="{$parentId|escape}" />
       <table>
-				{if $feature_wiki eq 'y'}
+				{if $prefs.feature_wiki eq 'y'}
         <tr>
           <td class="form">{tr}page{/tr}:</td>
           <td class="form"><select name="pageName[]" multiple="multiple" size="5">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:40:"(...)":true}</option>{/section}</select></td>
@@ -193,7 +193,7 @@
           <td class="form"><input type="submit" name="addarticle" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_blogs eq 'y'}
+				{if $prefs.feature_blogs eq 'y'}
         <tr>
           <td class="form">{tr}Blog{/tr}:</td>
           <td class="form"><select name="blogId">{section name=ix loop=$blogs}<option value="{$blogs[ix].blogId|escape}">{$blogs[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
@@ -207,49 +207,49 @@
           <td class="form"><input type="submit" name="adddirectory" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_galleries eq 'y'}
+				{if $prefs.feature_galleries eq 'y'}
         <tr>
           <td class="form">{tr}image gal{/tr}:</td>
           <td class="form"><select name="galleryId">{section name=ix loop=$galleries}<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addgallery" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_file_galleries eq 'y'}
+				{if $prefs.feature_file_galleries eq 'y'}
         <tr>
           <td class="form">{tr}file gal{/tr}:</td>
           <td class="form"><select name="file_galleryId">{section name=ix loop=$file_galleries}<option value="{$file_galleries[ix].galleryId|escape}">{$file_galleries[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfilegallery" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_forums eq 'y'}
+				{if $prefs.feature_forums eq 'y'}
         <tr>
           <td class="form">{tr}Forum{/tr}:</td>
           <td class="form"><select name="forumId">{section name=ix loop=$forums}<option value="{$forums[ix].forumId|escape}">{$forums[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addforum" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_polls eq 'y'}
+				{if $prefs.feature_polls eq 'y'}
         <tr>
           <td class="form">{tr}Poll{/tr}:</td>
           <td class="form"><select name="pollId">{section name=ix loop=$polls}<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addpoll" value="{tr}Add{/tr}" /></td>
         </tr>        
 				{/if}
-				{if $feature_faqs eq 'y'}
+				{if $prefs.feature_faqs eq 'y'}
         <tr>
           <td class="form">{tr}FAQ{/tr}:</td>
           <td class="form"><select name="faqId">{section name=ix loop=$faqs}<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfaq" value="{tr}Add{/tr}" /></td>
         </tr> 
 				{/if}
-				{if $feature_trackers eq 'y'}
+				{if $prefs.feature_trackers eq 'y'}
 	   <tr>
           <td class="form">{tr}Tracker{/tr}:</td>
           <td class="form"><select name="trackerId">{section name=ix loop=$trackers}<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addtracker" value="{tr}Add{/tr}" /></td>
         </tr>          
 				{/if}
-				{if $feature_quizzes eq 'y'}
+				{if $prefs.feature_quizzes eq 'y'}
         <tr>
           <td class="form">{tr}quiz{/tr}:</td>
           <td class="form"><select name="quizId">{section name=ix loop=$quizzes}<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>

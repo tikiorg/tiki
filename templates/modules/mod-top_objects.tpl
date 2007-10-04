@@ -1,4 +1,4 @@
-{if $feature_stats eq 'y'}
+{if $prefs.feature_stats eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Top `$module_rows` Objects{/tr}" assign="tpl_module_title"}

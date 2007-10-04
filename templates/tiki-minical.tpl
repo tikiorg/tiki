@@ -1,15 +1,15 @@
 <h1><a class="pagetitle" href="tiki-minical.php?view={$view}">{tr}Mini Calendar{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Doc tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-{if $feature_ajax ne 'y' && $feature_mootools ne 'y'}
+{if $prefs.feature_ajax ne 'y' && $feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 {/if}
 <br />
@@ -190,10 +190,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-minical.php?view={$view}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-minical.php?vew={$view}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
@@ -219,7 +219,7 @@
   <tr>
   	  <td class="formcolor">{tr}Start{/tr}</td>
   	  <td class="formcolor">
-  	  {html_select_date time=$ev_pdate end_year="+4" field_order=$display_field_order}
+  	  {html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order}
   	  {html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
   </tr>

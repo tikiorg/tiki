@@ -31,11 +31,11 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-newsreader_news.php?server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}&amp;offset={$next_offset}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {if $cant_pages < 20}
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-newsreader_news.php?server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}&amp;offset=selector_offset">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

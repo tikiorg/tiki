@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.7 2006-10-01 14:09:05 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.8 2007-10-04 22:17:49 nyloth Exp $ *}
 
 {include file="styles/notheme/babelfish.tpl"}
 
@@ -11,24 +11,24 @@
           <img src='pics/icons/feed.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' />
         </td>
       </tr><tr>
-        {if $rss_wiki eq 'y'}
+        {if $prefs.rss_wiki eq 'y'}
           <td> <a href="tiki-wiki_rss.php"> {tr}Wiki{/tr} </a> </td>
         {/if}
-        {if $rss_blogs eq 'y'}
+        {if $prefs.rss_blogs eq 'y'}
           <td> <a href="tiki-blogs_rss.php"> {tr}Blogs{/tr} </a> </td>
         {/if}
       </tr><tr>
-        {if $rss_articles eq 'y'}
+        {if $prefs.rss_articles eq 'y'}
           <td> <a href="tiki-articles_rss.php"> {tr}Articles{/tr} </a> </td>
         {/if}
-        {if $rss_forums eq 'y'}
+        {if $prefs.rss_forums eq 'y'}
           <td> <a href="tiki-forums_rss.php"> {tr}Forums{/tr} </a> </td>
         {/if}
       </tr><tr>
-        {if $rss_file_galleries eq 'y'}
+        {if $prefs.rss_file_galleries eq 'y'}
           <td> <a href="tiki-file_galleries_rss.php"> {tr}File galleries{/tr} </a> </td>
         {/if}
-        {if $rss_image_galleries eq 'y'}
+        {if $prefs.rss_image_galleries eq 'y'}
           <td> <a href="tiki-image_galleries_rss.php"> {tr}Image galleries{/tr} </a> </td>
         {/if}
       </tr>

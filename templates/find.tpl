@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.8 2007-07-19 13:16:15 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.9 2007-10-04 22:17:35 nyloth Exp $ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
@@ -35,12 +35,12 @@
 	</td>
 {/if}
 
-{if $find_show_languages ne 'n' and $feature_multilingual eq 'y'}
+{if $find_show_languages ne 'n' and $prefs.feature_multilingual eq 'y'}
 	<td class="findtitle">
 		<select name="lang">
 		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
 		{section name=ix loop=$languages}
-			{if count($available_languages) == 0 || in_array($languages[ix].value, $available_languages)}
+			{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>{tr}{$languages[ix].name}{/tr}</option>
 			{/if}
 		{/section}
@@ -49,7 +49,7 @@
 {/if}
 
 
-{if $find_show_categories ne 'n' and $feature_categories eq 'y'}
+{if $find_show_categories ne 'n' and $prefs.feature_categories eq 'y'}
 	<td class="findtitle">
 		<select name="categId">
 		<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
@@ -60,7 +60,7 @@
 	</td>
 {/if}
 
-<td class="findtitle">{tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" /></td>
+<td class="findtitle">{tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$prefs.maxRecords|escape}" size="3" /></td>
 
 <td class="findtitle"><input type="submit" name="search" value="{tr}Find{/tr}" /></td>
 </tr>

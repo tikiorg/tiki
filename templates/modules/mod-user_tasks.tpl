@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.16 2007-07-17 16:47:44 jyhem Exp $ *}
-{if $feature_tasks eq 'y' and $user}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.17 2007-10-04 22:17:47 nyloth Exp $ *}
+{if $prefs.feature_tasks eq 'y' and $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>"}{/if}
 {tikimodule title=$tpl_module_title name="user_tasks" flip=$module_params.flip decorations=$module_params.decorations}
 <table  border="0" cellpadding="0" cellspacing="0" width="100%">
