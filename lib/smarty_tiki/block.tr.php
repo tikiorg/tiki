@@ -20,10 +20,13 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 include_once('lib/init/tra.php');
 
 function smarty_block_tr($params, $content, &$smarty) {
-	if (empty($content) || empty($params['lang']))
+	if (empty($content) )
 		return;
-	$lang = $params['lang'];
-	if ( !isset($lang) or $lang == '') $lang = $language;
+	if (empty($params['lang'])) {
+		$lang = '';
+	} else {
+		$lang = $params['lang'];
+	}
 	echo tra($content,$lang);
 }
 ?>
