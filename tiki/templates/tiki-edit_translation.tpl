@@ -1,8 +1,8 @@
 <h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Edit Translations Template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
 </h1>
@@ -43,7 +43,7 @@
 	<option value="">{tr}Unknown{/tr}</option>
 	{/if}
 	{section name=ix loop=$languages}
-	{if in_array($languages[ix].value, $available_languages) or $available_languages|@count eq 0}
+	{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
 	<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 	{/if}
 	{/section}</select>

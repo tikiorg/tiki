@@ -1,6 +1,6 @@
 <html>
 <head>
-<link rel="StyleSheet" href="styles/{$style}" type="text/css" />
+<link rel="StyleSheet" href="styles/{$prefs.style}" type="text/css" />
 </head>
 
 <body style = "margin:0px;" onload = "window.setInterval('location.reload()','10000');">

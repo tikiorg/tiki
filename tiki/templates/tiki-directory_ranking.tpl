@@ -15,9 +15,9 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $prefs.directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
-{if $directory_country_flag eq 'y'}
+{if $prefs.directory_country_flag eq 'y'}
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 {/if}
 <td class="{cycle advance=false}">{$items[user].hits}</td>
@@ -42,10 +42,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-directory_ranking.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-directory_ranking.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -33,7 +33,7 @@
 {else}
 {if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].visible eq 'y'}href="tiki-calendar_edit_item.php?viewcalitemId={$cell[w][d].items[items].calitemId}"{/if}
 {/if}
-{if $calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
+{if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
 {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 >{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a>
 {if $cell[w][d].items[items].web}

@@ -1,4 +1,4 @@
-{if $feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
+{if $prefs.feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $colsCategorize} colspan="{$colsCategorize}"{/if}>
@@ -11,7 +11,7 @@
 </a>
   <div id="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
   <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
   <div class="rbox-data" name="tip">{tr}Hold down CTRL to select multiple categories{/tr}.</div>
@@ -29,7 +29,7 @@
   {else}
    <label for="cat-check">{tr}categorize this object{/tr}:</label>
     <input type="checkbox" name="cat_categorize" id="cat-check" {if $cat_categorize eq 'y' or $categ_checked eq 'y'}checked="checked"{/if}/><br />
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
   <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
   <div class="rbox-data" name="tip">{tr}Uncheck the above checkbox to uncategorize this page/object{/tr}.</div>

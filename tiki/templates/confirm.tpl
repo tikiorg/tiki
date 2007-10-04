@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/confirm.tpl,v 1.10 2007-07-15 20:35:00 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/confirm.tpl,v 1.11 2007-10-04 22:17:35 nyloth Exp $ *}
 <div class="cbox">
 {if !empty($confirmation_text)}<div class="cbox-title">{$confirmation_text}</div>{/if}
 <br />
@@ -16,7 +16,7 @@
 {/foreach}
 <input type="submit" name="daconfirm" value="{tr}Click here to confirm your action{/tr}" />
 <span class="button2"><a href="javascript:history.back()" class="linkbut">{tr}Go back{/tr}</a></span>
-<span class="button2"><a href="{$tikiIndex}" class="linkbut">{tr}Return to home page{/tr}</a></span>
+<span class="button2"><a href="{$prefs.tikiIndex}" class="linkbut">{tr}Return to home page{/tr}</a></span>
 </form>
 </div>
 </div><br />

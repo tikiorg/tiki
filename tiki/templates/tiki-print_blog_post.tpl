@@ -22,7 +22,7 @@
 <tr><td>
 <small>
 {tr}Permalink{/tr}: <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}</a>
-{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
 {/if}
 </small>

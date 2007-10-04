@@ -1,16 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.4 2007-03-02 19:49:10 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
 {* Template for Tikiwiki site identity header *}
-{if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
-{if $feature_siteloc eq 'y' and $feature_breadcrumbs eq 'y'}
+{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitemycode}{* here can be custom site admin code *}{/if}
+{if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 <div id="sitelocbar">
-	{if $feature_sitetitle eq 'n'}{tr}Location : {/tr}{/if}
+	{if $prefs.feature_sitetitle eq 'n'}{tr}Location : {/tr}{/if}
 	{if $trail}
 		{breadcrumbs type="trail" loc="site" crumbs=$trail}{breadcrumbs type="pagetitle" loc="site" crumbs=$trail}
 	{else}
 		<a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
 		{if $structure eq 'y'}
 			{section loop=$structure_path name=ix}
-				{$site_crumb_seper|escape:"html"}
+				{$prefs.site_crumb_seper|escape:"html"}
 				{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
 				<a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
 				{/if}
@@ -24,10 +24,10 @@
 				{/if}
 			{/section}
 		{else}
-			{if $page ne ''}{$site_crumb_seper|escape:"html"} {$page}
-			{elseif $title ne ''}{$site_crumb_seper|escape:"html"} {$title}
-			{elseif $thread_info.title ne ''}{$site_crumb_seper|escape:"html"} {$thread_info.title}
-			{elseif $forum_info.name ne ''}{$site_crumb_seper|escape:"html"} {$forum_info.name}
+			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page}
+			{elseif $prefs.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$prefs.title}
+			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
+			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}
 			{/if}
 		{/if}
 	{/if}
@@ -38,23 +38,23 @@
 		{breadcrumbs type="desc" loc="site" crumbs=$crumbs}
 	{/if}
 {/if}
-{if $feature_sitenav eq 'y'}
+{if $prefs.feature_sitenav eq 'y'}
 <div id="sitenavbar">
-	{eval var=$sitenav_code}
+	{eval var=$prefs.sitenav_code}
 </div>
 {* site navigation bar *}
 {/if}
-{if $feature_sitelogo eq 'y'}
-<div id="sitelogo"{if $sitelogo_bgcolor ne ''} style="background-color: {$sitelogo_bgcolor};"{/if}>
-	<a href="./" title="{$sitelogo_title}"><img src="{$sitelogo_src}" alt="{$sitelogo_alt}" style="border: none" /></a>
+{if $prefs.feature_sitelogo eq 'y'}
+<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};"{/if}>
+	<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
 </div>{* site logo *}
 {/if}
-{if $feature_sitead eq 'y'}
+{if $prefs.feature_sitead eq 'y'}
 <div id="sitead" align="center">
-	{if $feature_sitead eq 'y' && ($sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitead}{/if}
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
 </div>{* optional ads (banners) *}
 {/if}
-{if $feature_sitesearch eq 'y' and $feature_search eq 'y'}
+{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y'}
 <div id="sitesearchbar">
 	{include
 		file="tiki-searchindex.tpl"

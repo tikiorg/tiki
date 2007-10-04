@@ -10,7 +10,7 @@
 <a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" /></a>
 </div>
 
-{if $feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y'}
 <div class="jscalrow">
 <form action="{$myurl}" method="post" name="f">
 {jscalendar date="$focusdate" id="trig" goto="$jscal_url" align="Bc"}

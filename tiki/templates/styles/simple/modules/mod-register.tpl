@@ -12,7 +12,7 @@
 <button type="submit" name="register">{tr}Register{/tr}</button>
 </form>
 {else}
-{if $rnd_num_reg eq 'y'}
+{if $prefs.rnd_num_reg eq 'y'}
 <small>{tr}Your registration code:{/tr}</small>
 <img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
 <br />
@@ -20,10 +20,10 @@
 <form action="tiki-register.php" method="post"> <br />
 <table class="normal">
 <tr><td class="formcolor">{tr}Username{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
-{if $useRegisterPasscode eq 'y'}
+{if $prefs.useRegisterPasscode eq 'y'}
 <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td><td class="formcolor"><input type="password" name="passcode" /></td></tr>
 {/if}
-{if $rnd_num_reg eq 'y'}
+{if $prefs.rnd_num_reg eq 'y'}
 <tr><td class="formcolor">{tr}Registration code{/tr}:</td>
 <td class="formcolor"><input type="text" maxlength="8" size="8" name="regcode" /></td></tr>
 {/if}

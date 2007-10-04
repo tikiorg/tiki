@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.35 2007-08-24 17:01:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.36 2007-10-04 22:17:36 nyloth Exp $ *}
 {* Module layout with controls *}
 
 <div class="box-shadow">
 	<div class="box box-{$module_name|escape}">
 {if $module_decorations ne 'n'}
 		<div class="box-title">
-{if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
+{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<table width="100%"><tr>
 				<td width="11"><a title="{tr}Move module up{/tr}" 
 				href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img 

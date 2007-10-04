@@ -7,7 +7,7 @@
       <td id="centercolumn"><div id="tiki-center">
 
       
-      {if $feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
+      {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
 <img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
@@ -15,7 +15,7 @@
 <table >
 <tr>
 <td>
-{if $feature_wiki_description eq 'y'}
+{if $prefs.feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
@@ -30,7 +30,7 @@
 <a title="{tr}Refresh{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' width='16' height='16' alt='{tr}Refresh{/tr}' /></a>
 {/if}
 
-{if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+{if $user and $prefs.feature_wiki_notepad eq 'y' and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' width='16' height='16' alt='{tr}Save{/tr}' /></a>
 {/if}
 

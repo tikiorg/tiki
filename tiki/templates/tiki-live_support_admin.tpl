@@ -2,13 +2,13 @@
 {tr}Live support system{/tr}</a>
 
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Live Support tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 

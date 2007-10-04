@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.5 2005-05-18 11:02:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.6 2007-10-04 22:17:35 nyloth Exp $ *}
 
-{if $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'y'}
+{if $prefs.feature_babelfish eq 'y' and $prefs.feature_babelfish_logo eq 'y'}
 
 {assign var=links value=0}
 {section loop=$babelfish_links name=i}
@@ -32,7 +32,7 @@
 {/if}
 </div>
 
-{elseif $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'n'}
+{elseif $prefs.feature_babelfish eq 'y' and $prefs.feature_babelfish_logo eq 'n'}
 
 <div id="babelfish" align="center">
 {if $links>0}
@@ -48,7 +48,7 @@
 {/if}
 </div>
 
-{elseif $feature_babelfish eq 'n' and $feature_babelfish_logo eq 'y'}
+{elseif $prefs.feature_babelfish eq 'n' and $prefs.feature_babelfish_logo eq 'y'}
 
 <div id="babelfish" align="center">
   {$babelfish_logo}

@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.6 2006-03-20 21:39:19 lfagundes Exp $ *}
-{if $feature_ajax eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.7 2007-10-04 22:17:38 nyloth Exp $ *}
+{if $prefs.feature_ajax eq 'y'}
 
 {$xajax_js}
 

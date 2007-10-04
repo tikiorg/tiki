@@ -1,17 +1,17 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="messu-sent.php">{tr}Sent Messages{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=messu-sent.tpl" target="tikihelp" class="tikihelp"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-{if $messu_sent_size gt '0'}
+{if $prefs.messu_sent_size gt '0'}
 <br />
 <table border='0' cellpadding='0' cellspacing='0'>
 	<tr>
@@ -27,7 +27,7 @@
 		<td><small>{$percentage}%</small></td>
 	</tr>
 </table>
-[{$messu_sent_number} / {$messu_sent_size}] {tr}messages{/tr}. {if $messu_sent_number ge $messu_sent_size}{tr}Sent box is full. Archive or delete some sent messages first if you want to send more messages.{/tr}{/if}
+[{$messu_sent_number} / {$prefs.messu_sent_size}] {tr}messages{/tr}. {if $messu_sent_number ge $prefs.messu_sent_size}{tr}Sent box is full. Archive or delete some sent messages first if you want to send more messages.{/tr}{/if}
 {/if}
 <br /><br />
 <form action="messu-sent.php" method="get">

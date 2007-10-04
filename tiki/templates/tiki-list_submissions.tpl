@@ -21,22 +21,22 @@
 
 <table class="normal">
 <tr>
-{if $art_list_title eq 'y'}
+{if $prefs.art_list_title eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {/if}
-{if $art_list_topic eq 'y'}
+{if $prefs.art_list_topic eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
 {/if}
-{if $art_list_date eq 'y'}
+{if $prefs.art_list_date eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
 {/if}
-{if $art_list_size eq 'y'}
+{if $prefs.art_list_size eq 'y'}
 	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
 {/if}
-{if $art_list_img eq 'y'}
+{if $prefs.art_list_img eq 'y'}
 <td class="heading">{tr}Img{/tr}</td>
 {/if}
-{if $art_list_author eq 'y'}
+{if $prefs.art_list_author eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 <td class="heading">{tr}Action{/tr}</td>
@@ -44,24 +44,24 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $art_list_title eq 'y'}
-	<td class="{cycle advance=false}"><a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$art_list_title_len:"...":true}</a>
+{if $prefs.art_list_title eq 'y'}
+	<td class="{cycle advance=false}"><a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:$prefs.art_list_title_len:"...":true}</a>
 	{*if $listpages[changes].type eq 'Review'}(r){/if*}
 	</td>
 {/if}
-{if $art_list_topic eq 'y'}
+{if $prefs.art_list_topic eq 'y'}
 	<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>
 {/if}
-{if $art_list_date eq 'y'}
+{if $prefs.art_list_date eq 'y'}
 	<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
 {/if}
-{if $art_list_size eq 'y'}
+{if $prefs.art_list_size eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
 {/if}
-{if $art_list_img eq 'y'}
+{if $prefs.art_list_img eq 'y'}
 	<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 {/if}
-{if $art_list_author eq 'y'}
+{if $prefs.art_list_author eq 'y'}
 <td class="{cycle advance=false}">{$listpages[changes].author}</td>
 {/if}
 <td class="{cycle}" >
@@ -91,10 +91,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-list_submissions.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-list_submissions.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

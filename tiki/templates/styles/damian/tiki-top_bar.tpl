@@ -1,2 +1,2 @@
-Welcome to {$siteTitle} on {$smarty.now|tiki_short_datetime}<br />
+Welcome to {$prefs.siteTitle} on {$smarty.now|tiki_short_datetime}<br />
 {phplayers id=42 type=horiz}

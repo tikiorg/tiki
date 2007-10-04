@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.11 2007-07-19 17:06:16 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.12 2007-10-04 22:17:37 nyloth Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}'></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_contributions.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a>{/if}</h1>
 
@@ -23,15 +23,15 @@
 <form action="tiki-admin_contribution.php?page=features" method="post">
 <table class="normal">
 <tr><td class="formcolor">{tr}Contributions are mandatory in wiki pages{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory" {if $feature_contribution_mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory" {if $prefs.feature_contribution_mandatory eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are mandatory in forums{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_forum" {if $feature_contribution_mandatory_forum eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_forum" {if $prefs.feature_contribution_mandatory_forum eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are mandatory in comments{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_comment" {if $feature_contribution_mandatory_comment eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_comment" {if $prefs.feature_contribution_mandatory_comment eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are mandatory in blogs{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_blog" {if $feature_contribution_mandatory_blog eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_mandatory_blog" {if $prefs.feature_contribution_mandatory_blog eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributions are displayed in the comment/post{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $prefs.feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributors{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contributor_wiki" {if $feature_contributor_wiki eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}Save{/tr}" /></td></tr>

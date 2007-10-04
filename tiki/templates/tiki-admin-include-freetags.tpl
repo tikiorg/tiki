@@ -1,4 +1,4 @@
-{if $feature_help eq "y"}
+{if $prefs.feature_help eq "y"}
 <div class="rbox" style="margin-top: 10px;">
 <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
 <div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Freetags rock!{/tr}</div>
@@ -18,19 +18,19 @@
         </tr>
         <tr>
           <td class="form">{tr}Show Tag Cloud{/tr}: </td>
-          <td><input type="checkbox" name="freetags_browse_show_cloud" {if $freetags_browse_show_cloud eq 'y'}checked{/if} /></td>
+          <td><input type="checkbox" name="freetags_browse_show_cloud" {if $prefs.freetags_browse_show_cloud eq 'y'}checked{/if} /></td>
         </tr>
         <tr>
           <td class="form">{tr}Number of Tags to show in Cloud{/tr}: </td>
-          <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
+          <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$prefs.freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
         </tr>
         <tr>
           <td class="form">{tr}Only accept alphanumeric ASCII freetags (no accents or special chars){/tr}: </td>
-          <td><input type="checkbox" name="freetags_ascii_only" {if $freetags_ascii_only eq 'y'}checked{/if} /></td>
+          <td><input type="checkbox" name="freetags_ascii_only" {if $prefs.freetags_ascii_only eq 'y'}checked{/if} /></td>
         </tr>
         <tr>
           <td class="form">{tr}Only accept lowercase freetags{/tr}: </td>
-          <td><input type="checkbox" name="freetags_lowercase_only" {if $freetags_lowercase_only eq 'y'}checked{/if} /></td>
+          <td><input type="checkbox" name="freetags_lowercase_only" {if $prefs.freetags_lowercase_only eq 'y'}checked{/if} /></td>
         </tr>
 	<tr>
           <td colspan="2" class="button"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-{if $feature_morcego eq "y"}
+{if $prefs.feature_morcego eq "y"}
   <div class="cbox">
     <div class="cbox-title">
     {tr}Freetag 3D Browser Configuration{/tr}
@@ -53,26 +53,26 @@
       </tr>
       <tr>
         <td class="form">{tr}Enable freetags 3D browser{/tr}:</td>
-        <td><input type="checkbox" name="freetags_feature_3d" {if $freetags_feature_3d eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="freetags_feature_3d" {if $prefs.freetags_feature_3d eq 'y'}checked="checked"{/if}/></td>
       </tr>
 {*      <tr>
         <td class="form">{tr}Load page on navigation{/tr}: </td>
-	<td><input type="checkbox" name="freetags_3d_autoload" value="true" {if $freetags_3d_missing_page_color eq 'true'}checked{/if} /></td>
+	<td><input type="checkbox" name="freetags_3d_autoload" value="true" {if $prefs.freetags_3d_missing_page_color eq 'true'}checked{/if} /></td>
       </tr> *}
       <tr>
         <td class="form">{tr}Browser width{/tr}: </td>
-	<td><input type="text" name="freetags_3d_width" value="{$freetags_3d_width|escape}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_width" value="{$prefs.freetags_3d_width|escape}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Browser height{/tr}: </td>
-	<td><input type="text" name="freetags_3d_height" value="{$freetags_3d_height|escape}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_height" value="{$prefs.freetags_3d_height|escape}" size="3" /></td>
       </tr>
       <tr>
         <td colspan="2" class="heading">{tr}Graph appearance{/tr}</td>
       </tr>
       <tr>
         <td class="form">{tr}Navigation depth{/tr}: </td>
-	<td><input type="text" name="freetags_3d_navigation_depth" value="{$freetags_3d_navigation_depth|escape}" size="2" /></td>
+	<td><input type="text" name="freetags_3d_navigation_depth" value="{$prefs.freetags_3d_navigation_depth|escape}" size="2" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node size{/tr}: </td>
@@ -88,11 +88,11 @@
       </tr>
       <tr>
         <td class="form">{tr}Node color{/tr}: </td>
-	<td><input type="text" name="freetags_3d_existing_page_color" value="{$freetags_3d_existing_page_color|escape}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_existing_page_color" value="{$prefs.freetags_3d_existing_page_color|escape}" size="7" /></td>
       </tr>
       <tr>
 {*        <td class="form">{tr}Missing page node color{/tr}: </td>
-	<td><input type="text" name="freetags_3d_missing_page_color" value="{$freetags_3d_missing_page_color|escape}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_missing_page_color" value="{$prefs.freetags_3d_missing_page_color|escape}" size="7" /></td>
       </tr> *}
       <tr>
         <td colspan="2" class="heading">{tr}Camera settings{/tr}</td>
@@ -111,7 +111,7 @@
       </tr>
       <tr>
         <td class="form">{tr}Feed animation interval (milisecs){/tr}: </td>
-	<td><input type="text" name="freetags_3d_feed_animation_interval" value="{$freetags_3d_feed_animation_interval|escape}" size="4" /></td>
+	<td><input type="text" name="freetags_3d_feed_animation_interval" value="{$prefs.freetags_3d_feed_animation_interval|escape}" size="4" /></td>
       </tr>
       {* new fields *}
       <tr>

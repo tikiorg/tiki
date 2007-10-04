@@ -82,7 +82,7 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 <div class="articletrailer">
 <table class="wikitopline">
 <tr>
-{if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
+{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
     {if ($listpages[ix].size > 0)}
 	    <td class="articletrailer">
@@ -95,7 +95,7 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 	    {/if}
     {/if}
   {/if}
-  {if ($feature_article_comments eq 'y')
+  {if ($prefs.feature_article_comments eq 'y')
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
@@ -115,10 +115,10 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
   <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
 {/if}
-{if $feature_cms_print eq 'y'}
+{if $prefs.feature_cms_print eq 'y'}
   <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
-{if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
+{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
@@ -141,10 +141,10 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {if $next_offset >= 0}
 &nbsp;[<a class="artprevnext" href="tiki-view_articles.php?offset={$next_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxArticles}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxArticles}
 <a class="artprevnext" href="tiki-view_articles.php?find={$find}&amp;topic={$topic}&amp;type={$type}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

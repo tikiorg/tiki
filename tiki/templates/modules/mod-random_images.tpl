@@ -1,4 +1,4 @@
-{if $feature_galleries eq 'y'}
+{if $prefs.feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Random Images{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="random_images" flip=$module_params.flip decorations=$module_params.decorations}
   <center>

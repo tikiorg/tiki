@@ -1,4 +1,4 @@
-<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.14 2007-07-24 15:23:53 jyhem Exp $ -->
+<!-- $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-view_blog_post.tpl,v 1.15 2007-10-04 22:17:50 nyloth Exp $ -->
 {if $feature_blogposts_pings == 'y' && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -43,7 +43,7 @@
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='pics/icons/page_edit.png' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
 <a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='pics/icons/cross.png' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
-{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}' width='16' height='16' /></a>
 {/if}
 </div>
@@ -62,7 +62,7 @@
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
 ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}Posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}Posts{/tr})
-{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 {/if}
@@ -96,7 +96,7 @@
 </table>
 {/if}
 
-{if $feature_blogposts_comments == 'y'
+{if $prefs.feature_blogposts_comments == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)

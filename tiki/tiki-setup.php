@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.462 2007-10-04 20:52:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.463 2007-10-04 22:17:34 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -335,545 +335,110 @@ if ($wys == 'no' or $wys == 'optional' or $wys == 'default') {
 /* ------------------------------------------------------------- */
 /* END of UPGRADE wysiwyg */
 
-
-$pref['tiki_release'] = '1.10';
+require_once('lib/setup/prefs.php');
 
 # wiki
 $sections['wiki page']['feature'] = 'feature_wiki';
 $sections['wiki page']['key'] = 'page';
 $sections['wiki page']['itemkey'] = '';
-$pref['feature_wiki'] = 'y';
-$pref['default_wiki_diff_style'] = 'minsidediff';
-$pref['feature_backlinks'] = 'y';
-$pref['feature_dump'] = 'y';
-$pref['feature_history'] = 'y';
-$pref['feature_lastChanges'] = 'y';
-$pref['feature_likePages'] = 'y';
-$pref['feature_listPages'] = 'y';
-$pref['feature_page_title'] = 'y';
-$pref['feature_sandbox'] = 'y';
-$pref['feature_warn_on_edit'] = 'n';
-$pref['feature_wiki_1like_redirection'] = 'y';
-$pref['feature_wiki_allowhtml'] = 'n';
-$pref['feature_wiki_attachments'] = 'n';
-$pref['feature_wiki_comments'] = 'n';
-$pref['feature_wiki_description'] = 'n';
-$pref['feature_wiki_discuss'] = 'n';
-$pref['feature_wiki_export'] = 'y';
-$pref['feature_wiki_import_page'] = 'n';
-$pref['feature_wiki_footnotes'] = 'n';
-$pref['feature_wiki_icache'] = 'n';
-$pref['feature_wiki_import_html'] = 'n';
-$pref['feature_wiki_monosp'] = 'n';
-$pref['feature_wiki_multiprint'] = 'n';
-$pref['feature_wiki_notepad'] = 'n';
-$pref['feature_wiki_open_as_structure'] = 'n';
-$pref['feature_wiki_pageid'] = 'n';
-$pref['feature_wiki_paragraph_formatting'] = 'n';
-$pref['feature_wiki_pdf'] = 'n';
-$pref['feature_wiki_pictures'] = 'n';
-$pref['feature_wiki_plurals'] = 'y';
-$pref['feature_wiki_print'] = 'y';
-$pref['feature_wiki_protect_email'] = 'n';
-$pref['feature_wiki_rankings'] = 'y';
-$pref['feature_wiki_ratings'] = 'n';
-$pref['feature_wiki_replace'] = 'n';
-$pref['feature_wiki_show_hide_before'] = 'n';
-$pref['feature_wiki_tables'] = 'new';
-$pref['feature_wiki_templates'] = 'n';
-$pref['feature_wiki_undo'] = 'n';
-$pref['feature_wiki_userpage'] = 'y';
-$pref['feature_wiki_userpage_prefix'] = 'UserPage';
-$pref['feature_wiki_usrlock'] = 'n';
-$pref['feature_wikiwords'] = 'y';
-$pref['feature_wikiwords_usedash'] = 'y';
-$pref['mailin_autocheck'] = 'n';
-$pref['mailin_autocheckFreq'] = '0';
-$pref['mailin_autocheckLast'] = 0;
-$pref['warn_on_edit_time'] = 2;
-$pref['wikiHomePage'] = 'HomePage';
-$pref['wikiLicensePage'] = '';
-$pref['wikiSubmitNotice'] = '';
-$pref['wiki_authors_style'] = 'classic';
-$pref['wiki_show_version'] = 'n';
-$pref['wiki_bot_bar'] = 'n';
-$pref['wiki_cache'] = 0;
-$pref['wiki_comments_default_ordering'] = 'points_desc';
-$pref['wiki_comments_per_page'] = 10;
-$pref['wiki_creator_admin'] = 'n';
-$pref['wiki_feature_copyrights'] = 'n';
-$pref['wiki_forum_id'] = '';
-$pref['wiki_left_column'] = 'y';
-$pref['wiki_list_backlinks'] = 'y';
-$pref['wiki_list_comment'] = 'y';
-$pref['wiki_list_creator'] = 'y';
-$pref['wiki_list_hits'] = 'y';
-$pref['wiki_list_lastmodif'] = 'y';
-$pref['wiki_list_lastver'] = 'y';
-$pref['wiki_list_links'] = 'y';
-$pref['wiki_list_name'] = 'y';
-$pref['wiki_list_name_len'] = '40';
-$pref['wiki_list_size'] = 'y';
-$pref['wiki_list_status'] = 'y';
-$pref['wiki_list_user'] = 'y';
-$pref['wiki_list_versions'] = 'y';
-$pref['wiki_list_language'] = 'n';
-$pref['wiki_list_categories'] = 'n';
-$pref['wiki_list_categories_path'] = 'n';
-$pref['wiki_page_regex'] = 'strict';
-$pref['wiki_page_separator'] = '...page...';
-$pref['wiki_page_navigation_bar'] = 'bottom';
-$pref['wiki_pagename_strip'] = '';
-$pref['wiki_right_column'] = 'y';
-$pref['wiki_top_bar'] = 'y';
-$pref['wiki_uses_slides'] = 'n';
-$pref['wiki_watch_author'] = 'n';
-$pref['wiki_watch_comments'] = 'y';
-$pref['wiki_watch_editor'] = 'n';
-$pref['feature_wiki_history_full'] = 'n';
-$pref['feature_wiki_categorize_structure'] = 'n';
-
-# wysiwyg
-$pref['feature_wysiwyg'] = 'n';
-$pref['wysiwyg_optional'] = 'y';
-$pref['wysiwyg_default'] = 'y';
-$pref['wysiwyg_wiki_parsed'] = 'y';
-$pref['wysiwyg_wiki_semi_parsed'] = 'y';
-$pref['wysiwyg_toolbar_skin'] = 'default';
-$pref['wysiwyg_toolbar'] ="FitWindow,Templates,-,Cut,Copy,Paste,PasteWord,Print,SpellCheck
-Undo,Redo,-,Replace,RemoveFormat,-,Image,Table,Rule,SpecialChar,PageBreak
-/
-JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent
-Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,Link,Unlink,Anchor,-,tikilink,tikiimage
-/
-Style,FontName,FontSize,-,TextColor,BGColor,-,Source";
-
-# wiki3d
-$pref['wiki_feature_3d'] = 'n';
-$pref['wiki_3d_width'] = 500;
-$pref['wiki_3d_height'] = 500;
-$pref['wiki_3d_navigation_depth'] = 1;
-$pref['wiki_3d_feed_animation_interval'] = 500;
-$pref['wiki_3d_existing_page_color'] = '#00CC55';
-$pref['wiki_3d_missing_page_color'] = '#FF5555';
 
 # blogs
 $sections['blogs']['feature'] = 'feature_blogs';
 $sections['blogs']['key'] = 'blogId';
 $sections['blogs']['itemkey'] = 'postId';
-$pref['feature_blogs'] = 'n';
-$pref['blog_list_order'] = 'created_desc';
-$pref['home_blog'] = 0;
-$pref['feature_blog_rankings'] = 'y';
-$pref['feature_blog_comments'] = 'n';
-$pref['blog_comments_default_ordering'] = 'points_desc';
-$pref['blog_comments_per_page'] = 10;
-$pref['feature_blogposts_comments'] = 'n';
-$pref['blog_list_user'] = 'text';
-$pref['blog_list_title'] = 'y';
-$pref['blog_list_title_len'] = '35';
-$pref['blog_list_description'] = 'y';
-$pref['blog_list_created'] = 'y';
-$pref['blog_list_lastmodif'] = 'y';
-$pref['blog_list_posts'] = 'y';
-$pref['blog_list_visits'] = 'y';
-$pref['blog_list_activity'] = 'y';
-$pref['feature_blog_mandatory_category'] = '-1';
-$pref['feature_blog_heading'] = 'y';
 
 # filegals
 $sections['file_galleries']['feature'] = 'feature_file_galleries';
 $sections['file_galleries']['key'] = 'page';
 $sections['file_galleries']['itemkey'] = 'fileId';
-$pref['feature_file_galleries'] = 'n';
-$pref['home_file_gallery'] = 0;
-$pref['fgal_use_db'] = 'y';
-$pref['fgal_batch_dir'] = '';
-$pref['fgal_match_regex'] = '';
-$pref['fgal_nmatch_regex'] = '';
-$pref['fgal_use_dir'] = '';
-$pref['fgal_podcast_dir'] = 'files';
-$pref['feature_file_galleries_comments'] = 'n';
-$pref['file_galleries_comments_default_ordering'] = 'points_desc';
-$pref['file_galleries_comments_per_page'] = 10;
-$pref['feature_file_galleries_batch'] = 'n';
-$pref['feature_file_galleries_rankings'] = 'n';
-$pref['fgal_list_id'] = 'n';
-$pref['fgal_list_name'] = 'y';
-$pref['fgal_list_description'] = 'y';
-$pref['fgal_list_created'] = 'y';
-$pref['fgal_list_lastmodif'] = 'y';
-$pref['fgal_list_user'] = 'y';
-$pref['fgal_list_files'] = 'y';
-$pref['fgal_list_hits'] = 'y';
-$pref['fgal_enable_auto_indexing'] = 'y';
-$pref['fgal_allow_duplicates'] = 'n';
-$pref['fgal_list_parent'] = 'n';
-$pref['fgal_list_type'] = 'n';
-$pref['fgal_sort_mode'] = 'created_desc';
-$pref['feature_file_galleries_author'] = 'n';
-
 
 # imagegals
 $sections['galleries']['feature'] = 'feature_galleries';
 $sections['galleries']['key'] = 'galleryId';
 $sections['galleries']['itemkey'] = 'imageId';
-$pref['feature_galleries'] = 'n';
-$pref['feature_gal_batch'] = 'n';
-$pref['feature_gal_slideshow'] = 'n';
-$pref['home_gallery'] = 0;
-$pref['gal_use_db'] = 'y';
-$pref['gal_use_lib'] = 'gd';
-$pref['gal_match_regex'] = '';
-$pref['gal_nmatch_regex'] = '';
-$pref['gal_use_dir'] = '';
-$pref['gal_batch_dir'] = '';
-$pref['feature_gal_rankings'] = 'y';
-$pref['feature_image_galleries_comments'] = 'n';
-$pref['image_galleries_comments_default_order'] = 'points_desc';
-$pref['image_galleries_comments_per_page'] = 10;
-$pref['gal_list_name'] = 'y';
-$pref['gal_list_description'] = 'y';
-$pref['gal_list_created'] = 'y';
-$pref['gal_list_lastmodif'] = 'y';
-$pref['gal_list_user'] = 'y';
-$pref['gal_list_imgs'] = 'y';
-$pref['gal_list_visits'] = 'y';
-$pref['feature_image_gallery_mandatory_category'] = '-1';
-$pref['preset_galleries_scale'] ='n';
-$pref['gal_image_mouseover'] = 'n';
-
-# multimedia
-
-	$pref['ProgressBarPlay']='#FF8D41';
-	$pref['ProgressBarLoad']="#A7A7A7";
-	$pref['ProgressBarButton']="#FF0000";
-	$pref['ProgressBar']="#C3C3C3";
-	$pref['VolumeOn']="#21AC2A";
-	$pref['VolumeOff']="#8EFF8A";
-	$pref['VolumeButton']=0;
-	$pref['Button']="#555555";
-	$pref['ButtonPressed']="#FF00FF";
-	$pref['ButtonOver']="#B3B3B3";
-	$pref['ButtonInfo']="#C3C3C3";
-	$pref['ButtonInfoPressed']="#555555";
-	$pref['ButtonInfoOver']="#FF8D41";
-	$pref['ButtonInfoText']="#FFFFFF";
-	$pref['ID3']="#6CDCEB";
-	$pref['PlayTime']="#00FF00";
-	$pref['TotalTime']="#FF2020";
-	$pref['PanelDisplay']="#555555";
-	$pref['AlertMesg']="#00FFFF";
-	$pref['PreloadDelay']=3;
-	$pref['VideoHeight']=240;
-	$pref['VideoLength']=300;
-	$pref['ProgressBarPlay']="#FFFFFF";
-	$pref['URLAppend']="";
-	$pref['LimitedMsg']="You are limited to 1 minute";
-	$pref['MaxPlay']=60;
-	$pref['MultimediaGalerie']=1;
-	$pref['MultimediaDefaultLength']=200;
-	$pref['MultimediaDefaultHeight']=100;
-
-# spellcheck
-if (file_exists('lib/bablotron.php')) {
-	$pref['lib_spellcheck'] = 'y';
-	$pref['wiki_spellcheck'] = 'n';
-	$pref['cms_spellcheck'] = 'n';
-	$pref['blog_spellcheck'] = 'n';
-}
 
 # forums
 $sections['forums']['feature'] = 'feature_forums';
 $sections['forums']['key'] = 'forumId';
 $sections['forums']['itemkey'] = 'postId';
-$pref['feature_forums'] = 'n';
-$pref['home_forum'] = 0;
-$pref['feature_forum_rankings'] = 'y';
-$pref['feature_forum_parse'] = 'n';
-$pref['feature_forum_replyempty'] = 'n';
-$pref['feature_forum_quickjump'] = 'n';
-$pref['feature_forum_topicd'] = 'y';
-$pref['feature_forums_allow_thread_titles'] = 'n';
-$pref['forums_ordering'] = 'created_desc';
-$pref['forum_list_topics'] =  'y';
-$pref['forum_list_posts'] =  'y';
-$pref['forum_list_ppd'] =  'y';
-$pref['forum_list_lastpost'] =  'y';
-$pref['forum_list_visits'] =  'y';
-$pref['forum_list_desc'] =  'y';
-$pref['feature_forum_local_search'] = 'n';
-$pref['feature_forum_local_tiki_search'] = 'n';
-$pref['forum_thread_defaults_by_forum'] = 'n';
-$pref['forum_thread_user_settings'] = 'y';
-$pref['forum_thread_user_settings_keep'] = 'n';
-$pref['forum_comments_per_page'] = 20;
-$pref['forum_thread_style'] = 'commentStyle_plain';
-$pref['forum_thread_sort_mode'] = 'commentDate_desc';
 
 # articles
 $sections['cms']['feature'] = 'feature_articles';
 $sections['cms']['key'] = 'topicId';
 $sections['cms']['itemkey'] = 'articleId';
-$pref['feature_articles'] = 'n';
-$pref['feature_submissions'] = 'n';
-$pref['feature_cms_rankings'] = 'y';
-$pref['feature_cms_print'] = 'y';
-$pref['feature_cms_emails'] = 'n';
-$pref['art_list_title'] = 'y';
-$pref['art_list_title_len'] = '20';
-$pref['art_list_topic'] = 'y';
-$pref['art_list_date'] = 'y';
-$pref['art_list_author'] = 'y';
-$pref['art_list_reads'] = 'y';
-$pref['art_list_size'] = 'y';
-$pref['art_list_expire'] = 'y';
-$pref['art_list_img'] = 'y';
-$pref['art_list_type'] = 'y';
-$pref['art_list_visible'] = 'y';
-$pref['art_view_type'] = 'y';
-$pref['art_view_title'] = 'y';
-$pref['art_view_topic'] = 'y';
-$pref['art_view_date'] = 'y';
-$pref['art_view_author'] = 'y';
-$pref['art_view_reads'] = 'y';
-$pref['art_view_size'] = 'y';
-$pref['art_view_img'] = 'y';
-$pref['feature_article_comments'] = 'n';
-$pref['article_comments_default_ordering'] = 'points_desc';
-$pref['article_comments_per_page'] = 10;
-$pref['feature_cms_templates'] = 'n';
-$pref['cms_bot_bar'] = 'y';
-$pref['cms_left_column'] = 'y';
-$pref['cms_right_column'] = 'y';
-$pref['cms_top_bar'] = 'n';
-$pref['cms_spellcheck'] = 'n';
 
 # trackers
 $sections['trackers']['feature'] = 'feature_trackers';
 $sections['trackers']['key'] = 'trackerId';
 $sections['trackers']['itemkey'] = 'itemId';
-$pref['feature_trackers'] = 'n';
-$pref['t_use_db'] = 'y';
-$pref['t_use_dir'] = '';
-$pref['groupTracker'] = 'n';
-$pref['userTracker'] = 'n';
-$pref['trk_with_mirror_tables'] = 'n';
 
 # user
 $sections['mytiki']['feature'] = '';
 $sections['mytiki']['key'] = 'user';
 $sections['mytiki']['itemkey'] = '';
-$pref['feature_userlevels'] = 'n';
-$pref['userlevels'] = array('1'=>tra('Simple'),'2'=>tra('Advanced'));
-$pref['userbreadCrumb'] = 4;
-$pref['user_assigned_modules'] = 'n';
-$pref['user_flip_modules'] = 'module';
-$pref['user_show_realnames'] = 'n';
-$pref['feature_mytiki'] = 'y';
-$pref['feature_userPreferences'] = 'n';
-$pref['feature_userVersions'] = 'y';
-$pref['feature_user_bookmarks'] = 'n';
-$pref['feature_tasks'] = 'n';
-$pref['w_use_db'] = 'y';
-$pref['w_use_dir'] = '';
-$pref['uf_use_db'] = 'y';
-$pref['uf_use_dir'] = '';
-$pref['userfiles_quota'] = 30;
-$pref['feature_usermenu'] = 'n';
-$pref['feature_minical'] = 'n';
-$pref['feature_notepad'] = 'n';
-$pref['feature_userfiles'] = 'n';
-$pref['feature_community_mouseover'] = 'n';
-$pref['feature_community_mouseover_name'] = 'y';
-$pref['feature_community_mouseover_picture'] = 'y';
-$pref['feature_community_mouseover_friends'] = 'y';
-$pref['feature_community_mouseover_score'] = 'y';
-$pref['feature_community_mouseover_country'] = 'y';
-$pref['feature_community_mouseover_email'] = 'y';
-$pref['feature_community_mouseover_lastlogin'] = 'y';
-$pref['feature_community_mouseover_distance'] = 'y';
-$pref['feature_community_list_name'] = 'y';
-$pref['feature_community_list_score'] = 'y';
-$pref['feature_community_list_country'] = 'y';
-$pref['feature_community_list_distance'] = 'y';
-$pref['feature_community_friends_permission'] = 'n';
-$pref['feature_community_friends_permission_dep'] = '2';
-$pref['change_language'] = 'y';
-$pref['change_theme'] = 'y';
-$pref['login_is_email'] = 'n';
-$pref['validateUsers'] = 'n';
-$pref['validateEmail'] = 'n';
-$pref['forgotPass'] = 'n';
-$pref['change_password'] = 'y';
-$pref['available_languages'] = 'a:0:{}';
-$pref['available_styles'] = 'a:0:{}';
-$pref['lowercase_username'] = 'n';
-$pref['max_username_length'] = '50';
-$pref['min_username_length'] = '1';
-$pref['users_prefs_allowMsgs'] = 'n';
-$pref['users_prefs_country'] = '';
-$pref['users_prefs_diff_versions'] = 'n';
-$pref['users_prefs_display_timezone'] = 'Local';
-$pref['users_prefs_email_is_public'] = 'n';
-$pref['users_prefs_homePage'] = '';
-$pref['users_prefs_lat'] = '';
-$pref['users_prefs_lon'] = '';
-$pref['users_prefs_mess_archiveAfter'] = '0';
-$pref['users_prefs_mess_maxRecords'] = '10';
-$pref['users_prefs_mess_sendReadStatus'] = 'n';
-$pref['users_prefs_minPrio'] = '1';
-$pref['users_prefs_mytiki_blogs'] = 'y';
-$pref['users_prefs_mytiki_gals'] = 'y';
-$pref['users_prefs_mytiki_items'] = 'y';
-$pref['users_prefs_mytiki_msgs'] = 'y';
-$pref['users_prefs_mytiki_pages'] = 'y';
-$pref['users_prefs_mytiki_tasks'] = 'y';
-$pref['users_prefs_mytiki_workflow'] = 'y';
-$pref['users_prefs_realName'] = '';
-$pref['users_prefs_show_mouseover_user_info'] = 'y';
-$pref['users_prefs_tasks_maxRecords'] = '10';
-$pref['users_prefs_user_dbl'] = 'n';
-$pref['users_prefs_user_information'] = 'public';
-$pref['users_prefs_userbreadCrumb'] = '4';
-$pref['validateRegistration'] = 'n';
 
 # user messages
 $sections['user_messages']['feature'] = 'feature_messages';
 $sections['user_messages']['key'] = 'msgId';
 $sections['user_messages']['itemkey'] = '';
-$pref['feature_messages'] = 'n';
-$pref['messu_mailbox_size'] = '0';
-$pref['messu_archive_size'] = '200';
-$pref['messu_sent_size'] = '200';
-$pref['allowmsg_by_default'] = 'n';
-$pref['allowmsg_is_optional'] = 'y';
 
 # newsreader
 $sections['newsreader']['feature'] = 'feature_newsreader';
 $sections['newsreader']['key'] = 'serverId';
 $sections['newsreader']['itemkey'] = 'id';
-$pref['feature_newsreader'] = 'n';
 
 # mytiki
 $sections['mytiki']['feature'] = '';
-
-
-# freetags
-$pref['feature_freetags'] = 'n';
-$pref['freetags_browse_show_cloud'] = 'y';
-$pref['freetags_browse_amount_tags_in_cloud'] = '100';
-$pref['freetags_ascii_only'] = 'y';
-$pref['freetags_lowercase_only'] = 'y';
-$pref['freetags_feature_3d'] = 'n';
-$pref['freetags_3d_width'] = 500;
-$pref['freetags_3d_height'] = 500;
-$pref['freetags_3d_navigation_depth'] = 1;
-$pref['freetags_3d_feed_animation_interval'] = 500;
-$pref['freetags_3d_existing_page_color'] = '#00CC55';
-$pref['freetags_3d_missing_page_color'] = '#FF5555';
-
-# search
-$pref['feature_search_stats'] = 'n';
-$pref['feature_search'] = 'y';
-$pref['feature_search_fulltext'] = 'y';
-$pref['feature_search_show_forbidden_obj'] = 'n';
-$pref['feature_search_show_forbidden_cat'] = 'n';
-$pref['search_refresh_index_mode'] = 'normal';
 
 # chat
 $sections['chat']['feature'] = 'feature_chat';
 $sections['chat']['key'] = '';
 $sections['chat']['itemkey'] = '';
-$pref['feature_chat'] = 'n';
 
 # webmail
 $sections['webmail']['feature'] = 'feature_webmail';
 $sections['webmail']['key'] = 'msgId';
 $sections['webmail']['itemkey'] = '';
-$pref['feature_webmail'] = 'n';
-$pref['webmail_max_attachment'] = 1500000;
-$pref['webmail_view_html'] = 'y';
 
 # contacts
 $sections['contacts']['feature'] = 'feature_contacts';
 $sections['contacts']['key'] = 'contactId';
 $sections['contacts']['itemkey'] = '';
-$pref['feature_contacts'] = 'n';
 
 # faq
 $sections['faqs']['feature'] = 'feature_faqs';
 $sections['faqs']['key'] = 'faqId';
 $sections['faqs']['itemkey'] = '';
-$pref['feature_faqs'] = 'n';
-$pref['feature_faq_comments'] = 'y';
-$pref['faq_comments_default_ordering'] = 'points_desc';
-$pref['faq_comments_per_page'] = 10;
 
 # quizzes
 $sections['quizzes']['feature'] = 'feature_quizzes';
 $sections['quizzes']['key'] = 'quizId';
 $sections['quizzes']['itemkey'] = '';
-$pref['feature_quizzes'] = 'n';
 
 # polls
 $sections['poll']['feature'] = 'feature_polls';
 $sections['poll']['key'] = 'pollId';
 $sections['poll']['itemkey'] = '';
-$pref['feature_polls'] = 'n';
-$pref['feature_poll_comments'] = 'n';
-$pref['feature_poll_anonymous'] = 'n';
-$pref['poll_comments_default_ordering'] = 'points_desc';
-$pref['poll_comments_per_page'] = 10;
-$pref['poll_list_categories'] = 'n';
-$pref['poll_list_objects'] = 'n';
 
 # surveys
 $sections['surveys']['feature'] = 'feature_surveys';
 $sections['surveys']['key'] = 'surveyId';
 $sections['surveys']['itemkey'] = '';
-$pref['feature_surveys'] = 'n';
 
 # featured links
 $sections['featured_links']['feature'] = 'feature_featuredLinks';
 $sections['featured_links']['key'] = 'url';
 $sections['featured_links']['itemkey'] = '';
-$pref['feature_featuredLinks'] = 'n';
 
 # directories
 $sections['directory']['feature'] = 'feature_directory';
 $sections['directory']['key'] = 'directoryId';
 $sections['directory']['itemkey'] = '';
-$pref['feature_directory'] = 'n';
-$pref['directory_columns'] = 3;
-$pref['directory_links_per_page'] = 20;
-$pref['directory_open_links'] = 'n';
-$pref['directory_validate_urls'] = 'n';
-$pref['directory_cool_sites'] = 'y';
-$pref['directory_country_flag'] = 'y';
-
 
 # calendar
 $sections['calendar']['feature'] = 'feature_calendar';
 $sections['calendar']['key'] = 'calendarId';
 $sections['calendar']['itemkey'] = 'calitmId';
-$pref['feature_calendar'] = 'n';
-$pref['calendar_sticky_popup'] = 'n';
-$pref['calendar_view_mode'] = 'week';
-$pref['calendar_view_tab'] = 'n';
-$pref['calendar_firstDayofWeek'] = 'user';
-$pref['calendar_timespan'] = '5';
-$pref['feature_cal_manual_time'] = '0';
-$pref['feature_jscalendar'] = 'n';
-$pref['feature_action_calendar'] = 'n';
-
-# dates
-$pref['server_timezone'] = $tikidate->tz->getID();
-$pref['long_date_format'] = '%A %d of %B, %Y';
-$pref['long_time_format'] = '%H:%M:%S %Z';
-$pref['short_date_format'] = '%a %d of %b, %Y';
-$pref['short_time_format'] = '%H:%M %Z';
-$pref['display_field_order'] = 'MDY';
 
 # workflow
 $sections['workflow']['feature'] = 'feature_workflow';
@@ -884,401 +449,36 @@ $sections['workflow']['itemkey'] = '';
 $sections['charts']['feature'] = 'feature_charts';
 $sections['charts']['key'] = '';
 $sections['charts']['itemkey'] = '';
-$pref['feature_charts'] = 'n';
-
-# rss
-$pref['rss_forums'] = 'y';
-$pref['rss_forum'] = 'y';
-$pref['rss_directories'] = 'y';
-$pref['rss_articles'] = 'y';
-$pref['rss_blogs'] = 'y';
-$pref['rss_image_galleries'] = 'y';
-$pref['rss_file_galleries'] = 'y';
-$pref['rss_wiki'] = 'y';
-$pref['rss_image_gallery'] = 'n';
-$pref['rss_file_gallery'] = 'n';
-$pref['rss_blog'] = 'n';
-$pref['rss_tracker'] = 'n';
-$pref['rss_trackers'] = 'n';
-$pref['rss_calendar'] = 'n';
-$pref['rss_mapfiles'] = 'n';
-$pref['rss_cache_time'] = '0'; // 0 = disabled (default)
-$pref['max_rss_forums'] = 10;
-$pref['max_rss_forum'] = 10;
-$pref['max_rss_directories'] = 10;
-$pref['max_rss_articles'] = 10;
-$pref['max_rss_blogs'] = 10;
-$pref['max_rss_image_galleries'] = 10;
-$pref['max_rss_file_galleries'] = 10;
-$pref['max_rss_wiki'] = 10;
-$pref['max_rss_image_gallery'] = 10;
-$pref['max_rss_file_gallery'] = 10;
-$pref['max_rss_blog'] = 10;
-$pref['max_rss_mapfiles'] = 10;
-$pref['max_rss_tracker'] = 10;
-$pref['max_rss_trackers'] = 10;
-$pref['max_rss_calendar'] = 10;
-$pref['rssfeed_default_version'] = '2';
-$pref['rssfeed_language'] =  'en-us';
-$pref['rssfeed_editor'] = '';
-$pref['rssfeed_webmaster'] = '';
-$pref['rssfeed_creator'] = '';
-$pref['rssfeed_css'] = 'y';
-$pref['rssfeed_publisher'] = '';
-
 
 # maps
 $sections['maps']['feature'] = 'feature_maps';
 $sections['maps']['key'] = 'mapId';
 $sections['maps']['itemkey'] = '';
-$pref['feature_maps'] = 'n';
-$pref['map_path'] = '';
-$pref['default_map'] = '';
-$pref['map_help'] = 'MapsHelp';
-$pref['map_comments'] = 'MapsComments';
-$pref['gdaltindex'] = '';
-$pref['ogr2ogr'] = '';
-$pref['mapzone'] = '';
 
 # gmap
 $sections['gmaps']['feature'] = 'feature_gmap';
 $sections['gmaps']['key'] = '';
 $sections['gmaps']['itemkey'] = '';
-$pref['feature_gmap'] = 'n';
-$pref['gmap_defaultx'] = '0';
-$pref['gmap_defaulty'] = '0';
-$pref['gmap_defaultz'] = '17';
-$pref['gmap_key'] = '';
-
-
-# auth
-$pref['allowRegister'] = 'n';
-$pref['eponymousGroups'] = 'n';
-$pref['useRegisterPasscode'] = 'n';
-$pref['registerPasscode'] = '';
-$pref['rememberme'] = 'disabled';
-$pref['remembertime'] = 7200;
-$pref['feature_clear_passwords'] = 'n';
-$pref['feature_crypt_passwords'] = 'tikihash';
-$pref['feature_challenge'] = 'n';
-$pref['min_user_length'] = 1;
-$pref['min_pass_length'] = 1;
-$pref['pass_chr_num'] = 'n';
-$pref['pass_due'] = 999;
-$pref['email_due'] = -1;
-$pref['unsuccessful_logins'] = -1;
-$pref['rnd_num_reg'] = 'n';
-$pref['auth_method'] = 'tiki';
-$pref['auth_pear'] = 'tiki';
-$pref['auth_create_user_tiki'] = 'n';
-$pref['auth_create_user_auth'] = 'n';
-$pref['auth_skip_admin'] = 'y';
-$pref['auth_ldap_url'] = '';
-$pref['auth_pear_host'] = "localhost";
-$pref['auth_pear_port'] = "389";
-$pref['auth_ldap_scope'] = "sub";
-$pref['auth_ldap_basedn'] = '';
-$pref['auth_ldap_userdn'] = '';
-$pref['auth_ldap_userattr'] = 'uid';
-$pref['auth_ldap_useroc'] = 'inetOrgPerson';
-$pref['auth_ldap_groupdn'] = '';
-$pref['auth_ldap_groupattr'] = 'cn';
-$pref['auth_ldap_groupoc'] = 'groupOfUniqueNames';
-$pref['auth_ldap_memberattr'] = 'uniqueMember';
-$pref['auth_ldap_memberisdn'] = 'y';
-$pref['auth_ldap_adminuser'] = '';
-$pref['auth_ldap_adminpass'] = '';
-$pref['auth_ldap_version'] = 3;
-$pref['auth_ldap_nameattr'] = 'displayName';
-$pref['https_login'] = 'allowed';
-$pref['feature_show_stay_in_ssl_mode'] = 'y';
-$pref['feature_switch_ssl_mode'] = 'y';
-$pref['https_port'] = 443;
-$pref['http_port'] = 80;
-$pref['login_url'] = 'tiki-login.php';
-$pref['login_scr'] = 'tiki-login_scr.php';
-$pref['register_url'] = 'tiki-register.php';
-$pref['error_url'] = 'tiki-error.php';
-$pref['highlight_group'] = '';
-$pref['cookie_path'] = '/';
-$pref['cookie_domain'] = '';
-$pref['cookie_name'] = 'tikiwiki';
-$pref['user_tracker_infos'] = '';
-$pref['desactive_login_autocomplete'] = 'n';
-if ($phpcas_enabled == 'y') {
-	$pref['cas_create_user_tiki'] = 'n';
-	$pref['cas_skip_admin'] = 'n';
-	$pref['cas_version'] = '';
-	$pref['cas_hostname'] = '';
-	$pref['cas_port'] = '';
-	$pref['cas_path'] = '';
-}
-
-
-# intertiki
-$pref['feature_intertiki'] = 'n';
-$pref['feature_intertiki_server'] = 'n';
-$pref['feature_intertiki_slavemode'] = 'n';
-$pref['interlist'] = serialize(array(''));
-$pref['feature_intertiki_mymaster'] = '';
-$pref['feature_intertiki_import_preferences'] = 'n';
-$pref['feature_intertiki_import_groups'] = 'n';
-$pref['known_hosts'] = serialize(array(''));
-$pref['tiki_key'] = '';
-$pref['intertiki_logfile'] = '';
-$pref['intertiki_errfile'] = '';
-
-# search
-$pref['search_lru_length'] = '100';
-$pref['search_lru_purge_rate'] = '5';
-$pref['search_max_syllwords'] = '100';
-$pref['search_min_wordlength'] = '3';
-$pref['search_refresh_rate'] = '5';
-$pref['search_syll_age'] = '48';
 
 # categories
 $sections['categories']['feature'] = 'feature_categories';
 $sections['categories']['key'] = 'categId';
 $sections['categories']['itemkey'] = '';
-$pref['feature_categories'] = 'n';
-$pref['feature_categoryobjects'] = 'n';
-$pref['feature_categorypath'] = 'n';
-$pref['feature_category_reinforce'] = 'y';
-$pref['feature_category_use_phplayers'] = 'y';
 
 # games
 $sections['games']['feature'] = 'feature_games';
 $sections['games']['key'] = 'gameId';
 $sections['games']['itemkey'] = '';
-$pref['feature_games'] = 'n';
 
 # html pages
 $sections['html_pages']['feature'] = 'feature_html_pages';
 $sections['html_pages']['key'] = 'pageId';
 $sections['html_pages']['itemkey'] = '';
-$pref['feature_html_pages'] = 'n';
 
-# use filegals for image inclusion
-$pref['feature_filegals_manager'] = 'n';
-
-# contact & mail
-$pref['feature_contact'] = 'n';
-$pref['contact_user'] = 'admin';
-$pref['contact_anon'] = 'n';
-$pref['mail_crlf'] = 'LF';
-
-# i18n
-$pref['feature_detect_language'] = 'n';
-$pref['feature_homePage_if_bl_missing'] = 'n';
-$pref['record_untranslated'] = 'n';
-$pref['feature_best_language'] = 'n';
-$pref['lang_use_db'] = 'n';
-$pref['language'] = 'en';
-$pref['feature_babelfish'] = 'n';
-$pref['feature_babelfish_logo'] = 'n';
-
-# html header
-$pref['metatag_keywords'] = '';
-$pref['metatag_description'] = '';
-$pref['metatag_author'] = '';
-$pref['metatag_geoposition'] = '';
-$pref['metatag_georegion'] = '';
-$pref['metatag_geoplacename'] = '';
-$pref['metatag_robots'] = '';
-$pref['metatag_revisitafter'] = '';
-$pref['head_extra_js'] = array();
-$pref['keep_versions'] = 1;
-$pref['feature_custom_home'] = 'n';
-
-# site identity
-$pref['feature_siteidentity'] = 'n';
-$pref['site_crumb_seper'] = '>';
-$pref['site_nav_seper'] = '|';
-$pref['feature_sitemycode'] = 'n';
-$pref['sitemycode'] = '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>'; // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-$pref['sitemycode_publish'] = 'n';
-$pref['feature_sitelogo'] = 'y';
-$pref['sitelogo_bgcolor'] = '';
-$pref['sitelogo_align'] = 'left';
-$pref['sitelogo_title'] = 'Tikiwiki powered site';
-$pref['sitelogo_src'] = 'img/tiki/tikilogo.png';
-$pref['sitelogo_alt'] = 'Site Logo';
-$pref['feature_siteloc'] = 'y';
-$pref['feature_sitenav'] = 'n';
-$pref['sitenav'] = '{tr}Navigation : {/tr}<a href="tiki-contact.php" accesskey="10" title="">{tr}Contact Us{/tr}</a>';
-$pref['feature_sitead'] = 'y';
-$pref['sitead'] = '';
-$pref['sitead_publish'] = 'n';
-$pref['feature_breadcrumbs'] = 'n';
-$pref['feature_siteloclabel'] = 'y';
-$pref['feature_sitesearch'] = 'y';
-$pref['feature_sitemenu'] = 'n';
-$pref['feature_topbar_version'] = 'y';
-$pref['feature_topbar_date'] = 'y';
-$pref['feature_topbar_debug'] = 'y';
-$pref['feature_topbar_id_menu'] = '42';
-$pref['feature_sitetitle'] = 'y';
-$pref['feature_sitedesc'] = 'n';
-$pref['feature_bot_logo'] = 'n';
-
-# layout
-$pref['feature_left_column'] = 'y';
-$pref['feature_right_column'] = 'y';
-$pref['feature_top_bar'] = 'y';
-$pref['feature_bot_bar'] = 'y';
-$pref['feature_bot_bar_icons'] = 'y';
-$pref['feature_bot_bar_debug'] = 'y';
-$pref['feature_bot_bar_rss'] = 'y';
-$pref['title'] = '';
-$pref['maxRecords'] = 10;
-$pref['maxArticles'] = 10;
-$pref['maxVersions'] = 0;
-$pref['feature_view_tpl'] = 'n';
-$pref['slide_style'] = 'slidestyle.css';
-$pref['site_favicon'] = 'favicon.png';
-$pref['style'] = 'tikineat.css';
-
-# mods
-$pref['feature_mods_provider'] = 'n';
-$pref['mods_dir'] = 'mods';
-$pref['mods_server'] = 'http://tikiwiki.org/mods';
-
-# dev
-$pref['feature_experimental'] = 'n';
-
-# admin
-$pref['feature_actionlog'] = 'y';
-$pref['siteTitle'] = '';
-$pref['tmpDir'] = 'temp';
-
-# tell a friend
-$pref['feature_tell_a_friend'] = 'n';
-
-#copyright
-$pref['feature_copyright']='n';
-$pref['feature_multimedia']='n';
-
-#mypage
-$pref['feature_mypage_mandatory_category'] = -1;
-
-#swffix
+# swffix
 $sections['swffix']['feature'] = 'feature_swffix';
 $sections['workflow']['key'] = '';
 $sections['workflow']['itemkey'] = '';
-$pref['feature_swffix'] = 'n';
-
-#
-# unsorted features
-$pref['anonCanEdit'] = 'n';
-$pref['cacheimages'] = 'n';
-$pref['cachepages'] = 'n';
-$pref['count_admin_pvs'] = 'y';
-$pref['dblclickedit'] =  'n';
-$pref['default_mail_charset'] ='utf-8';
-$pref['direct_pagination'] = 'n';
-$pref['error_reporting_adminonly'] = 'y';
-$pref['error_reporting_level'] = 0;
-$pref['smarty_notice_reporting'] = 'n';
-$pref['feature_ajax'] = 'n';
-$pref['feature_antibot'] = 'n';
-$pref['feature_autolinks'] = 'y';
-$pref['feature_banners'] = 'n';
-$pref['feature_banning'] = 'n';
-$pref['feature_comm'] = 'n';
-$pref['feature_contribution'] = 'n';
-$pref['feature_contribution_display_in_comment'] = 'y';
-$pref['feature_contribution_mandatory'] = 'y';
-$pref['feature_contribution_mandatory_blog'] = 'n';
-$pref['feature_contribution_mandatory_comment'] = 'n';
-$pref['feature_contribution_mandatory_forum'] = 'n';
-$pref['feature_debug_console'] = 'n';
-$pref['feature_debugger_console'] = 'n';
-$pref['feature_display_my_to_others'] = 'n';
-$pref['feature_drawings'] = 'n';
-$pref['feature_dynamic_content'] = 'n';
-$pref['feature_edit_templates'] = 'n';
-$pref['feature_editcss'] = 'n';
-$pref['feature_events'] = 'n';
-$pref['feature_friends'] = 'n';
-$pref['feature_fullscreen'] = 'n';
-$pref['feature_help'] = 'y';
-$pref['feature_hotwords'] = 'y';
-$pref['feature_hotwords_nw'] = 'n';
-$pref['feature_integrator'] = 'n';
-$pref['feature_live_support'] = 'n';
-$pref['feature_mailin'] = 'n';
-$pref['feature_menusfolderstyle'] = 'y';
-$pref['feature_mobile'] = 'n';
-$pref['feature_modulecontrols'] = 'n';
-$pref['feature_morcego'] = 'n';
-$pref['feature_multilingual'] = 'y';
-$pref['feature_newsletters'] = 'n';
-$pref['feature_obzip'] = 'n';
-$pref['feature_phplayers'] = 'n';
-$pref['feature_projects'] = 'n';
-$pref['feature_ranking'] = 'n';
-$pref['feature_redirect_on_error'] = 'n';
-$pref['feature_referer_highlight'] = 'n';
-$pref['feature_referer_stats'] = 'n';
-$pref['feature_score'] = 'n';
-$pref['feature_sheet'] = 'n';
-$pref['feature_shoutbox'] = 'n';
-$pref['feature_smileys'] = 'y';
-$pref['feature_source'] = 'y';
-$pref['feature_stats'] = 'n';
-$pref['feature_tabs'] = 'n';
-$pref['feature_theme_control'] = 'n';
-$pref['feature_ticketlib'] = 'n';
-$pref['feature_ticketlib2'] = 'y';
-$pref['feature_top_banner'] = 'n';
-$pref['feature_usability'] = 'n';
-$pref['feature_use_quoteplugin'] = 'n';
-$pref['feature_user_watches'] = 'n';
-$pref['feature_user_watches_translations'] = 'y';
-$pref['feature_workflow'] = 'n';
-$pref['feature_xmlrpc'] = 'n';
-$pref['helpurl'] = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
-$pref['layout_section'] = 'n';
-$pref['limitedGoGroupHome'] = 'n';
-$pref['minical_reminders'] = $tikilib->get_user_preference($user, 'minical_reminders', 0);
-$pref['modallgroups'] = 'y';
-$pref['modseparateanon'] = 'n';
-$pref['php_docroot'] = 'http://php.net/';
-$pref['popupLinks'] = 'n';
-$pref['proxy_host'] = '';
-$pref['proxy_port'] = '';
-$pref['sender_email'] = $userlib->get_admin_email();
-$pref['session_db'] = 'n';
-$pref['session_lifetime'] = 0;
-$pref['shoutbox_autolink'] = 'n';
-$pref['show_comzone'] = 'n';
-$pref['system_os'] = TikiSetup::os();
-$pref['tikiIndex'] = 'tiki-index.php';
-$pref['urlIndex'] = '';
-$pref['useGroupHome'] = 'n';
-$pref['useUrlIndex'] = 'n';
-$pref['use_proxy'] = 'n';
-$pref['user_list_order'] = 'score_desc';
-$pref['webserverauth'] = 'n';
-$pref['feature_purifier'] = 'y';
-$pref['feature_lightbox'] = 'n';
-$pref['log_sql'] = 'n';
-
-// *****************************************************************************
-// First we populate with default values
-foreach ($pref as $defpref=>$defval) {
-	$$defpref = $defval;
-	$smarty->assign("$defpref", $defval);
-}
-
-// *****************************************************************************
-// start of replacement : get all prefs from db once
-$tikilib->get_all_preferences();
-foreach ($preferences as $name => $val) {
-	$$name = $val;
-	$smarty->assign("$name", $val);
-}
-unset($pref);
 
 // *****************************************************************************
 $sections_enabled = array();

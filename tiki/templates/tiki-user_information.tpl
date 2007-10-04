@@ -1,5 +1,5 @@
 <h1><a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a></h1>
-{if $feature_display_my_to_others eq 'y' and $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
+{if $prefs.feature_display_my_to_others eq 'y' and $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
 <div class="navbar"><a class="linkbut" href="#message">{tr}Send me a message{/tr}</a></div>
 {/if}
 <table>
@@ -17,7 +17,7 @@
 	{/if}
 	{$userinfo.login|userlink}
 	</td></tr>
-{if $feature_score eq 'y'}
+{if $prefs.feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
@@ -25,8 +25,8 @@
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
   <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {tr}{$country}{/tr}</td></tr>
-  {if $change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
-  {if $change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
+  {if $prefs.change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
+  {if $prefs.change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
   {if $realName }
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
   {/if}
@@ -43,19 +43,19 @@
 
   {if $avatar}<tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>{/if}
   {if $homepage}  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>
-{if $feature_wiki eq 'y' && $feature_wiki_userpage eq 'y'}
+{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>
 {if $userPage_exists}
-<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a>
+<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}</a>
 {elseif $user == $userinfo.login}
-{$feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
+{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
 {else}&nbsp;{/if}
 </td></tr>
 {/if}
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
 
-{if $user_tracker_infos}
+{if $prefs.user_tracker_infos}
   {foreach item=itemField from=$userItem.field_values}
 	{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
 		<tr><td class="form">{tr}{$itemField.name}{/tr}:</td>
@@ -64,7 +64,7 @@
   {/foreach}
 {/if}
 
-{if $feature_friends eq 'y' && $user ne $userwatch && $user}
+{if $prefs.feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
     <img src="pics/icons/user.png" width="16" height="16" border="0" /> {tr}This user is your friend{/tr}
@@ -81,7 +81,7 @@
   </div>
 </td></tr>
 
-{if $feature_display_my_to_others eq 'y'}
+{if $prefs.feature_display_my_to_others eq 'y'}
 <tr><td>
 {if $user_pages|@count > 0}
 <h2>{tr}Wiki Pages{/tr}</h2>
@@ -130,7 +130,7 @@
 </td></tr>
 {/if}
 
-{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
+{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
 {if $sent}
 {$message}
 {/if}

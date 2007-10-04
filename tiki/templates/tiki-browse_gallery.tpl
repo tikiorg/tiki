@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.54 2007-08-22 09:17:34 jyhem Exp $ *}
-{if $gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55 2007-10-04 22:17:38 nyloth Exp $ *}
+{if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
@@ -16,7 +16,7 @@
       <span class="button2"><a href="tiki-upload_image.php?galleryId={$galleryId}" class="linkbut">{tr}Upload Image{/tr}</a></span>
     {/if}
   {/if}
-  {if $feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
+  {if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
       <span class="button2"><a href="tiki-batch_upload.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
     {/if}
@@ -27,10 +27,10 @@
 <span class="button2"><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}List Gallery{/tr}</a></span>
 <span class="button2"><a href="tiki-show_all_images.php?id={$galleryId}" class="linkbut">{tr}All Images{/tr}</a></span>
 {/if}
-{if $rss_image_gallery eq 'y'}
+{if $prefs.rss_image_gallery eq 'y'}
   <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">{tr}RSS{/tr}</a></span>
 {/if}
-	{if $user and $feature_user_watches eq 'y'}
+	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_gal eq 'n'}
 			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}">{html_image file='img/icons/icon_watch.png' border='0' alt="{tr}Monitor this Gallery{/tr}"}</a>
 		{else}
@@ -40,7 +40,7 @@
 </div>
 
 <div class="navbar" align="right">
-    {if $user and $feature_user_watches eq 'y'}
+    {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
             {tr}Watched by categories{/tr}:
             {section name=i loop=$watching_categories}
@@ -102,15 +102,15 @@
         {foreach from=$images key=key item=item}
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
-{if $feature_lightbox neq 'y'}
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+{if $prefs.feature_lightbox neq 'y'}
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 {else}
-	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu"><img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 {/if}
           <br />
 
           <small class="caption">
-	  {if $gal_image_mouseover neq 'only'}
+	  {if $prefs.gal_image_mouseover neq 'only'}
 		{if $showname=='y'}{$item.name}<br />{/if}
 		{if $showfilename=='y'}{tr}Filename{/tr}: {$item.filename}<br />{/if}
 		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
@@ -160,7 +160,7 @@
       {if $next_offset >= 0}
       &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
       {/if}
-      {if $direct_pagination eq 'y'}
+      {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxImages}
@@ -180,7 +180,7 @@
    </td>
 </tr>
 </table>
-{if $feature_image_galleries_comments == 'y'
+{if $prefs.feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'

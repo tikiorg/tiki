@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.15 2007-07-23 09:35:25 pkdille Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.16 2007-10-04 22:17:42 nyloth Exp $ *}
 <h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
@@ -50,10 +50,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
@@ -62,7 +62,7 @@
 </div>
 {/if}
 
-{if $feature_poll_comments == 'y'
+{if $prefs.feature_poll_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
 && $comments_cant != 0)
 ||  $tiki_p_post_comments  == 'y'

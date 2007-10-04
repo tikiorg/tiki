@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
+    <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 		{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
     {include file="bidi.tpl"}
 
 <title>
-{$siteTitle}
+{$prefs.siteTitle}
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
 {elseif $arttitle ne ''} : {$arttitle}
-{elseif $title ne ''} : {$title}
+{elseif $prefs.title ne ''} : {$prefs.title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
@@ -23,7 +23,7 @@
 {/if}
 </title>
 
-{if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
+{if $prefs.feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
 
     {literal}
 	<script type="text/javascript" src="lib/tiki-js.js">
@@ -56,32 +56,32 @@
 	{/if}
 
 {* --- Firefox RSS icons --- *}
-{if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_blogs eq 'y' and $rss_blogs eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_blogs eq 'y' and $prefs.rss_blogs eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_articles eq 'y' and $rss_articles eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_articles eq 'y' and $prefs.rss_articles eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_galleries eq 'y' and $rss_image_galleries eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_galleries eq 'y' and $prefs.rss_image_galleries eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_file_galleries eq 'y' and $rss_file_galleries eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?{$rssfeed_default_version}" />
+{if $prefs.feature_file_galleries eq 'y' and $prefs.rss_file_galleries eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?{$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_forums eq 'y' and $rss_forums eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_forums eq 'y' and $prefs.rss_forums eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_maps eq 'y' and $rss_mapfiles eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_maps eq 'y' and $prefs.rss_mapfiles eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_directory eq 'y' and $rss_directories eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_directory eq 'y' and $prefs.rss_directories eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
-{if $feature_trackers eq 'y' and $rss_tracker eq 'y'}
-<link rel="alternate" type="application/xml" title="{tr}RSS Trackers{/tr}" href="tiki-tracker_rss.php?ver={$rssfeed_default_version}" />
+{if $prefs.feature_trackers eq 'y' and $prefs.rss_tracker eq 'y'}
+<link rel="alternate" type="application/xml" title="{tr}RSS Trackers{/tr}" href="tiki-tracker_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {* ---- END ---- *}
 
@@ -89,7 +89,7 @@
 
 </head>
 
-<body{if $uses_tabs eq 'y'} onload="javascript:tabInit();"{/if}{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  
-{if $minical_reminders>100}
+<body{if $uses_tabs eq 'y'} onload="javascript:tabInit();"{/if}{if $user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  
+{if $prefs.minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}  

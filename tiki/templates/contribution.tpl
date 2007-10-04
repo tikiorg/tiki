@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.15 2007-07-19 13:16:15 jyhem Exp $ *}
-{if $feature_contribution eq 'y' and count($contributions) gt 0}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.16 2007-10-04 22:17:35 nyloth Exp $ *}
+{if $prefs.feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">
 {popup_init src="lib/overlib.js"}

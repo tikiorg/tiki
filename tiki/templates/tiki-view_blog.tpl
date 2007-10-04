@@ -46,12 +46,12 @@
 <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a> &nbsp;
 <a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
 {/if}
-{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>
 {/if}
 </td></tr></table>
 </div>
-{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 <div class="freetaglist">
   {foreach from=$listpages[ix].freetags.data item=taginfo}
 	  <a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a> 
@@ -63,20 +63,20 @@
 {if $listpages[ix].pages > 1}
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
 {/if}
-{if $blogues_feature_copyrights  eq 'y' and $wikiLicensePage}
-  {if $wikiLicensePage == $page}
+{if $blogues_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+  {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
     {/if}
   {else}
-    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
 <hr/>
 <table ><tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
-{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{tr}View Comments{/tr}</a>]
 {/if}
@@ -97,17 +97,17 @@
 {if $next_offset >= 0}
 [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>
 
-{if $feature_blog_comments == 'y'
+{if $prefs.feature_blog_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'

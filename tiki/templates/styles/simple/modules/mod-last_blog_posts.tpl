@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_blog_posts.tpl,v 1.2 2005-12-12 15:18:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_blog_posts.tpl,v 1.3 2007-10-04 22:17:50 nyloth Exp $ *}
 
-{if $feature_blogs eq 'y'}
+{if $prefs.feature_blogs eq 'y'}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` blog posts{/tr}" assign="tpl_module_title"}
 {else}

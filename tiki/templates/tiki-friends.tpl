@@ -1,11 +1,11 @@
 <h1><a href="tiki-friends.php" class="pagetitle">{tr}Friendship Network{/tr}</a>
   
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
+      {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Friendship+Network" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
-      {if $feature_view_tpl eq 'y'}
+      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-friends.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}friends tpl{/tr}">
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
@@ -76,7 +76,7 @@
 {section name=changes loop=$listpages}
 <tr>
   <td class="userlist{cycle advance=false}">
-  <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login|userlink}</a>{if $feature_score eq 'y'}{$listpages[changes].score|star}{/if}
+  <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login|userlink}</a>{if $prefs.feature_score eq 'y'}{$listpages[changes].score|star}{/if}
   </td>
   <td class="userlist{cycle advance=false}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
   <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}"><img src="img/icons2/delete.gif" alt="{tr}break friendship{/tr}" border="0" /></a></td>
@@ -96,10 +96,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="userprevnext" href="tiki-friends.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-friends.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

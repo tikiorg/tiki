@@ -2,7 +2,7 @@
 <h1><a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br />
-{if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
+{if $prefs.feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 <a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
 {/if}
 <h2>{tr}Menus{/tr}</h2>
@@ -49,10 +49,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-usermenu.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-usermenu.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

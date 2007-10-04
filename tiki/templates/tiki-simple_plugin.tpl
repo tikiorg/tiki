@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-simple_plugin.tpl,v 1.11 2005-05-18 11:03:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-simple_plugin.tpl,v 1.12 2007-10-04 22:17:42 nyloth Exp $ *}
 
 <div class="catlists">
-    <div class="cbox-title">{$title}</div>
+    <div class="cbox-title">{$prefs.title}</div>
     <div class="cbox-data">
         {foreach key=t item=i from=$listcat}
             <b>{$t}:</b>

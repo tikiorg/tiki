@@ -1,10 +1,10 @@
 <h1><a class="pagetitle" href="tiki-view_faq.php?faqId={$faqId}">{$faq_info.title}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}View FAQ{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}View FAQ{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-view_faq.tpl" target="tikihelp" class="tikihelp" title="{tr}View FAQ Tpl{/tr}: {tr}Admin Menus tpl{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>{/if}</h1>
 
@@ -38,7 +38,7 @@
 <span class="highlight">{tr}1 suggestion{/tr}</span>{else}
 <span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>{/if}</a>
 {/if}
-{if $feature_faq_comments == 'y'
+{if $prefs.feature_faq_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
 && $comments_cant != 0)
 ||  $tiki_p_post_comments  == 'y'
@@ -78,19 +78,19 @@
 </div>
 {/if}
 
-{if $faqs_feature_copyrights  eq 'y' and $wikiLicensePage}
-  {if $wikiLicensePage == $page}
+{if $faqs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+  {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
     {/if}
   {else}
-    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
  
 
 
-{if $feature_faq_comments == 'y'
+{if $prefs.feature_faq_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
 && $comments_cant != 0)
 ||  $tiki_p_post_comments  == 'y'

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.53 2007-09-25 22:49:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.54 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -36,11 +36,11 @@
 {/foreach}
 </select>
 </td></tr>
-{if $feature_userlevels eq 'y'}
+{if $prefs.feature_userlevels eq 'y'}
 <tr class="formcolor"><td>{tr}Level{/tr}:</td><td colspan="3">
 <select name="level">
 <option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
-{foreach key=levn item=lev from=$userlevels}
+{foreach key=levn item=lev from=$prefs.userlevels}
 <option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>
 {/foreach}
 </select>
@@ -68,10 +68,10 @@
 <table>
 <tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
-<option value="{$tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
-<option value="tiki-view_blog.php?blogId={$home_blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>
-<option value="tiki-browse_gallery.php?galleryId={$home_gallery},{tr}Home Image Gal{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Home Image Gallery{/tr}</option>
-<option value="tiki-list_file_gallery?galleryId={$home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>]
+<option value="{$prefs.tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
+<option value="tiki-view_blog.php?blogId={$prefs.home_blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>
+<option value="tiki-browse_gallery.php?galleryId={$prefs.home_gallery},{tr}Home Image Gal{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Home Image Gallery{/tr}</option>
+<option value="tiki-list_file_gallery?galleryId={$prefs.home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>]
 </select></td></tr>
 <tr><td>{tr}General{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
@@ -160,7 +160,7 @@
      <input type="hidden" name="menuId" value="{$menuId}" />
    </form>
    </td>
-<td>{tr}Number of lines{/tr}</td><td><input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$maxRecords}{/if}" size="3" /></td>
+<td>{tr}Number of lines{/tr}</td><td><input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$prefs.maxRecords}{/if}" size="3" /></td>
 <td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 </tr>
 </table>
@@ -183,7 +183,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Permissions{/tr}</a></td>
 
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Group{/tr}</a></td>
-{if $feature_userlevels eq 'y'}
+{if $prefs.feature_userlevels eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'level_desc'}level_asc{else}level_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Level{/tr}</a></td>
 {/if}
 <td class="heading">{tr}Action{/tr}</td>
@@ -203,9 +203,9 @@ title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" 
 <td class="{cycle advance=false}">{$channels[user].section}</td>
 <td class="{cycle advance=false}">{$channels[user].perm}</td>
 <td class="{cycle advance=false}">{$channels[user].groupname}</td>
-{if $feature_userlevels eq 'y'}
+{if $prefs.feature_userlevels eq 'y'}
 {assign var=it value=$channels[user].userlevel}
-<td class="{cycle advance=false}">{$userlevels.$it}</td>
+<td class="{cycle advance=false}">{$prefs.userlevels.$it}</td>
 {/if}
 <td class="{cycle advance=false}">
 {if $channels[user].position > 1 }
@@ -239,10 +239,10 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

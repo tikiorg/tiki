@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.30 2007-03-30 11:59:33 bluestrain Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.31 2007-10-04 22:17:46 nyloth Exp $ *}
 
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Admin Menu{/tr}"}{/if}
 {tikimodule title="{tr}$tpl_module_title{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations}
@@ -16,11 +16,11 @@
  $tiki_p_admin_drawings eq 'y' or
  $tiki_p_admin_shoutbox eq 'y'
  }
-    {if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
+    {if $prefs.feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
 	{/if}
 
-	{if $feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
+	{if $prefs.feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
   		&nbsp;<a href="tiki-admin_banning.php" class="linkmenu">{tr}Banning{/tr}</a><br />
 	{/if}
     {if $tiki_p_admin eq 'y'}

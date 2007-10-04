@@ -1,10 +1,10 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.7 2007-03-14 09:24:04 pkdille Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.8 2007-10-04 22:17:46 nyloth Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
 *}
-{if $feature_categories eq 'y' and $page and $showmodule}
+{if $prefs.feature_categories eq 'y' and $page and $showmodule}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}$modcattitle{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="$modname" flip=$module_params.flip decorations=$module_params.decorations}
 <form method="post" action="{$smarty.server.PHP_SELF}" target="_self">

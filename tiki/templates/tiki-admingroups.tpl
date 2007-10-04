@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.83 2007-09-03 20:02:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84 2007-10-04 22:17:38 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Groups Template{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
@@ -20,11 +20,11 @@
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
 <span class="button2"><a href="tiki-admingroups.php?clean=y" class="linkbut">{tr}Clear cache{/tr}</a></span>
 {if $groupname}
-<span class="button2"><a href="tiki-admingroups.php?add=1{if $feature_tabs ne 'y'}#2{/if}" class="linkbut">{tr}Add new group{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php?add=1{if $prefs.feature_tabs ne 'y'}#2{/if}" class="linkbut">{tr}Add new group{/tr}</a></span>
 {/if}
 </div>
 
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
@@ -39,7 +39,7 @@
 
 {cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* ----------------------- tab with list --------------------------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
 <form method="get" action="tiki-admingroups.php">
@@ -81,7 +81,7 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=user loop=$users}
 <tr class="{cycle}">
 <td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a></td>
-<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
+<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
 <td>{tr}{$users[user].groupDesc}{/tr}</td>
 <td>
 {section name=ix loop=$users[user].included}
@@ -107,7 +107,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-admingroups.php?find={$find|escape:"url"}&amp;{if $initial}initial={$initial}&amp;{/if}offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;numrows={$numrows}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$numrows}
@@ -121,7 +121,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {* ----------------------- tab with form --------------------------------------- *}
 <a name="2" ></a>
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $groupname}
 <h2>{tr}Edit group{/tr} {$groupname}</h2>
 <a class="linkbut" href="tiki-assignpermission.php?group={$groupname}">{tr}Assign Permissions{/tr}</a>
@@ -147,7 +147,7 @@ class="prevnext">{tr}All{/tr}</a>
 ({tr}Use wiki page name or full URL{/tr})<br />
 To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
-{if $groupTracker eq 'y'}
+{if $prefs.groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
 <select name="groupstracker">
 <option value="0">{tr}choose a group tracker ...{/tr}</option>
@@ -167,7 +167,7 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}Admin{/tr} {$ggr}</a>
 </td></tr>
 {/if}
-{if $userTracker eq 'y'}
+{if $prefs.userTracker eq 'y'}
 <tr class="formcolor"><td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td><td>
 <select name="userstracker">
 <option value="0">{tr}choose a users tracker ...{/tr}</option>
@@ -200,7 +200,7 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 </form>
 <br /><br />
 
-{if $groupTracker eq 'y'}
+{if $prefs.groupTracker eq 'y'}
 {if $grouptrackerid and $groupitemid}
 {tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit item{/tr}</a></span>
 {elseif $grouptrackerid}
@@ -219,19 +219,19 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 {* ----------------------- tab with memberlist --------------------------------------- *}
 <a name="3" ></a>
 {if $groupname}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Members List{/tr}: {$groupname}</h2>
 <table class="normal"><tr>
 {if $memberslist}
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=ix loop=$memberslist}
-<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
+<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
 {/section}
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
 </div>
 {else}
-<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1{if $feature_tabs ne 'y'}#3{/if}" class="linkbut">{tr}List all members{/tr}</a></td>
+<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1{if $prefs.feature_tabs ne 'y'}#3{/if}" class="linkbut">{tr}List all members{/tr}</a></td>
 </tr></table>
 </div>
 {/if}

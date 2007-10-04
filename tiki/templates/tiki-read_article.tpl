@@ -1,7 +1,7 @@
-{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
+{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 <div align="right">{$display_catpath}</div>
 {/if}
-{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
 {include file="freetag_list.tpl"}
 {/if}
 
@@ -64,15 +64,15 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 <td>{if $show_size eq 'y'}
 ({$size} bytes)
 {/if}</td>
-{if $feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y' type='article'}{/if}
+{if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y' type='article'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
 {/if}
-{if $feature_cms_print eq 'y'}
+{if $prefs.feature_cms_print eq 'y'}
 <a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
-{if $feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
+{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a> &nbsp;
 {/if}
 {if $tiki_p_remove_article eq 'y'}
@@ -101,22 +101,22 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 </div>
 {if $show_linkto eq 'y' and $linkto}
 <div class="articlesource">
-{tr}Source{/tr}: <a href="{$linkto}"{if $popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
+{tr}Source{/tr}: <a href="{$linkto}"{if $prefs.popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
 </div>
 {/if}
 
-{if $articles_feature_copyrights  eq 'y' and $wikiLicensePage}
-  {if $wikiLicensePage == $page}
+{if $articles_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+  {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
     {/if}
   {else}
-    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+    <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
 
 
-{if $feature_article_comments == 'y'
+{if $prefs.feature_article_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
@@ -146,7 +146,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {include file=comments.tpl}
 {/if}
 
-{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
 {/if}
 

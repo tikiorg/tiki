@@ -12,7 +12,7 @@
         <div class="cbox-data">
         <br />
         {if ($errortype eq "404")}
-          {if $feature_likePages eq 'y'}
+          {if $prefs.feature_likePages eq 'y'}
            {if $likepages}
           {tr}Perhaps you were looking for:{/tr}
           <ul>
@@ -27,7 +27,7 @@
           {/if}
           {/if}
 		  
-		  {if $feature_search eq 'y'}
+		  {if $prefs.feature_search eq 'y'}
           {include
             file="tiki-searchindex.tpl"
             searchNoResults="true"                 
@@ -44,7 +44,7 @@
         {/if}
         {if $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y'  or $tiki_p_edit eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a> {tr}(page will be orphaned){/tr}<br /><br />{/if}
         <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
-        <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+        <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>
       {/if}

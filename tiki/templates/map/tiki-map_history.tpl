@@ -84,8 +84,8 @@
 <form action="tiki-map_history.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
-<div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr} {if $default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}</div>
-{if $default_wiki_diff_style ne "old" and $history}
+<div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr} {if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}</div>
+{if $prefs.default_wiki_diff_style ne "old" and $history}
 <div style=" text-align:right;"><select name="diff_style">
 	<option value="minsidediff" {if $diff_style == "minsidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
@@ -103,7 +103,7 @@
 <th class="heading">{tr}Ip{/tr}</th>
 <th class="heading">{tr}Version{/tr}</th>
 <th class="heading">{tr}Action{/tr}</th>
-{if $default_wiki_diff_style != "old" and $history}
+{if $prefs.default_wiki_diff_style != "old" and $history}
 <th class="heading" colspan="2">
 <input type="submit" name="compare" value="{tr}compare{/tr}" /><br />
 </th>
@@ -118,13 +118,13 @@
 <td class="{cycle advance=false} button">{$history[hist].version}</td>
 <td class="{cycle advance=false} button">
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
-{if $default_wiki_diff_style eq "old"}
+{if $prefs.default_wiki_diff_style eq "old"}
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
 {/if}
 &nbsp;
 </td>
-{if $default_wiki_diff_style ne "old"}
+{if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
 <input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}older version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
 </td>

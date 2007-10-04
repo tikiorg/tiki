@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.6 2007-09-13 17:07:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.7 2007-10-04 22:17:35 nyloth Exp $ *}
 <div class="postfooter">
 	<div class="status">
-	{if $feature_contribution eq 'y' and $feature_contribution_display_in_comment eq 'y'}
+	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_display_in_comment eq 'y'}
 		<span class="contributions">
 		{section name=ix loop=$comment.contributions}
 			<span class="contribution">{$comment.contributions[ix].name|escape}</span>

@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_modif_pages.tpl,v 1.2 2005-05-18 11:03:57 mose Exp $ *}
-{if $feature_wiki eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_modif_pages.tpl,v 1.3 2007-10-04 22:17:50 nyloth Exp $ *}
+{if $prefs.feature_wiki eq 'y'}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Last `$module_rows` changes{/tr}" assign="tpl_module_title"}
 	{else}

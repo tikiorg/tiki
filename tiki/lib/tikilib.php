@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.784 2007-10-04 17:57:06 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.785 2007-10-04 22:17:34 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4033,26 +4033,19 @@ function add_pageview() {
 		return $ret;
 	}
 
-    function get_all_preferences() {
-	global $preferences;
-	if (empty($preferences)) {
-	    $query = "select `name` ,`value` from `tiki_preferences`";
-
-	    $result = $this->query($query,array());
-	    $preferences = array();
-
-	    while ($res = $result->fetchRow()) {
-		$preferences[$res["name"]] = $res["value"];
-	    }
-	}
-
-	return $preferences;
+	// This method overrides the prefs with those specified in database
+	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
+    function get_db_preferences() {
+	$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+	while ( $res = $result->fetchRow() ) $_SESSION['prefs'][$res['name']] = $res['value'];
     }
 
+	// This method need to be _obsoleted_, since it queries the db instead of session vars
+	//   and since all prefs are not in db (but they can have a default value)
     function get_preferences( $filter_name ) {
 
-	$query = "select `name` ,`value` from `tiki_preferences` where `name` like ?";
-	$result = $this->query($query,array($filter_name));
+	$query = "select `name`, `value` from `tiki_preferences` where `name` like ?";
+	$result = $this->query($query, array($filter_name));
 	$preferences = array();
 
 	while ($res = $result->fetchRow()) {
@@ -4063,34 +4056,18 @@ function add_pageview() {
     }
 
     function get_preference($name, $default = '') {
-	global $preferences;
-
-	if (empty($preferences)) {
-	    $preferences = $this->get_all_preferences();
-	}
-
-	if (empty($preferences[$name])) {
-	    $preferences[$name] = $default;
-	}
-
-	return $preferences[$name];
+	return isset($_SESSION['prefs'][$name]) ? $_SESSION['prefs'][$name] : $default;
     }
 
     function set_preference($name, $value) {
-	global $preferences;
-	global $tikidomain;
-
-	//refresh cache
-	if (isset($preferences[$name])) {
-	    unset ($preferences[$name]);
-
-	    $preferences[$name] = $value;
-	}
 
 	$query = "delete from `tiki_preferences` where `name`=?";
 	$result = $this->query($query,array($name),-1,-1,false);
 	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
 	$result = $this->query($query,array($name,$value));
+
+	if ( isset($_SESSION['prefs']) ) $_SESSION['prefs'][$name] = $value;
+
 	return true;
     }
 

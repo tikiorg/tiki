@@ -46,7 +46,7 @@
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
 ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}Posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}Posts{/tr})
-{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 {/if}

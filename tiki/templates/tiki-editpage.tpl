@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.129 2007-09-23 14:51:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130 2007-10-04 22:17:40 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
-{if $feature_ajax == 'y'}
+{if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
@@ -68,7 +68,7 @@
 {if $add_child}
 <input type="hidden" name="add_child" value="true" />
 {/if}
-{if $feature_wysiwyg eq 'y' and $wysiwyg_optional eq 'y'}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 {if $wysiwyg ne 'y'}
 <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
@@ -84,7 +84,7 @@
 {/section}
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
-{if $feature_wiki_categorize_structure eq 'y'}
+{if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
@@ -94,7 +94,7 @@
 {/if}
 {include file=structures.tpl}
 
-{if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
+{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
 <tr class="formcolor"><td>{tr}Apply template{/tr}:</td><td>
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 <option value="0">{tr}none{/tr}</option>
@@ -105,7 +105,7 @@
 </td></tr>
 {/if}
 
-{if $feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
+{if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 <tr class="formcolor"><td>{tr}Use rating{/tr}:</td><td>
 {if $poll_rated.info}
 <input type="hidden" name="poll_title" value="{$poll_rated.info.title|escape}" />
@@ -144,13 +144,13 @@
 </td></tr>
 {/if}
 
-{if $feature_smileys eq 'y'&&!$wysiwyg}
+{if $prefs.feature_smileys eq 'y'&&!$wysiwyg}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
 </tr>
 {/if}
-{if $feature_wiki_description eq 'y'}
+{if $prefs.feature_wiki_description eq 'y'}
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor">
@@ -170,7 +170,7 @@
 {/if}
 </td></tr>
 
-{if $feature_wiki_replace eq 'y'}
+{if $prefs.feature_wiki_replace eq 'y'}
 <script type="text/javascript">
 {literal}
 function searchrep() {
@@ -199,13 +199,13 @@ function searchrep() {
 </td></tr>
 {/if}
 
-{if $feature_wiki_footnotes eq 'y'}
+{if $prefs.feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
 
-{if $feature_multilingual eq 'y'}
+{if $prefs.feature_multilingual eq 'y'}
 <tr class="formcolor"><td>{tr}Language{/tr}:</td><td>
 <select name="lang">
 <option value="">{tr}Unknown{/tr}</option>
@@ -219,7 +219,7 @@ function searchrep() {
 
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
-{if $wiki_feature_copyrights  eq 'y'}
+{if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
 <tr class="formcolor"><td>{tr}Title:{/tr}</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
@@ -230,17 +230,17 @@ function searchrep() {
 </td></tr>
 {/if}
 {/if}
-{if $feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
   {include file=freetag.tpl}
 {/if}
-{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
+{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg neq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-{if $wiki_spellcheck eq 'y'}
+{if $prefs.wiki_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 
-{if $feature_wiki_import_html eq 'y'}
+{if $prefs.feature_wiki_import_html eq 'y'}
 <tr class="formcolor">
   <td>{tr}Import HTML{/tr}:</td>
   <td>
@@ -257,20 +257,20 @@ function searchrep() {
 </tr>
 {/if}
 
-{if $tiki_p_admin_wiki eq 'y' && $feature_wiki_import_page eq 'y'}
+{if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 <tr class="formcolor"><td>{tr}Import page{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input name="userfile1" type="file" />
-{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 {/if}
 </td></tr>
 {/if}
 
 {if $wysiwyg neq 'y'}
-{if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
+{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
-{if $feature_filegals_manager eq 'y'}
+{if $prefs.feature_filegals_manager eq 'y'}
 <input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-file_galleries.php?filegals_manager','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;">
 {else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -282,7 +282,7 @@ function searchrep() {
 {/if}
 </td></tr>
 {/if}
-{if $feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
+{if $prefs.feature_wiki_attachments == 'y' and ($tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y')}
 <tr class="formcolor"><td>{tr}Upload file{/tr}:
 </td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -295,35 +295,35 @@ function searchrep() {
 {/if}
 {/if}
 
-{if $feature_wiki_icache eq 'y'}
+{if $prefs.feature_wiki_icache eq 'y'}
 <tr class="formcolor"><td>{tr}Cache{/tr}</td><td>
     <select name="wiki_cache">
-    <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
-    <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
-    <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
-    <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
-    <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-    <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
+    <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
+    <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+    <option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
+    <option value="600" {if $prefs.wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
+    <option value="900" {if $prefs.wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
+    <option value="1800" {if $prefs.wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
+    <option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
+    <option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
     </select> 
 </td></tr>
 {/if}
 
-{if $feature_antibot eq 'y' && $anon_user eq 'y'}
+{if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 {include file=antibot.tpl}
 {/if}
 
-{if $wiki_feature_copyrights  eq 'y'}
-<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td></tr>
-{if $wikiSubmitNotice neq ""}
-<tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
+{if $prefs.wiki_feature_copyrights  eq 'y'}
+<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$prefs.wikiLicensePage}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
+{if $prefs.wikiSubmitNotice neq ""}
+<tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
 {/if}
 {/if}
-{if $feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
+{if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-{if $feature_contribution eq 'y'}
+{if $prefs.feature_contribution eq 'y'}
 {include file="contribution.tpl"}
 {/if}
 {if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
@@ -339,7 +339,7 @@ function searchrep() {
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
 
-{if $feature_ajax eq 'y'}
+{if $prefs.feature_ajax eq 'y'}
   <input type="submit" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
 {/if}
 
@@ -349,7 +349,7 @@ function searchrep() {
 {/if}
 </td></tr>
 </table>
-{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
+{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
   <input type="hidden" name="allowhtml" checked="checked"/>
 {/if}
 </form>

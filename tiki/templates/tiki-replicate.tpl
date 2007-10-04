@@ -1,10 +1,10 @@
 <h1><a class="pagetitle" href="tiki-replicate.php">{tr}Replicate{/tr}</a>
 
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Replicate" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
 <img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width='16' height='16' /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-replicate.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}
 </h1>
@@ -51,6 +51,6 @@
 </div>
 </td>
 <td width="50%" valign="top">
-<iframe src="http://{$master}/tiki-replicate_console.php" name="{$title|escape}" height="100%" width="100%" align="center" frameborder="0" scrolling="auto" 
+<iframe src="http://{$master}/tiki-replicate_console.php" name="{$prefs.title|escape}" height="100%" width="100%" align="center" frameborder="0" scrolling="auto" 
 style="border:0"></iframe> 
 </td></tr></table>

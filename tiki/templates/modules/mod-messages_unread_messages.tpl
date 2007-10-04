@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.15 2007-07-24 14:40:38 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.16 2007-10-04 22:17:47 nyloth Exp $ *}
 
-{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Messages{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="messages_unread_messages" flip=$module_params.flip decorations=$module_params.decorations}
 {if $modUnread > 0}

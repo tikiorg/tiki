@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.13 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.14 2007-10-04 22:17:46 nyloth Exp $ *}
 
-{if $feature_featuredLinks eq 'y'}
+{if $prefs.feature_featuredLinks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Featured links{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="featured_links" flip=$module_params.flip decorations=$module_params.decorations}
    <table  border="0" cellpadding="0" cellspacing="0">

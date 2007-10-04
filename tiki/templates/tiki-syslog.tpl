@@ -1,11 +1,11 @@
-{* $Id: tiki-syslog.tpl,v 1.14 2007-08-24 17:01:53 jyhem Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.15 2007-10-04 22:17:43 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
-{if $feature_help eq 'y'}
+{if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Syslog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system logs{/tr}">
 <img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-syslog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system logs tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' /></a>{/if}
 </h1>
@@ -29,7 +29,7 @@
 <form method="get" action="tiki-syslog.php">
 <input type="text" name="find" value="{$find|escape}" />
 <input type="submit" value="{tr}Find{/tr}" name="search" />
-<input type="text" name="max" value="{$maxRecords|escape}" size="4" /> {tr}Rows{/tr}
+<input type="text" name="max" value="{$prefs.maxRecords|escape}" size="4" /> {tr}Rows{/tr}
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 </td></tr></table>
@@ -38,13 +38,13 @@
 <div class="simplebox">
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}asc{else}desc{/if}" class="tableheading">{tr}Id{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}asc{else}desc{/if}" class="tableheading">{tr}Type{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}asc{else}desc{/if}" class="tableheading">{tr}Time{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}asc{else}desc{/if}" class="tableheading">{tr}User{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}asc{else}desc{/if}" class="tableheading">{tr}Message{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}asc{else}desc{/if}" class="tableheading">{tr}IP{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}asc{else}desc{/if}" class="tableheading">{tr}Client{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}asc{else}desc{/if}" class="tableheading">{tr}Id{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}asc{else}desc{/if}" class="tableheading">{tr}Type{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}asc{else}desc{/if}" class="tableheading">{tr}Time{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}asc{else}desc{/if}" class="tableheading">{tr}User{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}asc{else}desc{/if}" class="tableheading">{tr}Message{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}asc{else}desc{/if}" class="tableheading">{tr}IP{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}asc{else}desc{/if}" class="tableheading">{tr}Client{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list}

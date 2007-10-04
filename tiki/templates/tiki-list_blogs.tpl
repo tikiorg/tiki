@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.47 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.48 2007-10-04 22:17:41 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='pics/icons/wrench.png' border='0' width='16' height='16' alt="{tr}Admin Feature{/tr}" title="{tr}Admin Feature{/tr}" /></a>
@@ -22,28 +22,28 @@
 </table>
 <table class="bloglist">
 <tr>
-{if $blog_list_title eq 'y'}
+{if $prefs.blog_list_title eq 'y'}
 	<td class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {/if}
-{if $blog_list_description eq 'y'}
+{if $prefs.blog_list_description eq 'y'}
 	<td class="heading">{tr}Description{/tr}</td>
 {/if}
-{if $blog_list_created eq 'y'}
+{if $prefs.blog_list_created eq 'y'}
 	<td class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
-{if $blog_list_lastmodif eq 'y'}
+{if $prefs.blog_list_lastmodif eq 'y'}
 	<td class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last post{/tr}</a></td>
 {/if}
-{if $blog_list_user ne 'disabled'}
+{if $prefs.blog_list_user ne 'disabled'}
 	<td class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
-{if $blog_list_posts eq 'y'}
+{if $prefs.blog_list_posts eq 'y'}
 	<td style="text-align:right;" class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'posts_desc'}posts_asc{else}posts_desc{/if}">{tr}Posts{/tr}</a></td>
 {/if}
-{if $blog_list_visits eq 'y'}
+{if $prefs.blog_list_visits eq 'y'}
 	<td style="text-align:right;" class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
-{if $blog_list_activity eq 'y'}
+{if $prefs.blog_list_activity eq 'y'}
 	<td style="text-align:right;" class="heading"><a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'activity_desc'}activity_asc{else}activity_desc{/if}">{tr}Activity{/tr}</a></td>
 {/if}
 <td class="heading">{tr}Action{/tr}</td>
@@ -51,35 +51,35 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $blog_list_title eq 'y'}
-	<td class="{cycle advance=false}">{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].title}">{/if}{if $listpages[changes].title}{$listpages[changes].title|truncate:"$blog_list_title_len":"...":true}{else}&nbsp;{/if}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}</td>
+{if $prefs.blog_list_title eq 'y'}
+	<td class="{cycle advance=false}">{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].title}">{/if}{if $listpages[changes].title}{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true}{else}&nbsp;{/if}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}</td>
 {/if}
-{if $blog_list_description eq 'y'}
+{if $prefs.blog_list_description eq 'y'}
 	<td class="{cycle advance=false}">{$listpages[changes].description}</td>
 {/if}
-{if $blog_list_created eq 'y'}
+{if $prefs.blog_list_created eq 'y'}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td><!--tiki_date_format:"%b %d" -->
 {/if}
-{if $blog_list_lastmodif eq 'y'}
+{if $prefs.blog_list_lastmodif eq 'y'}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
 {/if}
-{if $blog_list_user ne 'disabled'}
-{if $blog_list_user eq 'link'}
+{if $prefs.blog_list_user ne 'disabled'}
+{if $prefs.blog_list_user eq 'link'}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
-{elseif $blog_list_user eq 'avatar'}
+{elseif $prefs.blog_list_user eq 'avatar'}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user|avatarize}&nbsp;<br />
 	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {else}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
 {/if}
 {/if}
-{if $blog_list_posts eq 'y'}
+{if $prefs.blog_list_posts eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">&nbsp;{$listpages[changes].posts}&nbsp;</td>
 {/if}
-{if $blog_list_visits eq 'y'}
+{if $prefs.blog_list_visits eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">&nbsp;{$listpages[changes].hits}&nbsp;</td>
 {/if}
-{if $blog_list_activity eq 'y'}	
+{if $prefs.blog_list_activity eq 'y'}	
 	<td style="text-align:right;" class="{cycle advance=false}">&nbsp;{$listpages[changes].activity}&nbsp;</td>
 {/if}
 <td class="{cycle}" nowrap="nowrap">
@@ -125,10 +125,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="blogprevnext" href="tiki-list_blogs.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-list_blogs.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

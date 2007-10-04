@@ -42,7 +42,7 @@
 	</select>
 </div>
 {assign var=area_name value="blogedit"}
-{if $feature_smileys eq 'y'}
+{if $prefs.feature_smileys eq 'y'}
 	<div class="editblogform" style="clear:left">
 		{tr}Smileys{/tr}
 	</div>
@@ -55,7 +55,7 @@
 		{tr}Title{/tr}
 	</div>
 	<div class="editblogform">
-		<input type="text" size="80" name="title" value="{$title|escape}" />
+		<input type="text" size="80" name="title" value="{$prefs.title|escape}" />
 	</div>
 {/if}
 <div class="editblogform">
@@ -119,12 +119,12 @@
 <div class="editblogform">
 	<textarea name="trackback" rows="3" cols="60">{section name=ix loop=$trackbacks_to}{if not $smarty.section.ix.first},{/if}{$trackbacks_to[ix]}{/section}</textarea>
 </div>
-{if $blog_spellcheck eq 'y'}
+{if $prefs.blog_spellcheck eq 'y'}
 	<div class="editblogform">
 		{tr}Spellcheck{/tr}: <input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} />
 	</div>
 {/if}
-{if $feature_freetags eq 'y'}
+{if $prefs.feature_freetags eq 'y'}
 	{include file=freetag.tpl}
 {/if}
 <div class="editblogform">

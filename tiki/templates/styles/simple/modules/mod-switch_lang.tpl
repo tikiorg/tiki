@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang.tpl,v 1.3 2007-08-22 17:38:09 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
 
-{tikimodule title="{tr}Language: {/tr}`$language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
-	{if $change_language ne 'n' or $user eq ''}
+{tikimodule title="{tr}Language: {/tr}`$prefs.language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
+	{if $prefs.change_language ne 'n' or $user eq ''}
 	<form method="get" action="tiki-switch_lang.php">
 		<select name="language" size="1" onchange="this.form.submit();">
 		{section name=ix loop=$languages}
-			{if count($available_languages) == 0 || in_array($languages[ix].value, $available_languages)}
-			<option value="{$languages[ix].value|escape}"{if $language eq $languages[ix].value} selected="selected"{/if}>
+			{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
+			<option value="{$languages[ix].value|escape}"{if $prefs.language eq $languages[ix].value} selected="selected"{/if}>
 				{$languages[ix].name}
 			</option>
 			{/if}

@@ -4,11 +4,11 @@
     <table>
       <tr height="20">
         <td align="center">
-	{if $feature_calendar eq 'y'}
+	{if $prefs.feature_calendar eq 'y'}
           <a class="linkmodule" href="tiki-calendar.php?todate={$slvn_info.lastLogin}" title="{tr}click to edit{/tr}">
 	{/if}
             <b>{$slvn_info.lastLogin|tiki_short_date}</b>
-	{if $feature_calendar eq 'y'}
+	{if $prefs.feature_calendar eq 'y'}
           </a>
 	{/if}
         </td>

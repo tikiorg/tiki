@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.38 2007-09-20 20:03:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39 2007-10-04 22:17:43 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -39,7 +39,7 @@
 {/if}
 
 {if !$editFileId}
-	{if $feature_file_galleries_batch eq 'y'}
+	{if $prefs.feature_file_galleries_batch eq 'y'}
 	<div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	<div class="rbox-data" name="tip">{tr}Upload big files (e.g. PodCast files) here:{/tr} <a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Directory batch{/tr}</a></div>
@@ -93,7 +93,7 @@
 	</td></tr>
 	{/if}
 
-	{if $feature_file_galleries_author eq 'y'}
+	{if $prefs.feature_file_galleries_author eq 'y'}
 	<tr><td class="formcolor">{tr}Author if not the file creator{/tr}</td><td class="formcolor"><input type="text" name="author" value="{$fileInfo.author|escape}" /></td></tr>
 	{/if}
 

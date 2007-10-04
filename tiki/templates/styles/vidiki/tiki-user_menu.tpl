@@ -6,16 +6,16 @@
   {if $chdata.type eq 's' or $chdata.type eq 'r'}
    {if $opensec eq 'y'}</ul></li>{/if}
    {if $chdata.name or $chdata.url}<li>
-    {if $feature_menusfolderstyle eq 'y'}
+    {if $prefs.feature_menusfolderstyle eq 'y'}
      <a href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt=''/></a>
      {else}<a href="javascript:toggle('menu{$cname}');">[-]</a>
     {/if} 
     <a href="{$chdata.url|escape}" >{tr}{$chdata.name}{/tr}</a>
-    {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
+    {if $prefs.feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
    {else}
-    {if $feature_menusfolderstyle eq 'y'}
+    {if $prefs.feature_menusfolderstyle eq 'y'}
      <a href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt=''/></li>
-     {else}<a href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $feature_menusfolderstyle ne 'y'}[+]{/if}</a></li> 
+     {else}<a href="javascript:toggle('menu{$cname}');">[-]{/if}{tr}{$chdata.name}{/tr}{if $prefs.feature_menusfolderstyle ne 'y'}[+]{/if}</a></li> 
     {/if}
     {assign var=opensec value='y'}
     <ul {if $menu_info.type eq 'd'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
@@ -47,7 +47,7 @@
 <script type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's' or $chdata.type eq 'r'}
-  {if $feature_menusfolderstyle eq 'y'}
+  {if $prefs.feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
   {else}
     setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');

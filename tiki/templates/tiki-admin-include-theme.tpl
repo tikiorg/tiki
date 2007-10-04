@@ -47,7 +47,7 @@
         <td width="67%"><select name="site_style" id="general-theme">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
-                {if $style_site eq $styles[ix]}selected="selected"{/if}>
+                {if $prefs.style_site eq $styles[ix]}selected="selected"{/if}>
                 {$styles[ix]}</option>
             {/section}
             </select>
@@ -60,39 +60,39 @@
         <td><select name="slide_style" id="general-slideshows">
             {section name=ix loop=$slide_styles}
               <option value="{$slide_styles[ix]|escape}"
-                {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>
+                {if $prefs.slide_style eq $slide_styles[ix]}selected="selected"{/if}>
                 {$slide_styles[ix]}</option>
             {/section}
             </select>
         </td>
 	</tr><tr>
-	<td class="form" >&nbsp;</td><td>{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if}</td>
+	<td class="form" >&nbsp;</td><td>{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if}</td>
       </tr>
       
       <tr><td colspan="2"><hr/></td></tr>        
     <tr>
     	<td class="form">{tr}Use Tabs{/tr}</td>
-        <td><input type="checkbox" name="feature_tabs" {if $feature_tabs eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/></td>
     </tr>
         <tr>
 		<td class="form"> {tr}Theme Control{/tr} </td>
-		<td><input type="checkbox" name="feature_theme_control" {if $feature_theme_control eq 'y'}checked="checked"{/if}/>
-		{if $feature_theme_control eq 'y'}<a href="tiki-theme_control.php" class="link" title="{tr}Theme Control{/tr}">{tr}Theme Control{/tr}</a>{/if}
+		<td><input type="checkbox" name="feature_theme_control" {if $prefs.feature_theme_control eq 'y'}checked="checked"{/if}/>
+		{if $prefs.feature_theme_control eq 'y'}<a href="tiki-theme_control.php" class="link" title="{tr}Theme Control{/tr}">{tr}Theme Control{/tr}</a>{/if}
 		</td>
 	</tr>
 	<tr>
-		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Template Viewing{/tr}">{/if} {tr}Tiki Template Viewing{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_view_tpl" {if $feature_view_tpl eq 'y'}checked="checked"{/if}/></td>
+		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Template Viewing{/tr}">{/if} {tr}Tiki Template Viewing{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_view_tpl" {if $prefs.feature_view_tpl eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Edit Templates{/tr}">{/if} {tr}Edit Templates{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/>
-		{if $feature_edit_templates eq 'y'}<a href="tiki-edit_templates.php" class="link" title="{tr}Edit Templates{/tr}">{tr}Edit Templates{/tr}</a>{/if} </td>
+		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Edit Templates{/tr}">{/if} {tr}Edit Templates{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_edit_templates" {if $prefs.feature_edit_templates eq 'y'}checked="checked"{/if}/>
+		{if $prefs.feature_edit_templates eq 'y'}<a href="tiki-edit_templates.php" class="link" title="{tr}Edit Templates{/tr}">{tr}Edit Templates{/tr}</a>{/if} </td>
 	</tr>
 	<tr>
-		<td class="form"> {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_editcss" {if $feature_editcss eq 'y'}checked="checked"{/if}/>
-		{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if} </td>
+		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_editcss" {if $prefs.feature_editcss eq 'y'}checked="checked"{/if}/>
+		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if} </td>
 	</tr>
 	<tr>
 

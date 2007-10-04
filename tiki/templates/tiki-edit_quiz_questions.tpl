@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.28 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.29 2007-10-04 22:17:40 nyloth Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -9,12 +9,12 @@
 <h1><a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$quizId}">{tr}Edit quiz questions{/tr}</a>
 <! -- the help link info -->
   
-      {if $feature_help eq 'y'}
+      {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id141161" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 <! -- link to tpl -->
 
-     {if $feature_view_tpl eq 'y'}
+     {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=/tiki-edit_quiz_questions.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Questions Tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
 {/if}
 
@@ -58,7 +58,7 @@
 </form>
 <! -- begin area to import questions en masse -- >
 <h2>{tr}Import questions from text{/tr}
- {if $feature_help eq 'y'}
+ {if $prefs.feature_help eq 'y'}
 <! -- help link data -- >
   <a href="http://tikiwiki.org/tiki-index.php?page=QuizQuestionImport" target="tikihelp" class="tikihelp">
   <img border="0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a>
@@ -171,10 +171,10 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

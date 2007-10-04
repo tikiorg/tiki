@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.10 2007-02-18 11:21:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.11 2007-10-04 22:17:47 nyloth Exp $ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations}
 {foreach key=ix from=$online_users item=online_user}
-{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
     {if $online_user.allowMsgs eq 'n'}
 	<img src="img/icons/icon_ultima_no.gif" width="18" height="9" hspace="2" vspace="0" border="0" alt="-&gt;" />
     {else}

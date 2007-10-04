@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.20 2007-09-15 08:58:07 tombombadilom Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.21 2007-10-04 22:17:40 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a></h1>
 <div class="navbar">
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>
@@ -48,8 +48,8 @@
 <div class="simplebox">
 <table >
 <tr><td colspan="2" class="form">{tr}Show the banner only between these dates{/tr}:</td></tr>
-<tr><td class="form">{tr}From date{/tr}:</td><td class="form">{html_select_date time=$fromDate prefix="fromDate_" end_year="+2" field_order=$display_field_order}</td></tr>
-<tr><td class="form">{tr}To date{/tr}:</td><td class="form">{html_select_date time=$toDate prefix="toDate_" end_year="+2" field_order=$display_field_order}</td></tr>
+<tr><td class="form">{tr}From date{/tr}:</td><td class="form">{html_select_date time=$fromDate prefix="fromDate_" end_year="+2" field_order=$prefs.display_field_order}</td></tr>
+<tr><td class="form">{tr}To date{/tr}:</td><td class="form">{html_select_date time=$toDate prefix="toDate_" end_year="+2" field_order=$prefs.display_field_order}</td></tr>
 <tr><td class="form">{tr}Use dates{/tr}</td><td class="form"><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/></td></tr>
 </table>
 </div>

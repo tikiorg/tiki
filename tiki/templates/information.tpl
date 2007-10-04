@@ -5,7 +5,7 @@
 {/if}
 
 <div id="tiki-main">
-  {if $feature_top_bar eq 'y'}
+  {if $prefs.feature_top_bar eq 'y'}
   <div id="tiki-top">
     {include file="tiki-top_bar.tpl"}
   </div>
@@ -13,7 +13,7 @@
   <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" id="tikimidtbl" width="100%">
     <tr>
-      {if $feature_left_column eq 'y'}
+      {if $prefs.feature_left_column eq 'y'}
       <td id="leftcolumn">
       {section name=homeix loop=$left_modules}
       {$left_modules[homeix].data}
@@ -31,11 +31,11 @@
         {$msg}
         <br /><br />
         <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
-        <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+        <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>
       </div></td>
-      {if $feature_right_column eq 'y'}
+      {if $prefs.feature_right_column eq 'y'}
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}
@@ -45,7 +45,7 @@
     </tr>
     </table>
   </div>
-  {if $feature_bot_bar eq 'y'}
+  {if $prefs.feature_bot_bar eq 'y'}
   <div id="tiki-bot">
     {include file="tiki-bot_bar.tpl"}
   </div>

@@ -1,11 +1,11 @@
 <h1><a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Message Broadcast{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Message Broadcast{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=messu-broadcast.tpl" target="tikihelp" class="tikihelp">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>

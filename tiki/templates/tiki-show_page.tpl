@@ -1,23 +1,23 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.124 2007-10-04 17:57:06 sylvieg Exp $ *} 
-{if $feature_ajax == 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.125 2007-10-04 22:17:42 nyloth Exp $ *} 
+{if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
-{if $feature_page_title eq 'y'}
+{if $prefs.feature_page_title eq 'y'}
 {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
 
 <div class="wikitopline">
 <table><tr>
 <td style="vertical-align:top;">
-{if $feature_wiki_pageid eq 'y'}
+{if $prefs.feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}
 {if $cached_page eq 'y'}<small>({tr}cached{/tr})</small>{/if}
 </td>
-{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
+{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
 {/if}
 {if $print_page ne 'y'}
@@ -25,23 +25,23 @@
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}       
-	{if $feature_morcego eq 'y' && $wiki_feature_3d eq 'y'}
-		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt="{tr}3d browser{/tr}" /></a>
+	{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
+		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt="{tr}3d browser{/tr}" /></a>
 	{/if}
 	{if $cached_page eq 'y'}
 		<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt="{tr}Refresh{/tr}" /></a>
 	{/if}
-	{if $feature_wiki_print eq 'y'}
+	{if $prefs.feature_wiki_print eq 'y'}
 	<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="pics/icons/printer.png" border="0" width="16" height="16" alt="{tr}Print{/tr}" /></a>
 	{/if}
 
-	{if $feature_wiki_pdf eq 'y'}
+	{if $prefs.feature_wiki_pdf eq 'y'}
 		<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="pics/icons/page_white_acrobat.png" border="0" width="16" height="16" alt="{tr}pdf{/tr}" /></a>
 	{/if}
-	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Save{/tr}" /></a>
 	{/if}
-	{if $user and $feature_user_watches eq 'y'}
+	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_page eq 'n'}
 			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}">{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Page{/tr}' title='{tr}Monitor this Page{/tr}'}</a>
 		{else}
@@ -57,7 +57,7 @@
 	{/if}
 	</td>
 
-	{if $feature_backlinks eq 'y' and $backlinks}
+	{if $prefs.feature_backlinks eq 'y' and $backlinks}
 		<td style="vertical-align:top;text-align:right;width:42px;">
 		<form action="tiki-index.php" method="get">
 		<select name="page" onchange="page.form.submit()">
@@ -89,7 +89,7 @@
 		</td>
 	{/if}
 
-	{if $feature_multilingual == 'y'}
+	{if $prefs.feature_multilingual == 'y'}
 		{include file="translated-lang.tpl" td='y'}
 	{/if}
 
@@ -98,7 +98,7 @@
 </div>
 
 <div class="navbar" align="right">
-    {if $user and $feature_user_watches eq 'y'}
+    {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
             {tr}Watched by categories{/tr}:
             {section name=i loop=$watching_categories}
@@ -108,11 +108,11 @@
     {/if}
 </div>
 
-{if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
 {include file="freetag_list.tpl"}
 {/if}
 
-{if $pages > 1 and $wiki_page_navigation_bar neq 'bottom'}
+{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'bottom'}
 	<div align="center">
 		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src="pics/icons/resultset_first.png" border="0" height="16" width="16" alt="{tr}First page{/tr}" title="{tr}First page{/tr}" /></a>
 
@@ -184,7 +184,7 @@
   	<a href="tiki-edit_structure.php?page_ref_id={$home_info.page_ref_id}"><img src='pics/icons/chart_organisation.png' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr}" border='0' width='16' height='16' /></a>&nbsp;&nbsp;
 	({$cur_pos})&nbsp;&nbsp;	
     {section loop=$structure_path name=ix}
-      {if $structure_path[ix].parent_id}&nbsp;{$site_crumb_seper}&nbsp;{/if}
+      {if $structure_path[ix].parent_id}&nbsp;{$prefs.site_crumb_seper}&nbsp;{/if}
 	  <a href="tiki-index.php?page={$structure_path[ix].pageName|escape:'url'}&amp;structure={$home_info.pageName|escape:'url'}">
       {if $structure_path[ix].page_alias}
         {$structure_path[ix].page_alias}
@@ -198,9 +198,9 @@
 </table>
 </div>
 {/if}
-{if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
 {$parsed}
-{if $pages > 1 and $wiki_page_navigation_bar neq 'top'}
+{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 	<br />
 	<div align="center">
 		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src="pics/icons/resultset_first.png" border="0" height="16" width="16" alt="{tr}First page{/tr}" title="{tr}First page{/tr}" /></a>
@@ -220,7 +220,7 @@
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 
 <p class="editdate"> {* begining editdate *}
-{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
+{if isset($prefs.wiki_authors_style) && $prefs.wiki_authors_style eq 'business'}
   {tr}Last edited by{/tr} {$lastUser|userlink}
   {section name=author loop=$contributors}
    {if $smarty.section.author.first}, {tr}based on work by{/tr}
@@ -231,8 +231,8 @@
    {/if}
    {$contributors[author]|userlink}
   {/section}.<br />                                         
-  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'collaborative'}
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
+{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
 <br />
   {tr}Contributors to this page{/tr}: {$lastUser|userlink}
   {section name=author loop=$contributors}
@@ -241,23 +241,23 @@
    {/if}
    {$contributors[author]|userlink}
   {/section}.<br />
-  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($wiki_authors_style) &&  $wiki_authors_style eq 'none'}
+  {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
+{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
 {else}
 <br />
   {tr}Created by{/tr}: {$creator|userlink}.
-  {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
+  {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {/if}
 
-{if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
-  {if $wikiLicensePage == $page}
+{if $prefs.wiki_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+  {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <br />
       {tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.
     {/if}
   {else}
     <br />
-    {tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.
+    {tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.
   {/if}
 {/if}
 
@@ -268,7 +268,7 @@
 
 </p> {* end editdate *}
 
-{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+{if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
 {/if}
 

@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.154 2007-10-03 17:14:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155 2007-10-04 22:17:43 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
 {* --------- navigation ------ *}
 <div class="navbar">
-{if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
+{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
 {if $user_watching_tracker ne 'y'}
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=add" title="{tr}Monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Monitor{/tr}" /></a>
 {else}
@@ -25,7 +25,7 @@
 </div>
 
 <div class="navbar" align="right">
-	{if $user and $feature_user_watches eq 'y'}
+	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories{/tr}:
 			{section name=i loop=$watching_categories}
@@ -67,7 +67,7 @@
 </div><br />
 {/if}
 
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
@@ -85,7 +85,7 @@
 
 {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 {* --- tab with view ------------------------------------------------------------------------- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}View item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -137,7 +137,7 @@
 
 {* -------------------------------------------------- tab with comments --- *}
 {if $tracker_info.useComments eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
@@ -168,7 +168,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 
 {* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};" {/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};" {/if}>
 {if $tiki_p_attach_trackers eq 'y'}
 <h2>{tr}Attach a file to this item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
@@ -243,7 +243,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y' or $special}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent nohighlight"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent nohighlight"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Edit item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
@@ -426,7 +426,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
         </table>
         {/if}
 {elseif $cur_field.type eq 'f'}
-{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
+{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$prefs.display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
 
 {elseif $cur_field.type eq 'r'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
@@ -491,13 +491,13 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
 
 
-	{assign var='Height' value="$MultimediaDefaultHeight"}
-	{assign var='Lenght' value="$MultimediaDefaultLength"}
+	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
+	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
 
 	{if $cur_field.value ne ''}	
 	{if  $cur_field.options_array[1] ne '' } { $Lenght=$cur_field.options_array[1] }{/if}
 	{if  $cur_field.options_array[2] ne '' } { $Height=$cur_field.options_array[2] }{/if}
-	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$VideoHeight}{/if}
+	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
 	{include file=multiplayer.tpl url=$cur_field.value w=$Lenght h=$Height video=$ModeVideo}
 {/if}
 {/if}

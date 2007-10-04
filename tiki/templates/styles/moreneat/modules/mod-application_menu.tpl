@@ -1,36 +1,36 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.49 2005-08-12 13:02:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.50 2007-10-04 22:17:48 nyloth Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
-<div><a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a></div>
-{if $feature_chat eq 'y'}
+<div><a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Home{/tr}</a></div>
+{if $prefs.feature_chat eq 'y'}
 {if $tiki_p_chat eq 'y'}
 <div><a href="tiki-chat.php" class="linkmenu">{tr}Chat{/tr}</a></div>
 {/if}
 {/if}
 
-{if $feature_contact eq 'y'}
+{if $prefs.feature_contact eq 'y'}
 <div><a href="tiki-contact.php" class="linkmenu">{tr}Contact us{/tr}</a></div>
 {/if}
 
 
-{if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
+{if $prefs.feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
 <div><a href="tiki-stats.php" class="linkmenu">{tr}Stats{/tr}</a></div>
 {/if}
 
-{if $feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
+{if $prefs.feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
 <div><a href="tiki-browse_categories.php" class="linkmenu">{tr}Categories{/tr}</a></div>
 {/if}
 
-{if $feature_games eq 'y' and $tiki_p_play_games eq 'y'}
+{if $prefs.feature_games eq 'y' and $tiki_p_play_games eq 'y'}
 <div><a href="tiki-list_games.php" class="linkmenu">{tr}Games{/tr}</a></div>
 {/if}
 
-{if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
 <div><a href="tiki-calendar.php" class="linkmenu">{tr}Calendar{/tr}</a></div>
 {/if}
 
-{if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
+{if $prefs.feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
 <div class="separator">
 <a class='separator' href="javascript:toggle('wfmenu');">::</a>
 <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
@@ -48,7 +48,7 @@
 </div>
 {/if}
 
-{if $feature_friends eq 'y'}
+{if $prefs.feature_friends eq 'y'}
 <div class="separator">
 <a class='separator' href="javascript:toggle('friendsmenu');">::</a>
 <a class='separator' href='tiki-list_users.php'>{tr}Community{/tr}</a>
@@ -57,13 +57,13 @@
   {if $tiki_p_list_users eq 'y'}
     &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}User List{/tr}</a><br />
   {/if}
-  {if $feature_friends eq 'y'}
+  {if $prefs.feature_friends eq 'y'}
     &nbsp;<a href="tiki-friends.php" class="linkmenu">{tr}Friendship Network{/tr}</a><br />
   {/if}
   </div>
 {/if}
 
-{if $feature_wiki eq 'y'}
+{if $prefs.feature_wiki eq 'y'}
 <div class="separator">
 <a class='separator' href="javascript:toggle('wikimenu');">::</a>
 <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a>
@@ -72,29 +72,29 @@
 {if $tiki_p_view eq 'y'}
 &nbsp;<a href="tiki-index.php" class="linkmenu">{tr}Home{/tr}</a><br />
 {/if}
-  {if $feature_lastChanges eq 'y' and $tiki_p_view eq 'y'}
+  {if $prefs.feature_lastChanges eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-lastchanges.php" class="linkmenu">{tr}Last changes{/tr}</a><br />
   {/if}
-  {if $feature_dump eq 'y' and $tiki_p_view eq 'y' and $wiki_dump_exists eq 'y'}
+  {if $prefs.feature_dump eq 'y' and $tiki_p_view eq 'y' and $wiki_dump_exists eq 'y'}
     &nbsp;<a href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar" class="linkmenu">{tr}Dump{/tr}</a><br />
   {/if}
-  {if $feature_wiki_rankings eq 'y' and $tiki_p_view eq 'y'}
+  {if $prefs.feature_wiki_rankings eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-wiki_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
-  {if $feature_listPages eq 'y' and $tiki_p_view eq 'y'}
+  {if $prefs.feature_listPages eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}List pages{/tr}</a><br />
     &nbsp;<a href="tiki-orphan_pages.php" class="linkmenu">{tr}Orphan pages{/tr}</a><br />
   {/if}
-  {if $feature_sandbox eq 'y' and $tiki_p_view eq 'y'}
+  {if $prefs.feature_sandbox eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-editpage.php?page=SandBox" class="linkmenu">{tr}Sandbox{/tr}</a><br />
   {/if}
-  {if $feature_wiki_multiprint eq 'y' and $tiki_p_view eq 'y'}
+  {if $prefs.feature_wiki_multiprint eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-print_pages.php" class="linkmenu">{tr}Print{/tr}</a><br />
   {/if}
-  {if $tiki_p_send_pages eq 'y' and $feature_comm eq 'y'}
+  {if $tiki_p_send_pages eq 'y' and $prefs.feature_comm eq 'y'}
     &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send pages{/tr}</a><br />
   {/if}
-  {if $tiki_p_admin_received_pages eq 'y' and $feature_comm eq 'y'}
+  {if $tiki_p_admin_received_pages eq 'y' and $prefs.feature_comm eq 'y'}
     &nbsp;<a href="tiki-received_pages.php" class="linkmenu">{tr}Received pages{/tr}</a><br />
   {/if}
   {if $tiki_p_edit_structures eq 'y'}
@@ -126,7 +126,7 @@
   {/if}
 {/if}
 
-{if $feature_galleries eq 'y'}
+{if $prefs.feature_galleries eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('galmenu');">::</a>
   <a class='separator' href="tiki-galleries.php">{tr}Image Galleries{/tr}</a> 
@@ -135,7 +135,7 @@
   {if $tiki_p_view_image_gallery eq 'y'}
     &nbsp;<a href="tiki-galleries.php" class="linkmenu">{tr}Galleries{/tr}</a><br />
   {/if}
-  {if $feature_gal_rankings eq 'y' and $tiki_p_view_image_gallery eq 'y'}
+  {if $prefs.feature_gal_rankings eq 'y' and $tiki_p_view_image_gallery eq 'y'}
     &nbsp;<a href="tiki-galleries_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_upload_images eq 'y'}
@@ -147,7 +147,7 @@
   </div>
 {/if}
 
-{if $feature_articles eq 'y'}
+{if $prefs.feature_articles eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('cmsmenu');">::</a>
   <a class='separator' href='tiki-view_articles.php'>{tr}Articles{/tr}</a>
@@ -157,10 +157,10 @@
   &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles home{/tr}</a><br />
   &nbsp;<a href="tiki-list_articles.php" class="linkmenu">{tr}List articles{/tr}</a><br />
   {/if}
-  {if $feature_cms_rankings eq 'y' and $tiki_p_read_article eq 'y'}
+  {if $prefs.feature_cms_rankings eq 'y' and $tiki_p_read_article eq 'y'}
   &nbsp;<a href="tiki-cms_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
-  {if $feature_submissions eq 'y'}
+  {if $prefs.feature_submissions eq 'y'}
     {if $tiki_p_submit_article eq 'y'}
     &nbsp;<a href="tiki-edit_submission.php" class="linkmenu">{tr}Submit article{/tr}</a><br />
     {/if}
@@ -168,13 +168,13 @@
     &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View submissions{/tr}</a><br />
     {/if}
   {/if}
-  {if $tiki_p_edit_article eq 'y' && $feature_submissions ne 'y'}
+  {if $tiki_p_edit_article eq 'y' && $prefs.feature_submissions ne 'y'}
       &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}Edit article{/tr}</a><br />
   {/if}
-  {if $tiki_p_send_articles eq 'y' and $feature_comm eq 'y'}
+  {if $tiki_p_send_articles eq 'y' and $prefs.feature_comm eq 'y'}
     &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send articles{/tr}</a><br />
   {/if}
-  {if $tiki_p_admin_received_articles eq 'y' and $feature_comm eq 'y'}
+  {if $tiki_p_admin_received_articles eq 'y' and $prefs.feature_comm eq 'y'}
     &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}Received articles{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_cms eq 'y'}
@@ -184,7 +184,7 @@
   </div>
 {/if}
 
-{if $feature_blogs eq 'y'}
+{if $prefs.feature_blogs eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('blogmenu');">::</a>
   <a class='separator' href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
@@ -193,7 +193,7 @@
   {if $tiki_p_read_blog eq 'y'}
   &nbsp;<a href="tiki-list_blogs.php" class="linkmenu">{tr}List blogs{/tr}</a><br />
   {/if}
-  {if $feature_blog_rankings eq 'y' and $tiki_p_read_blog eq 'y'}
+  {if $prefs.feature_blog_rankings eq 'y' and $tiki_p_read_blog eq 'y'}
   &nbsp;<a href="tiki-blog_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_create_blogs eq 'y'}
@@ -208,7 +208,7 @@
   </div>
 {/if}
 
-{if $feature_forums eq 'y'}
+{if $prefs.feature_forums eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('formenu');">::</a>
   <a class='separator' href="tiki-forums.php">{tr}Forums{/tr}</a>
@@ -217,7 +217,7 @@
   {if $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}List forums{/tr}</a><br />
   {/if}
-  {if $feature_forum_rankings eq 'y' and $tiki_p_forum_read eq 'y'}
+  {if $prefs.feature_forum_rankings eq 'y' and $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forum_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_forum eq 'y'}
@@ -226,7 +226,7 @@
   </div>
 {/if}
 
-{if $feature_directory eq 'y'}
+{if $prefs.feature_directory eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('dirmenu');">::</a>
   <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
@@ -244,7 +244,7 @@
   </div>
 {/if}
 
-{if $feature_file_galleries eq 'y'}
+{if $prefs.feature_file_galleries eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('filegalmenu');">::</a>
   <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
@@ -253,7 +253,7 @@
   {if $tiki_p_view_file_gallery eq 'y'}
   &nbsp;<a href="tiki-file_galleries.php" class="linkmenu">{tr}List galleries{/tr}</a><br />
   {/if}
-  {if $feature_file_galleries_rankings eq 'y' and $tiki_p_view_file_gallery eq 'y'}
+  {if $prefs.feature_file_galleries_rankings eq 'y' and $tiki_p_view_file_gallery eq 'y'}
   &nbsp;<a href="tiki-file_galleries_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_upload_files eq 'y'}
@@ -262,7 +262,7 @@
   </div>
 {/if}
 
-{if $feature_faqs eq 'y'}
+{if $prefs.feature_faqs eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('faqsmenu');">::</a>
   <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
@@ -277,7 +277,7 @@
   </div>
 {/if}
 
-{if $feature_maps eq 'y'}
+{if $prefs.feature_maps eq 'y'}
   <div class="separator">
   <a class="separator" href="javascript:toggle('mapsmenu');">::</a>
   <a href="tiki-map.php" class="separator">{tr}Maps{/tr}</a>
@@ -292,7 +292,7 @@
   </div>
 {/if}
 
-{if $feature_quizzes eq 'y'}
+{if $prefs.feature_quizzes eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('quizmenu');">::</a>
   <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
@@ -308,7 +308,7 @@
   </div>
 {/if}
 
-{if $feature_trackers eq 'y'}
+{if $prefs.feature_trackers eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('trkmenu');">::</a>
   <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
@@ -321,7 +321,7 @@
   </div>
 {/if}
 
-{if $feature_surveys eq 'y'}
+{if $prefs.feature_surveys eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('srvmenu');">::</a>
   <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
@@ -337,7 +337,7 @@
   </div>
 {/if}
 
-{if $feature_newsletters eq 'y'}
+{if $prefs.feature_newsletters eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('nlmenu');">::</a>
   <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
@@ -364,7 +364,7 @@
 {/if}
 
 
-{if $feature_charts eq 'y'}
+{if $prefs.feature_charts eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('chartmenu');">::</a>
   <a href="tiki-charts.php" class="separator">{tr}Charts{/tr}</a>
@@ -402,11 +402,11 @@
 		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a><br />
 	{/if}
 	{sortlinks}
-	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
+	{if $prefs.feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
 	{/if}
 
-	{if $feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
+	{if $prefs.feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
   		&nbsp;<a href="tiki-admin_banning.php" class="linkmenu">{tr}Banning{/tr}</a><br />
 	{/if}
 
@@ -423,7 +423,7 @@
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
-    {if $feature_theme_control eq 'y'}
+    {if $prefs.feature_theme_control eq 'y'}
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
     {/if}
 			&nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
@@ -434,7 +434,7 @@
     {if $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />
     {/if}   
-    {if $tiki_p_admin_banners eq 'y' && $feature_banners eq 'y'}
+    {if $tiki_p_admin_banners eq 'y' && $prefs.feature_banners eq 'y'}
       &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_templates eq 'y'}
@@ -465,10 +465,10 @@
     {if $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br />
     {/if}
-    {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
+    {if $tiki_p_edit_languages eq 'y' && $prefs.lang_use_db eq 'y'}
       &nbsp;<a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_integrator eq 'y' && $feature_integrator eq 'y'}
+    {if $tiki_p_admin_integrator eq 'y' && $prefs.feature_integrator eq 'y'}
       &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}

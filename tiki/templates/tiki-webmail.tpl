@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.43 2007-07-24 17:12:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.44 2007-10-04 22:17:43 nyloth Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
 <img border="0" src="img/icons/info.gif" alt="{tr}Edit{/tr}" /></a>
 {/if}
@@ -302,10 +302,10 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 {/if}
-{if $direct_pagination eq 'y'}
+{if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.72 2007-09-13 13:12:33 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73 2007-10-04 22:17:38 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Forums Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
 
@@ -284,7 +284,7 @@
 
 </table></td></tr>
 
-{if $forum_thread_defaults_by_forum eq 'y'}
+{if $prefs.forum_thread_defaults_by_forum eq 'y'}
 <tr class="formcolor"><td>{tr}Set thread preferences{/tr}</td><td>
 <a class="link" href="javascript:flip('threadconfig');flip('threadprefshow','inline');flip('threadprefhide','inline');">
 <span id="threadprefshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_threadconfig) and $smarty.session.tiki_cookie_jar.show_threadconfig eq 'y'}none{else}inline{/if};">{tr}show threads preferences{/tr}</span>

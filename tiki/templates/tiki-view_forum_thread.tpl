@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.82 2007-10-03 21:26:45 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83 2007-10-04 22:17:43 nyloth Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -32,7 +32,7 @@
 {/if}
 
 <div class="top_post">
-  {if $feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
     {include file="freetag_list.tpl"}
   {/if}
 
@@ -74,7 +74,7 @@
 	</td>
 
 	<td style="text-align:right;">
-		{if $feature_forum_quickjump eq 'y'}
+		{if $prefs.feature_forum_quickjump eq 'y'}
 		<form id='quick' method="get" action="tiki-view_forum.php">
 			<small>{tr}Jump to forum{/tr}:</small>
 			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">

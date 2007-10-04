@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.27 2007-08-23 16:21:45 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.28 2007-10-04 22:17:42 nyloth Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -7,7 +7,7 @@
 <!- tiki-quiz_edit.tpl start ->
 
 <h1><a class="pagetitle" href="tiki-quiz_edit.php?quizId={$quiz->id}">{tr}Edit quiz{/tr}: {$quiz->name}</a>
-{if $feature_help}
+{if $prefs.feature_help}
 &nbsp &nbsp &nbsp<a title="{tr}Help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=QuizEdit" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 </h1>
@@ -71,13 +71,13 @@
 						<tr class="formcolor">
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
+								{html_select_date prefix="quiz_publish_" time=$quiz->datePub start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_publish_" time=$quiz->datePub display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone} 
 							</td>
 						</tr>
 						<tr class="formcolor">
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
+								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
 							</td>
 						</tr>
 						<tr class="formcolor">

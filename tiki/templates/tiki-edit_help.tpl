@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.54 2007-09-22 16:07:44 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55 2007-10-04 22:17:40 nyloth Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 <div id="wikihelp-tab">
-{if count($plugins) ne 0 and !($wysiwyg ne 'y' and $wysiwyg_wiki_parsed ne 'y' and $wysiwyg_wiki_semi_parsed ne 'y')}
+{if count($plugins) ne 0 and !($wysiwyg ne 'y' and $prefs.wysiwyg_wiki_parsed ne 'y' and $prefs.wysiwyg_wiki_semi_parsed ne 'y')}
   <div style="text-align: right;">
     <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');">{tr}Show Plugins Help{/tr}</a>
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
@@ -12,16 +12,16 @@
 {/if}
 <br />
 
-<p>{tr}For more information, please see <a href="{$helpurl}Wiki Page Editor">Wiki Page Editor</a>{/tr}</p>
+<p>{tr}For more information, please see <a href="{$prefs.helpurl}Wiki Page Editor">Wiki Page Editor</a>{/tr}</p>
 
-{if $feature_wiki_paragraph_formatting eq 'y' }
+{if $prefs.feature_wiki_paragraph_formatting eq 'y' }
 <p>{tr}Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.{/tr}</p>
 {else}
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
 {/if}
 
 <table width="100%">
-{if $wysiwyg eq 'n' or ($wysiwyg eq 'y' and $wysiwyg_wiki_parsed eq 'y')}
+{if $wysiwyg eq 'n' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%"><strong>{tr}Bold text{/tr}:</strong></td><td> 2 {tr}underscores{/tr} "_". {tr}Example{/tr}: __{tr}text{/tr}__</td></tr>
 <tr><td width="20%"><strong>{tr}Italic text{/tr}:</strong></td><td> 2 {tr}single quotes{/tr} "'". {tr}Example{/tr}: ''{tr}text{/tr}''</td></tr>
 <tr><td><strong>{tr}Centered text{/tr}:</strong></td><td> 2 {tr}colons{/tr} ":". {tr}Example{/tr}: ::{tr}some text{/tr}::</td></tr>
@@ -32,7 +32,7 @@
 <tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td><strong>{tr}Headings{/tr}:</strong></td><td> "!", "!!", "!!!" {tr}make headings{/tr}</td></tr>
 <tr><td><strong>{tr}Show/Hide{/tr}:</strong></td><td> "!+", "!!-" {tr}show/hide heading section. + (shown) or - (hidden) by default{/tr}.</td></tr>
-{if $feature_wiki_tables eq 'new'}
+{if $prefs.feature_wiki_tables eq 'new'}
 <tr><td><strong>{tr}Tables{/tr}:</strong></td><td> "||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||" {tr}creates a table{/tr}</td></tr>
 {else}
 <tr><td><strong>{tr}Tables{/tr}:</strong></td><td> "||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||" {tr}creates a table{/tr}</td></tr>
@@ -45,7 +45,7 @@
 <tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center imalign=right link=http://www.yahoo.com desc=foo alt=txt usemap=name class=xyz}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Non cacheable images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg?nocache=1 width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Line break{/tr}:</strong></td><td>"%%%" {tr}(very useful especially in tables){/tr}</td></tr>
-{if $feature_drawings eq 'y'}
+{if $prefs.feature_drawings eq 'y'}
 <tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
 <tr><td><strong>{tr}Multi-page pages{/tr}:</strong></td><td>{tr}Use{/tr} ...page... {tr}to separate pages{/tr}</td></tr>

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_images_th.tpl,v 1.4 2006-06-27 21:46:48 amette Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_images_th.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
 
-{if $feature_galleries eq 'y'}
+{if $prefs.feature_galleries eq 'y'}
   {tikimodule title="{tr}Last Images{/tr}" name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations}
   {section name=ix loop=$modLastImages}
     {if $smarty.section.ix.index < $module_rows}

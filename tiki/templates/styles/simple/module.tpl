@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.7 2007-08-24 17:01:55 jyhem Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.8 2007-10-04 22:17:50 nyloth Exp $*}
 {* Module layout with controls *}
 
 <div class="box"><div class="box-title">
 {* Draw module controls for logged user only *}
-{if $user and $user_assigned_modules == 'y' and $feature_modulecontrols eq 'y'}
+{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
   <span class="modcontrols">
     <a class="movemodup" title="{tr}Move module up{/tr}" href="{$current_location}?mc_up={$module_name}"><span>{tr}Up{/tr}</span></a>
     <a class="movemoddown" title="{tr}Move module down{/tr}" href="{$current_location}?mc_down={$module_name}"><span>{tr}Down{/tr}</span></a>

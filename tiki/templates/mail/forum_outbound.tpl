@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/forum_outbound.tpl,v 1.3 2007-08-31 11:41:48 sylvieg Exp $ *}
-{$title}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/forum_outbound.tpl,v 1.4 2007-10-04 22:17:46 nyloth Exp $ *}
+{$prefs.title}
 
 {tr}Author:{/tr} {$author}
 

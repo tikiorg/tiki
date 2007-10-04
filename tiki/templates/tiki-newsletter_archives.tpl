@@ -1,8 +1,8 @@
 <h1><a class="pagetitle" href="tiki-newsletter_archives.php?nlId={$nlId}">{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}</a>
- {if $feature_help eq 'y'}
-<a href="{$helpurl}Newsletters" target="tikihelp" class="tikihelp" title="{tr}Newsletters{/tr}">
+ {if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Newsletters" target="tikihelp" class="tikihelp" title="{tr}Newsletters{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
- {if $feature_view_tpl eq 'y'}
+ {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-newsletter_archives.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Newsletters Template{/tr}">
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 

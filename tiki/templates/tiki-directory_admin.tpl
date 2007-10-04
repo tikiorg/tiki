@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin.tpl,v 1.21 2007-07-24 17:12:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin.tpl,v 1.22 2007-10-04 22:17:39 nyloth Exp $ *}
 <h1><a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a>
-{if $feature_help eq 'y'}
-<a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">
 <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 

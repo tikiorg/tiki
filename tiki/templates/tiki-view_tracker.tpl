@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.157 2007-09-18 21:54:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.158 2007-10-04 22:17:43 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -6,14 +6,14 @@
 
 <h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
 <div class="navbar">
-{if $feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
+{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 {if $user_watching_tracker ne 'y'}
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}"><img src="pics/icons/eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Monitor{/tr}" /></a>
 {else}
 <a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Stop Monitor{/tr}" /></a>
 {/if}
 {/if}
-{if $rss_tracker eq "y"}
+{if $prefs.rss_tracker eq "y"}
 <a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align="right" /></a>
 {/if}
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>{/if}
@@ -29,7 +29,7 @@
 </div>
 
 <div class="navbar" align="right">
-	{if $user and $feature_user_watches eq 'y'}
+	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories{/tr}:
 			{section name=i loop=$watching_categories}
@@ -59,7 +59,7 @@
 {$err_value[ix].name}{if !$smarty.section.ix.last},&nbsp;{/if}
 	{/section}
 </div><br />{/if}
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div id="page-bar">
 {if $tiki_p_view_trackers eq 'y'}
@@ -74,7 +74,7 @@
 {cycle name=content values="1,2,3" print=false advance=false reset=true}
 {* -------------------------------------------------- tab with list --- *}
 {if $tiki_p_view_trackers eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 
@@ -513,7 +513,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <form enctype="multipart/form-data" action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
@@ -673,7 +673,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$display_field_order} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
@@ -761,7 +761,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {/section}
 
 {* -------------------- antibot code -------------------- *}
-{if $feature_antibot eq 'y' && $user eq ''}
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
 {include file="antibot.tpl"}
 {/if}
 

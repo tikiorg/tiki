@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.6 2007-02-18 11:21:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-usergroup_tracker.tpl,v 1.7 2007-10-04 22:17:47 nyloth Exp $ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
@@ -6,10 +6,10 @@
 
 <div><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></div>
 
-{if $userTracker eq 'y'}
+{if $prefs.userTracker eq 'y'}
 <div>{tr}User informations{/tr}: </div>
 <div class="">
-{if $userTracker}
+{if $prefs.userTracker}
 &nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+user" class="linkmodule">{$user}</a>
 {else}
 {$user}
@@ -18,10 +18,10 @@
 {/if}
 
 
-{if $groupTracker eq 'y'}
+{if $prefs.groupTracker eq 'y'}
 <div>{tr}Group informations{/tr}:</div>
 <div class="box-data">
-{if $groupTracker}
+{if $prefs.groupTracker}
 &nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$group}</a>
 {else}
 {$group}
@@ -32,7 +32,7 @@
 {/tikimodule}
 {/if}
 
-{if $groupTracker eq 'n' and $userTracker eq 'n' }
+{if $prefs.groupTracker eq 'n' and $prefs.userTracker eq 'n' }
 <a href="tiki-admin.php?page=login" class="linkmodule">{tr}You need to activate user and/or group trackers{/tr}</a>
 {/if}
 

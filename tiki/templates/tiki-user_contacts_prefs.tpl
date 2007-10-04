@@ -1,11 +1,11 @@
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-user_contacts_prefs.php">{tr}User Contacts Preferences{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="{$helpurl}User+Contacts+Prefs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit User Contacts Preferences{/tr}">
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}User+Contacts+Prefs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit User Contacts Preferences{/tr}">
 <img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_contacts_prefs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' />
 </a>
@@ -19,7 +19,7 @@
 
 <table class="admin" style="clear:both;"><tr><td>
 
-{if $feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y'}
 {cycle values="1,2" name=tabs print=false advance=false}
 <div id="page-bar">
 	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Options{/tr}</a></span>
@@ -28,7 +28,7 @@
 {/if}
 
 {cycle name=content values="1,2" print=false advance=false}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 <div class="cbox">
 <div class="cbox-title">{tr}Options{/tr}</div>
@@ -49,7 +49,7 @@
 </div>
 </div>
 
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 <div class="cbox">
 <div class="cbox-title">{tr}Manage Fields{/tr}</div>
