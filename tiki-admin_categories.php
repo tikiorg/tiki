@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.47 2007-08-10 13:42:40 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.48 2007-10-04 12:45:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -294,6 +294,14 @@ function array_csort($marray, $column) {
 
 $catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
 //$catree = array_csort($catree['data'],'categpath'); not needed as array is already sorted when returned from categlib
+foreach ($catree['data'] as $key=>$c) {
+	foreach ($path as $p) {
+		if ($p['categId'] == $c['categId']) {
+			$catree['data'][$key]['incat'] = 'y';
+			break;
+		}
+	}
+}
 $smarty->assign('catree', $catree['data']);
 
 // var_dump($catree); 
