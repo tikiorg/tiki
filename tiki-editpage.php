@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.176 2007-08-22 13:15:55 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.177 2007-10-05 15:40:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,9 +76,13 @@ function compare_import_versions($a1, $a2) {
 }
 
 if (isset($_REQUEST['cancel_edit'])) {
-    $page = urlencode($page);
-		$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
-    header("location: tiki-index.php?page=$page");
+	$page = urlencode($page);
+	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
+	$url = "location: tiki-index.php?page=$page";
+	if (!empty($_REQUEST['page_ref_id'])) {
+		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
+	}
+    header($url);
     die;
 }
 
