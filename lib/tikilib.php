@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.786 2007-10-05 13:00:30 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.787 2007-10-05 13:26:19 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4069,8 +4069,10 @@ function add_pageview() {
 		$result = $this->query($query,array($name),-1,-1,false);
 		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
 		$result = $this->query($query,array($name,$value));
-		if ( isset($_SESSION['prefs']) )
+		if ( isset($_SESSION['prefs']) ) {
 			$_SESSION['prefs'][$name] = $value;
+			$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
+		}
 		return true;
     }
 
