@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.99 2007-09-25 22:49:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.100 2007-10-05 16:57:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -354,12 +354,10 @@ $smarty->assign_by_ref('userinfo', $userinfo);
 $llist = array();
 $llist = $tikilib->list_styles();
 $smarty->assign_by_ref('styles',$llist);
-$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 $languages = array();
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
-$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
 
 // Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch, -1);

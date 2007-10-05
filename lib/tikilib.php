@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.788 2007-10-05 13:54:58 sept_7 Exp $
+// CVS: $Id: tikilib.php,v 1.789 2007-10-05 16:57:12 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4068,7 +4068,11 @@ function add_pageview() {
 		$query = "delete from `tiki_preferences` where `name`=?";
 		$result = $this->query($query,array($name),-1,-1,false);
 		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-		$result = $this->query($query,array($name,$value));
+		if (is_array($value)) {
+			$result = $this->query($query,array($name,serialize($value)));
+		} else {
+			$result = $this->query($query,array($name,$value));
+		}
 		if ( isset($_SESSION['prefs']) ) {
 			$_SESSION['prefs'][$name] = $value;
 			$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
@@ -6823,14 +6827,13 @@ if (!$simple_wiki) {
 			    // translated names.
 			    global $langmapping;
 			    global $available_languages;
-				$avlang = unserialize($available_languages);
 			    include_once("lang/langmapping.php");
 			    $formatted = array();
 
 			    // run through all the language codes:
 				if (isset($short) && $short == "y") {
 					foreach ($languages as $lc) {
-					if (!count($avlang) or (!$all and in_array($lc,$avlang))) {
+					if (!count($available_languages) or (!$all and in_array($lc,$available_languages))) {
 						if (isset($langmapping[$lc]))
 							$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
 						else
@@ -6841,7 +6844,7 @@ if (!$simple_wiki) {
 					return $formatted;
 				}
 			    foreach ($languages as $lc) {
-					if (!count($avlang) or (!$all and in_array($lc,$avlang)) or $all) {
+					if (!count($available_languages) or (!$all and in_array($lc,$available_languages)) or $all) {
 				if (isset($langmapping[$lc])) {
 				    // known language
 				    if ($langmapping[$lc][0] == $langmapping[$lc][1]) {

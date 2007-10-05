@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.50 2007-07-15 20:48:53 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.51 2007-10-05 16:57:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -200,8 +200,6 @@ if ( ! empty($multiprint_pages) ) {
         $languages = array();
         $languages = $tikilib->list_languages(false, 'y');
         $smarty->assign_by_ref('languages', $languages);
-        $avls = unserialize($tikilib->get_preference("available_languages"));
-        $smarty->assign_by_ref('available_languages', $avls);
 	}
 
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
