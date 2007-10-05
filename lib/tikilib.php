@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.785 2007-10-04 22:17:34 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.786 2007-10-05 13:00:30 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4035,9 +4035,12 @@ function add_pageview() {
 
 	// This method overrides the prefs with those specified in database
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
-    function get_db_preferences() {
-	$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-	while ( $res = $result->fetchRow() ) $_SESSION['prefs'][$res['name']] = $res['value'];
+	function get_db_preferences() {
+		$_SESSION['prefs']['lastReadingPrefs'] = $tikilib->now;
+		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+		while ( $res = $result->fetchRow() ) {
+			$_SESSION['prefs'][$res['name']] = $res['value'];
+		}
     }
 
 	// This method need to be _obsoleted_, since it queries the db instead of session vars
@@ -4060,15 +4063,15 @@ function add_pageview() {
     }
 
     function set_preference($name, $value) {
-
-	$query = "delete from `tiki_preferences` where `name`=?";
-	$result = $this->query($query,array($name),-1,-1,false);
-	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-	$result = $this->query($query,array($name,$value));
-
-	if ( isset($_SESSION['prefs']) ) $_SESSION['prefs'][$name] = $value;
-
-	return true;
+		$query = "update `tiki_preferences` set `value`=? where `name`=?";
+		$this->query($query, array('lastUpdatePrefs', $this->now));
+		$query = "delete from `tiki_preferences` where `name`=?";
+		$result = $this->query($query,array($name),-1,-1,false);
+		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
+		$result = $this->query($query,array($name,$value));
+		if ( isset($_SESSION['prefs']) )
+			$_SESSION['prefs'][$name] = $value;
+		return true;
     }
 
     function get_user_preference($user, $name, $default = '') {
@@ -4241,6 +4244,7 @@ function add_pageview() {
 	if (empty($hash['contributors'])) {
 		$hash2 = '';
 	} else {
+		echo 'BBB';print_r($hash['contributors']);echo 'FFF';
 		foreach ($hash['contributors'] as $c) {
 			$hash3['contributor'] = $c;
 			$hash2[] = $hash3;
@@ -4279,7 +4283,7 @@ function add_pageview() {
 	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $hash['contributions']);
 		if ($feature_contribution == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
-			$contributionlib->assign_contributions($$hash['contributions'], $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
+			$contributionlib->assign_contributions($hash['contributions'], $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
 		}
 	}
 
@@ -7263,5 +7267,12 @@ function validate_email($email,$checkserver='n') {
 		return true;
 	}
 }
+/* Editor configuration
+Local Variables:
+   tab-width: 4
+   c-basic-offset: 4
+End:
+* vim: fdm=marker tabstop=4 shiftwidth=4 noet:
+*/
 
 ?>
