@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.80 2007-10-02 11:04:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.81 2007-10-05 18:04:33 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -203,7 +203,7 @@ function wikiplugin_tracker($data, $params) {
 				// values are OK, then lets add a new item
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
-					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus']);
+					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($email)) {
 						global $sender_email;
