@@ -38,12 +38,12 @@ ask_ticket('admin-inc-i18n');
 
     $pref_byref_values = array(
         "language",
-		'available_language'
+		'available_languages'
     );
 	
     foreach ($pref_byref_values as $britem) {
         simple_set_value ($britem);
-    }	
+    }
 	
 }
 
