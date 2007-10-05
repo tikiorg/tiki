@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.192 2007-10-04 17:57:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.193 2007-10-05 14:12:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -537,6 +537,11 @@ $smarty->assign('wiki_extras','y');
 if ($feature_user_watches == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('index');
+		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'del_desc') && $tiki_p_watch_structure != 'y') {
+			$smarty->assign('msg',tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
