@@ -1,5 +1,5 @@
 <?php
-
+// CVS: $Id: structlib.php,v 1.91 2007-10-05 15:14:34 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
@@ -185,7 +185,7 @@ class StructLib extends TikiLib {
     $ret = null;
     // If the page doesn't exist then create a new wiki page!
 	$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
-	$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '');
+	$created = $this->create_page($name, 0, $newpagebody, $this->now, tra('created from structure'), 'system', '0.0.0.0', '', false, '', array('parent_id'=>$parent_id));
 		// if were not trying to add a duplicate structure head
 		if ($created or isset($parent_id)) {
             //Get the page Id
@@ -324,6 +324,10 @@ class StructLib extends TikiLib {
 	}
 
 	function get_watches($pageName='', $page_ref_id=0) {
+		global $tiki_p_watch_structure;
+		if ($tiki_p_watch_structure != 'y') {
+			return array();
+		}
 		$query = "SELECT ts.`parent_id`,tuw.`email`,tuw.`user`, tuw.`event`";
 		$query .= " FROM `tiki_structures` ts";
 		$query .= " LEFT JOIN `tiki_user_watches` tuw ON (tuw.`object`=ts.`page_ref_id` AND tuw.`event`=?)";
@@ -455,7 +459,7 @@ class StructLib extends TikiLib {
 					$smarty->assign('leafspace',str_repeat("\t",$cur_depth*2));
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if(isset($leaf['sub']) && is_array($leaf['sub'])) {
-						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1).str_repeat("\t",($cur_depth*2)+1)."</li>\n";
+						$ret.=$this->fetch_toc($leaf['sub'],$showdesc,$numbering,$type,$page,$maxdepth,$cur_depth+1, $structurePageName).str_repeat("\t",($cur_depth*2)+1)."</li>\n";
 					} else {
 						$ret.=str_repeat("\t",($cur_depth*2)+1)."</li>\n";
 					} 					
