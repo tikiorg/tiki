@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.2 2007-10-05 13:00:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.3 2007-10-05 13:19:11 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -17,7 +17,9 @@ if (isset($_SESSION['prefs'])) {
 	$query = "select `value` from `tiki_preferences` where `name`=?";
 	$lastUpdatePrefs = $tikilib->getOne($query, array('lastUpdatePrefs'));
 }
-if ( ! isset($_SESSION['prefs']) || empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
+
+// Set default prefs
+if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs'] = array();
 
 	$_SESSION['prefs']['tiki_release'] = '1.10';
@@ -851,7 +853,10 @@ if ( ! isset($_SESSION['prefs']) || empty($_SESSION['prefs']['lastReadingPrefs']
 	$_SESSION['prefs']['feature_purifier'] = 'y';
 	$_SESSION['prefs']['feature_lightbox'] = 'n';
 	$_SESSION['prefs']['log_sql'] = 'n';
+}
 
+// Check if prefs needs to be reloaded
+if ( ! isset($_SESSION['prefs']) || empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
 }
