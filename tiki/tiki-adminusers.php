@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.74 2007-07-20 21:05:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.75 2007-10-05 16:06:13 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -361,6 +361,10 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
 	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);
+
+	// If login is e-mail, email field needs to be the same as name (and is generally not send)
+	if ( $login_is_email == 'y' && isset($_POST['name']) ) $_POST['email'] = $_POST['name'];
+
 	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
 		//var_dump($_POST);die;
 		if ($_POST['name']) {
