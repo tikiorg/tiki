@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.58 2007-06-01 13:56:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.59 2007-10-05 16:57:11 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -63,19 +63,9 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
 	simple_set_toggle('desactive_login_autocomplete');
+	simple_set_value('available_languages');
+	simple_set_value('available_styles');
 
-
-    if (isset($_REQUEST["change_language"]) && isset($_REQUEST["available_languages"])) {
-	$tikilib->set_preference("available_languages", serialize($_REQUEST["available_languages"]));
-    } else {
-	$tikilib->set_preference("available_languages", serialize(array()));
-    }
-
-    if (isset($_REQUEST["available_styles"])) {
-	$tikilib->set_preference("available_styles", serialize($_REQUEST["available_styles"]));
-    } else {
-	$tikilib->set_preference("available_styles", serialize(array()));
-    }
 
 	if (isset($_REQUEST['registration_choices'])) {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');

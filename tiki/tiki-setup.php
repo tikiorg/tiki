@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.463 2007-10-04 22:17:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.464 2007-10-05 16:57:10 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -695,8 +695,7 @@ if (isset($_REQUEST['switchLang'])) {
 		|| !file_exists('lang/'.$_REQUEST['switchLang'].'/language.php'))
 		unset($_REQUEST['switchLang']);
 	elseif ($available_languages) {
-		$a = unserialize($available_languages);
-		if (count($a) >= 1 && !in_array($_REQUEST['switchLang'], $a))
+		if (count($available_languages) >= 1 && !in_array($_REQUEST['switchLang'], $available_languages))
 			unset($_REQUEST['switchLang']);
 	}
 }
