@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.3 2007-10-05 13:19:11 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.4 2007-10-05 13:32:29 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -856,7 +856,7 @@ if ( ! isset($_SESSION['prefs'])) {
 }
 
 // Check if prefs needs to be reloaded
-if ( ! isset($_SESSION['prefs']) || empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
+if ( empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
 }
