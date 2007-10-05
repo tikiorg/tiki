@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.59 2007-10-05 16:57:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.60 2007-10-05 17:05:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -188,9 +188,6 @@ $languages = $tikilib->list_languages(false,null,true);
 $smarty->assign_by_ref('languages', $languages);
 
 $smarty->assign("styles", $tikilib->list_styles());
-
-$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
-$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 $listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
 $smarty->assign("listTrackers",$listTrackers['list']);

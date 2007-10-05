@@ -38,29 +38,13 @@ ask_ticket('admin-inc-i18n');
 
     $pref_byref_values = array(
         "language",
+		'available_language'
     );
 	
-	
     foreach ($pref_byref_values as $britem) {
-        byref_set_value ($britem);
+        simple_set_value ($britem);
     }	
 	
-	
-	
-	
-	
-	
-    if (isset($_REQUEST["change_language"]) && isset($_REQUEST["available_languages"])) {
-	$tikilib->set_preference("available_languages", serialize($_REQUEST["available_languages"]));
-    } else {
-	$tikilib->set_preference("available_languages", serialize(array()));
-    }
-	
-
-	
 }
-
-$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
-$smarty->assign("language", $tikilib->get_preference("language", "en"));
 
 ?>
