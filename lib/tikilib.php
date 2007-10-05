@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.787 2007-10-05 13:26:19 sept_7 Exp $
+// CVS: $Id: tikilib.php,v 1.788 2007-10-05 13:54:58 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4036,7 +4036,7 @@ function add_pageview() {
 	// This method overrides the prefs with those specified in database
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
 	function get_db_preferences() {
-		$_SESSION['prefs']['lastReadingPrefs'] = $tikilib->now;
+		$_SESSION['prefs']['lastReadingPrefs'] = $this->now;
 		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
 		while ( $res = $result->fetchRow() ) {
 			$_SESSION['prefs'][$res['name']] = $res['value'];
