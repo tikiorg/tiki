@@ -23,12 +23,13 @@ class QuickTagsLib extends TikiLib {
 		}
 		if ($category) {
 			if ($mid) {
-				$mid = " and (`tagcategory` like ?)";
+				$mid .= " and (`tagcategory` like ?)";
 			} else {
 			   $mid = " where (`tagcategory` like ?)";
 			}
 			$bindvars[]=$category;
 	        }
+
 		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quicktags` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
