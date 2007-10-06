@@ -1,5 +1,5 @@
 {include file="header.tpl"}
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
 <div id="tiki-main" class="simplebox">
@@ -22,7 +22,7 @@
 <a href="#" onclick="javascript:window.close();" class="link">{tr}close{/tr}</a>
 </div>
 </div>
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 </td></tr></table>
 {/if}
 {include file="footer.tpl"}

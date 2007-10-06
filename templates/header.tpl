@@ -37,7 +37,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if !empty($headtitle)} : {$headtitle}
 {elseif !empty($page)} : {$page|escape} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 {elseif !empty($arttitle)} : {$arttitle}
-{elseif !empty($prefs.title)} : {$prefs.title}
+{elseif !empty($title)} : {$title}
 {elseif !empty($thread_info.title)} : {$thread_info.title}
 {elseif !empty($post_info.title)} : {$post_info.title}
 {elseif !empty($forum_info.name)} : {$forum_info.name}
@@ -49,7 +49,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 </title>
 
-{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
+{if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y'}

@@ -41,7 +41,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
 {elseif $arttitle ne ''} : {$arttitle}
-{elseif $prefs.title ne ''} : {$prefs.title}
+{elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
@@ -51,7 +51,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {* --- main CSS file --- *}		<link rel="StyleSheet" media="all" href="styles/{$prefs.style}" type="text/css" />
 
-{* --- favicon file --- *}{if $favicon}		<link rel="icon" href="{$favicon}" />{/if}
+{* --- favicon file --- *}{if $prefs.site_favicon}		<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y'}
@@ -110,7 +110,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $prefs.feature_community_mouseover}		{popup_init src="lib/overlib.js"}{/if}
 
 {* main content follows here *}
-		<div id="main"{if $feature_bidi eq 'y'} dir="rtl"{/if}><!-- START of main wrapper -->
+		<div id="main"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}><!-- START of main wrapper -->
 
 			<!--  here can be placed start tag of an optional extra div wrapper, e.g. for look'n'feel fancy stuff -->
 

@@ -1,8 +1,8 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.12 2007-10-04 22:17:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.13 2007-10-06 15:18:47 nyloth Exp $ *}
 {* Index we display a wiki page here *}
 
-{if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
+{if $prefs.feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
   {if $prefs.feature_top_bar eq 'y'}
@@ -73,6 +73,6 @@
 </div><!-- tiki-main -->
 {/if}
 
-{if $feature_bidi eq 'y'}</td></tr></table>{/if}
+{if $prefs.feature_bidi eq 'y'}</td></tr></table>{/if}
 
 {include file="footer.tpl"}

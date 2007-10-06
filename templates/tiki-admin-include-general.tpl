@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.66 2007-10-04 22:17:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.67 2007-10-06 15:18:45 nyloth Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -115,13 +115,13 @@
         <td class="form" >
           <label for="general-access">{tr}Disallow access to the site (except for those with permission){/tr}:</label></td>
         <td ><input type="checkbox" name="site_closed" id="general-access"
-              {if $site_closed eq 'y'}checked="checked"{/if}/>
+              {if $prefs.site_closed eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
         <td class="form">
             <label for="general-site_closed">{tr}Message to display when site is closed{/tr}:</label></td>
         <td><input type="text" name="site_closed_msg" id="general-site_closed"
-             value="{$site_closed_msg}" size="60"/></td>
+             value="{$prefs.site_closed_msg}" size="60"/></td>
       </tr>
       </table>
       <table class="admin"><tr>
@@ -130,14 +130,14 @@
         <td class="form" >
           <label for="general-load">{tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</label></td>
         <td ><input type="checkbox" name="use_load_threshold" id="general-load"
-              {if $use_load_threshold eq 'y'}checked="checked"{/if}/>
+              {if $prefs.use_load_threshold eq 'y'}checked="checked"{/if}/>
       </td>
       </tr><tr>
         <td class="form"><label for="general-max_load">{tr}Max average server load threshold in the last minute{/tr}:</label></td>
-        <td><input type="text" name="load_threshold" id="general-max_load" value="{$load_threshold}" size="5" /></td>
+        <td><input type="text" name="load_threshold" id="general-max_load" value="{$prefs.load_threshold}" size="5" /></td>
       </tr><tr>
         <td class="form"><label for="general-load_mess">{tr}Message to display when server is too busy{/tr}:</label></td>
-        <td><input type="text" name="site_busy_msg" id="general-load_mess" value="{$site_busy_msg}" size="60" /></td>
+        <td><input type="text" name="site_busy_msg" id="general-load_mess" value="{$prefs.site_busy_msg}" size="60" /></td>
       </tr>
       </table>
       <table class="admin"><tr>

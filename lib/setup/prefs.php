@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.5 2007-10-05 16:57:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.6 2007-10-06 15:18:45 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -367,8 +367,8 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['validateEmail'] = 'n';
 	$_SESSION['prefs']['forgotPass'] = 'n';
 	$_SESSION['prefs']['change_password'] = 'y';
-	$_SESSION['prefs']['available_languages'] = 'a:0:{}';
-	$_SESSION['prefs']['available_styles'] = 'a:0:{}';
+	$_SESSION['prefs']['available_languages'] = array();
+	$_SESSION['prefs']['available_styles'] = array();
 	$_SESSION['prefs']['lowercase_username'] = 'n';
 	$_SESSION['prefs']['max_username_length'] = '50';
 	$_SESSION['prefs']['min_username_length'] = '1';
@@ -626,7 +626,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['feature_intertiki_mymaster'] = '';
 	$_SESSION['prefs']['feature_intertiki_import_preferences'] = 'n';
 	$_SESSION['prefs']['feature_intertiki_import_groups'] = 'n';
-	$_SESSION['prefs']['known_hosts'] = serialize(array(''));
+	$_SESSION['prefs']['known_hosts'] = array('');
 	$_SESSION['prefs']['tiki_key'] = '';
 	$_SESSION['prefs']['intertiki_logfile'] = '';
 	$_SESSION['prefs']['intertiki_errfile'] = '';
@@ -730,6 +730,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['feature_view_tpl'] = 'n';
 	$_SESSION['prefs']['slide_style'] = 'slidestyle.css';
 	$_SESSION['prefs']['site_favicon'] = 'favicon.png';
+	$_SESSION['prefs']['site_favicon_type'] = 'image/png';
 	$_SESSION['prefs']['style'] = 'tikineat.css';
 	
 	# mods
@@ -853,14 +854,53 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['feature_purifier'] = 'y';
 	$_SESSION['prefs']['feature_lightbox'] = 'n';
 	$_SESSION['prefs']['log_sql'] = 'n';
+
+	$_SESSION['prefs']['case_patched'] = 'n';
+	$_SESSION['prefs']['site_closed'] = 'n';
+	$_SESSION['prefs']['site_closed_msg'] = 'Site is closed for maintainance; please come back later.';
+	$_SESSION['prefs']['use_load_threshold'] = 'n';
+	$_SESSION['prefs']['load_threshold'] = 3;
+	$_SESSION['prefs']['site_busy_msg'] = 'Server is currently too busy; please come back later.';
+
+	// Special default values
+
+	if ( is_file('styles/'.$tikidomain.'/'.$_SESSION['prefs']['site_favicon']) )
+		$_SESSION['prefs']['site_favicon'] = "styles/$tikidomain/$site_favicon";
+	elseif ( ! is_file($_SESSION['prefs']['site_favicon']) )
+		$_SESSION['prefs']['site_favicon'] = false;
+
+	$_SESSION['tmpDir'] = TikiInit::tempdir();
+
+	$_SESSION['prefs']['display_timezone'] = ( $user ) ? $tikilib->get_user_preference($user, 'display_timezone', $server_timezone) : $server_timezone;
+
+	$_SESSION['prefs']['feature_bidi'] = 'n';
+	$_SESSION['prefs']['feature_lastup'] = 'y';
+	$_SESSION['prefs']['display_server_load'] = 'y';
+
+	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+	if ( ! isset($_SESSION['serialized_prefs']) ) {	
+		$_SESSION['serialized_prefs'] = array();
+		foreach ( $_SESSION['prefs'] as $p => $v )
+			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
+	}
 }
+
 
 // Check if prefs needs to be reloaded
 if ( empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
+
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
-	$_SESSION['prefs']['available_languages'] = unserialize($_SESSION['prefs']['available_languages']);
-	$_SESSION['prefs']['available_styles'] = unserialize($_SESSION['prefs']['available_styles']);
+
+	// Unserialize serialized preferences
+	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
+		foreach ( $_SESSION['serialized_prefs'] as $p ) {
+			if ( ! is_array($_SESSION['prefs'][$p]) ) $_SESSION['prefs'][$p] = unserialize($_SESSION['prefs'][$p]);
+		}
+	}
+
+	// Be absolutely sure we have a value for tikiIndex
+	if ( $_SESSION['prefs']['tikiIndex'] == '' ) $_SESSION['prefs']['tikiIndex'] = 'tiki-index.php';
 }
 
 // Assign the prefs array in smarty, by reference

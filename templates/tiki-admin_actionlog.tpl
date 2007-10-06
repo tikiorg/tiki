@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.43 2007-10-04 22:17:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.44 2007-10-06 15:18:46 nyloth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -249,7 +249,7 @@
 <tr>
 <th class="heading">{tr}User{/tr}</th>
 {foreach key=title item=nb from=$userActions[0]}
-{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
@@ -271,7 +271,7 @@
 <tr>
 <th class="heading">{tr}Category{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categId item=stat from=$statCateg}
@@ -293,7 +293,7 @@
 <th class="heading">{tr}Category{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $prefs.title ne 'user'}<th class="heading">{$prefs.title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categUser item=stat from=$statUserCateg}

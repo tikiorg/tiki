@@ -51,6 +51,6 @@
 </div>
 </td>
 <td width="50%" valign="top">
-<iframe src="http://{$master}/tiki-replicate_console.php" name="{$prefs.title|escape}" height="100%" width="100%" align="center" frameborder="0" scrolling="auto" 
+<iframe src="http://{$master}/tiki-replicate_console.php" name="{$title|escape}" height="100%" width="100%" align="center" frameborder="0" scrolling="auto" 
 style="border:0"></iframe> 
 </td></tr></table>

@@ -26,7 +26,7 @@ FCKConfig.EditorAreaCSS = _TikiRoot + '{$fckstyle}' ;
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/{$prefs.wysiwyg_toolbar_skin}/' ;
 FCKConfig.DefaultLanguage   = '{$prefs.language}' ;
 FCKConfig.AutoDetectLanguage   = {if $prefs.feature_detect_language eq 'y'}true{else}false{/if} ;
-FCKConfig.ContentLangDirection = '{if $feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
+FCKConfig.ContentLangDirection = '{if $prefs.feature_bidi eq 'y'}rtl{else}ltr{/if}' ;
 FCKConfig.StartupFocus = true ;
 FCKConfig.FormatOutput = true ;
 

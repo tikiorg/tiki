@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.125 2007-06-29 16:33:40 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.126 2007-10-06 15:18:42 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,13 +39,15 @@ function simple_set_toggle($feature) {
 	}
 }
 
-function simple_set_value($feature) {
-	global $_REQUEST, $tikilib, $smarty;
-
+function simple_set_value($feature, $pref = '') {
+	global $_REQUEST, $tikilib;
 	if (isset($_REQUEST[$feature])) {
-		$tikilib->set_preference($feature, $_REQUEST[$feature]);
-
-		$smarty->assign($feature, $_REQUEST[$feature]);
+		if ( $pref != '' ) {
+			$tikilib->set_preference($pref, $_REQUEST[$feature]);
+			$_SESSION['prefs'][$feature] = $_REQUEST[$feature];
+		} else {
+			$tikilib->set_preference($feature, $_REQUEST[$feature]);
+		}
 	}
 }
 
@@ -53,24 +55,12 @@ function simple_set_int($feature) {
         global $_REQUEST, $tikilib, $smarty;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
 		$tikilib->set_preference($feature, $_REQUEST[$feature]);
-		$smarty->assign($feature, $_REQUEST[$feature]);
 	}
 }
 
 function byref_set_value($feature, $pref = "") {
 	global $_REQUEST, $tikilib, $smarty;
-
-	if (isset($_REQUEST[$feature])) {
-		if (strlen($pref) > 0) {
-			$tikilib->set_preference($pref, $_REQUEST[$feature]);
-			// also assign the ref appareantly --gongo
-			$smarty->assign_by_ref($pref, $_REQUEST[$feature]);
-		} else {
-			$tikilib->set_preference($feature, $_REQUEST[$feature]);
-		}
-
-		$smarty->assign_by_ref($feature, $_REQUEST[$feature]);
-	}
+	simple_set_value($feature, $pref);
 }
 
 $home_blog = $tikilib->get_preference("home_blog", 0);

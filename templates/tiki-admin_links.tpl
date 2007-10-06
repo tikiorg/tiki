@@ -49,7 +49,7 @@
 {if $editurl eq 'n'}
 <h2>{tr}Add Featured Link{/tr}</h2>
 {else}
-<h2>{tr}Edit this Featured Link:{/tr} {$prefs.title}</h2>
+<h2>{tr}Edit this Featured Link:{/tr} {$title}</h2>
 <a href="tiki-admin_links.php">{tr}Create new Featured Link{/tr}</a>
 {/if}
 <form action="tiki-admin_links.php" method="post">
@@ -61,7 +61,7 @@
 <input type="hidden" name="url" value="{$editurl|escape}" />
 </td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$prefs.title|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Position{/tr}</td><td><input type="text" size="3" name="position" value="{$position|escape}" /> (0 {tr}disables the link{/tr})</td></tr>
 <tr class="formcolor"><td>{tr}Link type{/tr}</td><td>
 <select name="type">

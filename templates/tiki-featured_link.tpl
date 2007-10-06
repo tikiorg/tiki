@@ -1,7 +1,7 @@
 <br />
 <iframe
   src="{$url}"
- name="{$prefs.title|escape}"
+ name="{$title|escape}"
  
  height="600"
  width="100%"

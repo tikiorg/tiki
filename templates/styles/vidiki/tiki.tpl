@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-{if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
+{if $prefs.feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 
 {* Index we display a wiki page here *}
@@ -13,7 +13,7 @@
   {if $headtitle} : {$headtitle}
   {elseif $page ne ''} : {$page|escape} {* add $description|escape if you want to put the description *}
   {elseif $arttitle ne ''} : {$arttitle}
-  {elseif $prefs.title ne ''} : {$prefs.title}
+  {elseif $title ne ''} : {$title}
   {elseif $thread_info.title ne ''} : {$thread_info.title}
   {elseif $post_info.title ne ''} : {$post_info.title}
   {elseif $forum_info.name ne ''} : {$forum_info.name}
@@ -54,6 +54,6 @@
   {/if}
 
 {/if}
-{if $feature_bidi eq 'y'}</td></tr></table>{/if}
+{if $prefs.feature_bidi eq 'y'}</td></tr></table>{/if}
 
 {include file="footer.tpl"}

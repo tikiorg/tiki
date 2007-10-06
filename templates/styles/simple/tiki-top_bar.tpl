@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-top_bar.tpl,v 1.9 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-top_bar.tpl,v 1.10 2007-10-06 15:18:47 nyloth Exp $ *}
 {tr}This is{/tr} Tikiwiki v1.10 (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   <a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
@@ -34,7 +34,7 @@
 				{/section}
 			{else}
 				{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page}
-				{elseif $prefs.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$prefs.title}
+				{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
 				{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
 				{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}
 				{/if}

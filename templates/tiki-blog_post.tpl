@@ -48,7 +48,7 @@
 {/if}
 {if $blog_data.use_title eq 'y' || !$blogId}
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-<input type="text" size="80" name="title" value="{$prefs.title|escape}" />
+<input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
 {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}

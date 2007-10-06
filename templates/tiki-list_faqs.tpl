@@ -14,7 +14,7 @@
 
 {if $tiki_p_admin_faqs eq 'y'}
 {if $faqId > 0}
-<h2>{tr}Edit this FAQ:{/tr} {$prefs.title}</h2>
+<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
 <a href="tiki-list_faqs.php" class="linkbut">{tr}Create new FAQ{/tr}</a>
 {else}
 <h2>{tr}Create New FAQ:{/tr}</h2>
@@ -22,7 +22,7 @@
 <form action="tiki-list_faqs.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$prefs.title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Users can suggest questions{/tr}:</td><td class="formcolor"><input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} /></td></tr>

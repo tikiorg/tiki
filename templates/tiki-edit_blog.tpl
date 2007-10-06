@@ -1,6 +1,6 @@
 <h1>
 {if $blogId > 0}
-<a class="pagetitle" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit Blog{/tr}: {$prefs.title}</a>
+<a class="pagetitle" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit Blog{/tr}: {$title}</a>
 {else}
 <a class="pagetitle" href="tiki-edit_blog.php">{tr}Create Blog{/tr}</a>
 {/if}
@@ -26,12 +26,12 @@
 {/if}
 
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName={$prefs.title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
+<a class="link" href="tiki-objectpermissions.php?objectName={$title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
 {/if}
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form">
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
 <table class="normal">
-<tr class="editblogform"><td><label for="blog-title">{tr}Title{/tr}</label></td><td><input type="text" name="title" id="blog-title" value="{$prefs.title|escape}" /></td></tr>
+<tr class="editblogform"><td><label for="blog-title">{tr}Title{/tr}</label></td><td><input type="text" name="title" id="blog-title" value="{$title|escape}" /></td></tr>
 <tr class="editblogform"><td><label for="blog-desc">{tr}Description{/tr}</label><br />{include file="textareasize.tpl" area_name='blog-desc' formId='blog-edit-form'}</td><td><textarea class="wikiedit" name="description" id="blog-desc" rows="{$rows}" cols="{$cols}" wrap="virtual">{$description|escape}</textarea></td></tr>
 {if $tiki_p_admin eq 'y'}<tr class="editblogform"><td>{tr}Creator{/tr}</td><td><select name="user">
 {foreach from=$users key=userId item=u}
