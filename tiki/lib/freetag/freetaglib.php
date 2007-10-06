@@ -98,9 +98,9 @@ class FreetagLib extends ObjectLib {
 	$this->ObjectLib($db);
 	
 	// update private vars with tiki preferences
-    	global $tikilib;
-	if ( $tikilib->get_preference('freetags_lowercase_only', 'y') != 'y' ) $this->_normalize_in_lowercase = 0;
-	if ( $tikilib->get_preference('freetags_ascii_only', 'y') != 'y' ) $this->_normalize_tags = 0;
+    	global $prefs;
+	if ( $prefs['freetags_lowercase_only'] != 'y' ) $this->_normalize_in_lowercase = 0;
+	if ( $prefs['freetags_ascii_only'] != 'y' ) $this->_normalize_tags = 0;
     }
 
     /**

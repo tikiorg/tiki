@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.45 2007-08-10 13:33:22 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.46 2007-10-06 17:16:58 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -47,25 +47,25 @@ if ($tiki_p_admin == 'y') {
 	}
 } else {
 	if (isset($_REQUEST['setConf'])) {
-		$prefs = 'v';
+		$_prefs = 'v';
 		for ($i = 0; $i < sizeof($confs); ++$i) {
 			if ($confs[$i]['status'] == 'v' || $confs[$i]['status'] == 'y') { // can only change what is recorded
 				if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed
-					$prefs .= $confs[$i]['id'].'v';
+					$_prefs .= $confs[$i]['id'].'v';
 					$confs[$i]['status'] = 'v';
 				} else {
-					$prefs .= $confs[$i]['id'].'y';
+					$_prefs .= $confs[$i]['id'].'y';
 					$confs[$i]['status'] = 'y';
 				}
 			}
 		}
-		$tikilib->set_user_preference($user, 'actionlog_conf', $prefs);
+		$tikilib->set_user_preference($user, 'actionlog_conf', $_prefs);
 	} else {
-		$prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
-		if (!empty($prefs)) {
+		$_prefs = $tikilib->get_user_preference($user, 'actionlog_conf', '');
+		if (!empty($_prefs)) {
 			foreach ($confs as $i=>$conf) {
 				if ($confs[$i]['status'] == 'v' || $confs[$i]['status'] == 'y') {
-					if (preg_match('/[vy]'.$confs[$i]['id'].'([vy])/', $prefs, $matches))
+					if (preg_match('/[vy]'.$confs[$i]['id'].'([vy])/', $_prefs, $matches))
 						$confs[$i]['status'] = $matches[1];
 				}
 			}

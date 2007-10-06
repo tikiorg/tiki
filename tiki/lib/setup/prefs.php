@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.6 2007-10-06 15:18:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.7 2007-10-06 17:16:59 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -908,3 +908,4 @@ $smarty->assign_by_ref('prefs', $_SESSION['prefs']);
 
 // Set a global var for each prefs
 extract($_SESSION['prefs']);
+$prefs =& $_SESSION['prefs'];
