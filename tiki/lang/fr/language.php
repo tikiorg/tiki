@@ -476,6 +476,7 @@ $lang=Array(
 "save the banner" => "enregistrer la bannière",
 "edit blog tpl" => "gabarit de la modification des blogues",
 "admin quicktags" => "administrer les raccourcis",
+"Quicktags category filter" => "Filtre des raccourcis",
 "save and go next" => "enregistrer et continuer",
 "create new block" => "créer un nouveau bloc",
 "list quizzes" => "liste des QCMs",

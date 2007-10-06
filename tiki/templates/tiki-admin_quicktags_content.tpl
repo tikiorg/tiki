@@ -1,4 +1,21 @@
 
+{* quicktags filter *}
+<div align=center>
+  <form action="tiki-admin_quicktags.php" method="get">
+    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+    <input type="hidden" name="tagId" value="{$tagId|escape}" />
+    {tr}Quicktags category filter{/tr}
+    <select name="category" onchange="this.form.submit()">
+      <option value=All>{tr}All{/tr}</option>
+      {section name=ct loop=$list_categories}
+        <option {if $category eq $list_categories[ct]} selected="selected"{/if}>{tr}{$list_categories[ct]}{/tr}</option>
+      {/section}
+    </select>
+  </form>
+</div>
+
+<br /><br />
+
 <table class="normal">
   <tr>
     <td class="heading">
@@ -39,22 +56,23 @@
   </tr>
 {/section}
 </table>
+
 <div class="mini">
 {if $prev_offset >= 0}
-  [<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Prev{/tr}
+  [<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;category={$category}{/ajax_href}}>{tr}Prev{/tr}
   </a>]
   &nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>{tr}Next{/tr}</a>]
+  &nbsp;[<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;category={$category}{/ajax_href}}>{tr}Next{/tr}</a>]
 {/if}
 {if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{/ajax_href}}>
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
+  <br />
+  {section loop=$cant_pages name=foo}
+    {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+      <a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}&amp;category={$category}{/ajax_href}}>
+      {$smarty.section.foo.index_next}</a>&nbsp;
+    {/section}
 {/if}
 </div>
