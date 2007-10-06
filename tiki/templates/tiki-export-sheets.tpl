@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
-<h1><a href="tiki-sheets.php" class="pagetitle">{tr}{$prefs.title}{/tr}</a></h1>
+<h1><a href="tiki-sheets.php" class="pagetitle">{tr}{$title}{/tr}</a></h1>
 
 <div>
 {$description}

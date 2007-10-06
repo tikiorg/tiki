@@ -1,4 +1,4 @@
-<div class="blogtitle">{tr}Blog{/tr}: {$prefs.title}</div>
+<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
 <div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />

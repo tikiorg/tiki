@@ -1,0 +1,20 @@
+<?php
+
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/userlevels.php,v 1.1 2007-10-06 15:18:45 nyloth Exp $
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
+// details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
+  header('location: index.php');
+  exit;
+}
+
+$mylevel = $tikilib->get_user_preference($user,'mylevel',1);
+if ( isset($_REQUEST['level']) and isset($userlevels[$_REQUEST['level']]) and $user ) {
+	$tikilib->set_user_preference($user,"mylevel",$_REQUEST['level']);
+	$mylevel = $_REQUEST['level'];
+}
+$smarty->assign('mylevel',$mylevel);

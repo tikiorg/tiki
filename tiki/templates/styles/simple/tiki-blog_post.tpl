@@ -55,7 +55,7 @@
 		{tr}Title{/tr}
 	</div>
 	<div class="editblogform">
-		<input type="text" size="80" name="title" value="{$prefs.title|escape}" />
+		<input type="text" size="80" name="title" value="{$title|escape}" />
 	</div>
 {/if}
 <div class="editblogform">

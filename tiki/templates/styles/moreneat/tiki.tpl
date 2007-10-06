@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.25 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki.tpl,v 1.26 2007-10-06 15:18:47 nyloth Exp $ *}
 {include file="header.tpl"}
 {* Index we display a wiki page here *}
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
@@ -114,7 +114,7 @@
 </div>
 
 {/if}
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 </td></tr></table>
 {/if}
 

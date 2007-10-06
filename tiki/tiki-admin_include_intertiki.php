@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.7 2007-07-26 10:23:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.8 2007-10-06 15:18:43 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -21,7 +21,6 @@ if (!isset($_REQUEST['known_hosts'])) $_REQUEST['known_hosts']= array();
 
 if (isset($_REQUEST['del'])) {
 	check_ticket('admin-inc-intertiki');
-	$interlist = unserialize($tikilib->get_preference("interlist",''));
 	$_REQUEST["intertikiclient"] = true;
 	foreach ($interlist as $k=>$i) {
 		if ($k != $_REQUEST['del']) {
@@ -32,13 +31,12 @@ if (isset($_REQUEST['del'])) {
 
 if (isset($_REQUEST['delk'])) {
 	check_ticket('admin-inc-intertiki');
-	$known_hosts = unserialize($tikilib->get_preference("known_hosts",''));
 	foreach ($known_hosts as $k=>$i) {
 		if ($k != $_REQUEST['delk']) {
 			$_REQUEST['known_hosts'][$k] = $i;
 		}
-	$_REQUEST['known_hosts'] = serialize($_REQUEST['known_hosts']);
-	simple_set_value('known_hosts');	}
+	simple_set_value('known_hosts');
+	}
 }
 
 if (isset($_REQUEST["intertikiclient"])) {
@@ -47,7 +45,6 @@ if (isset($_REQUEST["intertikiclient"])) {
 		$new["{$_REQUEST['new']['name']}"] = $_REQUEST['new'];
 		$_REQUEST['interlist'] += $new;
 	}
-	$_REQUEST['interlist'] = serialize($_REQUEST['interlist']);
 	simple_set_value('interlist');
 	simple_set_value('tiki_key');
 	simple_set_value('feature_intertiki_mymaster');
@@ -66,16 +63,7 @@ if (isset($_REQUEST["intertikiserver"])) {
 		$newhost["{$_REQUEST['newhost']['key']}"] = $_REQUEST['newhost'];
 		$_REQUEST['known_hosts'] += $newhost;
 	}
-	$_REQUEST['known_hosts'] = serialize($_REQUEST['known_hosts']);
 	simple_set_value('known_hosts');
 }
 
-$interlist   = unserialize($tikilib->get_preference("interlist",''));
-$known_hosts = unserialize($tikilib->get_preference("known_hosts",''));
-
-$smarty->assign("interlist", $interlist);
-$smarty->assign("known_hosts", $known_hosts);
-$smarty->assign("feature_intertiki_server", $tikilib->get_preference("feature_intertiki_server", "n"));
-
 ask_ticket('admin-inc-intertiki');
-?>

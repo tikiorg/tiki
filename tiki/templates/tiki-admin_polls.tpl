@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.34 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.35 2007-10-06 15:18:46 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -21,7 +21,7 @@
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$prefs.title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>

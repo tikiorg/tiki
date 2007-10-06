@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.6 2007-10-06 15:18:47 nyloth Exp $ *}
 {* Template for Tikiwiki site identity header *}
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitemycode}{* here can be custom site admin code *}{/if}
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
@@ -25,7 +25,7 @@
 			{/section}
 		{else}
 			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page}
-			{elseif $prefs.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$prefs.title}
+			{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
 			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
 			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}
 			{/if}

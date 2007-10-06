@@ -1,4 +1,4 @@
-<h1>{$prefs.title}</h1>
+<h1>{$title}</h1>
 <p>
 {$description}
 </p>
@@ -111,7 +111,7 @@ function _renValRad( name )
 <table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Title{/tr}:</td>
-		<td class="formcolor"><input type="text" name="title" value="{$prefs.title}" onChange="renderWikiPlugin()"/></td>
+		<td class="formcolor"><input type="text" name="title" value="{$title}" onChange="renderWikiPlugin()"/></td>
 	</tr>
 {if $showgridparam}
 	<tr>

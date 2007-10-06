@@ -36,12 +36,12 @@ ask_ticket('admin-inc-i18n');
         simple_set_toggle ($toggle);
     }	
 
-    $pref_byref_values = array(
-        "language",
-		'available_languages'
+    $pref_values = array(
+	'language',
+	'available_languages',
     );
 	
-    foreach ($pref_byref_values as $britem) {
+    foreach ($pref_values as $britem) {
         simple_set_value ($britem);
     }
 	

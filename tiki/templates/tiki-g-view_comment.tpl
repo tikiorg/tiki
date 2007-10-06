@@ -11,7 +11,7 @@
 	</tr>
 	<tr>
 		<td class="heading">{tr}Subject{/tr}:</td>
-		<td class="formcolor" colspan="3">{$prefs.title}</td>
+		<td class="formcolor" colspan="3">{$title}</td>
 	</tr>
 	<tr>
 		{*<td class="body">{tr}Body{/tr}:</td>*}

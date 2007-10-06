@@ -7,7 +7,7 @@ class HeaderLib {
 	var $cssfiles;
 	var $css;
 	var $rssfeeds;
-	var $matatags;
+	var $metatags;
 	
 	function HeaderLib() {
 		$this->title = '';
@@ -145,4 +145,4 @@ class HeaderLib {
 }
 
 $headerlib = new HeaderLib();
-?>
+$smarty->assign_by_ref('headerlib', $headerlib);

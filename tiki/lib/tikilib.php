@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.789 2007-10-05 16:57:12 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.790 2007-10-06 15:18:43 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4035,12 +4035,13 @@ function add_pageview() {
 
 	// This method overrides the prefs with those specified in database
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
-	function get_db_preferences() {
-		$_SESSION['prefs']['lastReadingPrefs'] = $this->now;
-		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-		while ( $res = $result->fetchRow() ) {
-			$_SESSION['prefs'][$res['name']] = $res['value'];
-		}
+
+    function get_db_preferences() {
+	$_SESSION['prefs']['lastReadingPrefs'] = $this->now;
+	$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+	while ( $res = $result->fetchRow() ) {
+		$_SESSION['prefs'][$res['name']] = $res['value'];
+	}
     }
 
 	// This method need to be _obsoleted_, since it queries the db instead of session vars
@@ -4063,21 +4064,21 @@ function add_pageview() {
     }
 
     function set_preference($name, $value) {
-		$query = "update `tiki_preferences` set `value`=? where `name`=?";
-		$this->query($query, array('lastUpdatePrefs', $this->now));
-		$query = "delete from `tiki_preferences` where `name`=?";
-		$result = $this->query($query,array($name),-1,-1,false);
-		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-		if (is_array($value)) {
-			$result = $this->query($query,array($name,serialize($value)));
-		} else {
-			$result = $this->query($query,array($name,$value));
-		}
-		if ( isset($_SESSION['prefs']) ) {
-			$_SESSION['prefs'][$name] = $value;
-			$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
-		}
-		return true;
+	$query = "update `tiki_preferences` set `value`=? where `name`=?";
+	$this->query($query, array('lastUpdatePrefs', $this->now));
+	$query = "delete from `tiki_preferences` where `name`=?";
+	$result = $this->query($query,array($name),-1,-1,false);
+	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
+	if (is_array($value)) {
+		$result = $this->query($query,array($name,serialize($value)));
+	} else {
+		$result = $this->query($query,array($name,$value));
+	}
+	if ( isset($_SESSION['prefs']) ) {
+		$_SESSION['prefs'][$name] = $value;
+		$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
+	}
+	return true;
     }
 
     function get_user_preference($user, $name, $default = '') {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/tiki.tpl,v 1.15 2007-10-04 22:17:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/tiki.tpl,v 1.16 2007-10-06 15:18:47 nyloth Exp $ *}
 {include file="header.tpl"}
 
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
@@ -14,7 +14,7 @@
 {assign var=cols value=$cols+1}
 {assign var=rcol value="y"}
 {/if}
-<table {if $feature_bidi eq 'y'}dir="rtl"{/if} cellpadding="0" cellspacing="0" border="0" width="100%">
+<table {if $prefs.feature_bidi eq 'y'}dir="rtl"{/if} cellpadding="0" cellspacing="0" border="0" width="100%">
 {if $prefs.feature_top_bar eq 'y'}
 <tr><td {if $cols gt 1}colspan="{$cols}"{/if}>
 <div id="tiki-top">{include file="tiki-top_tiki_bar.tpl"}</div>

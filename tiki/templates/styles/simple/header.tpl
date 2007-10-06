@@ -30,7 +30,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
 {elseif $arttitle ne ''} : {$arttitle}
-{elseif $prefs.title ne ''} : {$prefs.title}
+{elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
@@ -45,7 +45,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="StyleSheet"  href="styles/transitions/{$transition_style}" type="text/css" />
 {/if}
 <link rel="StyleSheet" media="all" href="styles/{$prefs.style}" type="text/css" />
-{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
+{if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 {* --- jscalendar block --- *}
 {if $prefs.feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>

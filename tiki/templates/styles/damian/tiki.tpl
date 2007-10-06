@@ -1,6 +1,6 @@
 {* Index we display a wiki page here *}
 {include file="header.tpl"}
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
@@ -46,7 +46,7 @@
   {/if}
 </div>
 {/if}
-{if $feature_bidi eq 'y'}
+{if $prefs.feature_bidi eq 'y'}
 </td></tr></table>
 {/if}
 {include file="footer.tpl"}

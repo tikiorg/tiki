@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
-		{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
+		{if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
     {include file="bidi.tpl"}
 
 <title>
@@ -14,7 +14,7 @@
 {if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
 {elseif $arttitle ne ''} : {$arttitle}
-{elseif $prefs.title ne ''} : {$prefs.title}
+{elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
