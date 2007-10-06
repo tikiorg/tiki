@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.60 2007-10-05 17:05:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61 2007-10-06 17:16:58 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -144,7 +144,7 @@ if (isset($_REQUEST['users_defaults'])) {
 	check_ticket('admin-inc-login');
 
 	// numerical and text values
-	$prefs = array(
+	$_prefs = array(
 		'users_prefs_theme',
 		'users_prefs_userbreadCrumb',
 		'users_prefs_language',
@@ -158,12 +158,12 @@ if (isset($_REQUEST['users_defaults'])) {
 		'users_prefs_mess_archiveAfter',
 		'users_prefs_tasks_maxRecords'
 	);
-	foreach($prefs as $pref) {
+	foreach($_prefs as $pref) {
 		simple_set_value($pref);
 	}
 	
 	// boolean values
-	$prefs = array(
+	$_prefs = array(
 		'users_prefs_show_mouseover_user_info',
 		'users_prefs_allowMsgs',
 		'users_prefs_mytiki_pages',
@@ -175,7 +175,7 @@ if (isset($_REQUEST['users_defaults'])) {
 		'users_prefs_mytiki_workflow',
 		'users_prefs_mess_sendReadStatus'
 	);
-	foreach($prefs as $pref) {
+	foreach($_prefs as $pref) {
 		simple_set_toggle($pref);
 	}
 }
