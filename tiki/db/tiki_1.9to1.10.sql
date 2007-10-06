@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.217 2007-10-05 14:11:57 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.218 2007-10-06 09:50:05 pkdille Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1582,3 +1582,13 @@ ALTER TABLE tiki_received_pages ADD KEY structureName (`structureName`);
 
 #2007-10-05 sylvieg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki');
+
+#2007-10-06 pkdille
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
+
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Quicktags' and url='tiki-admin_quicktags.php' and position='1135' and section='' and perm='tiki_p_admin';
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Quicktags' and url='tiki-admin_quicktags.php' and position='1135' and section='' and perm='tiki_p_admin_quicktags';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin_quicktags','');
+
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_quicktags' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','');
