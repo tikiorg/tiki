@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.54 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.55 2007-10-06 09:04:38 pkdille Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -151,19 +151,27 @@
 <a name="options"></a>
 <h2>{tr}Menu options{/tr}</h2>
 <div align="center">
-<form method="get" action="tiki-admin_menu_options.php">
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="menuId" value="{$menuId}" />
-   </form>
-   </td>
-<td>{tr}Number of lines{/tr}</td><td><input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$prefs.maxRecords}{/if}" size="3" /></td>
-<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
-</tr>
-</table>
+  <form method="get" action="tiki-admin_menu_options.php">
+    <table class="findtable">
+      <tr>
+        <td>{tr}Find{/tr}</td>
+        <td>
+          <input type="text" name="find" value="{$find|escape}" />
+          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+          <input type="hidden" name="menuId" value="{$menuId}" />
+        </td>
+        <td>
+          {tr}Number of lines{/tr}
+        </td>
+        <td>
+          <input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$prefs.maxRecords}{/if}" size="3" />
+        </td>
+        <td>
+          <input type="submit" value="{tr}Find{/tr}" name="search" />
+        </td>
+      </tr>
+    </table>
+  </form>
 
 <form method="get" action="tiki-admin_menu_options.php">
 <input type="hidden" name="find" value="{$find|escape}" />
