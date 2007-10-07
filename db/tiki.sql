@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-10-06 09:50:05 $
+# $Date: 2007-10-07 15:58:08 $
 # $Author: pkdille $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4285,7 +4285,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_take_survey', 'Can take surveys', 'basic', 'surveys');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks', 'Can use tasks', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks_receive', 'Can  receive tasks from other users', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
