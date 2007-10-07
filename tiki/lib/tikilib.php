@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.790 2007-10-06 15:18:43 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.791 2007-10-07 09:32:33 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4081,22 +4081,60 @@ function add_pageview() {
 	return true;
     }
 
-    function get_user_preference($user, $name, $default = '') {
-	global $user_preferences;
+	function get_user_preferences($user, $names, $defaults = false) {
 
-	if (!isset($user_preferences[$user][$name])) {
-	    $query = "select `value` from `tiki_user_preferences` where `prefName`=? and `user`=?";
+		// $user must be specified and $names must be an array
+		if ( ! is_string($user) || $user == '' || ! is_array($names) ) return false;
 
-	    $result = $this->getOne($query, array( "$name", "$user"));
+		global $user_preferences;
+		$needed = array();
 
-	    if (!$result) {
-		$user_preferences[$user][$name] = $default;
-	    } else {
-		$user_preferences[$user][$name] = $result;
-	    }
+		// Check if we need to get date from DB by looking in the global $user_preferences array
+		// (this handles more than one user pref at a time)
+		//   ... and store the default values as well, just in case we needs them later
+		if ( $defaults ) {
+			foreach ( $names as $pref => $def ) {
+				if ( ! isset($user_preferences[$user][$pref]) ) $needed[$pref] = $def;
+			}
+		} else {
+			foreach ( $names as $pref ) {
+				if ( ! isset($user_preferences[$user][$pref]) ) $needed[$pref] = null;
+			}
+		}
+		
+		if ( count($needed) > 0 ) {
+			$cond_query = '';
+			$bindvars = array($user);
+			foreach ( $needed as $pref => $def ) {
+				if ( $cond_query != '' ) $cond_query .= ' or ';
+				$cond_query .= '`prefName`=?';
+				$bindvars[] = $pref;
+			}
+			$query = "select `prefName`, `value` from `tiki_user_preferences` where `user`=? and ($cond_query)";
+			$result = $this->query($query, $bindvars);
+			if ( $result ) while ( $res = $result->fetchRow() ) {
+				// store the db value in the global $user_preferences array
+				$user_preferences[$user][$res['prefName']] = $res['value'];
+				// remove prefs that have a value in db from the $needed array to avoid affecting them a default value
+				unset($needed[$n]);
+			}
+
+			// set defaults values if needed and if there is no value in database and if it's default was not null
+			if ( $defaults ) foreach ( $needed as $pref => $def ) {
+				if ( ! is_null($def) ) $user_preferences[$user][$pref] = $def;
+			}
+		}
+
+		return true;
 	}
 
-	return $user_preferences[$user][$name];
+    function get_user_preference($user, $name, $default = null) {
+		global $user_preferences;
+		if ( ! isset($user_preferences[$user][$name]) ) {
+			if ( is_null($default) ) $this->get_user_preferences($user, array($name));
+			else $this->get_user_preferences($user, array($name => $default), true);
+		}
+		return $user_preferences[$user][$name];
     }
 
     function set_user_preference($user, $name, $value) {

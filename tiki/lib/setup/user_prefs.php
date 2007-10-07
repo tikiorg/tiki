@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.1 2007-10-06 15:18:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.2 2007-10-07 09:32:36 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,27 +12,47 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
+// Handle the current user prefs in session
+if ( ! isset($_SESSION['user']['login']) || $_SESSION['user']['login'] != $user ) {
+	$_SESSION['user'] = array();
+	$_SESSION['user']['prefs'] = array();
+	$_SESSION['user']['login'] = $user;
+	$_SESSION['user']['group'] = ( $user ) ? $userlib->get_user_default_group($user) : '';
+}
+
+// Define the globals $u_info and $u_prefs array for use in php / smarty
+$u_info =& $_SESSION['user'];
+$u_prefs =& $_SESSION['user']['prefs'];
+$smarty->assign_by_ref('u_info', $u_info);
+$smarty->assign_by_ref('u_prefs', $u_prefs);
+
 if ( $user ) {
 
 	$user_preferences = array(); // Used for cache
+	$user_preferences[$user] =& $_SESSION['user']['prefs'];
+	$group =& $_SESSION['user']['group'];
+	$smarty->assign_by_ref('group', $group);
+	$smarty->assign_by_ref('user', $user);
+	$smarty->assign_by_ref('default_group', $group);
 
-	$group = $userlib->get_user_default_group($user);
-	$user_dbl = $tikilib->get_user_preference($user, 'user_dbl', 'y');
-	$allowMsgs = $tikilib->get_user_preference($user, 'allowMsgs', 'y');
-	$tasks_maxRecords = $tikilib->get_user_preference($user, 'tasks_maxRecords');
+	// Get some user prefs in one query
+	$needed_user_prefs = array(
+		'user_dbl' => 'y',
+		'allowMsgs' => 'y',
+		'tasks_maxRecords' => null,
+	);
+	$tikilib->get_user_preferences($user, $needed_user_prefs, true);
 
-	$smarty->assign('user', $user);
-	$smarty->assign('default_group',$group);
+	// One global var per user prefs that are known at this stage
+	//   (deprecated -> consider using $u_prefs instead for the current user)
+	extract($user_preferences[$user]);
 
-	$smarty->assign('group', $group);
-	$smarty->assign('user_dbl', $user_dbl);
-	$smarty->assign('allowMsgs', $allowMsgs);
-	$smarty->assign('tasks_maxRecords', $tasks_maxRecords);
+	// Smarty assignations
+	//   (deprecated -> need to be replaced by the use of smarty $u_info array);
+	foreach ( $needed_user_prefs as $k => $v ) $smarty->assign($k, $$k);
 
 } else {
-
 	$allowMsgs = 'n';
-
 }
 
 if ( isset($_SERVER['REMOTE_ADDR']) ) {
