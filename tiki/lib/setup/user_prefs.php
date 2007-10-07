@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.2 2007-10-07 09:32:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.3 2007-10-07 16:28:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -39,9 +39,9 @@ if ( $user ) {
 	$needed_user_prefs = array(
 		'user_dbl' => 'y',
 		'allowMsgs' => 'y',
-		'tasks_maxRecords' => null,
+		'tasks_maxRecords' => '',
 	);
-	$tikilib->get_user_preferences($user, $needed_user_prefs, true);
+	$tikilib->get_user_preferences($user, $needed_user_prefs);
 
 	// One global var per user prefs that are known at this stage
 	//   (deprecated -> consider using $u_prefs instead for the current user)

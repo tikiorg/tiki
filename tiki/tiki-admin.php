@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.126 2007-10-06 15:18:42 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.127 2007-10-07 16:28:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,18 +62,6 @@ function byref_set_value($feature, $pref = "") {
 	global $_REQUEST, $tikilib, $smarty;
 	simple_set_value($feature, $pref);
 }
-
-$home_blog = $tikilib->get_preference("home_blog", 0);
-$smarty->assign('home_blog', $home_blog);
-
-$home_forum = $tikilib->get_preference("home_forum", 0);
-$smarty->assign('home_forum', $home_forum);
-
-$home_gallery = $tikilib->get_preference("home_gallery", 0);
-$smarty->assign('home_gallery', $home_gallery);
-
-$home_file_gallery = $tikilib->get_preference("home_file_gallery", 0);
-$smarty->assign('home_file_gallery', $home_file_gallery);
 
 $crumbs[] = new Breadcrumb('Administration',
                               'Sections',
