@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.465 2007-10-06 15:18:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.466 2007-10-07 09:35:32 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -14,6 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 require_once('lib/init/initlib.php');
 if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
+if ( ! isset($_SESSION['user']) ) $_SESSION['user'] = array();
 $num_queries = 0;
 $elapsed_in_db = 0.0;
 $server_load = '';
