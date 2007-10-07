@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.1 2007-10-06 15:18:44 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.2 2007-10-07 09:32:36 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -15,12 +15,10 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 if ( isset($section) and isset($sections[$section])) {
 	include_once ('lib/freetag/freetaglib.php');
 	$here = $sections[$section];
-	if (isset($_POST['addtags']) && trim($_POST['addtags']) != "" && $tiki_p_freetags_tag == 'y') {
-		if (!isset($user)) {
-			$userid = 0;
-		} else {
-			$userid = $userlib->get_user_id($user);
-		}
+	if ( $tiki_p_freetags_tag == 'y' && isset($_POST['addtags']) && trim($_POST['addtags']) != '' ) {
+		if ( ! isset($user) ) $userid = 0;
+		else $userid = $userlib->get_user_id($user);
+
 		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']], $_POST['addtags']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
