@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.792 2007-10-07 16:28:20 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.793 2007-10-07 20:13:29 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4124,7 +4124,7 @@ function add_pageview() {
 				$cond_query .= "`$field_name`=?";
 				$bindvars[] = $var;
 			}
-			if ( $query_cond != '' ) $cond_query = '('.$cond_query.') and '.$query_cond;
+			if ( $query_cond != '' ) $cond_query = $query_cond.' and ('.$cond_query.')';
 
 			$query = "select `$field_name`, `value` from `$table` where $cond_query";
 			$result = $this->query($query, $bindvars);
