@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.7 2007-10-06 17:16:59 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.8 2007-10-07 16:28:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -884,10 +884,10 @@ if ( ! isset($_SESSION['prefs'])) {
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 }
-
+$prefs =& $_SESSION['prefs'];
 
 // Check if prefs needs to be reloaded
-if ( empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs']) {
+if ( empty($prefs['lastReadingPrefs']) || $lastUpdatePrefs > $prefs['lastReadingPrefs']) {
 
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
@@ -895,12 +895,12 @@ if ( empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSI
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
 		foreach ( $_SESSION['serialized_prefs'] as $p ) {
-			if ( ! is_array($_SESSION['prefs'][$p]) ) $_SESSION['prefs'][$p] = unserialize($_SESSION['prefs'][$p]);
+			if ( ! is_array($prefs[$p]) ) $prefs[$p] = unserialize($prefs[$p]);
 		}
 	}
 
 	// Be absolutely sure we have a value for tikiIndex
-	if ( $_SESSION['prefs']['tikiIndex'] == '' ) $_SESSION['prefs']['tikiIndex'] = 'tiki-index.php';
+	if ( $prefs['tikiIndex'] == '' ) $prefs['tikiIndex'] = 'tiki-index.php';
 }
 
 // Assign the prefs array in smarty, by reference
@@ -908,4 +908,4 @@ $smarty->assign_by_ref('prefs', $_SESSION['prefs']);
 
 // Set a global var for each prefs
 extract($_SESSION['prefs']);
-$prefs =& $_SESSION['prefs'];
+

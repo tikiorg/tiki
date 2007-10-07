@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.27 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.28 2007-10-07 16:28:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,9 +29,9 @@ session_destroy();
 
 /* change group home page or desactivate if no page is set */
 if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
-else $url = $tikilib->get_preference('tikiIndex', 'tiki-index.php');
+else $url = $tikiIndex;
 
-if ($phpcas_enabled == 'y' and $tikilib->get_preference('auth_method', 'tiki') == 'cas' and $user != 'admin') {
+if ($phpcas_enabled == 'y' and $auth_method == 'cas' and $user != 'admin') {
 	require_once('phpcas/source/CAS/CAS.php');
 	phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
 	phpCAS::logout();

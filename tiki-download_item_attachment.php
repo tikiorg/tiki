@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.16 2007-06-20 19:20:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.17 2007-10-07 16:28:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,9 +27,6 @@ if ((isset($itemInfo['status']) and $itemInfo['status'] == 'p' && !$tikilib->use
 		$smarty->display('error.tpl');
 		die;
 }
-
-$t_use_db = $tikilib->get_preference('t_use_db', 'y');
-$t_use_dir = $tikilib->get_preference('t_use_dir', '');
 
 $trklib->add_item_attachment_hit($_REQUEST["attId"]);
 

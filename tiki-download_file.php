@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.31 2007-08-29 14:15:26 sept_7 Exp $
+// CVS: $Id: tiki-download_file.php,v 1.32 2007-10-07 16:28:20 nyloth Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
@@ -85,9 +85,6 @@ if (!empty($_REQUEST['user'])) {
 	}
 	$filegallib->lock_file($_REQUEST['fileId'], $user);
 }	 
-
-$fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
-$fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');
 
 if (!IsSet($_SERVER['REQUEST_URI'])) { 
 	$_SERVER['REQUEST_URI'] = ''; 

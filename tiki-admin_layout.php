@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.18 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.19 2007-10-07 16:28:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,12 +63,14 @@ foreach ($sections_enabled as $section=>$data) {
 
 $sections_smt = array();
 $temp_max = count($sections_enabled);
-foreach ($sections_enabled as $sec=>$dat) {
+$needed_prefs = array();
+$needed_elements = array('left_column', 'right_column', 'top_bar', 'bot_bar');
+foreach ( $sections_enabled as $sec => $dat ) foreach ( $needed_elements as $elmt ) $needed_prefs[$sec.'_'.$elmt] = 'y';
+$tikilib->get_preferences($needed_elements, true, true);
+
+foreach ( $sections_enabled as $sec => $dat ) {
 	$aux["name"] = $sec;
-	$aux["left_column"] = $tikilib->get_preference("${sec}_left_column", 'y');
-	$aux["right_column"] = $tikilib->get_preference("${sec}_right_column", 'y');
-	$aux["top_bar"] = $tikilib->get_preference("${sec}_top_bar", 'y');
-	$aux["bot_bar"] = $tikilib->get_preference("${sec}_bot_bar", 'y');
+	foreach ( $needed_elements as $elmt ) $aux[$elmt] = ${$sec.'_'.$elmt};
 	$sections_smt[] = $aux;
 }
 $smarty->assign('sections', $sections_smt);

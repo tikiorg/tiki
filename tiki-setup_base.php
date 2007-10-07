@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.138 2007-09-02 12:01:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.139 2007-10-07 16:28:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,19 +40,59 @@ ini_set('allow_call_time_pass_reference','On');
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
 require_once("lib/tikiticketlib.php");
-require_once("db/tiki-db.php"); 
+require_once("db/tiki-db.php");
 require_once("setup_smarty.php"); 
 require_once("lib/tikilib.php");
 require_once("lib/cache/cachelib.php");
 require_once("lib/logs/logslib.php");
 include_once('lib/init/tra.php');
-
 $tikilib = new TikiLib($dbTiki);
+
+// Get tiki-setup_base needed preferences in one query
+$prefs = array();
+$needed_prefs = array(
+	'session_lifetime' => '0',
+	'session_db' => 'n',
+	'sessions_silent' => 'disabled',
+	'language' => 'en',
+	'cookie_name' => 'tikiwiki',
+	'rememberme' => 'disabled',
+	'auth_method' => 'tiki',
+);
+$tikilib->get_preferences($needed_prefs, true, true);
+extract($prefs);
+
+// set session lifetime
+if ($session_lifetime > 0) {
+	ini_set('session.gc_maxlifetime',$session_lifetime*60);
+}
+
+// is session data  stored in DB or in filesystem?
+if ($session_db == 'y') {
+	include('db/local.php');
+	$ADODB_SESSION_DRIVER=$db_tiki;
+	$ADODB_SESSION_CONNECT=$host_tiki;
+	$ADODB_SESSION_USER=$user_tiki;
+	$ADODB_SESSION_PWD=$pass_tiki;
+	$ADODB_SESSION_DB=$dbs_tiki;
+	unset($db_tiki);
+	unset($host_tiki);
+	unset($user_tiki);
+	unset($pass_tiki);
+	unset($dbs_tiki);
+	ini_set('session.save_handler','user');
+	include('session/adodb-session.php');
+}
+
+if ( $sessions_silent == 'disabled' or !empty($_COOKIE) ) {
+	// enabing silent sessions mean a session is only started when a cookie is presented
+	session_start();
+}
+
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
 require_once("lib/tikiaccesslib.php");
 $access = new TikiAccessLib();
-
 require_once("lib/breadcrumblib.php");
 //require_once("lib/tikihelplib.php");
 
@@ -187,8 +227,6 @@ $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 
-$language = $tikilib->get_preference('language', 'en');// varcheck use tra
-
 function varcheck($array) {
   global $patterns, $vartype, $language;
   if (isset($array) and is_array($array)) {
@@ -253,42 +291,11 @@ if (empty($_SERVER['SERVER_NAME'])) {
 	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 }
 
-// set session lifetime
-$session_lifetime = $tikilib->get_preference('session_lifetime','0');
-if ($session_lifetime > 0) {
-	ini_set('session.gc_maxlifetime',$session_lifetime*60);
-}
-
-// is session data  stored in DB or in filesystem?
-$session_db = $tikilib->get_preference('session_db','n');
-if ($session_db == 'y') {
-	include('db/local.php');
-	$ADODB_SESSION_DRIVER=$db_tiki;
-	$ADODB_SESSION_CONNECT=$host_tiki;
-	$ADODB_SESSION_USER=$user_tiki;
-	$ADODB_SESSION_PWD=$pass_tiki;
-	$ADODB_SESSION_DB=$dbs_tiki;
-	unset($db_tiki);
-	unset($host_tiki);
-	unset($user_tiki);
-	unset($pass_tiki);
-	unset($dbs_tiki);
-	ini_set('session.save_handler','user');
-	include('session/adodb-session.php');
-}
-
-if ( $tikilib->get_preference('sessions_silent','disabled')=='disabled' or !empty($_COOKIE) ) {
-	// enabing silent sessions mean a session is only started when a cookie is presented
-	session_start();
-}
 
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with siteTitle 
-$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $tikilib->get_preference('cookie_name','tikiwiki'));
+$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $cookie_name);
 $user_cookie_site = 'tiki-user-'.$cookie_site;
-
-// check if the remember me feature is enabled
-$rememberme = $tikilib->get_preference('rememberme', 'disabled');
 
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
@@ -300,9 +307,6 @@ if (($rememberme != 'disabled')
 		$_SESSION["$user_cookie_site"] = $user;
 	}
 }
-
-// check what auth metod is selected. default is for the 'tiki' to auth users
-$auth_method = $tikilib->get_preference('auth_method', 'tiki');
 
 // if the auth method is 'web site', look for the username in $_SERVER
 if (($auth_method == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
@@ -442,6 +446,7 @@ if(!$cachelib->isCached("allperms")) {
 $allperms = $allperms["data"];
 
 //Initializes permissions
+
 foreach ($allperms as $vperm) {
 	$perm = $vperm["permName"];
 	$$perm = 'n';
@@ -485,6 +490,7 @@ $smarty->assign("tikidomain", $tikidomain);
 
 // Debug console open/close
 $smarty->assign('debugconsole_style',
-    isset($_COOKIE["debugconsole"]) && ($_COOKIE["debugconsole"] == 'o') ? 'display:block;' : 'display:none;');
+	isset($_COOKIE["debugconsole"]) && ($_COOKIE["debugconsole"] == 'o') ? 'display:block;' : 'display:none;'
+);
 
 ?>

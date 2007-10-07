@@ -1,17 +1,14 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.791 2007-10-07 09:32:33 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.792 2007-10-07 16:28:20 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-require_once ('Date.php');
-
-require_once ('lib/tikidate.php');
-require_once ('lib/tikidblib.php');
+require_once('lib/tikidate.php');
+require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
-global $tikidate;
 $tikidate = new TikiDate();
 
 //performance collecting:
@@ -4035,32 +4032,44 @@ function add_pageview() {
 
 	// This method overrides the prefs with those specified in database
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
-
-    function get_db_preferences() {
-	$_SESSION['prefs']['lastReadingPrefs'] = $this->now;
-	$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-	while ( $res = $result->fetchRow() ) {
-		$_SESSION['prefs'][$res['name']] = $res['value'];
-	}
+	function get_db_preferences() {
+		global $prefs;
+		$prefs['lastReadingPrefs'] = $this->now;
+		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+		while ( $res = $result->fetchRow() ) {
+			$prefs[$res['name']] = $res['value'];
+		}
     }
 
-	// This method need to be _obsoleted_, since it queries the db instead of session vars
-	//   and since all prefs are not in db (but they can have a default value)
-    function get_preferences( $filter_name ) {
+	function get_preferences( $names, $exact_match = false, $no_return = false ) {
+		global $prefs;
 
-	$query = "select `name`, `value` from `tiki_preferences` where `name` like ?";
-	$result = $this->query($query, array($filter_name));
-	$preferences = array();
+		$preferences = array();
+		if ( $exact_match ) {
+			if ( is_array($names) ) {
+				$this->_get_values('tiki_preferences', 'name', $names, $prefs);
+				if ( ! $no_return ) foreach ( $names as $name ) $preferences[$name] = $prefs[$name];
+			} else {
+				$this->get_preference($names);
+				if ( ! $no_return ) $preferences = array( $names => $prefs[$names] );
+			}
+		} else {
+			if ( is_array($names) ) {
+				//Only handle $filtername as array with exact_matches
+				return false;
+			} else {
+				$query = "select `name`, `value` from `tiki_preferences` where `name` like ?";
+				$result = $this->query($query, array($names));
+				while ( $res = $result->fetchRow() ) $preferences[$res["name"]] = $res["value"];
+			}
+		}
 
-	while ($res = $result->fetchRow()) {
-		$preferences[$res["name"]] = $res["value"];
-	}
-
-	return $preferences;
+		return $preferences;
     }
 
-    function get_preference($name, $default = '') {
-	return isset($_SESSION['prefs'][$name]) ? $_SESSION['prefs'][$name] : $default;
+	function get_preference($name, $default = '') {
+		global $prefs;
+		return isset($prefs[$name]) ? $prefs[$name] : $default;
     }
 
     function set_preference($name, $value) {
@@ -4081,51 +4090,69 @@ function add_pageview() {
 	return true;
     }
 
-	function get_user_preferences($user, $names, $defaults = false) {
+	function _get_values($table, $field_name, $var_names, &$global_ref, $query_cond = '', $bindvars = null) {
+		// This function needs values for at least $table, $field_name and $var_names
+		//   and $var_names must be an array
+		//   and $global_ref must be set
+		if ( empty($table) || empty($field_name) || empty($var_names) || ! is_array($var_names) || ! isset($global_ref) ) return false; 
 
-		// $user must be specified and $names must be an array
-		if ( ! is_string($user) || $user == '' || ! is_array($names) ) return false;
-
-		global $user_preferences;
 		$needed = array();
 
-		// Check if we need to get date from DB by looking in the global $user_preferences array
-		// (this handles more than one user pref at a time)
+		// Detect if var names are specified as keys (then values are considered as var defaults)
+		//   by looking at the type of the first key
+		$defaults = ! is_integer(key($var_names));
+
+		// Check if we need to get the value from DB by looking in the global $user_preferences array
+		// (this is able to handle more than one var at a time)
 		//   ... and store the default values as well, just in case we needs them later
 		if ( $defaults ) {
-			foreach ( $names as $pref => $def ) {
-				if ( ! isset($user_preferences[$user][$pref]) ) $needed[$pref] = $def;
+			foreach ( $var_names as $var => $default ) {
+				if ( ! isset($global_ref[$var]) ) $needed[$var] = $default;
 			}
 		} else {
-			foreach ( $names as $pref ) {
-				if ( ! isset($user_preferences[$user][$pref]) ) $needed[$pref] = null;
+			foreach ( $var_names as $var ) {
+				if ( ! isset($global_ref[$var]) ) $needed[$var] = null;
 			}
 		}
-		
+
 		if ( count($needed) > 0 ) {
+
 			$cond_query = '';
-			$bindvars = array($user);
-			foreach ( $needed as $pref => $def ) {
+			if ( is_null($bindvars) ) $bindvars = array();
+			foreach ( $needed as $var => $def ) {
 				if ( $cond_query != '' ) $cond_query .= ' or ';
-				$cond_query .= '`prefName`=?';
-				$bindvars[] = $pref;
+				$cond_query .= "`$field_name`=?";
+				$bindvars[] = $var;
 			}
-			$query = "select `prefName`, `value` from `tiki_user_preferences` where `user`=? and ($cond_query)";
+			if ( $query_cond != '' ) $cond_query = '('.$cond_query.') and '.$query_cond;
+
+			$query = "select `$field_name`, `value` from `$table` where $cond_query";
 			$result = $this->query($query, $bindvars);
 			if ( $result ) while ( $res = $result->fetchRow() ) {
-				// store the db value in the global $user_preferences array
-				$user_preferences[$user][$res['prefName']] = $res['value'];
-				// remove prefs that have a value in db from the $needed array to avoid affecting them a default value
-				unset($needed[$n]);
+				// store the db value in the global array
+				$global_ref[$res[$field_name]] = $res['value'];
+				// remove vars that have a value in db from the $needed array to avoid affecting them a default value
+				unset($needed[$res[$field_name]]);
 			}
 
 			// set defaults values if needed and if there is no value in database and if it's default was not null
-			if ( $defaults ) foreach ( $needed as $pref => $def ) {
-				if ( ! is_null($def) ) $user_preferences[$user][$pref] = $def;
+			if ( $defaults ) foreach ( $needed as $var => $def ) {
+				if ( ! is_null($def) ) $global_ref[$var] = $def;
 			}
 		}
 
 		return true;
+	}
+
+
+	function get_user_preferences($user, $names) {
+
+		// $user must be specified
+		if ( ! is_string($user) || $user == '' ) return false;
+
+		global $user_preferences;
+		$global_ref =& $user_preferences[$user];
+		return $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($user));
 	}
 
     function get_user_preference($user, $name, $default = null) {
@@ -4289,7 +4316,6 @@ function add_pageview() {
 	if (empty($hash['contributors'])) {
 		$hash2 = '';
 	} else {
-		echo 'BBB';print_r($hash['contributors']);echo 'FFF';
 		foreach ($hash['contributors'] as $c) {
 			$hash3['contributor'] = $c;
 			$hash2[] = $hash3;

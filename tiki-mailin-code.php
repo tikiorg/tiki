@@ -100,10 +100,10 @@ var_dump($aux);
       $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["From"] . "<br />";
       $mail = new TikiMail();
       $mail->setFrom($acc["account"]);
-      $c = $tikilib->get_preference("default_mail_charset", "utf8");
+      $c = $default_mail_charset;
       $mail->setHeadCharset($c);
       $mail->setTextCharset($c);
-      $l = $tikilib->get_preference("language", "en");
+      $l = $language;
       $mail->setSubject(tra('Tiki mail-in auto-reply', $l));
       $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
       $mail->setText(tra("Sorry, you can't use this feature.", $l));
@@ -184,7 +184,7 @@ var_dump($aux);
         // and also sends the source of the page
         $mail = new TikiMail();
         $mail->setFrom($acc["account"]);
-        $c = $tikilib->get_preference("default_mail_charset", "utf8");
+        $c = $default_mail_charset;
         $mail->setHeadCharset($c);
         $mail->setHtmlCharset($c); 
         $mail->setTextCharset($c);
@@ -197,7 +197,7 @@ var_dump($aux);
           $mail->addAttachment($info['data'], 'source.txt', 'plain/txt');
           $mail->setHTML($data, strip_tags($data));
         } else {
-          $l = $tikilib->get_preference("language", "en");
+          $l = $language;
           $mail_data = $smarty->fetchLang($l, "mail/mailin_reply_subject.tpl");
           $mail->setSubject($mail_data.$page);
         }
@@ -259,10 +259,10 @@ var_dump($aux);
           $mail = new TikiMail();
   
           $mail->setFrom($acc["account"]);
-          $c = $tikilib->get_preference("default_mail_charset", "utf8");
+          $c = $default_mail_charset;
           $mail->setHeadCharset($c);
           $mail->setTextCharset($c);
-          $l = $tikilib->get_preference("language", "en");
+          $l = $language;
           $mail_data = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");
           $mail->setSubject($mail_data);
           $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
