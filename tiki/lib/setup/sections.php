@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/sections.php,v 1.1 2007-10-06 15:18:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/sections.php,v 1.2 2007-10-08 14:40:44 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -62,9 +62,6 @@ $sections = array(
 		'feature' => 'feature_newsreader',
 		'key' => 'serverId',
 		'itemkey' => 'id',
-	),
-	'mytiki' => array(
-		'feature' => '',
 	),
 	'chat' => array(
 		'feature' => 'feature_chat',
@@ -155,6 +152,7 @@ $sections = array(
 		'feature' => 'feature_swffix',
 	),
 	'workflow' => array(
+		'feature' => 'feature_workflow',
 		'key' => '',
 		'itemkey' => '',
 	),
