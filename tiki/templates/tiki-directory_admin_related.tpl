@@ -53,7 +53,7 @@
 {* Links to edit, remove, browse the categories *}
 <table class="normal">
   <tr>
-    <td class="heading">{tr}category{/tr}</td>
+    <td class="heading">{tr}Category{/tr}</td>
     <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

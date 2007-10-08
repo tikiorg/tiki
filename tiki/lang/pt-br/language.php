@@ -1894,6 +1894,7 @@ $lang=Array(
 // "and also to all pages of the sub-structure:" => "and also to all pages of the sub-structure:",
 // "Hold down CTRL to select multiple" => "Hold down CTRL to select multiple",
 // "perms help" => "perms help",
+// "Perms Help" => "Perms help",
 // "Current permissions for categories that this object belongs to" => "Current permissions for categories that this object belongs to",
 // "These permissions do not apply. Special permissions apply." => "These permissions do not apply. Special permissions apply.",
 // "No category permissions; special permissions apply" => "No category permissions; special permissions apply",

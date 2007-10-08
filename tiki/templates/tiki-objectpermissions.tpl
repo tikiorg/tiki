@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.31 2007-09-13 15:36:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-objectpermissions.tpl,v 1.32 2007-10-08 12:21:56 jyhem Exp $ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}Back{/tr}</a>
@@ -75,7 +75,7 @@
 {/if}
 <br /><br />
 <div class="button2">
-<a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}perms help{/tr}</a>
+<a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}Perms Help{/tr}</a>
 </div>
 
 <div class="wiki-edithelp"  id='edithelpzone' >
@@ -95,7 +95,7 @@
 <div class="rbox-data" name="tip">{tr}These permissions do not apply. Special permissions apply.{/tr}
 </div>
 {/if}<table class="normal">
-<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td></tr>
+<tr><td class="heading">{tr}Category{/tr}</td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td></tr>
 {cycle print=false values="even,odd"}
 {section  name=x loop=$categ_perms}
 	{section name=y loop=$categ_perms[x]}
