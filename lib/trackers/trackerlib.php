@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.224 2007-10-03 18:08:38 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.225 2007-10-08 22:31:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -490,7 +490,9 @@ class TrackerLib extends TikiLib {
 		return true;
 	}
 	
-	/* experimental shared */
+	/* to filter filterfield is an array of fieldId
+	 * and the values are either filtervalue or exactvalue : each elt of the array is the filter of each elt of filterfield
+	 */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $feature_categories, $language;
 
@@ -532,7 +534,9 @@ class TrackerLib extends TikiLib {
 				$fv = $filtervalue;
 				$ff = $filterfield;
 				$nb_filtered_fields = 1;
-			} else $nb_filtered_fields = count($filterfield);
+			} else {
+				$nb_filtered_fields = count($filterfield);
+			}
 
 			for ( $i = 0 ; $i < $nb_filtered_fields ; $i++ ) {
 				if ( is_array($filterfield) ) {
@@ -555,7 +559,7 @@ class TrackerLib extends TikiLib {
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
 					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( 0 ";
-					$value = empty($fv) ? $exactvalue : $fv;
+					$value = empty($fv) ? is_array($exactvalue)? $exactvalue[$i]: $exactvalue : $fv;
 					if ( ! is_array($value) && $value != '' ) $value = array($value);
 					foreach ( $value as $catId ) {
 						$bindvars[] = $catId;
