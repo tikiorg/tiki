@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.48 2007-07-31 18:22:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.49 2007-10-08 19:02:23 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,33 @@ $addPHPslashes = Array ("\n" => '\n',
 			'\\' => '\\\\',
 			'$'  => '\$',
 			'"'  => '\"');
+
+
+/**
+  * Reads all the permission descriptions in tikiwiki database and writes
+  *   it to the file $file. All the strings will be surrounded by smarty translate tags
+  *     ex: {tr}perm description{/tr}
+  *
+  * @param $file string: target file for the perms
+  * @returns: nothing but creates the file with the perms (take care about the acl's in the target directory !)
+  */
+function collect_perms_desc($file)
+{
+  global $tikilib;
+
+  $result = $tikilib->query("SELECT DISTINCT(permDesc) FROM users_permissions ORDER BY permDesc");
+
+  $perm_strings = array();
+  while( $row = $result->fetchRow() )
+    $perm_strings[] = $row['permDesc'];
+
+  $pstr = fopen($file,'w');
+  foreach ($perm_strings as $strg)
+  {
+    fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
+  }
+  fclose($pstr);
+}
 
 function addphpslashes ($string) {
   // Translate as in "Table 7-1 Escaped characters" in the PHP manual
@@ -87,7 +114,8 @@ function hardwire_file ($file)
 
 function collect_files ($dir)
 {
-	global $files, $completion;
+  global $files, $completion;
+ 
   $handle = opendir ($dir);
   while (false !== ($file = readdir ($handle))) {
     // Skip current and parent directory
@@ -144,6 +172,7 @@ function writeTranslationPair (&$fd, &$key, &$val) {
 		      '"' . addphpslashes ($key) . '"' . " => " .
 		      '"' . addphpslashes ($val) . '",');
 }
+
 /* \brief: give the closest translation
  * \return the closest translated string
  * \param closeEnglish: the English string of the return string
@@ -225,6 +254,14 @@ collect_files ('.');
 hardwire_file ('./lang/langmapping.php');
 hardwire_file ('./img/flags/flagnames.php');
 
+## Adding a file in ./temp which contains all the perms descriptions
+## This file is called permstrings.tpl. The extension has to be .tpl in order to be
+##   taken in charge by the scipt (tpl or php)
+## This file is, of course, temporary and will be deleted during the next cache clear !
+
+$permsfile = "./temp/permstrings.tpl";
+$permsstrgs = collect_perms_desc($permsfile);
+hardwire_file ($permsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
@@ -296,26 +333,34 @@ foreach ($languages as $sel) {
   if (!$nohelp && !$completion) {
     // Good to have instructions for translators in the release file.
     // The comments get filtered away by Smarty anyway
-    writeFile_and_User ($fw, "// parameters:\n");
+    writeFile_and_User ($fw, "// parameters:\n\n");
     writeFile_and_User ($fw, "// lang=xx    : only tranlates language 'xx',\n");
     writeFile_and_User ($fw, "//              if not given all languages are translated\n");
+    writeFile_and_User ($fw, "\n");
+
     writeFile_and_User ($fw, "// comments   : generate all comments (equal to close&module)\n");
+    writeFile_and_User ($fw, "\n");
+
     writeFile_and_User ($fw, "// close      : look for similar strings that are already translated and\n");
     writeFile_and_User ($fw, "//              generate a comment if a 'match' is made\n");
+    writeFile_and_User ($fw, "\n");
+
     writeFile_and_User ($fw, "// module     : generate comments that describe in which .php and/or .tpl\n");
     writeFile_and_User ($fw, "//              module(s) a certain string was found (useful for checking\n");
     writeFile_and_User ($fw, "//              translations in context)\n");
+    writeFile_and_User ($fw, "\n");
 
     writeFile_and_User ($fw, "// patch      : looks for the file 'language.patch' in the same directory\n");
     writeFile_and_User ($fw, "//              as the corresponding language.php and overrides any strings\n");
     writeFile_and_User ($fw, "//              in language.php - good if a user does not agree with\n");
     writeFile_and_User ($fw, "//              some translations or if only changes are sent to the maintainer\n");
+    writeFile_and_User ($fw, "\n");
 
     writeFile_and_User ($fw, "// spelling   : generates a file 'spellcheck_me.txt' that contains the\n");
     writeFile_and_User ($fw, "//              words used in the translation. It is then easy to check this\n");
     writeFile_and_User ($fw, "//              file for spelling errors (corrections must be done in\n");
     writeFile_and_User ($fw, "//              'language.php, however)\n");
-
+    writeFile_and_User ($fw, "\n");
 
     writeFile_and_User ($fw, "// groupwrite : Sets the generated files permissions to allow the generated\n");
     writeFile_and_User ($fw, "//              language.php also be group writable. This is good for\n");
@@ -324,16 +369,14 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "//              to have write access removed when translation is finished\n");
     writeFile_and_User ($fw, "//              for security reasons. (Run script again without this\n");
     writeFile_and_User ($fw, "//              parameter)\n");
-
-
-
+    writeFile_and_User ($fw, "\n");
 
     writeFile_and_User ($fw, "// Examples:\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv\n");
     writeFile_and_User ($fw, "// Will translate langauage 'sv' and (almost) avoiding comment generation\n\n");
 
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv&comments\n");
-    writeFile_and_User ($fw, "// Will translate langauage 'sv' and generate all possible comments.\n");
+    writeFile_and_User ($fw, "// Will translate language 'sv' and generate all possible comments.\n");
     writeFile_and_User ($fw, "// This is the most usefull mode when working on a translation.\n\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv&nohelp&nosections\n");
     writeFile_and_User ($fw, "// These options will only provide the minimal amout of comments.\n");
@@ -393,7 +436,7 @@ foreach ($languages as $sel) {
       preg_match_all ('/(?s)\{tr\}(.+?)\{\/tr\}/', $data, $uqwords);
     }
 
-    // Transfer UNqouted words (if any) to the words array
+    // Transfer unquoted words (if any) to the words array
     // counting recursive, because we have two empty subarrays after failed match
     if (count($uqwords, COUNT_RECURSIVE) > 2) {
         $words = $uqwords[1];
