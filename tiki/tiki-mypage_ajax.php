@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.49 2007-10-01 09:55:43 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.50 2007-10-08 14:32:33 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -414,9 +414,9 @@ function mypage_fillinfos($id_mypage, $id_types=NULL, $update_only_type=false, $
 	/* templates update */
 	if (is_array($type)) {
 		$templates=MyPage::listPages($type['templateuser'], $type['name']);
-		$templates_html="<select id='mypageedit_template' onchange=\"mypageTemplateChange(this.value);\"><option value='0'>".tra("Without template")."</option>";
+		$templates_html="<select id='mypageedit_template' onchange=\"mypageTemplateChange(this.value);\"><option value='0' ".((int)$set_template > 0 ? '' : 'selected').">".tra("Without template")."</option>";
 		foreach($templates as $template)
-			$templates_html.="<option value='".$template['id']."'>".htmlspecialchars($template['name'])."</option>";
+			$templates_html.="<option value='".$template['id']."' ".((int)$set_template == (int)$template['id'] ? 'selected' : '').">".htmlspecialchars($template['name'])."</option>";
 		$templates_html.="</select>";
 
 		if (count($templates) == 0) {
