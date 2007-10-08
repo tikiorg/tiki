@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-10-08 18:52:40 $
-# $Author: pkdille $
+# $Date: 2007-10-08 19:02:43 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2057,7 +2057,7 @@ CREATE TABLE tiki_menu_options (
   groupname varchar(255) default NULL,
   userlevel int(4) default 0,
   PRIMARY KEY  (optionId),
-  UNIQUE KEY uniq_menu (menuId,name(50),url(80),position,section(50),perm(50))
+  UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','./',10,'','','');
