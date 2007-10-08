@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.82 2007-10-02 15:33:39 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.83 2007-10-08 14:41:28 niclone Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -861,8 +861,8 @@ class MyPageWindow {
 			// some default values...
 		$win->setParam('top',0);
 		$win->setParam('left',0);
-		$win->setParam('width',100);
-		$win->setParam('height',100);
+		$win->setParam('width',300);
+		$win->setParam('height',300);
 
 		$classname=MyPageWindow::getComponentClass($contenttype);
 		if (is_myerror($classname)) return $classname;
