@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.219 2007-10-06 12:57:01 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.220 2007-10-08 19:02:44 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -430,7 +430,7 @@ ALTER TABLE `tiki_articles` CHANGE `title` `title` varchar(255) default NULL;
 ALTER TABLE `tiki_submissions` CHANGE `title` `title` varchar(255) default NULL;
 
 # mose 2006-11-28 - new user contacts menu entry & Jyhem 2007-06-14
-DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contacts' and url='tiki-contacts.php' and position='87' and section='feature_contacts' and perm='' and groupname='Registered' ;
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contacts' and url='tiki-contacts.php' and position='87' and (section='feature_contacts' or section='feature_mytiki,feature_contacts') and perm='' and groupname='Registered' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contacts','tiki-contacts.php',87,'feature_contacts','','Registered');
 
 # mose 2006-11-28 - new contacts groups feature
@@ -781,6 +781,7 @@ ALTER TABLE tiki_actionlog_params ADD INDEX nameValue (name, value(200));
 
 #nyloth 2007-07-15
 ALTER TABLE tiki_menu_options ADD UNIQUE KEY uniq_menu(menuId,name,url,position,section,perm);
+DELETE FROM tiki_menu_options where menuId='42' and type='o' and name='Search' and url='tiki-searchindex.php' and position='13' and section='feature_search' and perm='' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','','');
 UPDATE tiki_menu_options SET section = 'feature_mytiki' WHERE menuId=42 AND url='tiki-my_tiki.php';
 UPDATE tiki_menu_options SET section = 'feature_mytiki,feature_userPreferences' WHERE menuId=42 AND url='tiki-user_preferences.php';
@@ -1592,3 +1593,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_quicktags' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','');
+
+#2007-10-08 sylvieg
+ALTER TABLE tiki_menu_options DROP KEY uniq_menu;
+ALTER IGNORE TABLE tiki_menu_options ADD UNIQUE uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50));
