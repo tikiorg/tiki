@@ -107,8 +107,8 @@ function mypage_editComponent(compname, asnew) {
 
 	mypage_winconf=new Windoo({
 		"modal": true,
-		"width": 700,
-		"height": 400,
+		"width": 400,
+		"height": 260,
 		"top": 100,
 		"left": 300,
 		"resizeLimit": {
@@ -448,7 +448,11 @@ function mypagewin_create(id_mypage, id_mypagewin, comptype, options, content) {
 		xajax_mypage_win_setrect(id_mypage, id_mypagewin, this.getState().outer);
 	});
 	win.addEvent('onDragComplete', function() {
-		xajax_mypage_win_setrect(id_mypage, id_mypagewin, this.getState().outer);
+		var state=this.getState();
+		if (state.outer.left < 0) state.outer.left=0;
+		if (state.outer.top < 0) state.outer.top=0;
+		this.setPosition(state.outer.left, state.outer.top);
+		xajax_mypage_win_setrect(id_mypage, id_mypagewin, state.outer);
 	});
 	win.addEvent('onClose', function() {
 		if ($('elem_addComponent_'+comptype))
