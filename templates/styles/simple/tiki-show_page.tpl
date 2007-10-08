@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.20 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-show_page.tpl,v 1.21 2007-10-08 13:28:32 jyhem Exp $ *}
 
 {if $prefs.feature_page_title eq 'y'}<h1><a href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle" title="{tr}Refresh{/tr}">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -7,7 +7,7 @@
     {$page}
   {/if}</a>
   {if $lock and $print_page ne 'y'}
-    <img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+    <img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
   {/if}
   </h1>
 {/if}
@@ -19,7 +19,7 @@
 {if $prefs.feature_wiki_pageid eq 'y'}
 	<div style="float: left"><small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small></div>
 {/if}
-{if $cached_page eq 'y'}<div style="float: right"><small>({tr}cached{/tr})</small>
+{if $cached_page eq 'y'}<div style="float: right"><small>({tr}Cached{/tr})</small>
 <a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img src="pics/icons/arrow_refresh.png" border="0" height="16" width="16" alt='{tr}Refresh{/tr}' /></a></div>{/if}
 
 <div class="wikitopline" style="clear: both;">
@@ -29,7 +29,7 @@
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
 <form action="tiki-index.php" method="post" style="float: right">
   <select name="page" onchange="page.form.submit()">
-		<option>{tr}backlinks{/tr}&hellip;</option>
+		<option>{tr}Backlinks{/tr}&hellip;</option>
 	{section name=back loop=$backlinks}
 	  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 	{/section}
@@ -217,7 +217,7 @@
 {if $prefs.wiki_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
-      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
     {/if}
   {else}
     <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>

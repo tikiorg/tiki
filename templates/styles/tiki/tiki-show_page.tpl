@@ -32,7 +32,7 @@
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
 <form action="tiki-index.php" method="get">
 <select name="page" onchange="page.form.submit()">
-<option>{tr}backlinks{/tr}...</option>
+<option>{tr}Backlinks{/tr}...</option>
 {section name=back loop=$backlinks}
 <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 {/section}
@@ -46,7 +46,7 @@
 
 {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock and $print_page ne 'y'}
-<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 {if $prefs.feature_wiki_pageid eq 'y'}
@@ -64,7 +64,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>({tr}cached{/tr})</small>
+<small>({tr}Cached{/tr})</small>
 {/if}
 </div>
 

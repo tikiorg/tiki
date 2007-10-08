@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.23 2007-10-04 22:17:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.24 2007-10-08 13:28:30 jyhem Exp $ *}
 {if $cant_pages > 1 or $initial or $find}
 <div align="center">
 {section name=ini loop=$initials}
@@ -132,7 +132,7 @@
 {if $prefs.wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
 	{if $listpages[changes].flag eq 'locked'}
-		<img src='pics/icons/lock.png' alt='{tr}locked{/tr}' border='0' height='16' width='16' />
+		<img src='pics/icons/lock.png' alt='{tr}Locked{/tr}' border='0' height='16' width='16' />
 	{else}
 		<img src='pics/icons/lock_break.png' alt='{tr}unlocked{/tr}' border='0' height='16' width='16' />
 	{/if}

@@ -1,7 +1,7 @@
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To add/edit wiki pages easily, add the module quick_edit via "Modules" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}click here{/tr}</a>.</div>
+<div class="rbox-data" name="tip">{tr}To add/edit wiki pages easily, add the module quick_edit via "Modules" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Click Here{/tr}</a>.</div>
 </div>
 <br />
 
