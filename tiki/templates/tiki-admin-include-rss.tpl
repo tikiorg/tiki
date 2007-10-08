@@ -1,7 +1,7 @@
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div>
+<div class="rbox-data" name="tip">{tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_rssmodules.php">{tr}Click Here{/tr}</a>.</div>
 </div>
 <br />
 

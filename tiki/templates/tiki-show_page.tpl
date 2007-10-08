@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.127 2007-10-05 15:40:00 sylvieg Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.128 2007-10-08 13:28:30 jyhem Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -15,7 +15,7 @@
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}
-{if $cached_page eq 'y'}<small>({tr}cached{/tr})</small>{/if}
+{if $cached_page eq 'y'}<small>({tr}Cached{/tr})</small>{/if}
 </td>
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
@@ -61,7 +61,7 @@
 		<td style="vertical-align:top;text-align:right;width:42px;">
 		<form action="tiki-index.php" method="get">
 		<select name="page" onchange="page.form.submit()">
-		<option>{tr}backlinks{/tr}...</option>
+		<option>{tr}Backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
 		<option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 		{/section}
@@ -253,7 +253,7 @@
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <br />
-      {tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.
+      {tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
     {/if}
   {else}
     <br />

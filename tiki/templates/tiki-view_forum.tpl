@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.109 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.110 2007-10-08 13:28:30 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -155,7 +155,7 @@ a moderator approves it.{/tr}
       <option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
       <option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
       <option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
-      <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
+      <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}Locked{/tr}</option>
       </select>
       {/if}
       {if $forum_info.topic_smileys eq 'y'}
@@ -354,7 +354,7 @@ a moderator approves it.{/tr}
   {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" title="{tr}announce{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" title="{tr}hot{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" title="{tr}sticky{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}locked{/tr}" title="{tr}locked{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}Locked{/tr}" title="{tr}Locked{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   </td>
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="{cycle advance=false}">

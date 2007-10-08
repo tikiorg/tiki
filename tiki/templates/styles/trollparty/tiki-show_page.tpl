@@ -2,7 +2,7 @@
 <div class="button2top">
 {if $print_page ne 'y'}
 {if $cached_page eq 'y'}
-<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}cached{/tr}</a>
+<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}Cached{/tr}</a>
 {/if}
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
@@ -36,7 +36,7 @@
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
 <form action="tiki-index.php" method="get">
 <select name="page" onchange="page.form.submit()">
-<option>{tr}backlinks{/tr}...</option>
+<option>{tr}Backlinks{/tr}...</option>
 {section name=back loop=$backlinks}
 <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 {/section}
@@ -56,7 +56,7 @@
 {if $prefs.feature_wiki_description eq 'y'}
 <div class="toptitledesc">
 {if $lock}
-<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
 {/if}
 {if $prefs.feature_page_title eq 'y'}
 <a href="tiki-index.php?page={$page}" class="link" style="font-weight:bold;">{$page}</a> :: 
@@ -161,7 +161,7 @@
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 {if $prefs.wikiLicensePage == $page}
 {if $tiki_p_edit_copyrights eq 'y'}
-<p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+<p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
 {/if}
 {else}
 <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page}">{$prefs.wikiLicensePage}</a>.</p>

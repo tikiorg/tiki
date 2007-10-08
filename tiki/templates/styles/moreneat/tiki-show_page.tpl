@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.74 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.75 2007-10-08 13:28:31 jyhem Exp $ *}
 {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -6,7 +6,7 @@
     {$page}
   {/if}</a>
 {if $lock and $print_page ne 'y'}
-<img src="pics/icons/lock.png" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="pics/icons/lock.png" height="19" width="19" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 {if $prefs.feature_wiki_pageid eq 'y'}
@@ -28,7 +28,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>({tr}cached{/tr})</small>
+<small>({tr}Cached{/tr})</small>
 {/if}
 </td>
 {if $print_page ne 'y'}
@@ -42,7 +42,7 @@
 
 
 {if $prefs.feature_backlinks eq 'y'}
-<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_link.gif' border='0' alt='{tr}backlinks{/tr}'}</a>
+<a title="{tr}Backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_link.gif' border='0' alt='{tr}Backlinks{/tr}'}</a>
 {/if}
 
 {if $prefs.feature_morcego eq "y" && $prefs.wiki_feature_3d eq "y"}
@@ -77,7 +77,7 @@
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
 <form action="tiki-index.php" method="get">
   <select name="page" onchange="page.form.submit()">
-    <option>{tr}backlinks{/tr}...</option>
+    <option>{tr}Backlinks{/tr}...</option>
 	{section name=back loop=$backlinks}
 	  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 	{/section}

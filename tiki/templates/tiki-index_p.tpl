@@ -9,7 +9,7 @@
       
       {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
-<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 <table >

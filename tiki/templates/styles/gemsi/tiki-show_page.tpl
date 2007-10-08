@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.20 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.21 2007-10-08 13:28:31 jyhem Exp $ *}
 
 {if $prefs.feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
 {if $structure eq 'y' and $page_info.page_alias ne ''}{$page_info.page_alias}{else}{$page}{/if}</a>  
-{if $lock}<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />{/if}
+{if $lock}<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />{/if}
 </h1>
 {/if}
 {if $prefs.feature_wiki_pageid eq 'y'}
@@ -98,7 +98,7 @@
 {if $prefs.wiki_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
-      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
+      <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
     {/if}
   {else}
     <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
@@ -139,7 +139,7 @@
 
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
 <select name=page onchange="go(this)">
-<option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+<option value="tiki-index.php?page={$page|escape:"url"}">{tr}Backlinks{/tr}...</option>
 {section name=back loop=$backlinks}
 <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
 {/section}

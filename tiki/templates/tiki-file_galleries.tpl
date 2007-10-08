@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.65 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66 2007-10-08 13:28:30 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">
@@ -73,7 +73,7 @@
 				<td class="formcolor">{tr}Size{/tr}</td>
 				<td class="formcolor">{tr}Description{/tr}</td>
 				<td class="formcolor">{tr}downloads{/tr}</td>
-				<td class="formcolor">{tr}locked{/tr}<br /></td>
+				<td class="formcolor">{tr}Locked{/tr}<br /></td>
 			</tr>
 			<tr>
 				<td class="formcolor"><input type="checkbox" name="show_icon" {if $show_icon eq 'y'} checked="checked"{/if} /></td>

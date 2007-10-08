@@ -5,7 +5,7 @@
     {$page}
   {/if}</a>
 {if $lock and $print_page ne 'y'}
-<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 {if $prefs.feature_wiki_pageid eq 'y'}
@@ -20,7 +20,7 @@
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
-<small>({tr}cached{/tr})</small>
+<small>({tr}Cached{/tr})</small>
 {/if}
 </td>
 <td align="right">
@@ -52,7 +52,7 @@
 
 
 {if $prefs.feature_backlinks eq 'y'}
-<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img src='pics/icons/link.png' border='0' alt='{tr}backlinks{/tr}' width='16' height='16' /></a>
+<a title="{tr}Backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img src='pics/icons/link.png' border='0' alt='{tr}Backlinks{/tr}' width='16' height='16' /></a>
 {/if}
 
 {if $prefs.feature_morcego eq "y" && $prefs.wiki_feature_3d eq "y"}
@@ -85,7 +85,7 @@
 
 {if $prefs.feature_backlinks eq 'y' and $backlinks}
   <select name="page" onchange="go(this)">
-    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Backlinks{/tr}...</option>
 	{section name=back loop=$backlinks}
 	  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
 	{/section}
