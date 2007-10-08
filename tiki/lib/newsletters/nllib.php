@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.61 2007-09-25 23:45:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.62 2007-10-08 12:35:10 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -15,7 +15,7 @@ class NlLib extends TikiLib {
 
 	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author) {
 		if ($nlId) {
-			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=? `frequency`=? where `nlId`=?";
+			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?, `frequency`=? where `nlId`=?";
 			$result = $this->query($query, array($name,$description,$allowUserSub,$allowAnySub,$unsubMsg,$frequency,$validateAddr,(int)$nlId));
 		} else {
 			$query = "insert into `tiki_newsletters`(`name`,
