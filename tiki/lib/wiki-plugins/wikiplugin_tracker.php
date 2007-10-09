@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.81 2007-10-05 18:04:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.82 2007-10-09 15:29:00 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -376,13 +376,13 @@ function wikiplugin_tracker($data, $params) {
 			// Loop on tracker fields and display form
 			$back.= '<table class="wikiplugin_tracker">';
 			foreach ($flds['data'] as $f) {
-				if ($f['type'] == 'u' and $f['options'] == '1') {
+				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
 				}
-				if ($f['type'] == 'I' and $f['options'] == '1') {
+				if ($f['type'] == 'I' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authoripid" value="'.$f['fieldId'].'" />';
 				}
-				if ($f['type'] == 'g' and $f['options'] == '1') {
+				if ($f['type'] == 'g' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
 				}
 				if (in_array($f['fieldId'],$outf)) {
@@ -434,7 +434,7 @@ function wikiplugin_tracker($data, $params) {
 						$flags = $tikilib->get_flags();
 						foreach ($flags as $flag) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
-							if (!isset($f['options']) ||  $f['options'] != '1')
+							if (!isset($f['options_array'][0]) ||  $f['options_array'][0] != '1')
 								$selected .= ' style="background-image:url(\'img/flags/'.$flag.'.gif\');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"';
 							$back.= '<option value="'.$flag.'" '.$selected.'>'.tra($flag).'</option>';
 						}
@@ -453,14 +453,14 @@ function wikiplugin_tracker($data, $params) {
 							$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft">'.$f['value'].'</textarea>';
 						}
 					// user selector
-					} elseif ($f['type'] == 'u' and $f['options'] == '1') {
+					} elseif ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
 					// drop down, user selector or group selector
 					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
 						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
 							$list = split(',',$f['options']);
 						} elseif ($f['type'] == 'u') {
-							if ($f['options'] == 1 or $f['options'] == 2) {
+							if ($f['options_array'][0] == 1 or $f['options_array'][0] == 2) {
 								$list = false;
 							} else {
 								$list = $userlib->list_all_users();

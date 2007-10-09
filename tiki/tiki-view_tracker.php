@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.135 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.136 2007-10-09 15:29:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,60 +34,7 @@ if (!isset($_REQUEST["trackerId"])) {
 	die;
 }
 
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["trackerId"], 'tracker', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-				if ($permName == 'tiki_p_admin_trackers') {
-					$propagate = true;
-				}
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $_REQUEST['trackerId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-		if ($tiki_p_view_categories == 'y' || $tiki_p_admin_categories == 'y') {
-			$tiki_p_view_categories = 'y';
-			$tiki_p_view_trackers = 'y';
-			$smarty->assign('tiki_p_view_trackers', 'y');
-		}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra("Please login"));
-		} else {
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	}
-	    $smarty->display("error.tpl");
-		die;
-	}
-}
-if (!empty($propagate) && $propagate) { // if local set of tiki_p_admin_trackers, need to other perm
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-    foreach ($perms['data'] as $perm) {
-        $perm = $perm['permName'];
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
+$tikilib->get_perm_object($trackerId, 'tracker');
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
@@ -251,7 +198,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
 
 		if ($listfields[$fid]['type'] == 'e') { //category
-		    $parentId = $listfields[$fid]["options"];
+		    $parentId = $listfields[$fid]['options_array'][0];
 		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
 		}
 
@@ -271,7 +218,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} elseif ($fields["data"][$i]["type"] == 'e') { // category
 			include_once('lib/categories/categlib.php');
-			$parentId = $fields["data"][$i]["options"];
+			$parentId = $fields["data"][$i]['options_array'][0];
 			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
@@ -287,16 +234,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$ins_fields["data"][$i]["value"] = '';
 
 		} elseif ($fields["data"][$i]["type"] == 'u') { // user selection
-			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
+			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]["options"] == 1 and $user) {
+				if ($fields["data"][$i]['options_array'][0] == 1 and $user) {
 					$ins_fields["data"][$i]["value"] = $user;
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
-			if ($fields["data"][$i]["options"] == 1 and !$writerfield) {
+			if ($fields["data"][$i]['options_array'][0] == 1 and !$writerfield) {
 				$writerfield = $fid;
 			} elseif (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
@@ -305,16 +252,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'I') { // IP selection
-			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
+			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]["options"] == 1 and $_SERVER['REMOTE_ADDR']) {
+				if ($fields["data"][$i]['options_array'][0] == 1 and $_SERVER['REMOTE_ADDR']) {
 					$ins_fields["data"][$i]["value"] = $_SERVER['REMOTE_ADDR'];
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
-			if ($fields["data"][$i]["options"] == 1 and !$writerfield) {
+			if ($fields["data"][$i]['options_array'][0] == 1 and !$writerfield) {
 				$writerfield = $fid;
 			} elseif (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
@@ -323,16 +270,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'g') { // group selection
-			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
+			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ( $fields["data"][$i]["options"] == 1 and $group) {
+				if ( $fields["data"][$i]['options_array'][0] == 1 and $group) {
 					$ins_fields["data"][$i]["value"] = $group;
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
 			}
-			if ($fields["data"][$i]["options"] == 1 and !$writergroupfield) {
+			if ($fields["data"][$i]['options_array'][0] == 1 and !$writergroupfield) {
 				$writergroupfield = $fid;
 			} elseif (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
@@ -559,7 +506,7 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
 	}
 
     // Check, if the user is watching this tracker by a category.    
-	if ($feature_categories == 'y') {    
+	if ($feature_categories == 'y') {
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["trackerId"],'tracker',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
