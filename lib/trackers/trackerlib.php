@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.227 2007-10-09 14:48:16 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.228 2007-10-09 15:29:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1752,8 +1752,10 @@ class TrackerLib extends TikiLib {
 	function get_tracker_field($fieldId) {
 		$query = "select * from `tiki_tracker_fields` where `fieldId`=?";
 		$result = $this->query($query,array((int) $fieldId));
-		if (!$result->numRows()) return false;
+		if (!$result->numRows())
+			return false;
 		$res = $result->fetchRow();
+		$res['options_array'] = split(',', $res['options']);
 		return $res;
 	}
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.12 2007-09-02 15:25:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.13 2007-10-09 15:29:00 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -72,7 +72,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	case 'e': // category
 		global $categlib;
 		include_once('lib/categories/categlib.php');
-		$res = $categlib->get_child_categories($field['options']);
+		$res = $categlib->get_child_categories($field['options_array'][0]);
 		$opts = array();
 		foreach ($res as $opt) {
 			$opt['id'] = $opt['categId'];
@@ -86,9 +86,8 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		break;
 	case 'd': // drop down list
-	  $res = array_unique(split(',', $field['options']));
 		$opts = array();
-		foreach ($res as $val) {
+		foreach ($field['options_array'] as $val) {
 			$opt['id'] = $val;
 			$opt['name'] = $val;
 			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
@@ -101,9 +100,8 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		break;
 	case 'R': // radio buttons
-		$res = split(',', $field['options']);
 		$opts = array();
-		foreach ($res as $val) {
+		foreach ($field['options_array'] as $val) {
 			$opt['id'] = $val;
 			$opt['name'] = $val;
 			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {

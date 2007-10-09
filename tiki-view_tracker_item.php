@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.137 2007-10-09 14:48:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.138 2007-10-09 15:29:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -315,7 +315,7 @@ foreach($xfields["data"] as $i=>$array) {
 		
 		} elseif ($fields["data"][$i]["type"] == 'e') {
 			include_once('lib/categories/categlib.php');
-			$k = $ins_fields["data"][$i]["options"];
+			$k = $ins_fields["data"][$i]['options_array'][0];
 			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
@@ -335,13 +335,13 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 
-		} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]) and $user)	{
-			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
+		} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]['options_array'][0]) and $user)	{
+			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]["options"] == 2) {
+				if ($fields["data"][$i]['options_array'][0] == 2) {
 					$ins_fields["data"][$i]["value"] = $user;
-				} elseif ($fields["data"][$i]["options"] == 1) {
+				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
 					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 						$tracker_info["authorfield"] = $fid;
 					}
@@ -356,13 +356,13 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 		
-		} elseif ($fields["data"][$i]["type"] == 'I' and isset($fields["data"][$i]["options"]) and isset($IP))	{
-			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
+		} elseif ($fields["data"][$i]["type"] == 'I' and isset($fields["data"][$i]['options_array'][0]) and isset($IP))	{
+			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]["options"] == 2) {
+				if ($fields["data"][$i]['options_array'][0] == 2) {
 					$ins_fields["data"][$i]["value"] = $IP;
-				} elseif ($fields["data"][$i]["options"] == 1) {
+				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}
@@ -373,13 +373,13 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 
-		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]["options"]) and $group)	{
+		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]['options_array'][0]) and $group)	{
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]["options"] == 2) {
+				if ($fields["data"][$i]['options_array'][0] == 2) {
 					$ins_fields["data"][$i]["value"] = $group;
-				} elseif ($fields["data"][$i]["options"] == 1)  {
+				} elseif ($fields["data"][$i]['options_array'][0] == 1)  {
 					if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
 						$tracker_info["authorgroupfield"] = $fid;
 					}
@@ -540,10 +540,10 @@ foreach($xfields["data"] as $i=>$array) {
 					    }
 				        } 
 		}
-	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]["options"]) and $user and $xfields["data"][$i]["options"] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
+	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]['options_array'][0]) and $user and $xfields["data"][$i]['options_array'][0] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 		// even if field is hidden need to pick up user for perm
 		$tracker_info["authorfield"] = $fid;
-	} elseif ($xfields["data"][$i]["type"] == "g" and isset($xfields["data"][$i]["options"]) and $group and $xfields["data"][$i]["options"] == 1 and isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
+	} elseif ($xfields["data"][$i]["type"] == "g" and isset($xfields["data"][$i]['options_array'][0]) and $group and $xfields["data"][$i]['options_array'][0] == 1 and isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
 		// even if field hidden need to pick up the group for perm
 		$tracker_info["authorgroupfield"] = $fid;
 	}
@@ -718,7 +718,7 @@ if ($_REQUEST["itemId"]) {
 				}
 				if ($fields["data"][$i]["type"] == 'e') {
 					global $categlib; include_once('lib/categories/categlib.php');
-					$k = $fields["data"][$i]["options"];
+					$k = $fields["data"][$i]['options_array'][0];
 					$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 					if (!isset($cat)) {
 						$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
@@ -772,7 +772,7 @@ if ($_REQUEST["itemId"]) {
 					       $ins_fields["data"][$i]["listdisplay"] =$trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][3]);
 					 }
 				} elseif ($fields["data"][$i]["type"] == 'u') {
-					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
+					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $user;
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
@@ -829,12 +829,12 @@ if ($_REQUEST["itemId"]) {
 					$smarty->assign("U_liste",$U_liste);
 
 				} elseif ($fields["data"][$i]["type"] == 'C') {
-					$calc = preg_replace('/#([0-9]+)/','$info[\1]',$fields["data"][$i]['options']);
+					$calc = preg_replace('/#([0-9]+)/','$info[\1]',$fields["data"][$i]['options_array'][0]);
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
 					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
 				} elseif ($fields["data"][$i]["type"] == 'g') {
-					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
+					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;
 					}
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
