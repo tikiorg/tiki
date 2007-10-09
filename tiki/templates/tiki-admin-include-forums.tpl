@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.25 2007-10-08 13:28:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26 2007-10-09 15:26:12 pkdille Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>
@@ -61,22 +61,26 @@
               <option value="name_asc" {if $prefs.forums_ordering eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
               </select></td>
         </tr><tr class="form">
-          <td><label>{tr}Tiki search local to a forum{/tr}</td>
+          <td><label>{tr}Search some forums by name (on "forum list"){/tr}</td>
+          <td><input type="checkbox" name="feature_forums_name_search"
+              {if $prefs.feature_forums_name_search eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+          <td><label>{tr}Search some forums by content (on "forum list"){/tr}</td>
+          <td><input type="checkbox" name="feature_forums_search"
+              {if $prefs.feature_forums_search eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+          <td><label>{tr}Search in topics content on forum page{/tr}</td>
+          <td><input type="checkbox" name="feature_forum_content_search"
+              {if $prefs.feature_forum_content_search eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+          <td><label>{tr}Search method when searching in content: Tiki search local to a forum{/tr}</td>
           <td><input type="checkbox" name="feature_forum_local_tiki_search"
-              {if $prefs.feature_forum_local_tiki_search eq 'y'}checked="checked"{/if}/></td>			
+              {if $prefs.feature_forum_local_tiki_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr class="form">
-          <td><label>{tr}Non-Tiki search local to a forum{/tr}</td>
+          <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $prefs.feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr class="form">
-          <td><label>{tr}Tiki search local to forums{/tr}</td>
-          <td><input type="checkbox" name="feature_forums_tiki_search"
-              {if $prefs.feature_forums_tiki_search eq 'y'}checked="checked"{/if}/></td>			
-        </tr><tr class="form">
-          <td><label>{tr}Non-Tiki search local to forums{/tr}</td>
-          <td><input type="checkbox" name="feature_forums_search"
-              {if $prefs.feature_forums_search eq 'y'}checked="checked"{/if}/></td>			
-        </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>

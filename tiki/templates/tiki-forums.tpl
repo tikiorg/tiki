@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.35 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.36 2007-10-09 15:26:11 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -12,26 +12,34 @@
 {/if}
 </div>
 
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-forums.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-{if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_tiki_search eq 'y'}
-<td>
-<form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-<input name="highlight" size="30" type="text" />
-<input type="hidden" name="where" value="forums" />
-<input type="submit" class="wikiaction" name="search" value="{tr}Forums search{/tr}"/>
-</form>
-</td>
-{/if}
-</tr>
-</table>
+{if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
+  <table class="findtable">
+    <tr>
+      <td class="findtable">{tr}Find{/tr}</td>
+      
+      {if $prefs.feature_forums_name_search eq 'y'}
+        <td class="findtable">
+          <form method="get" action="tiki-forums.php">
+            <input type="text" name="find" value="{$find|escape}" />
+            <input type="submit" value="{tr}Search by name{/tr}" name="search" />
+            <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+          </form>
+        </td>
+      {/if}
+
+      {if $prefs.feature_forums_search eq 'y'}
+        <td>
+          <form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+            <input name="highlight" size="30" type="text" />
+            <input type="hidden" name="where" value="forums" />
+            <input type="submit" class="wikiaction" name="search" value="{tr}Search in content{/tr}"/>
+          </form>
+        </td>
+      {/if}
+    </tr>
+  </table>
+{/if}  
+
 <table class="normal">
 <tr>
 <td  class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
