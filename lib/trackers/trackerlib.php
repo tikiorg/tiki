@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.225 2007-10-08 22:31:08 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.226 2007-10-09 13:02:23 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -559,7 +559,7 @@ class TrackerLib extends TikiLib {
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
 					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( 0 ";
-					$value = empty($fv) ? is_array($exactvalue)? $exactvalue[$i]: $exactvalue : $fv;
+					$value = empty($fv) ? (is_array($exactvalue)? $exactvalue[$i]: $exactvalue) : $fv;
 					if ( ! is_array($value) && $value != '' ) $value = array($value);
 					foreach ( $value as $catId ) {
 						$bindvars[] = $catId;
@@ -568,8 +568,15 @@ class TrackerLib extends TikiLib {
 					$mid .= " ) ";
 		
 				} else if ( $exactvalue ) {
-		
-					if ( is_array($exactvalue) ) {
+					if (!empty($exactvalue[$i])) {
+						if (is_array($exactvalue[$i])) {
+							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue[$i]),'?')).")";
+							$bindvars = array_merge($bindvars, $exactvalue[$i]);
+						} else {
+							$mid.= " AND ttif$i.`value`=? ";
+							$bindvars[] = $exactvalue[$i];
+						}
+					} elseif (is_array($exactvalue)) {
 						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue),'?')).")";
 						$bindvars = array_merge($bindvars, $exactvalue);
 					} else {
