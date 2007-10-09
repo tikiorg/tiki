@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.110 2007-10-08 13:28:30 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111 2007-10-09 15:26:12 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -51,14 +51,15 @@
 	{/if}
 </div>
 
-{if $prefs.feature_forum_local_search eq 'y' or $prefs.feature_forum_local_tiki_search eq 'y'}
-<form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-<input name="highlight" size="30" type="text" />
-<input type="hidden" name="where" value="forums" />
-<input type="hidden" name="forumId" value={$forum_info.forumId} />
-<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
-</form>
+{if $prefs.feature_forum_content_search eq 'y'}
+  <form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+    <input name="highlight" size="30" type="text" />
+    <input type="hidden" name="where" value="forums" />
+    <input type="hidden" name="forumId" value={$forum_info.forumId} />
+    <input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
+  </form>
 {/if}
+
 </td>
 </tr>
 </table>
