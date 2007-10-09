@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.43 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.44 2007-10-09 14:48:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -155,7 +155,7 @@ if ( $user_tracker_infos ) {
 	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
-	$items = $trklib->list_items($userTrackerId, 0, 1, '',  $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1'), $userwatch);
+	$items = $trklib->list_items($userTrackerId, 0, 1, '',  $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1%'), $userwatch);
 	$smarty->assign_by_ref('userItem',$items['data'][0]);
 }
 

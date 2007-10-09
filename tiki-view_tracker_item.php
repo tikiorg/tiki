@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.136 2007-10-03 17:24:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.137 2007-10-09 14:48:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 				$addit['data'][0]['type'] = 'u';
 				$addit['data'][0]['value'] = $user;
 				$i = 1;
-				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", 1)) {
+				if ($f = $trklib->get_field_id_from_type($_REQUEST['trackerId'], "u", '1%')) {
 				    if ($f != $utid['usersFieldId']) {
 					$addit['data'][1]['fieldId'] = $f;
 					$addit['data'][1]['type'] = 'u';
