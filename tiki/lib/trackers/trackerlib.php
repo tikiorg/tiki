@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.226 2007-10-09 13:02:23 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.227 2007-10-09 14:48:16 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1765,7 +1765,11 @@ class TrackerLib extends TikiLib {
 		$mid = ' `trackerId`=? and `type`=? ';
 		$bindvars = array((int)$trackerId, $type);
 		if (!empty($option)) {
-			$mid .= ' and `options`=? ';
+			if (strstr($options, '%')) {
+				$mid .= ' and `options`=? ';
+			} else {
+				$mid .= ' and `options` like ? ';
+			}
 			$bindvars[] = $option;
 		} 
 		return $this->getOne("select `fieldId` from `tiki_tracker_fields` where $mid",$bindvars);
@@ -2011,7 +2015,7 @@ class TrackerLib extends TikiLib {
 
 		$userreal=$userparam!=null?$userparam:$user;
 		if (!empty($userreal)) {
-			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
+			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
 				$value = $userreal;
 				$items = $this->get_items_list($trackerId, $fieldId, $value);
 				if ($items)
@@ -2027,7 +2031,7 @@ class TrackerLib extends TikiLib {
 		}
 	}
 	function get_item_creator($trackerId, $itemId) {
-		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1')) { // user creator field
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
 			return $this->get_item_value($trackerId, $itemId, $fieldId);
 		} else {
 			return null;
