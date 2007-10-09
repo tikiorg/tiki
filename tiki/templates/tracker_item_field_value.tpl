@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.16 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.17 2007-10-09 17:24:11 sylvieg Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -40,7 +40,7 @@
 	{/foreach}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value)}
+{elseif empty($field_value.value) and $field_value.type ne 'U'}
 	&nbsp;
 
 {* -------------------- test field, numeric, grop down, radio,user/group/IP selector, autopincrement, dynamic list *}
