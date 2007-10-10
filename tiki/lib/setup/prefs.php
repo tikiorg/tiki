@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.8 2007-10-07 16:28:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.9 2007-10-10 09:06:19 pkdille Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -265,6 +265,8 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['feature_forum_quickjump'] = 'n';
 	$_SESSION['prefs']['feature_forum_topicd'] = 'y';
 	$_SESSION['prefs']['feature_forums_allow_thread_titles'] = 'n';
+	$_SESSION['prefs']['feature_forum_content_search'] = 'y';
+	$_SESSION['prefs']['feature_forums_name_search'] = 'y';
 	$_SESSION['prefs']['forums_ordering'] = 'created_desc';
 	$_SESSION['prefs']['forum_list_topics'] =  'y';
 	$_SESSION['prefs']['forum_list_posts'] =  'y';
