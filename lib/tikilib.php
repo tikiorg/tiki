@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.795 2007-10-10 19:53:08 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.796 2007-10-10 20:27:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3758,7 +3758,7 @@ function add_pageview() {
       return(TRUE);
     }
 
-	/* get all the perm of an object either in a table or global and smarty set
+	/* get all the perm of an object either in a table or global+smarty set
 	 * OPTIMISATION: better to test tiki_p_admin outside for global=false
 	 * TODO: all the objectType
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
@@ -3789,6 +3789,8 @@ function add_pageview() {
 			}
 			return $ret;
 			/* else : all the perms have already been set in tiki-setup_base */
+		} elseif ($perms = $this->get_local_perms($user, $objectId, $objectType, $info, $global)) {
+			return $ret;
 		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 			$userPerms = $userlib->get_object_permissions_for_user($objectId, $objectType, $user);
@@ -3804,7 +3806,6 @@ function add_pageview() {
         				$smarty->assign("$perm", 'y');
 					}
 				}
-				echo "FFFF";
 				return $ret;
 			}
 			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
@@ -4033,6 +4034,32 @@ function add_pageview() {
 			break;
 		}
 		return $ret;
+	}
+	/* deal all the special perm */
+	function get_local_perms($user, $objectId, $objectType, $info, $global) {
+		global $userlib, $smarty;
+		$ret = array();
+		switch ($objectType) {
+		case 'wiki page': case 'wiki':
+			global $wiki_creator_admin;
+			if ($wiki_creator_admin == 'y' && $info['creator'] == $user) {
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+				foreach ($perms['data'] as $perm) {
+					$perm = $perm['permName'];
+					$ret[$perm] = 'y';
+       				if ($global) {
+						global $$perm;
+	        			$$perm = 'y';
+        				$smarty->assign("$perm", 'y');
+					}
+				}
+				return $ret;
+			}
+			break;
+		default:
+			break;
+		}
+		return false;
 	}
 
 	// This method overrides the prefs with those specified in database
