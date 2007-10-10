@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.469 2007-10-10 14:46:38 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.470 2007-10-10 15:04:38 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,7 +12,27 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-require_once('lib/setup/set_paths.php');
+/* Automatically set params used for absolute URLs - BEGIN */
+
+$tmp = dirname(str_replace(dirname(__FILE__),'',$_SERVER['SCRIPT_FILENAME']));
+if ($tmp != '/') {
+        $dir_level = substr_count($tmp,"/");
+} else {
+        $dir_level = 0;
+}
+unset($tmp);
+
+$tikiroot = dirname($_SERVER['PHP_SELF']);
+$tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
+
+if ($dir_level > 0) {
+        $tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
+        $tikipath = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikipath);
+        chdir(join('../',array_fill(0,$dir_level+1,'')));
+}
+
+if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
+if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
 if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
