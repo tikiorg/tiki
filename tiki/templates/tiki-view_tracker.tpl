@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.158 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159 2007-10-10 14:27:27 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -207,7 +207,7 @@ class="prevnext">{tr}All{/tr}</a>
 		</a>
 	</td>
 	{assign var=rateFieldId value=$fields[ix].fieldId}
-{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
+{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'c' or $tiki_p_admin_trackers eq 'y')}
 <td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
 {/if}
@@ -538,7 +538,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {assign var=fid value=$fields[ix].fieldId}
 
 {if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq '-'  or $tiki_p_admin_trackers eq 'y'}
-{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q'}
+{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q' and (($fields[ix].type ne 'u' and $fields[ix].type ne 'g' and $fields[ix].type ne 'I') or !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y')}
 {if $fields[ix].type eq 'h'}
 </table>
 <h2>{$fields[ix].name}</h2>
@@ -567,26 +567,24 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- user selector -------------------- *}
 {if $fields[ix].type eq 'u'}
-{if !$fields[ix].options or ($fields[ix].options ne '1' and $tiki_p_admin_trackers eq 'y')}
+{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
 {if $fields[ix].value}
 <option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
-{elseif $user}
-<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one}</option>
 {else}
-<option value="{$one|escape}">{$one}</option>
+<option value="{$one|escape}"{if $one eq $user and $fields[ix].options_array[0] ne '2'}} selected="selected"{/if}>{$one}</option>
 {/if}
 {/foreach}
 </select>
-{elseif $fields[ix].options eq 1 and $user}
+{else}
 {$user}
 {/if}
 
 {* -------------------- IP selector -------------------- *}
 {elseif $fields[ix].type eq 'I'}
-{if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
+{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
 <input type="text" name="{$fields[ix].ins_id}" value="{if $input_err}{$fields[ix].value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
 {else}
 {$IP}
@@ -594,14 +592,14 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- group selector -------------------- *}
 {elseif $fields[ix].type eq 'g'}
-{if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
+{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}" {if $input_err and $fields[ix].value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
-{elseif $fields[ix].options eq 1 and $group}
+{else}
 {$group}
 {/if}
 
