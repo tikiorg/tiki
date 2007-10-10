@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.194 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.195 2007-10-10 20:27:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -229,14 +229,6 @@ if (isset($wiki_authors_style) && $wiki_authors_style != 'classic') {
 
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
-
-// Let creator set permissions
-if($wiki_creator_admin == 'y') {
-    if ($creator && $user && ($creator==$user)) {
-	$tiki_p_admin_wiki = 'y';
-	$smarty->assign( 'tiki_p_admin_wiki', 'y' );
-    }
-}
 
 require_once('tiki-pagesetup.php');
 
