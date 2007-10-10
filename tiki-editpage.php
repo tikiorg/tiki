@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.178 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.179 2007-10-10 20:54:36 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -501,24 +501,10 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     }
     $_REQUEST['edit'] .= $sdta;
 }
-// Checks if a "UserPagesomething" can be edited
-$isUserPage = false;
-if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
-	if(strcasecmp(substr($page,0,strlen($feature_wiki_userpage_prefix)),$feature_wiki_userpage_prefix)==0) {
-		$name = substr($page,strlen($feature_wiki_userpage_prefix));
-		if(strcasecmp($user,$name)!=0 && $name != '') {
-			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
-			$smarty->display("error.tpl");
-			die;
-		} elseif ($name != '') {
-			$isUserPage = true;
-		} else {
-			$isUserPage = true;
-			$page .= $user;
-			$_REQUEST['page'] = $page;
-
-		}
-	}
+// if "UserPage" complete with the user name
+if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y' && $page == $feature_wiki_userpage_prefix) {
+	$page .= $user;
+	$_REQUEST['page'] = $page;
 }
 
 if (strtolower($_REQUEST["page"]) == 'sandbox' && $feature_sandbox != 'y') {
@@ -549,7 +535,7 @@ $smarty->assign('comments_show','n');
 
 // Permissions
 $tikilib->get_perm_object($page, 'wiki page', $info, true);
-if (!( $tiki_p_edit == 'y' || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user) || $isUserPage )) {
+if ($tiki_p_edit != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
