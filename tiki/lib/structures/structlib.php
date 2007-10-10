@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: structlib.php,v 1.91 2007-10-05 15:14:34 sylvieg Exp $
+// CVS: $Id: structlib.php,v 1.92 2007-10-10 17:44:42 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
@@ -246,7 +246,8 @@ class StructLib extends TikiLib {
         $aux['flag'] = 'L';
         $aux['user'] = $is_locked;
       }
-	  $perms = $tikilib->get_perm_object($struct_info['pageName'], 'wiki page', false);
+
+	  $perms = $tikilib->get_perm_object($struct_info['pageName'], 'wiki page', '', false);
 	  $aux['editable'] = $perms['tiki_p_edit'];
 	  $aux['viewable'] = $perms['tiki_p_view'];
       $ret[] = $aux;

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.793 2007-10-07 20:13:29 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.794 2007-10-10 17:44:38 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3763,7 +3763,7 @@ function add_pageview() {
 	 * TODO: all the objectType
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
-	function get_perm_object($objectId, $objectType, $global=true) {
+  function get_perm_object($objectId, $objectType, $info='', $global=true) {
 		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
 		$ret = array();
 		if (empty($objectId)) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.177 2007-10-05 15:40:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.178 2007-10-10 17:44:37 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -548,7 +548,7 @@ $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
 
 // Permissions
-$tikilib->get_perm_object($page, 'wiki page', true);
+$tikilib->get_perm_object($page, 'wiki page', $info, true);
 if (!( $tiki_p_edit == 'y' || ($wiki_creator_admin == 'y' && $user && $info['creator'] == $user) || $isUserPage )) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");

@@ -69,7 +69,7 @@ class Comp_wiki {
 	switch($for) {
 	case 'view':
 	    $wiki_page_name=$this->mypagewin->getParam('config');
-	    $ps = $tikilib->get_perm_object($wiki_page_name, 'wiki page', false);
+	    $ps = $tikilib->get_perm_object($wiki_page_name, 'wiki page', '', false);
 	    return (isset($ps['tiki_p_view']) && ($ps['tiki_p_view'] == 'y'));
 	default:
 	    return false;

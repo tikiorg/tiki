@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.37 2007-07-11 14:22:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.38 2007-10-10 17:44:43 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -23,9 +23,10 @@ function wikiplugin_trackerlist($data, $params) {
 	} else {
 
 		$smarty->assign('trackerId', $trackerId);
-		
+		$tracker_info = $trklib->get_tracker($trackerId);
+
 		if ($tiki_p_admin != 'y') {
-			$perms = $tikilib->get_perm_object($trackerId, 'tracker', false);
+			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
 			if ($perms['tiki_p_view_trackers'] != 'y')
 				return;
 			$smarty->assign_by_ref('perms', $perms);
@@ -39,7 +40,6 @@ function wikiplugin_trackerlist($data, $params) {
 			$listfields = split(':',$fields);
 		}
 
-		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);

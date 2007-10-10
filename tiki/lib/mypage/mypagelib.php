@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.83 2007-10-08 14:41:28 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.84 2007-10-10 17:44:39 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -334,7 +334,7 @@ class MyPage {
 		$res=$tikilib->query($query, $r, $limit, $offset);
 
 		while ($line = $res->fetchRow()) {
-// 			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', false);
+// 			$line['perms'] = $tikilib->get_perm_object($line['id'], 'mypage', '', false);
 			$pages[]=$line;
 		}
 
@@ -434,7 +434,7 @@ class MyPage {
 				$this->id=0;
 				return $this->lasterror=new MyError(MYERROR_ENOENT, "MyPage not found");
 			}
-			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', false);
+			$this->perms = $tikilib->get_perm_object($this->id, 'mypage', '', false);
 // 			if ($this->perms['tiki_p_view_mypage'] != 'y' && !($this->perms['tiki_p_edit_own_mypage'] == 'y' && $this->id_users == $this->getParam('id_users'))) {
 // 				return $this->lasterror=new MyError(MYERROR_EACCESS, tra('You do not have permissions to view the page'));
 // 			}
