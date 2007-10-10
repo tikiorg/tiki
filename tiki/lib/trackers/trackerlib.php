@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.228 2007-10-09 15:29:00 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.229 2007-10-10 14:07:37 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -204,7 +204,7 @@ class TrackerLib extends TikiLib {
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
-		$emails = $this->get_notification_emails($trackerId, $itemId, $options, '');
+		$emails = $this->get_notification_emails($trackerId, $itemId, $options);
 
 		if (count($emails > 0)) {
 			$smarty->assign('mail_date', $this->now);
@@ -1038,7 +1038,7 @@ class TrackerLib extends TikiLib {
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
 
-			$emails = $this->get_notification_emails($trackerId, $itemId, $options, $ins_fields);
+			$emails = $this->get_notification_emails($trackerId, $itemId, $options);
 
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -2096,10 +2096,10 @@ class TrackerLib extends TikiLib {
 		}
 		return $field;
 	}
-	function get_notification_emails($trackerId, $itemId, $options, $ins_fields='') {
+	function get_notification_emails($trackerId, $itemId, $options) {
 		global $userlib;
 		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
-		$emails = $this->get_local_notifications($ins_fields);
+		$emails = $this->get_local_notifications($itemId);
 		foreach ($watchers as $w) {
 			$emails[] = $userlib->get_user_email($w['user']);
 		}
@@ -2143,14 +2143,24 @@ class TrackerLib extends TikiLib {
 		$allFields['cant'] = sizeof($tmp);
 		return $allFields;
 	}
-	function get_local_notifications($ins_fields) {
+	/* return all the values+field options  of an item for a type field (ex: return all the user selector value for an item) */
+	function get_item_values_by_type($itemId, $typeField) {
+		$query = "select ttif.`value`, ttf.`options` from `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif";
+		$query .= " where ttif.`itemId`=? and ttf.`type`=? and ttf.`fieldId`=ttif.`fieldId`";
+		$result = $this->query($query, array($itemId, $typeField));
+		while ($res = $result->fetchRow()) {
+			$res['options_array'] = split(',', $res['options']);
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+	/* return all the emails that are locally watching an item */
+	function get_local_notifications($itemId) {
 		global $userlib;
 		$emails = array();
-		if (empty($ins_fields['data'])) {
-			return $emails;
-		}
-		foreach ($ins_fields['data'] as $f) {
-			if ($f['type'] == 'u' && isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
+		$res = $this->get_item_values_by_type($itemId, 'u');
+		foreach ($res as $f) {
+			if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
 				$email = $userlib->get_user_email($f['value']);
 				if (!empty($email)) {
 					$emails[] = $email;
