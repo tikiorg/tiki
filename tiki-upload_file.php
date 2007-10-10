@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.63 2007-09-20 20:03:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.64 2007-10-10 17:44:37 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,9 +30,10 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
 }	
 
-$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', true);
+$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $gal_info, true);
 
 if (!empty($_REQUEST['galleryId'])) { // perms of the gallery can overwrite general perms
 	$smarty->assign('individual', 'n');

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.53 2007-09-21 16:12:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.54 2007-10-10 17:44:37 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -12,9 +12,12 @@
 
 	if(!isset($_REQUEST["galleryId"])) {
 	  $_REQUEST["galleryId"]=0;
+	  $info = '';
+	} else {
+		$info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
 	}
 
-	$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', true);
+$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 
 	if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') || (!isset($tiki_p_list_file_galleries) && $tiki_p_view_file_gallery != 'y')) {
 	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
@@ -114,7 +117,6 @@
 	  $smarty->assign('edit_mode','y');
 	  $smarty->assign('edited','y');
 	  if($_REQUEST["galleryId"]>0) {
-	    $info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
 	
 	    //$smarty->assign_by_ref('theme',$info["theme"]);
 	    $smarty->assign_by_ref('name',$info["name"]);
@@ -180,7 +182,6 @@
 	    }
 	    // If the user can create a gallery then check if he can edit THIS gallery
 	    if($_REQUEST["galleryId"]>0) {
-	      $info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
 	      if(!$user || $info["user"]!=$user) {
 	        $smarty->assign('msg',tra("Permission denied you cannot edit this gallery"));
 	        $smarty->display("error.tpl");

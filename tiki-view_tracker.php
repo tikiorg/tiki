@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.137 2007-10-10 12:57:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.138 2007-10-10 17:44:37 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,14 @@ if (!isset($_REQUEST["trackerId"])) {
 	die;
 }
 
-$tikilib->get_perm_object($trackerId, 'tracker');
+$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
+if (empty($tracker_info)) {
+	$smarty->assign('msg', tra("No tracker indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+$tikilib->get_perm_object($trackerId, 'tracker', $tracker_info);
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
@@ -74,12 +81,6 @@ if (isset($_REQUEST['my'])) {
 	}
 }
 
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-if (empty($tracker_info)) {
-	$smarty->assign('msg', tra("No tracker indicated"));
-	$smarty->display("error.tpl");
-	die;
-}
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
 
