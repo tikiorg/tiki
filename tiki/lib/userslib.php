@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.243 2007-10-07 09:32:34 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.244 2007-10-10 19:53:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -162,6 +162,19 @@ class UsersLib extends TikiLib {
 
 	return $ret;
     }
+	function get_object_permissions_for_user ($objectId, $objectType, $user) {
+		$objectId = md5($objectType . strtolower($objectId));
+		$bindvars = array($objectId, $objectType);
+		$groups = $this->get_user_groups($user);
+		$bindvars = array_merge($bindvars, $groups);
+		$query = 'select `permName` from `users_objectpermissions`  where `objectId` = ? and `objectType` = ?  and `groupName` in ('.implode(',', array_fill(0, count($groups),'?')).')';
+		$result = $this->query($query, $bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['permName'];
+		}
+		return $ret;
+	}
 
     function object_has_one_permission($objectId, $objectType) {
 	$objectId = md5($objectType . strtolower($objectId));

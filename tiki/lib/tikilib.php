@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.794 2007-10-10 17:44:38 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.795 2007-10-10 19:53:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3791,26 +3791,31 @@ function add_pageview() {
 			/* else : all the perms have already been set in tiki-setup_base */
 		} elseif ($userlib->object_has_one_permission($objectId, $objectType)) {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+			$userPerms = $userlib->get_object_permissions_for_user($objectId, $objectType, $user);
+
+			$permAdmin = $this->get_adminPerm_from_objectType($objectType);
+			if (in_array($permAdmin, $userPerms)) { // has perm admin - so inherit all the perms
+				foreach ($perms['data'] as $perm) {
+					$perm = $perm['permName'];
+					$ret[$perm] = 'y';
+       				if ($global) {
+						global $$perm;
+	        			$$perm = 'y';
+        				$smarty->assign("$perm", 'y');
+					}
+				}
+				echo "FFFF";
+				return $ret;
+			}
 			foreach ($perms['data'] as $perm) { // foreach perm of the same group of perms
 				$permName = $perm['permName'];
-				global $$permName;//TODO: do not request for each perm but for all the perms at the same time
-				if ($userlib->object_has_permission($user, $objectId, $objectType, $permName)) {
+				global $$permName;
+				$permAdmin = $this->get_adminPerm_from_objectType($objectType);
+				if (in_array($permName, $userPerms)) {
 					$ret[$permName] = 'y';
 					if ($global) {
 						$$permName = 'y';
 						$smarty->assign("$permName", 'y');
-					}
-					if ($permName == $this->get_adminPerm_from_objectType($objectType)) { // admin sets all the other perms
-					    foreach ($perms['data'] as $perm) {
-							$perm = $perm['permName'];
-							$ret[$perm] = 'y';
-       						if ($global) {
-								global $$perm;
-	        					$$perm = 'y';
-        						$smarty->assign("$perm", 'y');
-							}
-						}
-						return $ret;
 					}
 				} else {
 					$ret[$permName] = 'n';
