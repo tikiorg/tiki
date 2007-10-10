@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.47 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.48 2007-10-10 21:27:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,105 +9,42 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/filegals/filegallib.php');
-include_once ('lib/stats/statslib.php');
-
-if ($feature_categories == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-}
-
 if ($feature_file_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
+include_once ('lib/filegals/filegallib.php');
+include_once ('lib/stats/statslib.php');
+
+if ($feature_categories == 'y') {
+	global $categlib; include_once('lib/categories/categlib.php');
+}
+
 if (empty($_REQUEST['galleryId']) || !($gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']))) {
 	$smarty->assign('msg', tra("Non-existent gallery"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 $podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
 
-$smarty->assign('individual', 'n');
-
 $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $gal_info, true);
 
-if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'file gallery')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'file gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'file gallery', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $_REQUEST['galleryId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra("Please login"));
-		} else {
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	}
-	    $smarty->display("error.tpl");
-		die;
-	}
-}
-
 if ($tiki_p_admin_file_galleries == 'y') {
-	$tiki_p_view_file_gallery = 'y';
-
-	$smarty->assign("tiki_p_view_file_gallery", 'y');
-	$tiki_p_upload_files = 'y';
-	$smarty->assign("tiki_p_upload_files", 'y');
-	$tiki_p_download_files = 'y';
-	$smarty->assign("tiki_p_download_files", 'y');
-	$tiki_p_create_file_galleries = 'y';
-	$smarty->assign("tiki_p_create_file_galleries", 'y');
-
 	if (isset($_REQUEST['delsel_x'])) {
 		check_ticket('list-fgal');
 		foreach (array_values($_REQUEST['file'])as $file) {
-//Watches
-                        if ($_REQUEST['file'] > 0) {
-                                $info = $filegallib->get_file_info($file);
- 
-                                $smarty->assign('fileId', $file);
-                                $smarty->assign('galleryId', $_REQUEST['galleryId']);
-                                $smarty->assign_by_ref('filename', $info['filename']);
-                                $smarty->assign_by_ref('fname', $info['name']);
-                                $smarty->assign_by_ref('fdescription', $info['description']);
-                        }
-                        $filegallib->remove_file($info, $user, $gal_info);
-
+			if ($_REQUEST['file'] > 0) {
+				$info = $filegallib->get_file_info($file);
+				$smarty->assign('fileId', $file);
+				$smarty->assign('galleryId', $_REQUEST['galleryId']);
+				$smarty->assign_by_ref('filename', $info['filename']);
+				$smarty->assign_by_ref('fname', $info['name']);
+				$smarty->assign_by_ref('fdescription', $info['description']);
+			}
+			$filegallib->remove_file($info, $user, $gal_info);
 		}
 	}
 
@@ -122,7 +59,6 @@ if ($tiki_p_admin_file_galleries == 'y') {
 
 if ($tiki_p_view_file_gallery != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
-
 	$smarty->display("error.tpl");
 	die;
 }
