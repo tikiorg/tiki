@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.796 2007-10-10 20:27:00 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.797 2007-10-10 20:54:36 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3760,7 +3760,8 @@ function add_pageview() {
 
 	/* get all the perm of an object either in a table or global+smarty set
 	 * OPTIMISATION: better to test tiki_p_admin outside for global=false
-	 * TODO: all the objectType
+	 * TODO: all the objectTypes
+	 * TODO: replace switch with object
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
   function get_perm_object($objectId, $objectType, $info='', $global=true) {
@@ -4042,7 +4043,7 @@ function add_pageview() {
 		switch ($objectType) {
 		case 'wiki page': case 'wiki':
 			global $wiki_creator_admin;
-			if ($wiki_creator_admin == 'y' && $info['creator'] == $user) {
+			if ($wiki_creator_admin == 'y' && $info['creator'] == $user) { //can admin his page
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
 					$perm = $perm['permName'];
@@ -4054,6 +4055,23 @@ function add_pageview() {
 					}
 				}
 				return $ret;
+			}
+			global $feature_wiki_userpage, $feature_wiki_userpage_prefix;
+			if ($feature_wiki_userpage == 'y' && strcasecmp($info['pageName'], $feature_wiki_userpage_prefix.$user) == 0) { //can edit his page
+				if (!$global) {
+					$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+					foreach ($perms['data'] as $perm) {
+						global $$perm['permName'];
+						if ($perm['permName'] == 'tiki_p_view' || $perm['permName'] == 'tiki_p_edit') {
+							$ret[$perm['permName']] = 'y';
+						} else {
+							$ret[$perm['permName']] = $$perm['permName'];
+						}
+					}
+				} else {
+					$smarty->assign('tiki_p_view', 'y');
+					$smarty->assign('tiki_p_edit', 'y');
+				}
 			}
 			break;
 		default:
