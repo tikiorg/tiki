@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.468 2007-10-10 13:30:51 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.469 2007-10-10 14:46:38 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-require_once('lib/setup/absolute_urls.php');
+require_once('lib/setup/set_paths.php');
 
 require_once('lib/init/initlib.php');
 if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
@@ -26,8 +26,6 @@ $crumbs = array();
 require_once('lib/setup/tikisetup.class.php');
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
-
-//echo ini_get('include_path');
 
 require_once('lib/setup/timer.class.php');
 $tiki_timer = new timer();
