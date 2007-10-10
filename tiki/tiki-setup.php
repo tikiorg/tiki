@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.467 2007-10-08 14:43:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.468 2007-10-10 13:30:51 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -11,6 +11,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   header('location: index.php');
   exit;
 }
+
+require_once('lib/setup/absolute_urls.php');
 
 require_once('lib/init/initlib.php');
 if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
@@ -24,6 +26,8 @@ $crumbs = array();
 require_once('lib/setup/tikisetup.class.php');
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
+
+//echo ini_get('include_path');
 
 require_once('lib/setup/timer.class.php');
 $tiki_timer = new timer();
@@ -104,3 +108,19 @@ $smarty->assign('uses_tabs', 'n');
 $smarty->assign('uses_jscalendar', 'n');
 $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('wiki_extras', 'n');
+
+$smarty->assign('tikipath', $tikipath);
+$smarty->assign('tikiroot', $tikiroot);
+$smarty->assign('url_scheme', $url_scheme);
+$smarty->assign('url_host', $url_host);
+$smarty->assign('url_port', $url_port);
+$smarty->assign('url_path', $url_path);
+
+$smarty->assign('base_host', $base_host);
+$smarty->assign('base_url', $base_url);
+$smarty->assign('base_url_http', $base_url_http);
+$smarty->assign('base_url_https', $base_url_https);
+
+$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
+$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
+

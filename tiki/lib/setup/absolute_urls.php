@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.1 2007-10-06 15:18:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.2 2007-10-10 13:30:52 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -14,15 +14,28 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 /* Automatically set params used for absolute URLs - BEGIN */
 
-$tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
-if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
+$tmp = dirname(str_replace(dirname(dirname(dirname(__FILE__))),'',$_SERVER['SCRIPT_FILENAME']));
+if ($tmp != '/') {
+	$dir_level = substr_count($tmp,"/");
+} else {
+	$dir_level = 0;
+}                                                                               
+unset($tmp);
 
 $tikiroot = dirname($_SERVER['PHP_SELF']);
+$tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
+
+if ($dir_level > 0) {
+	$tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
+	$tikipath = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikipath);
+	chdir(join('../',array_fill(0,$dir_level+1,'')));
+}
+
 if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
+if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 if ( $https_port == 443 ) $https_port = '';
 if ( $http_port == 80 ) $http_port = '';
-
 
 // Detect if we are in HTTPS / SSL mode.
 //
@@ -48,19 +61,6 @@ $base_url = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$url_p
 $base_url_http = 'http://'.$url_host.(($http_port!='')?":$http_port":'').$url_path;
 $base_url_https = 'https://'.$url_host.(($https_port!='')?":$https_port":'').$url_path;
 
-$smarty->assign('tikipath', $tikipath);
-$smarty->assign('tikiroot', $tikiroot);
-$smarty->assign('url_scheme', $url_scheme);
-$smarty->assign('url_host', $url_host);
-$smarty->assign('url_port', $url_port);
-$smarty->assign('url_path', $url_path);
-
-$smarty->assign('base_host', $base_host);
-$smarty->assign('base_url', $base_url);
-$smarty->assign('base_url_http', $base_url_http);
-$smarty->assign('base_url_https', $base_url_https);
-
-
 // SSL options
 
 if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
@@ -73,7 +73,3 @@ if ( isset($_REQUEST['stay_in_ssl_mode']) ) {
 
 // Show the 'Stay in SSL mode' checkbox only if we are already in HTTPS
 $show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
-
-$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
-$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
-
