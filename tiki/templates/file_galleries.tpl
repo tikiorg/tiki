@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.24 2007-10-04 22:17:35 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.25 2007-10-10 21:23:52 sylvieg Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -199,17 +199,17 @@
 {if $prefs.maxRecords > 0}
 	<div class="mini">
 	{if $prev_offset >= 0}
-		[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
+		[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 	{/if}
 	{tr}Page{/tr}: {$actual_page}/{$cant_pages}
 	{if $next_offset >= 0}
-		&nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
+		&nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
 	{/if}
 	{if $prefs.direct_pagination eq 'y' and $cant_pages gt 1}
 		<br />
 		{section loop=$cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-		<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+		<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 		{$smarty.section.foo.index_next}</a>&nbsp;
 		{/section}
 	{/if}
