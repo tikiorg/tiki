@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.140 2007-10-10 14:46:38 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.141 2007-10-10 15:04:38 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 	die();
 }
-
-require_once('lib/setup/set_paths.php');
 
 // ---------------------------------------------------------------------
 // basic php conf adjustment
