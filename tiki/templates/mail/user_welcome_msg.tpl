@@ -1,1 +1,1 @@
-{tr}Thank you for you registration. You may log in now.{/tr}
+{tr}Thank you for your registration. You may log in now.{/tr}
