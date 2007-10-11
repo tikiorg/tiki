@@ -68,7 +68,7 @@
 {else}
 <a href="tiki-mypage.php?mypage={$pagename}&edit=1">Edit</a>
 {/if}
-{if $tiki_p_admin} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}
+{if $tiki_p_admin eq 'y'} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}
 </span>
 
 {literal}
