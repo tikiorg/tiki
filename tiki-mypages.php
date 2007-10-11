@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.25 2007-10-01 07:54:43 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.26 2007-10-11 20:36:26 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ function mypageedit_populate($typeclassname) {
 	$offset=$showpage * $lpp;
 	$pages=MyPage::listPages($use_id_users, $mypage_type, $offset, $lpp);
  	if (is_callable(array($typeclassname, "customizeMypagesListing")))
- 		call_user_func(array($typeclassname, "customizeMypagesListing"), &$pages);
+ 		call_user_func(array($typeclassname, "customizeMypagesListing"), array(&$pages));
 
 	$pagesnum=array(); for($i=0; $i < $pcount; $i++) $pagesnum[$i]=$i+1;
 	$smarty->assign("pagesnum", $pagesnum);
@@ -147,7 +147,7 @@ function mypageedit_init() {
 							.'<a href="#" onclick="deleteMypage({$mypage.id});" title="{tr}delete entry{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}delete entry{/tr}" /></a>');
 
 	if (!is_myerror($typeclassname) && is_callable(array($typeclassname, 'customizeColumns'))) {
-		call_user_func(array($typeclassname, 'customizeColumns'), &$mp_columns);
+		call_user_func(array($typeclassname, 'customizeColumns'), array(&$mp_columns));
 	}
 
 
