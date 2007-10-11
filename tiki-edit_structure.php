@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.43 2007-09-05 17:52:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.44 2007-10-11 17:47:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,15 @@ if (isset($_REQUEST["sremove"])) {
   }
 }
 
+ if ($feature_user_watches == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {
+	check_ticket('edit-structure');
+	if ($_REQUEST['watch_action'] == 'add' && !empty($_REQUEST['page'])) {
+		$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page");
+	} elseif ($_REQUEST['watch_action'] == 'remove') {
+		$tikilib->remove_user_watch($user, 'structure_changed', $_REQUEST['watch_object']);
+	}
+}
+
 if (!isset($structure_info) or !isset($page_info) ) {
 	$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
 
@@ -119,11 +128,11 @@ if (isset($_REQUEST["create"])) {
     $after = $_REQUEST['after_ref_id'];
   }
 	if (!(empty($_REQUEST['name']))) {
-		$structlib->s_create_page($_REQUEST["page_ref_id"], $after, $_REQUEST["name"], '');
-		$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"],'wiki page');
 		if ($tikilib->page_exists($_REQUEST["name"])) {
 			$smarty->assign('alert_exists', 'y');
 		}
+		$structlib->s_create_page($_REQUEST["page_ref_id"], $after, $_REQUEST["name"], '');
+		$userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["name"],'wiki page');
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
@@ -235,6 +244,11 @@ $structures = $structlib->list_structures(0, -1, 'pageName_asc');
 $smarty->assign_by_ref('structures', $structures['data']);
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
+foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
+	if ($tikilib->user_watches($user, 'structure_changed', $s['page_ref_id'], 'structure')) {
+		$subtree[$i]['event'] = true;
+	}
+}
 $smarty->assign('subtree', $subtree);
 
 // Re-categorize

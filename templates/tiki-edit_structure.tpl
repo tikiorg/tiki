@@ -60,6 +60,13 @@
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
 		{/if}
+		{if $tiki_p_watch_structure eq 'y'}
+			{if !$subtree[ix].event}
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}Monitor the Sub-Structure{/tr}' title='{tr}Monitor the Sub-Structure{/tr}'}</a>
+			{else}
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}Stop Monitoring the Sub-Structure{/tr}' title='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
+			{/if}
+		{/if}
 	</td>
 	<td class="heading">
 		<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'><b>{$subtree[ix].pageName}{if $subtree[ix].page_alias} ({$subtree[ix].page_alias}){/if}</b></a>
@@ -77,6 +84,13 @@
 		{if $subtree[ix].editable == 'y'}
 		{if $subtree[ix].flag == 'L'}<img src="pics/icons/lock.png" border="0" height="16" width="16" alt="locked" title="locked by {$subtree[ix].user}" />
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>{/if}
+		{/if}
+		{if $tiki_p_watch_structure eq 'y'}
+			{if !$subtree[ix].event}
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=add&amp;page={$subtree[ix].pageName|escape:"url"}">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}Monitor the Sub-Structure{/tr}' title='{tr}Monitor the Sub-Structure{/tr}'}</a>
+			{else}
+				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}Stop Monitoring the Sub-Structure{/tr}' title='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
+			{/if}
 		{/if}
 		{if $editable == 'y'}<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'><img src='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' width='16' height='16' style="margin-right:20px;"/></a>{/if}
 	</td>

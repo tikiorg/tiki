@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.220 2007-10-08 19:02:44 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221 2007-10-11 17:47:09 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1597,3 +1597,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 #2007-10-08 sylvieg
 ALTER TABLE tiki_menu_options DROP KEY uniq_menu;
 ALTER IGNORE TABLE tiki_menu_options ADD UNIQUE uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50));
+
+#2007-10-11 sylvieg
+UPDATE tiki_user_watches SET event='structure_changed' WHERE event='structure_page_changed';
