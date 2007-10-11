@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.18 2007-10-11 05:49:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19 2007-10-11 20:51:31 sylvieg Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -61,11 +61,17 @@
 
 {* -------------------- Multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
-	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
 	{if $field_value.value ne ''}	
-	{if  $field_value.options_array[1] ne '' } { $Lenght=$field_value.options_array[1] }{/if}
-	{if  $field_value.options_array[2] ne '' } { $Height=$field_value.options_array[2] }{/if}
+	{if  $field_value.options_array[1] ne '' }
+		{assign var='Height' value=$prefs.MultimediaDefaultHeight}
+	{else}
+		{assign var='Height' value=$field_value.options_array[1]}
+	{/if}
+	{if  $field_value.options_array[2] ne '' }
+		{assign var='Lenght' value=$field_value.options_array[2]}
+	{else}
+		{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+	{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
 	{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
 	{/if}
