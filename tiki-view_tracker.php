@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.138 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.139 2007-10-11 13:45:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,7 @@ if (empty($tracker_info)) {
 	die;
 }
 
-$tikilib->get_perm_object($trackerId, 'tracker', $tracker_info);
+$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 	$cookietab = '1';
