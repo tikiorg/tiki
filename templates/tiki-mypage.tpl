@@ -64,9 +64,9 @@
 
 <span style="float: right">
 {if $editit}
-<a href="tiki-mypage.php?mypage={$pagename|escape:url}">View</a>
-{else}
 <a href="tiki-mypage.php?mypage={$pagename}&edit=1">Edit</a>
+{else}
+<a href="tiki-mypage.php?mypage={$pagename|escape:url}">View</a>
 {/if}
 {if $tiki_p_admin eq 'y'} | <a href="tiki-mypage_types.php">Admin Types</a>{/if}
 </span>
