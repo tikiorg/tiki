@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.82 2007-10-09 15:29:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.83 2007-10-11 20:47:18 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -453,8 +453,8 @@ function wikiplugin_tracker($data, $params) {
 							$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft">'.$f['value'].'</textarea>';
 						}
 					// user selector
-					} elseif ($f['type'] == 'u' and $f['options_array'][0] == '1') {
-						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
+					} elseif (($f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'I') and ($f['options_array'][0] == '1' or $f['options_array'][0] == '2')) {
+						//$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
 					// drop down, user selector or group selector
 					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
 						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
