@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.17 2007-10-09 17:24:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.18 2007-10-11 05:49:54 mose Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -76,7 +76,7 @@
 	{if $field_value.options_array[4] ne '' and $list_mode eq 'y'}
 		{$field_value.value|truncate:$field_value.options_array[4]:"...":true}
 	{else}
-		{$field_value.value}
+		{$field_value.pvalue}
 	{/if}
 
 {* -------------------- date -------------------- *}
