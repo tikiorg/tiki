@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.128 2007-10-08 13:28:30 jyhem Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129 2007-10-11 17:47:09 sylvieg Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -49,9 +49,9 @@
 		{/if}
 		{if $structure == 'y' and $tiki_p_watch_structure eq 'y'}
 			{if $user_watching_structure ne 'y'}
-				<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_page_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}Monitor the Sub-Structure{/tr}' title='{tr}Monitor the Sub-Structure{/tr}'}</a>
+				<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}Monitor the Sub-Structure{/tr}' title='{tr}Monitor the Sub-Structure{/tr}'}</a>
 			{else}
-				<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_page_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=remove_desc&amp;structure={$home_info.pageName|escape:'url'}">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}Stop Monitoring the Sub-Structure{/tr}' title='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
+				<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=remove_desc&amp;structure={$home_info.pageName|escape:'url'}">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}Stop Monitoring the Sub-Structure{/tr}' title='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
 			{/if}
 		{/if}
 	{/if}

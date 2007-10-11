@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: structlib.php,v 1.92 2007-10-10 17:44:42 sylvieg Exp $
+// CVS: $Id: structlib.php,v 1.93 2007-10-11 17:47:09 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
@@ -335,10 +335,10 @@ class StructLib extends TikiLib {
 		if (empty($page_ref_id)) {
 			$query .= " LEFT JOIN `tiki_pages` tp ON ( tp.`page_id`=ts.`page_id`)";
 			$query .= " WHERE tp.`pageName`=?";
-			$result = $this->query($query, array('structure_page_changed', $pageName));
+			$result = $this->query($query, array('structure_changed', $pageName));
 		} else {
 			$query .= " WHERE ts.`page_ref_id`=?";
-			$result = $this->query($query, array('structure_page_changed', $page_ref_id));
+			$result = $this->query($query, array('structure_changed', $page_ref_id));
 		}
 		$ret = array();
 		while ($res = $result->fetchRow()) {
