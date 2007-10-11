@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.229 2007-10-10 14:07:37 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.230 2007-10-11 13:33:52 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1166,7 +1166,7 @@ class TrackerLib extends TikiLib {
 		$cat_objid = $itemId;
 		$cat_desc = '';
 		$cat_name = "Tracker Item $itemId";
-		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
+		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
 		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 			if (!$catObjectId) {
@@ -1959,7 +1959,7 @@ class TrackerLib extends TikiLib {
 				$cat_name = $itemId;
 		else
 				$cat_name = $mainfield;
-		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&amp;itemId=$itemId";
+		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
 		$categlib->update_object_categories($ins_categs, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 	}
 	function move_up_last_fields($trackerId, $position, $delta=1) {
