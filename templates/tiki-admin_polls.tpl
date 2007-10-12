@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.35 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.36 2007-10-12 07:55:50 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -83,7 +83,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="{if $feature_poll_categories eq 'y'}8{else}7{/if}" class="odd">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="{if $prefs.feature_poll_categories eq 'y'}8{else}7{/if}" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 <br />

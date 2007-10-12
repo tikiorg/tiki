@@ -17,10 +17,10 @@ $link2 = new HAW_link("Wiki","tiki-index.php?mode=wap");
 $link3 = new HAW_link("Blogs","tiki-list_blogs.php?mode=wap");
 $linkset = new HAW_linkset();
 //$linkset->add_link($link1);
-if($feature_wiki == 'y') {
+if($prefs['feature_wiki'] == 'y') {
 	$linkset->add_link($link2);
 }
-if($feature_blogs == 'y') {
+if($prefs['feature_blogs'] == 'y') {
 	$linkset->add_link($link3);
 }
 $DemoPage->add_linkset($linkset);

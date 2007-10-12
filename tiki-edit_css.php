@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.14 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.15 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// $Id: tiki-edit_css.php,v 1.14 2007-03-06 19:29:47 sylvieg Exp $
+// $Id: tiki-edit_css.php,v 1.15 2007-10-12 07:55:26 nyloth Exp $
 include_once ("tiki-setup.php");
 
 include_once ("lib/csslib.php");
@@ -39,16 +39,13 @@ function load_css2_file($filename, $styledir) {
 	return $data;
 }
 
-// remove soon..
-#$feature_edit_css = 'y';
-#$tiki_p_create_css = 'y';
-if (!isset($feature_editcss))
-	$feature_editcss = 'n';
+if (!isset($prefs['feature_editcss']))
+	$prefs['feature_editcss'] = 'n';
 
 if (!isset($tiki_p_create_css))
 	$tiki_p_create_css = 'n';
 
-if ($feature_editcss != 'y') {
+if ($prefs['feature_editcss'] != 'y') {
 	$smarty->assign('msg', tra("Feature disabled"));
 
 	$smarty->display("error.tpl");
@@ -128,8 +125,8 @@ $smarty->assign('editstyle', $editstyle);
 
 if ($_REQUEST["try"]) {
 	$style = "$editstyle.css";
-
-	$smarty->assign('style', $style);
+	$_SESSION['try_style'] = $style;
+	$prefs['style'] = $style;
 }
 
 $list = $csslib->list_css($styledir);

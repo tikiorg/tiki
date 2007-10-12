@@ -13,7 +13,7 @@ $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );
 
 function getSubGraph($params) {
-    global $wikilib, $dbTiki, $base_url;
+    global $wikilib, $dbTiki, $base_url, $prefs;
 
     $nodeName = $params->getParam(0); $nodeName = $nodeName->scalarVal();
     $depth = $params->getParam(1); $depth = $depth->scalarVal();
@@ -25,8 +25,8 @@ function getSubGraph($params) {
     $i = 0;
 
     $tikilib = new TikiLib($dbTiki);
-    $existing_color = $tikilib->get_preference("wiki_3d_existing_page_color", '#00BB88');
-    $missing_color = $tikilib->get_preference("wiki_3d_missing_page_color", '#FF6666');
+    $existing_color = $prefs['wiki_3d_existing_page_color'];
+    $missing_color = $prefs['wiki_3d_missing_page_color'];
 
     while ($i <= $depth && sizeof($queue) > 0) {
 	$nextQueue = array();

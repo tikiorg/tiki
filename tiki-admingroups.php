@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.60 2007-09-03 19:50:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.61 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if ($tiki_p_admin != 'y') {
 $cookietab = "1";
 list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield,$ag_rufields) = array(array(),0,0,0,0,'');
 
-if (isset($groupTracker) and $groupTracker == 'y') {
+if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
 	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
@@ -29,7 +29,7 @@ if (isset($groupTracker) and $groupTracker == 'y') {
 	}
 }
 
-if (isset($userTracker) and $userTracker == 'y') {
+if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
@@ -89,7 +89,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {		
 		$area = 'delgroup';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_group($_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed group '.$_REQUEST["group"]);
@@ -100,7 +100,7 @@ if (isset($_REQUEST["action"])) {
 	}
 	if ($_REQUEST["action"] == 'remove') {
 		$area = 'delgroupperm';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed permission '.$_REQUEST["permission"].' from group '.$_REQUEST["group"]);
@@ -116,7 +116,7 @@ if (isset($_REQUEST['clean'])) {
 	$cachelib->invalidate('grouplist');
 }
 if (!isset($_REQUEST["numrows"])) {
-	$numrows = $maxRecords;
+	$numrows = $prefs['maxRecords'];
 } else {
 	$numrows = $_REQUEST["numrows"];
 }
@@ -169,7 +169,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	if(isset($re["groupHome"]))
 		$grouphome = $re["groupHome"];
 
-	if ($userTracker == 'y') {
+	if ($prefs['userTracker'] == 'y') {
 		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
 			include_once('lib/trackers/trackerlib.php');
 			$userstrackerid = $re["usersTrackerId"];
@@ -185,7 +185,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$smarty->assign('registrationUsersFieldIds', $re['registrationUsersFieldIds']);
 	}
 
-	if ($groupTracker == 'y') {	
+	if ($prefs['groupTracker'] == 'y') {	
 		$groupFields = array();
 		if (isset($re["groupTrackerId"]) and $re["groupTrackerId"]) {
 			include_once('lib/trackers/trackerlib.php');

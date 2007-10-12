@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.19 2007-06-12 12:22:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.20 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/newsletters/nllib.php');
 
-if ($feature_calendar != 'y') {
+if ($prefs['feature_calendar'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
   $smarty->display("error.tpl");
   die;
@@ -115,7 +115,7 @@ if (!isset($_REQUEST['calendarId']) and count($caladd)) {
 	$_REQUEST['calendarId'] = array_shift($keys); 
 } 
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
   include_once ('lib/categories/categlib.php');
   $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $_REQUEST['calendarId']);
   if ($perms_array) {
@@ -181,7 +181,7 @@ if (isset($_POST['act'])) {
 
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
   $area = 'delcalevent';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
     $calendarlib->drop_item($user, $_REQUEST["calitemId"]);
     $_REQUEST["calitemId"] = 0;
@@ -289,7 +289,7 @@ $smarty->assign('listprioritycolors',array('fff','fdd','fcc','fbb','faa','f99','
 $smarty->assign('listroles',array('0'=>'','1'=>tra('required'),'2'=>tra('optional'),'3'=>tra('non participant')));
 
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
   $cat_type = "calendar";
   $cat_objid = $_REQUEST['calendarId'];
   include('tiki-tc.php');

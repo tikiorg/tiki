@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.25 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ include_once ('lib/userprefs/userprefslib.php');
 include_once ('lib/imagegals/imagegallib.php');
 
 // User preferences screen
-if ($feature_userPreferences != 'y') {
+if ($prefs['feature_userPreferences'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
 	$smarty->display("error.tpl");
@@ -90,7 +90,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			}
 
 			// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-			$tmpfname = tempnam($tmpDir, "TMPIMG");
+			$tmpfname = tempnam($prefs['tmpDir'], "TMPIMG");
 			imagejpeg($t, $tmpfname);
 			// Now read the information
 			$fp = fopen($tmpfname, "rb");

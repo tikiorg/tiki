@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.62 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.63 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,11 +12,11 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/blogs/bloglib.php');
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	include_once('lib/freetag/freetaglib.php');
 }
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -31,8 +31,8 @@ if ((empty($_REQUEST['blogId']) && $tiki_p_blog_post != 'y') || (!empty($_REQUES
 	die;
 }
 
-if ( $feature_wysiwyg == 'y' &&
-	( $wysiwyg_default == 'y' && ! isset($_REQUEST['wysiwyg']) )
+if ( $prefs['feature_wysiwyg'] == 'y' &&
+	( $prefs['wysiwyg_default'] == 'y' && ! isset($_REQUEST['wysiwyg']) )
 	|| ( isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y' )
 ) $smarty->assign('wysiwyg', 'y');
 else $smarty->assign('wysiwyg', 'n');
@@ -63,7 +63,7 @@ $smarty->assign_by_ref('blog_data', $blog_data);
 
 if (isset($_REQUEST['remove_image'])) {
   $area = 'delblogpostimage';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$bloglib->remove_post_image($_REQUEST['remove_image']);
   } else {
@@ -136,7 +136,7 @@ if ($tiki_p_admin != 'y') {
 $blogpriv='n';
 $smarty->assign('blogpriv', 'n');
 if(isset($_REQUEST["data"])) {
-    if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
+    if (($prefs['feature_wiki_allowhtml'] == 'y' and $tiki_p_use_HTML == 'y' 
 		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
 		$edit_data = $_REQUEST["data"];  
     } else {
@@ -163,9 +163,9 @@ if (isset($_REQUEST["preview"])) {
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data);
 
-	if ($blog_spellcheck == 'y') {
+	if ($prefs['blog_spellcheck'] == 'y') {
 		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_data = $tikilib->spellcheckreplace($edit_data, $parsed_data, $language, 'blogedit');
+			$parsed_data = $tikilib->spellcheckreplace($edit_data, $parsed_data, $prefs['language'], 'blogedit');
 
 			$smarty->assign('spellcheck', 'y');
 		} else {
@@ -175,7 +175,7 @@ if (isset($_REQUEST["preview"])) {
 
 	$smarty->assign('data', htmldecode( $edit_data ) );
 
-	if ($feature_freetags == 'y') {
+	if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
@@ -184,7 +184,7 @@ if (isset($_REQUEST["preview"])) {
 }
 
 // remove images (permissions!)
-if ((isset($_REQUEST['save']) || isset($_REQUEST['save_exit']))&& $feature_contribution == 'y' && $feature_contribution_mandatory_blog == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
+if ((isset($_REQUEST['save']) || isset($_REQUEST['save_exit']))&& $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_blog'] == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
 	$contribution_needed = true;
 	$smarty->assign('contribution_needed', 'y');
 } else {
@@ -280,7 +280,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 	$smarty->assign('data', htmldecode( $edit_data ) );
 
-	if ($feature_freetags == 'y') {
+	if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);	
 	}
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
@@ -291,7 +291,7 @@ if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
 	$smarty->assign('data', htmldecode( $_REQUEST['data'] ) );
-	if ($feature_freetags == 'y') {
+	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
 }
@@ -338,7 +338,7 @@ $smarty->assign_by_ref('plugins', $plugins);
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','blogs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
-if ($feature_contribution == 'y') {
+if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
 

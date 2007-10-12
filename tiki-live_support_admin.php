@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/live_support/lsadminlib.php');
 include_once ('lib/live_support/lslib.php');
 
-if ($feature_live_support != 'y') {
+if ($prefs['feature_live_support'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_live_support");
 
 	$smarty->display("error.tpl");
@@ -42,7 +42,7 @@ if ($tiki_p_live_support_admin == 'y') {
 
 	if (isset($_REQUEST['removeuser'])) {
 		$area = 'dellsuser';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$lsadminlib->remove_operator($_REQUEST['removeuser']);
 		} else {

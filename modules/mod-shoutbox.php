@@ -6,12 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once ('lib/tikilib.php'); # httpScheme()
+require_once ('lib/tikilib.php');
 
-global $shoutboxlib;include_once ('lib/shoutbox/shoutboxlib.php');
-global $feature_shoutbox, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $feature_ticketlib2;
+global $shoutboxlib, $prefs, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox;
+include_once ('lib/shoutbox/shoutboxlib.php');
 
-if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
+if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 	$setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 
 	if (isset($setup_parsed_uri["query"])) {
@@ -37,7 +37,7 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 	if (isset($_REQUEST["shout_remove"])) {
 		$info = $shoutboxlib->get_shoutbox($_REQUEST["shout_remove"]);
 		if ($tiki_p_admin_shoutbox == 'y'  || $info["user"] == $user ) {
-			if ($feature_ticketlib2 =='y') {
+			if ($prefs['feature_ticketlib2'] =='y') {
 				$area = 'delshoutboxentry';
 				if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 					key_check($area);

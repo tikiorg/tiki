@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.32 2007-10-11 00:18:37 nkoth Exp $
+/* $Id: wikiplugin_module.php,v 1.33 2007-10-12 07:55:48 nyloth Exp $
 Displays a module inlined in page
 
 Parameters
@@ -32,8 +32,7 @@ function wikiplugin_module_help() {
 }
 
 function wikiplugin_module($data, $params) {
-	global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, $tikidomain, $user,
-		$feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $language;
+	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
 
 	$out = '';
 	extract ($params,EXTR_SKIP);
@@ -75,10 +74,6 @@ function wikiplugin_module($data, $params) {
 			$args = '';
 		}
 
-//		$cachefile = 'modules/cache/';
-//		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-//		$cachefile.= 'mod-' . $module . '.tpl.'.$language.'.cache';
-//		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
 		$phpfile = 'modules/mod-' . $module . '.php';
 		$template = 'modules/mod-' . $module . '.tpl';
 
@@ -94,7 +89,6 @@ function wikiplugin_module($data, $params) {
 		$smarty->assign_by_ref('module_rows',$module_rows);
 		$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 
-//		if ((!file_exists($cachefile)) || (file_exists($nocache)) || ((time() - filemtime($cachefile)) > $cache_time)) {
 			if (file_exists($phpfile)) {
 				include ($phpfile);
 			}

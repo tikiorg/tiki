@@ -9,7 +9,7 @@
   require_once('lib/Galaxia/GUI.php');
 
   // Check if feature is enabled and permissions
-  if ($feature_workflow != 'y') {
+  if ($prefs['feature_workflow'] != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_workflow");
 
     $smarty->display("error.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.15 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.16 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($rss_mapfiles != 'y') {
+if ($prefs['rss_mapfiles'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
@@ -35,20 +35,20 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "";
 	$readrepl = "tiki-map.phtml?mapfile=";
 	
-	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-	if ($desc<>'') $desc = $tmp;
+        $tmp = $prefs['title_rss_'.$feed];
+        if ($tmp<>'') $title = $tmp;
+        $tmp = $prefs['desc_rss_'.$feed];
+        if ($desc<>'') $desc = $tmp;
 	
 	  // Get mapfiles from the mapfiles directory
 	  $tmp = array();
-	  $h = @opendir($map_path);
+	  $h = @opendir($prefs['map_path']);
 	
 	  while (($file = @readdir($h)) !== false)
 	  {
 	  	if (preg_match('/\.map$/i', $file))
 	  	{
-	  		$filetlist[$file] = filemtime ($map_path."/".$file);
+	  		$filetlist[$file] = filemtime ($prefs['map_path']."/".$file);
 	  	}
 	  }
 	  @arsort($filetlist, SORT_NUMERIC);
@@ -58,7 +58,7 @@ if ($output["data"]=="EMPTY") {
 	  if (is_array($filetlist))
 	  while (list ($key, $val) = each ($filetlist))
 	  {
-	    if ($i >= $max_rss_mapfiles) break;
+	    if ($i >= $prefs['max_rss_mapfiles']) break;
 	    $i++;
 	  	$aux["name"] = $key;
 	  	$aux["lastModif"] = $val;

@@ -1,15 +1,15 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.5 2006-02-17 15:10:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6 2007-10-12 07:55:49 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $feature_categories;
+global $prefs;
 // temporary limitation to wiki pages
 // params : id (id of parent categ) and shy (show only if page is in categ)
-if ($feature_categories == 'y' and isset($_REQUEST['page'])) {
+if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['page'])) {
   $id = 0;
   if (isset($module_params['id'])) {
     $id = $module_params['id'];

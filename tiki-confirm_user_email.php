@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-confirm_user_email.php,v 1.2 2007-07-06 18:06:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-confirm_user_email.php,v 1.3 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if (!isset($email_due) || $email_due < 0) {
+if (!isset($prefs['email_due']) || $prefs['email_due'] < 0) {
 	$smarty->assign('msg', tra('This feature is disabled'));
 	$smarty->display('error.tpl');
 	die;

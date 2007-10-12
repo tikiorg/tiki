@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wikiatt.php,v 1.6 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wikiatt.php,v 1.7 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,9 +18,9 @@ if (isset($_REQUEST['action']) and isset($_REQUEST['attId'])) {
 	check_ticket('admin-inc-wikiatt');
 	$item = $wikilib->get_item_attachment($_REQUEST['attId']);
 	if ($_REQUEST['action'] == 'move2db') {
-		$wikilib->file_to_db($w_use_dir.$item['path'],$_REQUEST['attId']);
+		$wikilib->file_to_db($prefs['w_use_dir'].$item['path'],$_REQUEST['attId']);
 	} elseif ($_REQUEST['action'] == 'move2file') {
-		$wikilib->db_to_file($w_use_dir . md5($item['filename']),$_REQUEST['attId']);
+		$wikilib->db_to_file($prefs['w_use_dir'] . md5($item['filename']),$_REQUEST['attId']);
 	}
 }
 
@@ -49,14 +49,14 @@ if (isset($_REQUEST["all2db"])) {
 	$attachements = $wikilib->list_all_attachements();
 	for ($i=0;$i<$attachements['cant'];$i++) {
 		if ($attachements['data'][$i]['path']) {
-			$wikilib->file_to_db($w_use_dir.$attachements['data'][$i]['path'],$attachements['data'][$i]['attId']);
+			$wikilib->file_to_db($prefs['w_use_dir'].$attachements['data'][$i]['path'],$attachements['data'][$i]['attId']);
 		}
 	}
 } elseif (isset($_REQUEST["all2file"])) {
 	$attachements = $wikilib->list_all_attachements();
 	for ($i=0;$i<$attachements['cant'];$i++) {
 		if (!$attachements['data'][$i]['path']) {
-			$wikilib->db_to_file($w_use_dir. md5($attachements['data'][$i]['filename']),$attachements['data'][$i]['attId']);
+			$wikilib->db_to_file($prefs['w_use_dir']. md5($attachements['data'][$i]['filename']),$attachements['data'][$i]['attId']);
 		}
 	}
 }

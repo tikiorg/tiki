@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.20 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ if (!isset($polllib)) {
 	$polllib = new PollLib($dbTiki);
 }
 
-if ($feature_polls != 'y') {
+if ($prefs['feature_polls'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_polls");
 
 	$smarty->display("error.tpl");
@@ -91,10 +91,10 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list'])) {
 }
 
 // Poll comments
-if ($feature_poll_comments == 'y') {
-	$comments_per_page = $poll_comments_per_page;
+if ($prefs['feature_poll_comments'] == 'y') {
+	$comments_per_page = $prefs['poll_comments_per_page'];
 
-	$thread_sort_mode = $poll_comments_default_ordering;
+	$thread_sort_mode = $prefs['poll_comments_default_ordering'];
 	$comments_vars = array('pollId');
 	$comments_prefix_var = 'poll:';
 	$comments_object_var = 'pollId';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.120 2007-08-22 19:46:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,18 +10,18 @@
 $section = 'forums';
 require_once ('tiki-setup.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	include_once('lib/freetag/freetaglib.php');
 }
 
-if ($feature_forums != 'y') {
+if ($prefs['feature_forums'] != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
     $smarty->display("error.tpl");
@@ -85,7 +85,7 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 	    }
 	}
     }
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $_REQUEST['forumId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -149,7 +149,7 @@ if ($tiki_p_forums_report == 'y') {
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['remove_attachment'])) {
   	$area = 'delforumattach';
-  	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     	key_check($area);
 			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
   	} else {
@@ -159,7 +159,7 @@ if ($tiki_p_admin_forum == 'y') {
 
 	if (isset($_REQUEST['delsel_x'])) {
 		$area = 'delforumtopics';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 		if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
@@ -257,14 +257,14 @@ $smarty->assign('warning', 'n');
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
-	  if (empty($user) && $feature_antibot == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+	  if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
 			$smarty->display("error.tpl");
 			die;
 		}
 	  if ( ! empty($_REQUEST["comments_title"])
-		&& ! ( empty($_REQUEST["comments_data"]) && $feature_forums_allow_thread_titles != 'y' )
-		&& ! ( $feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions']) )
+		&& ! ( empty($_REQUEST["comments_data"]) && $prefs['feature_forums_allow_thread_titles'] != 'y' )
+		&& ! ( $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions']) )
 	  ) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
     
@@ -431,10 +431,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	    // give him a chance to correct this
 	    $smarty->assign('openpost', 'y');
 
-	    if ( empty($_REQUEST["comments_title"]) || ( empty($_REQUEST["comments_data"]) && $feature_forums_allow_thread_titles != 'y' ) )
+	    if ( empty($_REQUEST["comments_title"]) || ( empty($_REQUEST["comments_data"]) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) )
 		    $smarty->assign('warning', 'y');
 
-	    if ($feature_contribution == 'y' && $feature_contribution_mandatory_forum == 'y' && empty($_REQUEST['contributions'])) {
+	    if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions'])) {
 		$smarty->assign('contribution_needed', 'y');
 		unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 	    }
@@ -516,7 +516,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
                 && $tiki_p_forum_post_topic == 'y')
        ) {
 			$area = 'delforumcomm';
-		  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     		key_check($area);
         $comments_show = 'y';
         $commentslib->remove_comment($_REQUEST["comments_threadId"]);
@@ -630,7 +630,7 @@ $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 include_once ('tiki-section_options.php');
 
-if ($feature_user_watches == 'y') {
+if ($prefs['feature_user_watches'] == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('view-forum');
 		if ($_REQUEST['watch_action'] == 'add') {
@@ -652,7 +652,7 @@ if ($feature_user_watches == 'y') {
 	}
 
     // Check, if the user is watching this forum by a category.    
-	if ($feature_categories == 'y') {    
+	if ($prefs['feature_categories'] == 'y') {    
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["forumId"],'forum',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -667,7 +667,7 @@ if ($feature_user_watches == 'y') {
 	
 }
 
-if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
+if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
     $all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
     $temp_max = count($all_forums["data"]);
@@ -688,7 +688,7 @@ if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 
 $smarty->assign('unread', 0);
 
-if ($user && $feature_messages == 'y' && $tiki_p_messages == 'y') {
+if ($user && $prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
     $unread = $tikilib->user_unread_messages($user);
 
     $smarty->assign('unread', $unread);
@@ -700,7 +700,7 @@ if ($tiki_p_admin_forum == 'y') {
     $smarty->assign('reported', $commentslib->get_num_reported($_REQUEST['forumId']));
 }
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
     $cat_type = 'forum post';
     $cat_objid = $_REQUEST["comments_threadId"];
     include_once ("freetag_list.php");
@@ -713,18 +713,18 @@ if ($feature_freetags == 'y') {
 
 include_once("textareasize.php");
 
-if ($feature_forum_parse == "y") {
+if ($prefs['feature_forum_parse'] == "y") {
 	include_once ('lib/quicktags/quicktagslib.php');
 	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','', 'forums');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
-if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_forum($forum_info['name'], $comments_coms, $tiki_p_forum_read, $comments_offset, $comments_maxRecords, $comments_cant);
 }
-if ($feature_contribution == 'y') {
+if ($prefs['feature_contribution'] == 'y') {
 		$contributionItemId = $_REQUEST['comments_threadId'];
 		include_once('contribution.php');
 }

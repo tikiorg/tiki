@@ -76,19 +76,19 @@ $smarty->assign_by_ref('phpsettings',$phpsettings);
 
 $tikisettings=array();
 
-if($feature_file_galleries=='y' && !empty($fgal_use_dir) && 
-    substr($fgal_use_dir,0,1)!='/') { // todo: check if absolute path is in tiki root
-  $tikisettings['fgal_use_dir']=array('risk' => tra('unsafe'),'setting' => $fgal_use_dir,
+if($prefs['feature_file_galleries']=='y' && !empty($prefs['fgal_use_dir']) && 
+    substr($prefs['fgal_use_dir'],0,1)!='/') { // todo: check if absolute path is in tiki root
+  $tikisettings['fgal_use_dir']=array('risk' => tra('unsafe'),'setting' => $prefs['fgal_use_dir'],
      'message' => tra('The Path to store files in the filegallery should be outside the tiki root directory'));
 }
 
-if($feature_galleries=='y' && !empty($gal_use_dir) && 
-    substr($gal_use_dir,0,1)!='/') {
-  $tikisettings['gal_use_dir']=array('risk' => tra('unsafe'),'setting' => $gal_use_dir,
+if($prefs['feature_galleries']=='y' && !empty($prefs['gal_use_dir']) && 
+    substr($prefs['gal_use_dir'],0,1)!='/') {
+  $tikisettings['gal_use_dir']=array('risk' => tra('unsafe'),'setting' => $prefs['gal_use_dir'],
      'message' => tra('The Path to store files in the imagegallery should be outside the tiki root directory'));
 }
 
-if($feature_edit_templates='y') {
+if($prefs['feature_edit_templates']='y') {
    $tikisettings['edit_templates']=array('risk' => tra('unsafe'),'setting' => tra('on'),
      'message' => tra('The feature "Edit Templates" is switched on. Do not allow anyone you cannot trust to use this feature. It can easily be used to inject php code.'));
 }

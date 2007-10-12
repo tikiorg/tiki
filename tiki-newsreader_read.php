@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.17 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.18 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (!$user) {
 	die;
 }
 
-if ($feature_newsreader != 'y') {
+if ($prefs['feature_newsreader'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsreader");
 
 	$smarty->display("error.tpl");
@@ -102,7 +102,7 @@ include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
 
-if ($user && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
 	//Get the news	
 	$tikilib->replace_note($user, 0, $headers['Subject'], $body);
 }

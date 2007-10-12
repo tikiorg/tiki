@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.26 2007-03-24 13:38:51 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.27 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
 
-if ($feature_newsletters != 'y') {
+if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
 
 	$smarty->display("error.tpl");

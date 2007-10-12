@@ -7,16 +7,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set', $fullname='', $max_length=0) {
-    global $tikilib, $userlib, $cachelib, $user, $feature_score, $feature_friends, $highlight_group,
-	$feature_community_mouseover, $feature_community_mouseover_name,$feature_community_mouseover_picture,
-	$feature_community_mouseover_friends,$feature_community_mouseover_score,$feature_community_mouseover_country,
-	$feature_community_mouseover_email, $feature_community_mouseover_lastlogin, $feature_community_mouseover_distance,$userprefslib,
-	$user_show_realnames;
+    global $tikilib, $userlib, $cachelib, $user, $prefs, $userprefslib;
 
     $cachePeriod = 60*60*2; // how long does an entry stay in the cache for?  2hr
 
-    $show_mouseover = $feature_community_mouseover == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
-    $show_friends = $feature_friends == 'y' && $tikilib->verify_friendship($user, $other_user);
+    $show_mouseover = $prefs['feature_community_mouseover'] == 'y' && $userlib->get_user_preference($user, 'show_mouseover_user_info','y') == 'y';
+    $show_friends = $prefs['feature_friends'] == 'y' && $tikilib->verify_friendship($user, $other_user);
     
     if( $show_mouseover || $show_friends ) {
         $cacheItem = "userlink.".$user.".".$other_user.$fullname.$max_length;
@@ -35,11 +31,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     
     $star = '';
     $info = array();
-    if ($feature_community_mouseover || $feature_score) {
+    if ($prefs['feature_community_mouseover'] || $prefs['feature_score']) {
 	$info = $userlib->get_user_info($other_user);
     }
 
-    if ($feature_score == 'y') {
+    if ($prefs['feature_score'] == 'y') {
 	if ($other_user == "admin" || $other_user == "system" || $other_user == "Anonymous") {
 		$star = "";
 	} else {
@@ -54,7 +50,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     }
 
     if ( $fullname != '' ) { $ou = $fullname; }
-    elseif ( $user_show_realnames == 'y' ) {
+    elseif ( $prefs['user_show_realnames'] == 'y' ) {
 	    $user_details = $userlib->get_user_details($other_user);
 	    $ou = $user_details['info']['realName'];
 	    unset($user_details);
@@ -63,7 +59,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     if ( $max_length > 0 ) $ou = smarty_modifier_truncate($ou, $max_length, '...', true);
 
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
-			if (isset($info) and is_array($info) and $highlight_group and in_array($highlight_group,$info['groups'])) { 
+			if (isset($info) and is_array($info) and $prefs['highlight_group'] and in_array($prefs['highlight_group'],$info['groups'])) { 
 			    $ou = '<i class="highlightgroup"><b>'.$ou.'</b></i>';
 			}
 			
@@ -71,35 +67,35 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 
 			if ($show_mouseover) {
 			    $content = '';
-			    if ($feature_community_mouseover_name == 'y') {
+			    if ($prefs['feature_community_mouseover_name'] == 'y') {
 				$line = $userlib->get_user_preference($other_user, "realName");
 				if ($line) {
 				    $content .= $line."<br />";
 				}
 			    }
-			    if ($feature_community_mouseover_friends == 'y' && $feature_friends == 'y') {
+			    if ($prefs['feature_community_mouseover_friends'] == 'y' && $prefs['feature_friends'] == 'y') {
 				$content .= "<img src='img/icons/ico_friend.gif' />&nbsp;";
 				$content .= $tikilib->get_friends_count($other_user) . '&nbsp;&nbsp;&nbsp;';
 			    }
-			    if ($feature_community_mouseover_score == 'y' && $star) {
+			    if ($prefs['feature_community_mouseover_score'] == 'y' && $star) {
 				$content .= $star . $info['score'];
 			    }
-			    if (($feature_community_mouseover_score == 'y' || $feature_community_mouseover_friends == 'y') && $star) $content .= "<br />";
+			    if (($prefs['feature_community_mouseover_score'] == 'y' || $prefs['feature_community_mouseover_friends'] == 'y') && $star) $content .= "<br />";
 
-			    if ($feature_community_mouseover_country == 'y') {
+			    if ($prefs['feature_community_mouseover_country'] == 'y') {
 				$country = $tikilib->get_user_preference($other_user, "country", "");
 				if ($country && $country != "Other") {
 				   $content .= "<img src='img/flags/$country.gif' /> ".tra($country) . "<br />";
 				}
 					}
-					if ($feature_community_mouseover_distance == 'y') {
+					if ($prefs['feature_community_mouseover_distance'] == 'y') {
 				if (!is_object($userprefslib)) include_once 'lib/userprefs/userprefslib.php';
 				$distance = $userprefslib->get_userdistance($other_user,$user);
 				if (!is_null($distance)) {
 				   $content .= $distance." ".tra("km") . "<br />";
 				}
 			    }
-			    if($feature_community_mouseover_email == 'y') {
+			    if($prefs['feature_community_mouseover_email'] == 'y') {
 				$email_isPublic = $tikilib->get_user_preference($other_user, "email is public");
 				if ($email_isPublic != 'n') {
 				    include_once ('lib/userprefs/scrambleEmail.php');
@@ -108,7 +104,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				    $content .= $info['email'] . "<br />";
 				}	    
 			    }
-			    if ($feature_community_mouseover_lastlogin == 'y') {
+			    if ($prefs['feature_community_mouseover_lastlogin'] == 'y') {
 				$content .= tra("Last seen on ") . $tikilib->get_short_datetime($info['lastLogin']);
 				$content .= "<br />";
 			    }
@@ -117,7 +113,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				$content .= sprintf(tra("(idle for %s seconds)"), $idletime) . "<br />";
 			    }
 
-			    if ($feature_community_mouseover_picture == 'y') {
+			    if ($prefs['feature_community_mouseover_picture'] == 'y') {
 				if ($info['avatarLibName'] != "") {
 					$img = "<img border='0' width='45' height='45' src='" . $info['avatarLibName']. "'  alt='' />";
 				} else if ($info['avatarData'] != "") {

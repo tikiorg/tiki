@@ -11,7 +11,7 @@ $section = 'forums';
 require_once ('tiki-setup.php');
 
 // Forums must be active
-if ($feature_forums != 'y') {
+if ($prefs['feature_forums'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
 	$smarty->display("error.tpl");
@@ -81,7 +81,7 @@ $smarty->assign_by_ref('forum_info', $forum_info);
 $section = 'forums';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'forum';
 
 	$cat_objid = $_REQUEST["forumId"];
@@ -104,7 +104,7 @@ if (isset($_REQUEST['del']) && isset($_REQUEST['msg'])) {
 }
 
 // Quickjumpt to other forums
-if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
+if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
 	$temp_max = count($all_forums["data"]);

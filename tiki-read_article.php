@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.60 2007-07-17 14:50:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61 2007-10-12 07:55:31 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once ('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 
 include_once ('lib/articles/artlib.php');
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_articles != 'y') {
+if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
 	$smarty->display("error.tpl");
@@ -41,7 +41,7 @@ if (!isset($_REQUEST["articleId"])) {
 }
 
 //This is basicaly a copy of part of the freetag code from tiki-setup.php and should be only there. The problem is that the section name for articles is "cms" and the object name for article in the table tiki_objects is "article". Maybe it is a good idea to use "cms" on tiki_objects instead "article" and then this block of code can be removed. Another solution?
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
   include_once ('lib/freetag/freetaglib.php');
 	$here = $sections[$section];
 
@@ -80,7 +80,7 @@ if ($feature_freetags == 'y') {
 			$smarty->display("error.tpl");
 			die;
 		}
-	} elseif ($feature_categories == 'y') {
+	} elseif ($prefs['feature_categories'] == 'y') {
 		$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
 	   	if ($perms_array) {
 	   		$is_categorized = TRUE; // this var is used below
@@ -194,11 +194,11 @@ if ($feature_freetags == 'y') {
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
-if ($feature_article_comments == 'y') {
+if ($prefs['feature_article_comments'] == 'y') {
 	$smarty->assign('comment_can_rate_article', $article_data["comment_can_rate_article"]); 
-	$comments_per_page = $article_comments_per_page;
+	$comments_per_page = $prefs['article_comments_per_page'];
 
-	$thread_sort_mode = $article_comments_default_ordering;
+	$thread_sort_mode = $prefs['article_comments_default_ordering'];
 	$comments_vars = array('articleId');
 	$comments_prefix_var = 'article:';
 	$comments_object_var = 'articleId';
@@ -214,16 +214,16 @@ $objId = $_REQUEST['articleId'];
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
   $smarty->assign('is_categorized','y');
-  if(isset($feature_categorypath) and $feature_categories == 'y') {
-    if ($feature_categorypath == 'y') {
+  if(isset($prefs['feature_categorypath']) and $prefs['feature_categories'] == 'y') {
+    if ($prefs['feature_categorypath'] == 'y') {
       $cats = $categlib->get_object_categories('article',$objId);
       $display_catpath = $categlib->get_categorypath($cats);
       $smarty->assign('display_catpath',$display_catpath);
     }
   } 
   // Display current category objects or not (like {category()})
-  if (isset($feature_categoryobjects) and $feature_categories == 'y') {
-    if ($feature_categoryobjects == 'y') {
+  if (isset($prefs['feature_categoryobjects']) and $prefs['feature_categories'] == 'y') {
+    if ($prefs['feature_categoryobjects'] == 'y') {
       $catids = $categlib->get_object_categories('article', $objId);
       $display_catobjects = $categlib->get_categoryobjects($catids);
       $smarty->assign('display_catobjects',$display_catobjects);
@@ -236,20 +236,20 @@ if (isset($is_categorized) && $is_categorized) {
 $section = 'cms';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'article';
 
 	$cat_objid = $_REQUEST["articleId"];
 	include ('tiki-tc.php');
 }
 
-if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_read_article($article_data, $pages);
 }
 
-if ($feature_multilingual == 'y' && $article_data['lang']) {
+if ($prefs['feature_multilingual'] == 'y' && $article_data['lang']) {
 	include_once("lib/multilingual/multilinguallib.php");
 	$trads = $multilinguallib->getTranslations('article', $article_data['articleId'], $article_data["title"], $article_data['lang']);
 	$smarty->assign('trads', $trads);

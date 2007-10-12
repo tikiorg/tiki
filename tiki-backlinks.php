@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-backlinks.php,v 1.14 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-backlinks.php,v 1.15 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_backlinks != 'y') {
+if ($prefs['feature_backlinks'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_backlinks");
 
 	$smarty->display("error.tpl");

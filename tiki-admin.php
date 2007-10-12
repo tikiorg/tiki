@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.127 2007-10-07 16:28:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,31 +20,29 @@ if ($tiki_p_admin != 'y') {
 }
 
 function simple_set_toggle($feature) {
-	global $_REQUEST, $tikilib, $smarty, $tikifeedback, $$feature;
+	global $_REQUEST, $tikilib, $smarty, $tikifeedback, $prefs;
 
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == "on") {
-		if ((!isset($$feature) || $$feature != 'y')) {
+		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
-			$smarty->assign($feature, 'y');
 			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
 		}
 	} else {
-		if ((!isset($$feature) || $$feature != 'n')) {
+		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
 			$tikilib->set_preference($feature, 'n');
-			$smarty->assign($feature, 'n');
 			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
 		}
 	}
 }
 
 function simple_set_value($feature, $pref = '') {
-	global $_REQUEST, $tikilib;
+	global $_REQUEST, $tikilib ,$prefs;
 	if (isset($_REQUEST[$feature])) {
 		if ( $pref != '' ) {
 			$tikilib->set_preference($pref, $_REQUEST[$feature]);
-			$_SESSION['prefs'][$feature] = $_REQUEST[$feature];
+			$prefs[$feature] = $_REQUEST[$feature];
 		} else {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
 		}

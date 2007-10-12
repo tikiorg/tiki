@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.38 2007-10-10 17:44:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.39 2007-10-12 07:55:49 nyloth Exp $
 //
 // TODO : 
 // ----------
@@ -13,12 +13,12 @@ function wikiplugin_trackerlist_help() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-  global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $feature_trackers;
-  global $trklib; require_once("lib/trackers/trackerlib.php");
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib;
+	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
 
-	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
+	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
 

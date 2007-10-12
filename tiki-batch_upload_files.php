@@ -4,13 +4,13 @@
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 
-if ($feature_file_galleries != 'y') {
+if ($prefs['feature_file_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_file_galleries_batch != 'y') {
+if ($prefs['feature_file_galleries_batch'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries_batch");
 	$smarty->display("error.tpl");
 	die;
@@ -24,7 +24,7 @@ if ($tiki_p_batch_upload_file_dir != 'y') {
 }
 
 // check directory path 
-if (!isset($fgal_batch_dir) or !is_dir($fgal_batch_dir)) {
+if (!isset($prefs['fgal_batch_dir']) or !is_dir($prefs['fgal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of files.")."<br />"; 
 	if ($tiki_p_admin == 'y') {
 		$msg.= tra("Please setup that dir on ").'<a href="tiki-admin.php?page=fgal">'.tra('File Galleries Admin Panel').'</a>.';
@@ -35,7 +35,7 @@ if (!isset($fgal_batch_dir) or !is_dir($fgal_batch_dir)) {
 	$smarty->display("error.tpl");
 	die;
 } else {
-	$filedir = $fgal_batch_dir;
+	$filedir = $prefs['fgal_batch_dir'];
 }
 
 // We need a galleryId
@@ -187,18 +187,18 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		include_once ('lib/mime/mimetypes.php');
 		$typeArray[$x] = $mimetypes["$ext"];
 
-		if (($fgal_use_db == 'n') || ($podCastGallery)) {
+		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 			$fhash = md5($name = $fileArray[$x]);
 			$fhash = md5(uniqid($fhash));
 
 			// for podcast galleries add the extension so the
 			// file can be called directly if name is known,
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 			if ($podCastGallery) {
 				if (in_array($ext,array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
 					$fhash .= ".".$ext;
 				}
-				$savedir=$fgal_podcast_dir;
+				$savedir=$prefs['fgal_podcast_dir'];
 			}
 			@$fw = @fopen($savedir . $fhash, "wb");
 			if (!$fw) {
@@ -207,7 +207,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			}
 		}
 		while (!feof($fp)) {
-			if (($fgal_use_db == 'y') && (!$podCastGallery)) {
+			if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
 				$data .= @fread($fp, 8192 * 16);
 			} else {
 				$data = @fread($fp, 8192 * 16);
@@ -218,7 +218,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		$sizeArray[$x] = @filesize($savedir . $fhash);
 
 		// file system is used:
-		if (($fgal_use_db == 'n') || ($podCastGallery)) {
+		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 			fclose ($fw);
 			$data = '';
 		} else {
@@ -278,7 +278,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 						$feedback[] = "!!! ". sprintf(tra('Impossible to remove file %s from Batch directory.'),$name);
 			} else {
 				$feedback[] = "!!!".tra('Upload was not successful'). ': ' . $name;
-				if (($fgal_use_db == 'n') || ($podCastGallery)) {
+				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 					@unlink($savedir . $fhash);
 				}
 			}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.13 2007-08-04 10:34:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_vote.php,v 1.14 2007-10-12 07:55:49 nyloth Exp $
 /* A plugin vote based on tracker
  */
 /* fields is optionnal - all the fields except the type suer, group, ip will be used
@@ -10,11 +10,11 @@ function wikiplugin_vote_help() {
 	return $help;
 }
 function wikiplugin_vote($data, $params) {
-	global $smarty, $tikilib, $user, $feature_trackers, $tiki_p_admin_trackers, $tiki_p_view_trackers;
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	global $smarty, $tikilib, $user, $prefs, $tiki_p_admin_trackers, $tiki_p_view_trackers, $trklib;
+	include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
-	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 

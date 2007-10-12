@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.16 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.17 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 
-global $smarty, $tiki_p_configure_modules, $user_assigned_modules, $user;
+global $smarty, $tiki_p_configure_modules, $prefs, $user;
 
 $check_req = (isset($_REQUEST["mc_unassign"])
            || isset($_REQUEST["mc_up"])
@@ -24,7 +24,7 @@ if ($tiki_p_configure_modules != 'y' && $check_req) {
 	die;
 }
 
-if ($user_assigned_modules != 'y' && $check_req) {
+if ($prefs['user_assigned_modules'] != 'y' && $check_req) {
 	$smarty->assign('msg', tra("This feature is disabled").": user_assigned_modules");
 	$smarty->display("error.tpl");
 	die;

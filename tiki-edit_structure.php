@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.44 2007-10-11 17:47:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.45 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,7 +78,7 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["rremove"])) {
   $area = 'delstructure';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremove"], false);
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
@@ -89,7 +89,7 @@ if (isset($_REQUEST["rremove"])) {
 # TODO : Case where the index page of the structure is removed seems to be unexpected, leaving a corrupted structure
 if (isset($_REQUEST["sremove"])) {
   $area = 'delstructureandpages';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$page = $page_info["pageName"];
 		require ('tiki-pagesetup.php');
@@ -100,7 +100,7 @@ if (isset($_REQUEST["sremove"])) {
   }
 }
 
- if ($feature_user_watches == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {
+ if ($prefs['feature_user_watches'] == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {
 	check_ticket('edit-structure');
 	if ($_REQUEST['watch_action'] == 'add' && !empty($_REQUEST['page'])) {
 		$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page");
@@ -141,7 +141,7 @@ if (isset($_REQUEST["create"])) {
 		}	
 	}
 	
-	if ($feature_wiki_categorize_structure == 'y') {      	
+	if ($prefs['feature_wiki_categorize_structure'] == 'y') {      	
 		global $categlib;
 		if (!is_object($categlib)) {
 			include_once('lib/categories/categlib.php');
@@ -265,7 +265,7 @@ if ($tiki_p_edit_structures == 'y' && $editable == 'y') {
 }
 $smarty->assign('all_editable', $all_editable);
 
-if (isset($_REQUEST["recategorize"]) && $feature_wiki_categorize_structure == 'y' && $all_editable == 'y') {
+if (isset($_REQUEST["recategorize"]) && $prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') {
 	$cat_name = $structure_info["pageName"];
 	$cat_objid = $cat_name;
 	$cat_href="tiki-index.php?page=" . urlencode($cat_name);
@@ -338,7 +338,7 @@ $smarty->assign('alert_categorized', $alert_categorized);
 $smarty->assign('alert_to_remove_cats', $alert_to_remove_cats);
 $smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
 
-if ($feature_wiki_categorize_structure == 'y' && $all_editable == 'y') {
+if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') {
 	$cat_name = $structure_info["pageName"];
 	$cat_objid = $cat_name;
 	$cat_href="tiki-index.php?page=" . urlencode($cat_name);

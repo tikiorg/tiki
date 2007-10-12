@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.17 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.18 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 $section = 'forums';
 require_once ('tiki-setup.php');
 
-if ($feature_forums != 'y') {
+if ($prefs['feature_forums'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
 	$smarty->display("error.tpl");
@@ -29,7 +29,7 @@ include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = $forums_ordering;
+	$sort_mode = $prefs['forums_ordering'];
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -114,7 +114,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 include_once ('tiki-section_options.php');
 
-if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_forums($channels["data"], $tiki_p_forum_read, $offset, $maxRecords, $channels["cant"]);

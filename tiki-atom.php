@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.11 2007-03-02 19:49:06 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.12 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ $urlarray = parse_url($url);
 
 $pagename = substr($urlarray["path"], strrpos($urlarray["path"], '/') + 1);
 
-$home = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]));
+$home = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, $prefs['tikiIndex'], $urlarray["path"]));
 $img = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]));
 
 $read = $tikilib->httpPrefix().str_replace($pagename, "$readrepl", $urlarray["path"]);

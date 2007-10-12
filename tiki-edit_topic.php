@@ -1,9 +1,9 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_topic.php,v 1.8 2007-02-07 13:59:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_topic.php,v 1.9 2007-10-12 07:55:27 nyloth Exp $
 require_once('tiki-setup.php');
 include_once('lib/articles/artlib.php');
 
-if($feature_articles != 'y') {
+if($prefs['feature_articles'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
   $smarty->display("error.tpl");
   die;  

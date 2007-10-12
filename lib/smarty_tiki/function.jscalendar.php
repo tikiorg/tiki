@@ -11,14 +11,14 @@ function smarty_function_jscalendar($params, &$smarty) {
 }
 
 function smarty_function_jscalendar_body($params, &$smarty) {
-	global $headerlib,$firstDayofWeek,$tikilib;
+	global $headerlib, $firstDayofWeek, $tikilib, $prefs;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');
 	$headerlib->add_cssfile('css/jscalendar.css');
 	$headerlib->add_jsfile('lib/jscalendar/calendar.js');
-	global $language;
-	if (is_file('lib/jscalendar/lang/calendar-'.$language.'-utf8.js')) {
-		$headerlib->add_jsfile('lib/jscalendar/lang/calendar-'.$language.'-utf8.js');
+
+	if (is_file('lib/jscalendar/lang/calendar-'.$prefs['language'].'-utf8.js')) {
+		$headerlib->add_jsfile('lib/jscalendar/lang/calendar-'.$prefs['language'].'-utf8.js');
 	} else {
 		$headerlib->add_jsfile('lib/jscalendar/lang/calendar-en.js');
 	}

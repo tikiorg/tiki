@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.16 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.17 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/directory/dirlib.php');
 
-if ($feature_directory != 'y') {
+if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
 
 	$smarty->display("error.tpl");
@@ -48,7 +48,7 @@ $smarty->assign_by_ref('path', $path);
 // Remove a relationship
 if (isset($_REQUEST["remove"])) {
   $area = 'deldirrelated';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
 	} else {

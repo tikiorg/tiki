@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.20 2007-06-30 00:52:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.21 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
@@ -36,7 +36,7 @@ include_once ("tiki-pagesetup.php");
 // Now check permissions to rename this page
 $info=null;
 if ($tiki_p_rename == 'y') {
-	if ($tiki_p_admin_wiki != 'y' && $feature_wiki_usrlock == 'y') {
+	if ($tiki_p_admin_wiki != 'y' && $prefs['feature_wiki_usrlock'] == 'y') {
 		$info = $tikilib->get_page_info($page);
 		$allowed = ($wikilib->is_editable($page, $user, $info))? 'y': 'n';
 	} else {
@@ -64,8 +64,8 @@ if (isset($_REQUEST["rename"])) {
 	check_ticket('rename-page');
 	// If the new pagename does match userpage prefix then display an error
 	$newName = $_REQUEST['newpage'];
-	if (stristr($newName, $feature_wiki_userpage_prefix) == $newName) {//stripos is only php5
-		$smarty->assign('msg', tra("Cannot rename page because the new name begins with reserved prefix").' ('.$feature_wiki_userpage_prefix.').');
+	if (stristr($newName, $prefs['feature_wiki_userpage_prefix']) == $newName) {//stripos is only php5
+		$smarty->assign('msg', tra("Cannot rename page because the new name begins with reserved prefix").' ('.$prefs['feature_wiki_userpage_prefix'].').');
 
 		$smarty->display("error.tpl");
 		die;

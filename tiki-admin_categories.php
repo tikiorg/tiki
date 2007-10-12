@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.48 2007-10-04 12:45:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.49 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if (!isset($commentslib)) {
 	$commentslib = new Comments($dbTiki);
 }
 
-if ($feature_categories != 'y') {
+if ($prefs['feature_categories'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_categories");
 
 	$smarty->display("error.tpl");
@@ -161,7 +161,7 @@ if (isset($_REQUEST["categId"])) {
 
 if (isset($_REQUEST["removeObject"])) {
 	$area = 'delcategobject';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$category=$categlib->get_category($_REQUEST["parentId"]);		
 		$categorizedObject=$categlib->get_categorized_object_via_category_object_id($_REQUEST["removeObject"]);		
@@ -181,7 +181,7 @@ if (isset($_REQUEST["removeObject"])) {
 
 if (isset($_REQUEST["removeCat"])) {
 	$area = "delcateg";
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$categlib->remove_category($_REQUEST["removeCat"]);
 	} else {
@@ -342,22 +342,22 @@ $smarty->assign('find_objects', $find_objects);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign_by_ref('find', $find);
-$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
+$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $prefs['maxRecords'], $sort_mode, '', $find, false);
 $smarty->assign_by_ref('objects', $objects["data"]);
 
-$cant_pages = ceil($objects["cant"] / $maxRecords);
+$cant_pages = ceil($objects["cant"] / $prefs['maxRecords']);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
 
-if ($objects["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($objects["cant"] > ($offset + $prefs['maxRecords']s)) {
+	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

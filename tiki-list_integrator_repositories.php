@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.13 2005-05-18 10:58:58 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.14 2007-10-12 07:55:28 nyloth Exp $
  *
  * Admin interface for repositories management
  *
@@ -10,7 +10,7 @@ require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
 
 // If Integrator is ON, check permissions...
-if ($feature_integrator != 'y')
+if ($prefs['feature_integrator'] != 'y')
 {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
 	$smarty->display("error.tpl");

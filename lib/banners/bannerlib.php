@@ -176,8 +176,8 @@ class BannerLib extends TikiLib {
 		return $res;
 	}
 	function embed_flash($movieUrl,$movieId,$movieInstallUrl,$movieWidth,$movieHeight,$movieVersion='8.0.0',$movieFlashVars='',$movieParams='',$movieAttributes='') {
-		global $feature_swffix;
-		if ($feature_swffix == 'y') {
+		global $prefs;
+		if ($prefs['feature_swffix'] == 'y') {
 			if (!$movieId) {
 				$movieId="banner_".rand(1000,100000);
 			}
@@ -232,8 +232,8 @@ class BannerLib extends TikiLib {
 				$result = $this->query($query,$bindvars);
 
 				/* invalid cache */
-				global $tikilib, $tikidomain;
-				$bannercachefile = $tikilib->get_preference("tmpdir", "temp");
+				global $tikilib, $tikidomain, $prefs;
+				$bannercachefile = $prefs['tmpDir'];
 				if ($tikidomain) { $bannercachefile.= "/$tikidomain"; }
 				$bannercachefile.= "/banner.".(int)$bannerId;
 				unlink($bannercachefile);

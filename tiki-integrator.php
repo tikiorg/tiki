@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.18 2005-05-18 10:58:57 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.19 2007-10-12 07:55:28 nyloth Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -10,7 +10,7 @@ require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
 
 // If Integrator is ON, check permissions...
-if ($feature_integrator != 'y')
+if ($prefs['feature_integrator'] != 'y')
 {
     $smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
     $smarty->display("error.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.19 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.20 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($change_password != 'y') {
+if ($prefs['change_password'] != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;
@@ -51,15 +51,15 @@ if (isset($_REQUEST["change"])) {
 	}
 
 	//Validate password here
-	if (strlen($_REQUEST["pass"]) < $min_pass_length) {
-		$smarty->assign('msg', tra("Password should be at least"). ' ' . $min_pass_length . ' ' . tra("characters long"));
+	if (strlen($_REQUEST["pass"]) < $prefs['min_pass_length']) {
+		$smarty->assign('msg', tra("Password should be at least"). ' ' . $prefs['min_pass_length'] . ' ' . tra("characters long"));
 
 		$smarty->display("error.tpl");
 		die;
 	}
 
 	// Check this code
-	if ($pass_chr_num == 'y') {
+	if ($prefs['pass_chr_num'] == 'y') {
 		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass"], $foo)) {
 			$smarty->assign('msg', tra("Password must contain both letters and numbers"));
 
@@ -73,13 +73,13 @@ if (isset($_REQUEST["change"])) {
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	$user = $_REQUEST["user"];
 	$smarty->assign_by_ref('user', $user);
-	header ("location: $tikiIndex");
+	header ('location: '.$prefs['tikiIndex']);
 }
 ask_ticket('change-password');
 
 // Display the template
-global $language;
-$language = $tikilib->get_user_preference($_REQUEST["user"], "language", $language);
+global $prefs;
+$prefs['language'] = $tikilib->get_user_preference($_REQUEST["user"], "language", $prefs['site_language']);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

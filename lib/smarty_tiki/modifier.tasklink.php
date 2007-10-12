@@ -6,13 +6,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 function smarty_modifier_tasklink($taskId,$class_name="link",$offset="0",$sort_mode="priority_desc") {
-    global $tikilib, $tasklib, $userlib, $user, $dbTiki, $feature_community_mouseover;
+    global $tikilib, $tasklib, $userlib, $user, $dbTiki, $prefs;
 
 include_once('lib/tasks/tasklib.php');
 
 	$info = $tasklib->get_task($user, $taskId); 
 	$mouseover = '';
-	if ($feature_community_mouseover == 'y'){
+	if ($prefs['feature_community_mouseover'] == 'y'){
 		$description = "";
 	
 		$my_length = strlen($info[description]);

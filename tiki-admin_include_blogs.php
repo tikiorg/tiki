@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.19 2007-06-16 16:01:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.20 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["blogset"]) && isset($_REQUEST["homeBlog"])) {
 	check_ticket('admin-inc-blogs');
 	$tikilib->set_preference("home_blog", $_REQUEST["homeBlog"]);
-	$smarty->assign('home_blog', $_REQUEST["homeBlog"]);
 }
 
 if (isset($_REQUEST["blogfeatures"])) {
@@ -64,7 +63,7 @@ if (isset($_REQUEST["blogcomprefs"])) {
 	simple_set_value ("blog_comments_per_page");
 	simple_set_value ("blog_comments_default_ordering");
 }
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once('lib/categories/categlib.php');
 	$catree = $categlib->get_all_categories();
 	$smarty->assign('catree', $catree);

@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/ban/banlib.php');
 
-if ($feature_banning != 'y') {
+if ($prefs['feature_banning'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_banning");
 
 	$smarty->display("error.tpl");
@@ -45,7 +45,7 @@ $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST['remove'])) {
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$banlib->remove_rule($_REQUEST['remove']);
 	} else {
@@ -125,21 +125,21 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
+$items = $banlib->list_rules($offset, $prefs['maxRecords'], $sort_mode, $find, $where);
 $smarty->assign('cant', $items['cant']);
 
-$cant_pages = ceil($items["cant"] / $maxRecords);
+$cant_pages = ceil($items["cant"] / $prefs['maxRecords']);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
 
-if ($items["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($items["cant"] > ($offset + $prefs['maxRecords'])) {
+	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

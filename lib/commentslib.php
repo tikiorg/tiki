@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.166 2007-09-28 15:20:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167 2007-10-12 07:55:37 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -875,8 +875,8 @@ class Comments extends TikiLib {
 		    array($name,(int) $this->now));
 	}
 
-	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+	global $prefs;
+	if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('forums', $forumId);
 	}
@@ -1097,11 +1097,9 @@ class Comments extends TikiLib {
     }
 
     function forum_add_hit($forumId) {
-	global $count_admin_pvs;
+	global $prefs, $user;
 
-	global $user;
-
-	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	    $query = "update `tiki_forums` set `hits`=`hits`+1 where
 		`forumId`=?";
 
@@ -1113,11 +1111,9 @@ class Comments extends TikiLib {
     }
 
     function comment_add_hit($threadId) {
-	global $count_admin_pvs;
+	global $prefs, $user;
 
-	global $user;
-
-	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	    $query = "update `tiki_comments` set `hits`=`hits`+1 where
 		`threadId`=?";
 
@@ -1226,7 +1222,7 @@ class Comments extends TikiLib {
 	    // this function adds some extras to the referenced array. 
 	    // This array should already contain the contents of the tiki_comments table row
 	    // used in $this->get_comment and $this->get_comments
-	    global $feature_contribution;
+	    global $prefs;
 
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 
@@ -1252,7 +1248,7 @@ class Comments extends TikiLib {
 	    if ($res['userName']) {
 		$res['user_online'] = $this->is_user_online($res['userName'])? 'y' : 'n';
 	    }
-	    if ($feature_contribution == 'y') {
+	    if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$res['contributions'] = $contributionlib->get_assigned_contributions($res['threadId'], 'comment');
 	    }
@@ -1434,9 +1430,9 @@ class Comments extends TikiLib {
     }
 
     function parse_smileys($data) {
-	global $feature_smileys;
+	global $prefs;
 
-	if ($feature_smileys == 'y') {
+	if ($prefs['feature_smileys'] == 'y') {
 	    $data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
 	}
 
@@ -1456,11 +1452,9 @@ class Comments extends TikiLib {
     }
 
     function parse_comment_data($data) {
-	global $feature_forum_parse;
+	global $prefs, $tikilib;
 
-	global $tikilib;
-
-	if ($feature_forum_parse == 'y') {
+	if ($prefs['feature_forum_parse'] == 'y') {
 	    return $this->parse_data($data);
 	}
 
@@ -1812,8 +1806,8 @@ class Comments extends TikiLib {
     }
 
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='', $contributions='') {
-	global $feature_actionlog, $feature_contribution;
-	if ($feature_actionlog == 'y') {
+	global $prefs;
+	if ($prefs['feature_actionlog'] == 'y') {
 		$object = explode( ":", $objectId, 2);
 		$comment= $this->get_comment($threadId);
 		include_once('lib/diff/difflib.php');
@@ -1829,12 +1823,12 @@ class Comments extends TikiLib {
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
-	if ($feature_contribution == 'y') {
+	if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 	}
-	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+
+	if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('comments', $threadId);
 	}
@@ -1965,8 +1959,8 @@ class Comments extends TikiLib {
 	include_once("lib/search/refresh-functions.php");
 	refresh_index_comments( $threadId );
 
-	global $feature_actionlog;
-	if ($feature_actionlog == 'y') {
+	global $prefs;
+	if ($prefs['feature_actionlog'] == 'y') {
 		global $logslib; include_once('lib/logs/logslib.php');
 		global $tikilib;
 		if ($parentId == 0)
@@ -1978,13 +1972,13 @@ class Comments extends TikiLib {
 		else
 			$logslib->add_action(($parentId == 0)? 'Posted': 'Replied', $object[1], 'comment', 'type='.$object[0].'&amp;add='.$l.'#threadId'.$threadId, '', '', '', '', $contributions);
 	}
-	global $feature_contribution;
-	if ($feature_contribution == 'y') {
+
+	if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
 	}
-	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+
+	if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('comments', $threadId);
 	}
@@ -2006,8 +2000,8 @@ class Comments extends TikiLib {
     function remove_comment($threadId) {
 	if ($threadId == 0)
 		return false;
-	global $feature_actionlog, $feature_contribution;
-	if ($feature_actionlog == 'y') {
+	global $prefs;
+	if ($prefs['feature_actionlog'] == 'y') {
 		global $logslib; include_once('lib/logs/logslib.php');
 		$query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
 		$result = $this->query($query, array((int)$threadId, (int)$threadId));
@@ -2018,7 +2012,7 @@ class Comments extends TikiLib {
 				$logslib->add_action('Removed', $res['object'], 'comment', 'type='.$res['objectType'].'&amp;del='.strlen($res['data'])."threadId#$threadId");
 		}
 	}
-	if ($feature_contribution == 'y') {
+	if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib;require_once('lib/contribution/contributionlib.php');
 		$contributionlib->remove_comment($threadId);
 	}

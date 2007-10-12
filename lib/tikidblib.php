@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.40 2007-09-28 22:21:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41 2007-10-12 07:55:37 nyloth Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -171,7 +171,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB, $smarty, $feature_ajax, $ajaxlib;
+    global $ADODB_LASTDB, $smarty, $prefs, $ajaxlib;
 
     trigger_error($ADODB_LASTDB . " error:  " . htmlspecialchars($this->db->ErrorMsg()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
     // only for debugging.
@@ -219,7 +219,7 @@ function sql_error($query, $values, $result) {
     //if(empty($result)) echo "<br>\$result is empty";
 	
     $showviaajax=false;
-    if ($feature_ajax == 'y') {
+    if ($prefs['feature_ajax'] == 'y') {
 		global $ajaxlib;
 		include_once('lib/ajax/xajax.inc.php');
 		if ($ajaxlib && $ajaxlib->canProcessRequests()) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.70 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.71 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,11 +12,11 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/articles/artlib.php');
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	include_once('lib/freetag/freetaglib.php');
 }
 
-if ($feature_articles != 'y') {
+if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
 	$smarty->display("error.tpl");
@@ -53,7 +53,7 @@ $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
 $smarty->assign('linkto', '');
 $smarty->assign('image_caption', '');
-$smarty->assign('lang', $language);
+$smarty->assign('lang', $prefs['language']);
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
 $smarty->assign('authorName', $authorName);
 $smarty->assign('topicId', '');
@@ -146,7 +146,7 @@ if (isset($_REQUEST["allowhtml"])) {
 }
 
 $errors = array();
-if (empty($_REQUEST['emails']) || $feature_cms_emails != 'y')
+if (empty($_REQUEST['emails']) || $prefs['feature_cms_emails'] != 'y')
 	$emails = '';
 elseif (!empty($_REQUEST['emails'])) {
 	$emails = split(',', $_REQUEST['emails']);
@@ -245,7 +245,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	}
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
+		$tmpfname = $prefs['tmpDir'] . "/articleimage" . "." . $_REQUEST["articleId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
@@ -274,11 +274,10 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$parsed_body = $tikilib->parse_data($body);
 	$parsed_heading = $tikilib->parse_data($heading);
 
-	if ($cms_spellcheck == 'y') {
+	if ($prefs['cms_spellcheck'] == 'y') {
 		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $language, 'subbody');
-
-			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $language, 'subheading');
+			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $prefs['language'], 'subbody');
+			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $prefs['language'], 'subheading');
 			$smarty->assign('spellcheck', 'y');
 		} else {
 			$smarty->assign('spellcheck', 'n');
@@ -348,7 +347,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
-		$topiccachefile = $tikilib->get_preference("tmpdir", "temp");
+		$topiccachefile = $prefs['tmpDir'];
 		if ($tikidomain) { $topiccachefile.= "/$tikidomain"; }
 		$topiccachefile.= "/article.".$_REQUEST["id"];
 		@unlink($topiccachefile);
@@ -368,7 +367,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
 
-	if ($feature_multilingual == 'y' && $_REQUEST['lang'] && isset($article_data) && $article_data['lang'] != $_REQUEST["lang"]) {
+	if ($prefs['feature_multilingual'] == 'y' && $_REQUEST['lang'] && isset($article_data) && $article_data['lang'] != $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
 		if ($multilinguallib->updatePageLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
 			$_REQUEST['lang'] = $article_data['lang'];
@@ -406,12 +405,12 @@ $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types_byname();
 $smarty->assign_by_ref('types', $types);
 
-if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+if ($prefs['feature_cms_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('cms', 0, -1, 'name_asc', '');
 }
 $smarty->assign_by_ref('templates', $templates["data"]);
 
-if ($feature_multilingual == 'y') {
+if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
@@ -421,7 +420,7 @@ $cat_type = 'article';
 $cat_objid = $articleId;
 include_once ("categorize_list.php");
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
     include_once ("freetag_list.php");
     if ($_REQUEST["preview"]) {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
@@ -432,7 +431,7 @@ $smarty->assign('publishDate', $publishDate);
 $smarty->assign('publishDateSite', $publishDate);
 $smarty->assign('expireDate', $expireDate);
 $smarty->assign('expireDateSite', $expireDate);
-$smarty->assign('siteTimeZone', $display_timezone);
+$smarty->assign('siteTimeZone', $prefs['display_timezone']);
 
 include_once ('tiki-section_options.php');
 

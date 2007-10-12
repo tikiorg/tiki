@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.18 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.19 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if(@$feature_maps != 'y') {
+if($prefs['feature_maps'] != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
   $smarty->display("error.tpl");
   die;
@@ -21,8 +21,8 @@ if ($tiki_p_map_edit !='y') {
   die;      
 }
 
-if (!is_dir($map_path)) {
-  $smarty->assign('msg', tra("Please create a directory named $map_path to hold your map files."));
+if (!is_dir($prefs['map_path'])) {
+  $smarty->assign('msg', tra('Please create a directory named '.$prefs['map_path'].' to hold your map files.'));
 	$smarty->display('error.tpl');
 	die;
 }
@@ -49,22 +49,22 @@ if (isset($_REQUEST["directory"])) {
 if (isset($_REQUEST["dir"])) {
 	$_REQUEST["dir"] = preg_replace('~\~~','',$_REQUEST["dir"]);
 	$_REQUEST["dir"] = preg_replace('~/+~','/',$_REQUEST["dir"]);
-	$directory_path = inpath($map_path.$_REQUEST["dir"],$map_path."data");
+	$directory_path = inpath($prefs['map_path'].$_REQUEST["dir"],$prefs['map_path']."data");
 	if ($directory_path) {
-		$dir = $DSEP."data".substr($directory_path,strlen($map_path)+4);
+		$dir = $DSEP."data".substr($directory_path,strlen($prefs['map_path'])+4);
 	} else {
 	  $dir=$DSEP."data";
-		$directory_path=$map_path.$DSEP."data";
+		$directory_path=$prefs['map_path'].$DSEP."data";
 	}
 	$basedir = dirname($_REQUEST["dir"]);
 
   if (substr($dir,0,5) != $DSEP."data") {
-    $directory_path = $map_path.$DSEP."data";
+    $directory_path = $prefs['map_path'].$DSEP."data";
     $dir = $DSEP."data";
 		$basedir = $DSEP;
   }
 } else {
-  $directory_path=$map_path.$DSEP."data";
+  $directory_path=$prefs['map_path'].$DSEP."data";
   $dir=$DSEP."data";
 	$basedir = $DSEP;
 }
@@ -88,7 +88,7 @@ if (isset($_REQUEST["upload"])) {
 if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
   if ($_REQUEST["action"]=="delete") {
 		$area = "delmapupload";
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 					
          if (is_file($directory_path.$DSEP.$_REQUEST["file"]) &&
@@ -133,7 +133,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
   }
   if ($_REQUEST["action"]=="deldir") {
 		$area = "delmapdir";
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 					
     	if(!preg_match("/^\./", $_REQUEST["directory"]) || 
@@ -176,7 +176,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
         $smarty->display("error.tpl");
         die;      
       }
-		if (!isset($gdaltindex)) {
+		if (!isset($prefs['gdaltindex'])) {
         $smarty->assign('msg',tra("I do not know where is gdaltindex. Set correctly the Map feature"));
         $smarty->display("error.tpl");
         die;      
@@ -184,10 +184,10 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
       
       $indexfile=inpath(dirname($directory_path.$DSEP.$_REQUEST["indexfile"]),$directory_path);
       $filestoindex=inpath(dirname($directory_path.$DSEP.$_REQUEST["filestoindex"]),$directory_path);
-      if ($indexfile && $filestoindex && is_file($gdaltindex)) {
+      if ($indexfile && $filestoindex && is_file($prefs['gdaltindex'])) {
         $indexfile=escapeshellarg($indexfile.$DSEP.basename($_REQUEST["indexfile"]));
         $filestoindex=escapeshellarg($filestoindex.$DSEP.basename($_REQUEST["filestoindex"]));
-	      $command=$gdaltindex." ".$indexfile." ".$filestoindex;
+	      $command=$prefs['gdaltindex']." ".$indexfile." ".$filestoindex;
 	      $return=shell_exec($command);
 	      if ($return<>0) {
 	        $smarty->assign('msg',tra("I could not create the index file"));

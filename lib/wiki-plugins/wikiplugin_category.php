@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.18 2007-06-16 16:01:59 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.19 2007-10-12 07:55:48 nyloth Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -23,15 +23,13 @@ function wikiplugin_category_help() {
 }
 
 function wikiplugin_category($data, $params) {
-	global $smarty;
-	global $feature_categories;
-	global $categlib;
+	global $smarty, $prefs, $categlib;
 
 	if (!is_object($categlib)) {
 		require_once ("lib/categories/categlib.php");
 	}
 
-	if ($feature_categories != 'y') {
+	if ($prefs['feature_categories'] != 'y') {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 

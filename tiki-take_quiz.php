@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.24 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.25 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/quizzes/quizlib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_quizzes != 'y') {
+if ($prefs['feature_quizzes'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
 
 	$smarty->display("error.tpl");
@@ -54,7 +54,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $_REQUEST['quizId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -212,7 +212,7 @@ $smarty->assign_by_ref('questions', $questions["data"]);
 $section = 'quizzes';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'quiz';
 
 	$cat_objid = $_REQUEST["quizId"];

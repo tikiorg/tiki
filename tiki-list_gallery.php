@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.28 2007-04-05 23:53:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.29 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ("lib/imagegals/imagegallib.php");
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("error.tpl");
@@ -55,7 +55,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 			}
 		}
 	} 
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -138,7 +138,7 @@ if (isset($_REQUEST["remove"])) {
 		die;
 	}
   $area = 'delgallery';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$imagegallib->remove_image($_REQUEST["remove"]);
   } else {
@@ -249,7 +249,7 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('list-gal');
 
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
 }

@@ -186,7 +186,7 @@ class MultilingualLib extends TikiLib {
 	 * @param $langContext: optional the language the user comes from
 	 */
 	function preferedLangs($langContext = null,$include_browser_lang=TRUE) {
-		global $user, $language, $tikilib;
+		global $user, $prefs, $tikilib;
 		$langs = array();
 
 		if ($langContext) {
@@ -195,9 +195,9 @@ class MultilingualLib extends TikiLib {
 				$langs[] = $this->rootLang($langContext);
 		}
 		
-		if ($language && !in_array($language, $langs)) {
-			$langs[] = $language;
-			$l = $this->rootLang($language);
+		if ($prefs['language'] && !in_array($prefs['language'], $langs)) {
+			$langs[] = $prefs['language'];
+			$l = $this->rootLang($prefs['language']);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}
@@ -214,10 +214,10 @@ class MultilingualLib extends TikiLib {
 			}
 		}
 
-		$l = $tikilib->get_preference("language", "en");
+		$l = $prefs['site_language'];
 		if (!in_array($l, $langs)) {
 			$langs[] = $l; // site language
-			$l = $this->rootLang($language);
+			$l = $this->rootLang($l);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}

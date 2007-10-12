@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.797 2007-10-10 20:54:36 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.798 2007-10-12 07:55:37 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -46,7 +46,7 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function httprequest($url, $reqmethod = "GET") {
-	global $use_proxy,$proxy_host,$proxy_port;
+	global $prefs;
 	// test url :
 	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
 	// rewrite url if sloppy # added a case for https urls
@@ -63,9 +63,9 @@ class TikiLib extends TikiDB {
 	    $url .= "/";
 	}
 	// Proxy settings
-	if ($use_proxy == 'y') {
-	    $aSettingsRequest["proxy_host"]=$proxy_host;
-	    $aSettingsRequest["proxy_port"]=$proxy_port;
+	if ($prefs['use_proxy'] == 'y') {
+	    $aSettingsRequest["proxy_host"]=$prefs['proxy_host'];
+	    $aSettingsRequest["proxy_port"]=$prefs['proxy_port'];
 	}
 	include_once ('lib/pear/HTTP/Request.php');
 	$req = &new HTTP_Request($url, $aSettingsRequest);
@@ -278,13 +278,13 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function get_event_watches($event, $object, $info=null) {
-	global $feature_user_watches_translations, $dbTiki;
+	global $prefs, $dbTiki;
 	$ret = array();
 
 	$where = array();
 	$mid = '';
-	if( $feature_user_watches_translations == 'y'  && $event == 'wiki_page_changed') {
-	    // If $feature_user_watches_translations is turned on, also look for
+	if( $prefs['feature_user_watches_translations'] == 'y'  && $event == 'wiki_page_changed') {
+	    // If $prefs['feature_user_watches_translations'] is turned on, also look for
 	    // pages in a translation group.
 		$mid = "`event`=?";
 		$bindvars[] = $event;
@@ -381,8 +381,7 @@ class TikiLib extends TikiDB {
 
     // Also include users that are watching a category to which this object belongs to.
     if ( $event != 'category_changed' )  {    	
-        global $feature_categories;                
-        if ($feature_categories == 'y') {
+        if ($prefs['feature_categories'] == 'y') {
             global $categlib; require_once('lib/categories/categlib.php');
             $objectType="";
             switch($event) {
@@ -1091,8 +1090,8 @@ class TikiLib extends TikiDB {
     // File attachments functions for the wiki ////
     /*shared*/
     function add_wiki_attachment_hit($id) {
-	global $count_admin_pvs, $user;
-	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	global $prefs, $user;
+	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	    $query = "update `tiki_wiki_attachments` set `downloads`=`downloads`+1 where `attId`=?";
 	    $result = $this->query($query,array((int)$id));
 	}
@@ -1376,17 +1375,17 @@ function add_pageview() {
 
     /*shared*/
     function get_user_groups($user) {
-		global $feature_intertiki,$interlist,$feature_intertiki_mymaster;
+		global $prefs;
 	if (!$user) {
 		$ret = array();
 		$ret[] = "Anonymous";
 		return $ret;
-	} elseif ($feature_intertiki == 'y' and empty($feature_intertiki_mymaster) and strstr($user,'@')) {
+	} elseif ($prefs['feature_intertiki'] == 'y' and empty($prefs['feature_intertiki_mymaster']) and strstr($user,'@')) {
 		$realm = substr($user,strpos($user,'@')+1);
 		$user = substr($user,0,strpos($user,'@'));
-		if (isset($interlist[$realm])) {
-			$groups = $interlist[$realm]['groups'].',Anonymous';
-			return split(',',$interlist[$realm]['groups']);
+		if (isset($prefs['interlist'][$realm])) {
+			$groups = $prefs['interlist'][$realm]['groups'].',Anonymous';
+			return split(',',$prefs['interlist'][$realm]['groups']);
 		}
 	} elseif (!isset($this->usergroups_cache[$user])) {
 	    $userid = $this->get_user_id($user);
@@ -1775,7 +1774,7 @@ function add_pageview() {
 
     /*shared*/
     function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0) {
-	  global $smarty,$user, $tiki_p_admin;
+	  global $smarty,$user, $tiki_p_admin, $prefs;
 	$ret = array();
 	$retval = array();
 	$bindvars = array((int)$menuId);
@@ -1793,6 +1792,7 @@ function add_pageview() {
 	$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_menu_options` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	//FIXME
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
 	    if (!$full) {
@@ -1800,7 +1800,7 @@ function add_pageview() {
 		if (isset($res['section']) and $res['section']) {
 		    $sections = split(",",$res['section']);
 		    foreach ($sections as $sec) {
-			if (!isset($GLOBALS["$sec"]) or $GLOBALS["$sec"] != 'y') {
+			if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
 			    $display = false;
 			    break;
 			}
@@ -1810,7 +1810,7 @@ function add_pageview() {
 		    if (isset($res['perm']) and $res['perm']) {
 			$sections = split(",",$res['perm']);
 			foreach ($sections as $sec) {
-			    if (!isset($GLOBALS["$sec"]) or $GLOBALS["$sec"] != 'y') {
+			    if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
 				$display = false;
 				break;
 			    }
@@ -2026,14 +2026,13 @@ function add_pageview() {
 
     /*shared*/
     function add_file_hit($id) {
-	global $count_admin_pvs, $user;
-	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	global $prefs, $user;
+	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	    $query = "update `tiki_files` set `downloads`=`downloads`+1 where `fileId`=?";
 	    $result = $this->query($query,array((int) $id));
 	}
 
-	global $feature_score;
-	if ($feature_score == 'y') {
+	if ($prefs['feature_score'] == 'y') {
 	    $this->score_event($user, 'fgallery_download', $id);
 	    $query = "select `user` from `tiki_files` where `fileId`=?";
 	    $owner = $this->getOne($query, array((int)$id));
@@ -2045,8 +2044,8 @@ function add_pageview() {
 
     /*shared*/
     function add_file_gallery_hit($id) {
-	global $count_admin_pvs, $user;
-	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	global $prefs, $user;
+	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	    $query = "update `tiki_file_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 	    $result = $this->query($query,array((int) $id));
 	}
@@ -2275,11 +2274,11 @@ function add_pageview() {
     }
 
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = true) {
-	global $user, $feature_friends;
-	global $userprefslib;include_once('lib/userprefs/userprefslib.php');
+	global $user, $prefs, $userprefslib;
+	include_once('lib/userprefs/userprefslib.php');
 
 	$bindvars = array();
-	if ($feature_friends == 'y') {
+	if ($prefs['feature_friends'] == 'y') {
 		$bindvars[] = $user;
 	}
 	if ( $find ) {
@@ -2337,7 +2336,7 @@ function add_pageview() {
 	if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
 	// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-	if ($feature_friends == 'y') {
+	if ($prefs['feature_friends'] == 'y') {
 		$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
 	} else {
 		$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
@@ -2349,7 +2348,7 @@ function add_pageview() {
 
 	$ret = array();
 	while ($res = $result->fetchRow()) {
-		if ($feature_friends == 'y') {
+		if ($prefs['feature_friends'] == 'y') {
 			$res['friend'] = !empty($res['friend'] );
 		}
 	    if ( $include_prefs ) $res['preferences'] = $userprefslib->get_userprefs($res['login']);
@@ -2397,6 +2396,8 @@ function add_pageview() {
 
     /*shared*/
     function get_blog($blogId) {
+	global $prefs, $user;
+
 	$query = "select * from `tiki_blogs` where `blogId`=?";
 	$result = $this->query($query,array((int)$blogId));
 	if ($result->numRows()) {
@@ -2405,8 +2406,7 @@ function add_pageview() {
 	    return false;
 	}
 
-	global $feature_score, $user;
-	if ($feature_score == 'y' && $user != $res['user']) {
+	if ($prefs['feature_score'] == 'y' && $user != $res['user']) {
 	    $this->score_event($user, 'blog_read', $blogId);
 	    $this->score_event($res['user'], 'blog_is_read', "$user:$blogId");
 	}
@@ -2764,7 +2764,7 @@ function add_pageview() {
     }
 
     function get_article($articleId) {
-	global $user, $tiki_p_admin_cms;
+	global $user, $tiki_p_admin_cms, $prefs;
 	if ($tiki_p_admin_cms != 'y' && !$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article'))
 		return false;
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
@@ -2799,8 +2799,7 @@ function add_pageview() {
 	    return false;
 	}
 
-	global $feature_score, $user;
-	if ($feature_score == 'y') {
+	if ($prefs['feature_score'] == 'y') {
 	    $this->score_event($user, 'article_read', $articleId);
 	    $this->score_event($res['author'], 'article_is_read', $articleId . '_' . $user);
 	}
@@ -2941,8 +2940,8 @@ function add_pageview() {
     }
 
     function cache_links($links) {
-	$cachepages = $this->get_preference("cachepages", 'y');
-	if ($cachepages != 'y') return false;
+	global $prefs;
+	if ($prefs['cachepages'] != 'y') return false;
 	foreach ($links as $link) {
 	    if (!$this->is_cached($link)) {
 		$this->cache_url($link);
@@ -3236,9 +3235,8 @@ function add_pageview() {
     // Removes all the versions of a page and the page itself
     /*shared*/
     function remove_all_versions($page, $comment = '') {
-	global $dbTiki, $user, $feature_contribution;
-	global $feature_actionlog;
-	if ($feature_actionlog == 'y') {
+	global $dbTiki, $user, $prefs;
+	if ($prefs['feature_actionlog'] == 'y') {
 		$info= $this->get_page_info($page);
 		$params = 'del='.strlen($info['data']);
 	} else {
@@ -3261,7 +3259,7 @@ function add_pageview() {
 	}
 	$query = "delete from `tiki_pages` where `pageName` = ?";
 	$result = $this->query($query, array( $page ) );
-	if ($feature_contribution == 'y') {
+	if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->remove_page($page);
 	}
@@ -3531,7 +3529,7 @@ function add_pageview() {
    }
 
     function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true, $onlyName=false, $forListPages=false, $only_orphan_pages = false, $filter='', $onlyCant=false) {
-	global $wiki_list_links, $wiki_list_versions, $wiki_list_backlinks, $user;
+	global $prefs, $user;
 
 	$join_tables = '';
 	$join_bindvars = array();
@@ -3640,11 +3638,11 @@ function add_pageview() {
 			$res['len'] = $res['page_size'];
 			unset($res['page_size']);
 			$res['flag'] = $res['flag'] == 'L' ? 'locked' : 'unlocked';
-			if ($forListPages && $wiki_list_versions == 'y')
+			if ($forListPages && $prefs['wiki_list_versions'] == 'y')
 				$res['versions'] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
-			if ($forListPages && $wiki_list_links == 'y')
+			if ($forListPages && $prefs['wiki_list_links'] == 'y')
 				$res['links'] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
-			if ($forListPages && $wiki_list_backlinks == 'y')
+			if ($forListPages && $prefs['wiki_list_backlinks'] == 'y')
 				$res['backlinks'] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
 		    }
 		    $ret[] = $res;
@@ -3685,8 +3683,7 @@ function add_pageview() {
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
   function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
-            global $feature_categories;
-            global $userlib;
+            global $prefs, $userlib;
 		static $cacheUserPerm;
 		$keyCache = "$user/$object/$objtype/$perm";
 		if (!empty($cacheUserPerm[$keyCache])) {
@@ -3715,7 +3712,7 @@ function add_pageview() {
 		  }
 			$cacheUserPerm[$keyCache] = true;
             return (TRUE);
-            } elseif ($feature_categories == 'y' && $categperm !== 0) {
+            } elseif ($prefs['feature_categories'] == 'y' && $categperm !== 0) {
                 // no wiki permissions so now we check category permissions
                 global $categlib;
                         if (!is_object($categlib)) {
@@ -3765,7 +3762,7 @@ function add_pageview() {
 	 * global = true set the global perm and smarty var, otherwise return an array of perms
 	 */
   function get_perm_object($objectId, $objectType, $info='', $global=true) {
-		global $tiki_p_admin, $user, $feature_categories, $userlib, $smarty;
+		global $tiki_p_admin, $user, $prefs, $userlib, $smarty;
 		$ret = array();
 		if (empty($objectId)) {
 			if (!$global) {
@@ -3784,7 +3781,7 @@ function add_pageview() {
 					$ret[$perm['permName']] = 'y';
 				}
 				global $categlib; include_once('lib/categories/categlib.php');
-				if ($userlib->object_has_one_permission($objectId, $objectType) || ($feature_categories == 'y' && $categlib->get_object_categories_perms($user, $objectType, $objectId))) {
+				if ($userlib->object_has_one_permission($objectId, $objectType) || ($prefs['feature_categories'] == 'y' && $categlib->get_object_categories_perms($user, $objectType, $objectId))) {
 					$ret['has_special_perm'] = 'y';
 				}
 			}
@@ -3829,7 +3826,7 @@ function add_pageview() {
 			}
 			$ret['has_special_perm'] = 'y';
 			return $ret; // special perms - do not look further
-		} elseif ($feature_categories == 'y') {
+		} elseif ($prefs['feature_categories'] == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$perms = $categlib->get_object_categories_perms($user, $objectType, $objectId);
 			if (!empty($perms)) {
@@ -4038,12 +4035,11 @@ function add_pageview() {
 	}
 	/* deal all the special perm */
 	function get_local_perms($user, $objectId, $objectType, $info, $global) {
-		global $userlib, $smarty;
+		global $userlib, $smarty, $prefs;
 		$ret = array();
 		switch ($objectType) {
 		case 'wiki page': case 'wiki':
-			global $wiki_creator_admin;
-			if ($wiki_creator_admin == 'y' && $info['creator'] == $user) { //can admin his page
+			if ($prefs['wiki_creator_admin'] == 'y' && $info['creator'] == $user) { //can admin his page
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
 					$perm = $perm['permName'];
@@ -4056,8 +4052,7 @@ function add_pageview() {
 				}
 				return $ret;
 			}
-			global $feature_wiki_userpage, $feature_wiki_userpage_prefix;
-			if ($feature_wiki_userpage == 'y' && strcasecmp($info['pageName'], $feature_wiki_userpage_prefix.$user) == 0) { //can edit his page
+			if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($info['pageName'], $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
 				if (!$global) {
 					$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 					foreach ($perms['data'] as $perm) {
@@ -4123,6 +4118,8 @@ function add_pageview() {
     }
 
     function set_preference($name, $value) {
+	global $user_overrider_prefs, $user_preferences, $user, $prefs;
+
 	$query = "update `tiki_preferences` set `value`=? where `name`=?";
 	$this->query($query, array('lastUpdatePrefs', $this->now));
 	$query = "delete from `tiki_preferences` where `name`=?";
@@ -4133,60 +4130,76 @@ function add_pageview() {
 	} else {
 		$result = $this->query($query,array($name,$value));
 	}
-	if ( isset($_SESSION['prefs']) ) {
-		$_SESSION['prefs'][$name] = $value;
-		$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
+	if ( isset($prefs) ) {
+		if ( in_array($name, $user_overrider_prefs) ) {
+			$prefs['site_'.$name] = $value;
+		} elseif ( isset($user_preferences[$user][$name] ) ) {
+			$prefs[$name] = $user_preferences[$user][$name];
+		} else {
+			$prefs[$name] = $value;
+		}
+		$prefs['lastUpdatePrefs'] = $this->now;
 	}
 	return true;
     }
 
-	function _get_values($table, $field_name, $var_names, &$global_ref, $query_cond = '', $bindvars = null) {
-		// This function needs values for at least $table, $field_name and $var_names
-		//   and $var_names must be an array
-		//   and $global_ref must be set
-		if ( empty($table) || empty($field_name) || empty($var_names) || ! is_array($var_names) || ! isset($global_ref) ) return false; 
+	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
+		if ( empty($table) || empty($field_name) ) return false; 
 
 		$needed = array();
+		$defaults = null;
 
-		// Detect if var names are specified as keys (then values are considered as var defaults)
-		//   by looking at the type of the first key
-		$defaults = ! is_integer(key($var_names));
+		if ( is_array($var_names) ) {
 
-		// Check if we need to get the value from DB by looking in the global $user_preferences array
-		// (this is able to handle more than one var at a time)
-		//   ... and store the default values as well, just in case we needs them later
-		if ( $defaults ) {
-			foreach ( $var_names as $var => $default ) {
-				if ( ! isset($global_ref[$var]) ) $needed[$var] = $default;
+			// Detect if var names are specified as keys (then values are considered as var defaults)
+			//   by looking at the type of the first key
+			$defaults = ! is_integer(key($var_names));
+
+			// Check if we need to get the value from DB by looking in the global $user_preferences array
+			// (this is able to handle more than one var at a time)
+			//   ... and store the default values as well, just in case we needs them later
+			if ( $defaults ) {
+				foreach ( $var_names as $var => $default ) {
+					if ( ! isset($global_ref[$var]) ) $needed[$var] = $default;
+				}
+			} else {
+				foreach ( $var_names as $var ) {
+					if ( ! isset($global_ref[$var]) ) $needed[$var] = null;
+				}
 			}
-		} else {
-			foreach ( $var_names as $var ) {
-				if ( ! isset($global_ref[$var]) ) $needed[$var] = null;
-			}
+
+		} elseif ( $var_names !== null ) {
+			return false;
 		}
 
-		if ( count($needed) > 0 ) {
-
-			$cond_query = '';
-			if ( is_null($bindvars) ) $bindvars = array();
+		$cond_query = '';
+		if ( is_null($bindvars) ) $bindvars = array();
+		if ( count($needed > 0 ) ) {
 			foreach ( $needed as $var => $def ) {
-				if ( $cond_query != '' ) $cond_query .= ' or ';
+				if ( $cond_query != '' ) {
+					$cond_query .= ' or ';
+				} elseif ( $query_cond != '' ) {
+					$cond_query = ' and ';
+				}
 				$cond_query .= "`$field_name`=?";
 				$bindvars[] = $var;
 			}
-			if ( $query_cond != '' ) $cond_query = $query_cond.' and ('.$cond_query.')';
+		}
+		$query = "select `$field_name`, `value` from `$table` where $query_cond $cond_query";
+		$result = $this->query($query, $bindvars);
 
-			$query = "select `$field_name`, `value` from `$table` where $cond_query";
-			$result = $this->query($query, $bindvars);
-			if ( $result ) while ( $res = $result->fetchRow() ) {
+		if ( $result ) {
+			while ( $res = $result->fetchRow() ) {
 				// store the db value in the global array
 				$global_ref[$res[$field_name]] = $res['value'];
 				// remove vars that have a value in db from the $needed array to avoid affecting them a default value
 				unset($needed[$res[$field_name]]);
 			}
+		}
 
-			// set defaults values if needed and if there is no value in database and if it's default was not null
-			if ( $defaults ) foreach ( $needed as $var => $def ) {
+		// set defaults values if needed and if there is no value in database and if it's default was not null
+		if ( $defaults ) {
+			foreach ( $needed as $var => $def ) {
 				if ( ! is_null($def) ) $global_ref[$var] = $def;
 			}
 		}
@@ -4195,34 +4208,50 @@ function add_pageview() {
 	}
 
 
-	function get_user_preferences($user, $names) {
+	function get_user_preferences($my_user, $names = null) {
 
-		// $user must be specified
-		if ( ! is_string($user) || $user == '' ) return false;
+		// $my_user must be specified
+		if ( ! is_string($my_user) || $my_user == '' ) return false;
 
 		global $user_preferences;
-		$global_ref =& $user_preferences[$user];
-		return $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($user));
+		$global_ref =& $user_preferences[$my_user];
+		return $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($my_user));
 	}
 
-    function get_user_preference($user, $name, $default = null) {
+    function get_user_preference($my_user, $name, $default = null) {
 		global $user_preferences;
-		if ( ! isset($user_preferences[$user][$name]) ) {
-			if ( is_null($default) ) $this->get_user_preferences($user, array($name));
-			else $this->get_user_preferences($user, array($name => $default), true);
+		if ( isset($user_preferences) && isset($user_preferences[$my_user]) && isset($user_preferences[$my_user][$name]) ) {
+			return $user_preferences[$my_user][$name];
 		}
-		return $user_preferences[$user][$name];
+		return $default;
     }
 
-    function set_user_preference($user, $name, $value) {
-	global $user_preferences, $cachelib;
+    function set_user_preference($my_user, $name, $value) {
+	global $user_preferences, $cachelib, $prefs, $user, $user_overrider_prefs;
 
 	require_once("lib/cache/cachelib.php");
-	$cachelib->invalidate('user_details_'.$user);
+	$cachelib->invalidate('user_details_'.$my_user);
 
-	$user_preferences[$user][$name] = $value;
+	$user_preferences[$my_user][$name] = $value;
+
+	if ( $my_user == $user ) {
+		$prefs[$name] = $value;
+		if ( $name == 'theme' ) { // FIXME: Remove this exception
+			$prefs['style'] = $value;
+			if ( $value == '' ) {
+				$prefs['style'] = $prefs['site_style'];
+			}
+		} elseif ( $value == '' ) {
+			if ( in_array($name, $user_overrider_prefs) ) {
+				$prefs[$name] = $prefs['site_'.$name];
+			} else {
+				$_SESSION['need_reload_prefs'] = true;
+			}
+		}
+	}
+
 	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-	$bindvars=array($user,$name);
+	$bindvars=array($my_user,$name);
 	$result = $this->query($query, $bindvars, -1,-1,false);
 	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
 	$bindvars[]=$value;
@@ -4232,21 +4261,24 @@ function add_pageview() {
     }
 
     // similar to set_user_preference, but set all at once.
-    function set_user_preferences($user, $preferences) {
-	global $user_preferences, $cachelib;
+    function set_user_preferences($my_user, &$preferences) {
+	global $user_preferences, $cachelib, $prefs, $user;
 
 	require_once("lib/cache/cachelib.php");
-	$cachelib->invalidate('user_details_'.$user);
-
-	$user_preferences = $preferences;
+	$cachelib->invalidate('user_details_'.$my_user);
 
 	$query = "delete from `tiki_user_preferences` where `user`=?";
-
-	$result = $this->query($query, array($user), -1,-1,false);
+	$result = $this->query($query, array($my_user), -1,-1,false);
 
 	foreach ($preferences as $prefName => $value) {
 	    $query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-	    $result = $this->query($query, array($user,$prefName,$value));
+	    $result = $this->query($query, array($my_user,$prefName,$value));
+	}
+	$user_preferences[$my_user] =& $preferences;
+
+	if ( $my_user == $user ) {
+		$prefs =& array_merge(&$prefs, &$preferences);
+		$_SESSION['need_reload_prefs'] = true;
 	}
 
 	return true;
@@ -4309,11 +4341,7 @@ function add_pageview() {
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
     function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null) {
-	global $smarty, $feature_contribution;
-	global $dbTiki;
-	global $sender_email;
-	global $feature_purifier;
-	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+	global $smarty, $prefs, $dbTiki;
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);
@@ -4337,7 +4365,7 @@ function add_pageview() {
 	    return false;
 
 	$html=$is_html?1:0;
-	if ($html && $feature_purifier != 'n') {
+	if ($html && $prefs['feature_purifier'] != 'n') {
 		require "HTMLPurifier.auto.php";
 		$purifier = new HTMLPurifier();
 		$edit_data = $purifier->purify($edit_data);
@@ -4391,18 +4419,11 @@ function add_pageview() {
 
 	    //  Deal with mail notifications.
 	    include_once('lib/notifications/notificationemaillib.php');
-	    //This is put away: sender_email must be enough!
-	    //  if( $this->get_preference('wiki_forum') ) {
-	    //      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-	    //    if ($forums)
-	    //      $fromEmail = $forums["data"][0]["outbound_from"];
-	    //    else
-	    //      $fromEmail = $sender_email;
-	    //  }
+
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $this->httpPrefix(). dirname( $foo["path"] );
 	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine, '', false, $hash['contributions']);
-		if ($feature_contribution == 'y') {
+		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->assign_contributions($hash['contributions'], $name, 'wiki page', $description, $name, "tiki-index.php?page=".urlencode($name));
 		}
@@ -4414,12 +4435,11 @@ function add_pageview() {
 		$this->invalidate_cache($res['fromPage']);
 	}
 
-	global $feature_score;
-	if ($feature_score == 'y') {
+	if ($prefs['feature_score'] == 'y') {
 	    $this->score_event($user, 'wiki_new');
 	}
 
-	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+	if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('pages', $name);
 	}
@@ -4938,12 +4958,11 @@ function add_pageview() {
 
     // Replace hotwords in given line
     function replace_hotwords($line, $words) {
-	global $feature_hotwords;
-	global $feature_hotwords_nw;
-	$hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
+	global $prefs;
+	$hotw_nw = ($prefs['feature_hotwords_nw'] == 'y') ? "target='_blank'" : '';
 
 	// Replace Hotwords
-	if ($feature_hotwords == 'y') {
+	if ($prefs['feature_hotwords'] == 'y') {
 	    foreach ($words as $word => $url) {
 		// \b is a word boundary, \s is a space char
 		$pregword = preg_replace("/\//","\/",$word);
@@ -4957,15 +4976,13 @@ function add_pageview() {
 
     // Make plain text URIs in text into clickable hyperlinks
     function autolinks($text) {
+	global $prefs;
 	//	check to see if autolinks is enabled before calling this function
-	//		global $feature_autolinks;
-
-	//		if ($feature_autolinks == "y") {
-	global $feature_wiki_ext_icon, $feature_wiki_protect_email;
+	//		if ($prefs['feature_autolinks'] == "y") {
 	$attrib = '';
-	if ($this->get_preference('popupLinks', 'n') == 'y')
+	if ($prefs['popupLinks'] == 'y')
 		$attrib .= 'target="_blank" ';
-	if ($feature_wiki_ext_icon == 'y') {
+	if ($prefs['feature_wiki_ext_icon'] == 'y') {
 		$attrib .= 'class="wiki external" ';
 		$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 	} else {
@@ -4983,7 +5000,7 @@ function add_pageview() {
 	$patterns[] = "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^,< \n\r]*)?)#i";
 	$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 	$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
-	if ($feature_wiki_protect_email == 'y')
+	if ($prefs['feature_wiki_protect_email'] == 'y')
 		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at")." \\3</noscript>";
 	else
 		$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
@@ -5120,46 +5137,16 @@ function add_pageview() {
 		}
 	}
 	
-	global $page_regex;
-
-	global $slidemode;
-	global $feature_hotwords;
-	global $feature_autolinks;
-	global $cachepages;
-	global $ownurl_father;
-	global $feature_drawings;
-	global $tiki_p_admin_drawings;
-	global $tiki_p_edit_drawings;
-	global $tiki_p_edit_dynvar;
-	global $feature_wiki_pictures;
-	global $tiki_p_upload_picture;
-	global $feature_wiki_plurals;
-	global $feature_wiki_tables;
-	global $page;
-	global $page_ref_id;
-	global $rsslib;
-	global $dbTiki;
-	global $structlib;
-	global $user;
-	global $tikidomain;
-	global $feature_wikiwords;
-	global $feature_wiki_paragraph_formatting;
-	global $feature_wikiwords_usedash;
-	global $feature_multilingual;
-	global $feature_best_language;
-	global $wiki_page_separator;
-	global $feature_wysiwyg;
-	global $wysiwyg_wiki_parsed;
-	global $wysiwyg_wiki_semi_parsed;
+	global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain;
 
 	// if simple_wiki is tru, disable some wiki syntax
 	// basically, allow wiki plugins, wiki links and almost
 	// everything between {}
 	$simple_wiki = false;
-	if ($feature_wysiwyg == 'y' and $is_html) {
-		if ($wysiwyg_wiki_semi_parsed == 'y') {
+	if ($prefs['feature_wysiwyg'] == 'y' and $is_html) {
+		if ($prefs['wysiwyg_wiki_semi_parsed'] == 'y') {
 			$simple_wiki = true;
-		} elseif ($wysiwyg_wiki_parsed == 'n') {
+		} elseif ($prefs['wysiwyg_wiki_parsed'] == 'n') {
 			return $data;
 		}
 	}
@@ -5209,9 +5196,7 @@ function add_pageview() {
 	    $data = str_replace( "((".$anchor_line."))", $repl, $data);
 	}
 
-	global $feature_wiki_attachments;
-
-	if( $feature_wiki_attachments == 'y' )
+	if( $prefs['feature_wiki_attachments'] == 'y' )
 	{
 	    // Handle wiki file links by turning them into ATTACH module calls.
 	    preg_match_all("/(\{file [^\}]+})/", $data, $pages);
@@ -5292,8 +5277,8 @@ function add_pageview() {
 
 	// Replace special characters
 	// done after url catching because otherwise urls of dyn. sites will be modified
-  // not done in wysiwyg mode, i.e. $feature_wysiwyg set to something other than 'no' or not set at all
-			if (!$simple_wiki and $feature_wysiwyg == 'n') {
+  // not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
+			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') {
 				$this->parse_htmlchar($data);
 			}
 	// Now replace a TOC
@@ -5351,7 +5336,7 @@ function add_pageview() {
     }
 
 	// Now search for images uploaded by users
-	if ($feature_wiki_pictures == 'y') {
+	if ($prefs['feature_wiki_pictures'] == 'y') {
 	    preg_match_all("/\{picture file=([^\}]+)\}/", $data, $pics);
 
 	    $temp_max = count($pics[0]);
@@ -5387,7 +5372,7 @@ function add_pageview() {
 	$data = $this->parse_smileys($data);
 
 	// Replace links to slideshows
-	if ($feature_drawings == 'y') {
+	if ($prefs['feature_drawings'] == 'y') {
 	    // Replace drawings
 	    // Replace rss modules
 	    $pars = parse_url($_SERVER["REQUEST_URI"]);
@@ -5575,7 +5560,7 @@ function add_pageview() {
 			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
 			$desc1 = $desc;
 		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-		    $bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : "";
+		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl" : "";
 		    $uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]).$bestLang;
 
 			// check to see if desc is blank in ((page|desc))
@@ -5631,7 +5616,7 @@ function add_pageview() {
 		if ($desc = $this->page_exists_desc($page_parse)) {
 		    // why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-		    $bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : ""; // to choose the best page language
+		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl" : ""; // to choose the best page language
 		    $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		} else {
 		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
@@ -5646,9 +5631,9 @@ function add_pageview() {
 	// If they are parenthesized then don't treat as links
 	// Prevent ))PageName(( from being expanded \"\'
 	//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-	if (!$simple_wiki&&$feature_wikiwords == 'y') {
+	if ( ! $simple_wiki && $prefs['feature_wikiwords'] == 'y' ) {
 	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-	    if ($feature_wikiwords_usedash == 'y') {
+	    if ($prefs['feature_wikiwords_usedash'] == 'y') {
 		preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
 	    } else {
 		preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
@@ -5660,7 +5645,7 @@ function add_pageview() {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			$repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-		    } elseif ($feature_wiki_plurals == 'y') {
+		    } elseif ($prefs['feature_wiki_plurals'] == 'y') {
 # Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
 			$plural_tmp = $page_parse;
@@ -5741,7 +5726,7 @@ function add_pageview() {
 
 	    if ($imgdata["link"]) {
 		$imgtarget= '';
-		if ($this->get_preference('popupLinks', 'n') == 'y')
+		if ($prefs['popupLinks'] == 'y')
 		{
 		    $imgtarget = ' target="_blank"';
 		}
@@ -5780,7 +5765,7 @@ function add_pageview() {
 	    $class = 'class="wiki"';
 	    $ext_icon = '';
 
-	    if ($this->get_preference('popupLinks', 'n') == 'y')
+	    if ($prefs['popupLinks'] == 'y')
 	    {
 		$target = 'target="_blank"';
 	    }
@@ -5792,8 +5777,7 @@ function add_pageview() {
 	    {
 			$target = '';
 	    } else {
-	    	global $feature_wiki_ext_icon;
-	    	if ($feature_wiki_ext_icon == 'y') {
+	    	if ($prefs['feature_wiki_ext_icon'] == 'y') {
 		    	$class = 'class="wiki external"';
 		    	$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 	    	}
@@ -5803,7 +5787,7 @@ function add_pageview() {
 	    // enter square brackets in their output; things like [[foo]
 	    // get rendered as [foo]. -rlpowell
 
-	    if ($cachepages == 'y' && $this->is_cached($link))
+	    if ($prefs['cachepages'] == 'y' && $this->is_cached($link))
 	    {
 		//use of urlencode for using cached versions of dynamic sites
 		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
@@ -5839,7 +5823,7 @@ function add_pageview() {
  * Wiki Tables syntax
  */
 	// tables in old style
-	if ($feature_wiki_tables != 'new') {
+	if ($prefs['feature_wiki_tables'] != 'new') {
 	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
 			$maxcols = 1;
 
@@ -5960,7 +5944,7 @@ if (!$simple_wiki) {
 	// HotWords will be replace only in ordinal text
 	// It looks __really__ goofy in Headers or Titles
 
-	if ($feature_hotwords == 'y') {
+	if ($prefs['feature_hotwords'] == 'y') {
 		// Get list of HotWords
 		$words = $this->get_hotwords();
 	}
@@ -6052,9 +6036,7 @@ if (!$simple_wiki) {
 	    $inTOC -= substr_count(strtolower($line), "</ul");
 	    
 	    // If the first character is ' ' and we are not in pre then we are in pre
-	    global $feature_wiki_monosp;
-
-	    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
+	    if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
 		// Close open paragraph and lists, but not div's
 		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
@@ -6063,13 +6045,13 @@ if (!$simple_wiki) {
 		$line = '<tt>' . $line . '</tt>';
 	    }
 
-		if ($feature_hotwords == 'y') {
+		if ($prefs['feature_hotwords'] == 'y') {
 		    // Replace Hotwords before begin
 		    $line = $this->replace_hotwords($line, $words);
 		}
 
 	    // Make plain URLs clickable hyperlinks
-	    if ($feature_autolinks == 'y') {
+	    if ($prefs['feature_autolinks'] == 'y') {
 			$line = $this->autolinks($line);
 	    }
 
@@ -6208,22 +6190,21 @@ if (!$simple_wiki) {
 			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
-			global $feature_wiki_show_hide_before;
-			if ($feature_wiki_show_hide_before == 'y')
+			if ($prefs['feature_wiki_show_hide_before'] == 'y')
 			$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . $aclose." ". substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
 			else
 			$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
-		    } elseif (!strcmp($line, $wiki_page_separator)) {
+		    } elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 			// Leave line unchanged... tiki-index.php will split wiki here
-			$line = $wiki_page_separator;
+			$line = $prefs['wiki_page_separator'];
 			$pageNum += 1;
 		    } else {
 			/** Usual paragraph.
 			 *
 			 * If the
-			 * $feature_wiki_paragraph_formatting
+			 * $prefs['feature_wiki_paragraph_formatting']
 			 * is on, then consecutive lines of
 			 * text will be gathered into a block
 			 * that is surrounded by HTML
@@ -6244,7 +6225,7 @@ if (!$simple_wiki) {
 				// Don't put newlines at comments' end!
 				&& ! substr_count(strtolower($line), "-->")
 			) {
-			    if ($feature_wiki_paragraph_formatting == 'y') {
+			    if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
 				if ($in_paragraph && (0 == strcmp("", trim($line)))) {
 				    // Blank line; end the paragraph
 				    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
@@ -6383,9 +6364,9 @@ if (!$simple_wiki) {
 	}
 
     function parse_smileys($data) {
-	global $feature_smileys;
+	global $prefs;
 
-	if ($feature_smileys == 'y') {
+	if ($prefs['feature_smileys'] == 'y') {
 	    $data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
 	}
 
@@ -6393,11 +6374,9 @@ if (!$simple_wiki) {
     }
 
     function get_pages($data) {
-	global $page_regex;
+	global $page_regex, $prefs;
 
-	global $feature_wikiwords;
-
-	if ($feature_wikiwords == 'y') {
+	if ($prefs['feature_wikiwords'] == 'y') {
 	    preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages2);
 	    preg_match_all("/\(\( *($page_regex) *\|(.+?)\)\)/", $data, $pages3);
 	    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
@@ -6432,16 +6411,7 @@ if (!$simple_wiki) {
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
     function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null) {
-	global $smarty;
-	global $feature_contribution;
-	global $dbTiki;
-	global $feature_user_watches;
-	global $wiki_watch_author;
-	global $wiki_watch_comments;
-	global $sender_email;
-	global $histlib, $feature_wiki_history_full;
-	global $feature_purifier;
-	global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
+	global $smarty, $prefs, $dbTiki, $histlib;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
@@ -6473,7 +6443,7 @@ if (!$simple_wiki) {
 	$version = $old_version + 1;
 
 	$html=$is_html?1:0;
-	if ($html && $feature_purifier != 'n') {
+	if ($html && $prefs['feature_purifier'] != 'n') {
 		require "HTMLPurifier.auto.php";
 		$purifier = new HTMLPurifier();
 		$edit_data = $purifier->purify($edit_data);
@@ -6518,11 +6488,11 @@ if (!$simple_wiki) {
 	}
 
 	if (strtolower($pageName) != 'sandbox' && !$minor) {
-	    $maxversions = $this->get_preference("maxVersions", 0);
+	    $maxversions = $prefs['maxVersions'];
 
 	    if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {
 		// Select only versions older than keep_versions days
-		$keep = $this->get_preference('keep_versions', 0);
+		$keep = $prefs['keep_versions'];
 
 		$oktodel = $this->now - ($keep * 24 * 3600);
 		$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
@@ -6535,7 +6505,7 @@ if (!$simple_wiki) {
 		    $version = $res["version"];
 		    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 		    $this->query($query,array($pageName,$version));
-		    if ($feature_contribution == 'y') {
+		    if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->remove_history($res['historyId']);
 		    }
@@ -6544,13 +6514,13 @@ if (!$simple_wiki) {
 	}
 
 	// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
-	if( $feature_wiki_history_full == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
+	if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
 	    if (strtolower($pageName) != 'sandbox') {
 		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
 		    values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		if ($feature_contribution == 'y') {// transfer page contributions to the history
+		if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
 			$historyId = $this->getOne($query, array($pageName,(int) $old_version));
@@ -6570,14 +6540,13 @@ if (!$simple_wiki) {
 		    include_once('lib/diff/difflib.php');
 		    $bytes = diff2($data , $edit_data, 'bytes');
 		    $logslib->add_action('Updated', $pageName, 'wiki page', $bytes, $edit_user, $edit_ip, '', $this->now, $hash['contributions'], $hash2);
-		    if ($feature_contribution == 'y') {
+		    if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributionlib->assign_contributions($hash['contributions'], $pageName, 'wiki page', $description, $pageName, "tiki-index.php?page=".urlencode($pageName));
 		   }
 		}
 
-		global $feature_user_watches;
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			//  Deal with mail notifications.
 			include_once('lib/notifications/notificationemaillib.php');
 			global $histlib; include_once ("lib/wiki/histlib.php");
@@ -6592,13 +6561,12 @@ if (!$simple_wiki) {
 		$query = "delete from `tiki_page_drafts` where `user`=? and `pageName`=?";
 		$this->query($query, array($GLOBALS['user'], $pageName));
 
-		global $feature_score;
-	        if ($feature_score == 'y') {
+	        if ($prefs['feature_score'] == 'y') {
         	    $this->score_event($user, 'wiki_edit');
 	        }
 
 	}
-	if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+	if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('pages', $pageName);
 	}
@@ -6645,38 +6613,36 @@ if (!$simple_wiki) {
 	}
     }
 
-			function get_server_timezone() {
-			static $server_timezone;
-
-			if (!$server_timezone) {
+	function get_server_timezone() {
+		static $server_timezone;
+	
+		if (!$server_timezone) {
 			$server_time = new Date();
-
 			$server_timezone = $server_time->tz->getID();
-			}
+		}
+	
+		return $server_timezone;
+	}
 
-			return $server_timezone;
-			}
-
-# TODO rename get_site_timezone()
-			function get_display_timezone($user = false) {
-			    static $display_timezone = false;
-
-			    if (!$display_timezone) {
-				$server_time = $this->get_server_timezone();
-
-				if ($user) {
-				    $display_timezone = $this->get_user_preference($user, 'display_timezone');
-
-				    if (!$display_timezone || $display_timezone == 'default') {
-					$display_timezone = $this->get_preference('display_timezone', $server_time);
-				    }
-				} else {
-				    $display_timezone = $this->get_preference('display_timezone', $server_time);
+	function get_display_timezone($user = false) {
+		static $display_timezone = false;
+	
+		if (!$display_timezone) {
+			$server_time = $this->get_server_timezone();
+	
+			if ($user) {
+				$display_timezone = $this->get_user_preference($user, 'display_timezone');
+	
+				if (!$display_timezone || $display_timezone == 'default') {
+					$display_timezone = $prefs['display_timezone'];
 				}
-			    }
-
-			    return $display_timezone;
+			} else {
+				$display_timezone = $prefs['display_timezone'];
 			}
+		}
+	
+		return $display_timezone;
+	}
 
 			/**
 			 * Retrieves the user's preferred offset for displaying dates.
@@ -6685,6 +6651,7 @@ if (!$simple_wiki) {
 			 * returns: the preferred offset to UTC.
 			 */
 			function get_display_offset($_user = false) {
+				global $prefs;
 
 			    // Cache preference from DB
 			    $display_tz = "UTC";
@@ -6724,37 +6691,41 @@ if (!$simple_wiki) {
 			}
 
 			function get_long_date_format() {
+				global $prefs;
 			    static $long_date_format = false;
 
 			    if (!$long_date_format)
-				$long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
+				$long_date_format = $prefs['long_date_format'];
 
 			    return $long_date_format;
 			}
 
 			function get_short_date_format() {
+				global $prefs;
 			    static $short_date_format = false;
 
 			    if (!$short_date_format)
-				$short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
+				$short_date_format = $prefs['short_date_format'];
 
 			    return $short_date_format;
 			}
 
 			function get_long_time_format() {
+				global $prefs;
 			    static $long_time_format = false;
 
 			    if (!$long_time_format)
-				$long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
+				$long_time_format = $prefs['long_time_format'];
 
 			    return $long_time_format;
 			}
 
 			function get_short_time_format() {
+				global $prefs;
 			    static $short_time_format = false;
 
 			    if (!$short_time_format)
-				$short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
+				$short_time_format = $prefs['short_time_format'];
 
 			    return $short_time_format;
 			}
@@ -6788,25 +6759,24 @@ if (!$simple_wiki) {
 			}
 
 			function date_format($format, $timestamp = false, $user = false) {
-				global $tikidate, $display_timezone;
+				global $tikidate, $prefs;
 				if (!$timestamp) {
 					$timestamp = time();
 				}
 				if ($user) {
-					global $server_timezone;
-					$tz = $this->get_user_preference($user, 'display_timezone', $server_timezone);
+					$tz = $this->get_user_preference($user, 'display_timezone', $prefs['server_timezone']);
 				} else {
-					$tz = $display_timezone;
+					$tz = $prefs['display_timezone'];
 				}
 				$tikidate->setTZbyID('UTC');
 				$tikidate->setDate($timestamp);
-				$tikidate->convertTZbyID($display_timezone);
+				$tikidate->convertTZbyID($prefs['display_timezone']);
 				return $tikidate->format($format);
 			}
 
 			function make_time($hour,$minute,$second,$month,$day,$year) {
-				global $tikidate, $display_timezone;
-				$tikidate->setTZbyID($display_timezone);
+				global $tikidate, $prefs;
+				$tikidate->setTZbyID($prefs['display_timezone']);
 				$tikidate->setDate(0);
 				$tikidate->hour = $hour;
 				$tikidate->minute = $minute;
@@ -6940,15 +6910,14 @@ if (!$simple_wiki) {
 			function format_language_list($languages, $short=null, $all=false) {
 			    // The list of available languages so far with both English and
 			    // translated names.
-			    global $langmapping;
-			    global $available_languages;
+			    global $langmapping, $prefs;
 			    include_once("lang/langmapping.php");
 			    $formatted = array();
 
 			    // run through all the language codes:
 				if (isset($short) && $short == "y") {
 					foreach ($languages as $lc) {
-					if (!count($available_languages) or (!$all and in_array($lc,$available_languages))) {
+					if (!count($prefs['available_languages']) or (!$all and in_array($lc,$prefs['available_languages']))) {
 						if (isset($langmapping[$lc]))
 							$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
 						else
@@ -6959,7 +6928,7 @@ if (!$simple_wiki) {
 					return $formatted;
 				}
 			    foreach ($languages as $lc) {
-					if (!count($available_languages) or (!$all and in_array($lc,$available_languages)) or $all) {
+					if (!count($prefs['available_languages']) or (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 				    // known language
 				    if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
@@ -6990,18 +6959,20 @@ if (!$simple_wiki) {
 						}
 
 						function get_language($user = false) {
-						static $language = false;
+							global $prefs;
+							static $language = false;
 
-						if (!$language) {
-						    if ($user) {
-							$language = $this->get_user_preference($user, 'language', 'default');
-
-							if (!$language || $language == 'default')
-							    $language = $this->get_preference('language', 'en');
-						    } else
-							$language = $this->get_preference('language', 'en');
-						}
-						return $language;
+							if (!$language) {
+								if ($user) {
+									$language = $this->get_user_preference($user, 'language', 'default');
+									if (!$language || $language == 'default') {
+										$language = $prefs['language'];
+									}
+								} else {
+									$language = $prefs['language'];
+								}
+							}
+							return $language;
 						}
 
 						function read_raw($text) {
@@ -7073,9 +7044,8 @@ if (!$simple_wiki) {
 
 
 	function attach_file($file_name, $file_tmp_name, $store_type) {
-		global $tmpDir;
-		global $w_use_dir;
-		$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
+		global $prefs;
+		$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
 		if (!move_uploaded_file($file_tmp_name, $tmp_dest))
 			return array("ok"=>false, "error"=>tra('Errors detected'));
 		$fp = fopen($tmp_dest, "rb");
@@ -7084,7 +7054,7 @@ if (!$simple_wiki) {
 		$chunk = '';
 		if ($store_type == 'dir') {
 			$fhash = md5($name = $file_name.date('U'));
-			$fw = fopen($w_use_dir.$fhash, "wb");
+			$fw = fopen($prefs['w_use_dir'].$fhash, "wb");
 			if (!$fw)
 			    return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
 		}
@@ -7107,9 +7077,9 @@ if (!$simple_wiki) {
 	}
 	/* to get the length of a data without the quoted part (very approximative)  */
 	function strlen_quoted($data) {
-		global $feature_use_quoteplugin;
+		global $prefs;
 		$data = preg_replace('/{QUOTE\([^\)]*\)}.*{QUOTE}/Ui', '', $data);
-		if ($feature_use_quoteplugin != 'y') {
+		if ($prefs['feature_use_quoteplugin'] != 'y') {
 			$data = preg_replace('/^>.*\\n?/m', '', $data);
 		}
 		return strlen($data);

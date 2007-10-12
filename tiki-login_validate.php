@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.24 2007-07-06 18:06:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 if ($isvalid) {
 	$user = $_REQUEST['user'];
 	$userlib->confirm_user($user);
-	if ($tikilib->get_preference('validateRegistration','n') == 'y') {
+	if ($prefs['validateRegistration'] == 'y') {
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$foo1 = str_replace('tiki-login_validate','tiki-login_scr',$foo['path']);
 		$machine =$tikilib->httpPrefix().$foo1;

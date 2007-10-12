@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.49 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.50 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,14 @@ require_once ('tiki-setup.php');
 include_once ("lib/imagegals/imagegallib.php");
 include_once ('lib/stats/statslib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("error.tpl");
@@ -64,7 +64,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -166,7 +166,7 @@ if (isset($_REQUEST["remove"])) {
 	}
 
   $area = 'delgalimage';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$imagegallib->remove_image($_REQUEST["remove"]);
 	} else {
@@ -213,7 +213,7 @@ if (isset($_REQUEST["rotateleft"])) {
 	$imagegallib->rotate_left_image($_REQUEST["rotateleft"]);
 }
 // Watches
-if($feature_user_watches == 'y') {
+if($prefs['feature_user_watches'] == 'y') {
     if($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('browse-gallery');
 		if($_REQUEST['watch_action']=='add') {
@@ -228,7 +228,7 @@ if($feature_user_watches == 'y') {
     }
 
     // Check, if the user is watching this image gallery by a category.    
-	if ($feature_categories == 'y') { 		  
+	if ($prefs['feature_categories'] == 'y') { 		  
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['galleryId'],'image gallery',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -359,7 +359,7 @@ $smarty->assign_by_ref('images', $images["data"]);
 $smarty->assign_by_ref('subgals', $subgals['data']);
 
 // Mouseover data
-if ( $gal_image_mouseover != 'n' ) {
+if ( $prefs['gal_image_mouseover'] != 'n' ) {
 	foreach ( $images['data'] as $k => $v ) {
 		$smarty->assign_by_ref('file_info', $v);
 		$over_info[$k] = $smarty->fetch("tiki-file_info_box.tpl");
@@ -367,10 +367,10 @@ if ( $gal_image_mouseover != 'n' ) {
 	$smarty->assign_by_ref('over_info', $over_info);
 }
 
-if ($feature_image_galleries_comments == 'y') {
-	$comments_per_page = $image_galleries_comments_per_page;
+if ($prefs['feature_image_galleries_comments'] == 'y') {
+	$comments_per_page = $prefs['image_galleries_comments_per_page'];
 
-	$thread_sort_mode = $image_galleries_comments_default_order;
+	$thread_sort_mode = $prefs['image_galleries_comments_default_order'];
 	$comments_vars = array(
 		'galleryId',
 		'offset',
@@ -384,7 +384,7 @@ if ($feature_image_galleries_comments == 'y') {
 
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'image gallery';
 
 	$cat_objid = $_REQUEST["galleryId"];
@@ -393,14 +393,14 @@ if ($feature_theme_control == 'y') {
 ask_ticket('browse-gallery');
 //add a hit
 $statslib->stats_hit($gal_info["name"],"image gallery",$_REQUEST["galleryId"]);
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['galleryId'], 'image gallery');
 }
 
 // Display the template
 
-if ( $feature_lightbox == 'y' ) {
+if ( $prefs['feature_lightbox'] == 'y' ) {
 	$headerlib->add_jsfile('lib/lightbox/js/prototype.js');
 	$headerlib->add_jsfile('lib/lightbox/js/scriptaculous.js?load=effects');
 	$headerlib->add_jsfile('lib/lightbox/js/lightbox.js');

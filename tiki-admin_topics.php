@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.22 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.23 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
 
-if ($feature_articles != 'y') {
+if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
 	$smarty->display("error.tpl");
@@ -48,7 +48,7 @@ if (isset($_REQUEST["addtopic"])) {
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delarttopic';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$artlib->remove_topic($_REQUEST["remove"]);
 	} else {
@@ -57,7 +57,7 @@ if (isset($_REQUEST["remove"])) {
 }
 if (isset($_REQUEST["removeall"])) {
   $area = 'delarttopicall';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$artlib->remove_topic($_REQUEST["removeall"], 1);
 	} else {

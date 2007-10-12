@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.15 2007-05-04 14:46:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.16 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once('tiki-setup.php');
 
 include_once('lib/directory/dirlib.php');
 
-if ($feature_directory != 'y') {
+if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
 
 	$smarty->display("error.tpl");
@@ -91,9 +91,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 $smarty->assign_by_ref('categs', $categs['data']);
-
-$cols = $tikilib->get_preference('directory_columns', 3);
-$smarty->assign('cols', $cols);
+$smarty->assign('cols', $prefs['directory_columns']);
 
 // Now if needed get sites
 $categ_info = $dirlib->dir_get_category($_REQUEST['parent']);
@@ -129,19 +127,19 @@ if ($categ_info['allowSites'] == 'y') {
 	$smarty->assign_by_ref('offset', $offset);
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
 	$smarty->assign('find', $find);
-	$items = $dirlib->dir_list_sites($_REQUEST['parent'], $offset, $directory_links_per_page, $sort_mode, '', 'y');
-	$cant_pages = ceil($items["cant"] / $directory_links_per_page);
+	$items = $dirlib->dir_list_sites($_REQUEST['parent'], $offset, $prefs['directory_links_per_page'], $sort_mode, '', 'y');
+	$cant_pages = ceil($items["cant"] / $prefs['directory_links_per_page']);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
-	$smarty->assign('actual_page', 1 + ($offset / $directory_links_per_page));
+	$smarty->assign('actual_page', 1 + ($offset / $prefs['directory_links_per_page']));
 
-	if ($items["cant"] > ($offset + $directory_links_per_page)) {
-		$smarty->assign('next_offset', $offset + $directory_links_per_page);
+	if ($items["cant"] > ($offset + $prefs['directory_links_per_page'])) {
+		$smarty->assign('next_offset', $offset + $prefs['directory_links_per_page']);
 	} else {
 		$smarty->assign('next_offset', -1);
 	}
 
 	if ($offset > 0) {
-		$smarty->assign('prev_offset', $offset - $directory_links_per_page);
+		$smarty->assign('prev_offset', $offset - $prefs['directory_links_per_page']);
 	} else {
 		$smarty->assign('prev_offset', -1);
 	}

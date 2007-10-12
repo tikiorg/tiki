@@ -30,7 +30,7 @@ $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 
 if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-	$_SESSION['CalendarViewMode'] = $calendar_view_mode;
+	$_SESSION['CalendarViewMode'] = $prefs['calendar_view_mode'];
 }
 
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {

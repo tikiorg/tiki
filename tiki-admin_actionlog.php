@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.46 2007-10-06 17:16:58 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47 2007-10-12 07:55:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once('lib/logs/logslib.php');
@@ -17,7 +17,7 @@ include_once('lib/categories/categlib.php');
 include_once('lib/contribution/contributionlib.php');
 $commentslib = new Comments($dbTiki);
 
-if ($feature_actionlog != 'y') {
+if ($prefs['feature_actionlog'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_actionlog");
 	$smarty->display("error.tpl");
 	die;
@@ -89,7 +89,7 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		$smarty->display("error.tpl");
 		die;
 	}
-	if (isset($_REQUEST['saveAction']) && $feature_contribution == 'y') {
+	if (isset($_REQUEST['saveAction']) && $prefs['feature_contribution'] == 'y') {
 		if ($contributionlib->update($action, empty($_REQUEST['contributions']) ? '': $_REQUEST['contributions'])) {
 			$logslib->delete_params($_REQUEST['actionId'], 'contribution');
 			if (isset($_REQUEST['contributions'])) {
@@ -389,7 +389,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$csv = $logslib->export($actions);
 		$smarty->assign('csv', $csv);
 	}
-	if ($feature_contribution == 'y') {
+	if ($prefs['feature_contribution'] == 'y') {
 		if (empty($_REQUEST['contribTime']))
 			$_REQUEST['contribTime'] = 'w';
 		$contributionStat = $logslib->get_stat_contribution($actions, $startDate, $endDate, $_REQUEST['contribTime']);
@@ -750,7 +750,7 @@ if (isset($_REQUEST['time']))
 if (isset($_REQUEST['unit']))
 	$smarty->assign('unit', $_REQUEST['unit']);
 
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_actionlog_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-admin_actionlog.tpl");

@@ -25,9 +25,10 @@ class RSSLib extends TikiLib {
 	// ------------------------------------
 
 	function get_rss_version($ver) {
+		global $prefs;
 		if ($ver=='') {
 			// get default rss feed version from database or set to 0.91 if none in there
-			$ver = $this->get_preference("rssfeed_default_version",9);
+			$ver = $prefs['rssfeed_default_version'];
 		}
 
 		$rss_version=$ver;
@@ -73,9 +74,10 @@ class RSSLib extends TikiLib {
 	}
 
 	function get_rss_version_name($ver) {
+		global $prefs;
 		if ($ver=='') {
 			// get default rss feed version from database or set to 0.91 if none in there
-			$ver = $this->get_preference("rssfeed_default_version","RSS0.91");
+			$ver = $prefs['rssfeed_default_version'];
 		}
 
 		$rss_version_name=$ver;
@@ -189,9 +191,7 @@ class RSSLib extends TikiLib {
 	}
 
 	function generate_feed($feed, $uniqueid, $rss_version, $changes, $itemurl, $urlparam, $id, $title, $titleId, $desc, $descId, $dateId, $authorId, $fromcache=false) {
-		global $tikiIndex;
-		global $userslib;
-		global $rss_cache_time;
+		global $prefs, $userslib, $rss_cache_time;
 		
 		$rss_version=$this->get_current_rss_version();
 
@@ -226,7 +226,7 @@ class RSSLib extends TikiLib {
 		$dirname = (dirname($urlarray["path"]) != "/" ? "/" : "");
 
 		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
-		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$tikiIndex);
+		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$prefs['tikiIndex']);
 		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname."img/tiki.jpg");
 
 		$title = htmlspecialchars($title);
@@ -291,9 +291,9 @@ class RSSLib extends TikiLib {
 		$rss->xslStyleSheet = htmlspecialchars($xslStyleSheet);
 		$rss->encoding = $encoding;
 		
-		$rss->language = $this->get_preference("rssfeed_language","en-us");
-		$rss->editor = $this->get_preference("rssfeed_editor","");
-		$rss->webmaster = $this->get_preference("rssfeed_webmaster","");
+		$rss->language = $prefs['rssfeed_language'];
+		$rss->editor = $prefs['rssfeed_editor'];
+		$rss->webmaster = $prefs['rssfeed_webmaster'];
 		
 		$rss->link = $url;
 		$rss->feedURL = $url;

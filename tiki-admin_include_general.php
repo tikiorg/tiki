@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.58 2007-07-11 10:45:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if (isset($_REQUEST["prefs"])) {
+if (isset($_REQUEST["new_prefs"])) {
 	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",
@@ -85,27 +85,18 @@ if (isset($_REQUEST["prefs"])) {
         byref_set_value ($britem);
     }
 
-    // Set value(s) with alternate pref name
-    //byref_set_value("site_style", "style");
-
     // Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
     if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
         $_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
-
         $tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
-        $smarty->assign_by_ref("tikiIndex", $_REQUEST["tikiIndex"]);
     }
 
     // Special handling for tmpDir, which has a default value
     if (isset($_REQUEST["tmpDir"])) {
         $tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
-
-        $smarty->assign_by_ref("tmpDir", $_REQUEST["tmpDir"]);
     } else {
         $tdir = TikiSetup::tempdir();
-
         $tikilib->set_preference("tmpDir", $tdir);
-        $smarty->assign("tmpDir", $tdir);
     }
     
     // not needed anymore? -- gongo
@@ -129,10 +120,10 @@ elseif (isset($_REQUEST["newadminpass"])) {
 	
 
     // Validate password here
-    if (strlen($_REQUEST["adminpass"]) < $min_pass_length) {
+    if (strlen($_REQUEST["adminpass"]) < $prefs['min_pass_length']) {
         $text = tra("Password should be at least");
 
-        $text .= " " . $min_pass_length . " ";
+        $text .= " " . $prefs['min_pass_length'] . " ";
         $text .= tra("characters long");
         $access->display_error(basename(__FILE__), $text);
     }
@@ -159,38 +150,38 @@ $smarty->assign_by_ref("slide_styles", $slide_styles);
 $smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
 
 // Get information for alternate homes
-$smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);
-$smarty->assign("home_blog_url", "tiki-view_blog.php?blogId=" . $home_blog);
-$smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $home_gallery);
-$smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $home_file_gallery);
+$smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $prefs['home_forum']);
+$smarty->assign("home_blog_url", "tiki-view_blog.php?blogId=" . $prefs['home_blog']);
+$smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $prefs['home_gallery']);
+$smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $prefs['home_file_gallery']);
 
-if ($home_blog) {
-	$hbloginfo = $tikilib->get_blog($home_blog);
+if ($prefs['home_blog']) {
+	$hbloginfo = $tikilib->get_blog($prefs['home_blog']);
 	$smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
 } else {
 	$smarty->assign("home_blog_name", '');
 }
 
-if ($home_gallery) {
-	$hgalinfo = $tikilib->get_gallery($home_gallery);
+if ($prefs['home_gallery']) {
+	$hgalinfo = $tikilib->get_gallery($prefs['home_gallery']);
 	$smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
 } else {
 	$smarty->assign("home_gal_name", '');
 }
 
-if ($home_forum) {
+if ($prefs['home_forum']) {
 	require_once('lib/commentslib.php');
 	if (!isset($commentslib)) {
 		$commentslib = new Comments($dbTiki);
 	}
-	$hforuminfo = $commentslib->get_forum($home_forum);
+	$hforuminfo = $commentslib->get_forum($prefs['home_forum']);
 	$smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
 } else {
 	$smarty->assign("home_forum_name", '');
 }
 
-if ($home_file_gallery) {
-	$hgalinfo = $tikilib->get_gallery($home_file_gallery);
+if ($prefs['home_file_gallery']) {
+	$hgalinfo = $tikilib->get_gallery($prefs['home_file_gallery']);
 	$smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
 } else {
 	$smarty->assign("home_fil_name", '');

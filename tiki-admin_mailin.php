@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.22 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.23 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/mailin/mailinlib.php');
 
 //check if feature is on
-if($feature_mailin != 'y') {
+if($prefs['feature_mailin'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_mailin");
   $smarty->display("error.tpl");
   die;  
@@ -66,7 +66,7 @@ if (isset($_REQUEST["new_acc"])) {
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delmailin';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$mailinlib->remove_mailin_account($_REQUEST["remove"]);
   } else {
@@ -108,17 +108,13 @@ if (isset($_REQUEST["mailin_autocheck"]) ) {
   } else {
     $tikilib->set_preference("mailin_autocheck", $_REQUEST["mailin_autocheck"]);
     $tikilib->set_preference("mailin_autocheckFreq", $_REQUEST["mailin_autocheckFreq"]);
-    $mailin_autocheck = $_REQUEST["mailin_autocheck"];
-    $mailin_autocheckFreq = $_REQUEST["mailin_autocheckFreq"];
-    if ($mailin_autocheck == 'y') {
-	    $tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in accounts set to be checked every %s minutes"),$mailin_autocheckFreq));
+    if ($prefs['mailin_autocheck'] == 'y') {
+	    $tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in accounts set to be checked every %s minutes"),$prefs['mailin_autocheckFreq']));
     } else {
     	$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Automatic Mail-in accounts checking disabled")));
     }
   }
 }
-$smarty->assign('mailin_autocheck',$mailin_autocheck);
-$smarty->assign('mailin_autocheckFreq',$mailin_autocheckFreq);
 
 global $artlib;
 if (!is_object($artlib)) {

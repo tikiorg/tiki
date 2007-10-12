@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-06-16 19:09:14 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.40 2007-06-16 19:09:14 toggg Exp $
+ * @date last-modified: $Date: 2007-10-12 07:55:43 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.41 2007-10-12 07:55:43 nyloth Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -34,7 +34,7 @@ class RegistrationLib extends TikiLib {
     // Validate emails...
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
-	global $validateEmail;
+	global $prefs;
 	if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	}	
@@ -62,7 +62,7 @@ class RegistrationLib extends TikiLib {
     // split function reference : http://www.php.net/manual/en/function.split.php
     list ( $Username, $Domain ) = split ("@",$Email);
 	
-	if($validateEmail == 'n') {
+	if($prefs['validateEmail'] == 'n') {
 		$Return[0]=true;
 		$Return[1]="The email appears to be correct."; 
 		Return $Return;
@@ -115,8 +115,8 @@ class RegistrationLib extends TikiLib {
 		        $Out = fgets ( $Connect, 1024 ); // Receive server's answering cord.
 
 	            // Inform sender's address to server.
-	            fputs ( $Connect, "MAIL FROM: <{$sender_email}>\r\n" );
-                if ($Debug) echo "Run : MAIL FROM: &lt;{$sender_email}&gt;<br>";
+	            fputs ( $Connect, "MAIL FROM: <{$prefs['sender_email']}>\r\n" );
+                if ($Debug) echo "Run : MAIL FROM: &lt;{$prefs['sender_email']}&gt;<br>";
 		        $From = fgets ( $Connect, 1024 ); // Receive server's answering cord.
 
 	            // Inform listener's address to server.
@@ -172,9 +172,9 @@ class RegistrationLib extends TikiLib {
    *  @returns true if user data validates and user was created, false (or never returns) otherwise
    */
   function callback_tikiwiki_save_registration($raisedBy, $data) {
-      global $allowRegister;
+      global $prefs;
 
-      if($allowRegister != 'y') {
+      if($prefs['allowRegister'] != 'y') {
           header("location: index.php");
           die;
       }
@@ -192,12 +192,9 @@ class RegistrationLib extends TikiLib {
    *  @returns true if registration data is valid, false (or never returns) otherwise
    */
   function validate_registration() {
-  global $allowRegister, $_REQUEST, $_SESSION, $min_pass_length, $useRegisterPasscode, $validateUsers, $rnd_num_reg;
-  global $sender_email, $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
-  global $userlib, $logslib, $smarty, $tikilib;
-  global $Debug;
+  global $prefs, $_REQUEST, $_SESSION, $email_valid, $userlib, $logslib, $smarty, $tikilib, $Debug;
 
-  if($allowRegister != 'y') {
+  if($prefs['allowRegister'] != 'y') {
     header("location: index.php");
     die;
   }
@@ -222,7 +219,7 @@ class RegistrationLib extends TikiLib {
     die;
   }
 
-  if($rnd_num_reg == 'y') {
+  if($prefs['rnd_num_reg'] == 'y') {
         if($novalidation != 'yes' and(!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode'])) {
     $smarty->assign('msg',tra("Wrong registration code"));
     $smarty->display("error.tpl");
@@ -253,14 +250,14 @@ class RegistrationLib extends TikiLib {
   }
 
   //Validate password here
-  if(strlen($_REQUEST["pass"])<$min_pass_length) {
-    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+  if(strlen($_REQUEST["pass"])<$prefs['min_pass_length']) {
+    $smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
     $smarty->display("error.tpl");
     die;
   }
 
   // Check this code
-  if($pass_chr_num == 'y') {
+  if($prefs['pass_chr_num'] == 'y') {
     if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("error.tpl");
@@ -275,8 +272,8 @@ class RegistrationLib extends TikiLib {
   }
 
   // Check the mode
-  if($useRegisterPasscode == 'y') {
-    if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass()))))
+  if($prefs['useRegisterPasscode'] == 'y') {
+    if($_REQUEST["passcode"]!=$prefs['registerPasscode'])
     {
       $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
       $smarty->display("error.tpl");
@@ -285,8 +282,8 @@ class RegistrationLib extends TikiLib {
   }
 
     $email_valid = 'yes';
-    if($validateUsers=='y') {
-      $ret = $this->SnowCheckMail($_REQUEST["email"],$sender_email,$novalidation, $Debug);
+    if($prefs['validateUsers']=='y') {
+      $ret = $this->SnowCheckMail($_REQUEST["email"],$prefs['sender_email'],$novalidation, $Debug);
       if(!$ret[0]) {
         if($ret[1] == 'not_recognized') {
                         $smarty->assign('notrecognized','y');
@@ -317,14 +314,12 @@ class RegistrationLib extends TikiLib {
    *  @returns true on success, false to halt event proporgation
    */
   function create_user() {
-        global $_REQUEST, $_SERVER, $email_valid, $validateUsers, $registrationlib_apass, $customfields;
-        global $userlib, $tikilib;
-	global $Debug;
+        global $_REQUEST, $_SERVER, $email_valid, $prefs, $registrationlib_apass, $customfields, $userlib, $tikilib, $Debug;
 
 	if ($Debug) print "::create_user";
 
 	if($email_valid != 'no') {
-                if($validateUsers == 'y') {
+                if($prefs['validateUsers'] == 'y') {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
                         $apass = addslashes(md5($tikilib->genPass()));
 			$registrationlib_apass = $apass;
@@ -362,10 +357,7 @@ class RegistrationLib extends TikiLib {
    *  @returns true on success, false to halt event proporgation
    */
   function callback_tikiwiki_send_email($raisedBy, $data) {
-	global $_REQUEST, $_SESSION, $_SERVER, $min_pass_length, $useRegisterPasscode, $validateUsers, $registrationlib_apass;
-	global $contact_user, $pass_chr_num, $validateRegistration, $email_valid;
-	global $smarty, $tikilib, $userlib;
-	global $Debug;
+	global $_REQUEST, $_SESSION, $_SERVER, $prefs, $registrationlib_apass, $email_valid, $smarty, $tikilib, $userlib, $Debug;
 
 	if ($Debug) print "::send_email";
 
@@ -374,7 +366,7 @@ class RegistrationLib extends TikiLib {
 	$mail_site = $data['mail_site'];
 
 	if($email_valid != 'no') {
-                if($validateUsers == 'y') {
+                if($prefs['validateUsers'] == 'y') {
 			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
 			$apass = $registrationlib_apass;
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -388,13 +380,13 @@ class RegistrationLib extends TikiLib {
 			$registrationlib_apass = "";
                         $smarty->assign('mail_email',$_REQUEST['email']);
                         include_once("lib/notifications/notificationemaillib.php");
-                        if (isset($validateRegistration) and $validateRegistration == 'y') {
+                        if (isset($prefs['validateRegistration']) and $prefs['validateRegistration'] == 'y') {
                                 $smarty->assign('msg',$smarty->fetch('mail/user_validation_waiting_msg.tpl'));
                                 if ($sender_email == NULL or !$sender_email) {
                                         include_once('lib/messu/messulib.php');
                                         $mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
                                         $mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-                                        $messulib->post_message($contact_user,$contact_user,$contact_user,'',$mail_subject,$mail_data,5);
+                                        $messulib->post_message($prefs['contact_user'],$prefs['contact_user'],$prefs['contact_user'],'',$mail_subject,$mail_data,5);
                                 } else {
                                         $mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
                                         $mail = new TikiMail();
@@ -448,8 +440,8 @@ class RegistrationLib extends TikiLib {
      *  Display the registration form
      */
     function registration_form() {
-        global $allowRegister, $smarty;
-        if($allowRegister != 'y') {
+        global $prefs, $smarty;
+        if($prefs['allowRegister'] != 'y') {
             header("location: index.php");
             die;
         }

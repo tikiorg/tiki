@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.29 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.30 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,11 +12,11 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once ('lib/categories/categlib.php');
 }
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -43,7 +43,7 @@ if (isset($_REQUEST["remove"])) {
 		}
 	}
   $area = 'delblog';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$bloglib->remove_blog($_REQUEST["remove"]);
   } else {
@@ -57,7 +57,7 @@ if (isset($_REQUEST["remove"])) {
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = $blog_list_order;
+	$sort_mode = $prefs['blog_list_order'];
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -139,7 +139,7 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 include_once ('tiki-section_options.php');
 
-if ($feature_mobile =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_list_blogs($listpages, $tiki_p_read_blog);

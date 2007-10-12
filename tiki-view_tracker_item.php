@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.138 2007-10-09 15:29:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.139 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ include_once ("lib/filegals/filegallib.php");
 include_once ('lib/trackers/trackerlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
-if ($feature_trackers != 'y') {
+if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
@@ -21,7 +21,7 @@ if ($feature_trackers != 'y') {
 
 $special = false;
 
-if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
+if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		$utid = $userlib->get_usertrackerid($group);
 		if($utid['usersTrackerId']) {
@@ -57,7 +57,7 @@ if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 	}
 }
 
-if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
+if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
 		if($gtid['groupTrackerId']) {
@@ -490,15 +490,15 @@ foreach($xfields["data"] as $i=>$array) {
 		
 			if ($fields["data"][$i]["type"] == 'i')	{
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {					
-					if (!empty($gal_match_regex)) {
-						if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+					if (!empty($prefs['gal_match_regex'])) {
+						if (!preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
 						}
 					}
-					if (!empty($gal_nmatch_regex)) {
-						if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+					if (!empty($prefs['gal_nmatch_regex'])) {
+						if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
@@ -858,8 +858,8 @@ if ($_REQUEST["itemId"]) {
 				            $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($info["$fid$lang"]));
 					    }
 					    //For display only
-					     $ins_fields["data"][$i]["value"] = $info["$fid$language"];
-					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid$language"]));
+					     $ins_fields["data"][$i]["value"] = $info[$fid.$prefs['language']];
+					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info[$fid.$prefs['language']]));
 				        } else {
 					     $ins_fields["data"][$i]["value"] = $info["$fid"];
 					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
@@ -869,9 +869,8 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}
 			if ($fields['data'][$i]['type'] == 'M' ) {
-			global $filegallib; 
-			global $URLAppend;
-			if ( $URLAppend == '' ) { list ($val1,$val2)=split('=', $ins_fields["data"][$i]["value"]); }
+			global $filegallib, $prefs;
+			if ( $prefs['URLAppend'] == '' ) { list ($val1,$val2)=split('=', $ins_fields["data"][$i]["value"]); }
 			else { $val2=$ins_fields["data"][$i]["value"];}
 			$res=$filegallib->get_file_info($val2);
 			if ( $res["filetype"] == "video/x-flv" ) { $ModeVideo = 'y' ;}
@@ -965,7 +964,7 @@ $smarty->assign_by_ref('users', $users);
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('groups', $groups);
 
-if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
+if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
   if ($user and isset($_REQUEST['watch'])) {
     check_ticket('view-trackers');
     if ($_REQUEST['watch'] == 'add') {
@@ -981,7 +980,7 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
   }
     
     // Check, if the user is watching this trackers' item by a category.
-	if ($feature_categories == 'y') {    			
+	if ($prefs['feature_categories'] == 'y') {    			
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['trackerId'],'tracker',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -999,7 +998,7 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
 		$area = 'deltrackercomment';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
 		} else {
@@ -1039,7 +1038,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
 			$area = 'deltrackerattach';
-			if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
 				$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 			} else {
@@ -1063,9 +1062,9 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 			$data = '';
 			$fhash = '';
-			if ($t_use_db == 'n') {
+			if ($prefs['t_use_db'] == 'n') {
 				$fhash = md5($name = $_FILES['userfile1']['name']);
-				$fw = fopen($t_use_dir . $fhash, "wb");
+				$fw = fopen($prefs['t_use_dir'] . $fhash, "wb");
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 					$smarty->display("error.tpl");
@@ -1073,7 +1072,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 				}
 			}
 			while (!feof($fp)) {
-				if ($t_use_db == 'y') {
+				if ($prefs['t_use_db'] == 'y') {
 					$data .= fread($fp, 8192 * 16);
 				} else {
 					$data = fread($fp, 8192 * 16);
@@ -1081,7 +1080,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 				}
 			}
 			fclose ($fp);
-			if ($t_use_db == 'n') {
+			if ($prefs['t_use_db'] == 'n') {
 				fclose ($fw);
 				$data = '';
 			}
@@ -1146,7 +1145,7 @@ include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
 
-if ($feature_jscalendar) {
+if ($prefs['feature_jscalendar']) {
 	$smarty->assign('uses_jscalendar', 'y');
 }
 

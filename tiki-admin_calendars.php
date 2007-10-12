@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.32 2007-08-01 10:09:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.33 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if (!isset($_REQUEST["calendarId"])) {
 
 if (isset($_REQUEST["drop"])) {
 	$area = "delcalendar";
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$calendarlib->drop_calendar($_REQUEST["drop"]);
 		$_REQUEST["calendarId"] = 0;
@@ -63,7 +63,7 @@ if (isset($_REQUEST["save"])) {
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_add_events");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_change_events");
 	}
-	if ($feature_categories == 'y') {
+	if ($prefs['feature_categories'] == 'y') {
 		$cat_type = 'calendar';
 		$cat_objid = $_REQUEST["calendarId"];
 		$cat_desc = $_REQUEST["description"];
@@ -72,7 +72,7 @@ if (isset($_REQUEST["save"])) {
 		include_once("categorize.php");
 	}
 }
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	$cat_type = 'calendar';
 	$cat_objid = $_REQUEST["calendarId"];
 	include_once ("categorize_list.php");
@@ -168,19 +168,19 @@ if (!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset', $offset);
 
-$cant_pages = ceil($calendars["cant"] / $maxRecords);
+$cant_pages = ceil($calendars["cant"] / $prefs['maxRecords']);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
 
-if ($calendars["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+if ($calendars["cant"] > ($offset + $prefs['maxRecords'])) {
+	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.139 2007-10-11 13:45:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.140 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once('tiki-setup.php');
 include_once('lib/trackers/trackerlib.php');
 global $notificationlib; include_once('lib/notifications/notificationlib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_trackers != 'y') {
+if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
@@ -408,15 +408,15 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 			} elseif ($fields["data"][$i]["type"] == 'i')	{ // image
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-					if (!empty($gal_match_regex)) {
-						if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+					if (!empty($prefs['gal_match_regex'])) {
+						if (!preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
 						}
 					}
-					if (!empty($gal_nmatch_regex)) {
-						if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+					if (!empty($prefs['gal_nmatch_regex'])) {
+						if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
@@ -480,7 +480,7 @@ if ($textarea_options) {
 
 if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["remove"])) {
   $area = 'deltrackeritem';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
   } else {
@@ -496,7 +496,7 @@ if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and i
 $smarty->assign('mail_msg', '');
 $smarty->assign('email_mon', '');
 
-if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
+if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 	if ($user and isset($_REQUEST['watch'])) {
 		check_ticket('view-trackers');
 		if ($_REQUEST['watch'] == 'add') {
@@ -512,7 +512,7 @@ if ($feature_user_watches == 'y' and $tiki_p_watch_trackers == 'y') {
 	}
 
     // Check, if the user is watching this tracker by a category.    
-	if ($feature_categories == 'y') {
+	if ($prefs['feature_categories'] == 'y') {
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["trackerId"],'tracker',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -776,7 +776,7 @@ $section = 'trackers';
 include_once('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
-if ($feature_jscalendar) {
+if ($prefs['feature_jscalendar']) {
 	$smarty->assign('uses_jscalendar', 'y');
 }
 $smarty->assign('show_filters', 'n');

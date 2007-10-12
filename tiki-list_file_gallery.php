@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.48 2007-10-10 21:27:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.49 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($feature_file_galleries != 'y') {
+if ($prefs['feature_file_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	$smarty->display("error.tpl");
 	die;
@@ -18,7 +18,7 @@ if ($feature_file_galleries != 'y') {
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 }
 
@@ -65,17 +65,17 @@ if ($tiki_p_view_file_gallery != 'y') {
 
 $smarty->assign_by_ref('gal_info', $gal_info);
 if (!empty($gal_info['subgal_conf'])) {
-	list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$gal_info['subgal_conf']);
-	$smarty->assign('fgal_list_id', $fgal_list_id);
-	$smarty->assign('fgal_list_name', $fgal_list_name);
-	$smarty->assign('fgal_list_description', $fgal_list_description);
-	$smarty->assign('fgal_list_type', $fgal_list_type);
-	$smarty->assign('fgal_list_created', $fgal_list_created);
-	$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
-	$smarty->assign('fgal_list_user', $fgal_list_user);
-	$smarty->assign('fgal_list_files', $fgal_list_files);
-	$smarty->assign('fgal_list_hits', $fgal_list_hits);
-	$smarty->assign('fgal_list_parent', $fgal_list_parent);
+	list($prefs['fgal_list_id'], $prefs['fgal_list_name'], $prefs['fgal_list_description'], $prefs['fgal_list_type'], $prefs['fgal_list_created'], $prefs['fgal_list_lastmodif'], $prefs['fgal_list_user'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], $prefs['fgal_list_parent']) = split(':',$gal_info['subgal_conf']);
+	$smarty->assign('fgal_list_id', $prefs['fgal_list_id']);
+	$smarty->assign('fgal_list_name', $prefs['fgal_list_name']);
+	$smarty->assign('fgal_list_description', $prefs['fgal_list_description']);
+	$smarty->assign('fgal_list_type', $prefs['fgal_list_type']);
+	$smarty->assign('fgal_list_created', $prefs['fgal_list_created']);
+	$smarty->assign('fgal_list_lastmodif', $prefs['fgal_list_lastmodif']);
+	$smarty->assign('fgal_list_user', $prefs['fgal_list_user']);
+	$smarty->assign('fgal_list_files', $prefs['fgal_list_files']);
+	$smarty->assign('fgal_list_hits', $prefs['fgal_list_hits']);
+	$smarty->assign('fgal_list_parent', $prefs['fgal_list_parent']);
 }
 
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
@@ -97,7 +97,7 @@ if (!empty($_REQUEST['remove'])) {
 		}
 	}
 	$area = 'delfile';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 	  key_check($area);
 
 //Watches
@@ -242,10 +242,10 @@ if ($file_offset > 0) {
 
 $smarty->assign_by_ref('files', $files['data']);
 
-if ($feature_file_galleries_comments == 'y') {
-	$comments_per_page = $file_galleries_comments_per_page;
+if ($prefs['feature_file_galleries_comments'] == 'y') {
+	$comments_per_page = $prefs['file_galleries_comments_per_page'];
 
-	$thread_sort_mode = $file_galleries_comments_default_ordering;
+	$thread_sort_mode = $prefs['file_galleries_comments_default_ordering'];
 	$comments_vars = array('galleryId',	'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
 
 	$comments_prefix_var = 'file gallery:';
@@ -283,7 +283,7 @@ if ($galleries['cant']) {
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'file gallery';
 
 	$cat_objid = $_REQUEST["galleryId"];
@@ -299,7 +299,7 @@ if (!isset($_REQUEST["galleryName"])) {
         $galleryName = $_REQUEST["galleryName"];
 }
 
-if($feature_user_watches == 'y') {
+if($prefs['feature_user_watches'] == 'y') {
     if($user && isset($_REQUEST['watch_event'])) {
         check_ticket('index');
         if($_REQUEST['watch_action']=='add') {
@@ -313,7 +313,7 @@ if($feature_user_watches == 'y') {
         $smarty->assign('user_watching_file_gallery','y');
     }
     // Check, if the user is watching this file gallery by a category.    
-	if ($feature_categories == 'y') { 		  
+	if ($prefs['feature_categories'] == 'y') { 		  
 	    $watching_categories_temp=$categlib->get_watching_categories($galleryId,'file gallery',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -331,15 +331,15 @@ if($feature_user_watches == 'y') {
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 $smarty->assign('all_galleries', $all_galleries['data']);
 if ($podCastGallery) {
-	$smarty->assign('download_path', $fgal_podcast_dir);
+	$smarty->assign('download_path', $prefs['fgal_podcast_dir']);
 } else {
-	$smarty->assign('download_path', $fgal_use_dir);
+	$smarty->assign('download_path', $prefs['fgal_use_dir']);
 }
 ask_ticket('list-fgal');
 
 //add a hit
 $statslib->stats_hit($gal_info["name"],"file gallery",$galleryId);
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $galleryId, 'file gallery');
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.23 2007-07-08 17:39:03 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_faqs != 'y') {
+if ($prefs['feature_faqs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 
 	$smarty->display("error.tpl");
@@ -39,7 +39,7 @@ if (!isset($_REQUEST["faqId"])) {
 	die;
 }
 
-if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $_REQUEST['faqId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -97,10 +97,10 @@ $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQU
 $smarty->assign_by_ref('suggested', $suggested["data"]);
 $smarty->assign('suggested_cant', count($suggested["data"]));
 
-if ($feature_faq_comments == 'y') {
-	$comments_per_page = $faq_comments_per_page;
+if ($prefs['feature_faq_comments'] == 'y') {
+	$comments_per_page = $prefs['faq_comments_per_page'];
 
-	$thread_sort_mode = $faq_comments_default_ordering;
+	$thread_sort_mode = $prefs['faq_comments_default_ordering'];
 	$comments_vars = array('faqId');
 	$comments_prefix_var = 'faq:';
 	$comments_object_var = 'faqId';
@@ -110,7 +110,7 @@ if ($feature_faq_comments == 'y') {
 $section = 'faqs';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'faq';
 
 	$cat_objid = $_REQUEST["faqId"];

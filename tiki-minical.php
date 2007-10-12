@@ -1,18 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.25 2007-08-10 15:03:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.26 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'calendar';
 require_once('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once('lib/minical/minicallib.php');
 
-if ($feature_minical != 'y') {
+if ($prefs['feature_minical'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_minical");
 
 	$smarty->display("error.tpl");
@@ -39,7 +39,7 @@ if (!isset($_REQUEST["eventId"]))
 
 if (isset($_REQUEST['remove'])) {
   $area = 'delminicalevent';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$minicallib->minical_remove_event($user, $_REQUEST['remove']);
   } else {
@@ -49,7 +49,7 @@ if (isset($_REQUEST['remove'])) {
 
 if (isset($_REQUEST['remove2'])) {
   $area = 'delminicalevent2';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 	$minicallib->minical_remove_event($user, $_REQUEST['eventId']);
   } else {
@@ -59,7 +59,7 @@ if (isset($_REQUEST['remove2'])) {
 
 if (isset($_REQUEST['delete'])) {
   $area = 'delminical';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 	foreach (array_keys($_REQUEST["event"])as $ev) {
 		$minicallib->minical_remove_event($user, $ev);
@@ -92,7 +92,7 @@ $smarty->assign('pdate_h', $pdate_h);
 
 if (isset($_REQUEST['removeold'])) {
   $area = 'delminicaloldevents';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$minicallib->minical_remove_old($user, $pdate_h);
   } else {
@@ -277,7 +277,7 @@ include_once ('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 ask_ticket('minical');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_minical_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-minical.tpl");

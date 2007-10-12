@@ -686,11 +686,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		if(!$trackerId)
 			return;
 	
-		global $user;
-		global $smarty;
-		global $notificationlib;
-		global $sender_email;
-		global $cachelib;
+		global $user, $smarty, $notificationlib, $prefs, $cachelib;
 		
 		// update
 		if ($itemId) {
@@ -833,10 +829,8 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 				include_once ('lib/mail/maillib.php');
 
 				foreach ($emails as $email) {
-					//var_dump($email);
-					//var_dump($mail_data);
 					if ($email!='') {
-						mail($email, encode_headers('['.$trackerName.'] '.$mail_subject, 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+						mail($email, encode_headers('['.$trackerName.'] '.$mail_subject, 'utf-8'), $mail_data, 'From: '.$prefs['sender_email']."\r\nContent-type: text/plain;charset=utf-8");
 					}
 				}
 			} else {
@@ -884,8 +878,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 
 		if (!$itemId) $itemId = $new_itemId;
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('tracker_items', $itemId);
 		}
@@ -984,8 +977,8 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 			}
 
 			// -------------------
-			global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-			if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+			global $prefs;
+			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 				require_once('lib/search/refresh-functions.php');
 				refresh_index('trackers', $trackerId);
 			}

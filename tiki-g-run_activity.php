@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.18 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.19 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ include_once ("lib/webmail/htmlMimeMail.php");
 
 $__activity_completed = false;
 
-if ($feature_workflow != 'y') {
+if ($prefs['feature_workflow'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_workflow");
 
 	$smarty->display("error.tpl");
@@ -124,7 +124,7 @@ if (isset($_REQUEST['__removecomment'])) {
 
 	if ($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
 		$area = "delinstancecomment";
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$instance->remove_instance_comment($_REQUEST['__removecomment']);
 		} else {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.21 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.22 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,12 +8,12 @@
 
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/userfiles/userfileslib.php');
 
-if ($feature_userfiles != 'y') {
+if ($prefs['feature_userfiles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userfiles");
 
 	$smarty->display("error.tpl");
@@ -34,7 +34,7 @@ if ($tiki_p_userfiles != 'y') {
 	die;
 }
 $quota = $userfileslib->userfiles_quota($user);
-$limit = $userfiles_quota * 1024 * 1000;
+$limit = $prefs['userfiles_quota'] * 1024 * 1000;
 
 if ($limit == 0)
 	$limit = 999999999;
@@ -56,10 +56,10 @@ for ($i = 0; $i < 5; $i++) {
 		$fhash = '';
 		$name = $_FILES["userfile$i"]['name'];
 
-		if ($uf_use_db == 'n') {
+		if ($prefs['uf_use_db'] == 'n') {
 			$fhash = md5(uniqid('.'));
 
-			$fw = fopen($uf_use_dir . $fhash, "wb");
+			$fw = fopen($prefs['uf_use_dir'] . $fhash, "wb");
 
 			if (!$fw) {
 				$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
@@ -70,7 +70,7 @@ for ($i = 0; $i < 5; $i++) {
 		}
 
 		while (!feof($fp)) {
-			if ($uf_use_db == 'y') {
+			if ($prefs['uf_use_db'] == 'y') {
 				$data .= fread($fp, 8192 * 16);
 			} else {
 				$data = fread($fp, 8192 * 16);
@@ -81,7 +81,7 @@ for ($i = 0; $i < 5; $i++) {
 
 		fclose ($fp);
 
-		if ($uf_use_db == 'n') {
+		if ($prefs['uf_use_db'] == 'n') {
 			fclose ($fw);
 
 			$data = '';
@@ -111,7 +111,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["userfile"])) {
 }
 
 $quota = $userfileslib->userfiles_quota($user);
-$limit = $userfiles_quota * 1024 * 1000;
+$limit = $prefs['userfiles_quota'] * 1024 * 1000;
 
 if ($limit == 0)
 	$limit = 999999999;
@@ -181,7 +181,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-files');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_files_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-userfiles.tpl");

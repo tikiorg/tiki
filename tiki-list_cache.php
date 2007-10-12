@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_cache.php,v 1.13 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_cache.php,v 1.14 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($user != 'admin') {
 }
 
 /*
-if($feature_listPages != 'y') {
+if($prefs['feature_listPages'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;  
@@ -27,7 +27,7 @@ if($feature_listPages != 'y') {
 */
 if (isset($_REQUEST["remove"])) {
   $area = 'delcache';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$tikilib->remove_cache($_REQUEST["remove"]);
   } else {

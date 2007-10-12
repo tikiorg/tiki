@@ -3,7 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/directory/dirlib.php');
 
-if($feature_directory != 'y') {
+if($prefs['feature_directory'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;  
@@ -47,7 +47,7 @@ if($dirlib->dir_url_exists($_REQUEST['url'])) {
   die;  
 }
   
-if($directory_validate_urls == 'y') {
+if($prefs['directory_validate_urls'] == 'y') {
   @$fsh = fopen($_REQUEST['url'],'r');
   if(!$fsh) {
     $smarty->assign('msg',tra("URL cannot be accessed: wrong URL or site is offline and cannot be added to the directory"));

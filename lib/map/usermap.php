@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.11 2007-03-06 19:30:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.12 2007-10-12 07:55:41 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,26 +20,21 @@ class MapsLib extends TikiLib {
 
 
 	function makeusermap() {
-		global $map_path;
-		global $mapzone;
-		global $tikidomain;
-		global $ogr2ogr;
-		global $smarty;
-		global $feature_userPreferences;
+		global $prefs, $tikidomain, $smarty;
 
-		if (!isset($ogr2ogr) || !is_executable($ogr2ogr)) {
+		if (!isset($prefs['ogr2ogr']) || !is_executable($prefs['ogr2ogr'])) {
 			return (tra("No valid ogr2ogr executable"));
 		} 
 		// User preferences screen
-		if ($feature_userPreferences != 'y') {
-			return (tra("This feature is disabled").": $feature_userPreferences");
+		if ($prefs['feature_userPreferences'] != 'y') {
+			return (tra('This feature is disabled').': '.$prefs['feature_userPreferences']);
 		}
 		
 		$pres=100000; // Precision for lat lon convertion
 		$tdo = "user";
 		if ($tikidomain) $tdo = "$tikidomain.user";
-		$miffile=$map_path."data/$tdo.mif";
-		$midfile=$map_path."data/$tdo.mid";
+		$miffile=$prefs['map_path']."data/$tdo.mif";
+		$midfile=$prefs['map_path']."data/$tdo.mid";
 		
 		$symbol="Symbol (34,16711680,9)";
 			  
@@ -129,7 +124,7 @@ class MapsLib extends TikiLib {
 					$lon=-((-$lon*$pres) % (360*$pres))/$pres;
 					if($lon<-180) {$lon=$lon+360;}
 				}
-				if ($mapzone==360 && $lon<0) {
+				if ($prefs['mapzone']==360 && $lon<0) {
 					$lon=360+$lon;
 				}
 				fwrite($fdmid,"\"".$login."\",");
@@ -146,40 +141,35 @@ class MapsLib extends TikiLib {
 		fclose($fdmid);
 		fclose($fdmif);
 
-		if (is_file($map_path."/data/$tdo.dbf")) {
-			unlink($map_path."/data/$tdo.dbf");
+		if (is_file($prefs['map_path']."/data/$tdo.dbf")) {
+			unlink($prefs['map_path']."/data/$tdo.dbf");
 		}
-		if (is_file($map_path."/data/$tdo.prj")) {
-			unlink($map_path."/data/$tdo.prj");
+		if (is_file($prefs['map_path']."/data/$tdo.prj")) {
+			unlink($prefs['map_path']."/data/$tdo.prj");
 		}
-		if (is_file($map_path."/data/$tdo.shp")) {
-			unlink($map_path."/data/$tdo.shp");
+		if (is_file($prefs['map_path']."/data/$tdo.shp")) {
+			unlink($prefs['map_path']."/data/$tdo.shp");
 		}
-		if (is_file($map_path."/data/$tdo.shx")) {
-			unlink($map_path."/data/$tdo.shx");
+		if (is_file($prefs['map_path']."/data/$tdo.shx")) {
+			unlink($prefs['map_path']."/data/$tdo.shx");
 		}
 	
-		$ret=exec($ogr2ogr." -f \"ESRI Shapefile\" ".$map_path."data/$tdo.shp ".$map_path."data/$tdo.mif");
-		return (tra("User Map Generated in:").$map_path."data/".$tdo.".shp");
+		$ret=exec($prefs['ogr2ogr']." -f \"ESRI Shapefile\" ".$prefs['map_path']."data/$tdo.shp ".$prefs['map_path']."data/$tdo.mif");
+		return (tra("User Map Generated in:").$prefs['map_path']."data/".$tdo.".shp");
 	}
 
 	function makeimagemap($tdo,$galleryId) {
-		global $map_path;
-		global $mapzone;
-		global $tikidomain;
-		global $ogr2ogr;
-		global $smarty;
-		global $feature_userPreferences;
+		global $prefs, $tikidomain, $smarty;
 
-		if (!isset($ogr2ogr) || !is_executable($ogr2ogr)) {
+		if (!isset($prefs['ogr2ogr']) || !is_executable($prefs['ogr2ogr'])) {
 			return (tra("No valid ogr2ogr executable"));
 		} 
 		// User preferences screen
-		if ($feature_userPreferences != 'y') {
-			return (tra("This feature is disabled").": $feature_userPreferences");
+		if ($prefs['feature_userPreferences'] != 'y') {
+			return (tra('This feature is disabled').': '.$prefs['feature_userPreferences']);
 		}
-		$miffile=$map_path."data/$tdo.mif";
-		$midfile=$map_path."data/$tdo.mid";
+		$miffile=$prefs['map_path']."data/$tdo.mif";
+		$midfile=$prefs['map_path']."data/$tdo.mid";
 		
 		$symbol="Symbol (34,16711680,9)";
 			  
@@ -227,7 +217,7 @@ class MapsLib extends TikiLib {
 					$lon=-((-$lon*$pres) % (360*$pres))/$pres;
 					if($lon<-180) {$lon=$lon+360;}
 				}
-				if ($mapzone==360 && $lon<0) {
+				if ($prefs['mapzone']==360 && $lon<0) {
 					$lon=360+$lon;
 				}
 				fwrite($fdmid,"\"".$name."\",");
@@ -242,21 +232,21 @@ class MapsLib extends TikiLib {
 		fclose($fdmid);
 		fclose($fdmif);
 
-		if (is_file($map_path."/data/$tdo.dbf")) {
-			unlink($map_path."/data/$tdo.dbf");
+		if (is_file($prefs['map_path']."/data/$tdo.dbf")) {
+			unlink($prefs['map_path']."/data/$tdo.dbf");
 		}
-		if (is_file($map_path."/data/$tdo.prj")) {
-			unlink($map_path."/data/$tdo.prj");
+		if (is_file($prefs['map_path']."/data/$tdo.prj")) {
+			unlink($prefs['map_path']."/data/$tdo.prj");
 		}
-		if (is_file($map_path."/data/$tdo.shp")) {
-			unlink($map_path."/data/$tdo.shp");
+		if (is_file($prefs['map_path']."/data/$tdo.shp")) {
+			unlink($prefs['map_path']."/data/$tdo.shp");
 		}
-		if (is_file($map_path."/data/$tdo.shx")) {
-			unlink($map_path."/data/$tdo.shx");
+		if (is_file($prefs['map_path']."/data/$tdo.shx")) {
+			unlink($prefs['map_path']."/data/$tdo.shx");
 		}
 					
-		$ret=exec($ogr2ogr." -f \"ESRI Shapefile\" ".$map_path."data/$tdo.shp ".$map_path."data/$tdo.mif");
-		return (tra("Image Map Generated in:").$map_path."data/".$tdo.".shp");
+		$ret=exec($prefs['ogr2ogr']." -f \"ESRI Shapefile\" ".$prefs['map_path']."data/$tdo.shp ".$prefs['map_path']."data/$tdo.mif");
+		return (tra("Image Map Generated in:").$prefs['map_path']."data/".$tdo.".shp");
 	}
 }
 global $dbTiki;

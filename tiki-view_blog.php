@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.64 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.65 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,18 +12,18 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	include_once('lib/freetag/freetaglib.php');
 }
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -60,7 +60,7 @@ if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $_REQUEST['blogId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -146,7 +146,7 @@ if (isset($_REQUEST["remove"])) {
 		}
 	}
   $area = 'delpost';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$bloglib->remove_post($_REQUEST["remove"]);
   } else {
@@ -192,7 +192,7 @@ $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"], 1)) ;
 
-	if ($feature_freetags == 'y') {     // And get the Tags for the posts
+	if ($prefs['feature_freetags'] == 'y') {     // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}
 
@@ -220,10 +220,10 @@ if ($offset > 0) {
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
-if ($feature_blog_comments == 'y') {
-	$comments_per_page = $blog_comments_per_page;
+if ($prefs['feature_blog_comments'] == 'y') {
+	$comments_per_page = $prefs['blog_comments_per_page'];
 
-	$thread_sort_mode = $blog_comments_default_ordering;
+	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
 	$comments_vars = array('blogId');
 	$comments_prefix_var = 'blog:';
 	$comments_object_var = 'blogId';
@@ -232,14 +232,14 @@ if ($feature_blog_comments == 'y') {
 
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'blog';
 
 	$cat_objid = $_REQUEST['blogId'];
 	include ('tiki-tc.php');
 }
 
-if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
 	check_ticket('blog');
 	$post_info = $bloglib->get_post($_REQUEST['savenotepad']);
 
@@ -247,7 +247,7 @@ if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUES
 		0, $post_info['title'] ? $post_info['title'] : $tikilib->date_format("%d/%m/%Y [%H:%M]", $post_info['created']), $post_info['data']);
 }
 
-if ($feature_user_watches == 'y') {
+if ($prefs['feature_user_watches'] == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('blog');
 		if ($_REQUEST['watch_action'] == 'add') {
@@ -265,7 +265,7 @@ if ($feature_user_watches == 'y') {
 	}
 
     // Check, if the user is watching this blog by a category.    
-	if ($feature_categories == 'y') {    
+	if ($prefs['feature_categories'] == 'y') {    
 	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST['blogId'],'blog',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
@@ -280,12 +280,12 @@ if ($feature_user_watches == 'y') {
 }
 
 
-if ($feature_mobile == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_blog($listpages, $blog_data);
 }
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $_REQUEST['blogId'], 'blog', '');
 }

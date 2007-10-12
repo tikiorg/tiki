@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.20 2007-10-03 17:11:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,7 @@ if (isset($_REQUEST["add"])) {
 			$save = false;
 		}
 	} elseif (!empty($_REQUEST['email'])) {
-		if (validate_email($_REQUEST['email'],$validateEmail)) {
+		if (validate_email($_REQUEST['email'],$prefs['validateEmail'])) {
 			$email = $_REQUEST['email'];
 		} else {
 			$tikifeedback[] = array('num'=>0,'mes'=>tra("Invalid email"));
@@ -91,7 +91,7 @@ if (!empty($tikifeedback)) {
 }
 if (isset($_REQUEST["removeevent"])) {
   $area = 'delnotif';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$tikilib->remove_user_watch_by_hash($_REQUEST["removeevent"]);
   } else {

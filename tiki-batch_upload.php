@@ -1,18 +1,18 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.15 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.16 2007-10-12 07:55:24 nyloth Exp $
 
 $section = 'galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/imagegals/imagegallib.php');
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_gal_batch != 'y') {
+if ($prefs['feature_gal_batch'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_gal_batch");
 	$smarty->display("error.tpl");
 	die;
@@ -26,7 +26,7 @@ if ($tiki_p_batch_upload_image_dir != 'y') {
 }
 
 // check directory path 
-if (!isset($gal_batch_dir) or !is_dir($gal_batch_dir)) {
+if (!isset($prefs['gal_batch_dir']) or !is_dir($prefs['gal_batch_dir'])) {
 	$msg = tra("Incorrect directory chosen for batch upload of images.")."<br />"; 
 	if ($tiki_p_admin == 'y') {
 		$msg.= tra("Please setup that dir on ").'<a href="tiki-admin.php?page=gal">'.tra('Image Galleries Admin Panel').'</a>.';
@@ -37,7 +37,7 @@ if (!isset($gal_batch_dir) or !is_dir($gal_batch_dir)) {
 	$smarty->display("error.tpl");
 	die;
 } else {
-	$imgdir = $gal_batch_dir;
+	$imgdir = $prefs['gal_batch_dir'];
 }
 
 $smarty->assign('imgdir',$imgdir);

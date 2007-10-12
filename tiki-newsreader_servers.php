@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.25 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.26 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'newsreader';
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/newsreader/newslib.php');
@@ -19,7 +19,7 @@ if (!$user) {
 	die;
 }
 
-if ($feature_newsreader != 'y') {
+if ($prefs['feature_newsreader'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsreader");
 
 	$smarty->display("error.tpl");
@@ -37,7 +37,7 @@ if (!isset($_REQUEST["serverId"]))
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delnewsserver';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$newslib->remove_server($user, $_REQUEST['remove']);
   } else {
@@ -121,7 +121,7 @@ include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('news-server');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_newsreaders_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-newsreader_servers.tpl");

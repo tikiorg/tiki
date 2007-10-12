@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.19 2007-07-20 15:05:51 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.20 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
 
-if ($feature_newsletters != 'y') {
+if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
 
 	$smarty->display("error.tpl");
@@ -75,7 +75,7 @@ $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delnl';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$nllib->remove_newsletter($_REQUEST["remove"]);
 	} else {

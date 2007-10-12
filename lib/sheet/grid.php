@@ -704,6 +704,8 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
+		global $prefs;
+
 		echo "	var g;\n";
 		echo "	function initGrid()\n";
 		echo "	{\n";
@@ -754,8 +756,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 		}
 
 
-		global $feature_contribution;
-		if ($feature_contribution == 'y') {
+		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$contributions = $contributionlib->list_contributions();
 			for ($i = $contributions['cant'] - 1; $i >= 0; -- $i) {
@@ -1212,7 +1213,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		global $tikilib, $user, $feature_actionlog;
+		global $tikilib, $user, $prefs;
 		// Load the current database state {{{3
 		$current = &new TikiSheet;
 		$handler = &new TikiSheetDatabaseHandler( $this->sheetId );
@@ -1262,7 +1263,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$updates[] = $sheet->getColumnCount();
 
 		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( sizeof($updates) - 4 ) / 2 );
-		if ($feature_actionlog == 'y') { // must keep the previous value to do the difference
+		if ($prefs['feature_actionlog'] == 'y') { // must keep the previous value to do the difference
 			$query = "SELECT `rowIndex`, `columnIndex`, `value` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND  `end` IS NULL";
 			$result = $tikilib->query($query, array($this->sheetId));
 			$old = array();
@@ -1279,7 +1280,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format`, `user` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
 			}
 
-		if ($feature_actionlog == 'y') {
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$add = 0;
 			$del = 0;
@@ -1288,8 +1289,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				if (!empty($old[$values[2].'-'.$values[3]]))
 					$del += strlen($old[$values[2].'-'.$values[3]]);
 			}
-			global $feature_contribution;
-			if ($feature_contribution == 'y' && isset($_REQUEST['contributions'])) {
+			if ($prefs['feature_contribution'] == 'y' && isset($_REQUEST['contributions'])) {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
 				$contributionlib->assign_contributions($_REQUEST['contributions'], $this->sheetId, 'sheet', '', '', '');
 			}			
@@ -1872,12 +1872,12 @@ class SheetLib extends TikiLib
 
 	function remove_sheet( $sheetId ) // {{{2
 	{
+		global $prefs;
 		$this->query( "DELETE FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_values` WHERE `sheetId` = ?", array( $sheetId ) );
 		$this->query( "DELETE FROM `tiki_sheet_layout` WHERE `sheetId` = ?", array( $sheetId ) );
 
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Removed', $sheetId, 'sheet');
 		}
@@ -1885,14 +1885,14 @@ class SheetLib extends TikiLib
 
 	function replace_sheet( $sheetId, $title, $description, $author ) // {{{2
 	{
-		global $feature_actionlog;
+		global $prefs;
 
 		if( $sheetId == 0 )
 		{
 			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author` ) VALUES( ?, ?, ? )", array( $title, $description, $author ) );
 
 			$sheetId = $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
-			if ($feature_actionlog == 'y') {
+			if ($prefs['feature_actionlog'] == 'y') {
 				global $logslib; include_once('lib/logs/logslib.php');
 				$query = 'select `sheetId` from `tiki_sheets` where `title`=? and `description`= ? and `author`=?';
 				$id = $this->getOne($query, array($title, $description, $author ) );

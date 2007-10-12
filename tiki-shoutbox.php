@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.17 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.18 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,16 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/shoutbox/shoutboxlib.php');
 
-if ($feature_shoutbox != 'y') {
+if ($prefs['feature_shoutbox'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_shoutbox");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_view_shoutbox != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -35,7 +33,6 @@ if ($_REQUEST["msgId"]) {
 	$owner=$info["user"];
 	if ($tiki_p_admin_shoutbox != 'y' &&  $owner != $user) {
 		$smarty->assign('msg', tra("You do not have permission to edit messages $owner"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -54,16 +51,15 @@ $smarty->assign('user', $info["user"]);
 if ($tiki_p_admin_shoutbox == 'y' || $user == $owner ) {
 	if (isset($_REQUEST["remove"])) {
 		$area = 'delshoutboxitem';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
 		} else {
 			key_get($area);
 		}
 	} elseif (isset($_REQUEST["shoutbox_admin"])) {
-		$shoutbox_autolink = (isset($_REQUEST["shoutbox_autolink"])) ? 'y' : 'n';
-		$tikilib->set_preference('shoutbox_autolink',$shoutbox_autolink);
-		$smarty->assign('shoutbox_autolink',$shoutbox_autolink);
+		$prefs['shoutbox_autolink'] = (isset($_REQUEST["shoutbox_autolink"])) ? 'y' : 'n';
+		$tikilib->set_preference('shoutbox_autolink',$prefs['shoutbox_autolink']);
 	}
 }
 
@@ -71,7 +67,6 @@ if ($tiki_p_post_shoutbox == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('shoutbox');
 		$shoutboxlib->replace_shoutbox($_REQUEST["msgId"], $_REQUEST["user"], $_REQUEST["message"]);
-
 		$smarty->assign("msgId", '0');
 		$smarty->assign('message', '');
 	}

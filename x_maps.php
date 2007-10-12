@@ -11,7 +11,7 @@ $xajax = new xajax("x_maps.php");
 
   
   function map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$changeleg=false,$corx2=0,$cory2=0) {
-  	global $map_path;
+  	global $prefs;
   	$objResponse = new xajaxResponse();
   	
   	if (strstr($mapfile, '..')) {
@@ -20,16 +20,16 @@ $xajax = new xajax("x_maps.php");
 	    return $objResponse;
 		}
 
-		$map_path = preg_replace("/\/?$/","/",$map_path);
+		$prefs['map_path'] = preg_replace("/\/?$/","/",$prefs['map_path']);
 
 		//checking the mapfile
-		if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
+		if (!is_file($prefs['map_path'].$mapfile) || preg_match("/(\/\.)/", $prefs['map_path'].$mapfile)) {
 	  	$msg = tra("invalid mapfile name");
 	  	$objResponse->addAlert($msg);
 	  	return $objResponse;
 	  }
 
-  	$map = ms_newMapObj($map_path.$mapfile);
+  	$map = ms_newMapObj($prefs['map_path'].$mapfile);
   	for ($j=0;$j<$map->numlayers;$j++)
   	{
     	$my_layer=$map->getLayer($j);

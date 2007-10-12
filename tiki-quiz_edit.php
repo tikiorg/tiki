@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.20 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21 2007-10-12 07:55:31 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -33,7 +33,7 @@ require_once('tiki-setup.php');
 
 include_once('lib/quizzes/quizlib.php');
 
-if ($feature_quizzes != 'y') {
+if ($prefs['feature_quizzes'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
 
 	$smarty->display("error.tpl");
@@ -253,7 +253,7 @@ function setup_options(&$tpl){
 
 	$tpl['qpp'] = $qpp;
 	
-	$tpl['siteTimeZone'] = $display_timezone;
+	$tpl['siteTimeZone'] = $prefs['display_timezone'];
 }
 
 $tpl = array();

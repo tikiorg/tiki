@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.26 2007-06-04 22:45:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.27 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	simple_set_toggle("fgal_list_hits");
 	simple_set_toggle('fgal_list_parent');
 	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder'])?'created':$_REQUEST['fgal_sortorder']).'_'.(empty($_REQUEST['fgal_sortdirection'])?'desc':$_REQUEST['fgal_sortdirection']);
-	$fgal_sort_mode = $_REQUEST['fgal_sort_mode'];
+	$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
 	simple_set_value('fgal_sort_mode');
 }
 
@@ -88,12 +88,8 @@ if (isset($_REQUEST["filegalhandlers"])) {
 	}
 	if (isset($_REQUEST["fgal_enable_auto_indexing"])) {
 		$tikilib->set_preference("fgal_enable_auto_indexing", 'y');
-
-		$smarty->assign('fgal_enable_auto_indexing', 'y');
 	} else {
 		$tikilib->set_preference("fgal_enable_auto_indexing", 'n');
-
-		$smarty->assign('fgal_enable_auto_indexing', 'n');
 	}
 }
 
@@ -101,7 +97,7 @@ if (isset($_REQUEST["filegalredosearch"])) {
 	$filegallib->reindex_all_files_for_search_text();
 }
 
-if (!empty($fgal_sort_mode) &&	preg_match('/(.*)_(asc|desc)/', $fgal_sort_mode, $matches)) {
+if (!empty($prefs['fgal_sort_mode']) &&	preg_match('/(.*)_(asc|desc)/', $prefs['fgal_sort_mode'], $matches)) {
 	$smarty->assign('fgal_sortorder',$matches[1]);
 	$smarty->assign('fgal_sortdirection', $matches[2]);
 } else {
@@ -118,6 +114,5 @@ $smarty->assign("fgal_handlers",$handlers);
 $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
-$smarty->assign("fgal_match_regex", $tikilib->get_preference("fgal_match_regex", ''));
 ask_ticket('admin-inc-fgal');
 ?>

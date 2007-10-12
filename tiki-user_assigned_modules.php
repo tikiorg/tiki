@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.19 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.20 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/usermodules/usermoduleslib.php');
@@ -21,7 +21,7 @@ if ($tiki_p_configure_modules != 'y') {
 	die;
 }
 
-if ($user_assigned_modules != 'y') {
+if ($prefs['user_assigned_modules'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": user_assigned_modules");
 
 	$smarty->display("error.tpl");
@@ -105,7 +105,7 @@ $smarty->assign_by_ref('modules', $modules);
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-modules');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_modules_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-user_assigned_modules.tpl");

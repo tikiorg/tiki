@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.45 2007-04-02 16:27:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.46 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,14 @@ require_once('tiki-setup.php');
 include_once("lib/imagegals/imagegallib.php");
 include_once ('lib/stats/statslib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 	$smarty->display("error.tpl");
 	die;
@@ -66,7 +66,7 @@ if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $galleryId);
    	if ($perms_array) {
    		$is_categorized = TRUE;
@@ -172,7 +172,7 @@ $smarty->assign('offset', $maxgal ? $offset - ($offset % $maxgal) : 0);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 
-if ($feature_gal_slideshow != 'n') {
+if ($prefs['feature_gal_slideshow'] != 'n') {
 	$headerlib->add_jsfile('lib/imagegals/imagegallib.js',50);
 	$listImgId = implode(',', $listImgId);
 	$smarty->assign('listImgId', $listImgId);
@@ -276,7 +276,7 @@ $smarty->assign_by_ref('scaleinfo',$scaleinfo);
 $section = 'galleries';
 include_once('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'image gallery';
 
 	$cat_objid = $galleryId;
@@ -294,7 +294,7 @@ ask_ticket('browse-image');
 
 //add a hit
 $statslib->stats_hit($info["name"],"image",$imageId);
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $galleryId, 'image gallery');
 }

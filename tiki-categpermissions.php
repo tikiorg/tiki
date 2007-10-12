@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.16 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.17 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ("tiki-setup.php");
 
-if ($feature_categories != 'y') {
+if ($prefs['feature_categories'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_categories");
 	$smarty->display("error.tpl");
 	die;
@@ -58,14 +58,14 @@ if (isset($_REQUEST['assign_all'])) {
 if (isset($_REQUEST['action'])) {
 	$area = 'removecategperm';
 	if ($_REQUEST['action'] == 'remove') {
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
 		} else {
 			key_get($area);
 		}
 	} elseif ($_REQUEST['action'] == 'remove_all') {
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
 		$children = $categlib->get_child_categories($categId);

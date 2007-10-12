@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.179 2007-10-10 20:54:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.180 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,7 +22,7 @@ $access->check_feature('feature_wiki');
 
 
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
-if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
+if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
 	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
 		$smarty->display("error.tpl");
@@ -92,14 +92,14 @@ if (isset($_REQUEST['minor'])) {
 }
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 
-if ($feature_warn_on_edit == 'y') {
+if ($prefs['feature_warn_on_edit'] == 'y') {
 	$editpageconflict = 'n';
 	$beingEdited = 'n';
 	$semUser = '';
 	$u = $user? $user: 'anonymous';
 	if (!empty($page) && ($page != 'sandbox' || $page == 'sandbox' && $tiki_p_admin == 'y')) {
 		if (!isset($_REQUEST['save'])) {
-			if ($tikilib->semaphore_is_set($page, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($page) != $u) {
+			if ($tikilib->semaphore_is_set($page, $prefs['warn_on_edit_time'] * 60) && $tikilib->get_semaphore_user($page) != $u) {
 				$editpageconflict = 'y';
 			} elseif ($tiki_p_edit == 'y') {
 				$_SESSION["edit_lock_$page"] = $tikilib->semaphore_set($page);
@@ -195,13 +195,13 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       //print(strlen($part["body"]));
       $msg = '';
 
-	if (isset($_REQUEST['save']) && $feature_contribution == 'y' && $feature_contribution_mandatory == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
+	if (isset($_REQUEST['save']) && $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory'] == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
 		$contribution_needed = true;
 		$smarty->assign('contribution_needed', 'y');
 	} else {
 		$contribution_needed = false;
 	}
- 	if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+ 	if (isset($_REQUEST['save']) && $prefs['feature_categories'] == 'y' && $prefs['feature_wiki_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 		$category_needed = true;
 		$smarty->assign('category_needed', 'y');
 	} else {
@@ -211,7 +211,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
         if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
         	make_clean($description);
         	if ($tikilib->page_exists($pagename)) {
-			if ($feature_multilingual == 'y') {
+			if ($prefs['feature_multilingual'] == 'y') {
 				$info = $tikilib->get_page_info($pagename);
 				if ($info['lang'] != $pageLang) {
 					include_once("lib/multilingual/multilinguallib.php");
@@ -251,7 +251,7 @@ $wiki_up = "img/wiki_up";
 if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
 // Upload pictures here
 
-if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
+if (($prefs['feature_wiki_pictures'] == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
 	$i = 1;
 	while ( isset($_FILES['picfile'.$i]) ) {
 		if ( is_uploaded_file($_FILES['picfile'.$i]['tmp_name']) ) {
@@ -266,11 +266,11 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
 	}
 }
 
-if ($feature_wiki_attachments == 'y' && isset($_REQUEST["attach"]) && ($tiki_p_wiki_attach_files == 'y' || $tiki_p_wiki_admin_attachments == 'y')) {
+if ($prefs['feature_wiki_attachments'] == 'y' && isset($_REQUEST["attach"]) && ($tiki_p_wiki_attach_files == 'y' || $tiki_p_wiki_admin_attachments == 'y')) {
 	if (isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
-		$ret = $tikilib->attach_file($_FILES['userfile2']['name'], $_FILES['userfile2']['tmp_name'], $w_use_db == 'y'? 'db': 'dir');
+		$ret = $tikilib->attach_file($_FILES['userfile2']['name'], $_FILES['userfile2']['tmp_name'], $prefs['w_use_db'] == 'y'? 'db': 'dir');
 		if ($ret['ok']) {
-			$wikilib->wiki_attach_file($page, $_FILES['userfile2']['name'], $_FILES['userfile2']['type'], $_FILES['userfile2']['size'], ($w_use_db == 'dir')?'': $ret['data'], $_REQUEST["attach_comment"], $user, $ret['fhash']);
+			$wikilib->wiki_attach_file($page, $_FILES['userfile2']['name'], $_FILES['userfile2']['type'], $_FILES['userfile2']['size'], ($prefs['w_use_db'] == 'dir')?'': $ret['data'], $_REQUEST["attach_comment"], $user, $ret['fhash']);
 		} else {
 				$smarty->assign('msg', $ret['error']);
 				$smarty->display("error.tpl");
@@ -502,12 +502,12 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     $_REQUEST['edit'] .= $sdta;
 }
 // if "UserPage" complete with the user name
-if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y' && $page == $feature_wiki_userpage_prefix) {
+if ($prefs['feature_wiki_userpage'] == 'y' && $tiki_p_admin != 'y' && $page == $prefs['feature_wiki_userpage_prefix']) {
 	$page .= $user;
 	$_REQUEST['page'] = $page;
 }
 
-if (strtolower($_REQUEST["page"]) == 'sandbox' && $feature_sandbox != 'y') {
+if (strtolower($_REQUEST["page"]) == 'sandbox' && $prefs['feature_sandbox'] != 'y') {
   $smarty->assign('msg', tra("The SandBox is disabled"));
   $smarty->display("error.tpl");
   die;
@@ -520,8 +520,8 @@ if (!isset($_REQUEST["comment"])) {
 // Get page data
 $info = $tikilib->get_page_info($page);
 if(isset($info['wiki_cache'])) {
-  $wiki_cache = $info['wiki_cache'];
-  $smarty->assign('wiki_cache',$wiki_cache);
+  $prefs['wiki_cache'] = $info['wiki_cache'];
+  $smarty->assign('wiki_cache',$prefs['wiki_cache']);
 }
 
 if ($info["flag"] == 'L' && !$wikilib->is_editable($page, $user, $info)) {
@@ -549,7 +549,7 @@ $smarty->assign_by_ref('data', $info);
 $smarty->assign('footnote', '');
 $smarty->assign('has_footnote', 'n');
 
-if ($feature_wiki_footnotes == 'y') {
+if ($prefs['feature_wiki_footnotes'] == 'y') {
   if ($user) {
     $x = $wikilib->get_footnote($user, $page);
 
@@ -617,11 +617,11 @@ if(isset($_REQUEST["edit"])) {
 
 $likepages = '';
 $smarty->assign_by_ref('likepages', $likepages);
-if ($feature_likePages == 'y' and $edit_data == '' && !$tikilib->page_exists($page)) {
+if ($prefs['feature_likePages'] == 'y' and $edit_data == '' && !$tikilib->page_exists($page)) {
 	$likepages = $wikilib->get_like_pages($page);
 }
 	
-if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
+if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] == 'y') {
   if (isset($_REQUEST['copyrightTitle'])) {
     $smarty->assign('copyrightTitle', $_REQUEST["copyrightTitle"]);
   }
@@ -671,7 +671,7 @@ if (empty($_REQUEST['lock_it']) && !empty($info['flag']) && $info['flag'] == 'L'
 $smarty->assign_by_ref('lock_it', $lock_it);
 
 if (isset($_REQUEST["lang"])) {
-  if ($feature_multilingual == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
+  if ($prefs['feature_multilingual'] == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
 	include_once("lib/multilingual/multilinguallib.php");
 	if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $_REQUEST["lang"], true)) {
 		$pageLang = $info['lang'];
@@ -688,11 +688,11 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-if ($feature_wysiwyg == 'n' or $_SESSION['wysiwyg'] != 'y') $edit_data =& htmldecode($edit_data);
+if ($prefs['feature_wysiwyg'] == 'n' or $_SESSION['wysiwyg'] != 'y') $edit_data =& htmldecode($edit_data);
 $smarty->assign('pagedata',$edit_data);
 
 // apply the optional post edit filters before preview
-if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
+if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
   $parsed = $tikilib->apply_postedit_handlers($edit_data);
   $parsed = $tikilib->parse_data($parsed,$is_html);
 } else {
@@ -701,9 +701,9 @@ if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["s
 
 /* SPELLCHECKING INITIAL ATTEMPT */
 //This nice function does all the job!
-if ($wiki_spellcheck == 'y') {
+if ($prefs['wiki_spellcheck'] == 'y') {
   if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-    $parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $language, 'editwiki');
+    $parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $prefs['language'], 'editwiki');
 
     $smarty->assign('spellcheck', 'y');
   } else {
@@ -757,13 +757,13 @@ $pageAlias = '';
 $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 
-if (isset($_REQUEST['save']) && $feature_contribution == 'y' && $feature_contribution_mandatory == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
+if (isset($_REQUEST['save']) && $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory'] == 'y' && (empty($_REQUEST['contributions']) || count($_REQUEST['contributions']) <= 0)) {
 	$contribution_needed = true;
 	$smarty->assign('contribution_needed', 'y');
 } else {
 	$contribution_needed = false;
 }
-if (isset($_REQUEST['save']) && $feature_categories == 'y' && $feature_wiki_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+if (isset($_REQUEST['save']) && $prefs['feature_categories'] == 'y' && $prefs['feature_wiki_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 	$category_needed = true;
 	$smarty->assign('category_needed', 'y');
 } else {
@@ -782,7 +782,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
   }
   include_once("lib/imagegals/imagegallib.php");
-  $cat_desc = ($feature_wiki_description == 'y') ? substr($_REQUEST["description"],0,200) : '';
+  $cat_desc = ($prefs['feature_wiki_description'] == 'y') ? substr($_REQUEST["description"],0,200) : '';
   $cat_name = $_REQUEST["page"];
   $cat_href="tiki-index.php?page=".urlencode($cat_objid);
   include_once("categorize.php");
@@ -799,7 +799,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     }
 
     // add permisions here otherwise return error!
-    if(isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y'
+    if(isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] == 'y'
       && isset($_REQUEST['copyrightTitle'])
       && isset($_REQUEST['copyrightYear'])
       && isset($_REQUEST['copyrightAuthors'])
@@ -831,7 +831,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       $tikilib->cache_links($cachedlinks);
       */
       $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash);
-      if ($wiki_watch_author == 'y') {
+      if ($prefs['wiki_watch_author'] == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
     } else {
@@ -882,12 +882,12 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 } //save
 $smarty->assign('pageAlias',$pageAlias);
 
-if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+if ($prefs['feature_wiki_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
   $smarty->assign_by_ref('templates', $templates["data"]);
 }
 
-if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_ratings == 'y') {
+if ($prefs['feature_polls'] =='y' and $prefs['feature_wiki_ratings'] == 'y' && $tiki_p_wiki_admin_ratings == 'y') {
 	function pollnameclean($s) { global $page; if (isset($s['title'])) $s['title'] = substr($s['title'],strlen($page)+2); return $s; }
 	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
 	if (!isset($categlib) or !is_object($categlib)) include("lib/categories/categlib.php");
@@ -916,7 +916,7 @@ if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_
 	$smarty->assign('listpolls',$listpolls['data']);
 }
 
-if ($feature_multilingual == 'y') {
+if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
@@ -927,17 +927,17 @@ $cat_objid = $_REQUEST["page"];
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	include_once ("freetag_list.php");
 	//If in preview mode get the tags from the form and not from database
 	if (isset($_REQUEST["preview"])) {
 	    $smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
 }
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once ("categorize_list.php");
 	
-	if (isset($_REQUEST["current_page_id"]) && $feature_wiki_categorize_structure == 'y' && $categlib->is_categorized('wiki page', $structure_info["pageName"])) {
+	if (isset($_REQUEST["current_page_id"]) && $prefs['feature_wiki_categorize_structure'] == 'y' && $categlib->is_categorized('wiki page', $structure_info["pageName"])) {
 		$categIds = $categlib->get_object_categories('wiki page', $structure_info["pageName"]);
 		$smarty->assign('categIds',$categIds);
 	}
@@ -977,7 +977,7 @@ if (isset($_REQUEST['cat_categorize'])) {
 	}
 }
 
-if ($wiki_feature_copyrights == 'y' && $tiki_p_edit_copyrights == 'y') {
+if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') {
 	include_once ('lib/copyrights/copyrightslib.php');
 	$copyrightslib = new CopyrightsLib($dbTiki);
 	$copyrights = $copyrightslib->list_copyrights($_REQUEST["page"]);
@@ -991,11 +991,11 @@ include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
-$smarty->assign('feature_antibot', "$feature_antibot");
+
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');
 }
-if ($feature_contribution == 'y') {
+if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
 ask_ticket('edit-page');

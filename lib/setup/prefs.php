@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.9 2007-10-10 09:06:19 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.10 2007-10-12 07:55:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -19,7 +19,7 @@ if (isset($_SESSION['prefs'])) {
 }
 
 // Set default prefs
-if ( ! isset($_SESSION['prefs'])) {
+if ( ! isset($_SESSION['prefs']) || $_SESSION['need_reload_prefs'] ) {
 	$_SESSION['prefs'] = array();
 
 	$_SESSION['prefs']['tiki_release'] = '1.10';
@@ -377,7 +377,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['users_prefs_allowMsgs'] = 'n';
 	$_SESSION['prefs']['users_prefs_country'] = '';
 	$_SESSION['prefs']['users_prefs_diff_versions'] = 'n';
-	$_SESSION['prefs']['users_prefs_display_timezone'] = 'Local';
+	$_SESSION['prefs']['users_prefs_display_timezone'] = 'UTC';
 	$_SESSION['prefs']['users_prefs_email_is_public'] = 'n';
 	$_SESSION['prefs']['users_prefs_homePage'] = '';
 	$_SESSION['prefs']['users_prefs_lat'] = '';
@@ -399,6 +399,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['users_prefs_user_dbl'] = 'n';
 	$_SESSION['prefs']['users_prefs_user_information'] = 'public';
 	$_SESSION['prefs']['users_prefs_userbreadCrumb'] = '4';
+	$_SESSION['prefs']['users_prefs_mailCharset'] = 'utf-8';
 	$_SESSION['prefs']['validateRegistration'] = 'n';
 	
 	# user messages
@@ -561,7 +562,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['allowRegister'] = 'n';
 	$_SESSION['prefs']['eponymousGroups'] = 'n';
 	$_SESSION['prefs']['useRegisterPasscode'] = 'n';
-	$_SESSION['prefs']['registerPasscode'] = '';
+	$_SESSION['prefs']['registerPasscode'] = md5($tikilib->genPass());
 	$_SESSION['prefs']['rememberme'] = 'disabled';
 	$_SESSION['prefs']['remembertime'] = 7200;
 	$_SESSION['prefs']['feature_clear_passwords'] = 'n';
@@ -614,7 +615,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	if ( $phpcas_enabled == 'y' ) {
 		$_SESSION['prefs']['cas_create_user_tiki'] = 'n';
 		$_SESSION['prefs']['cas_skip_admin'] = 'n';
-		$_SESSION['prefs']['cas_version'] = '';
+		$_SESSION['prefs']['cas_version'] = '1.0';
 		$_SESSION['prefs']['cas_hostname'] = '';
 		$_SESSION['prefs']['cas_port'] = '';
 		$_SESSION['prefs']['cas_path'] = '';
@@ -725,7 +726,6 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['feature_bot_bar_icons'] = 'y';
 	$_SESSION['prefs']['feature_bot_bar_debug'] = 'y';
 	$_SESSION['prefs']['feature_bot_bar_rss'] = 'y';
-	$_SESSION['prefs']['title'] = '';
 	$_SESSION['prefs']['maxRecords'] = 10;
 	$_SESSION['prefs']['maxArticles'] = 10;
 	$_SESSION['prefs']['maxVersions'] = 0;
@@ -833,7 +833,7 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['helpurl'] = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
 	$_SESSION['prefs']['layout_section'] = 'n';
 	$_SESSION['prefs']['limitedGoGroupHome'] = 'n';
-	$_SESSION['prefs']['minical_reminders'] = $tikilib->get_user_preference($user, 'minical_reminders', 0);
+	$_SESSION['prefs']['minical_reminders'] = 0;
 	$_SESSION['prefs']['modallgroups'] = 'y';
 	$_SESSION['prefs']['modseparateanon'] = 'n';
 	$_SESSION['prefs']['php_docroot'] = 'http://php.net/';
@@ -864,17 +864,82 @@ if ( ! isset($_SESSION['prefs'])) {
 	$_SESSION['prefs']['load_threshold'] = 3;
 	$_SESSION['prefs']['site_busy_msg'] = 'Server is currently too busy; please come back later.';
 
+
+	$_SESSION['prefs']['bot_logo_code'] = '';
+	$_SESSION['prefs']['feature_blogposts_pings'] = '';
+	$_SESSION['prefs']['feature_create_webhelp'] = '';
+	$_SESSION['prefs']['feature_forums_search'] = '';
+	$_SESSION['prefs']['feature_forums_tiki_search'] = '';
+	$_SESSION['prefs']['feature_trackbackpings'] = '';
+	$_SESSION['prefs']['feature_wiki_ext_icon'] = '';
+	$_SESSION['prefs']['feature_wiki_mandatory_category'] = '';
+	$_SESSION['prefs']['freetags_3d_autoload'] = '';
+	$_SESSION['prefs']['freetags_3d_camera_distance'] = '';
+	$_SESSION['prefs']['freetags_3d_elastic_constant'] = '';
+	$_SESSION['prefs']['freetags_3d_eletrostatic_constant'] = '';
+	$_SESSION['prefs']['freetags_3d_fov'] = '';
+	$_SESSION['prefs']['freetags_3d_friction_constant'] = '';
+	$_SESSION['prefs']['freetags_3d_node_charge'] = '';
+	$_SESSION['prefs']['freetags_3d_node_mass'] = '';
+	$_SESSION['prefs']['freetags_3d_node_size'] = '';
+	$_SESSION['prefs']['freetags_3d_spring_size'] = '';
+	$_SESSION['prefs']['freetags_3d_text_size'] = '';
+	$_SESSION['prefs']['feature_intertiki_imported_groups'] = '';
+	$_SESSION['prefs']['feature_wiki_history_ip'] = '';
+	$_SESSION['prefs']['pam_create_user_tiki'] = '';
+	$_SESSION['prefs']['pam_service'] = '';
+	$_SESSION['prefs']['pam_skip_admin'] = '';
+	$_SESSION['prefs']['shib_affiliation'] = '';
+	$_SESSION['prefs']['shib_create_user_tiki'] = '';
+	$_SESSION['prefs']['shib_group'] = 'Shibboleth';
+	$_SESSION['prefs']['shib_skip_admin'] = '';
+	$_SESSION['prefs']['shib_usegroup'] = 'n';
+	$_SESSION['prefs']['wiki_3d_camera_distance'] = '';
+	$_SESSION['prefs']['wiki_3d_elastic_constant'] = '';
+	$_SESSION['prefs']['wiki_3d_eletrostatic_constant'] = '';
+	$_SESSION['prefs']['wiki_3d_fov'] = '';
+	$_SESSION['prefs']['wiki_3d_friction_constant'] = '';
+	$_SESSION['prefs']['wiki_3d_node_charge'] = '';
+	$_SESSION['prefs']['wiki_3d_node_mass'] = '';
+	$_SESSION['prefs']['wiki_3d_node_size'] = '';
+	$_SESSION['prefs']['wiki_3d_spring_size'] = '';
+	$_SESSION['prefs']['wiki_3d_text_size'] = '';
+	$_SESSION['prefs']['articles_feature_copyrights'] = '';
+	$_SESSION['prefs']['blogues_feature_copyrights'] = '';
+	$_SESSION['prefs']['faqs_feature_copyrights'] = '';
+	$_SESSION['prefs']['feature_contributor_wiki'] = '';
+	$_SESSION['prefs']['feature_jukebox_files'] = '';
+	$_SESSION['prefs']['freetags_3d_adjust_camera'] = '';
+	$_SESSION['prefs']['https_login_required'] = '';
+	$_SESSION['prefs']['jukebox_album_list_created'] = '';
+	$_SESSION['prefs']['jukebox_album_list_description'] = '';
+	$_SESSION['prefs']['jukebox_album_list_genre'] = '';
+	$_SESSION['prefs']['jukebox_album_list_lastmodif'] = '';
+	$_SESSION['prefs']['jukebox_album_list_title'] = '';
+	$_SESSION['prefs']['jukebox_album_list_tracks'] = '';
+	$_SESSION['prefs']['jukebox_album_list_user'] = '';
+	$_SESSION['prefs']['jukebox_album_list_visits'] = '';
+	$_SESSION['prefs']['jukebox_list_order'] = '';
+	$_SESSION['prefs']['jukebox_list_user'] = '';
+	$_SESSION['prefs']['maxRowsGalleries'] = '';
+	$_SESSION['prefs']['replimaster'] = '';
+	$_SESSION['prefs']['rowImagesGalleries'] = '';
+	$_SESSION['prefs']['scaleSizeGalleries'] = '';
+	$_SESSION['prefs']['thumbSizeXGalleries'] = '';
+	$_SESSION['prefs']['thumbSizeYGalleries'] = '';
+	$_SESSION['prefs']['wiki_3d_adjust_camera'] = '';
+	$_SESSION['prefs']['wiki_3d_autoload'] = '';
+
 	// Special default values
 
 	if ( is_file('styles/'.$tikidomain.'/'.$_SESSION['prefs']['site_favicon']) )
-		$_SESSION['prefs']['site_favicon'] = "styles/$tikidomain/$site_favicon";
+		$_SESSION['prefs']['site_favicon'] = 'styles/'.$tikidomain.'/'.$_SESSION['prefs']['site_favicon'];
 	elseif ( ! is_file($_SESSION['prefs']['site_favicon']) )
 		$_SESSION['prefs']['site_favicon'] = false;
 
 	$_SESSION['tmpDir'] = TikiInit::tempdir();
 
-	$_SESSION['prefs']['display_timezone'] = ( $user ) ? $tikilib->get_user_preference($user, 'display_timezone', $server_timezone) : $server_timezone;
-
+	$_SESSION['prefs']['display_timezone'] = $_SESSION['prefs']['server_timezone'];
 	$_SESSION['prefs']['feature_bidi'] = 'n';
 	$_SESSION['prefs']['feature_lastup'] = 'y';
 	$_SESSION['prefs']['display_server_load'] = 'y';
@@ -908,6 +973,5 @@ if ( empty($prefs['lastReadingPrefs']) || $lastUpdatePrefs > $prefs['lastReading
 // Assign the prefs array in smarty, by reference
 $smarty->assign_by_ref('prefs', $_SESSION['prefs']);
 
-// Set a global var for each prefs
+// DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
 extract($_SESSION['prefs']);
-

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.34 2007-08-08 21:07:12 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.35 2007-10-12 07:55:48 nyloth Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
  * \brief Class to manage user assigned modules
  *
- * Useful only if the feature "A user can assign modules has been set" ($user_assigned_modules)
+ * Useful only if the feature "A user can assign modules has been set" ($prefs['user_assigned_modules'])
  *
  * The first time, a user displays the page to assign modules(tiki-user_assigned_modules.php), 
  * the list of modules are copied from tiki_modules to tiki_user_assigned_modules
@@ -112,7 +112,7 @@ class UserModulesLib extends TikiLib {
 		$query = "delete from `tiki_user_assigned_modules` where `user`=?";
 
 		$result = $this->query($query,array($user));
-		global $modallgroups;
+		global $prefs;
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query,array());
 		$ret = array();
@@ -121,7 +121,7 @@ class UserModulesLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$mod_ok = 0;
 			if ($res['type'] != "h") {
-				if ($res["groups"] && $modallgroups != 'y') {
+				if ($res["groups"] && $prefs['modallgroups'] != 'y') {
 					$groups = unserialize($res["groups"]);
 
 					$ins = array_intersect($groups, $user_groups);
@@ -147,7 +147,7 @@ class UserModulesLib extends TikiLib {
 	}
 	// Return the list of modules that can be assigned by the user
 	function get_user_assignable_modules($user) {
-		global $modallgroups;
+		global $prefs;
 
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query,array());
@@ -162,7 +162,7 @@ class UserModulesLib extends TikiLib {
 				"select count(*) from `tiki_user_assigned_modules` where `moduleId`=? and `user`=?",array($res['moduleId'],$user));
 
 			if (!$isas) {
-				if ($res["groups"] && $modallgroups != 'y' && $user != 'admin') {
+				if ($res["groups"] && $prefs['modallgroups'] != 'y' && $user != 'admin') {
 					$groups = unserialize($res["groups"]);
 
 					$ins = array_intersect($groups, $user_groups);

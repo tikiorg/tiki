@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.72 2007-08-10 13:42:40 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -18,7 +18,7 @@ $headerlib->add_cssfile('css/calendar.css',20);
 # 	$tiki_p_admin_calendar
 # 	$tiki_p_change_events
 # 	$tiki_p_add_events
-if ($feature_calendar != 'y') {
+if ($prefs['feature_calendar'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
 	$smarty->display("error.tpl");
 	die;
@@ -32,7 +32,7 @@ $cookietab = 1;
 $rawcals = $calendarlib->list_calendars();
 $viewOneCal = $tiki_p_view_calendar;
 $modifTab = 0;
-if ($feature_theme_control == 'y'	and isset($_REQUEST['calIds'])) {
+if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 	$cat_type = "calendar";
 	$cat_objid = $_REQUEST['calIds'][0]; 
 	include('tiki-tc.php');
@@ -97,7 +97,7 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$visible[] = $cal_id;
 	}
 }
-if ($feature_categories == 'y' and isset($_REQUEST['calIds'])) {
+if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
 	$is_categorized = FALSE;
 	foreach ($_REQUEST['calIds'] as $calId) {
 		$perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calId);
@@ -296,7 +296,7 @@ $smarty->assign('cell', $cell);
 $smarty->assign('var', '');
 $smarty->assign('myurl', $myurl);
 
-if($feature_user_watches == 'y' && $user && count($_SESSION['CalendarViewGroups']) == 1) {
+if($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarViewGroups']) == 1) {
 	$calId = $_SESSION['CalendarViewGroups'][0];
 	if (isset($_REQUEST['watch_event']) && isset($_REQUEST['watch_action'])) {
 		check_ticket('calendar');
@@ -313,7 +313,7 @@ if($feature_user_watches == 'y' && $user && count($_SESSION['CalendarViewGroups'
 	}
 
     // Check, if a user is watching this calendar.
-	if ($feature_categories == 'y') {    			
+	if ($prefs['feature_categories'] == 'y') {    			
 	    $watching_categories_temp=$categlib->get_watching_categories($calId,'calendar',$user);	    
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {

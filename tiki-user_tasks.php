@@ -1,19 +1,19 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.26 2007-08-10 14:49:39 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
-require_once ('lib/ajax/ajaxlib.php');
+if ($prefs['feature_ajax'] == "y") {
+	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/tasks/tasklib.php');
 include_once ('lib/messu/messulib.php');
 
-if ($feature_tasks != 'y') {
+if ($prefs['feature_tasks'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_tasks");
 
 	$smarty->display("error.tpl");
@@ -434,17 +434,17 @@ if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
 		$save['start'] = $start_date;
 			$msg_changes .=  tra('Start').": ";
 			if($info['start'] != null) {
-				$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $info['start']).' --> ';
+				$msg_changes .= $tikilib->date_format($prefs['short_date_format'].' '.$prefs['long_time_format'], $info['start']).' --> ';
 			}
-			$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $save['start']) ."\n";
+			$msg_changes .= $tikilib->date_format($prefs['short_date_format'].' '.$prefs['long_time_format'], $save['start']) ."\n";
 	}
 	if(isset($_REQUEST['use_end_date']) and $info['end'] != $end_date){
 		$save['end'] = $end_date;
 			$msg_changes .=  tra('END').": ";
 			if($info['end'] != null) {
-				$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $info['end']).' --> ';
+				$msg_changes .= $tikilib->date_format($prefs['short_date_format'].' '.$prefs['long_time_format'], $info['end']).' --> ';
 			}
-			$msg_changes .= $tikilib->date_format("$short_date_format $long_time_format", $save['end']) ."\n";
+			$msg_changes .= $tikilib->date_format($prefs['short_date_format'].' '.$prefs['long_time_format'], $save['end']) ."\n";
 	}
 	if(isset($_REQUEST['priority']) and $info['priority'] != $_REQUEST['priority']){
 		$save['priority'] = $_REQUEST['priority'];
@@ -621,10 +621,10 @@ if (isset($_REQUEST['save'])) {
 		}
 		$mail_data .= ".\n\n";
 		if ($info['start'] !== NULL){
-			$mail_data .= tra("You've to start your work at least on").": ".$tikilib->date_format("$short_date_format $short_time_format",$info['end'])."\n";
+			$mail_data .= tra("You've to start your work at least on").": ".$tikilib->date_format($prefs['short_date_format'].' '.$prefs['short_time_format'],$info['end'])."\n";
 		}
 		if ($info['end'] !== NULL){
-			$mail_data .= tra("You've to finish your work on").": ". $tikilib->date_format("$short_date_format $short_time_format",$info['end'])."\n";
+			$mail_data .= tra("You've to finish your work on").": ". $tikilib->date_format($prefs['short_date_format'].' '.$prefs['short_time_format'],$info['end'])."\n";
 		}
 
 		$mail_data .= "\n".tra("Login and click the link below")."\n";
@@ -789,16 +789,16 @@ $smarty->assign('img_me_waiting_width', $img_me_waiting_width);
 $smarty->assign('img_not_accepted', $img_not_accepted);
 $smarty->assign('img_not_accepted_height', $img_not_accepted_height);
 $smarty->assign('img_not_accepted_width', $img_not_accepted_width);
-if ($feature_ajax == "y") {
-function user_tasks_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-user_tasks.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
-}
-user_tasks_ajax();
+if ($prefs['feature_ajax'] == "y") {
+	function user_tasks_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-user_tasks.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
+	user_tasks_ajax();
 
-$smarty->assign("mootab",'y');
+	$smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-user_tasks.tpl');
 $smarty->display("tiki.tpl");

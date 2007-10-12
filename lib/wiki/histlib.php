@@ -13,8 +13,8 @@ class HistLib extends TikiLib {
 
 	// Removes a specific version of a page
 	function remove_version($page, $version, $comment = '', $historyId = '') {
-		global $feature_contribution;
-		if ($feature_contribution == 'y') {
+		global $prefs;
+		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			if ($historyId == '') {
 				$query = 'select `historyId` from `tiki_history` where `pageName`=? and `version`=?';
@@ -70,8 +70,8 @@ class HistLib extends TikiLib {
 		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
 		//$result=$this->query($query);
 		//
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+		global $prefs;
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action("Rollback", $page, 'wiki page', "version=$version");
 		}
@@ -112,7 +112,7 @@ class HistLib extends TikiLib {
 	// Returns all the versions for this page
 	// without the data itself
 	function get_page_history($page, $fetchdata=true) {
-		global $feature_contribution;
+		global $prefs;
 
 		$query = "select * from `tiki_history` where `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page));
@@ -130,7 +130,7 @@ class HistLib extends TikiLib {
 			$aux["description"] = $res["description"];
 			$aux["comment"] = $res["comment"];
 			//$aux["percent"] = levenshtein($res["data"],$actual);
-			if ($feature_contribution == 'y') {
+			if ($prefs['feature_contribution'] == 'y') {
 				global $contributionlib; include_once('lib/contribution/contributionlib.php');
 				$aux['contributions'] = $contributionlib->get_assigned_contributions($res['historyId'], 'history');
 				global $logslib; include_once('lib/logs/logslib.php');

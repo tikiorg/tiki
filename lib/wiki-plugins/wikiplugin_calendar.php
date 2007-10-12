@@ -5,7 +5,7 @@ function wikiplugin_calendar_help() {
 }
 
 function wikiplugin_calendar($data, $params) {
-    global $smarty, $tikilib, $feature_calendar, $tiki_p_admin, $tiki_p_view_calendar;
+    global $smarty, $tikilib, $prefs, $tiki_p_admin, $tiki_p_view_calendar;
     global $dbTiki, $dc, $user, $calendarlib;
 
     require_once("lib/calendar/calendarlib.php");

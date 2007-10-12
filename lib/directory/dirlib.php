@@ -14,35 +14,35 @@ class DirLib extends TikiLib {
 
 	// Path functions
 	function dir_get_category_path_admin($categId) {
-		global $site_crumb_seper;
+		global $prefs;
 		$info = $this->dir_get_category($categId);
 		$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>';
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>' . $site_crumb_seper . $path;
+			$path = '<a class="link" href="tiki-directory_admin_categories.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>' . $prefs['site_crumb_seper'] . $path;
 		}
 		return $path;
 	}
 
 	function dir_get_path_text($categId) {
-		global $site_crumb_seper;
+		global $prefs;
 		$info = $this->dir_get_category($categId);
 		$path = $info["name"];
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = $info["name"] . $site_crumb_seper . $path;
+			$path = $info["name"] . $prefs['site_crumb_seper'] . $path;
 		}
 		return $path;
 	}
 
 	function dir_get_category_path_browse($categId) {
-		global $site_crumb_seper;
+		global $prefs;
 		$path = '';
 		$info = $this->dir_get_category($categId);
 		$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a>';
 		while ($info["parent"] != 0) {
 			$info = $this->dir_get_category($info["parent"]);
-			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a> ' . $site_crumb_seper . ' ' . $path;
+			$path = '<a class="dirlink" href="tiki-directory_browse.php?parent=' . $info["categId"] . '">' . $info["name"] . '</a> ' . $prefs['site_crumb_seper'] . ' ' . $path;
 		}
 
 		return $path;
@@ -117,12 +117,9 @@ class DirLib extends TikiLib {
 			//$res["path"]=$this->dir_get_path_text($res["categId"]);
 
 		    $add = TRUE;
-		    global $feature_categories;
-		    global $userlib;
-		    global $user;
-		    global $tiki_p_admin;
+		    global $prefs, $userlib, $user, $tiki_p_admin;
 
-		    if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 		    	global $categlib;
 				if (!is_object($categlib)) {
 					include_once('lib/categories/categlib.php');
@@ -398,7 +395,7 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_replace_site($siteId, $name, $description, $url, $country, $isValid) {
-		global $cachepages;
+		global $prefs;
 
 		make_clean($name);
 		make_clean($description);
@@ -413,13 +410,12 @@ class DirLib extends TikiLib {
 			$this->query($query,array($name,$description,$url,$country,$isValid,0,(int)$this->now,(int)$this->now));
 			$siteId = $this->db->getOne("select max(siteId) from `tiki_directory_sites` where `created`=? and `name`=?",array((int)$this->now,$name));
 
-			if ($cachepages == 'y') {
+			if ($prefs['cachepages'] == 'y') {
 				$this->cache_url($url);
 			}
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('directory_sites', $siteId);
 		}
@@ -438,8 +434,8 @@ class DirLib extends TikiLib {
 			$categId = $this->getOne("select max(`categId`) from `tiki_directory_categories` where `name`=?",array($name));
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('directory_categories', $categId);
 		}
@@ -553,16 +549,16 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_add_site_hit($siteId) {
-		global $count_admin_pvs, $user;
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		global $prefs, $user;
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_directory_sites` set `hits`=`hits`+1 where `siteId`=?";
 			$this->query($query,array((int)$siteId));
 		}
 	}
 
 	function dir_add_category_hit($categId) {
-		global $count_admin_pvs, $user;
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		global $prefs, $user;
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_directory_categories` set `hits`=`hits`+1 where `categId`=?";
 			$this->query($query,array((int)$categId));
 		}

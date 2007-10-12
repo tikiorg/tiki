@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.67 2007-09-04 14:33:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.68 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,7 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
-global $modseparateanon, $user, $userlib, $user_assigned_modules, $tiki_p_configure_modules;
-global $language, $modallgroups, $smarty, $tikidomain, $tikilib, $section, $page;
+global $prefs, $user, $userlib, $tiki_p_configure_modules, $smarty, $tikidomain, $tikilib, $section, $page;
 
 clearstatcache();
 
@@ -33,7 +32,7 @@ $module_zones = array();
 $module_zones['l'] = 'left_modules';
 $module_zones['r'] = 'right_modules';
 
-if ($user_assigned_modules == 'y' && $tiki_p_configure_modules == 'y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
+if ($prefs['user_assigned_modules'] == 'y' && $tiki_p_configure_modules == 'y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
     foreach ( $module_zones as $zone=>$zone_name ) {
         $$zone_name = $usermoduleslib->get_assigned_modules_user($user, $zone);
     }
@@ -62,21 +61,21 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
 	if (isset($module_params['section']) && $module_params['section'] == 'wiki' && $section == 'wiki page') $module_params['section'] = 'wiki page';
 	$pass = 'y';
-	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
+	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($prefs['language'], $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $prefs['language']))) {
 		$pass="n";
 	} elseif (isset($module_params['section']) && (!isset($section) || $section != $module_params['section'])) {
 		$pass = 'n';
 	} elseif (isset($module_params['page']) && (!isset($section) || $section != 'wiki page' || !isset($page) || $page != $module_params['page'])) {
 		$pass = 'n';
 	}
-	elseif ($modallgroups != 'y') {
+	elseif ($prefs['modallgroups'] != 'y') {
 		if ($mod_reference["groups"]) {
 			$module_groups = unserialize($mod_reference["groups"]);
 		} else {
 			$module_groups = array();
 		}
 		$pass = 'n';
-		if ($modseparateanon !== 'y') {
+		if ($prefs['modseparateanon'] !== 'y') {
 			foreach ($module_groups as $mod_group) {
 				if (in_array($mod_group, $user_groups)) {
 					$pass = 'y';
@@ -102,11 +101,6 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 	}
 	if ($pass == 'y') {
-// Commented out here too.  See zaufi's note in lib/wiki-plugins/wikiplugin_module.php	
-//		$cachefile = 'modules/cache/';
-//		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-//		$cachefile.= 'mod-' . $mod_reference["name"] . '.tpl.'.$language.'.cache';
-//		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
 		$show_columns[$these_modules_name] = 'y';
 		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
 		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';

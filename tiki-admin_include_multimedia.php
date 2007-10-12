@@ -28,39 +28,33 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
    fwrite ( $xmlmm,'	<Color>'."\n");
 
    foreach ($pref_toggles_Colors as $toggle) {
-	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
         $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-// 	$value=${$toggle};
 	$hexavalue=str_replace("#","0x",$_REQUEST[$toggle]);
 	fwrite ( $xmlmm,"		<$toggle>$hexavalue</$toggle>"."\n");
-	
-        $smarty->assign($toggle, $_REQUEST[$toggle]);
 }
     fwrite ( $xmlmm,'	</Color>'."\n");
     fwrite ( $xmlmm,'	<Value>'."\n");
 
     foreach ($pref_toggles_Values as $toggle) {
-	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-      $smarty->assign($toggle, $_REQUEST[$toggle]);
-      if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
+      if ( $prefs[$toggle] ) fwrite ( $xmlmm,"		<$toggle>".$prefs[$toggle]."</$toggle>"."\n");
 }
     fwrite ( $xmlmm,'	</Value>'."\n");
 
     foreach ($pref_toggles_Values_external_flash as $toggle) {
-	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-      $smarty->assign($toggle, $_REQUEST[$toggle]);
 }
 
 
     fwrite ( $xmlmm,'	<Text>'."\n");
 
     foreach ($pref_toggles_Text as $toggle) {
-	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+	if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-      $smarty->assign($toggle, $_REQUEST[$toggle]);
-      if ( ${$toggle} ) fwrite ( $xmlmm,"		<$toggle>${$toggle}</$toggle>"."\n");
+      if ( $prefs[$toggle] ) fwrite ( $xmlmm,"		<$toggle>".$prefs[$toggle]."</$toggle>"."\n");
 }
     fwrite ( $xmlmm,'	</Text>'."\n");
     
@@ -71,9 +65,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     fclose ($xmlmm);
  
     foreach ($pref_toggles_System as $toggle) {
-      if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = ${$toggle};
+      if (!isset($_REQUEST[$toggle])) $_REQUEST[$toggle] = $prefs[$toggle];
       $tikilib->set_preference($toggle,  $_REQUEST[$toggle]);
-      $smarty->assign($toggle, $_REQUEST[$toggle]);
 }
 
 ?>

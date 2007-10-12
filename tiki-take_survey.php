@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.17 2007-03-16 21:33:37 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.18 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/surveys/surveylib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_surveys != 'y') {
+if ($prefs['feature_surveys'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
 
 	$smarty->display("error.tpl");
@@ -54,7 +54,7 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $_REQUEST['surveyId']);
    	if ($perms_array) {
    		$is_categorized = TRUE;

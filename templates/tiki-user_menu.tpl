@@ -1,10 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.30 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31 2007-10-12 07:55:50 nyloth Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
 {foreach key=pos item=chdata from=$channels}
 {assign var=cname value=$menu_info.menuId|cat:'__'|cat:$chdata.position}
-
 {* ----------------------------- section *}
 {if $chdata.type ne 'o' and  $chdata.type ne '-'}
 

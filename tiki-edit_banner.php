@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.28 2007-09-15 08:58:07 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.29 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (!isset($bannerlib)) {
 }
 
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
-if ($feature_banners != 'y') {
+if ($prefs['feature_banners'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
 
 	$smarty->display("error.tpl");
@@ -92,7 +92,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("hasImage", 'n');
 
 	if (strlen($info["imageData"]) > 0) {
-		$tmpfname = $tmpDir . "/bannerimage" . "." . $_REQUEST["bannerId"];
+		$tmpfname = $prefs['tmpDir'] . "/bannerimage" . "." . $_REQUEST["bannerId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
@@ -136,7 +136,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 
 if (isset($_REQUEST["removeZone"])) {
   $area = 'delbannerzone';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
   } else {
@@ -288,7 +288,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	$smarty->assign('tempimg', 'n');
 
 	if (strlen($_REQUEST["imageData"]) > 0) {
-		$tmpfname = tempnam($tmpDir, "TMPIMG"). $imgname;
+		$tmpfname = tempnam($prefs['tmpDir'], "TMPIMG"). $imgname;
 
 		$fp = fopen($tmpfname, "w");
 

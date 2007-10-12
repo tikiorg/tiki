@@ -17,18 +17,13 @@ function wikiplugin_catorphans_help() {
 }
 
 function wikiplugin_catorphans($data, $params) {
-	global $dbTiki;
-
-	global $smarty;
-	global $tikilib;
-	global $feature_categories;
-	global $categlib;
+	global $dbTiki, $smarty, $tikilib, $prefs, $categlib;
 
 	if (!is_object($categlib)) {
 		require_once ("lib/categories/categlib.php");
 	}
 
-	if ($feature_categories != 'y') {
+	if ($prefs['feature_categories'] != 'y') {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 

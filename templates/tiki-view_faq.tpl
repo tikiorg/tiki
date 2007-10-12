@@ -78,7 +78,7 @@
 </div>
 {/if}
 
-{if $faqs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+{if $prefs.faqs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>

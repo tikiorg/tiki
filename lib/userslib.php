@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.244 2007-10-10 19:53:08 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.245 2007-10-12 07:55:38 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -44,13 +44,13 @@ class UsersLib extends TikiLib {
     }
 
     function set_admin_pass($pass) {
-	global $feature_clear_passwords;
+	global $prefs;
 
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array('admin'));
 	$hash = $this->hash_pass($pass);
 
-	if ($feature_clear_passwords == 'n')
+	if ($prefs['feature_clear_passwords'] == 'n')
 	    $pass = '';
 
 	$query = "update `users_users` set `password` = ?, hash = ?
@@ -222,12 +222,12 @@ class UsersLib extends TikiLib {
     
     function genPass() {
 	// AWC: enable mixed case and digits, don't return too short password
-	global $min_pass_length;                                          //AWC
+	global $prefs;                                          //AWC
 
 	$vocales = "AaEeIiOoUu13580";                                     //AWC
 	$consonantes = "BbCcDdFfGgHhJjKkLlMmNnPpQqRrSsTtVvWwXxYyZz24679"; //AWC
 	$r = '';
-	$passlen = ($min_pass_length > 5) ? $min_pass_length : 5;         //AWC
+	$passlen = ($prefs['min_pass_length'] > 5) ? $prefs['min_pass_length'] : 5;         //AWC
 
 	for ($i = 0; $i < $passlen; $i++) {                               //AWC
 	    if ($i % 2) {
@@ -256,14 +256,14 @@ class UsersLib extends TikiLib {
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
     function validate_user(&$user, $pass, $challenge, $response, $validate_phase=false) {
-	global $tikilib, $sender_email, $feature_intertiki, $feature_intertiki_mymaster, $min_pass_length, $user_ldap_attributes;
+	global $tikilib, $prefs, $user_ldap_attributes;
 
-	if ($user != 'admin' && $feature_intertiki == 'y' && !empty($feature_intertiki_mymaster)) {
+	if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 	    // slave intertiki sites should never check passwords locally, just for admin
 	    return false;
 	}
 
-	if (strlen($pass) < $min_pass_length) {
+	if (strlen($pass) < $prefs['min_pass_length']) {
 		return false;
 	}
 	// these will help us keep tabs of what is going on
@@ -273,30 +273,30 @@ class UsersLib extends TikiLib {
 	$userAuthPresent = false;
 
 	// read basic pam options
-	$auth_pam = ($tikilib->get_preference("auth_method", "tiki") == "pam");
-	$pam_create_tiki = ($tikilib->get_preference("pam_create_user_tiki", "n") == "y");
-	$pam_skip_admin = ($tikilib->get_preference("pam_skip_admin", "n") == "y");
+	$auth_pam = ($prefs['auth_method'] == 'pam');
+	$pam_create_tiki = ($prefs['pam_create_user_tiki'] == 'y');
+	$pam_skip_admin = ($prefs['pam_skip_admin'] == 'y');
 
 	// read basic PEAR:Auth options
-	$auth_pear = ($tikilib->get_preference("auth_method", "tiki") == "auth");
-	$create_tiki = ($tikilib->get_preference("auth_create_user_tiki", "n") == "y");
-	$create_auth = ($tikilib->get_preference("auth_create_user_auth", "n") == "y");
-	$skip_admin = ($tikilib->get_preference("auth_skip_admin", "n") == "y");
+	$auth_pear = ($prefs['auth_method'] == 'auth');
+	$create_tiki = ($prefs['auth_create_user_tiki'] == 'y');
+	$create_auth = ($prefs['auth_create_user_auth'] == 'y');
+	$skip_admin = ($prefs['auth_skip_admin'] == 'y');
 	
 	// read basic cas options
 	global $phpcas_enabled;
 	if ($phpcas_enabled == 'y') {
-		$auth_cas = ($tikilib->get_preference('auth_method', 'tiki') == 'cas');
-		$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
-		$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
+		$auth_cas = ($prefs['auth_method'] == 'cas');
+		$cas_create_tiki = ($prefs['cas_create_user_tiki'] == 'y');
+		$cas_skip_admin = ($prefs['cas_skip_admin'] == 'y');
 	} else {
 		$auth_cas = $cas_create_tiki = $cas_skip_admin = false;
 	}
 
 	// see if we are to use Shibboleth
-	$auth_shib = ($tikilib->get_preference('auth_method', 'tiki') == 'shib');
-	$shib_create_tiki = ($tikilib->get_preference('shib_create_user_tiki', 'n') == 'y');
-	$shib_skip_admin = ($tikilib->get_preference('shib_skip_admin', 'n') == 'y');
+	$auth_shib = ($prefs['auth_method'] == 'shib');
+	$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
+	$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
 
 	// first attempt a login via the standard Tiki system
 	// 
@@ -471,7 +471,7 @@ class UsersLib extends TikiLib {
 
 		// Get the affiliation information to log in
 		$shibaffiliarray = split(";",strtoupper($shibaffiliation));
-		$validaffiliarray = split(",",strtoupper($tikilib->get_preference("shib_affiliation", "")));
+		$validaffiliarray = split(",",strtoupper($prefs['shib_affiliation']));
 		$validafil=false;
 		foreach($shibaffiliarray as $affil){
 		   if(in_array($affil, $validaffiliarray)){
@@ -527,8 +527,8 @@ class UsersLib extends TikiLib {
 						// if it worked ok, just log in
 						if ($result == USER_VALID){
 							// Add to the default Group
-							if ($tikilib->get_preference("shib_usegroup", "n") == "y"){
-								$result = $this->assign_user_to_group($user, $tikilib->get_preference("shib_group", "Shibboleth"));
+							if ($prefs['shib_usegroup'] == 'y'){
+								$result = $this->assign_user_to_group($user, $prefs['shib_group']);
 							}
 
 							// before we log in, update the login counter
@@ -655,14 +655,11 @@ class UsersLib extends TikiLib {
 
   // validate the user through PAM
     function validate_user_pam($user, $pass) {
-	global $tikilib;
+	global $tikilib, $prefs;
 
 	// just make sure we're supposed to be here
-	if ($tikilib->get_preference("auth_method", "tiki") != "pam")
+	if ($prefs['auth_method'] != "pam")
 	    return false;
-
-	// get all of the PAM options from the database
-	$pam_service = $tikilib->get_preference("pam_service", "tikiwiki");
 
 // Read page AuthPAM at tw.o, it says about a php module required.
 // maybe and if extension line could be added here... module requires $error
@@ -678,28 +675,22 @@ class UsersLib extends TikiLib {
     
 	// validate the user through CAS
 	function validate_user_cas(&$user) {
-		global $tikilib;
-		global $phpcas_enabled;
+		global $tikilib, $phpcas_enabled, $prefs;
 		if ($phpcas_enabled != 'y') {
 			return SERVER_ERROR;
 		}
 		// just make sure we're supposed to be here
-		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas') {
+		if ($prefs['auth_method'] != 'cas') {
 		    return false;
 		}
 
-		$cas_version = $tikilib->get_preference('cas_version', '1.0');
-		$cas_hostname = $tikilib->get_preference('cas_hostname');
-		$cas_port = $tikilib->get_preference('cas_port');
-		$cas_path = $tikilib->get_preference('cas_path');
-		
 		// import phpCAS lib
 		require_once('phpcas/source/CAS/CAS.php');
 
 		phpCAS::setDebug();
 
 		// initialize phpCAS
-		phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+		phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
 
 		// check CAS authentication
 		phpCAS::forceAuthentication();
@@ -718,43 +709,43 @@ class UsersLib extends TikiLib {
 
     // validate the user in the PEAR::Auth system
     function validate_user_auth($user, $pass) {
-	global $tikilib, $user_ldap_attributes;
+	global $tikilib, $user_ldap_attributes, $prefs;
 
 	include_once ("Auth/Auth.php");
 
 	// just make sure we're supposed to be here
-	if ($tikilib->get_preference("auth_method", "tiki") != "auth")
+	if ($prefs['auth_method'] != 'auth')
 	    return false;
 
 	// get all of the LDAP options from the database
-	$options["url"] = $tikilib->get_preference("auth_ldap_url", "");
-	$options["host"] = $tikilib->get_preference("auth_pear_host", "localhost");
-	$options["port"] = $tikilib->get_preference("auth_pear_port", "389");
-	$options["scope"] = $tikilib->get_preference("auth_ldap_scope", "sub");
-	$options["basedn"] = $tikilib->get_preference("auth_ldap_basedn", "");
-	$options["userdn"] = $tikilib->get_preference("auth_ldap_userdn", "");
-	$options["userattr"] = $tikilib->get_preference("auth_ldap_userattr", "uid");
-	$options["useroc"] = $tikilib->get_preference("auth_ldap_useroc", "posixAccount");
-	$options["groupdn"] = $tikilib->get_preference("auth_ldap_groupdn", "");
-	$options["groupattr"] = $tikilib->get_preference("auth_ldap_groupattr", "cn");
-	$options["groupoc"] = $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
-	$options["memberattr"] = $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
-	$options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
-	$options["version"] = $tikilib->get_preference("auth_ldap_version", 3);
+	$options['url'] = $prefs['auth_ldap_url'];
+	$options['host'] = $prefs['auth_pear_host'];
+	$options['port'] = $prefs['auth_pear_port'];
+	$options['scope'] = $prefs['auth_ldap_scope'];
+	$options['basedn'] = $prefs['auth_ldap_basedn'];
+	$options['userdn'] = $prefs['auth_ldap_userdn'];
+	$options['userattr'] = $prefs['auth_ldap_userattr'];
+	$options['useroc'] = $prefs['auth_ldap_useroc'];
+	$options['groupdn'] = $prefs['auth_ldap_groupdn'];
+	$options['groupattr'] = $prefs['auth_ldap_groupattr'];
+	$options['groupoc'] = $prefs['auth_ldap_groupoc'];
+	$options['memberattr'] = $prefs['auth_ldap_memberattr'];
+	$options['memberisdn'] = ($prefs['auth_ldap_memberisdn'] == 'y');
+	$options['version'] = $prefs['auth_ldap_version'];
 
 	//added to allow for ldap systems that do not allow anonymous bind
-	$options["binddn"] = $tikilib->get_preference("auth_ldap_adminuser", "");
-	$options["bindpw"] = $tikilib->get_preference("auth_ldap_adminpass", "");
+	$options['binddn'] = $prefs['auth_ldap_adminuser'];
+	$options['bindpw'] = $prefs['auth_ldap_adminpass'];
 
 	// attributes to fetch
 	$options['attributes'] = array();
-	if ( $nameattr = $tikilib->get_preference("auth_ldap_nameattr") ) $options['attributes'][] = $nameattr;
+	if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
 
 	// set the Auth options
-	//$a = new Auth("LDAP", $options, "", false, $user, $pass);
+	//$a = new Auth('LDAP', $options, '', false, $user, $pass);
 	
 	//corrected for the Auth v.13 upgrade
-	$a = new Auth("LDAP", $options, "", false);
+	$a = new Auth('LDAP', $options, '', false);
 
 	//added to support Auth v1.3
 	$a->username = $user;
@@ -782,7 +773,7 @@ class UsersLib extends TikiLib {
 
     // validate the user in the Tiki database
     function validate_user_tiki($user, $pass, $challenge, $response, $validate_phase=false) {
-	global $feature_challenge;
+	global $prefs;
 
 	// first verify that the user exists
 	$query = "select * from `users_users` where " . $this->convert_binary(). " `login` = ?";
@@ -810,7 +801,7 @@ class UsersLib extends TikiLib {
 		return array(USER_VALID, $user);
 
 	// next verify the password with every hashes methods
-	if ($feature_challenge == 'n' || empty($response)) {
+	if ($prefs['feature_challenge'] == 'n' || empty($response)) {
 	    if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very old method md5(user.pass.email), for compatibility
  		return array(USER_VALID, $user);
 
@@ -870,28 +861,28 @@ class UsersLib extends TikiLib {
 
     // create a new user in the Auth directory
     function create_user_auth($user, $pass) {
-	global $tikilib, $sender_email, $login_is_email;
+	global $tikilib, $prefs;
 
 	$options = array();
-	$options["url"] = $tikilib->get_preference("auth_ldap_url", "");
-	$options["host"] = $tikilib->get_preference("auth_pear_host", "localhost");
-	$options["port"] = $tikilib->get_preference("auth_pear_port", "389");
-	$options["scope"] = $tikilib->get_preference("auth_ldap_scope", "sub");
-	$options["basedn"] = $tikilib->get_preference("auth_ldap_basedn", "");
-	$options["userdn"] = $tikilib->get_preference("auth_ldap_userdn", "");
-	$options["userattr"] = $tikilib->get_preference("auth_ldap_userattr", "uid");
-	$options["useroc"] = $tikilib->get_preference("auth_ldap_useroc", "posixAccount");
-	$options["groupdn"] = $tikilib->get_preference("auth_ldap_groupdn", "");
-	$options["groupattr"] = $tikilib->get_preference("auth_ldap_groupattr", "cn");
-	$options["groupoc"] = $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
-	$options["memberattr"] = $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
-	$options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
-	$options["binduser"] = $tikilib->get_preference("auth_ldap_adminuser", "");
-	$options["bindpw"] = $tikilib->get_preference("auth_ldap_adminpass", "");
+	$options['url'] = $prefs['auth_ldap_url'];
+	$options['host'] = $prefs['auth_pear_host'];
+	$options['port'] = $prefs['auth_pear_port'];
+	$options['scope'] = $prefs['auth_ldap_scope'];
+	$options['basedn'] = $prefs['auth_ldap_basedn'];
+	$options['userdn'] = $prefs['auth_ldap_userdn'];
+	$options['userattr'] = $prefs['auth_ldap_userattr'];
+	$options['useroc'] = $prefs['auth_ldap_useroc'];
+	$options['groupdn'] = $prefs['auth_ldap_groupdn'];
+	$options['groupattr'] = $prefs['auth_ldap_groupattr'];
+	$options['groupoc'] = $prefs['auth_ldap_groupoc'];
+	$options['memberattr'] = $prefs['auth_ldap_memberattr'];
+	$options['memberisdn'] = ($prefs['auth_ldap_memberisdn'] == 'y');
+	$options['binduser'] = $prefs['auth_ldap_adminuser'];
+	$options['bindpw'] = $prefs['auth_ldap_adminpass'];
 
 	// set additional attributes here
 	$userattr = array();
-	$userattr["email"] = ( $login_is_email == 'y' ) ? $user : $this->getOne("select `email` from `users_users` where `login`=?", array($user));
+	$userattr['email'] = ( $prefs['login_is_email'] == 'y' ) ? $user : $this->getOne("select `email` from `users_users` where `login`=?", array($user));
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options);
@@ -1358,15 +1349,15 @@ function get_included_groups($group, $recur=true) {
 		return $home;
 	}
 	function get_user_default_homepage2($user) {
-		global $useGroupHome, $wikiHomePage;
-		if ($useGroupHome == 'y') {
+		global $prefs;
+		if ($prefs['useGroupHome'] == 'y') {
 			$groupHome = $this->get_user_default_homepage($user);
 			if ($groupHome)
 				$p = $groupHome;
  			else
-				$p = $wikiHomePage;
+				$p = $prefs['wikiHomePage'];
 		} else {
-			$p = $wikiHomePage;
+			$p = $prefs['wikiHomePage'];
 		}
 		return $p;
 	}
@@ -1412,7 +1403,7 @@ function get_included_groups($group, $recur=true) {
     }
 
     function get_user_info($user, $inclusion = false, $field = 'login') {
-    	global $login_is_email;
+    	global $prefs;
 	if ( $field == 'userId' ) $user = (int)$user;
 	elseif ( $field != 'login' ) return false;
 
@@ -1421,7 +1412,7 @@ function get_included_groups($group, $recur=true) {
 
 	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($user) : $this->get_user_groups($user);
 	$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
-	if ( $login_is_email == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
+	if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
 
 	return $res;
     }
@@ -1818,9 +1809,9 @@ function get_included_groups($group, $recur=true) {
     }
 
     function hash_pass($pass, $salt = NULL) {
-	global $feature_crypt_passwords;
+	global $prefs;
 
-	$hashmethod=$feature_crypt_passwords;
+	$hashmethod=$prefs['feature_crypt_passwords'];
 
 	if (!is_null($salt)) {
 	    $len=strlen($salt);
@@ -1866,7 +1857,7 @@ function get_included_groups($group, $recur=true) {
     }
 
     function confirm_user($user) {
-	global $feature_clear_passwords,$cachelib;
+	global $prefs,$cachelib;
 
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
@@ -1874,7 +1865,7 @@ function get_included_groups($group, $recur=true) {
 	$hash = $this->hash_pass($res['provpass']);
 	$provpass = $res["provpass"];
 
-	if ($feature_clear_passwords == 'n') {
+	if ($prefs['feature_clear_passwords'] == 'n') {
 	    $provpass = '';
 	}
 
@@ -1891,7 +1882,7 @@ function get_included_groups($group, $recur=true) {
     }
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
-	global $tikilib, $cachelib, $patterns, $email_due, $feature_clear_passwords, $validateRegistration;
+	global $tikilib, $cachelib, $patterns, $prefs;
 	
 	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
 	    return false;
@@ -1905,14 +1896,14 @@ function get_included_groups($group, $recur=true) {
 	else
 	{
 		$hash = '';
-		if (!isset($validateRegistration) || $validateRegistration != 'y')  $lastLogin = time();
+		if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y')  $lastLogin = time();
 	}
 		
 	if ($valid == 'n') {
 		$valid = $pass;
 	}
 
-	if ( $feature_clear_passwords == 'n' ) $pass = '';
+	if ( $prefs['feature_clear_passwords'] == 'n' ) $pass = '';
 
 	if ( $pass_first_login ) {
 		$new_pass_confirm = 0;
@@ -1941,7 +1932,7 @@ function get_included_groups($group, $recur=true) {
 
 	$this->assign_user_to_group($user, 'Registered');
 
-	if( $tikilib->get_preference("eponymousGroups", 'n') == 'y' )
+	if( $prefs['eponymousGroups'] == 'y' )
 	{
 	    // Create a group just for this user, for permissions
 	    // assignment.
@@ -1957,12 +1948,13 @@ function get_included_groups($group, $recur=true) {
     }
     
     function set_user_default_preferences($user) {
-    
-	$users_prefs = $this->get_preferences('users_prefs_%');
-	foreach( $users_prefs as $pref => $value ) {
-		$pref_name = substr( $pref, 12 );
-		if($pref == 'users_prefs_email_is_public') {
+    	global $prefs;
+	foreach( $prefs as $pref => $value ) {
+		if ( ! ereg('^users_prefs_', $pref) ) continue;
+		if ($pref == 'users_prefs_email_is_public') {
 			$pref_name = 'email is public';
+		} else {
+			$pref_name = substr( $pref, 12 );
 		}
 		$this->set_user_preference($user, $pref_name, $value);
 	}
@@ -2013,18 +2005,18 @@ function get_included_groups($group, $recur=true) {
     }
 
     function get_user_email($user) {
-    	global $login_is_email;
-        return ( $login_is_email == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+    	global $prefs;
+        return ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) ? $user : $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
     }
 
     /**
      *  Returns the contact users' email if set and permitted by Admin->Features settings
      */
     function get_admin_email() {
-        global $user, $contact_anon, $feature_contact, $tikilib, $contact_user;
-        if (( !isset($user) && isset($contact_anon) && $contact_anon == 'y' ) ||
-                ( isset($user) && $user != "" && isset($feature_contact) && $feature_contact == 'y' )) {
-            return $tikilib->get_preference('sender_email', $this->get_user_email($contact_user));
+        global $user, $prefs, $tikilib;
+        if (( !isset($user) && isset($prefs['contact_anon']) && $prefs['contact_anon'] == 'y' ) ||
+                ( isset($user) && $user != '' && isset($prefs['feature_contact']) && $prefs['feature_contact'] == 'y' )) {
+            return isset($prefs['sender_email']) ? $prefs['sender_email'] : $this->get_user_email($prefs['contact_user']);
         }
     }
 
@@ -2041,9 +2033,9 @@ function get_included_groups($group, $recur=true) {
     }
 
 	function create_user_cookie($user) {
-		global $remembertime;
+		global $prefs;
 		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
-		$hash.= ".". ($this->now + $remembertime);
+		$hash.= ".". ($this->now + $prefs['remembertime']);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
 	}
@@ -2078,31 +2070,31 @@ function get_included_groups($group, $recur=true) {
     }
     
     function is_due($user) {
-    	global $change_password, $phpcas_enabled, $auth_method, $pass_due;
+    	global $prefs, $phpcas_enabled;
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-    	if (($phpcas_enabled == 'y' and $auth_method == 'cas') || $change_password != 'y') {
+    	if (($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas') || $prefs['change_password'] != 'y') {
     		return false;
     	}
 		$confirm = $this->getOne("select `pass_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 		if (!$confirm) {
 			return true;
 		}
-		if ($pass_due < 0) {
+		if ($prefs['pass_due'] < 0) {
 			return false;
 		}
-		if ($confirm + (60 * 60 * 24 * $pass_due) < $this->now) {
+		if ($confirm + (60 * 60 * 24 * $prefs['pass_due']) < $this->now) {
 		    return true;
 		}
 		return false;
     }
 
     function is_email_due($user) {
-    	global $email_due;
-		if ($email_due < 0) {
+    	global $prefs;
+		if ($prefs['email_due'] < 0) {
 			return false;
 		}
 		$confirm = $this->getOne("select `email_confirm`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
-		if ($confirm + (60 * 60 * 24 * $email_due) < $this->now) {
+		if ($confirm + (60 * 60 * 24 * $prefs['email_due']) < $this->now) {
 		    return true;
 		}
 		return false;
@@ -2135,12 +2127,12 @@ function get_included_groups($group, $recur=true) {
     }
 
     function change_user_password($user, $pass) {
-	global $feature_clear_passwords;
+	global $prefs;
 
 	$hash = $this->hash_pass($pass);
 	$new_pass_confirm = $this->now;
 
-	if ($feature_clear_passwords == 'n') {
+	if ($prefs['feature_clear_passwords'] == 'n') {
 	    $pass = '';
 	}
 
@@ -2220,13 +2212,13 @@ function get_included_groups($group, $recur=true) {
     }
 
     function set_user_fields($u) {
-	global $feature_clear_passwords;
+	global $prefs;
 
 	$q = array();
 	$bindvars = array();
 
 	if (@$u['password']) {
-	    if ($feature_clear_passwords == 's') {
+	    if ($prefs['feature_clear_passwords'] == 's') {
 		$q[] = "`password` = ?";
 		$bindvars[] = strip_tags($u['password']);
 	    }
@@ -2474,7 +2466,7 @@ function get_included_groups($group, $recur=true) {
 		return $ret;									
 	}
 	function send_validation_email($name, $apass, $email, $again='') {
-		global $tikilib, $validateRegistration, $validateUsers, $sender_email, $smarty, $contact_user;
+		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
 		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
@@ -2486,18 +2478,18 @@ function get_included_groups($group, $recur=true) {
 		$smarty->assign('mail_email', $email);
 		$smarty->assign('mail_again', $again);
 		include_once('lib/webmail/tikimaillib.php');
-		if ($validateRegistration == 'y') {
+		if ($prefs['validateRegistration'] == 'y') {
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
-			if ($sender_email == NULL or !$sender_email) {
+			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {
 				include_once('lib/messu/messulib.php');
-				$messulib->post_message($contact_user, $contact_user, $contact_user, '', $mail_subject, $mail_data, 5);
+				$messulib->post_message($prefs['contact_user'], $prefs['contact_user'], $prefs['contact_user'], '', $mail_subject, $mail_data, 5);
 				$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
 			} else {
 				$mail = new TikiMail();
 				$mail->setText($mail_data);
 				$mail->setSubject($mail_subject);
-				if (!$mail->send(array($sender_email))) {
+				if (!$mail->send(array($prefs['sender_email']))) {
 					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 					return false;
 				} elseif (empty($again)) {
@@ -2506,7 +2498,7 @@ function get_included_groups($group, $recur=true) {
 					$smarty->assign('msg', tra('The administrator has not yet validated your account. Please wait.'));
 				}
 			}
-		} elseif ($validateUsers == 'y') {
+		} elseif ($prefs['validateUsers'] == 'y') {
 			$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
 			$mail = new TikiMail();
 			$mail->setText($mail_data);
@@ -2544,7 +2536,7 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function confirm_email($user, $pass) {
-		global $email_due, $tikilib;
+		global $prefs, $tikilib;
 		$query = 'select `provpass`, `login`, `unsuccessful_logins` from `users_users` where `login`=?';
 		$result = $this->query($query, array($user));
 		if (!($res = $result->fetchRow())) {
@@ -2564,9 +2556,9 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function send_confirm_email($user,$tpl='confirm_user_email') {
-		global $smarty, $language, $tikilib;
+		global $smarty, $prefs, $tikilib;
 		include_once ('lib/webmail/tikimaillib.php');
-		$languageEmail = $this->get_user_preference($_REQUEST["username"], "language", $language);
+		$languageEmail = $this->get_user_preference($_REQUEST["username"], "language", $prefs['site_language']);
 		$apass = $this->renew_user_password($user);
 		$apass = md5($apass);
 		$smarty->assign('mail_apass',$apass);

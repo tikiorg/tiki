@@ -1,6 +1,6 @@
 <?php 
 require_once ('tiki-setup.php');
-if ($lang_use_db != 'y') {
+if ($prefs['lang_use_db'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
 	$smarty->assign('error', 'y');
 	$smarty->display("tiki-interactive_trans.tpl");

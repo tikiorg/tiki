@@ -8,8 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once $smarty->_get_plugin_filepath('modifier','tiki_date_format');
 function smarty_modifier_tiki_short_datetime($string) {
-	global $short_date_format, $short_time_format;
-	return smarty_modifier_tiki_date_format($string, $short_date_format.' '.$short_time_format);
+	global $prefs;
+	return smarty_modifier_tiki_date_format($string, $prefs['short_date_format'].' '.$prefs['short_time_format']);
 }
 
 ?>

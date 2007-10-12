@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.61 2007-07-25 02:33:19 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/blogs/bloglib.php,v 1.62 2007-10-12 07:55:39 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -29,9 +29,8 @@ class BlogLib extends TikiLib {
 	}
 
 	function add_blog_hit($blogId) {
-		global $count_admin_pvs;
-		global $user;
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		global $prefs, $user;
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
 			$result = $this->query($query,array((int) $blogId));
 		}
@@ -77,8 +76,8 @@ class BlogLib extends TikiLib {
 		$this->query($query,array($imgId));
 	}
 
-	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find,
-		$allow_comments, $show_avatar) {
+	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find, $allow_comments, $show_avatar) {
+		global $prefs;
 		if ($blogId) {
 			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
 
@@ -91,14 +90,12 @@ class BlogLib extends TikiLib {
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
 			$blogId = $this->getOne($query2,array((int) $this->now));
 
-			global $feature_score;
-			if ($feature_score == 'y') {
+			if ($prefs['feature_score'] == 'y') {
 			    $this->score_event($user, 'blog_new');
 			}
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blogs', $blogId);
 		}
@@ -169,13 +166,9 @@ class BlogLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
+		global $prefs, $userlib, $user, $tiki_p_admin;
 		while ($res = $result->fetchRow()) {
-
 		    $add = TRUE;
-		    global $feature_categories;
-		    global $userlib;
-		    global $user;
-		    global $tiki_p_admin;
 	
 		    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['blogId'], 'blog')) {
 		    // quiz permissions override category permissions
@@ -183,7 +176,7 @@ class BlogLib extends TikiLib {
 				{
 				    $add = FALSE;
 				}
-		    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    } elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 		    	// no quiz permissions so now we check category permissions
 		    	global $categlib;
 				if (!is_object($categlib)) {
@@ -221,11 +214,8 @@ class BlogLib extends TikiLib {
 
 	function blog_post($blogId, $data, $user, $title = '', $contributions='', $priv='n') {
 		// update tiki_blogs and call activity functions
-		global $smarty;
-		global $tikilib, $feature_categories;
+		global $smarty, $tikilib, $prefs;
 
-		global $feature_user_watches;
-		global $sender_email;
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`priv`) values(?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $blogId,$data,(int) $this->now,$user,$title,$priv));
@@ -235,7 +225,7 @@ class BlogLib extends TikiLib {
 		$result = $this->query($query,array((int) $this->now,(int) $blogId));
 		$this->add_blog_activity($blogId);
 
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			$nots = $this->get_event_watches('blog_post', $blogId);
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -252,8 +242,8 @@ class BlogLib extends TikiLib {
 				$smarty->assign('mail_date', $this->now);
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
-				global $feature_contribution;
-				if ($feature_contribution == 'y' && !empty($contributions)) {
+
+				if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
 					$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 				}
@@ -268,18 +258,16 @@ class BlogLib extends TikiLib {
 			}
 		}
 
-		global $feature_score;
-		if ($feature_score == 'y') {
+		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'blog_post');
 		}
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Posted', $blogId, 'blog', "blogId=$blogId&amp;postId=$id&amp;add=".strlen($data)."#postId$id", '', '', '', '', $contributions);
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blog_posts', $id);
 		}
@@ -307,8 +295,8 @@ class BlogLib extends TikiLib {
 			$blogId = 0;
 		}
 
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+		global $prefs;
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$param = "blogId=$blogId&amp;postId=$postId";
 			if ($blogId)
@@ -343,15 +331,14 @@ class BlogLib extends TikiLib {
 	}
 
 	function update_post($postId, $blogId, $data, $user, $title = '', $contributions='', $old_data='', $priv='n') {
-		global $feature_actionlog;
+		global $prefs;
 		$query = "update `tiki_blog_posts` set `blogId`=?,`data`=?,`user`=?,`title`=?, `priv`=? where `postId`=?";
 		$result = $this->query($query,array($blogId,$data,$user,$title,$priv,$postId));
-		if ($feature_actionlog == 'y') {
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Updated', $blogId, 'blog', "blogId=$blogId&amp;postId=$postId#postId$postId", '', '', '', '', $contributions);
 		}
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('blog_posts', $postId);
 		}

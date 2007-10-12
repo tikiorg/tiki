@@ -2,7 +2,7 @@
 include 'tiki-setup.php';
 include_once ('lib/trackers/trackerlib.php');
 
-if ($feature_gmap != 'y') {
+if ($prefs['feature_gmap'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').": feature_gmap");
 	$smarty->display("error.tpl");
 	die;
@@ -22,17 +22,17 @@ if ($user and isset($_REQUEST['default'])) {
 	$tikilib->set_user_preference($userwatch, 'gmap_defy', $d['y']);
 	$tikilib->set_user_preference($userwatch, 'gmap_defz', $d['z']);
 } elseif ($user and isset($_REQUEST['reset_default'])) {
-	$tikilib->set_user_preference($userwatch, 'gmap_defx', $gmap_defaultx);
-	$tikilib->set_user_preference($userwatch, 'gmap_defy', $gmap_defaulty);
-	$tikilib->set_user_preference($userwatch, 'gmap_defz', $gmap_defaultz);
+	$tikilib->set_user_preference($userwatch, 'gmap_defx', $prefs['gmap_defaultx']);
+	$tikilib->set_user_preference($userwatch, 'gmap_defy', $prefs['gmap_defaulty']);
+	$tikilib->set_user_preference($userwatch, 'gmap_defz', $prefs['gmap_defaultz']);
 }
 
-$gmap_defaultx = $tikilib->get_user_preference($userwatch,'gmap_defx',$gmap_defaultx);
-$gmap_defaulty = $tikilib->get_user_preference($userwatch,'gmap_defy',$gmap_defaulty);
-$gmap_defaultz = $tikilib->get_user_preference($userwatch,'gmap_defz',$gmap_defaultz);
-$smarty->assign('gmap_defaultx',$gmap_defaultx);
-$smarty->assign('gmap_defaulty',$gmap_defaulty);
-$smarty->assign('gmap_defaultz',$gmap_defaultz);
+$prefs['gmap_defaultx'] = $tikilib->get_user_preference($userwatch,'gmap_defx',$prefs['gmap_defaultx']);
+$prefs['gmap_defaulty'] = $tikilib->get_user_preference($userwatch,'gmap_defy',$prefs['gmap_defaulty']);
+$prefs['gmap_defaultz'] = $tikilib->get_user_preference($userwatch,'gmap_defz',$prefs['gmap_defaultz']);
+$smarty->assign('gmap_defaultx',$prefs['gmap_defaultx']);
+$smarty->assign('gmap_defaulty',$prefs['gmap_defaulty']);
+$smarty->assign('gmap_defaultz',$prefs['gmap_defaultz']);
 
 $smarty->assign('input','n');
 if ($user and isset($_REQUEST['for'])) {
@@ -45,7 +45,7 @@ if ($user and isset($_REQUEST['for'])) {
 		}
 		$pointx = $tikilib->get_user_preference($userwatch,'lon','');
 		$pointy = $tikilib->get_user_preference($userwatch,'lat','');
-		$pointz = $tikilib->get_user_preference($userwatch,'zoom',$gmap_defaultz);
+		$pointz = $tikilib->get_user_preference($userwatch,'zoom',$prefs['gmap_defaultz']);
 		$smarty->assign('pointx',$pointx);
 		$smarty->assign('pointy',$pointy);
 		$smarty->assign('pointz',$pointz);

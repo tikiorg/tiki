@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.45 2007-10-08 12:21:56 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46 2007-10-12 07:55:50 nyloth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -111,7 +111,7 @@
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 <th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 {if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
-{if $feature_contributor_wiki eq 'y'}<th class="heading">{tr}contributor{/tr}</th>{/if}
+{if $prefs.feature_contributor_wiki eq 'y'}<th class="heading">{tr}contributor{/tr}</th>{/if}
 {if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
@@ -133,7 +133,7 @@
 {$actionlogs[ix].contributions[iy].name}
 {/section}
 </td>
-{if $feature_contributor_wiki eq 'y'}
+{if $prefs.feature_contributor_wiki eq 'y'}
 <td class="{cycle advance=false}">
 {section name=iy loop=$actionlogs[ix].contributors}
 {if !$smarty.section.iy.first}, {/if}

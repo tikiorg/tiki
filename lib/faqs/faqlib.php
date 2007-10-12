@@ -119,11 +119,9 @@ class FaqLib extends TikiLib {
 	}
 
 	function add_faq_hit($faqId) {
-		global $count_admin_pvs;
+		global $prefs, $user;
 
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_faqs` set `hits`=`hits`+1 where `faqId`=?";
 
 			$result = $this->query($query,array($faqId));
@@ -145,8 +143,8 @@ class FaqLib extends TikiLib {
 			$questionId = $this->getOne('select max(questionId) from `tiki_faq_questions` where `faqId`=?', $faqId);
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('faq_questions', $questionId);
 		}
@@ -168,8 +166,8 @@ class FaqLib extends TikiLib {
 			$faqId = $this->getOne('select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?', array($title, (int) $this->now));
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('faqs', $faqId);
 		}

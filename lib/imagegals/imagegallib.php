@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.96 2007-09-06 00:31:29 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97 2007-10-12 07:55:41 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -9,6 +9,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class ImageGalsLib extends TikiLib {
 	function ImageGalsLib($db) {
+		global $prefs;
+
 		$this->TikiLib($db);
 		$exts=get_loaded_extensions();
 
@@ -56,7 +58,7 @@ class ImageGalsLib extends TikiLib {
 		//what shall we use?
 
 		//$this->uselib = "gd";
-		$this->uselib = $this->get_preference('gal_use_lib', 'gd');
+		$this->uselib = $prefs['gal_use_lib'];
 
 		if ($this->uselib == "imagick") {
 			$this->canrotate = true;
@@ -413,12 +415,8 @@ class ImageGalsLib extends TikiLib {
 
 	// Batch image uploads todo
 	function process_batch_image_upload($galleryId, $file, $user) {
-		global $gal_match_regex;
+		global $prefs;
 
-		global $gal_nmatch_regex;
-		global $gal_use_db;
-		global $gal_use_dir;
-		global $tmpDir;
 		$numimages = 0;
 		include_once ('lib/pclzip.lib.php');
 		$archive = new PclZip($file);
@@ -437,18 +435,18 @@ class ImageGalsLib extends TikiLib {
 
 				$upl = 1;
 
-				if (!empty($gal_match_regex)) {
-					if (!preg_match("/$gal_match_regex/", $file, $reqs))
+				if (!empty($prefs['gal_match_regex'])) {
+					if (!preg_match('/'.$prefs['gal_match_regex'].'/', $file, $reqs))
 						$upl = 0;
 				}
 
-				if (!empty($gal_nmatch_regex)) {
-					if (preg_match("/$gal_nmatch_regex/", $file, $reqs))
+				if (!empty($prefs['gal_nmatch_regex'])) {
+					if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $file, $reqs))
 						$upl = 0;
 				}
 				//extract file
 				$archive->extractByIndex($ziplist["$i"]["index"],
-					$tmpDir, dirname($file)); //extract and remove (dangerous) pathname
+					$prefs['tmpDir'], dirname($file)); //extract and remove (dangerous) pathname
 				$file = basename($file);
 
 				//unset variables
@@ -457,13 +455,13 @@ class ImageGalsLib extends TikiLib {
 				unset ($this->ysize);
 
 				//determine filetype and dimensions
-				$this->getfileinfo($tmpDir . "/" . $file);
+				$this->getfileinfo($prefs['tmpDir'] . "/" . $file);
 				
 				$foo=explode(".",$file);
 				$exp=end($foo);
 				// read image and delete it after
-				$this->readimagefromfile($tmpDir . "/" . $file);
-				unlink ($tmpDir . "/" . $file);
+				$this->readimagefromfile($prefs['tmpDir'] . "/" . $file);
+				unlink ($prefs['tmpDir'] . "/" . $file);
 
 				if ($this->issupported($exp)) {
 					// convert to handle
@@ -492,18 +490,14 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function add_image_hit($id) {
-		global $count_admin_pvs;
+		global $prefs, $user;
 
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_images` set `hits`=`hits`+1 where `imageId`=?";
-
 			$result = $this->query($query,array((int)$id));
 		}
 
-		global $feature_score;
-		if ($feature_score == 'y') {
+		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'igallery_see_img', $id);
 		    $query = "select `user` from `tiki_images` where `imageId`=?";
 		    $owner = $this->getOne($query, array((int)$id));
@@ -514,18 +508,15 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function add_gallery_hit($id) {
-		global $count_admin_pvs;
+		global $prefs, $user;
 
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 
 			$result = $this->query($query,array((int) $id));
 		}
 
-		global $feature_score;
-		if ($feature_score == 'y') {
+		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'igallery_see', $id);
 		    $query = "select `user` from `tiki_galleries` where `galleryId`=?";
 		    $owner = $this->getOne($query, array((int)$id));
@@ -573,14 +564,12 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function store_image_data($overwrite = false) {
-		global $gal_use_dir;
-
-		global $gal_use_db;
+		global $prefs;
 
 		$size = strlen($this->image);
 		$fhash = "";
 
-		if ($gal_use_db == 'y') {
+		if ($prefs['gal_use_db'] == 'y') {
 			// Prepare to store data in database
 		} else {
 			// Store data in directory
@@ -606,7 +595,7 @@ class ImageGalsLib extends TikiLib {
 			}
 
 			$fhash = $this->path . $ext; //Path+extension
-			@$fw = fopen($gal_use_dir . $fhash, "wb");
+			@$fw = fopen($prefs['gal_use_dir'] . $fhash, "wb");
 
 			if (!$fw) {
 				return false;
@@ -637,12 +626,12 @@ class ImageGalsLib extends TikiLib {
 			where
 			`imageId`=? and `type`=? and
 			`xsize`=? and `ysize`=?";
-			 $bindvars=array($this->filetype,$this->filename,($gal_use_db == 'y')?$this->image:'',(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
+			 $bindvars=array($this->filetype,$this->filename,($prefs['gal_use_db'] == 'y')?$this->image:'',(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
 		} else {
 			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
                                 `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,($gal_use_db == 'y')?$this->image:'');
+			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,($prefs['gal_use_db'] == 'y')?$this->image:'');
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -680,8 +669,7 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		// now we can start rebuilding the image
-		global $gal_use_dir;
-		global $gal_use_db;
+		global $prefs;
 		//if(!function_exists("ImageCreateFromString")) return false;
 		#get image and other infos
 		$this->get_image($imageid);
@@ -724,9 +712,7 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function rebuild_thumbnails($galleryId) {
-		global $gal_use_dir;
-
-		global $gal_use_db;
+		global $prefs;
 
 		// rewritten by flo
 		$query = "select `imageId`, `path` from `tiki_images` where `galleryId`=?";
@@ -738,7 +724,7 @@ class ImageGalsLib extends TikiLib {
 			$result2 = $this->query($query2,array((int)$res["imageId"],'t'));
 
 			if (strlen($res["path"]) > 0) {
-				$ftn = $gal_use_dir . $res["path"] . ".thumb";
+				$ftn = $prefs['gal_use_dir'] . $res["path"] . ".thumb";
 
 				if (file_exists($ftn)) {
 					unlink ($ftn);
@@ -754,7 +740,7 @@ class ImageGalsLib extends TikiLib {
 		// automatic rebuild
 		// give either a galleryId for rebuild complete gallery or
 		// a imageId for a image rebuild
-    global $gal_use_dir;
+    global $prefs;
 		if ($imageId == -1) {
 			//gallery mode
 			//mysql does'nt have subqueries. Bad.
@@ -778,7 +764,7 @@ class ImageGalsLib extends TikiLib {
 				    if($res2['type']=='s') { $ext = ".scaled_" . $res2['xsize'] . "x" . $res2['ysize'];}
 				    if($res2['type']=='t') { $ext = ".thumb";}
             if($res2['type']=='s' || $res2['type']=='t') { // in case we add other types later
-              @unlink($gal_use_dir.$res['path'].$ext );
+              @unlink($prefs['gal_use_dir'].$res['path'].$ext );
             }
           }
 				}
@@ -794,7 +780,7 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function edit_image($id, $name, $description, $lat=NULL, $lon=NULL, $file=NULL) {
-		global $gal_use_db, $gal_use_dir;
+		global $prefs;
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
@@ -806,13 +792,13 @@ class ImageGalsLib extends TikiLib {
 			$data =  fread($fp, $file['size']);
 			$etag = md5($data);
 			fclose($fp);
-			if ($gal_use_db == 'y') {
+			if ($prefs['gal_use_db'] == 'y') {
 				$query = "update `tiki_images_data` set `data`=?, `etag`=?, `filename`=? where `imageId` = ? and `type`=?";
 				$result = $this->query($query,array($data, $etag, $file['name'], (int)$id, 'o'));
 			} else {
 				$query = "select `path` from `tiki_images` where `imageId`=?";
 				$path = $this->getOne($query, $id);
-				if (!move_uploaded_file($file['tmp_name'], $gal_use_dir.$path)) {
+				if (!move_uploaded_file($file['tmp_name'], $prefs['gal_use_dir'].$path)) {
 					return false;
 				}
 				$query = "update `tiki_images_data` set `etag`=?,`filename`=? where `imageId` = ? and `type`=?";
@@ -822,8 +808,7 @@ class ImageGalsLib extends TikiLib {
 			$result = $this->query($query, array((int)$id, 'o'));
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('images', $id);
 		}
@@ -832,9 +817,8 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type ,$lat=NULL, $lon=NULL, $gal_info=NULL) {
-		global $gal_use_db;
+		global $prefs;
 
-		global $gal_use_dir;
 		$name = strip_tags($name);
 		$description = strip_tags($description);
 		if ($t_data && is_string($t_data)) {
@@ -842,13 +826,13 @@ class ImageGalsLib extends TikiLib {
 		}
 		$path = '';
 
-		if ($gal_use_db == 'y') {
+		if ($prefs['gal_use_db'] == 'y') {
 			// Prepare to store data in database
 		} else {
 			// Store data in directory
 			$fhash = md5(uniqid($filename));
 
-			@$fw = fopen($gal_use_dir . $fhash, "wb");
+			@$fw = fopen($prefs['gal_use_dir'] . $fhash, "wb");
 
 			if (!$fw) {
 				return false;
@@ -858,7 +842,7 @@ class ImageGalsLib extends TikiLib {
 			fclose ($fw);
 
 			if ($t_data) {
-				@$fw = fopen($gal_use_dir . $fhash . '.thumb', "wb");
+				@$fw = fopen($prefs['gal_use_dir'] . $fhash . '.thumb', "wb");
 
 				if (!$fw) {
 					return false;
@@ -898,17 +882,17 @@ class ImageGalsLib extends TikiLib {
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int)$this->now,(int)$galleryId));
 
-		global $feature_score;
-		if ($feature_score == 'y') {
+		global $prefs;
+		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'igallery_new_img');
 		}
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Uploaded', $galleryId, 'image gallery', 'imageId='.$imageId);
 		}
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('images', $imageId);
 		}
@@ -919,8 +903,8 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function notify($imageId, $galleryId, $name, $filename, $description, $galleryName, $user) {
-		global $feature_user_watches;
-		if ($feature_user_watches == 'y') {
+		global $prefs;
+		if ($prefs['feature_user_watches'] == 'y') {
 			include_once('lib/notifications/notificationemaillib.php');
 			global $smarty, $tikilib;
 			$nots = $this->get_event_watches('image_gallery_changed', $galleryId);
@@ -941,9 +925,8 @@ class ImageGalsLib extends TikiLib {
 
 	function rotate_image($id, $angle) {
 		//get image
-		global $gal_use_dir;
+		global $prefs;
 
-		global $gal_use_db;
 		$this->get_image($id);
 
 		$this->rotateimage($angle);
@@ -962,19 +945,19 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function remove_image($id) {
-		global $gal_use_dir;
+		global $prefs;
 
 		$path = $this->getOne("select `path` from `tiki_images` where `imageId`=?",array($id));
 
 		if ($path) {
-			@unlink ($gal_use_dir . $path);
+			@unlink ($prefs['gal_use_dir'] . $path);
 
-			@unlink ($gal_use_dir . $path . '.thumb');
+			@unlink ($prefs['gal_use_dir'] . $path . '.thumb');
 		  // remove scaled images
 		  $query = "select i.`path`, d.`xsize`, d.`ysize` from `tiki_images` i, `tiki_images_data` d where i.`imageId`=d.`imageId` and i.`imageId`=? and d.`type`=?";
 		  $result=$this->query($query,array($id,'s'));
 		  while($res = $result->fetchRow()) {
-                    @unlink ($gal_use_dir . $path . '.scaled_'.$res['xsize'].'x'.$res['ysize']);
+                    @unlink ($prefs['gal_use_dir'] . $path . '.scaled_'.$res['xsize'].'x'.$res['ysize']);
 		  }
 		}
 
@@ -1360,20 +1343,17 @@ class ImageGalsLib extends TikiLib {
 	    $cant = $this->getOne($query_cant,$bindvars);
 	    $ret = array();
 
+	    global $prefs, $userlib, $user, $tiki_p_admin;
 	    while ($res = $result->fetchRow()) {
 
 		$add = TRUE;
-		global $feature_categories;
-		global $userlib;
-		global $user;
-		global $tiki_p_admin;
 
 		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'image gallery')) {
 		    // gallery permissions override category permissions
 		    if (!$userlib->object_has_permission($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
 			$add = FALSE;
 		    }
-		} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 		    // no forum permissions so now we check category permissions
 		    global $categlib;
 		    if (!is_object($categlib)) {
@@ -1583,9 +1563,8 @@ class ImageGalsLib extends TikiLib {
 
 	// Add an option to establish Image size (x,y)
 	function get_image($id, $itype = 'o', $xsize = 0, $ysize = 0) {
-		global $gal_use_db;
+		global $prefs;
 
-		global $gal_use_dir;
 		$mid = "";
 
 		if ($itype == 't') {
@@ -1690,10 +1669,10 @@ class ImageGalsLib extends TikiLib {
 
 			// If the image was a .gif then the thumbnail has 0 bytes if the thumbnail
 			// is empty then use the full image as thumbnail
-			//  if($ext==".thumb" && filesize($gal_use_dir.$res["path"].$ext)==0 ) {
+			//  if($ext==".thumb" && filesize($prefs['gal_use_dir'].$res["path"].$ext)==0 ) {
 			//   $ext='';
 			//}
-			$this->readimagefromfile($gal_use_dir . $res["path"] . $ext);
+			$this->readimagefromfile($prefs['gal_use_dir'] . $res["path"] . $ext);
 		} else {
 			$this->image = $res["data"];
 		}
@@ -1794,6 +1773,8 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o',$geographic	= 'n') {
+		global $prefs;
+
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -1823,14 +1804,12 @@ class ImageGalsLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $this->now));
 
-			global $feature_score;
-			if ($feature_score == 'y') {
+			if ($prefs['feature_score'] == 'y') {
 			    $this->score_event($user, 'igallery_new');
 			}
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('galleries', $galleryId);
 		}
@@ -1860,7 +1839,7 @@ class ImageGalsLib extends TikiLib {
         }
 
 	function remove_gallery($id) {
-		global $gal_use_dir;
+		global $prefs;
 
 		$query = "select `imageId`,path from `tiki_images` where `galleryId`=?";
 		$result = $this->query($query,array((int) $id));
@@ -1894,7 +1873,7 @@ class ImageGalsLib extends TikiLib {
 				}
 
 				if ($path) {
-					@unlink ($gal_use_dir . $path . $ext);
+					@unlink ($prefs['gal_use_dir'] . $path . $ext);
 				}
 			}
 
@@ -1969,10 +1948,8 @@ class ImageGalsLib extends TikiLib {
 
 	//Capture Images from wiki, blogs, ....
 	function capture_images($data) {
-		global $tmpDir;
-		global $tikilib;
-		$cacheimages = $this->get_preference("cacheimages", 'n');
-		if ($cacheimages != 'y')
+		global $prefs, $tikilib;
+		if ($prefs['cacheimages'] != 'y')
 			return $data;
 
 		preg_match_all("/src=\"([^\"]+)\"/", $data, $reqs1);
@@ -2042,7 +2019,7 @@ class ImageGalsLib extends TikiLib {
 							// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
 							//$tmpfname = 'temp.jpg';
 							//$tmpfname = tempnam("/tmp", "img");
-							$tmpfname = tempnam($tmpDir, "img");
+							$tmpfname = tempnam($prefs['tmpDir'], "img");
 							imagejpeg($t, $tmpfname);
 							// Now read the information
 							$fp = fopen($tmpfname, "rb");
@@ -2074,23 +2051,23 @@ class ImageGalsLib extends TikiLib {
 		return $page_data;
 	}
 	function get_one_image_from_disk($userfile, $galleryId=0, $name='', $description='', $gal_info='') {
-		global $tmpDir, $user;
+		global $prefs, $user;
 		$ret = array();
 		if (is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
 			$file_name = $_FILES[$userfile]['name'];
 			$ret['filename'] = $file_name;
-			if (!empty($gal_match_regex) && !preg_match("/$gal_match_regex/", $file_name, $reqs)) {
+			if (!empty($prefs['gal_match_regex']) && !preg_match('/'.$prefs['gal_match_regex'].'/', $file_name, $reqs)) {
 				$ret['msg'] = tra('Invalid imagename (using filters for filenames)');
 				return $ret;
 			}
-			if (!empty($gal_nmatch_regex) && preg_match("/$gal_nmatch_regex/", $file_name, $reqs)) {
+			if (!empty($prefs['gal_nmatch_regex']) && preg_match('/'.$prefs['gal_nmatch_regex'].'/', $file_name, $reqs)) {
 				$ret['msg'] = tra('Invalid imagename (using filters for filenames)');
 				return $ret;
 			}
 			$type = $_FILES[$userfile]['type'];
 			$size = $_FILES[$userfile]['size'];
 			$file_tmp_name = $_FILES[$userfile]['tmp_name'];
-			$tmp_dest = $tmpDir . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
+			$tmp_dest = $prefs['tmpDir'] . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
 			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$ret['msg'] = tra('Errors detected');
 				@unlink($tmp_dest);
@@ -2130,8 +2107,8 @@ class ImageGalsLib extends TikiLib {
   // function to move images from one store to another (fs to db or db to fs)
   function move_image_store($imageId,$direction='to_fs')
   {
-    global $gal_use_db;
-    global $gal_use_dir;
+    global $prefs;
+
 		global $errstr;
     $this->clear_class_vars(); //cleanup
     
@@ -2139,7 +2116,7 @@ class ImageGalsLib extends TikiLib {
       return(false);
     }
     
-		if ($direction == 'to_fs' and !is_dir($gal_use_dir)) {
+		if ($direction == 'to_fs' and !is_dir($prefs['gal_use_dir'])) {
 			$errstr = tra("unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>");
 			return(0);
 		}
@@ -2164,7 +2141,7 @@ class ImageGalsLib extends TikiLib {
       $this->store_image_data(true);
       if($direction=='to_db') {
         // remove image in fs 
-        if(!@unlink($gal_use_dir.$this->path)) {
+        if(!@unlink($prefs['gal_use_dir'].$this->path)) {
           $errstr = tra("unlink failed");
         }
         $this->query($query,array('',$imageId));

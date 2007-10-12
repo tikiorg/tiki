@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.6 2007-03-02 19:49:06 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_showpages.php,v 1.7 2007-10-12 07:55:48 nyloth Exp $
  *
  * SHOWPAGES plugin
  * Displays wiki pages that match a supplied pagename criteria.
@@ -19,7 +19,7 @@
  *
  * @package Tikiwiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 function wikiplugin_showpages_help() {
@@ -27,7 +27,7 @@ function wikiplugin_showpages_help() {
 }
 
 function wikiplugin_showpages($data, $params) {
-	global $tikilib, $feature_wiki_description;
+	global $tikilib, $prefs;
 
 	extract ($params,EXTR_SKIP);
 	if (!isset($find)) {
@@ -47,7 +47,7 @@ function wikiplugin_showpages($data, $params) {
 	$text = '';
 
 	foreach ($data["data"] as $page) {
-		if (isset($feature_wiki_description) && $feature_wiki_description == 'y' && strpos($display,'desc') !== false) {
+		if (isset($prefs['feature_wiki_description']) && $prefs['feature_wiki_description'] == 'y' && strpos($display,'desc') !== false) {
 			$desc = $tikilib->page_exists_desc($page["pageName"]);
 		} else {
 			$desc = '';

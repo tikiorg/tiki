@@ -12,11 +12,9 @@ class ChartLib extends TikiLib {
 	}
 
 	function add_chart_hit($chartId) {
-		global $count_admin_pvs;
+		global $prefs, $user;
 
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_charts` set `hits`=`hits`+1 where `chartId`=?";
 
 			$this->query($query,array((int) $chartId));

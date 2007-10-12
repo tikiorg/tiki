@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["style"])) {
     check_ticket('admin-inc-general');
-    byref_set_value("site_style", "style");
+    //byref_set_value("site_style", "style");
 }
 
 if (isset($_REQUEST["themesetup"])) {
@@ -25,8 +25,6 @@ ask_ticket('admin-inc-theme');
 	"feature_editcss",
 	"feature_view_tpl",
     );
-
-
 
     foreach ($pref_toggles as $toggle) {
         simple_set_toggle ($toggle);
@@ -41,7 +39,7 @@ ask_ticket('admin-inc-theme');
     }
     
     // Set value(s) with alternate pref name
-    byref_set_value("site_style", "style");
+//    byref_set_value("site_style", "style");
 }
 
 $llist = $tikilib->list_styles();
@@ -57,7 +55,6 @@ while ($file = readdir($h)) {
 }
 closedir ($h);
 
-$smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
 ?>

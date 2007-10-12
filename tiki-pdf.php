@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.18 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.19 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,15 +13,15 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
-	$page = $wikiHomePage;
+	$page = $prefs['wikiHomePage'];
 
-	$smarty->assign('page', $wikiHomePage);
+	$smarty->assign('page', $prefs['wikiHomePage']);
 } else {
 	$page = $_REQUEST["page"];
 
@@ -47,7 +47,7 @@ if (!$tikilib->user_has_perm_on_object($user, $page,'wiki page','tiki_p_view')) 
 }
 
 // Now increment page hits since we are visiting this page
-if ($count_admin_pvs == 'y' || $user != 'admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 

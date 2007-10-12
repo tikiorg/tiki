@@ -5,19 +5,19 @@
  */
 // BUG; will not work with a language other than the default ($lang will be or not redefined)
 function tra($content, $lg='') {
-	global $lang_use_db;
-	global $language;
+	global $prefs;
+
 	if ($content) {
-		if ($lang_use_db != 'y') {
+		if ($prefs['lang_use_db'] != 'y') {
 			global $lang;
 			if ($lg != "") {
 				if (is_file("lang/$lg/language.php")) {
 					$l = $lg;
 				} else {
-					$l = $language;
+					$l = $prefs['language'];
 				}
-			} elseif (is_file("lang/$language/language.php")) {
-				$l = $language;
+			} elseif (is_file('lang/'.$prefs['language'].'/language.php')) {
+				$l = $prefs['language'];
 			} else {
 				$l = false;
 			}
@@ -41,16 +41,15 @@ function tra($content, $lg='') {
 		} else {
 			global $tikilib,$multilinguallib;
 			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
-			$result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
+			$result = $tikilib->query($query, array($content,$lg == ""? $prefs['language'] : $lg));
 			$res = $result->fetchRow();
 			if (!$res) {
 				return $content;
 			}
 			if (!isset($res["tran"])) {
-				global $record_untranslated;
-				if ($record_untranslated == 'y') {
+				if ($prefs['record_untranslated'] == 'y') {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
-					$tikilib->query($query, array($content,$language),-1,-1,false);
+					$tikilib->query($query, array($content,$prefs['language']),-1,-1,false);
 				}
 				return $content;
 			}

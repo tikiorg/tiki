@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.44 2007-08-29 14:15:25 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.45 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,7 +57,7 @@ class Smarty_Tikiwiki extends Smarty {
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
-		global $language, $style_base, $tikidomain;
+		global $prefs, $style_base, $tikidomain;
 
 		if (isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
@@ -68,17 +68,15 @@ class Smarty_Tikiwiki extends Smarty {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
-		$_smarty_cache_id = $language . $_smarty_cache_id;
-		$_smarty_compile_id = $language . $_smarty_compile_id;
+		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
+		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 	}
 	/* fetch in a specific language  without theme consideration */
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)  {
-		global $language;
-		global $lang;
-		global $style, $style_base, $tikidomain;
+		global $prefs, $lang, $style_base, $tikidomain;
 		
-                if (isset($style) && isset($style_base)) {
+                if (isset($prefs['style']) && isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
 			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
@@ -93,25 +91,25 @@ class Smarty_Tikiwiki extends Smarty {
 		$this->_compile_id = $lg . $_smarty_compile_id; // not pretty but I don't know how to change id for get_compile_path
 		$isCompiled = $this->_is_compiled($_smarty_tpl_file, $this->_get_compile_path($_smarty_tpl_file));
 		if (!$isCompiled) {
-			$lgSave = $language;
-			$language = $lg;
-			include("lang/$language/language.php");
+			$lgSave = $prefs['language'];
+			$prefs['language'] = $lg;
+			include('lang/'.$prefs['language'].'/language.php');
 				// the language file needs to be included again:
 				// the file could have been included before: prefilter.tr using include_once will not reload the file
 				// but the $lang can be from another language
 		}
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 		if (!$isCompiled) {
-			$language = $lgSave;
-			include ("lang/$language/language.php");
+			$prefs['language'] = $lgSave;
+			include ('lang/'.$prefs['language'].'/language.php');
 		}
 
 		return ereg_replace("^[ \t]*", '', $res);
 	}
 	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
-		global $language, $style, $style_base, $tikidomain;
+		global $prefs, $style_base, $tikidomain;
 
-		if (isset($style) && isset($style_base)) {
+		if (isset($prefs['style']) && isset($style_base)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
 			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
@@ -120,14 +118,14 @@ class Smarty_Tikiwiki extends Smarty {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
-		$_smarty_cache_id = $language . $_smarty_cache_id;
-		$_smarty_compile_id = $language . $_smarty_compile_id;
+		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
+		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 		return parent::is_cached($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id);
 	}
 	function clear_cache($_smarty_tpl_file = null, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_exp_time=null) {
-		global $language, $style, $style_base, $tikidomain;
+		global $prefs, $style_base, $tikidomain;
 
-		if (isset($style) && isset($style_base) && isset($_smarty_tpl_file)) {
+		if (isset($prefs['style']) && isset($style_base) && isset($_smarty_tpl_file)) {
 			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
 			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
@@ -136,8 +134,8 @@ class Smarty_Tikiwiki extends Smarty {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
-		$_smarty_cache_id = $language . $_smarty_cache_id;
-		$_smarty_compile_id = $language . $_smarty_compile_id;
+		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
+		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
 	function display($resource_name, $cache_id=null, $compile_id = null) {

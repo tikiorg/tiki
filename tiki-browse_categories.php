@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.36 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.37 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/tree/categ_browse_tree.php');
 
-if ($feature_categories != 'y') {
+if ($prefs['feature_categories'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_categories");
 
 	$smarty->display("error.tpl");
@@ -113,7 +113,7 @@ if(!$canView) {
 //$ctall = $categlib->get_all_categories();
 $ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
-if ($feature_phplayers == 'y' && $feature_category_use_phplayers == 'y') {
+if ($prefs['feature_phplayers'] == 'y' && $prefs['feature_category_use_phplayers'] == 'y') {
 	global $tikiphplayers; include_once('lib/phplayers_tiki/tiki-phplayers.php');
 	$urlEnd = "&amp;deep=$deep";
 	if ($type)
@@ -166,7 +166,7 @@ $section = 'categories';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');
 
-if($feature_user_watches == 'y') {
+if($prefs['feature_user_watches'] == 'y') {
     if($user && isset($_REQUEST['watch_event'])) {
             
         if($_REQUEST['watch_action']=='add_desc') {

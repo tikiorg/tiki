@@ -3,7 +3,7 @@
 include 'tiki-setup.php';
 include 'lib/calendar/tikicalendarlib.php';
 
-if ($feature_action_calendar != 'y') {
+if ($prefs['feature_action_calendar'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_action_calendar");
   $smarty->display("error.tpl");
   die;
@@ -18,19 +18,19 @@ if ($tiki_p_view_tiki_calendar != 'y') {
 $headerlib->add_cssfile('css/calendar.css',20);
 
 $tikiItems = array(
-  "wiki" => array( "label" => tra("Wiki"), "feature" => "$feature_wiki", "right" => "$tiki_p_view"),
-  "gal" => array( "label" => tra("Image Gallery"), "feature" => "$feature_galleries", "right" => "$tiki_p_view_image_gallery"),
-  "art" => array( "label" => tra("Articles"), "feature" => "$feature_articles", "right" => "$tiki_p_read_article"),
-  "blog" => array( "label" => tra("Blogs"), "feature" => "$feature_blogs", "right" => "$tiki_p_read_blog"),
-  "forum" => array( "label" => tra("Forums"), "feature" => "$feature_forums", "right" => "$tiki_p_forum_read"),
-  "dir" => array( "label" => tra("Directory"), "feature" => "$feature_directory", "right" => "$tiki_p_view_directory"),
-  "fgal" => array( "label" => tra("File Gallery"), "feature" => "$feature_file_galleries", "right" => "$tiki_p_view_file_gallery"),
-  "faq" => array( "label" => tra("FAQs"), "feature" => $feature_faqs, "right" => $tiki_p_view_faqs),
-  "quiz" => array( "label" => tra("Quizzes"), "feature" => $feature_quizzes, "right" => $tiki_p_take_quiz),
-  "track" => array( "label" => tra("Trackers"), "feature" => "$feature_trackers", "right" => "$tiki_p_view_trackers"),
-  "surv" => array( "label" => tra("Survey"), "feature" => "$feature_surveys", "right" => "$tiki_p_take_survey"),
-  "nl" => array( "label" => tra("Newsletter"), "feature" => "$feature_newsletters", "right" => "$tiki_p_subscribe_newsletters"),
-  "chart" => array( "label" => tra("Charts"), "feature" => "$feature_charts", "right" => "$tiki_p_view_chart")
+  "wiki" => array( "label" => tra("Wiki"), "feature" => ''.$prefs['feature_wiki'], "right" => "$tiki_p_view"),
+  "gal" => array( "label" => tra("Image Gallery"), "feature" => ''.$prefs['feature_galleries'], "right" => "$tiki_p_view_image_gallery"),
+  "art" => array( "label" => tra("Articles"), "feature" => ''.$prefs['feature_articles'], "right" => "$tiki_p_read_article"),
+  "blog" => array( "label" => tra("Blogs"), "feature" => ''.$prefs['feature_blogs'], "right" => "$tiki_p_read_blog"),
+  "forum" => array( "label" => tra("Forums"), "feature" => ''.$prefs['feature_forums'], "right" => "$tiki_p_forum_read"),
+  "dir" => array( "label" => tra("Directory"), "feature" => ''.$prefs['feature_directory'], "right" => "$tiki_p_view_directory"),
+  "fgal" => array( "label" => tra("File Gallery"), "feature" => ''.$prefs['feature_file_galleries'], "right" => "$tiki_p_view_file_gallery"),
+  "faq" => array( "label" => tra("FAQs"), "feature" => ''.$prefs['feature_faqs'], "right" => $tiki_p_view_faqs),
+  "quiz" => array( "label" => tra("Quizzes"), "feature" => ''.$prefs['feature_quizzes'], "right" => $tiki_p_take_quiz),
+  "track" => array( "label" => tra("Trackers"), "feature" => ''.$prefs['feature_trackers'], "right" => "$tiki_p_view_trackers"),
+  "surv" => array( "label" => tra("Survey"), "feature" => ''.$prefs['feature_surveys'], "right" => "$tiki_p_take_survey"),
+  "nl" => array( "label" => tra("Newsletter"), "feature" => ''.$prefs['feature_newsletters'], "right" => "$tiki_p_subscribe_newsletters"),
+  "chart" => array( "label" => tra("Charts"), "feature" => ''.$prefs['feature_charts'], "right" => "$tiki_p_view_chart")
 );
 
 // Register selected tikiItems in session vars if a refresh is requested

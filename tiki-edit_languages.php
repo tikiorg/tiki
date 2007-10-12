@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.24 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.25 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($lang_use_db != 'y') {
+if ($prefs['lang_use_db'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
 	$smarty->display("error.tpl");
 	die;
@@ -85,7 +85,7 @@ if (isset($_REQUEST["edit_language"])) {
 }
 
 if (!isset($edit_language)) {
-	$edit_language = $language;
+	$edit_language = $prefs['language'];
 }
 
 if (isset($_REQUEST["whataction"])) {

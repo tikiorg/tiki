@@ -1,11 +1,11 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.9 2007-01-21 12:48:56 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.10 2007-10-12 07:55:28 nyloth Exp $
 
 // Initialization
 require_once('tiki-setup.php');
 include_once ('lib/userprefs/userprefslib.php');
 
-if($feature_friends != 'y') {
+if($prefs['feature_friends'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;  
@@ -25,7 +25,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = $user_list_order;
+  $sort_mode = $prefs['user_list_order'];
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 
@@ -72,7 +72,7 @@ if($offset>0) {
 $listdistance = array();
 $listuserscountry = array();
 for ($i=0;$i<count($listusers["data"]);$i++) {
-	if ($feature_community_list_distance == "y") {
+	if ($prefs['feature_community_list_distance'] == "y") {
 		$userlogin=$listusers["data"][$i]["login"];
 		$distance=$userprefslib->get_userdistance($userlogin,$user);
 		if (is_null($distance)) {
@@ -82,7 +82,7 @@ for ($i=0;$i<count($listusers["data"]);$i++) {
 		}
 	}
 
-	if ($feature_community_list_country == "y") {
+	if ($prefs['feature_community_list_country'] == "y") {
 		$userprefs=$listusers["data"][$i]["preferences"];
 		$country="None";
 		for ($j=0;$j<count($userprefs);$j++) {

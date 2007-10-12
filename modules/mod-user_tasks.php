@@ -6,10 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $tasklib; include_once('lib/tasks/tasklib.php');
-global $user;
+global $user, $tasklib;
+include_once('lib/tasks/tasklib.php');
 
-if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
+if ($user && isset($prefs['feature_tasks']) && $prefs['feature_tasks'] == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
 	if (isset($_SESSION['thedate'])) {
 		$pdate = $_SESSION['thedate'];
 	} else {

@@ -1,4 +1,4 @@
-<?php // $Id: initlib.php,v 1.15 2007-06-16 16:01:54 sylvieg Exp $
+<?php // $Id: initlib.php,v 1.16 2007-10-12 07:55:41 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -108,7 +108,7 @@ class TikiInit {
 }
 
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
-	global $error_reporting_level,$tiki_p_admin,$phpErrors, $smarty_notice_reporting;
+	global $prefs,$tiki_p_admin,$phpErrors;
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
@@ -120,7 +120,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	$err[E_PARSE]           = 'E_PARSE';
 	$err[E_NOTICE]          = 'E_NOTICE';
 	$err[E_USER_NOTICE]     = 'E_USER_NOTICE';
-	if (!empty($error_reporting_level) and $error_reporting_level) {
+	if (!empty($prefs['error_reporting_level']) and $prefs['error_reporting_level']) {
 		$errfile = basename($errfile);
 		switch ($errno) {
 		case E_ERROR:
@@ -132,7 +132,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		case E_USER_WARNING:
 		case E_COMPILE_WARNING:
 		case E_PARSE:
-			if ($error_reporting_level == 2047 or $error_reporting_level == 2039 or ($error_reporting_level == 1 and $tiki_p_admin == 'y')) {
+			if ($prefs['error_reporting_level'] == 2047 or $prefs['error_reporting_level'] == 2039 or ($prefs['error_reporting_level'] == 1 and $tiki_p_admin == 'y')) {
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#F66;font-size:10px;'>";
 				$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
 				$back.= "<tt><b>File:</b></tt> $errfile<br />";
@@ -144,8 +144,8 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 			break;
 		case E_NOTICE:
 		case E_USER_NOTICE:
-			if ($error_reporting_level == '2047' and $tiki_p_admin == 'y') {
-				if ($smarty_notice_reporting != 'y' && strstr($errfile, '.tpl.php'))
+			if ($prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y') {
+				if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 					break;
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";
 				$back.= "<b>PHP (".PHP_VERSION.") NOTICE ($errno):</b><br />";

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/error_reporting.php,v 1.1 2007-10-06 15:18:44 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/error_reporting.php,v 1.2 2007-10-12 07:55:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,11 +12,11 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-if ( $error_reporting_level == 1 ) $error_reporting_level = ( $tiki_p_admin == 'y' ) ? E_ALL : 0;
-elseif ( $error_reporting_adminonly == 'y' and $tiki_p_admin != 'y' ) $error_reporting_level = 0;
-error_reporting($error_reporting_level);
+if ( $prefs['error_reporting_level'] == 1 ) $prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? E_ALL : 0;
+elseif ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) $prefs['error_reporting_level'] = 0;
+error_reporting($prefs['error_reporting_level']);
 
-if ( $log_sql == 'y' ) $dbTiki->LogSQL();
+if ( $prefs['log_sql'] == 'y' ) $dbTiki->LogSQL();
 
 $tikifeedback = array();
 

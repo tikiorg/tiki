@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.20 2007-06-06 13:27:04 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.21 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/wiki/histlib.php');
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
@@ -73,7 +73,7 @@ if (!$tikilib->page_exists($page)) {
 
 if (isset($_REQUEST["rollback"])) {
   $area = 'delrollbackpage';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$histlib->use_version($_REQUEST["page"], $_REQUEST["version"]);
   } else {

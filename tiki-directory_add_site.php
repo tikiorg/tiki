@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.20 2007-09-16 22:07:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.21 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/directory/dirlib.php');
 
-if ($feature_directory != 'y') {
+if ($prefs['feature_directory'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
 
 	$smarty->display("error.tpl");
@@ -104,7 +104,7 @@ if (isset($_REQUEST["save"])) {
 			$msg .= tra("URL already added to the directory. Duplicate site? ");
 		}
 
-		if ($directory_validate_urls == 'y') {
+		if ($prefs['directory_validate_urls'] == 'y') {
 			@$fsh = fopen($_REQUEST['url'], 'r');
 
 			if (!$fsh) {

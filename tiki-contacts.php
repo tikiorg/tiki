@@ -6,12 +6,12 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/webmail/contactlib.php');
 
-if ($feature_contacts != 'y') {
+if ($prefs['feature_contacts'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_contacts");
   $smarty->display("error.tpl");
   die;
@@ -61,7 +61,7 @@ if (isset($_REQUEST["remove"])) {
 		die;
 	}
 	$area = "delwebmailcontact";
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$contactlib->remove_contact($_REQUEST["remove"], $user);
 	} else {
@@ -177,7 +177,7 @@ if ($offset > 0) {
 include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_contacts_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-contacts.tpl");

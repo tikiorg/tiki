@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.7 2007-10-02 16:15:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 // To include a link in your tpl do
 //<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 
-if ($feature_tell_a_friend != 'y') {
+if ($prefs['feature_tell_a_friend'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_tell_a_friend');
 	$smarty->display('error.tpl');
 	die;
@@ -42,7 +42,7 @@ if (isset($_REQUEST['send'])) {
 	foreach ($emails as $email) {
 		include_once('lib/registration/registrationlib.php');
 		if (function_exists('validate_email')) {
-			$ok = validate_email($email, $validateEmail);
+			$ok = validate_email($email, $prefs['validateEmail']);
 		} else {
 			$ret = $registrationlib->SnowCheckMail($email,'','mini');
 			$ok = $ret[0];
@@ -61,7 +61,7 @@ if (isset($_REQUEST['send'])) {
 		include_once ('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
-		$mail->setFrom($tikilib->get_preference('sender_email',''));
+		$mail->setFrom($prefs['sender_email']);
 		$txt = $smarty->fetch('mail/tellAFriend_subject.tpl');
 		$mail->setSubject($txt);
 		$txt = $smarty->fetch('mail/tellAFriend.tpl');

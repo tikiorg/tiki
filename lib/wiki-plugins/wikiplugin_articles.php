@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.26 2007-02-12 11:12:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.27 2007-10-12 07:55:48 nyloth Exp $
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
@@ -10,16 +10,10 @@ function wikiplugin_articles_help() {
 }
 
 function wikiplugin_articles($data,$params) {
-	global $smarty;
-	global $tikilib;
-	global $feature_articles;
-	global $tiki_p_read_article;
-	global $dbTiki;
-	global $feature_multilingual;
-	global $pageLang;
+	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $dbTiki, $pageLang;
 
 	extract($params,EXTR_SKIP);
-	if (($feature_articles !=  'y') || ($tiki_p_read_article != 'y')) {
+	if (($prefs['feature_articles'] !=  'y') || ($tiki_p_read_article != 'y')) {
 		//		the feature is disabled or the user can't read articles
 		return("");
 	}
@@ -52,7 +46,7 @@ function wikiplugin_articles($data,$params) {
 	$commentslib = new Comments($dbTiki);
 	
 	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
- 	if ($feature_multilingual == 'y') {
+ 	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);

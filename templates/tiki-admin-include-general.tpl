@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.67 2007-10-06 15:18:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.68 2007-10-12 07:55:49 nyloth Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -338,7 +338,7 @@
 
       <tr>
         <td class="button" colspan='2'>
-          <input type="submit" name="prefs" value="{tr}Change preferences{/tr}" />
+          <input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
         </td>
       </tr></table>
     </form>

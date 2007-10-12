@@ -12,7 +12,7 @@ class ShoutboxLib extends TikiLib {
 	}
 
 	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
-		global $shoutbox_autolink;
+		global $prefs;
 		if ($find) {
 			$mid = " where (`message` like ?)";
 			$bindvars = array('%'.$find.'%');
@@ -34,7 +34,7 @@ class ShoutboxLib extends TikiLib {
       // convert ampersands and other stuff to xhtml compliant entities
       $res["message"] = htmlspecialchars($res["message"]);
       
-      if ($shoutbox_autolink == 'y') {				
+      if ($prefs['shoutbox_autolink'] == 'y') {				
 				// we replace urls starting with http(s)|ftp(s) to active links
 				$res["message"] = preg_replace("/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\">\\0</a>", $res["message"]);
 				// we replace also urls starting with www. only to active links

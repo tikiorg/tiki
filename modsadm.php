@@ -8,11 +8,11 @@ if (!defined('STDOUT') || !defined('STDIN') || !defined('STDERR'))
 require_once ('tiki-setup.php');
 include('lib/mods/modslib.php');
 
-$repos=array('installed' => array('url' => $mods_dir.'/Installed/00_list.txt',
+$repos=array('installed' => array('url' => $prefs['mods_dir'].'/Installed/00_list.txt',
 				  'content' => $installed),
-	     'local' => array('url' => $mods_dir.'/Packages/00_list.txt',
+	     'local' => array('url' => $prefs['mods_dir'].'/Packages/00_list.txt',
 			      'content' => $local),
-	     'remote' => array('url' => $mods_dir.'/Packages/00_list.'.urlencode($mods_server).'.txt',
+	     'remote' => array('url' => $prefs['mods_dir'].'/Packages/00_list.'.urlencode($mods_server).'.txt',
 			       'content' => $remote));
 
 $goptions=array();
@@ -63,10 +63,10 @@ function command_help($goption, $coption, $cparams) {
 
 function command_install($goption, $coption, $cparams) {
 	global $modslib;
-	global $mods_dir;
+	global $prefs;
 	global $mods_server;
 
-	$deps=$modslib->find_deps($mods_dir, $mods_server, $cparams);
+	$deps=$modslib->find_deps($prefs['mods_dir'], $mods_server, $cparams);
 
 	if (count($deps['unavailable'])) {
 		$err="Sorry, theses packages are required but not available:\n";
@@ -113,15 +113,15 @@ function command_install($goption, $coption, $cparams) {
 		exit(0);
 	}
 
-	$modslib->install_with_deps($mods_dir, $mods_server, $deps);
+	$modslib->install_with_deps($prefs['mods_dir'], $mods_server, $deps);
 }
 
 function command_remove($goption, $coption, $cparams) {
 	global $modslib;
-	global $mods_dir;
+	global $prefs;
 	global $mods_server;
 
-	$deps=$modslib->find_deps_remove($mods_dir, $mods_server, $cparams);
+	$deps=$modslib->find_deps_remove($prefs['mods_dir'], $mods_server, $cparams);
 
 	if (count($deps['wantedtoremove'])) {
 		echo "You asked to remove these mods:\n";
@@ -144,7 +144,7 @@ function command_remove($goption, $coption, $cparams) {
 
 	$res=NULL;
 
-	$modslib->remove_with_deps($mods_dir, $mods_server, $deps);	
+	$modslib->remove_with_deps($prefs['mods_dir'], $mods_server, $deps);	
 }
 
 function command_list($goption, $coption, $cparams) {

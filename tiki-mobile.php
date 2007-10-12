@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.13 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.14 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 
 include_once ("lib/hawhaw/hawtikilib.php");
 
-if ($feature_mobile != 'y') {
+if ($prefs['feature_mobile'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_mobile");
 
 	$smarty->display("error.tpl");
@@ -47,25 +47,25 @@ if (isset($_REQUEST['content']) && $_REQUEST['content'] == "about") {
 
 	$wiki = new HAW_link(hawtra("Wiki"), "tiki-index.php?mode=mobile");
 
-	if ($feature_wiki == 'y') {
+	if ($prefs['feature_wiki'] == 'y') {
 		$linkset->add_link($wiki);
 	}
 
 	$blogs = new HAW_link(hawtra("Blogs"), "tiki-list_blogs.php?mode=mobile");
 
-	if ($feature_blogs == 'y') {
+	if ($prefs['feature_blogs'] == 'y') {
 		$linkset->add_link($blogs);
 	}
 
 	$articles = new HAW_link(hawtra("Articles"), "tiki-list_articles.php?mode=mobile");
 
-	if ($feature_articles == 'y') {
+	if ($prefs['feature_articles'] == 'y') {
 		$linkset->add_link($articles);
 	}
 
 	$forums = new HAW_link(hawtra("Forums"), "tiki-forums.php?mode=mobile");
 
-	if ($feature_forums == 'y') {
+	if ($prefs['feature_forums'] == 'y') {
 		$linkset->add_link($forums);
 	}
 

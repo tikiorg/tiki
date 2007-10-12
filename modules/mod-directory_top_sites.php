@@ -5,9 +5,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $feature_directory;
+global $prefs;
 
-if ($feature_directory == 'y') {
+if ($prefs['feature_directory'] == 'y') {
 	$ranking = $tikilib->dir_list_all_valid_sites2(0, $module_rows, 'hits_desc', '');
 
 	$smarty->assign('modTopdirSites', $ranking["data"]);
