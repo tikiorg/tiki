@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.49 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.50 2007-10-12 13:13:55 jonnybradley Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -349,7 +349,7 @@ $cant_pages = ceil($objects["cant"] / $prefs['maxRecords']);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
 
-if ($objects["cant"] > ($offset + $prefs['maxRecords']s)) {
+if ($objects["cant"] > ($offset + $prefs['maxRecords'])) {
 	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
 } else {
 	$smarty->assign('next_offset', -1);
