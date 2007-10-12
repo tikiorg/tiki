@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.84 2007-10-12 07:55:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85 2007-10-12 18:26:11 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -374,6 +374,7 @@ function wikiplugin_tracker($data, $params) {
 
 			// Loop on tracker fields and display form
 			$back.= '<table class="wikiplugin_tracker">';
+			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
@@ -502,10 +503,13 @@ function wikiplugin_tracker($data, $params) {
 							$back.= '<input type="hidden" name="track['.$f["fieldId"].']" value="'.$user.'" />';
 						}
 					} elseif ($f['type'] == 'h') {
-						$back .= "</td></tr></table><h2>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</h2><table><tr><td>";
+						if (strlen($back) != $backLength0) {
+							$back .= '</td></tr>';
+						}
+						$back .= "</table><h2>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</h2>';
 						if (!empty($f['description']))
 							$back .= '<i>'.$f['description'].'</i>';
-						$back .= "<table><tr><td>";
+						$back .= '<table class="wikiplugin_tracker"><tr><td>';
 					} elseif ($f['type'] == 'e') {
 						$back .="<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
