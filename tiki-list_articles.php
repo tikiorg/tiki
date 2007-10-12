@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.36 2007-10-12 07:55:28 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.37 2007-10-12 21:57:31 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,8 +66,10 @@ if (!isset($_REQUEST["offset"])) {
 $smarty->assign_by_ref('offset', $offset);
 if (!empty($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
-	$smarty->assign('maxRecords', $maxRecords);
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
+$smarty->assign('maxRecords', $maxRecords);
 
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) {
   $pdate = '';

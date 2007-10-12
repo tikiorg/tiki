@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.34 2007-10-12 12:42:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.35 2007-10-12 21:57:31 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -238,8 +238,10 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
-	$smarty->assign('maxRecords', $maxRecords);
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
+$smarty->assign('maxRecords', $maxRecords);
 
 $filter = '';
 if (!empty($_REQUEST['lang'])) {
