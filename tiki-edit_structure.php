@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.45 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46 2007-10-12 12:42:40 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,7 @@ if (isset($_REQUEST["rremove"])) {
   $area = 'delstructure';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$structlib->s_remove_page($_REQUEST["rremove"], false);
+	$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page'])? '': $_REQUEST['page']);
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
   } else {
     key_get($area);
@@ -93,7 +93,7 @@ if (isset($_REQUEST["sremove"])) {
     key_check($area);
 		$page = $page_info["pageName"];
 		require ('tiki-pagesetup.php');
-		$structlib->s_remove_page($_REQUEST["sremove"], $tiki_p_remove == 'y');
+		$structlib->s_remove_page($_REQUEST["sremove"], $tiki_p_remove == 'y', empty($_REQUEST['page'])? '': $_REQUEST['page']);
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
   } else {
     key_get($area);
@@ -103,7 +103,7 @@ if (isset($_REQUEST["sremove"])) {
  if ($prefs['feature_user_watches'] == 'y' && $tiki_p_watch_structure == 'y' && $user && !empty($_REQUEST['watch_object']) && !empty($_REQUEST['watch_action'])) {
 	check_ticket('edit-structure');
 	if ($_REQUEST['watch_action'] == 'add' && !empty($_REQUEST['page'])) {
-		$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page");
+		$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page_ref_id=".$_REQUEST['watch_object']);
 	} elseif ($_REQUEST['watch_action'] == 'remove') {
 		$tikilib->remove_user_watch($user, 'structure_changed', $_REQUEST['watch_object']);
 	}

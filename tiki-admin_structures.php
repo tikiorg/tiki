@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.33 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.34 2007-10-12 12:42:40 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (isset($_REQUEST['rremove'])) {
 	}
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$structlib->s_remove_page($_REQUEST["rremove"], false);		
+	$structlib->s_remove_page($_REQUEST["rremove"], false, empty($_REQUEST['page'])? '': $_REQUEST['page']);		
 	} else {
 		key_get($area);
 	}
@@ -50,7 +50,7 @@ if (isset($_REQUEST['rremovex'])) {
 	}
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$structlib->s_remove_page($_REQUEST["rremovex"], true);
+	$structlib->s_remove_page($_REQUEST["rremovex"], true, empty($_REQUEST['page'])? '': $_REQUEST['page']);
 	} else {
 		key_get($area);
 	}

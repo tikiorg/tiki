@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: structlib.php,v 1.93 2007-10-11 17:47:09 sylvieg Exp $
+// CVS: $Id: structlib.php,v 1.94 2007-10-12 12:42:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
@@ -67,9 +67,13 @@ class StructLib extends TikiLib {
 		}
 	}
 
-	function s_remove_page($page_ref_id, $delete) {
+	function s_remove_page($page_ref_id, $delete, $name='') {
 		// Now recursively remove
-		global $user, $tiki_p_remove;
+		global $user, $prefs, $tiki_p_remove;
+		if ($prefs['feature_user_watches'] == 'y') {
+			include_once('lib/notifications/notificationemaillib.php');
+			sendStructureEmailNotification(array('action'=>'remove', 'page_ref_id'=>$page_ref_id, 'name'=>$name));
+		}
 
 		$query = 'select `page_ref_id`, ts.`page_id`, `pageName` ';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
@@ -106,6 +110,7 @@ class StructLib extends TikiLib {
 	}
 
 	function promote_node($page_ref_id) {
+		global $prefs;
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$parent_info = $this->s_get_parent_info($page_ref_id);
 		//If there is a parent and the parent isnt the structure root node.
@@ -119,6 +124,10 @@ class StructLib extends TikiLib {
 			//Remove the space that was created by the promotion
   			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
   			$this->query($query,array((int)$page_info["pos"], (int)$page_info["parent_id"]));
+			if ($prefs['feature_user_watches'] == 'y') {
+				include_once('lib/notifications/notificationemaillib.php');
+				sendStructureEmailNotification(array('action'=>'move_up', 'page_ref_id'=>$page_ref_id, 'parent_id'=>$page_info['parent_id']));
+			}
 		}
 	}
 
@@ -141,6 +150,10 @@ class StructLib extends TikiLib {
 			//Remove the space created by the demotion			
 			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
 			$this->query($query,array((int)$parent_info["pos"], (int)$parent_info["parent_id"]));  
+			if ($prefs['feature_user_watches'] == 'y') {
+				include_once('lib/notifications/notificationemaillib.php');
+				sendStructureEmailNotification(array('action'=>'move_down', 'page_ref_id'=>$page_ref_id, 'parent_id'=>$previous['page_ref_id']));
+			}
 		}
 	}
 
@@ -182,6 +195,7 @@ class StructLib extends TikiLib {
       \return the new entries page_ref_id or null if not created.
   */
   function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
+	  global $prefs;
     $ret = null;
     // If the page doesn't exist then create a new wiki page!
 	$newpagebody = tra("Table of contents") . ":" . "{toc}"; 
@@ -222,6 +236,11 @@ class StructLib extends TikiLib {
 			$query .= 'where `page_id`=? and `page_alias`=? and `pos`=?';
 			$query .= $parent_check;
 			$ret = $this->getOne($query,$attributes);
+
+			if ($prefs['feature_user_watches'] == 'y') {
+				include_once('lib/notifications/notificationemaillib.php');
+				sendStructureEmailNotification(array('action'=>'add', 'page_ref_id'=>$ret, 'name'=>$name));
+			}
 		}
 		return $ret;
 	}
@@ -324,7 +343,8 @@ class StructLib extends TikiLib {
     return $structure_path;
 	}
 
-	function get_watches($pageName='', $page_ref_id=0) {
+	/* get all the users that watches a page or a page above */
+	function get_watches($pageName='', $page_ref_id=0, $recurs=true) {
 		global $tiki_p_watch_structure;
 		if ($tiki_p_watch_structure != 'y') {
 			return array();
@@ -348,7 +368,7 @@ class StructLib extends TikiLib {
 				$ret[] = $res;
 			}
 		}
-		if (!empty($parent_id)) {
+		if (!empty($parent_id) && $recurs) {
 			$ret2 = $this->get_watches('', $parent_id);
 			if (!empty($ret2)) {
 				$ret = array_merge($ret2, $ret);

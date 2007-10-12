@@ -5,8 +5,8 @@
 {if $remove eq 'y'}
 {tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
 <ul>
-<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
-{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
+<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove only from structure{/tr}</a></li>
+{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
 </ul>
 <br />
 {/if}
