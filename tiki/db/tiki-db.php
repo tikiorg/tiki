@@ -70,9 +70,8 @@ if (is_file('db/virtuals.inc')) {
 		$tikidomain = $multi;
 	}
 }
-if (is_file($local_php)) {
-	require_once($local_php);
-} else {
+$re  = include_once($local_php);
+if ( $re === FALSE) {
 	die("<b style=\"color:red;\">$local_php not found.</b><br /><br />Please run <a href=tiki-install.php>tiki-install.php</a>");
 }
 if (preg_match('/^adodb$/i', $api_tiki)) {
@@ -82,7 +81,7 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-	include_once ('adodb.inc.php');
+	require_once ('adodb.inc.php');
 	if( !empty( $error_handler_file ) && is_file( $error_handler_file ) ) {
 		include_once($error_handler_file);
 	} else {
