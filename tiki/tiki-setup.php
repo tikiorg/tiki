@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.471 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.472 2007-10-12 17:33:56 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -119,7 +119,6 @@ $smarty->assign_by_ref('elapsed_in_db', $elapsed_in_db);
 $smarty->assign_by_ref('crumbs', $crumbs);
 
 $smarty->assign('lock', false);
-$smarty->assign('title', $title);
 $smarty->assign('edit_page', 'n');
 $smarty->assign('forum_mode', 'n');
 $smarty->assign('uses_tabs', 'n');
