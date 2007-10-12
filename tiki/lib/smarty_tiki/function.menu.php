@@ -34,9 +34,8 @@ function smarty_function_menu($params, &$smarty)
 			$tpl = 'tiki-user_menu.tpl';
 		}
     if (!$smarty->is_cached($tpl, "$cache_id")) {
-			global $mylevel;
        $menu_info = $tikilib->get_menu($id);
-       $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',$prefs['mylevel']);
+       $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
        $channels = $tikilib->sort_menu_options($channels);
        $smarty->assign('channels',$channels['data']);
        $smarty->assign('menu_info',$menu_info);
