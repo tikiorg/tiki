@@ -62,6 +62,14 @@ function convert_formula( $formula )
 	return create_function('$x', "return $formula;");
 }
 
+// Now check permissions to access this page
+if ($feature_sheet != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets, feature_charts");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 if( !( is_numeric( $_GET['w'] )
 	&& is_numeric( $_GET['h'] )
 	&& is_numeric( $_GET['s'] )
