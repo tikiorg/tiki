@@ -1,4 +1,4 @@
-{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_current.tpl,v 1.1 2007-10-12 19:40:53 nkoth Exp $ *}
+{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_current.tpl,v 1.2 2007-10-12 19:47:34 nkoth Exp $ *}
 
 {if $prefs.feature_freetags eq 'y' && count($modFreetagsCurrent) gt 0}
   {eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}
@@ -9,7 +9,7 @@
      <a class="linkmodule" href="tiki-browse_freetags.php?tag={$modFreetagsCurrent.data[ix].tag|escape:'url'}">{$modFreetagsCurrent.data[ix].tag}</a>
 	 </div>
   {/section}
-  {if $tiki_p_freetags_tag eq 'y'}
+  {if $tiki_p_freetags_tag eq 'y' && $tiki_p_edit eq 'y'}
   <form method="post" action="">
   <div>
   <input type="text" name="tags" value=""/>
