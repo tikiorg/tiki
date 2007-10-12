@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.24 2006-02-11 17:04:45 amette Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/freetag/freetag_ajax.js,v 1.25 2007-10-12 18:28:28 nkoth Exp $
 
 //var maxRecords gets defined in the template !
 var objectType = '';
@@ -32,7 +32,7 @@ function setFilter(find) {
 	listObjects(currentTag);
 }
 
-function listObjects(tag) {
+function listObjects(tag, broaden) {
 	currentTag = tag;
 	var cp = new cpaint();
 	cp.set_use_cpaint_api(true);
@@ -40,7 +40,7 @@ function listObjects(tag) {
 
 	document.getElementById('ajaxLoading').style.display = 'block';
 
-	cp.call('tiki-freetag_list_objects_ajax.php', 'list_objects', renderObjectList, tag, objectType, offset, sort_mode, filter);
+	cp.call('tiki-freetag_list_objects_ajax.php', 'list_objects', renderObjectList, tag, objectType, offset, sort_mode, filter, broaden);
 }
 
 function renderObjectList(result) {

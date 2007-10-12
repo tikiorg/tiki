@@ -13,10 +13,12 @@ if ($prefs['feature_freetags'] != 'y') {
 require_once('lib/cpaint/cpaint2.inc.php');
 require_once ('lib/freetag/freetaglib.php');
 
-function list_objects($tag, $type, $offset, $sort_mode = 'created_desc', $find='') {
+function list_objects($tag, $type, $offset, $sort_mode = 'name_asc', $find='', $broaden) {
     global $freetaglib, $cp, $prefs;
 
-    $objects = $freetaglib->get_objects_with_tag($tag, $type, '', $offset, $maxRecords, $sort_mode, $find);
+    $tagArray = preg_split('/\s*(,|\s)\s*/',trim($tag));
+	$tagArray = array_unique($tagArray);	
+    $objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, '', $offset, $maxRecords, $sort_mode, $find, $broaden);     
 
     for ($i=0; $i < sizeof($objects['data']); $i++) {
 	$obj = $objects['data'][$i];
