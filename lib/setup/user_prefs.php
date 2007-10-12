@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.4 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.5 2007-10-12 14:26:57 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -46,7 +46,7 @@ if ( $user ) {
 	$tikilib->get_user_preferences($user);
 
 	// Prefs overriding
-	$prefs = &array_merge(&$prefs, &$user_preferences[$user]);
+	$prefs = &array_merge($prefs, $user_preferences[$user]);
 
 	// Copy some user prefs that doesn't have the same name as the related site pref
 	//   in order to symplify the overriding and the use 
