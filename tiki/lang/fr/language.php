@@ -7151,5 +7151,9 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Canal de syndication RSS Tiki pour les pages Wiki",
 "Last modifications to the Wiki." => "Dernières pages Wiki modifiées.",
 "invalid mapfile name" => "nom de fichier-carte invalide",
+"A page has been added to your watched sub-structure." => "Une page a été ajoutée à la sous-structure que vous surveillez.",
+"A page has been removed from your watched sub-structure." => "Une page a été retirée de la sous-structure que vous surveillez.",
+"A page has been promoted out your watched sub-structure."=>  "Une page a été promue dans la sous-structure que vous surveillez.",
+"A page has been demoted to your watched structure." =>  "Une page a été dépromue de la sous-structure que vous surveillez.",
 "###end###"=>"###end###");
 ?>

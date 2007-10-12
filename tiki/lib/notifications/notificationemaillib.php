@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.33 2007-10-12 12:42:41 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.34 2007-10-12 13:07:41 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -468,7 +468,7 @@ function sendCategoryEmailNotification($values) {
         }        
 }
 function sendStructureEmailNotification($params) {
-	global $tikilib, $smarty;
+	global $tikilib, $smarty, $prefs;
 	global $structlib; include_once('lib/structures/structlib.php');
 	if ($params['action'] == 'move_up' || $params['action'] == 'move_down') {
 		$nots = $structlib->get_watches('', $params['parent_id'], false);
@@ -476,6 +476,7 @@ function sendStructureEmailNotification($params) {
 		$nots = $structlib->get_watches('', $params['page_ref_id']);
 	}
 	if (!empty($nots)) {
+		$defaultLanguage = $prefs['site_language'];
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 		$smarty->assign_by_ref('mail_machine', $machine);
@@ -487,11 +488,13 @@ function sendStructureEmailNotification($params) {
 			$smarty->assign('name', $params['name']);
 		}
 		foreach ($nots as $not) {
+			$mail->setUser($not['user']);
+			$not['language'] = $tikilib->get_user_preference($not['user'], 'language', $defaultLanguage);
 			$mail_subject = $smarty->fetchLang($not['language'], 'mail/user_watch_structure_subject.tpl');
 			$mail_data = $smarty->fetchLang($not['language'], 'mail/user_watch_structure.tpl');
 			$mail->setSubject($mail_subject);
 			$mail->setText($mail_data);
-			echo "STRUCT2 $mail_subject $mail_data";
+			echo "STRUCT2 $mail_subject $mail_data";print_r($not);
 			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
