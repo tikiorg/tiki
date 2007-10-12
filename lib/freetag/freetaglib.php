@@ -712,7 +712,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	return true;
     }
 
-    function update_tags($user, $itemId, $type, $tag_string) {
+    function update_tags($user, $itemId, $type, $tag_string, $old_user = false) {
 	if($tag_string == '') {
 	    return true;
 	}
@@ -720,11 +720,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
  	
-	$oldTags = $this->get_tags_on_object($itemId, $type, 0, -1, $user);
+	$oldTags = $this->get_tags_on_object($itemId, $type, 0, -1, $old_user);
 
 	foreach ($oldTags['data'] as $tag) {
 	    if (!in_array($tag['raw_tag'], $tagArray)) {
-		$this->delete_object_tag($itemId, $type, $tag['raw_tag'],$user);
+		$this->delete_object_tag($itemId, $type, $tag['raw_tag'],$old_user);
 	    }
 	}
 
