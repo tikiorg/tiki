@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.34 2007-10-12 13:07:41 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.35 2007-10-12 13:26:04 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -149,7 +149,7 @@ function testEmailInList($nots, $email) {
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='', $structure_parent_id=0) {
-	global $tikilib, $prefs, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
+	global $tikilib, $prefs, $smarty, $userlib;
 	global $notificationlib; include_once('lib/notifications/notificationlib.php');
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
@@ -173,7 +173,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}
 	}
-	if ($feature_user_watches == 'y' && $event == 'wiki_page_created' && $structure_parent_id) {
+	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_created' && $structure_parent_id) {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$nots = $structlib->get_watches('', $structure_parent_id);
 	}
