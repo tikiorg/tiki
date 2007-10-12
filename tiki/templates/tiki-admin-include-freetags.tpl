@@ -32,11 +32,60 @@
           <td class="form">{tr}Only accept lowercase freetags{/tr}: </td>
           <td><input type="checkbox" name="freetags_lowercase_only" {if $prefs.freetags_lowercase_only eq 'y'}checked{/if} /></td>
         </tr>
-	<tr>
+        <tr>
           <td colspan="2" class="button"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
         </tr>
       </table>
     </form>
+    </div>
+  </div>
+    
+    <div class="cbox">
+    <div class="cbox-title">
+    {tr}Tag Management{/tr}
+    </div>
+    <div class="cbox-data">    
+      <table class="admin">               
+        <tr>
+          <td>{tr}Cleanup unused tags{/tr}:</td>
+          <td>
+          <form action="tiki-admin.php?page=freetags" method="post">
+          <input type="submit" value="{tr}cleanup{/tr}" name="cleanup" />     
+          </form>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="heading">{tr}More Like This/Get Similar Module{/tr}</td>
+        </tr>
+    <form action="tiki-admin.php?page=freetags" method="post">
+    <tr>    
+	    <td>{tr}More Like This algorithm{/tr}</td>
+		<td>
+			<select name="morelikethis_algorithm">			
+				<option value="basic"{if $prefs.morelikethis_algorithm eq 'basic' or ! $prefs.morelikethis_algorithm} selected="selected"{/if}>{tr}basic{/tr}</option>
+				<option value="weighted"{if $prefs.morelikethis_algorithm eq 'weighted'} selected="selected"{/if}>{tr}weighted{/tr}</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td>{tr}Basic algorithm - Minimum amount of tags in common{/tr}</td>
+		<td>
+			<select name="morelikethis_basic_mincommon">
+				<option value="1"{if $prefs.morelikethis_basic_mincommon eq '1'} selected="selected"{/if}>{tr}1{/tr}</option>
+				<option value="2"{if $prefs.morelikethis_basic_mincommon eq '2' or ! $prefs.morelikethis_basic_mincommon} selected="selected"{/if}>{tr}2{/tr}</option>
+				<option value="3"{if $prefs.morelikethis_basic_mincommon eq '3'} selected="selected"{/if}>{tr}3{/tr}</option>
+				<option value="4"{if $prefs.morelikethis_basic_mincommon eq '4'} selected="selected"{/if}>{tr}4{/tr}</option>
+				<option value="5"{if $prefs.morelikethis_basic_mincommon eq '5'} selected="selected"{/if}>{tr}5{/tr}</option>
+				<option value="6"{if $prefs.morelikethis_basic_mincommon eq '6'} selected="selected"{/if}>{tr}6{/tr}</option>
+				<option value="7"{if $prefs.morelikethis_basic_mincommon eq '7'} selected="selected"{/if}>{tr}7{/tr}</option>
+				<option value="8"{if $prefs.morelikethis_basic_mincommon eq '8'} selected="selected"{/if}>{tr}8{/tr}</option>
+				<option value="9"{if $prefs.morelikethis_basic_mincommon eq '9'} selected="selected"{/if}>{tr}9{/tr}</option>
+			</select>			
+			<input type="submit" name="morelikethisoptions" value="{tr}change{/tr}"/>
+		</td>
+	</tr>
+	</form>
+      </table>    
     </div>
   </div>
 
