@@ -19,6 +19,11 @@ function wikiplugin_formula_help() {
 }
 function wikiplugin_formula($data, $params) {
 	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin;
+	global $feature_sheet; 
+	if ($feature_sheet != 'y') {
+		return (tra("This feature is disabled").": feature_sheet");
+	}
+	
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($width)) $width = 500;
