@@ -1081,6 +1081,19 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		// }}}
 		}
 	}
+	
+	/**
+     * cleanup_tags
+     *
+     * This function added by Nelson to remove all tags that are orphaned (i.e. not used)
+  	 *
+     */
+    
+	function cleanup_tags() {
+		$query = "DELETE FROM `tiki_freetags` t USING `tiki_freetags` t LEFT JOIN `tiki_freetagged_objects` fto ON (t.`tagId` = fto.`tagId`) WHERE fto.`tagId` IS NULL";
+		$this->query($query);
+	    return true;
+	 }
 
 }
 
