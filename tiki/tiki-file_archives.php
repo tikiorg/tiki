@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.8 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_archives.php,v 1.9 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/filegals/filegallib.php');
 
-if ($feature_file_galleries != 'y') {
+if ($prefs['feature_file_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	$smarty->display("error.tpl");
 	die;
@@ -43,7 +43,7 @@ if (!empty($_REQUEST['remove'])) {
 		die;
 	}
 	$area = 'delfile';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     	key_check($area);
 		$filegallib->remove_file($removeInfo, $user, $gal_info);
 	} else {
@@ -109,7 +109,7 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'file gallery';
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');

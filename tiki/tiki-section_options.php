@@ -1,18 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.14 2007-03-06 19:29:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.15 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.14 2007-03-06 19:29:51 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.15 2007-10-12 07:55:32 nyloth Exp $
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	include ('tiki-tc.php');
 }
 
-if ($feature_banning == 'y') {
+if ($prefs['feature_banning'] == 'y') {
 	if ($msg = $tikilib->check_rules($user, $section)) {
 		$smarty->assign('msg', $msg);
 		$smarty->display("error.tpl");
@@ -20,17 +20,12 @@ if ($feature_banning == 'y') {
 	}
 }
 
-if ($layout_section == 'y') {
-	$section_top_bar = $section . '_top_bar';
-	$section_bot_bar = $section . '_bot_bar';
-	$section_left_column = $section . '_left_column';
-	$section_right_column = $section . '_right_column';
-
-	if (isset($$section_top_bar)) {
-		$smarty->assign('feature_top_bar', $$section_top_bar);
-		$smarty->assign('feature_bot_bar', $$section_bot_bar);
-		$smarty->assign('feature_left_column', $$section_left_column);
-		$smarty->assign('feature_right_column', $$section_right_column);
+if ($prefs['layout_section'] == 'y') {
+	$section_elements = array('top_bar', 'bot_bar', 'left_column', 'right_column');
+	foreach ( $section_elements as $element ) {
+		if ( isset($prefs[$section.'_'.$element]) ) {
+			$prefs['feature_'.$element] = $prefs[$section.'_'.$element];
+		}
 	}
 }
 

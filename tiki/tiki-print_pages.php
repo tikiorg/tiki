@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.19 2007-08-02 10:45:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.20 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
-if ($feature_wiki_multiprint != 'y') {
+if ($prefs['feature_wiki_multiprint'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_multiprint");
 
 	$smarty->display("error.tpl");

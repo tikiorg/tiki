@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.25 2006-09-19 16:33:12 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.26 2007-10-12 07:55:24 nyloth Exp $
  *
  * Admin interface for rules management
  *
@@ -10,7 +10,7 @@ require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
 
 // If Integrator is ON, check permissions...
-if ($feature_integrator != 'y')
+if ($prefs['feature_integrator'] != 'y')
 {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
 	$smarty->display("error.tpl");
@@ -161,7 +161,7 @@ if (isset($_REQUEST["action"]))
     case 'rm':
         if ($ruleID != 0) {
 					$area = "delintegratorrule";
-					if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+					if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 						key_check($area);
 						$integrator->remove_rule($ruleID);
 					} else {

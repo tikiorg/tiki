@@ -14,9 +14,9 @@ syntax: {phplayers [type=tree|phptree|plain|hort|vert] [id=1] [file=/path/to/men
 
 */
 function smarty_function_phplayers($params, &$smarty) {
-	global $feature_phplayers;
-	global $tikiphplayers; include_once('lib/phplayers_tiki/tiki-phplayers.php');
-	if ($feature_phplayers != 'y') {
+	global $prefs, $tikiphplayers;
+	include_once('lib/phplayers_tiki/tiki-phplayers.php');
+	if ($prefs['feature_phplayers'] != 'y') {
 	  echo tra("phplayers are not available on this site");
 	  return;
 	}

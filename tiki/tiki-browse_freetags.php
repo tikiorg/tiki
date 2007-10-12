@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.13 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.14 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.13 2007-05-31 09:42:56 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.14 2007-10-12 07:55:24 nyloth Exp $
 //
 
 // Initialization
@@ -15,7 +15,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/freetag/freetaglib.php');
 
-if ($feature_freetags != 'y') {
+if ($prefs['feature_freetags'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_freetags");
 
 	$smarty->display("error.tpl");
@@ -85,7 +85,7 @@ if (isset($_REQUEST["user_only"]) && $_REQUEST["user_only"] == 'on') {
 
 $smarty->assign('tag', $_REQUEST['tag']);
 
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $freetags_browse_amount_tags_in_cloud);
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $prefs['freetags_browse_amount_tags_in_cloud']);
 $smarty->assign('most_popular_tags', $most_popular_tags);
 $sort_mode = 'created_desc';
 $objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords, $sort_mode, $find); //, $sort_mode);
@@ -114,7 +114,7 @@ $section = 'freetags';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
 
-if ($feature_ajax == 'y') {
+if ($prefs['feature_ajax'] == 'y') {
 	$ajax_col1 = array('type', 'innerHTML');
 	$ajax_col2 = array('name', 'innerHTML');
 	$ajax_col3 = array('href', 'a');

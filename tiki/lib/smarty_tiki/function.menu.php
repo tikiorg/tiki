@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_menu($params, &$smarty)
 {
-    global $tikilib, $user, $headerlib;
+    global $tikilib, $user, $headerlib, $prefs;
     extract($params);
     // Param = zone
 
@@ -36,7 +36,7 @@ function smarty_function_menu($params, &$smarty)
     if (!$smarty->is_cached($tpl, "$cache_id")) {
 			global $mylevel;
        $menu_info = $tikilib->get_menu($id);
-       $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',$mylevel);
+       $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',$prefs['mylevel']);
        $channels = $tikilib->sort_menu_options($channels);
        $smarty->assign('channels',$channels['data']);
        $smarty->assign('menu_info',$menu_info);

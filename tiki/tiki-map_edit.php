@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.29 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.30 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 include_once ('lib/map/maplib.php');
 
-if(!isset($feature_maps) or $feature_maps != 'y') {
+if(!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
   $smarty->display("error.tpl");
   die;
@@ -37,14 +37,14 @@ if (isset($_REQUEST["mapfile"])) {
 		die;
 	}
 }
-if (!isset($map_path) or !$map_path) {
+if (!isset($prefs['map_path']) or !$prefs['map_path']) {
 	$smarty->assign('msg', tra("Maps feature is not correctly setup : Maps path is missing."));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!is_dir($map_path)) {
-	$smarty->assign('msg', tra("Please create a directory named $map_path to hold your map files."));
+if (!is_dir($prefs['map_path'])) {
+	$smarty->assign('msg', tra('Please create a directory named '.$prefs['map_path'].' to hold your map files.'));
 	$smarty->display('error.tpl');
 	die;							
 }
@@ -52,7 +52,7 @@ if (!is_dir($map_path)) {
 $smarty->assign('tiki_p_map_create', $tiki_p_map_create);
 
 if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
-	$newmapfile = $map_path.$_REQUEST["newmapfile"];
+	$newmapfile = $prefs['map_path'].$_REQUEST["newmapfile"];
 
 	if (!preg_match('/\.map$/i', $newmapfile) || preg_match('/\.\./', $_REQUEST["newmapfile"])) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
@@ -99,9 +99,9 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 $smarty->assign('tiki_p_map_delete', $tiki_p_map_delete);
 if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 	$area = 'delmap';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
-		if(!unlink($map_path.$_REQUEST["mapfile"])) {
+		if(!unlink($prefs['map_path'].$_REQUEST["mapfile"])) {
 			$smarty->assign('msg', tra("You do not have permission to delete the mapfile"));
 			$smarty->display("error.tpl");  
 			die;
@@ -130,7 +130,7 @@ if ($tiki_p_map_edit != 'y') {
   
   //Get the revision number
   // Get mapfiles from the mapfiles directory
-$files=$maplib->listMaps($map_path);
+$files=$maplib->listMaps($prefs['map_path']);
 	
 	for ($i=0;$i<count($files);$i++) {
   	if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
@@ -140,12 +140,12 @@ $files=$maplib->listMaps($map_path);
   }
 	
 	ini_set("display_errors","0");
-  if (!copy($map_path.$_REQUEST["mapfile"],$map_path.$_REQUEST["mapfile"].$revision)) {
+  if (!copy($prefs['map_path'].$_REQUEST["mapfile"],$prefs['map_path'].$_REQUEST["mapfile"].$revision)) {
 		$smarty->assign('msg', tra("I could not make a copy"));
 		$smarty->display("error.tpl");
 		die;  
   }
-	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
+	$fp = fopen($prefs['map_path'].$_REQUEST["mapfile"], "w");
   ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
@@ -169,7 +169,7 @@ $files=$maplib->listMaps($map_path);
 	fwrite($fp, $mapfiledata);
 	fclose ($fp);
 	
-	if ($feature_user_watches == 'y') {
+	if ($prefs['feature_user_watches'] == 'y') {
 	  $nots = $tikilib->get_event_watches('map_changed', $_REQUEST["mapfile"]);
 
 	  foreach ($nots as $not) {
@@ -190,7 +190,7 @@ $files=$maplib->listMaps($map_path);
 
 		     $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 		     $mail_data = $smarty->fetch('mail/user_watch_map_changed.tpl');
-		     @mail($not['email'], tra('Map'). ' ' . $_REQUEST["mapfile"] . ' ' . tra('changed'), $mail_data, "From: ".$sender_email."\r\nContent-type: text/plain;charset=utf-8\r\n");
+		     @mail($not['email'], tra('Map'). ' ' . $_REQUEST["mapfile"] . ' ' . tra('changed'), $mail_data, "From: ".$prefs['sender_email']."\r\nContent-type: text/plain;charset=utf-8\r\n");
 	  }
 	}
 	
@@ -202,7 +202,7 @@ if ($tiki_p_map_edit != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
- $mapfile = $map_path .$_REQUEST["mapfile"];
+ $mapfile = $prefs['map_path'] .$_REQUEST["mapfile"];
   ini_set("display_errors","0"); 
 	$fp = fopen($mapfile, "r");
   ini_set("display_errors","1");
@@ -224,7 +224,7 @@ if ($tiki_p_map_edit != 'y') {
 $smarty->assign('mode', $mode);
 
 // Get mapfiles from the mapfiles directory
-$files=$maplib->listMaps($map_path);
+$files=$maplib->listMaps($prefs['map_path']);
 
 $mapstats = array();
 for ($i=0;$i<count($files);$i++) {
@@ -238,7 +238,7 @@ $smarty->assign('mapstats7days', $mapstats7days);
 $smarty->assign('tiki_p_map_edit', $tiki_p_map_edit);
 
 // Watches
-if($feature_user_watches == 'y') {
+if($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 	  if($_REQUEST['watch_action']=='add') {
 	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.phtml?mapfile=".$_REQUEST['watch_object']);

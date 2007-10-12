@@ -1,5 +1,5 @@
 <?php
-// $Id: outputfilter.highlight.php,v 1.20 2007-06-04 23:32:23 nyloth Exp $
+// $Id: outputfilter.highlight.php,v 1.21 2007-10-12 07:55:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -29,10 +29,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
  function smarty_outputfilter_highlight($source, &$smarty) {
-    global $feature_referer_highlight;
+    global $prefs;
 
     $highlight = $_REQUEST['highlight'];
-    if(isset($feature_referer_highlight) && $feature_referer_highlight == 'y') {
+    if(isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') {
         $refererhi = _refererhi();
         if(isset($refererhi) && !empty($refererhi)) {
             if(isset($highlight) && !empty($highlight)) {

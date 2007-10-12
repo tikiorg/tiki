@@ -1,13 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.84 2007-10-10 17:44:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/mypage/mypagelib.php,v 1.85 2007-10-12 07:55:42 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 /* checks about features */
-global $feature_ajax;
-if ($feature_ajax != 'y') {
+global $prefs;
+
+if ($prefs['feature_ajax'] != 'y') {
 	die("feature ajax is required for mypage");
 }
 
@@ -463,9 +464,9 @@ class MyPage {
 			$this->modified['created']=1;
 
 			// verify that we have a category if mandatory
-			global $feature_mypage_mandatory_category;
+			global $prefs;
 			$categories = $this->getParam('categories');
-			if (($feature_mypage_mandatory_category > 0) && (count($categories) == 0)) {
+			if (($prefs['feature_mypage_mandatory_category'] > 0) && (count($categories) == 0)) {
 				return $this->lasterror = new MyError(MYERROR_EINVAL, tra('A category is mandatory'));
 			}
 
@@ -514,9 +515,9 @@ class MyPage {
 					$r[]=$this->params[$k];
 				}
 
-				global $feature_mypage_mandatory_category;
+				global $prefs;
 				$categories = $this->getParam('categories');
-				if ($feature_mypage_mandatory_category > 0 && count($categories) == 0) {
+				if ($prefs['feature_mypage_mandatory_category'] > 0 && count($categories) == 0) {
 					return $this->lasterror = new MyError(MYERROR_EINVAL, tra('A category is mandatory'));
 				}
 

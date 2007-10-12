@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.62 2007-10-08 12:35:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.63 2007-10-12 07:55:42 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -163,7 +163,7 @@ class NlLib extends TikiLib {
 	}
 
 	function newsletter_subscribe($nlId, $add, $isUser='n', $validateAddr='', $addEmail='') {
-		global $smarty, $tikilib, $user, $sender_email,  $userlib;
+		global $smarty, $tikilib, $user, $prefs, $userlib;
 		if (empty($add))
 			return false;
 		if ($isUser == "y" && $addEmail == "y") {
@@ -216,11 +216,7 @@ class NlLib extends TikiLib {
 	}
 
 	function confirm_subscription($code) {
-		global $smarty;
-		global $tikilib;
-		global $sender_email;
-		global $userlib;
-		global $language;
+		global $smarty, $tikilib, $prefs, $userlib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
@@ -249,7 +245,7 @@ class NlLib extends TikiLib {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
 		$mail = new TikiMail($user);
-		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
+		$lg = ! $user ? $prefs['site_language']: $this->get_user_preference($user, "language", $prefs['site_language']);
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
 		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
@@ -260,11 +256,7 @@ class NlLib extends TikiLib {
 	}
 
 	function unsubscribe($code,$mailit=false) {
-		global $smarty;
-		global $sender_email;
-		global $userlib;
-		global $tikilib;
-		global $language;
+		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
 		$query = "select * from `tiki_newsletter_subscriptions` where `code`=?";
@@ -292,7 +284,7 @@ class NlLib extends TikiLib {
 		}
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
-		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
+		$lg = ! $user ? $prefs['site_language'] : $this->get_user_preference($user, "language", $prefs['site_language']);
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -566,7 +558,7 @@ class NlLib extends TikiLib {
 	}
 
 	function get_unsub_msg($nlId, $email, $lang, $code='', $user='') {
-		global $smarty, $language,$userlib,$tikilib;
+		global $smarty, $userlib, $tikilib;
 		$pth = $tikilib->httpPrefix(). substr($_SERVER["REQUEST_URI"],0,strpos($_SERVER["REQUEST_URI"],'tiki-'));
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		 $smarty->assign('url',$pth);
@@ -581,7 +573,7 @@ class NlLib extends TikiLib {
 		if ($user == '')
 			$user = $userlib->get_user_by_email($email);
 		if ($lang == '')
-			$lang = !$user? $language: $this->get_user_preference($user, "language", $language);
+			$lang = ! $user ? $prefs['site_language'] : $this->get_user_preference($user, "language", $prefs['site_language']);
 
 		$smarty->assign('thisuser',$user);
 		$msg = $smarty->fetchLang($lang, 'mail/newsletter_unsubscribe.tpl');

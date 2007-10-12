@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.79 2007-10-04 22:17:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80 2007-10-12 07:55:49 nyloth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
@@ -242,9 +242,9 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <div class="cbox-data">
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
-<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="pam_skip_admin" {if $pam_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})</td><td><input type="text" name="pam_service" value="{$pam_service|escape}"/></td></tr>
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $prefs.pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="pam_skip_admin" {if $prefs.pam_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})</td><td><input type="text" name="pam_service" value="{$prefs.pam_service|escape}"/></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_pam" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
@@ -294,11 +294,11 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
-<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="shib_create_user_tiki" {if $shib_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="shib_skip_admin" {if $shib_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Valid Affiliations (separated by commas){/tr}:</td><td><input type="text" name="shib_affiliation" value="{$shib_affiliation}" size="50" /></td></tr>
-<tr><td class="form">{tr}Create with default group?{/tr}</td><td><input type="checkbox" name="shib_usegroup" {if $shib_usegroup eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Default group: {/tr}</td><td><input type="text" name="shib_group" value="{$shib_group}" size="30"/></td></tr>
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="shib_create_user_tiki" {if $prefs.shib_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="shib_skip_admin" {if $prefs.shib_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Valid Affiliations (separated by commas){/tr}:</td><td><input type="text" name="shib_affiliation" value="{$prefs.shib_affiliation}" size="50" /></td></tr>
+<tr><td class="form">{tr}Create with default group?{/tr}</td><td><input type="checkbox" name="shib_usegroup" {if $prefs.shib_usegroup eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Default group: {/tr}</td><td><input type="text" name="shib_group" value="{$prefs.shib_group}" size="30"/></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_shib" value="{tr}Change Shibboleth preferences{/tr}" /></td></tr>
 </table>
 </form>

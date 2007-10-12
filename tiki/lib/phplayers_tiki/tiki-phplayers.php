@@ -1,9 +1,9 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.18 2007-09-25 22:49:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19 2007-10-12 07:55:42 nyloth Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
-		global $smarty, $language,$categlib;
+		global $smarty, $prefs, $categlib;
 		include_once('lib/smarty_tiki/modifier.tr_if.php');
 		$kids = array();
 		foreach ($categories as $cat) {
@@ -24,7 +24,7 @@ class TikiPhplayers extends TikiLib {
 					$smarty->assign('categoryName', $k['name']);
 					$smarty->assign('categoryLocal', $k['objects']);
 					$smarty->assign('categoryTotal', $count);
-					$back .= $smarty->fetchLang($language, $tpl);
+					$back .= $smarty->fetchLang($prefs['language'], $tpl);
 				} else 
 					$back .= $k['name'];
 				$back .= '|tiki-browse_categories.php?parentId='.$k['categId'].$urlEnd;

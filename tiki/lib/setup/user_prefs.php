@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.3 2007-10-07 16:28:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.4 2007-10-12 07:55:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -13,43 +13,44 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 // Handle the current user prefs in session
-if ( ! isset($_SESSION['user']['login']) || $_SESSION['user']['login'] != $user ) {
-	$_SESSION['user'] = array();
-	$_SESSION['user']['prefs'] = array();
-	$_SESSION['user']['login'] = $user;
-	$_SESSION['user']['group'] = ( $user ) ? $userlib->get_user_default_group($user) : '';
+if ( ! isset($_SESSION['u_info']['login']) || $_SESSION['u_info']['login'] != $user || $_SESSION['need_reload_prefs'] ) {
+	$_SESSION['need_reload_prefs'] = false;
+	$_SESSION['u_info'] = array();
+	$_SESSION['u_info']['prefs'] = array();
+	$_SESSION['u_info']['login'] = $user;
+	$_SESSION['u_info']['group'] = ( $user ) ? $userlib->get_user_default_group($user) : '';
 }
 
-// Define the globals $u_info and $u_prefs array for use in php / smarty
-$u_info =& $_SESSION['user'];
-$u_prefs =& $_SESSION['user']['prefs'];
+// Define the globals $u_info array for use in php / smarty
+$u_info =& $_SESSION['u_info'];
 $smarty->assign_by_ref('u_info', $u_info);
-$smarty->assign_by_ref('u_prefs', $u_prefs);
 
 if ( $user ) {
 
+	// Keep some useful sites values available before overriding with user prefs
+	$user_overrider_prefs = array('language', 'style', 'userbreadCrumb');
+	foreach ( $user_overrider_prefs as $uop ) {
+		$prefs['site_'.$uop] = $prefs[$uop];
+	}
+
+	// Initialize user prefs
 	$user_preferences = array(); // Used for cache
-	$user_preferences[$user] =& $_SESSION['user']['prefs'];
+	$user_preferences[$user] =& $_SESSION['u_info']['prefs'];
+
 	$group =& $_SESSION['user']['group'];
 	$smarty->assign_by_ref('group', $group);
 	$smarty->assign_by_ref('user', $user);
 	$smarty->assign_by_ref('default_group', $group);
 
-	// Get some user prefs in one query
-	$needed_user_prefs = array(
-		'user_dbl' => 'y',
-		'allowMsgs' => 'y',
-		'tasks_maxRecords' => '',
-	);
-	$tikilib->get_user_preferences($user, $needed_user_prefs);
+	// Get all user prefs in one query
+	$tikilib->get_user_preferences($user);
 
-	// One global var per user prefs that are known at this stage
-	//   (deprecated -> consider using $u_prefs instead for the current user)
-	extract($user_preferences[$user]);
+	// Prefs overriding
+	$prefs = &array_merge(&$prefs, &$user_preferences[$user]);
 
-	// Smarty assignations
-	//   (deprecated -> need to be replaced by the use of smarty $u_info array);
-	foreach ( $needed_user_prefs as $k => $v ) $smarty->assign($k, $$k);
+	// Copy some user prefs that doesn't have the same name as the related site pref
+	//   in order to symplify the overriding and the use 
+	$prefs['style'] = $prefs['theme'];
 
 } else {
 	$allowMsgs = 'n';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.13 2006-10-25 18:19:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14 2007-10-12 07:55:49 nyloth Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -16,11 +16,11 @@ function wikiplugin_trackerstat_help() {
 }
 
 function wikiplugin_trackerstat($data, $params) {
-	global $smarty, $feature_trackers, $tiki_p_admin_trackers;
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib;
+	include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
-	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
+	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 

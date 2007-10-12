@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.39 2007-06-01 14:04:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.40 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,8 +11,8 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 
 if (!$user) {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -21,9 +21,9 @@ if (!$user) {
 	}
 }
 
-if ($feature_messages != 'y') {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+if ($prefs['feature_messages'] != 'y') {
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
@@ -38,7 +38,7 @@ if ($tiki_p_messages != 'y') {
 	die;
 }
 
-if ($allowmsg_is_optional == 'y') {
+if ($prefs['allowmsg_is_optional'] == 'y') {
 	if ($tikilib->get_user_preference($user, 'allowMsgs', 'y') != 'y') {
 	$smarty->assign('msg', tra("You have to be able to receive messages in order to send them. Goto your user preferences and enable 'Allow messages from other users'"));
 	$smarty->display("error.tpl");
@@ -46,7 +46,7 @@ if ($allowmsg_is_optional == 'y') {
 	}
 }
 
-if (($messu_sent_size>0) && ($messulib->count_messages($user, 'sent')>=$messu_sent_size) ) {
+if (($prefs['messu_sent_size']>0) && ($messulib->count_messages($user, 'sent')>=$prefs['messu_sent_size']) ) {
 	$smarty->assign('msg', tra('Sent box is full. Archive or delete some sent messages first if you want to send more messages.'));
 	$smarty->display("error.tpl");
 	die;
@@ -123,9 +123,9 @@ if (isset($_REQUEST['send'])) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-			  if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+			  if ($prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
-					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
+					if (($messulib->count_messages($a_user)<$prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size']==0)) {
 						$users[] = $a_user;
 					} else {
 						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"),$a_user)."<br />";
@@ -144,9 +144,9 @@ if (isset($_REQUEST['send'])) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-			  if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+			  if ($prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
-					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
+					if (($messulib->count_messages($a_user)<$prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size']==0)) {
 						$users[] = $a_user;
 					} else {
 						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"),$a_user)."<br />";
@@ -165,9 +165,9 @@ if (isset($_REQUEST['send'])) {
 			$a_user = str_replace('\\;', ';', $a_user);
 			if ($userlib->user_exists($a_user)) {
 				// mail only to users with activated message feature
-				if ($allowmsg_is_optional != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
+				if ($prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					// only send mail if nox mailbox size is defined or not reached yet
-					if (($messulib->count_messages($a_user)<$messu_mailbox_size) || ($messu_mailbox_size==0)) {
+					if (($messulib->count_messages($a_user)<$prefs['messu_mailbox_size']) || ($prefs['messu_mailbox_size']==0)) {
 						$users[] = $a_user;
 					} else {
 						$message .= sprintf(tra("User %s can not receive messages, mailbox is full"),$a_user)."<br />";
@@ -198,7 +198,7 @@ if (isset($_REQUEST['send'])) {
 		$messulib->post_message(
 			$a_user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'],
 			$_REQUEST['priority'], $_REQUEST['replyto_hash']);
-    		if ($feature_score == 'y') {
+    		if ($prefs['feature_score'] == 'y') {
 	            $tikilib->score_event($user, 'message_send');
 			    $tikilib->score_event($a_user, 'message_receive');
 	        }
@@ -215,7 +215,7 @@ if (isset($_REQUEST['send'])) {
 
 	$smarty->assign('message', $message);
 
-	if ($feature_actionlog == 'y') {
+	if ($prefs['feature_actionlog'] == 'y') {
 		include_once('lib/logs/logslib.php');
 		if (isset($_REQUEST['reply']) && $_REQUEST['reply'] == 'y')
 			$logslib->add_action('Replied', '', 'message', 'add='.$tikilib->strlen_quoted($_REQUEST['body']));
@@ -223,7 +223,7 @@ if (isset($_REQUEST['send'])) {
 			$logslib->add_action('Posted', '', 'message', 'add='.strlen($_REQUEST['body']));
 	}
 }
-$allowMsgs = $allowmsg_is_optional != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');
+$allowMsgs = $prefs['allowmsg_is_optional'] != 'y' || $tikilib->get_user_preference($user, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
 
 include_once ('tiki-section_options.php');

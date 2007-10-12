@@ -7,9 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_editform($params, &$smarty) {
-	global $feature_detect_language;
-	global $language;
-	global $base_url;
+	global $prefs, $base_url;
 
 	include_once 'lib/tikifck.php';
 	if (!isset($params['InstanceName']))       $params['InstanceName'] = 'fckedit';
@@ -22,12 +20,12 @@ function smarty_function_editform($params, &$smarty) {
 	} else {
 		$fcked->ToolbarSet = 'Tiki';
 	}
-	if ($feature_detect_language == 'y') {
+	if ($prefs['feature_detect_language'] == 'y') {
 		$fcked->Config['AutoDetectLanguage'] = true;
 	} else {
 		$fcked->Config['AutoDetectLanguage'] = false;
 	}
-	$fcked->Config['DefaultLanguage'] = $language;
+	$fcked->Config['DefaultLanguage'] = $prefs['language'];
 	$fcked->Config['CustomConfigurationsPath'] = $base_url.'setup_fckeditor.php';
 	echo $fcked->CreateHtml();
 }

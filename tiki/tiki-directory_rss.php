@@ -10,12 +10,12 @@ require_once ('lib/tikilib.php');
 require_once('lib/directory/dirlib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($rss_directories != 'y') {
+if ($prefs['rss_directories'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
 
-if ($feature_directory != 'y') {
+if ($prefs['feature_directory'] != 'y') {
 	$errmsg=tra("This feature is disabled").": feature_directory";
       require_once ('tiki-rss_error.php');
 }
@@ -44,12 +44,12 @@ if ($output["data"]=="EMPTY") {
 	$dateId = "created";
 	$readrepl = "tiki-directory_redirect.php?$id=%s";
 
-	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-	if ($desc<>'') $desc = $tmp;
+        $tmp = $prefs['title_rss_'.$feed];
+        if ($tmp<>'') $title = $tmp;
+        $tmp = $prefs['desc_rss_'.$feed];
+        if ($desc<>'') $desc = $tmp;
 
-	$changes = $dirlib->dir_list_sites($_REQUEST["parent"], 0, $max_rss_directories, $dateId.'_desc', '', 'y');
+	$changes = $dirlib->dir_list_sites($_REQUEST["parent"], 0, $prefs['max_rss_directories'], $dateId.'_desc', '', 'y');
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, '');
 }
 header("Content-type: ".$output["content-type"]);

@@ -7,10 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_poll($params, &$smarty) {
-    global $polllib;
-    global $dbTiki;
-		global $commentslib;
-		global $feature_poll_comments;
+	global $polllib, $dbTiki, $commentslib, $prefs;
     extract($params);
     // Param = zone
 	if (!is_object($polllib)) {
@@ -32,7 +29,7 @@ function smarty_function_poll($params, &$smarty) {
       $menu_info = $polllib->get_poll($id);
 	if ($menu_info) {
       $channels = $polllib->list_poll_options($id);
-			if ($feature_poll_comments == 'y') {
+			if ($prefs['feature_poll_comments'] == 'y') {
 				$commentslib = new Comments($dbTiki);
 				$comments_count = $commentslib->count_comments("poll:".$menu_info["pollId"]);
 			} else

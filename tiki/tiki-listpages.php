@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.51 2007-10-05 16:57:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.52 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,13 +11,13 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_listPages != 'y') {
+if ($prefs['feature_listPages'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_listPages");
 	$smarty->display("error.tpl");
 	die;
@@ -52,14 +52,14 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				die;
 			}
 			$area = 'listpages_delete';
-			if ( $feature_ticketlib2 != 'y' or ( isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]) ) ) {
+			if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]) ) ) {
 				key_check($area);
 				foreach ( $_REQUEST["checked"] as $page ) $tikilib->remove_all_versions($page);
 			} else key_get($area, '<b>'.tra("Delete those pages:").'</b><br />'.implode('<br />', $_REQUEST["checked"]));
 			break;
 			
 		case 'print_pages':
-			if ( $feature_wiki_multiprint != 'y' ) {
+			if ( $prefs['feature_wiki_multiprint'] != 'y' ) {
 				$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_multiprint");
 				$smarty->display("error.tpl");
 				die;
@@ -179,11 +179,11 @@ if ( ! empty($multiprint_pages) ) {
 	if ($offset > 0) $smarty->assign('prev_offset', $offset - $maxRecords);
 	else $smarty->assign('prev_offset', -1);
 	
-	if ($feature_categories == 'y') {
+	if ($prefs['feature_categories'] == 'y') {
 		global $categlib; include_once ('lib/categories/categlib.php');
 		$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 		$smarty->assign_by_ref('categories', $categories);
-		if ((isset($wiki_list_categories) && $wiki_list_categories == 'y') || (isset($wiki_list_categories_path) && $wiki_list_categories_path == 'y')) {
+		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
 			foreach ($listpages['data'] as $i=>$page) {
 				$cats = $categlib->get_object_categories('wiki page',$page['pageName']);
 				foreach ($cats as $cat) {
@@ -196,7 +196,7 @@ if ( ! empty($multiprint_pages) ) {
 			}
 		}
 	}
-	if ($feature_multilingual == 'y') {
+	if ($prefs['feature_multilingual'] == 'y') {
         $languages = array();
         $languages = $tikilib->list_languages(false, 'y');
         $smarty->assign_by_ref('languages', $languages);

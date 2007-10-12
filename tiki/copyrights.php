@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.17 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.18 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 require_once ('tiki-setup.php');
 
-if ($wiki_feature_copyrights != 'y') {
+if ($prefs['wiki_feature_copyrights'] != 'y') {
 	$smarty->assign('msg', tra("The copyright management feature is not enabled."));
 
 	$smarty->display("error.tpl");
@@ -32,7 +32,7 @@ $smarty->assign('page', $_REQUEST["page"]);
 $page = $_REQUEST["page"];
 
 if (isset($_REQUEST['addcopyright'])) {
-	if ($wiki_feature_copyrights == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
+	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
 		&& isset($_REQUEST['copyrightAuthors']) && !empty($_REQUEST['copyrightYear']) && !empty($_REQUEST['copyrightTitle'])) {
 		$copyrightYear = $_REQUEST['copyrightYear'];
 
@@ -46,7 +46,7 @@ if (isset($_REQUEST['addcopyright'])) {
 }
 
 if (isset($_REQUEST['editcopyright'])) {
-	if ($wiki_feature_copyrights == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
+	if ($prefs['wiki_feature_copyrights'] == 'y' && isset($_REQUEST['copyrightTitle']) && isset($_REQUEST['copyrightYear'])
 		&& isset($_REQUEST['copyrightAuthors']) && !empty($_REQUEST['copyrightYear']) && !empty($_REQUEST['copyrightTitle'])) {
 		$copyrightId = $_REQUEST['copyrightId'];
 
@@ -67,7 +67,7 @@ if (isset($_REQUEST['action']) && isset($_REQUEST['copyrightId'])) {
 		$copyrightslib->down_copyright($_REQUEST['copyrightId']);
 	} elseif ($_REQUEST['action'] == 'delete') {
 		$area = 'delcopyright';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$copyrightslib->remove_copyright($_REQUEST['copyrightId']);
 		} else {

@@ -8,13 +8,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_ajax_href($params, $content, &$smarty)
 {
-    global $feature_ajax;
+    global $prefs;
 
     $url = $content;
     $template = $params['template'];
     $htmlelement = $params['htmlelement'];
 
-    if ($feature_ajax != 'y') {
+    if ($prefs['feature_ajax'] != 'y') {
 	return " href=\"$url\" ";
     } else {
 	return " href=\"#\" title=\"$template\" onclick=\"loadComponent('$url','$template','$htmlelement');\" ";

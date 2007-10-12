@@ -24,12 +24,13 @@ class DrawLib extends TikiLib {
 	}
 
 	function update_drawing($name, $hash, $user) {
+		global $prefs;
 		$version = $this->getOne("select max(`version`) from `tiki_drawings` where `name`=?",array($name));
 		if (!$version) $version = 0;
 		$version = $version + 1;
 		$this->replace_drawing(0, $name, '', $hash, $user, $version);
-		$maxversions = $this->get_preference("maxVersions", 0);
-		$keep = $this->get_preference('keep_versions', 0);
+		$maxversions = $prefs['maxVersions'];
+		$keep = $prefs['keep_versions'];
 		$cant = $this->getOne("select count(*) from `tiki_drawings` where `name`=?",array($name));
 		$oktodel = $this->now - ($keep * 24 * 3600);
 

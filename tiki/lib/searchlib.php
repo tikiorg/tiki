@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.47 2007-05-09 14:15:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48 2007-10-12 07:55:37 nyloth Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -55,8 +55,7 @@ class SearchLib extends TikiLib {
  * \return the nb of results + array('name', 'data', 'hits', 'lastModif', 'href', 'pageName', 'relevance'
 **/
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
-		global $tiki_p_admin, $feature_categories, $feature_search_show_forbidden_obj,
-		    $feature_search_show_forbidden_cat, $userlib, $user, $categlib;
+		global $tiki_p_admin, $prefs, $userlib, $user, $categlib;
 		    
 		if (!is_object($categlib)) {
 			require_once('lib/categories/categlib.php');
@@ -125,7 +124,7 @@ class SearchLib extends TikiLib {
 		}
 		    
 		    
-		$chkObjPerm = $feature_search_show_forbidden_obj != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
+		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
 
 		if ($chkObjPerm) {
 
@@ -149,7 +148,7 @@ class SearchLib extends TikiLib {
 			$bindHaving = array(0,1);
 	 	}
 
-		$chkCatPerm = $feature_search_show_forbidden_cat != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $feature_categories == 'y';
+		$chkCatPerm = $prefs['feature_search_show_forbidden_cat'] != 'y' && $tiki_p_admin != 'y' && !empty($objType) && !empty($objKeyCat) && !empty($objKeyGroup) && $prefs['feature_categories'] == 'y';
 
 		if ($chkCatPerm) {
 
@@ -244,7 +243,7 @@ class SearchLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			//if (($feature_search_show_forbidden_cat == 'y' || $feature_search_show_forbidden_obj == 'y') && !$this->user_has_perm_on_object($user,$res['id1'],$objType,$permName) continue;
+			//if (($prefs['feature_search_show_forbidden_cat'] == 'y' || $prefs['feature_search_show_forbidden_obj'] == 'y') && !$this->user_has_perm_on_object($user,$res['id1'],$objType,$permName) continue;
 			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
@@ -554,11 +553,9 @@ class SearchLib extends TikiLib {
 
 		$cant = 0;
 		
-		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
-				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
-		global $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
+		global $prefs, $tiki_p_view_directory, $tiki_p_read_article, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
-		if ($feature_wiki == 'y') {
+		if ($prefs['feature_wiki'] == 'y') {
 		$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext);
 		foreach ($rv['data'] as $a) {
 			$a['type'] = tra('Wiki');
@@ -569,7 +566,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_galleries == 'y') {
+		if ($prefs['feature_galleries'] == 'y') {
 		$rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -581,7 +578,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_faqs == 'y' && $tiki_p_view_faqs == 'y') {
+		if ($prefs['feature_faqs'] == 'y' && $tiki_p_view_faqs == 'y') {
 		$rv = $this->find_faqs($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -593,7 +590,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_galleries == 'y') {
+		if ($prefs['feature_galleries'] == 'y') {
 		$rv = $this->find_images($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -605,7 +602,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_forums == 'y') {
+		if ($prefs['feature_forums'] == 'y') {
 		$rv = $this->find_forums($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -617,7 +614,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_file_galleries == 'y') {
+		if ($prefs['feature_file_galleries'] == 'y') {
 		$rv = $this->find_files($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -629,7 +626,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_blogs =='y') {
+		if ($prefs['feature_blogs'] =='y') {
 		$rv = $this->find_blogs($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -641,7 +638,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_articles == 'y' && $tiki_p_read_article == 'y') {
+		if ($prefs['feature_articles'] == 'y' && $tiki_p_read_article == 'y') {
 		$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -653,7 +650,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 		
-		if ($feature_blogs == 'y') {
+		if ($prefs['feature_blogs'] == 'y') {
 		$rv = $this->find_posts($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -665,7 +662,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 
-		if ($feature_directory == 'y' && $tiki_p_view_directory == 'y') {
+		if ($prefs['feature_directory'] == 'y' && $tiki_p_view_directory == 'y') {
 		$rv = $this->find_directory($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -678,7 +675,7 @@ class SearchLib extends TikiLib {
 		$cant += $rv['cant'];
 		}
 
-		if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
+		if ($prefs['feature_trackers'] == 'y' && $tiki_p_view_trackers == 'y') {
 		$rv = $this->find_trackers($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {

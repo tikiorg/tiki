@@ -1,20 +1,20 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.13 2007-10-09 15:29:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14 2007-10-12 07:55:49 nyloth Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
-  global $smarty, $feature_trackers;
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	global $smarty, $prefs, $trklib;
+	include_once('lib/trackers/trackerlib.php');
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	if (isset($_REQUEST['msgTrackerFilter'])) 
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	if (isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
-		if ($feature_trackers != 'y' || empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		if ($prefs['feature_trackers'] != 'y' || empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 			return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 		}
 		if (!isset($fields)) {

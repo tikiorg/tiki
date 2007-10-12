@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.26 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.27 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
@@ -19,16 +19,16 @@ if ($feature_wiki != 'y') {
 //print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
-	$_REQUEST["page"] = $wikiHomePage;
+	$_REQUEST["page"] = $prefs['wikiHomePage'];
 
-	$page = $wikiHomePage;
-	$smarty->assign('page', $wikiHomePage);
+	$page = $prefs['wikiHomePage'];
+	$smarty->assign('page', $prefs['wikiHomePage']);
 } else {
 	$page = $_REQUEST["page"];
 
@@ -56,20 +56,14 @@ if ($tiki_p_view != 'y') {
 // BreadCrumbNavigation here
 // Get the number of pages from the default or userPreferences
 // Remember to reverse the array when posting the array
-$anonpref = $tikilib->get_preference('userbreadCrumb', 4);
-
-if ($user) {
-	$userbreadCrumb = $tikilib->get_user_preference($user, 'userbreadCrumb', $anonpref);
-} else {
-	$userbreadCrumb = $anonpref;
-}
+$anonpref = $prefs['userbreadCrumb'];
 
 if (!isset($_SESSION["breadCrumb"])) {
 	$_SESSION["breadCrumb"] = array();
 }
 
 if (!in_array($page, $_SESSION["breadCrumb"])) {
-	if (count($_SESSION["breadCrumb"]) > $userbreadCrumb) {
+	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
 		array_shift ($_SESSION["breadCrumb"]);
 	}
 
@@ -85,7 +79,7 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 //print_r($_SESSION["breadCrumb"]);
 
 // Now increment page hits since we are visiting this page
-if ($count_admin_pvs == 'y' || $user != 'admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 

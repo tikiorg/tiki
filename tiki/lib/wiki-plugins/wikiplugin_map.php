@@ -12,8 +12,7 @@ function wikiplugin_map_help() {
 }
 
 function wikiplugin_map($data, $params) {
-	global $tikilib;
-	global $feature_maps;
+	global $tikilib, $prefs;
 
 	extract ($params,EXTR_SKIP);
 
@@ -46,7 +45,7 @@ function wikiplugin_map($data, $params) {
 	if (isset($height)) {
 		$heightdata='height="'.intval($height).'"';
 	}	
-	if(@$feature_maps != 'y') {
+	if(@$prefs['feature_maps'] != 'y') {
 		$map=tra("Feature disabled");
 	} else {
 		$map='<object border="0" hspace="0" vspace="0" type="text/html" data="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=frame" '.$widthdata.' '.$heightdata.'><a href="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a></object>';

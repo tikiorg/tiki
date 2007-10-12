@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.33 2007-07-24 15:10:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.34 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($forgotPass != 'y') {
+if ($prefs['forgotPass'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": forgotPass");
 	$smarty->display("error.tpl");
 	die;
@@ -40,7 +40,7 @@ if (isset($_REQUEST["remind"])) {
 			$smarty->assign('msg', tra('Invalid or unknown username'). ': ' . $_REQUEST['name']);
 		} else {
 			$info = $userlib->get_user_info($_REQUEST["name"]);
-			if (!empty($info['valid']) && ($validateRegistration == 'y' || $validateUsers == 'y')) {
+			if (!empty($info['valid']) && ($prefs['validateRegistration'] == 'y' || $prefs['validateUsers'] == 'y')) {
 				$showmsg = 'e';
 				$userlib->send_validation_email($_REQUEST["username"], $info['valid'], $info['email'], 'y');
 			} elseif (empty($info['email'])) { //only renew if i can mail the pass
@@ -61,7 +61,7 @@ if (isset($_REQUEST["remind"])) {
 	} else {
 		include_once ('lib/webmail/tikimaillib.php');
 		$name = $_REQUEST['name'];
-		if ($feature_clear_passwords == 'y') {
+		if ($prefs['feature_clear_passwords'] == 'y') {
 			$pass = $userlib->get_user_password($name);
 			$smarty->assign('clearpw', 'y');
 		} else {
@@ -69,7 +69,7 @@ if (isset($_REQUEST["remind"])) {
 			$smarty->assign('clearpw', 'n');
 		}
 
-		$languageEmail = $tikilib->get_user_preference($name, "language", $language);
+		$languageEmail = $tikilib->get_user_preference($name, "language", $prefs['site_language']);
 		
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -79,7 +79,7 @@ if (isset($_REQUEST["remind"])) {
 
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_user', $name);
-		$smarty->assign('mail_same', $feature_clear_passwords);
+		$smarty->assign('mail_same', $prefs['feature_clear_passwords']);
 		$smarty->assign('mail_pass', $pass);
 		$smarty->assign('mail_apass', md5($pass));
 		$smarty->assign('mail_ip', $_SERVER['REMOTE_ADDR']);
@@ -97,7 +97,7 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('showmsg', 'y');
 		$smarty->assign('showfrm', 'n');
 
-		if ($feature_clear_passwords == 'y') {
+		if ($prefs['feature_clear_passwords'] == 'y') {
 			$tmp = tra("A password and your IP address reminder email has been sent ");
 		} else {
 			$tmp = tra("A new (and temporary) password and your IP address has been sent ");

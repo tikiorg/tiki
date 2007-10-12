@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.35 2007-09-01 06:29:26 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.36 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_wiki_print != 'y') {
+if ($prefs['feature_wiki_print'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_print");
 
 	$smarty->display("error.tpl");
@@ -26,15 +26,15 @@ if ($feature_wiki_print != 'y') {
 }
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
-	$page = $wikiHomePage;
+	$page = $prefs['wikiHomePage'];
 
-	$smarty->assign('page', $wikiHomePage);
+	$smarty->assign('page', $prefs['wikiHomePage']);
 } else {
 	$page = $_REQUEST["page"];
 
@@ -60,18 +60,18 @@ if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tik
 }
 
 // Now increment page hits since we are visiting this page
-if ($count_admin_pvs == 'y' || $user != 'admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 
 // Get page data
 $info = $tikilib->get_page_info($page);
 
-if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y' && isset($wikiLicensePage)) {
+if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] == 'y' && isset($prefs['wikiLicensePage'])) {
 	// insert license if wiki copyrights enabled
-	$license_info = $tikilib->get_page_info($wikiLicensePage);
+	$license_info = $tikilib->get_page_info($prefs['wikiLicensePage']);
 
-	$tikilib->add_hit($wikiLicensePage);
+	$tikilib->add_hit($prefs['wikiLicensePage']);
 	$info["data"] = $info["data"] . "\n<HR>\n" . $license_info["data"];
 	$_REQUEST['copyrightpage'] = $page;
 }

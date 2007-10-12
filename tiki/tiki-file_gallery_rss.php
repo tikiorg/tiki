@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.33 2007-09-11 15:39:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.34 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($rss_file_gallery != 'y') {
+if ($prefs['rss_file_gallery'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
@@ -40,20 +40,20 @@ if ($output["data"]=="EMPTY") {
 	$readrepl = "tiki-download_file.php?$id=%s";
 	if (($tmp["type"]=="podcast") || ($tmp["type"]=="vidcast")) {
 		$titleId = "name";
-		$readrepl = $fgal_podcast_dir."%s";
+		$readrepl = $prefs['fgal_podcast_dir']."%s";
 		$id = "podcast_filename";
 	}
 
 	if ($title=="") {
-		$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-		if ($tmp<>'') $title = $tmp;
+        	$tmp = $prefs['title_rss_'.$feed];
+       		if ($tmp<>'') $title = $tmp;
 	}
 	if ($desc=="") {
-		$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-		if ($desc<>'') $desc = $tmp;
+        	$tmp = $prefs['desc_rss_'.$feed];
+	        if ($desc<>'') $desc = $tmp;
 	}
 
-	$changes = $tikilib->get_files( 0, $max_rss_file_gallery, $dateId.'_desc', '', $_REQUEST["galleryId"]);
+	$changes = $tikilib->get_files( 0, $prefs['max_rss_file_gallery'], $dateId.'_desc', '', $_REQUEST["galleryId"]);
 	$output = $rsslib->generate_feed($feed, $uniqueid, '', $changes, $readrepl, '', $id, $title, $titleId, $desc, $descId, $dateId, $authorId);
 }
 header("Content-type: ".$output["content-type"]);

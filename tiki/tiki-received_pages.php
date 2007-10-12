@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.17 2007-10-02 17:27:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.18 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_comm != 'y') {
+if ($prefs['feature_comm'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_comm");
 
 	$smarty->display("error.tpl");
@@ -72,7 +72,7 @@ $smarty->assign('parsed', $tikilib->parse_data($info["data"]));
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delreceivedpage';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$commlib->remove_received_page($_REQUEST["remove"]);
   } else {

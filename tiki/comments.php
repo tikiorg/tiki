@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.79 2007-09-27 17:02:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,12 +33,12 @@ $handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode
 
 // First override existing values (e.g. coming from forum specific settings) by user specific requests if we allow them
 //   (we empty those user specific requests if they are denied)
-if ( $forum_thread_user_settings == 'y' ) {
+if ( $prefs['forum_thread_user_settings'] == 'y' ) {
 	foreach ( $handled_requests as $request_name ) {
 		if ( isset($_REQUEST[$request_name]) ) {
 			$$request_name = $_REQUEST[$request_name];
 			$smarty->assign($request_name.'_param', '&amp;'.$request_name.'='.$_REQUEST[$request_name]);
-			if ( $forum_thread_user_settings_keep == 'y' ) $_SESSION['forums_'.$request_name] = $_REQUEST[$request_name];
+			if ( $prefs['forum_thread_user_settings_keep'] == 'y' ) $_SESSION['forums_'.$request_name] = $_REQUEST[$request_name];
 		}
 	}
 } else foreach ( $handled_requests as $request_name ) unset($_REQUEST[$request_name]);
@@ -47,7 +47,7 @@ if ( $forum_thread_user_settings == 'y' ) {
 if ( isset($forum_mode) && $forum_mode == 'y' ) {
 	// If we are in a forum thread
 
-	if ( $forum_thread_user_settings == 'y' && $forum_thread_user_settings_keep == 'y' ) {
+	if ( $prefs['forum_thread_user_settings'] == 'y' && $prefs['forum_thread_user_settings_keep'] == 'y' ) {
 		// If 'forum_thread_user_settings' is enabled (allow user to change thread display settings)
 		// and if the 'forum_thread_user_settings_keep' is enabled (keep user settings for all forums during his session)
 		// ... we check session vars
@@ -64,9 +64,9 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		//  !! Global value is not used when there is an explicit user request !!
 
 		foreach ( $handled_requests as $request_name )
-			if ( ( ! isset($$request_name) || $$request_name == '' || $forum_thread_defaults_by_forum != 'y' )
+			if ( ( ! isset($$request_name) || $$request_name == '' || $prefs['forum_thread_defaults_by_forum'] != 'y' )
 				&& ! isset($_REQUEST[$request_name])
-			) $$request_name = ${'forum_'.$request_name};
+			) $$request_name = $prefs['forum_'.$request_name];
 	}
 
 	if ( $forum_info['is_flat'] == 'y' ) {
@@ -210,14 +210,14 @@ $in_reply_to = '';
 if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 	|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
     if (isset($_REQUEST["comments_postComment"])) {
-	  if (empty($user) && $feature_antibot == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+	  if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
 			$smarty->display("error.tpl");
 			die;
 		}
 	$comments_show = 'y';
 
-	  if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($feature_contribution == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $feature_contribution_mandatory_forum == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $feature_contribution_mandatory_comment == 'y')) && empty($_REQUEST['contributions']))) {
+	  if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($prefs['feature_contribution'] == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $prefs['feature_contribution_mandatory_comment'] == 'y')) && empty($_REQUEST['contributions']))) {
 
 	    if ( isset($forum_mode) && $forum_mode == 'y' && $forum_info['is_flat'] == 'y' && $_REQUEST["comments_grandParentId"] > 0 ) {
 		$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
@@ -377,7 +377,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 
 		$commentslib->register_forum_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
 	    }
-	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y') && (isset($_REQUEST["page"]))) {
+	    if (($prefs['feature_user_watches'] == 'y') && ($prefs['wiki_watch_comments'] == 'y') && (isset($_REQUEST["page"]))) {
 		include_once ('lib/webmail/tikimaillib.php');
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 		$isBuilt = false;
@@ -395,7 +395,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 				$nots[] = array("user"=>"", "hash"=>"", "email"=>$email);
 		}
 		foreach ($nots as $not) {
-		    if ($wiki_watch_editor != 'y' && $not['user'] == $user)
+		    if ($prefs['wiki_watch_editor'] != 'y' && $not['user'] == $user)
 			break;
 		    if (!$isBuilt) {
 			$isBuilt = true;
@@ -416,8 +416,8 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 			$mail = new TikiMail();
 		    }
-		    global $language;// TODO: optimise by grouping user by language
-		    $languageEmail = $tikilib->get_user_preference($not['user'], "language", $language);
+		    global $prefs;// TODO: optimise by grouping user by language
+		    $languageEmail = $tikilib->get_user_preference($not['user'], "language", $prefs['site_language']);
 		    $mail->setUser($not['user']);
 		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
 		    $mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
@@ -433,7 +433,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
 			$msgError = tra("Missing title or body when trying to post a comment");
 	    }
-	    if ($feature_contribution == 'y' && empty($_REQUEST['contributions'])) {
+	    if ($prefs['feature_contribution'] == 'y' && empty($_REQUEST['contributions'])) {
 			if ($msgError)
 				$msgError .= '<br />';
 			$msgError .= tra("A contribution is mandatory");
@@ -475,7 +475,7 @@ if (($tiki_p_remove_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n
 	|| (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y' ) ) {
     if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
 	$area = 'delcomment';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 	    key_check($area);
 	    $comments_show = 'y';
 	    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
@@ -510,9 +510,9 @@ if ($_REQUEST["comments_threadId"] > 0) {
     // Re-enabled by rlpowell; my users rely on this.  If you want to disable it, put an option in the forums or something.
     // However, I re-enabled it *working*, instead of broken.  -rlpowell
     // check to see if QUOTE plugin or > should be used -Terence
-    global $feature_forum_parse, $feature_use_quoteplugin;
+    global $prefs;
     if ( $comment_info["data"] != ''  ) {
-	if ( $feature_forum_parse == 'y' && $feature_use_quoteplugin == 'y' ) {
+	if ( $prefs['feature_forum_parse'] == 'y' && $prefs['feature_use_quoteplugin'] == 'y' ) {
 		$comment_info["data"] = "\n{QUOTE()}" . $comment_info["data"] . '{QUOTE}';
 	} else {
 		$comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
@@ -683,7 +683,7 @@ if (!empty($_REQUEST['post_reply'])) {
 	$smarty->assign('edit_reply', $_REQUEST['edit_reply']);
 }
 
-if ($feature_contribution == 'y') {
+if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
 }

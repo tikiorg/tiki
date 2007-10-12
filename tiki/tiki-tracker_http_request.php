@@ -3,14 +3,14 @@
 require_once('tiki-setup.php');
 include_once('lib/trackers/trackerlib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_trackers != 'y') {
+if ($prefs['feature_trackers'] != 'y') {
 	die;
 }
 
@@ -26,7 +26,7 @@ header('Cache-Control: no-cache');
 
 for ($index = 0; $index < count($arrayTrackerId); $index++)
 {
-	if ( ! $userlib->object_has_one_permission($arrayTrackerId[$index], 'tracker') && ($tiki_p_admin != 'y' && $feature_categories == 'y')) {
+	if ( ! $userlib->object_has_one_permission($arrayTrackerId[$index], 'tracker') && ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y')) {
 		$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $arrayTrackerId[$index]);
    		if ($perms_array) {
    			$is_categorized = TRUE;

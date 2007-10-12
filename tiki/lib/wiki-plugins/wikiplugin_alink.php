@@ -25,13 +25,11 @@ function wikiplugin_alink_help() {
 
 function wikiplugin_alink($data, $params)
 {
-        global $multilinguallib;
+        global $multilinguallib, $tikilib, $prefs;
+
 	if( ! isset( $multilinguallib ) || !is_object($multilinguallib) ) {
 		include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
 	}
-        global $tikilib;
-	global $feature_multilingual;
-	global $feature_best_language;
         extract ($params, EXTR_SKIP);
 
 	if (!isset($aname)) {
@@ -43,8 +41,8 @@ function wikiplugin_alink($data, $params)
 	    if( $desc = $tikilib->page_exists_desc($pagename) )
 	    {
 		// to choose the best page language
-		$bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : ""; 
-		// $bestLang = $feature_best_language == 'y' ? "&amp;bl" : ""; 
+		$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl" : ""; 
+		// $bestLang = $prefs['feature_best_language'] == 'y' ? "&amp;bl" : ""; 
 
 		return "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($pagename) . 
 			$bestLang .  "#" . $aname .  "' class='wiki'>$data</a>";

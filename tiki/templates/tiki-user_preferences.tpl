@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.112 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113 2007-10-12 07:55:50 nyloth Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -117,7 +117,7 @@
 		<option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
     {section name=ix loop=$styles}
       {if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
-        <option value="{$styles[ix]|escape}" {if $user_style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]|escape}" {if $u_info.prefs.theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
       {/if}
     {/section}
         </select>
@@ -305,7 +305,7 @@
 	</select>
 {/if}
 <tr>
-  <td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td>
+  <td colspan="2" class="button"><input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
 </table>
 </form>

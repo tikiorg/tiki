@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.15 2007-08-21 09:17:35 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ require_once ('lib/search/searchlib.php');
 
 $searchlib = &new SearchLib($tikilib->db);
 
-if ($feature_search != 'y') {
+if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
 
 	$smarty->display("error.tpl");
@@ -25,7 +25,7 @@ if(isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
   $_REQUEST["words"]=$_REQUEST["highlight"];
 }
 
-if ($feature_search_stats == 'y') {
+if ($prefs['feature_search_stats'] == 'y') {
 	$searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
 
@@ -40,7 +40,7 @@ $smarty->assign('where2',tra($where));
 $filter = array();
 
 if($where=='wikis') {
-  if ($feature_wiki != 'y') {
+  if ($prefs['feature_wiki'] != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
     $smarty->display("error.tpl");
     die;
@@ -53,7 +53,7 @@ if($where=='wikis') {
 }
 
 if($where=='directory') {
-	if ($feature_directory != 'y') {
+	if ($prefs['feature_directory'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_directory");
   $smarty->display("error.tpl");
   die;
@@ -66,7 +66,7 @@ if($where=='directory') {
 }
 
 if($where=='faqs') {
-	if ($feature_faqs != 'y') {
+	if ($prefs['feature_faqs'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 	  $smarty->display("error.tpl");
 	  die;
@@ -79,7 +79,7 @@ if($where=='faqs') {
 }
 
 if($where=='forums') {
-	if ($feature_forums != 'y') {
+	if ($prefs['feature_forums'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
   	$smarty->display("error.tpl");
   	die;
@@ -95,7 +95,7 @@ if($where=='forums') {
 }
 
 if($where=='files') {
-	if ($feature_file_galleries !='y') {
+	if ($prefs['feature_file_galleries'] !='y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	  $smarty->display("error.tpl");
 	  die;
@@ -108,7 +108,7 @@ if($where=='files') {
 }
 
 if($where=='articles') {
-	if ($feature_articles != 'y') {
+	if ($prefs['feature_articles'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 	  $smarty->display("error.tpl");
 	  die;
@@ -121,7 +121,7 @@ if($where=='articles') {
 }
 
 if (($where=='galleries' || $where=='images')) {
-	if ($feature_galleries != 'y') {
+	if ($prefs['feature_galleries'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 	  $smarty->display("error.tpl");
 	  die;
@@ -134,7 +134,7 @@ if (($where=='galleries' || $where=='images')) {
 }
 
 if(($where=='blogs' || $where=='posts')) {
-	if ($feature_blogs != 'y') {
+	if ($prefs['feature_blogs'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 	  $smarty->display("error.tpl");
 	  die;
@@ -147,7 +147,7 @@ if(($where=='blogs' || $where=='posts')) {
 }
 
 if(($where=='trackers')) {
-        if ($feature_trackers != 'y') {
+        if ($prefs['feature_trackers'] != 'y') {
           $smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
           $smarty->display("error.tpl");
           die;
@@ -168,7 +168,7 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
-$fulltext = $feature_search_fulltext == 'y';
+$fulltext = $prefs['feature_search_fulltext'] == 'y';
 
 // Build the query using words
 if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {

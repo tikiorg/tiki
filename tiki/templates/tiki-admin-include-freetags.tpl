@@ -76,15 +76,15 @@
       </tr>
       <tr>
         <td class="form">{tr}Node size{/tr}: </td>
-	<td><input type="text" name="freetags_3d_node_size" value="{$freetags_3d_node_size|default:"30"}" size="2" /></td>
+	<td><input type="text" name="freetags_3d_node_size" value="{$prefs.freetags_3d_node_size|default:"30"}" size="2" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Text size{/tr}: </td>
-	<td><input type="text" name="freetags_3d_text_size" value="{$freetags_3d_text_size|default:"40"}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_text_size" value="{$prefs.freetags_3d_text_size|default:"40"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Spring (connection) size{/tr}: </td>
-	<td><input type="text" name="freetags_3d_spring_size" value="{$freetags_3d_spring_size|default:"100"}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_spring_size" value="{$prefs.freetags_3d_spring_size|default:"100"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node color{/tr}: </td>
@@ -99,15 +99,15 @@
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
-	<td><input type="checkbox" name="freetags_3d_adjust_camera" {if $freetags_3d_adjust_camera eq 'true'}checked="checked"{/if} /></td>
+	<td><input type="checkbox" name="freetags_3d_adjust_camera" {if $prefs.freetags_3d_adjust_camera eq 'true'}checked="checked"{/if} /></td>
       </tr>
       <tr>
         <td class="form">{tr}Camera distance{/tr}: </td>
-	<td><input type="text" name="freetags_3d_camera_distance" value="{$freetags_3d_camera_distance|default:"200"}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_camera_distance" value="{$prefs.freetags_3d_camera_distance|default:"200"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Field of view{/tr}: </td>
-	<td><input type="text" name="freetags_3d_fov" value="{$freetags_3d_fov|default:"250"}" size="3" /></td>
+	<td><input type="text" name="freetags_3d_fov" value="{$prefs.freetags_3d_fov|default:"250"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Feed animation interval (milisecs){/tr}: </td>
@@ -119,23 +119,23 @@
      </tr>
       <tr>
         <td class="form">{tr}Friction constant{/tr}: </td>
-	<td><input type="text" name="freetags_3d_friction_constant" value="{$freetags_3d_friction_constant|default:"0.4f"}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_friction_constant" value="{$prefs.freetags_3d_friction_constant|default:"0.4f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Elastic constant{/tr}: </td>
-	<td><input type="text" name="freetags_3d_elastic_constant" value="{$freetags_3d_elastic_constant|default:"0.5f"}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_elastic_constant" value="{$prefs.freetags_3d_elastic_constant|default:"0.5f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Eletrostatic constant{/tr}: </td>
-	<td><input type="text" name="freetags_3d_eletrostatic_constant" value="{$freetags_3d_eletrostatic_constant|default:"1000f"}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_eletrostatic_constant" value="{$prefs.freetags_3d_eletrostatic_constant|default:"1000f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node mass{/tr}: </td>
-	<td><input type="text" name="freetags_3d_node_mass" value="{$freetags_3d_node_mass|default:"5"}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_node_mass" value="{$prefs.freetags_3d_node_mass|default:"5"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node charge{/tr}: </td>
-	<td><input type="text" name="freetags_3d_node_charge" value="{$freetags_3d_node_charge|default:"1"}" size="7" /></td>
+	<td><input type="text" name="freetags_3d_node_charge" value="{$prefs.freetags_3d_node_charge|default:"1"}" size="7" /></td>
       </tr>
 
       <tr>

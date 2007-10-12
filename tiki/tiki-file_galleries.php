@@ -1,10 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.54 2007-10-10 17:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.55 2007-10-12 07:55:27 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
 	
-	if($feature_file_galleries != 'y') {
+	if($prefs['feature_file_galleries'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	  $smarty->display("error.tpl");
 	  die;  
@@ -42,7 +42,7 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 	      }
 	    }
 	  }
-	} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	  global $categlib; include_once('lib/categories/categlib.php');
 	  $perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $_REQUEST['galleryId']);
    	  if ($perms_array) {
@@ -150,17 +150,17 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 			$smarty->assign('sortdirection', 'desc');
 		}
 		if (!empty($info['subgal_conf'])) {
-			list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$info['subgal_conf']);
-			$smarty->assign('fgal_list_id', $fgal_list_id);
-			$smarty->assign('fgal_list_name', $fgal_list_name);
-			$smarty->assign('fgal_list_description', $fgal_list_description);
-			$smarty->assign('fgal_list_type', $fgal_list_type);
-			$smarty->assign('fgal_list_created', $fgal_list_created);
-			$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
-			$smarty->assign('fgal_list_user', $fgal_list_user);
-			$smarty->assign('fgal_list_files', $fgal_list_files);
-			$smarty->assign('fgal_list_hits', $fgal_list_hits);
-			$smarty->assign('fgal_list_parent', $fgal_list_parent);
+			list($prefs['fgal_list_id'], $prefs['fgal_list_name'], $prefs['fgal_list_description'], $prefs['fgal_list_type'], $prefs['fgal_list_created'], $prefs['fgal_list_lastmodif'], $prefs['fgal_list_user'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], $prefs['fgal_list_parent']) = split(':',$info['subgal_conf']);
+			$smarty->assign('fgal_list_id', $prefs['fgal_list_id']);
+			$smarty->assign('fgal_list_name', $prefs['fgal_list_name']);
+			$smarty->assign('fgal_list_description', $prefs['fgal_list_description']);
+			$smarty->assign('fgal_list_type', $prefs['fgal_list_type']);
+			$smarty->assign('fgal_list_created', $prefs['fgal_list_created']);
+			$smarty->assign('fgal_list_lastmodif', $prefs['fgal_list_lastmodif']);
+			$smarty->assign('fgal_list_user', $prefs['fgal_list_user']);
+			$smarty->assign('fgal_list_files', $prefs['fgal_list_files']);
+			$smarty->assign('fgal_list_hits', $prefs['fgal_list_hits']);
+			$smarty->assign('fgal_list_parent', $prefs['fgal_list_parent']);
 		}
 	  }
 	} elseif (!empty($_REQUEST['dup_mode'])) {
@@ -254,7 +254,7 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 	  $_REQUEST['subgal_conf']=implode(':', array(isset($_REQUEST['fgal_list_id'])?'y':'n', isset($_REQUEST['fgal_list_name'])?'y':'n', isset($_REQUEST['fgal_list_description'])?'y':'n', isset($_REQUEST['fgal_list_type'])?'y':'n', isset($_REQUEST['fgal_list_created'])?'y':'n', isset($_REQUEST['fgal_list_lastmodif'])?'y':'n', isset($_REQUEST['fgal_list_user'])?'y':'n', isset($_REQUEST['fgal_list_files'])?'y':'n', isset($_REQUEST['fgal_list_hits'])?'y':'n', isset($_REQUEST['fgal_list_parent'])?'y':'n'));
 	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author'], $_REQUEST['subgal_conf']);
 	  
-		if ($feature_categories == 'y') {
+		if ($prefs['feature_categories'] == 'y') {
 			$cat_type='file gallery';
 			$cat_objid = $fgid;
 			$cat_desc = substr($_REQUEST["description"],0,$_REQUEST['max_desc']);
@@ -272,7 +272,7 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 	
 	if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['galleryId'])) {
 		$newGalleryId = $filegallib->duplicate_file_gallery($_REQUEST['galleryId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
-	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $feature_categories == 'y') {
+	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cats = $categlib->get_object_categories('file gallery', $_REQUEST['galleryId']);
 		$catObjectId = $categlib->add_categorized_object('file gallery', $newGalleryId, isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST['name'], "tiki-list_file_gallery.php?galleryId=$newGalleryId");
@@ -299,7 +299,7 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 	       die;
 		}
 		$area = 'delfilegal';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$filegallib->remove_file_gallery($_REQUEST["removegal"], $_REQUEST['galleryId']);
 		} else {
@@ -335,7 +335,7 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 		}
 	}
 	if(!isset($_REQUEST["sort_mode"])) {
-	  $sort_mode = !empty($fgal_sort_mode)? $fgal_sort_mode: 'created_desc'; 
+	  $sort_mode = !empty($prefs['fgal_sort_mode'])? $prefs['fgal_sort_mode']: 'created_desc'; 
 	} else {
 	  $sort_mode = $_REQUEST["sort_mode"];
 	} 

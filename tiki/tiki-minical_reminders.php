@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.15 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.16 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,12 +10,12 @@ include_once ('tiki-setup_base.php');
 
 include_once ('lib/minical/minicallib.php');
 
-if (!$minical_reminders)
+if (!$prefs['minical_reminders'])
 	die;
 
 //$refresh=$_REQUEST['refresh']*1000;
 $refresh = 1000 * 60 * 1;
-$evs = $minicallib->minical_get_events_to_remind($user, $minical_reminders);
+$evs = $minicallib->minical_get_events_to_remind($user, $prefs['minical_reminders']);
 
 foreach ($evs as $ev) {
 	$command = "<script type='text/javascript'>alert('event " . $ev['title'] . " will start at " . date(

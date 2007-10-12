@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.11 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.12 2007-10-12 07:55:32 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
-if ($feature_sheet != 'y') {
+if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
 	$smarty->display("error.tpl");
@@ -137,7 +137,7 @@ if (isset($_REQUEST["removesheet"])) {
 		die;
 	}
   $area = 'delsheet';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$sheetlib->remove_sheet($_REQUEST["sheetId"]);
   } else {

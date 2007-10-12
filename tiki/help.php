@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.4 2005-09-08 01:33:00 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.5 2007-10-12 07:55:23 nyloth Exp $
 
 // Initialization
 require_once ('tiki-setup.php');
@@ -10,7 +10,7 @@ include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
   $smarty->display("error.tpl");

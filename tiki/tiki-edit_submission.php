@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.60 2007-06-27 19:15:17 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.61 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,11 +11,11 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
     include_once('lib/freetag/freetaglib.php');
 }
 
-if ($feature_submissions != 'y') {
+if ($prefs['feature_submissions'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
 
 	$smarty->display("error.tpl");
@@ -52,7 +52,7 @@ $smarty->assign('topline', '');
 $smarty->assign('subtitle', '');
 $smarty->assign('linkto', '');
 $smarty->assign('image_caption', '');
-$smarty->assign('lang', $language);
+$smarty->assign('lang', $prefs['language']);
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
 $smarty->assign('authorName', $authorName);
 $smarty->assign('topicId', '');
@@ -120,7 +120,7 @@ if (isset($_REQUEST["subId"])) {
 	$imgname = $article_data["image_name"];
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["subId"];
+		$tmpfname = $prefs['tmpDir'] . "/articleimage" . "." . $_REQUEST["subId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
@@ -227,7 +227,7 @@ if (isset($_REQUEST["preview"])) {
 		// Simple check if it's an image file
 		if (preg_match('/\.(gif|png|jpe?g)$/i',$file_name)) {			
 		$file_tmp_name = $_FILES['userfile1']['tmp_name'];
-		$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
+		$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
 		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 			$smarty->assign('msg', tra('Errors detected'));
 			$smarty->display("error.tpl");
@@ -253,7 +253,7 @@ if (isset($_REQUEST["preview"])) {
 	}
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["subId"];
+		$tmpfname = $prefs['tmpDir'] . "/articleimage" . "." . $_REQUEST["subId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
@@ -282,11 +282,11 @@ if (isset($_REQUEST["preview"])) {
 	$parsed_body = $tikilib->parse_data($body);
 	$parsed_heading = $tikilib->parse_data($heading);
 
-	if ($cms_spellcheck == 'y') {
+	if ($prefs['cms_spellcheck'] == 'y') {
 		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $language, 'subbody');
+			$parsed_body = $tikilib->spellcheckreplace($body, $parsed_body, $prefs['language'], 'subbody');
 
-			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $language, 'subheading');
+			$parsed_heading = $tikilib->spellcheckreplace($heading, $parsed_heading, $prefs['language'], 'subheading');
 			$smarty->assign('spellcheck', 'y');
 		} else {
 			$smarty->assign('spellcheck', 'n');
@@ -412,13 +412,13 @@ $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types_byname();
 $smarty->assign_by_ref('types', $types);
 
-if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+if ($prefs['feature_cms_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('cms', 0, -1, 'name_asc', '');
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);
 
-if ($feature_multilingual == 'y') {
+if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
@@ -428,7 +428,7 @@ $cat_type = 'submission';
 $cat_objid = $subId;
 include_once ("categorize_list.php");
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
     include_once ("freetag_list.php");
     if ($_REQUEST["preview"]) {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
@@ -437,7 +437,7 @@ if ($feature_freetags == 'y') {
 
 $smarty->assign('publishDateSite', $publishDate);
 $smarty->assign('expireDateSite', $expireDate);
-$smarty->assign('siteTimeZone', $display_timezone);
+$smarty->assign('siteTimeZone', $prefs['display_timezone']);
 
 include_once("textareasize.php");
 

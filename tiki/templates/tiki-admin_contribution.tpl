@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.12 2007-10-04 22:17:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.13 2007-10-12 07:55:50 nyloth Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -33,7 +33,7 @@
 <tr><td class="formcolor">{tr}Contributions are displayed in the comment/post{/tr}</td>
 <td class="formcolor"><input type="checkbox" name="feature_contribution_display_in_comment" {if $prefs.feature_contribution_display_in_comment eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">{tr}Contributors{/tr}</td>
-<td class="formcolor"><input type="checkbox" name="feature_contributor_wiki" {if $feature_contributor_wiki eq 'y'}checked="checked"{/if}/></td></tr>
+<td class="formcolor"><input type="checkbox" name="feature_contributor_wiki" {if $prefs.feature_contributor_wiki eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="setting" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

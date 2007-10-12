@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.28 2007-10-08 13:28:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.29 2007-10-12 07:55:49 nyloth Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -42,11 +42,11 @@
         </tr><tr>
            <td class="form"><label for="feature_trackbackpings">{tr}Trackbacks Pings{/tr}:</label></td>
           <td><input type="checkbox" name="feature_trackbackpings" id="feature_trackbackpings"
-              {if $feature_trackbackpings eq 'y'}checked="checked"{/if}/></td>       
+              {if $prefs.feature_trackbackpings eq 'y'}checked="checked"{/if}/></td>       
         </tr><tr>    
           <td class="form"><label for="blogs-postpings">{tr}Post level trackback pings{/tr}:</label></td>
           <td><input type="checkbox" name="feature_blogposts_pings" id="blogs-postpings"
-              {if $feature_blogposts_pings eq 'y'}checked="checked"{/if}/></td>
+              {if $prefs.feature_blogposts_pings eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
          <td class="form"><label for="blogs-spell">{tr}Spellchecking{/tr}:</label></td>
           <td>{if $prefs.lib_spellcheck eq 'y'}<input type="checkbox" name="blog_spellcheck" id="blogs-spell"

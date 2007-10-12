@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.38 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.39 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -79,8 +79,6 @@ if (!isset($lastModif)) {
 	$smarty->assign('lastModif', $lastModif);
 }
 
-$rss_version = $tikilib->get_preference("rssfeed_default_version","2");
-
 if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = $_REQUEST["heading"];
 } else {
@@ -133,7 +131,7 @@ if (isset($_REQUEST['preview'])) {
 }
 
 $category_needed = false;
-if (isset($_REQUEST["save"]) && $feature_categories == 'y' && $feature_blog_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_blog_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 		$category_needed = true;
 		$smarty->assign('category_needed', 'y');
 } elseif (isset($_REQUEST["save"])) {

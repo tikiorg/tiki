@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.141 2007-10-10 15:04:38 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,12 +63,12 @@ $tikilib->get_preferences($needed_prefs, true, true);
 extract($prefs);
 
 // set session lifetime
-if ($session_lifetime > 0) {
-	ini_set('session.gc_maxlifetime',$session_lifetime*60);
+if ($prefs['session_lifetime'] > 0) {
+	ini_set('session.gc_maxlifetime',$prefs['session_lifetime']*60);
 }
 
 // is session data  stored in DB or in filesystem?
-if ($session_db == 'y') {
+if ($prefs['session_db'] == 'y') {
 	include('db/local.php');
 	$ADODB_SESSION_DRIVER=$db_tiki;
 	$ADODB_SESSION_CONNECT=$host_tiki;
@@ -228,7 +228,7 @@ $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 
 function varcheck($array) {
-  global $patterns, $vartype, $language;
+  global $patterns, $vartype, $prefs;
   if (isset($array) and is_array($array)) {
     foreach ($array as $rq=>$rv) {
 	  // check if the variable name is allowed
@@ -294,12 +294,12 @@ if (empty($_SERVER['SERVER_NAME'])) {
 
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with siteTitle 
-$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $cookie_name);
+$cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
-if (($rememberme != 'disabled') 
+if (($prefs['rememberme'] != 'disabled') 
 	and (isset($_COOKIE["$user_cookie_site"])) 
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
 	$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
@@ -309,7 +309,7 @@ if (($rememberme != 'disabled')
 }
 
 // if the auth method is 'web site', look for the username in $_SERVER
-if (($auth_method == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
+if (($prefs['auth_method'] == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 	if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
 		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
 	} elseif ($userlib->user_exists(str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']))) {
@@ -329,7 +329,7 @@ if (is_file('lib/phpcas/source/CAS/CAS.php')) {
 }
 
 // Check for Shibboleth Login
-if ($auth_method == 'shib' and isset($_SERVER['REMOTE_USER'])){
+if ($prefs['auth_method'] == 'shib' and isset($_SERVER['REMOTE_USER'])){
 	// Validate the user (if not created create it)
 	if($userlib->validate_user($_SERVER['REMOTE_USER'],"","","")){
 		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
@@ -386,7 +386,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 // --------------------------------------------------------------
 
-if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feature_referer_highlight == 'y') ) {
+if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') ) {
   $smarty->load_filter('output','highlight');
 }
 

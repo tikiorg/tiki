@@ -8,26 +8,25 @@ class TikiMail extends HtmlMimeMail {
 		var $charset;
 	
 	function TikiMail($user = null) {
-		global $sender_email;
-		global $tikilib, $mail_crlf;
+		global $prefs, $tikilib;
 
 		parent::htmlMimeMail();
-		$this->charset = !$user ? $tikilib->get_preference("default_mail_charset", "utf-8"): $tikilib->get_user_preference($user, "mailCharset", "utf-8");
+		$this->charset = !$user ? $prefs['default_mail_charset'] : $tikilib->get_user_preference($user, 'mailCharset', 'utf-8');
 		$this->setTextCharset($this->charset);
 		$this->setHtmlCharset($this->charset);
 		$this->setHeadCharset($this->charset);
-		if (isset($mail_crlf))
-			$this->setCrlf($mail_crlf == "LF"? "\n": "\r\n");
-		$this->setFrom($sender_email);
+		if (isset($prefs['mail_crlf']))
+			$this->setCrlf($prefs['mail_crlf'] == "LF"? "\n": "\r\n");
+		$this->setFrom($prefs['sender_email']);
 		if (!@ini_get('safe_mode'))
-			$this->setReturnPath($sender_email); // in safe-mode, return-path must then be configured at the server level
-		$this->setHeader("Return-Path", "<".$sender_email.">"); // just in case, mainly will not work as usually the server rewrites the envelop
-		$this->setHeader("Reply-To",  "<".$sender_email.">");
+			$this->setReturnPath($prefs['sender_email']); // in safe-mode, return-path must then be configured at the server level
+		$this->setHeader("Return-Path", "<".$prefs['sender_email'].">"); // just in case, mainly will not work as usually the server rewrites the envelop
+		$this->setHeader("Reply-To",  "<".$prefs['sender_email'].">");
 	}
 
 	function setUser($user) {
-		global $tikilib;
-		$this->charset = $tikilib->get_user_preference($user, "mailCharset", $tikilib->get_preference('default_mail_charset', 'utf-8'));
+		global $tikilib, $prefs;
+		$this->charset = $tikilib->get_user_preference($user, 'mailCharset', $prefs['default_mail_charset']);
 		$this->setTextCharset($this->charset);
 		$this->setHtmlCharset($this->charset);
 		$this->setHeadCharset($this->charset);

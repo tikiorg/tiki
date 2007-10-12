@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.45 2007-08-10 13:42:39 guidoscherp Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.46 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/imagegals/imagegallib.php');
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("error.tpl");
@@ -123,8 +123,8 @@ if (isset($_REQUEST["upload"])) {
 		// We process here file uploads
 		if (isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
 			if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-			if (!empty($gal_match_regex)) {
-				if (!preg_match("/$gal_match_regex/", $_FILES['userfile1']['name'], $reqs)) {
+			if (!empty($prefs['gal_match_regex'])) {
+				if (!preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES['userfile1']['name'], $reqs)) {
 					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 
 					$smarty->display("error.tpl");
@@ -132,8 +132,8 @@ if (isset($_REQUEST["upload"])) {
 				}
 			}
 
-			if (!empty($gal_nmatch_regex)) {
-				if (preg_match("/$gal_nmatch_regex/", $_FILES['userfile1']['name'], $reqs)) {
+			if (!empty($prefs['gal_nmatch_regex'])) {
+				if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES['userfile1']['name'], $reqs)) {
 					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 
 					$smarty->display("error.tpl");
@@ -169,7 +169,7 @@ if (isset($_REQUEST["upload"])) {
 
 			$file_name = $_FILES['userfile1']['name'];	
 			$file_tmp_name = $_FILES['userfile1']['tmp_name'];
-			$tmp_dest = $tmpDir . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
+			$tmp_dest = $prefs['tmpDir'] . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
 			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$smarty->assign('msg', tra('Errors detected'));
 				$smarty->display("error.tpl");
@@ -218,7 +218,7 @@ if (isset($_REQUEST["upload"])) {
 	
 	$lat=NULL;
 	$lon=NULL;
-	if ($feature_maps == 'y') {
+	if ($prefs['feature_maps'] == 'y') {
 		if (isset($_REQUEST["lat"])) {
 			$lat = (float) $_REQUEST["lat"];
 			$smarty->assign('lat', $lat);
@@ -258,7 +258,7 @@ if (isset($_REQUEST["upload"])) {
 
 				// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
 				//$tmpfname = 'temp.jpg';
-				$tmpfname = tempnam($tmpDir, "TMPIMG");
+				$tmpfname = tempnam($prefs['tmpDir'], "TMPIMG");
 				imagejpeg($t, $tmpfname);
 				// Now read the information
 				$fp = fopen($tmpfname, "rb");
@@ -390,7 +390,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
-if($feature_maps == 'y' && isset($_REQUEST["galleryId"])) {
+if($prefs['feature_maps'] == 'y' && isset($_REQUEST["galleryId"])) {
 	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 	if ($gal_info['geographic'] == 'y') {
 		$smarty->assign('geogallery', 'y');

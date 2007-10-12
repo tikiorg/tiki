@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.69 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.70 2007-10-12 07:55:50 nyloth Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -85,10 +85,10 @@
 {if $prefs.preset_galleries_scale ne 'y'}
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 
-{tr}Global default{/tr} {$scaleSizeGalleries}x{$scaleSizeGalleries} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleSizeGalleries}" {if $defaultscale==$scaleSizeGalleries}checked="checked"{/if} />{tr}default scale{/tr}<br />
+{tr}Global default{/tr} {$prefs.scaleSizeGalleries}x{$prefs.scaleSizeGalleries} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$prefs.scaleSizeGalleries}" {if $defaultscale==$prefs.scaleSizeGalleries}checked="checked"{/if} />{tr}default scale{/tr}<br />
 
 {section  name=scales loop=$scaleinfo}
-{if $scaleinfo[scales].scale ne $scaleSizeGalleries}
+{if $scaleinfo[scales].scale ne $prefs.scaleSizeGalleries}
 {tr}Remove{/tr}:<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
 {$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />{tr}default scale{/tr}<br />
 {/if}
@@ -99,7 +99,7 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" />{tr}pixels{/tr}</td></tr>
 {else}
-{$defaultscale=$scaleSizeGalleries}
+{$defaultscale=$prefs.scaleSizeGalleries}
 {/if}
 
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>

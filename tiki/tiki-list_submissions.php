@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.20 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.21 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,13 +12,13 @@ require_once ('tiki-setup.php');
 include_once ('lib/articles/artlib.php');
 
 /*
-if($feature_listPages != 'y') {
+if($prefs['feature_listPages'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;  
 }
 */
-if ($feature_submissions != 'y') {
+if ($prefs['feature_submissions'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
 
 	$smarty->display("error.tpl");
@@ -40,7 +40,7 @@ if (isset($_REQUEST["remove"])) {
 		die;
 	}
   $area = 'delsubmission';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$artlib->remove_submission($_REQUEST["remove"]);
   } else {

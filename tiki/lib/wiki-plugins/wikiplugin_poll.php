@@ -9,7 +9,7 @@ function wikiplugin_poll_help() {
 	return $help;
 }
 function wikiplugin_poll($data, $params) {
-	global $smarty, $polllib, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $user;
+	global $smarty, $polllib, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $user;
 
 	extract ($params,EXTR_SKIP);
 

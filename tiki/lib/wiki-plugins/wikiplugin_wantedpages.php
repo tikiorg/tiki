@@ -59,13 +59,11 @@ function getDescription () {
 
 function getVersion () {
 	return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.6 $");
+                "\$Revision: 1.7 $");
 }
 
 function run($data, $params) {
-	global $feature_wikiwords;
-	global $feature_wikiwords_usedash;
-	global $page_regex;
+	global $prefs, $page_regex;
 
 	// Grab and handle our Tiki parameters...
 	extract($params, EXTR_SKIP);
@@ -144,7 +142,7 @@ function run($data, $params) {
 		$WikiWord = preg_match("/^(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])$/", $row['toPage']);
 		// test whether toPage is a valid wiki page under current syntax
 		if ($dashWikiWord && !$WikiWord) { // a Dashed-WikiWord, can we allow this?
-			if (($feature_wikiwords != 'y') || ($feature_wikiwords_usedash != 'y')) {
+			if (($prefs['feature_wikiwords'] != 'y') || ($prefs['feature_wikiwords_usedash'] != 'y')) {
 				if ($debug == 2) {
 					echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("dash-WikiWord")."<br />";
 				} elseif ($debug) {
@@ -153,7 +151,7 @@ function run($data, $params) {
 				continue;
 			}
 		} elseif ($WikiWord){ // a WikiWord, can we allow this?
-			if ($feature_wikiwords != 'y') {
+			if ($prefs['feature_wikiwords'] != 'y') {
 				if ($debug == 2) {
 					echo $row['toPage']." [from: ".$row['fromPage']."]: ".tra("WikiWord")."<br />";
 				} elseif ($debug) {

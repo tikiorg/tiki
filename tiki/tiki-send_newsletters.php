@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.40 2007-09-25 23:45:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/newsletters/nllib.php');
 
 $sender_email = $userlib->get_user_email($user);
 
-if ($feature_newsletters != 'y') {
+if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
 	$smarty->display("error.tpl");
 	die;
@@ -95,7 +95,7 @@ $smarty->assign('showBoxCheck',$showBoxCheck);
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delnewsletter';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$nllib->remove_edition($_REQUEST["nlId"], $_REQUEST["remove"]);
 	} else {
@@ -216,7 +216,7 @@ if (isset($_REQUEST["send"])) {
 	}
 	
 	$nllib->memo_subscribers_edition($editionId, $users);
-	$sender_email = $tikilib->get_preference("sender_email","");
+	$sender_email = $prefs['sender_email'];
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
@@ -235,7 +235,7 @@ if (isset($_REQUEST["send"])) {
 		}
 			$mail->setFrom($sender_email);
 			$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
-			$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
+			$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
 			if ($nl_info["unsubMsg"] == 'y') {
 				$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
 				if (stristr($html, "</body>") === false) {

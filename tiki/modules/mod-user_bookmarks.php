@@ -8,9 +8,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-global $bookmarklib; include_once ('lib/bookmarks/bookmarklib.php');
-global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
-global $user, $feature_user_bookmarks, $tiki_p_create_bookmarks;
+global $bookmarklib, $imagegallib, $user, $prefs, $tiki_p_create_bookmarks;
+include_once ('lib/bookmarks/bookmarklib.php');
+include_once ("lib/imagegals/imagegallib.php");
 
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 
@@ -20,7 +20,7 @@ if (isset($setup_parsed_uri["query"])) {
 	$setup_query_data = array();
 }
 
-if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') {
+if ($prefs['feature_user_bookmarks'] == 'y' && $user && $tiki_p_create_bookmarks == 'y') {
 	// check the session to get the parent or create parent =0
 	$smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 
@@ -59,7 +59,7 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 				if (isset($setup_query_data["page"])) {
 					$_REQUEST["bookmark_urlname"] = $setup_query_data["page"];
 				} else {
-					$_REQUEST["bookmark_urlname"] = $wikiHomePage;
+					$_REQUEST["bookmark_urlname"] = $prefs['wikiHomePage'];
 				}
 			}
 

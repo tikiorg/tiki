@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.57 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.58 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ("lib/imagegals/imagegallib.php");
 include_once ('lib/categories/categlib.php');
 include_once ('lib/map/usermap.php');
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("error.tpl");
@@ -75,11 +75,11 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
 $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
-	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $maxRowsGalleries;
-	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = $rowImagesGalleries;
-	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $thumbSizeXGalleries;
-	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $thumbSizeYGalleries;
-	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $scaleSizeGalleries;
+	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
+	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] = $prefs['rowImagesGalleries'];
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
+	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
 
 if (isset($_REQUEST['edit']) || isset($_REQUEST['preview']) || $_REQUEST["galleryId"] == 0) {
 	if (!isset($_REQUEST['description'])) $_REQUEST['description'] = '';
@@ -192,7 +192,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 
 // Process the insertion or modification of a gallery here
 $category_needed = 'n';
-if (isset($_REQUEST["edit"]) && $feature_categories == 'y' && $feature_image_gallery_mandatory_category >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
+if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_image_gallery_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
 		$category_needed = 'y';
 } elseif (isset($_REQUEST["edit"])) {
 	check_ticket('galleries');
@@ -361,7 +361,7 @@ if (isset($_REQUEST["removegal"])) {
 		}
 	}
   $area = 'delgal';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$imagegallib->remove_gallery($_REQUEST["removegal"]);
   } else {
@@ -370,7 +370,7 @@ if (isset($_REQUEST["removegal"])) {
 }
 $smarty->assign('category_needed', $category_needed);
 
-if ($feature_maps == 'y') {
+if ($prefs['feature_maps'] == 'y') {
 $map_error="";
 if (isset($_REQUEST["make_map"])) {
 		if ($_REQUEST["galleryId"] > 0) {

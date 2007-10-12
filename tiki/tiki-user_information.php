@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.44 2007-10-09 14:48:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/messu/messulib.php');
@@ -16,7 +16,7 @@ include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/registration/registrationlib.php');
 include_once ('lib/trackers/trackerlib.php');
 
-if ($feature_display_my_to_others == 'y') {
+if ($prefs['feature_display_my_to_others'] == 'y') {
     include_once ('lib/wiki/wikilib.php');
     include_once ('lib/articles/artlib.php');
     include_once ("lib/commentslib.php");
@@ -55,7 +55,7 @@ $customfields = $registrationlib->get_customfields($userwatch);
 
 $smarty->assign_by_ref('customfields', $customfields);
 
-if ($feature_friends == 'y') {
+if ($prefs['feature_friends'] == 'y') {
 	$smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
 }
 
@@ -87,22 +87,25 @@ if ($user) {
 		$smarty->assign('message', $message);
 	}
 }
-if ($feature_score == 'y' and isset($user) and $user != $userwatch) {
+if ($prefs['feature_score'] == 'y' and isset($user) and $user != $userwatch) {
 	$tikilib->score_event($user, 'profile_see');
 	$tikilib->score_event($userwatch, 'profile_is_seen');
 }
 
 $smarty->assign('priority',3);
-if ($allowmsg_is_optional == 'y') {
+if ($prefs['allowmsg_is_optional'] == 'y') {
 	$allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
 } else {
 	$allowMsgs = 'y';
 }
 $smarty->assign('allowMsgs',$allowMsgs);
+
 $user_style = $tikilib->get_user_preference($userwatch,'theme',$site_style);
+$smarty->assign_by_ref('user_style',$user_style);
+
 $user_language = $tikilib->get_language($userwatch);
 $smarty->assign_by_ref('user_language',$user_language);
-$smarty->assign_by_ref('user_style',$user_style);
+
 $realName = $tikilib->get_user_preference($userwatch,'realName','');
 $gender = $tikilib->get_user_preference($userwatch,'gender','');
 $country = $tikilib->get_user_preference($userwatch,'country','Other');
@@ -129,11 +132,11 @@ if ($email_isPublic != 'n') {
 }
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
-$userPage = $feature_wiki_userpage_prefix.$userinfo['login'];
+$userPage = $prefs['feature_wiki_userpage_prefix'].$userinfo['login'];
 $exist = $tikilib->page_exists($userPage);
 $smarty->assign("userPage_exists", $exist);
 
-if ($feature_display_my_to_others == 'y') {
+if ($prefs['feature_display_my_to_others'] == 'y') {
 	$user_pages = $wikilib->get_user_all_pages($userwatch, 'pageName_asc');
 	$smarty->assign_by_ref('user_pages', $user_pages);
 	$user_blogs = $tikilib->list_user_blogs($userwatch,false);
@@ -146,9 +149,9 @@ if ($feature_display_my_to_others == 'y') {
 	$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);
 }
 
-if ( $user_tracker_infos ) {
+if ( $prefs['user_tracker_infos'] ) {
 	// arg passed 11,56,58,68=trackerId,fieldId...
-	$trackerinfo = explode(',',$user_tracker_infos) ;
+	$trackerinfo = explode(',',$prefs['user_tracker_infos']) ;
 	$userTrackerId = $trackerinfo[0] ;
 	array_shift ($trackerinfo);
 	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fields'=>$trackerinfo));
@@ -160,7 +163,7 @@ if ( $user_tracker_infos ) {
 }
 
 ask_ticket('user-information');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_information_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-user_information.tpl");

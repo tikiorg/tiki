@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.11 2007-07-19 09:10:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,12 +10,12 @@ require_once ('lib/tikilib.php');
 require_once ('lib/trackers/trackerlib.php');
 require_once ('lib/rss/rsslib.php');
 
-if ($rss_tracker != 'y') {
+if ($prefs['rss_tracker'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
 }
 
-if ($feature_trackers != 'y') {
+if ($prefs['feature_trackers'] != 'y') {
         $errmsg=tra("This feature is disabled").": feature_trackers";
         require_once ('tiki-rss_error.php');
 }
@@ -41,10 +41,10 @@ if ($output["data"]=="EMPTY") {
 	$desc = $tmp["description"];
 	$tmp=null;
 	
-	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-	if ($tmp<>'') $desc = $tmp;
+        $tmp = $prefs['title_rss_'.$feed];
+        if ($tmp<>'') $title = $tmp;
+        $tmp = $prefs['desc_rss_'.$feed];
+        if ($desc<>'') $desc = $tmp;
 	
 	$titleId = "rss_subject";
 	$descId = "rss_description";
@@ -53,7 +53,7 @@ if ($output["data"]=="EMPTY") {
 	$urlparam = "itemId";
 	$readrepl = "tiki-view_tracker_item.php?$id=%s&$urlparam=%s";
 	
-	$tmp = $tikilib->list_tracker_items($_REQUEST["$id"], 0, $max_rss_tracker, $dateId.'_desc', '', '');
+	$tmp = $tikilib->list_tracker_items($_REQUEST["$id"], 0, $prefs['max_rss_tracker'], $dateId.'_desc', '', '');
 	foreach ($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:').' #'.$data["$urlparam"];
 		$data[$descId] = '';

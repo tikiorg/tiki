@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate.php,v 1.3 2005-05-18 10:58:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate.php,v 1.4 2007-10-12 07:55:32 nyloth Exp $
 
 require_once ('tiki-setup.php');
 include_once 'lib/logs/logslib.php';
@@ -15,7 +15,7 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
-$master = $tikilib->get_preference('replimaster','');
+$master = $prefs['replimaster'];
 
 if (isset($_POST['action']) and $_POST['action']  == 'save') {
 	if ($master != $newmaster) {

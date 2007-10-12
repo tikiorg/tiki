@@ -49,13 +49,10 @@ class EvLib extends TikiLib {
 	}
 
 	function event_subscribe($evId, $email, $fname, $lname, $company, $charset="utf-8") {
-		global $smarty;
-		global $tikilib;
-		global $user;
-		global $sender_email;
+		global $smarty, $tikilib, $user, $prefs;
 		$info = $this->get_event($evId);
 		$smarty->assign('info', $info);
-		$code = $this->genRandomString($sender_email);
+		$code = $this->genRandomString($prefs['sender_email']);
 		if ($info["validateAddr"] == 'y') {
 			// Generate a code and store it and send an email  with the
 			// URL to confirm the subscription put valid as 'n'
@@ -92,11 +89,7 @@ class EvLib extends TikiLib {
 	}
 
 	function confirm_subscription($code) {
-		global $smarty;
-		global $sender_email;
-		global $userlib;
-		global $tikilib;
-		global $language;
+		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
 		$query = "select * from `tiki_event_subscriptions` where `code`=?";
@@ -119,7 +112,7 @@ class EvLib extends TikiLib {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
 		$mail = new TikiMail($user);
-		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
+		$lg = ! $user ? $prefs['site_language'] : $this->get_user_preference($user, "language", $prefs['site_language']);
 		$mail_data = $smarty->fetchLang($lg, 'mail/event_welcome_subject.tpl');
 		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/event_welcome.tpl');
@@ -130,11 +123,7 @@ class EvLib extends TikiLib {
 	}
 
 	function unsubscribe($code) {
-		global $smarty;
-		global $sender_email;
-		global $userlib;
-		global $tikilib;
-		global $language;
+		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$url_subscribe = $tikilib->httpPrefix(). $foo["path"];
 		$query = "select * from `tiki_event_subscriptions` where `code`=?";
@@ -153,7 +142,7 @@ class EvLib extends TikiLib {
 		$user = $userlib->get_user_by_email($res["email"]); //global $user is not necessary defined as the user is not necessary logged in
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
-		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
+		$lg = ! $user ? $prefs['site_language']: $this->get_user_preference($user, "language", $prefs['site_language']);
 		if (!isset($_SERVER["SERVER_NAME"])) {
 			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 		}
@@ -307,7 +296,7 @@ class EvLib extends TikiLib {
 	}
 
 	function get_unsub_msg($evId, $email, $lang) {
-		global $smarty, $language, $userlib,$tikilib;
+		global $smarty, $prefs, $userlib, $tikilib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 
 		$foo = str_replace('send_events', 'events', $foo);
@@ -315,7 +304,7 @@ class EvLib extends TikiLib {
 		$code = $this->getOne("select `code` from `tiki_event_subscriptions` where `evId`=? and `email`=?",array((int)$evId,$email));
 		$url_unsub = $url_subscribe . '?unsubscribe=' . $code;
 		$user = $userlib->get_user_by_email($email);
-		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
+		$lg = ! $user ? $prefs['site_language'] : $this->get_user_preference($user, "language", $prefs['site_language']);
 		$msg = $smarty->fetchLang($lg, 'mail/event_unsubscribe.tpl');
 		$msg = '<br /><br />' . $msg . ": <a href='$url_unsub'>$url_unsub</a>";
 		return $msg;

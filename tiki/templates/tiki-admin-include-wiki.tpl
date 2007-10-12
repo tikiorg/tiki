@@ -330,15 +330,15 @@
       </tr>
       <tr>
         <td class="form">{tr}Node size{/tr}: </td>
-	<td><input type="text" name="wiki_3d_node_size" value="{$wiki_3d_node_size|default:"30"}" size="2" /></td>
+	<td><input type="text" name="wiki_3d_node_size" value="{$prefs.wiki_3d_node_size|default:"30"}" size="2" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Text size{/tr}: </td>
-	<td><input type="text" name="wiki_3d_text_size" value="{$wiki_3d_text_size|default:"40"}" size="3" /></td>
+	<td><input type="text" name="wiki_3d_text_size" value="{$prefs.wiki_3d_text_size|default:"40"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Spring (connection) size{/tr}: </td>
-	<td><input type="text" name="wiki_3d_spring_size" value="{$wiki_3d_spring_size|default:"100"}" size="3" /></td>
+	<td><input type="text" name="wiki_3d_spring_size" value="{$prefs.wiki_3d_spring_size|default:"100"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Existing page node color{/tr}: </td>
@@ -353,18 +353,18 @@
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
-	<td><input type="checkbox" name="wiki_3d_adjust_camera" value="true" {if $wiki_3d_adjust_camera eq 'true'}checked{/if} /></td>
+	<td><input type="checkbox" name="wiki_3d_adjust_camera" value="true" {if $prefs.wiki_3d_adjust_camera eq 'true'}checked{/if} /></td>
 	</tr><tr>
         <td class="form">{tr}Load page on navigation{/tr}: </td>
-	<td><input type="checkbox" name="wiki_3d_autoload" {if $wiki_3d_autoload eq 'true'}checked="checked"{/if} /></td>
+	<td><input type="checkbox" name="wiki_3d_autoload" {if $prefs.wiki_3d_autoload eq 'true'}checked="checked"{/if} /></td>
       </tr>
       <tr>
         <td class="form">{tr}Camera distance{/tr}: </td>
-	<td><input type="text" name="wiki_3d_camera_distance" value="{$wiki_3d_camera_distance|default:"200"}" size="3" /></td>
+	<td><input type="text" name="wiki_3d_camera_distance" value="{$prefs.wiki_3d_camera_distance|default:"200"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Field of view{/tr}: </td>
-	<td><input type="text" name="wiki_3d_fov" value="{$wiki_3d_fov|default:"250"}" size="3" /></td>
+	<td><input type="text" name="wiki_3d_fov" value="{$prefs.wiki_3d_fov|default:"250"}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Feed animation interval (milisecs){/tr}: </td>
@@ -376,23 +376,23 @@
      </tr>
       <tr>
         <td class="form">{tr}Friction constant{/tr}: </td>
-	<td><input type="text" name="wiki_3d_friction_constant" value="{$wiki_3d_friction_constant|default:"0.4f"}" size="7" /></td>
+	<td><input type="text" name="wiki_3d_friction_constant" value="{$prefs.wiki_3d_friction_constant|default:"0.4f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Elastic constant{/tr}: </td>
-	<td><input type="text" name="wiki_3d_elastic_constant" value="{$wiki_3d_elastic_constant|default:"0.5f"}" size="7" /></td>
+	<td><input type="text" name="wiki_3d_elastic_constant" value="{$prefs.wiki_3d_elastic_constant|default:"0.5f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Eletrostatic constant{/tr}: </td>
-	<td><input type="text" name="wiki_3d_eletrostatic_constant" value="{$wiki_3d_eletrostatic_constant|default:"1000f"}" size="7" /></td>
+	<td><input type="text" name="wiki_3d_eletrostatic_constant" value="{$prefs.wiki_3d_eletrostatic_constant|default:"1000f"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node mass{/tr}: </td>
-	<td><input type="text" name="wiki_3d_node_mass" value="{$wiki_3d_node_mass|default:"5"}" size="7" /></td>
+	<td><input type="text" name="wiki_3d_node_mass" value="{$prefs.wiki_3d_node_mass|default:"5"}" size="7" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Node charge{/tr}: </td>
-	<td><input type="text" name="wiki_3d_node_charge" value="{$wiki_3d_node_charge|default:"1"}" size="7" /></td>
+	<td><input type="text" name="wiki_3d_node_charge" value="{$prefs.wiki_3d_node_charge|default:"1"}" size="7" /></td>
       </tr>
 
       <tr>
@@ -477,7 +477,7 @@
     <tr><td class="form">{tr}Uses Slideshow{/tr}:</td><td><input type="checkbox" name="wiki_uses_slides" {if $prefs.wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure{/tr}:</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $prefs.feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Categorize structure pages together{/tr}:</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Create webhelp from structure{/tr}:</td><td><input type="checkbox" name="feature_create_webhelp" {if $feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Create webhelp from structure{/tr}:</td><td><input type="checkbox" name="feature_create_webhelp" {if $prefs.feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons{/tr}:</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}User's Page{/tr}:</td><td><input type="checkbox" name="feature_wiki_userpage" {if $prefs.feature_wiki_userpage eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}UserPage prefix{/tr}:</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$prefs.feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>

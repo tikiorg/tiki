@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-archive.php,v 1.6 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-archive.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,8 +11,8 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 
 if (!$user) {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -21,9 +21,9 @@ if (!$user) {
 	}
 }
 
-if ($feature_messages != 'y') {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+if ($prefs['feature_messages'] != 'y') {
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
@@ -134,13 +134,13 @@ $smarty->assign_by_ref('items', $items["data"]);
 
 $cellsize = 200;
 $percentage = 1;
-if ($messu_archive_size>0) {
+if ($prefs['messu_archive_size']>0) {
 	$current_number = $messulib->count_messages($user, 'archive');
 	$smarty->assign('messu_archive_number', $current_number);
-	$smarty->assign('messu_archive_size', $messu_archive_size);
-	$percentage = ($current_number / $messu_archive_size) * 100;
+	$smarty->assign('messu_archive_size', $prefs['messu_archive_size']);
+	$percentage = ($current_number / $prefs['messu_archive_size']) * 100;
 	$cellsize = round($percentage / 100 * 200);
-	if ($current_number>$messu_archive_size) $cellsize=200;
+	if ($current_number>$prefs['messu_archive_size']) $cellsize=200;
 	if ($cellsize<1) $cellsize=1;
 	$percentage = round($percentage);
 }

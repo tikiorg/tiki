@@ -47,7 +47,7 @@
         <td width="67%"><select name="site_style" id="general-theme">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
-                {if $prefs.style_site eq $styles[ix]}selected="selected"{/if}>
+                {if $prefs.site_style eq $styles[ix]}selected="selected"{/if}>
                 {$styles[ix]}</option>
             {/section}
             </select>

@@ -2,9 +2,9 @@
 
 function smarty_modifier_star($score)
 {
-    global $feature_score, $tikilib;
+    global $prefs, $tikilib;
 
-    if ($feature_score != 'y') {
+    if ($prefs['feature_score'] != 'y') {
 	return '';
     }
 

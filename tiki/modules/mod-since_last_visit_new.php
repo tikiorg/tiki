@@ -18,8 +18,7 @@ if (!function_exists('since_last_visit_new')) {
 function since_last_visit_new($user, $params = null) {
   if (!$user) return false;
 
-  global $tikilib;
-  global $userlib;
+  global $tikilib, $userlib, $prefs;
   $ret = array();
   $ret["label"] = tra("Since your last visit");
   if ( $params == null ) $params = array();
@@ -104,7 +103,7 @@ function since_last_visit_new($user, $params = null) {
     }
     $ret["items"]["comments"]["count"] = $count;
 
- if ($tikilib->get_preference('feature_forums') == 'y') {
+ if ($prefs['feature_forums'] == 'y') {
     $ret["items"]["posts"]["label"] = tra("new posts");
     $ret["items"]["posts"]["cname"] = "slvn_posts_menu";
     $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? and `objectType` = 'forum' order by `commentDate` desc";
@@ -129,7 +128,7 @@ function since_last_visit_new($user, $params = null) {
     $ret["items"]["posts"]["count"] = $count;
  }
 
-  if ($tikilib->get_preference("feature_wiki") == 'y') {
+  if ($prefs['feature_wiki'] == 'y') {
     // && $tikilib->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last))!=0) {    
     $ret["items"]["pages"]["label"] = tra("wiki pages changed");
     $ret["items"]["pages"]["cname"] = "slvn_pages_menu";
@@ -149,7 +148,7 @@ function since_last_visit_new($user, $params = null) {
     $ret["items"]["pages"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_articles") == 'y' ) {    
+  if ($prefs['feature_articles'] == 'y' ) {    
     $ret["items"]["articles"]["label"] = tra("new articles");
     $ret["items"]["articles"]["cname"] = "slvn_articles_menu";
 
@@ -175,7 +174,7 @@ function since_last_visit_new($user, $params = null) {
     $ret["items"]["articles"]["count"] = $count;
   }
   
-  if ($tikilib->get_preference("feature_submissions") == 'y' && $userlib->user_has_permission($user, "tiki_p_edit_submission")) {    
+  if ($prefs['feature_submissions'] == 'y' && $userlib->user_has_permission($user, "tiki_p_edit_submission")) {    
     $ret["items"]["submissions"]["label"] = tra("new submissions");
     $ret["items"]["submissions"]["cname"] = "slvn_submissions_menu";
 
@@ -197,7 +196,7 @@ function since_last_visit_new($user, $params = null) {
     $ret["items"]["submissions"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_faqs") == 'y') {    
+  if ($prefs['feature_faqs'] == 'y') {    
     $ret["items"]["faqs"]["label"] = tra("new FAQs");
     $ret["items"]["faqs"]["cname"] = "slvn_faqs_menu";
 
@@ -219,7 +218,7 @@ function since_last_visit_new($user, $params = null) {
 
 // directories
 
-if ($tikilib->get_preference("feature_directory") == 'y') {    
+if ($prefs['feature_directory'] == 'y') {    
     $ret["items"]["dirs"]["label"] = tra("new sites");
     $ret["items"]["dirs"]["cname"] = "slvn_dirs_menu";
 
@@ -238,7 +237,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["dirs"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_blogs") == 'y') {    
+  if ($prefs['feature_blogs'] == 'y') {    
     $ret["items"]["blogs"]["label"] = tra("new blogs");
     $ret["items"]["blogs"]["cname"] = "slvn_blogs_menu";
 
@@ -278,7 +277,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["blogPosts"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_galleries") == 'y') {
+  if ($prefs['feature_galleries'] == 'y') {
     //image galleries
     $ret["items"]["imageGalleries"]["label"] = tra("new image galleries");
     $ret["items"]["imageGalleries"]["cname"] = "slvn_imageGalleries_menu";
@@ -317,7 +316,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
   }
 
 
-  if ($tikilib->get_preference("feature_file_galleries") == 'y') {
+  if ($prefs['feature_file_galleries'] == 'y') {
     //file galleries
     $ret["items"]["fileGalleries"]["label"] = tra("new file galleries");
     $ret["items"]["fileGalleries"]["cname"] = "slvn_fileGalleries_menu";
@@ -355,7 +354,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["files"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference("feature_polls") == 'y') {
+  if ($prefs['feature_polls'] == 'y') {
     $ret["items"]["polls"]["label"] = tra("new polls");
     $ret["items"]["polls"]["cname"] = "slvn_polls_menu";
 
@@ -388,7 +387,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
 	$ret['items']['users']['count'] = $count;
   }
 
-  if ($tikilib->get_preference("feature_trackers") == 'y' && (!isset($params['showtracker']) || $params['showtracker'] != 'n')) {
+  if ($prefs['feature_trackers'] == 'y' && (!isset($params['showtracker']) || $params['showtracker'] != 'n')) {
     $ret["items"]["trackers"]["label"] = tra("new tracker items");
     $ret["items"]["trackers"]["cname"] = "slvn_trackers_menu";
 
@@ -423,7 +422,7 @@ if ($tikilib->get_preference("feature_directory") == 'y') {
     $ret["items"]["trackers"]["count"] = $count;
   }
 
-  if ($tikilib->get_preference('feature_calendar') == 'y') {    
+  if ($prefs['feature_calendar'] == 'y') {    
     $ret["items"]["calendar"]["label"] = tra("new calendar events");
     $ret["items"]["calendar"]["cname"] = "slvn_calendar_menu";
 

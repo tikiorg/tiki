@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.109 2007-06-03 00:48:10 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110 2007-10-12 07:55:48 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -18,7 +18,7 @@ class WikiLib extends TikiLib {
 
     //Special parsing for multipage articles
     function get_number_of_pages($data) {
-	global $wiki_page_separator;
+	global $prefs;
 	// Temporary remove <PRE></PRE> secions to protect
 	// from broke <PRE> tags and leave well known <PRE>
 	// behaviour (i.e. type all text inside AS IS w/o
@@ -38,34 +38,14 @@ class WikiLib extends TikiLib {
 	    $idx = $idx + 1;
 	}
 
-	$parts = explode($wiki_page_separator, $data);
+	$parts = explode($prefs['wiki_page_separator'], $data);
 	return count($parts);
     }
 
     function get_page($data, $i) {
-	// Temporary remove <PRE></PRE> secions to protect
-	// from broke <PRE> tags and leave well known <PRE>
-	// behaviour (i.e. type all text inside AS IS w/o
-	// any interpretation)
-	/*
-	$preparsed = array();
-
-	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
-	$idx = 0;
-
-	foreach (array_unique($preparse[2])as $pp) {
-	    $key = md5($this->genPass());
-
-	    $aux["key"] = $key;
-	    $aux["data"] = $pp;
-	    $preparsed[] = $aux;
-	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
-	    $idx = $idx + 1;
-	}
-*/
 	// Get slides
-	global $wiki_page_separator;
-	$parts = explode($wiki_page_separator, $data);
+	global $prefs;
+	$parts = explode($prefs['wiki_page_separator'], $data);
 	$ret = $parts[$i - 1];
 
 	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
@@ -247,19 +227,18 @@ class WikiLib extends TikiLib {
 		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=?";
 		$this->query($query, array( $newId, $oldId ) );
 
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+		global $prefs;
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Renamed', $newName, 'wiki page', 'old='.$oldName.'&new='.$newName, '', '', '', '', '', array(array('rename'=>$oldName)));
 			$logslib->rename('wiki page', $oldName, $newName);
 		}
-		global $feature_user_watches;
 		global $user;
 		global $tikilib;
 		global $smarty;
 
 		// first get all watches for this page ...
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			$nots = $tikilib->get_event_watches('wiki_page_changed', $oldName);
 		}
 
@@ -269,7 +248,7 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
 
 		// now send notification email to all on the watchlist:
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			if (!isset($_SERVER["SERVER_NAME"])) {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
@@ -291,8 +270,7 @@ class WikiLib extends TikiLib {
 			}
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $newName);
 		}
@@ -331,13 +309,13 @@ class WikiLib extends TikiLib {
 	}
 
 	function remove_wiki_attachment($attId) {
-		global $w_use_dir;
+		global $prefs;
 
 		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
 
 		/* carefull a same file can be attached in different page */
 		if ($path && $this->getOne("select count(*) from `tiki_wiki_attachments` where `path`='$path'") <= 1) {
-			@unlink ($w_use_dir . $path);
+			@unlink ($prefs['w_use_dir'] . $path);
 		}
 
 		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
@@ -350,8 +328,8 @@ class WikiLib extends TikiLib {
 		$this->blob_encode($data);
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $this->now,"$user","$comment","$fhash"));
 
-		global $feature_score;
-	        if ($feature_score == 'y') {
+		global $prefs;
+	        if ($prefs['feature_score'] == 'y') {
         	    $this->score_event($user, 'wiki_attach_file');
 	        }
 	}
@@ -513,7 +491,7 @@ class WikiLib extends TikiLib {
 		}
 
 	    $histlib->use_version($res["pageName"], $res["version"]);
-	    if ($feature_contribution == 'y') {
+	    if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$info = $tikilib->get_page_info($res['pageName']);
 		$contributionlib->change_assigned_contributions($res['historyId'], 'history', $res['pageName'], 'wiki page', $info['description'], $res['pageName'], "tiki-index.php?page".urlencode($res['pageName']));
@@ -568,11 +546,11 @@ class WikiLib extends TikiLib {
 	return ($info["flag"] == 'L')? $info["user"] : null;
     }
     function is_editable($page, $user, $info=null) {
-	global $tiki_p_admin, $tiki_p_admin_wiki, $feature_wiki_userpage, $feature_wiki_userpage_prefix;
+	global $tiki_p_admin, $tiki_p_admin_wiki, $prefs;
       if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
             return true;
       else {
-		if ($feature_wiki_userpage == 'y' and strcasecmp(substr($page, 0, strlen($feature_wiki_userpage_prefix)), $feature_wiki_userpage_prefix) == 0 and strcasecmp($page, $feature_wiki_userpage_prefix.$user) != 0)
+		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
 		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
 			return false;
@@ -680,16 +658,16 @@ class WikiLib extends TikiLib {
 	}
 
 	function get_default_wiki_page() {
-		global $user, $wikiHomePage, $useGroupHome;
-	 	if ($useGroupHome == 'y') {
+		global $user, $prefs;
+	 	if ($prefs['useGroupHome'] == 'y') {
 			global $user;
 			global $userlib; include_once('lib/userslib.php');
 			if ($groupHome = $userlib->get_user_default_homepage($user))
 				return $groupHome;
 			else
- 				return $wikiHomePage;
+ 				return $prefs['wikiHomePage'];
 		}
-		return $wikiHomePage;
+		return $prefs['wikiHomePage'];
 	}
 
 	function save_draft($pageName, $pageDesc, $pageData, $pageComment) {

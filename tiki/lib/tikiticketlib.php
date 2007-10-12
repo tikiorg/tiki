@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.23 2007-02-17 10:09:34 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.24 2007-10-12 07:55:38 nyloth Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -22,9 +22,9 @@ function ask_ticket($area) {
 function check_ticket($area) { 
 	if (!isset($_SESSION['antisurf'])) $_SESSION['antisurf'] = '';
 	if ($_SESSION['antisurf'] != $area) { 
-		global $smarty, $feature_ticketlib;
+		global $smarty, $prefs;
 		$_SESSION['antisurf'] =  $area; 
-		if ($feature_ticketlib == 'y') {
+		if ($prefs['feature_ticketlib'] == 'y') {
 			$smarty->assign('post',$_POST);
 			$smarty->assign('query',$_SERVER["QUERY_STRING"]);
 			$smarty->assign('self',$_SERVER["PHP_SELF"]);
@@ -40,8 +40,8 @@ function check_ticket($area) {
 
 function key_get($area, $confirmation_text = '', $confirmaction='') {
 //confirmaction actin must be set if the param are not transfer via the URI
-	global $tikilib,$smarty,$feature_ticketlib2,$user;
-	if ($feature_ticketlib2 == 'y') {
+	global $tikilib,$smarty,$prefs,$user;
+	if ($prefs['feature_ticketlib2'] == 'y') {
 		if ($user) {
 			$whose = $user;
 		} else { 
@@ -70,8 +70,8 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 }
 
 function key_check($area) {
-	global $tikilib,$smarty,$feature_ticketlib2,$user;
-	if ($feature_ticketlib2 != 'y') {
+	global $tikilib,$smarty,$prefs,$user;
+	if ($prefs['feature_ticketlib2'] != 'y') {
 		return true;
 	} else {
 		if (isset($_SESSION["ticket_$area"])

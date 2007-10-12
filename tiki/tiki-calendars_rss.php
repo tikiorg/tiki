@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.11 2007-05-27 15:51:14 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.12 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 require_once ('lib/calendar/calendarlib.php');
 
-if (!isset($rss_calendar) || $rss_calendar != 'y') {
+if (!isset($prefs['rss_calendar']) || $prefs['rss_calendar'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -46,10 +46,10 @@ if ($output["data"]=="EMPTY") {
 	$authorId = "user";
 	$readrepl = "tiki-calendar_edit_item.php?viewcalitemId=%s";
 
-	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-	if ($desc<>'') $desc = $tmp;
+        $tmp = $prefs['title_rss_'.$feed];
+        if ($tmp<>'') $title = $tmp;
+        $tmp = $prefs['desc_rss_'.$feed];
+        if ($desc<>'') $desc = $tmp;
 
 	$allCalendars = $calendarlib->list_calendars();
 
@@ -78,7 +78,7 @@ if ($output["data"]=="EMPTY") {
 	    }
 	}
 
-	$maxCalEntries = $tikilib->get_preference("max_rss_calendar", $maxRecords);
+	$maxCalEntries = $prefs['max_rss_calendar'];
 	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->now+365*24*60*60, 0, $maxCalEntries);
 
 	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");

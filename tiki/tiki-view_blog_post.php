@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.45 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.46 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 
 // first of all , we just die if blogs feature is not set
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -151,10 +151,10 @@ $smarty->assign('pagenum', $_REQUEST['page']);
 
 $smarty->assign('parsed_data', $parsed_data);
 
-if ($feature_blogposts_comments == 'y') {
-	$comments_per_page = $blog_comments_per_page;
+if ($prefs['feature_blogposts_comments'] == 'y') {
+	$comments_per_page = $prefs['blog_comments_per_page'];
 
-	$thread_sort_mode = $blog_comments_default_ordering;
+	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
 	$comments_vars = array(
 		'postId',
 		'offset',
@@ -173,12 +173,12 @@ $cat_objid = $blogId;
 include_once ('tiki-section_options.php');
 
 
-if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
 	check_ticket('view-blog-post');
 	$tikilib->replace_note($user, 0, $post_info['title'] ? $post_info['title'] : $tikilib->date_format("%d/%m/%Y [%H:%M]", $post_info['created']), $post_info['data']);
 }
 
-if ($feature_mobile == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+if ($prefs['feature_mobile'] == 'y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_blog_post ($post_info);
@@ -188,7 +188,7 @@ if (isset($_REQUEST['show_comments']) && $_REQUEST['show_comments'] == 1) {
         $smarty->assign('show_comments', 1);
 }
 
-if ($feature_freetags == 'y') {
+if ($prefs['feature_freetags'] == 'y') {
 	// Get Tags
 	include_once('lib/freetag/freetaglib.php');
 	$tags = $freetaglib->get_tags_on_object($postId, "blog post");

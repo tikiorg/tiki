@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.3 2007-10-10 14:46:38 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.4 2007-10-12 07:55:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,8 +12,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-if ( $https_port == 443 ) $https_port = '';
-if ( $http_port == 80 ) $http_port = '';
+if ( $prefs['https_port'] == 443 ) $prefs['https_port'] = '';
+if ( $prefs['http_port'] == 80 ) $prefs['http_port'] = '';
 
 // Detect if we are in HTTPS / SSL mode.
 //
@@ -25,19 +25,19 @@ if ( $http_port == 80 ) $http_port = '';
 // 
 $https_mode = false;
 if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
-	|| ( $https_port == '' && $_SERVER['SERVER_PORT'] == 443 )
-	|| ( $https_port > 0 && $_SERVER['SERVER_PORT'] == $https_port )
-	|| $https_login == 'force_nocheck'
+	|| ( $prefs['https_port'] == '' && $_SERVER['SERVER_PORT'] == 443 )
+	|| ( $prefs['https_port'] > 0 && $_SERVER['SERVER_PORT'] == $prefs['https_port'] )
+	|| $prefs['https_login'] == 'force_nocheck'
 ) $https_mode = true;
 
 $url_scheme = $https_mode ? 'https' : 'http';
 $url_host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
-$url_port = $https_mode ? $https_port : $http_port;
+$url_port = $https_mode ? $prefs['https_port'] : $prefs['http_port'];
 $url_path = $tikiroot;
-$base_host = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'');
-$base_url = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$url_path;
-$base_url_http = 'http://'.$url_host.(($http_port!='')?":$http_port":'').$url_path;
-$base_url_https = 'https://'.$url_host.(($https_port!='')?":$https_port":'').$url_path;
+$base_host = $url_scheme.'://'.$url_host.(($url_port!='')?':'.$url_port:'');
+$base_url = $url_scheme.'://'.$url_host.(($url_port!='')?':'.$url_port:'').$url_path;
+$base_url_http = 'http://'.$url_host.(($prefs['http_port']!='')?':'.$prefs['http_port']:'').$url_path;
+$base_url_https = 'https://'.$url_host.(($prefs['https_port']!='')?':'.$prefs['https_port']:'').$url_path;
 
 // SSL options
 

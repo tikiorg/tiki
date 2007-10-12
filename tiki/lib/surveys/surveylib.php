@@ -13,10 +13,9 @@ class SurveyLib extends TikiLib
 	}
 
 	function add_survey_hit($surveyId) {
-		global $count_admin_pvs;
-		global $user;
+		global $prefs, $user;
 
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_surveys` set `taken`=`taken`+1, `lastTaken`=? where `surveyId`=?";
 			$result = $this->query($query,array((int)$this->now,(int)$surveyId));
 		}

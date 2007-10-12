@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.17 2007-08-13 08:57:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.18 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ $section = 'forums';
 require_once ('tiki-setup.php');
 
 // Forums must be active
-if ($feature_forums != 'y') {
+if ($prefs['feature_forums'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
 	$smarty->display("error.tpl");
@@ -81,7 +81,7 @@ $smarty->assign_by_ref('forum_info', $forum_info);
 $section = 'forums';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'forum';
 
 	$cat_objid = $_REQUEST["forumId"];
@@ -138,7 +138,7 @@ if (isset($_REQUEST['qId'])) {
 
 	if (isset($_REQUEST['remove'])) {
 		$area = 'delcomment';
-	  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
   	  key_check($area);
 			$smarty->assign('form', 'n');
 			$commentslib->remove_queued($_REQUEST['qId']);
@@ -226,7 +226,7 @@ if (isset($_REQUEST['app']) && isset($_REQUEST['msg'])) {
 }
 
 // Quickjumpt to other forums
-if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
+if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
 	$temp_max = count($all_forums["data"]);

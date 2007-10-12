@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.24 2007-08-10 13:33:20 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.25 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,14 +8,14 @@
 $section = 'user_messages';
 require_once ('tiki-setup.php');
 
-if ($feature_ajax == "y") {
-require_once ('lib/ajax/ajaxlib.php');
+if ($prefs['feature_ajax'] == "y") {
+	require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/messu/messulib.php');
 
 if (!$user) {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -25,9 +25,9 @@ if (!$user) {
 	}
 }
 
-if ($feature_messages != 'y') {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+if ($prefs['feature_messages'] != 'y') {
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
@@ -77,7 +77,7 @@ if (isset($_REQUEST["archive"]) && isset($_REQUEST["msg"])) {
 	check_ticket('messu-mailbox');
 	$tmp = $messulib->count_messages($user, 'archive');
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
-		if  (($messu_archive_size>0) && ($tmp>=$messu_archive_size)) {
+		if  (($prefs['messu_archive_size']>0) && ($tmp>=$prefs['messu_archive_size'])) {
 			$smarty->assign('msg', tra("Archive is full. Delete some messages from archive first."));
 			$smarty->display("error.tpl");
 			die;
@@ -182,13 +182,13 @@ $smarty->assign_by_ref('items', $items["data"]);
 
 $cellsize = 200;
 $percentage = 1;
-if ($messu_mailbox_size>0) {
+if ($prefs['messu_mailbox_size']>0) {
 	$current_number = $messulib->count_messages($user);
 	$smarty->assign('messu_mailbox_number', $current_number);
-	$smarty->assign('messu_mailbox_size', $messu_mailbox_size);
-	$percentage = ($current_number / $messu_mailbox_size) * 100;
+	$smarty->assign('messu_mailbox_size', $prefs['messu_mailbox_size']);
+	$percentage = ($current_number / $prefs['messu_mailbox_size']) * 100;
 	$cellsize = round($percentage / 100 * 200);
-	if ($current_number>$messu_mailbox_size) $cellsize=200;
+	if ($current_number>$prefs['messu_mailbox_size']) $cellsize=200;
 	if ($cellsize<1) $cellsize=1;
 	$percentage = round($percentage);
 }
@@ -200,7 +200,7 @@ include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 ask_ticket('messu-mailbox');
 
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_messages_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("messu-mailbox.tpl");

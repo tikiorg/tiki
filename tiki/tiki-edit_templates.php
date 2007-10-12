@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.22 2007-03-06 19:29:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.23 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 
 // if any of the two rights is not set, yell!
-if ($feature_edit_templates != 'y' ) {
+if ($prefs['feature_edit_templates'] != 'y' ) {
 	$smarty->assign('msg', tra("Feature disabled"));
 
 	$smarty->display("error.tpl");
@@ -81,7 +81,7 @@ if ($tiki_p_edit_templates == 'y') {
 	
 	if (isset($_REQUEST['delete']) && !empty($_REQUEST['template'])) {
 		$area = 'deltpl';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 	    		key_check($area);
 			$file = $smarty->get_filename($_REQUEST['template']);
 			unlink($file);

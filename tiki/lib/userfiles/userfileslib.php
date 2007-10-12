@@ -64,12 +64,12 @@ class UserFilesLib extends TikiLib {
 	}
 
 	function remove_userfile($user, $fileId) {
-		global $uf_use_dir;
+		global $prefs;
 
 		$path = $this->getOne("select `path` from `tiki_userfiles` where `user`=? and `fileId`=?",array($user,(int) $fileId));
 
 		if ($path) {
-			@unlink ($uf_use_dir . $path);
+			@unlink ($prefs['uf_use_dir'] . $path);
 		}
 
 		$query = "delete from `tiki_userfiles` where `user`=? and `fileId`=?";

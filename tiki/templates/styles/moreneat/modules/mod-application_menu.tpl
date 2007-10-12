@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.50 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.51 2007-10-12 07:55:51 nyloth Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -103,7 +103,7 @@
   </div>
 {/if}
 
-{if $feature_homework eq 'y' and $tiki_p_hw_student eq 'y'}
+{if $prefs['feature_homework'] eq 'y' and $tiki_p_hw_student eq 'y'}
   <div class="separator">
     <a class='separator' href="javascript:toggle('homeworkmenu');">::</a>
     {if $tiki_p_hw_teacher eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.60 2007-10-04 22:17:37 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61 2007-10-12 07:55:50 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -186,7 +186,7 @@
           <td class="form"><input type="submit" name="addpage" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_cms eq 'y'}
+				{if $prefs.feature_cms eq 'y'}
         <tr>
           <td class="form">{tr}Article{/tr}:</td>
           <td class="form"><select name="articleId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
@@ -200,7 +200,7 @@
           <td class="form"><input type="submit" name="addblog" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $feature_directopries eq 'y'}
+				{if $prefs.feature_directories eq 'y'}
         <tr>
           <td class="form">{tr}Directory{/tr}:</td>
           <td class="form"><select name="directoryId">{section name=ix loop=$directories}<option value="{$directories[ix].categId|escape}">{$directories[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>

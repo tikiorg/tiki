@@ -8,10 +8,10 @@ include 'tiki-setup.php';
 
 header('Content-type: application/javascript');
 
-$fckstyle = "styles/$style";
+$fckstyle = 'styles/'.$prefs['style'];
 $smarty->assign('fckstyle',$fckstyle);
 
-$tools = split("\r\n|\n",$wysiwyg_toolbar);
+$tools = split("\r\n|\n",$prefs['wysiwyg_toolbar']);
 $line = 0;
 $trim = create_function('&$x', '$x=trim($x);');
 foreach ($tools as $t) {

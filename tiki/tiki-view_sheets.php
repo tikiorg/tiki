@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.15 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.16 2007-10-12 07:55:33 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
-if ($feature_sheet != 'y') {
+if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
 	$smarty->display("error.tpl");
@@ -124,7 +124,7 @@ else
 		ob_end_clean();
 
 		$smarty->assign('page_mode', 'edit' );
-		if ($feature_contribution == 'y') {
+		if ($prefs['feature_contribution'] == 'y') {
 			$contributionItemId = $_REQUEST['sheetId'];
 			include_once('contribution.php');
 		}
@@ -139,8 +139,8 @@ else
 		ob_end_clean();
 	}
 }
-if ($feature_warn_on_edit == 'y') {
-	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $warn_on_edit_time * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
+if ($prefs['feature_warn_on_edit'] == 'y') {
+	if ($tikilib->semaphore_is_set($_REQUEST['sheetId'], $prefs['warn_on_edit_time'] * 60, 'sheet') && ($semUser = $tikilib->get_semaphore_user($_REQUEST['sheetId'], 'sheet')) != $user) {
 		$editconflict = 'y';
 		$smarty->assign('editconflict', 'y');
 		$smarty->assign('semUser', $semUser);

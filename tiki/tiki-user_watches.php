@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.20 2007-08-10 13:33:22 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.21 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 $section = 'mytiki';
 include_once ('tiki-setup.php');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 if (!$user) {
@@ -18,7 +18,7 @@ if (!$user) {
 	die;
 }
 
-if ($feature_user_watches != 'y') {
+if ($prefs['feature_user_watches'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_user_watches");
 
 	$smarty->display("error.tpl");
@@ -28,7 +28,7 @@ if ($feature_user_watches != 'y') {
 
 if (isset($_REQUEST['hash'])) {
   $area = 'deluserwatch';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$tikilib->remove_user_watch_by_hash($_REQUEST['hash']);
   } else {
@@ -57,7 +57,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
   check_ticket('user-watches');
 /* CSRL doesn't work if param as passed not in the uri */
 /*  $area = 'delwatches';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area); */
 	foreach (array_keys($_REQUEST["watch"])as $item) {
 		$tikilib->remove_user_watch_by_hash($item);
@@ -81,7 +81,7 @@ $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
 $smarty->assign('watches', $watches);
 // this was never needed here, was it ? -- luci
 //include_once ('tiki-mytiki_shared.php');
-if ($feature_categories) {
+if ($prefs['feature_categories']) {
 	include_once('lib/categories/categlib.php');
 	$watches = $tikilib->get_user_watches($user, 'new_in_category');
 	$categories = $categlib->list_categs();
@@ -101,13 +101,13 @@ if ($feature_categories) {
 	$smarty->assign('categories', $categories);
 }
 
-if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
+if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
   $unread = $tikilib->user_unread_messages($user);
   $smarty->assign('unread', $unread);
 }
 
 ask_ticket('user-watches');
-if ($feature_ajax == "y") {
+if ($prefs['feature_ajax'] == "y") {
 function user_watches_ajax() {
     global $ajaxlib, $xajax;
     $ajaxlib->registerTemplate("tiki-user_watches.tpl");

@@ -17,7 +17,7 @@ class Messu extends TikiLib {
 	 * Put sent message to 'sent' box
 	 */
 	function save_sent_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
-		global $smarty, $userlib, $sender_email, $language;
+		global $smarty, $userlib, $prefs;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -38,7 +38,7 @@ class Messu extends TikiLib {
 	 * Send a message to a user
 	 */
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
-		global $smarty, $userlib, $sender_email, $language;
+		global $smarty, $userlib, $prefs;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -71,16 +71,16 @@ class Messu extends TikiLib {
 				$smarty->assign('mail_subject', stripslashes($subject));
 				$smarty->assign('mail_body', stripslashes($body));
 				$mail = new TikiMail($user);
-				$lg = $this->get_user_preference($user, 'language', $this->get_preference("language", "en"));
+				$lg = $this->get_user_preference($user, 'language', $prefs['site_language']);
 				$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
 				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
 				$mail->setText($mail_data);
 
 				if ($userlib->get_user_preference($from,'email is public','n') == 'y') {
-					$sender_email = $userlib->get_user_email($from);
+					$prefs['sender_email'] = $userlib->get_user_email($from);
 				}
-				if (strlen( $sender_email ) > 1 ) {
+				if (strlen( $prefs['sender_email'] ) > 1 ) {
 					$mail->setHeader("Reply-To", $local_sender_email);
 					$mail->setHeader("From", $local_sender_email);
 				}

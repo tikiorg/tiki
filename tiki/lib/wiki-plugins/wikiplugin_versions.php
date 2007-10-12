@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.9 2006-08-29 20:19:11 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.10 2007-10-12 07:55:49 nyloth Exp $
  *
  * Versions plugin: Split the text in parts visible only under some conditions:
  * 
@@ -14,10 +14,8 @@ function wikiplugin_versions_help() {
 	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}".tra("text")."{VERSIONS}~/np~";
 }
 
-global $use_best_language,$language;
-
 function wikiplugin_versions($data, $params) {
-	global $use_best_language,$language;
+	global $use_best_language, $prefs;
 	if (isset($params) and is_array($params)) {
 		extract ($params,EXTR_SKIP);
 	}
@@ -38,8 +36,8 @@ function wikiplugin_versions($data, $params) {
 	} else {
 		if (isset($_REQUEST['tikiversion'])) {
 			$vers = $_REQUEST['tikiversion'];
-		} elseif ($use_best_language == 'y' and in_array($language,$v[1]))  {
-			$vers = $language;
+		} elseif ($use_best_language == 'y' and in_array($prefs['language'],$v[1]))  {
+			$vers = $prefs['language'];
 		} else {
 			$vers = $default;
 		}

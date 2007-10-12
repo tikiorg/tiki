@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.28 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.29 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/wiki/wikilib.php');
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error_raw.tpl");
@@ -22,8 +22,8 @@ if ($feature_wiki != 'y') {
 //print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', date("U"), 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', date("U"), 'Tiki initialization');
 }
 
 if (!isset($_SESSION["thedate"])) {
@@ -59,22 +59,14 @@ if ($tiki_p_view != 'y') {
 }
 
 // BreadCrumbNavigation here
-// Get the number of pages from the default or userPreferences
 // Remember to reverse the array when posting the array
-$anonpref = $tikilib->get_preference('userbreadCrumb', 4);
-
-if ($user) {
-	$userbreadCrumb = $tikilib->get_user_preference($user, 'userbreadCrumb', $anonpref);
-} else {
-	$userbreadCrumb = $anonpref;
-}
 
 if (!isset($_SESSION["breadCrumb"])) {
 	$_SESSION["breadCrumb"] = array();
 }
 
 if (!in_array($page, $_SESSION["breadCrumb"])) {
-	if (count($_SESSION["breadCrumb"]) > $userbreadCrumb) {
+	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
 		array_shift ($_SESSION["breadCrumb"]);
 	}
 
@@ -90,7 +82,7 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 //print_r($_SESSION["breadCrumb"]);
 
 // Now increment page hits since we are visiting this page
-if ($count_admin_pvs == 'y' || $user != 'admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 
@@ -161,15 +153,14 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 
 /*
 // force enable wiki comments (for development)
-$feature_wiki_comments = 'y';
-$smarty->assign('feature_wiki_comments','y');
+$prefs['feature_wiki_comments'] = 'y';
 */
 
 // Comments engine!
-if ($feature_wiki_comments == 'y') {
-	$comments_per_page = $wiki_comments_per_page;
+if ($prefs['feature_wiki_comments'] == 'y') {
+	$comments_per_page = $prefs['wiki_comments_per_page'];
 
-	$thread_sort_mode = $wiki_comments_default_ordering;
+	$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
 	$comments_vars = array('page');
 	$comments_prefix_var = 'wiki page:';
 	$comments_object_var = 'page';

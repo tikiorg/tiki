@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.17 2007-10-07 16:28:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.18 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,8 +50,8 @@ header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header ("Pragma: public");
 
 if ($info["path"]) {
-	header("Content-Length: ". filesize( $w_use_dir.$info["path"] ) );
-	readfile ($w_use_dir . $info["path"]);
+	header("Content-Length: ". filesize( $prefs['w_use_dir'].$info["path"] ) );
+	readfile ($prefs['w_use_dir'] . $info["path"]);
 } else {
 	header("Content-Length: ". $info[ "filesize" ] );
 	echo "$content";

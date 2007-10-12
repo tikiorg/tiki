@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.8 2007-05-03 11:00:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/contribution.php,v 1.9 2007-10-12 07:55:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -19,9 +19,9 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 }
 
 require_once('tiki-setup.php'); 
-global $feature_contribution;
+global $prefs;
 
-if ($feature_contribution == 'y') {
+if ($prefs['feature_contribution'] == 'y') {
 	global $contributionlib; include_once('lib/contribution/contributionlib.php');
 	$contributions = $contributionlib->list_contributions();
 	if (!empty($_REQUEST['contributions'])) {
@@ -47,13 +47,12 @@ if ($feature_contribution == 'y') {
 		}
 	}
 	if (!empty($oneSelected)) {
-		if ((isset($section) && $section == 'forum' && $feature_contribution_mandatory_forum != 'y') || ((!isset($section) || $section != 'forum') && $feature_contribution_mandatory_comment != 'y'))
+		if ((isset($section) && $section == 'forum' && $prefs['feature_contribution_mandatory_forum'] != 'y') || ((!isset($section) || $section != 'forum') && $prefs['feature_contribution_mandatory_comment'] != 'y'))
 		$contributions['data'][] = array('contributionId'=>0, 'name'=>'');
 	}		
 	$smarty->assign_by_ref('contributions', $contributions['data']);
 
-	global $feature_contributor_wiki;
-	if ($feature_contributor_wiki == 'y' && !empty($section) && $section == 'wiki page') {
+	if ($prefs['feature_contributor_wiki'] == 'y' && !empty($section) && $section == 'wiki page') {
 		$users = $userlib->list_all_users();
 		$smarty->assign_by_ref('users', $users);
 		if (!empty($_REQUEST['contributors'])) {

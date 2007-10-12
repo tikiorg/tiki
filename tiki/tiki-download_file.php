@@ -1,12 +1,12 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.32 2007-10-07 16:28:20 nyloth Exp $
+// CVS: $Id: tiki-download_file.php,v 1.33 2007-10-12 07:55:26 nyloth Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 include_once('lib/filegals/filegallib.php');
 
-if($feature_file_galleries != 'y') {
+if($prefs['feature_file_galleries'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;
@@ -115,7 +115,7 @@ $content=&$info["data"];
 
 //add a hit
 $statslib->stats_hit($file,"file",$_REQUEST["fileId"]);
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Downloaded', $_REQUEST['galleryId'], 'file gallery', 'fileId='.$_REQUEST["fileId"]);
 }
@@ -135,7 +135,7 @@ header( "Content-Disposition: attachment; filename=\"$file\"" );
 
 if( $info["path"] )
 {
-	header("Content-Length: ". filesize( $fgal_use_dir.$info["path"] ) );
+	header("Content-Length: ". filesize( $prefs['fgal_use_dir'].$info["path"] ) );
 }
 else
 {
@@ -147,7 +147,7 @@ header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: public");
 if($info["path"]) {
-  readfile_chunked($fgal_use_dir.$info["path"]);
+  readfile_chunked($prefs['fgal_use_dir'].$info["path"]);
 } else {
   echo "$content";
 }

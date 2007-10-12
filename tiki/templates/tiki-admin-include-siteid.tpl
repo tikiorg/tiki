@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.17 2007-10-04 22:17:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.18 2007-10-12 07:55:49 nyloth Exp $ *}
 
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
@@ -171,7 +171,7 @@
 
 				<tr>
 					<td class="form"><label for="bot_logo_code">{tr}Content{/tr}:</label></td>
-					<td><textarea name="bot_logo_code" rows="6" style="width: 90%">{$bot_logo_code|escape}</textarea>
+					<td><textarea name="bot_logo_code" rows="6" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small></td>
 				</tr>

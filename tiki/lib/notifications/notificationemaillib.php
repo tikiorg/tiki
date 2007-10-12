@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.31 2007-10-04 17:57:18 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.32 2007-10-12 07:55:42 nyloth Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -10,14 +10,14 @@
   */
 
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId, $parentId, $contributions='' ) {
-	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email, $feature_contribution;
+	global $tikilib, $prefs, $smarty, $userlib;
 
 	// Per-forum From address overrides global default.
 	if( $forum_info['outbound_from'] )
 	{
 	    $my_sender = '"' . "$author" . '" <' . $forum_info['outbound_from'] . '>';
 	} else {
-	    $my_sender = $sender_email;
+	    $my_sender = $prefs['sender_email'];
 	}
 
 	//outbound email ->  will be sent in utf8 - from sender_email
@@ -77,10 +77,10 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	}
 
 	$nots = array();
-	$defaultLanguage = $tikilib->get_preference("language", "en");
+	$defaultLanguage = $prefs['site_language'];
 
 	// Users watching this forum or this post
-	if ($feature_user_watches == 'y') {
+	if ($prefs['feature_user_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
@@ -106,7 +106,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_date', $tikilib->now);
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
-		if ($feature_contribution == 'y' && !empty($contributions)) {
+		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
@@ -149,12 +149,12 @@ function testEmailInList($nots, $email) {
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='') {
-	global $tikilib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
-	global $notificationlib; include_once('lib/notifications/notificationlib.php');
+	global $tikilib, $prefs, $smarty, $userlib, $notificationlib;
+	include_once('lib/notifications/notificationlib.php');
 	$nots = array();
-	$defaultLanguage = $tikilib->get_preference("language", "en");
+	$defaultLanguage = $prefs['site_language'];
 
-	if ($feature_user_watches == 'y' && $event == 'wiki_page_changed') {
+	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
 		global $structlib; include_once('lib/structures/structlib.php');
 		$nots2 = $structlib->get_watches($pageName);
@@ -162,7 +162,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			$nots = array_merge($nots, $nots2);
 		}
 		
-		if ($wiki_watch_editor != "y") {
+		if ($prefs['wiki_watch_editor'] != "y") {
 			for ($i = count($nots) - 1; $i >=0; --$i)
 				if ($nots[$i]['user'] == $edit_user) {
 					unset($nots[$i]);
@@ -185,7 +185,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	foreach ($emails as $email) {
-		if ($wiki_watch_editor != "y" && $email == $edit_user)
+		if ($prefs['wiki_watch_editor'] != "y" && $email == $edit_user)
 		    continue;
 		if (!testEmailInList($nots, $email)) {
 		    $not = array('email' =>  $email);
@@ -216,7 +216,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 	    $smarty->assign('mail_machine', $machine);
-		if ($feature_contribution == 'y' && !empty($contributions)) {
+		if ($prefs['feature_contribution'] == 'y' && !empty($contributions)) {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$smarty->assign('mail_contributions', $contributionlib->print_contributions($contributions));
 		}
@@ -253,11 +253,11 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
  * \return the nb of sent emails
  */
 function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl) {
-    global $smarty, $tikilib, $userlib;
+    global $smarty, $tikilib, $userlib, $prefs;
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$sent = 0;
-	$defaultLanguage = $tikilib->get_preference("language", "en");
+	$defaultLanguage = $prefs['site_language'];
 	$languageEmail = $defaultLanguage;
 	foreach ($list as $elt) {
 		if ($type == "watch") {
@@ -313,13 +313,13 @@ function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?'
 }
 
 function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $name, $filename, $description, $action, $user) {
-        global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
+        global $tikilib, $prefs, $smarty, $userlib;
 
         $nots = array();
-        $defaultLanguage = $tikilib->get_preference("language", "en");
+        $defaultLanguage = $prefs['site_language'];
 
         // Users watching this gallery
-        if ($feature_user_watches == 'y') {
+        if ($prefs['feature_user_watches'] == 'y') {
                 $nots = $tikilib->get_event_watches($event, $galleryId);
                 for ($i = count($nots) - 1; $i >=0; --$i) {
                         $nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
@@ -384,13 +384,13 @@ function sendCategoryEmailNotification($values) {
         
         //$event, $categoryId, $categoryName, $categoryPath, 
 		//$description, $parentId, $parentName, $action
-        global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email,$user;
+        global $tikilib, $prefs, $smarty, $userlib, $user;
 
         $nots = array();
-        $defaultLanguage = $tikilib->get_preference("language", "en");
+        $defaultLanguage = $prefs['site_language'];
 
         // Users watching this gallery
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			if ($action == 'category created') {                                
 				$nots = $tikilib->get_event_watches($event, $parentId);
 			} else if ($action == 'category removed') { 

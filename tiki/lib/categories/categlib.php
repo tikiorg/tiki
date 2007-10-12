@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.112 2007-09-04 17:14:53 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113 2007-10-12 07:55:40 nyloth Exp $
  *
  * \brief Categories support class
  *
@@ -496,10 +496,7 @@ class CategLib extends ObjectLib {
 	function get_object_categories_perms($user, $type, $itemId) {		
 		$is_categorized = $this->is_categorized("$type",$itemId);
 		if ($is_categorized) {
-			global $cachelib;
-			global $userlib;
-			global $tiki_p_admin;
-			global $feature_category_reinforce;
+			global $cachelib, $userlib, $tiki_p_admin, $prefs;
 			
 			$parents = $this->get_object_categories("$type", $itemId);
 			$return_perms = array(); // initialize array for storing perms to be returned
@@ -520,7 +517,7 @@ class CategLib extends ObjectLib {
 						if ($userlib->object_has_one_permission($categId, 'category')) {
 							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
 								$return_perms["$perm"] = 'y';
-								if ($feature_category_reinforce == "n") {
+								if ($prefs['feature_category_reinforce'] == "n") {
 									break 1;
 								}
 							} else {
@@ -528,7 +525,7 @@ class CategLib extends ObjectLib {
 								// better-sorry-than-safe approach:
 								// if a user lacks a given permission regarding a particular category,
 								// that category takes precedence when considering if user has that permission
-								if ($feature_category_reinforce == "y") {
+								if ($prefs['feature_category_reinforce'] == "y") {
 									break 1;
 								}
 								// break out of one FOREACH loop
@@ -545,7 +542,7 @@ class CategLib extends ObjectLib {
 										// better-sorry-than-safe approach:
 										// if a user lacks a given permission regarding a particular category,
 										// that category takes precedence when considering if user has that permission
-										if ($feature_category_reinforce == "y") {
+										if ($prefs['feature_category_reinforce'] == "y") {
 											break 2;
 										}
 										// break out of one FOR loop and one FOREACH loop
@@ -806,7 +803,7 @@ class CategLib extends ObjectLib {
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
-	  global $cachelib, $language, $feature_multilingual;
+	  global $cachelib, $prefs;
 		if (!$categId) $categId = "0"; // avoid wrong cache
 		if (!$cachelib->isCached("childcategs$categId")) {
 			$ret = array();
@@ -825,7 +822,7 @@ class CategLib extends ObjectLib {
 		} else {
 			$ret = unserialize($cachelib->getCached("childcategs$categId"));
 		}
-		if ($feature_multilingual == 'y' && $language != 'en') {
+		if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
 			foreach ($ret as $key=>$res) {
 				$ret[$key]['name'] = tra($res['name']);
 			}
@@ -979,8 +976,7 @@ class CategLib extends ObjectLib {
 
     // Moved from tikilib.php
     function get_categorypath($cats) {
-			global $smarty;
-			global $feature_categories;
+			global $smarty, $prefs;
 
 			$catpath = '';
 			foreach ($cats as $categId) {
@@ -999,8 +995,7 @@ class CategLib extends ObjectLib {
     
     //Moved from tikilib.php
     function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false) {
-			global $smarty;
-			global $feature_categories;
+			global $smarty, $prefs;
 
 		$typetokens = array(
 			"article" => "article",
@@ -1311,9 +1306,9 @@ class CategLib extends ObjectLib {
 	 * objectName, objectType, objectUrl 
 	 */
 	function notify ($values) {					
-		global $feature_user_watches;
+		global $prefs;
         
-        if ($feature_user_watches == 'y') {        	       
+        if ($prefs['feature_user_watches'] == 'y') {        	       
 			include_once('lib/notifications/notificationemaillib.php');			
           	$foo = parse_url($_SERVER["REQUEST_URI"]);          	
           	$machine = $this->httpPrefix(). dirname( $foo["path"]);          	
@@ -1369,7 +1364,7 @@ class CategLib extends ObjectLib {
 		return $result;
 	}
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
-		global $feature_user_watches;
+		global $prefs;
 		$old_categories = $this->get_object_categories($objType, $objId);
 		if (empty($categories)) {
 			$new_categories = array();
@@ -1393,7 +1388,7 @@ class CategLib extends ObjectLib {
 			}
 		}
 
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			foreach ($new_categories as $categId) {			
 		   		$category = $this->get_category($categId);
 				$values = array('categoryId'=>$categId, 'categoryName'=>$category['name'], 'categoryPath'=>$this->get_category_path_string_with_root($categId),

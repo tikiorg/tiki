@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.8 2007-10-06 15:18:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_intertiki.php,v 1.9 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -22,7 +22,7 @@ if (!isset($_REQUEST['known_hosts'])) $_REQUEST['known_hosts']= array();
 if (isset($_REQUEST['del'])) {
 	check_ticket('admin-inc-intertiki');
 	$_REQUEST["intertikiclient"] = true;
-	foreach ($interlist as $k=>$i) {
+	foreach ($prefs['interlist'] as $k=>$i) {
 		if ($k != $_REQUEST['del']) {
 			$_REQUEST['interlist'][$k] = $i;
 		}
@@ -31,7 +31,7 @@ if (isset($_REQUEST['del'])) {
 
 if (isset($_REQUEST['delk'])) {
 	check_ticket('admin-inc-intertiki');
-	foreach ($known_hosts as $k=>$i) {
+	foreach ($prefs['known_hosts'] as $k=>$i) {
 		if ($k != $_REQUEST['delk']) {
 			$_REQUEST['known_hosts'][$k] = $i;
 		}

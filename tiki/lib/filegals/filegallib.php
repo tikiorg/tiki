@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.75 2007-07-04 18:28:18 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76 2007-10-12 07:55:41 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -23,12 +23,12 @@ class FileGalLib extends TikiLib {
 	}
 
 	function remove_file($fileInfo, $user, $galInfo='') {
-		global $fgal_use_dir, $fgal_podcast_dir, $smarty;
+		global $prefs, $smarty;
 
 		if ($podCastGallery = $this->isPodCastGallery($galleryId, $galInfo)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
 		
 		if ($fileInfo['path']) {
@@ -52,15 +52,15 @@ class FileGalLib extends TikiLib {
 	}
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $author, $created='', $lockedby=NULL) {
-	  global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $fgal_allow_duplicates, $smarty, $user;
+	  global $prefs, $tikilib, $smarty, $user;
 
 		$name = strip_tags($name);
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
-		if (($fgal_use_db == 'n') || ($podCastGallery)) {
+		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				$checksum = md5_file($savedir . $path);
 			} else {
@@ -71,10 +71,10 @@ class FileGalLib extends TikiLib {
 		}
 		$description = strip_tags($description);
 
-		if ( $fgal_allow_duplicates != 'y' ) {
+		if ( $prefs['fgal_allow_duplicates'] != 'y' ) {
 			$fgal_query = 'select count(*) from `tiki_files` where `hash`=?';
 			$fgal_vars = array($checksum);
-			if ( $fgal_allow_duplicates == 'different_galleries' ) {
+			if ( $prefs['fgal_allow_duplicates'] == 'different_galleries' ) {
 				$fgal_query .= ' and `galleryId`=?';
 				$fgal_vars[] = $galleryId;
 			}
@@ -82,7 +82,7 @@ class FileGalLib extends TikiLib {
 		}
 
 		$search_data = '';
-		if ($tikilib->get_preference('fgal_enable_auto_indexing','y') != 'n') {
+		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $galleryId);
 			if ($search_data === false)
 				return false;
@@ -97,17 +97,16 @@ class FileGalLib extends TikiLib {
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
 		$fileId = $this->getOne($query,array((int) $created));
 
-		global $feature_score;
-		if ($feature_score == 'y') {
+		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'fgallery_new_file');
 		}
-		global $feature_actionlog;
-		if ($feature_actionlog == 'y') {
+
+		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('files', $fileId);
 		}
@@ -179,20 +178,16 @@ class FileGalLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
+		global $prefs, $userlib, $user, $tiki_p_admin;
 		while ($res = $result->fetchRow()) {
-
 		    $add = TRUE;
-		    global $feature_categories;
-		    global $userlib;
-		    global $user;
-		    global $tiki_p_admin;
 
 		    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'file gallery')) {
 		    // gallery permissions override category permissions
 				if (!$userlib->object_has_permission($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
 				    $add = FALSE;
 				}
-		    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    } elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 		    	// no forum permissions so now we check category permissions
 		    	global $categlib;
 				if (!is_object($categlib)) {
@@ -268,7 +263,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function remove_file_gallery($id, $galleryId=0) {
-		global $fgal_use_dir, $fgal_podcast_dir;
+		global $prefs;
 
 		if (empty($galleryId)) {
 			$info = $this->get_file_info($id);
@@ -276,9 +271,9 @@ class FileGalLib extends TikiLib {
 		}
 
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
 
 		$query = "select `path` from `tiki_files` where `galleryId`=?";
@@ -308,8 +303,10 @@ class FileGalLib extends TikiLib {
 		return $res;
 	}
 
-	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon,
-								  $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $fileTracker) {
+	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon, $show_name, $show_size, $show_description, $show_created, $show_dl, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $fileTracker) {
+
+		global $prefs;
+
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -339,14 +336,13 @@ class FileGalLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 			$galleryId
 				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,(int) $this->now));
-			global $feature_score;
-			if ($feature_score == 'y') {
+
+			if ($prefs['feature_score'] == 'y') {
 			    $this->score_event($user, 'fgallery_new');
 			}
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('file_galleries', $galleryId);
 		}
@@ -355,12 +351,8 @@ class FileGalLib extends TikiLib {
 	}
 
 	function process_batch_file_upload($galleryId, $file, $user, $description) {
-		global $fgal_match_regex;
+		global $prefs;
 
-		global $fgal_nmatch_regex;
-		global $fgal_use_db;
-		global $fgal_use_dir;
-		global $fgal_podcast_dir;
 		include_once ('lib/pclzip.lib.php');
 		include_once ('lib/mime/mimelib.php');
 		$extract_dir = 'temp/'.basename($file).'/';
@@ -372,9 +364,9 @@ class FileGalLib extends TikiLib {
 		$h = opendir($extract_dir);
 		$gal_info = $this->get_file_gallery_info($galleryId);
 		if ($podCastGallery = $this->isPodCastGallery($galleryId, $gal_info)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
 
 		while (($file = readdir($h)) !== false) {
@@ -384,13 +376,13 @@ class FileGalLib extends TikiLib {
 				// check filters
 				$upl = 1;
 
-				if (!empty($fgal_match_regex)) {
-					if (!preg_match("/$fgal_match_regex/", $file, $reqs))
+				if (!empty($prefs['fgal_match_regex'])) {
+					if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $file, $reqs))
 						$upl = 0;
 				}
 
-				if (!empty($fgal_nmatch_regex)) {
-					if (preg_match("/$fgal_nmatch_regex/", $file, $reqs))
+				if (!empty($prefs['fgal_nmatch_regex'])) {
+					if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $file, $reqs))
 						$upl = 0;
 				}
 
@@ -402,7 +394,7 @@ class FileGalLib extends TikiLib {
 				$data = '';
 				$fhash = '';
 
-				if (($fgal_use_db == 'n') || ($podCastGallery)) {
+				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 					$fhash = md5($name = $file);
 
 					@$fw = fopen($savedir . $fhash, "wb");
@@ -415,7 +407,7 @@ class FileGalLib extends TikiLib {
 					}
 				}
 				while (!feof($fp)) {
-					if (($fgal_use_db == 'y') && (!$podCastGallery)) {
+					if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
 						$data .= fread($fp, 8192 * 16);
 					} else {
 						$data = fread($fp, 8192 * 16);
@@ -426,7 +418,7 @@ class FileGalLib extends TikiLib {
 
 				fclose ($fp);
 
-				if (($fgal_use_db == 'n') || ($podCastGallery)) {
+				if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 					fclose ($fw);
 
 					$data = '';
@@ -470,8 +462,8 @@ class FileGalLib extends TikiLib {
 			$this->query($query,array($this->now,$galleryId));
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('files', $id);
 		}
@@ -480,18 +472,18 @@ class FileGalLib extends TikiLib {
 	}
 
 	function replace_file($id, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='', $gal_info, $didFileReplace, $author='', $created='', $lockedby=NULL) {
-	  global $fgal_use_db, $fgal_use_dir, $fgal_podcast_dir, $tikilib, $feature_categories, $feature_search, $user;
+	  global $prefs, $tikilib, $user;
 
 		// Update the fields in the database
 		$name = strip_tags($name);
 
 		if ($podCastGallery = $this->isPodCastGallery($gal_info['galleryId'], $gal_info)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
 
-		if (($fgal_use_db == 'n') || ($podCastGallery)) {
+		if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 			if (function_exists('md5_file')) {
 				if (!($checksum = md5_file($savedir . $path)))
 					$checksum = '';
@@ -505,7 +497,7 @@ class FileGalLib extends TikiLib {
 		$description = strip_tags($description);
 
 		$search_data = '';
-		if ($tikilib->get_preference("fgal_enable_auto_indexing") != 'n') {
+		if ($prefs['fgal_enable_auto_indexing'] != 'n') {
 			$search_data = $this->get_search_text_for_data($data,$path,$type, $gal_info['galleryId']);
 			if ($search_data === false)
 				return false;
@@ -537,11 +529,11 @@ class FileGalLib extends TikiLib {
 			}
 			$query = "update `tiki_files` set `archiveId`=?, `search_data`=?,`user`=?, `lockedby`=? where `archiveId`=? or `fileId`=?";
 			$this->query($query,array($idNew, '',$creator,NULL, $id, $id));
-			if ($feature_categories == 'y') {
+			if ($prefs['feature_categories'] == 'y') {
 				global $categlib; require_once('lib/categories/categlib.php');
 				$categlib->uncategorize_object('file', $id);
 			}
-			if ($feature_search == 'y') {
+			if ($prefs['feature_search'] == 'y') {
 				include_once('lib/search/refresh-functions.php');
 				$words = array();
 				insert_index($words, 'file', $id);
@@ -555,8 +547,7 @@ class FileGalLib extends TikiLib {
 			$this->query($query,array($this->now,$gal_info['galleryId']));
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('files', $id);
 		}
@@ -619,16 +610,16 @@ class FileGalLib extends TikiLib {
 	}
 
 	function get_search_text_for_data($data,$path,$type, $galleryId) {
-		global $fgal_use_dir, $fgal_podcast_dir;
+		global $prefs;
 		
 		if (!isset($data) && !isset($path)) {
 			return false;
 		}
 
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
-			$savedir=$fgal_podcast_dir;
+			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
-			$savedir=$fgal_use_dir;
+			$savedir=$prefs['fgal_use_dir'];
 		}
 		
 		$fileParseApps = $this->get_file_handlers();
@@ -678,8 +669,8 @@ class FileGalLib extends TikiLib {
 	}
 
 	function notify ($galleryId, $name, $filename, $description, $action, $user) {
-		global $feature_user_watches;
-                if ($feature_user_watches == 'y') {
+		global $prefs;
+                if ($prefs['feature_user_watches'] == 'y') {
                         //  Deal with mail notifications.
                         include_once('lib/notifications/notificationemaillib.php');
                         $foo = parse_url($_SERVER["REQUEST_URI"]);

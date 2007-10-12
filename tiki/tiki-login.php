@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.84 2007-09-09 17:25:37 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.84 2007-09-09 17:25:37 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85 2007-10-12 07:55:29 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -23,20 +23,20 @@ if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
 }
 
 // Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
-if ( ! $https_mode && $https_login == 'required' ) {
-	header('location: '.$base_url_https.$login_url);
+if ( ! $https_mode && $prefs['https_login'] == 'required' ) {
+	header('location: '.$base_url_https.$prefs['login_url']);
 	exit;
 }
 // Redirect to HTTP if we are in HTTPS but we doesn't allow HTTPS login
-if ( $https_mode && $https_login == 'disabled' ) {
-	header('location: '.$base_url_http.$login_url);
+if ( $https_mode && $prefs['https_login'] == 'disabled' ) {
+	header('location: '.$base_url_http.$prefs['login_url']);
 	exit;
 }
 
 // Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 // Note that loginfrom will always be a complete URL (http://...)
 if ( ! isset($_SESSION['loginfrom']) ) {
-	$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $tikiIndex );
+	$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex'] );
 	if ( ! ereg('^http', $_SESSION['loginfrom']) ) {
 		if ( $_SESSION['loginfrom']{0} == '/' ) $_SESSION['loginfrom'] = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$_SESSION['loginfrom'];
 		else $_SESSION['loginfrom'] = $base_url.$_SESSION['loginfrom'];
@@ -66,11 +66,11 @@ $isdue = false;
 $isEmailDue = false;
 
 // admin is always local
-if ( $user == 'admin' ) $feature_intertiki = 'n';
+if ( $user == 'admin' ) $prefs['feature_intertiki'] = 'n';
 
 // Determine the intertiki domain
-if ( $feature_intertiki == 'y' ) {
-	if ( ! empty($feature_intertiki_mymaster) ) $_REQUEST['intertiki'] = $feature_intertiki_mymaster;
+if ( $prefs['feature_intertiki'] == 'y' ) {
+	if ( ! empty($prefs['feature_intertiki_mymaster']) ) $_REQUEST['intertiki'] = $prefs['feature_intertiki_mymaster'];
 	elseif ( strstr($user, '@') ) {
 		list($user, $intertiki_domain) = explode('@', $user);
 		$_REQUEST['intertiki'] = $intertiki_domain;
@@ -78,19 +78,19 @@ if ( $feature_intertiki == 'y' ) {
 } else unset($_REQUEST['intertiki']);
 
 // Go through the intertiki process
-if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($interlist)) ) {
+if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist'])) ) {
 
     include_once('XML/RPC.php');
 
     function intervalidate($remote,$user,$pass,$get_info = false) {
-	global $tiki_key;
+	global $prefs;
 	$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 	$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 	$client->setDebug(0);
 	$msg = new XML_RPC_Message(
 				   'intertiki.validate',
 				   array(
-					 new XML_RPC_Value($tiki_key, 'string'),
+					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
 					 new XML_RPC_Value($user, 'string'),
 					 new XML_RPC_Value($pass, 'string'),
 					 new XML_RPC_Value($get_info, 'boolean')
@@ -99,7 +99,7 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 	return $result;
     }
 
-    $rpcauth = intervalidate($interlist[$_REQUEST['intertiki']],$user,$pass,!empty($feature_intertiki_mymaster)? true : false);
+    $rpcauth = intervalidate($prefs['interlist'][$_REQUEST['intertiki']],$user,$pass,!empty($prefs['feature_intertiki_mymaster'])? true : false);
 
     if (!$rpcauth) {
 	$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': Failed');
@@ -126,7 +126,7 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 
 	    $logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki']);
 
-	    if (!empty($feature_intertiki_mymaster)) {
+	    if (!empty($prefs['feature_intertiki_mymaster'])) {
 
 		// this is slave intertiki site
 		$response_value = $rpcauth->value();
@@ -146,13 +146,13 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 		    $userlib->update_lastlogin($user);
 		}
 
-		if ($feature_userPreferences == 'y' && $feature_intertiki_import_preferences == 'y') {
+		if ($prefs['feature_userPreferences'] == 'y' && $prefs['feature_intertiki_import_preferences'] == 'y') {
 		    $userlib->set_user_preferences($user, $user_details['preferences']);
 		}
 
-		if ($feature_intertiki_import_groups == 'y') {
-				if ($feature_intertiki_imported_groups) {
-					$groups = preg_split('/\s*,\s*/',$feature_intertiki_imported_groups);
+		if ($prefs['feature_intertiki_import_groups'] == 'y') {
+				if ($prefs['feature_intertiki_imported_groups']) {
+					$groups = preg_split('/\s*,\s*/',$prefs['feature_intertiki_imported_groups']);
 					foreach ($groups as $group) {
 						if (in_array(trim($group),$user_details['groups'])) {
 							$userlib->assign_user_to_group($user, trim($group));
@@ -162,7 +162,7 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 		    	$userlib->assign_user_to_groups($user, $user_details['groups']);
 				}
 		} else {
-		    $groups = preg_split('/\s*,\s*/',$interlist[$feature_intertiki_mymaster]['groups']);
+		    $groups = preg_split('/\s*,\s*/',$prefs['interlist'][$prefs['feature_intertiki_mymaster']]['groups']);
 		    foreach ($groups as $group) {
 			$userlib->assign_user_to_group($user, trim($group));
 		    }
@@ -170,8 +170,7 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 
 	    } else {
 		$user = $user.'@'.$_REQUEST['intertiki'];
-		$feature_userPreferences = 'n';
-		$smarty->assign('feature_userPreferences',$feature_userPreferences);
+		$prefs['feature_userPreferences'] = 'n';
 	    }
 
 	}
@@ -237,10 +236,10 @@ if ( $isvalid ) {
 			break;
 		default:
 			// Go to the group page ?
-			if ( $useGroupHome == 'y' ) {
+			if ( $prefs['useGroupHome'] == 'y' ) {
 				$url_vars = parse_url($url);
 				// Go to the group page only if the loginfrom is the default page
-				if ( $limitedGoGroupHome == 'n' || $url == $tikiIndex || $url_vars['path'] == $tikiIndex || basename($url_vars['path']) == $tikiIndex ) {
+				if ( $prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['tikiIndex'] || $url_vars['path'] == $prefs['tikiIndex'] || basename($url_vars['path']) == $prefs['tikiIndex'] ) {
 					$groupHome = $userlib->get_user_default_homepage($user);
 					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
 				}
@@ -252,23 +251,23 @@ if ( $isvalid ) {
 	
 			// No sense in sending user to registration page or no page at all
 			// This happens if the user has just registered and it's first login
-			if ( $url == '' || ereg('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url) ) $url = $tikiIndex;
+			if ( $url == '' || ereg('(tiki-register|tiki-login_validate|tiki-login_scr)\.php', $url) ) $url = $prefs['tikiIndex'];
 	
 			// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-			if ( $rememberme != 'disabled' ) {
+			if ( $prefs['rememberme'] != 'disabled' ) {
 				if ( isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on' ) {
 					$hash = $userlib->create_user_cookie($_REQUEST['user']);
 					$time = substr($hash,strpos($hash,'.')+1);
-					setcookie($user_cookie_site, $hash.'.'.$user, $time, $cookie_path, $cookie_domain);
-					$logslib->add_log('login',"got a cookie for $remembertime seconds");
+					setcookie($user_cookie_site, $hash.'.'.$user, $time, $cookie_path, $prefs['cookie_domain']);
+					$logslib->add_log('login','got a cookie for '.$prefs['remembertime'].' seconds');
 				}
 			}
 		}
 	}
 } else {
-	if ( $error == PASSWORD_INCORRECT && $unsuccessful_logins >= 0 ) {
- 		if ( ($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $unsuccessful_logins ) {
-			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $unsuccessful_logins);
+	if ( $error == PASSWORD_INCORRECT && $prefs['unsuccessful_logins'] >= 0 ) {
+ 		if ( ($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins'] ) {
+			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 			$smarty->assign('msg', $msg);
 			$userlib->send_confirm_email($user, 'unsuccessful_logins');
 			$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
@@ -299,7 +298,7 @@ if ( $isvalid ) {
 	sleep(5);
 }
 
-if ( isset($user) and $feature_score == 'y' ) $tikilib->score_event($user, 'login');
+if ( isset($user) and $prefs['feature_score'] == 'y' ) $tikilib->score_event($user, 'login');
 
 
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI

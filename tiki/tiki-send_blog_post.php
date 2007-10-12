@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.25 2007-07-08 17:39:02 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.26 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
@@ -119,10 +119,10 @@ if (!$blog_data) {
 	die;
 }
 
-if ($feature_blogposts_comments == 'y') {
-	$comments_per_page = $blog_comments_per_page;
+if ($prefs['feature_blogposts_comments'] == 'y') {
+	$comments_per_page = $prefs['blog_comments_per_page'];
 
-	$thread_sort_mode = $blog_comments_default_ordering;
+	$thread_sort_mode = $prefs['blog_comments_default_ordering'];
 	$comments_vars = array(
 		'postId',
 		'offset',
@@ -138,7 +138,7 @@ if ($feature_blogposts_comments == 'y') {
 $section = 'blogs';
 include_once ('tiki-section_options.php');
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'blog';
 
 	$cat_objid = $_REQUEST['blogId'];
@@ -163,7 +163,7 @@ if (isset($_REQUEST['send'])) {
 
 	/* Check if the emails are valid */
 	foreach ($emails as $email) {
-	  if(!validate_email($email,$validateEmail)) {
+	  if(!validate_email($email,$prefs['validateEmail'])) {
 	    $smarty->assign('msg', tra("One of the email addresses you typed is invalid").": " . $email);
 	    $smarty->display("error.tpl");
 	    die;
@@ -178,7 +178,7 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign('mail_machine', $machine);
 		$mail_data = $smarty->fetch('mail/blogs_send_link.tpl');
 		@mail($email, tra('Post recommendation at'). ' ' . $_SERVER["SERVER_NAME"], $mail_data,
-			"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			'From: '.$prefs['sender_email']."\r\nContent-type: text/plain;charset=utf-8\r\n");
 	}
 
 	$smarty->assign('sent', 'y');

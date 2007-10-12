@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.32 2007-10-05 16:57:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.33 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (isset($_REQUEST['rremove'])) {
 		$smarty->display("error.tpl");
 		die;		
 	}
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremove"], false);		
 	} else {
@@ -48,7 +48,7 @@ if (isset($_REQUEST['rremovex'])) {
 		$smarty->display("error.tpl");
 		die;		
 	}
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremovex"], true);
 	} else {
@@ -59,7 +59,7 @@ if (isset($_REQUEST['rremovex'])) {
 if (isset($_REQUEST['export'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
-	if ($feature_wiki_export != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+	if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
 		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 		$smarty->display("error.tpl");
 		die;
@@ -167,7 +167,7 @@ if (isset($_REQUEST["create"])) {
 				$cat_objid = $cat_name;
 				$cat_href="tiki-index.php?page=" . urlencode($cat_name);
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-			    if ($feature_wiki_categorize_structure == 'y' && !$catObjectId) {
+			    if ($prefs['feature_wiki_categorize_structure'] == 'y' && !$catObjectId) {
     			// page that is added is not categorized -> categorize it if necessary
 			    if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && isset($_REQUEST["cat_categories"])) {
 					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
@@ -176,7 +176,7 @@ if (isset($_REQUEST["create"])) {
 						$categlib->categorize($catObjectId, $cat_acat);
 					}
 				}
-			    } elseif ($feature_wiki_categorize_structure == 'y') {
+			    } elseif ($prefs['feature_wiki_categorize_structure'] == 'y') {
 				// page that is added is categorized
 			    if (!isset($_REQUEST["cat_categories"]) || !isset($_REQUEST["cat_categorize"]) || isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] != 'on') {
 					// alert that current pages are categorized					
@@ -208,7 +208,7 @@ $smarty->assign('alert_to_remove_extra_cats', $alert_to_remove_extra_cats);
 
 } // end of security hardening
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once("categorize_list.php");
 }
 
@@ -259,7 +259,7 @@ if (isset($_REQUEST["exact_match"])) {
 	$smarty->assign('exact_match', 'n');
 }  
 
-if ($feature_multilingual == 'y') {
+if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);

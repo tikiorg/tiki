@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.25 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.26 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,7 +59,7 @@ $smarty->assign('publishDate', $info["publishDate"]);
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delpoll';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$polllib->remove_poll($_REQUEST["remove"]);
 	} else {
@@ -140,12 +140,12 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-if ($poll_list_categories == 'y') {
+if ($prefs['poll_list_categories'] == 'y') {
 	foreach ($channels['data'] as $key=>$channel) {
 		$channels['data'][$key]['categories'] = $polllib->get_poll_categories($channel['pollId']);
 	}
 }
-if ($poll_list_objects == 'y') {
+if ($prefs['poll_list_objects'] == 'y') {
 	foreach ($channels['data'] as $key=>$channel) {
 		$channels['data'][$key]['objects'] = $polllib->get_poll_objects($channel['pollId']);
 	}

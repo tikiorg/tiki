@@ -287,7 +287,7 @@ class AdminLib extends TikiLib {
 	}
 
 	function remove_tag($tagname) {
-		global $wikiHomePage;
+		global $prefs;
 
 		$query = "delete from `tiki_tags` where `tagName`=?";
 		$result = $this->query($query,array($tagname));
@@ -312,7 +312,7 @@ class AdminLib extends TikiLib {
 	// This function can be used to store the set of actual pages in the "tags"
 	// table preserving the state of the wiki under a tag name.
 	function create_tag($tagname, $comment = '') {
-		global $wikiHomePage;
+		global $prefs;
 
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query,array());
@@ -336,7 +336,7 @@ class AdminLib extends TikiLib {
 	// This funcion recovers the state of the wiki using a tagName from the
 	// tags table
 	function restore_tag($tagname) {
-		global $wikiHomePage;
+		global $prefs;
 
 		$query = "update `tiki_pages` set `cache_timestamp`=0";
 		$this->query($query,array());
@@ -362,7 +362,7 @@ class AdminLib extends TikiLib {
 	// Dumps the database to dump/new.tar
 	// changed for virtualhost support
 	function dump() {
-		global $tikidomain, $wikiHomePage, $style;
+		global $tikidomain, $prefs;
 		$dump_path = "dump";
 		if ($tikidomain) {
 			$dump_path.= "/$tikidomain";
@@ -370,7 +370,7 @@ class AdminLib extends TikiLib {
 
 		@unlink ("$dump_path/new.tar");
 		$tar = new tar();
-		$tar->addFile("styles/$style");
+		$tar->addFile('styles/'.$prefs['style']);
 		// Foreach page
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query,array());
@@ -385,7 +385,7 @@ class AdminLib extends TikiLib {
 			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
 			//print_r($cosas);
-			$data = "<html><head><title>" . $res["pageName"] . "</title><link rel='StyleSheet' href='styles/$style' type='text/css'></head><body><a class='wiki' href='$wikiHomePage.html'>home</a><br /><h1>" . $res["pageName"] . "</h1><div class='wikitext'>" . $dat . '</div></body></html>';
+			$data = "<html><head><title>" . $res["pageName"] . "</title><link rel='StyleSheet' href='styles/" . $prefs['style']  . "' type='text/css'></head><body><a class='wiki' href='" . $prefs['wikiHomePage'] . ".html'>home</a><br /><h1>" . $res["pageName"] . "</h1><div class='wikitext'>" . $dat . '</div></body></html>';
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 

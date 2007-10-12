@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.7 2007-08-04 10:26:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8 2007-10-12 07:55:32 nyloth Exp $
 
 require_once ('tiki-setup.php');
 
@@ -11,7 +11,7 @@ if ($tiki_p_admin != 'y') {
 
 if (isset($_REQUEST["clean"])) {
 	$area = 'cleanlogs';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);	
 		$date = strtotime("-".$_REQUEST["months"]." months");
 		$logslib->clean_logs($date);

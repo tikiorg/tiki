@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.17 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.18 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/rankings/ranklib.php');
 
-if ($feature_blogs != 'y') {
+if ($prefs['feature_blogs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_blog_rankings != 'y') {
+if ($prefs['feature_blog_rankings'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blog_rankings");
 
 	$smarty->display("error.tpl");

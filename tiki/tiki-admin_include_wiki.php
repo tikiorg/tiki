@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.76 2007-06-16 16:01:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -214,18 +214,14 @@ if (isset($_REQUEST["wikiset3d"])) {
 
 	if (isset($_REQUEST["wiki_3d_autoload"]) && $_REQUEST["wiki_3d_autoload"] == "on") {
 	    $tikilib->set_preference("wiki_3d_autoload", 'true');
-	    $smarty->assign("wiki_3d_autoload", 'true');
 	} else {
 	    $tikilib->set_preference("wiki_3d_autoload", 'false');
-	    $smarty->assign("wiki_3d_autoload", 'false');
 	}
 
 	if (isset($_REQUEST["wiki_3d_adjust_camera"]) && $_REQUEST["wiki_3d_adjust_camera"] == "on") {
 	    $tikilib->set_preference("wiki_3d_adjust_camera", 'true');
-	    $smarty->assign("wiki_3d_adjust_camera", 'true');
 	} else {
 	    $tikilib->set_preference("wiki_3d_adjust_camera", 'false');
-	    $smarty->assign("wiki_3d_adjust_camera", 'false');
 	}
 
 }
@@ -237,12 +233,12 @@ if(isset($_REQUEST["wikisetwatch"])) {
 	simple_set_toggle('wiki_watch_editor');
 }
 
-if ($feature_forums == 'y') {
+if ($prefs['feature_forums'] == 'y') {
 	$commentslib = new Comments($dbTiki);
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 	$smarty->assign_by_ref("all_forums", $all_forums["data"]);
 }
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once('lib/categories/categlib.php');
 	$catree = $categlib->get_all_categories();
 	$smarty->assign('catree', $catree);

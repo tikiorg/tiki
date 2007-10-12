@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.7 2007-03-06 19:29:58 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tikihelplib.php,v 1.8 2007-10-12 07:55:37 nyloth Exp $
  * Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -26,7 +26,7 @@ class TikiHelpLib {
  */
 /* static */
 function help_doclink($params) {
-    global $feature_help, $helpurl;
+    global $prefs, $helpurl;
     
      extract($params);
     // Param = zone
@@ -39,7 +39,7 @@ function help_doclink($params) {
         $desc = $crumb->helpDescription;
     }
     
-    if ($feature_help == 'y' and $url) {
+    if ($prefs['feature_help'] == 'y' and $url) {
         $ret = '<a title="'.$desc.'" href="'
         .$helpurl.$url.'" target="tikihelp" class="tikihelp">'
         .'<img src="pics/icons/help.png"'

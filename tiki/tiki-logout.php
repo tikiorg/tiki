@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.28 2007-10-07 16:28:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.29 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ $bypass_siteclose_check = 'y';
 require_once ('tiki-setup.php');
 
 // go offline in Live Support
-if ($feature_live_support == 'y') {
+if ($prefs['feature_live_support'] == 'y') {
 	include_once ('lib/live_support/lslib.php');
 
 	if ($lslib->get_operator_status($user) != 'offline') {
@@ -19,7 +19,7 @@ if ($feature_live_support == 'y') {
 	}
 }
 
-setcookie($user_cookie_site, '', -3600, $cookie_path, $cookie_domain);
+setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
 $userlib->delete_user_cookie($user,'cookie','');
 $userlib->user_logout($user);
 $logslib->add_log('login','logged out');		
@@ -29,11 +29,11 @@ session_destroy();
 
 /* change group home page or desactivate if no page is set */
 if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
-else $url = $tikiIndex;
+else $url = $prefs['tikiIndex'];
 
-if ($phpcas_enabled == 'y' and $auth_method == 'cas' and $user != 'admin') {
+if ($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas' and $user != 'admin') {
 	require_once('phpcas/source/CAS/CAS.php');
-	phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+	phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
 	phpCAS::logout();
 }
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.74 2007-08-28 14:51:50 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75 2007-10-12 07:55:39 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -268,7 +268,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function set_item($user, $calitemId, $data, $customs=array()) {
-		global $user;
+		global $user, $prefs;
 		if (!isset($data['calendarId'])) {
 			return false;
 		}
@@ -411,8 +411,7 @@ class CalendarLib extends TikiLib {
 			}
 		}
 
-		global $feature_user_watches;
-		if ($feature_user_watches == 'y') {
+		if ($prefs['feature_user_watches'] == 'y') {
 			$this->watch($calitemId, $data);
 		}
 
@@ -420,7 +419,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function watch($calitemId, $data) {
-		global $tikilib, $smarty;
+		global $tikilib, $smarty, $prefs;
 		if ($nots = $tikilib->get_event_watches('calendar_changed', $data['calendarId'])) {
 			include_once('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
@@ -431,7 +430,7 @@ class CalendarLib extends TikiLib {
 			$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
 			$machine = preg_replace("!/$!", "", $machine); // just incase
  			$smarty->assign('mail_machine', $machine);
-			$defaultLanguage = $tikilib->get_preference('language', "en");
+			$defaultLanguage = $prefs['site_language'];
 			foreach ($nots as $not) {
 				$mail->setUser($not['user']);
 				$mail_data = $smarty->fetchLang($defaultLanguage, "mail/user_watch_calendar_subject.tpl");

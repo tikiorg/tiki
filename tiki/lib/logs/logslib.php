@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.52 2007-08-08 20:21:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.53 2007-10-12 07:55:41 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -99,12 +99,12 @@ class LogsLib extends TikiLib {
 	 * TODO: merge $param and $contributions together into a hash and but everything in actionlog_params
 	*/
 	function add_action($action, $object, $objectType='wiki page', $param='', $who='', $ip='', $client='', $date='', $contributions='', $hash='') {
-		global $user, $feature_categories;
+		global $user, $prefs;
 		if ($objectType == 'wiki page' && $action != 'Viewed')
 			$logObject = true; // to have the tiki_my_edit, history and mod-last_modif_pages
 		else
 			$logObject = $this->action_must_be_logged($action, $objectType);
-		$logCateg = $feature_categories == 'y'? $this->action_must_be_logged('*', 'category'): false;
+		$logCateg = $prefs['feature_categories'] == 'y'? $this->action_must_be_logged('*', 'category'): false;
 		if (!$logObject && !$logCateg)
 			return 0;
 		if ($date == '')
@@ -164,8 +164,8 @@ class LogsLib extends TikiLib {
 		return  $actions[0];
 	}
 	function action_must_be_logged($action, $objectType) {
-		global $feature_actionlog;
-		if ($feature_actionlog != 'y')
+		global $prefs;
+		if ($prefs['feature_actionlog'] != 'y')
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
 		$logActions = $this->get_all_actionlog_conf();
 		foreach ($logActions as $conf) {
@@ -175,8 +175,8 @@ class LogsLib extends TikiLib {
 		return false;
 	}
 	function action_is_viewed($action, $objectType) {
-		global $feature_actionlog;
-		if ($feature_actionlog != 'y')
+		global $prefs;
+		if ($prefs['feature_actionlog'] != 'y')
 			return true; // for previous compatibility - the new action are added with a if ($feature..)
 		$logActions = $this->get_all_actionlog_conf();
 		foreach ($logActions as $conf) {
@@ -216,8 +216,8 @@ class LogsLib extends TikiLib {
 		return split('_', str_replace('0', ' ', $conf));
 	}
 	function list_actions($action='', $objectType='',$user='',$offset=0,$maxRecords=-1,$sort_mode='lastModif_desc',$find='',$start=0,$end=0, $categId='') {
-		global $feature_contribution, $feature_contributor_wiki, $section, $tikilib;
-		global $contributionlib;include_once('lib/contribution/contributionlib.php');
+		global $prefs, $section, $tikilib, $contributionlib;
+		include_once('lib/contribution/contributionlib.php');
 
 		$bindvars = array();
 		$bindvarsU = array();
@@ -294,7 +294,7 @@ class LogsLib extends TikiLib {
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			if ($this->action_is_viewed($res['action'], $res['objectType'])) {
-				if ($feature_contribution == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
+				if ($prefs['feature_contribution'] == 'y' && ($res['action'] == 'Created' || $res['action'] == 'Updated' || $res['action'] == 'Posted' || $res['action'] == 'Replied')) {
 					if  ($res['objectType'] == 'wiki page') {
 						$res['contributions'] = $this->get_action_contributions($res['actionId']);
 					} elseif ($id = $this->get_comment_action($res)) {
@@ -303,7 +303,7 @@ class LogsLib extends TikiLib {
 						$res['contributions'] = $contributionlib->get_assigned_contributions($res['object'], $res['objectType']); // todo: do a left join
 					}
 				}
-				if ($feature_contributor_wiki == 'y' && $res['objectType'] == 'wiki page') {
+				if ($prefs['feature_contributor_wiki'] == 'y' && $res['objectType'] == 'wiki page') {
 					$res['contributors'] = $this->get_contributors($res['actionId']);
 					$res['nbContributors'] = 1 + sizeof($res['contributors']);
 				}
@@ -879,8 +879,8 @@ class LogsLib extends TikiLib {
 		return $contributorActions;
 	}
 	function list_logsql($sort_mode='created_desc', $offset=0, $maxRecords=-1) {
-		global $log_sql;
-		if ($log_sql != 'y')
+		global $prefs;
+		if ($prefs['log_sql'] != 'y')
 			return null;
 		$query = 'select * from `adodb_logsql` order by '.$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, array(), $maxRecords, $offset);
@@ -919,9 +919,9 @@ class LogsLib extends TikiLib {
 		$jpgraph->Add( $gbplot);
 	}
 	function insert_image($galleryId, $graph, $ext, $title, $period) {
-		global $tmpDir, $user;
+		global $prefs, $user;
 		global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-		$filename = $tmpDir.md5(rand().time()).'.'.$ext;
+		$filename = $prefs['tmpDir'].md5(rand().time()).'.'.$ext;
 		$graph->Stroke($filename);
 		$info = getimagesize($filename);
 		$size = filesize($filename);

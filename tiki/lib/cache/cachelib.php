@@ -124,11 +124,10 @@ class Cachelib {
   }
 
   function cache_templates($path,$newlang) {
-	global $language;
-	global $smarty;
-	global $tikidomain;
-	$oldlang=$language;
-	$language=$newlang;
+	global $prefs, $smarty, $tikidomain;
+
+	$oldlang=$prefs['language'];
+	$prefs['language']=$newlang;
 	if (!$path or !is_dir($path)) return 0;
 	if ($dir = opendir($path)) {
 		while (false !== ($file = readdir($dir))) {
@@ -136,9 +135,9 @@ class Cachelib {
 			$ext=strtolower(end($a));
 			if (substr($file,0,1) == "." or $file == 'CVS') continue;
 			if (is_dir($path."/".$file)) {
-				$language=$oldlang;
+				$prefs['language']=$oldlang;
 				$this->cache_templates($path."/".$file,$newlang);
-				$language=$newlang;
+				$prefs['language']=$newlang;
 			} else {
 				if ($ext=="tpl") {
 					$file=substr($path."/".$file,10);
@@ -157,7 +156,7 @@ class Cachelib {
 		}
 		closedir($dir);
 	}
-	$language=$oldlang;
+	$prefs['language']=$oldlang;
   }
 
 }

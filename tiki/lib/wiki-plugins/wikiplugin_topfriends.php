@@ -4,13 +4,10 @@ function wikiplugin_topfriends_help() {
 }
 
 function wikiplugin_topfriends($data, $params) {
-	global $smarty;
-	global $feature_friends;
-	global $tiki_p_list_users;
-	global $tikilib;
+	global $smarty, $prefs, $tiki_p_list_users, $tikilib;
 	
 	/* Check we can be called */
-	if($feature_friends != 'y') {
+	if($prefs['feature_friends'] != 'y') {
 		return ' ';  
 	}
 	extract ($params);

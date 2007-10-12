@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.23 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.24 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/userprefs/scrambleEmail.php');
 
 
 $access->check_feature('feature_contact');
-if ($contact_anon != 'y') {
+if ($prefs['contact_anon'] != 'y') {
   $access->check_user($user);
 }
 
@@ -25,7 +25,7 @@ $email = scrambleEmail($email,'strtr');
 
 $smarty->assign('email', $email);
 
-if ($user == '' and $contact_anon == 'y') {
+if ($user == '' and $prefs['contact_anon'] == 'y') {
   $user = 'anonymous';
 	$smarty->assign('sent', 0);
 	if (isset($_REQUEST['send'])) {
@@ -39,15 +39,15 @@ if ($user == '' and $contact_anon == 'y') {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		$messulib->post_message($contact_user, $user, $_REQUEST['to'],
+		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-		$message = tra('Message sent to'). ':' . $contact_user . '<br />';
+		$message = tra('Message sent to'). ':' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);
 	}
 }
 
 
-if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
+if ($user and $prefs['feature_messages'] == 'y' and $tiki_p_messages == 'y') {
 	$smarty->assign('sent', 0);
 
 	if (isset($_REQUEST['send'])) {
@@ -65,8 +65,8 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 			die;
 		}
 
-		$message = tra('Message sent to'). ':' . $contact_user . '<br />';
-		$messulib->post_message($contact_user, $user, $_REQUEST['to'],
+		$message = tra('Message sent to'). ':' . $prefs['contact_user'] . '<br />';
+		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 
 		$smarty->assign('message', $message);

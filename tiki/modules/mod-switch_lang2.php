@@ -25,7 +25,7 @@ foreach($languages as $lingua) {
         // currently displayed language's entry has it's native/local name
         // in front of the brackets, not inside; get it from there
         // NativeName (code)
-        if($disp === $language) {
+        if($disp === $prefs['language']) {
             $tmp = explode (" ", $lingua["name"]);
             $disp = $tmp[0];
         }

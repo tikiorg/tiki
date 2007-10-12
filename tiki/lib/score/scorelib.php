@@ -31,6 +31,7 @@ class ScoreLib extends TikiLib {
 
 	// All event types, for administration
 	function get_all_events() {
+		global $prefs;
 
 		$query = "select * from `tiki_score`";
 		$result = $this->query($query,array());
@@ -48,8 +49,7 @@ class ScoreLib extends TikiLib {
 		    $show = true;
 		    foreach ($features as $feature) {
 			if (!empty($feature)) {
-			    global $$feature;
-			    if ($$feature != 'y') {
+			    if ($prefs[$feature] != 'y') {
 				$show = false;
 			    }
 			}

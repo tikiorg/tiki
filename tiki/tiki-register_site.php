@@ -11,7 +11,7 @@ $tmp2 = isset($_SERVER["PHP_SELF"]) ? $_SERVER["PHP_SELF"] : "";
 $url = $tmp1.dirname($tmp2);
 
 $info = Array();
-$info["name"] = $tikilib->get_preference( "siteTitle", "" );
+$info["name"] = $prefs['siteTitle'];
 $info["description"] = '';
 $info["url"] = $url;
 $info["country"] = 'None';

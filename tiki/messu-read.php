@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.25 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.26 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,8 +11,8 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 
 if (!$user) {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -22,9 +22,9 @@ if (!$user) {
 }
 }
 
-if ($feature_messages != 'y') {
-	if ($feature_redirect_on_error == 'y') {
-		header("location: $tikiIndex");
+if ($prefs['feature_messages'] != 'y') {
+	if ($prefs['feature_redirect_on_error'] == 'y') {
+		header('location: '.$prefs['tikiIndex']);
 		die;
 	} else {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
@@ -84,8 +84,8 @@ $msg = $messulib->get_message($user, $_REQUEST['msgId']);
 $smarty->assign('msg', $msg);
 
 // which quote format should tiki use?
-global $feature_use_quoteplugin;
-if ($feature_use_quoteplugin == 'y') {
+global $prefs;
+if ($prefs['feature_use_quoteplugin'] == 'y') {
 	$quote_format = 'fancy';
 } else {
 	$quote_format = 'simple';
@@ -96,7 +96,7 @@ if ($messulib->get_user_preference($user, 'mess_sendReadStatus', 'n') == 'y') {
 	// Mark the message as read in the senders sent box:
 	$messulib->flag_message($msg['user_from'], $_REQUEST['msgId'], 'isRead', 'y', 'sent');
 }
-if ($feature_actionlog == 'y') {
+if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', '', 'message');
 }

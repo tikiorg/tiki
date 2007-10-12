@@ -3,7 +3,7 @@
 
 require_once("tiki-setup.php");
 
-if ($feature_freetags != 'y') {
+if ($prefs['feature_freetags'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_freetags");
 
 	$smarty->display("error.tpl");
@@ -14,8 +14,7 @@ require_once('lib/cpaint/cpaint2.inc.php');
 require_once ('lib/freetag/freetaglib.php');
 
 function list_objects($tag, $type, $offset, $sort_mode = 'created_desc', $find='') {
-    global $freetaglib, $cp;
-    global $maxRecords;
+    global $freetaglib, $cp, $prefs;
 
     $objects = $freetaglib->get_objects_with_tag($tag, $type, '', $offset, $maxRecords, $sort_mode, $find);
 

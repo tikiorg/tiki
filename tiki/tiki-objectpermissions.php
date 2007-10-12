@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.24 2007-08-29 14:15:26 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ $perm = 'tiki_p_assign_perm_'.str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
 		$special_perm = 'y';
-	} else if ($wiki_creator_admin == 'y') {
+	} else if ($prefs['wiki_creator_admin'] == 'y') {
 		include_once ('lib/wiki/wikilib.php');
 		$creator = $wikilib->get_creator($_REQUEST['objectName']);
 		if ($creator && $user && ($creator == $user)) {
@@ -134,7 +134,7 @@ if ($tiki_p_admin_objects != 'y') {
 	$smarty->assign_by_ref('perms', $perms['data']);
 }
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 	// Get the permissions of the categories that this object belongs to,
 	$categ_perms = array();

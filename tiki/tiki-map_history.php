@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.5 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.6 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if(!isset($feature_maps) or $feature_maps != 'y') {
+if(!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
   $smarty->display("error.tpl");
   die;
@@ -30,17 +30,17 @@ if (isset($_REQUEST["mapfile"])) {
 	}
   $mapfile = $_REQUEST['mapfile'];
 } else {
-  $mapfile = $default_map;
+  $mapfile = $prefs['default_map'];
 }
 
-if (!isset($map_path) or !$map_path) {
+if (!isset($prefs['map_path']) or !$prefs['map_path']) {
 	$smarty->assign('msg', tra("Maps feature is not correctly setup : Maps path is missing."));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if (!is_dir($map_path)) {
-	$smarty->assign('msg', tra("Please create a directory named $map_path to hold your map files."));
+if (!is_dir($prefs['map_path'])) {
+	$smarty->assign('msg', tra('Please create a directory named '.$prefs['map_path'].' to hold your map files.'));
 	$smarty->display('error.tpl');
 	die;							
 }
@@ -58,7 +58,7 @@ $smarty->assign('mapfile', $mapfile);
 
 // Get mapfiles from the mapfiles directory
 $files = array();
-$h = opendir($map_path);
+$h = opendir($prefs['map_path']);
 
 while (($file = readdir($h)) !== false) {
 	if (preg_match('/\.map/i', $file)) {
@@ -76,14 +76,14 @@ for ($i=0;$i<count($files);$i++) {
  		$revision=intval(substr($suffix,1));
  		if ($revision!=0) {
 	 		$history[$j]["version"]=$revision;
-	 		$history[$j]["data"]=nl2br(file_get_contents($map_path.$files[$i]));
+	 		$history[$j]["data"]=nl2br(file_get_contents($prefs['map_path'].$files[$i]));
  			$j++;
  		}
  	}
 }
 
 $history[$j]["version"]=$j+1;
-$history[$j]["data"]=nl2br(file_get_contents($map_path.$mapfile));
+$history[$j]["data"]=nl2br(file_get_contents($prefs['map_path'].$mapfile));
 
 for ($i=0;$i<count($history);$i++) {
 	if (strpos($history[$i]["data"],"##TIKIMAPS HEADER: END##")!=FALSE) {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.42 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.43 2007-10-12 07:55:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('lib/tikilib.php');
 require_once ('lib/wiki/histlib.php');
 require_once ('lib/rss/rsslib.php'); 
 
-if ($rss_wiki != 'y') {
+if ($prefs['rss_wiki'] != 'y') {
 	$errmsg=tra("rss feed disabled");
 	require_once ('tiki-rss_error.php');
 }
@@ -40,12 +40,12 @@ if ($output["data"]=="EMPTY") {
 	}
 	$param = "previous";
 	
-	$tmp = $tikilib->get_preference('title_rss_'.$feed, '');
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $tikilib->get_preference('desc_rss_'.$feed, '');
-	if ($desc<>'') $desc = $tmp;
+        $tmp = $prefs['title_rss_'.$feed];
+        if ($tmp<>'') $title = $tmp;
+        $tmp = $prefs['desc_rss_'.$feed];
+        if ($desc<>'') $desc = $tmp;
 	
-	$changes = $tikilib -> list_pages(0, $max_rss_wiki, 'lastModif_desc');
+	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc');
 	$tmp = array();
 	foreach ($changes["data"] as $data) {
 		// get last 2 versions of the page and parse them

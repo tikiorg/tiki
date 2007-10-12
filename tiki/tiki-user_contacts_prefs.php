@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.6 2007-05-13 20:26:08 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_contacts_prefs.php,v 1.7 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (!$user) {
 	die;
 }
 
-if ($feature_contacts != 'y') {
+if ($prefs['feature_contacts'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_contacts");
 	$smarty->display("error.tpl");
 	die;

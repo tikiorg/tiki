@@ -18,12 +18,12 @@ class TikiAccessLib extends TikiLib {
 
     // check that the user is admin or has admin permissions
     function check_admin($user,$feature_name="") {
-        global $smarty, $tiki_p_admin, $feature_redirect_on_error, $tikiIndex;
+        global $smarty, $tiki_p_admin, $prefs;
         require_once ('tiki-setup.php');
         // first check that user is logged in
         $this->check_user($user);
         if (($user != 'admin') && ($tiki_p_admin != 'y')) {
-        	if ($feature_redirect_on_error != 'y') {
+        	if ($prefs['feature_redirect_on_error'] != 'y') {
             $msg = tra("You do not have permission to use this feature");
             if ($feature_name) {
                 $msg = $msg . ": " . $feature_name;
@@ -32,19 +32,19 @@ class TikiAccessLib extends TikiLib {
             $smarty->display("error.tpl");
             die;
         	} else {
-        		$this->redirect("$tikiIndex");
+        		$this->redirect(''.$prefs['tikiIndex']);
         		die;
         	}
         }
     }
 
     function check_user($user) {
-        global $smarty, $feature_usability, $feature_redirect_on_error, $tikiIndex;
+        global $smarty, $prefs;
         require_once ('tiki-setup.php');
         if (!$user) {
-        	if ($feature_redirect_on_error != 'y') {
+        	if ($prefs['feature_redirect_on_error'] != 'y') {
             $title = tra("You are not logged in");
-            if (isset( $feature_usability ) && $feature_usability == 'y' ) {
+            if (isset( $prefs['feature_usability'] ) && $prefs['feature_usability'] == 'y' ) {
                 $this->display_error('',$title,'402');
             } else {
                 $smarty->assign('msg', $title);
@@ -52,7 +52,7 @@ class TikiAccessLib extends TikiLib {
             }
             die;
         	} else {
-        		$this->redirect("$tikiIndex");
+        		$this->redirect(''.$prefs['tikiIndex']);
         		die;
         	}
         }
@@ -71,19 +71,18 @@ class TikiAccessLib extends TikiLib {
     }
 
     function check_feature($features, $feature_name="") {
-        global $smarty, $feature_redirect_on_error, $tikiIndex;
+        global $smarty, $prefs;
         require_once ('tiki-setup.php');
 	if ( ! is_array($features) ) { $features = array($features); }
         foreach ($features as $feature) {
-            global $$feature;
-            if ($$feature != 'y') {
-            	if ($feature_redirect_on_error != 'y') {
+            if ($prefs[$feature] != 'y') {
+            	if ($prefs['feature_redirect_on_error'] != 'y') {
                 if ($feature_name == '') { $feature_name = $feature; }
                 $smarty->assign('msg', tra("This feature is disabled").": ". $feature_name);
                 $smarty->display("error.tpl");
                 die;
             	} else {
-            		$this->redirect("$tikiIndex");
+            		$this->redirect(''.$prefs['tikiIndex']);
             		die;
             	}
             }
@@ -141,13 +140,13 @@ class TikiAccessLib extends TikiLib {
      * 
      */
     function check_script($scriptname, $page) {
-      global $smarty, $feature_usability, $feature_redirect_on_error, $tikiIndex;
+      global $smarty, $prefs;
       if (strpos($scriptname,$page) !== FALSE) {
-      	if ($feature_redirect_on_error == 'y') {
-      		$this->redirect("$tikiIndex");
+      	if ($prefs['feature_redirect_on_error'] == 'y') {
+      		$this->redirect(''.$prefs['tikiIndex']);
       		die;
       	} else {
-        if( !isset($feature_usability) || $feature_usability == 'n' ) {
+        if( !isset($prefs['feature_usability']) || $prefs['feature_usability'] == 'n' ) {
           $msg = tra("This script cannot be called directly");                
           $this->display_error($page, $msg);
         } else { 
@@ -189,24 +188,23 @@ class TikiAccessLib extends TikiLib {
     }
 
     function get_home_page($page='') {
-	global $useGroupHome, $wikiHomePage, $feature_best_language,
-                $tikilib, $use_best_language;
+	global $prefs, $tikilib, $use_best_language;
 
         if (!isset($page) || $page == '') {
-            if ($useGroupHome == 'y') {
+            if ($prefs['useGroupHome'] == 'y') {
                 $groupHome = $userlib->get_user_default_homepage($user);
                 if ($groupHome) {
                         $page = $groupHome;
                 } else {
-                        $page = $wikiHomePage;
+                        $page = $prefs['wikiHomePage'];
                 }
             } else {
-                $page = $wikiHomePage;
+                $page = $prefs['wikiHomePage'];
             }
-            if(!$tikilib->page_exists($wikiHomePage)) {
-                $tikilib->create_page($wikiHomePage,0,'',$this->now,'Tiki initialization');
+            if(!$tikilib->page_exists($prefs['wikiHomePage'])) {
+                $tikilib->create_page($prefs['wikiHomePage'],0,'',$this->now,'Tiki initialization');
             }
-            if ($feature_best_language == 'y') {
+            if ($prefs['feature_best_language'] == 'y') {
                 $use_best_language = true;
             }
         }
@@ -220,8 +218,8 @@ class TikiAccessLib extends TikiLib {
      * @param string an optional message to display
      */
     function redirect( $url='', $msg='' ) {
-        global $tikiIndex;
-        if( $url == '' ) $url = $tikiIndex;
+        global $prefs;
+        if( $url == '' ) $url = $prefs['tikiIndex'];
         if (trim( $msg )) {
                 if (strpos( $url, '?' )) {
                         $url .= '&msg=' . urlencode( $msg );

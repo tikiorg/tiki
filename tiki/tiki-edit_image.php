@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.21 2007-04-02 16:31:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.22 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ("lib/imagegals/imagegallib.php");
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("error.tpl");
@@ -81,7 +81,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 				}
 			}
 		}
-	} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 		$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $_REQUEST['galleryId']);
    		if ($perms_array) {
    			$is_categorized = TRUE;
@@ -135,14 +135,14 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	$error_msg = '';
 
 	// Avoid warnings
-	if ($feature_maps != 'y') {
+	if ($prefs['feature_maps'] != 'y') {
 	    $_REQUEST['lat'] = '';
 	    $_REQUEST['lon'] = '';
 	}
 
 	if (!empty($_FILES['userfile']) && !empty($_FILES['userfile']['name'])) {
-	  if ((!empty($gal_match_regex) && !preg_match("/$gal_match_regex/", $_FILES['userfile']['name'], $reqs))
-		  || (!empty($gal_nmatch_regex) && preg_match("/$gal_nmatch_regex/", $_FILES['userfile']['name'], $reqs))) {
+	  if ((!empty($prefs['gal_match_regex']) && !preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES['userfile']['name'], $reqs))
+		  || (!empty($prefs['gal_nmatch_regex']) && preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES['userfile']['name'], $reqs))) {
 			$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 			$smarty->display('error.tpl');
 			die;

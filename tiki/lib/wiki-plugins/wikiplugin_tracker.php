@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.83 2007-10-11 20:47:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.84 2007-10-12 07:55:49 nyloth Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -21,13 +21,13 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $feature_trackers, $feature_multilingual, $userTracker;
-	global $trklib; include_once('lib/trackers/trackerlib.php');
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib;
+	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
 	extract ($params,EXTR_SKIP);
 
-	if ($feature_trackers != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
 
@@ -40,7 +40,7 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($showdesc)) {
 		$showdesc = "n";
 	}
-	if (empty($trackerId) && !empty($view) && $view == 'user' && $userTracker == 'y') {
+	if (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') {
 		$utid = $userlib->get_usertrackerid($group);
 		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
 			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
@@ -206,16 +206,15 @@ function wikiplugin_tracker($data, $params) {
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($email)) {
-						global $sender_email;
 						$emailOptions = split("\|", $email);
 						if (is_numeric($emailOptions[0])) {
 							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
 						}
 						if (empty($emailOptions[0])) { // from
-							$emailOptions[0] = $sender_email;
+							$emailOptions[0] = $prefs['sender_email'];
 						}
 						if (empty($emailOptions[1])) { // to
-							$emailOptions[1][0] = $sender_email;
+							$emailOptions[1][0] = $prefs['sender_email'];
 						} else {
 							$emailOptions[1] = split(',', $emailOptions[1]);
 							foreach ($emailOptions[1] as $key=>$email) {

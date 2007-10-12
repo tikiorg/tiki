@@ -4,7 +4,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 
-if ($feature_workflow != 'y') {
+if ($prefs['feature_workflow'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_workflow");
 
 	$smarty->display("error.tpl");

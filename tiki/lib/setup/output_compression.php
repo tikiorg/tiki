@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/output_compression.php,v 1.1 2007-10-06 15:18:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/output_compression.php,v 1.2 2007-10-12 07:55:46 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -24,7 +24,7 @@ if ( ! empty($force_no_compression) && $force_no_compression ) {
 		$smarty->assign('gzip', 'Enabled');
 		$smarty->assign('gzip_handler', 'php');
 	// if not, check if tiki compression is enabled
-	} elseif ( $feature_obzip == 'y' ) {
+	} elseif ( $prefs['feature_obzip'] == 'y' ) {
 		// tiki compression is enabled, then let activate the handler
 		ob_start('ob_gzhandler');
 		$smarty->assign('gzip_handler', 'tiki');

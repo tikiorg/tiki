@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.26 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.27 2007-10-12 07:55:28 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,14 @@ include_once('lib/structures/structlib.php');
 
 include_once('lib/wiki/wikilib.php');
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
 	}
 }
 
-if ($feature_wiki != 'y') {
+if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("error.tpl");
@@ -30,8 +30,8 @@ if ($feature_wiki != 'y') {
 //print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 if (!isset($_SESSION["thedate"])) {
@@ -47,8 +47,8 @@ if (!isset($_REQUEST["page"])) {
 $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
-if (!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage, 0, '', $tikilib->now, 'Tiki initialization');
+if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
+	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
 require_once('tiki-pagesetup.php');
@@ -63,7 +63,7 @@ if (!$tikilib->page_exists($page)) {
 
 // Check to see if page is categorized
 $objId = urldecode($page);
-if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
+if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y' && !$object_has_perms) {
     // Check to see if page is categorized
     $perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
     if ($perms_array) {
@@ -84,7 +84,7 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	$smarty->display("error.tpl");
 	die;
     }
-} elseif ($feature_categories == 'y') {
+} elseif ($prefs['feature_categories'] == 'y') {
     $is_categorized = $categlib->is_categorized('wiki page',$objId);
 } else {
     $is_categorized = FALSE;
@@ -99,22 +99,14 @@ if ($tiki_p_view != 'y') {
 }
 
 // BreadCrumbNavigation here
-// Get the number of pages from the default or userPreferences
 // Remember to reverse the array when posting the array
-$anonpref = $tikilib->get_preference('userbreadCrumb', 4);
-
-if ($user) {
-	$userbreadCrumb = $tikilib->get_user_preference($user, 'userbreadCrumb', $anonpref);
-} else {
-	$userbreadCrumb = $anonpref;
-}
 
 if (!isset($_SESSION["breadCrumb"])) {
 	$_SESSION["breadCrumb"] = array();
 }
 
 if (!in_array($page, $_SESSION["breadCrumb"])) {
-	if (count($_SESSION["breadCrumb"]) > $userbreadCrumb) {
+	if (count($_SESSION["breadCrumb"]) > $prefs['userbreadCrumb']) {
 		array_shift($_SESSION["breadCrumb"]);
 	}
 
@@ -130,7 +122,7 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 //print_r($_SESSION["breadCrumb"]);
 
 // Now increment page hits since we are visiting this page
-if ($count_admin_pvs == 'y' || $user != 'admin') {
+if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
 }
 
@@ -140,7 +132,7 @@ $info = $tikilib->get_page_info($page);
 $smarty->assign('page_user', $info['user']);
 
 if (($tiki_p_admin_wiki == 'y')
-	|| ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_usrlock == 'y'))) {
+	|| ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))) {
 	if (isset($_REQUEST["action"])) {
 		check_ticket('index-p');
 		if ($_REQUEST["action"] == 'unlock') {
@@ -150,7 +142,7 @@ if (($tiki_p_admin_wiki == 'y')
 }
 
 // Save to notepad if user wants to
-if ($user && $feature_wiki_notepad == 'y' && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+if ($user && $prefs['feature_wiki_notepad'] == 'y' && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
 		check_ticket('index-p');
 	include_once('lib/notepad/notepadlib.php');
 
@@ -195,10 +187,10 @@ $preparsed = array();
 $noparsed = array();
 $tikilib->parse_first( $info["data"], $preparsed, $noparsed );
 
-if ($wiki_cache > 0) {
+if ($prefs['wiki_cache'] > 0) {
 	$cache_info = $wikilib->get_cache_info($page);
 
-	if ($cache_info['cache_timestamp'] + $wiki_cache > $tikilib->now) {
+	if ($cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $tikilib->now) {
 		$pdata = $cache_info['cache'];
 
 		$smarty->assign('cached_page', 'y');
@@ -270,7 +262,7 @@ if ($structlib->page_is_in_structure($page)) {
 }
 */
 
-if ($feature_theme_control == 'y') {
+if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'wiki page';
 
 	$cat_objid = $_REQUEST["page"];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.15 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.16 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,32 +17,32 @@ $map_error="";
 
 if (isset($_REQUEST["mapzone"]))
 {
-  $mapzone=$_REQUEST["mapzone"];
-  $tikilib->set_preference('mapzone',$mapzone);
+  $prefs['mapzone']=$_REQUEST["mapzone"];
+  $tikilib->set_preference('mapzone',$prefs['mapzone']);
 }
 
-if (!isset($mapzone))
+if (!isset($prefs['mapzone']))
 {
-	$mapzone=180;
+	$prefs['mapzone']=180;
 }
 
 $smarty->assign('checkboxes_mapzone', array(
             180 => '[-180 180]',
             360 => '[0 360]'));
-$smarty->assign('mapzone_id', $mapzone);     
+$smarty->assign('mapzone_id', $prefs['mapzone']);     
 
-$smarty->assign('map_path', $map_path);
-$smarty->assign('default_map', $default_map);
-$smarty->assign('map_help', $map_help);
-$smarty->assign('map_comments', $map_comments);
+$smarty->assign('map_path', $prefs['map_path']);
+$smarty->assign('default_map', $prefs['default_map']);
+$smarty->assign('map_help', $prefs['map_help']);
+$smarty->assign('map_comments', $prefs['map_comments']);
 
-if (isset($gdaltindex))
+if (isset($prefs['gdaltindex']))
 {
-	$smarty->assign('gdaltindex', $gdaltindex);
+	$smarty->assign('gdaltindex', $prefs['gdaltindex']);
 }
-if (isset($ogr2ogr))
+if (isset($prefs['ogr2ogr']))
 {
-	$smarty->assign('ogr2ogr', $ogr2ogr);
+	$smarty->assign('ogr2ogr', $prefs['ogr2ogr']);
 }
 
 if (isset($_REQUEST["mapuser"])) {
@@ -56,10 +56,6 @@ if ((isset($_REQUEST["map_path"])) && (isset($_REQUEST["default_map"]))
 	$tikilib->set_preference('default_map', $_REQUEST["default_map"]);
 	$tikilib->set_preference('map_help', $_REQUEST["map_help"]);
 	$tikilib->set_preference('map_comments', $_REQUEST["map_comments"]);
-	$smarty->assign('map_path', $_REQUEST["map_path"]);
-	$smarty->assign('default_map', $_REQUEST["default_map"]);
-	$smarty->assign('map_help', $_REQUEST["map_help"]);	
-	$smarty->assign('map_comments', $_REQUEST["map_comments"]);
 
 if (($_REQUEST["map_path"]=='') || ($_REQUEST["default_map"]=='')
      || ($_REQUEST["map_help"]=='') || ($_REQUEST["map_comments"]==''))  {

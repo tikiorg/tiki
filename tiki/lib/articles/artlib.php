@@ -48,19 +48,17 @@ class ArtLib extends TikiLib {
 			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"],  $data["topline"],  $data["subtitle"],  $data["linkto"],  $data["image_caption"],  
 			$data["lang"], $data["rating"], $data['isfloat']);
 		$this->remove_submission($subId);
-		global $feature_categories;
-		if ($feature_categories == 'y') {
+		global $prefs;
+		if ($prefs['feature_categories'] == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$categlib->approve_submission($subId, $articleId);
 		}
 	}
 
 	function add_article_hit($articleId) {
-		global $count_admin_pvs;
+		global $prefs, $user;
 
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
 			$query = "update `tiki_articles` set `nbreads`=`nbreads`+1 where `articleId`=?";
 
 			$result = $this->query($query,array($articleId));
@@ -92,10 +90,7 @@ class ArtLib extends TikiLib {
 	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, 
 	$imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
-		global $smarty, $tiki_p_autoapprove_submission;
-		global $tikilib;
-		global $dbTiki;
-		global $sender_email;
+		global $smarty, $tiki_p_autoapprove_submission, $tikilib, $dbTiki, $prefs;
 
       if ($expireDate < $publishDate) {
          $expireDate = $publishDate;
@@ -235,8 +230,8 @@ class ArtLib extends TikiLib {
 		    $query2 = "select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?";
 		    $articleId = $this->getOne($query2, array( (int) $this->now, $title, $hash ) );
 
-		    global $feature_score;
-		    if ($feature_score == 'y') {
+		    global $prefs;
+		    if ($prefs['feature_score'] == 'y') {
 				$this->score_event($user, 'article_new');
 		    }		    
 		    global $smarty, $tikilib;
@@ -280,8 +275,7 @@ class ArtLib extends TikiLib {
 	    }
 
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('articles', $articleId);
 		}

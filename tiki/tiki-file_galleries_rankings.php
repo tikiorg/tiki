@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rankings.php,v 1.15 2007-06-01 18:36:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rankings.php,v 1.16 2007-10-12 07:55:27 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,14 +11,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/rankings/ranklib.php');
 
-if ($feature_file_galleries != 'y') {
+if ($prefs['feature_file_galleries'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_file_galleries_rankings != 'y') {
+if ($prefs['feature_file_galleries_rankings'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries_rankings");
 
 	$smarty->display("error.tpl");

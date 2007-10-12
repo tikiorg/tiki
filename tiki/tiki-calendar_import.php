@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.4 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_import.php,v 1.5 2007-10-12 07:55:25 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,7 +11,7 @@
 require_once ('tiki-setup.php');
 require_once ('lib/calendar/calendarlib.php');
 
-if ($feature_calendar != 'y') {
+if ($prefs['feature_calendar'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
 	$smarty->display("error.tpl");
 	die;

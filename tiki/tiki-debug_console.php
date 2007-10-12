@@ -1,17 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.9 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.10 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.9 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.10 2007-10-12 07:55:25 nyloth Exp $
 //
 
-global $feature_debug_console;
-if ($feature_debug_console == 'y') {
+global $prefs;
+if ($prefs['feature_debug_console'] == 'y') {
 global $debugger;
 
 require_once ('lib/debug/debugger.php');

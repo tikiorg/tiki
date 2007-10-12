@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.40 2007-04-02 17:21:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.41 2007-10-12 07:55:32 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,20 +12,20 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
 include_once("lib/commentslib.php");
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once('lib/categories/categlib.php');
 }
 
 $commentslib = new Comments($dbTiki);
 
 /*
-if($feature_listPages != 'y') {
+if($prefs['feature_listPages'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;  
 }
 */
-if ($feature_articles != 'y') {
+if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
 	$smarty->display("error.tpl");
@@ -46,7 +46,7 @@ if (isset($_REQUEST["remove"])) {
 		die;
 	}
   $area = 'delarticle';
-  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$artlib->remove_article($_REQUEST["remove"]);
   } else {
@@ -124,8 +124,8 @@ if (!isset($_REQUEST['lang'])) {
 }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y', '', $categId, '', '', $_REQUEST['lang']);
-if ($feature_multilingual == 'y') {
+$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $pdate, $user, $type, $topic, 'y', '', $categId, '', '', $_REQUEST['lang']);
+if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
 }
@@ -142,20 +142,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
-$cant_pages = ceil($listpages["cant"] / $maxArticles);
+$cant_pages = ceil($listpages["cant"] / $prefs['maxArticles']);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxArticles));
-$smarty->assign('maxArticles', $maxArticles);
+$smarty->assign('actual_page', 1 + ($offset / $prefs['maxArticles']));
+$smarty->assign('maxArticles', $prefs['maxArticles']);
 
-if ($listpages["cant"] > ($offset + $maxArticles)) {
-	$smarty->assign('next_offset', $offset + $maxArticles);
+if ($listpages["cant"] > ($offset + $prefs['maxArticles'])) {
+	$smarty->assign('next_offset', $offset + $prefs['maxArticles']);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxArticles);
+	$smarty->assign('prev_offset', $offset - $prefs['maxArticles']);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

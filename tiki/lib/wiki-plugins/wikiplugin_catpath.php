@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.8 2007-03-02 19:49:06 luciash Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.9 2007-10-12 07:55:48 nyloth Exp $
  *
  * Tikiwiki CATPATH plugin.
  * 
@@ -17,18 +17,13 @@ function wikiplugin_catpath_help() {
 }
 
 function wikiplugin_catpath($data, $params) {
-	global $dbTiki;
-
-	global $smarty;
-	global $tikilib;
-	global $feature_categories;
-	global $categlib;
+	global $dbTiki, $smarty, $tikilib, $prefs, $categlib;
 
 	if (!is_object($categlib)) {
 		require_once ("lib/categories/categlib.php");
 	}
 
-	if ($feature_categories != 'y') {
+	if ($prefs['feature_categories'] != 'y') {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 

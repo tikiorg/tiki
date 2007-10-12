@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.230 2007-10-11 13:33:52 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231 2007-10-12 07:55:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -43,8 +43,8 @@ class TrackerLib extends TikiLib {
 	}
 
 	function add_item_attachment_hit($id) {
-		global $count_admin_pvs, $user;
-		if ($user != 'admin' || $count_admin_pvs == 'y' ) {
+		global $prefs, $user;
+		if ($user != 'admin' || $prefs['count_admin_pvs'] == 'y' ) {
 			$query = "update `tiki_tracker_item_attachments` set `downloads`=`downloads`+1 where `attId`=?";
 			$result = $this->query($query,array((int) $id));
 		}
@@ -161,9 +161,9 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_item_attachment($attId) {
-		global $t_use_dir;
+		global $prefs;
 		$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
-		if ($path) @unlink ($t_use_dir . $path);
+		if ($path) @unlink ($prefs['t_use_dir'] . $path);
 		$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
 		$result = $this->query($query,array((int) $attId));
 	}
@@ -174,18 +174,17 @@ class TrackerLib extends TikiLib {
 			$query = "update `tiki_tracker_item_attachments` set `comment`=?,`user`=?,`version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($comment, $user, $version, $longdesc, $attId));
 		} else {
-			global $t_use_dir;
+			global $prefs;
 			$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
-			if ($path) @unlink ($t_use_dir . $path);
+			if ($path) @unlink ($prefs['t_use_dir'] . $path);
 			$query = "update `tiki_tracker_item_attachments` set `filename`=?,`filesize`=?,`filetype`=?, `data`=?,`comment`=?,`user`=?,`path`=?, `version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($filename, $size, $type, $data, $comment, $user, $fhash, $version, $longdesc, (int)$attId));
 		}
 	}
 
 	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
-		global $smarty;
-		global $notificationlib; include_once ('lib/notifications/notificationlib.php');
-		global $sender_email;
+		global $smarty, $notificationlib, $prefs;
+		include_once ('lib/notifications/notificationlib.php');
 		$title = strip_tags($title);
 		$data = strip_tags($data, "<a>");
 
@@ -230,7 +229,7 @@ class TrackerLib extends TikiLib {
 			$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 			$mail->setText($mail_data);
-			$mail->setHeader("From", $sender_email);
+			$mail->setHeader("From", $prefs['sender_email']);
 			$mail->send($emails);
 		}
 
@@ -352,12 +351,12 @@ class TrackerLib extends TikiLib {
 
 	/* experimental shared */
 	function get_item_value($trackerId,$itemId,$fieldId) {
+		global $prefs;
 	        $res=""; 
 		$basequery = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
 		if ($this->is_multilingual($fieldId)=='y') {
-	        	global $language;
 	        	$query= "$basequery  and ttif.`lang`=?";
-			$res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId,(string)$language));
+			$res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId,(string)$prefs['language']));
 		}
 	       if (!isset($res) || $res=='' ){
 	            //Try normal query
@@ -421,14 +420,14 @@ class TrackerLib extends TikiLib {
         
         
 	function get_all_items($trackerId,$fieldId,$status='o') {
-		global $cachelib;
-		global $language;
+		global $cachelib, $prefs;
+
 		$sort_mode = "value_asc";
 		$cache = md5('trackerfield'.$fieldId.$status);
 		if ($this->is_multilingual($fieldId) == 'y') { 
 			global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
 			$multi_languages=$multilinguallib->getSystemLanguage();
-			$cache = md5('trackerfield'.$fieldId.$status.$language);
+			$cache = md5('trackerfield'.$fieldId.$status.$prefs['language']);
 		} else
 			unset($multi_languages);
                 
@@ -440,7 +439,7 @@ class TrackerLib extends TikiLib {
 			$mid.= " and (".implode('=? or ',array_fill(0,count($fieldIdArray),'ttif.`fieldId`'))."=?) ";
 			if ($this->is_multilingual($fieldId) == 'y'){
 				$mid.=" and ttif.`lang`=?";
-				$bindvars = array_merge($sts,$fieldIdArray,array((string)$language));
+				$bindvars = array_merge($sts,$fieldIdArray,array((string)$prefs['language']));
 			}else {
 				$bindvars = array_merge($sts,$fieldIdArray);
 			}
@@ -494,7 +493,7 @@ class TrackerLib extends TikiLib {
 	 * and the values are either filtervalue or exactvalue : each elt of the array is the filter of each elt of filterfield
 	 */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
-		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $feature_categories, $language;
+		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
 		$sort_tables = '';
@@ -554,7 +553,7 @@ class TrackerLib extends TikiLib {
 					$bindvars[] = $ff;
 				}
 					
-				if ( $filter['type'] == 'e' && $feature_categories == 'y' ) { //category
+				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' ) { //category
 		
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
@@ -629,7 +628,7 @@ class TrackerLib extends TikiLib {
 			$kx = '';
 
 			$itid = $res['itemId'];
-			$bindvars = array((string)$language, (int)$res['itemId']);
+			$bindvars = array((string)$prefs['language'], (int)$res['itemId']);
 
 			$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
 				.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
@@ -718,8 +717,7 @@ class TrackerLib extends TikiLib {
 							$fopt['options_array'][3]
 						);
 					} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
-						global $feature_multilingual;
-						if ( $feature_multilingual == 'y' ) {
+						if ( $prefs['feature_multilingual'] == 'y' ) {
 							foreach ( $fopt['options_array'] as $key => $l ) {
 								$fopt['options_array'][$key] = tra($l);
 							}
@@ -749,14 +747,8 @@ class TrackerLib extends TikiLib {
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
-		global $user;
-		global $smarty;
-		global $notificationlib; include_once ('lib/notifications/notificationlib.php');
-		global $sender_email;
-		global $cachelib;
-		global $categlib;
-		global $feature_categories;
-		global $tiki_p_admin_trackers;
+		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers;
+		include_once ('lib/notifications/notificationlib.php');
 
 		if ($itemId && $itemId!=0) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
@@ -778,7 +770,7 @@ class TrackerLib extends TikiLib {
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 
-		if ($feature_categories == 'y') {
+		if ($prefs['feature_categories'] == 'y') {
 			global $categlib; include_once('lib/categories/categlib.php');
 			$old_categs = $categlib->get_object_categories("tracker $trackerId", $itemId ? $itemId : $new_itemId);
 
@@ -864,23 +856,21 @@ class TrackerLib extends TikiLib {
 					} else if( $ins_fields["data"][$i]['value'] != '' ) {
 						$opts = split(',', $ins_fields['data'][$i]["options"]);
  						global $filegallib; 
-						global $MultimediaGalerie;
 						if(  $ins_fields["data"][$i]["options_array"][0] == '3' ||  $ins_fields["data"][$i]["options_array"][0] == '5' ) {// flv
 						$Mytype="video/x-flv";
 						}
 						else {	//MP3
 						$Mytype="audio/x-mp3";
 						}	
-						$fileGalId=$filegallib->insert_file($MultimediaGalerie,$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$Mytype , $user,"" , '', "system", time(), $lockedby=NULL) ; 
+						$fileGalId=$filegallib->insert_file($prefs['MultimediaGalerie'],$ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["file_name"] , $ins_fields["data"][$i]["file_name"] ,$ins_fields["data"][$i]["value"] ,$ins_fields["data"][$i]["file_size"] ,$Mytype , $user,"" , '', "system", time(), $lockedby=NULL) ; 
 						$ins_fields["data"][$i]['value']=$fileGalId;
 
  						if (!$fileGalId) {
 							$errors[] = tra('Upload was not successful. Duplicate file content ?'). ': ' . $name;
-// 						if (($fgal_use_db == 'n') || ($podCastGallery)) {
+// 						if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 // 							@unlink($savedir . $fhash);
 // 						}
-						global $URLAppend ;
-// 						if ( $URLAppend == "" ) { }
+// 						if ( $prefs['URLAppend'] == "" ) { }
 						$ins_fields["data"][$i]["value"]="$fileGalId";
 					
 					}
@@ -901,7 +891,7 @@ class TrackerLib extends TikiLib {
 				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false)
 					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId)) + 1;
 
-				if ($ins_fields["data"][$i]["type"] == 'e' && $feature_categories == 'y') {
+				if ($ins_fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') {
 				// category type
 
 					$my_categs = $categlib->get_child_categories($ins_fields['data'][$i]["options"]);
@@ -1091,7 +1081,7 @@ class TrackerLib extends TikiLib {
 					$mail = new TikiMail();
 					$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
 					$mail->setText($mail_data);
-					$mail->setHeader("From", $sender_email);
+					$mail->setHeader("From", $prefs['sender_email']);
 					$mail->send($emails);
 				} else {
 			    		// Use simple email
@@ -1177,8 +1167,7 @@ class TrackerLib extends TikiLib {
 		
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('tracker_items', $itemId);
 		}
@@ -1288,8 +1277,7 @@ class TrackerLib extends TikiLib {
 			$total++;
 		}
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' && is_array($need_reindex) ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && is_array($need_reindex) ) {
 			require_once('lib/search/refresh-functions.php');
 			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
 			unset($need_reindex);
@@ -1311,7 +1299,7 @@ class TrackerLib extends TikiLib {
 	// check the validity of each field values of a tracker item
 	// and the presence of mandatory fields
 	function check_field_values($ins_fields, $categorized_fields='') {
-		global $validateEmail;
+		global $prefs;
 		$mandatory_fields = array();
 		$erroneous_values = array();
         if (isset($ins_fields)&&isset($ins_fields['data']))        
@@ -1358,17 +1346,16 @@ class TrackerLib extends TikiLib {
 
 				// email
 				case 'm':
-					if(!validate_email($f['value'],$validateEmail)) {
+					if(!validate_email($f['value'],$prefs['validateEmail'])) {
 						$erroneous_values[] = $f;
 					}
 					break;
 				//multimedia
 				case 'M':
-				global $URLAppend;
 				if ( empty($f['options_array'][0]) 
 					||$f['options_array'][0] == '0' ) {
 					//MP3 link file in gallery expected 
-					  $file=$URLAppend.$f['value'];
+					  $file=$prefs['URLAppend'].$f['value'];
 					  list($rest1,$idfilegal)=split('=',$file);
 					  global $filegallib ; include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
@@ -1380,7 +1367,7 @@ class TrackerLib extends TikiLib {
 					}
 				elseif ($f['options_array'][0] == '1' ) {
 					// FLV link in gallery expected 
-					  $file=$URLAppend.$f['value'] ;
+					  $file=$prefs['URLAppend'].$f['value'] ;
 					  list($rest1,$idfilegal)=split('=',$file);
 					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
@@ -1392,7 +1379,7 @@ class TrackerLib extends TikiLib {
 					}
 				elseif ($f['options_array'][0] == '2' ) {
 					// FLV or MP3 link in gallery expected 
-					  $file=$URLAppend.$f['value'] ;
+					  $file=$prefs['URLAppend'].$f['value'] ;
 					  list($rest1,$idfilegal)=split('=',$file);
 					  global $filegallib ;include_once ('lib/filegals/filegallib.php');
 					  $info = $filegallib->get_file_info($idfilegal);
@@ -1478,7 +1465,7 @@ class TrackerLib extends TikiLib {
 
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true, $filter='') {
-		global $feature_multilingual, $language;
+		global $prefs;
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where `trackerId`=? and (`name` like ?)";
@@ -1507,10 +1494,10 @@ class TrackerLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res['options_array'] = split(',', $res['options']);
-			if ($tra_name && $feature_multilingual == 'y' && $language != 'en')
+			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
 				$res['name'] = tra($res['name']);
 			if ($res['type'] == 'd' || $res['type'] == 'D') { // drop down
-				if ($feature_multilingual == 'y') {
+				if ($prefs['feature_multilingual'] == 'y') {
 					foreach ($res['options_array'] as $key=>$l) {
 						$res['options_array'][$key] = tra($l);
 					}
@@ -1565,8 +1552,8 @@ class TrackerLib extends TikiLib {
 		}
 		$this->clear_tracker_cache($trackerId);
 
-		global $feature_search, $feature_search_fulltext, $search_refresh_index_mode;
-		if ( $feature_search == 'y' && $feature_search_fulltext != 'y' && $search_refresh_index_mode == 'normal' ) {
+		global $prefs;
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('trackers', $trackerId);
 		}
@@ -1939,10 +1926,10 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_isMain_value($trackerId, $itemId) {
-	
-	    global $language;
+	    global $prefs;
+
 	    $query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? and tif.`lang`=? ";
-		$result = $this->getOne($query, array( (int)$itemId, "y",$language));
+		$result = $this->getOne($query, array( (int)$itemId, "y", $prefs['language']));
 		if(isset($result) && $result!='')
 		  return $result;
 	
@@ -1986,8 +1973,8 @@ class TrackerLib extends TikiLib {
 	function is_multilingual($fieldId){
 	         if ($fieldId<1)
 	           return 'n';
-	         global $feature_multilingual;
-	         if ( $feature_multilingual !='y')
+	         global $prefs;
+	         if ( $prefs['feature_multilingual'] !='y')
 	           return 'n';
 	         $query = "select `isMultilingual` from `tiki_tracker_fields` where `fieldId`=?";
 	         $res=$this->getOne($query,(int)$fieldId);
@@ -2193,9 +2180,9 @@ class TrackerLib extends TikiLib {
 	}
 }
 
-global $dbTiki, $tikilib;
-//if(isset($trk_with_mirror_tables) && $trk_with_mirror_tables == 'y') {
-if($tikilib->get_preference('trk_with_mirror_tables') == 'y') {
+global $dbTiki, $tikilib, $prefs;
+
+if ( $prefs['trk_with_mirror_tables'] == 'y' ) {
 	include_once ("trkWithMirrorTablesLib.php");
 	$trklib = new TrkWithMirrorTablesLib($dbTiki);
 }

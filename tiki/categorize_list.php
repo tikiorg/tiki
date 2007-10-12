@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.29 2007-09-12 10:12:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,10 +13,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 require_once('tiki-setup.php');  
-global $feature_categories, $userlib;
+global $prefs, $userlib;
 
 $smarty->assign('mandatory_category', '-1');
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	global $categlib, $user; include_once ('lib/categories/categlib.php');
 	$smarty->assign('cat_categorize', 'n');
 
@@ -28,12 +28,12 @@ if ($feature_categories == 'y') {
 	if ($cat_type == 'wiki page' || $cat_type == 'blog' || $cat_type == 'image gallery' || $cat_type == 'mypage') {
 		$ext = ($cat_type == 'wiki page')? 'wiki':str_replace(' ', '_', $cat_type);
 		$pref = 'feature_'.$ext.'_mandatory_category';
-		global $$pref;
-		if ($$pref > 0)
-			$all_categories = $categlib->list_categs($$pref);
-		else
+		if ($prefs[$pref] > 0) {
+			$all_categories = $categlib->list_categs($prefs[$pref]);
+		} else {
 			$all_categories = $categlib->list_categs();
-		$smarty->assign('mandatory_category', $$pref);
+		}
+		$smarty->assign('mandatory_category', $prefs[$pref]);
 	} else
 		$all_categories = $categlib->list_categs();
 	$categories = array();

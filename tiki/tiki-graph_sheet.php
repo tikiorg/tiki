@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.9 2007-03-06 19:29:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.10 2007-10-12 07:55:27 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -31,7 +31,7 @@ function handle_series( $serie, &$sheet )
 // Various validations {{{1
 
 // Now check permissions to access this page
-if ($feature_sheet != 'y') {
+if ($prefs['feature_sheet'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets, feature_charts");
 
 	$smarty->display("error.tpl");

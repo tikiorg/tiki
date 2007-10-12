@@ -1,13 +1,13 @@
 <?php
-// CVS: $Id: ajaxlib.php,v 1.3 2006-07-30 15:14:36 lfagundes Exp $
+// CVS: $Id: ajaxlib.php,v 1.4 2007-10-12 07:55:39 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-global $feature_ajax;
-if ($feature_ajax == 'y') {
+global $prefs;
+if ($prefs['feature_ajax'] == 'y') {
     require_once("lib/ajax/xajax.inc.php");
 
     class TikiAjax extends xajax {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_userfile.php,v 1.11 2007-10-07 16:28:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_userfile.php,v 1.12 2007-10-12 07:55:26 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ header ("Content-type: $type");
 header ("Content-Disposition: inline; filename=\"$file\"");
 
 if ($info["path"]) {
-	readfile ($uf_use_dir . $info["path"]);
+	readfile ($prefs['uf_use_dir'] . $info["path"]);
 } else {
 	echo "$content";
 }

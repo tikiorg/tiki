@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.16 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.17 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
-//if($feature_wiki != 'y') {
+//if($prefs['feature_wiki'] != 'y') {
 //  die;
 //}
 
@@ -22,9 +22,7 @@ if ($tiki_p_view != 'y') {
 }
 
 //feature
-$feature_wiki_pdf = $tikilib->get_preference('feature_wiki_pdf', 'n');
-
-if ($feature_wiki_pdf != 'y') {
+if ($prefs['feature_wiki_pdf'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_pdf");
 	$smarty->display("error.tpl");
 	die;

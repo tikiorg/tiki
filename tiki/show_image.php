@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.33 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.34 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ include_once ("lib/imagegals/imagegallib.php");
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
 // you have to check if the user has permission to see this gallery
-if ($feature_galleries != 'y') {
+if ($prefs['feature_galleries'] != 'y') {
    header("HTTP/1.0 404 Not Found");
 	die;
 }
@@ -51,7 +51,7 @@ if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
 			}
 		}
 	}
-} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
@@ -142,7 +142,7 @@ header ("Etag: ".$imagegallib->etag);
 
 header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
 //if($data["path"]) {
-//  readfile($gal_use_dir.$data["path"].$ter);
+//  readfile($prefs['gal_use_dir'].$data["path"].$ter);
 //} else {
 echo $imagegallib->image;
 //}

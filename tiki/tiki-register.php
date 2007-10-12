@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.90 2007-09-09 16:10:30 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91 2007-10-12 07:55:32 nyloth Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-09-09 16:10:30 $
+ * @date last-modified: $Date: 2007-10-12 07:55:32 $
  */
 
 // Initialization
@@ -18,7 +18,7 @@ include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 
 // Permission: needs p_register and not to be a slave
-if ($allowRegister != 'y' || ($feature_intertiki == 'y' && !empty($feature_intertiki_mymaster))) {
+if ($prefs['allowRegister'] != 'y' || ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']))) {
   header("location: index.php");
   die;
 }
@@ -71,7 +71,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
     die;
   }
   
-  if($rnd_num_reg == 'y') {
+  if($prefs['rnd_num_reg'] == 'y') {
   	if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode']) {
     $smarty->assign('msg',tra("Wrong registration code"));
     $smarty->display("error.tpl");
@@ -99,7 +99,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
     die; 	
   }
 
-  if($lowercase_username == 'y') {
+  if($prefs['lowercase_username'] == 'y') {
     if(ereg("[[:upper:]]", $_REQUEST["name"])) {
       $smarty->assign('msg',tra("Username cannot contain uppercase letters"));
       $smarty->display("error.tpl");
@@ -108,27 +108,27 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
   }
 
   //FALTA DEFINIR VALORES PADRÕES PARA AS DUAS VARIÁVEIS!!!
-  if(strlen($_REQUEST["name"])<$min_username_length) {
-    $smarty->assign('msg',tra("Username must be at least").' '.$min_username_length.' '.tra("characters long"));
+  if(strlen($_REQUEST["name"])<$prefs['min_username_length']) {
+    $smarty->assign('msg',tra("Username must be at least").' '.$prefs['min_username_length'].' '.tra("characters long"));
     $smarty->display("error.tpl");
     die; 	
   }
 
-  if(strlen($_REQUEST["name"])>$max_username_length) {
-    $smarty->assign('msg',tra("Username cannot contain more than").' '.$max_username_length.' '.tra("characters"));
+  if(strlen($_REQUEST["name"])>$prefs['max_username_length']) {
+    $smarty->assign('msg',tra("Username cannot contain more than").' '.$prefs['max_username_length'].' '.tra("characters"));
     $smarty->display("error.tpl");
     die; 	
   }
 
   //Validate password here
-  if(strlen($_REQUEST["pass"])<$min_pass_length && !isset($_SESSION['openid_url'])) {
-    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+  if(strlen($_REQUEST["pass"])<$prefs['min_pass_length'] && !isset($_SESSION['openid_url'])) {
+    $smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
     $smarty->display("error.tpl");
     die; 	
   }
   
   // Check this code
-  if(!isset($_SESSION['openid_url']) && $pass_chr_num == 'y') {
+  if(!isset($_SESSION['openid_url']) && $prefs['pass_chr_num'] == 'y') {
     if (!preg_match("/[0-9]/",$_REQUEST["pass"]) || !preg_match("/[A-Za-z]/",$_REQUEST["pass"])) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("error.tpl");
@@ -143,8 +143,8 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
   }
   
   // Check the mode
-  if($useRegisterPasscode == 'y') {
-    if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass())))) {
+  if($prefs['useRegisterPasscode'] == 'y') {
+    if($_REQUEST['passcode']!=$prefs['registerPasscoder']) {
       $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
       $smarty->display("error.tpl");
       die;
@@ -156,7 +156,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
       die;
     }	  
   
-	if ($login_is_email == 'y') {
+	if ($prefs['login_is_email'] == 'y') {
 		if (empty($_REQUEST['novalidation']) || $_REQUEST['novalidation'] != 'yes') {
 			$_POST['email'] = $_REQUEST['email'] = $_REQUEST['name'];
 		} else {
@@ -165,9 +165,9 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 	}
 
 	$email_valid = 'y';
-	if (!validate_email($_REQUEST["email"],$validateEmail)) {
+	if (!validate_email($_REQUEST["email"],$prefs['validateEmail'])) {
 		$email_valid = 'n';
-	} elseif ($userTracker == 'y') {
+	} elseif ($prefs['userTracker'] == 'y') {
 		$re = $userlib->get_group_info(isset($_REQUEST['chosenGroup'])? $_REQUEST['chosenGroup']: 'Registered');
 		if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 			include_once('lib/wiki-plugins/wikiplugin_tracker.php');
@@ -185,7 +185,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		} else {
 			$openid_url = '';
 		}
-		if($validateUsers == 'y' || (isset($validateRegistration) && $validateRegistration == 'y')) {
+		if($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
 			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
 			
@@ -206,34 +206,34 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		}
 
 		// save default user preferences
-		$tikilib->set_user_preference($_REQUEST["name"], 'theme', $tikilib->get_preference("style","tikineat.css"));
-		$tikilib->set_user_preference($_REQUEST["name"], 'userbreadCrumb', $tikilib->get_preference("users_prefs_userbreadCrumb",4));
-		$tikilib->set_user_preference($_REQUEST["name"], 'language',$tikilib->get_preference("langage","en-us"));
-		$tikilib->set_user_preference($_REQUEST["name"], 'display_timezone', $tikilib->get_preference("display_timezone","UTC"));
-		$tikilib->set_user_preference($_REQUEST["name"],'user_information',$tikilib->get_preference("users_prefs_user_information","private"));
-		$tikilib->set_user_preference($_REQUEST["name"], 'user_dbl',$tikilib->get_preference("users_prefs_user_dbl","on"));
-		$tikilib->set_user_preference($_REQUEST["name"], 'diff_versions',$tikilib->get_preference("users_prefs_diff_versions",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'show_mouseover_user_info',$tikilib->get_preference("users_prefs_show_mouseover_user_info",'y'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'email is public',$tikilib->get_preference("users_prefs_email_is_public ",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mailCharset', $tikilib->get_preference("users_prefs_mailCharset","utf-8"));
-		$tikilib->set_user_preference($_REQUEST["name"], 'realName', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'homePage', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'lat', floatval(0));
-		$tikilib->set_user_preference($_REQUEST["name"], 'lon', floatval(0));
-		$tikilib->set_user_preference($_REQUEST["name"], 'country', '');
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_maxRecords',$tikilib->get_preference("users_prefs_mess_maxRecords",10));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', $tikilib->get_preference("users_prefs_mess_archiveAfter",0));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', $tikilib->get_preference("users_prefs_mess_sendReadStatus",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio',$tikilib->get_preference("users_prefs_minPrio",6));
-		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', $tikilib->get_preference("users_prefs_allowMsgs",'y'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', $tikilib->get_preference("users_prefs_mytiki_pages",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs',$tikilib->get_preference("users_prefs_mytiki_blogs", 'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', $tikilib->get_preference("users_prefs_mytiki_gals",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_msgs', $tikilib->get_preference("users_prefs_mytiki_msgs",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_tasks', $tikilib->get_preference("users_prefs_mytiki_tasks",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_items', $tikilib->get_preference("users_prefs_mytiki_items",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', $tikilib->get_preference("users_prefs_mytiki_workflow",'n'));
-		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', $tikilib->get_preference("users_prefs_tasks_maxRecords",10));
+		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'language', $prefs['language']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'display_timezone', $prefs['display_timezone']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'user_information', $prefs['users_prefs_user_information']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'user_dbl', $prefs['users_prefs_user_dbl']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'diff_versions', $prefs['users_prefs_diff_versions']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'show_mouseover_user_info', $prefs['users_prefs_show_mouseover_user_info']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'email is public', $prefs['users_prefs_email_is_public']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mailCharset', $prefs['users_prefs_mailCharset']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'realName', '');
+		$tikilib->set_user_preference($_REQUEST['name'], 'homePage', '');
+		$tikilib->set_user_preference($_REQUEST['name'], 'lat', floatval(0));
+		$tikilib->set_user_preference($_REQUEST['name'], 'lon', floatval(0));
+		$tikilib->set_user_preference($_REQUEST['name'], 'country', '');
+		$tikilib->set_user_preference($_REQUEST['name'], 'mess_maxRecords',$prefs['users_prefs_mess_maxRecords']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mess_archiveAfter', $prefs['users_prefs_mess_archiveAfter']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mess_sendReadStatus', $prefs['users_prefs_mess_sendReadStatus']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'minPrio',$prefs['users_prefs_minPrio']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_blogs',$prefs['users_prefs_mytiki_blogs']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_items', $prefs['users_prefs_mytiki_items']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_workflow', $prefs['users_prefs_mytiki_workflow']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
 
 		// Custom fields
 		foreach ($customfields as $custpref=>$prefvalue ) {
@@ -260,16 +260,16 @@ ask_ticket('register');
 
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 
-$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $min_user_length, "0-9,a-z,A-Z") );
-$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $min_pass_length, "0-9,a-z,A-Z") );
-$smarty->assign('min_user_length', $min_user_length);
-$smarty->assign('min_pass_length', $min_pass_length);
+$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $prefs['min_user_length'], "0-9,a-z,A-Z") );
+$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $prefs['min_pass_length'], "0-9,a-z,A-Z") );
+$smarty->assign('min_user_length', $prefs['min_user_length']);
+$smarty->assign('min_pass_length', $prefs['min_pass_length']);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // xajax
-if ($feature_ajax == 'y') {
+if ($prefs['feature_ajax'] == 'y') {
     require_once("lib/ajax/ajaxlib.php");
     $ajaxlib->setRequestURI('tiki-register_ajax.php');
     $ajaxlib->registerFunction('AJAXCheckUserName');

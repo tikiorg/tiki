@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-cms_rankings.php,v 1.16 2007-03-06 19:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-cms_rankings.php,v 1.17 2007-10-12 07:55:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/rankings/ranklib.php');
 
-if ($feature_articles != 'y') {
+if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($feature_cms_rankings != 'y') {
+if ($prefs['feature_cms_rankings'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_cms_rankings");
 
 	$smarty->display("error.tpl");

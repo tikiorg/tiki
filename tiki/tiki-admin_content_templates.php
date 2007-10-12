@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.20 2007-05-07 10:13:59 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.21 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,7 +78,7 @@ $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delcontenttemplate';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$templateslib->remove_template($_REQUEST["remove"]);
 	} else {
@@ -88,7 +88,7 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["removesection"])) {
 	$area = 'delcontenttemplatefromsection';
-	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$templateslib->remove_template_from_section($_REQUEST["rtemplateId"], $_REQUEST["removesection"]);
 	} else {

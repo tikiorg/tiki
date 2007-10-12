@@ -2,7 +2,6 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/messu/messulib.php');
-global $language;
 
 if(!$user) {
   $smarty->assign('msg', tra("You must be logged in to use this feature"));
@@ -10,7 +9,7 @@ if(!$user) {
   die;
 }
 
-if($feature_friends != 'y') {
+if($prefs['feature_friends'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("error.tpl");
   die;
@@ -23,7 +22,7 @@ if (isset($_REQUEST['request_friendship'])) {
     if ($userlib->user_exists($friend)) {
 	if (!$tikilib->verify_friendship($friend,$user)) {
 	    $userlib->request_friendship($user,$friend);
-	    $lg = $tikilib->get_user_preference($friend, "language", $language);
+	    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
 	    $smarty->assign('msg',sprintf(tra("Friendship request sent to %s"), $friend));
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = $tikilib->httpPrefix(). $foo["path"];
@@ -47,7 +46,7 @@ if (isset($_REQUEST['request_friendship'])) {
 } elseif (isset($_REQUEST['accept'])) {
     $friend = $_REQUEST['accept'];
     $userlib->accept_friendship($user,$friend);
-    $lg = $tikilib->get_user_preference($friend, "language", $language);
+    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
     $smarty->assign('msg', sprintf(tra('Accepted friendship request from %s'),$friend));
 
     $messulib->post_message($friend, $user, $friend, '',
@@ -59,7 +58,7 @@ if (isset($_REQUEST['request_friendship'])) {
 } elseif (isset($_REQUEST['refuse'])) {
     $friend = $_REQUEST['refuse'];
     $userlib->refuse_friendship($user, $friend);
-    $lg = $tikilib->get_user_preference($friend, "language", $language);
+    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
     $smarty->assign('msg', sprintf(tra('Refused friendship request from %s'),$friend));
 
     // Should we send a message, or that would intimidate refusing friendships?
@@ -73,7 +72,7 @@ if (isset($_REQUEST['request_friendship'])) {
 } elseif (isset($_REQUEST['break'])) { 
     $friend = $_REQUEST['break'];
     $userlib->break_friendship($user, $friend);
-    $lg = $tikilib->get_user_preference($friend, "language", $language);
+    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
     $smarty->assign('msg', sprintf(tra('Broke friendship with %s'),$friend));
     
     // Should we send a message, or that would intimidate user?
@@ -86,7 +85,7 @@ if (isset($_REQUEST['request_friendship'])) {
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = $user_list_order;
+  $sort_mode = $prefs['user_list_order'];
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 

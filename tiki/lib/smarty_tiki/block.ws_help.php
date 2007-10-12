@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 function smarty_block_ws_help($params, $content, &$smarty) {
-	global $user_flip_modules;
+	global $prefs;
 	extract($params);
 	if (!isset($content))   return "error";
 

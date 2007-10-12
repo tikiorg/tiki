@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.8 2007-10-02 18:14:38 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.9 2007-10-12 07:55:29 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -30,7 +30,7 @@ require_once "Auth/OpenID/FileStore.php";
  */
 require_once "Auth/OpenID/SReg.php";
 
-if ($auth_method != 'openid') {
+if ($prefs['auth_method'] != 'openid') {
 	$smarty->assign('msg', tra("Authentication method is not OpenID"));
 
 	$smarty->display("error.tpl");
@@ -42,7 +42,7 @@ function setupFromAddress() // {{{
 	global $url_scheme, $url_host, $url_port, $base_url;
 	// Remember where the page was requested from (from tiki-login.php)
 	if ( ! isset($_SESSION['loginfrom']) ) {
-		$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $tikiIndex );
+		$_SESSION['loginfrom'] = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $prefs['tikiIndex'] );
 		if ( ! ereg('^http', $_SESSION['loginfrom']) ) {
 			if ( $_SESSION['loginfrom']{0} == '/' ) $_SESSION['loginfrom'] = $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'').$_SESSION['loginfrom'];
 			else $_SESSION['loginfrom'] = $base_url.$_SESSION['loginfrom'];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.7 2007-02-09 15:01:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.8 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,10 +54,8 @@ if (isset($_REQUEST["freetagsset3d"])) {
 	}
 	if (isset($_REQUEST["freetags_3d_adjust_camera"]) && $_REQUEST["freetags_3d_adjust_camera"] == "on") {
 	    $tikilib->set_preference("freetags_3d_adjust_camera", 'true');
-	    $smarty->assign("freetags_3d_adjust_camera", 'true');
 	} else {
 	    $tikilib->set_preference("freetags_3d_adjust_camera", 'false');
-	    $smarty->assign("freetags_3d_adjust_camera", 'false');
 	}
 }
 

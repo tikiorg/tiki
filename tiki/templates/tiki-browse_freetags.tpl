@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.31 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.32 2007-10-12 07:55:50 nyloth Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -25,20 +25,20 @@
       <param name="showArcaLogo" value="false">
       <param name="showMorcegoLogo" value="false">
 
-      <param name="loadPageOnCenter" value="{$freetags_3d_autoload|default:"true"}">
+      <param name="loadPageOnCenter" value="{$prefs.freetags_3d_autoload|default:"true"}">
       
-      <param name="cameraDistance" value="{$freetags_3d_camera_distance|default:"200"}">
-      <param name="adjustCameraPosition" value="{$freetags_3d_adjust_camera|default:"true"}">
+      <param name="cameraDistance" value="{$prefs.freetags_3d_camera_distance|default:"200"}">
+      <param name="adjustCameraPosition" value="{$prefs.freetags_3d_adjust_camera|default:"true"}">
 
-      <param name="fieldOfView" value="{$freetags_3d_fov|default:"250"}">
-      <param name="nodeSize" value="{$freetags_3d_node_size|default:"30"}">
-      <param name="textSize" value="{$freetags_3d_text_size|default:"40"}">
+      <param name="fieldOfView" value="{$prefs.freetags_3d_fov|default:"250"}">
+      <param name="nodeSize" value="{$prefs.freetags_3d_node_size|default:"30"}">
+      <param name="textSize" value="{$prefs.freetags_3d_text_size|default:"40"}">
 
-      <param name="frictionConstant" value="{$freetags_3d_friction_constant|default:"0.4f"}">
-      <param name="elasticConstant" value="{$freetags_3d_elastic_constant|default:"0.5f"}">
-      <param name="eletrostaticConstant" value="{$freetags_3d_eletrostatic_constant|default:"1000f"}">
-      <param name="springSize" value="{$freetags_3d_spring_size|default:"100"}">
-      <param name="nodeMass" value="{$freetags_3d_node_mass|default:"5"}">
+      <param name="frictionConstant" value="{$prefs.freetags_3d_friction_constant|default:"0.4f"}">
+      <param name="elasticConstant" value="{$prefs.freetags_3d_elastic_constant|default:"0.5f"}">
+      <param name="eletrostaticConstant" value="{$prefs.freetags_3d_eletrostatic_constant|default:"1000f"}">
+      <param name="springSize" value="{$prefs.freetags_3d_spring_size|default:"100"}">
+      <param name="nodeMass" value="{$prefs.freetags_3d_node_mass|default:"5"}">
       <param name="nodeCharge" value="{$freetags_3d_node_charde|default:"1"}">
 
 </applet>

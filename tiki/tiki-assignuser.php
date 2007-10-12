@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.23 2007-07-17 11:59:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.24 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if (isset($_REQUEST["action"])) {
 		}			
 	} elseif ($_REQUEST["action"] == 'removegroup') {
 		$area = 'deluserfromgroup';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			if ($tiki_p_admin == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
 				$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);

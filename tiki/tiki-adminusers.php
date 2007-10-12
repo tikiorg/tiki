@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.75 2007-10-05 16:06:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -164,7 +164,7 @@ if (isset($_REQUEST["newuser"])) {
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && $_REQUEST["user"] != 'admin') {
 		$area = 'deluser';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user($_REQUEST["user"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
@@ -174,7 +174,7 @@ if (isset($_REQUEST["newuser"])) {
 	}
 	if ($_REQUEST["action"] == 'removegroup') {
 		$area = 'deluserfromgroup';
-		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
@@ -189,15 +189,15 @@ if (isset($_REQUEST["newuser"])) {
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
 		$area = 'batchdeluser';
-		if ($feature_ticketlib2 == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			foreach ($_REQUEST["checked"] as $deleteuser) if ( $deleteuser != 'admin' ) {
 				$userlib->remove_user($deleteuser);
 				if ($_REQUEST['submit_mult'] == 'remove_users_with_page')
-					$tikilib->remove_all_versions($feature_wiki_userpage_prefix.$deleteuser);
+					$tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'].$deleteuser);
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
 			}
-		} elseif ( $feature_ticketlib2 == 'y') {
+		} elseif ( $prefs['feature_ticketlib2'] == 'y') {
 			$ch = "";
 			foreach ($_REQUEST['checked'] as $c) {
 				$ch .= "&amp;checked[]=".urlencode($c);
@@ -363,7 +363,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);
 
 	// If login is e-mail, email field needs to be the same as name (and is generally not send)
-	if ( $login_is_email == 'y' && isset($_POST['name']) ) $_POST['email'] = $_POST['name'];
+	if ( $prefs['login_is_email'] == 'y' && isset($_POST['name']) ) $_POST['email'] = $_POST['name'];
 
 	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
 		//var_dump($_POST);die;
@@ -383,12 +383,12 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			} 
-			if (strlen($_POST["pass"])<$min_pass_length) {
-				$smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+			if (strlen($_POST["pass"])<$prefs['min_pass_length']) {
+				$smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
 				$smarty->display("error.tpl");
 				die; 	
 			} 
-			if ($pass_chr_num == 'y') {
+			if ($prefs['pass_chr_num'] == 'y') {
 				if (!preg_match_all("/[0-9]+/",$_POST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_POST["pass"],$foo)) {
 					$smarty->assign('msg',tra("Password must contain both letters and numbers"));
 					$smarty->display("error.tpl");
@@ -424,7 +424,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		}
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 	}
-	if ($userTracker == 'y') {
+	if ($prefs['userTracker'] == 'y') {
 		$re = $userlib->get_usertracker($_REQUEST["user"]);
 		if ($re['usersTrackerId']) {
 			include_once('lib/trackers/trackerlib.php');

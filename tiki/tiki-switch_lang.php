@@ -7,7 +7,7 @@ if (isset($_GET['from']))
 elseif (isset($_SERVER['HTTP_REFERER']))
 	$orig_url = $_SERVER['HTTP_REFERER'];
 else
-	$orig_url = $tikiIndex;
+	$orig_url = $prefs['tikiIndex'];
 
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
 	global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
@@ -59,9 +59,9 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 $orig_url = preg_replace('/(.*\?.*)switchLang=[a-zA-Z-_]*&?(.*)/', '$1$2', $orig_url);
 $orig_url = preg_replace('/(.*[?&]lang=)[a-zA-Z-_]*(&?.*)/', '$1'.$_REQUEST['language'].'$2', $orig_url); // for tiki-view_lang.php?lang=en
 
-if(isset($_GET['language'])) {
+if ( isset($_GET['language']) ) {
 	$language = $_GET['language'];
-	if($feature_userPreferences == 'y' && $user && $change_language == 'y')  {
+	if ( $prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_language'] == 'y' )  {
 		$tikilib->set_user_preference($user, 'language', $language);
 	}
 	else

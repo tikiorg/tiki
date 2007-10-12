@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.23 2007-05-13 12:52:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,8 +59,8 @@ if (isset($_REQUEST["rmvorphimg"])) {
 
 if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
    check_ticket('admin-inc-gal');
-   if(($_REQUEST['mvimg']=='to_fs' && $gal_use_db=='n') ||
-      ($_REQUEST['mvimg']=='to_db' && $gal_use_db=='y')) {
+   if(($_REQUEST['mvimg']=='to_fs' && $prefs['gal_use_db']=='n') ||
+      ($_REQUEST['mvimg']=='to_db' && $prefs['gal_use_db']=='y')) {
 
      $mvresult=$imagegallib->move_gallery_store($_REQUEST['move_gallery'],$_REQUEST['mvimg']);
      $mvmsg=sprintf(tra('moved %d images, %d errors occured.'),$mvresult['moved_images'],$mvresult['errors']);
@@ -98,8 +98,8 @@ if (isset($_REQUEST["imagegalcomprefs"])) {
 
 if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
    check_ticket('admin-inc-gal');
-   if(($_REQUEST['mvimg']=='to_fs' && $gal_use_db=='n') ||
-      ($_REQUEST['mvimg']=='to_db' && $gal_use_db=='y')) {
+   if(($_REQUEST['mvimg']=='to_fs' && $prefs['gal_use_db']=='n') ||
+      ($_REQUEST['mvimg']=='to_db' && $prefs['gal_use_db']=='y')) {
 
      $mvresult=$imagegallib->move_gallery_store($_REQUEST['move_gallery'],$_REQUEST['mvimg']);
      $mvmsg=sprintf(tra('moved %d images, %d errors occured.'),$mvresult['moved_images'],$mvresult['errors']);
@@ -112,11 +112,11 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 
 
 
-	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $maxRowsGalleries;
-	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] =$rowImagesGalleries ;
-	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $thumbSizeXGalleries;
-	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $thumbSizeYGalleries;
-	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $scaleSizeGalleries;
+	if (!isset($_REQUEST['maxRows'])) $_REQUEST['maxRows'] = $prefs['maxRowsGalleries'];
+	if (!isset($_REQUEST['rowImages'])) $_REQUEST['rowImages'] =$prefs['rowImagesGalleries'] ;
+	if (!isset($_REQUEST['thumbSizeX'])) $_REQUEST['thumbSizeX'] = $prefs['thumbSizeXGalleries'];
+	if (!isset($_REQUEST['thumbSizeY'])) $_REQUEST['thumbSizeY'] = $prefs['thumbSizeYGalleries'];
+	if (!isset($_REQUEST['scaleSize'])) $_REQUEST['scaleSize'] = $prefs['scaleSizeGalleries'];
         
         $tikilib->set_preference("maxRowsGalleries",  $_REQUEST['maxRows']);
         $tikilib->set_preference("rowImagesGalleries",  $_REQUEST['rowImages']);
@@ -144,7 +144,7 @@ if($imagegallib->haveimagick) {
 $smarty->assign('gdlib',$gdlib);
 $smarty->assign('imagicklib',$imagicklib);
 
-if ($feature_categories == 'y') {
+if ($prefs['feature_categories'] == 'y') {
 	include_once('lib/categories/categlib.php');
 	$catree = $categlib->get_all_categories();
 	$smarty->assign('catree', $catree);
@@ -152,8 +152,6 @@ if ($feature_categories == 'y') {
 
 $galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-
-$smarty->assign("gal_match_regex", $tikilib->get_preference("gal_match_regex", ''));
 
 $smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.15 2007-07-15 14:16:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.16 2007-10-12 07:55:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 include_once ('lib/notepad/notepadlib.php');
 
-if ($feature_notepad != 'y') {
+if ($prefs['feature_notepad'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_notepad");
 	$smarty->display("error.tpl");
 	die;

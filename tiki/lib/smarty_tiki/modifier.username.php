@@ -7,9 +7,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_username($user, $login_fallback = true, $check_user_show_realnames = true) {
-	global $userlib, $user_show_realnames;
+	global $userlib, $prefs;
 
-	if ( $user_show_realnames == 'y' || ! $check_user_show_realnames ) {
+	if ( $prefs['user_show_realnames'] == 'y' || ! $check_user_show_realnames ) {
 		$details = $userlib->get_user_details($user);
 		$return = $details['info']['realName'];
 		unset($details);
