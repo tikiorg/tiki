@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.14 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.15 2007-10-12 18:28:28 nkoth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.14 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.15 2007-10-12 18:28:28 nkoth Exp $
 //
 
 // Initialization
@@ -83,12 +83,27 @@ if (isset($_REQUEST["user_only"]) && $_REQUEST["user_only"] == 'on') {
     $smarty->assign('user_only', 'off');
 }
 
-$smarty->assign('tag', $_REQUEST['tag']);
+if (isset($_REQUEST["broaden"]) && $_REQUEST["broaden"] == 'n' || isset($_REQUEST["stopbroaden"]) && $_REQUEST["stopbroaden"] == 'on') {
+	$broaden = 'n';
+} else {
+	$broaden = 'y';
+}
 
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $prefs['freetags_browse_amount_tags_in_cloud']);
+$smarty->assign('broaden', $broaden);
+
+$tagArray = preg_split('/\s*(,|\s)\s*/',trim($_REQUEST['tag']));
+$tagArray = array_unique($tagArray);
+$tagString = '';
+foreach ($tagArray as $t_ar) {
+	$tagString .= $t_ar . ' ';	
+}
+
+$smarty->assign('tagString', trim($tagString));
+$smarty->assign('tag', $tagArray[0]);
+
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $freetags_browse_amount_tags_in_cloud);
 $smarty->assign('most_popular_tags', $most_popular_tags);
-$sort_mode = 'created_desc';
-$objects = $freetaglib->get_objects_with_tag($_REQUEST['tag'], $type, $view_user, $offset, $maxRecords, $sort_mode, $find); //, $sort_mode);
+$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden); 
 
 $smarty->assign_by_ref('objects', $objects["data"]);
 $smarty->assign_by_ref('cantobjects', $objects["cant"]);

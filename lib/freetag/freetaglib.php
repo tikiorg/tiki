@@ -179,9 +179,18 @@ class FreetagLib extends ObjectLib {
      * @param int (Optional) - Restrict the result to objects tagged by a particular user.
      *
      * @return An array of Object ID numbers that reference your original objects.
+     *      
+     * 
+     * Notes by nkoth:
+     * 1. Updated because original version simply does not work right.
+     * 2. The reason why I am using two queries here is because I can't get one query to work
+     * properly to return the right count of number of objects returned with duplicated objects
+     * 3. If you can fix this with subquery that works as far back as MSSQL 4.1, may be worth
+     * doing. But my experience with subquery is that it may be slower anyway.     
+     * 
      */
     
-    function get_objects_with_tag_combo($tagArray, $user = '', $offset = 0, $maxRecords = -1) {
+function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '', $broaden = 'n') {
 	if (!isset($tagArray) || !is_array($tagArray)) {
 	    return false;
 	}
@@ -193,6 +202,8 @@ class FreetagLib extends ObjectLib {
 	
 	$bindvals = $tagArray;
 	
+	$numTags = count($tagArray);
+		
 	if (isset($user) && !empty($user)) {
 	    $mid = "AND `user` = ?";
 	    $bindvals[] = $user;
@@ -200,32 +211,94 @@ class FreetagLib extends ObjectLib {
 	    $mid = '';
 	}
 	
-	$tag_sql = "?";
-	$numTags = count($tagArray);
-	for ($i=1; $i<$numTags; $i++) { $tag_sql .= ",?"; }
+	$tag_sql = "t.`tag` IN (?";
+	for ($i=1; $i<$numTags; $i++) {
+		$tag_sql .= ",?";			 
+	}
+	$tag_sql .= ")";
+
+    if ($broaden == 'n') {
+		$bindvals_t = $bindvals;		
+		$mid_t = '';
+
+		if (isset($user) && !empty($user)) {
+	    	$mid_t = "AND `user` = ?";
+	    	$bindvals_t[] = $user;	
+		}	
 	
-	$bindvals[] = $numTags;
+		if (isset($type) && !empty($type)) {
+	    	$mid_t .= " AND `type` = ?";
+	    	$bindvals_t[] = $type;
+		}
+
+		if (isset($find) && !empty($find)) {
+			$findesc = '%' . $find . '%';
+			$mid_t .= " AND (o.`name` like ? OR o.`description` like ?)";
+			$bindvals_t = array_merge($bindvals_t, array($findesc, $findesc));
+		}
+    	
+		$bindvals_t[] = $numTags;		
+		
+		$query_t = "SELECT o.`objectId`, COUNT(DISTINCT t.`tag`) AS uniques ";			
+		$query_end_t = "
+			FROM `tiki_objects` o,
+                `tiki_freetagged_objects` fto, `tiki_freetags` t
+                WHERE $tag_sql
+				AND fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId`				
+				 $mid_t
+			GROUP BY o.`objectId`
+			HAVING uniques = ?
+			";
+		$query_t .= $query_end_t;
+		$result = $this->query($query_t, $bindvals_t, -1, 0);		
+		$ret = array();
+		while ($row = $result->fetchRow()) {
+	    	$ret[] = $row;
+		}
+		if ($numCats = count($ret)) {
+			$tag_sql .= " AND o.`objectId` IN (?";
+			$bindvals[] = $ret[0]["objectId"];			
+			for ($i=1; $i<$numCats; $i++) {
+				$tag_sql .= ",?";
+				$bindvals[] = $ret[$i]["objectId"];				
+			}			
+			$tag_sql .= ")";
+		} else {
+			return array('data' => array(),
+			 'cant' => 0);
+		}
+	} 
+	
+	$mid = '';
+
+	if (isset($user) && !empty($user)) {
+	    $mid = "AND `user` = ?";
+	    $bindvals[] = $user;	
+	}	
+	
+	if (isset($type) && !empty($type)) {
+	    $mid .= " AND `type` = ?";
+	    $bindvals[] = $type;
+	}
+
+	if (isset($find) && !empty($find)) {
+		$findesc = '%' . $find . '%';
+		$mid .= " AND (o.`name` like ? OR o.`description` like ?)";
+		$bindvals = array_merge($bindvals, array($findesc, $findesc));
+	}
 	
 	// We must adjust for duplicate normalized tags appearing multiple times in the join by 
 	// counting only the distinct tags. It should also work for an individual user.
 	
-	$query = "SELECT o.*, t.`tag`, COUNT(DISTINCT t.`tag`) AS uniques ";
-	$query_cant = "SELECT COUNT(*) ";
+	$query = "SELECT DISTINCT o.* ";
+	$query_cant = "SELECT COUNT(DISTINCT o.`objectId`) ";
 	
-	$query_end = "
-			FROM `tiki_objects` o,
-                             `tiki_freetagged_objects` fto,
-			     `tiki_freetags` t
-			WHERE t.`tag` IN ($tag_sql) AND
-                              fto.`tagId` = t.`tagId` AND
-                              fto.`objectId` = o.`objectId`                              
-                        $mid
-			GROUP BY o.`objectId`
-			HAVING uniques = ?
-			";
+	$query_end = "FROM `tiki_objects` o, `tiki_freetagged_objects` fto, `tiki_freetags` t 
+	WHERE fto.`tagId`=t.`tagId` AND o.`objectId` = fto.`objectId` AND $tag_sql $mid ORDER BY ". $this->convert_sortmode($sort_mode);
+	// note the original line was originally here to fix ambiguous 'created' column for default sort. Not a neat fix the o. prefix is ugly.	So changed default order instead.
 	
 	$query      .= $query_end;
-	$query_cant .= $query_end;
+	$query_cant .= $query_end;	
 	
 	$result = $this->query($query, $bindvals, $maxRecords, $offset);
 	
