@@ -996,6 +996,91 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    
 	return $ret;
     }
+    
+    /*
+     * nkoth: This function is for the More Like This module which find out what 
+     * similar objects there are based on the number of tags they have in common.
+     * Once you have enough tags, the results are quite good. It is very organic
+     * as tagging is human-technology.
+     */ 
+    
+	function get_similar( $type, $objectId, $maxResults = 10 ) {
+
+		$algorithm = $this->get_preference('morelikethis_algorithm', 'basic');
+
+		$maxResults = (int) $maxResults;
+		if( $maxResults <= 0 )
+			$maxResults = 10;
+			
+		switch( $algorithm )
+		{
+		case 'basic': // {{{
+			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
+
+			$query = "
+				SELECT
+					ob.itemId pageName, COUNT(DISTINCT fb.tagId) cnt
+				FROM
+					tiki_objects oa
+					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId
+					INNER JOIN tiki_freetagged_objects fb USING(tagId)
+					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
+				WHERE
+					oa.objectId <> ob.objectId
+					AND ob.type = '$type'
+					AND oa.type = ? AND oa.itemId = ?
+				GROUP BY
+					ob.itemId
+				HAVING
+					cnt >= $minCommon
+				ORDER BY
+					cnt DESC, RAND()
+				LIMIT $maxResults
+				";
+
+			$result = $this->query( $query, array( $type, $objectId ) );
+			$tags = array();
+			while( $row = $result->fetchRow() )
+				$tags[] = $row;
+
+			return $tags;
+		// }}}
+
+		case 'weighted': // {{{
+			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
+
+			$query = "
+				SELECT
+					ob.itemId pageName, COUNT(DISTINCT fc.objectId) sort_cnt, COUNT(DISTINCT fb.tagId) having_cnt
+				FROM
+					tiki_objects oa
+					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId
+					INNER JOIN tiki_freetagged_objects fb USING(tagId)
+					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
+					INNER JOIN tiki_freetagged_objects fc ON fb.tagId = fc.tagId
+				WHERE
+					oa.objectId <> ob.objectId
+					AND ob.type = '$type'
+					AND oa.type = ? AND oa.itemId = ?
+				GROUP BY
+					ob.itemId
+				HAVING
+					having_cnt >= $minCommon
+				ORDER BY
+					-- Sort based on the global popularity of all tags in common
+					sort_cnt DESC, RAND()
+				LIMIT $maxResults
+				";
+
+			$result = $this->query( $query, array( $type, $objectId ) );
+			$tags = array();
+			while( $row = $result->fetchRow() )
+				$tags[] = $row;
+
+			return $tags;
+		// }}}
+		}
+	}
 
 }
 
