@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.32 2007-10-12 07:55:42 nyloth Exp $
+// $Id: notificationemaillib.php,v 1.33 2007-10-12 12:42:41 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -148,9 +148,9 @@ function testEmailInList($nots, $email) {
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
-function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='') {
-	global $tikilib, $prefs, $smarty, $userlib, $notificationlib;
-	include_once('lib/notifications/notificationlib.php');
+function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='', $minor=false, $contributions='', $structure_parent_id=0) {
+	global $tikilib, $prefs, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor, $feature_contribution;
+	global $notificationlib; include_once('lib/notifications/notificationlib.php');
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
 
@@ -172,6 +172,10 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		foreach (array_keys($nots) as $i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}
+	}
+	if ($feature_user_watches == 'y' && $event == 'wiki_page_created' && $structure_parent_id) {
+		global $structlib; include_once('lib/structures/structlib.php');
+		$nots = $structlib->get_watches('', $structure_parent_id);
 	}
 
 	// admin notifications
@@ -462,6 +466,36 @@ function sendCategoryEmailNotification($values) {
                         $mail->send(array($not['email']));
                 }
         }        
+}
+function sendStructureEmailNotification($params) {
+	global $tikilib, $smarty;
+	global $structlib; include_once('lib/structures/structlib.php');
+	if ($params['action'] == 'move_up' || $params['action'] == 'move_down') {
+		$nots = $structlib->get_watches('', $params['parent_id'], false);
+	} else {
+		$nots = $structlib->get_watches('', $params['page_ref_id']);
+	}
+	if (!empty($nots)) {
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+		$smarty->assign_by_ref('mail_machine', $machine);
+	    include_once('lib/webmail/tikimaillib.php');
+        $mail = new TikiMail();
+		$smarty->assign_by_ref('action',$params['action']);
+		$smarty->assign_by_ref('page_ref_id', $params['page_ref_id']);
+		if (!empty($params['name'])) {
+			$smarty->assign('name', $params['name']);
+		}
+		foreach ($nots as $not) {
+			$mail_subject = $smarty->fetchLang($not['language'], 'mail/user_watch_structure_subject.tpl');
+			$mail_data = $smarty->fetchLang($not['language'], 'mail/user_watch_structure.tpl');
+			$mail->setSubject($mail_subject);
+			$mail->setText($mail_data);
+			echo "STRUCT2 $mail_subject $mail_data";
+			$mail->buildMessage();
+			$mail->send(array($not['email']));
+		}
+	}
 }
 
 ?>
