@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.35 2007-10-12 13:26:04 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.36 2007-10-12 13:55:55 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -494,7 +494,6 @@ function sendStructureEmailNotification($params) {
 			$mail_data = $smarty->fetchLang($not['language'], 'mail/user_watch_structure.tpl');
 			$mail->setSubject($mail_subject);
 			$mail->setText($mail_data);
-			echo "STRUCT2 $mail_subject $mail_data";print_r($not);
 			$mail->buildMessage();
 			$mail->send(array($not['email']));
 		}
