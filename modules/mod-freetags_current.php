@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $dbTiki;
 global $freetaglib;
-global $tiki_p_freetags_tag, $tiki_p_edit;
+global $tiki_p_freetags_tag, $tiki_p_edit, $tiki_p_view;
 
 if (!isset($freetaglib) or !is_object($freetaglib)) { include_once 'lib/freetag/freetaglib.php'; }
 
@@ -19,7 +19,7 @@ if( $tiki_p_edit == 'y' && $tiki_p_freetags_tag == 'y' && ! empty( $page ) && is
 	exit;
 }
 
-if( ! empty( $page ) )
+if( ! empty( $page ) && $tiki_p_view == 'y' )
 	$currenttags = $freetaglib->get_tags_on_object( $page, 'wiki page' );
 else
 	$currenttags = array();
