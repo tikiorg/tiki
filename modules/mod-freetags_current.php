@@ -8,11 +8,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $dbTiki;
 global $freetaglib;
-global $tiki_p_freetags_tag;
+global $tiki_p_freetags_tag, $tiki_p_edit;
 
 if (!isset($freetaglib) or !is_object($freetaglib)) { include_once 'lib/freetag/freetaglib.php'; }
 
-if( $tiki_p_freetags_tag == 'y' && ! empty( $page ) && isset( $_POST['mod_add_tags'] ) )
+if( $tiki_p_edit == 'y' && $tiki_p_freetags_tag == 'y' && ! empty( $page ) && isset( $_POST['mod_add_tags'] ) )
 {
 	$freetaglib->tag_object( $user, $page, 'wiki page', $_POST['tags'] );
 	header( "Location: {$_SERVER['REQUEST_URI']}" );
