@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.10 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.11 2007-10-12 23:49:52 nkoth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -426,6 +426,8 @@ if ( ! isset($_SESSION['prefs']) || $_SESSION['need_reload_prefs'] ) {
 	$_SESSION['prefs']['freetags_3d_feed_animation_interval'] = 500;
 	$_SESSION['prefs']['freetags_3d_existing_page_color'] = '#00CC55';
 	$_SESSION['prefs']['freetags_3d_missing_page_color'] = '#FF5555';
+	$_SESSION['prefs']['morelikethis_algorithm'] = 'basic';
+	$_SESSION['prefs']['morelikethis_basic_mincommon'] = '2';
 	
 	# search
 	$_SESSION['prefs']['feature_search_stats'] = 'n';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.8 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.9 2007-10-12 23:49:52 nkoth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,23 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 
 	simple_set_value('freetags_browse_amount_tags_in_cloud');
 }
-						
+
+if (isset($_REQUEST["cleanup"])) {
+	check_ticket('admin-inc-freetags');
+	global $freetaglib;
+	if (!is_object($freetaglib)) {
+		include_once('lib/freetag/freetaglib.php');
+	}			
+	$freetaglib->cleanup_tags();
+}
+
+if (isset($_REQUEST["morelikethisoptions"])) {
+	check_ticket('admin-inc-freetags');
+		
+	simple_set_value('morelikethis_algorithm');
+	simple_set_value('morelikethis_basic_mincommon');
+}
+
 if (isset($_REQUEST["freetagsset3d"])) {
 	check_ticket('admin-inc-freetags');
 	$pref_toggles = array(
