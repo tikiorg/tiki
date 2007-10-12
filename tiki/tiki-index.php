@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.197 2007-10-12 07:55:28 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198 2007-10-12 18:17:20 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -537,7 +537,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if ($tikilib->user_watches($user, 'wiki_page_changed', $page, 'wiki page')) {
 			$smarty->assign('user_watching_page', 'y');
 		}
-		if ($tikilib->user_watches($user, 'structure_changed', $page_info['page_ref_id'], 'structure')) {
+		if (isset($page_info) && $tikilib->user_watches($user, 'structure_changed', $page_info['page_ref_id'], 'structure')) {
 			$smarty->assign('user_watching_structure', 'y');
 		}
 	}
