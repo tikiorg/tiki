@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.6 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.7 2007-10-12 19:05:54 nkoth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,11 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_freetags_tag == 'y') {
 	include_once('lib/freetag/freetaglib.php');
     }
 
-    $tag_string = $_REQUEST['freetag_string'];
+	if (isset($_REQUEST['freetag_string'])) {    	    
+		$tag_string = $_REQUEST['freetag_string'];
+	} else {
+		$tag_string = '';
+	}    
     
     // Use same parameters passed to categorize.php, makes simpler implementation
     // and keep consistency
