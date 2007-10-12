@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/language.php,v 1.4 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/language.php,v 1.5 2007-10-12 08:29:02 sept_7 Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -16,7 +16,7 @@ if (!empty($_SESSION['language'])) {
 	$saveLanguage = $_SESSION['language']; // if register_globals is on variable and _SESSION are the same
 }
 
-if ( $prefs['feature_detect_language'] == 'y' ) {
+if ( $prefs['feature_detect_language'] == 'y' and !isset($u_info['prefs']['language'])) {
 	$browser_language = detect_browser_language();
 	if ( ! empty($browser_language) ) {
 		$prefs['language'] = $browser_language;
