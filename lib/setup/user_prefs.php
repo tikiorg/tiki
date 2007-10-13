@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.5 2007-10-12 14:26:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.6 2007-10-13 16:53:12 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -50,7 +50,9 @@ if ( $user ) {
 
 	// Copy some user prefs that doesn't have the same name as the related site pref
 	//   in order to symplify the overriding and the use 
-	$prefs['style'] = $prefs['theme'];
+	if ( isset($prefs['theme']) && $prefs['theme'] != '' ) {
+		$prefs['style'] = $prefs['theme'];
+	}
 
 } else {
 	$allowMsgs = 'n';
