@@ -10,9 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (isset($_REQUEST["style"])) {
+if (isset($_REQUEST["site_style"])) {
     check_ticket('admin-inc-general');
-    //byref_set_value("site_style", "style");
+    simple_set_value("site_style", "style");
 }
 
 if (isset($_REQUEST["themesetup"])) {
@@ -38,8 +38,6 @@ ask_ticket('admin-inc-theme');
         byref_set_value ($britem);
     }
     
-    // Set value(s) with alternate pref name
-//    byref_set_value("site_style", "style");
 }
 
 $llist = $tikilib->list_styles();
