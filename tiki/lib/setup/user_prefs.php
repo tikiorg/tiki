@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.6 2007-10-13 16:53:12 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.7 2007-10-13 21:49:44 fr_rodo Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -37,7 +37,7 @@ if ( $user ) {
 	$user_preferences = array(); // Used for cache
 	$user_preferences[$user] =& $_SESSION['u_info']['prefs'];
 
-	$group =& $_SESSION['user']['group'];
+	$group =& $_SESSION['u_info']['group'];
 	$smarty->assign_by_ref('group', $group);
 	$smarty->assign_by_ref('user', $user);
 	$smarty->assign_by_ref('default_group', $group);
