@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.30 2007-10-04 22:17:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31 2007-10-13 15:13:41 nyloth Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -270,7 +270,7 @@
 {/if}
 </form>
 
-{if $prefs.maxRecords > 0 and $cant_pages > 0}
+{if $maxRecords > 0 and $cant_pages > 0}
   <div class="mini">
       {if $prev_offset >= 0}
         [<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$prev_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -282,7 +282,7 @@
       {if $prefs.direct_pagination eq 'y' and $cant_pages > 1}
 	<br />
 	{section loop=$cant_pages name=foo}
-	{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+	{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 	<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if isset($file)}file={$file}&amp;{/if}galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}&amp;{$ext}offset={$selector_offset}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={$sort_mode}">
 	{$smarty.section.foo.index_next}</a>&nbsp;
 	{/section}
