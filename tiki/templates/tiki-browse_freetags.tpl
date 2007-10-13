@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.33 2007-10-12 18:28:29 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.34 2007-10-13 00:17:15 nkoth Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -153,7 +153,7 @@
 {/literal}
 </script>
 {foreach from=$most_popular_tags item=popular_tag}
-<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onClick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;">{$popular_tag.tag}</a> 
+<a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onClick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;">{$popular_tag.tag}</a> 
 {/foreach}
 {/if}
 </td><td>
