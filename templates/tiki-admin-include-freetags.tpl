@@ -81,8 +81,10 @@
 				<option value="8"{if $prefs.morelikethis_basic_mincommon eq '8'} selected="selected"{/if}>{tr}8{/tr}</option>
 				<option value="9"{if $prefs.morelikethis_basic_mincommon eq '9'} selected="selected"{/if}>{tr}9{/tr}</option>
 			</select>			
-			<input type="submit" name="morelikethisoptions" value="{tr}change{/tr}"/>
-		</td>
+		</td>		
+	</tr>
+	<tr>
+		<td colspan="2" class="button"><input type="submit" name="morelikethisoptions" value="{tr}Change preferences{/tr}"/></td>
 	</tr>
 	</form>
       </table>    
