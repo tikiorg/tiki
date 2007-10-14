@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.7 2007-10-13 21:49:44 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.8 2007-10-14 12:39:22 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -26,12 +26,6 @@ $u_info =& $_SESSION['u_info'];
 $smarty->assign_by_ref('u_info', $u_info);
 
 if ( $user ) {
-
-	// Keep some useful sites values available before overriding with user prefs
-	$user_overrider_prefs = array('language', 'style', 'userbreadCrumb');
-	foreach ( $user_overrider_prefs as $uop ) {
-		$prefs['site_'.$uop] = $prefs[$uop];
-	}
 
 	// Initialize user prefs
 	$user_preferences = array(); // Used for cache
