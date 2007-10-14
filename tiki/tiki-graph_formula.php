@@ -50,7 +50,7 @@ function convert_formula( $formula )
 	// Make sure only valid functions are used
 	preg_match_all( '/([a-z0-9_]+)/i', $formula, $out, PREG_PATTERN_ORDER );
 	foreach( $out[0] as $match )
-		if( !in_array( strtolower( $match ), $valid ) && $match !== 'x' )
+		if( !is_numeric( $match ) && !in_array( strtolower( $match ), $valid ) && $match !== 'x' )
 			die( "Invalid function call {$match}" );
 	
 	// Replace spaces for commas
