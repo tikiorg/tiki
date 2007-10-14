@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.33 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.34 2007-10-14 15:17:16 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -168,19 +168,19 @@ if (!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset', $offset);
 
-$cant_pages = ceil($calendars["cant"] / $prefs['maxRecords']);
+$cant_pages = ceil($calendars["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($calendars["cant"] > ($offset + $prefs['maxRecords'])) {
-	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
+if ($calendars["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
+	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

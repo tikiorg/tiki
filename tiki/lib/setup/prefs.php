@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.15 2007-10-14 13:17:00 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16 2007-10-14 15:17:18 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -975,6 +975,13 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 
+	// Be sure we have a default value for user prefs
+	foreach ( $prefs as $p => $v ) {
+		if ( substr($p, 0, 12) == 'users_prefs_' ) {
+			$prefs[substr($p, 12)] = $v;
+		}
+	}
+
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
 
@@ -997,6 +1004,10 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 // Assign the prefs array in smarty, by reference
 $smarty->assign_by_ref('prefs', $_SESSION['prefs']);
+
+// Define the special maxRecords global var
+$maxRecords = $prefs['maxRecords'];
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 
 // DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
 extract($_SESSION['prefs']);

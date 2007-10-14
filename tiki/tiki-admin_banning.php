@@ -125,21 +125,21 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$items = $banlib->list_rules($offset, $prefs['maxRecords'], $sort_mode, $find, $where);
+$items = $banlib->list_rules($offset, $maxRecords, $sort_mode, $find, $where);
 $smarty->assign('cant', $items['cant']);
 
-$cant_pages = ceil($items["cant"] / $prefs['maxRecords']);
+$cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($items["cant"] > ($offset + $prefs['maxRecords'])) {
-	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
+if ($items["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
+	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

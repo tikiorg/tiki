@@ -70,7 +70,7 @@
 {if $prefs.direct_pagination eq 'y'}
   <br />
   {section loop=$cant_pages name=foo}
-    {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+    {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
       <a class="prevnext" {ajax_href template="tiki-admin_quicktags_content.tpl" htmlelement="quicktags-content"}tiki-admin_quicktags.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}&amp;category={$category}{/ajax_href}}>
       {$smarty.section.foo.index_next}</a>&nbsp;
     {/section}

@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.16 2007-10-14 13:33:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17 2007-10-14 15:17:16 nyloth Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.16 2007-10-14 13:33:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17 2007-10-14 15:17:16 nyloth Exp $
 //
 
 // Initialization
@@ -101,7 +101,7 @@ foreach ($tagArray as $t_ar) {
 $smarty->assign('tagString', trim($tagString));
 $smarty->assign('tag', $tagArray[0]);
 
-$maxRecords = $prefs['maxRecords'];
+$maxRecords = $maxRecords;
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $prefs['freetags_browse_amount_tags_in_cloud']);
 $smarty->assign('most_popular_tags', $most_popular_tags);
 $objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, $view_user, $offset, $maxRecords, $sort_mode, $find, $broaden); 
