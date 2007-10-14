@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.799 2007-10-12 14:26:57 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.800 2007-10-14 23:02:04 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1342,9 +1342,20 @@ function add_pageview() {
 	return $login;
     }
 
-    function get_user_id($user) {
-	$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($user),-1,-1,false);
-	return $id;
+    function get_user_id($u) {
+		// Anonymous is not in db
+		if ( $u == '' ) return -1;
+
+		// If we ask for the current user id and if we already know it in session
+		global $user;
+		$current = ( $u == $user );
+		if ( isset($_SESSION['u_info']['id']) && $current ) return $_SESSION['u_info']['id'];
+
+		// In other cases, we look in db
+		$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($u));
+		$id = ($id === NULL) ? -1 : $id;
+		if ( $current ) $_SESSION['u_info']['id'] = $id;
+		return $id;
     }
 
     /*shared*/
