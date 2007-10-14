@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.245 2007-10-12 07:55:38 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.246 2007-10-14 23:02:04 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1136,22 +1136,6 @@ function get_included_groups($group, $recur=true) {
 		return $list;
 	}
 
-
-    function get_user_id($u) {
-	// Anonymous is not in db
-	if ( $u == '' ) return -1;
-
-	// If we ask for the current user id and if we already know it in session
-	global $user;
-	$current = ( $u == $user );
-	if ( isset($_SESSION['user']['id']) && $current ) return $_SESSION['user']['id'];
-
-	// In other cases, we look in db
-	$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($u));
-	$id = ($id === NULL) ? -1 : $id;
-	if ( $current ) $_SESSION['user']['id'] = $id;
-	return $id;
-    }
 
     function remove_user($user) {
 	global $cachelib;
