@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.11 2007-10-12 23:49:52 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.12 2007-10-14 11:45:20 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -14,8 +14,10 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 // Set default prefs if they are not already in session vars
 if (isset($_SESSION['prefs'])) {
-	$query = "select `value` from `tiki_preferences` where `name`=?";
-	$lastUpdatePrefs = $tikilib->getOne($query, array('lastUpdatePrefs'));
+	$lastUpdatePrefs = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", array('lastUpdatePrefs'));
+	if ( ! isset($lastUpdatePrefs) ) {
+		$tikilib->query("insert into `tiki_preferences` (`name`,`value`) values (?,?)", array('lastUpdatePrefs', $tikilib->now));
+	}
 }
 
 // Set default prefs
