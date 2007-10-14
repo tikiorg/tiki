@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.12 2007-10-14 11:45:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.13 2007-10-14 12:39:22 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,17 +12,27 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
-// Set default prefs if they are not already in session vars
+// Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
+// ( this is also used in tikilib, not only when reloading prefs )
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb');
+
+// Check if prefs needs to be reloaded
 if (isset($_SESSION['prefs'])) {
 	$lastUpdatePrefs = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", array('lastUpdatePrefs'));
 	if ( ! isset($lastUpdatePrefs) ) {
 		$tikilib->query("insert into `tiki_preferences` (`name`,`value`) values (?,?)", array('lastUpdatePrefs', $tikilib->now));
 	}
-}
+	if ( empty($prefs['lastReadingPrefs']) || $lastUpdatePrefs > $prefs['lastReadingPrefs'] ) {
+		$_SESSION['need_reload_prefs'] = true;
+	}
+} else $_SESSION['need_reload_prefs'] = true;
 
-// Set default prefs
-if ( ! isset($_SESSION['prefs']) || $_SESSION['need_reload_prefs'] ) {
+// Set default prefs only if needed
+if ( ! $_SESSION['need_reload_prefs'] ) {
+	$prefs =& $_SESSION['prefs'];
+} else {
 	$_SESSION['prefs'] = array();
+	$prefs =& $_SESSION['prefs'];
 
 	$_SESSION['prefs']['tiki_release'] = '1.10';
 	
@@ -954,11 +964,6 @@ if ( ! isset($_SESSION['prefs']) || $_SESSION['need_reload_prefs'] ) {
 		foreach ( $_SESSION['prefs'] as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
-}
-$prefs =& $_SESSION['prefs'];
-
-// Check if prefs needs to be reloaded
-if ( empty($prefs['lastReadingPrefs']) || $lastUpdatePrefs > $prefs['lastReadingPrefs']) {
 
 	// Override default prefs with values specified in database
 	$tikilib->get_db_preferences();
@@ -972,6 +977,12 @@ if ( empty($prefs['lastReadingPrefs']) || $lastUpdatePrefs > $prefs['lastReading
 
 	// Be absolutely sure we have a value for tikiIndex
 	if ( $prefs['tikiIndex'] == '' ) $prefs['tikiIndex'] = 'tiki-index.php';
+
+	// Keep some useful sites values available before overriding with user prefs
+	// (they could be used in templates, so we need to set them even for Anonymous)
+	foreach ( $user_overrider_prefs as $uop ) {
+		$prefs['site_'.$uop] = $prefs[$uop];
+	}
 }
 
 // Assign the prefs array in smarty, by reference
