@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.16 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.17 2007-10-14 17:51:01 mose Exp $ *}
 
 {if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Messages{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="messages_unread_messages" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="messages_unread_messages" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {if $modUnread > 0}
 	<a class="linkmodule" href="messu-mailbox.php"><span class="highlight">
 	{tr}You have{/tr} {$modUnread} {if $modUnread !== '1'}{tr}New Messages{/tr}{else}{tr}New Message{/tr}{/if}</span>

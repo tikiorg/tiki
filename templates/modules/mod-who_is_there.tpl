@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.16 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.17 2007-10-14 17:51:03 mose Exp $ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 <div>
 {if $cluster}
 {foreach from=$logged_cluster_users item=cant key=tikihost}

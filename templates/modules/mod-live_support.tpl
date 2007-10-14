@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.14 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
 
 {if $prefs.feature_live_support eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Live support{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="live_support" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="live_support" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {if $modsupport > 0}
 <a href="#" onclick='javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");'><img border="0" src="tiki-live_support_server.php?operators_online=1" alt="image" /></a>
 {else}

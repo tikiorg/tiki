@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.10 2007-07-27 16:47:00 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.11 2007-10-14 17:51:01 mose Exp $ *}
 
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
@@ -7,7 +7,7 @@
 {eval var="{tr}Last Visitors{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     <ol style="list-style-position:inside; margin:0; padding:0;{if $nonums eq 'y'} list-style-type:none;{else} list-style-type:decimal;{/if}">
     {foreach from=$modLastVisitors key=key item=item}
         <li><a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">

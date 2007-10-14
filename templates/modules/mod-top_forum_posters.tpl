@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_forum_posters.tpl,v 1.7 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_forum_posters.tpl,v 1.8 2007-10-14 17:51:02 mose Exp $ *}
 
 {if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}
@@ -8,7 +8,7 @@
 {eval var="{tr}Top Forum Posters{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="top_forum_posters" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="top_forum_posters" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 <table width="90%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTopForumPosters}
 <tr>

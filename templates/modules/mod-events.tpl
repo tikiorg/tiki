@@ -75,7 +75,7 @@ if (count($query)>0) {
 $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
 {/php}
 
-{tikimodule title="{tr}Current events{/tr}" name="events" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title="{tr}Current events{/tr}" name="events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 	<table	border="0" cellspacing="0" cellpadding="0" class="caltable">
 	<!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
 	<tr>

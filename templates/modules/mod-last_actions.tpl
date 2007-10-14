@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_actions.tpl,v 1.5 2007-02-18 11:21:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_actions.tpl,v 1.6 2007-10-14 17:51:00 mose Exp $ *}
 
 {if $nonums eq 'y'}
 {if !isset($tpl_module_title)}
@@ -7,7 +7,7 @@
 {eval var="{tr}Last actions{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_actions" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="last_actions" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastActions}
      <tr>

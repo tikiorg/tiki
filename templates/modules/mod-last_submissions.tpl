@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.14 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
 
 {if $prefs.feature_submissions eq 'y'}
 {if !isset($tpl_module_title)}
@@ -8,7 +8,7 @@
 {eval var="<a href=\"tiki-list_submissions.php\">{tr}Last submissions{/tr}</a>" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_submissions" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="last_submissions" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastSubmissions}
       <tr>

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.14 2007-07-24 14:40:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Since your last visit{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="since_last_visit" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {tr}Since your last visit on{/tr}<br />
 <b>{$nvi_info.lastVisit|tiki_short_datetime|replace:"[":""|replace:"]":""}</b><br />
 {$nvi_info.images} {tr}New Images{/tr}<br />
