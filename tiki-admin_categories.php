@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.50 2007-10-12 13:13:55 jonnybradley Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.51 2007-10-14 15:17:16 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -342,22 +342,22 @@ $smarty->assign('find_objects', $find_objects);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign_by_ref('find', $find);
-$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $prefs['maxRecords'], $sort_mode, '', $find, false);
+$objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
 $smarty->assign_by_ref('objects', $objects["data"]);
 
-$cant_pages = ceil($objects["cant"] / $prefs['maxRecords']);
+$cant_pages = ceil($objects["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $prefs['maxRecords']));
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($objects["cant"] > ($offset + $prefs['maxRecords'])) {
-	$smarty->assign('next_offset', $offset + $prefs['maxRecords']);
+if ($objects["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $prefs['maxRecords']);
+	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
 }

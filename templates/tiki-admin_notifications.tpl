@@ -21,7 +21,7 @@
      <input type="hidden" name="find" value="{$find|escape}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      {if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
-	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
+	 {if $numrows ne $maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
 <tr><td class="formcolor">{tr}Event{/tr}:</td>
     <td class="formcolor">
     <select name="event">
@@ -54,7 +54,7 @@
    <form method="get" action="tiki-admin_notifications.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}Find{/tr}" name="search" />
-	 {tr}Number of displayed rows{/tr}<input type="text" size="4" name="numrows" value="{if $numrows}{$numrows}{else}{$prefs.maxRecords}{/if}" />
+	 {tr}Number of displayed rows{/tr}<input type="text" size="4" name="numrows" value="{if $numrows}{$numrows}{else}{$maxRecords}{/if}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
@@ -62,10 +62,10 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Event{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Object{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}eMail{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}User{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $maxRecords}&amp;numrows={$numrows}{/if}">{tr}Event{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $maxRecords}&amp;numrows={$numrows}{/if}">{tr}Object{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $maxRecords}&amp;numrows={$numrows}{/if}">{tr}eMail{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $maxRecords}&amp;numrows={$numrows}{/if}">{tr}User{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -95,7 +95,7 @@
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_notifications.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

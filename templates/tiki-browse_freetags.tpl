@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.34 2007-10-13 00:17:15 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35 2007-10-14 15:17:20 nyloth Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -190,7 +190,7 @@
       {if $prefs.direct_pagination eq 'y'}
         <br />
         {section loop=$cant_pages name=foo}
-          {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+          {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
           <a class="prevnext" href="tiki-browse_freetags.php?tag={$tagString|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$selector_offset}{if $broaden}&amp;broaden={$broaden}{/if}">
             {$smarty.section.foo.index_next}
           </a>&nbsp;

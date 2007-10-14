@@ -68,7 +68,7 @@
   {if $tr_recnum != 0}
     <input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
   {/if}
-  {if $untr_numrows > $tr_recnum+$prefs.maxRecords}
+  {if $untr_numrows > $tr_recnum+$maxRecords}
     <input type="submit" name="morerec" value="{tr}next page{/tr}" />
   {/if}
   <input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />
@@ -92,7 +92,7 @@
   {if $tr_recnum != 0}
     <input type="submit" name="lessrec" value="{tr}previous page{/tr}" />
   {/if}
-  {if $untr_numrows > $tr_recnum+$prefs.maxRecords}
+  {if $untr_numrows > $tr_recnum+$maxRecords}
     <input type="submit" name="morerec" value="{tr}next page{/tr}" />
   {/if}
   <input type="hidden" name="tr_recnum" value="{$tr_recnum|escape}" />

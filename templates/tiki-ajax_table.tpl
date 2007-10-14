@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.5 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.6 2007-10-14 15:17:20 nyloth Exp $ *}
 <form action="" method="">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="tag" value="{$tag|escape}" />
@@ -13,7 +13,7 @@
 	<th><a href="javascript:setSortMode('{$ajax_cols[j][0]}_desc')" id="ajax_{$ajax_cols[j][0]}Header">{$ajax_cols[j][0]}</a></th>
 	{/section}
 </tr>
-{section name=i start=0 loop=$prefs.maxRecords step=1}
+{section name=i start=0 loop=$maxRecords step=1}
 <tr class="freetagObject {if $smarty.section.i.index is even}odd{else}even{/if}">
 	{section name="j" start=0 loop=$ajax_cols step=1}
 	{if $ajax_cols[j][1] eq "innerHTML"}
@@ -27,9 +27,9 @@
 </table>
 
     <div class="mini">
-        [<a class="prevnext" href="javascript:setOffset(-{$prefs.maxRecords});">{tr}Prev{/tr}</a>]&nbsp;
+        [<a class="prevnext" href="javascript:setOffset(-{$maxRecords});">{tr}Prev{/tr}</a>]&nbsp;
       {tr}Page{/tr}: <span id="actual_page">1</span>/<span id="cant_pages"></span>
-        &nbsp;[<a class="prevnext" href="javascript:setOffset({$prefs.maxRecords});">{tr}Next{/tr}</a>]
+        &nbsp;[<a class="prevnext" href="javascript:setOffset({$maxRecords});">{tr}Next{/tr}</a>]
 
       {if $prefs.direct_pagination eq 'y'}
 	<br />

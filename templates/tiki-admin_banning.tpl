@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.32 2007-10-04 22:17:37 nyloth Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.33 2007-10-14 15:17:19 nyloth Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -167,7 +167,7 @@
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_banning.php?offset={$selector_offset}&amp;find={$find}">
 {$smarty.section.foo.index_next}</a>
 {/section}

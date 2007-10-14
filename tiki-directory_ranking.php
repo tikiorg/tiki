@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_ranking.php,v 1.11 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_ranking.php,v 1.12 2007-10-14 15:17:16 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,8 +25,9 @@ if ($tiki_p_view_directory != 'y') {
 	die;
 }
 
-if (isset($_REQUEST['maxRecords']))
+if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
+}
 
 // Listing: sites
 // Pagination resolution

@@ -67,7 +67,7 @@
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-live_support_transcripts.php?offset={$selector_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
