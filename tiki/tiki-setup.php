@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.472 2007-10-12 17:33:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.473 2007-10-14 18:48:53 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -14,7 +14,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 /* Automatically set params used for absolute URLs - BEGIN */
 
-$tmp = dirname(str_replace(dirname(__FILE__),'',$_SERVER['SCRIPT_FILENAME']));
+$tmp = dirname(str_replace(realpath(dirname(__FILE__)),'',realpath($_SERVER['SCRIPT_FILENAME'])));
 if ($tmp != '/') {
         $dir_level = substr_count($tmp,"/");
 } else {
@@ -44,6 +44,7 @@ $area = 'tiki';
 $crumbs = array();
 
 require_once('lib/setup/tikisetup.class.php');
+TikiSetup::prependIncludePath($tikipath);
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
 
