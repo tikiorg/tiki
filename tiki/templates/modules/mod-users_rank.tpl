@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-users_rank.tpl,v 1.6 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-users_rank.tpl,v 1.7 2007-10-14 17:51:02 mose Exp $ *}
 
 {if $prefs.feature_score eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-list_users.php\">{tr}Top users{/tr}</a>"}{/if}
-{tikimodule title=$tpl_module_title name="users_rank" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="users_rank" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 <table border="0" cellpadding="0" cellspacing="0">
 {section loop=$users_rank name=u}
   <tr>

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_images_th.tpl,v 1.8 2007-10-04 22:17:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_images_th.tpl,v 1.9 2007-10-14 17:51:01 mose Exp $ *}
 
 {if $prefs.feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Last Images{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
   {section name=ix loop=$modLastImages}
     {if $smarty.section.ix.index < $module_rows}
        <table  cellpadding="0" cellspacing="0">

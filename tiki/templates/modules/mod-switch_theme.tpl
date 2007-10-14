@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_theme.tpl,v 1.19 2007-10-12 07:55:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_theme.tpl,v 1.20 2007-10-14 17:51:01 mose Exp $ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Style{/tr}: `$prefs.style`"}{/if}
-{tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 	{if $prefs.change_theme ne 'n' or $user eq ''}
 	<form method="get" action="tiki-switch_theme.php">
 		<select name="theme" size="1" onchange="this.form.submit();">

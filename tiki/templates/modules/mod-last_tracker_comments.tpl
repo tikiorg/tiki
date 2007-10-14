@@ -6,7 +6,7 @@
 {eval var="{tr}Last Modified Comments{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_modif_tracker_comments" flip=$module_params.flip decorations=$mo\dule_params.decorations}
+{tikimodule title=$tpl_module_title name="last_modif_tracker_comments" flip=$module_params.flip decorations=$mo\dule_params.decorations nobox=$module_params.nobox}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastModifComments}
       <tr>

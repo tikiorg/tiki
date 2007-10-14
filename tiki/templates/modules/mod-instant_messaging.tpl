@@ -1,7 +1,7 @@
 {if $prefs.feature_ajax eq 'y' && $prefs.feature_friends eq 'y' && !empty($user)}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}My friends{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="instant_messaging" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="instant_messaging" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 
   <div id="im"></div>
 

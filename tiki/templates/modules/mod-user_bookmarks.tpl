@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.20 2007-10-04 22:17:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.21 2007-10-14 17:51:02 mose Exp $ *}
 
 {if $prefs.feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}
-{tikimodule title=$tpl_module_title name="user_bookmarks" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="user_bookmarks" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modb_folders}
 	<tr><td valign="bottom" class="module">
