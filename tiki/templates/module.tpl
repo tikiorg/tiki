@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.37 2007-10-14 17:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38 2007-10-14 23:39:21 nyloth Exp $ *}
 {* Module layout with controls *}
 
-{if $module_nobox eq 'n'}
+{if $module_nobox neq 'y'}
 <div class="box-shadow">
 	<div class="box box-{$module_name|escape}">
 {if $module_decorations ne 'n'}
@@ -48,7 +48,7 @@
 {/if}
 {$module_content}
 {$module_error}
-{if $module_nobox eq 'n'}
+{if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
 			<script type="text/javascript">
 				setsectionstate('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','{$module_dstate}', 'module.png');
