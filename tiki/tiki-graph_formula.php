@@ -44,9 +44,8 @@ function convert_formula( $formula )
 	global $valid;
 
 	// Stripping all quotes
-	$formula = str_replace( '`', '', $formula );
-	$formula = str_replace( '"', '', $formula );
-	$formula = str_replace( "'", '', $formula );
+	$chars = array( '`', "'", '"', '&', '[', ']', '$', '{', '}' );
+	$formula = str_replace( $chars, array_fill( 0, count($chars), '' ), $formula );
 
 	// Make sure only valid functions are used
 	preg_match_all( '/([a-z0-9_]+)/i', $formula, $out, PREG_PATTERN_ORDER );
