@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.45 2007-10-14 15:17:22 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46 2007-10-15 08:16:39 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -177,7 +177,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   <td>
     <form method="post" action="tiki-webmail.php">
     <input type="hidden" name="locSection" value="compose" />
-    <input type="submit" name="reply" value="{tr}reply{/tr}" />
+    <input type="submit" name="reply" value="{tr}Reply{/tr}" />
     <input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
     <input type="hidden" name="to" value="{$headers.replyto|escape}" />
     <input type="hidden" name="subject" value="Re:{$headers.subject}" />
