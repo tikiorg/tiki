@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.15 2007-06-16 16:02:03 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.16 2007-10-15 14:33:13 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -183,7 +183,18 @@ input {
 input[type=checkbox], input[type=radio] {
 	border : 0;
 }
-a.linkbut, input[type=submit] {
+a.linkbut {
+	font-size : 10px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border : 1px solid #827B77;
+	background-color: #A59F9C;
+	font-weight : bold;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 1px;
+	text-decoration: none;
+}
+input[type=submit] {
 	font-size : 10px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	border : 1px solid #827B77;
