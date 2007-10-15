@@ -28,15 +28,13 @@
 <div class="wikitext">
 
 {if $edit}
-<form action="{$myurl}" method="post" name="f">
+<form action="{$myurl}" method="post" name="f" id="editcalitem">
 <input type="hidden" name="save[user]" value="{$calitem.user}" />
 {if $id}
 <input type="hidden" name="save[calitemId]" value="{$id}" />
 {/if}
 {/if}
 
-<table width="100%">
-<tr><td>
 <table class="normal">
 {if not $edit}
 <tr class="formcolor"><td>
@@ -158,24 +156,21 @@
 </td>
 </tr>
 <tr class="formcolor">
-<td colspan="2">
+<td>{tr}Description{/tr}<br /><br />
+{include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
+{include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+</td><td>
 {if $edit}
-<textarea cols="62" rows="8" name="save[description]" wrap="soft" style="width:98%;">{$calitem.description}</textarea>
+<textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" wrap="soft" style="width:98%">{$calitem.description}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
 {else}
 {$calitem.description|default:"<i>No description</i>"}
 {/if}
-</td>
-</tr>
-</table>
-</td>
+</td></tr>
 
-<td>
+<tr class="formcolor"><td>
 
-<table class="normal">
-<tr>
-<td colspan="2">
-<table cellpadding="0" cellspacing="0" border="0" style="border:0;" width="100%">
-<tr><td>
 <div class="statusbox{if $calitem.status eq 0} status0{/if}">
 {if $edit}
 <input id="status0" type="radio" name="save[status]" value="0"{if $calitem.status eq 0} checked="checked"{/if} />
@@ -217,7 +212,6 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </div>
 
-</td></tr></table>
 </td></tr>
 <tr class="formcolor" style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
 <td>{tr}Category{/tr}</td>
@@ -311,7 +305,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </td>
 </tr>
-</table>
+<tr><td colspan="2">
 {if $edit}
 <div style="display:{if $calendar.customparticipants eq 'y' and (isset($cookie.show_calparthelp) and $cookie.show_calparthelp eq 'y')}block{else}none{/if};" id="calparthelp">
 {tr}Roles{/tr}<br />
