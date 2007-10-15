@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.139 2007-10-12 07:55:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.140 2007-10-15 22:12:30 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -724,14 +724,18 @@ if ($_REQUEST["itemId"]) {
 						$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
 					}
 					if (isset($_REQUEST['save']) || isset($_REQUEST['save_return'])) {
-						foreach ($ins_categs as $c) {
-							$ins_fields['data'][$i]['cat']["$c"] = 'y';
-							$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
+						foreach ($ins_fields["data"][$i]["$k"] as $c) {
+							if (in_array($c['categId'], $ins_categs)) {
+								$ins_fields['data'][$i]['cat']["$c"] = 'y';
+								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
+							}
 						}
 					} else {
-						foreach ($cat as $c) {
-							$ins_fields['data'][$i]['cat']["$c"] = 'y';
-							$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
+						foreach ($ins_fields["data"][$i]["$k"] as $c) {
+							if (in_array($c['categId'], $cat)) {
+								$ins_fields['data'][$i]['cat']["$c"] = 'y';
+								$ins_fields['data'][$i]['categs'][] = $categlib->get_category($c);
+							}
 						}
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
