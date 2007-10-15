@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.81 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82 2007-10-15 07:46:47 sept_7 Exp $ *}
 
+{strip}
 <hr/>
 
 <div id="page-bar">
@@ -152,3 +153,4 @@
 {include file=comments.tpl}
 {/if}
 
+{/strip}
