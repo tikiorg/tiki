@@ -19,8 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
 function smarty_modifier_user_date_format($string, $format = "%B %e, %Y")
 {
-	
-	$date = new Date($string);
+	$date = new TikiDate($string);
 	return $date->format(tra($format));
 }
 
