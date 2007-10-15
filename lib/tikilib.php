@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.800 2007-10-14 23:02:04 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801 2007-10-15 14:47:40 pkdille Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4132,7 +4132,8 @@ function add_pageview() {
 	global $user_overrider_prefs, $user_preferences, $user, $prefs;
 
 	$query = "update `tiki_preferences` set `value`=? where `name`=?";
-	$this->query($query, array('lastUpdatePrefs', $this->now));
+	$this->query($query, array($this->now, 'lastUpdatePrefs'));
+
 	$query = "delete from `tiki_preferences` where `name`=?";
 	$result = $this->query($query,array($name),-1,-1,false);
 	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
