@@ -80,6 +80,7 @@ class Base extends Observable {
             $query .= $qe[$i];
             break;
         case "postgres7":
+        case "postgres8":
         case "sybase":
             $query = preg_replace("/`/", "\"", $query);
             break;
@@ -117,6 +118,7 @@ class Base extends Observable {
         switch ($ADODB_LASTDB) {
         case "pgsql72":
         case "postgres7":
+        case "postgres8":
         case "oci8":
         case "sybase":
             // Postgres needs " " around column names
@@ -141,6 +143,7 @@ class Base extends Observable {
         case "pgsql72":
         case "oci8":
         case "postgres7":
+        case "postgres8":
             return;
             break;
         case "mysql3":
