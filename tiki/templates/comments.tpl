@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.97 2007-10-04 22:17:35 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98 2007-10-15 08:16:39 jyhem Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -144,7 +144,7 @@
 
 	{if $comments_threshold ne 0}
 	<div class="nb_replies">
-	{$comments_below} {if $comments_below eq 1}{tr}reply{/tr}{else}{tr}Replies{/tr}{/if} {tr}below your current threshold{/tr}
+	{$comments_below} {if $comments_below eq 1}{tr}Reply{/tr}{else}{tr}Replies{/tr}{/if} {tr}below your current threshold{/tr}
 	</div>
 	{/if}
 
