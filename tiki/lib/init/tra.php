@@ -3,7 +3,7 @@
  * @param $content - English string
  * @param $lg - language - if not specify = global current language
  */
-// BUG; will not work with a language other than the default ($lang will be or not redefined)
+
 function tra($content, $lg='') {
 	global $prefs;
 
@@ -31,10 +31,10 @@ function tra($content, $lg='') {
 				  ${"lang_$l"} = $lang;
 				  unset($lang);
 				}
-				$lang = &${"lang_$l"};
+				$lang = &${"lang_".$prefs['language']};
 			}
-			if (isset($lang[$content])) {
-				return $lang[$content];
+			if ($l and isset(${"lang_$l"}[$content])) {
+				return ${"lang_$l"}[$content];
 			} else {
 				return $content;
 			}
