@@ -48,9 +48,9 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 	if (isset($params['format'])) {
 		$format = preg_replace('/"/','\"',$params['format']);
 	} else {
-		$format = tra($GLOBALS['long_date_format']);
+		$format = tra($prefs['long_date_format']);
 		if ($showtime) {
-			$format.= ' '.tra($GLOBALS['short_time_format']);
+			$format.= ' '.tra($prefs['short_time_format']);
 		}
 	}
 
@@ -59,7 +59,7 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 	if (isset($params['id'])) {
 		$id =  preg_replace('/"/','\"',$params['id']);
 	} else {
-		$id = $_GLOBALS['now'];
+		$id = $tikilib->now;
 	}
 
 	if (isset($params['ifFormat'])) {
