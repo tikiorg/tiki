@@ -156,16 +156,18 @@
 </td>
 </tr>
 <tr class="formcolor">
-<td>{tr}Description{/tr}<br /><br />
+<td>{tr}Description{/tr}
+{if $edit}<br /><br />
 {include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
 {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+{/if}
 </td><td>
 {if $edit}
 <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" wrap="soft" style="width:98%">{$calitem.description}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 {else}
-{$calitem.description|default:"<i>No description</i>"}
+{$calitem.parsed|default:"<i>No description</i>"}
 {/if}
 </td></tr>
 
