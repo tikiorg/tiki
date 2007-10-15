@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.39 2007-10-12 07:55:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40 2007-10-15 13:35:20 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -137,7 +137,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 		
 		if (!isset($max)) {
-			$max = $maxRecords;
+			$max = $prefs['maxRecords'];
 		}
 
 		if (isset($_REQUEST['tr_offset'])) {

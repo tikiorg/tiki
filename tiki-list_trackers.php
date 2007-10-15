@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.17 2007-10-12 07:55:28 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.18 2007-10-15 13:35:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
+$channels = $trklib->list_trackers($offset, $prefs['maxRecords'], $sort_mode, $find);
 
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
