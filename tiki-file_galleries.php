@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.55 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.56 2007-10-15 00:08:51 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -150,17 +150,17 @@ $tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $info, true);
 			$smarty->assign('sortdirection', 'desc');
 		}
 		if (!empty($info['subgal_conf'])) {
-			list($prefs['fgal_list_id'], $prefs['fgal_list_name'], $prefs['fgal_list_description'], $prefs['fgal_list_type'], $prefs['fgal_list_created'], $prefs['fgal_list_lastmodif'], $prefs['fgal_list_user'], $prefs['fgal_list_files'], $prefs['fgal_list_hits'], $prefs['fgal_list_parent']) = split(':',$info['subgal_conf']);
-			$smarty->assign('fgal_list_id', $prefs['fgal_list_id']);
-			$smarty->assign('fgal_list_name', $prefs['fgal_list_name']);
-			$smarty->assign('fgal_list_description', $prefs['fgal_list_description']);
-			$smarty->assign('fgal_list_type', $prefs['fgal_list_type']);
-			$smarty->assign('fgal_list_created', $prefs['fgal_list_created']);
-			$smarty->assign('fgal_list_lastmodif', $prefs['fgal_list_lastmodif']);
-			$smarty->assign('fgal_list_user', $prefs['fgal_list_user']);
-			$smarty->assign('fgal_list_files', $prefs['fgal_list_files']);
-			$smarty->assign('fgal_list_hits', $prefs['fgal_list_hits']);
-			$smarty->assign('fgal_list_parent', $prefs['fgal_list_parent']);
+			list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$info['subgal_conf']);
+			$smarty->assign('fgal_list_id', $fgal_list_id);
+			$smarty->assign('fgal_list_name', $fgal_list_name);
+			$smarty->assign('fgal_list_description', $fgal_list_description);
+			$smarty->assign('fgal_list_type', $fgal_list_type);
+			$smarty->assign('fgal_list_created', $fgal_list_created);
+			$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
+			$smarty->assign('fgal_list_user', $fgal_list_user);
+			$smarty->assign('fgal_list_files', $fgal_list_files);
+			$smarty->assign('fgal_list_hits', $fgal_list_hits);
+			$smarty->assign('fgal_list_parent', $fgal_list_parent);
 		}
 	  }
 	} elseif (!empty($_REQUEST['dup_mode'])) {
