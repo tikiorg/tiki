@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.18 2007-10-12 07:55:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.19 2007-10-16 14:18:28 mose Exp $ *}
 
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
@@ -36,11 +36,6 @@
         	<td colspan="2"><hr/></td>
 				</tr>
 								
-				<tr>
-					<td class="form" colspan="2"><label for="alter_tiki_prefs_table"><strong>{tr}Important{/tr}:</strong><br />
-					{tr}Tiki preferences value field in db is set to be max. 250 characters long by default until now. That applies for the custom code content too. Check this field if you want to update your preferences database table to support more than 250 chars (although it was tested and works fine with mysql, it's recommended to backup your data manually before any database update){/tr}:</label> <input type="checkbox" name="alter_tiki_prefs_table" id="alter_tiki_prefs_table" /></td>
-				</tr>
-				
 				<tr>
 					<td class="heading" colspan="2" align="center">{tr}Site Breadcrumbs{/tr}</td>
 				</tr>
