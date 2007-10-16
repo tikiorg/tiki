@@ -1,4 +1,6 @@
-/***
+//mooRainbow: Mootools color picker, from: http://w00fz.altervista.org/mooRainbow/
+
+/***
  * MooRainbow
  *
  * @version		1.0
