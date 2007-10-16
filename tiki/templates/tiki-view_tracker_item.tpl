@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.156 2007-10-16 19:25:20 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -378,7 +378,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
 /* ]]> */</script>
 {/if}
-{assign var=fca value=$cur_field.options}
+{assign var=fca value=$cur_field.options_array[0]}
 <table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false}
 {foreach key=ku item=iu from=$cur_field.$fca name=foreache}
 {assign var=fcat value=$iu.categId }
