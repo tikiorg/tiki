@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.246 2007-10-14 23:02:04 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.247 2007-10-16 13:53:24 pkdille Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2146,7 +2146,7 @@ function get_included_groups($group, $recur=true) {
 
 	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='') {
 		global $cachelib;
-		if ( $oldgroup == 'Anonymous' || $oldgroup == 'Registered' ) return false;
+		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) return false;
 
 		if (!$this->group_exists($olgroup))
 			return $this->add_group($group, $desc, $home,$utracker,$gtracker);
