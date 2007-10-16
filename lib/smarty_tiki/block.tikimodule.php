@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.17 2007-10-12 07:55:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.18 2007-10-16 14:11:35 mose Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -42,6 +42,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	if (!isset($title))     $title = substr(strip_tags($content),0,12)."...";
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
 	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
+	if (!isset($nobox))      $nobox = 'n';
 	if ($flip == 'yc') {
 		// can be switched but initialy closed
 		$flip = 'y';
@@ -61,6 +62,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	$smarty->assign('module_name', $name);
 	$smarty->assign('module_flip', $flip);
 	$smarty->assign('module_dstate', $dstate);
+	$smarty->assign('module_nobox', $nobox);
 	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
