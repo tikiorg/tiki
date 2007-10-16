@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.131 2007-10-16 17:45:00 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -161,7 +161,7 @@
 {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 {else}
