@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181 2007-10-13 15:53:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.182 2007-10-16 17:26:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -599,10 +599,10 @@ if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
 }
 if(isset($_REQUEST["edit"])) {
   
-  if ($is_html) {
+  if ($is_html and $_SESSION['wysiwyg'] == 'y') {
     $edit_data = $_REQUEST["edit"];  
   } else {
-  $edit_data = htmlspecialchars($_REQUEST["edit"]);
+    $edit_data = htmlspecialchars($_REQUEST["edit"]);
   }
 
 } else {
@@ -612,6 +612,9 @@ if(isset($_REQUEST["edit"])) {
 	$edit_data = $info["data"];
     } else {
 	$edit_data = '';
+    }
+    if ($is_html and $_SESSION['wysiwyg'] != 'y') {
+  	$edit_data = htmlspecialchars($edit_data);
     }
 }
 
