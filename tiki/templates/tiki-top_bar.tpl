@@ -1,5 +1,5 @@
 {if $prefs.feature_topbar_version eq 'y'}
-{tr}This is{/tr} Tikiwiki v1.10 (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
+{tr}This is{/tr} Tikiwiki v1.11 (CVS) - ... - &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
 title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {/if}
 {if $prefs.feature_topbar_date eq 'y'}
