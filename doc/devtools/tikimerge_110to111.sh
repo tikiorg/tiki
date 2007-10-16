@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge_110to111.sh,v 1.1.2.1 2007-10-16 18:17:35 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge_110to111.sh,v 1.1.2.2 2007-10-16 19:48:30 sylvieg Exp $
 #
 # NOTE: Since 1.9.8 release, the 1.9 branch is frozen and merges are done manualy
 # merge now only concerns BRANCH-1-10 to HEAD
@@ -128,7 +128,7 @@ read
 
 echo
 echo "tikimerge -? Commit the merged files to HEAD ?"
-echo "tikimerge -> [ Type the one-line comment of your commit, then press enter to proceed ] "
+echo "tikimerge -> [ Type the one-line comment of your commit(or nothing for the default message), then press enter to proceed ] "
 read COMMENT
 
 if [ -z "$COMMENT" ]; then
@@ -141,6 +141,9 @@ cvs ci -m'[MERGED] $COMMENT' $FILES >> $MERGELOG
 #
 echo "tikimerge -> Auto-moving the floating tag to updated version."
 echo "tikimerge -$ cvs -q tag -r BRANCH-1-10-HEAD -F MERGE-1-10-HEAD $FILES"
+
+echo "cvs -q up -dA -r BRANCH-1-10 $FILES"
+cvs -q up -dA -r BRANCH-1-10 $FILES
 
 echo 
 echo "tikimerge -> All Done. Check $MERGELOG for detailed log."
