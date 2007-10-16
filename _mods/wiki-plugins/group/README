@@ -1,9 +1,0 @@
- Group Wiki Plugin
-------------------
-
-To install copy the wiki-plugin/wikiplugin_group.php to your lib/wiki-plugins
-folder of your TikiWiki installation.
-
-Then in wiki syntax type {GROUP(groups=>group|list|separated|by|pipe)}some wiki content{GROUP}
-
-The wiki content will only be shown for specified groups.
