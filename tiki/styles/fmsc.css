@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.16 2007-10-15 14:33:13 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.17 2007-10-16 19:43:39 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -85,7 +85,6 @@ a.pagetitle {
 	border-left-style: solid;
 	margin-top: 10px;
 	padding-left: 0px;
-	margin-left: -40px;
 }
 .rubpresentation, .tiki_wiki .pagetitle {
 	border-left-color: #F48E00;
@@ -2367,5 +2366,6 @@ div.admbox img { margin-top: 20px; }
 .searchresults {
 text-align: left;
 }
+.tabcontent { _width: 97% }
 
 /* end of css file */
