@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.53 2007-10-12 07:55:41 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54 2007-10-16 17:23:09 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -730,7 +730,6 @@ class LogsLib extends TikiLib {
 		$colors[] = 'lime';	if (!--$nb) return $colors;
 		$colors[] = 'maroon';	if (!--$nb) return $colors;
 		$colors[] = 'navy';	if (!--$nb) return $colors;
-		$colors[] = 'olive';	if (!--$nb) return $colors;
 		$colors[] = 'black';	if (!--$nb) return $colors;
 		$colors[] = 'purple';	if (!--$nb) return $colors;
 		$colors[] = 'silver';	if (!--$nb) return $colors;
