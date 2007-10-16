@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.11 2007-05-17 18:25:31 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.12 2007-10-16 14:18:28 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,10 +16,6 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 if (isset($_REQUEST["siteidentityset"])) {
  check_ticket('admin-inc-siteid');
  
- if (isset($_REQUEST["alter_tiki_prefs_table"])) {
-	 $alter_result = alterprefs();
- }
-
  	$pref_toggles = array(
   			        "feature_sitemycode",
 				"feature_breadcrumbs",
