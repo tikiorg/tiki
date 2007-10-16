@@ -187,6 +187,8 @@ function user_contacts_ajax() {
 user_contacts_ajax();
 $smarty->assign("mootab",'y');
 }
+$smarty->assign('myurl', 'tiki-contacts.php');
+
 $smarty->assign('mid','tiki-contacts.tpl');
 $smarty->display('tiki.tpl');
 ?>
