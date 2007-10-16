@@ -4,7 +4,7 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-loaded = 1;
+phplayersmenu_loaded = 1;
 // -->
 </script>
 

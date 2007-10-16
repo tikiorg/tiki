@@ -4,7 +4,7 @@ useTimeouts = 1;
 timeoutLength = 1000;	// time in ms; not significant if useTimeouts = 0;
 shutdownOnClick = 0;
 
-loaded = 0;
+phplayersmenu_loaded = 0;
 layersMoved = 0;
 layerPoppedUp = '';
 
@@ -73,7 +73,7 @@ function clearLMTO()
 
 function moveLayerX(menuName)
 {
-	if (!loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
+	if (!phplayersmenu_loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
 		return;
 	}
 	if (father[menuName] != '') {
@@ -128,7 +128,7 @@ function moveLayerX(menuName)
 
 function moveLayerY(menuName)
 {
-	if (!loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
+	if (!phplayersmenu_loaded || (isVisible(menuName) && menuName != layerPoppedUp)) {
 		return;
 	}
 	if (!layersMoved) {
@@ -227,7 +227,7 @@ function seeThroughWorkaround(menuName, on)
 
 function LMPopUpL(menuName, on)
 {
-	if (!loaded) {
+	if (!phplayersmenu_loaded) {
 		return;
 	}
 	if (!layersMoved) {
@@ -239,7 +239,7 @@ function LMPopUpL(menuName, on)
 
 function LMPopUp(menuName, isCurrent)
 {
-	if (!loaded || menuName == layerPoppedUp || (isVisible(menuName) && !isCurrent)) {
+	if (!phplayersmenu_loaded || menuName == layerPoppedUp || (isVisible(menuName) && !isCurrent)) {
 		return;
 	}
 	if (menuName == father[layerPoppedUp]) {
@@ -307,7 +307,7 @@ function loadHandler()
 	}
 }
 var window_onload_orig=window.onload;
-window.onload = loadHandler;
+//window.onload = loadHandler;
 
 function fixieflm(menuName)
 {
