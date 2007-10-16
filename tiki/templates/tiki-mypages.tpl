@@ -247,13 +247,7 @@ function updateMypageParams(id, vals) {
 	}
 }
 
-{/literal}
-{if $prefs.feature_phplayers eq 'y'}{* this is an ugly hack ... *}
-window.addEvent('load', initMypageEdit);
-{else}
 window.addEvent('domready', initMypageEdit);
-{/if}
-{literal}
 
 </script>
 {/literal}
