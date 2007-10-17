@@ -21,7 +21,7 @@ foreach(array_keys($prefs) as $k => $v) {
     $dst[$k]='$prefs.'.$v;
 }
 
-$elems=scandir('templates/');
+$elems=scandir($dirtoscan);
 
 foreach($elems as $filename) {
     if (preg_match('/.tpl$/', $filename)) {
