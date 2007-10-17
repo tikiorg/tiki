@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.1 2007-10-17 18:10:11 niclone Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.2 2007-10-17 18:18:10 niclone Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4299,7 +4299,7 @@ function add_pageview() {
 
 	if ( $my_user == $user ) {
 		$prefs =array_merge($prefs, $preferences);
-		$_SESSION['prefs']=array_merge($prefs, $preferences);
+		$_SESSION['prefs']=array_merge($_SESSION['prefs'], $preferences);
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
