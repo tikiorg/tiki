@@ -16,7 +16,7 @@
 		htmlelement=user_information}tiki-user_information.php{/ajax_href}>{tr}My Infos{/tr}</a></h5>
 		<div id="user_information">
 		</div>
-		{if $prefs.feature_ajax eq "y" && $feature_mootools eq "y"}
+		{if $prefs.feature_ajax eq "y" && $prefs.feature_mootools eq "y"}
 		<h5><a {ajax_href template=tiki-mypages.tpl
 		htmlelement=user_pages}tiki-mypages.php{/ajax_href}>{tr}My Pages{/tr}</a></h5>
 		<div id="user_pages">
