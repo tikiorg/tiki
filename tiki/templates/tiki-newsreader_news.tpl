@@ -35,7 +35,7 @@
 <br />
 {if $cant_pages < 20}
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-newsreader_news.php?server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}&amp;offset=selector_offset">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
