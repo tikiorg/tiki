@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16 2007-10-14 15:17:18 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.1 2007-10-17 14:17:17 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -35,13 +35,16 @@ if (isset($_SESSION['prefs'])) {
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
-} else $_SESSION['need_reload_prefs'] = true;
+ } else {
+	$_SESSION['need_reload_prefs'] = true;
+ }
 
 // Set default prefs only if needed
 if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs =& $_SESSION['prefs'];
 } else {
 	$_SESSION['prefs'] = array();
+	unset($_SESSION['serialized_prefs']);
 	$prefs =& $_SESSION['prefs'];
 
 	$_SESSION['prefs']['tiki_release'] = '1.10';
@@ -649,7 +652,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$_SESSION['prefs']['feature_intertiki'] = 'n';
 	$_SESSION['prefs']['feature_intertiki_server'] = 'n';
 	$_SESSION['prefs']['feature_intertiki_slavemode'] = 'n';
-	$_SESSION['prefs']['interlist'] = serialize(array(''));
+	$_SESSION['prefs']['interlist'] = array('');
 	$_SESSION['prefs']['feature_intertiki_mymaster'] = '';
 	$_SESSION['prefs']['feature_intertiki_import_preferences'] = 'n';
 	$_SESSION['prefs']['feature_intertiki_import_groups'] = 'n';
