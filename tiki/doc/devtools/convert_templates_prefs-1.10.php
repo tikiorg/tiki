@@ -25,10 +25,15 @@ $elems=scandir('templates/');
 
 foreach($elems as $filename) {
     if (preg_match('/.tpl$/', $filename)) {
-	echo "$filename...\n";
-	$content=file_get_contents($dirtoscan.'/'.$filename);
-	$content=str_replace($src, $dst, $content);
-	file_put_contents($dirtoscan.'/'.$filename, $content);
+	echo "$filename... ";
+	$content_src=file_get_contents($dirtoscan.'/'.$filename);
+	$content_dst=str_replace($src, $dst, $content_src);
+	if ($content_dst != $content_src) {
+	    file_put_contents($dirtoscan.'/'.$filename, $content_dst);
+	    echo " modified\n";
+	} else {
+	    echo " no\n";
+	}
     }
 }
 
