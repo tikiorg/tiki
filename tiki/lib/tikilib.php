@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.2 2007-10-17 18:18:10 niclone Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.3 2007-10-17 18:33:53 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4090,12 +4090,12 @@ function add_pageview() {
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
 	function get_db_preferences() {
 		global $prefs;
-		$prefs['lastReadingPrefs'] = $this->now;
 		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
 		while ( $res = $result->fetchRow() ) {
 			$prefs[$res['name']] = $res['value'];
 			$_SESSION['prefs'][$res['name']] = $res['value'];
 		}
+		$_SESSION['prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
     }
 
 	function get_preferences( $names, $exact_match = false, $no_return = false ) {
@@ -4131,9 +4131,8 @@ function add_pageview() {
 
     function set_preference($name, $value) {
 		global $user_overrider_prefs, $user_preferences, $user, $prefs;
-		
-		$query = "update `tiki_preferences` set `value`=? where `name`=?";
-		$this->query($query, array($this->now, 'lastUpdatePrefs'));
+
+		$this->set_lastUpdatePrefs();
 		
 		$query = "delete from `tiki_preferences` where `name`=?";
 		$result = $this->query($query,array($name),-1,-1,false);
@@ -4159,6 +4158,12 @@ function add_pageview() {
 		}
 		return true;
     }
+
+	function set_lastUpdatePrefs() {
+		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
+		$this->query($query, array('lastUpdatePrefs'));
+		
+	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
 		if ( empty($table) || empty($field_name) ) return false; 
