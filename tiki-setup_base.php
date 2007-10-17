@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.1 2007-10-17 19:26:15 jonnybradley Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.2 2007-10-17 20:01:04 niclone Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,7 +84,7 @@ if ($prefs['session_db'] == 'y') {
 	include('session/adodb-session.php');
 }
 
-if ( ($sessions_silent == 'disabled' or !empty($_COOKIE)) && !isset($_SESSION) ) {
+if ($sessions_silent == 'disabled' or !empty($_COOKIE)) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	session_start();
 }
