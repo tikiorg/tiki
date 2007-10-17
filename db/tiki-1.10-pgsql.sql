@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-09-25 02:12:49 $
--- $Author: mose $
+-- $Date: 2007-10-17 19:22:52 $
+-- $Author: jonnybradley $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -5991,11 +5991,9 @@ CREATE TABLE "tiki_mypage" (
   "wintitlecolor" varchar(16) default NULL,
   "wintextcolor" varchar(16) default NULL,
   "bgimage" varchar(255) default NULL,
-  "bgtype" varchar(11) CHECK ("bgtype" IN ('color', 'imageurl')) default 'color' NOT NULL;
-
-  winbgimage varchar(255) default NULL,
-  "winbgtype" varchar(11) CHECK ("winbgtype" IN ('color', 'imageurl')) default 'color' NOT NULL;
-
+  "bgtype" varchar(11) CHECK ("bgtype" IN ('color', 'imageurl')) default 'color' NOT NULL,
+  "winbgimage" varchar(255) default NULL,
+  "winbgtype" varchar(11) CHECK ("winbgtype" IN ('color', 'imageurl')) default 'color' NOT NULL,
   PRIMARY KEY  (id)
 ) ENGINE=MyISAM;
 
