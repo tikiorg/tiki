@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40 2007-10-04 22:17:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.41 2007-10-18 06:26:40 ohertel Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -25,7 +25,7 @@
 					  <div id="zoomselect" style="position:absolute; left:0px; top:0px; width: 0px; height: 0px; 
 							border: blue solid 2px; z-index:30; visibility:hidden;overflow:hidden;">
 			      </div>
-		      {*	<input type="image" id="map" src="{$image_url}"  *}
+		      {*	<input type="image" id="map" src="{$image_url}">  *}
 		        <img id="map" src="{$image_url}"
 						{if $xsize != ""}width="{$xsize}"{/if} 
 						{if $ysize != ""}height="{$ysize}"{/if} 

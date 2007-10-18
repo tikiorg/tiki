@@ -32,9 +32,7 @@
 {if $diff_style eq "sideview"}
 <tr>
   <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
-  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
-</tr>
-</table>
+  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div>
 {/if}
 
 {if $diff_style eq 'unidiff'}
@@ -71,13 +69,13 @@
  {else}
  <div class="diffheader">{tr}Versions are identical{/tr}</div>
  {/if}
-</td></tr>
-</table>
 {/if}
 
 {if $diff_style eq 'sidediff' || $diff_style eq 'minsidediff'}
-  {if $diffdata}{$diffdata}{else}{tr}Versions are identical{/tr}</td></tr></table>{/if}
+  {if $diffdata}{$diffdata}{else}{tr}Versions are identical{/tr}{/if}
 {/if}
+</td></tr>
+</table>
 <br />
 
 {if $preview || $diff_style}<h2>{tr}History{/tr}</h2>{/if}

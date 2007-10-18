@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.17 2007-10-14 17:51:03 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.18 2007-10-18 06:32:07 ohertel Exp $ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
@@ -37,7 +37,6 @@
 {elseif $logged_users>0}
 {tr}online user{/tr}
 {/if}
-</div>
 {foreach key=ix item=online_user from=$online_users}
 {if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $online_user.allowMsgs eq 'n'}

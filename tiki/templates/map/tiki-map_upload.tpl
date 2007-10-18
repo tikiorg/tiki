@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.15 2007-07-17 16:33:13 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.16 2007-10-18 06:26:40 ohertel Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
 <h3>{tr}{$dir}{/tr}</h3></a>
 <table class="normal">
 <tr>
-<td class="heading" colspan="2">{tr}Directories{/tr}</a></td>
+<td class="heading" colspan="2">{tr}Directories{/tr}</td>
 </tr>
 {if $dir ne '/data'}
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 {/if}
 {/section}
-<td class="heading" colspan="2">{tr}Files{/tr}</a></td>
+<td class="heading" colspan="2">{tr}Files{/tr}</td>
 {cycle values="odd,even" print=false}
 {section name=user loop=$files}
 <tr>
