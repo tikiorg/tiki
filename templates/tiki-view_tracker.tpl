@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.2 2007-10-18 18:37:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.3 2007-10-18 21:30:54 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -62,7 +62,7 @@
 {if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div id="page-bar">
-{if $tiki_p_view_trackers eq 'y' or $tracker_info.writerCanModify eq 'y'}
+{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
@@ -73,7 +73,7 @@
 
 {cycle name=content values="1,2,3" print=false advance=false reset=true}
 {* -------------------------------------------------- tab with list --- *}
-{if $tiki_p_view_trackers eq 'y' or $tracker_info.writerCanModify eq 'y'}
+{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
