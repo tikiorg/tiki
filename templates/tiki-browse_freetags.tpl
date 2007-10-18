@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.2 2007-10-18 06:08:36 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.3 2007-10-18 08:51:35 ohertel Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
@@ -140,6 +140,7 @@
 <br /> 
 <br /> 
 <table width="100%">
+<tr>
 <td width="200">
 {if $prefs.freetags_browse_show_cloud eq 'y'}
 <script type="text/javascript">

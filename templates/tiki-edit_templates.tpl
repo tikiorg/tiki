@@ -21,7 +21,7 @@
 <h2>{tr}Available templates{/tr}:</h2>
 <table border="1" cellpadding="0" cellspacing="0" >
 <tr>
-<td class="heading">{tr}Template{/tr}</a></td>
+<td class="heading">{tr}Template{/tr}</td>
 </tr>
 {section name=user loop=$files}
 {if $smarty.section.user.index % 2}

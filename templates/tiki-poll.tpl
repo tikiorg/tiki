@@ -29,8 +29,6 @@
 <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
 </a>
 </div>
-</td>
 {/if}
-</div>
 </form>
 

@@ -185,7 +185,6 @@
   <td class="formcolor">
   <input type="submit" name="create" value="{tr}Update{/tr}" />
   </td>
-  </tr>
 </tr>
 </table>
 </form>

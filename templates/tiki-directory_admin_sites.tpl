@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.36.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.36.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
   
       {if $prefs.feature_help eq 'y'}
@@ -7,7 +7,7 @@
 
       {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory Sites tpl{/tr}">
-<img border='0' src='pics/icons/shape_square_edit.png'  height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1
+<img border='0' src='pics/icons/shape_square_edit.png'  height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.1 2007-10-17 20:36:06 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.2 2007-10-18 08:51:33 ohertel Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -64,7 +64,6 @@
 {else}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a new user{/tr}</a></span>
 {/if}
-</span>
 </div>
 {/if}
 
@@ -95,7 +94,7 @@
 {/section}
 </select></td>
 </tr><tr>
-</td><td>{tr}Email{/tr}</td>
+<td>{tr}Email{/tr}</td>
 <td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
 </tr>
 </table>
@@ -198,7 +197,6 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   </select><br /><input type="submit" value="{tr}OK{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
-  </p>
   </td></tr>
   </table>
   
@@ -230,7 +228,6 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 
 </div>
 {/if}
-</div>
 
 {* ---------------------- tab with form -------------------- *}
 <a name="2" ></a>

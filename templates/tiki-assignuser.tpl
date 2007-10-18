@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.42.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.42.2.2 2007-10-18 08:51:35 ohertel Exp $ *}
 
 <h1><a href="tiki-assignuser.php?assign_user={$assign_user|escape:url}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 
@@ -98,5 +98,4 @@
 {/section}
 {/if}
 
-</div>
 </div>
