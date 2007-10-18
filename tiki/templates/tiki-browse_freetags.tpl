@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.2 2007-10-18 06:08:36 mose Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
 {include file='tiki-ajax_header.tpl' test=$test}
 <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
 {/if}
 
-<h1>{tr}Browse related tags{/tr}</h1>
+<h1><a href="tiki-browse_freetags.php" class="pagetitle">{tr}Browse related tags{/tr}</a></h1>
 
 {if $prefs.feature_morcego eq 'y' and $prefs.freetags_feature_3d eq 'y'}
 
@@ -162,7 +162,7 @@
   <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
 	<b>{tr}Tags{/tr}</b> <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" /><a class="link" onClick="clearTags();">{tr}clear{/tr}</a><br />
   <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-  <input type=checkbox name="stopbroaden" {if $broaden eq 'n'}checked{/if}>{tr}Show only objects with all selected tags{/tr}<br />
+  <input type="checkbox" id="stopb" name="stopbroaden" {if $broaden eq 'n'}checked{/if}> <label for="stopb">{tr}Show only objects with all selected tags{/tr}</label><br />
   {tr}Find:{/tr} <input type="text" name="find" />
   <input type="submit" />
   </form>
