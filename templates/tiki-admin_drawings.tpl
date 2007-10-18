@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.32.2.1 2007-10-17 20:36:05 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.32.2.2 2007-10-18 08:10:21 ohertel Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 
@@ -42,9 +42,9 @@
 <td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 {/if}
 <td class="heading">{tr}Name{/tr}</td>
-<td  class="heading">{tr}Ver{/tr}</a></td>
-<td  class="heading">{tr}Versions{/tr}</a></td>
-<td  class="heading">{tr}Action{/tr}</a></td>
+<td  class="heading">{tr}Ver{/tr}</td>
+<td  class="heading">{tr}Versions{/tr}</td>
+<td  class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

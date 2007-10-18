@@ -60,7 +60,7 @@
         <tr><td class="form">&nbsp;</td><td class="form" colspan="4">
 		<div class="rbox" name="tip">
 		<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-		<div class="rbox-data" name="tip">{tr}Only enable caching if all syndicated content is public (visible to everyone) or private documents might leak out. Cache ignores existing permissions.{/tr}</a></div>
+		<div class="rbox-data" name="tip">{tr}Only enable caching if all syndicated content is public (visible to everyone) or private documents might leak out. Cache ignores existing permissions.{/tr}</div>
 		</div>
 		</td></tr>
 		
