@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159 2007-10-10 14:27:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.1 2007-10-18 08:51:34 ohertel Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -749,10 +749,11 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {if $fields[ix].description}
 <br /><em>{$fields[ix].description}</em>
 {/if}
+</td>
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
-</td>{assign var=stick value="y"}
+{assign var=stick value="y"}
 {else}
-</td></tr>{assign var=stick value="n"}
+</tr>{assign var=stick value="n"}
 {/if}
 {/if}
 {/if}

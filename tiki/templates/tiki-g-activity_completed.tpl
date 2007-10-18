@@ -31,7 +31,6 @@
 		<td class="odd" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
 	</tr>
 	{/if}
-</tr>
 </table>
 <input type="hidden" name="iid" value="{$iid}" />
 <input type="hidden" name="__post" value="y" />

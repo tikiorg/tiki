@@ -26,7 +26,7 @@ Text Search <input type="hidden" name="where" value="wikis" />
 {/if}
 <td style="text-align:right;">
 {if $user}
-<b>{$user}</a>
+<b>{$user}</b>
 <a href="tiki-logout.php">({tr}Logout{/tr})</a>
 {else}
 <form action="tiki-login.php" method="post">
@@ -54,4 +54,4 @@ Text Search <input type="hidden" name="where" value="wikis" />
 </div>
 {/if}
 </td></tr></table>
-</td></tr></table>
+

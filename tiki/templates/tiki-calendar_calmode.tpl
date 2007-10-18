@@ -1,7 +1,7 @@
 <table cellpadding="0" cellspacing="0" border="0" id="caltable">
 <tr><td width="10px">&nbsp;</td>
 {section name=dn loop=$daysnames}
-<th class="days" width="14%">{$daysnames[dn]}</td>
+<th class="days" width="14%">{$daysnames[dn]}</th>
 {/section}
 </tr>
 {cycle values="odd,even" print=false}

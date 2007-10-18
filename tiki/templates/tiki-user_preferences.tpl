@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.1 2007-10-17 21:18:49 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -191,6 +191,7 @@
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <tr id="3"><td class="heading" colspan="2">{tr}User Messages{/tr}</td></tr>
+<tr>
   <td class="{cycle advance=false}">{tr}Messages per page{/tr}</td>
   <td class="{cycle}">
     <select name="mess_maxRecords">

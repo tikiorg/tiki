@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.37.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.37.2.2 2007-10-18 08:51:33 ohertel Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -159,7 +159,7 @@
 
 {* still stuck on being able to sort by number of questions and results!
 Results need to be sortable so as to give admin quick idea of user participation
-<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}Results{/tr}</a>
+<td><a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}Results{/tr}</a>
 </td>
 *}
 

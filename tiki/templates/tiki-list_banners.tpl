@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.1 2007-10-17 20:36:10 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Admin Banners{/tr}">
@@ -39,7 +39,7 @@
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'maxImpressions_desc'}maxImpressions_asc{else}maxImpressions_desc{/if}">{tr}Max Impressions{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'impressions_desc'}impressions_asc{else}impressions_desc{/if}">{tr}Impressions{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'clicks_desc'}clicks_asc{else}clicks_desc{/if}">{tr}Clicks{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</a></td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}

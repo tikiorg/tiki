@@ -17,7 +17,7 @@
   <tr><td align="center" colspan=3>{tr}Create Language{/tr}</td></tr>
   <tr><td class="form">{tr}Shortname{/tr}:</td><td><input name="cr_lang_short" size=6 maxlength=16 value="{$cr_lang_short|escape}" /></td><td>({tr}like{/tr} en)</td></tr>
   <tr><td class="form">{tr}Longname{/tr}:</td><td><input name="cr_lang_long" size=20 maxlength=255 value="{$cr_lang_long|escape}" /></td><td>({tr}like{/tr} English)</td></tr>
-  <td align="center"><input type="submit" name="createlang" value="{tr}Create{/tr}" /></td></tr>
+  <tr><td align="center"><input type="submit" name="createlang" value="{tr}Create{/tr}" /></td></tr>
   {if $crmsg}
     <tr><td align="center" colspan=3>{$crmsg}</td></tr>
   {/if}
