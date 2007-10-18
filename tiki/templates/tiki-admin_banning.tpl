@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.33.2.1 2007-10-17 20:36:05 niclone Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.33.2.2 2007-10-18 08:10:21 ohertel Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -118,9 +118,9 @@
 <tr>
 <td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}Title{/tr}</td>
-<td class="heading">{tr}User/IP{/tr}</a></td>
-<td class="heading">{tr}Sections{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</a></td>
+<td class="heading">{tr}User/IP{/tr}</td>
+<td class="heading">{tr}Sections{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

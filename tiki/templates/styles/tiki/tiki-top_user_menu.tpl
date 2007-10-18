@@ -15,7 +15,7 @@
 <option value="">{tr}MyTiki{/tr}</option>
 <option value="">----</option>
 {if $prefs.feature_userPreferences eq 'y'}
-<option value="tiki-user_preferences.php">{tr}Preferences{/tr}</a>
+<option value="tiki-user_preferences.php">{tr}Preferences{/tr}</option>
 {/if}
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <option value="messu-mailbox.php">{tr}Messages{/tr}</option>
