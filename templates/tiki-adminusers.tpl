@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.2 2007-10-18 08:51:33 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.3 2007-10-19 20:55:17 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -64,6 +64,7 @@
 {else}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a new user{/tr}</a></span>
 {/if}
+</span>
 </div>
 {/if}
 
@@ -94,7 +95,7 @@
 {/section}
 </select></td>
 </tr><tr>
-<td>{tr}Email{/tr}</td>
+</td><td>{tr}Email{/tr}</td>
 <td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
 </tr>
 </table>
@@ -197,6 +198,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
   </select><br /><input type="submit" value="{tr}OK{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
+  </p>
   </td></tr>
   </table>
   
@@ -219,7 +221,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 
 <a class="prevnext" href="tiki-adminusers.php?find={$find|escape:"url"}&amp;{if $initial}initial={$initial}&amp;{/if}offset={$selector_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
@@ -228,6 +230,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 
 </div>
 {/if}
+</div>
 
 {* ---------------------- tab with form -------------------- *}
 <a name="2" ></a>
