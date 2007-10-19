@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.2 2007-10-19 18:01:30 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.3 2007-10-19 18:20:11 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -690,9 +690,17 @@ if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
 	$smarty->assign('pagedata', $edit_data);
 }
 
+if ( isset($_REQUEST['edit']) && ! $is_html ) {
+	// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
+	//   then we need to convert HTML special chars into their HTML entities equivalent;
+	$parsed = htmlspecialchars($edit_data);
+} else {
+	$parsed = $edit_data;
+}
+
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
-  $parsed = $tikilib->apply_postedit_handlers($edit_data);
+  $parsed = $tikilib->apply_postedit_handlers($parsed);
   $parsed = $tikilib->parse_data($parsed,$is_html);
 } else {
   $parsed = "";
@@ -710,11 +718,6 @@ if ($prefs['wiki_spellcheck'] == 'y') {
   }
 }
 
-if ( isset($_REQUEST['edit']) && ! $is_html ) {
-	// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
-	//   then we need to convert HTML special chars into their HTML entities equivalent;
-	$parsed = htmlspecialchars($edit_data);
-}
 $smarty->assign_by_ref('parsed', $parsed);
 
 
