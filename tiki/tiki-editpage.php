@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.1 2007-10-18 12:43:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.2 2007-10-19 18:01:30 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -598,13 +598,7 @@ if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
 	$smarty->assign("poll_template",0);
 }
 if(isset($_REQUEST["edit"])) {
-  
-  if ($is_html) {
     $edit_data = $_REQUEST["edit"];  
-  } else {
-  $edit_data = htmlspecialchars($_REQUEST["edit"]);
-  }
-
 } else {
     if (isset($info['draft'])) {
 	$edit_data = $info['draft']['data'];
@@ -688,8 +682,13 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-if ($prefs['feature_wysiwyg'] == 'n' or $_SESSION['wysiwyg'] != 'y') $edit_data =& htmldecode($edit_data);
-$smarty->assign('pagedata',$edit_data);
+if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
+	// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
+	//   then we need to convert database's HTML entities into their "normal chars" equivalents
+	$smarty->assign('pagedata', htmldecode($edit_data));
+} else {
+	$smarty->assign('pagedata', $edit_data);
+}
 
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
@@ -711,7 +710,13 @@ if ($prefs['wiki_spellcheck'] == 'y') {
   }
 }
 
+if ( isset($_REQUEST['edit']) && ! $is_html ) {
+	// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
+	//   then we need to convert HTML special chars into their HTML entities equivalent;
+	$parsed = htmlspecialchars($edit_data);
+}
 $smarty->assign_by_ref('parsed', $parsed);
+
 
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
@@ -720,9 +725,17 @@ if(isset($_REQUEST["preview"])) {
 }
 
 function htmldecode($string) {
-   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-   return $string;
+	if ( version_compare(phpversion(), '5', '>=') ) {
+		// Use html_entity_decode with UTF-8 only with PHP5 or later, since
+		//   this function was available in PHP4 but _without_ multi-byte charater sets support
+		$string = html_entity_decode($string, ENT_COMPAT, 'utf-8');
+		return $string;
+	} else {
+		// For compatibility purposes with php < 5
+		$string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
+		$string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
+		return recode_string('iso-8859-15..utf-8', $string);
+	}
 }
 
 
@@ -794,8 +807,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     if($is_html) {
       $edit = $_REQUEST["edit"];
     } else {
-//      $edit = strip_tags($_REQUEST["edit"]);
-    $edit = htmlspecialchars($_REQUEST['edit']);
+      $edit = htmlspecialchars($_REQUEST['edit']);
     }
 
     // add permisions here otherwise return error!
