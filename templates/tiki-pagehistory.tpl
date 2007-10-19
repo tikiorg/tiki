@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.1 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.2 2007-10-19 19:54:33 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -52,7 +52,9 @@
 {if $diff_style eq "sideview"}
 <tr>
   <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
-  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div>
+  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
+</tr>
+</table>
 {/if}
 
 {if $diff_style eq 'unidiff'}
@@ -89,13 +91,13 @@
  {else}
  <div class="diffheader">{tr}Versions are identical{/tr}</div>
  {/if}
+</td></tr>
+</table>
 {/if}
 
 {if $diff_style && $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}{/if}
+  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr></table>{/if}
 {/if}
-</td></tr>
-</table>
 <br />
 
 {if (!isset($noHistory))}                                              
