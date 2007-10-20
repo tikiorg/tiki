@@ -71,8 +71,8 @@
           <td ><select name="user_list_order" id="user_list_order">
         	<option value="score_asc" {if $prefs.user_list_order=="score_asc"}selected="selected"{/if}>{tr}Score ascending{/tr}</option>
             <option value="score_desc" {if $prefs.user_list_order=="score_desc"}selected="selected"{/if}>{tr}Score descending{/tr}</option>
-            <option value="realName_asc" {if $prefs.user_list_order=="realName_asc"}selected="selected"{/if}>{tr}Name ascending{/tr}</option>
-            <option value="realName_desc" {if $prefs.user_list_order=="realName_desc"}selected="selected"{/if}>{tr}Name descending{/tr}</option>
+            <option value="pref:realName_asc" {if $prefs.user_list_order=="pref:realName_asc"}selected="selected"{/if}>{tr}Name ascending{/tr}</option>
+            <option value="pref:realName_desc" {if $prefs.user_list_order=="pref:realName_desc"}selected="selected"{/if}>{tr}Name descending{/tr}</option>
             <option value="login_asc" {if $prefs.user_list_order=="login_asc"}selected="selected"{/if}>{tr}Login ascending{/tr}</option>
             <option value="login_desc" {if $prefs.user_list_order=="login_desc"}selected="selected"{/if}>{tr}Login descending{/tr}</option>
           </select></td>
