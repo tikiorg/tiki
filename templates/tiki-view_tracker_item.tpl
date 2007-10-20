@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.2 2007-10-18 08:51:33 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.3 2007-10-20 12:58:35 pkdille Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -319,11 +319,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {else}
 <tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
 {if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
-<br />
-{include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+  <br />
+
+  {if $prefs.quicktags_over_textarea neq 'y'}
+    {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+  {/if}
 {elseif ($cur_field.type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
 <br />
+
 {* <a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;vals%5B{$cur_field.options_array[1]}%5D= *}
+
 <a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
 {section name=ox loop=$ins_fields}
 {if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
@@ -415,6 +420,9 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {$cur_field.value|escape}
 
 {elseif $cur_field.type eq 'a'}
+{if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
+{/if}
 {if $cur_field.isMultilingual ne "y"}
             <textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
         {else}

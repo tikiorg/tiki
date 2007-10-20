@@ -19,6 +19,7 @@ ask_ticket('admin-inc-textarea');
 	"feature_smileys",
 	"popupLinks",
 	"feature_autolinks",
+        "quicktags_over_textarea",
     );
 
 

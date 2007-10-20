@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -59,31 +59,37 @@
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 {/if}
 {/if}
+
 {if $page_ref_id}
-<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+  <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
+
 {if $current_page_id}
-<input type="hidden" name="current_page_id" value="{$current_page_id}" />
+  <input type="hidden" name="current_page_id" value="{$current_page_id}" />
 {/if}
+
 {if $add_child}
-<input type="hidden" name="add_child" value="true" />
+  <input type="hidden" name="add_child" value="true" />
 {/if}
+
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-{if $wysiwyg ne 'y'}
-<span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
-{else}
-<span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
-{/if}
+  {if $wysiwyg ne 'y'}
+    <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+  {else}
+    <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+  {/if}
 {/if}
 
 <table class="normal">
 
 {if $categIds}
 {section name=o loop=$categIds}
-<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+  <input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
 {/section}
+
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
+
 {if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
@@ -95,14 +101,17 @@
 {include file=structures.tpl}
 
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
-<tr class="formcolor"><td>{tr}Apply template{/tr}:</td><td>
-<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
-<option value="0">{tr}none{/tr}</option>
-{section name=ix loop=$templates}
-<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
-{/section}
-</select>
-</td></tr>
+  <tr class="formcolor">
+    <td>{tr}Apply template{/tr}:</td>
+    <td>
+      <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
+      <option value="0">{tr}none{/tr}</option>
+      {section name=ix loop=$templates}
+        <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
+      {/section}
+      </select>
+    </td>
+  </tr>
 {/if}
 
 {if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
@@ -151,16 +160,25 @@
 </tr>
 {/if}
 {if $prefs.feature_wiki_description eq 'y'}
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td></tr>
+  <tr class="formcolor">
+    <td>{tr}Description{/tr}:</td>
+    <td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td>
+  </tr>
 {/if}
+
 <tr class="formcolor">
 {if $wysiwyg ne 'y'}
 <td>
 {tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
-{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+{if $prefs.quicktags_over_textarea neq 'y'}
+  {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+{/if}
 </td>
 <td>
+{if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
+  {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+{/if}
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>

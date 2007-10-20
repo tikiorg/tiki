@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.65 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.65.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -21,6 +21,16 @@
 <a class="linkbut" href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
 <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
+
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+</div>
+
+<div class="rbox-data" name="tip">
+  {tr}Use ...page... to separate pages in a multi-page post{/tr}
+</div>
+
+<br />
 
 {if $preview}
 {include file="tiki-preview_article.tpl"}
@@ -132,29 +142,63 @@
 
 {include file=categorize.tpl}
 
-<tr class="formcolor"><td>{tr}Heading{/tr}<br />{include file=tiki-edit_help_tool.tpl area_name='heading'}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr  id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Body{/tr}
-<br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
-<br />{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
-</td><td>
-<b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
-<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
-</td></tr>
+
+<tr class="formcolor">
+  <td>{tr}Heading{/tr}<br />
+    {if $prefs.quicktags_over_textarea neq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='heading'}
+    {/if}
+  </td>
+  <td>
+    {if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='heading'}
+    {/if}
+    <textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
+  </td>
+</tr>
+
+
+<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+  <td>{tr}Body{/tr}
+    <br />
+    {include file="textareasize.tpl" area_name='body' formId='editpageform'}
+    {if $prefs.quicktags_over_textarea neq 'y'}
+      <br />{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
+    {/if}
+  </td>
+  <td>
+    {if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='body'}
+    {/if}
+    <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
+    <input type="hidden" name="rows" value="{$rows}"/>
+    <input type="hidden" name="cols" value="{$cols}"/>
+  </td>
+</tr>
+
 {if $prefs.cms_spellcheck eq 'y'}
-<tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
+  <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
-{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
-&nbsp;{$siteTimeZone}
-</span>
-</td></tr>
-<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
-{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
-&nbsp;{$siteTimeZone}
-</span>
-</td></tr>
+
+<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y' || $types.$type.show_pre_publ ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+  <td>{tr}Publish Date{/tr}</td>
+  <td>
+    {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
+    <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+      &nbsp;{$siteTimeZone}
+    </span>
+  </td>
+</tr>
+
+<tr id='show_expdate' {if $types.$type.show_expdate eq 'y' || $types.$type.show_post_expire ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor">
+  <td>{tr}Expiration Date{/tr}</td>
+  <td>{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr} 
+  <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+    &nbsp;{$siteTimeZone}
+  </span>
+  </td>
+</tr>
+
 {if $tiki_p_use_HTML eq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}</td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}

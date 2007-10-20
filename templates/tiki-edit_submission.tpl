@@ -22,6 +22,14 @@
 <a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+</div>
+
+<div class="rbox-data" name="tip">
+  {tr}Use ...page... to separate pages in a multi-page post{/tr}
+</div>
+
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
 <input type="hidden" name="subId" value="{$subId|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />
@@ -119,17 +127,41 @@
 
 {include file=categorize.tpl}
 
-<tr class="formcolor"><td>{tr}Heading{/tr}<br />
-{include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Body{/tr}
-<br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
-<br />{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
-</td><td>
-<b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
-<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
-<input type="hidden" name="rows" value="{$rows}" />
-<input type="hidden" name="cols" value="{$cols}" />
-</td></tr>
+<tr class="formcolor">
+  <td>
+    {tr}Heading{/tr}
+    <br />
+    {if $prefs.quicktags_over_textarea neq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}
+    {/if}
+  </td>
+  <td>
+    {if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='heading' qtnum='1'}
+    {/if}
+    <textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea>
+  </td>
+</tr>
+
+<tr id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:table-row;"{else}style="display:none;"{/if} class="formcolor">
+  <td>
+    {tr}Body{/tr}
+    <br /><br />
+    {include file="textareasize.tpl" area_name='body' formId='editpageform'}
+    {if $prefs.quicktags_over_textarea neq 'y'}
+      <br /><br />
+      {include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
+    {/if}
+  </td>
+  <td>
+    {if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
+    {/if}
+    <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
+    <input type="hidden" name="rows" value="{$rows}" />
+    <input type="hidden" name="cols" value="{$cols}" />
+  </td>
+</tr>
 {if $prefs.cms_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}

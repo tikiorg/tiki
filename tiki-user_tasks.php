@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27.2.1 2007-10-17 20:47:18 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27.2.2 2007-10-20 12:58:34 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,11 @@ if (!isset($_REQUEST['taskId'])){
 	$_REQUEST['taskId'] = 0;
 }
 
+include_once ('lib/quicktags/quicktagslib.php');
+// The quicktags presented in the user tasks are the wiki-quicktags !
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+$smarty->assign('quicktagscant', $quicktags["cant"]);
 
 
 //default values for show options

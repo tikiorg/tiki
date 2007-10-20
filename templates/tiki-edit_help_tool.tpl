@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28 2007-10-11 14:41:31 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -18,10 +18,12 @@ function taginsert(area_name,tagid)
 -->
 </script>
 {/literal}
+{if $prefs.quicktags_over_textarea neq 'y'}
   <a href="javascript:flip('helptool{$qtnum}');" class="link">
     <img src="pics/icons/bullet_toggle_plus.png" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...
   </a>
   <br /><br />
+{ /if}
 {*get_strings {tr}bold{/tr}
               {tr}italic{/tr}
               {tr}underline{/tr}
@@ -56,14 +58,18 @@ function taginsert(area_name,tagid)
 <div id='helptool{$qtnum}' 
   {assign var=show value="show_helptool"|cat:$qtnum}
 
+{if $prefs.quicktags_over_textarea neq 'y'}
   {if isset($smarty.session.tiki_cookie_jar.$show) and $smarty.session.tiki_cookie_jar.$show eq 'y'}
     style="display:block;"
   {else}
     style="display:none;"
   {/if}>
-
+{/if}
+  
   <div>
+  {if $prefs.quicktags_over_textarea neq 'y'}
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
+  {/if}
     {section name=qtg loop=$quicktags}
       <a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
         <img src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' title='{tr}{$quicktags[qtg].taglabel}{/tr}' border='0' />
@@ -73,10 +79,11 @@ function taginsert(area_name,tagid)
     <a title="{tr}special chars{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');">
       <img src='pics/icons/world_edit.png' alt='{tr}special characters{/tr}' title='{tr}special characters{/tr}' border='0' />
     </a>
-  </div>
+  {if $prefs.quicktags_over_textarea neq 'y'}
+    </div>
+  {/if}
 
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}
-    <br />
     <a href="tiki-admin_quicktags.php" class="link">{tr}Admin Quicktags{/tr}</a>
   {/if}
 </div>

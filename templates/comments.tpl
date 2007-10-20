@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98 2007-10-15 08:16:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -271,6 +271,15 @@
 			<td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost2"}</td>
 		</tr>
 		{/if}
+                
+                {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
+                  <tr>
+		    <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
+                    <td class="formcolor">
+                      {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+                    </td>
+                  </tr>
+                {/if}
 
 		<tr>
 			<td class="formcolor">
@@ -278,7 +287,9 @@
 				<br /><br />
 				{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}
 				<br /><br />
-				{if $quicktags}{include file=tiki-edit_help_tool.tpl area_name='editpost2'}{/if}
+                                {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
+				  {include file=tiki-edit_help_tool.tpl area_name='editpost2'}
+                                {/if}
 			</td>
 			<td class="formcolor">
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' }{$comment_data|escape}{/if}</textarea>

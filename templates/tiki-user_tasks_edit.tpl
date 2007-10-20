@@ -116,17 +116,21 @@
 			<input  style="width:98%;" type="text" name="title" value="{$info.title|escape}" />
 		</td>
     </tr>
-	<tr>
-    	<td class="formcolor">{tr}Description{/tr}<br /><br />
-
-{include file="textareasize.tpl" area_name='edittask' formId='editpageform'}<br /><br /> 
-{include file=tiki-edit_help_tool.tpl}
-	  </td>
-      <td colspan="3" class="formcolor">
-        <textarea id='edittask' style="width:98%;"  rows="5" cols="80" name="description">{$info.description|escape}</textarea>
+    <tr>
+      <td class="formcolor">{tr}Description{/tr}<br /><br />
+        {include file="textareasize.tpl" area_name='edittask' formId='editpageform'}<br /><br /> 
+        {if $quicktags and $prefs.quicktags_over_textarea neq 'y'}
+          {include file=tiki-edit_help_tool.tpl area_name='description'}
+        {/if}
       </td>
-  	</tr>
-	<tr><td  class="formcolor">{tr}Start{/tr}</td>
+      <td colspan="3" class="formcolor">
+        {if $quicktags and $prefs.quicktags_over_textarea eq 'y'}
+          {include file=tiki-edit_help_tool.tpl area_name='description'}
+        {/if}
+        <textarea id='edittask' style="width:98%;" rows="15" cols="80" name="description">{$info.description|escape}</textarea>
+      </td>
+    </tr>
+    <tr><td  class="formcolor">{tr}Start{/tr}</td>
 		<td colspan="3" class="formcolor">
 			{html_select_date time=$start_date prefix="start_" end_year="+4" field_order=$prefs.display_field_order}
 			&nbsp;-&nbsp;

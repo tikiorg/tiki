@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.3 2007-10-18 21:30:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.4 2007-10-20 12:58:35 pkdille Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -551,8 +551,10 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {else}
 <tr class="formcolor"><td class="formlabel">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
 {if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
-<br />
-{include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
+  <br />
+  {if $prefs.quicktags_over_textarea neq 'y'}
+    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
+  {/if}
 {/if}
 </td><td colspan="3" nowrap="nowrap">
 {/if}
@@ -658,13 +660,23 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {* -------------------- textarea -------------------- *}
 {elseif $fields[ix].type eq 'a'}
 {if $fields[ix].isMultilingual ne "y"}
+  {if $prefs.quicktags_over_textarea eq 'y'}
+    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=`$fields[ix].ins_id`}
+  {/if}
 <textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
 rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}</textarea>
 {else}
 <table>
 {foreach from=$fields[ix].lingualvalue item=ling}
-    <TR><TD>{$ling.lang}</td><td>
-        <textarea name="ins_{$fields[ix].id}_{$ling.lang}" id="area_{$fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea></td></tr>
+    <TR>
+      <TD>{$ling.lang}</td>
+      <td>
+        {if $prefs.quicktags_over_textarea eq 'y'}
+          {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=ins_`$fields[ix].id`_`$ling.lang`}
+        {/if}
+        <textarea name="ins_{$fields[ix].id}_{$ling.lang}" id="area_{$fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea>
+      </td>
+    </tr>
     {/foreach}
 </table>
 {/if}

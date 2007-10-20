@@ -45,22 +45,40 @@
 {if $prefs.feature_html_pages eq 'y'}
 <tr><td class="formcolor">{tr}Use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-<tr>
-{assign var=area_name value="editwiki"}
-{if $wysiwyg ne 'y'}
-<td class="formcolor">{tr}template{/tr}:<br /><br />
-{tr}Edit{/tr}:<br /><br />
-{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
-{include file=tiki-edit_help_tool.tpl area_name='editwiki'}</td>
-<td class="formcolor">
-<textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
-{else}
-<td colspan="2">
-{editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
+
+{if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
+  <tr>
+    <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
+    <td class="formcolor">
+      {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+    </td>
+  </tr>
 {/if}
-</td></tr>
+
+<tr>
+  {assign var=area_name value="editwiki"}
+  {if $wysiwyg ne 'y'}
+    <td class="formcolor">{tr}template{/tr}:
+      <br /><br />
+      {tr}Edit{/tr}:
+      <br /><br />
+      {include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br />
+      <br />
+      {if $prefs.quicktags_over_textarea neq 'y'}
+        {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+      {/if}  
+    </td>
+    <td class="formcolor">
+      <textarea id='editwiki' class="wikiedit" name="content" rows="{$rows}" cols="{$cols}" style="WIDTH: 100%;">{$info.content|escape}</textarea>
+      <input type="hidden" name="rows" value="{$rows}"/>
+      <input type="hidden" name="cols" value="{$cols}"/>
+  {else}
+    <td colspan="2">
+    {editform Meat=$info.content InstanceName='content' ToolbarSet="Tiki"}
+  {/if}
+  </td>
+</tr>
+
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

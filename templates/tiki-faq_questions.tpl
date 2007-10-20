@@ -11,28 +11,37 @@
 
 {* begin table *}
 <table class="normal">
-<tr>
-<td class="formcolor">{tr}Question{/tr}:</td>
-<td class="formcolor" >
-<textarea type="text" rows="2" cols="80" name="question">{$question|escape}</textarea>
-</td>
-</tr>
-<tr>
-<td class="formcolor">{tr}Answer{/tr}:
-<br /> {include file="textareasize.tpl" area_name='faqans' formId='editpageform'}
-<br />{include file=tiki-edit_help_tool.tpl area_name="faqans"}
-</td>
-<td class="formcolor" >
-<textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
-</td>
-</tr>
-<tr>
-<td  class="formcolor">&nbsp;</td>
-<td class="formcolor" >
-<input type="submit" name="save" value="{tr}Save{/tr}" />
-{* set your changes and save 'em *}
-</td>
-</tr>
+  <tr class="formcolor">
+    <td class="formcolor">{tr}Question{/tr}:</td>
+    <td class="formcolor" >
+      <textarea type="text" rows="2" cols="80" name="question">{$question|escape}</textarea>
+    </td>
+  </tr>
+
+  <tr class="formcolor">
+    <td class="formcolor">{tr}Answer{/tr}:
+      <br /> 
+      {include file="textareasize.tpl" area_name='faqans' formId='editpageform'}
+      {if $prefs.quicktags_over_textarea neq 'y'}
+        <br />
+        {include file=tiki-edit_help_tool.tpl area_name="faqans"}
+      {/if}
+    </td>
+    <td class="formcolor" >
+      {if $prefs.quicktags_over_textarea eq 'y'}
+        {include file=tiki-edit_help_tool.tpl area_name="faqans"}
+      {/if}
+      <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
+    </td>
+  </tr>
+
+  <tr class="formcolor">
+    <td  class="formcolor">&nbsp;</td>
+    <td class="formcolor" >
+      <input type="submit" name="save" value="{tr}Save{/tr}" />
+      {* set your changes and save 'em *}
+    </td>
+  </tr>
 </table>
 {* end table *}
 

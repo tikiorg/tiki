@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.4 2007-10-17 18:33:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.5 2007-10-20 12:58:34 pkdille Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -889,6 +889,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['use_load_threshold'] = 'n';
 	$prefs['load_threshold'] = 3;
 	$prefs['site_busy_msg'] = 'Server is currently too busy; please come back later.';
+	$prefs['quicktags_over_textarea'] = 'n';
 
 
 	$prefs['bot_logo_code'] = '';
