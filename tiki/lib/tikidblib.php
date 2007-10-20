@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41 2007-10-12 07:55:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41.2.1 2007-10-20 20:55:52 fr_rodo Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -337,6 +337,7 @@ function convert_sortmode($sort_mode) {
         return '';
     }
     // parse $sort_mode for evil stuff
+    $sort_mode = str_replace('pref:','',$sort_mode);
     $sort_mode = preg_replace('/[^A-Za-z_,.]/', '', $sort_mode);
 
     if ($sort_mode == 'random') {

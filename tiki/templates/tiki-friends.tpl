@@ -68,7 +68,7 @@
 {if $listpages}
 <tr>
   <td class="userlistheading"><a class="userlistheading" href="tiki-friends.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Login{/tr}</a></td>
-  <td class="userlistheading"><a class="userlistheading" href="tiki-friends.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'realName_desc'}realName_asc{else}realName_desc{/if}">{tr}Real Name{/tr}</a></td>
+  <td class="userlistheading"><a class="userlistheading" href="tiki-friends.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pref:realName_desc'}pref:realName_asc{else}pref:realName_desc{/if}">{tr}Real Name{/tr}</a></td>
   <td class="userlistheading">{tr}Action{/tr}</td>
 </tr>
 {/if}
