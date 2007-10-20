@@ -57,9 +57,15 @@
 </td></tr>
 
 {if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
-<tr class="editblogform"><td><label for="blogs-heading">{tr}Blog heading{/tr}</label></td><td>
-<textarea name="heading" id="blogs-heading" rows='10' cols='40'>{$heading|escape}</textarea>
-</td></tr>
+<tr class="editblogform">
+  <td>
+    <label for="blogs-heading">{tr}Blog heading{/tr}</label>
+    <br />
+    {include file="textareasize.tpl" area_name='blogs-heading' formId='blog-edit-form'}</td>
+  <td>
+    <textarea name="heading" id="blogs-heading" rows='10' cols='{$cols}'>{$heading|escape}</textarea>
+  </td>
+</tr>
 {/if}
 {include file=categorize.tpl}
 <tr class="editblogform"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /></td></tr>
