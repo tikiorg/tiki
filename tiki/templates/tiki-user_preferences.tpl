@@ -1,42 +1,33 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.114 2007-10-20 05:17:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.115 2007-10-20 21:07:14 frank_p Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
-
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
-
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_preferences.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
-
 {if $tiki_p_admin_users eq 'y'}
 <a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
 <img border="0" alt="{tr}Assign Group{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>
 {/if}
 </h1>
-
 {if $userwatch eq $user or $userwatch eq ""}{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}{/if}
 <br />
 {/if}
-
 {if $tikifeedback}
 <div class="simplebox highlight">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}{/section}</div>
 {/if}
-
 <form action="tiki-user_preferences.php" method="post">
 <input type="hidden" name="view_user" value="{$userwatch|escape}" />
 <input type="hidden" name="user" value="{$userwatch|escape}" />
-
 {cycle values="odd,even" print=false}
  <table class="normal">
-
 <tr id="1"><td class="heading" colspan="2">{tr}Personal Information{/tr}</td></tr>
   <tr><td class="{cycle advance=false}">{tr}User{/tr}:</td><td class="{cycle}">{$userinfo.login}{if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'} <i>({tr}Use the email as username{/tr})</i>{/if}</td></tr>
   <tr><td class="{cycle advance=false}">{tr}Real Name{/tr}:</td><td class="{cycle}">{if $prefs.auth_ldap_nameattr eq ''}<input type="text" name="realName" value="{$realName|escape}" />{else}{$realName}{/if}</td></tr>
-
 	{* this should be optional
   <tr><td class="{cycle advance=false}">{tr}Gender{/tr}:</td>
   <td class="{cycle}">
@@ -46,7 +37,6 @@
   </td>
   </tr>
 	*}
-
   <tr><td class="{cycle advance=false}">{tr}Country{/tr}:</td><td class="{cycle}">
   {if $country == "None"}
   <img src="img/flags/Other.gif" border="0" width="16" height="13" alt='{tr}Flag{/tr}' title='{tr}Flag{/tr}' />
@@ -69,7 +59,6 @@
 	{if $prefs.feature_gmap eq 'y'}<a href="tiki-gmap_locator.php?for=user{if $userinfo.login ne $user}&amp;view_user={$userinfo.login}{/if}">{tr}Use Google Map locator{/tr}</a>{/if}</td></tr>
   <tr><td class="{cycle advance=false}">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="{cycle}"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   {/if}
-
   <tr><td class="{cycle advance=false}">{tr}Avatar{/tr}:</td><td class="{cycle}">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="{cycle advance=false}">{tr}URL:{/tr}</td><td class="{cycle}"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $prefs.feature_wiki eq 'y' and $prefs.feature_wiki_userpage eq 'y'}
@@ -81,7 +70,6 @@
   <tr><td class="{cycle advance=false}">{tr}Your personal tracker information{/tr}:</td><td class="{cycle}">
 	<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
 	{/if}
-
   {* Custom fields *}
   {section name=ir loop=$customfields}
   {if $customfields[ir].show}
@@ -90,7 +78,6 @@
     </tr>
   {/if}
   {/section}
-
 <tr id="2"><td class="heading" colspan="2">{tr}Preferences{/tr}</td></tr>
   <tr><td class="{cycle advance=false}">{tr}Last login{/tr}:</td><td class="{cycle}">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
   <tr><td class="{cycle advance=false}">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="{cycle}">
@@ -188,7 +175,6 @@
   </td>
   </tr>
   {/if}
-
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <tr id="3"><td class="heading" colspan="2">{tr}User Messages{/tr}</td></tr>
 <tr>
@@ -246,7 +232,6 @@
   </td>
 </tr>
 {/if}
-
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <tr><td class="heading" colspan="2">{tr}User Tasks{/tr}</td></tr>
 <tr>
@@ -264,54 +249,43 @@
   </td>
 </tr>
 {/if}
-
 <tr id="MyTiki"><td class="heading" colspan="2">{tr}My Tiki{/tr}</td></tr>
-
 {if $prefs.feature_wiki eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My pages{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_blogs eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My blogs{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_galleries eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My galleries{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_messages eq 'y'and $tiki_p_messages eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My messages{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_msgs" {if $mytiki_msgs eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My tasks{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_tasks" {if $mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_trackers eq 'y'}
 <tr><td class="{cycle advance=false}">{tr}My items{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-
 {if $prefs.feature_workflow eq 'y'}
   {if $tiki_p_use_workflow eq 'y'}
     <tr><td class="{cycle advance=false}">{tr}My workflow{/tr}</td><td class="{cycle}"><input type="checkbox" name="mytiki_workflow" {if $mytiki_workflow eq 'y'}checked="checked"{/if} /></td></tr>
   {/if}
 {/if}
-
 {if $prefs.feature_userlevels eq 'y'}
 	<tr><td class="form">{tr}My level{/tr}</td><td class="form">
 	<select name="mylevel">
 	{foreach key=levn item=lev from=$prefs.userlevels}
-	<option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
+	<option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{tr}{$lev}{/tr}</option>
 	{/foreach}
-	</select>
+	</select></td></tr>
 {/if}
 <tr>
   <td colspan="2" class="button"><input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
 </table>
 </form>
-
-
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
 <br />
 <table class="normal">
@@ -340,4 +314,3 @@
   </table>
   </form>
 {/if}
-
