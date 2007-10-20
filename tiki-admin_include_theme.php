@@ -55,4 +55,9 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
+if ( isset($_REQUEST["site_style"]) ) {
+	// If the theme has changed, reload the page to use the new theme
+	header("location: tiki-admin.php?page=theme");
+	exit;
+}
 ?>
