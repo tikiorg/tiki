@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32 2007-10-14 15:17:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.33 2007-10-20 05:17:10 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -138,7 +138,7 @@
     {if $prefs.direct_pagination eq 'y'}
       <br />
       {section loop=$cant_pages name=foo}
-        {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+        {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
         <a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;type={$type}&amp;parentId={$parentId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
           {$smarty.section.foo.index_next}
         </a>&nbsp;

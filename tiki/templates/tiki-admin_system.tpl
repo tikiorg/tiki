@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.29 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.30 2007-10-20 05:17:09 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -32,6 +32,11 @@
 <td><b>./temp/cache/</b></td>
 <td><a href="tiki-admin_system.php?do=temp_cache" class="link">{tr}Empty{/tr}</a></td>
 <td>({$tempcache.cant} {tr}Files{/tr} / {$tempcache.total|kbsize})</td>
+</tr>
+<tr class="form">
+<td><b>{tr}All user prefs sessions{/tr}</b></td>
+<td><a href="tiki-admin_system.php?do=prefs" class="link">{tr}Empty{/tr}</a></td>
+<td></td>
 </tr>
 </table>
 {if count($templates)}

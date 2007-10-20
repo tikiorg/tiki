@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.25 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.26 2007-10-20 05:16:54 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,7 +121,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	check_ticket('edit-languages');
 	//check if user has translated something
 	if (isset($_REQUEST["tr_recnum"])) {
-		for ($i = 0; $i <= $maxRecords; $i++) {
+		for ($i = 0; $i <= $prefs['maxRecords']; $i++) {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
@@ -172,17 +172,15 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		$tr_recnum = $_REQUEST["tr_recnum"];
 
 		if (isset($_REQUEST["morerec"])) {
-			$tr_recnum += $maxRecords;
+			$tr_recnum += $prefs['maxRecords'];
 		}
 
 		if (isset($_REQUEST["lessrec"])) {
-			$tr_recnum -= $maxRecords;
+			$tr_recnum -= $prefs['maxRecords'];
 		}
 
 		$smarty->assign('tr_recnum', $tr_recnum);
 	}
-
-	$smarty->assign('maxRecords', $maxRecords);
 
 	//Handle searches
 	$squery = "";

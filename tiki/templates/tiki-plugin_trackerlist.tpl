@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33 2007-10-14 15:17:21 nyloth Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.34 2007-10-20 05:17:19 mose Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -124,7 +124,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$selector_offset}{
 	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}">

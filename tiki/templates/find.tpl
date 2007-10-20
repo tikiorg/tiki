@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.10 2007-10-12 21:57:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.11 2007-10-20 05:17:06 mose Exp $ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
@@ -39,9 +39,9 @@
 	<td class="findtitle">
 		<select name="lang">
 		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
-		{section name=ix loop=$languages}
-			{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
-			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>{tr}{$languages[ix].name}{/tr}</option>
+		{section name=ix loop=$prefs.languages}
+			{if count($prefs.available_languages) == 0 || in_array($prefs.languages[ix].value, $prefs.available_languages)}
+			<option value="{$prefs.languages[ix].value|escape}" {if $find_lang eq $prefs.languages[ix].value}selected="selected"{/if}>{tr}{$prefs.languages[ix].name}{/tr}</option>
 			{/if}
 		{/section}
 		</select>

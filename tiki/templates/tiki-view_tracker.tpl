@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159 2007-10-10 14:27:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.160 2007-10-20 05:17:21 mose Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -62,7 +62,7 @@
 {if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div id="page-bar">
-{if $tiki_p_view_trackers eq 'y'}
+{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
@@ -73,7 +73,7 @@
 
 {cycle name=content values="1,2,3" print=false advance=false reset=true}
 {* -------------------------------------------------- tab with list --- *}
-{if $tiki_p_view_trackers eq 'y'}
+{if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
@@ -749,10 +749,11 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {if $fields[ix].description}
 <br /><em>{$fields[ix].description}</em>
 {/if}
+</td>
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
-</td>{assign var=stick value="y"}
+{assign var=stick value="y"}
 {else}
-</td></tr>{assign var=stick value="n"}
+</tr>{assign var=stick value="n"}
 {/if}
 {/if}
 {/if}

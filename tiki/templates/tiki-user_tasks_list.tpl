@@ -9,14 +9,14 @@
 			<div align="right">
 				{tr}Tasks per page{/tr}
 				<select name="tasks_maxRecords">
-				<option value="-1" {if $tasks_maxRecords eq -1} selected="selected"{/if}>{tr}All{/tr}</option>
-				<option value="2" {if $tasks_maxRecords eq 2} selected="selected"{/if}>2</option>
-				<option value="5" {if $tasks_maxRecords eq 5} selected="selected"{/if}>5</option>
-				<option value="10" {if $tasks_maxRecords eq 10} selected="selected"{/if}>10</option>
-				<option value="20" {if $tasks_maxRecords eq 20} selected="selected"{/if}>20</option>
-				<option value="30" {if $tasks_maxRecords eq 30} selected="selected"{/if}>30</option>
-				<option value="40" {if $tasks_maxRecords eq 40} selected="selected"{/if}>40</option>
-				<option value="50" {if $tasks_maxRecords eq 50} selected="selected"{/if}>50</option>
+				<option value="-1" {if $prefs.tasks_maxRecords eq -1} selected="selected"{/if}>{tr}All{/tr}</option>
+				<option value="2" {if $prefs.tasks_maxRecords eq 2} selected="selected"{/if}>2</option>
+				<option value="5" {if $prefs.tasks_maxRecords eq 5} selected="selected"{/if}>5</option>
+				<option value="10" {if $prefs.tasks_maxRecords eq 10} selected="selected"{/if}>10</option>
+				<option value="20" {if $prefs.tasks_maxRecords eq 20} selected="selected"{/if}>20</option>
+				<option value="30" {if $prefs.tasks_maxRecords eq 30} selected="selected"{/if}>30</option>
+				<option value="40" {if $prefs.tasks_maxRecords eq 40} selected="selected"{/if}>40</option>
+				<option value="50" {if $prefs.tasks_maxRecords eq 50} selected="selected"{/if}>50</option>
 				</select>
 			</div>
 		</td>
@@ -159,7 +159,7 @@
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-user_tasks.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

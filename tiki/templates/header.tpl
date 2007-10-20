@@ -8,8 +8,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-{* can be needed for sefurls with tiki not installed at the root server *}
-{if $base_url}<base href="{$base_url}"/>{/if}
+{* Do NOT specify a base URL anymore, since it breaks anchors links in pages {if $base_url}<base href="{$base_url}"/>{/if} *}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords}" />
 {/if}
@@ -96,7 +95,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
-{if $feature_mootools eq "y"}
+{if $prefs.feature_mootools eq "y"}
 <script type="text/javascript" src="lib/mootools/mootools.js"></script>
 {if $mootools_windoo eq "y"}
 <script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
@@ -127,7 +126,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 </head>
 
-<body {if isset($section) and $section eq 'wiki page' and $user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+<body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $msgError} onload="javascript:location.hash='msgError'"{/if}
 {if $section} class="tiki_{$section}"{/if}>
 {if $prefs.minical_reminders>100}

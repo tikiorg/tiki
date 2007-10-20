@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.24 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.25 2007-10-20 05:17:21 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -9,7 +9,7 @@
 <a href="tiki-edit_templates.php?template=tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Watches tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-{if $prefs.feature_ajax ne 'y' && $feature_mootools ne 'y'}
+{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 {/if}
 

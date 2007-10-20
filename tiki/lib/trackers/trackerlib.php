@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231 2007-10-12 07:55:47 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.232 2007-10-20 05:17:05 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -567,7 +567,7 @@ class TrackerLib extends TikiLib {
 					$mid .= " ) ";
 		
 				} else if ( $exactvalue ) {
-					if (!empty($exactvalue[$i])) {
+					if (is_array($exactvalue) && !empty($exactvalue[$i])) {
 						if (is_array($exactvalue[$i])) {
 							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue[$i]),'?')).")";
 							$bindvars = array_merge($bindvars, $exactvalue[$i]);

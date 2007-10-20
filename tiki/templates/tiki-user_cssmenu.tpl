@@ -3,7 +3,7 @@
 {assign var=lasttype value='o'}
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's'}
-{if $lasttype eq 'o'}</ul></ul>{/if}
+{if $lasttype eq 'o'}</ul>{/if}
 <ul><li><h2>
 <img src="pics/icons/folder.png" width="16" height="16" border="0" align="left" />
 {tr}{$chdata.name}{/tr}<br clear="both" /></h2>

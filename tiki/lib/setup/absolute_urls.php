@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.4 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/absolute_urls.php,v 1.5 2007-10-20 05:17:05 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -12,6 +12,16 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   exit;
 }
 
+// check if the current port is not 80 or 443
+if (isset($_SERVER["SERVER_PORT"])) {
+	if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
+		if (( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )) {
+			$prefs['https_port'] = (int) $_SERVER['SERVER_PORT'];		
+		} else {
+			$prefs['http_port'] = (int) $_SERVER['SERVER_PORT'];		
+		}
+	}
+}
 if ( $prefs['https_port'] == 443 ) $prefs['https_port'] = '';
 if ( $prefs['http_port'] == 80 ) $prefs['http_port'] = '';
 

@@ -10,7 +10,7 @@
 <a href="tiki-edit_templates.php?template=tiki-user_tasks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Tasks tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}</h1>
-{if $prefs.feature_ajax ne 'y' && $feature_mootools ne 'y'}
+{if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 {/if}
@@ -80,7 +80,7 @@
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}waiting for me{/tr}" title="{tr}waiting for me{/tr}"}
+		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}waiting for me{/tr}" title="{tr}waiting for me{/tr}"} >
 	</td>
 	<td>
 		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.

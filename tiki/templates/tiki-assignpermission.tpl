@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.81 2007-10-20 05:17:10 mose Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -70,16 +70,16 @@
 <input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <select name="type" onchange="permselects.submit()">
-<option value="">{tr}All{/tr}</a>
+<option value="">{tr}All{/tr}</option>
 {sortlinks}
 {section name=v loop=$types}
-<option value="{$types[v]}"{if $type eq $types[v]} selected="selected"{/if}>{tr}{$types[v]}{/tr}</a>
+<option value="{$types[v]}"{if $type eq $types[v]} selected="selected"{/if}>{tr}{$types[v]}{/tr}</option>
 {/section}
 {/sortlinks}
 </select>
 <select name="group" onchange="permselects.submit()">
 {section name=v loop=$groups}
-<option value="{$groups[v].groupName}"{if $group eq $groups[v].groupName} selected="selected"{/if}>{$groups[v].groupName}</a>
+<option value="{$groups[v].groupName}"{if $group eq $groups[v].groupName} selected="selected"{/if}>{$groups[v].groupName}</option>
 {/section}
 </select>
 </form>
@@ -91,7 +91,7 @@
 <input type="submit" name="update" value="{tr}Update{/tr}" /><br />
 <table class="sortable" id="assignperms">
 <tr>
-<th class="heading">&nbsp;</td>
+<th class="heading">&nbsp;</th>
 <th class="heading">{tr}Name{/tr}</th>
 <th class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
 <th class="heading">{tr}Type{/tr}</th>

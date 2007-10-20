@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.2 2007-07-24 15:23:50 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.3 2007-10-20 05:17:15 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-index.php?page={$objectId}">{$objectId}</a></h1>
 <p>
@@ -74,6 +74,7 @@
 		</tr>
 		<tr class="formcolor">
 			<td colspan="2" class="center"><input type="submit" name="add" value="{tr}Add to List{/tr}"/></td>
+		</tr>
 		</form>
 	</table>
 </form>

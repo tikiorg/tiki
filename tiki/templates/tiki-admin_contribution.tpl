@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.13 2007-10-12 07:55:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.14 2007-10-20 05:17:08 mose Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">
@@ -59,8 +59,8 @@
 {cycle print=false values="even,odd"}
 {section name=ix loop=$contributions}
 <tr>
-<td class="{cycle advance=false}">{$contributions[ix].name}</a></td>
-<td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</a></td>
+<td class="{cycle advance=false}">{$contributions[ix].name}</td>
+<td class="{cycle advance=false}">{$contributions[ix].description|truncate|escape}</td>
 <td class="{cycle}">
 <a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> &nbsp;
 <a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28 2007-03-06 19:29:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.29 2007-10-20 05:16:54 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,6 +23,8 @@ if (isset($_GET['do'])) {
 	} elseif ($_GET['do'] == 'modules_cache') {
 		$cachelib->erase_dir_content("modules/cache/$tikidomain");
 		$logslib->add_log('system','erased modules/cache content');
+	} elseif ($_GET['do'] == 'prefs') {
+		$tikilib->set_lastUpdatePrefs();
 	}
 }
 

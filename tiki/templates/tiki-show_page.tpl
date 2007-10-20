@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129 2007-10-11 17:47:09 sylvieg Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.130 2007-10-20 05:17:20 mose Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -18,10 +18,10 @@
 {if $cached_page eq 'y'}<small>({tr}Cached{/tr})</small>{/if}
 </td>
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
-	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
+	<td style="vertical-align:top;">{$display_catpath}</td>
 {/if}
 {if $print_page ne 'y'}
-	<td style="vertical-align:top;text-align:right;width:350px;wrap:nowrap">
+	<td style="vertical-align:top;text-align:right;padding-left:10px;wrap:nowrap">
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}       

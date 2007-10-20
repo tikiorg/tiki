@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.46 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.47 2007-10-20 05:16:54 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -285,10 +285,10 @@ if ($prefs['feature_theme_control'] == 'y') {
 
 // now set it if needed
 if ($popup) {
-	$smarty->assign('feature_top_bar', 'n');
-	$smarty->assign('feature_left_column', 'n');
-	$smarty->assign('feature_right_column', 'n');
-	$smarty->assign('feature_bot_bar', 'n');
+	$prefs['feature_top_bar']='n';
+	$prefs['feature_left_column']='n';
+	$prefs['feature_right_column']='n';
+	$prefs['feature_bot_bar']='n';
 }
 ask_ticket('browse-image');
 

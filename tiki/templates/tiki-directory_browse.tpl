@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.26 2007-10-14 15:17:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.27 2007-10-20 05:17:11 mose Exp $ *}
 
 {* The heading and category path *}
 {if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
@@ -136,7 +136,7 @@ loc="page" crumbs=$crumbs}
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset*2}&amp;sort_mode={$sort_mode}"> {*selector_offset is calculated wrong internal; temporary bug fix by w-o-g*}
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

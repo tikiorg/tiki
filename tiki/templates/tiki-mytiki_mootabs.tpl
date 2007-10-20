@@ -16,7 +16,7 @@
 		htmlelement=user_information}tiki-user_information.php{/ajax_href}>{tr}My Infos{/tr}</a></h5>
 		<div id="user_information">
 		</div>
-		{if $prefs.feature_ajax eq "y" && $feature_mootools eq "y"}
+		{if $prefs.feature_ajax eq "y" && $prefs.feature_mootools eq "y"}
 		<h5><a {ajax_href template=tiki-mypages.tpl
 		htmlelement=user_pages}tiki-mypages.php{/ajax_href}>{tr}My Pages{/tr}</a></h5>
 		<div id="user_pages">
@@ -75,7 +75,7 @@
 		{*if $prefs.feature_newsletters eq 'y'}
 		<h5><a {ajax_href template=tiki-user_newsletters.tpl
 		htmlelement=user_newsletters}tiki-user_newsletters.php{/ajax_href}><img  border="0" src="img/mytiki/stock_contact.png" alt="{tr}My Newsletters{/tr}" />{tr}My Newsletters{/tr}</a></h5>
-		<div id="user_newsletters>
+		<div id="user_newsletters">
 		</div>
 		{/if*}
 		

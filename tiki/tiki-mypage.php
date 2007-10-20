@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.36 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage.php,v 1.37 2007-10-20 05:16:54 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,10 +43,11 @@ function mypage_ajax_init() {
 function mypage_init() {
 	global $smarty, $headerlib, $id_users;
 	global $tiki_p_admin;
+	global $prefs;
 
 	// deactivate left and right columns 
-	$smarty->assign('feature_right_column', 'n');
-	$smarty->assign('feature_left_column', 'n');
+	$prefs['feature_right_column']='n';
+	$prefs['feature_left_column']='n';
 
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.css");
 	$headerlib->add_cssfile("lib/mootools/extensions/windoo/themes/windoo.aero.css");
@@ -131,7 +132,7 @@ function mypage_init() {
 
 	mypage_ajax_init();
 	
-	if (!$editit) $smarty->assign('site_header', 'n');
+	if (!$editit) $prefs['site_header']='n';
 	$smarty->assign('slidebar', 'y');
 	$smarty->assign("mid", "tiki-mypage.tpl");
 	$smarty->display("tiki.tpl");

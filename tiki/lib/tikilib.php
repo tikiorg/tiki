@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801 2007-10-15 14:47:40 pkdille Exp $
+// CVS: $Id: tikilib.php,v 1.802 2007-10-20 05:17:03 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4090,11 +4090,12 @@ function add_pageview() {
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
 	function get_db_preferences() {
 		global $prefs;
-		$prefs['lastReadingPrefs'] = $this->now;
 		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
 		while ( $res = $result->fetchRow() ) {
 			$prefs[$res['name']] = $res['value'];
+			$_SESSION['prefs'][$res['name']] = $res['value'];
 		}
+		$_SESSION['prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
     }
 
 	function get_preferences( $names, $exact_match = false, $no_return = false ) {
@@ -4129,31 +4130,40 @@ function add_pageview() {
     }
 
     function set_preference($name, $value) {
-	global $user_overrider_prefs, $user_preferences, $user, $prefs;
+		global $user_overrider_prefs, $user_preferences, $user, $prefs;
 
-	$query = "update `tiki_preferences` set `value`=? where `name`=?";
-	$this->query($query, array($this->now, 'lastUpdatePrefs'));
-
-	$query = "delete from `tiki_preferences` where `name`=?";
-	$result = $this->query($query,array($name),-1,-1,false);
-	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-	if (is_array($value)) {
-		$result = $this->query($query,array($name,serialize($value)));
-	} else {
-		$result = $this->query($query,array($name,$value));
-	}
-	if ( isset($prefs) ) {
-		if ( in_array($name, $user_overrider_prefs) ) {
-			$prefs['site_'.$name] = $value;
-		} elseif ( isset($user_preferences[$user][$name] ) ) {
-			$prefs[$name] = $user_preferences[$user][$name];
+		$this->set_lastUpdatePrefs();
+		
+		$query = "delete from `tiki_preferences` where `name`=?";
+		$result = $this->query($query,array($name),-1,-1,false);
+		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
+		if (is_array($value)) {
+			$result = $this->query($query,array($name,serialize($value)));
 		} else {
-			$prefs[$name] = $value;
+			$result = $this->query($query,array($name,$value));
 		}
-		$prefs['lastUpdatePrefs'] = $this->now;
-	}
-	return true;
+		if ( isset($prefs) ) {
+			if ( in_array($name, $user_overrider_prefs) ) {
+				$prefs['site_'.$name] = $value;
+				$_SESSION['prefs']['site_'.$name] = $value;
+			} elseif ( isset($user_preferences[$user][$name] ) ) {
+				$prefs[$name] = $user_preferences[$user][$name];
+				$_SESSION['prefs'][$name] = $user_preferences[$user][$name];
+			} else {
+				$prefs[$name] = $value;
+				$_SESSION['prefs'][$name] = $value;
+			}
+			$prefs['lastUpdatePrefs'] = $this->now;
+			$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
+		}
+		return true;
     }
+
+	function set_lastUpdatePrefs() {
+		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
+		$this->query($query, array('lastUpdatePrefs'));
+		
+	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
 		if ( empty($table) || empty($field_name) ) return false; 
@@ -4239,39 +4249,43 @@ function add_pageview() {
     }
 
     function set_user_preference($my_user, $name, $value) {
-	global $user_preferences, $cachelib, $prefs, $user, $user_overrider_prefs;
-
-	require_once("lib/cache/cachelib.php");
-	$cachelib->invalidate('user_details_'.$my_user);
-
-	$user_preferences[$my_user][$name] = $value;
-
-	if ( $my_user == $user ) {
-		$prefs[$name] = $value;
-		if ( $name == 'theme' ) { // FIXME: Remove this exception
-			$prefs['style'] = $value;
-			if ( $value == '' ) {
-				$prefs['style'] = $prefs['site_style'];
-			}
-		} elseif ( $value == '' ) {
-			if ( in_array($name, $user_overrider_prefs) ) {
-				$prefs[$name] = $prefs['site_'.$name];
-			} else {
-				$_SESSION['need_reload_prefs'] = true;
+		global $user_preferences, $cachelib, $prefs, $user, $user_overrider_prefs;
+		
+		require_once("lib/cache/cachelib.php");
+		$cachelib->invalidate('user_details_'.$my_user);
+		
+		$user_preferences[$my_user][$name] = $value;
+		
+		if ( $my_user == $user ) {
+			$prefs[$name] = $value;
+			$_SESSION['prefs'][$name] = $value;
+			if ( $name == 'theme' ) { // FIXME: Remove this exception
+				$prefs['style'] = $value;
+				$_SESSION['prefs']['style'] = $value;
+				if ( $value == '' ) {
+					$prefs['style'] = $prefs['site_style'];
+					$_SESSION['prefs']['style'] = $prefs['site_style'];
+				}
+			} elseif ( $value == '' ) {
+				if ( in_array($name, $user_overrider_prefs) ) {
+					$prefs[$name] = $prefs['site_'.$name];
+					$_SESSION['prefs'][$name] = $prefs['site_'.$name];
+				} else {
+					$_SESSION['need_reload_prefs'] = true;
+				}
 			}
 		}
-	}
-
-	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-	$bindvars=array($my_user,$name);
-	$result = $this->query($query, $bindvars, -1,-1,false);
-	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-	$bindvars[]=$value;
-	$result = $this->query($query, $bindvars);
-
-	return true;
+		
+		$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+		$bindvars=array($my_user,$name);
+		$result = $this->query($query, $bindvars, -1,-1,false);
+		$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+		$bindvars[]=$value;
+		$result = $this->query($query, $bindvars);
+		
+		return true;
     }
-
+	
     // similar to set_user_preference, but set all at once.
     function set_user_preferences($my_user, &$preferences) {
 	global $user_preferences, $cachelib, $prefs, $user;
@@ -4289,7 +4303,8 @@ function add_pageview() {
 	$user_preferences[$my_user] =& $preferences;
 
 	if ( $my_user == $user ) {
-		$prefs =& array_merge($prefs, $preferences);
+		$prefs =array_merge($prefs, $preferences);
+		$_SESSION['prefs']=array_merge($_SESSION['prefs'], $preferences);
 		$_SESSION['need_reload_prefs'] = true;
 	}
 

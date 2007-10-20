@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.156 2007-10-16 19:25:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.157 2007-10-20 05:17:21 mose Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -296,9 +296,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 				<td>
 					{section name=i loop=$cur_field.options_array}
 						{if $cur_field.options_array[i] eq $my_rate}
-							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}</option>
+							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
 						{else}
-							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}</option>
+							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
 						{/if}
 					{/section}
 				</td>
@@ -520,10 +520,11 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {if $cur_field.description}
 <br /><em>{$cur_field.description}</em>
 {/if}
+</td>
 {if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}
-</td>{assign var=stick value="y"}
+{assign var=stick value="y"}
 {else}
-</td></tr>{assign var=stick value="n"}
+</tr>{assign var=stick value="n"}
 {/if}
 
 {elseif $cur_field.type eq 'x'}

@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-09-25 02:12:50 $
+-- $Date: 2007-10-20 05:16:55 $
 -- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8244,14 +8244,8 @@ CREATE TABLE `tiki_mypage` (
   `wintextcolor` varchar(16) default NULL NULL,
   `bgimage` varchar(255) default NULL NULL,
   `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL
-go
-
-
   `winbgimage` varchar(255) default NULL NULL,
   `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL
-go
-
-
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)

@@ -7,5 +7,4 @@
 {if $type eq 'd'}
 <span class="button2"><a class="linkbut" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}content{/tr}</a></span>
 {/if}
-</small>
 {/if}

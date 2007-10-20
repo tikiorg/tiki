@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/set_paths.php,v 1.1 2007-10-10 14:46:38 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/set_paths.php,v 1.2 2007-10-20 05:17:05 mose Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -23,6 +23,7 @@ if ($tmp != '/') {
 unset($tmp);
 
 $tikiroot = dirname($_SERVER['PHP_SELF']);
+if ("\\" == $tikiroot) $tikiroot="/"; // even onv windows / is used!
 $tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
 
 if ($dir_level > 0) {

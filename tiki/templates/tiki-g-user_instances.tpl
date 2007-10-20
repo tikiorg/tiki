@@ -108,25 +108,25 @@
 {section name=ix loop=$items}
 <tr>
 	<td class="{cycle advance=false}">
-	  {$items[ix].iname}</a>
+	  {$items[ix].iname}
 	</td>
 	<td class="{cycle advance=false}">
-	  {$items[ix].owner}</a>
+	  {$items[ix].owner}
 	</td>
 	<td class="{cycle advance=false}">
-	  {$items[ix].status}</a>
+	  {$items[ix].status}
 	</td>
 	<td class="{cycle advance=false}">
-	  {$items[ix].procname} {$items[ix].version}</a>
+	  {$items[ix].procname} {$items[ix].version}
 	</td>
 	<td class="{cycle advance=false}">
-	  {$items[ix].type|act_icon:$items[ix].isInteractive} {$items[ix].name}</a>
+	  {$items[ix].type|act_icon:$items[ix].isInteractive} {$items[ix].name}
 	</td>
 	<td class="{cycle advance=false}">
 	  {$items[ix].user}
 	</td>
 {*	<td class="{cycle advance=false}">
-	  {$items[ix].actstatus}</a>
+	  {$items[ix].actstatus}
 	</td>*}
 	<td class="{cycle advance=false}">
 	{if $items[ix].exptime eq 0}
@@ -197,7 +197,7 @@
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

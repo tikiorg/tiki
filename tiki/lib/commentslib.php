@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167 2007-10-12 07:55:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.168 2007-10-20 05:17:03 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1178,7 +1178,7 @@ class Comments extends TikiLib {
     }
 
     function get_user_forum_comments($user, $max) {
-	$query = "select `threadId`, `object`, `title` from `tiki_comments` where `objectType`='forum' AND `userName`=? ORDER BY `commentDate` desc;";
+	$query = "select `threadId`, `object`, `title` from `tiki_comments` where `objectType`='forum' AND `userName`=? ORDER BY `commentDate` desc";
 	
 	$result = $this->query($query,array($user),$max);
 	$ret = array();

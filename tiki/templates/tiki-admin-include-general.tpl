@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69 2007-10-14 15:17:19 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.70 2007-10-20 05:17:06 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -234,7 +234,7 @@
       </tr><tr>
         <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
         <td><input size="5" type="text" name="maxRecords" id="general-max_records"
-                   value="{$maxRecords|escape}" /></td>
+                   value="{$prefs.maxRecords|escape}" /></td>
 
       </tr><tr>
         <td class="form"><label for="feature_help">{tr}Help System{/tr}:</label></td>

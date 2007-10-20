@@ -10,7 +10,7 @@
 <tr class="{cycle}">
 <td>
 <a href="{$myurl}?todate={$listevents[w].start}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
-{$listevents[w].start|tiki_short_time}</a>
+{$listevents[w].start|tiki_short_time}
 </td>
 <td>
 {if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<a href="{$myurl}?todate={$listevents[w].end}" title="{tr}change focus{/tr}">{$listevents[w].end|tiki_short_date}</a>{/if}<br />
@@ -29,6 +29,5 @@ src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/
 <a class="link" href="tiki-calendar_edit_item.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>{/if}
 </td></tr>
 {/section}
-</td></tr>
 </table>
 

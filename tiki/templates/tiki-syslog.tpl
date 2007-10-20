@@ -1,4 +1,4 @@
-{* $Id: tiki-syslog.tpl,v 1.16 2007-10-14 15:17:21 nyloth Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.17 2007-10-20 05:17:20 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -29,7 +29,7 @@
 <form method="get" action="tiki-syslog.php">
 <input type="text" name="find" value="{$find|escape}" />
 <input type="submit" value="{tr}Find{/tr}" name="search" />
-<input type="text" name="max" value="{$maxRecords|escape}" size="4" /> {tr}Rows{/tr}
+<input type="text" name="max" value="{$prefs.maxRecords|escape}" size="4" /> {tr}Rows{/tr}
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 </td></tr></table>
@@ -38,13 +38,13 @@
 <div class="simplebox">
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}asc{else}desc{/if}" class="tableheading">{tr}Id{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}asc{else}desc{/if}" class="tableheading">{tr}Type{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}asc{else}desc{/if}" class="tableheading">{tr}Time{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}asc{else}desc{/if}" class="tableheading">{tr}User{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}asc{else}desc{/if}" class="tableheading">{tr}Message{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}asc{else}desc{/if}" class="tableheading">{tr}IP{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$maxRecords}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}asc{else}desc{/if}" class="tableheading">{tr}Client{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}asc{else}desc{/if}" class="tableheading">{tr}Id{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}asc{else}desc{/if}" class="tableheading">{tr}Type{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}asc{else}desc{/if}" class="tableheading">{tr}Time{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}asc{else}desc{/if}" class="tableheading">{tr}User{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}asc{else}desc{/if}" class="tableheading">{tr}Message{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}asc{else}desc{/if}" class="tableheading">{tr}IP{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;max={$prefs.maxRecords}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}asc{else}desc{/if}" class="tableheading">{tr}Client{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list}

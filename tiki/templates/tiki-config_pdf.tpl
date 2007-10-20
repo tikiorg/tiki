@@ -78,7 +78,7 @@
 				</td></tr>
 				<tr><td class="form">{tr}PDF compatilbility level{/tr}</td><td class="form">
 					<select name="pdfversion">
-						<option value="1.2" {if $pdfversion eq '1.2'}selected{/if}>PDF 1.2 {tr}(NOT supported by PDFLIB!){/tr}</b></option>
+						<option value="1.2" {if $pdfversion eq '1.2'}selected{/if}>PDF 1.2 {tr}(NOT supported by PDFLIB!){/tr}</option>
 						<option value="1.3" {if $pdfversion eq '1.3'}selected{/if}>PDF 1.3 (Acrobat Reader 4)</option>
 						<option value="1.4" {if $pdfversion eq '1.4'}selected{/if}>PDF 1.4 (Acrobat Reader 5)</option>
 						<option value="1.5" {if $pdfversion eq '1.5'}selected{/if}>PDF 1.5 (Acrobat Reader 6)</option>

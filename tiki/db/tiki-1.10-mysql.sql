@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-09-25 02:12:49 $
+# $Date: 2007-10-20 05:16:55 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1309,10 +1309,10 @@ CREATE TABLE tiki_file_galleries (
   max_desc int(8) default NULL,
   show_created char(1) default NULL,
   show_dl char(1) default NULL,
-  parentId int(14) NOT NULL default -1,
+  parentId int(14) NOT NULL default '-1',
   lockable char(1) default 'n',
   show_lockedby char(1) default NULL,
-  archives int(4) default -1,
+  archives int(4) default '-1',
   sort_mode char(20) default NULL,
   show_modified char(1) default NULL,
   show_author char(1) default NULL,
@@ -1553,7 +1553,7 @@ CREATE TABLE tiki_galleries (
   sortorder varchar(20) NOT NULL default 'created',
   sortdirection varchar(4) NOT NULL default 'desc',
   galleryimage varchar(20) NOT NULL default 'first',
-  parentgallery int(14) NOT NULL default -1,
+  parentgallery int(14) NOT NULL default '-1',
   showname char(1) NOT NULL default 'y',
   showimageid char(1) NOT NULL default 'n',
   showdescription char(1) NOT NULL default 'n',
@@ -4906,7 +4906,7 @@ CREATE TABLE `tiki_webmail_contacts_ext` (
   `value` varchar(255) NOT NULL,
   `hidden` tinyint(1) NOT NULL,
   KEY `contactId` (`contactId`)
-) ENGINE=MyISAM;
+) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_webmail_contacts_fields;
 CREATE TABLE `tiki_webmail_contacts_fields` (
@@ -4917,9 +4917,10 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   `show` char(1) NOT NULL default 'n',
   PRIMARY KEY ( `fieldId` ),
   INDEX ( `user` )
-) ENGINE = MyISAM ;
+) TYPE = MyISAM ;
 
 # ---------- mypage ----------------
+DROP TABLE IF EXISTS tiki_mypage;
 CREATE TABLE `tiki_mypage` (
   `id` int(11) NOT NULL auto_increment,
   `id_users` int(11) NOT NULL,
@@ -4935,14 +4936,15 @@ CREATE TABLE `tiki_mypage` (
   `wintitlecolor` varchar(16) default NULL,
   `wintextcolor` varchar(16) default NULL,
   `bgimage` varchar(255) default NULL,
-  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
+  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
   `winbgimage` varchar(255) default NULL,
-  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
+  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
-) ENGINE=MyISAM;
+) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypagewin;
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
   `id_mypage` int(11) NOT NULL,
@@ -4961,8 +4963,9 @@ CREATE TABLE `tiki_mypagewin` (
   `content` blob,
   PRIMARY KEY  (`id`),
   KEY `id_mypage` (`id_mypage`)
-) ENGINE=MyISAM;
+) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types;
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
   `created` int(11) NOT NULL,
@@ -4979,14 +4982,15 @@ CREATE TABLE `tiki_mypage_types` (
   `templateuser` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM;
+) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types_components;
 CREATE TABLE `tiki_mypage_types_components` (
   `id_mypage_types` int(11) NOT NULL,
   `compname` varchar(255) NOT NULL,
   `mincount` int(11) NOT NULL default '1',
   `maxcount` int(11) NOT NULL default '1',
   KEY `id_mypage_types` (`id_mypage_types`)
-) ENGINE=MyISAM;
+) TYPE=MyISAM;
 
 # ------------------------------------

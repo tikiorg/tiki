@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.12 2006-11-07 14:21:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.13 2007-10-20 05:16:56 mose Exp $
 #
 # NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD
 #
@@ -22,6 +22,9 @@
 
 # Use it giving file name(s) as arguments: file name(s) can be particular files
 # or "." (default) for all files
+
+echo "Deprecated. Use tikimerge_110to111.sh instead."
+exit 0
 
 EXCLUDE="lang"
 if [ -z $1 ]; then

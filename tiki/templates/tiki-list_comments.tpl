@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7 2007-07-24 14:40:36 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.8 2007-10-20 05:17:14 mose Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -41,13 +41,13 @@
 
 <table class="normal">
 <tr>
-<th class="heading">&nbsp;</td>
+<th class="heading">&nbsp;</th>
 <th class="heading">{if $types eq "wiki page"}<a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Page{/tr}</a>{else}<a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'objectType_desc'}objectType_asc{else}objectType_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Type{/tr}</a>{/if}</th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Title{/tr}</a></td>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Author{/tr}</a></td>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'user_ip_desc'}user_ip_asc{else}user_ip_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}IP{/tr}</a></td>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'commentDate_desc'}commentDate_asc{else}commentDate_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Date{/tr}</a></td>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'data_desc'}data_asc{else}data_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Data{/tr}</a></td>
+<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Title{/tr}</a></th>
+<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Author{/tr}</a></th>
+<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'user_ip_desc'}user_ip_asc{else}user_ip_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}IP{/tr}</a></th>
+<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'commentDate_desc'}commentDate_asc{else}commentDate_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Date{/tr}</a></th>
+<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'data_desc'}data_asc{else}data_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Data{/tr}</a></th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$comments}
@@ -75,7 +75,7 @@
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
-</form
+</form>
 
 {if cant_pages ne 0}
 <div class="mini">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26 2007-10-13 15:13:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.27 2007-10-20 05:17:06 mose Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -196,7 +196,7 @@
 {/if}
 </form>
 
-{if $maxRecords > 0}
+{if $prefs.maxRecords > 0}
 	<div class="mini">
 	{if $prev_offset >= 0}
 		[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -208,7 +208,7 @@
 	{if $prefs.direct_pagination eq 'y' and $cant_pages gt 1}
 		<br />
 		{section loop=$cant_pages name=foo}
-		{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+		{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 		<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 		{$smarty.section.foo.index_next}</a>&nbsp;
 		{/section}

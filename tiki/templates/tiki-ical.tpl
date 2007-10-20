@@ -62,7 +62,7 @@
 </td><td class="formcolor">
 <input type="file" name="fileICS" size="50" />
 <input type="submit" name="import" value="{tr}import{/tr}" />
-</td></td></table>
+</td></tr></table>
 </form>
 <p>{$filedata}</p>
 <hr />

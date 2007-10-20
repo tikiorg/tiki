@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46 2007-10-12 07:55:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.47 2007-10-20 05:17:07 mose Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -392,7 +392,7 @@
 {/if}
 </tr>
 {/section}
-<tr><td colspan="3" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
+<tr><td colspan="4" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
 </table>
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>

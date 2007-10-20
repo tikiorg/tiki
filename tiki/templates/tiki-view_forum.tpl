@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111 2007-10-09 15:26:12 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.112 2007-10-20 05:17:21 mose Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -456,7 +456,8 @@ a moderator approves it.{/tr}
 	<table class="normal">
 	<tr>
 	 	<td class="heading">{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</td>
-	 	{section name=ix loop=$last_comments}
+	</tr>
+ 	{section name=ix loop=$last_comments}
 	 	<tr>
 	 		<td class="{cycle}">
 	 		{if $last_comments[ix].parentId eq 0}
@@ -467,8 +468,7 @@ a moderator approves it.{/tr}
 	 		<a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$thread_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title}</a>
 	 		</td>
 	 	</tr>
-	 	{/section}
-	</tr>
+ 	{/section}
 	</table>
 	<br />
 {/if}

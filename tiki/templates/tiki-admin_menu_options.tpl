@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57 2007-10-14 15:17:19 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.58 2007-10-20 05:17:08 mose Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span></h1>
@@ -164,7 +164,7 @@
           {tr}Number of lines{/tr}
         </td>
         <td>
-          <input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$maxRecords}{/if}" size="3" />
+          <input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$prefs.maxRecords}{/if}" size="3" />
         </td>
         <td>
           <input type="submit" value="{tr}Find{/tr}" name="search" />
@@ -250,7 +250,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46 2007-10-15 08:16:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.47 2007-10-20 05:17:21 mose Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -74,6 +74,7 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
+<tr>
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}" title="{if $accounts[ix].current ne 'y'}{tr}Activate{/tr}{/if}">{$accounts[ix].account}</a>
 </td>
 <td class="{cycle advance=false}">{if $accounts[ix].current eq 'y'}{tr}yes{/tr}{else}{tr}no{/tr}{/if}</td>
@@ -81,7 +82,14 @@
 <td class="{cycle advance=false}">{$accounts[ix].username}</td>
 <td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" 
 title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
-<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{if $accounts[ix].current ne 'y'}<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}"><img src="pics/icons/accept.png" alt="{tr}Activate{/tr}" width="16" height="16" border="0" /></a>{/if}</td></tr>
+<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}">
+<img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' />
+</a>
+{if $accounts[ix].current ne 'y'}
+<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">
+<img src="pics/icons/accept.png" alt="{tr}Activate{/tr}" width="16" height="16" border="0" />
+</a>{/if}
+</td></tr>
 {/section}
 </table>
 {/if}
@@ -305,7 +313,7 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
 {if $prefs.direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
 <a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
@@ -349,7 +357,7 @@ title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" 
     <tr class="formcolor"><td>&nbsp;</td>
     <td colspan="3">
     <textarea name="body" cols="60" rows="30">{$body|escape}</textarea>
-    <tr class="formcolor"><td>{tr}Use HTML mail{/tr}</td><td colspan="3"><input type="checkbox" name="useHTML" /></td></tr>
+    <tr class="formcolor"><td>{tr}Use HTML mail{/tr}</td><td colspan="3"><input type="checkbox" name="useHTML" />
     </td></tr>
     </table>
     </form>

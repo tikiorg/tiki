@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.28 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.29 2007-10-20 05:17:19 mose Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -201,7 +201,7 @@
       <td class="formcolor">
       </td>
       <td class="formcolor">
-				<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}Cancel Edit{/tr}</a></td>
+				<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}Cancel Edit{/tr}</a>
       </td>
     </tr>
   </table>

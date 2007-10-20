@@ -57,7 +57,7 @@
      <option id='mptype_components_{$component|escape}' value='{$component|escape}'>{$component|escape}</option>
      {/foreach}
     </select>
-   </td/
+   </td>
   </tr>
 
   <tr>
@@ -94,8 +94,6 @@
  <br />
  <input type='button' value='Cancel' onclick='closeMptypeEdit();'>
  <input id='mptype_submit' type='button' value='Modify' onclick='saveMptypeEdit();'>
-</div>
-
 </div>
 
 <input type='button' value='Create' onclick='showMptypeEdit(0);'>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.28 2007-10-20 05:16:55 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -298,8 +298,6 @@ if(isset($_REQUEST["show_form"]) and $_REQUEST["show_form"] == 'y'){
 
 $tasks_maxRecords = $tikilib->get_user_preference($user, 'tasks_maxRecords', $maxRecords);
 $maxRecords = $tasks_maxRecords;
-
-$smarty->assign('tasks_maxRecords', $tasks_maxRecords);
 
 $user_for_group_list = $user;
 

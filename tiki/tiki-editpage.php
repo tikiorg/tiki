@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.182 2007-10-16 17:26:07 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.183 2007-10-20 05:16:54 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -598,13 +598,7 @@ if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
 	$smarty->assign("poll_template",0);
 }
 if(isset($_REQUEST["edit"])) {
-  
-  if ($is_html and $_SESSION['wysiwyg'] == 'y') {
     $edit_data = $_REQUEST["edit"];  
-  } else {
-    $edit_data = htmlspecialchars($_REQUEST["edit"]);
-  }
-
 } else {
     if (isset($info['draft'])) {
 	$edit_data = $info['draft']['data'];
@@ -690,11 +684,26 @@ if (isset($_REQUEST["lang"])) {
   $pageLang = "";
 }
 $smarty->assign('lang', $pageLang);
-$smarty->assign('pagedata',$edit_data);
+
+if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
+	// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
+	//   then we need to convert database's HTML entities into their "normal chars" equivalents
+	$smarty->assign('pagedata', htmldecode($edit_data));
+} else {
+	$smarty->assign('pagedata', $edit_data);
+}
+
+if ( isset($_REQUEST['edit']) && ! $is_html ) {
+	// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
+	//   then we need to convert HTML special chars into their HTML entities equivalent;
+	$parsed = htmlspecialchars($edit_data);
+} else {
+	$parsed = $edit_data;
+}
 
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
-  $parsed = $tikilib->apply_postedit_handlers($edit_data);
+  $parsed = $tikilib->apply_postedit_handlers($parsed);
   $parsed = $tikilib->parse_data($parsed,$is_html);
 } else {
   $parsed = "";
@@ -714,6 +723,7 @@ if ($prefs['wiki_spellcheck'] == 'y') {
 
 $smarty->assign_by_ref('parsed', $parsed);
 
+
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 if(isset($_REQUEST["preview"])) {
@@ -730,7 +740,10 @@ function htmldecode($string) {
 		// For compatibility purposes with php < 5
 		$string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
 		$string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-		return recode_string('iso-8859-15..utf-8', $string);
+		if (function_exists('recode_string')) {
+			$string =  recode_string('iso-8859-15..utf-8', $string);
+		}
+		return $string;
 	}
 }
 
@@ -803,8 +816,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     if($is_html) {
       $edit = $_REQUEST["edit"];
     } else {
-//      $edit = strip_tags($_REQUEST["edit"]);
-    $edit = htmlspecialchars($_REQUEST['edit']);
+      $edit = htmlspecialchars($_REQUEST['edit']);
     }
 
     // add permisions here otherwise return error!
