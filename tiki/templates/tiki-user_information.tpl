@@ -33,16 +33,14 @@
 {if $gender neq 'Hidden' and $gender}
   <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
 {/if}
-
   {* Custom fields *}
   {section name=ir loop=$customfields}
   {if $customfields[ir].show}
     <tr><td class="form">{tr}{$customfields[ir].label}{/tr}:</td><td>{$customfields[ir].value}</td></tr>
   {/if}
   {/section}
-
   {if $avatar}<tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>{/if}
-  {if $homepage}  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>
+  {if $homepage}<tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>{/if}
 {if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>
 {if $userPage_exists}
@@ -52,9 +50,7 @@
 {else}&nbsp;{/if}
 </td></tr>
 {/if}
-{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$prefs.display_timezone}</td></tr>
-
 {if $prefs.user_tracker_infos}
   {foreach item=itemField from=$userItem.field_values}
 	{if $itemField.value ne '' or !empty($itemField.categs) or !empty($itemField.links)}
@@ -63,7 +59,6 @@
 	{/if}
   {/foreach}
 {/if}
-
 {if $prefs.feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
@@ -80,7 +75,6 @@
   </div>
   </div>
 </td></tr>
-
 {if $prefs.feature_display_my_to_others eq 'y'}
 <tr><td>
 {if $user_pages|@count > 0}
@@ -129,7 +123,6 @@
 {/if}
 </td></tr>
 {/if}
-
 {if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
 {if $sent}
 {$message}
@@ -163,7 +156,6 @@
     <td colspan="2" style="text-align: center;" class="form"><textarea rows="20" cols="80" name="body"></textarea></td>
   </tr>
 </table>
-
   </form>
   </div>
   </div>
