@@ -26,6 +26,10 @@
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
   <div class="rbox-data" name="tip">{tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}</div>
   </div>
+  {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
+    <div class="rbox-data" name="tip">{tr}Use ...page... to separate pages in a multi-page post{/tr}</div>
+  {/if}
+
   <br />
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
@@ -46,26 +50,49 @@
    {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
 {/if}
+
 {if $blog_data.use_title eq 'y' || !$blogId}
-<tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-<input type="text" size="80" name="title" value="{$title|escape}" />
-</td></tr>
+  <tr>
+    <td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
+      <input type="text" size="80" name="title" value="{$title|escape}" />
+    </td>
+  </tr>
 {/if}
+
+{if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y' and $prefs.quicktags_over_textarea eq 'y'}
+  <tr>
+    <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
+    <td class="editblogform">
+      {include file=tiki-edit_help_tool.tpl area_name='blogedit'}
+    </td>
+  </tr>
+{/if}
+
 {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
-<tr><td class="editblogform">{tr}Data{/tr}
-<br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
-<br />
-{include file=tiki-edit_help_tool.tpl area_name="blogedit"}
-</td><td class="editblogform">
-<b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
-<textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
+  <tr>
+    <td class="editblogform">
+      <br />
+      {include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}
+      <br />
+
+      {if $prefs.quicktags_over_textarea neq 'y'}
+      <br /><br />
+        {include file=tiki-edit_help_tool.tpl area_name="blogedit"}
+      {/if}
+
+    </td>
+    
+    <td class="editblogform">
+      <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
 {else}
-<td class="editblogform" colspan="2">
-{editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
+  <td class="editblogform" colspan="2">
+    {editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
 {/if}
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
-</td></tr>
+    <input type="hidden" name="rows" value="{$rows}"/>
+    <input type="hidden" name="cols" value="{$cols}"/>
+  </td>
+</tr>
+
 {if $postId > 0}
 	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
 	<td class="editblogform">

@@ -21,14 +21,22 @@
       {/if}
 
       {if $questions[ix].type eq 'x'}
+      {assign var='area' value=$questions[ix].questionId}
+
         <div class="quizoptions">
           <table class="normal">
             <tr>
               <td valign="top">
-                {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
-                {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+                {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
+                <br /><br />
+                {if $prefs.quicktags_over_textarea neq 'y'}
+                  {include file=tiki-edit_help_tool.tpl area_name=question_$area qtnum='2'}
+                {/if}
               </td>
               <td valign="top">
+                {if $prefs.quicktags_over_textarea eq 'y'}
+                  {include file=tiki-edit_help_tool.tpl area_name=question_$area qtnum='2'}
+                {/if}
                 <textarea id='editwiki' name="question_{$questions[ix].questionId}" rows="{$rows}" cols="{$cols}"></textarea>
               </td>
             </tr>

@@ -157,17 +157,24 @@
 </tr>
 <tr class="formcolor">
 <td>{tr}Description{/tr}
-{if $edit}<br /><br />
-{include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
-{include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+{if $edit}
+  <br /><br />
+  {include file="textareasize.tpl" area_name="editwiki" formId="editcalitem"}<br /><br />
+  {if $prefs.quicktags_over_textarea neq 'y'}
+    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+  {/if}
 {/if}
+
 </td><td>
 {if $edit}
-<textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" wrap="soft" style="width:98%">{$calitem.description}</textarea>
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
+  {if $prefs.quicktags_over_textarea eq 'y'}
+    {include file="tiki-edit_help_tool.tpl" area_name="save[description]"}
+  {/if}
+  <textarea id='editwiki' class="wikiedit" cols="{$cols}" rows="{$rows}" name="save[description]" wrap="soft" style="width:98%">{$calitem.description}</textarea>
+  <input type="hidden" name="rows" value="{$rows}"/>
+  <input type="hidden" name="cols" value="{$cols}"/>
 {else}
-{$calitem.parsed|default:"<i>No description</i>"}
+  {$calitem.parsed|default:"<i>No description</i>"}
 {/if}
 </td></tr>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.1 2007-10-18 08:51:33 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.2 2007-10-20 12:58:35 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -190,15 +190,21 @@ a moderator approves it.{/tr}
 	<td>{include file="tiki-smileys.tpl" area_name='editpost'}</td>
      </tr>
     {/if}
+    
     <tr class="formcolor">
       <td>{tr}Comment{/tr}
 			<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}
-			{if $prefs.feature_forum_parse eq 'y'}
-			{include file=tiki-edit_help_tool.tpl area_name="editpost"}
+			{if $prefs.feature_forum_parse eq 'y' and $prefs.quicktags_over_textarea neq 'y'}
+			  {include file=tiki-edit_help_tool.tpl area_name="editpost"}
 			{/if}
 			</td>
-      <td><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/></td>
+      <td>
+        {if $prefs.feature_forum_parse eq 'y' and $prefs.quicktags_over_textarea eq 'y'}
+          {include file=tiki-edit_help_tool.tpl area_name='editpost'}
+        {/if}
+        <textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
+        <input type="hidden" name="cols" value="{$cols}"/>
+      </td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr class="formcolor">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.28 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.28.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
@@ -8,10 +8,10 @@
 {if $errors}
 <span class="attention">{tr}Errors detected{/tr}<br /></span>
 <table class="normal">
-<tr><td class="heading">{tr}User{/tr}</td><td class="heading">{tr}Email{/tr}</td></tr>
+<tr class="formcolor"><td class="heading">{tr}User{/tr}</td><td class="heading">{tr}Email{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {section loop=$errors name=ix}
-<tr><td class="{cycle advance=false}">{$errors[ix].user}</td><td class="{cycle}">{$errors[ix].email}</td></tr>
+<tr class="formcolor"><td class="{cycle advance=false}">{$errors[ix].user}</td><td class="{cycle}">{$errors[ix].email}</td></tr>
 {/section}
 </table><br /><br />
 {/if}
@@ -70,8 +70,8 @@
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
 <input type="hidden" name="editionId" value="{$info.editionId}"/>
 <table class="normal" id="newstable">
-<tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
+<tr class="formcolor"><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="80" name="subject" value="{$info.subject|escape}" /></td></tr>
+<tr class="formcolor"><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
 <select name="nlId" onchange="checkNewsletterTxtArea();">
 {section loop=$newsletters name=ix}
 <option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>{$newsletters[ix].name}</option>
@@ -80,7 +80,7 @@
 </td></tr>
 
 {if $tiki_p_use_content_templates eq 'y'}
-<tr><td class="formcolor">{tr}Apply content template{/tr}</td><td class="formcolor">
+<tr class="formcolor"><td class="formcolor">{tr}Apply content template{/tr}</td><td class="formcolor">
 <input type="hidden" name="previousTemplateId" value="{$templateId}" />
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
@@ -91,7 +91,7 @@
 </td></tr>
 {/if}
 {if $tpls}
-<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<tr class="formcolor"><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
 <select name="usedTpl">
 <option value="">{tr}none{/tr}</option>
 {section name=ix loop=$tpls}
@@ -101,18 +101,44 @@
 </td></tr>
 {/if}
 
-<tr><td class="formcolor">{tr}Data HTML{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}<br /><br />{include file=tiki-edit_help_tool.tpl}</td>
-<td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
-</td></tr>
-<tr>  
-    <td class="formcolor" id="txtcol1">{tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}</td>
-    <td class="formcolor" id="txtcol2" ><textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
-</td></tr>
+<tr class="formcolor">
+  <td class="formcolor">{tr}Data HTML{/tr}:
+    <br /><br />
+    {include file="textareasize.tpl" area_name='editnl' formId='editpageform'}
+    {if $prefs.quicktags_over_textarea neq 'y'}
+      <br /><br />
+      {include file=tiki-edit_help_tool.tpl area_name='data'}
+    {/if}
+  </td>
+  <td class="formcolor">
+    {if $prefs.quicktags_over_textarea eq 'y'}
+      {include file=tiki-edit_help_tool.tpl area_name='data'}
+    {/if}
+    <textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
+    <input type="hidden" name="rows" value="{$rows}"/>
+    <input type="hidden" name="cols" value="{$cols}"/>
+  </td>
+</tr>
+  
+<tr class="formcolor">
+  <td class="formcolor" id="txtcol1">
+    {tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}
+  </td>
+  <td class="formcolor" id="txtcol2" >
+    <textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+  </td>
+</tr>
 
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
+<tr class="formcolor">
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">
+    <input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td>
+</tr>
+
+<tr>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td>
+</tr>
 </table>
 </form>
 </div>

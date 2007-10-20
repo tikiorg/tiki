@@ -30,6 +30,10 @@
 	        <td class="form"> <label for="general-ext_links">{tr}Open external links in new window{/tr}:</label></td>
 	        <td><input type="checkbox" name="popupLinks" id="general-ext_links" {if $prefs.popupLinks eq 'y'}checked="checked"{/if}/></td>
        	</tr>
+	<tr>
+	        <td class="form"> <label for="quicktags_over_textarea">{tr}Show quicktags over textareas (instead on left side){/tr}:</label></td>
+	        <td><input type="checkbox" name="quicktags_over_textarea" id="general-ext_links" {if $prefs.quicktags_over_textarea eq 'y'}checked="checked"{/if}/></td>
+       	</tr>
 	<tr>	
 		
           <td colspan="2" class="button"><input type="submit" name="textareasetup" value="{tr}Save{/tr}" /></td>
