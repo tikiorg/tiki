@@ -87,11 +87,13 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
       foreach ($listtikievents["$dday"] as $lte) {
       	$lte['desc_name'] = $lte['name'];
-      	if ( $calendarGroupByItem == 'y' ) {
+      	if ( $calendarGroupByItem != 'n' ) {
 		$key = $lte['id'].'|'.$lte['type'];
         	if ( ! isset($leday[$key]) ) {
 			$leday[$key] = $lte;
 			$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
+			$leday[$key]['head'] = ucfirst(tra('in')).' '.$lte['where'];
+			$leday[$key]['desc_name'] = $lte['id'];
 		} else {
 			$leday_item =& $leday[$key];
 			$leday_item['user'] .= ', '.$lte['user'];
@@ -106,7 +108,6 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
 				$leday_item['show_description'] = 'y';
 			}
-			$leday_item['desc_name'] = tra('Details').' : ';
 
 		}
 	} else {
