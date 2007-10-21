@@ -23,7 +23,7 @@
 	<div class="rbox-data" name="tip">
 	
 	
-	Please also see:
+	{tr}Please also see:{/tr}
 	<a class="rbox-link" href="tiki-admin.php?page=siteid">{tr}Site Identity{/tr}</a>
 	
 	
