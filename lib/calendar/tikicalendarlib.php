@@ -51,6 +51,8 @@ class TikiCalendarLib extends TikiLib {
 						} 
 						$res['url'] = $this->get_object_url($res['type'], $url_vars);
 						if ( $res['user'] != '' ) {
+							include_once('lib/smarty_tiki/modifier.username.php');
+							$res['user'] = smarty_modifier_username($res['user']);
 							if ( ! strpos($res['description'], '%s') ) {
 								$br = ( $res['description'] == '' ) ? '' : '<br />';
 								$res['description'] = '<i>'.tra('by').' %s</i>'.$br.$res['description'];
