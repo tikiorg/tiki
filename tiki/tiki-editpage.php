@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.184 2007-10-21 12:52:32 frank_p Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.185 2007-10-21 13:09:43 frank_p Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,7 @@ require_once ("lib/ajax/ajaxlib.php");
 require_once ("lib/wiki/wiki-ajax.php");
 $access->check_feature('feature_wiki');
 if (!$user) { 
-	$user = 'Anonymous';
+	$user = 'anonymous';
 }
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
