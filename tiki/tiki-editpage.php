@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.4 2007-10-19 21:10:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.5 2007-10-21 01:00:54 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,9 +112,10 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 			}
 		}
 	}
-	if ($editpageconflict == 'y' && !isset($_REQUEST["conflictoverride"]) ) { 				
+	if ($editpageconflict == 'y' && !isset($_REQUEST["conflictoverride"]) ) {
+		include_once('lib/smarty_tiki/modifier.userlink.php');
 		$msg = tra("This page is being edited by ") .
-			$semUser . ". " . 
+			smarty_modifier_userlink($semUser) . ". " . 
 			tra("Please check with the user before editing the page,
 			otherwise the changes will be stored as two separate versions in the history and
 			you will have to manually merge them later. ") ;
