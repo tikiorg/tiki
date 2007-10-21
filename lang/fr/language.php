@@ -7157,5 +7157,6 @@ $lang=Array(
 "A page has been demoted to your watched structure." =>  "Une page a été dépromue de la sous-structure que vous surveillez.",
 "Advanced search" => "Recherche avancée",
 "Override lock and carry on with edit" => "Outrepasser le verrou et continuer en mode édition",
+"Please also see:" => "Consultez également :",
 "###end###"=>"###end###");
 ?>
