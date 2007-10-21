@@ -33,7 +33,8 @@ class TikiCalendarLib extends TikiLib {
 							TikiLib::date_format('%Y', $res['start'])
 						);
 						$res['time'] = TikiLib::date_format('%H%M', $res['start']);
-						$when = '<b>'.TikiLib::date_format('%H:%M', $res['start']).'</b>';
+						$res['when'] = TikiLib::date_format('%H:%M', $res['start']);
+						$when = '<b>'.$res['when'].'</b>';
 						$url_vars = array($res['id'], $res['id2']);
 						switch ( $res['type'] ) {
 							case 'art': $res['description'] = $this->parse_data($res['description']); break;
@@ -60,7 +61,8 @@ class TikiCalendarLib extends TikiLib {
 						if ( $res['name'] == '' ) $res['name'] = $res['id'];
 						$res['name'] .= ' '.tra($res['action']);
 						
-						if ( $where == '' && $res['parent'] != '' ) $where = ' '.tra('in').' <b>'.str_replace("\n|\r", '', addslashes($res['parent'])).'</b>';
+						$res['where'] = str_replace("\n|\r", '', addslashes($res['parent']));
+						if ( $where == '' && $res['parent'] != '' ) $where = ' '.tra('in').' <b>'.$res['where'].'</b>';
 						if ( $res['head'] == '' ) $res['head'] = $when.$where;
 						
 						$ret[$dstart][] = $res;
