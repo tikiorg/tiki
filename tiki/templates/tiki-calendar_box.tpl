@@ -24,9 +24,9 @@ alt="{tr}zoom{/tr}" /></a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edi
 {if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<div class='box-title'><b>{$cellcategory}</b></div>{/if}
 {if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<div class='box-title'><a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$url|truncate:32:'...'}</a></div>{/if}
 <div class='box-data'>
-<b>{$cellname}</b>
+{if $cellname}<b>{$cellname}</b>{/if}
 {if $show_description eq 'y'}
-<br />{$celldescription}
+{if $cellname}<br />{/if}{$celldescription}
 {/if}
 </div>
 </div>

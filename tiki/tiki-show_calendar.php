@@ -272,7 +272,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$smarty->assign_by_ref('cellcalname', $lte["calname"]);
 				$smarty->assign('celllocation', "");
 				$smarty->assign('cellcategory', "");
-				$smarty->assign_by_ref('cellname', $lte["name"]);
+				$smarty->assign_by_ref('cellname', $lte["name"].' '.tra($lte['action']);
 				$smarty->assign('cellid', "");
 				$smarty->assign_by_ref('celldescription', $lte["description"]);
 				$leday["{$lte['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
