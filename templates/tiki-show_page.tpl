@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.1 2007-10-19 08:16:49 nyloth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.2 2007-10-21 19:27:53 pkdille Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -35,7 +35,13 @@
 	<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src="pics/icons/printer.png" border="0" width="16" height="16" alt="{tr}Print{/tr}" /></a>
 	{/if}
 
-	{if $prefs.feature_wiki_pdf eq 'y'}
+        {if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
+          <a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">
+            <img src="pics/icons/email_link.png" border="0" width="16" height="16" alt="{tr}Send a link{/tr}" />
+          </a>
+        {/if}
+	
+        {if $prefs.feature_wiki_pdf eq 'y'}
 		<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="pics/icons/page_white_acrobat.png" border="0" width="16" height="16" alt="{tr}pdf{/tr}" /></a>
 	{/if}
 	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
