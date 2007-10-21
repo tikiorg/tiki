@@ -5,9 +5,9 @@
 
 {if $viewlist neq 'list'}
 <span class="button2">
-{if $group_by_item eq 'y'}
-<a href="{$myurl}?gbi=n" class="linkbut" title="{tr}calendar view{/tr}">{tr}Do not group by item{/tr}</a>{else}
-<a href="{$myurl}?gbi=y" class="linkbut" title="{tr}calendar view{/tr}">{tr}Group by item{/tr}</a>{/if}
+{if $group_by_item neq 'n'}
+<a href="{$myurl}?gbi=n" class="linkbut" title="{tr}Do not group by item{/tr}">{tr}Do not group by item{/tr}</a>{else}
+<a href="{$myurl}?gbi=y" class="linkbut" title="{tr}Group by item{/tr}">{tr}Group by item{/tr}</a>{/if}
 </span>
 {/if}
 
