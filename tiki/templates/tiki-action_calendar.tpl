@@ -2,6 +2,15 @@
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
+
+{if $viewlist neq 'list'}
+<span class="button2">
+{if $group_by_item eq 'y'}
+<a href="{$myurl}?gbi=n" class="linkbut" title="{tr}calendar view{/tr}">{tr}Do not group by item{/tr}</a>{else}
+<a href="{$myurl}?gbi=y" class="linkbut" title="{tr}calendar view{/tr}">{tr}Group by item{/tr}</a>{/if}
+</span>
+{/if}
+
 <span class="button2"><a href="#" class="linkbut" onclick="toggle('filtercal');">{tr}Filter{/tr}</a></span>
 
 <span class="button2">

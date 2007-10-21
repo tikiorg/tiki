@@ -82,23 +82,59 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
       $cell[$i][$w]['focus'] = false;
     }
     if (isset($listtikievents["$dday"])) {
-      $e = 0;
+      $e = -1;
+
 
       foreach ($listtikievents["$dday"] as $lte) {
-        $leday["{$lte['time']}$e"] = $lte;
+      	$lte['desc_name'] = $lte['name'];
+      	if ( $calendarGroupByItem == 'y' ) {
+		$key = $lte['id'].'|'.$lte['type'];
+        	if ( ! isset($leday[$key]) ) {
+			$leday[$key] = $lte;
+			$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
+		} else {
+			$leday_item =& $leday[$key];
+			$leday_item['user'] .= ', '.$lte['user'];
 
+			if ( ! is_integer($leday_item['action']) ) $leday_item['action'] = 1;
+			$leday_item['action']++;
+
+			$leday_item['name'] = $lte['id'].' (x<b>'.$leday_item['action'].'</b>)';
+			$leday_item['head'] = ucfirst(tra('in')).' '.$lte['where'].' ('.$leday_item['action'].' '.tra('actions').')';
+
+			if ( $lte['show_description'] == 'y' && ! empty($lte['description']) ) {
+				$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
+				$leday_item['show_description'] = 'y';
+			}
+			$leday_item['desc_name'] = tra('Details').' : ';
+
+		}
+	} else {
+		$e++;
+		$key = "{$lte['time']}$e";
+        	$leday[$key] = $lte;
+	}
+      }
+
+      foreach ( $leday as $key => $lte ) {
         $smarty->assign_by_ref('cellhead', $lte["head"]);
         $smarty->assign_by_ref('cellprio', $lte["prio"]);
         $smarty->assign_by_ref('cellcalname', $lte["calname"]);
         $smarty->assign('celllocation', "");
         $smarty->assign('cellcategory', "");
-        $smarty->assign_by_ref('cellname', $lte["name"]);
+        $smarty->assign_by_ref('cellname', $lte["desc_name"]);
         $smarty->assign('cellid', "");
         $smarty->assign_by_ref('celldescription', $lte["description"]);
         $smarty->assign('show_description', $lte["show_description"]);
-        $leday["{$lte['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
-        $e++;
+
+	if ( ! isset($leday[$key]["over"]) ) {
+		$leday[$key]["over"] = '';
+	} else {
+		$leday[$key]["over"] .= "<br />\n";
+	}
+        $leday[$key]["over"] .= $smarty->fetch("tiki-calendar_box.tpl");
       }
+
     }
 
     if (is_array($leday)) {
@@ -138,7 +174,7 @@ if ( $_SESSION['CalendarViewList'] == 'list' )
 	if ( is_array($listtikievents) ) foreach ( $listtikievents as $le )
 		if ( is_array($le) ) foreach ( $le as $e )
 			$listevents[] = $e;
-	
+
 $smarty->assign('listevents', $listevents);
 $smarty->assign('var', '');
 $smarty->assign('myurl', 'tiki-action_calendar.php');

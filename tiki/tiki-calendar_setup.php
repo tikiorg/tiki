@@ -51,9 +51,18 @@ if (isset($_REQUEST["viewlist"])) {
 }
 $smarty->assign_by_ref('viewlist', $_SESSION['CalendarViewList']);
 
+if (isset($_REQUEST["gbi"])) {
+	$group_by_item = $_REQUEST["gbi"];
+	$_SESSION['CalendarGroupByItem'] = $group_by_item;
+} else {
+	$group_by_item = "";
+}
+$smarty->assign_by_ref('group_by_item', $_SESSION['CalendarGroupByItem']);
+
 $calendarViewMode = $_SESSION['CalendarViewMode'];
 $calendarViewGroups = $_SESSION['CalendarViewGroups'];
 $calendarViewList = $_SESSION['CalendarViewList'];
+$calendarGroupByItem = $_SESSION['CalendarGroupByItem'];
 
 global $calendar_firstDayofWeek;
 if ($calendar_firstDayofWeek == 'user') {
