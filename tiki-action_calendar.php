@@ -92,8 +92,8 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         	if ( ! isset($leday[$key]) ) {
 			$leday[$key] = $lte;
 			$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
-			$leday[$key]['head'] = ucfirst(tra('in')).' '.$lte['where'];
-			$leday[$key]['desc_name'] = $lte['id'];
+			$leday[$key]['head'] = $lte['name'].', <i>'.tra('in').' '.$lte['where'].'</i>';
+			$leday[$key]['desc_name'] = '';
 		} else {
 			$leday_item =& $leday[$key];
 			$leday_item['user'] .= ', '.$lte['user'];
@@ -101,8 +101,8 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			if ( ! is_integer($leday_item['action']) ) $leday_item['action'] = 1;
 			$leday_item['action']++;
 
-			$leday_item['name'] = $lte['id'].' (x<b>'.$leday_item['action'].'</b>)';
-			$leday_item['head'] = ucfirst(tra('in')).' '.$lte['where'].' ('.$leday_item['action'].' '.tra('actions').')';
+			$leday_item['name'] = $lte['name'].' (x<b>'.$leday_item['action'].'</b>)';
+			$leday_item['desc_name'] = $leday_item['action'].' '.tra('actions');
 
 			if ( $lte['show_description'] == 'y' && ! empty($lte['description']) ) {
 				$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
@@ -114,6 +114,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 		$e++;
 		$key = "{$lte['time']}$e";
         	$leday[$key] = $lte;
+		$lte['desc_name'] .= tra($lte['action']);
 	}
       }
 

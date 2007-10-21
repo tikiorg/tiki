@@ -59,7 +59,6 @@ class TikiCalendarLib extends TikiLib {
 						}
 						$res['description'] = str_replace(array('"',"\n|\r"), array("'",''), $res['description']);
 						if ( $res['name'] == '' ) $res['name'] = $res['id'];
-						$res['name'] .= ' '.tra($res['action']);
 						
 						$res['where'] = str_replace("\n|\r", '', addslashes($res['parent']));
 						if ( $where == '' && $res['parent'] != '' ) $where = ' '.tra('in').' <b>'.$res['where'].'</b>';
