@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.2 2007-10-21 07:23:49 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -99,31 +99,60 @@
 {/if}
 
 <table class="admin">
-<tr><td>
+  <tr>
+    <td>
+      {$tree}
+    </td>
+    
+    <td width="20">
+      &nbsp;
+    </td>
 
-{$tree}
+    <td>
+      {if $cantobjects > 0}
+        <table class="normal">
+          <tr class="heading">
+            <th class="heading">
+              {tr}Name{/tr}
+            </th>
+            <th class="heading">
+              {tr}Type{/tr}
+            </th>
+            {if $deep eq 'on'}
+              <th>
+                {tr}Category{/tr}
+              </th>
+            {/if}
+          </tr>
+  
+          {cycle values="odd,even" print=false}
+          {section name=ix loop=$objects}
+          <tr class="{cycle}" >
 
-</td>
-<td width="20">&nbsp;</td>
-<td>
+            <td>
+              <a href="{$objects[ix].href}" class="catname">{$objects[ix].name|default:'&nbsp;'}</a>
+              <br />
+              {$objects[ix].description}
+            </td>
+            
+            <td>
+              <strong>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</strong>
+            </td>
+            {if $deep eq 'on'}
+              <td>
+                {$objects[ix].categName|tr_if}
+              </td>
+            {/if}
 
-<h3>{tr}Objects{/tr} ({$cantobjects})</h3>
-{if $cantobjects > 0}
-<table class="normal">
-{cycle values="odd,even" print=false}
-{section name=ix loop=$objects}
-<tr class="{cycle}" >
-{if $deep eq 'on'}<td>{$objects[ix].categName|tr_if}</td>{/if}
-<td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}</td>
-<td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name|default:'&nbsp;'}</a></td>
-<td>{$objects[ix].description}&nbsp;</td>
-</tr>
-{/section}
+          </tr>
+          {/section}
+        </table>
+        <br />
+      {/if}
+
+    </td>
+  </tr>
 </table>
-<br />
-{/if}
-
-</td></tr></table>
 
 
 {if $cantobjects > 0}
