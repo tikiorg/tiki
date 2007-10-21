@@ -35,7 +35,6 @@ class TikiDate extends Date {
 	 */
 	var $server_offset;
 	var $trad = array("January","February","March","April","May","June","July","August","September","October","Novembre","December","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Mon","Tue","Wed","Thu","Fri","Sat","Sun","of");
-	var $replace = NULL ;
 
 	/**
 	 * Default constructor
@@ -117,13 +116,31 @@ class TikiDate extends Date {
 	}
 
 	function format($format) {
-		$output = parent::format($format);
+		global $prefs;
 
-		if ($this->replace == NULL) {
-		  $this->replace = array_map("tra",$this->trad);
+		// Format the date
+		$return = parent::format($format);
+
+		// Translate the date if we are not already in english
+		if ( $prefs['language'] != 'en' ) {
+
+			// Divide the date into an array of strings by looking for dates elements (specified in $this->trad)
+			$words = preg_split('/('.implode('|',$this->trad).')/', $return, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+			// For each strings in $words array...
+			$return = '';
+			foreach ( $words as $w ) {
+				if ( in_array($w, $this->trad) ) {
+					// ... either we have a date element that needs a translation
+					$return .= tra($w);
+				} else {
+					// ... either we have a string that should not be translated
+					$return .= $w;
+				}
+			}
 		}
 
-	  	return str_replace($this->trad,$this->replace,$output);
+		return $return;
 	}
 
 	function setDate($date,$format = DATE_FORMAT_ISO) {
