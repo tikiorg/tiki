@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141 2007-10-16 17:22:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.1 2007-10-22 15:53:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -696,7 +696,8 @@ if ($_REQUEST["itemId"]) {
 	||  (isset($info['status']) and $info['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers_closed'))
 	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
-		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId'])
+		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
+		 ($tracker_info['writerCanModify'] != 'y' || $user != $trklib->get_item_creator($info['trackerId'], $_REQUEST['itemId']))
 	) ) {
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');

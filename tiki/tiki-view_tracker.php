@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.1 2007-10-18 21:30:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.2 2007-10-22 15:53:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,9 @@ if (empty($tracker_info)) {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"])) {
+	$tracker_info = array_merge($tracker_info,$t);
+ }
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
@@ -82,9 +85,6 @@ if (isset($_REQUEST['my'])) {
 		$ours = $group;
 	}
 }
-
-if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
-	$tracker_info = array_merge($tracker_info,$t);
 
 if ($tiki_p_create_tracker_items == 'y' && !empty($t['start'])) {
 	if ($tikilib->now < $t['start']) {
