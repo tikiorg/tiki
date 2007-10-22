@@ -1,10 +1,8 @@
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	<div class="rbox-data" name="tip">
-	
-	Text area (that apply throughout many features)
-
-	</div>
+	  {tr}Text area (that apply throughout many features){/tr}
+        </div>
 </div>
 <br />
 
