@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.20 2007-09-26 20:27:53 tombombadilom Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.20.2.1 2007-10-22 23:19:08 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ $smarty->assign_by_ref('languages_files', $languages_files);
 
 // Save Variables
 if (isset($_REQUEST["imp_language"])) {
-	$imp_language = $_REQUEST["imp_language"];
+	$imp_language = preg_replace('/\.\./','',$_REQUEST['imp_language']);
 
 	$smarty->assign('imp_language', $imp_language);
 }
@@ -49,7 +49,6 @@ if (isset($_REQUEST["exp_language"])) {
 // Import
 if (isset($_REQUEST["import"])) {
 	check_ticket('import-lang');
-
 	include_once ('lang/' . $imp_language . '/language.php');
 
 	$impmsg = "Included lang/" . $imp_language . "/language.php";
