@@ -1,13 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80 2007-10-12 07:55:49 nyloth Exp $ *}
-<div class="cbox">
-<div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
-<div class="cbox-data">
-<br />
-<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
-<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.1 2007-10-22 20:56:17 pkdille Exp $ *}
+<div class="rbox" name="tip">
+	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+	
+        <div class="rbox-data" name="tip">
+	  {tr}Link to{/tr} <a class="rbox-link" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
+        </div>
+        <div class="rbox-data" name="tip">
+	  {tr}Link to{/tr} <a class="rbox-link" href="tiki-adminusers.php">{tr}Admin users{/tr}</a>
+        </div>
 <br /><br />
-</div>
-</div>
 
 <div class="cbox">
 <div class="cbox-title">
