@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.2 2007-10-21 07:23:49 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.3 2007-10-22 19:42:03 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -131,8 +131,7 @@
 
             <td>
               <a href="{$objects[ix].href}" class="catname">{$objects[ix].name|default:'&nbsp;'}</a>
-              <br />
-              {$objects[ix].description}
+              <div class="subcomment">  {$objects[ix].description} </div>
             </td>
             
             <td>
