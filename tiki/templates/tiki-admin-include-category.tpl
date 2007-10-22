@@ -48,8 +48,8 @@
 		<td><input type="checkbox" name="feature_category_reinforce" {if $prefs.feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Category{/tr}">{/if} {tr}Categories browse uses PhpLayers{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_category_use_phplayers" {if $prefs.feature_category_use_phplayers eq 'y'}checked="checked"{/if}/><i>{tr}The feature must be activated{/tr}</i></td>
+		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Category{/tr}">{/if} {tr}Categories browse uses PhpLayers{/tr} <i>({tr}The feature must be activated{/tr})</i> {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_category_use_phplayers" {if $prefs.feature_category_use_phplayers eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
           <td colspan="2" class="button"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
