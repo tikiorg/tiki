@@ -54,7 +54,11 @@ or HTTP_HOST
 
 */
 
-if (!isset($local_php)) $local_php = 'db/local.php';
+if (!isset($local_php) or !is_file($local_php)) {
+  $local_php = 'local.php';
+} else {
+	$local_php = preg_replace(array('/\.\./','/^db\//'),array('',''),$local_php);
+}
 if (is_file('db/virtuals.inc')) {
 	if (!isset($multi)) {
 		if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
@@ -66,11 +70,11 @@ if (is_file('db/virtuals.inc')) {
 		}
 	}
 	if (isset($multi)) {
-		$local_php = "db/$multi/local.php";
+		$local_php = "$multi/local.php";
 		$tikidomain = $multi;
 	}
 }
-$re  = include_once($local_php);
+$re  = include_once('db/'.$local_php);
 if ( $re === FALSE) {
 	die("<b style=\"color:red;\">$local_php not found.</b><br /><br />Please run <a href=tiki-install.php>tiki-install.php</a>");
 }
