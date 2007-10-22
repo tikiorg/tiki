@@ -2,7 +2,7 @@
 
 {if $showmsg ne 'n'}
   {if $showmsg eq 'e'}<span class="warn">{/if}
-  {$msg}
+  {$msg|escape:'html'}
   {if $showmsg eq 'e'}</span>{/if}
   <br /><br />
 {/if}
