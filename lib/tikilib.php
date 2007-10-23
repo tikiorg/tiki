@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.4 2007-10-22 23:00:42 mose Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.5 2007-10-23 16:41:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -326,11 +326,10 @@ class TikiLib extends TikiDB {
 				              $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
 				break;
 			case 'tracker_modified':
-				$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_tracker');
+				$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_trackers');
 				break;
 			case 'tracker_item_modified':
-				global $trackerId;
-				$res['perm'] = $this->user_has_perm_on_object($res['user'],$trackerId,'tracker','tiki_p_view_tracker');
+				$res['perm'] = $this->user_has_perm_on_object($res['user'],$info['trackerId'],'tracker','tiki_p_view_trackers');
 				break;
 			case 'blog_post':
 				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
