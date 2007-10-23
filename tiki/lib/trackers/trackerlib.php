@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.1 2007-10-18 18:17:40 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.2 2007-10-23 20:59:43 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2090,7 +2090,7 @@ class TrackerLib extends TikiLib {
 		foreach ($watchers as $w) {
 			$emails[] = $userlib->get_user_email($w['user']);
 		}
-		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId);
+		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId));
 		foreach ($watchers_item as $w) {
 			$emails2[] = $userlib->get_user_email($w['user']);
 		}

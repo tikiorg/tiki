@@ -768,7 +768,7 @@ class TrkWithMirrorTablesLib extends TrackerLib {
 		include_once('lib/notifications/notificationlib.php');	
 
 		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
-		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
+		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId, array('trackerId'=>$trackerId));
 
 		if( array_key_exists( "outboundEmail", $options ) )
 		{
