@@ -485,14 +485,19 @@ class RSSLib extends TikiLib {
 			// extract all the data we need:
 			preg_match_all("/<title[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/msi", $items[0][$it], $titles);
 	 		preg_match_all("/<link>(.*?)<\/link>/msi", $items[0][$it], $links);
-			preg_match_all("/<!\[CDATA\[(.*?)\]\]>/msi", $links[1][0], $links2);
-			if (count($links2[1]) > 0)
-				$links[1][0] = $links2[1][0];
-			if (count($links[1])<1)
-		 		preg_match_all("/<link.*?href=\"(.*?)\".*?>/msi", $items[0][$it], $links);
+			if (count($links[1]) > 0) {
+				preg_match_all("/<!\[CDATA\[(.*?)\]\]>/msi", $links[1][0], $links2);
+				if (count($links2[1]) > 0) {
+					$links[1][0] = $links2[1][0];
+				}
+		 	} else {
+				preg_match_all("/<link.*?href=\"(.*?)\".*?>/msi", $items[0][$it], $links);
+			}
 	 		preg_match_all("/<description[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/description>/msi", $items[0][$it], $description);
 			if (count($description[1])<1)
 		 		preg_match_all("/<dc:description>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/dc:description>/i", $items[0][$it], $description);
+			if (count($description[1])<1)
+				preg_match_all("/<content[^>]*>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/content>/msi", $items[0][$it], $description);
 
 			$pubdate = array();
 			preg_match_all("/<dc:date>(.*?)<\/dc:date>/msi", $items[0][$it], $pubdate);
@@ -500,6 +505,8 @@ class RSSLib extends TikiLib {
 				preg_match_all("/<pubDate>(.*?)<\/pubDate>/msi", $items[0][$it], $pubdate);
 			if (count($pubdate[1])<1)				
 				preg_match_all("/<issued>(.*?)<\/issued>/msi", $items[0][$it], $pubdate);
+			if (count($pubdate[1])<1)				
+				preg_match_all("/<published>(.*?)<\/published>/msi", $items[0][$it], $pubdate);
 
 			preg_match_all("/<author>(.*?)<\/author>/msi", $items[0][$it], $author);
 			if (count($author[1])<1)				
