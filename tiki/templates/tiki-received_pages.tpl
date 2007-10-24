@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.2 2007-10-24 13:51:08 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received Pages{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -7,6 +8,14 @@
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received pages tpl{/tr}">
 <img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+
+{if !empty($errors)}
+<div class="simplebox highlight">
+{foreach item=error from=$errors}
+{tr}{$error.error}{/tr} {$error.param}<br />
+{/foreach}
+</div>
+{/if}
 
 {if $receivedPageId > 0 or $view eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
@@ -41,7 +50,7 @@
    </td>
 </tr>
 </table>
-<p>{tr}The highlight page already exist.{/tr} {tr}Please, change the name if you want the page to be uploaded.{/tr}</p>
+{if $channels|@count > 0}<p><span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}</p>{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a></td>
@@ -95,8 +104,11 @@
 </div>
 
 <h2>{tr}Received Structures{/tr}</h2>
+{if $structures|@count > 0}<p><span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}</p>{/if}
+<form>
 <table class="normal">
 <tr>
+<td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_modes={if $sort_modes eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_modes={if $sort_modes eq 'structureName_desc'}structureName_asc{else}structureName_desc{/if}">{tr}Structure{/tr}</a></td>
 <td class="heading">{tr}Page{/tr}</td>
@@ -109,6 +121,7 @@
 {section name=user loop=$structures}
 {if $structures[user].structureName eq $structures[user].pageName}
 <tr>
+<td class="{cycle advance=false}">&nbsp;</td>
 <td class="{cycle advance=false}">{$structures[user].receivedPageId}</td>
 <td class="{cycle advance=false}">{$structures[user].pageName}</td>
 <td class="{cycle advance=false}">&nbsp;</td>
@@ -123,6 +136,7 @@
 {section name=ix loop=$structures}
 {if $structures[ix].structureName eq $structures[user].structureName}
 <tr>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" </td>
 <td class="{cycle advance=false}">{$structures[ix].receivedPageId}</td>
 <td class="{cycle advance=false}">&nbsp;</td>
 {if $structures[ix].pageExists ne ''}
@@ -142,4 +156,10 @@
 {/section}
 {/if}
 {/section}
+<script type="text/javascript"> /* <![CDATA[ */
+	document.write('<tr><td colspan="8"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
+	document.write('<label for="clickall">{tr}select all{/tr}</label></td></tr>');
+	/* ]]> */</script>
 </table>
+{tr}Prefix the checked:{/tr}<input type="text" name="prefix" />{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />
+</form>

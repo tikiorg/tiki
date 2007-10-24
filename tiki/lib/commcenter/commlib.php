@@ -174,6 +174,17 @@ class CommLib extends TikiLib {
 		$query = "insert into `tiki_received_pages`(`pageName`,`data`,`comment`,`receivedFromSite`, `receivedFromUser`, `receivedDate`,`description`,`structureName`, `parentName`, `page_alias`, `pos`) values(?,?,?,?,?,?,?,?,?,?,?)";
 		$this->query($query,array($pageName,$data,$comment,$site,$user,(int)$tikilib->now,$description,$structureName, $parentName,$alias,$pos));		
 	}
+	function rename_structure_pages($pages, $prefix, $postfix) {
+		$bindvars[] = $prefix;
+		$bindvars[] = $postfix;
+		$bindvars = array_merge($bindvars, $pages);
+		$query = 'update `tiki_received_pages` set `pageName`= concat(?,`pageName`,?) where `pageName` in ('.implode(',',array_fill(0, count($pages),'?')).")";
+		$this->query($query, $bindvars);
+		$query = 'update `tiki_received_pages` set `parentName`= concat(?,`parentName`,?) where `parentName` in ('.implode(',',array_fill(0, count($pages),'?')).")";
+		$this->query($query, $bindvars);
+		$query = 'update `tiki_received_pages` set `structureName`= concat(?,`structureName`,?) where `structureName` in ('.implode(',',array_fill(0, count($pages),'?')).")";
+		$this->query($query, $bindvars);
+	}
 
 // Functions for the communication center end ////
 }
