@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.28 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.28.2.1 2007-10-24 21:23:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,6 +64,9 @@ $smarty->assign('username', $_REQUEST["username"]);
 $smarty->assign('site', $_REQUEST["site"]);
 $smarty->assign('path', $_REQUEST["path"]);
 $smarty->assign('password', $_REQUEST["password"]);
+if (isset($_REQUEST['dbg'])) {
+	$smarty->assign('dbg', $_REQUEST['dbg']);
+}
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -112,7 +115,7 @@ if (isset($_REQUEST["send"])) {
 	check_ticket('send-objects');
 	// Create XMLRPC object
 	$client = new XML_RPC_Client($_REQUEST["path"], $_REQUEST["site"], 80);
-	$client->setDebug(0);
+	$client->setDebug((isset($_REQUEST['dbg']) && $_REQUEST['dbg'] == 'on')?true:false);
 
 	foreach ($sendstructures as $structure) {
 		$spages = $structlib->s_get_structure_pages($structure);
@@ -126,7 +129,7 @@ if (isset($_REQUEST["send"])) {
 				new XML_RPC_Value($_REQUEST["username"], "string"),
 				new XML_RPC_Value($_REQUEST["password"], "string"),
 				new XML_RPC_Value($spages[0]['pageName'], "string"),
-				new XML_RPC_Value($listPageNames[$spage['parent_id']], "string"),
+				new XML_RPC_Value($spage['parent_id']?$listPageNames[$spage['parent_id']]: $spage['pageName'], "string"),
 				new XML_RPC_Value($spage['pageName'], "string"),
 				new XML_RPC_Value(base64_encode($page_info["data"]), "string"),
 				new XML_RPC_Value($page_info["comment"], "string"),
@@ -141,10 +144,10 @@ if (isset($_REQUEST["send"])) {
 				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-					$msg .= tra('Page'). ' '.$spage['pageName'].': ' . $page . tra(' successfully sent'). "<br />";
+					$msg .= tra('Page'). ': '.$spage['pageName']. tra(' successfully sent'). "<br />";
 				} else {
 					$errorMsg = $result->faultString(); 
-					$msg .= tra('Page'). ' '.$spage['pageName'].': ' . $page . tra(' not sent') . '!' . "<br />";
+					$msg .= tra('Page'). ': '.$spage['pageName']. tra(' not sent') . '!' . "<br />";
 					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
