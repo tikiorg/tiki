@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38 2007-10-14 23:39:21 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38.2.1 2007-10-24 09:28:39 sylvieg Exp $ *}
 {* Module layout with controls *}
 
 {if $module_nobox neq 'y'}
 <div class="box-shadow">
 	<div class="box box-{$module_name|escape}">
 {if $module_decorations ne 'n'}
-		<div class="box-title">
+		<div class="box-title"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 {if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<table width="100%"><tr>
 				<td width="11"><a title="{tr}Move module up{/tr}" 
