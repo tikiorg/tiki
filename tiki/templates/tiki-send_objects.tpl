@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.1 2007-10-24 21:23:59 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -116,6 +116,7 @@
 <tr><td class="form">{tr}Path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
 <tr><td class="form">{tr}Username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
 <tr><td class="form">{tr}Password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
+<tr><td class="form">{tr}Debug{/tr}:</td><td class="form"><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if} /></td></tr>
 <tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
 </table>
 </div>
