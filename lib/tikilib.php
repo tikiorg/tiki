@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.5 2007-10-23 16:41:19 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.6 2007-10-24 05:24:10 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5066,6 +5066,8 @@ function add_pageview() {
 		$i = str_replace('{', '', $i);
 		$i = str_replace('\'', '', $i);
 		$i = str_replace('"', '', $i);
+		// IE silently removes null-byte html char \0, so let's remove it anyways
+		$i = str_replace('\\0', '', $i);
 	    }
 
 	    if ($inside) {  // inside "foo bar" - append
