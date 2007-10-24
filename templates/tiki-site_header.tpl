@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.12 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.12.2.1 2007-10-24 17:21:59 sylvieg Exp $ *}
 {* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}{/if}
 {if $prefs.feature_sitelogo eq 'y'}
@@ -11,7 +11,7 @@
 			{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
 		</div>{* optional ads (banners) *}
 {/if}
-{if $filegals_manager ne 'y'}
+{if $filegals_manager ne 'y' and $print_page ne 'y'}
 {if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y'}
 		<div id="sitesearchbar">{include file="tiki-searchindex.tpl"
 									searchNoResults="false"
