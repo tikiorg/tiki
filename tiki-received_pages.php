@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.18 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.18.2.1 2007-10-24 13:51:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,10 +32,14 @@ if (!isset($_REQUEST["receivedPageId"])) {
 
 $smarty->assign('receivedPageId', $_REQUEST["receivedPageId"]);
 
+$errors = array();
 if (isset($_REQUEST["accept"])) {
 	check_ticket('received-pages');
 	// CODE TO ACCEPT A PAGE HERE
-	$commlib->accept_page($_REQUEST["accept"]);
+	if (!$commlib->accept_page($_REQUEST["accept"])) {
+		$info = $commlib->get_received_page($_REQUEST['accept']);
+		$errors[] = array('error'=>'Page already exists');
+	}
 }
 
 if ($_REQUEST["receivedPageId"]) {
@@ -91,6 +95,19 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('parsed', $tikilib->parse_data($_REQUEST["data"]));
 }
 
+if (!empty($_REQUEST['checked']) && (!empty($_REQUEST['prefix']) || !empty($_REQUEST['postfix']))) {
+	check_ticket('received-pages');
+	foreach ($_REQUEST['checked'] as $page) {
+		$newpage = empty($_REQUEST['postfix'])? $_REQUEST['prefix'].$page: $page.$_REQUEST['postfix'];
+		if ($tikilib->page_exists($newpage)) {
+			$errors[] = array('error'=>'Page already exists', 'param'=>$page);
+		}
+	}
+	if (empty($errors)) {
+		$commlib->rename_structure_pages($_REQUEST['checked'], isset($_REQUEST['prefix'])?$_REQUEST['prefix']: '', isset($_REQUEST['postfix'])?$_REQUEST['postfix']: '');
+	}
+}
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'receivedDate_desc';
 } else {
@@ -142,6 +159,10 @@ if (!isset($_REQUEST['sort_modes'])) {
 }
 $structures = $tikilib->list_received_pages(0, -1, $sort_modes, '', 's');
 $smarty->assign_by_ref('structures', $structures['data']);
+
+if (!empty($errors)) {
+	$smarty->assign_by_ref('errors', $errors);
+}
 
 ask_ticket('received-pages');
 
