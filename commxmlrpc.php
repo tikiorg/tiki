@@ -1,22 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22 2007-10-02 17:27:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.1 2007-10-25 20:00:51 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22 2007-10-02 17:27:05 sylvieg Exp $
-include_once("lib/init/initlib.php");
-include_once ('db/tiki-db.php');
-
-include_once ('lib/tikilib.php');
-include_once ('lib/userslib.php');
-include_once ("XML/Server.php");
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.1 2007-10-25 20:00:51 sylvieg Exp $
+include_once("tiki-setup.php");
+include_once ("lib/pear/XML/Server.php");
 include_once ('lib/commcenter/commlib.php');
-
-$tikilib = new Tikilib($dbTiki);
-$userlib = new Userslib($dbTiki);
 
 if ($tikilib->get_preference("feature_comm", 'n') != 'y') {
 	die;
