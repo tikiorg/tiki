@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.28.2.1 2007-10-24 21:23:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.28.2.2 2007-10-25 19:51:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ("XML/Server.php");
+include_once ("lib/pear/XML/Server.php");
 include_once ('lib/structures/structlib.php');
 
 if ($prefs['feature_comm'] != 'y') {
@@ -233,6 +233,7 @@ if (isset($_REQUEST["send"])) {
 $smarty->assign('msg', $msg);
 
 $smarty->assign('sendpages', $sendpages);
+$sendstructures_names = array();
 foreach ($sendstructures as $key=>$id) {
 	foreach ($structures['data'] as $structure) {
 		if ($structure['page_ref_id'] == $id) {
