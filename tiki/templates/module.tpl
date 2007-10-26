@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38.2.1 2007-10-24 09:28:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38.2.2 2007-10-26 17:24:42 sylvieg Exp $ *}
 {* Module layout with controls *}
 
 {if $module_nobox neq 'y'}
@@ -15,7 +15,7 @@
 				href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img 
 				src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}Down{/tr}]" /></a></td>
 				<td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{/if}>
-<span class="box-titletext">{$module_title}</span>
+<span class="box-titletext"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>{$module_title}</span>
 </td>
 {if $module_flip eq 'y'}
 <td width="16">
@@ -30,7 +30,7 @@
 {if $module_flip eq 'y'}
 <table width="100%"><tr>
 <td ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');">
-<span class="box-titletext">
+<span class="box-titletext"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 {/if}
 {$module_title}
 {if $module_flip eq 'y'}</span>
