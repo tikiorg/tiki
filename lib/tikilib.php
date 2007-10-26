@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.6 2007-10-24 05:24:10 mose Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.7 2007-10-26 16:02:50 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5729,6 +5729,9 @@ function add_pageview() {
           $imgdata["class"] = '';
 	    $imgdata = $this->split_assoc_array( $parts, $imgdata);
 
+			if (stristr(str_replace(' ', '', $imgdata["src"]),'javascript:')) {
+				$imgdata["src"]  = '';
+			}
 			if ($tikidomain) {
 				$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
 			}
