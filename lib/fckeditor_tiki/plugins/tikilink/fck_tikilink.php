@@ -1,7 +1,7 @@
 ﻿<?php
-chdir('../../../..');
+$dir_level = 4;
+require_once('../../../../tiki-setup.php');
 
-require_once('tiki-setup.php');
 $smarty->template_dir = dirname(__FILE__).'/templates/';
 
 if (!isset($_REQUEST["offset"])) {
