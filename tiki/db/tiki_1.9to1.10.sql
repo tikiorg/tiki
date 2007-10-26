@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221 2007-10-11 17:47:09 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.1 2007-10-26 18:33:11 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -67,7 +67,7 @@ CREATE TABLE `tiki_events` (
   `object` varchar(200) NOT NULL default '',
   `method` varchar(200) NOT NULL default '',
   PRIMARY KEY  (`callback_type`,`order`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # 2005-09-31: mdavey: make sure developers are using the 6-column version of tiki_events
 ALTER TABLE `tiki_events` ADD `file` varchar(200) NOT NULL default '' AFTER `event`;
@@ -95,7 +95,7 @@ CREATE TABLE `tiki_registration_fields` (
   `show` tinyint(1) NOT NULL default '1',
   `size` varchar(10) default '10',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # 2005-09-22: mdavey: move custom fields to new table
 INSERT IGNORE INTO `tiki_registration_fields` (field, name) SELECT prefName as field, value as name FROM `tiki_user_preferences` WHERE user='CustomFields';
@@ -132,7 +132,7 @@ CREATE TABLE `tiki_actionlog_conf` (
  `objectType`varchar(32) NOT NULL default '',
  `status` char(1) default '',
  PRIMARY KEY (`action`, `objectType`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Created', 'wiki page', 'y');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'wiki page', 'y');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'wiki page', 'y');
@@ -210,7 +210,7 @@ CREATE TABLE `tiki_freetags` (
   `tag` varchar(30) NOT NULL default '',
   `raw_tag` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`tagId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #2005-12-06 lfagundes
 
@@ -227,14 +227,14 @@ CREATE TABLE `tiki_freetagged_objects` (
   KEY (`tagId`),
   KEY (`user`),
   KEY (`objectId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #2005-12-07 lfagundes
 
 CREATE TABLE `tiki_categorized_objects` (
   `catObjectId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`catObjectId`)
-) TYPE=MyISAM ;
+) ENGINE=MyISAM ;
 
 #2005-12-09 lfagundes
 
@@ -281,13 +281,13 @@ CREATE TABLE tiki_contributions (
   name varchar(100) default NULL,
   description varchar(250) default NULL,
   PRIMARY KEY  (contributionId)
-) TYPE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 CREATE TABLE tiki_contributions_assigned (
   contributionId int(12) NOT NULL,
   objectId int(12) NOT NULL,
   PRIMARY KEY  (objectId, contributionId)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
@@ -310,7 +310,7 @@ CREATE TABLE tiki_page_drafts (
   description varchar(200) default NULL,
   comment varchar(200) default NULL,
   PRIMARY KEY  (pageName, user)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 #2006-03-16 sampaioprimo
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','week');
@@ -329,7 +329,7 @@ CREATE TABLE tiki_actionlog_params (
   name varchar(40) NOT NULL,
   value text,
   KEY  (actionId)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 #2006-04-06
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Renamed', 'wiki page', 'n');
 #2006-04-11
@@ -347,7 +347,7 @@ CREATE TABLE tiki_sent_newsletters_errors (
   login varchar(40) default '',
   error char(1) default '',
   KEY  (editionId)
-) TYPE=MyISAM ;
+) ENGINE=MyISAM ;
 #2006-04-27
 ALTER TABLE `tiki_semaphores` ADD `objectType` varchar(20) default 'wiki page' AFTER `semName`;
 
@@ -438,7 +438,7 @@ CREATE TABLE tiki_webmail_contacts_groups (
   contactId int(12) NOT NULL,
   groupName varchar(255) NOT NULL,
   PRIMARY KEY  (contactId,groupName(200))
-) TYPE=MyISAM ;
+) ENGINE=MyISAM ;
 
 #sylvieg 2006-11-30
 ALTER TABLE `users_grouppermissions` CHANGE `permName` `permName` varchar(31)  NOT NULL default '';
@@ -455,7 +455,7 @@ CREATE TABLE tiki_calendar_options (
 	optionName varchar(120) NOT NULL default '',
 	value varchar(255),
 	PRIMARY KEY (calendarId,optionName)
-) TYPE=MyISAM ;
+) ENGINE=MyISAM ;
 
 update `users_permissions` set type='tiki' where `permName`='tiki_p_view_tiki_calendar' and `type`='calendar';
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Tiki Calendar' and url='tiki-action_calendar.php' and position='36' and section='feature_action_calendar' and perm='tiki_p_view_tiki_calendar' and groupname='' ;
@@ -1572,7 +1572,7 @@ CREATE TABLE tiki_newsletter_included (
   nlId int(12) NOT NULL default '0',
   includedId int(12) NOT NULL default '0',
   PRIMARY KEY  (nlId,includedId)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # 2007-10-01 sylvieg
 ALTER TABLE tiki_received_pages ADD COLUMN  structureName varchar(250) default NULL;
