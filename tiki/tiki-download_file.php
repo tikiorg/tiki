@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.33 2007-10-12 07:55:26 nyloth Exp $
+// CVS: $Id: tiki-download_file.php,v 1.33.2.1 2007-10-26 15:56:37 sylvieg Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
@@ -40,8 +40,18 @@ function readfile_chunked($filename,$retbytes=true) {
    return $status;
 }
 
-if(!isset($_REQUEST['fileId']) || !($info = $tikilib->get_file($_REQUEST['fileId']))) {
-	$smarty->assign('msg', tra('incorrect fieldId'));
+if (isset($_REQUEST["fileId"])) {
+	$info = $tikilib->get_file($_REQUEST["fileId"]);
+} elseif (isset($_REQUEST["galleryId"]) && isset($_REQUEST["name"])) {
+	$info = $tikilib->get_file_by_name($_REQUEST["galleryId"], $_REQUEST["name"]);
+	$_REQUEST['fileId'] = $info['fileId'];
+} else {
+	$smarty->assign('msg',tra('Incorrect param'));
+	$smarty->display('error.tpl');
+  die;
+}
+if (!is_array($info)) {
+	$smarty->assign('msg',tra('Incorrect param'));
 	$smarty->display('error.tpl');
 	die;
 }
