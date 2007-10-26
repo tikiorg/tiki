@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.1 2007-10-26 18:33:11 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.2 2007-10-26 20:36:40 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1600,3 +1600,9 @@ ALTER IGNORE TABLE tiki_menu_options ADD UNIQUE uniq_menu (menuId,name(30),url(5
 
 #2007-10-11 sylvieg
 UPDATE tiki_user_watches SET event='structure_changed' WHERE event='structure_page_changed';
+
+#2007-10-26 sylvieg
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
+UPDATE  tiki_menu_options set perm='tiki_p_edit_menu' where url='tiki-admin_menus.php';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','');
