@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.2 2007-10-29 16:37:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.3 2007-10-29 17:49:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.2 2007-10-29 16:37:20 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.22.2.3 2007-10-29 17:49:48 sylvieg Exp $
 include_once("tiki-setup.php");
 include_once ("lib/pear/XML/Server.php");
 include_once ('lib/commcenter/commlib.php');
@@ -24,7 +24,7 @@ $map = array(
 $s = new XML_RPC_Server($map);
 
 function sendStructurePage($params) {
-	global $tikilib, $userlib, $commlib;
+	global $tikilib, $userlib, $commlib, $prefs;
 	include_once ('lib/structures/structlib.php');
 	$site = $params->getParam(0); $site = $site->scalarval();
 	$user = $params->getParam(1); $user = $user->scalarval();
@@ -62,7 +62,7 @@ function sendStructurePage($params) {
 /* Validates the user and returns user information */
 function sendPage($params) {
 	// Get the page and store it in received_pages
-	global $tikilib, $userlib, $commlib;
+	global $tikilib, $userlib, $commlib, $prefs;
 
 	$pp = $params->getParam(0);
 	$site = $pp->scalarval();
@@ -79,7 +79,11 @@ function sendPage($params) {
 	$pp = $params->getParam(6);
 	$description = $pp->scalarval();
 
-	list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
+	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+		$ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $username, $password, false);
+	} else {
+		list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
+	}
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
@@ -97,7 +101,7 @@ function sendPage($params) {
 
 function sendArticle($params) {
 	// Get the page and store it in received_pages
-	global $tikilib, $userlib, $commlib;
+	global $tikilib, $userlib, $commlib, $prefs;
 
 	$pp = $params->getParam(0);
 	$site = $pp->scalarval();
@@ -144,7 +148,11 @@ function sendArticle($params) {
 	$pp = $params->getParam(21);
 	$rating = $pp->scalarval();
 
-	list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
+	if ($username != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+		$ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $username, $password, false);
+	} else {
+		list($ok, $username, $error) = $userlib->validate_user($username, $password, '', '');
+	}
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, "Invalid username or password");
 	}
