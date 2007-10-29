@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.8 2007-10-29 13:32:32 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.9 2007-10-29 16:01:58 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3942,7 +3942,8 @@ function add_pageview() {
 		$ret = array();
 		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 		foreach ($perms['data'] as $perm) {
-			$ret[$perm['permName']] = 'n';
+			global $$perm['permName'];
+			$ret[$perm['permName']] = $$perm['permName'];
 		}
 		if (empty($categPerms['tiki_p_view_categories'])) {
 			$categPerms['tiki_p_view_categories'] = 'n';
@@ -3957,10 +3958,15 @@ function add_pageview() {
 		case 'tracker':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_trackers'] = 'y';
+			} else {
+				$ret['tiki_p_view_trackers'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_modify_tracker_items'] = 'y';
 				$ret['tiki_p_create_tracker_items'] = 'y';
+			} else {
+				$ret['tiki_p_modify_tracker_items'] = 'n';
+				$ret['tiki_p_create_tracker_items'] = 'n';
 			}
 			break;
 		case 'image gallery':
@@ -3968,61 +3974,91 @@ function add_pageview() {
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_image_gallery'] = 'y';
 				$ret['tiki_p_download_files'] = 'y';
+			} else {
+				$ret['tiki_p_view_image_gallery'] = 'n';
+				$ret['tiki_p_download_files'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_upload_images'] = 'y';
+			} else {
+				$ret['tiki_p_upload_images'] = 'n';
 			}
 			break;
 		case 'file gallery':
 		case 'file':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_file_gallery'] = 'y';
+			} else {
+				$ret['tiki_p_view_file_gallery'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_upload_files'] = 'y';
+			} else {
+				$ret['tiki_p_upload_files'] = 'n';
 			}
 			break;
 		case 'article':
 		case 'submission':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_read_article'] = 'y';
+			} else {
+				$ret['tiki_p_read_article'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_edit_article'] = 'y';
 				$ret['tiki_p_submit_article'] = 'y';
+			} else {
+				$ret['tiki_p_edit_article'] = 'n';
+				$ret['tiki_p_submit_article'] = 'n';
 			}
 			break;
 		case 'forum':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_forum_read'] = 'y';
+			} else {
+				$ret['tiki_p_forum_read'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_forum_post_topic'] = 'y';
 				$ret['tiki_p_forum_post'] = 'y';
+			} else {
+				$ret['tiki_p_forum_post_topic'] = 'n';
+				$ret['tiki_p_forum_post'] = 'n';
 			}
 			break;
 		case 'blog':
 		case 'blog post':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_read_blog'] = 'y';
+			} else {
+				$ret['tiki_p_read_blog'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_create_blogs'] = 'y';
 				$ret['tiki_p_blog_post'] = 'y';
+			} else {
+				$ret['tiki_p_create_blogs'] = 'n';
+				$ret['tiki_p_blog_post'] = 'n';
 			}
 			break;
 		case 'wiki page':
 		case 'history':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view'] = 'y';
+			} else {
+				$ret['tiki_p_view'] = 'n';
 			}
 			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_edit'] = 'y';
+			} else {
+				$ret['tiki_p_edit'] = 'n';
 			}
 			break;
 		case 'faq':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_faqs'] = 'y';
+			} else {
+				$ret['tiki_p_view_faqs'] = 'n';
 			}
 			break;
 		case 'survey':
@@ -4030,6 +4066,8 @@ function add_pageview() {
 		case 'newsletter':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_subscribe_newsletters'] = 'y';
+			} else {
+				$ret['tiki_p_subscribe_newsletters'] = 'n';
 			}
 			break;
 		case 'mypage':
@@ -4040,8 +4078,15 @@ function add_pageview() {
 			
 		/* TODO */
 		default:
+			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+				$ret["tiki_p_edit_$objectType"] = 'y';
+			} else {
+				$ret["tiki_p_edit_$objectType"] = 'n';
+			}
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret["tiki_p_view_$objectType"] = 'y';
+			} else {
+				$ret["tiki_p_view_$objectType"] = 'n';
 			}
 			break;
 		}
