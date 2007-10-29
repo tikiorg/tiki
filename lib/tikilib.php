@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.7 2007-10-26 16:02:50 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.8 2007-10-29 13:32:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3743,6 +3743,10 @@ function add_pageview() {
 		if ($is_categorized && !empty($categperm) && $$categperm != 'y') {
 			$cacheUserPerm[$keyCache] = false;
 			return (FALSE);
+		}
+		if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
+			$cacheUserPerm[$keyCache] = true;
+			return (TRUE);
 		}
                 // if it has no category perms or the user does not have
                 // the perms, continue to check individual perms!
