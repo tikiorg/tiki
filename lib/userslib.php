@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247 2007-10-16 13:53:24 pkdille Exp $
+// CVS: $Id: userslib.php,v 1.247.2.1 2007-10-29 16:37:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2567,6 +2567,25 @@ function get_included_groups($group, $recur=true) {
 		// This won't update the database unless the openid is different
 		$this->query("UPDATE `users_users` SET openid_url = ? WHERE login = ? AND ( openid_url <> ? OR openid_url IS NULL )", array( $openid, $username, $openid ));
 	}
+
+	function intervalidate($remote,$user,$pass,$get_info = false) {
+		global $prefs;
+		include_once('XML/RPC.php');
+		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(1);
+		$msg = new XML_RPC_Message(
+				   'intertiki.validate',
+				   array(
+					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
+					 new XML_RPC_Value($user, 'string'),
+					 new XML_RPC_Value($pass, 'string'),
+					 new XML_RPC_Value($get_info, 'boolean')
+					 ));
+		$result = $client->send($msg);
+		return $result;
+    }
+
 }
 
 /* For the emacs weenies in the crowd.
