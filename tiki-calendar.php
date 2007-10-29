@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73 2007-10-12 07:55:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.1 2007-10-29 20:20:19 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -32,11 +32,6 @@ $cookietab = 1;
 $rawcals = $calendarlib->list_calendars();
 $viewOneCal = $tiki_p_view_calendar;
 $modifTab = 0;
-if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
-	$cat_type = "calendar";
-	$cat_objid = $_REQUEST['calIds'][0]; 
-	include('tiki-tc.php');
-}
 
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 	if ($tiki_p_admin == 'y') {
@@ -329,6 +324,10 @@ if($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarVi
 }
 
 $section = 'calendar';
+if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
+	$cat_type = "calendar";
+	$cat_objid = $_REQUEST['calIds'][0]; 
+}
 include_once ('tiki-section_options.php');
 
 setcookie('tab',$cookietab);
