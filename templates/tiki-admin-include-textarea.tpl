@@ -30,7 +30,7 @@
        	</tr>
 	<tr>
 	        <td class="form"> <label for="quicktags_over_textarea">{tr}Show quicktags over textareas (instead on left side){/tr}:</label></td>
-	        <td><input type="checkbox" name="quicktags_over_textarea" id="general-ext_links" {if $prefs.quicktags_over_textarea eq 'y'}checked="checked"{/if}/></td>
+	        <td><input type="checkbox" name="quicktags_over_textarea" id="quicktags_over_textarea" {if $prefs.quicktags_over_textarea eq 'y'}checked="checked"{/if}/></td>
        	</tr>
 	<tr>	
 		

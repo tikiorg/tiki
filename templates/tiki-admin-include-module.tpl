@@ -1,15 +1,9 @@
 <div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">
-	
-	
-	Right & left boxes
-	
-	
-	<a class="rbox-link" href="tiki-admin_modules.php">{tr}Administer modules{/tr}</a>
-
-	</div>
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">{tr}Right &amp; left boxes{/tr}</div>
+  <div class="rbox-data" name="tip"><a class="rbox-link" href="tiki-admin_modules.php">{tr}Administer modules{/tr}</a></div>
 </div>
+
 <br />
 
 <div class="cbox">
