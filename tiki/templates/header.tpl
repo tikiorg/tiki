@@ -126,7 +126,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 </head>
 
-<body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+<body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $msgError} onload="javascript:location.hash='msgError'"{/if}
 {if $section} class="tiki_{$section}"{/if}>
 {if $prefs.minical_reminders>100}
