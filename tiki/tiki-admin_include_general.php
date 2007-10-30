@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.1 2007-10-30 05:58:56 gillesm Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,6 +84,8 @@ if (isset($_REQUEST["new_prefs"])) {
     foreach ($pref_byref_values as $britem) {
         byref_set_value ($britem);
     }
+
+   $tikilib->set_preference ("display_timezone",$tikilib->get_preference ("server_timezone"));
 
     // Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
     if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
