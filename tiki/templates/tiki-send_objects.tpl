@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.1 2007-10-24 21:23:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.2 2007-10-30 22:01:27 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -112,8 +112,8 @@
 <input type="hidden" name="sendstructures" value="{$form_sendstructures|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <table>
-<tr><td class="form">{tr}Site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>
-<tr><td class="form">{tr}Path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
+<tr><td class="form">{tr}Site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /><br /><i>{tr}Ex: http://tikiwiki.org or localhost{/tr}</i></td></tr>
+<tr><td class="form">{tr}Path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /><br /><i>{tr}Use /commxmlrpc.php if your tikiwiki site is installed at the root, otherwise adapt /tiki to your need{/tr}</i></td></tr>
 <tr><td class="form">{tr}Username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
 <tr><td class="form">{tr}Password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
 <tr><td class="form">{tr}Debug{/tr}:</td><td class="form"><input type="checkbox" name="dbg"{if $dbg eq 'on'} checked="checked"{/if} /></td></tr>
