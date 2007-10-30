@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.51.2.3 2007-10-19 08:19:07 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.51.2.4 2007-10-30 20:07:13 pkdille Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -122,14 +122,14 @@
 </tr>    
 <tr>
    <td class="formcolor">{tr}Tree{/tr}:<br />(optional)</td>
-   <td colspan=3 class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
+   <td colspan="3" class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
 </tr>    
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
 {/if}
 <tr>
    <td class="formcolor">&nbsp;</td>
-   <td colspan=3 class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
+   <td colspan="3" class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
 </tr>
 </table>
 </form>
