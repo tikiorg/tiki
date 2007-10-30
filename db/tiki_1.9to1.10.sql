@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.2 2007-10-26 20:36:40 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.3 2007-10-30 09:10:50 pkdille Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1606,3 +1606,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
 UPDATE  tiki_menu_options set perm='tiki_p_edit_menu' where url='tiki-admin_menus.php';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','');
+
+#2007-10-30 pkdille
+UPDATE tiki_menu_options set url='javascript:toggle(\'debugconsole\')' where url='javascript:toggle("debugconsole")';
