@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.4 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.5 2007-10-30 21:19:19 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -537,6 +537,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 
+{* -------------------- header and others -------------------- *}
 {if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq '-'  or $tiki_p_admin_trackers eq 'y'}
 {if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q' and (($fields[ix].type ne 'u' and $fields[ix].type ne 'g' and $fields[ix].type ne 'I') or !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y')}
 {if $fields[ix].type eq 'h'}
@@ -545,18 +546,19 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
+<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td class="formlabel">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
 {if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
+{* --- display quicktags --- *}
   <br />
   {if $prefs.quicktags_over_textarea neq 'y'}
     {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
   {/if}
 {/if}
-</td><td colspan="3" nowrap="nowrap">
+</td><td colspan="3" >
 {/if}
 {/if}
 
@@ -657,8 +659,17 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 <input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} value="{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}" />
 {if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
 
+{* -------------------- static text -------------------- *}
+{elseif $fields[ix].type eq 'S'}
+{if $fields[ix].description}
+{$fields[ix].description|escape|nl2br}
+{/if}
+
 {* -------------------- textarea -------------------- *}
 {elseif $fields[ix].type eq 'a'}
+{if $fields[ix].description}
+<em>{$fields[ix].description|escape|nl2br}</em><br />
+{/if}
 {if $fields[ix].isMultilingual ne "y"}
   {if $prefs.quicktags_over_textarea eq 'y'}
     {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=`$fields[ix].ins_id`}
@@ -758,8 +769,10 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 </select>
 
 {/if}
+{if $fields[ix].type ne 'a' and $fields[ix].type ne 'S'}
 {if $fields[ix].description}
-<br /><em>{$fields[ix].description}</em>
+<br /><em>{$fields[ix].description|escape}</em>
+{/if}
 {/if}
 </td>
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
@@ -779,7 +792,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
 </table>
 </form>
-<br /><em>{tr}fields marked with a * are mandatory{/tr}</em>
+<br /><em>{tr}Fields marked with a * are mandatory{/tr}</em>
 </div>
 {/if}
 {section name=ix loop=$fields}
