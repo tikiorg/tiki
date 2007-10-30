@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.2 2007-10-23 20:59:43 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.3 2007-10-30 21:19:18 jyhem Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1815,7 +1815,7 @@ class TrackerLib extends TikiLib {
 		$type['a'] = array(
 			'label'=>tra('textarea'),
 			'opt'=>true,
-			'help'=>tra('Textarea options: quicktags,width,height,max,listmax - Use Quicktags is 1 or 0, widthis indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved, listmax isthe maximum number of characters that are displayed in list mode.'));
+			'help'=>tra('Textarea options: quicktags,width,height,max,listmax - Use Quicktags is 1 or 0, width is indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved, listmax is the maximum number of characters that are displayed in list mode.'));
 		$type['c'] = array(
 			'label'=>tra('checkbox'),
 			'opt'=>true,
@@ -1871,6 +1871,10 @@ class TrackerLib extends TikiLib {
 		$type['h'] = array(
 			'label'=>tra('header'),
 			'opt'=>false);
+		$type['S'] = array(
+			'label'=>tra('static text'),
+			'opt'=>true, 
+			'help'=>tra('Static text options: none yet') );
 		$type['e'] = array(
 			'label'=>tra('category'), 
 			'opt'=>true, 
@@ -1900,18 +1904,18 @@ class TrackerLib extends TikiLib {
 			'opt'=>false,
 			'help'=>tra('Sequential auto-increment number') );
 		$type['U'] = array(
-			'label'=>tra('User subscription'),
+			'label'=>tra('user subscription'),
 			'opt'=>false,
 			'help'=>tra('Allow registered user to subscribe to an item. They can add a number of friends.'));
 		$type['G'] = array(
-			'label'=>tra('Google map'),
+			'label'=>tra('Google Maps'),
 			'opt'=>false,
-			'help'=>tra('Use Google map.'));
+			'help'=>tra('Use Google Maps.'));
 		$type['s'] = array(
 			'label'=>tra('system'),
 			'opt'=>false);
 		$type['C'] = array(
-			'label'=>tra('Computed field'),
+			'label'=>tra('computed field'),
 			'opt'=>true,
 			'help'=>tra('Formula for computation, using # for indicating fields and +,*,/,- and parenthesis for operations.'));
 

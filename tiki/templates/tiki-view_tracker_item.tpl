@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.3 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.4 2007-10-30 21:19:19 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -105,9 +105,9 @@
 		<table class="normal">
 	{elseif $cur_field.type ne 'x'}
 		{if $stick ne 'y'}
-			<tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel">
+			<tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel" nowrap="nowrap">
 		{else}
-			<td class="formlabel right">
+			<td class="formlabel right" nowrap="nowrap">
 		{/if}
 		{$cur_field.name}
 		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
@@ -419,7 +419,16 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="hidden" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" size="6" maxlength="6" />
 {$cur_field.value|escape}
 
+{* -------------------- static text -------------------- *}
+{elseif $cur_field.type eq 'S'}
+{if $cur_field.description}
+{wiki}{$cur_field.description|escape|nl2br}{/wiki}
+{/if}
+
 {elseif $cur_field.type eq 'a'}
+{if $cur_field.description}
+<em>{$cur_field.description|escape|nl2br}</em><br />
+{/if}
 {if $prefs.quicktags_over_textarea eq 'y'}
       {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
 {/if}
@@ -525,8 +534,10 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/if}
 {/if}
 
+{if $cur_field.type ne 'a' and $cur_field.type ne 'S'}
 {if $cur_field.description}
-<br /><em>{$cur_field.description}</em>
+<br /><em>{$cur_field.description|escape}</em>
+{/if}
 {/if}
 </td>
 {if (($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1') and $stick ne 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19 2007-10-11 20:51:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.1 2007-10-30 21:19:19 jyhem Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -38,6 +38,14 @@
 			<div>{$tlabel|truncate:255:"..."}</div>
 	{/if}
 	{/foreach}
+
+{* -------------------- static text -------------------- *}
+{elseif $field_value.type eq 'S'}
+	{if $field_value.options_array[0] ne '' and $list_mode eq 'y'}
+		{$field_value.description|truncate:$field_value.options_array[0]:"...":true|escape}
+	{else}
+		{wiki}{$field_value.description|escape|nl2br}{/wiki}
+	{/if}
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.type ne 'U'}
@@ -80,9 +88,9 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.options_array[4] ne '' and $list_mode eq 'y'}
-		{$field_value.value|truncate:$field_value.options_array[4]:"...":true}
+		{wiki}{$field_value.value|truncate:$field_value.options_array[4]:"...":true}{/wiki}
 	{else}
-		{$field_value.pvalue}
+		{wiki}{$field_value.value}{/wiki}
 	{/if}
 
 {* -------------------- date -------------------- *}

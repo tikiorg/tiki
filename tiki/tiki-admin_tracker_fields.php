@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.1 2007-10-30 21:19:18 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -160,7 +160,13 @@ function replace_tracker_from_request( $tracker_info )
 	$isMandatory = 'n';
     }
 
-	if (!isset($_REQUEST['description'])) {
+	if ( isset($_REQUEST["type"]) && ( $_REQUEST["type"] == 'S' ) ) {
+		if ( isset($_REQUEST['descriptionStaticText']) ) {
+			$_REQUEST['description'] = $_REQUEST['descriptionStaticText'] ;
+		} else {
+			$_REQUEST['description'] = '';
+		}
+	} elseif (!isset($_REQUEST['description'])) {
 		$_REQUEST['description'] = '';
 	}
 
