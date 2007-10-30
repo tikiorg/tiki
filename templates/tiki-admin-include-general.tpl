@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.1 2007-10-17 20:36:05 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.2 2007-10-30 09:52:51 pkdille Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -91,7 +91,7 @@
       </td>
 	  </tr><tr>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
-	  <td><input type="checkbox" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
+	  <td><input type="checkbox" name="log_sql" id="log_sql" {if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
       <td><select name="default_mail_charset" id="general-charset">
@@ -237,7 +237,7 @@
                    value="{$prefs.maxRecords|escape}" /></td>
 
       </tr><tr>
-        <td class="form"><label for="feature_help">{tr}Help System{/tr}:</label></td>
+        <td class="form"><label for="general-feature_help">{tr}Help System{/tr}:</label></td>
         <td><input type="checkbox" name="feature_help" id="general-feature_help" {if $prefs.feature_help eq 'y'}checked="checked"{/if} /></td>
 
       </tr><tr>
