@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34 2007-10-08 13:28:30 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -91,11 +91,11 @@
 {if $prefs.gal_use_db eq 'n'}
 {tr}Move images from database storage to filesystem storage{/tr}
 </label>
-<input type="hidden" name="mvimg" value="to_fs"></td>
+<input type="hidden" name="mvimg" value="to_fs" /></td>
 {else}
 {tr}Move images from filesystem storage to database storage{/tr}
 </label>
-<input type="hidden" name="mvimg" value="to_db"></td>
+<input type="hidden" name="mvimg" value="to_db" /></td>
 {/if}
 <td>
 <select name="move_gallery">

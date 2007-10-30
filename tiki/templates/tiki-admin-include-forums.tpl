@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26 2007-10-09 15:26:12 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>
@@ -61,23 +61,23 @@
               <option value="name_asc" {if $prefs.forums_ordering eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
               </select></td>
         </tr><tr class="form">
-          <td><label>{tr}Search some forums by name (on "forum list"){/tr}</td>
+          <td><label>{tr}Search some forums by name (on "forum list"){/tr}</label></td>
           <td><input type="checkbox" name="feature_forums_name_search"
               {if $prefs.feature_forums_name_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label>{tr}Search some forums by content (on "forum list"){/tr}</td>
+          <td><label>{tr}Search some forums by content (on "forum list"){/tr}</label></td>
           <td><input type="checkbox" name="feature_forums_search"
               {if $prefs.feature_forums_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label>{tr}Search in topics content on forum page{/tr}</td>
+          <td><label>{tr}Search in topics content on forum page{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_content_search"
               {if $prefs.feature_forum_content_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label>{tr}Search method when searching in content: Tiki search local to a forum{/tr}</td>
+          <td><label>{tr}Search method when searching in content: Tiki search local to a forum{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_local_tiki_search"
               {if $prefs.feature_forum_local_tiki_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr class="form">
-          <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</td>
+          <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $prefs.feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr class="form">
@@ -128,45 +128,62 @@
   <div class="cbox-title">{tr}Threads default preferences{/tr}</div>
   <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=forums">
-        <table class="admin"><tr class="form">
+        <table class="admin">
+        
+        <tr class="form">
           <td><label>{tr}Allow to manage thread defaults in each forum configuration{/tr}</label></td>
 	  <td><input type="checkbox" name="forum_thread_defaults_by_forum"
 		{if $prefs.forum_thread_defaults_by_forum eq 'y'}checked="checked"{/if} /></td>
-	</td>
-        </tr><tr class="form">
+        </tr>
+        
+        <tr class="form">
           <td><label>{tr}Display thread configuration bar to override defaults{/tr}</label></td>
 	  <td><input type="checkbox" name="forum_thread_user_settings"
 		{if $prefs.forum_thread_user_settings eq 'y'}checked="checked"{/if} />
-	</td>
-	</tr><tr class="form">
+	  </td>
+	</tr>
+        
+        <tr class="form">
           <td><label>{tr}Configuration bar settings are the kept for all forums during the user session:{/tr}</label></td>
 	  <td><input type="checkbox" name="forum_thread_user_settings_keep"
 		{if $prefs.forum_thread_user_settings_keep eq 'y'}checked="checked"{/if} />
-	</td>
-        </tr><tr class="form">
+	  </td>
+        </tr>
+        
+        <tr class="form">
           <td><label>{tr}Default number of comments per page{/tr}</label></td>
-	  <td><input size="5" type="text" name="forum_comments_per_page" value="{$prefs.forum_comments_per_page|escape}" /></td></tr>
-	</td>
-        </tr><tr class="form">
+	  <td><input size="5" type="text" name="forum_comments_per_page" value="{$prefs.forum_comments_per_page|escape}" /></td>
+        </tr>
+
+        <tr class="form">
           <td><label>{tr}Default thread style{/tr}</label></td>
 	  <td><select name="forum_thread_style">
 	  	<option value="commentStyle_plain" {if $prefs.forum_thread_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
 		<option value="commentStyle_threaded" {if $prefs.forum_thread_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
 		<option value="commentStyle_headers" {if $prefs.forum_thread_style eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
-	  </select></td>
-        </tr><tr class="form">
+	      </select>
+          </td>
+        </tr>
+        
+        <tr class="form">
           <td><label>{tr}Default thread sort mode{/tr}</label></td>
-	  <td><select name="forum_thread_sort_mode">
-		<option value="commentDate_desc" {if $prefs.forum_thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-		<option value="commentDate_asc" {if $prefs.forum_thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-		<option value="points_desc" {if $prefs.forum_thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
-		<option value="title_desc" {if $prefs.forum_thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
-		<option value="title_asc" {if $prefs.forum_thread_sort_mode eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
-	  </select></td>
-        </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="forumthreadprefs"
-              value="{tr}Change preferences{/tr}" /></td>
-        </tr></table>
-      </form>
+	  <td>
+            <select name="forum_thread_sort_mode">
+	      <option value="commentDate_desc" {if $prefs.forum_thread_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+	      <option value="commentDate_asc" {if $prefs.forum_thread_sort_mode eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+	      <option value="points_desc" {if $prefs.forum_thread_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
+	      <option value="title_desc" {if $prefs.forum_thread_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+	      <option value="title_asc" {if $prefs.forum_thread_sort_mode eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
+	    </select>
+          </td>
+        </tr>
+        
+        <tr>
+          <td colspan="2" class="button">
+            <input type="submit" name="forumthreadprefs" value="{tr}Change preferences{/tr}" />
+          </td>
+        </tr>
+      </table>
+    </form>
   </div>
 </div>    
