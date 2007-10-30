@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.2 2007-10-22 15:53:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.3 2007-10-30 20:06:01 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -309,15 +309,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 		} elseif ($fields["data"][$i]["type"] == 'a') { // textarea
 			if (isset($_REQUEST["$ins_id"])) {
-				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
-					if (function_exists('mb_substr')) {
-						$ins_fields["data"][$i]["value"] = mb_substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
-					} else {
-						$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
-					}
-				} else {
 					$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-				}
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
 			}
