@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.186 2007-10-23 17:03:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.187 2007-10-30 21:21:22 rlpowell Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,6 +13,14 @@ include_once ('lib/notifications/notificationlib.php');
 require_once ("lib/ajax/ajaxlib.php");
 require_once ("lib/wiki/wiki-ajax.php");
 $access->check_feature('feature_wiki');
+
+// Permissions
+$tikilib->get_perm_object($page, 'wiki page', $info, true);
+if ($tiki_p_edit != 'y') {
+	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+	$smarty->display("error.tpl");
+	die;
+}
 
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feature_antibot'] == 'y') {
@@ -487,13 +495,6 @@ if ($info["flag"] == 'L' && !$wikilib->is_editable($page, $user, $info)) {
 $smarty->assign('editable','y');
 $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
-// Permissions
-$tikilib->get_perm_object($page, 'wiki page', $info, true);
-if ($tiki_p_edit != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-	$smarty->display("error.tpl");
-	die;
-}
 // wysiwyg decision
 include 'tiki-parsemode_setup.php';
 $smarty->assign_by_ref('data', $info);
