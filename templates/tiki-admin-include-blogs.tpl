@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.29 2007-10-12 07:55:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.29.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -92,7 +92,7 @@
         <table class="admin"><tr>
           <td class="form"><label for="blogs-title">{tr}Title{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_title" id="blogs-title"
-              {if $prefs.blog_list_title eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_title eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-titlelen">{tr}Title length{/tr}: </label></td>
           <td class="form"><input size="3" type="text" name="blog_list_title_len" id="blogs-titlelen"
@@ -100,17 +100,17 @@
         </tr><tr>
           <td class="form"><label for="blogs-desc">{tr}Description{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_description" id="blogs-desc"
-              {if $prefs.blog_list_description eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_description eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-creation">{tr}Creation date{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_created" id="blogs-creation"
-              {if $prefs.blog_list_created eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_created eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-lastmod">{tr}Last modification time{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_lastmodif" id="blogs-lastmod"
-              {if $prefs.blog_list_lastmodif eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form"><label for="blogs-user">{tr}User{/tr}</label></td>
+          <td class="form"><label for="blogs-listinguser">{tr}User{/tr}</label></td>
           <td class="form"><select name="blog_list_user" id="blogs-listinguser">
               <option value="disabled" {if $prefs.blog_list_user eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
 	      <option value="text" {if $prefs.blog_list_user eq 'text'}selected="selected"{/if}>{tr}Plain text{/tr}</option>
@@ -120,15 +120,15 @@
         </tr><tr>
           <td class="form"><label for="blogs-posts">{tr}Posts{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_posts" id="blogs-posts"
-              {if $prefs.blog_list_posts eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_posts eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-visits">{tr}Visits{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_visits" id="blogs-visits"
-              {if $prefs.blog_list_visits eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_visits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="blogs-activity">{tr}Activity{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_activity" id="blogs-activity"
-              {if $prefs.blog_list_activity eq 'y'}checked="checked"{/if}></td>
+              {if $prefs.blog_list_activity eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="bloglistconf"
               value="{tr}Change preferences{/tr}" /></td>
