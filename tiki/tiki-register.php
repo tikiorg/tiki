@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.92 2007-10-30 01:42:17 gillesm Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-10-12 07:55:32 $
+ * @date last-modified: $Date: 2007-10-30 01:42:17 $
  */
 
 // Initialization
@@ -209,7 +209,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		$tikilib->set_user_preference($_REQUEST['name'], 'theme', $prefs['style']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'language', $prefs['language']);
-		$tikilib->set_user_preference($_REQUEST['name'], 'display_timezone', $prefs['display_timezone']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'display_timezone', $prefs['users_prefs_display_timezone']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'user_information', $prefs['users_prefs_user_information']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'user_dbl', $prefs['users_prefs_user_dbl']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'diff_versions', $prefs['users_prefs_diff_versions']);

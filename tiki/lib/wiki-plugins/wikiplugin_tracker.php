@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85 2007-10-12 18:26:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.86 2007-10-30 01:42:19 gillesm Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -111,7 +111,7 @@ function wikiplugin_tracker($data, $params) {
 							if (empty($_REQUEST['$ins_id'.'Minute'])) {
 								$_REQUEST['$ins_id'.'Minute'] = 0;
 							}
-							$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
+							$_REQUEST['track'][$fl['fieldId']] = $tikilib->make_time_local($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"], 0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 						} else {
 							$_REQUEST['track'][$fl['fieldId']] = $tikilib->now;
 						}

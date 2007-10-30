@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.802 2007-10-20 05:17:03 mose Exp $
+// CVS: $Id: tikilib.php,v 1.803 2007-10-30 01:42:18 gillesm Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6815,6 +6815,7 @@ if (!$simple_wiki) {
 				return $tikidate->getTime();
 			}
 			
+	
 			function get_long_date($timestamp, $user = false) {
 			    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
 			}

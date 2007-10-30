@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221 2007-10-11 17:47:09 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.222 2007-10-30 01:42:17 gillesm Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -58,16 +58,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_tasks_maxRe
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_copyright', '10');
 
 
-# 2005-08-26 / 2005-09-31: mdavey: new table tiki_events for notificationlib / tikisignal
-CREATE TABLE `tiki_events` (
-  `callback_type` int(1) NOT NULL default '3',
-  `order` int(2) NOT NULL default '50',
-  `event` varchar(200) NOT NULL default '',
-  `file` varchar(200) NOT NULL default '',
-  `object` varchar(200) NOT NULL default '',
-  `method` varchar(200) NOT NULL default '',
-  PRIMARY KEY  (`callback_type`,`order`)
-) TYPE=MyISAM;
 
 # 2005-09-31: mdavey: make sure developers are using the 6-column version of tiki_events
 ALTER TABLE `tiki_events` ADD `file` varchar(200) NOT NULL default '' AFTER `event`;
