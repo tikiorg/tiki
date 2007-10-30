@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.3 2007-10-30 16:33:09 pkdille Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -152,11 +152,12 @@
   <tr><td class="{cycle advance=false}">{tr}Displayed time zone{/tr}:</td>
   <td class="{cycle}">
 	<select name="display_timezone" id="display_timezone">
-	{foreach key=tz item=tzinfo from=$timezones}
-	{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-	<option value="{$tz}"{if $prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
-	{/foreach}
-	</select><br />
+	  {foreach key=tz item=tzinfo from=$timezones}
+	    {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
+            <option value="{$tz}"{if $prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+	  {/foreach}
+	</select>
+        <br />
 	<a href="#" onclick="document.getElementById('display_timezone').value='{$prefs.server_timezone}';">{tr}Reset to default timezone{/tr}</a>
 	({$prefs.server_timezone})
   </td>
@@ -298,13 +299,18 @@
 {/if}
 
 {if $prefs.feature_userlevels eq 'y'}
-	<tr><td class="form">{tr}My level{/tr}</td><td class="form">
-	<select name="mylevel">
-	{foreach key=levn item=lev from=$prefs.userlevels}
-	<option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
+  <tr>
+    <td class="{cycle advance=false}">{tr}My level{/tr}</td>
+    <td class="{cycle}">
+      <select name="mylevel">
+        {foreach key=levn item=lev from=$prefs.userlevels}
+	  <option value="{$levn}"{if $mylevel eq $levn} selected="selected"{/if}>{$lev}</option>
 	{/foreach}
-	</select>
+      </select>
+    </td>
+  </tr>
 {/if}
+
 <tr>
   <td colspan="2" class="button"><input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
@@ -313,31 +319,56 @@
 
 
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
-<br />
-<table class="normal">
-  <tr id="4"><td class="heading" colspan="2">{tr}Account Information{/tr}</td></tr>
-  {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
-  {if $prefs.change_password neq 'n' and ($prefs.login_is_email ne 'y' or $userinfo.login eq 'admin') }<tr><td colspan="2">{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}</td></tr>{/if}
-  {/if}
+  <br />
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table class="admin">
-  {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'}
-	<input type="hidden" name="email" value="{$userinfo.email|escape}" />
-  {else}
-    <tr><td class="{cycle advance=false}">{tr}Email address{/tr}:</td><td class="{cycle}"><input type="text" name="email" value="{$userinfo.email|escape}" /></td></tr>
-  {/if}
-{if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
-  {if $prefs.change_password neq 'n'}
-  <tr><td class="{cycle advance=false}">{tr}New password{/tr}:</td><td class="{cycle}"><input type="password" name="pass1" /></td></tr>
-  <tr><td class="{cycle advance=false}">{tr}Confirm new password{/tr}:</td><td class="{cycle}"><input type="password" name="pass2" /></td></tr>
-  {/if}
-  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
-    <tr><td class="{cycle advance=false}">{tr}Current password (required){/tr}:</td><td class="{cycle}"><input type="password" name="pass" /></td></tr>
-  {/if}
-{/if}
-  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}Change administrative info{/tr}" /></td></tr>
-  </table>
+  <table class="normal">
+    <tr id="4">
+      <td class="heading" colspan="2">{tr}Account Information{/tr}</td>
+    </tr>
+    
+    {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
+      {if $prefs.change_password neq 'n' and ($prefs.login_is_email ne 'y' or $userinfo.login eq 'admin') }
+        <tr>
+          <td class="{cycle advance=false}" colspan="2">{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}</td>
+        </tr>
+      {/if}
+    {/if}
+  
+      {if $prefs.login_is_email eq 'y' and $userinfo.login neq 'admin'}
+        <input type="hidden" name="email" value="{$userinfo.email|escape}" />
+      {else}
+        <tr>
+          <td class="{cycle advance=false}">{tr}Email address{/tr}:</td>
+          <td class="{cycle}"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+        </tr>
+      {/if}
+
+      {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
+        {if $prefs.change_password neq 'n'}
+          <tr>
+            <td class="{cycle advance=false}">{tr}New password{/tr}:</td>
+            <td class="{cycle}"><input type="password" name="pass1" /></td>
+          </tr>
+  
+          <tr>
+            <td class="{cycle advance=false}">{tr}Confirm new password{/tr}:</td>
+            <td class="{cycle}"><input type="password" name="pass2" /></td>
+          </tr>
+        {/if}
+      
+        {if $tiki_p_admin ne 'y' or $userwatch eq $user}
+          <tr>
+            <td class="{cycle advance=false}">{tr}Current password (required){/tr}:</td>
+            <td class="{cycle}"><input type="password" name="pass" /></td>
+          </tr>
+        {/if}
+      {/if}
+    
+      <tr>
+        <td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}Change administrative info{/tr}" /></td>
+      </tr>
+    </table>
   </form>
 {/if}
 

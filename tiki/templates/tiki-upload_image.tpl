@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.1 2007-10-30 16:32:46 pkdille Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -53,7 +53,7 @@
 	</td></tr>
 {include file=categorize.tpl}
 	<tr class="formcolor">
-	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}</td></tr>
+	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}</b></td></tr>
 	<tr><td class="formcolor">URL:</td><td class="formcolor"><input size="50" type="text" name="url" /></td></tr>
 	<tr>
 	<td class="formcolor">{tr}Upload from disk{/tr} / {tr}Batch upload{/tr}:</td><td class="formcolor">
