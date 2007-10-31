@@ -92,7 +92,15 @@ class HeaderLib {
 			foreach ($this->cssfiles as $x=>$cssf) {
 				$back.= "<!-- cssfile $x -->\n";
 				foreach ($cssf as $cf) {
-					$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" />\n";
+					global $tikipath;
+					$cfprint = str_replace('.css','',$cf) . '-print.css';
+					if (!file_exists($tikipath . $cfprint)) {
+						$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" />\n";
+					} else {
+						// add support for print style sheets
+						$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" media=\"screen\" />\n";
+						$back.= "<link rel=\"stylesheet\" href=\"$cfprint\" type=\"text/css\" media=\"print\" />\n";	
+					}
 				}
 			}
 		}
@@ -146,3 +154,4 @@ class HeaderLib {
 
 $headerlib = new HeaderLib();
 $smarty->assign_by_ref('headerlib', $headerlib);
+?>
