@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/default_homepage.php,v 1.2 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/default_homepage.php,v 1.2.2.1 2007-10-31 13:50:51 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -13,7 +13,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 $groupHome = $userlib->get_user_default_homepage($user);
-if ( $user != '' ) $groupHome = $tikilib->get_user_preference($user, 'homePage', $groupHome);
 if ( $groupHome != '' ) {
 	if ( ! preg_match('/^(\/|https?:)/', $groupHome) ) {
 		$prefs['wikiHomePage'] = $groupHome;
