@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.1 2007-11-01 16:11:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.2 2007-11-01 16:12:23 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,6 @@ $_SERVER['TIKI_VIRTUAL'] = 'myvirtual';
 chdir('/path/to/tiki');
 */
 
-include_once("lib/init/initlib.php");
 include 'tiki-setup.php';
 require_once("XML/Server.php");
 
