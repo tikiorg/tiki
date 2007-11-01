@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.9 2007-10-29 16:01:58 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.10 2007-11-01 04:26:56 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1805,6 +1805,9 @@ function add_pageview() {
 	//FIXME
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
+		if (preg_match('|\(\(('.$res['url'].')\)\)|', $res['url'], $matches)) {
+			$res['url'] = 'tiki-index.php?page='.$matches[1];
+		}
 	    if (!$full) {
 		$display = true;
 		if (isset($res['section']) and $res['section']) {
@@ -2547,19 +2550,16 @@ function add_pageview() {
 	        $connect = " and ";
         }
         $add = "";
-        $rest = $type;
-        while ($rest <> "") {
-			@list($type, $rest) = split ("\+", $rest, 2); //split 'x+y+z' into 'x' and 'y+z'
-			if ($type <>"") {
-				if ($add == "") {
-					if ($mid) { $mid .= " and "; } else { $mid = " where "; }
-				} else {
-					$add .= $connect;
-				}
-				$add .= " `tiki_articles`.`type`$invert=? ";
-				$bindvars[] = $type;
+        $rest =  split ("\+", $type);
+        foreach($rest as $type) {
+			if ($add == "") {
+				if ($mid) { $mid .= " and "; } else { $mid = " where "; }
+			} else {
+				$add .= $connect;
 			}
-        }
+			$add .= " `tiki_articles`.`type`$invert=? ";
+			$bindvars[] = $type;
+		}
         if ($add <> "") { $mid .= " ( ".$add." ) "; }
     }
 
@@ -2574,18 +2574,15 @@ function add_pageview() {
 	        $connect = " and ";
         }
         $add = "";
-        $rest = $topicId;
-        while ($rest <> "") {
-			@list($topicId, $rest) = split ("\+", $rest, 2); //split 'x+y+z' into 'x' and 'y+z'
-			if ($topicId <>"") {
-				if ($add == "") {
-					if ($mid) { $mid .= " and "; } else { $mid = " where "; }
-				} else {
-					$add .= $connect;
-				}
-				$add .= " `tiki_articles`.`topicId`$invert=? ";
-				$bindvars[] = $topicId;
+        $rest =  split ("\+", $topicId);
+        foreach ($rest as $topicId) {
+			if ($add == "") {
+				if ($mid) { $mid .= " and "; } else { $mid = " where "; }
+			} else {
+				$add .= $connect;
 			}
+			$add .= " `tiki_articles`.`topicId`$invert=? ";
+			$bindvars[] = $topicId;
         }
         if ($add <> "") { $mid .= " ( ".$add." ) "; }
     }
@@ -2601,19 +2598,16 @@ function add_pageview() {
 	        $connect = " and ";
         }
         $add = "";
-        $rest = $topic;
-        while ($rest <> "") {
-			@list($topic, $rest) = split ("\+", $rest, 2); //split 'x+y+z' into 'x' and 'y+z'
-			if ($topic <>"") {
-				if ($add == "") {
-					if ($mid) { $mid .= " and "; } else { $mid = " where "; }
-				} else {
-					$add .= $connect;
-				}
-				$add .= " `tiki_articles`.`topicName`$invert=? ";
-				$bindvars[] = $topic;
+        $rest = split("\+", $topic);
+        foreach ($rest as $topic) {
+			if ($add == "") {
+				if ($mid) { $mid .= " and "; } else { $mid = " where "; }
+			} else {
+				$add .= $connect;
 			}
-        }
+			$add .= " `tiki_articles`.`topicName`$invert=? ";
+			$bindvars[] = $topic;
+		}
         if ($add <> "") { $mid .= " ( ".$add." ) "; }
     }
     if (($visible_only) && ($visible_only <> 'n')) {
