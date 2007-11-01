@@ -23,6 +23,8 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_value('calendar_view_mode');
 	simple_set_value('calendar_firstDayofWeek');
 	simple_set_value('calendar_timespan');
+	simple_set_value('calendar_start_year');
+	simple_set_value('calendar_end_year');
 }
   	 
 ask_ticket('admin-inc-cal'); 	 

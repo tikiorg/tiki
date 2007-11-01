@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.5 2007-10-20 12:58:34 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.6 2007-11-01 13:39:28 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -515,6 +515,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_cal_manual_time'] = '0';
 	$prefs['feature_jscalendar'] = 'n';
 	$prefs['feature_action_calendar'] = 'n';
+	$prefs['calendar_start_year'] = '+0';
+	$prefs['calendar_end_year'] = '+3';
 	
 	# dates
 	$prefs['server_timezone'] = $tikidate->tz->getID();
@@ -1016,5 +1018,5 @@ $maxRecords = $prefs['maxRecords'];
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 
 // DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
-extract($prefs);
-foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
+//extract($prefs);
+//foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
