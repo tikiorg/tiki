@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: structlib.php,v 1.94.2.1 2007-11-02 01:09:00 frank_p Exp $
+// CVS: $Id: structlib.php,v 1.94.2.2 2007-11-02 01:22:36 frank_p Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
@@ -427,7 +427,6 @@ class StructLib extends TikiLib {
 					}
 					
 					$smarty->assign('structurePageName',$structurePageName);
-					$smarty->assign('page_alias',$page_alias);
 					$smarty->assign_by_ref('structure_tree',$leaf);
 					$smarty->assign('showdesc',$showdesc);
 					$smarty->assign('numbering',$numbering);
