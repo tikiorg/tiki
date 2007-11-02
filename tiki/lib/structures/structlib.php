@@ -1,29 +1,24 @@
 <?php
-// CVS: $Id: structlib.php,v 1.94 2007-10-12 12:42:39 sylvieg Exp $
+// CVS: $Id: structlib.php,v 1.94.2.1 2007-11-02 01:09:00 frank_p Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
-
 class StructLib extends TikiLib {
 	function StructLib($db) {
 		$this->TikiLib($db);
 	}
-
 	function s_export_structure($structure_id) {
 		global $exportlib, $tikidomain;
 		global $dbTiki;
-
 		include_once ('lib/wiki/exportlib.php');
 		include_once ('lib/tar.class.php');
-
 		$page_info = $this->s_get_structure_info($structure_id);
 		$page_name = $page_info['pageName'];
 		$zipname   = $page_name . '.zip';
 		$tar = new tar();
 		$pages = $this->s_get_structure_pages($page_info['page_ref_id']);
-
 		foreach ($pages as $page) {
 			$data = $exportlib->export_wiki_page($page['pageName'], 0);
 			$tar->addData($page['pageName'], $data, $this->now);
@@ -34,10 +29,8 @@ class StructLib extends TikiLib {
 		header ("location: $dump/$page_name.tar");
 		return '';
 	}
-
 	function s_export_structure_tree($structure_id, $level = 0) {
 		$structure_tree = $this->get_subtree($structure_id);
-
 		$level = 0;
 		$first = true;
 		header('Content-type: text/plain; charset=utf-8');
@@ -66,7 +59,6 @@ class StructLib extends TikiLib {
 			}
 		}
 	}
-
 	function s_remove_page($page_ref_id, $delete, $name='') {
 		// Now recursively remove
 		global $user, $prefs, $tiki_p_remove;
@@ -74,17 +66,14 @@ class StructLib extends TikiLib {
 			include_once('lib/notifications/notificationemaillib.php');
 			sendStructureEmailNotification(array('action'=>'remove', 'page_ref_id'=>$page_ref_id, 'name'=>$name));
 		}
-
 		$query = 'select `page_ref_id`, ts.`page_id`, `pageName` ';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     $query .= 'where tp.`page_id`=ts.`page_id` and `parent_id`=?';
 		$result = $this->query($query,array((int)$page_ref_id));
-
     //Iterate down through the child nodes
 		while ($res = $result->fetchRow()) {
 			$this->s_remove_page($res['page_ref_id'], $delete);
 		}
-
     //Only delete a page if other structures arent referencing it
 		if ($delete && $tiki_p_remove == 'y') {
 		$page_info = $this->s_get_page_info($page_ref_id);
@@ -105,10 +94,8 @@ class StructLib extends TikiLib {
     //Remove the structure node
 		$query = 'delete from `tiki_structures` where `page_ref_id`=?';
 		$result = $this->query($query, array((int)$page_ref_id));
-
 		return true;
 	}
-
 	function promote_node($page_ref_id) {
 		global $prefs;
 		$page_info = $this->s_get_page_info($page_ref_id);
@@ -130,7 +117,6 @@ class StructLib extends TikiLib {
 			}
 		}
 	}
-
 	function demote_node($page_ref_id) {
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$parent_info = $this->s_get_parent_info($page_ref_id);
@@ -156,7 +142,6 @@ class StructLib extends TikiLib {
 			}
 		}
 	}
-
 	function move_after_next_node($page_ref_id) {
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$query = 'select `page_ref_id`, `pos` from `tiki_structures` where `pos`>? and `parent_id`=? order by `pos` asc';
@@ -169,7 +154,6 @@ class StructLib extends TikiLib {
 			$this->query($query,array((int)$res['pos'], (int)$page_info['page_ref_id']) );
 		}
 	}
-
 	function move_before_previous_node($page_ref_id) {
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$query = 'select `page_ref_id`, `pos` from `tiki_structures` where `pos`<? and `parent_id`=? order by `pos` desc';
@@ -182,9 +166,6 @@ class StructLib extends TikiLib {
 			$this->query($query,array((int)$page_info['pos'], (int)$res['page_ref_id']) );
 		}
 	}
-
-
-
   /** \brief Create a structure entry with the given name
       \param parent_id The parent entry to add this to.
            If NULL, create new structure.
@@ -205,25 +186,21 @@ class StructLib extends TikiLib {
             //Get the page Id
 		    $query = 'select `page_id` from `tiki_pages` where `pageName`=?';
 			$page_id = $this->getOne($query,array($name));
-
 			if (isset($after_ref_id)) {
 				$max = $this->getOne('select `pos` from `tiki_structures` where `page_ref_id`=?',array((int)$after_ref_id));
 			} else {
 				$max = 0;
 			}
-
 			if ($max > 0) {
 				//If max is 5 then we are inserting after position 5 so we'll insert 5 and move all
 				// the others
 				$query = 'update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?';
 				$result = $this->query($query,array((int)$max, (int)$parent_id));
 			}
-
             //Create a new structure entry
 			$max++;
 			$query = 'insert into `tiki_structures`(`parent_id`,`page_id`,`page_alias`,`pos`) values(?,?,?,?)';
 			$result = $this->query($query,array((int)$parent_id,(int)$page_id,$alias,(int)$max));
-
 			//Get the page_ref_id just created
 			if (isset($parent_id)) {
 				$parent_check = ' and `parent_id`=?';
@@ -236,7 +213,6 @@ class StructLib extends TikiLib {
 			$query .= 'where `page_id`=? and `page_alias`=? and `pos`=?';
 			$query .= $parent_check;
 			$ret = $this->getOne($query,$attributes);
-
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'add', 'page_ref_id'=>$ret, 'name'=>$name));
@@ -244,8 +220,6 @@ class StructLib extends TikiLib {
 		}
 		return $ret;
 	}
-
-
 	function get_subtree($page_ref_id, $level = 0, $parent_pos = '') {
 		global $tikilib;
     $ret = array();
@@ -265,20 +239,17 @@ class StructLib extends TikiLib {
         $aux['flag'] = 'L';
         $aux['user'] = $is_locked;
       }
-
 	  $perms = $tikilib->get_perm_object($struct_info['pageName'], 'wiki page', '', false);
 	  $aux['editable'] = $perms['tiki_p_edit'];
 	  $aux['viewable'] = $perms['tiki_p_view'];
       $ret[] = $aux;
       $level++;
     }
-
 		//Get all child nodes for this page_ref_id
     $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     $query .= 'where ts.`page_id` = tp.`page_id` and `parent_id`=? order by `pos` asc';
 		$result = $this->query($query,array((int)$page_ref_id));
-
     $subs = array();
     $row_max = $result->numRows();
 		while ($res = $result->fetchRow()) {
@@ -309,7 +280,6 @@ class StructLib extends TikiLib {
          $aux['pos'] = $parent_pos . '.' . "$pos";
       }
       $ret[] = $aux;
-
       //Recursively add any child nodes
 			$subs = $this->get_subtree($res['page_ref_id'], ($level + 1), $aux['pos']);
       if(isset($subs)) {
@@ -321,28 +291,23 @@ class StructLib extends TikiLib {
         $aux['last']  = true;
         $ret[] = $aux;
       }
-
       $pos++;
 		}
 		return $ret;
 	}
-
   /**Returns an array of page_info arrays
-
      This can be used to construct a path from the
      structure head to the requested page.
   */
 	function get_structure_path($page_ref_id) {
     $structure_path = array();
 		$page_info = $this->s_get_page_info($page_ref_id);
-
 		if ($page_info['parent_id']) {
       $structure_path = $this->get_structure_path($page_info['parent_id']);
     }
     $structure_path[] = $page_info;
     return $structure_path;
 	}
-
 	/* get all the users that watches a page or a page above */
 	function get_watches($pageName='', $page_ref_id=0, $recurs=true) {
 		global $tiki_p_watch_structure;
@@ -376,34 +341,26 @@ class StructLib extends TikiLib {
 		}
 		return $ret;
 	}
-
   /**Returns a structure_info array
-
      See get_page_info for details of array
   */
 	function s_get_structure_info($page_ref_id) {
 		$parent_id = $this->getOne('select `parent_id` from `tiki_structures` where `page_ref_id`=?', array((int)$page_ref_id));
-
 		if (!$parent_id)
 			return $this->s_get_page_info($page_ref_id);
-
 		return $this->s_get_structure_info($parent_id);
 	}
-
   /**Returns an array of info about the parent
      page_ref_id
-
      See get_page_info for details of array
   */
 	function s_get_parent_info($page_ref_id) {
 		// Try to get the parent of this page
 		$parent_id = $this->getOne('select `parent_id` from `tiki_structures` where `page_ref_id`=?',array((int)$page_ref_id));
-
     if (!$parent_id)
       return null;
 		return ($this->s_get_page_info($parent_id));
 	}
-
 	/** Return an array of page info
   */
 	function s_get_page_info($page_ref_id) {
@@ -418,7 +375,6 @@ class StructLib extends TikiLib {
       return null;
     }
 	}
-
 	// that is intended to replace the get_subtree_toc and get_subtree_toc_slide
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
 	// the $tocPrefix can be used to Prefix a subtree as it would start from a given number (e.g. 2.1.3)
@@ -440,7 +396,7 @@ class StructLib extends TikiLib {
 						$res['sub'] = $sub;
 					}
 				}
-				if ($res['page_alias']<>'') $res['pageName']=$res['page_alias'];
+				//if ($res['page_alias']<>'') $res['pageName']=$res['page_alias'];
 				$back[] = $res;
 			}
 		} else {
@@ -448,13 +404,11 @@ class StructLib extends TikiLib {
 		}
 		return $back;
 	}
-
 	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName='') {
 		global $smarty;
 		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
 		return $this->fetch_toc($structure_tree,$showdesc,$numbering,$type,$page,$maxdepth,0,$structurePageName)."\n";
 	}
-
 	function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='') {
 		global $smarty;
 		$ret='';
@@ -473,6 +427,7 @@ class StructLib extends TikiLib {
 					}
 					
 					$smarty->assign('structurePageName',$structurePageName);
+					$smarty->assign('page_alias',$page_alias);
 					$smarty->assign_by_ref('structure_tree',$leaf);
 					$smarty->assign('showdesc',$showdesc);
 					$smarty->assign('numbering',$numbering);
@@ -492,8 +447,6 @@ class StructLib extends TikiLib {
 		return $ret;
 	}
 	// end of replacement
-
-
 	function page_is_in_structure($pageName) {
     $query  = 'select count(*) ';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
@@ -501,7 +454,6 @@ class StructLib extends TikiLib {
 		$cant = $this->getOne($query,array($pageName));
 		return $cant;
 	}
-
   //Is this page the head page for a structure?
 	function get_struct_ref_if_head($pageName) {
     $query =  'select `page_ref_id` ';
@@ -510,8 +462,6 @@ class StructLib extends TikiLib {
 		$page_ref_id = $this->getOne($query,array($pageName));
 		return $page_ref_id;
 	}
-
-
  //Get reference id for a page
 function get_struct_ref_id($pageName) {
     $query =  'select `page_ref_id` ';
@@ -520,11 +470,7 @@ function get_struct_ref_id($pageName) {
     $page_ref_id = $this->getOne($query,array($pageName));
     return $page_ref_id;
 }
-
-
-
 	function get_next_page($page_ref_id, $deep = true) {
-
 		// If we have children then get the first child
 		if ($deep) {
 			$query  = 'select `page_ref_id` ';
@@ -532,27 +478,22 @@ function get_struct_ref_id($pageName) {
 			$query .= 'where `parent_id`=? ';
 			$query .= 'order by '.$this->convert_sortmode('pos_asc');
 			$result1 = $this->query($query,array((int)$page_ref_id));
-
 			if ($result1->numRows()) {
 				$res = $result1->fetchRow();
 				return $res['page_ref_id'];
 			}
 		}
-
 		// Try to get the next page with the same parent as this
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$parent_id = $page_info['parent_id'];
 		$page_pos = $page_info['pos'];
-
 		if (!$parent_id)
 			return null;
-
 		$query  = 'select `page_ref_id` ';
         $query .= 'from `tiki_structures` ts ';
 		$query .= 'where `parent_id`=? and `pos`>? ';
 		$query .= 'order by '.$this->convert_sortmode('pos_asc');
 		$result2 = $this->query($query,array((int)$parent_id, (int)$page_pos));
-
 		if ($result2->numRows()) {
 			$res = $result2->fetchRow();
 			return $res['page_ref_id'];
@@ -561,9 +502,7 @@ function get_struct_ref_id($pageName) {
 			return $this->get_next_page($parent_id, false);
 		}
 	}
-
 	function get_prev_page($page_ref_id, $deep = false) {
-
     //Drill down to last child for this tree node
         if ($deep) {
   	        $query  = 'select `page_ref_id` ';
@@ -571,7 +510,6 @@ function get_struct_ref_id($pageName) {
 			$query .= 'where `parent_id`=? ';
 			$query .= 'order by '.$this->convert_sortmode('pos_desc');
 			$result = $this->query($query,array($page_ref_id));
-
 			if ($result->numRows()) {
 				//There are more children
 				$res = $result->fetchRow();
@@ -583,17 +521,14 @@ function get_struct_ref_id($pageName) {
 		$page_info = $this->s_get_page_info($page_ref_id);
 		$parent_id = $page_info['parent_id'];
 		$pos       = $page_info['pos'];
-
 		//At the top of the tree
 		if (!isset($parent_id))
 			return null;
-
 		$query  = 'select `page_ref_id` ';
 		$query .= 'from `tiki_structures` ts ';
 		$query .= 'where `parent_id`=? and `pos`<? ';
 		$query .= 'order by '.$this->convert_sortmode('pos_desc');
 		$result =  $this->query($query,array((int)$parent_id, (int)$pos));
-
 		if ($result->numRows()) {
 			//There is a previous sibling
 			$res = $result->fetchRow();
@@ -605,13 +540,11 @@ function get_struct_ref_id($pageName) {
 		}
 		return $page_ref_id;
 	}
-
 	function get_navigation_info($page_ref_id) {
 		$struct_nav_pages = array();
 		// Get structure info for this page
 		$prev_page_ref_id = $this->get_prev_page($page_ref_id);
 		$next_page_ref_id = $this->get_next_page($page_ref_id);
-
         $struct_nav_pages['prev'] = null;
         if (isset($prev_page_ref_id)) {
             $struct_nav_pages['prev']   = $this->s_get_page_info($prev_page_ref_id);
@@ -622,10 +555,8 @@ function get_struct_ref_id($pageName) {
 	    }
  		$struct_nav_pages['parent'] = $this->s_get_parent_info($page_ref_id);
  		$struct_nav_pages['home']   = $this->s_get_structure_info($page_ref_id);
-
  		return $struct_nav_pages;
 	}
-
 	/** Return an array of subpages
       Used by the 'After Page' select box
   */
@@ -642,7 +573,6 @@ function get_struct_ref_id($pageName) {
 		}
 		return $ret;
 	}
-
     /** Get a list of all structures this page is a member of
 	*/
 	function get_page_structures($pageName,$structure='') {
@@ -665,9 +595,7 @@ function get_struct_ref_id($pageName) {
 		}
 		return $ret;
 	}
-
 	function get_max_children($page_ref_id) {
-
 		$query = 'select `page_ref_id` from `tiki_structures` where `parent_id`=?';
 		$result = $this->query($query,array((int)$page_ref_id));
 		if (!$result->numRows()) {
@@ -676,8 +604,6 @@ function get_struct_ref_id($pageName) {
 		$res = $result->fetchRow();
 		return $res;
 	}
-
-
 /** Return a unique list of pages belonging to the structure
   \return An array of page_info arrays
 */
@@ -688,8 +614,6 @@ function s_get_structure_pages_unique($page_ref_id) {
 	$ret2  = $this->s_get_structure_pages($page_ref_id);
 	return array_unique(array_merge($ret, $ret2));
 }
-
-
 /** Return all the pages belonging to a structure
  \param  Page reference ID in struct table
  \return An array of page_info arrays
@@ -702,7 +626,6 @@ function s_get_structure_pages($page_ref_id) {
 		$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     		$query .= 'where ts.`page_id`=tp.`page_id` and `parent_id`=? ';
 		$query .= 'order by '.$this->convert_sortmode('pos_asc');
-
    		$result = $this->query($query,array((int)$page_ref_id));
 		while ($res = $result->fetchRow()) {
 			$ret = array_merge($ret,$this->s_get_structure_pages($res['page_ref_id']));
@@ -710,9 +633,7 @@ function s_get_structure_pages($page_ref_id) {
 	}
 	return $ret;
 }
-
 function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_match = true, $filter = '') {
-
 		if ($find) {
 			if (!$exact_match && $find) {
 				$find = preg_replace("/(\w+)/","%\\1%",$find);
@@ -728,7 +649,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			$mid = ' where (`parent_id` is null or `parent_id`=0) ';
 			$bindvars=array();
 		}
-
 		$join_tables = ' inner join `tiki_pages` tp on (tp.`page_id`= ts.`page_id`)';
 		$join_bindvars = array();
 		if (!empty($filter)) {
@@ -755,7 +675,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			global $user;
 	        if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view') ) {
@@ -774,31 +693,24 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			
 	        } // end check for perm if 
 		}
-
 		$retval = array();
 		$retval['data'] = $ret;
 		$retval['cant'] = $cant;
 		return $retval;
 	}
-
   function get_page_alias($page_ref_id) {
 		$query = 'select `page_alias` from `tiki_structures` where `page_ref_id`=?';
 		$res = $this->getOne($query, array((int)$page_ref_id));
     return $res;
   }
-
   function set_page_alias($page_ref_id, $pageAlias) {
 		$query = 'update `tiki_structures` set `page_alias`=? where `page_ref_id`=?';
 		$this->query($query, array($pageAlias, (int)$page_ref_id));
   }
-
-
-
   //This nifty function creates a static WebHelp version using a TikiStructure as
   //the base.
   function structure_to_webhelp($page_ref_id, $dir, $top) {
   	global $style_base;
-
     //The first task is to convert the structure into an array with the
     //proper format to produce a WebHelp project.
 	//We have to create something in the form
@@ -817,7 +729,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	$fw = fopen("$base/menu/menuNodes.js",'a+');
 	fwrite($fw,$menucode);
 	fclose($fw);
-
 	$docs = Array();
 	$words = Array();
 	$index = Array();
@@ -833,7 +744,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		if(empty($res['description'])) $res['description']=$res['pageName'];
   		$pageName=$res['pageName'].'|'.$res['description'];
   		$dat = $this->parse_data($res['data']);
-
   		//Now dump the page
   		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
   		$dat = str_replace('?nocache=1','',$dat);
@@ -843,7 +753,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		fwrite($fw,$data);
   		fclose($fw);
   		unset($dat);
-
   		$page_words = split("[^A-Za-z0-9\-_]",$res['data']);
   		foreach($page_words as $word) {
     		$word=strtolower($word);
@@ -873,9 +782,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   		$i++;
 	}
 	fclose($fw);
-
   }
-
   function structure_to_tree($page_ref_id) {
 	$query = 'select * from `tiki_structures` ts,`tiki_pages` tp where tp.`page_id`=ts.`page_id` and `page_ref_id`=?';
 	$result = $this->query($query,array((int)$page_ref_id));
@@ -903,7 +810,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	}
     return $code;
   }
-
   function traverse($tree,$parent='') {
   $code='';
   foreach($tree as $name => $node) {
@@ -919,7 +825,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
   }
   return $code;
   }
-
   function traverse2($tree) {
   $pages = Array();
   foreach($tree as $name => $node) {
@@ -959,5 +864,4 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 }
 global $dbTiki;
 $structlib = new StructLib($dbTiki);
-
 ?>
