@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.1 2007-11-02 13:38:31 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85 2007-10-12 07:55:29 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.1 2007-11-02 13:38:31 sylvieg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -80,26 +80,7 @@ if ( $prefs['feature_intertiki'] == 'y' ) {
 // Go through the intertiki process
 if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist'])) ) {
 
-    include_once('XML/RPC.php');
-
-    function intervalidate($remote,$user,$pass,$get_info = false) {
-	global $prefs;
-	$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
-	$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
-	$client->setDebug(0);
-	$msg = new XML_RPC_Message(
-				   'intertiki.validate',
-				   array(
-					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
-					 new XML_RPC_Value($user, 'string'),
-					 new XML_RPC_Value($pass, 'string'),
-					 new XML_RPC_Value($get_info, 'boolean')
-					 ));
-	$result = $client->send($msg);
-	return $result;
-    }
-
-    $rpcauth = intervalidate($prefs['interlist'][$_REQUEST['intertiki']],$user,$pass,!empty($prefs['feature_intertiki_mymaster'])? true : false);
+    $rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']],$user,$pass,!empty($prefs['feature_intertiki_mymaster'])? true : false);
 
     if (!$rpcauth) {
 	$logslib->add_log('login','intertiki : '.$user.'@'.$_REQUEST['intertiki'].': Failed');
