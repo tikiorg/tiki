@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26.2.1 2007-11-02 13:30:09 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'mytiki';
 require_once ('tiki-setup.php');
 
 include_once ('lib/userprefs/userprefslib.php');
@@ -64,7 +65,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);
 
 	if ($iwidth == 45 and $iheight == 45) {
-		$userprefslib->set_user_avatar($user, 'u', '', $name, $size, $itype, $data);
+		$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $itype, $data);
 	} else {
 		if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
 			$img = imagecreatefromstring($data);
@@ -98,20 +99,20 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			fclose ($fp);
 			unlink ($tmpfname);
 			$t_type = 'image/jpeg';
-			$userprefslib->set_user_avatar($user, 'u', '', $name, $size, $t_type, $t_data);
+			$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $t_type, $t_data);
 		} else {
-			$userprefslib->set_user_avatar($user, 'u', '', $name, $size, $type, $data);
+			$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $type, $data);
 		}
 	}
 }
 
 if (isset($_REQUEST["uselib"])) {
 	check_ticket('pick-avatar');
-	$userprefslib->set_user_avatar($user, 'l', $_REQUEST["avatar"], '', '', '', '');
+	$userprefslib->set_user_avatar($userwatch, 'l', $_REQUEST["avatar"], '', '', '', '');
 }
 if (isset($_REQUEST["reset"])) {
 	check_ticket('pick-avatar');
-	$userprefslib->set_user_avatar($user, '0', '', '', '', '', '');
+	$userprefslib->set_user_avatar($userwatch, '0', '', '', '', '', '');
 }
 
 $avatars = array();
@@ -130,7 +131,7 @@ $smarty->assign('yours', rand(0, count($avatars)));
 
 include_once ('tiki-mytiki_shared.php');
 
-$avatar = $tikilib->get_user_avatar($user);
+$avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
 
 ask_ticket('pick-avatar');
