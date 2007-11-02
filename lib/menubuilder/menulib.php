@@ -167,6 +167,25 @@ class MenuLib extends TikiLib {
 	    return $channels;
 
 	}
+	// rename all the url of the form ((pageName))
+	function rename_wiki_page($oldName, $newName) {
+		$query = "update `tiki_menu_options` set `url`=? where `url`=?";
+		$result = $this->query($query, array('(('.$newName.'))', '(('.$oldName.'))'));
+		// try to change some tiki-index.php?page - very limitted: for another http://anothersite/tiki-index.php?page= must not be changed
+		$query = "select * from `tiki_menu_options` where `url` like ?";
+		$result = $this->query($query, array("%tiki-index.php?page=$oldName%"));
+		$query = "update `tiki_menu_options` set `url`=? where `optionId`=?";
+		while ($res = $result->fetchRow()) {
+			$p = parse_url($res['url']);
+	  		if ($p['path'] == 'tiki-index.php') {
+				parse_str($p['query'], $p);
+				if ($p['page'] == $oldName) {
+					$url = str_replace($oldName, $newName, $res['url']);
+					$this->query($query, array($url, $res['optionId']));
+				}
+			}
+		}
+	}
 }
 global $dbTiki;
 $menulib = new MenuLib($dbTiki);
