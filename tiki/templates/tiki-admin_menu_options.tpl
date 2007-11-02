@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.2 2007-10-26 17:47:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.3 2007-11-02 15:01:54 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">
@@ -32,7 +32,7 @@
  {if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
 <table>
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td colspan="3"><input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}URL{/tr}:<br />{tr}or PageName Surrounding by (( )){/tr}</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
@@ -213,7 +213,7 @@
 title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' /></a></td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
-<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].url}">{$channels[user].url|truncate:40:' ...'}</a></td>
+<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a></td>
 <td class="{cycle advance=false}">{$channels[user].type_description}</td>
 <td class="{cycle advance=false}">{$channels[user].section}</td>
 <td class="{cycle advance=false}">{$channels[user].perm}</td>

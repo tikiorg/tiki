@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.10 2007-11-01 04:26:56 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.11 2007-11-02 15:01:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1802,9 +1802,9 @@ function add_pageview() {
 	$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_menu_options` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	//FIXME
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
+		$res['canonic'] = $res['url'];
 		if (preg_match('|\(\(('.$res['url'].')\)\)|', $res['url'], $matches)) {
 			$res['url'] = 'tiki-index.php?page='.$matches[1];
 		}
@@ -4273,6 +4273,7 @@ function add_pageview() {
 
 
 	function get_user_preferences($my_user, $names = null) {
+		global $user_preferences;
 
 		// $my_user must be specified
 		if ( ! is_string($my_user) || $my_user == '' ) return false;
@@ -4283,7 +4284,10 @@ function add_pageview() {
 	}
 
     function get_user_preference($my_user, $name, $default = null) {
-		global $user_preferences;
+		global $user_preferences, $user;
+		if ($user != $my_user && !isset($user_preferences[$my_user])) {
+			$this->get_user_preferences($my_user);
+		}
 		if ( isset($user_preferences) && isset($user_preferences[$my_user]) && isset($user_preferences[$my_user][$name]) ) {
 			return $user_preferences[$my_user][$name];
 		}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110 2007-10-12 07:55:48 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.1 2007-11-02 15:01:55 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -274,6 +274,9 @@ class WikiLib extends TikiLib {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('pages', $newName);
 		}
+
+		global $menulib; include_once('lib/menubuilder/menulib.php');
+		$menulib->rename_wiki_page($oldName, $newName);
 
 		return true;
 	}
