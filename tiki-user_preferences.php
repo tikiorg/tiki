@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.1 2007-11-02 13:31:20 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -146,7 +146,7 @@ if (isset($_REQUEST["new_prefs"])) {
 			$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
 	}
 
-	if (isset($_REQUEST["realName"]) && $prefs['auth_ldap_nameattr'] == '')
+	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'auth'))
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 
 	/* this should be optional
@@ -309,31 +309,32 @@ if (isset($_REQUEST['chgadmin'])) {
 
 }
 
-$smarty->assign('mytiki_pages', $tikilib->get_user_preference($userwatch, 'mytiki_pages', 'y'));
-$smarty->assign('mytiki_blogs', $tikilib->get_user_preference($userwatch, 'mytiki_blogs', 'y'));
-$smarty->assign('mytiki_gals', $tikilib->get_user_preference($userwatch, 'mytiki_gals', 'y'));
-$smarty->assign('mytiki_items', $tikilib->get_user_preference($userwatch, 'mytiki_items', 'y'));
-$smarty->assign('mytiki_msgs', $tikilib->get_user_preference($userwatch, 'mytiki_msgs', 'y'));
-$smarty->assign('mytiki_tasks', $tikilib->get_user_preference($userwatch, 'mytiki_tasks', 'y'));
-$smarty->assign('mytiki_workflow', $tikilib->get_user_preference($userwatch, 'mytiki_workflow', 'y'));
-$smarty->assign('mylevel', $tikilib->get_user_preference($userwatch, 'mylevel', '1'));
-
-$tasks_maxRecords = $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
-$smarty->assign('tasks_maxRecords', $tasks_maxRecords);
-
-$mess_maxRecords = $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
-$smarty->assign('mess_maxRecords', $mess_maxRecords);
-
-$mess_archiveAfter = $tikilib->get_user_preference($userwatch, 'mess_archiveAfter', 0);
-$smarty->assign('mess_archiveAfter', $mess_archiveAfter);
-
-$mess_sendReadStatus = $tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 0);
-$smarty->assign('mess_sendReadStatus', $mess_sendReadStatus);
-
-$allowMsgs = $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
-$smarty->assign('allowMsgs', $allowMsgs);
-$minPrio = $tikilib->get_user_preference($userwatch, 'minPrio', 6);
-$smarty->assign('minPrio', $minPrio);
+$tikilib->get_user_preference($userwatch, 'mytiki_pages', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_blogs', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_gals', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_items', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_msgs', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_tasks', 'y');
+$tikilib->get_user_preference($userwatch, 'mytiki_workflow', 'y');
+$tikilib->get_user_preference($userwatch, 'mylevel', '1');
+$tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
+$tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
+$tikilib->get_user_preference($userwatch, 'mess_archiveAfter', 0);
+$tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 0);
+$tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
+$tikilib->get_user_preference($userwatch, 'minPrio', 6);
+$tikilib->get_user_preference($userwatch, 'theme', '');
+$tikilib->get_user_preference($userwatch, 'language', '');
+$tikilib->get_user_preference($userwatch, 'realName', '');
+$tikilib->get_user_preference($userwatch, 'country', 'Other');
+$tikilib->get_user_preference($userwatch, 'lat', '');
+$tikilib->get_user_preference($userwatch, 'lon', '');
+$tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
+$tikilib->get_user_preference($userwatch, 'homePage', '');
+$tikilib->get_user_preference($userwatch, 'email is public', 'n');
+$user_preferences[$userwatch]['email_isPublic'] = $user_preferences[$userwatch]['email is public'];
+$tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
+$tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
 
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
@@ -346,56 +347,31 @@ $languages = array();
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 
-// Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
-$user_blogs = $tikilib->list_user_blogs($userwatch, false);
-$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
+$user_blogs = $tikilib->list_user_blogs($userwatch, false);
 $smarty->assign_by_ref('user_blogs', $user_blogs);
+$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_galleries', $user_galleries);
-
 $user_items = $tikilib->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items', $user_items);
 
-// Get flags here
 $flags = $tikilib->get_flags();
 $smarty->assign_by_ref('flags', $flags);
 
-// Get preferences
-$user_style = $tikilib->get_user_preference($userwatch, 'theme', '');
-$smarty->assign('user_style', $_REQUEST["mystyle"]);
-$langUser = $tikilib->get_user_preference($userwatch, 'language', '');
-$smarty->assign('langUser', $langUser);
-$realName = $tikilib->get_user_preference($userwatch, 'realName', '');
-$country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
-$smarty->assign('country', $country);
-$lat = $tikilib->get_user_preference($userwatch, 'lat', '');
-$smarty->assign('lat', $lat);
-$lon = $tikilib->get_user_preference($userwatch, 'lon', '');
-$smarty->assign('lon', $lon);
-$anonpref = $prefs['site_userbreadCrumb'];
-$prefs['userbreadCrumb'] = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $anonpref);
-$smarty->assign_by_ref('realName', $realName);
-$smarty->assign_by_ref('userbreadCrumb', $prefs['userbreadCrumb']);
-$homePage = $tikilib->get_user_preference($userwatch, 'homePage', '');
-$smarty->assign_by_ref('homePage', $homePage);
-$smarty->assign('email_isPublic', $tikilib->get_user_preference($userwatch, 'email is public', 'n'));
 $scramblingMethods = array("n", "strtr", "unicode", "x"); // email_isPublic utilizes 'n'
 $smarty->assign_by_ref('scramblingMethods', $scramblingMethods);
 $scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode')."-".tra("unicode"), scrambleEmail($userinfo['email'], 'x'));
 $smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 $avatar = $tikilib->get_user_avatar($userwatch);
-$smarty->assign('avatar', $avatar);
-$smarty->assign('mailCharset', $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']));
+$smarty->assign_by_ref('avatar', $avatar);
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
-$user_dbl = $tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
-$smarty->assign_by_ref('user_dbl', $user_dbl);
 
-$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
-$smarty->assign('user_information', $user_information);
-$diff_versions = $tikilib->get_user_preference($userwatch, 'diff_versions', 'n');
-$smarty->assign('diff_versions', $diff_versions);
+$smarty->assign_by_ref('user_prefs', $user_preferences[$userwatch]);
+
+$tikilib->get_user_preference($userwatch, 'user_information', 'public');
+$tikilib->get_user_preference($userwatch, 'diff_versions', 'n');
 
 $usertrackerId = false;
 $useritemId= false;
