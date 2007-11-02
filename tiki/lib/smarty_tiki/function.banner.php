@@ -19,7 +19,11 @@ function smarty_function_banner($params, &$smarty)
         $smarty->trigger_error("assign: missing 'zone' parameter");
         return;
     }
-    $banner = $bannerlib->select_banner($zone);
+	if (empty($target)) {
+		$banner = $bannerlib->select_banner($zone);
+	} else {
+		$banner = $bannerlib->select_banner($zone, $target);
+	}
     print($banner);
 }
 
