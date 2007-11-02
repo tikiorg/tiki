@@ -1,12 +1,17 @@
-<h1><a class="pagetitle" href="tiki-pick_avatar.php">{tr}Pick your avatar{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-pick_avatar.php{if $user ne $userwatch}?view_user={$userwatch}{/if}">{if $user ne $userwatch}{tr}Avatar:{/tr} {$userwatch}{else}{tr}Pick your avatar{/tr}{/if}</a></h1>
+
+{if $user eq $userwatch}
 {include file=tiki-mytiki_bar.tpl}
-<br /><br />
-<h2>{tr}Your current avatar{/tr}</h2>
+{else}
+<div class="navbar"><span class="button2"><a href="tiki-user_preferences.php?view_user={$userwatch|escape}" class="linkbut">{tr}User Preferences{/tr}</a></span></div>
+{/if}
+
+<h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
 <table class="normal">
 <tr>
   <td class="formcolor">{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}</td>
 {if sizeof($avatars) eq 0 and $avatar}
- <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}reset{/tr}' /></a></td>
+ <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}reset{/tr}' /></a></td>
 {/if}
 </tr>
 </table>
@@ -14,7 +19,7 @@
 {if sizeof($avatars) > 0}
 
 {if $showall eq 'y'}
-<h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
+<h2>{if $user eq $userwatch}{tr}Pick avatar from the library{/tr}{else}{tr}Pick user Avatar{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
 <div class="normal">
 {section name=im loop=$avatars}
 <a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''/></a>
@@ -55,6 +60,7 @@ function subavt() {
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">
 <input id="avatar" type="hidden" name="avatar" value="{$yours|escape}" />
+{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
 <table class="normal">
 <tr>
  <td class="formcolor">
@@ -82,6 +88,7 @@ function subavt() {
 
 <h2>{tr}Upload your own avatar{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
+{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
 <table class="normal">
 <tr><td class="formcolor">{tr}File{/tr} {tr}(Only .gif images, and aproximately 45px x 45px){/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
