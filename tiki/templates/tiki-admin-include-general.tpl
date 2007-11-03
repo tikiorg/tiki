@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.70 2007-10-20 05:17:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.71 2007-11-03 18:16:09 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -11,9 +11,8 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
-	<tr><td class="form">{tr}Tikiwiki release{/tr} : </td><td class="form">{$prefs.tiki_release}</td></tr>
-
-      <tr><td colspan="2"><a href="tiki-admin.php?page=theme">{tr}Theme{/tr}</a><hr/></td></tr>
+	<tr><td width="40%" class="form">{tr}Tikiwiki release{/tr} : </td><td class="form">{$prefs.tiki_release}</td></tr>
+	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>
         <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
@@ -85,9 +84,12 @@
             <option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
             <option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
             </select>
-						{tr}visible to admin only{/tr}
+						<br />
+
 						<input type="checkbox" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} />
-						<br />{tr}smarty notice reporting{/tr}<input type="checkbox" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} />
+						{tr}visible to admin only{/tr}<br />
+						<input type="checkbox" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} />
+						{tr}smarty notice reporting{/tr}
       </td>
 	  </tr><tr>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
@@ -107,11 +109,12 @@
             </select>
       </td>
 	</tr>
-      </table>
-      <table class="admin"><tr>
-        <td class="heading" colspan="2"
-            align="center">{tr}General Settings{/tr}</td>
-      </tr><tr>
+		
+			<tr>
+        <td class="heading" colspan="2" align="center">{tr}General Settings{/tr}</td>
+      </tr>
+		
+		<tr>
         <td class="form" >
           <label for="general-access">{tr}Disallow access to the site (except for those with permission){/tr}:</label></td>
         <td ><input type="checkbox" name="site_closed" id="general-access"
@@ -123,10 +126,12 @@
         <td><input type="text" name="site_closed_msg" id="general-site_closed"
              value="{$prefs.site_closed_msg}" size="60"/></td>
       </tr>
-      </table>
-      <table class="admin"><tr>
+     
+			<tr>
         <td colspan="2"><hr/></td>
-      </tr><tr>
+      </tr>
+
+			<tr>
         <td class="form" >
           <label for="general-load">{tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</label></td>
         <td ><input type="checkbox" name="use_load_threshold" id="general-load"
@@ -139,16 +144,11 @@
         <td class="form"><label for="general-load_mess">{tr}Message to display when server is too busy{/tr}:</label></td>
         <td><input type="text" name="site_busy_msg" id="general-load_mess" value="{$prefs.site_busy_msg}" size="60" /></td>
       </tr>
-      </table>
-      <table class="admin"><tr>
+			<tr><td colspan="2">
+			
+			<table width="100%">
         <td colspan="5"><hr/></td></tr>
         <tr>
-        <td class="form" >
-          <a href="tiki-admin.php?page=textarea">{tr}Open external links in new window{/tr}:</a></td>
-        <td >&nbsp;</td>
-        <td class="form" >
-          <a href="tiki-admin.php?page=module">{tr}Display modules to all groups always{/tr}</a></td>
-      </tr><tr>
         <td class="form"><label for="general-cache_ext_pages">{tr}Use cache for external pages{/tr}:</label></td>
         <td><input type="checkbox" name="cachepages" id="general-cache_ext_pages"
               {if $prefs.cachepages eq 'y'}checked="checked"{/if}/>
@@ -184,14 +184,15 @@
         <td>&nbsp;</td>
         <td class="form"><label for="general-pageviews">{tr}Count admin pageviews{/tr}:</label></td>
         <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews" {if $prefs.count_admin_pvs eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
-		<td class="form"><a href="tiki-admin.php?page=module">{tr}Hide anonymous-only modules from registered users{/tr}</a></td>
-        <td>&nbsp;</td>
-      </tr></table>
+      </tr>
+			</table>
+			</td></tr>
 
-      <table class="admin"><tr>
+      <tr>
         <td colspan="2"><hr/></td>
-      </tr><tr>
+      </tr>
+			
+			<tr>
         <td class="form"><label for="general-browser_title">{tr}Browser title{/tr}:</label></td>
         <td><input type="text" name="siteTitle" id="general-browser_title" value="{$prefs.siteTitle|escape}" size="40" /></td>
       </tr><tr>
@@ -249,8 +250,10 @@
         <td>{tr}Please expect not found help-pages with the default-URL.{/tr}<br />
 	    {tr}Any help with the documentation is welcome.{/tr}</td>
 
-      </tr></table>
-      <table class="admin"><tr>
+      </tr>
+     
+			
+			<tr>
         <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
         <td class="form" ><label for="general-timezone">{tr}Default timezone{/tr}:</label></td>
@@ -288,9 +291,7 @@
           <a class="link" target="strftime" href="{$fcnlink}">
             {tr}Date and Time Format Help{/tr}</a></td>
       </tr>
-		</table>
 
-			<table class="admin">
 				<tr>
 					<td class="heading" colspan="2" align="center">{tr}Other{/tr}</td>
 				</tr>
@@ -344,16 +345,8 @@
     </form>
   </div>
 </div>
-<br />
-<div class="cbox">
-  <div class="cbox-title">
-    {tr}Register this site at tikiwiki.org{/tr}
-  </div>
-  <div class="cbox-data">
-  <a class="link" href="tiki-register_site.php">{tr}Click here for more details.{/tr}</a>
-  </div>
-</div>
-<br />
+
+<div class="simplebox">
 <div class="cbox">
   <div class="cbox-title">
     {tr}Change admin password{/tr}
@@ -373,4 +366,5 @@
       </tr></table>
     </form>
   </div>
+</div>
 </div>
