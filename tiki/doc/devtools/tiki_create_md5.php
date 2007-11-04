@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tiki_create_md5.php,v 1.2 2005-01-22 22:55:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tiki_create_md5.php,v 1.2.2.1 2007-11-04 22:08:07 nyloth Exp $
 
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

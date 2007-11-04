@@ -1,7 +1,7 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/timer.class.php,v 1.1 2007-10-06 15:18:45 nyloth Exp $
-// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/timer.class.php,v 1.1.2.1 2007-11-04 22:08:35 nyloth Exp $
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
 // details.
