@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.26 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.26.2.1 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,16 +100,8 @@ if (isset($_REQUEST['removeold'])) {
   }
 }
 
-// corrections by Wells Wang
-// $ev_pdate = $pdate;
-// $ev_pdate_h = $pdate_h;
-$ev_pdate = $pdate + $tikilib->get_site_time_difference($user);
-$ev_pdate_h = $pdate_h + $tikilib->get_site_time_difference($user);
-
 if ($_REQUEST["eventId"]) {
 	$info = $minicallib->minical_get_event($user, $_REQUEST["eventId"]);
-
-	$info['start'] += $tikilib->get_site_time_difference($user);
 	$ev_pdate = $info['start'];
 	$ev_pdate_h = $info['start'];
 } else {
@@ -130,7 +122,6 @@ if (isset($_REQUEST['save'])) {
 	$start = mktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'],
 		0, $_REQUEST['Date_Month'], $_REQUEST['Date_Day'], $_REQUEST['Date_Year']);
 
-	$start -= $tikilib->get_site_time_difference($user);
 	$minicallib->minical_replace_event($user, $_REQUEST["eventId"], $_REQUEST["title"], $_REQUEST["description"],
 		$start, ($_REQUEST['duration_hours'] * 60 * 60) + ($_REQUEST['duration_minutes'] * 60), $_REQUEST['topicId']);
 	$info = array();
@@ -166,13 +157,6 @@ if ($_REQUEST['view'] == 'daily') {
 	$slot_end = $tempdate + 60 * 60 * $minical_end_hour;
 	$interval = $minical_interval;
 }
-
-// added by Wells Wang to solve Mini Cal Event List Wrong Time BUG
-if (isset($slot_start))
-	$slot_start -= $tikilib->get_site_time_difference($user);
-
-if (isset($slot_end))
-	$slot_end -= $tikilib->get_site_time_difference($user);
 
 // end of modification
 if ($_REQUEST['view'] == 'weekly') {

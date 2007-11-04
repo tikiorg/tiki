@@ -34,7 +34,7 @@
 <tr>
 
 <td class="even">
-{$upcoming[ix].start|date_format:"%b %d %H:%M"}
+{$upcoming[ix].start|tiki_date_format:"%b %d %H:%M"}
 		{if $upcoming[ix].topicId}
 			{if $upcoming[ix].topic.isIcon eq 'y'}
 			<img title="{$upcoming[ix].topic.name}" src="{$upcoming[ix].topic.path}" alt="{tr}topic image{/tr}" />
@@ -55,14 +55,14 @@
 </table>
 <br />
 <!-- Time here -->
-<!--[{$pdate_h|date_format:"%H"}:{$pdate_h|date_format:"%M"}]-->
+<!--[{$pdate_h|tiki_date_format:"%H"}:{$pdate_h|tiki_date_format:"%M"}]-->
 
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
 </b>
 <table clas="normal"  >
 {section name=ix loop=$slots}
@@ -97,9 +97,9 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
-<b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|tiki_date_format:"%d"}&amp;mon={$prev_week_start|tiki_date_format:"%m"}&amp;year={$prev_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
+<b>{$week_start|tiki_date_format:"%b"} {$week_start|tiki_date_format:"%d"}-{$week_end|tiki_date_format:"%b"} {$week_end|tiki_date_format:"%d"}</b>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
 <table class="normal"  >
 {section name=ix loop=$slots}
 <tr>
@@ -107,8 +107,8 @@
 	    <table >
 	    <tr>
 	    <td >
-    	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&amp;year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
-    	{$slots[ix].start|date_format:"%d"}</a>
+    	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|tiki_date_format:"%d"}&amp;mon={$slots[ix].start|tiki_date_format:"%m"}&amp;year={$slots[ix].start|tiki_date_format:"%Y"}">{$slots[ix].start|tiki_date_format:"%a"}<br />
+    	{$slots[ix].start|tiki_date_format:"%d"}</a>
     	</td>
     	<td>
     	{section name=jj loop=$slots[ix].events}

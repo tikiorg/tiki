@@ -52,13 +52,8 @@ $smarty->assign('monthafter', $focus_nextmonth);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = $tikilib->make_time(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
-$smarty->assign('now', $now); /* server date */
-if (!isset($dc->getDisplayDateFromServerDate)) {
-    $dc = $tikilib->get_date_converter($user);
-}
-$smarty->assign('nowUser', $dc->getDisplayDateFromServerDate($now)); /* user time */
-
+$smarty->assign('now', $tikilib->now); /* server date */
+$smarty->assign('nowUser', $tikilib->now); /* user time */
 
 $weekdays = range(0, 6);
 $hours = range(0, 23);

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.1 2007-11-02 13:31:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.2 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,7 +106,6 @@ if (isset($_REQUEST["new_prefs"])) {
 
 	if (isset($_REQUEST['display_timezone'])) {
 		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
-		$_SESSION['prefs']['display_timezone'] = $_REQUEST['display_timezone'];
 	}
 
 	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);

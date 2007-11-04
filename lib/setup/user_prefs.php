@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.8 2007-10-14 12:39:22 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.8.2.1 2007-11-04 21:49:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -55,4 +55,15 @@ if ( $user ) {
 if ( isset($_SERVER['REMOTE_ADDR']) ) {
 	$IP = $_SERVER['REMOTE_ADDR'];
 	$smarty->assign('IP', $IP);
+}
+
+if ( $user_preferences[$user]['display_timezone'] == '' ) {
+	// If the display timezone is not known ...
+	if ( isset($_COOKIE['local_tz']) ) {
+		//   ... we try to use the timezone detected by javascript and stored in cookies
+		$prefs['display_timezone'] = $_COOKIE['local_tz'];
+	} else {
+		// ... and we fallback to the server timezone if the cookie value is not available
+		$prefs['display_timezone'] = $prefs['server_timezone'];
+	}
 }

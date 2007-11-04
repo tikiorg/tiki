@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.6 2007-11-01 13:39:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.7 2007-11-04 21:49:23 nyloth Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -401,7 +401,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['users_prefs_allowMsgs'] = 'n';
 	$prefs['users_prefs_country'] = '';
 	$prefs['users_prefs_diff_versions'] = 'n';
-	$prefs['users_prefs_display_timezone'] = 'UTC';
+	$prefs['users_prefs_display_timezone'] = '';
 	$prefs['users_prefs_email_is_public'] = 'n';
 	$prefs['users_prefs_homePage'] = '';
 	$prefs['users_prefs_lat'] = '';
@@ -968,7 +968,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	$_SESSION['tmpDir'] = TikiInit::tempdir(); //??
 
-	$prefs['display_timezone'] = $prefs['server_timezone'];
 	$prefs['feature_bidi'] = 'n';
 	$prefs['feature_lastup'] = 'y';
 	$prefs['display_server_load'] = 'y';

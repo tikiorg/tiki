@@ -146,7 +146,6 @@ class MiniCalLib extends TikiLib {
 				$res2 = $result2->fetchRow();
 			}
 			$res['topic'] = $res2;
-			$res['start'] += $this->get_site_time_difference($user); //added by WellsWang to Solove Mini Cal Upcoming Events wrong TimeZone Problem
 			$ret[] = $res;
 		}
 		$retval = array();

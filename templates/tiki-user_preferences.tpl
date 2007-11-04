@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.4 2007-11-02 13:31:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.5 2007-11-04 21:49:25 nyloth Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -150,14 +150,12 @@
   <tr><td class="{cycle advance=false}">{tr}Displayed time zone{/tr}:</td>
   <td class="{cycle}">
 	<select name="display_timezone" id="display_timezone">
+	    <option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
 	  {foreach key=tz item=tzinfo from=$timezones}
 	    {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
             <option value="{$tz}"{if $user_prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
 	  {/foreach}
 	</select>
-        <br />
-	<a href="#" onclick="document.getElementById('display_timezone').value='{$prefs.server_timezone}';">{tr}Reset to default timezone{/tr}</a>
-	({$prefs.server_timezone})
   </td>
   </tr>
   <tr><td class="{cycle advance=false}">{tr}User information{/tr}:</td><td class="{cycle}">
