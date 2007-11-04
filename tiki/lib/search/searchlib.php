@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.38 2007-10-12 07:55:46 nyloth Exp $
+// $Id: searchlib.php,v 1.38.2.1 2007-11-04 12:53:58 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -724,9 +724,9 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_exact_wiki($words,$offset, $maxRecords) {
-	  global $prefs, $user;
+	  global $prefs, $user, $tikilib;
 	  if ($prefs['feature_wiki'] == 'y'  && count($words) >0) {
-	  $query = "select distinct s.`page`, s.`location`, s.`last_update`, sum(s.`count`) as `count`, p.`data`, p.`hits`, p.`lastModif` 
+	  $query = "select distinct s.`page`, s.`location`, s.`last_update`, sum(s.`count`) as `count`, p.`data`, p.`hits`, p.`lastModif`, p.`is_html` 
 		from `tiki_searchindex` s, `tiki_pages` p  
 		where `searchword` in (".implode(',',array_fill(0,count($words),'?')).") 
 			and s.`location`='wiki' and s.`page`=p.`pageName`
@@ -742,7 +742,7 @@ class SearchLib extends TikiLib {
             $ret[] = array(
               'pageName' => $res["page"],
               'location' => tra("Wiki"),
-              'data' => substr($res["data"],0,250),
+              'data' => $tikilib->parse_data($res["data"], $res["is_html"]),
               'hits' => $res["hits"],
               'lastModif' => $res["lastModif"],
               'href' => $href,
