@@ -28,48 +28,10 @@ if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_
 }
 
 function _translate_lang($key) {
-  global $lang, $prefs;
-  if ($prefs['lang_use_db']!='y') {
-    if(isset($lang[$key[2]])) {
-        if ($key[1] == "{tr}") {
-          return $lang[$key[2]];// no more possible translation in block.tr.php
-        }
-        else {
-          return $key[1].$lang[$key[2]]."{/tr}";// perhaps variable substitution to do in block.tr.php
-        }
-    }// not found in language.php
-    elseif (strstr($key[2], "{\$")) {
-         return $key[1].$key[2]."{/tr}";// keep the tags to be perhaps translated in block.tr.php
-    }
-    else {
-         return $key[2];
-    }
-   }
-   else {
-    global $tikilib,$multilinguallib;
-    $tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($key[2]):"";
-    $content = $key[2];
-    $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
-    $result=$tikilib->query($query,array($content,$prefs['language']));
-    $res=$result->fetchRow();
-    if(isset($res["tran"])) {
-	if ($key[1] == "{tr}") {
-	    return $res["tran"].$tag;// no more possible translation in block.tr.php
-	} else {
-	    return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
-	}
+    if ( strstr($key[2], '{$') ) {
+	return $key[1].$key[2].'{/tr}';// keep the tags to be perhaps translated in block.tr.php
     } else {
-	if ($prefs['record_untranslated']=='y') {
-	    $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
-	    //No eror checking here
-	    $tikilib->query($query,array($content,$prefs['language']),-1,-1,false);
-	}
-	if (strstr($key[2], "{\$"))  {
-	    return $key[1].$content."{/tr}";
-	} else {
-	    return $key[2].$tag;
-	}
+	return tra($key[2]);
     }
-   }
 }
 ?>
