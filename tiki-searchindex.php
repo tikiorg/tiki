@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.1 2007-11-04 12:51:59 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,6 +211,38 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+
+$where_list = array('pages' => 'entire site');
+if ( $prefs['feature_wiki'] == 'y' ) {
+	$where_list['wikis'] = 'Wiki Pages';
+}
+if ( $prefs['feature_galleries'] == 'y' ) {
+	$where_list['galleries'] = 'Galleries';
+	$where_list['images'] = 'Images';
+}
+if ( $prefs['feature_file_galleries'] == 'y' ) {
+	$where_list['files'] = 'Files';
+}
+if ( $prefs['feature_forums'] == 'y' ) {
+	$where_list['forums'] = 'Forums';
+}
+if ( $prefs['feature_faqs'] == 'y' ) {
+	$where_list['faqs'] = 'FAQs';
+}
+if ( $prefs['feature_blogs'] == 'y' ) {
+	$where_list['blogs'] = 'Blogs';
+	$where_list['posts'] = 'Blog Posts';
+}
+if ( $prefs['feature_directory'] == 'y' ) {
+	$where_list['directory'] = 'Directory';
+}
+if ( $prefs['feature_articles'] == 'y' ) {
+	$where_list['articles'] = 'Articles';
+}
+if ( $prefs['feature_trackers'] == 'y' ) {
+	$where_list['trackers'] = 'Trackers';
+}
+$smarty->assign_by_ref('where_list', $where_list);
 
 // Find search results (build array)
 $smarty->assign_by_ref('results', $results["data"]);
