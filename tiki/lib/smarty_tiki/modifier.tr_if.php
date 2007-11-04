@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: modifier.tr_if.php,v 1.3 2007-10-12 07:55:47 nyloth Exp $
+// CVS: $Id: modifier.tr_if.php,v 1.3.2.1 2007-11-04 12:39:15 nyloth Exp $
 
 // Translate only if feature_multilingual is on
 
@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_modifier_tr_if($source) {
 	global $prefs;
-	if ($prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en') {
+	if ($prefs['language'] != 'en') {
 		include_once('lib/init/tra.php');
 		return tra($source);
 	} else {
