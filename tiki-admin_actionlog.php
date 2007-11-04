@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.1 2007-11-04 19:16:58 sylvieg Exp $
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -31,9 +31,9 @@ if (empty($user) || $tiki_p_view_actionlog != 'y') {
 $confs = $logslib->get_all_actionlog_conf();
 $nbViewedConfs = 0;
 if ($tiki_p_admin == 'y') {
-	if (isset($_REQUEST['setConf'])) { 
+	if (isset($_REQUEST['save'])) { 
 		for ($i = 0; $i < sizeof($confs); ++$i) {
-			if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed and reported
+			if (isset($_REQUEST['v_'.$confs[$i]['code']]) && $_REQUEST['v_'.$confs[$i]['code']] == 'on') {//viewed and reported
 				$logslib->set_actionlog_conf($confs[$i]['action'], $confs[$i]['objectType'], 'v');
 				$confs[$i]['status'] = 'v';
 			} elseif (isset($_REQUEST[$confs[$i]['code']]) && $_REQUEST[$confs[$i]['code']] == 'on') {
@@ -46,11 +46,11 @@ if ($tiki_p_admin == 'y') {
 		}
 	}
 } else {
-	if (isset($_REQUEST['setConf'])) {
+	if (isset($_REQUEST['save'])) {
 		$_prefs = 'v';
 		for ($i = 0; $i < sizeof($confs); ++$i) {
 			if ($confs[$i]['status'] == 'v' || $confs[$i]['status'] == 'y') { // can only change what is recorded
-				if (isset($_REQUEST['view_'.$confs[$i]['code']]) && $_REQUEST['view_'.$confs[$i]['code']] == 'on') {//viewed
+				if (isset($_REQUEST['v_'.$confs[$i]['code']]) && $_REQUEST['v_'.$confs[$i]['code']] == 'on') {//viewed
 					$_prefs .= $confs[$i]['id'].'v';
 					$confs[$i]['status'] = 'v';
 				} else {
