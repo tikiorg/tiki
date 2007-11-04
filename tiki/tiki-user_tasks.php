@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27.2.2 2007-10-20 12:58:34 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.27.2.3 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -351,7 +351,6 @@ if (isset($_REQUEST['preview'])) {
 }
 
 if ((isset($_REQUEST['save'])) || (isset($_REQUEST['preview']))) {
-	$dc = $tikilib->get_date_converter($user);
 	$auto_accepted_status = true;
 	$save = array();
 	$save_head = array();

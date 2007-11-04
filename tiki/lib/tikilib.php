@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.11 2007-11-02 15:01:46 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.12 2007-11-04 21:49:21 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4280,7 +4280,16 @@ function add_pageview() {
 
 		global $user_preferences;
 		$global_ref =& $user_preferences[$my_user];
-		return $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($my_user));
+		$return = $this->_get_values('tiki_user_preferences', 'prefName', $names, $global_ref, '`user`=?', array($my_user));
+
+		// Handle special display_timezone values
+		if ( isset($user_preferences[$my_user]['display_timezone'])
+			&& ! Date_TimeZone::isValidID($user_preferences[$my_user]['display_timezone'])
+		) {
+			unset($user_preferences[$my_user]['display_timezone']);
+		}
+
+		return $return;
 	}
 
     function get_user_preference($my_user, $name, $default = null) {
@@ -6694,121 +6703,41 @@ if (!$simple_wiki) {
 	}
     }
 
-	function get_server_timezone() {
-		static $server_timezone;
-	
-		if (!$server_timezone) {
-			$server_time = new Date();
-			$server_timezone = $server_time->tz->getID();
-		}
-	
-		return $server_timezone;
-	}
-
-	function get_display_timezone($user = false) {
-		static $display_timezone = false;
-	
-		if (!$display_timezone) {
-			$server_time = $this->get_server_timezone();
-	
-			if ($user) {
-				$display_timezone = $this->get_user_preference($user, 'display_timezone');
-	
-				if (!$display_timezone || $display_timezone == 'default') {
-					$display_timezone = $prefs['display_timezone'];
+			function get_display_timezone($_user = false) {
+				global $prefs, $user;
+			
+				if ( $_user === false || $_user == $user ) {
+					// If the requested timezone is the current user timezone
+					$tz = $prefs['display_timezone'];
+				} elseif ( $_user ) {
+					// ... else, get the user timezone preferences from DB
+					$tz = $this->get_user_preference($_user, 'display_timezone');
+					if ( ! Date_TimeZone::isValidID($tz) ) {
+						$tz = $prefs['server_timezone'];
+					}
 				}
-			} else {
-				$display_timezone = $prefs['display_timezone'];
+
+				return $tz;
 			}
-		}
-	
-		return $display_timezone;
-	}
-
-			/**
-			 * Retrieves the user's preferred offset for displaying dates.
-			 *
-			 * $user: the logged-in user.
-			 * returns: the preferred offset to UTC.
-			 */
-			function get_display_offset($_user = false) {
-				global $prefs;
-
-			    // Cache preference from DB
-			    $display_tz = "UTC";
-
-			    // Default to UTCget_display_offset
-			    $display_offset = 0;
-
-			    // Load pref from DB is cache is empty
-			    if ($_user)
-				$display_tz = $this->get_display_timezone($_user);
-			    else if (isset($_COOKIE["tz_offset"])) // if an anonymous has a cookie, we pick up his tz
-				$display_tz = "";
-
-			    // Recompute offset each request in case DST kicked in
-			    if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
-				$display_offset = intval($_COOKIE["tz_offset"]);
-
-			    return $display_offset;
-			}
-
-			/**
-			 * Retrieves a TikiDate object for converting to/from display/UTC timezones
-			 *
-			 * $user: the logged-in user
-			 * returns: reference to a TikiDate instance with the appropriate offsets
-			 */
-			function &get_date_converter($_user = false) {
-			    static $date_converter;
-
-			    if (!$date_converter) {
-				$display_offset = $this->get_display_offset($_user);
-
-				$date_converter = &new TikiDate($display_offset);
-			    }
-
-			    return $date_converter;
-			}
-
+			
 			function get_long_date_format() {
 				global $prefs;
-			    static $long_date_format = false;
-
-			    if (!$long_date_format)
-				$long_date_format = $prefs['long_date_format'];
-
-			    return $long_date_format;
+				return $prefs['long_date_format'];
 			}
 
 			function get_short_date_format() {
 				global $prefs;
-			    static $short_date_format = false;
-
-			    if (!$short_date_format)
-				$short_date_format = $prefs['short_date_format'];
-
-			    return $short_date_format;
+				return $prefs['short_date_format'];
 			}
 
 			function get_long_time_format() {
 				global $prefs;
-			    static $long_time_format = false;
-
-			    if (!$long_time_format)
-				$long_time_format = $prefs['long_time_format'];
-
-			    return $long_time_format;
+				return $prefs['long_time_format'];
 			}
 
 			function get_short_time_format() {
 				global $prefs;
-			    static $short_time_format = false;
-
-			    if (!$short_time_format)
-				$short_time_format = $prefs['short_time_format'];
-
-			    return $short_time_format;
+				return $prefs['short_time_format'];
 			}
 
 			function get_long_datetime_format() {
@@ -6839,33 +6768,40 @@ if (!$simple_wiki) {
 			    return $short_datetime_format;
 			}
 
-			function date_format($format, $timestamp = false, $user = false) {
-				global $tikidate, $prefs;
-				if (!$timestamp) {
+			function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+				global $tikidate, $tikilib;
+				if ( ! $timestamp ) {
 					$timestamp = time();
 				}
-				if ($user) {
-					$tz = $this->get_user_preference($user, 'display_timezone', $prefs['server_timezone']);
-				} else {
-					$tz = $prefs['display_timezone'];
-				}
+
 				$tikidate->setTZbyID('UTC');
-				$tikidate->setDate($timestamp);
-				$tikidate->convertTZbyID($prefs['display_timezone']);
+				$tikidate->setDate($timestamp, $input_format);
+
+				$tz = $tikilib->get_display_timezone($_user);
+
+				// If user timezone is not also in UTC, convert the date
+				if ( $tz != 'UTC' ) {
+					$tikidate->convertTZbyID($tz);
+				}
+
 				return $tikidate->format($format);
 			}
 
 			function make_time($hour,$minute,$second,$month,$day,$year) {
-				global $tikidate, $prefs;
-				$tikidate->setTZbyID($prefs['display_timezone']);
-				$tikidate->setDate(0);
+				global $tikidate, $tikilib, $prefs;
+				$display_tz = $tikilib->get_display_timezone();
+				if ( $display_tz == '' ) $display_tz = 'UTC';
+				$tikidate->setTZbyID($display_tz);
+				$tikidate->setDate('1970-01-01 00:00:00');
 				$tikidate->hour = $hour;
 				$tikidate->minute = $minute;
 				$tikidate->second = $second;
 				$tikidate->month = $month;
 				$tikidate->day = $day;
 				$tikidate->year = $year;
-				$tikidate->convertTZbyID('UTC');
+				if ( $display_tz != 'UTC' ) {
+					$tikidate->convertTZbyID('UTC');
+				}
 				return $tikidate->getTime();
 			}
 			
@@ -6891,18 +6827,6 @@ if (!$simple_wiki) {
 
 			function get_short_datetime($timestamp, $user = false) {
 			    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
-			}
-
-			/**
-			  get_site_time_difference - Return the number of seconds needed to add to a
-			  'system' time to return a 'site' time.
-			 */
-			function get_site_time_difference($user = false) {
-			    $dc = &$this->get_date_converter($user);
-
-			    $display_offset = $dc->display_offset;
-			    $server_offset = $dc->server_offset;
-			    return $display_offset - $server_offset;
 			}
 
 			/**

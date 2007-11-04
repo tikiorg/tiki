@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.1 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -297,14 +297,24 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["useExplicitNames"] = 'n';
 	}
 	if (isset($_REQUEST['start']) && $_REQUEST['start'] == 'on') {
-		$dc = &$tikilib->get_date_converter($user);
-		$tracker_options['start'] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["start_Hour"], $_REQUEST["start_Minute"],
-                0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]));
+		$tracker_options['start'] = TikiLib::make_time(
+			$_REQUEST["start_Hour"],
+			$_REQUEST["start_Minute"],
+			0,
+			$_REQUEST["start_Month"],
+			$_REQUEST["start_Day"],
+			$_REQUEST["start_Year"]
+		);
 	}
 	if (isset($_REQUEST['end']) && $_REQUEST['end'] == 'on') {
-		$dc = &$tikilib->get_date_converter($user);
-		$tracker_options['end'] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["end_Hour"], $_REQUEST["end_Minute"],
-                0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]));
+		$tracker_options['end'] = TikiLib::make_time(
+			$_REQUEST["end_Hour"],
+			$_REQUEST["end_Minute"],
+			0,
+			$_REQUEST["end_Month"],
+			$_REQUEST["end_Day"],
+			$_REQUEST["end_Year"]
+		);
 	}
 
 	if (isset($_REQUEST['doNotShowEmptyField']) && ($_REQUEST['doNotShowEmptyField'] == 'on' || $_REQUEST['doNotShowEmptyField'] == 'y')) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21 2007-10-12 07:55:31 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21.2.1 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -25,8 +25,6 @@
     If you leave the data field blank, the default is to use all the questions from the table.
     You can also set the same option under the Generl Options section.
 */
-
-error_reporting(E_ALL);
 
 // Initialization
 require_once('tiki-setup.php');
@@ -80,8 +78,6 @@ $cat_type = 'quiz';
 $cat_objid = $_REQUEST["quizId"];
 include_once ("categorize_list.php");
 
-$dc = &$tikilib->get_date_converter($user);
-
 if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST["textview"])) {
 	echo "line: ".__LINE__."<br>";
 	echo "Sorry, preview, xmlview and textview are not supported in this version.<br>";
@@ -94,7 +90,7 @@ if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST
 
 $quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 
-function	fetchYNOption(&$quiz, $_REQUEST, $option){
+function fetchYNOption(&$quiz, $_REQUEST, $option){
 	if (isset($_REQUEST[$option]) && $_REQUEST[$option] == 'on'){
 		$quiz[$option] = 'y';
 	} else {
@@ -105,7 +101,6 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 // Load the data from the 
 function quiz_data_load(){
 	global $_REQUEST;
-	global $dc;
 	$quiz_data = array();
 	foreach($_REQUEST as $key => $val){
 		if (preg_match("/^quiz_/",$key)){
@@ -120,13 +115,23 @@ function quiz_data_load(){
 		$quiz_data["online"] = "n";
 	}
 
-  $quiz_data["datePub"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["publish_Hour"],
-    $quiz_data["publish_Minute"], 0, $quiz_data["publish_Month"], $quiz_data["publish_Day"], 
-    $quiz_data["publish_Year"]));
+  $quiz_data["datePub"] = TikiLib::make_time(
+	$quiz_data["publish_Hour"],
+	$quiz_data["publish_Minute"],
+	0,
+	$quiz_data["publish_Month"],
+	$quiz_data["publish_Day"],
+	$quiz_data["publish_Year"]
+  );
 
-  $quiz_data["dateExp"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["expire_Hour"],
-    $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], 
-    $quiz_data["expire_Year"]));
+  $quiz_data["dateExp"] = TikiLib::make_time(
+	$quiz_data["expire_Hour"],
+	$quiz_data["expire_Minute"],
+	0,
+	$quiz_data["expire_Month"],
+	$quiz_data["expire_Day"],
+	$quiz_data["expire_Year"]
+  );
  
 	$fields = array('nQuestion',
 									'shuffleAnswers',

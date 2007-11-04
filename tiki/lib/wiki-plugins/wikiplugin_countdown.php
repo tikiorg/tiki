@@ -18,20 +18,24 @@ function wikiplugin_countdown_help() {
 	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004[,locatetime=>on])}".tra("text")."{COUNTDOWN}~/np~";
 }
 function wikiplugin_countdown($data, $params) {
+	global $tikilib, $tikidate;
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($enddate)) {
 		return ("<b>COUNTDOWN: Missing 'enddate' parameter for plugin</b><br />");
 	}
 
-	if (isset($localtime) && $localtime == 'on')
-		$tz = 0;
-	else
-		$tz = $_COOKIE['tz_offset'];
+	// Parse the string and cancel the server environment's timezone adjustment
+	$then = strtotime($enddate) + date('Z');
 
-	$now = strtotime ("now") + $tz;
-	$then = strtotime ($enddate);
-	$difference = $then - $now;
+	// Calculate the real UTC timestamp
+	//  (the string was specified using the user timezone)
+	$tikidate->setTZbyID($tikilib->get_display_timezone());
+	$tikidate->setDate($then);
+	$tikidate->convertTZbyID('UTC');
+	$then = $tikidate->getDate(DATE_FORMAT_UNIXTIME);
+
+	$difference = $then - $tikilib->now;
 	$num = $difference/86400;
 	$days = intval($num);
 	$num2 = ($num - $days)*24;

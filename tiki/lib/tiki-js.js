@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.1 2007-10-30 21:19:19 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.2 2007-11-04 21:49:21 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -730,13 +730,16 @@ function switchCheckboxes(tform, elements_name, state) {
 }  
 
 //
-// Set client offset (in minutes) to a cookie to avoid server-side DST issues
+// Set client timezone
 // Added 7/25/03 by Jeremy Jongsma (jjongsma@tickchat.com)
+// Updated 11/04/07 by Nyloth to get timezone name instead of timezone offset
 //
+
 var expires = new Date();
-var offset = -(expires.getTimezoneOffset() * 60);
+var local_date = expires.toLocaleString();
+var local_tz = local_date.substring(local_date.lastIndexOf(' ') + 1);
 expires.setFullYear(expires.getFullYear() + 1);
-setCookie("tz_offset", offset, null, expires, "/");
+setCookie("local_tz", local_tz, null, expires, "/");
 
 // function added for use in navigation dropdown
 // example :

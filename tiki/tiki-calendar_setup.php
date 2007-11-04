@@ -7,7 +7,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 $trunc = "20"; // put in a pref, number of chars displayed in cal cells
-$dc = $tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
@@ -133,9 +132,8 @@ $smarty->assign('yearafter', $focus_nextyear);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$now = $tikilib->now;
-$smarty->assign('now', $now); /* server date */
-$smarty->assign('nowUser', $now);
+$smarty->assign('now', $tikilib->now);
+$smarty->assign('nowUser', $tikilib->now);
 
 $weekdays = range(0, 6);
 $hours = range(0, 23);
