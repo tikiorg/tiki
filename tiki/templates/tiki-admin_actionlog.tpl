@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.1 2007-10-18 06:22:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.2 2007-11-04 19:16:58 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -386,13 +386,13 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
 {/if}
 {if $tiki_p_admin eq 'y' or $actionlogConf[ix].status eq 'y' or $actionlogConf[ix].status eq 'v'}
-<td class="{cycle advance=false}"><input type="checkbox" name="view_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="v_{$actionlogConf[ix].code}" {if $actionlogConf[ix].status eq 'v'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}">{tr}{$actionlogConf[ix].action}{/tr}</td>
 <td class="{cycle}">{tr}{$actionlogConf[ix].objectType}{/tr}</td>
 {/if}
 </tr>
 {/section}
-<tr><td colspan="4" class="button"><input type="submit" name="setConf" value="{tr}Set{/tr}" /></td></tr>
+<tr><td colspan="4" class="button"><input type="submit" name="save" value="{tr}Set{/tr}" /></td></tr>
 </table>
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>
