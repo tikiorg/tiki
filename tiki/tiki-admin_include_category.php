@@ -16,7 +16,6 @@ if (isset($_REQUEST["categorysetup"])) {
 ask_ticket('admin-inc-category');
 
     $pref_toggles = array(
-	"feature_categories",
 	"feature_categoryobjects",
 	"feature_categorypath",
 	"feature_search_show_forbidden_cat",
