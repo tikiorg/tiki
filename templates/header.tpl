@@ -8,7 +8,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-{* Do NOT specify a base URL anymore, since it breaks anchors links in pages {if $base_url}<base href="{$base_url}"/>{/if} *}
+{if $base_url and $dir_level gt 0}<base href="{$base_url}"/>{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords}" />
 {/if}
