@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50 2007-10-13 14:52:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.1 2007-11-05 18:16:49 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -328,8 +328,10 @@ if($prefs['feature_user_watches'] == 'y') {
 }
 
 
-$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
-$smarty->assign('all_galleries', $all_galleries['data']);
+if ($tiki_p_admin_file_galleries == 'y') {
+	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
+	$smarty->assign('all_galleries', $all_galleries['data']);
+ }
 if ($podCastGallery) {
 	$smarty->assign('download_path', $prefs['fgal_podcast_dir']);
 } else {
