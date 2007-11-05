@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.2 2007-11-05 14:12:54 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -133,6 +133,7 @@ $smarty->assign('url_host', $url_host);
 $smarty->assign('url_port', $url_port);
 $smarty->assign('url_path', $url_path);
 
+$smarty->assign('dir_level', $dir_level);
 $smarty->assign('base_host', $base_host);
 $smarty->assign('base_url', $base_url);
 $smarty->assign('base_url_http', $base_url_http);
