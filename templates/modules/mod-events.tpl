@@ -7,13 +7,13 @@ global $dbTiki,$tikilib,$user;
 
 // get date for which to display the calendar view:
 if(isset($_SESSION["thedate"])) {
-	$day=TikiLib::date_format("d",$_SESSION["thedate"]);
-	$mon=TikiLib::date_format("m",$_SESSION["thedate"]);
-	$year=TikiLib::date_format("Y",$_SESSION["thedate"]);
+	$day=TikiLib::date_format("%d",$_SESSION["thedate"]);
+	$mon=TikiLib::date_format("%m",$_SESSION["thedate"]);
+	$year=TikiLib::date_format("%Y",$_SESSION["thedate"]);
 } else {
-	$day=TikiLib::date_format("d");
-	$mon=TikiLib::date_format("m");
-	$year=TikiLib::date_format("Y");
+	$day=TikiLib::date_format("%d");
+	$mon=TikiLib::date_format("%m");
+	$year=TikiLib::date_format("%Y");
 }
 if(isset($_REQUEST["day"])) {
 	$day = $_REQUEST["day"];
@@ -89,7 +89,8 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 	if ($nmonth == 13) {$nyear += 1; $nmonth -= 12;}
 	$url="$father"."day=$day&amp;mon=$pmonth&amp;year=$pyear";
 	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Prev{/tr}\" title=\"{tr}Prev{/tr}\"> &lt; </a>" );
-	print( $v );
+	$url="$father"."viewlist=table&amp;viewmode=month&amp;mon=$mon&amp;year=$year";
+	print( "<a href=\"$url\">$v</a>" );
 	$url="$father"."day=$day&amp;mon=$nmonth&amp;year=$nyear";
 	print( "<a class=\"nav\" href=\"".$url."\" alt=\"{tr}Next{/tr}\" title=\"{tr}Next{/tr}\"> &gt; </a>" );
 	print( "&nbsp;" );
@@ -177,7 +178,7 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 					}
 				}
 				print( "<td class=\"$fc\" $mouseover align=\"center\">" );
-				$url = "tiki-calendar.php?viewlist=list";
+				$url = "tiki-calendar.php?viewlist=list&amp;viewmode=day&amp;day=$val&amp;mon=$mon&amp;year=$year";
 				print( "<a class=\"$classval\" href=\"$url\">$val</a></td>\n");
 			}
 			print("</tr>");
