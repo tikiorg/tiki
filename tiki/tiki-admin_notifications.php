@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.1 2007-11-05 16:20:30 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,6 +98,12 @@ if (isset($_REQUEST["removeevent"])) {
     key_get($area);
   }
 }
+if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
+	check_ticket('admin-notif');
+	foreach($_REQUEST['checked'] as $id) {
+		$tikilib->remove_user_watch_by_hash($id);
+	}
+ }	
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'event_asc';
