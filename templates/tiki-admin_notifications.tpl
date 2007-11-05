@@ -60,6 +60,7 @@
    </td>
 </tr>
 </table>
+<form method="get" action="tiki-admin_notifications.php">
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Event{/tr}</a></td>
@@ -77,12 +78,22 @@
 <td>{$channels[user].user}</td>
 <td>
    <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+   <input type="checkbox" name="checked[]" value="{$channels[user].hash|escape}" {if $smarty.request.checked and in_array($channels[user].hash,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="4"><b>{tr}No records found.{/tr}</b></td></tr>
 {/section}
 </table>
+<div align="right">
+<script type="text/javascript"> /* <![CDATA[ */
+document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
+/* ]]> */</script>
+<br />{tr}Perform action with checked:{/tr}
+<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+</div>
+</form>
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
