@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113 2007-10-12 07:55:40 nyloth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.1 2007-11-05 21:11:38 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -133,7 +133,6 @@ class CategLib extends ObjectLib {
 		}
 		$this->category_cache[$categId] = $result->fetchRow();
 	   }
-	   $this->category_cache[$categId]['name']=$this->get_category_name($categId);
 	   return $this->category_cache[$categId];
 	}
 	
