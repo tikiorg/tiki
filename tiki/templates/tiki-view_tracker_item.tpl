@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.4 2007-10-30 21:19:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.5 2007-11-05 18:37:41 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -313,11 +313,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
+<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
+<td class="formlabel right" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
 {if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
   <br />
 
@@ -337,7 +337,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/section}
 ">{tr}Insert new item{/tr}<br />
 {/if}
-</td><td colspan="3" nowrap="nowrap">
+</td><td colspan="3" >
 {/if}
 {/if}
 
