@@ -22,10 +22,6 @@
 
       <form action="tiki-admin.php?page=category" method="post">
         <table class="admin">
-        <tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Category" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_categories" {if $prefs.feature_categories eq 'y'}checked="checked"{/if}/></td>
-	</tr>
 	<tr>
 		<td class="form"> {tr}Show Category Path{/tr} </td>
 		<td><input type="checkbox" name="feature_categorypath" {if $prefs.feature_categorypath eq 'y'}checked="checked"{/if}/></td>
