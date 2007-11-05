@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.1 2007-11-05 22:18:41 sylvieg Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -14,7 +14,7 @@
 <div id="{$rootid}browse_image">
 {else}
 <div id="{$rootid}browse_image">
-  <h2><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h2>
+  <h1><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h1>
   <p style="float:left;position:absolute;">
     <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}Return to Gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
