@@ -186,6 +186,17 @@ class MenuLib extends TikiLib {
 			}
 		}
 	}
+   	// look if the current url matches the menu option
+	function menuOptionMatchesUrl($option) {
+		$url = urldecode($_SERVER['REQUEST_URI']);
+		$pos = strpos($url, $option['url']);
+		if ($pos) {
+			$last = $pos + strlen($option['url']);
+			if ($last >= strlen($url) || $url['last'] == '#' || $url['last'] == '?' || $url['last'] == '&') {
+				return true;
+			}
+		}
+	}
 }
 global $dbTiki;
 $menulib = new MenuLib($dbTiki);

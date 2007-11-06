@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.1 2007-10-21 11:21:01 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.2 2007-11-06 23:49:15 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -35,10 +35,10 @@ class TikiPhplayers extends TikiLib {
 			return array('', 0);
 		}
 	}
-	function mkMenuEntry($idMenu, &$curOption) {
+	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='') {
 	  global $tikilib, $wikilib, $mylevel;
 		$menu_info = $tikilib->get_menu($idMenu);
-		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel);
+		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel, $sectionLevel);
 		$indented = '';
 		$res = '';
 		$curOption = 0;
@@ -140,7 +140,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		return array($type, $class, $new, $tplFct, $tpl);		
 	}
-	function mkMenu($itall, $name, $style, $file='', $curOption = 0) {
+	function mkMenu($itall, $name, $style, $file='', $curOption = 0, $sectionLevel='') {
 		static $name_counter = 0;
 		if ( empty($name) ) {
 			// Name must never be empty to avoid function names conflicts
