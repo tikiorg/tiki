@@ -178,7 +178,7 @@
 {/if}
 </td></tr>
 
-<tr class="formcolor"><td>
+<tr class="formcolor"><td>{tr}Status{/tr}</td><td>
 
 <div class="statusbox{if $calitem.status eq 0} status0{/if}">
 {if $edit}
@@ -204,13 +204,13 @@
 {tr}Cancelled{/tr}
 {/if}
 </div>
-</td>
+</td></tr>
 
-<td align="right" style="text-align:right;">
-<div style="display:{if $calendar.custompriorities eq 'y'}block{else}none{/if};width:120px;padding:4px;border:1px solid #888;text-align:center;" id="calprio">
-{tr}Priority{/tr}<br />
+{if $calendar.custompriorities eq 'y'}
+<tr class="formcolor"><td>
+{tr}Priority{/tr}</td<td>
 {if $edit}
-<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:90%;"
+<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:40%;"
 onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {foreach item=it from=$listpriorities}
 <option value="{$it}" style="background-color:#{$listprioritycolors[$it]};"{if $calitem.priority eq $it} selected="selected"{/if}>{$it}</option>
@@ -219,9 +219,9 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {else}
 <span style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:90%;padding:1px 4px">{$calitem.priority}</span>
 {/if}
-</div>
 
 </td></tr>
+{/if}
 <tr class="formcolor" style="display:{if $calendar.customcategories eq 'y'}tablerow{else}none{/if};" id="calcat">
 <td>{tr}Category{/tr}</td>
 <td>
