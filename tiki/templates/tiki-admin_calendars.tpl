@@ -172,10 +172,10 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Permissions{
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Start of day{/tr}:</td><td>
-{html_select_time prefix="startday_" display_seconds=false display_minutes=false time=$startday}{tr}h{/tr}
+<select name="startday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $startday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
 <tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
-{html_select_time prefix="endday_" display_seconds=false display_minutes=false time=$endday}{tr}h{/tr}
+<select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom foreground color{/tr}:</td><td>
 <input type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" />

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.34 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.34.2.1 2007-11-06 19:39:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if (isset($_REQUEST["save"])) {
 	$options = $_REQUEST['options'];
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '000000';
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = 'ffffff';
-	$options['startday'] = $_REQUEST['startday_Hour']*60*60 - 1;
+	$options['startday'] = $_REQUEST['startday_Hour']*60*60;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
 	$extra = array('calname','description','location','description','language','category','participants','url');
 	foreach ($extra as $ex) {
@@ -136,8 +136,9 @@ $smarty->assign('show_participants', $info["show_participants"]);
 $smarty->assign('show_url', $info["show_url"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
-$smarty->assign('startday', $info["startday"]);
-$smarty->assign('endday', $info["endday"]);
+$smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));
+$smarty->assign('endday', $info["endday"] < 0 ?0: round($info['endday']/(60*60)));
+$smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'));
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';
