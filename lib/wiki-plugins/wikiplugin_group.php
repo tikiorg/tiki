@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6 2007-03-21 19:21:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6.2.1 2007-11-06 20:45:08 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
@@ -31,7 +31,7 @@ function wikiplugin_group($data, $params) {
 
 	$userGroups = $userlib->get_user_groups($user);
 
-	if ((!empty($groups) && $groups[0] == 'Anonymous' && sizeof($groups) == 1) || (!empty($notgroups) && $notgroups[0] == 'Anonymous' && sizeof($notgroups) == 1)) {
+	if (count($userGroups) > 1) { //take away the anonynous as everybody who is registered is anonynmous
 		foreach ($userGroups as $key=>$grp) {
 			if ($grp == 'Anonymous') {
 				$userGroups[$key] = '';
@@ -39,6 +39,7 @@ function wikiplugin_group($data, $params) {
 			}
 		}
 	}
+	print_r($userGroups);
 
 	if (!empty($groups)) {
 		$ok = false;
