@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6.2.1 2007-11-06 20:45:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6.2.2 2007-11-06 20:51:38 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
@@ -39,7 +39,6 @@ function wikiplugin_group($data, $params) {
 			}
 		}
 	}
-	print_r($userGroups);
 
 	if (!empty($groups)) {
 		$ok = false;
