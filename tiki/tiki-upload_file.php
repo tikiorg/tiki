@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.65 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.65.2.1 2007-11-06 17:39:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -329,32 +329,30 @@ if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign('galleryId', '');
 }
 
-if ($tiki_p_admin_file_galleries != 'y') {
-	$galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_asc', $user, '');
-} else {
-	$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
-}
-
-$temp_max = count($galleries["data"]);
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'file gallery')) {
-		$galleries["data"][$i]["individual"] = 'y';
-
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_upload_files')) {
-			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'n';
-		}
-		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery',
-			'tiki_p_admin_file_galleries')) {
-			$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
-		}
+if (empty($_REQUEST['fileId'])) {
+	if ($tiki_p_admin_file_galleries != 'y') {
+		$galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_asc', $user, '');
 	} else {
-		$galleries["data"][$i]["individual"] = 'n';
+		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 	}
+	$temp_max = count($galleries["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
+		if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'file gallery')) {
+			$galleries["data"][$i]["individual"] = 'y';
+			if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery', 'tiki_p_upload_files')) {
+				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
+			} else {
+				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'n';
+			}
+			if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'file gallery',	'tiki_p_admin_file_galleries')) {
+				$galleries["data"][$i]["individual_tiki_p_upload_files"] = 'y';
+			}
+		} else {
+			$galleries["data"][$i]["individual"] = 'n';
+		}
+	}
+	$smarty->assign_by_ref('galleries', $galleries["data"]);
 }
-
-$smarty->assign_by_ref('galleries', $galleries["data"]);
 
 if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
 	$users = $tikilib->list_users(0, -1, 'login_asc');
