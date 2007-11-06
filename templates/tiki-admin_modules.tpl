@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.1 2007-10-26 17:39:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.2 2007-11-06 14:33:39 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -252,6 +252,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}Use Poll{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id= rate=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 
@@ -261,13 +263,15 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td>
    <select name="galleries" id='list_galleries'>
-   <option value="{literal}{{/literal}gallery id=-1 showgalleryname=1{literal}}{/literal}">{tr}All galleries{/tr}</option>
+   <option value="{literal}{{/literal}gallery id=-1{literal}}{/literal}">{tr}All galleries{/tr}</option>
    {section name=ix loop=$galleries}
-   <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId} showgalleryname=0{literal}}{/literal}">{$galleries[ix].name}</option>
+   <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name}</option>
    {/section}
   </td>
   <td class="form">
    <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}Use Gallery{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 
@@ -285,6 +289,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}Use Dynamic Content{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 <tr>
@@ -300,6 +306,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}Use RSS Module{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 
@@ -316,7 +324,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}Use Menu{/tr}</a>
-  </td>
+  </td><td class="form">
+	<a {popup text="Params: id= css= link_on_section=y" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>  </td>
 </tr>
 
 {if $prefs.feature_phplayers eq "y"}
@@ -333,6 +342,9 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}Use phplayermenu{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id= type=tree|phptree|plain|hort|vert file=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+
   </td>
 </tr>
 
@@ -350,6 +362,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}Use Banner Zone{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 
@@ -366,6 +380,8 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');">{tr}Use Wiki Structure{/tr}</a>
+  </td><td class="form">
+	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
 
