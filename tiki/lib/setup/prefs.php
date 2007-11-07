@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.9 2007-11-07 20:45:27 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.10 2007-11-07 20:47:53 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -1017,5 +1017,5 @@ $maxRecords = $prefs['maxRecords'];
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 
 // DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
-//extract($prefs);
-//foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
+extract($prefs);
+foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
