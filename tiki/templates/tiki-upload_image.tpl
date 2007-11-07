@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.1 2007-10-30 16:32:46 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.2 2007-11-07 21:29:33 sylvieg Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -26,8 +26,38 @@
   {/if}
 </div>
 
+{if $batchRes}
+	<h2>{tr}Batch Upload Results{/tr}</h2>
+	<table class="normal">
+	{cycle values="odd,even" print=false}
+	{section name=ix loop=$batchRes}
+		<tr><td class="{cycle advance=false}">{$batchRes[ix].filename}</td>
+		{if $batchRes[ix].msg}
+			<td class="{cycle advance=false}">{$batchRes[ix].msg}</td><td class="{cycle advance=false}">&nbsp;</td><td class="{cycle}">&nbsp;</td>
+		{else}
+			<td class="{cycle advance=false}">{tr}Upload successful!{/tr}</td><td class="{cycle advance=false}">{$batchRes[ix].imageId}</td><td class="{cycle}"><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" /></td>
+		{/if}
+		</tr>
+	{/section}
+	</table>
+{/if}
+{if $show eq 'y'}
+	<h2>{tr}Upload successful!{/tr}</h2>
+	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
+	<div align="center">
+	<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}" /><br />
+	<b>{tr}Thumbnail{/tr}:</b><br />
+	<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" /><br /><br />
+	<div class="wikitext">
+	{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br /><br />
+	{tr}You can include the image in an Wiki page using{/tr}:  <form><textarea rows="3" cols="60" style="width: 90%">{literal}{{/literal}img src=show_image.php?id={$imageId}{literal}}{/literal}</textarea></form>
+	</div>
+	</div>
+{/if}
+
 {if count($galleries) > 0}
 	<div align="center">
+	{if $batchRes or $show eq 'y'}<h2>Upload File</h2>{/if}
 	<form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">
 	<table class="normal">
 	<tr>
@@ -75,39 +105,8 @@
 	</table>
 	</form>
 	</div>
-	{if $show eq 'y'}
-	<br />
-	<hr/>
-	<h2>{tr}Upload successful!{/tr}</h2>
-	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
-	<div align="center">
-	<img src="show_image.php?id={$imageId}" alt="{tr}Image ID{/tr}" /><br />
-	<b>{tr}Thumbnail{/tr}:</b><br />
-	<img src="show_image.php?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" /><br /><br />
-	<div class="wikitext">
-	{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br /><br />
-	{tr}You can include the image in an Wiki page using{/tr}:  <form><textarea rows="3" cols="60" style="width: 90%">{literal}{{/literal}img src=show_image.php?id={$imageId}{literal}}{/literal}</textarea></form>
-	</div>
-	</div>
-	{/if}
-	{if $batchRes}
-	<h2>{tr}Batch Upload Results{/tr}</h2>
-	<table class="normal">
-	{cycle values="odd,even" print=false}
-	{section name=ix loop=$batchRes}
-		<tr><td class="{cycle advance=false}">{$batchRes[ix].filename}</td>
-		{if $batchRes[ix].msg}
-			<td class="{cycle advance=false}">{$batchRes[ix].msg}</td><td class="{cycle advance=false}">&nbsp;</td><td class="{cycle}">&nbsp;</td>
-		{else}
-			<td class="{cycle advance=false}">{tr}Upload successful!{/tr}</td><td class="{cycle advance=false}">{$batchRes[ix].imageId}</td><td class="{cycle}"><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}" /></td>
-		{/if}
-		</tr>
-	{/section}
-	</table>
-	{/if}
 {else}
-	<a class="linkbut" href="tiki-galleries.php">{tr}You have to 
-create a gallery first!{/tr}</a>
+	<a class="linkbut" href="tiki-galleries.php">{tr}You have to create a gallery first!{/tr}</a>
 {/if}
 
 
