@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.82 2007-03-22 17:54:55 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.82.2.1 2007-11-07 15:10:55 jyhem Exp $
 
 MoreNeat theme
 */
@@ -351,6 +351,12 @@ TD.formbor
 .comform,
 .forumform
 { border: 1px solid #8CACBB; color: black;   background: #C7D0D9; font-size: 10px; vertical-align: top; text-align: left;}
+
+/* Cells in tracker items display */
+.formlabel { white-space: nowrap; }
+
+.formcontent { }
+
 
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,TABLE.sortable,table.gallerylisting, table.bloglist, table.editblogform,
