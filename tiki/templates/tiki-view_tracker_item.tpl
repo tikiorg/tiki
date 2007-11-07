@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.7 2007-11-07 16:51:11 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.8 2007-11-07 17:06:21 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -121,7 +121,7 @@
 		{else}
 			{assign var=stick value="n"}
 		{/if}
-		{if $stick eq 'y'}<td>{else}<td colspan="3" class="formcontent">{/if}
+		{if $stick eq 'y'}<td class="formcontent">{else}<td colspan="3" class="formcontent">{/if}
 
 		{include file="tracker_item_field_value.tpl" field_value=$cur_field list_mode=n}
 
@@ -260,7 +260,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 {/section}
 
 <table class="normal">
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3" class="formcontent">
+<tr class="formcolor"><td class="formcontent">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
@@ -573,7 +573,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {/if}
 {/foreach}
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3" class="formcontent">
+<tr class="formcolor"><td class="formcontent">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
