@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.1 2007-11-07 18:15:29 jyhem Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}
@@ -50,7 +50,7 @@
 {if ( $searchStyle eq "menu" )}
     {tr}in{/tr}
     <select name="where">
-    <option value="pages">{tr}entire site{/tr}</option>
+    <option value="pages">{tr}Entire Site{/tr}</option>
     {if $prefs.feature_wiki eq 'y'}
        <option value="wikis">{tr}Wiki Pages{/tr}</option>
     {/if}

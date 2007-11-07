@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.7 2007-11-07 18:07:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.8 2007-11-07 18:15:29 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -413,7 +413,7 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {elseif $items[user].field_values[ix].type eq 'U'}
 <td class="auto">
 
-{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}subscriptions{/tr}
+{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}Subscriptions{/tr}
 
 </td>
 
