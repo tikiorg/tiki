@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.4 2007-11-05 21:38:52 jyhem Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.5 2007-11-07 11:08:58 jyhem Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -849,11 +849,11 @@ class TrackerLib extends TikiLib {
 			// Handle truncated fields. Only for textareas which have option 3 set
 			if ( $ins_fields["data"][$i]["type"] == 'a' && isset($ins_fields["data"][$i]["options_array"][3]) && ($ins_fields["data"][$i]['options_array'][3]) ) {
 				if (function_exists('mb_substr')) { // then mb_strlen() also exists
-					if ( mb_strlen($ins_fields["data"][$i]['value'] > $ins_fields["data"][$i]['options_array'][3]) ) {
+					if ( mb_strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
 						$ins_fields['data'][$i]['value'] = mb_substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
 					}
 				} else {
-					if ( strlen($ins_fields["data"][$i]['value'] > $ins_fields["data"][$i]['options_array'][3]) ) {
+					if ( strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
 						$ins_fields['data'][$i]['value'] = substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
 					}
 				}
