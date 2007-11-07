@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.4 2003-10-18 23:17:01 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.4.18.1 2007-11-07 17:23:14 jyhem Exp $ *}
 
 <h2>{tr}Available Repositories{/tr}</h2>
 
@@ -6,7 +6,7 @@
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}configure repositories{/tr}</a>
+      <a href="tiki-admin_integrator.php" class="linkbut">{tr}Configure Repositories{/tr}</a>
     </div></td>
   </tr></table>
 </div>
