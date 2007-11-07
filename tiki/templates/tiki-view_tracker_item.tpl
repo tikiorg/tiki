@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.5 2007-11-05 18:37:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.6 2007-11-07 15:10:54 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -105,9 +105,9 @@
 		<table class="normal">
 	{elseif $cur_field.type ne 'x'}
 		{if $stick ne 'y'}
-			<tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel" nowrap="nowrap">
+			<tr class="formcolor field{$cur_field.fieldId}"><td class="formlabel" >
 		{else}
-			<td class="formlabel right" nowrap="nowrap">
+			<td class="formlabel right" >
 		{/if}
 		{$cur_field.name}
 		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1')}
@@ -121,7 +121,7 @@
 		{else}
 			{assign var=stick value="n"}
 		{/if}
-		{if $stick eq 'y'}<td>{else}<td colspan="3">{/if}
+		{if $stick eq 'y'}<td>{else}<td colspan="3" class="formcontent">{/if}
 
 		{include file="tracker_item_field_value.tpl" field_value=$cur_field list_mode=n}
 
@@ -130,8 +130,8 @@
 	{/if}
   {/if}
 {/foreach}
-{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}</td><td colspan="3">{$info.created|tiki_long_datetime}</td></tr>{/if}
-{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3">{$info.lastModif|tiki_long_datetime}</td></tr>{/if}
+{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}</td><td colspan="3" class="formcontent">{$info.created|tiki_long_datetime}</td></tr>{/if}
+{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime}</td></tr>{/if}
 </table>
 </div>
 
@@ -234,7 +234,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 </tr>
 {sectionelse}
 <tr>
- <td colspan="5">{tr}No attachments for this item{/tr}</td>
+ <td colspan="5" class="formcontent">{tr}No attachments for this item{/tr}</td>
 </tr>
 {/section}
 </table>
@@ -260,7 +260,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 {/section}
 
 <table class="normal">
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3">
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
@@ -313,11 +313,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($cur_field.type eq 'c' or $cur_field.type eq 't' or $cur_field.type eq 'n') and $cur_field.options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
+<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
 {elseif $stick eq 'y'}
-<td class="formlabel right" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
+<td class="formlabel right" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" >{$cur_field.name}{if $cur_field.isMandatory eq 'y'} *{/if}
 {if $cur_field.type eq 'a' and $cur_field.options_array[0] eq 1}
   <br />
 
@@ -337,7 +337,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/section}
 ">{tr}Insert new item{/tr}<br />
 {/if}
-</td><td colspan="3" >
+</td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
 
@@ -573,7 +573,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {/if}
 {/foreach}
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3">
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}

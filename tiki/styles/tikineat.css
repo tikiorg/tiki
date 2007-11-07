@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37 2007-09-12 02:41:51 niclone Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.1 2007-11-07 15:10:55 jyhem Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -481,6 +481,14 @@ TABLE.normalnoborder {
 .forumform td {
 	border : 1px solid #8CACBB;
 	background-color : #DEE7EC;
+}
+
+/* cells in tracker items display */
+td.formlabel {
+	white-space: nowrap;
+}
+
+td.formcontent {
 }
 
 table.email {
