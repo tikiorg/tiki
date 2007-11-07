@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.6 2007-11-05 19:10:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.7 2007-11-07 18:07:37 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -670,7 +670,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 <em>{$fields[ix].description|escape|nl2br}</em><br />
 {/if}
 {if $fields[ix].isMultilingual ne "y"}
-  {if $prefs.quicktags_over_textarea eq 'y'}
+  {if $prefs.quicktags_over_textarea eq 'y' and $fields[ix].options_array[0] eq 1}
     {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=`$fields[ix].ins_id`}
   {/if}
 <textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
@@ -681,7 +681,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
     <TR>
       <TD>{$ling.lang}</td>
       <td>
-        {if $prefs.quicktags_over_textarea eq 'y'}
+        {if $prefs.quicktags_over_textarea eq 'y' and $fields[ix].options_array[0] eq 1}
           {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=ins_`$fields[ix].id`_`$ling.lang`}
         {/if}
         <textarea name="ins_{$fields[ix].id}_{$ling.lang}" id="area_{$fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea>
