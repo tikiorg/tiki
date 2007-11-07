@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.1 2007-10-30 21:19:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.2 2007-11-07 18:15:29 jyhem Exp $ *}
 {strip}
 {* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
@@ -191,7 +191,7 @@
 
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}
-	{$field_value.value|how_many_user_inscriptions} {tr}subscriptions{/tr}
+	{$field_value.value|how_many_user_inscriptions} {tr}Subscriptions{/tr}
 	{if $list_mode ne 'y'}
 	{if $field_value.maxsubscriptions}(max : {$field_value.maxsubscriptions}){/if} :
 	{foreach from=$field_value.users_array name=U_user item=U_user}
