@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.8 2007-11-04 22:08:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.9 2007-11-07 20:45:27 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -238,7 +238,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['gal_list_imgs'] = 'y';
 	$prefs['gal_list_visits'] = 'y';
 	$prefs['feature_image_gallery_mandatory_category'] = '-1';
-	$prefs['preset_galleries_scale'] ='n';
+	$prefs['preset_galleries_thumb'] ='n';
 	$prefs['gal_image_mouseover'] = 'n';
 	
 	# multimedia

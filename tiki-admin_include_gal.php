@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.1 2007-11-07 20:44:24 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,7 +82,7 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 	"gal_list_user",
 	"gal_list_imgs",
 	"gal_list_visits",
-	"preset_galleries_scale"
+	"preset_galleries_thumb"
 	);
 
 	foreach ($pref_toggles as $toggle) {
