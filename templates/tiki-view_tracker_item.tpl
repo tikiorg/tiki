@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.8 2007-11-07 17:06:21 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.9 2007-11-07 18:07:37 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -429,7 +429,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {if $cur_field.description}
 <em>{$cur_field.description|escape|nl2br}</em><br />
 {/if}
-{if $prefs.quicktags_over_textarea eq 'y'}
+{if $prefs.quicktags_over_textarea eq 'y' and $cur_field.options_array[0] eq 1}
       {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
 {/if}
 {if $cur_field.isMultilingual ne "y"}
