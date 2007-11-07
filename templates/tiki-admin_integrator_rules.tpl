@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.24 2007-07-24 14:40:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.24.2.1 2007-11-07 17:23:14 jyhem Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}configure repositories{/tr}</a>
+      <a href="tiki-admin_integrator.php" class="linkbut">{tr}Configure Repositories{/tr}</a>
     </div></td>
     <td><div class="button2">
       <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
@@ -13,7 +13,7 @@
     <td>&nbsp;</td>
 
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
+      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}Configure this Repository{/tr}</a>
     </div></td>
     <td><div class="button2">
       <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}View this Repository{/tr}</a>
@@ -29,7 +29,7 @@
     {if count($reps) gt 0}
     <td><div class="button2">
       <a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');" class="linkbut">
-        {tr}copy rules{/tr}
+        {tr}Copy Rules{/tr}
       </a>
     </div></td>
     {/if}
