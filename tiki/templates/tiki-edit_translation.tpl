@@ -14,7 +14,7 @@
 {/if}
 
 {if $error}
-	<div class="error">
+	<div class="simplebox hoghlight">
 	{if $error == "traLang"}
 		{tr}You must specify the object language{/tr}
 	{elseif $error == "srcExists"}
