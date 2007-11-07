@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.1 2007-11-07 23:36:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,23 +8,6 @@
 
 //include_once("tiki-setup_base.php");
 include_once ("tiki-setup.php");
-
-include_once ('lib/structures/structlib.php');
-include_once ('lib/wiki/wikilib.php');
-include_once ("lib/ziplib.php");
-include_once ('lib/wiki/exportlib.php');
-include_once ('lib/pdflib/pdflib.php');
-
-//if($prefs['feature_wiki'] != 'y') {
-//  die;
-//}
-
-//Permissions
-if ($tiki_p_view != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-	$smarty->display("error.tpl");
-	die;
-}
 
 if ($prefs['feature_wiki_pdf'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_pdf");
@@ -34,15 +17,52 @@ if ($prefs['feature_wiki_pdf'] != 'y') {
 
 check_ticket('pdf');
 
+require_once ('lib/html2pdf/config.inc.php');
+require_once('lib/html2pdf/pipeline.factory.class.php');
+
+/**
+ * Handles the saving generated PDF to user-defined output file on server
+ */
+class MyDestinationFile extends Destination {
+  /**
+   * @var String result file name / path
+   * @access private
+   */
+  var $_dest_filename;
+
+  function MyDestinationFile($dest_filename) {
+    $this->_dest_filename = $dest_filename;
+  }
+
+  function process($tmp_filename, $content_type) {
+    copy($tmp_filename, $this->_dest_filename);
+  }
+}
+
+class MyFetcherLocalFile extends Fetcher {
+  var $_content;
+
+  function MyFetcherLocalFile($file) {
+    $this->_content = file_get_contents($file);
+  }
+
+  function get_data($dummy1) {
+    return new FetchedDataURL($this->_content, array(), "");
+  }
+
+  function get_base_url() {
+    return "file:///C:/rac/html2ps/test/";
+  }
+
+}
+
 //
 //Default settings for html2pdf
 //
 
 // Works only with safe mode off; in safe mode it generates a warning message
-@set_time_limit(600);
+@set_time_limit(-1);
 
-require_once('lib/html2pdf/pipeline.factory.class.php');
-check_requirements();
 // Title of styleshee to use (empty if no preferences are set)
 if(!isset($_REQUEST['renderforms'])){
 	$_REQUEST['renderforms'] = '';
@@ -79,7 +99,6 @@ $g_config = array(
                   'mode'          => 'html'
                   );
 
-                  // ========== Entry point
 parse_config_file('lib/html2pdf/.html2ps.config');
 //
 //End of default settings for html2pdf
@@ -106,6 +125,13 @@ if(is_file("templates/header-pdf.tpl")){
 
 //Fetchinf the data in HTML and put it into a temp file
 foreach (array_values($convertpages)as $page) {
+	$tikilib->get_perm_object($page, 'wiki page', $info, true);
+	if ($tiki_p_view != 'y') {
+		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
+
 	if(isset($_REQUEST["page_ref_id"])){
 		$page_ref_id = $structlib->get_struct_ref_id($page);
 		
@@ -167,10 +193,11 @@ if ($g_config['scalepoints']) {
 };
 
 // Initialize the coversion pipeline
-$pipeline = new Pipeline();
+$pipeline = PipelineFactory::create_default_pipeline("", // Attempt to auto-detect encoding
+                                                       "");
 
 // Configure the fetchers
-$pipeline->fetchers[] = new FetcherURL();
+$pipeline->fetchers[] = new MyFetcherLocalFile("temp/".$filename);
 
 // Configure the data filters
 $pipeline->data_filters[] = new DataFilterDoctype();
