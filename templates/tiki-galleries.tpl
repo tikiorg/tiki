@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.2 2007-10-30 16:32:46 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.3 2007-11-07 15:55:11 sylvieg Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -22,7 +22,7 @@
 <h2>{tr}Edit this gallery:{/tr} {$name}</h2>
 {/if}
 {if $category_needed eq 'y'}
-<div class="error">{tr}A category is mandatory{/tr}</div>
+<div class="simplebox hoghlight">{tr}A category is mandatory{/tr}</div>
 {/if}
 
 <div align="center">
