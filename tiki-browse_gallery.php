@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.50 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.50.2.1 2007-11-08 15:56:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -183,6 +183,7 @@ if (isset($_REQUEST["rebuild"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
+	$smarty->assign('advice', 'You must clear your browser cache.');//get_strings tra('You must clear your browser cache.');
 
 	$imagegallib->rebuild_thumbnails($_REQUEST["rebuild"]);
 }

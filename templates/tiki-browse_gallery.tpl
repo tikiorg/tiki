@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.3 2007-11-05 17:57:00 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.4 2007-11-08 15:56:43 sylvieg Exp $ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -49,6 +49,10 @@
         {/if}			
     {/if}
 </div>
+
+{if $advice}
+<div class="highlight simplebox">{tr}{$advice}{/tr}</div>
+{/if}
 
 {if strlen($description) > 0}
 	<div class="imgaldescr">
