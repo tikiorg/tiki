@@ -131,7 +131,7 @@
           <td class="form">{tr}Search refresh mode{/tr}:</td>
 	  <td>
 	    <select name="search_refresh_index_mode">
-	      <option value="normal" {if $prefs.search_refresh_index_mode eq 'normal'}selected="selected"{/if}>{tr}normal{/tr}</option>
+	      <option value="normal" {if $prefs.search_refresh_index_mode eq 'normal'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 	      <option value="random" {if $prefs.search_refresh_index_mode eq 'random'}selected="selected"{/if}>{tr}random{/tr}</option>
 	    </select>
 	  </td>

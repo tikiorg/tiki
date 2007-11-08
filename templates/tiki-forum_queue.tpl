@@ -56,7 +56,7 @@
       <option value="a" {if $msg_info.type eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
       <option value="h" {if $msg_info.type eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
       <option value="s" {if $msg_info.type eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
-      <option value="l" {if $msg_info.type eq 'l'}selected="selected"{/if}>{tr}Locked{/tr}</option>
+      <option value="l" {if $msg_info.type eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
       </select>
 	  {if $forum_info.topic_smileys eq 'y'}
       <select name="topic_smiley">
@@ -153,7 +153,7 @@
 		    <br />
 			{section name=iz loop=$items[ix].attachments}
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
-				<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}attachment{/tr}' />
+				<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}Attachment{/tr}' />
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
 				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
 				<br />

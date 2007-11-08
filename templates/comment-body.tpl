@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.7 2007-10-04 22:17:35 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.7.2.1 2007-11-08 17:15:42 jyhem Exp $ *}
 <div class="content">
 
 	<div class="author">
@@ -70,7 +70,7 @@
 <div class="attachments">
 	{section name=ix loop=$comment.attachments}
 	<a class="link" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}">
-	{html_image file="pics/icons/attach.png" border="0" alt='{tr}attachment{/tr}'}
+	{html_image file="pics/icons/attach.png" border="0" alt='{tr}Attachment{/tr}'}
 	{$comment.attachments[ix].filename} ({$comment.attachments[ix].filesize|kbsize})</a>
 	{if $tiki_p_admin_forum eq 'y'}
 	<a class="link"
