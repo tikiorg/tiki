@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.1 2007-11-02 13:38:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.2 2007-11-08 13:09:40 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.1 2007-11-02 13:38:31 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.2 2007-11-08 13:09:40 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -219,11 +219,23 @@ if ( $isvalid ) {
 			// Go to the group page ?
 			if ( $prefs['useGroupHome'] == 'y' ) {
 				$url_vars = parse_url($url);
-				// Go to the group page only if the loginfrom is the default page
-				if ( $prefs['limitedGoGroupHome'] == 'n' || $url == $prefs['tikiIndex'] || $url_vars['path'] == $prefs['tikiIndex'] || basename($url_vars['path']) == $prefs['tikiIndex'] ) {
+				$url_path = $url_vars['path'];
+				if ( $url_vars['query'] != '' ) $url_path .= '?'.$url_vars['query'];
+
+				// Go to the group page instead of the referer url if we are in one of those cases :
+				//   - pref 'Go to group homepage only if login from default homepage' (limitedGoGroupHome) is disabled,
+				//   - referer url (e.g. http://example.com/tiki/tiki-index.php?page=Homepage ) is the homepage (tikiIndex),
+				//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
+				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the hompage
+				if ( $prefs['limitedGoGroupHome'] == 'n' 
+					|| $url == $prefs['tikiIndex']
+					|| $url_path == $prefs['tikiIndex']
+					|| basename($url_path) == $prefs['tikiIndex']
+				) {
 					$groupHome = $userlib->get_user_default_homepage($user);
 					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
 				}
+				unset($url_path);
 				unset($url_vars);
 			}
 			unset($url_vars);
