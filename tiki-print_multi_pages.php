@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.1 2007-10-24 17:36:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.2 2007-11-08 18:48:16 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,6 +66,7 @@ if (isset($_REQUEST["print"])) {
 	foreach ($printstructures as $structureId) {
 		$struct = $structlib->get_subtree($structureId);
 		foreach($struct as $struct_page) {
+			global $page_ref_id; $page_ref_id = $struct_page['page_ref_id']; //to interpret {toc}
 			if ($struct_page['pos'] != '' && $struct_page['last'] == 1)
 				continue;
 			$page_info = $tikilib->get_page_info($struct_page['pageName']);
