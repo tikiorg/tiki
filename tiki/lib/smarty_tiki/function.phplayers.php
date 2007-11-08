@@ -26,9 +26,11 @@ function smarty_function_phplayers($params, &$smarty) {
 	if (empty($type)) {
 		$type = 'tree';
 	}
-
+	if (!isset($sectionLevel)) {
+		$sectionLevel = '';
+	}
 	if (!empty($id)) {
-	  $output = $tikiphplayers->mkMenuEntry($id, $curOption);
+	  $output = $tikiphplayers->mkMenuEntry($id, $curOption, $sectionLevel);
 	}
 	$name = 'usermenu'.$id;
 	if (!isset($file))
