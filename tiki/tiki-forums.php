@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.18 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.18.2.1 2007-11-08 21:34:48 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,9 @@
 // Initialization
 $section = 'forums';
 require_once ('tiki-setup.php');
+
+
+$smarty->assign('headtitle',tra('Forums'));
 
 if ($prefs['feature_forums'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
