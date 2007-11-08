@@ -1,12 +1,10 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.2 2007-11-08 13:09:40 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.3 2007-11-08 13:57:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.2 2007-11-08 13:09:40 nyloth Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -221,16 +219,24 @@ if ( $isvalid ) {
 				$url_vars = parse_url($url);
 				$url_path = $url_vars['path'];
 				if ( $url_vars['query'] != '' ) $url_path .= '?'.$url_vars['query'];
+				$anonymous_homepage = $userlib->get_group_home('Anonymous');
 
 				// Go to the group page instead of the referer url if we are in one of those cases :
 				//   - pref 'Go to group homepage only if login from default homepage' (limitedGoGroupHome) is disabled,
 				//   - referer url (e.g. http://example.com/tiki/tiki-index.php?page=Homepage ) is the homepage (tikiIndex),
 				//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
-				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the hompage
+				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the homepage
+				//   - one of the three cases listed above, but compared to anonymous page instead of global homepage
 				if ( $prefs['limitedGoGroupHome'] == 'n' 
-					|| $url == $prefs['tikiIndex']
+					|| $url == $prefs['tikiIndex'] 
 					|| $url_path == $prefs['tikiIndex']
 					|| basename($url_path) == $prefs['tikiIndex']
+					|| ( $anonymous_homepage != '' &&
+						( $url == $anonymous_homepage
+						|| $url_path == $anonymous_homepage
+						|| basename($url_path) == $anonymous_homepage
+						)
+					)
 				) {
 					$groupHome = $userlib->get_user_default_homepage($user);
 					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
