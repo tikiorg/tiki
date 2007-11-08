@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.38 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.38.2.1 2007-11-08 21:47:51 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,8 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+
+$smarty->assign('headtitle',tra('List Articles'));
 
 if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");

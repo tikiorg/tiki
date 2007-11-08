@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.71 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.71.2.1 2007-11-08 21:47:51 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,8 @@ $section = 'cms';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/articles/artlib.php');
+
+$smarty->assign('headtitle',tra('Edit article'));
 
 if ($prefs['feature_freetags'] == 'y') {
 	include_once('lib/freetag/freetaglib.php');
