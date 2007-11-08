@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198 2007-10-12 18:17:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.1 2007-11-08 18:18:50 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,14 +42,21 @@ $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
 	$_REQUEST['page'] = $userHomePage = $userlib->get_user_default_homepage2($user);
-    // Create the HomePage if it doesn't exist
-    if(!$tikilib->page_exists($prefs['wikiHomePage'])) {
-        $tikilib->create_page($prefs['wikiHomePage'],0,'',$tikilib->now,'Tiki initialization');
-    }
-		header('Location: tiki-index.php?page='.$userHomePage);
-    if ($prefs['feature_best_language'] == 'y') {
-        $use_best_language = true;
-    }
+	
+	// Create the HomePage if it doesn't exist
+	if ( ! empty($userHomePage) ) {
+		if ( ! $tikilib->page_exists($userHomePage)) {
+			$tikilib->create_page($userHomePage,0,'',$tikilib->now,'Tiki initialization');
+			header('Location: tiki-index.php?page='.$userHomePage);
+		}
+	} else {
+		$smarty->assign('msg', tra('No name indicated for wiki page'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($prefs['feature_best_language'] == 'y') {
+		$use_best_language = true;
+	}
 }
 
 $structure = 'n';

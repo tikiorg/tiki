@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.3 2007-11-03 19:23:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.4 2007-11-08 18:18:51 nyloth Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -35,34 +35,34 @@
         <td class="form"><label for="general-homepage">{tr}Home page{/tr}:</label></td>
         <td><select name="tikiIndex" id="general-homepage">
             <option value="tiki-index.php"
-              {if $prefs.tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>
+              {if $prefs.site_tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>
               {tr}Wiki{/tr}</option>
             <option value="tiki-view_articles.php"
-              {if $prefs.tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>
+              {if $prefs.site_tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>
               {tr}Articles{/tr}</option>
             {if $prefs.home_blog_name}
               <option value="{$prefs.home_blog_url|escape}"
-                {if $prefs.tikiIndex eq $prefs.home_blog_url}selected="selected"{/if}>
+                {if $prefs.site_tikiIndex eq $prefs.home_blog_url}selected="selected"{/if}>
                 {tr}Blog{/tr}: {$prefs.home_blog_name}</option>
             {/if}
             {if $home_gal_name}
               <option value="{$prefs.home_gallery_url|escape}"
-                {if $prefs.tikiIndex eq $prefs.home_gallery_url}selected="selected"{/if}>
+                {if $prefs.site_tikiIndex eq $prefs.home_gallery_url}selected="selected"{/if}>
                 {tr}Image Gallery{/tr}: {$home_gal_name}</option>
             {/if}
             {if $home_fil_name}
               <option value="{$prefs.home_file_gallery_url|escape}"
-                {if $prefs.tikiIndex eq $prefs.home_file_gallery_url}selected="selected"{/if}>
+                {if $prefs.site_tikiIndex eq $prefs.home_file_gallery_url}selected="selected"{/if}>
                 {tr}File Gallery{/tr}: {$home_fil_name}</option>
             {/if}
             {if $prefs.home_forum_name}
               <option value="{$prefs.home_forum_url|escape}"
-                {if $prefs.tikiIndex eq $prefs.home_forum_url}selected="selected"{/if}>
+                {if $prefs.site_tikiIndex eq $prefs.home_forum_url}selected="selected"{/if}>
                 {tr}Forum{/tr}: {$prefs.home_forum_name}</option>
             {/if}
             {if $prefs.feature_custom_home eq 'y'}
               <option value="tiki-custom_home.php"
-                {if $prefs.tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
+                {if $prefs.site_tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
             {/if}
             </select>
         </td>

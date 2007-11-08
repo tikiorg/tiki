@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.3 2007-11-08 13:57:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.4 2007-11-08 18:18:51 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -216,10 +216,38 @@ if ( $isvalid ) {
 		default:
 			// Go to the group page ?
 			if ( $prefs['useGroupHome'] == 'y' ) {
-				$url_vars = parse_url($url);
-				$url_path = $url_vars['path'];
-				if ( $url_vars['query'] != '' ) $url_path .= '?'.$url_vars['query'];
-				$anonymous_homepage = $userlib->get_group_home('Anonymous');
+				if ( $prefs['limitedGoGroupHome'] == 'y' ) {
+					// Handle spaces (that could be written as '%20' in referer, but are generated as '+' with urlencode)
+					$url = str_replace('%20', '+', $url);
+
+					$url_vars = parse_url($url);
+					$url_path = $url_vars['path'];
+					if ( $url_vars['query'] != '' ) $url_path .= '?'.$url_vars['query'];
+
+					// Get a valid URL for anonymous group homepage
+					// It has to be rewritten when the following two syntaxes are used :
+					//  - http:tiki-something.php => tiki-something.php
+					//  - pageName => tiki-index.php?page=pageName
+					$anonymous_homepage = $userlib->get_group_home('Anonymous');
+					if ( ! ereg('^https?://', $anonymous_homepage) ) {
+						if ( substr($anonymous_homepage, 0, 5) == 'http:' ) {
+							$anonymous_homepage = substr($anonymous_homepage, 5);
+						} else {
+							$anonymous_homepage = 'tiki-index.php?page='.urlencode($anonymous_homepage);
+						}
+					}
+
+					// Determine the complete tikiIndex URL for not logged users
+					// when tikiIndex's page has not been explicitely specified
+					//   (this only handles wiki default page for the moment)
+					if ( ereg('tiki-index.php$', $prefs['site_tikiIndex'])
+						|| ereg('tiki-index.php$', $anonymous_homepage)
+					) {
+						$tikiIndex_full = 'tiki-index.php?page='.urlencode($prefs['site_wikiHomePage']);
+					} else {
+						$tikiIndex_full = '';
+					}
+				}
 
 				// Go to the group page instead of the referer url if we are in one of those cases :
 				//   - pref 'Go to group homepage only if login from default homepage' (limitedGoGroupHome) is disabled,
@@ -227,24 +255,28 @@ if ( $isvalid ) {
 				//   - referer url complete path ( e.g. /tiki/tiki-index.php?page=Homepage ) is the homepage,
 				//   - referer url relative path ( e.g. tiki-index.php?page=Homepage ) is the homepage
 				//   - one of the three cases listed above, but compared to anonymous page instead of global homepage
+				//
+				//   - last case ($tikiIndex_full != '') :
+				//       wiki homepage could have been saved as 'tiki-index.php' instead of 'tiki-index.php?page=Homepage'.
+				//       ... so we also need to check against : homepage + '?page=' + default wiki pagename
+				//
 				if ( $prefs['limitedGoGroupHome'] == 'n' 
-					|| $url == $prefs['tikiIndex'] 
-					|| $url_path == $prefs['tikiIndex']
-					|| basename($url_path) == $prefs['tikiIndex']
+					|| $url == $prefs['site_tikiIndex']
+					|| $url_path == $prefs['site_tikiIndex']
+					|| basename($url_path) == $prefs['site_tikiIndex']
 					|| ( $anonymous_homepage != '' &&
 						( $url == $anonymous_homepage
 						|| $url_path == $anonymous_homepage
 						|| basename($url_path) == $anonymous_homepage
 						)
 					)
+					|| ( $tikiIndex_full != '' && basename($url_path) == $tikiIndex_full )
 				) {
 					$groupHome = $userlib->get_user_default_homepage($user);
-					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
+					if ( $groupHome != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.urlencode($groupHome);
 				}
-				unset($url_path);
-				unset($url_vars);
 			}
-			unset($url_vars);
+	
 			// Unset session variable in case user su's
 			unset($_SESSION['loginfrom']);
 	

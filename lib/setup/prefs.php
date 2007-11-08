@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.10 2007-11-07 20:47:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.11 2007-11-08 18:18:51 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -16,7 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb');
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['prefs'])) {
