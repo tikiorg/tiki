@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.19 2007-10-16 14:18:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-siteid.tpl,v 1.19.2.1 2007-11-08 21:15:50 ntavares Exp $ *}
 
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
@@ -25,7 +25,7 @@
 					<td><textarea name="sitemycode" rows="6" style="width: 90%" id="sitemycode">{$prefs.sitemycode|escape}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>: 
-					{literal}{if $user neq ''}{/literal}&lt;div align="right" style="float: right; font-size: 10px"&gt;{literal}{{/literal}tr}logged as{literal}{/tr}{/literal}: {literal}{$user}{/literal}&lt;/div&gt;{literal}{/if}{/literal}</small></td>
+					{literal}{if $user neq ''}{/literal}&lt;div align="right" style="float: right; font-size: 10px"&gt;{literal}{{/literal}tr}{tr}logged as{/tr}{literal}{/tr}{/literal}: {literal}{$user}{/literal}&lt;/div&gt;{literal}{/if}{/literal}</small></td>
 				</tr>
 				<tr>
 					<td class="form"><label for="sitemycode_publish">{tr}Publish{/tr}:</label></td>
@@ -125,7 +125,7 @@
 					<td class="form"><label for="sitead">{tr}Content{/tr}:</label></td>
 					<td><textarea name="sitead" rows="6" style="width: 90%" id="sitead">{$prefs.sitead|escape}</textarea>
 					<br />
-					<small><em>{tr}Example{/tr}</em>: {literal}{banner zone='Test'}{/literal}</small></td>
+					<small><em>{tr}Example{/tr}</em>: {literal}{banner zone='{/literal}{tr}Test{/tr}{literal}'}{/literal}</small></td>
 				</tr>
 				<tr>
 					<td class="form"><label for="sitead_publish">{tr}Publish{/tr}:</label></td>
