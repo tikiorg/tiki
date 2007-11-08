@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.1 2007-11-07 23:36:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.2 2007-11-08 02:01:31 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,7 @@ $g_config = array(
                   'mode'          => 'html'
                   );
 
-parse_config_file('lib/html2pdf/.html2ps.config');
+parse_config_file('lib/html2pdf/html2ps.config');
 //
 //End of default settings for html2pdf
 //
