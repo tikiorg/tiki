@@ -129,7 +129,7 @@
     <div class="cbox-data">
      <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>
-    <td class="form"><input type="text" name="wikiHomePage" value="{$prefs.wikiHomePage|escape}" />
+    <td class="form"><input type="text" name="wikiHomePage" value="{$prefs.site_wikiHomePage|escape}" />
     <input type="submit" name="setwikihome" value="{tr}Set{/tr}" />
     </td>
     </tr></table>
