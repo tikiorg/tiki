@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.1 2007-11-04 12:51:59 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.2 2007-11-08 21:31:12 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,8 @@ require_once ('lib/search/searchlib.php');
 // note: lib/search/searchlib.php is new. the old one was lib/searchlib.php
 
 $searchlib = &new SearchLib($tikilib->db);
+
+$smarty->assign('headtitle',tra('Search results'));
 
 if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
