@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.2 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.3 2007-11-08 17:15:43 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -27,14 +27,14 @@
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_forum eq 'n'}
-			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics of this forum{/tr}'><img border='0' alt='{tr}monitor topics of this forum{/tr}' src='pics/icons/eye.png' /></a>
+			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'><img border='0' alt='{tr}Monitor Topics of this Forum{/tr}' src='pics/icons/eye.png' /></a>
 		{else}
 			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
 		{/if}			
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_forum_topic_and_thread eq 'n'}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}monitor topics and threads of this forum{/tr}'><img border='0' alt='{tr}monitor topics and threads of this forum{/tr}' src='pics/icons/eye_magnifier.png' /></a>
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Monitor Topics and Threads of this Forum{/tr}' src='pics/icons/eye_magnifier.png' /></a>
 	{else}
 		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
 	{/if}
@@ -125,7 +125,7 @@ a moderator approves it.{/tr}
 
 <div id="forumpost" style="display:{if $comments_threadId > 0 or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
   {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}post new comment{/tr}</a>)
+    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New Comment{/tr}</a>)
     {/if}
     <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php" id="editpageform">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -156,7 +156,7 @@ a moderator approves it.{/tr}
       <option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
       <option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
       <option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
-      <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}Locked{/tr}</option>
+      <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
       </select>
       {/if}
       {if $forum_info.topic_smileys eq 'y'}
@@ -262,21 +262,21 @@ a moderator approves it.{/tr}
 <table class="normal">
 {if $tiki_p_admin_forum eq 'y'}
 <tr>
-	<td class="heading" colspan='18'>{tr}moderator actions{/tr}</td>
+	<td class="heading" colspan='18'>{tr}Moderator Actions{/tr}</td>
 </tr>
 <tr>	
 	<td class="odd" colspan="3">
-	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}Move{/tr}' title='{tr}move selected topics{/tr}' />
-	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}Unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
-	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}Lock{/tr}' title='{tr}lock selected topics{/tr}' />
+	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
+	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
 	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
+	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
-	<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a><br />
+	<a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages:{/tr}{$reported}</a><br />
 	{/if}
-	<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a>
+	<a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages:{/tr}{$queued}</a>
 	</td>
 </tr>
 {if $smarty.request.movesel_x} 
@@ -306,14 +306,14 @@ a moderator approves it.{/tr}
 			{/if}
 		{/section}
 	</select>
-	<input type="submit" name="mergesel" value="{tr}merge{/tr}" />
+	<input type="submit" name="mergesel" value="{tr}Merge{/tr}" />
 	</td>
 </tr>
 {/if}
 
 <tr id='moveop' style="display:none;">
 	<td class="odd" colspan="18">
-		move
+		{tr}Move{/tr}
 	</td>
 </tr>
 {/if}
@@ -323,7 +323,7 @@ a moderator approves it.{/tr}
   {/if}
   <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
   {if $forum_info.topic_smileys eq 'y'}
-  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}emot{/tr}</a></td>
+  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}Emot{/tr}</a></td>
   {/if}
   <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
   {if $forum_info.topics_list_replies eq 'y'}
@@ -357,10 +357,10 @@ a moderator approves it.{/tr}
   </td>
   {/if}	
   <td style="text-align:center;" class="{cycle advance=false}">
-  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}normal{/tr}" title="{tr}normal{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}announce{/tr}" title="{tr}announce{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}hot{/tr}" title="{tr}hot{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
-  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}sticky{/tr}" title="{tr}sticky{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'n'}<img src="img/silk/page{$newtopic}.png" alt="{tr}Normal{/tr}" title="{tr}Normal{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'a'}<img src="img/silk/announce{$newtopic}.png" alt="{tr}Announce{/tr}" title="{tr}Announce{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 'h'}<img src="img/silk/hot{$newtopic}.png" alt="{tr}Hot{/tr}" title="{tr}Hot{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
+  {if $comments_coms[ix].type eq 's'}<img src="img/silk/sticky{$newtopic}.png" alt="{tr}Sticky{/tr}" title="{tr}Sticky{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/silk/locked{$newtopic}.png" alt="{tr}Locked{/tr}" title="{tr}Locked{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />{/if}
   </td>
   {if $forum_info.topic_smileys eq 'y'}
