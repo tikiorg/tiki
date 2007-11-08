@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.2 2007-11-08 02:01:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.3 2007-11-08 18:01:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,18 +120,12 @@ if (!isset($_REQUEST["convertpages"])) {
 if(is_file("templates/header-pdf.tpl")){
 	$data = $smarty->fetch("header-pdf.tpl");
 } else {
+	$smarty->assign('print_page', 'y');
 	$data = $smarty->fetch("header.tpl");
 }
 
 //Fetchinf the data in HTML and put it into a temp file
 foreach (array_values($convertpages)as $page) {
-	$tikilib->get_perm_object($page, 'wiki page', $info, true);
-	if ($tiki_p_view != 'y') {
-		$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-
 	if(isset($_REQUEST["page_ref_id"])){
 		$page_ref_id = $structlib->get_struct_ref_id($page);
 		
@@ -149,7 +143,7 @@ foreach (array_values($convertpages)as $page) {
 	}
 	$info = $tikilib->get_page_info($page);
 	if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_view')) {
-	  $data .= $tikilib->parse_data($info["data"]);
+		$data .= str_replace('...page...', '<hr />', $tikilib->parse_data($info['data']));
 	} else {
 	   $data .= tra("No permission to view the page")."<br />\n";
 	}
@@ -158,18 +152,18 @@ foreach (array_values($convertpages)as $page) {
 //saving the HTML file in the temp directory
 $filename = md5(rand().time()).".html";
 //File write operations
-if (!$fp = fopen("temp/".$filename, 'a')) {
-	echo "Cannot open file for PDF generation - check ./temp/ dir or file:($filename)";
+if (!$fp = fopen($prefs['tmpDir']."/$filename", 'a')) {
+	echo "Cannot open file for PDF generation - check file:($filename)";
 	die();
 }
 
 // Write $somecontent to our opened file.
 if (fwrite($fp, $data) === FALSE) {
-	echo "Cannot write to file - check ./temp/ dir or file:($filename)";
+	echo "Cannot write to file - check file:($filename)";
 	die();
 }
 fclose($fp);
-chmod("temp/$filename", 0644); // seems necessary on some systems with suphp security module from apache installed
+chmod($prefs['tmpDir']."/$filename", 0644); // seems necessary on some systems with suphp security module from apache installed
 
 
 //Getting url for parsing
@@ -197,7 +191,7 @@ $pipeline = PipelineFactory::create_default_pipeline("", // Attempt to auto-dete
                                                        "");
 
 // Configure the fetchers
-$pipeline->fetchers[] = new MyFetcherLocalFile("temp/".$filename);
+$pipeline->fetchers[] = new MyFetcherLocalFile($prefs['tmpDir']."/$filename");
 
 // Configure the data filters
 $pipeline->data_filters[] = new DataFilterDoctype();
@@ -287,5 +281,5 @@ if ($status == null) {
 // end code snipet from html2pdf lib
 
 //unlink temp file when it's ready
-unlink("temp/".$filename);
+unlink($prefs['tmpDir']."/$filename");
 ?>
