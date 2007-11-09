@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.1 2007-11-09 13:29:29 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -21,7 +21,7 @@
 {/if}
 
 <table width="100%">
-{if $wysiwyg eq 'n' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
+{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%"><strong>{tr}Bold text{/tr}:</strong></td><td> 2 {tr}underscores{/tr} "_". {tr}Example{/tr}: __{tr}text{/tr}__</td></tr>
 <tr><td width="20%"><strong>{tr}Italic text{/tr}:</strong></td><td> 2 {tr}single quotes{/tr} "'". {tr}Example{/tr}: ''{tr}text{/tr}''</td></tr>
 <tr><td><strong>{tr}Centered text{/tr}:</strong></td><td> 2 {tr}colons{/tr} ":". {tr}Example{/tr}: ::{tr}some text{/tr}::</td></tr>
