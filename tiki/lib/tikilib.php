@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.15 2007-11-09 11:12:34 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.16 2007-11-09 15:23:17 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6350,7 +6350,7 @@ if (!$simple_wiki) {
 			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 			    $aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 			    array_unshift($divdepth, $hdrlevel);
-			    $addremove = 1;
+			    $addremove += 1;
 			}
 
 			// create stable anchors for all headers
