@@ -61,7 +61,7 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
-<input type="submit" name="download" value="{tr}download{/tr}" />
+<input type="submit" name="download" value="{tr}Download{/tr}" />
 <script type="text/javascript">
 var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
 </script>

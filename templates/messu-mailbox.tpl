@@ -64,7 +64,7 @@
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="archive" value="{tr}move to archive{/tr}" />
-<input type="submit" name="download" value="{tr}download{/tr}" />
+<input type="submit" name="download" value="{tr}Download{/tr}" />
 <select name="action">
 <option value="isRead_y">{tr}Mark as read{/tr}</option>
 <option value="isRead_n">{tr}Mark as unread{/tr}</option>
