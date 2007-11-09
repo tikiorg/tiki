@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.9 2007-11-07 18:07:37 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.10 2007-11-09 19:15:49 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -573,7 +573,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {/if}
 {/foreach}
-<tr class="formcolor"><td class="formcontent">&nbsp;</td><td colspan="3" class="formcontent">
+<tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}

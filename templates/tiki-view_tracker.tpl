@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.8 2007-11-07 18:15:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.9 2007-11-09 19:15:48 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -413,7 +413,7 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {elseif $items[user].field_values[ix].type eq 'U'}
 <td class="auto">
 
-{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}Subscriptions{/tr}
+{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}subscriptions{/tr}
 
 </td>
 
@@ -518,7 +518,8 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 
 <h2>{tr}Insert new item{/tr}</h2>
 <table class="normal">
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td  class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
+<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 
 {if $tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
@@ -545,11 +546,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table class="normal">
 {else}
 {if ($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
+<tr class="formcolor"><td class="formlabel" >{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td nowrap="nowrap">
+<td class="formlabel right">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" nowrap="nowrap">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
+<tr class="formcolor"><td class="formlabel" >{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
 {if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
 {* --- display quicktags --- *}
   <br />
@@ -557,7 +558,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
     {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
   {/if}
 {/if}
-</td><td colspan="3" >
+</td><td colspan="3" class="formcontent" >
 {/if}
 {/if}
 
@@ -788,7 +789,8 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {include file="antibot.tpl"}
 {/if}
 
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
+<tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
+<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
 </table>
 </form>
 <br /><em>{tr}Fields marked with a * are mandatory{/tr}</em>
