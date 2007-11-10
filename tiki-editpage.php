@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.8 2007-10-25 06:26:41 frank_p Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.9 2007-11-10 22:21:00 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -27,6 +27,16 @@ if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
 }
 $page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
+
+// Permissions
+$info = $tikilib->get_page_info($page);
+$tikilib->get_perm_object($page, 'wiki page', $info, true);
+if ($tiki_p_edit != 'y') {
+	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $page_ref_id = '';
 if (isset($_REQUEST["page_ref_id"])) {
   $page_ref_id = $_REQUEST["page_ref_id"];
@@ -474,7 +484,6 @@ if (!isset($_REQUEST["comment"])) {
   $_REQUEST["comment"] = '';
 }
 // Get page data
-$info = $tikilib->get_page_info($page);
 if(isset($info['wiki_cache'])) {
   $prefs['wiki_cache'] = $info['wiki_cache'];
   $smarty->assign('wiki_cache',$prefs['wiki_cache']);
@@ -487,13 +496,7 @@ if ($info["flag"] == 'L' && !$wikilib->is_editable($page, $user, $info)) {
 $smarty->assign('editable','y');
 $smarty->assign('show_page','n');
 $smarty->assign('comments_show','n');
-// Permissions
-$tikilib->get_perm_object($page, 'wiki page', $info, true);
-if ($tiki_p_edit != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-	$smarty->display("error.tpl");
-	die;
-}
+
 // wysiwyg decision
 include 'tiki-parsemode_setup.php';
 $smarty->assign_by_ref('data', $info);
