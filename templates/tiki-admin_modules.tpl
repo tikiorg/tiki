@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.5 2007-11-08 21:07:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.6 2007-11-11 01:03:21 ntavares Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -123,7 +123,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}Order{/tr}</td>
 <td class="heading">{tr}Cache{/tr}</td>
 <td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Paramaters{/tr}</td>
+<td class="heading">{tr}Parameters{/tr}</td>
 <td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
@@ -159,7 +159,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <td class="heading">{tr}Order{/tr}</td>
 <td class="heading">{tr}Cache{/tr}</td>
 <td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Paramaters{/tr}</td>
+<td class="heading">{tr}Parameters{/tr}</td>
 <td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
