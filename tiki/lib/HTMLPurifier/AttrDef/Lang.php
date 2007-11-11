@@ -46,10 +46,10 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
         
         // process second subtag : $subtags[1]
         $length = strlen($subtags[1]);
-        if ($length == 0 || $length == 1 || $length > 8 || !ctype_alnum($subtags[1])) {
+        if ($length == 0 || ($length == 1 && $subtags[1] != 'x') || $length > 8 || !ctype_alnum($subtags[1])) {
             return $new_string;
         }
-        if (!ctype_lower($subtags[1])) $subtags[1] = strotolower($subtags[1]);
+        if (!ctype_lower($subtags[1])) $subtags[1] = strtolower($subtags[1]);
         
         $new_string .= '-' . $subtags[1];
         if ($num_subtags == 2) return $new_string;
@@ -61,7 +61,7 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
                 return $new_string;
             }
             if (!ctype_lower($subtags[$i])) {
-                $subtags[$i] = strotolower($subtags[$i]);
+                $subtags[$i] = strtolower($subtags[$i]);
             }
             $new_string .= '-' . $subtags[$i];
         }
@@ -72,4 +72,3 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
     
 }
 
-?>

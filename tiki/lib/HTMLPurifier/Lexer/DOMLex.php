@@ -21,7 +21,7 @@ require_once 'HTMLPurifier/TokenFactory.php';
  * 
  * @warning DOM tends to drop whitespace, which may wreak havoc on indenting.
  *          If this is a huge problem, due to the fact that HTML is hand
- *          edited and youa re unable to get a parser cache that caches the
+ *          edited and you are unable to get a parser cache that caches the
  *          the output of HTML Purifier while keeping the original HTML lying
  *          around, you may want to run Tidy on the resulting output or use
  *          HTMLPurifier_DirectLex
@@ -38,29 +38,35 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $this->factory = new HTMLPurifier_TokenFactory();
     }
     
-    public function tokenizeHTML($string, $config, &$context) {
+    public function tokenizeHTML($html, $config, &$context) {
         
-        $string = $this->normalize($string, $config, $context);
+        $html = $this->normalize($html, $config, $context);
         
-        // preprocess string, essential for UTF-8
-        $string =
-            '<!DOCTYPE html '.
-                'PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'.
-                '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'.
-            '<html><head>'.
-            '<meta http-equiv="Content-Type" content="text/html;'.
-                ' charset=utf-8" />'.
-            '</head><body><div>'.$string.'</div></body></html>';
+        // attempt to armor stray angled brackets that cannot possibly
+        // form tags and thus are probably being used as emoticons
+        if ($config->get('Core', 'AggressivelyFixLt')) {
+            $char = '[^a-z!\/]';
+            $comment = "/<!--(.*?)(-->|\z)/is";
+            $html = preg_replace_callback($comment, array('HTMLPurifier_Lexer_DOMLex', 'callbackArmorCommentEntities'), $html);
+            $html = preg_replace("/<($char)/i", '&lt;\\1', $html);
+            $html = preg_replace_callback($comment, array('HTMLPurifier_Lexer_DOMLex', 'callbackUndoCommentSubst'), $html); // fix comments
+        }
+        
+        // preprocess html, essential for UTF-8
+        $html = $this->wrapHTML($html, $config, $context);
         
         $doc = new DOMDocument();
-        $doc->encoding = 'UTF-8'; // technically does nothing, but whatever
-        @$doc->loadHTML($string); // mute all errors, handle it transparently
+        $doc->encoding = 'UTF-8'; // theoretically, the above has this covered
+        
+        set_error_handler(array($this, 'muteErrorHandler'));
+        $doc->loadHTML($html);
+        restore_error_handler();
         
         $tokens = array();
         $this->tokenizeDOM(
-            $doc->getElementsByTagName('html')->item(0)-> // html
-                  getElementsByTagName('body')->item(0)-> // body
-                  getElementsByTagName('div')->item(0) // div
+            $doc->getElementsByTagName('html')->item(0)-> // <html>
+                  getElementsByTagName('body')->item(0)-> //   <body>
+                  getElementsByTagName('div')->item(0)    //     <div>
             , $tokens);
         return $tokens;
     }
@@ -76,17 +82,24 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @returns Tokens of node appended to previously passed tokens.
      */
     protected function tokenizeDOM($node, &$tokens, $collect = false) {
-        // recursive goodness!
         
         // intercept non element nodes. WE MUST catch all of them,
         // but we're not getting the character reference nodes because
         // those should have been preprocessed
-        if ($node->nodeType === XML_TEXT_NODE ||
-                  $node->nodeType === XML_CDATA_SECTION_NODE) {
+        if ($node->nodeType === XML_TEXT_NODE) {
             $tokens[] = $this->factory->createText($node->data);
+            return;
+        } elseif ($node->nodeType === XML_CDATA_SECTION_NODE) {
+            // undo DOM's special treatment of <script> tags
+            $tokens[] = $this->factory->createText($this->parseData($node->data));
             return;
         } elseif ($node->nodeType === XML_COMMENT_NODE) {
             $tokens[] = $this->factory->createComment($node->data);
+            return;
+        } elseif (
+            // not-well tested: there may be other nodes we have to grab
+            $node->nodeType !== XML_ELEMENT_NODE
+        ) {
             return;
         }
         
@@ -136,6 +149,46 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         return $array;
     }
     
+    /**
+     * An error handler that mutes all errors
+     */
+    public function muteErrorHandler($errno, $errstr) {}
+    
+    /**
+     * Callback function for undoing escaping of stray angled brackets
+     * in comments
+     */
+    function callbackUndoCommentSubst($matches) {
+        return '<!--' . strtr($matches[1], array('&amp;'=>'&','&lt;'=>'<')) . $matches[2];
+    }
+    
+    /**
+     * Callback function that entity-izes ampersands in comments so that
+     * callbackUndoCommentSubst doesn't clobber them
+     */
+    function callbackArmorCommentEntities($matches) {
+        return '<!--' . str_replace('&', '&amp;', $matches[1]) . $matches[2];
+    }
+    
+    /**
+     * Wraps an HTML fragment in the necessary HTML
+     */
+    function wrapHTML($html, $config, &$context) {
+        $def = $config->getDefinition('HTML');
+        $ret = '';
+        
+        if (!empty($def->doctype->dtdPublic) || !empty($def->doctype->dtdSystem)) {
+            $ret .= '<!DOCTYPE html ';
+            if (!empty($def->doctype->dtdPublic)) $ret .= 'PUBLIC "' . $def->doctype->dtdPublic . '" ';
+            if (!empty($def->doctype->dtdSystem)) $ret .= '"' . $def->doctype->dtdSystem . '" ';
+            $ret .= '>';
+        }
+        
+        $ret .= '<html><head>';
+        $ret .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+        $ret .= '</head><body><div>'.$html.'</div></body></html>';
+        return $ret;
+    }
+    
 }
 
-?>

@@ -1,5 +1,12 @@
 <?php
 
+require_once 'HTMLPurifier/URIScheme/http.php';
+require_once 'HTMLPurifier/URIScheme/https.php';
+require_once 'HTMLPurifier/URIScheme/mailto.php';
+require_once 'HTMLPurifier/URIScheme/ftp.php';
+require_once 'HTMLPurifier/URIScheme/nntp.php';
+require_once 'HTMLPurifier/URIScheme/news.php';
+
 HTMLPurifier_ConfigSchema::define(
     'URI', 'AllowedSchemes', array(
         'http'  => true, // "Hypertext Transfer Protocol", nuf' said
@@ -7,10 +14,9 @@ HTMLPurifier_ConfigSchema::define(
         // quite useful, but not necessary
         'mailto' => true,// Email
         'ftp'   => true, // "File Transfer Protocol"
-        'irc'   => true, // "Internet Relay Chat", usually needs another app
         // for Usenet, these two are similar, but distinct
         'nntp'  => true, // individual Netnews articles
-        'news'  => true  // newsgroup or individual Netnews articles),
+        'news'  => true  // newsgroup or individual Netnews articles
     ), 'lookup',
     'Whitelist that defines the schemes that a URI is allowed to have.  This '.
     'prevents XSS attacks from using pseudo-schemes like javascript or mocha.'
@@ -32,6 +38,7 @@ class HTMLPurifier_URISchemeRegistry
     
     /**
      * Retrieve sole instance of the registry.
+     * @static
      * @param $prototype Optional prototype to overload sole instance with,
      *                   or bool true to reset to default registry.
      * @note Pass a registry object $prototype with a compatible interface and
@@ -54,12 +61,6 @@ class HTMLPurifier_URISchemeRegistry
     var $schemes = array();
     
     /**
-     * Directory where scheme objects can be found
-     * @private
-     */
-    var $_scheme_dir = null;
-    
-    /**
      * Retrieves a scheme validator object
      * @param $scheme String scheme name like http or mailto
      * @param $config HTMLPurifier_Config object
@@ -78,11 +79,8 @@ class HTMLPurifier_URISchemeRegistry
         }
         
         if (isset($this->schemes[$scheme])) return $this->schemes[$scheme];
-        if (empty($this->_dir)) $this->_dir = dirname(__FILE__) . '/URIScheme/';
-        
         if (!isset($allowed_schemes[$scheme])) return $null;
         
-        @include_once $this->_dir . $scheme . '.php';
         $class = 'HTMLPurifier_URIScheme_' . $scheme;
         if (!class_exists($class)) return $null;
         $this->schemes[$scheme] = new $class();
@@ -90,7 +88,7 @@ class HTMLPurifier_URISchemeRegistry
     }
     
     /**
-     * Registers a custom scheme to the cache.
+     * Registers a custom scheme to the cache, bypassing reflection.
      * @param $scheme Scheme name
      * @param $scheme_obj HTMLPurifier_URIScheme object
      */
@@ -100,4 +98,4 @@ class HTMLPurifier_URISchemeRegistry
     
 }
 
-?>
+

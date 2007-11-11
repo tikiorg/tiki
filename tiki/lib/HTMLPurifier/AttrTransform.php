@@ -21,7 +21,7 @@ class HTMLPurifier_AttrTransform
      * Abstract: makes changes to the attributes dependent on multiple values.
      * 
      * @param $attr Assoc array of attributes, usually from
-     *              HTMLPurifier_Token_Tag::$attributes
+     *              HTMLPurifier_Token_Tag::$attr
      * @param $config Mandatory HTMLPurifier_Config object.
      * @param $context Mandatory HTMLPurifier_Context object
      * @returns Processed attribute array.
@@ -29,6 +29,29 @@ class HTMLPurifier_AttrTransform
     function transform($attr, $config, &$context) {
         trigger_error('Cannot call abstract function', E_USER_ERROR);
     }
+    
+    /**
+     * Prepends CSS properties to the style attribute, creating the
+     * attribute if it doesn't exist.
+     * @param $attr Attribute array to process (passed by reference)
+     * @param $css CSS to prepend
+     */
+    function prependCSS(&$attr, $css) {
+        $attr['style'] = isset($attr['style']) ? $attr['style'] : '';
+        $attr['style'] = $css . $attr['style'];
+    }
+    
+    /**
+     * Retrieves and removes an attribute
+     * @param $attr Attribute array to process (passed by reference)
+     * @param $key Key of attribute to confiscate
+     */
+    function confiscateAttr(&$attr, $key) {
+        if (!isset($attr[$key])) return null;
+        $value = $attr[$key];
+        unset($attr[$key]);
+        return $value;
+    }
+    
 }
 
-?>
