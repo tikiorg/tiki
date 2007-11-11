@@ -9,20 +9,16 @@
  * @date created:
  * @date last-modified: 2005-08-26 13:01
  */
-
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
 // callback_type is 1, 3 or 5 - all other values are reserved
 define ("TIKI_CALLBACK_EARLY", 1);
 define ("TIKI_CALLBACK_STANDARD", 3);
 define ("TIKI_CALLBACK_LATE", 5);
-
 if (!isset($Debug)) $Debug = false;
-
 /**
  * This class provides an events notification
  *
@@ -39,40 +35,32 @@ class NotificationLib extends TikiLib {
 	function NotificationLib($db) {
 		$this->TikiLib($db);
 	}
-
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {
-
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
 			$mid = " where (`event` like ? or `email` like ?)";
 			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = " ";
 			$bindvars=array();
 		}
-
 		$query = "select * from `tiki_mail_events` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_mail_events` $mid";
+		$query_cant = "select count(*) from `tiki_user_watches` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-
 	function add_mail_event($event, $object, $email) {
 		$query = "insert into `tiki_mail_events`(`event`,`object`,`email`) values(?,?,?)";
 		$result = $this->query($query, array($event,$object,$email) );
 	}
-
 	function remove_mail_event($event, $object, $email) {
 		$query = "delete from `tiki_mail_events` where `event`=? and `object`=? and `email`=?";
 		$result = $this->query($query,array($event,$object,$email));
@@ -82,19 +70,15 @@ class NotificationLib extends TikiLib {
 		$query = "update `tiki_mail_events` set `email`=? where `email`=?";
 		$result = $this->query($query,array($newMail,$oldMail));
 	}
-
 	function get_mail_events($event, $object) {
 		$query = "select `email` from `tiki_mail_events` where `event`=? and (`object`=? or `object`='*')";
 		$result = $this->query($query, array($event,$object) );
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["email"];
 		}
-
 		return $ret;
 	}
-
 	/**
 	 *  Request a callback
 	 *  @param event the event about which we want to be
@@ -131,7 +115,6 @@ class NotificationLib extends TikiLib {
         	//      return fault;
     		// }
  	}
-
 	/**
 	 *  Raise a Tikiwiki event
 	 *  @param event the event to raise
@@ -149,7 +132,6 @@ class NotificationLib extends TikiLib {
 		$query_cant = "select count(*) from `tiki_events` where event like ?";
 		$result = $this->query($query,$bindvars,$maxRecords);
                 $cant = $this->getOne($query_cant,$bindvars);
-
 		$continue = true;
                 while ($continue && $res = $result->fetchRow()) {
 			$class = $res['object'];
@@ -177,8 +159,6 @@ class NotificationLib extends TikiLib {
        		return $success;
 	}
 }
-
 global $dbTiki;
 $notificationlib = new NotificationLib($dbTiki);
-
 ?>
