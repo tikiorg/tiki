@@ -11,13 +11,21 @@
  */
 class HTMLPurifier_Token {
     var $type; /**< Type of node to bypass <tt>is_a()</tt>. @public */
+    var $line; /**< Line number node was on in source document. Null if unknown. @public */
+    
+    /**
+     * Lookup array of processing that this token is exempt from.
+     * Currently, valid values are "ValidateAttributes" and
+     * "MakeWellFormed_TagClosedError"
+     */
+    var $armor = array();
     
     /**
      * Copies the tag into a new one (clone substitute).
      * @return Copied token
      */
     function copy() {
-        trigger_error('Cannot copy abstract class', E_USER_ERROR);
+        return unserialize(serialize($this));
     }
 }
 
@@ -50,30 +58,30 @@ class HTMLPurifier_Token_Tag extends HTMLPurifier_Token // abstract
     /**
      * Associative array of the tag's attributes.
      */
-    var $attributes = array();
+    var $attr = array();
     
     /**
      * Non-overloaded constructor, which lower-cases passed tag name.
      * 
-     * @param $name         String name.
-     * @param $attributes   Associative array of attributes.
+     * @param $name String name.
+     * @param $attr Associative array of attributes.
      */
-    function HTMLPurifier_Token_Tag($name, $attributes = array()) {
-        //if ($attributes === null) var_dump(debug_backtrace());
+    function HTMLPurifier_Token_Tag($name, $attr = array(), $line = null) {
         $this->name = ctype_lower($name) ? $name : strtolower($name);
-        foreach ($attributes as $key => $value) {
+        foreach ($attr as $key => $value) {
             // normalization only necessary when key is not lowercase
             if (!ctype_lower($key)) {
                 $new_key = strtolower($key);
-                if (!isset($attributes[$new_key])) {
-                    $attributes[$new_key] = $attributes[$key];
+                if (!isset($attr[$new_key])) {
+                    $attr[$new_key] = $attr[$key];
                 }
                 if ($new_key !== $key) {
-                    unset($attributes[$key]);
+                    unset($attr[$key]);
                 }
             }
         }
-        $this->attributes = $attributes;
+        $this->attr = $attr;
+        $this->line = $line;
     }
 }
 
@@ -83,9 +91,6 @@ class HTMLPurifier_Token_Tag extends HTMLPurifier_Token // abstract
 class HTMLPurifier_Token_Start extends HTMLPurifier_Token_Tag
 {
     var $type = 'start';
-    function copy() {
-        return new HTMLPurifier_Token_Start($this->name, $this->attributes);
-    }
 }
 
 /**
@@ -94,9 +99,6 @@ class HTMLPurifier_Token_Start extends HTMLPurifier_Token_Tag
 class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
 {
     var $type = 'empty';
-    function copy() {
-        return new HTMLPurifier_Token_Empty($this->name, $this->attributes);
-    }
 }
 
 /**
@@ -109,9 +111,6 @@ class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
 class HTMLPurifier_Token_End extends HTMLPurifier_Token_Tag
 {
     var $type = 'end';
-    function copy() {
-        return new HTMLPurifier_Token_End($this->name);
-    }
 }
 
 /**
@@ -136,12 +135,10 @@ class HTMLPurifier_Token_Text extends HTMLPurifier_Token
      * 
      * @param $data String parsed character data.
      */
-    function HTMLPurifier_Token_Text($data) {
+    function HTMLPurifier_Token_Text($data, $line = null) {
         $this->data = $data;
         $this->is_whitespace = ctype_space($data);
-    }
-    function copy() {
-        return new HTMLPurifier_Token_Text($this->data);
+        $this->line = $line;
     }
     
 }
@@ -158,12 +155,9 @@ class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
      * 
      * @param $data String comment data.
      */
-    function HTMLPurifier_Token_Comment($data) {
+    function HTMLPurifier_Token_Comment($data, $line = null) {
         $this->data = $data;
-    }
-    function copy() {
-        return new HTMLPurifier_Token_Comment($this->data);
+        $this->line = $line;
     }
 }
 
-?>

@@ -19,13 +19,14 @@ class HTMLPurifier_EntityLookup {
      */
     function setup($file = false) {
         if (!$file) {
-            $file = dirname(__FILE__) . '/EntityLookup/entities.ser';
+            $file = HTMLPURIFIER_PREFIX . '/HTMLPurifier/EntityLookup/entities.ser';
         }
         $this->table = unserialize(file_get_contents($file));
     }
     
     /**
      * Retrieves sole instance of the object.
+     * @static
      * @param Optional prototype of custom lookup table to overload with.
      */
     function instance($prototype = false) {
@@ -42,4 +43,3 @@ class HTMLPurifier_EntityLookup {
     
 }
 
-?>
