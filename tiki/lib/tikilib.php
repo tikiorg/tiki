@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.17 2007-11-11 13:10:05 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.18 2007-11-11 13:41:57 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6290,7 +6290,6 @@ if (!$simple_wiki) {
 			 */
 
 			$line_lenght = strlen($line);
-			$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
 
 			// Generate an array containing the squeleton of maketoc (based on headers levels)
 			//   i.e. hdr_structure will contain something lile this :
@@ -6304,10 +6303,12 @@ if (!$simple_wiki) {
 			// Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
 			//   - if the current title deepest level is lesser than (or equal to)
 			//     the deepest level of the previous title : then we increment the last level number,
-			//   - else : we simply add new levels with value '1',
+			//   - else : we simply add new levels with value '1' (only if the previous level number was shown),
 			if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
 				$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
-				$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
+				if ( $show_title_level[$hdrlevel] ) {
+					$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
+				}
 			} else {
 				if ( $nb_last_hdr > 0 ) {
 					$hdr_structure[$nb_hdrs] = $last_hdr;
@@ -6316,6 +6317,7 @@ if (!$simple_wiki) {
 					$hdr_structure[$nb_hdrs][$h + $nb_last_hdr] = '1';
 				}
 			}
+			$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
 
 			// Update last_hdr info for the next header
 			$last_hdr = $hdr_structure[$nb_hdrs];
