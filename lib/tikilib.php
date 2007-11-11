@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.18 2007-11-11 13:41:57 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.19 2007-11-11 18:33:56 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4166,9 +4166,9 @@ function add_pageview() {
 		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
 		while ( $res = $result->fetchRow() ) {
 			$prefs[$res['name']] = $res['value'];
-			$_SESSION['prefs'][$res['name']] = $res['value'];
+			$_SESSION['s_prefs'][$res['name']] = $res['value'];
 		}
-		$_SESSION['prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
+		$_SESSION['s_prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
     }
 
 	function get_preferences( $names, $exact_match = false, $no_return = false ) {
@@ -4218,16 +4218,16 @@ function add_pageview() {
 		if ( isset($prefs) ) {
 			if ( in_array($name, $user_overrider_prefs) ) {
 				$prefs['site_'.$name] = $value;
-				$_SESSION['prefs']['site_'.$name] = $value;
+				$_SESSION['s_prefs']['site_'.$name] = $value;
 			} elseif ( isset($user_preferences[$user][$name] ) ) {
 				$prefs[$name] = $user_preferences[$user][$name];
-				$_SESSION['prefs'][$name] = $user_preferences[$user][$name];
+				$_SESSION['s_prefs'][$name] = $user_preferences[$user][$name];
 			} else {
 				$prefs[$name] = $value;
-				$_SESSION['prefs'][$name] = $value;
+				$_SESSION['s_prefs'][$name] = $value;
 			}
 			$prefs['lastUpdatePrefs'] = $this->now;
-			$_SESSION['prefs']['lastUpdatePrefs'] = $this->now;
+			$_SESSION['s_prefs']['lastUpdatePrefs'] = $this->now;
 		}
 		return true;
     }
@@ -4344,18 +4344,18 @@ function add_pageview() {
 		
 		if ( $my_user == $user ) {
 			$prefs[$name] = $value;
-			$_SESSION['prefs'][$name] = $value;
+			$_SESSION['s_prefs'][$name] = $value;
 			if ( $name == 'theme' ) { // FIXME: Remove this exception
 				$prefs['style'] = $value;
-				$_SESSION['prefs']['style'] = $value;
+				$_SESSION['s_prefs']['style'] = $value;
 				if ( $value == '' ) {
 					$prefs['style'] = $prefs['site_style'];
-					$_SESSION['prefs']['style'] = $prefs['site_style'];
+					$_SESSION['s_prefs']['style'] = $prefs['site_style'];
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];
-					$_SESSION['prefs'][$name] = $prefs['site_'.$name];
+					$_SESSION['s_prefs'][$name] = $prefs['site_'.$name];
 				} else {
 					$_SESSION['need_reload_prefs'] = true;
 				}
@@ -4390,7 +4390,7 @@ function add_pageview() {
 
 	if ( $my_user == $user ) {
 		$prefs =array_merge($prefs, $preferences);
-		$_SESSION['prefs']=array_merge($_SESSION['prefs'], $preferences);
+		$_SESSION['s_prefs']=array_merge($_SESSION['s_prefs'], $preferences);
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
