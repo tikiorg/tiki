@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.11 2007-11-08 18:18:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.12 2007-11-11 18:33:57 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
 // details.
 
-// RULE1: $_SESSION['prefs'] does not contain serialized values. Only the database contains serialized values.
+// RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
@@ -19,14 +19,14 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 $user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage');
 
 // Check if prefs needs to be reloaded
-if (isset($_SESSION['prefs'])) {
+if (isset($_SESSION['s_prefs'])) {
 
 	// Reload if there was an update of some prefs
 	$lastUpdatePrefs = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", array('lastUpdatePrefs'));
 	if ( ! isset($lastUpdatePrefs) ) {
 		$tikilib->query("insert into `tiki_preferences` (`name`,`value`) values (?,?)", array('lastUpdatePrefs', 0));
 	}
-	if ( empty($_SESSION['prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['prefs']['lastReadingPrefs'] ) {
+	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
 		$_SESSION['need_reload_prefs'] = true;
 	}
 
@@ -41,7 +41,7 @@ if (isset($_SESSION['prefs'])) {
 
 // Set default prefs only if needed
 if ( ! $_SESSION['need_reload_prefs'] ) {
-	$prefs = $_SESSION['prefs'];
+	$prefs = $_SESSION['s_prefs'];
 } else {
 	$prefs=array();
 
@@ -1006,7 +1006,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	}
 
 	// Assign prefs to the session
-	$_SESSION['prefs']=$prefs;
+	$_SESSION['s_prefs'] = $prefs;
 }
 
 // Assign the prefs array in smarty, by reference
