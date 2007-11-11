@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.16 2007-11-09 15:23:17 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.17 2007-11-11 13:10:05 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6077,11 +6077,15 @@ if (!$simple_wiki) {
 	$listbeg = array();
 	$divdepth = array();
 	$hdr_structure = array();
+	$show_title_level = array();
+	$last_hdr = array();
+	$nb_last_hdr = 0;
 	$nb_hdrs = 0;
 	$inTable = 0;
 	$inPre = 0;
 	$inComment = 0;
 	$inTOC = 0;
+	$title_text = '';
 
 	// loop: process all lines
 	$in_paragraph = 0;
@@ -6277,53 +6281,60 @@ if (!$simple_wiki) {
 		    // If 1st char on line is '!' and its count less than 6 (max in HTML)
 		    if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
 
-			    // Handle headings autonumbering syntax (i.e. !#Text, !!#Text, ...)
-			    $line_lenght = strlen($line);
-			    if ( ereg('^!+[\+\-]?#', $line) ) {
-				    $numbering_remove = 1; // Remove '#' sign from final string
+			/*
+			 * Handle headings autonumbering syntax (i.e. !#Text, !!#Text, ...)
+			 * Note :
+			 *    this needs to be done even if the current header has no '#'
+			 *    in order to generate the right numbers when they are not specified for every headers.
+			 *    This is the case, for example, when you want to add numbers to headers of level 2 but not to level 1
+			 */
 
-				    // Generate an array containing the squeleton of maketoc (based on headers levels)
-				    //   i.e. hdr_structure will contain something lile this :
-				    //     array( 1, 2, 2.1, 2.1.1, 2.1.2, 2.2, ... , X.Y.Z... )
-				    //
+			$line_lenght = strlen($line);
+			$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
 
-				    $hdr_structure[$nb_hdrs] = '';
+			// Generate an array containing the squeleton of maketoc (based on headers levels)
+			//   i.e. hdr_structure will contain something lile this :
+			//     array( 1, 2, 2.1, 2.1.1, 2.1.2, 2.2, ... , X.Y.Z... )
+			//
 
-				    if ( $nb_hdrs > 0 && $hdr_structure[$nb_hdrs - 1] != '' ) {
-					// If the current title for maketoc is not the first,
-					//   - get the previous one in $last_hdr,
-					//   - split its numbers into $last_hdr_array,
-					//   - and set $nb_last_hdr to its level depth
-					$last_hdr = $hdr_structure[$nb_hdrs - 1];
-				    	$last_hdr_array = explode('.', $last_hdr);
-				    	$nb_last_hdr = count($last_hdr_array);
-				    } else {
-					$last_hdr = '';
-					$last_hdr_array = array();
-					$nb_last_hdr = 0;
-				    }
+			$hdr_structure[$nb_hdrs] = '';
 
-				    // Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
-				    //   - if the current title deepest level is lesser than (or equal to)
-				    //     the deepest level of the previous title : then we increment the last level number,
-				    //   - else : we simply add new levels with value '1',
-				    if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
-					$hdr_structure[$nb_hdrs] = array_slice($last_hdr_array, 0, $hdrlevel);
-					$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
-					$hdr_structure[$nb_hdrs] = implode('.', $hdr_structure[$nb_hdrs]);
-				    } else {
-					if ( $nb_last_hdr > 0 ) {
-						$hdr_structure[$nb_hdrs] = $last_hdr.'.';
-					}
-					if ( $hdrlevel - $nb_last_hdr > 1 ) {
-						$hdr_structure[$nb_hdrs] .= str_repeat('1.', ($hdrlevel - $nb_last_hdr) - 1);
-					}
-					$hdr_structure[$nb_hdrs] .= '1';
-				    }
-				    $current_title_num = $hdr_structure[$nb_hdrs].'. ';
-				    $nb_hdrs++;
+			// If the current title for maketoc is the first, just initialize values
 
-			    }
+			// Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
+			//   - if the current title deepest level is lesser than (or equal to)
+			//     the deepest level of the previous title : then we increment the last level number,
+			//   - else : we simply add new levels with value '1',
+			if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
+				$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
+				$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
+			} else {
+				if ( $nb_last_hdr > 0 ) {
+					$hdr_structure[$nb_hdrs] = $last_hdr;
+				}
+				for ( $h = 0 ; $h < $hdrlevel - $nb_last_hdr ; $h++ ) {
+					$hdr_structure[$nb_hdrs][$h + $nb_last_hdr] = '1';
+				}
+			}
+
+			// Update last_hdr info for the next header
+			$last_hdr = $hdr_structure[$nb_hdrs];
+			$nb_last_hdr = count($last_hdr);
+
+			// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
+			$hideall = false;
+			for ( $j = $hdrlevel ; $j > 0 ; $j-- ) {
+				if ( $hideall || ! $show_title_level[$j] ) {
+					unset($hdr_structure[$nb_hdrs][$j - 1]);
+					$hideall = true;
+				}
+			}
+
+			// Store the title number to use only if it has to be shown (if the '#' char is used)
+			$current_title_num = $show_title_level[$hdrlevel] ? implode('.', $hdr_structure[$nb_hdrs]).'. ' : '';
+
+			$nb_hdrs++;
+
 
 			// Close open paragraph (lists already closed above)
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
@@ -6340,36 +6351,46 @@ if (!$simple_wiki) {
 			$anchor = '';
 			$aclose = '';
 			$aclose2 = '';
-			$addremove = $numbering_remove;
+			$addremove = $show_title_level[$hdrlevel] ? 1 : 0; // If needed, also remove '#' sign from title beginning
 
 			// May be special signs present after '!'s?
 			$divstate = substr($line, $hdrlevel, 1);
 			if ($divstate == '+' || $divstate == '-') {
-			    // OK. Must insert flipper after HEADER, and then open new div...
-			    $thisid = 'id' . microtime() * 1000000;
-			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-			    $aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-			    array_unshift($divdepth, $hdrlevel);
-			    $addremove += 1;
+				// OK. Must insert flipper after HEADER, and then open new div...
+				$thisid = 'id' . microtime() * 1000000;
+				$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+				$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+				array_unshift($divdepth, $hdrlevel);
+				$addremove += 1;
 			}
+
+			// Generate the final title text
+			$title_text = $current_title_num.substr($line, $hdrlevel + $addremove);
 
 			// create stable anchors for all headers
 			// use header but replace non-word character sequences
 			// with one underscore (for XHTML 1.0 compliance)
-			$thisid = str_replace(array('.',' '), array('_',''), $current_title_num)
-				. ereg_replace("[^a-zA-Z0-9]+","_",substr($line,$hdrlevel+$addremove));
+			$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $title_text);
+
+			// Add a number to the anchor if it already exists, to avoid duplicated anchors
+			if ( isset($all_anchors[$thisid]) ) {
+				$all_anchors[$thisid]++;
+				$thisid .= '_'.$all_anchors[$thisid];
+			} else {
+				$all_anchors[$thisid] = 1;
+			}
 
 			// Is any {maketoc} present on page?
 			if (count($tocs[0]) > 0) {
-			    // OK. Must collect TOC entry
-			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
-			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
+				// OK. Must collect TOC entry
+				$pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
+				array_push($anch, str_repeat("*", $hdrlevel)." <a href='$pageNumLink#$thisid' class='link'>".$title_text.'</a>');
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-				$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . $aclose." ". $current_title_num . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" .$aclose2;
+				$line = '<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
 			} else {
-				$line = "<h" . ($hdrlevel+1) . ' class="showhide_heading" id="'.$thisid.'">' . $current_title_num . substr($line, $hdrlevel + $addremove). "</h".($hdrlevel+1).">" . $aclose.$aclose2;
+				$line = '<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
 			}
 		    } elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 			// Close open paragraph, lists, and div's
