@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.3 2007-11-12 18:44:50 ntavares Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.4 2007-11-12 18:58:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,6 +88,10 @@ if (isset($_REQUEST["new_prefs"])) {
 	// setting preferences
 	if ($prefs['change_theme'] == 'y') {
 		if (isset($_REQUEST["mystyle"])) {
+			if ($user == $userwatch) {
+				$t = $tikidomain? $tikidomain.'/':'';
+				$headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$_REQUEST['mystyle'], 51);
+			}
 			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
 		}
 	}
