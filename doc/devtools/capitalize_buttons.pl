@@ -3,20 +3,20 @@
 #    Copyright Council of Europe - Conseil de l'Europe
 #Division  :  DIT / STI
 #Project   :  Espaces Collaboratifs Open-Source
-#Filename  :  capitalize_buttons.pl
-#Author    :  Jean-Marc LIBS (Jyhem)
+#Filename  :  jml_translate_buttons-vxx.pl
+#Author    :  Jean-Marc LIBS
 #Company   :  Council of Europe - Conseil de l'Europe
 #Date      :  2007-07-17
 #Language  :  Perl
 #License   :  Licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1
 #
-#Input     :  Mot minuscule, mot majuscule: "word" "Word"
+#Input     :  lowercase word, Uppercase word: "word" "Word"
 #
-#Output    :  Editer tous les fichiers de langages
+#Output    :  Edit all language files
 #
-#Abstract  :  Reçoit un mot dont on change la capitalisation.
-#             Parcourt tous les fichiers de language. Pour chacun:
-#             Si on trouve la ligne avec '"Word" => "Truc"' on laisse
+#Abstract  :  Gets a lowercase word and the uppercase version of the word
+#             In each language file:
+#             If the line with '"Word" => "Truc"' is found. Leave alone
 #             Sinon:
 #               On cherche la ligne avec '"word" => "truc"' (commenté ou pas)
 #                 Si langage "simple", et on la duplique en '"Word" => "Truc"'
@@ -27,13 +27,15 @@
 #Warning: This was written quickly as a use-once script. Use as inspiration, don't
 #         trust blindly
 #
-#Usage     :  perl capitalize_buttons.pl word Word
+#Usage     :  perl jml_translate_buttons-vxx.pl word Word
 #
 #Revision history :
 #  Date       Author  Description
 #  2007-07-17  JML    1: First version
 #  2007-07-20  JML    2: words can be expressions
 #  2007-07-23  JML    3: renaming, add license, add TODO, all for publication
+#  2007-11-12  JML    4: remove calls to unused libs, add --ignorecase, handle
+#                        slashes in text
 #
 #TODO:
 #translate all comments
@@ -41,36 +43,39 @@
 ################################################################################
 
 use strict;
-use File::Copy;
-use Time::CTime;
 
 ########################################################################
 #   Manage Command Line options
 ####
-use vars qw($opt_help $opt_debug $opt_verbose );
+use vars qw($opt_help $opt_debug $opt_verbose $opt_ignorecase);
 use Getopt::Long;
-my $correct_options=GetOptions("help","debug","verbose");
+my $correct_options=GetOptions("help","debug","verbose","ignorecase");
 
 if($opt_debug){
 	print "Number of args: ".$#ARGV."\n";
 	exit 1;
 }
 
-if($opt_help || !$correct_options || ($#ARGV != 1) || ("$ARGV[0]" ne "\L$ARGV[0]") || ( "$ARGV[1]" ne "\u$ARGV[1]" ) ) {
+if($opt_help || !$correct_options || ($#ARGV != 1) || (!$opt_ignorecase && (("$ARGV[0]" ne "\L$ARGV[0]") || ( "$ARGV[1]" ne "\u$ARGV[1]" ))) ) {
 die "Usage: $0 [options] word Word
 
 options:
  -h --help               this message
  -d --debug              debugging info
+ -i --ignorecase         does not enforce lowercase on first argument and uppercase for second argument
  -v --verbose            more verbose output
 ";
 }
 
 my $word_lowercase = $ARGV[0];
 my $word_correct = $ARGV[1];
-if($opt_verbose){print "$word_lowercase --> $word_correct (given) \u$word_lowercase (auto)\n";}
+my $word_lowercase_escaped = $word_lowercase;
+my $word_correct_escaped = $word_correct;
+$word_lowercase_escaped =~ s/\//\\\//g;
+$word_correct_escaped =~ s/\//\\\//g;
+#if($opt_verbose) {print "escaped lowercase: '$word_lowercase_escaped'\n";}
+if($opt_verbose){print "'$word_lowercase' --> '$word_correct' (given) '\u$word_lowercase' (auto)\n";}
 
-my $day= strftime("%Y%m%d", localtime());
 my %languages_delicats=qw( 
 ar 1
 cn 1
@@ -100,7 +105,7 @@ while ( my $langfile = <lang/*/language.php> ){
 		$trycapitalisation=1;
 	}
 	print "\n";
-	# Looking for '"Word" => "Truc"'
+	# Looking for '"Word" => "Translation"'
 	my $command="grep '\"$word_correct\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
 	if($opt_verbose){print "-> $command\n";}
 	if(system($command)) {
@@ -110,10 +115,10 @@ while ( my $langfile = <lang/*/language.php> ){
 	chomp(my $result = <RESULT>);
 	close(RESULT);
 	if( $result > 0){
-		print "Nothing to do: translation of $word_correct is there already (lines found: $result)\n\n";
+		print "Nothing to do: translation of '$word_correct' is there already (lines found: $result)\n\n";
 		next;
 	}
-	print "Need to do add translation of $word_correct (lines found: $result)\n";
+	print "Need to add translation of '$word_correct' (lines found: $result)\n";
 	$command="grep '\"$word_lowercase\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
 	if($opt_verbose){print "-> $command\n";}
 	if(system($command)) {
@@ -123,16 +128,20 @@ while ( my $langfile = <lang/*/language.php> ){
 	chomp(my $result = <RESULT>);
 	close(RESULT);
 	if( $result == 0){
-		print STDERR "ERROR: $word_lowercase not in translation file (lines found: $result)\n";
+		print STDERR "ERROR: '$word_lowercase' not in translation file (lines found: $result)\n";
 		next;
 		# last;
 	}
 	print "Need to edit $langfile (lines found: $result)\n";
 	# here we edit the file
 	if($trycapitalisation==0){
-		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct\" => \"\$4\",/' $langfile";
+		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
 	}else{
-		$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct\" => \"\\u\$4\",/' $langfile";
+		if($opt_ignorecase) { # then we assume that no attempt at capitalisation is expected
+			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\$4\",/' $langfile";
+		}else{
+			$command="perl -pi.bak -e 's/(^(.*)\"($word_lowercase_escaped)\"[ 	]*=>[ 	]*\"([^\"]*)\"[ 	]*,.*\$)/\$1\\n\$2\"$word_correct_escaped\" => \"\\u\$4\",/' $langfile";
+		}
 	}
 	if($opt_verbose){print "-> $command\n";}
 	if(system($command)) {
