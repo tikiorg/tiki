@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80.2.1 2007-10-18 08:10:21 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80.2.2 2007-11-12 20:21:07 sylvieg Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -19,11 +19,11 @@
 
 <h2>{tr}Group Information{/tr}</h2>
 <table class="normal" id="groupinformation">
-<tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
-<tr><td class="even">{tr}Desc{/tr}:</td><td class="odd">{$group_info.groupDesc}</td></tr>
+<tr><td class="even">{tr}Name{/tr}:</td><td class="odd" colspan="2">{$group_info.groupName}</td></tr>
+<tr><td class="even">{tr}Desc{/tr}:</td><td class="odd" colspan="2">{$group_info.groupDesc}</td></tr>
 <tr><td class="even" style="vertical-align:top;">{tr}Permissions{/tr}:</td><td class="odd">
 {section name=grp loop=$group_info.perms}
-{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">x</a>){/if}&nbsp;<br />
+{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}<br />
 {/section}
 </td></tr>
 </table>
