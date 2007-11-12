@@ -65,7 +65,8 @@ if ( isset($_GET['language']) ) {
 		$tikilib->set_user_preference($user, 'language', $language);
 	}
 	else
-		$_SESSION['language'] = $language;
+		$_SESSION['s_prefs']['language'] = $language;
+	$prefs['language'] = $language;
 	}
 
 header("location: $orig_url");
