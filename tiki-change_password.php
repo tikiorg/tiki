@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.20 2007-10-12 07:55:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.20.2.1 2007-11-12 18:44:50 ntavares Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,22 +50,11 @@ if (isset($_REQUEST["change"])) {
 		}
 	}
 
-	//Validate password here
-	if (strlen($_REQUEST["pass"]) < $prefs['min_pass_length']) {
-		$smarty->assign('msg', tra("Password should be at least"). ' ' . $prefs['min_pass_length'] . ' ' . tra("characters long"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	// Check this code
-	if ($prefs['pass_chr_num'] == 'y') {
-		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass"], $foo)) {
-			$smarty->assign('msg', tra("Password must contain both letters and numbers"));
-
-			$smarty->display("error.tpl");
-			die;
-		}
+	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+	if ( strlen($polerr)>0 ) {
+		$smarty->assign('msg',$polerr);
+	    $smarty->display("error.tpl");
+	    die;
 	}
 
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);

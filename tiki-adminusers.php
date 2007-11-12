@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.1 2007-11-12 18:44:50 ntavares Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,6 +148,13 @@ if (isset($_REQUEST["newuser"])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
 				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+
+				$polerr = $userlib->check_password_policy($_POST["pass"]);
+				if ( strlen($polerr)>0 ) {
+					$smarty->assign('msg',$polerr);
+				    $smarty->display("error.tpl");
+				    die;
+				}
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					$cookietab = '1';
@@ -383,17 +390,11 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			} 
-			if (strlen($_POST["pass"])<$prefs['min_pass_length']) {
-				$smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
-				$smarty->display("error.tpl");
-				die; 	
-			} 
-			if ($prefs['pass_chr_num'] == 'y') {
-				if (!preg_match_all("/[0-9]+/",$_POST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_POST["pass"],$foo)) {
-					$smarty->assign('msg',tra("Password must contain both letters and numbers"));
-					$smarty->display("error.tpl");
-					die; 	
-				}
+			$polerr = $userlib->check_password_policy($_POST["pass"]);
+			if ( strlen($polerr)>0 ) {
+				$smarty->assign('msg',$polerr);
+			    $smarty->display("error.tpl");
+			    die;
 			}
 			if ($userlib->change_user_password($_POST['name'],$_POST["pass"])) {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
