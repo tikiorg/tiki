@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.1 2007-11-08 18:18:50 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.2 2007-11-12 15:30:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -472,7 +472,13 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 	check_ticket('index');
 	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
 	if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
-	    $wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
+		$area = 'removeattach';
+	    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+			key_check($area);
+			$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
+		} else {
+			key_get($area);
+		}
 	}
     $smarty->assign('atts_show', 'y');
     }
