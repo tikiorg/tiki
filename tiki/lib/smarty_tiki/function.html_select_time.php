@@ -55,7 +55,7 @@ function smarty_function_html_select_time($params, &$smarty)
     extract($params);
 		if (!isset($time) or !$time) $time = time();
 		
-		if (!preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/',$hour_minmax)) {
+		if (empty($hour_minmax) || !preg_match('/^[0-2]?[0-9]-[0-2]?[0-9]$/',$hour_minmax)) {
 			$hour_minmax = '0-23';
 		}
 
