@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.2 2007-11-12 20:22:27 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -159,7 +159,7 @@
 	</tr>
 	<tr class="form">
 		<td><label>{tr}Force galleries image size per default{/tr}</label></td>
-		<td><input type="checkbox" name="preset_galleries_scale" {if $prefs.preset_galleries_scale eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="preset_galleries_thumb" {if $prefs.preset_galleries_thumb eq 'y'}checked="checked"{/if} /></td>
 
 	</tr>
 	
@@ -168,7 +168,7 @@
 	<tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
 	<tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
 	
-	<tr><td class="form">{tr}Default scaled images with bounding box of square size{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
+	<tr><td class="form">{tr}Size of all thumbnails{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
 
