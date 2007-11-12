@@ -17,6 +17,7 @@ if (isset($_GET['theme'])){
 		$prefs['style'] = $new_theme;
 	} elseif ($prefs['change_theme'] == 'y') {
 		$prefs['style'] = $new_theme;
+		$_SESSION['s_prefs']['style'] = $new_theme;
 	}
 }
 
