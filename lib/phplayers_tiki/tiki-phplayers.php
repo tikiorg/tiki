@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.2 2007-11-06 23:49:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.3 2007-11-12 20:24:26 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -37,8 +37,13 @@ class TikiPhplayers extends TikiLib {
 	}
 	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='') {
 	  global $tikilib, $wikilib, $mylevel;
+	  global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menu_info = $tikilib->get_menu($idMenu);
-		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel, $sectionLevel);
+		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel);
+		$channels = $menulib->setSelected($channels, $sectionLevel);
+		if (empty($channels['data'])) {
+			return;
+		}
 		$indented = '';
 		$res = '';
 		$curOption = 0;
@@ -167,8 +172,9 @@ class TikiPhplayers extends TikiLib {
 			$$plClass->setMenuStructureFile($file);
 		}
 		$$plClass->parseStructureForMenu($name);
-		if (!empty($curOption))
+		if (!empty($curOption)) {
 		  $$plClass->setSelectedItemByCount($name, $curOption);
+		}
 
 		$res = '';
 		if ($style == 'vert' || $style == 'horiz') {
