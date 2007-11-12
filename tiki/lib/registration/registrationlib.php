@@ -7,8 +7,8 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
- * @date last-modified: $Date: 2007-10-12 07:55:43 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.41 2007-10-12 07:55:43 nyloth Exp $
+ * @date last-modified: $Date: 2007-11-12 18:44:50 $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.41.2.1 2007-11-12 18:44:50 ntavares Exp $
  */
 
 //this script may only be included - so it's better to die if called directly
@@ -249,20 +249,11 @@ class RegistrationLib extends TikiLib {
     die;
   }
 
-  //Validate password here
-  if(strlen($_REQUEST["pass"])<$prefs['min_pass_length']) {
-    $smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
+  $polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+  if ( strlen($polerr)>0 ) {
+    $smarty->assign('msg',$polerr);
     $smarty->display("error.tpl");
     die;
-  }
-
-  // Check this code
-  if($prefs['pass_chr_num'] == 'y') {
-    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
-      $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-      $smarty->display("error.tpl");
-      die;
-    }
   }
 
   if(!preg_match_all("/[A-Z0-9a-z\_\-]+/",$_REQUEST["name"],$matches)) {

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.2 2007-11-08 14:12:12 nyloth Exp $
+// CVS: $Id: userslib.php,v 1.247.2.3 2007-11-12 18:44:50 ntavares Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2110,6 +2110,34 @@ function get_included_groups($group, $recur=true) {
 		return false;
     }
 
+	/* Tests the password against policy enforcement (Admin->Login), namelly:
+	* $min_pass_length
+	* $pass_chr_num
+	* $pass_ud_chr_num
+	*
+	* returns an empty string if password is ok, or the error string otherwise
+	*/
+	function check_password_policy($pass) {
+		global $prefs;
+
+		//Validate password here
+		if ( strlen($pass)<$prefs['min_pass_length'] ) {
+			return tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long");
+		}
+
+		// Check this code
+		if ($prefs['pass_chr_num'] == 'y') {
+			if (!preg_match_all("/[0-9]+/", $pass, $foo) || !preg_match_all("/[A-Za-z]+/", $pass, $foo)) {
+				return tra("Password must contain both letters and numbers");
+			}
+		}
+
+		return "";
+	}
+
+
+    
+    
     function change_user_password($user, $pass) {
 	global $prefs;
 

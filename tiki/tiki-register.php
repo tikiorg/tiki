@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91.2.1 2007-10-30 06:02:19 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91.2.2 2007-11-12 18:44:50 ntavares Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2007-10-30 06:02:19 $
+ * @date last-modified: $Date: 2007-11-12 18:44:50 $
  */
 
 // Initialization
@@ -120,22 +120,13 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
     die; 	
   }
 
-  //Validate password here
-  if(strlen($_REQUEST["pass"])<$prefs['min_pass_length'] && !isset($_SESSION['openid_url'])) {
-    $smarty->assign('msg',tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long"));
+  $polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+  if ( !isset($_SESSION['openid_url']) && (strlen($polerr)>0) ) {
+    $smarty->assign('msg', $polerr);
     $smarty->display("error.tpl");
-    die; 	
+    die;
   }
-  
-  // Check this code
-  if(!isset($_SESSION['openid_url']) && $prefs['pass_chr_num'] == 'y') {
-    if (!preg_match("/[0-9]/",$_REQUEST["pass"]) || !preg_match("/[A-Za-z]/",$_REQUEST["pass"])) {
-      $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-      $smarty->display("error.tpl");
-      die; 	
-    }
-  }
-  
+    
   if (!preg_match($patterns['login'],$_REQUEST["name"])) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
