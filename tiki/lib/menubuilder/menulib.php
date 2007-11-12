@@ -186,8 +186,11 @@ class MenuLib extends TikiLib {
 			}
 		}
 	}
-   	// look if the current url matches the menu option
+   	// look if the current url matches the menu option - do be improved a lot
 	function menuOptionMatchesUrl($option) {
+		if (empty($option['url'])) {
+			return false;
+		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
 		$pos = strpos($url, $option['url']);
 		if ($pos) {
@@ -196,6 +199,56 @@ class MenuLib extends TikiLib {
 				return true;
 			}
 		}
+		return false;
+	}
+	// assign selected and selectedAscendant to a menu
+	function setSelected($channels, $sectionLevel='') {
+		if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
+			$findUrl = false;
+			$optionLevel = 0;
+			$cant = 0;
+			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
+				}
+				if (!empty($subMenu) && $optionLevel <= $sectionLevel && $option['type'] != 'o') { //close the submenu
+					if ($findUrl) {
+						break;
+					}
+					unset($subMenu);
+					$cant = 0;
+				}
+				if (($option['type'] == 'o' && $optionLevel == $sectionLevel) || $optionLevel > $sectionLevel) {
+					$subMenu[$position] = $option;
+					++$cant;
+					if (!empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
+						$findUrl = true;
+						$selectedPosition = $position;
+					}
+				}
+			}
+			if (!empty($subMenu) && $findUrl) {
+				$channels['data'] = $subMenu;
+				$channels['cant'] = $cant;
+			} else {
+				$channels['data'] = '';
+				$channels['cant'] = 0;
+			}
+		} else {
+			foreach ($channels['data'] as $position=>$option) {
+				if ($this->menuOptionMatchesUrl($option)) {
+					$selectedPosition = $position;
+				}
+			}
+		}
+		if (isset($selectedPosition)) {
+			$channels['data'][$selectedPosition]['selected'] = true;
+		}
+		return $channels;
 	}
 }
 global $dbTiki;

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.20 2007-11-12 13:23:39 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.21 2007-11-12 20:24:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1783,7 +1783,7 @@ function add_pageview() {
     }
 
     /*shared*/
-    function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0, $sectionLevel='') {
+    function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0) {
 	  global $smarty,$user, $tiki_p_admin, $prefs;
 	$ret = array();
 	$retval = array();
@@ -1849,38 +1849,7 @@ function add_pageview() {
 		$ret[] = $res;
 	    }
 	}
-	if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
-		global $menulib; include_once('lib/menubuilder/menulib.php');
-		$findUrl = false;
-		$subMenu = array();
-		$optionLevel = 0;
-		foreach ($ret as $position=>$option) {
-			if (is_numeric($option['type'])) {
-				$optionLevel = $option['type'];
-			} else if ($option['type'] == '-') {
-				$optionLevel = $optionLevel - 1;
-			} else if ($option['type'] == 'r' || $option['type'] == 's') {
-				$optionLevel = 0;
-			}
-			if (!empty($subMenu) && $optionLevel <= $sectionLevel && $option['type'] != 'o') { //close the submenu
-				if ($findUrl) {
-					break;
-				}
-				unset($subMenu);
-			}
-			if (($option['type'] == 'o' && $optionLevel == $sectionLevel) || $optionLevel > $sectionLevel) {
-				$subMenu[$position] = $option;
-				if (!empty($option['url']) && $menulib->menuOptionMatchesUrl($option)) {
-					$findUrl = true;
-				}
-			}
-		}
-		if (!empty($subMenu) && $findUrl) {
-			$ret = $subMenu;
-		} else {
-			$ret = '';
-		}
-	}
+
 	$retval["data"] = array_values($ret);
 	$retval["cant"] = $cant;
 	return $retval;
