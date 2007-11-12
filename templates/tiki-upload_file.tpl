@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.2 2007-11-06 17:39:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.3 2007-11-12 01:36:27 marclaporte Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -25,7 +25,8 @@
 			<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b><br />
 			<div class="wikitext">
 				{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
-				{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
+				{tr}You can include the file in an Wiki page using{/tr}: <textarea cols="60" rows="2">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</textarea>
+				{tr}You can include the file in an HTML page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea>
 			</div>
 		</div>
 	{/section}
