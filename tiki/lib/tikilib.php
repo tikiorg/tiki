@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.19 2007-11-11 18:33:56 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.20 2007-11-12 13:23:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6385,7 +6385,7 @@ if (!$simple_wiki) {
 			// Is any {maketoc} present on page?
 			if (count($tocs[0]) > 0) {
 				// OK. Must collect TOC entry
-				$pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
+				$pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=".urlencode($page)."&amp;pagenum=$pageNum": "";
 				array_push($anch, str_repeat("*", $hdrlevel)." <a href='$pageNumLink#$thisid' class='link'>".$title_text.'</a>');
 			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
