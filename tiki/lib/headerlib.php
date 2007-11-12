@@ -41,6 +41,15 @@ class HeaderLib {
 		}
 	}
 
+	function replace_cssfile($old, $new, $rank) {
+		foreach ($this->cssfiles[$rank] as $i=>$css) {
+			if ($css == $old) {
+				$this->cssfiles[$rank][$i] = $new;
+				break;
+			}
+		}
+	}
+
 	function drop_cssfile($file) {
 		foreach ($this->cssfiles as $rank=>$data) {
 			foreach ($data as $f) {
