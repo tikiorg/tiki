@@ -55,7 +55,7 @@
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}' title="{tr}diff{/tr}">d</a>&nbsp;
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}' title="{tr}Source{/tr}">s</a>
 {elseif $lastchanges[changes].versionlast}
-(<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url'}">{tr}hist{/tr}</a>)
+(<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{tr}hist{/tr}</a>)
 {/if}
 
 </td>
