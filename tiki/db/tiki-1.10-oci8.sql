@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-11-04 22:08:05 $
--- $Author: nyloth $
+-- $Date: 2007-11-13 22:21:19 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -34,7 +34,7 @@ CREATE TABLE "galaxia_activities" (
   "description" clob,
   "expirationTime" number(6) default '0' NOT NULL,
   PRIMARY KEY ("activityId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_activities_trig" BEFORE INSERT ON "galaxia_activities" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -54,7 +54,7 @@ CREATE TABLE "galaxia_activity_roles" (
   "activityId" number(14) default '0' NOT NULL,
   "roleId" number(14) default '0' NOT NULL,
   PRIMARY KEY ("activityId","roleId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -73,7 +73,7 @@ CREATE TABLE "galaxia_instance_activities" (
   "user" varchar(200) default '',
   "status" varchar(11) default NULL CHECK ("status" IN ('running','completed')),
   PRIMARY KEY ("instanceId","activityId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -96,7 +96,7 @@ CREATE TABLE "galaxia_instance_comments" (
   "activity" varchar(80) default NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("cId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_instance_comments_trig" BEFORE INSERT ON "galaxia_instance_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -125,7 +125,7 @@ CREATE TABLE "galaxia_instances" (
   "status" varchar(11) default NULL CHECK ("status" IN ('active','exception','aborted','completed')),
   "properties" blob,
   PRIMARY KEY ("instanceId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_instances_trig" BEFORE INSERT ON "galaxia_instances" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -152,7 +152,7 @@ CREATE TABLE "galaxia_processes" (
   "lastModif" number(14) default NULL,
   "normalized_name" varchar(80) default NULL,
   PRIMARY KEY ("pId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_processes_trig" BEFORE INSERT ON "galaxia_processes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -176,7 +176,7 @@ CREATE TABLE "galaxia_roles" (
   "name" varchar(80) default NULL,
   "description" clob,
   PRIMARY KEY ("roleId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_roles_trig" BEFORE INSERT ON "galaxia_roles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -197,7 +197,7 @@ CREATE TABLE "galaxia_transitions" (
   "actFromId" number(14) default '0' NOT NULL,
   "actToId" number(14) default '0' NOT NULL,
   PRIMARY KEY ("actFromId","actToId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -214,7 +214,7 @@ CREATE TABLE "galaxia_user_roles" (
   "roleId" number(14) NOT NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("roleId","user")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_user_roles_trig" BEFORE INSERT ON "galaxia_user_roles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -241,7 +241,7 @@ CREATE TABLE "galaxia_workitems" (
   "ended" number(14) default NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("itemId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "galaxia_workitems_trig" BEFORE INSERT ON "galaxia_workitems" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -275,7 +275,7 @@ CREATE TABLE "messu_messages" (
   "isFlagged" char(1) default NULL,
   "priority" number(2) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "messu_messages_trig" BEFORE INSERT ON "messu_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -311,7 +311,7 @@ CREATE TABLE "messu_archive" (
   "isFlagged" char(1) default NULL,
   "priority" number(2) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "messu_archive_trig" BEFORE INSERT ON "messu_archive" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -346,7 +346,7 @@ CREATE TABLE "messu_sent" (
   "isFlagged" char(1) default NULL,
   "priority" number(2) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "messu_sent_trig" BEFORE INSERT ON "messu_sent" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -362,7 +362,7 @@ CREATE TABLE "sessions"(
   "expireref" varchar(64),
   "data" clob NOT NULL,
   PRIMARY KEY ("sesskey")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 
@@ -386,7 +386,7 @@ CREATE TABLE "tiki_actionlog" (
   "comment" varchar(200) default NULL,
   "categId" number(12) default '0' NOT NULL,
   PRIMARY KEY ("actionId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_actionlog_trig" BEFORE INSERT ON "tiki_actionlog" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -401,7 +401,7 @@ CREATE TABLE "tiki_actionlog_params" (
   "name" varchar(40) NOT NULL,
   "value" clob,
   KEY (actionId)
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value");
 -- --------------------------------------------------------
@@ -449,7 +449,7 @@ CREATE TABLE "tiki_articles" (
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("articleId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_articles_trig" BEFORE INSERT ON "tiki_articles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -491,7 +491,7 @@ CREATE TABLE "tiki_article_types" (
   "creator_edit" varchar(1) default NULL,
   "comment_can_rate_article" char(1) default NULL,
   PRIMARY KEY ("type")
-)  ;
+) ENGINE=MyISAM ;
 
 CREATE  INDEX "tiki_article_types_show_pre_publ" ON "tiki_article_types"("show_pre_publ");
 CREATE  INDEX "tiki_article_types_show_post_expire" ON "tiki_article_types"("show_post_expire");
@@ -545,7 +545,7 @@ CREATE TABLE "tiki_banners" (
   "clicks" number(8) default NULL,
   "zone" varchar(40) default NULL,
   PRIMARY KEY ("bannerId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_banners_trig" BEFORE INSERT ON "tiki_banners" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -577,7 +577,7 @@ CREATE TABLE "tiki_banning" (
   "created" number(14) default NULL,
   "message" clob,
   PRIMARY KEY ("banId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_banning_trig" BEFORE INSERT ON "tiki_banning" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -597,7 +597,7 @@ CREATE TABLE "tiki_banning_sections" (
   "banId" number(12) default '0' NOT NULL,
   "section" varchar(100) default '' NOT NULL,
   PRIMARY KEY ("banId","section")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -613,7 +613,7 @@ CREATE TABLE "tiki_blog_activity" (
   "day" number(14) default '0' NOT NULL,
   "posts" number(8) default NULL,
   PRIMARY KEY ("blogId","day")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -638,7 +638,7 @@ CREATE TABLE "tiki_blog_posts" (
   "title" varchar(80) default NULL,
   "priv" varchar(1) default NULL,
   PRIMARY KEY ("postId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_blog_posts_trig" BEFORE INSERT ON "tiki_blog_posts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -667,7 +667,7 @@ CREATE TABLE "tiki_blog_posts_images" (
   "filesize" number(14) default NULL,
   "data" blob,
   PRIMARY KEY ("imgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_blog_posts_images_trig" BEFORE INSERT ON "tiki_blog_posts_images" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -705,7 +705,7 @@ CREATE TABLE "tiki_blogs" (
   "allow_comments" char(1) default NULL,
   "show_avatar" char(1) default NULL,
   PRIMARY KEY ("blogId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_blogs_trig" BEFORE INSERT ON "tiki_blogs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -731,7 +731,7 @@ CREATE TABLE "tiki_calendar_categories" (
   "calendarId" number(14) default '0' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("calcatId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_calendar_categories_trig" BEFORE INSERT ON "tiki_calendar_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -767,7 +767,7 @@ CREATE TABLE "tiki_calendar_items" (
   "created" number(14) default '0' NOT NULL,
   "lastmodif" number(14) default '0' NOT NULL,
   PRIMARY KEY ("calitemId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_calendar_items_trig" BEFORE INSERT ON "tiki_calendar_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -791,7 +791,7 @@ CREATE TABLE "tiki_calendar_locations" (
   "name" varchar(255) default '' NOT NULL,
   "description" blob,
   PRIMARY KEY ("callocId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_calendar_locations_trig" BEFORE INSERT ON "tiki_calendar_locations" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -813,7 +813,7 @@ CREATE TABLE "tiki_calendar_roles" (
   "username" varchar(200) default '' NOT NULL,
   "role" varchar(3) default '0' NOT NULL CHECK ("role" IN ('0','1','2','3','6')),
   PRIMARY KEY ("calitemId","username","role")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -840,7 +840,7 @@ CREATE TABLE "tiki_calendars" (
   "lastmodif" number(14) default '0' NOT NULL,
   "personal" enum ('n', 'y') default 'n' NOT NULL,
   PRIMARY KEY ("calendarId")
-)  ;
+) ENGINE=MyISAM ;
 
 CREATE TRIGGER "tiki_calendars_trig" BEFORE INSERT ON "tiki_calendars" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -855,7 +855,7 @@ CREATE TABLE "tiki_calendar_options" (
   "optionName" varchar(120) default '' NOT NULL,
   "value" varchar(255),
   PRIMARY KEY (calendarId,optionName)
-)  ;
+) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
 --
@@ -874,7 +874,7 @@ CREATE TABLE "tiki_categories" (
   "parentId" number(12) default NULL,
   "hits" number(8) default NULL,
   PRIMARY KEY ("categId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_categories_trig" BEFORE INSERT ON "tiki_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -903,7 +903,7 @@ CREATE TABLE "tiki_objects" (
   PRIMARY KEY ("objectId")
   KEY (type, objectId),
   KEY (itemId, type)
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_objects_trig" BEFORE INSERT ON "tiki_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -918,7 +918,7 @@ DROP TABLE `tiki_categorized_objects`;
 CREATE TABLE `tiki_categorized_objects` (
   `catObjectId` number(11) default '0' NOT NULL,
   PRIMARY KEY ("`catObjectId`")
-)  ;
+) ENGINE=MyISAM ;
 
 
 --
@@ -933,7 +933,7 @@ CREATE TABLE "tiki_category_objects" (
   "catObjectId" number(12) default '0' NOT NULL,
   "categId" number(12) default '0' NOT NULL,
   PRIMARY KEY ("catObjectId","categId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -948,7 +948,7 @@ CREATE TABLE "tiki_object_ratings" (
   "catObjectId" number(12) default '0' NOT NULL,
   "pollId" number(12) default '0' NOT NULL,
   PRIMARY KEY ("catObjectId","pollId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -963,7 +963,7 @@ CREATE TABLE "tiki_category_sites" (
   "categId" number(10) default '0' NOT NULL,
   "siteId" number(14) default '0' NOT NULL,
   PRIMARY KEY ("categId","siteId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -986,7 +986,7 @@ CREATE TABLE "tiki_chart_items" (
   "points" number(14) default NULL,
   "average" decimal(4,2) default NULL,
   PRIMARY KEY ("itemId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_chart_items_trig" BEFORE INSERT ON "tiki_chart_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1023,7 +1023,7 @@ CREATE TABLE "tiki_charts" (
   "voteAgainAfter" number(14) default NULL,
   "created" number(14) default NULL,
   PRIMARY KEY ("chartId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_charts_trig" BEFORE INSERT ON "tiki_charts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1049,7 +1049,7 @@ CREATE TABLE "tiki_charts_rankings" (
   "rvotes" number(14) default '0' NOT NULL,
   "raverage" decimal(4,2) default '0.00' NOT NULL,
   PRIMARY KEY ("chartId","itemId","period")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1066,7 +1066,7 @@ CREATE TABLE "tiki_charts_votes" (
   "timestamp" number(14) default NULL,
   "chartId" number(14) default NULL,
   PRIMARY KEY ("user","itemId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1088,7 +1088,7 @@ CREATE TABLE "tiki_chat_channels" (
   "active" char(1) default NULL,
   "refresh" number(6) default NULL,
   PRIMARY KEY ("channelId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_chat_channels_trig" BEFORE INSERT ON "tiki_chat_channels" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1112,7 +1112,7 @@ CREATE TABLE "tiki_chat_messages" (
   "poster" varchar(200) default 'anonymous' NOT NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("messageId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_chat_messages_trig" BEFORE INSERT ON "tiki_chat_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1133,7 +1133,7 @@ CREATE TABLE "tiki_chat_users" (
   "channelId" number(8) default '0' NOT NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("nickname","channelId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1168,7 +1168,7 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(128) default NULL,
   "comment_rating" number(2) default NULL,  
   PRIMARY KEY ("threadId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_comments_trig" BEFORE INSERT ON "tiki_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1197,7 +1197,7 @@ CREATE TABLE "tiki_content" (
   "contentId" number(8) NOT NULL,
   "description" clob,
   PRIMARY KEY ("contentId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_content_trig" BEFORE INSERT ON "tiki_content" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1220,7 +1220,7 @@ CREATE TABLE "tiki_content_templates" (
   "name" varchar(200) default NULL,
   "created" number(14) default NULL,
   PRIMARY KEY ("templateId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_content_templates_trig" BEFORE INSERT ON "tiki_content_templates" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1240,7 +1240,7 @@ CREATE TABLE "tiki_content_templates_sections" (
   "templateId" number(10) default '0' NOT NULL,
   "section" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("templateId","section")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1256,7 +1256,7 @@ CREATE TABLE "tiki_cookies" (
   "cookieId" number(10) NOT NULL,
   "cookie" clob,
   PRIMARY KEY ("cookieId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_cookies_trig" BEFORE INSERT ON "tiki_cookies" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1282,7 +1282,7 @@ CREATE TABLE "tiki_copyrights" (
   "copyright_order" number(11) default NULL,
   "userName" varchar(200) default '',
   PRIMARY KEY ("copyrightId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_copyrights_trig" BEFORE INSERT ON "tiki_copyrights" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1312,7 +1312,7 @@ CREATE TABLE "tiki_directory_categories" (
   "editorGroup" varchar(200) default NULL,
   "hits" number(12) default NULL,
   PRIMARY KEY ("categId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_directory_categories_trig" BEFORE INSERT ON "tiki_directory_categories" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1332,7 +1332,7 @@ CREATE TABLE "tiki_directory_search" (
   "term" varchar(250) default '' NOT NULL,
   "hits" number(14) default NULL,
   PRIMARY KEY ("term")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1359,7 +1359,7 @@ CREATE TABLE "tiki_directory_sites" (
   PRIMARY KEY ("siteId")
   KEY (isValid),
   KEY (url)
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_directory_sites_trig" BEFORE INSERT ON "tiki_directory_sites" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1386,7 +1386,7 @@ CREATE TABLE "tiki_drawings" (
   "timestamp" number(14) default NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("drawId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_drawings_trig" BEFORE INSERT ON "tiki_drawings" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1408,7 +1408,7 @@ CREATE TABLE "tiki_dsn" (
   "name" varchar(200) default '' NOT NULL,
   "dsn" varchar(255) default NULL,
   PRIMARY KEY ("dsnId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_dsn_trig" BEFORE INSERT ON "tiki_dsn" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1440,7 +1440,7 @@ CREATE TABLE "tiki_extwiki" (
   "name" varchar(200) default '' NOT NULL,
   "extwiki" varchar(255) default NULL,
   PRIMARY KEY ("extwikiId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_extwiki_trig" BEFORE INSERT ON "tiki_extwiki" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1465,7 +1465,7 @@ CREATE TABLE "tiki_faq_questions" (
   "question" clob,
   "answer" clob,
   PRIMARY KEY ("questionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_faq_questions_trig" BEFORE INSERT ON "tiki_faq_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1496,7 +1496,7 @@ CREATE TABLE "tiki_faqs" (
   "hits" number(8) default NULL,
   "canSuggest" char(1) default NULL,
   PRIMARY KEY ("faqId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_faqs_trig" BEFORE INSERT ON "tiki_faqs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1524,7 +1524,7 @@ CREATE TABLE "tiki_featured_links" (
   "position" number(6) default NULL,
   "type" char(1) default NULL,
   PRIMARY KEY ("url")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 -- Table structure for table tiki_file_galleries
@@ -1567,7 +1567,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_creator" char(1) default NULL,
   "subgal_conf" varchar(200) default NULL,
   PRIMARY KEY ("galleryId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_file_galleries_trig" BEFORE INSERT ON "tiki_file_galleries" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1611,7 +1611,7 @@ CREATE TABLE "tiki_files" (
   "comment" varchar(200) default NULL,
   "archiveId" number(14) default 0,
   PRIMARY KEY ("fileId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_files_trig" BEFORE INSERT ON "tiki_files" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1648,7 +1648,7 @@ CREATE TABLE "tiki_forum_attachments" (
   "created" number(14) default NULL,
   "path" varchar(250) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_forum_attachments_trig" BEFORE INSERT ON "tiki_forum_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1671,7 +1671,7 @@ CREATE TABLE "tiki_forum_reads" (
   "forumId" number(14) default NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("user","threadId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1742,7 +1742,7 @@ CREATE TABLE "tiki_forums" (
   "commentsPerPage" varchar(100) default NULL,
   "is_flat" char(1) default NULL,
   PRIMARY KEY ("forumId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_forums_trig" BEFORE INSERT ON "tiki_forums" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1775,7 +1775,7 @@ CREATE TABLE "tiki_forums_queue" (
   "summary" varchar(240) default NULL,
   "in_reply_to" varchar(128) default NULL,
   PRIMARY KEY ("qId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_forums_queue_trig" BEFORE INSERT ON "tiki_forums_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1799,7 +1799,7 @@ CREATE TABLE "tiki_forums_reported" (
   "timestamp" number(14) default NULL,
   "reason" varchar(250) default NULL,
   PRIMARY KEY ("threadId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1843,7 +1843,7 @@ CREATE TABLE "tiki_galleries" (
   "showfilename" char(1) default 'n' NOT NULL,
   "defaultscale" varchar(10) DEFAULT 'o' NOT NULL,
   PRIMARY KEY ("galleryId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_galleries_trig" BEFORE INSERT ON "tiki_galleries" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1869,7 +1869,7 @@ CREATE TABLE "tiki_galleries_scales" (
   "galleryId" number(14) default '0' NOT NULL,
   "scale" number(11) default '0' NOT NULL,
   PRIMARY KEY ("galleryId","scale")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1886,7 +1886,7 @@ CREATE TABLE "tiki_games" (
   "votes" number(8) default NULL,
   "points" number(8) default NULL,
   PRIMARY KEY ("gameName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1901,7 +1901,7 @@ CREATE TABLE "tiki_group_inclusion" (
   "groupName" varchar(255) default '' NOT NULL,
   "includeGroup" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("groupName","includeGroup")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1927,7 +1927,7 @@ CREATE TABLE "tiki_history" (
   "type" varchar(50) default NULL,
   PRIMARY KEY ("pageName","version")
   KEY(historyId)
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_history_trig" BEFORE INSERT ON "tiki_history" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -1947,7 +1947,7 @@ CREATE TABLE "tiki_hotwords" (
   "word" varchar(40) default '' NOT NULL,
   "url" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("word")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1965,7 +1965,7 @@ CREATE TABLE "tiki_html_pages" (
   "type" char(1) default NULL,
   "created" number(14) default NULL,
   PRIMARY KEY ("pageName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -1982,7 +1982,7 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
   "type" char(2) default NULL,
   "content" clob,
   PRIMARY KEY ("pageName","zone")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2007,7 +2007,7 @@ CREATE TABLE "tiki_images" (
   "hits" number(14) default NULL,
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_images_trig" BEFORE INSERT ON "tiki_images" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2042,7 +2042,7 @@ CREATE TABLE "tiki_images_data" (
   "data" blob,
   "etag" varchar(32) default NULL,
   PRIMARY KEY ("imageId","xsize","ysize","type")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type");
 -- --------------------------------------------------------
@@ -2059,7 +2059,7 @@ CREATE TABLE "tiki_language" (
   "lang" char(16) default '' NOT NULL,
   "tran" blob,
   PRIMARY KEY ("source","lang")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2074,7 +2074,7 @@ CREATE TABLE "tiki_languages" (
   "lang" char(16) default '' NOT NULL,
   "language" varchar(255) default NULL,
   PRIMARY KEY ("lang")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 INSERT INTO tiki_languages(lang, language) VALUES('en','English');
@@ -2095,7 +2095,7 @@ CREATE TABLE "tiki_link_cache" (
   "data" blob,
   "refresh" number(14) default NULL,
   PRIMARY KEY ("cacheId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_link_cache_trig" BEFORE INSERT ON "tiki_link_cache" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2118,7 +2118,7 @@ CREATE TABLE "tiki_links" (
   "fromPage" varchar(160) default '' NOT NULL,
   "toPage" varchar(160) default '' NOT NULL,
   PRIMARY KEY ("fromPage","toPage")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
 -- --------------------------------------------------------
@@ -2140,7 +2140,7 @@ CREATE TABLE "tiki_live_support_events" (
   "data" clob,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("eventId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_live_support_events_trig" BEFORE INSERT ON "tiki_live_support_events" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2163,7 +2163,7 @@ CREATE TABLE "tiki_live_support_message_comments" (
   "data" clob,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("cId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_live_support_message_comments_trig" BEFORE INSERT ON "tiki_live_support_message_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2194,7 +2194,7 @@ CREATE TABLE "tiki_live_support_messages" (
   "module" number(4) default NULL,
   "email" varchar(250) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_live_support_messages_trig" BEFORE INSERT ON "tiki_live_support_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2215,7 +2215,7 @@ CREATE TABLE "tiki_live_support_modules" (
   "modId" number(4) NOT NULL,
   "name" varchar(90) default NULL,
   PRIMARY KEY ("modId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_live_support_modules_trig" BEFORE INSERT ON "tiki_live_support_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2259,7 +2259,7 @@ CREATE TABLE "tiki_live_support_operators" (
   "points" number(10) default NULL,
   "status_since" number(14) default NULL,
   PRIMARY KEY ("user")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2286,7 +2286,7 @@ CREATE TABLE "tiki_live_support_requests" (
   "chat_started" number(14) default NULL,
   "chat_ended" number(14) default NULL,
   PRIMARY KEY ("reqId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2307,7 +2307,7 @@ CREATE TABLE "tiki_logs" (
   "logclient" clob NOT NULL,
   "logtime" number(14) NOT NULL,
   PRIMARY KEY ("logId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_logs_trig" BEFORE INSERT ON "tiki_logs" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2329,7 +2329,7 @@ CREATE TABLE "tiki_mail_events" (
   "event" varchar(200) default NULL,
   "object" varchar(200) default NULL,
   "email" varchar(200) default NULL
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2360,7 +2360,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "article_type" varchar(50) default NULL,
   "discard_after" varchar(255) default NULL,
   PRIMARY KEY ("accountId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_mailin_accounts_trig" BEFORE INSERT ON "tiki_mailin_accounts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2381,7 +2381,7 @@ CREATE TABLE "tiki_menu_languages" (
   "menuId" number(8) NOT NULL,
   "language" char(16) default '' NOT NULL,
   PRIMARY KEY ("menuId","language")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_menu_languages_trig" BEFORE INSERT ON "tiki_menu_languages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2410,14 +2410,14 @@ CREATE TABLE "tiki_menu_options" (
   "groupname" varchar(255) default NULL,
   "userlevel" number(4) default 0,
   PRIMARY KEY ("optionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_menu_options_trig" BEFORE INSERT ON "tiki_menu_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
 SELECT "tiki_menu_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
-CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm");
+CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm","groupname");
 -- --------------------------------------------------------
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','./',10,'','','');
 
@@ -2443,7 +2443,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered');
@@ -2706,6 +2706,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','');
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_live_support_admin','');
@@ -2717,6 +2719,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 
@@ -2742,7 +2746,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','RSS modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin','');
 
@@ -2752,7 +2756,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Theme control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin,tiki_p_admin_quicktags','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Chat','tiki-admin_chat.php',1140,'feature_chat','tiki_p_admin_chat','');
 
@@ -2835,7 +2839,7 @@ CREATE TABLE "tiki_menus" (
   "description" clob,
   "type" char(1) default NULL,
   PRIMARY KEY ("menuId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_menus_trig" BEFORE INSERT ON "tiki_menus" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2867,7 +2871,7 @@ CREATE TABLE "tiki_minical_events" (
   "topicId" number(12) default NULL,
   "reminded" char(1) default NULL,
   PRIMARY KEY ("eventId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_minical_events_trig" BEFORE INSERT ON "tiki_minical_events" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2895,7 +2899,7 @@ CREATE TABLE "tiki_minical_topics" (
   "path" varchar(250) default NULL,
   "isIcon" char(1) default NULL,
   PRIMARY KEY ("topicId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_minical_topics_trig" BEFORE INSERT ON "tiki_minical_topics" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2924,7 +2928,7 @@ CREATE TABLE "tiki_modules" (
   "params" varchar(255) default NULL,
   "groups" clob,
   PRIMARY KEY ("name","position","ord")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_modules_trig" BEFORE INSERT ON "tiki_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -2959,7 +2963,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
   "subscribed" number(14) default NULL,
   "isUser" char(1) default 'n' NOT NULL,
   PRIMARY KEY ("nlId","email","isUser")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2975,7 +2979,7 @@ CREATE TABLE "tiki_newsletter_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "code" varchar(32) default NULL,
   PRIMARY KEY ("nlId","groupName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -2990,7 +2994,7 @@ CREATE TABLE "tiki_newsletter_included" (
   "nlId" number(12) default '0' NOT NULL,
   "includedId" number(12) default '0' NOT NULL,
   PRIMARY KEY ("nlId","includedId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3018,7 +3022,7 @@ CREATE TABLE "tiki_newsletters" (
   "frequency" number(14) default NULL,
   "author" varchar(200) default NULL,
   PRIMARY KEY ("nlId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_newsletters_trig" BEFORE INSERT ON "tiki_newsletters" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3040,7 +3044,7 @@ CREATE TABLE "tiki_newsreader_marks" (
   "groupName" varchar(255) default '' NOT NULL,
   "timestamp" number(14) default '0' NOT NULL,
   PRIMARY KEY ("`user`","serverId","groupName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3060,7 +3064,7 @@ CREATE TABLE "tiki_newsreader_servers" (
   "username" varchar(200) default NULL,
   "password" varchar(200) default NULL,
   PRIMARY KEY ("serverId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_newsreader_servers_trig" BEFORE INSERT ON "tiki_newsreader_servers" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3082,7 +3086,7 @@ CREATE TABLE "tiki_page_footnotes" (
   "pageName" varchar(250) default '' NOT NULL,
   "data" clob,
   PRIMARY KEY ("`user`","pageName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3121,7 +3125,7 @@ CREATE TABLE "tiki_pages" (
   "created" number(14),
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
-)  ;
+) ENGINE=MyISAM ;
 
 CREATE TRIGGER "tiki_pages_trig" BEFORE INSERT ON "tiki_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3148,7 +3152,7 @@ CREATE TABLE "tiki_page_drafts" (
   "comment" varchar(200) default NULL,
   "lastModif" number(14) default NULL,
   PRIMARY KEY ("pageName","`user`")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3163,7 +3167,7 @@ CREATE TABLE "tiki_pageviews" (
   "day" number(14) default '0' NOT NULL,
   "pageviews" number(14) default NULL,
   PRIMARY KEY ("day")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3176,7 +3180,7 @@ CREATE TABLE `tiki_poll_objects` (
   `pollId` number(11) default '0' NOT NULL,
   `title` varchar(255) default NULL,
   PRIMARY KEY ("`catObjectId`","`pollId`")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3195,7 +3199,7 @@ CREATE TABLE "tiki_poll_options" (
   "position" number(4) default '0' NOT NULL,
   "votes" number(8) default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_poll_options_trig" BEFORE INSERT ON "tiki_poll_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3219,7 +3223,7 @@ CREATE TABLE "tiki_polls" (
   "active" char(1) default NULL,
   "publishDate" number(14) default NULL,
   PRIMARY KEY ("pollId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_polls_trig" BEFORE INSERT ON "tiki_polls" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3239,7 +3243,7 @@ CREATE TABLE "tiki_preferences" (
   "name" varchar(40) default '' NOT NULL,
   "value" clob,
   PRIMARY KEY ("name")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3261,7 +3265,7 @@ CREATE TABLE "tiki_private_messages" (
   "key"(received),
   "key"(timestamp),
   PRIMARY KEY ("messageId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_private_messages_trig" BEFORE INSERT ON "tiki_private_messages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3284,7 +3288,7 @@ CREATE TABLE "tiki_programmed_content" (
   "publishDate" number(14) default '0' NOT NULL,
   "data" clob,
   PRIMARY KEY ("pId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_programmed_content_trig" BEFORE INSERT ON "tiki_programmed_content" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3307,7 +3311,7 @@ CREATE TABLE "tiki_quiz_question_options" (
   "optionText" clob,
   "points" number(4) default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quiz_question_options_trig" BEFORE INSERT ON "tiki_quiz_question_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3332,7 +3336,7 @@ CREATE TABLE "tiki_quiz_questions" (
   "type" char(1) default NULL,
   "maxPoints" number(4) default NULL,
   PRIMARY KEY ("questionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quiz_questions_trig" BEFORE INSERT ON "tiki_quiz_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3356,7 +3360,7 @@ CREATE TABLE "tiki_quiz_results" (
   "toPoints" number(4) default NULL,
   "answer" clob,
   PRIMARY KEY ("resultId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quiz_results_trig" BEFORE INSERT ON "tiki_quiz_results" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3378,7 +3382,7 @@ CREATE TABLE "tiki_quiz_stats" (
   "optionId" number(10) default '0' NOT NULL,
   "votes" number(10) default NULL,
   PRIMARY KEY ("quizId","questionId","optionId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3397,7 +3401,7 @@ CREATE TABLE "tiki_quiz_stats_sum" (
   "avgavg" decimal(5,2) default NULL,
   "avgtime" decimal(5,2) default NULL,
   PRIMARY KEY ("quizId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3448,7 +3452,7 @@ CREATE TABLE "tiki_quizzes" (
   "sEpilogue" clob,
   "passingperct" number(4) default 0,
   PRIMARY KEY ("quizId","nVersion")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quizzes_trig" BEFORE INSERT ON "tiki_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3490,7 +3494,7 @@ CREATE TABLE "tiki_received_articles" (
   "type" varchar(50) default NULL,
   "rating" decimal(3,2) default NULL,
   PRIMARY KEY ("receivedArticleId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_received_articles_trig" BEFORE INSERT ON "tiki_received_articles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3516,14 +3520,19 @@ CREATE TABLE "tiki_received_pages" (
   "receivedFromSite" varchar(200) default NULL,
   "receivedFromUser" varchar(200) default NULL,
   "receivedDate" number(14) default NULL,
+  "structureName"  varchar(250) default NULL,
+  "parentName"  varchar(250) default NULL,
+  "page_alias" varchar(250) default '',
+  "pos" number(4) default NULL,
   PRIMARY KEY ("receivedPageId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_received_pages_trig" BEFORE INSERT ON "tiki_received_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
 SELECT "tiki_received_pages_sequ".nextval into :NEW."receivedPageId" FROM DUAL;
 END;
 /
+CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("structureName");
 -- --------------------------------------------------------
 --
 -- Table structure for table tiki_referer_stats
@@ -3538,7 +3547,7 @@ CREATE TABLE "tiki_referer_stats" (
   "hits" number(10) default NULL,
   "last" number(14) default NULL,
   PRIMARY KEY ("referer")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3553,7 +3562,7 @@ CREATE TABLE "tiki_related_categories" (
   "categId" number(10) default '0' NOT NULL,
   "relatedTo" number(10) default '0' NOT NULL,
   PRIMARY KEY ("categId","relatedTo")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3576,7 +3585,7 @@ CREATE TABLE "tiki_rss_modules" (
   "showPubDate" char(1) default 'n',
   "content" blob,
   PRIMARY KEY ("rssId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_rss_modules_trig" BEFORE INSERT ON "tiki_rss_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3600,7 +3609,7 @@ CREATE TABLE "tiki_rss_feeds" (
   "lastUpdated" number(14) default NULL,
   "cache" blob,
   PRIMARY KEY ("name","rssVer")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 DROP TABLE "tiki_searchindex";
@@ -3612,7 +3621,7 @@ CREATE TABLE "tiki_searchindex"(
   "count" number(11) default '1' NOT NULL,
   "last_update" number(11) default '0' NOT NULL,
   PRIMARY KEY ("searchword","location","page")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
 CREATE  INDEX "tiki_searchindex_location" ON "tiki_searchindex"("location" "page");
@@ -3625,7 +3634,7 @@ CREATE TABLE "tiki_searchsyllable"(
   "lastUsed" number(11) default '0' NOT NULL,
   "lastUpdated" number(11) default '0' NOT NULL,
   PRIMARY KEY ("syllable")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
 
@@ -3636,7 +3645,7 @@ CREATE TABLE "tiki_searchwords"(
   "syllable" varchar(80) default '' NOT NULL,
   "searchword" varchar(80) default '' NOT NULL,
   PRIMARY KEY ("syllable","searchword")
-) ;
+) ENGINE=MyISAM;
 
 
 --
@@ -3651,7 +3660,7 @@ CREATE TABLE "tiki_search_stats" (
   "term" varchar(50) default '' NOT NULL,
   "hits" number(10) default NULL,
   PRIMARY KEY ("term")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3666,7 +3675,7 @@ CREATE TABLE "tiki_secdb"(
   "tiki_version" varchar(60) NOT NULL,
   "severity" number(4) default '0' NOT NULL,
   PRIMARY KEY ("md5_value","filename","tiki_version")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
 
@@ -3684,7 +3693,7 @@ CREATE TABLE "tiki_semaphores" (
   "user" varchar(200) default NULL,
   "timestamp" number(14) default NULL,
   PRIMARY KEY ("semName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3705,7 +3714,7 @@ CREATE TABLE "tiki_sent_newsletters" (
   "data" blob,
   "datatxt" blob,
   PRIMARY KEY ("editionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_sent_newsletters_trig" BEFORE INSERT ON "tiki_sent_newsletters" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3724,7 +3733,7 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
   "login" varchar(40) default '',
   "error" char(1) default '',
   KEY  (editionId)
-)  ;
+) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
 --
@@ -3741,7 +3750,7 @@ CREATE TABLE "tiki_sessions" (
   "timestamp" number(14) default NULL,
   "tikihost" varchar(200) default NULL,
   PRIMARY KEY ("sessionId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_sessions_user" ON "tiki_sessions"("user");
 CREATE  INDEX "tiki_sessions_timestamp" ON "tiki_sessions"("timestamp");
@@ -3756,7 +3765,7 @@ CREATE TABLE "tiki_sheet_layout" (
   "headerRow" number(4) default '0' NOT NULL,
   "footerRow" number(4) default '0' NOT NULL,
   "className" varchar(64) default NULL
-) ;
+) ENGINE=MyISAM;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
 
@@ -3774,7 +3783,7 @@ CREATE TABLE "tiki_sheet_values" (
   "height" number(4) default '1' NOT NULL,
   "format" varchar(255) default NULL,
   "user" varchar(200) default NULL
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
 CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex");
@@ -3788,7 +3797,7 @@ CREATE TABLE "tiki_sheets" (
   "description" clob,
   "author" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("sheetId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_sheets_trig" BEFORE INSERT ON "tiki_sheets" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3812,7 +3821,7 @@ CREATE TABLE "tiki_shoutbox" (
   "user" varchar(200) default NULL,
   "hash" varchar(32) default NULL,
   PRIMARY KEY ("msgId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_shoutbox_trig" BEFORE INSERT ON "tiki_shoutbox" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3829,7 +3838,7 @@ CREATE TABLE "tiki_shoutbox_words" (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY ("word")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -3845,7 +3854,7 @@ CREATE TABLE "tiki_structure_versions" (
   "structure_id" number(14) NOT NULL,
   "version" number(14) default NULL,
   PRIMARY KEY ("structure_id")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_structure_versions_trig" BEFORE INSERT ON "tiki_structure_versions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3871,7 +3880,7 @@ CREATE TABLE "tiki_structures" (
   "page_alias" varchar(240) default '' NOT NULL,
   "pos" number(4) default NULL,
   PRIMARY KEY ("page_ref_id")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_structures_trig" BEFORE INSERT ON "tiki_structures" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3925,7 +3934,7 @@ CREATE TABLE "tiki_submissions" (
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("subId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_submissions_trig" BEFORE INSERT ON "tiki_submissions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3950,7 +3959,7 @@ CREATE TABLE "tiki_suggested_faq_questions" (
   "created" number(14) default NULL,
   "user" varchar(200) default NULL,
   PRIMARY KEY ("sfqId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_suggested_faq_questions_trig" BEFORE INSERT ON "tiki_suggested_faq_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -3973,7 +3982,7 @@ CREATE TABLE "tiki_survey_question_options" (
   "qoption" clob,
   "votes" number(10) default NULL,
   PRIMARY KEY ("optionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_survey_question_options_trig" BEFORE INSERT ON "tiki_survey_question_options" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4001,7 +4010,7 @@ CREATE TABLE "tiki_survey_questions" (
   "value" number(10) default NULL,
   "average" decimal(4,2) default NULL,
   PRIMARY KEY ("questionId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_survey_questions_trig" BEFORE INSERT ON "tiki_survey_questions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4027,7 +4036,7 @@ CREATE TABLE "tiki_surveys" (
   "created" number(14) default NULL,
   "status" char(1) default NULL,
   PRIMARY KEY ("surveyId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_surveys_trig" BEFORE INSERT ON "tiki_surveys" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4056,7 +4065,7 @@ CREATE TABLE "tiki_tags" (
   "ip" varchar(15) default NULL,
   "flag" char(1) default NULL,
   PRIMARY KEY ("tagName","pageName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4071,7 +4080,7 @@ CREATE TABLE "tiki_theme_control_categs" (
   "categId" number(12) default '0' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("categId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4088,7 +4097,7 @@ CREATE TABLE "tiki_theme_control_objects" (
   "name" varchar(250) default '' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("objId","type")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4103,7 +4112,7 @@ CREATE TABLE "tiki_theme_control_sections" (
   "section" varchar(250) default '' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("section")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4125,7 +4134,7 @@ CREATE TABLE "tiki_topics" (
   "active" char(1) default NULL,
   "created" number(14) default NULL,
   PRIMARY KEY ("topicId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_topics_trig" BEFORE INSERT ON "tiki_topics" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4158,7 +4167,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMultilingual" char(1) default 'n',
   "description" clob,
   PRIMARY KEY ("fieldId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_fields_trig" BEFORE INSERT ON "tiki_tracker_fields" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4190,7 +4199,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "longdesc" blob,
   "version" varchar(40) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_item_attachments_trig" BEFORE INSERT ON "tiki_tracker_item_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4215,7 +4224,7 @@ CREATE TABLE "tiki_tracker_item_comments" (
   "title" varchar(200) default NULL,
   "posted" number(14) default NULL,
   PRIMARY KEY ("commentId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_item_comments_trig" BEFORE INSERT ON "tiki_tracker_item_comments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4237,7 +4246,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
   "lang" char(16) default NULL,
   "value" clob,
   PRIMARY KEY ("itemId","fieldId","lang")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value");
 -- --------------------------------------------------------
@@ -4257,7 +4266,7 @@ CREATE TABLE "tiki_tracker_items" (
   "status" char(1) default NULL,
   "lastModif" number(14) default NULL,
   PRIMARY KEY ("itemId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_items_trig" BEFORE INSERT ON "tiki_tracker_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4278,7 +4287,7 @@ CREATE TABLE "tiki_tracker_options" (
   "name" varchar(80) default '' NOT NULL,
   "value" clob default NULL,
   PRIMARY KEY ("trackerId","name")
-)  ;
+) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
 --
@@ -4306,7 +4315,7 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL,
   "orderAttachments" varchar(255) default 'filename,created,filesize,downloads,desc' NOT NULL,
   PRIMARY KEY ("trackerId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_trackers_trig" BEFORE INSERT ON "tiki_trackers" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4328,7 +4337,7 @@ CREATE TABLE "tiki_untranslated" (
   "source" blob NOT NULL,
   "lang" char(16) default '' NOT NULL,
   PRIMARY KEY ("source","lang")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_untranslated_trig" BEFORE INSERT ON "tiki_untranslated" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4352,7 +4361,7 @@ CREATE TABLE "tiki_user_answers" (
   "questionId" number(10) default '0' NOT NULL,
   "optionId" number(10) default '0' NOT NULL,
   PRIMARY KEY ("userResultId","quizId","questionId","optionId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4373,7 +4382,7 @@ CREATE TABLE "tiki_user_answers_uploads" (
   "filesize" varchar(255) default '' NOT NULL,
   "filecontent" blob NOT NULL,
   PRIMARY KEY ("answerUploadId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_user_answers_uploads_trig" BEFORE INSERT ON "tiki_user_answers_uploads" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4397,7 +4406,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "type" char(1) default NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("name","user","position")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4415,7 +4424,7 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
   "user" varchar(200) default '' NOT NULL,
   "name" varchar(30) default NULL,
   PRIMARY KEY ("user","folderId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_bookmarks_folders_trig" BEFORE INSERT ON "tiki_user_bookmarks_folders" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4441,7 +4450,7 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
   "folderId" number(12) default '0' NOT NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("urlId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_bookmarks_urls_trig" BEFORE INSERT ON "tiki_user_bookmarks_urls" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4472,7 +4481,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "useAuth" char(1) default NULL,
   "smtpPort" number(4) default NULL,
   PRIMARY KEY ("accountId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_mail_accounts_trig" BEFORE INSERT ON "tiki_user_mail_accounts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4497,7 +4506,7 @@ CREATE TABLE "tiki_user_menus" (
   "position" number(4) default NULL,
   "mode" char(1) default NULL,
   PRIMARY KEY ("menuId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_menus_trig" BEFORE INSERT ON "tiki_user_menus" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4519,7 +4528,7 @@ CREATE TABLE "tiki_user_modules" (
   "data" blob,
   "parse" char(1) default NULL,
   PRIMARY KEY ("name")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
@@ -4544,7 +4553,7 @@ CREATE TABLE "tiki_user_notes" (
   "size" number(14) default NULL,
   "parse_mode" varchar(20) default NULL,
   PRIMARY KEY ("noteId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_notes_trig" BEFORE INSERT ON "tiki_user_notes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4567,7 +4576,7 @@ CREATE TABLE "tiki_user_postings" (
   "first" number(14) default NULL,
   "level" number(8) default NULL,
   PRIMARY KEY ("user")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4583,7 +4592,7 @@ CREATE TABLE "tiki_user_preferences" (
   "prefName" varchar(40) default '' NOT NULL,
   "value" varchar(250) default NULL,
   PRIMARY KEY ("user","prefName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4605,7 +4614,7 @@ CREATE TABLE "tiki_user_quizzes" (
   "resultId" number(10) default NULL,
   "userResultId" number(10) NOT NULL,
   PRIMARY KEY ("userResultId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_user_quizzes_trig" BEFORE INSERT ON "tiki_user_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4625,7 +4634,7 @@ CREATE TABLE "tiki_user_taken_quizzes" (
   "user" varchar(200) default '' NOT NULL,
   "quizId" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("user","quizId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4655,7 +4664,7 @@ CREATE TABLE "tiki_user_tasks_history" (
   "accepted_creator" char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
   "accepted_user" char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
-)   ;
+) ENGINE=MyISAM  ;
 
 
 --
@@ -4680,7 +4689,7 @@ CREATE TABLE "tiki_user_tasks" (
   "percentage" number(4) default NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
-)  ;
+) ENGINE=MyISAM ;
 
 
 -- --------------------------------------------------------
@@ -4697,7 +4706,7 @@ CREATE TABLE "tiki_user_votings" (
   "id" varchar(255) default '' NOT NULL,
   "optionId" number(10) default 0 NOT NULL,
   PRIMARY KEY ("`user`","id")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4718,7 +4727,7 @@ CREATE TABLE "tiki_user_watches" (
   "url" varchar(250) default NULL,
   "email" varchar(200) default NULL,
   PRIMARY KEY ("`user`","event","object")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4743,7 +4752,7 @@ CREATE TABLE "tiki_userfiles" (
   "path" varchar(255) default NULL,
   "created" number(14) default NULL,
   PRIMARY KEY ("fileId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_userfiles_trig" BEFORE INSERT ON "tiki_userfiles" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4763,7 +4772,7 @@ CREATE TABLE "tiki_userpoints" (
   "user" varchar(200) default NULL,
   "points" decimal(8,2) default NULL,
   "voted" number(8) default NULL
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4780,7 +4789,7 @@ CREATE TABLE "tiki_users" (
   "email" varchar(200) default NULL,
   "lastLogin" number(14) default NULL,
   PRIMARY KEY ("user")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4800,7 +4809,7 @@ CREATE TABLE "tiki_webmail_contacts" (
   "nickname" varchar(200) default NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("contactId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_webmail_contacts_trig" BEFORE INSERT ON "tiki_webmail_contacts" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4814,7 +4823,7 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
   "contactId" number(12) NOT NULL,
   "groupName" varchar(255) NOT NULL,
   PRIMARY KEY ("contactId","groupName")
-)  ;
+) ENGINE=MyISAM ;
 
 -- --------------------------------------------------------
 --
@@ -4833,7 +4842,7 @@ CREATE TABLE "tiki_webmail_messages" (
   "isReplied" char(1) default NULL,
   "isFlagged" char(1) default NULL,
   PRIMARY KEY ("accountId","mailId")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4858,7 +4867,7 @@ CREATE TABLE "tiki_wiki_attachments" (
   "created" number(14) default NULL,
   "comment" varchar(250) default NULL,
   PRIMARY KEY ("attId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_wiki_attachments_trig" BEFORE INSERT ON "tiki_wiki_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4877,7 +4886,7 @@ DROP TABLE "tiki_zones";
 CREATE TABLE "tiki_zones" (
   "zone" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("zone")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4897,7 +4906,7 @@ CREATE TABLE "tiki_download" (
   "date" number(14) default '0' NOT NULL,
   "IP" varchar(50) default '' NOT NULL,
   PRIMARY KEY ("id")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_download_trig" BEFORE INSERT ON "tiki_download" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -4922,7 +4931,7 @@ CREATE TABLE "users_grouppermissions" (
   "permName" varchar(31) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
@@ -4946,8 +4955,9 @@ CREATE TABLE "users_groups" (
   "groupFieldId" number(11),
   "registrationChoice" char(1) default NULL,
   "registrationUsersFieldIds" clob,
+  "userChoice" char(1) default NULL,
   PRIMARY KEY ("groupName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4964,7 +4974,7 @@ CREATE TABLE "users_objectpermissions" (
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
   PRIMARY KEY ("objectId","objectType","groupName","permName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 --
@@ -4982,7 +4992,7 @@ CREATE TABLE "users_permissions" (
   "type" varchar(20) default NULL,
   "admin" varchar(1) default NULL,
   PRIMARY KEY ("permName")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "users_permissions_type" ON "users_permissions"("type");
 -- --------------------------------------------------------
@@ -5063,6 +5073,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow', 'y');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
@@ -5077,7 +5089,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_files', 'Can upload zip files with files', 'editors', 'file galleries');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directoy Batch Load', 'editors', 'file galleries');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
 
@@ -5253,7 +5265,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_receive', 'Can  receive tasks from other users', 'registered', 'user');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
 
@@ -5385,6 +5397,14 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
@@ -5398,7 +5418,7 @@ CREATE TABLE "users_usergroups" (
   "userId" number(8) default '0' NOT NULL,
   "groupName" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("userId","groupName")
-) ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
@@ -5443,7 +5463,7 @@ CREATE TABLE "users_users" (
   "unsuccessful_logins" number(14) default 0,
   "openid_url" varchar(255) default NULL,
   PRIMARY KEY ("userId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "users_users_trig" BEFORE INSERT ON "users_users" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -5485,7 +5505,7 @@ CREATE TABLE "tiki_integrator_reps" (
   "expiration" number(11) default '0' NOT NULL,
   "description" clob NOT NULL,
   PRIMARY KEY ("repID")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_integrator_reps_trig" BEFORE INSERT ON "tiki_integrator_reps" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -5517,7 +5537,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "enabled" char(1) default 'n' NOT NULL,
   "description" clob NOT NULL,
   PRIMARY KEY ("ruleID")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_integrator_rules_trig" BEFORE INSERT ON "tiki_integrator_rules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -5529,11 +5549,11 @@ CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
 --
 -- Dumping data for table 'tiki_integrator_rules'
 --
-INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
+INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 
-INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths');
 
-INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
 
 
 --
@@ -5549,7 +5569,7 @@ CREATE TABLE "tiki_quicktags" (
   "tagicon" varchar(255) default NULL,
   "tagcategory" varchar(255) default NULL,
   PRIMARY KEY ("tagId")
-)   ;
+) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_quicktags_trig" BEFORE INSERT ON "tiki_quicktags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -5903,7 +5923,7 @@ CREATE TABLE "tiki_translated_objects" (
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL,
   PRIMARY KEY (type, objId)
-)  ;
+) ENGINE=MyISAM ;
 
 CREATE TRIGGER "tiki_translated_objects_trig" BEFORE INSERT ON "tiki_translated_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -5921,7 +5941,7 @@ CREATE TABLE "tiki_friends" (
   "user" char(200) default '' NOT NULL,
   "friend" char(200) default '' NOT NULL,
   PRIMARY KEY ("`user`","friend")
-) ;
+) ENGINE=MyISAM;
 
 
 DROP TABLE "tiki_friendship_requests";
@@ -5931,7 +5951,7 @@ CREATE TABLE "tiki_friendship_requests" (
   "userTo" char(200) default '' NOT NULL,
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("userFrom","userTo")
-) ;
+) ENGINE=MyISAM;
 
 
 DROP TABLE "tiki_score";
@@ -5941,7 +5961,7 @@ CREATE TABLE "tiki_score" (
   "score" number(11) default '0' NOT NULL,
   "expiration" number(11) default '0' NOT NULL,
   PRIMARY KEY ("event")
-) ;
+) ENGINE=MyISAM;
 
 
 INSERT INTO "tiki_score" ("event","score","expiration") VALUES ('login',1,0);
@@ -6013,7 +6033,7 @@ CREATE TABLE "tiki_users_score" (
   "expire" number(14) default '0' NOT NULL,
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("user","event_id")
-) ;
+) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");
 
@@ -6031,7 +6051,7 @@ DROP TABLE "tiki_file_handlers";
 CREATE TABLE "tiki_file_handlers" (
   "mime_type" varchar(64) default NULL,
   "cmd" varchar(238) default NULL
-) ;
+) ENGINE=MyISAM;
 
 
 --
@@ -6048,7 +6068,7 @@ CREATE TABLE "tiki_stats" (
   "day" number(14) default '0' NOT NULL,
   "hits" number(14) default '0' NOT NULL,
   PRIMARY KEY ("object","type","day")
-) ;
+) ENGINE=MyISAM;
 
 
 --
@@ -6067,7 +6087,7 @@ CREATE TABLE "tiki_events" (
   "object" varchar(200) default '' NOT NULL,
   "method" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("callback_type","`order`")
-) ;
+) ENGINE=MyISAM;
 
 
 INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('1', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_setup_custom_fields');
@@ -6098,7 +6118,7 @@ CREATE TABLE "tiki_registration_fields" (
   `show` number(1) default '0' NOT NULL,
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_registration_fields_trig" BEFORE INSERT ON "tiki_registration_fields" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -6115,7 +6135,7 @@ CREATE TABLE "tiki_actionlog_conf" (
  `status` char(1) default '',
 PRIMARY KEY (action, objectType),
 KEY (id)
-) ;
+) ENGINE=MyISAM;
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y');
 
@@ -6201,7 +6221,7 @@ CREATE TABLE "tiki_freetags" (
   "tag" varchar(30) default '' NOT NULL,
   "raw_tag" varchar(50) default '' NOT NULL,
   PRIMARY KEY ("tagId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_freetags_trig" BEFORE INSERT ON "tiki_freetags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -6221,7 +6241,7 @@ CREATE TABLE "tiki_freetagged_objects" (
   KEY (tagId),
   KEY (user),
   KEY (objectId)
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_freetagged_objects_trig" BEFORE INSERT ON "tiki_freetagged_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -6237,7 +6257,7 @@ CREATE TABLE "tiki_contributions" (
   "name" varchar(100) default NULL,
   "description" varchar(250) default NULL,
   PRIMARY KEY ("contributionId")
-) ;
+) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_contributions_trig" BEFORE INSERT ON "tiki_contributions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
@@ -6251,7 +6271,7 @@ CREATE TABLE "tiki_contributions_assigned" (
   "contributionId" number(12) NOT NULL,
   "objectId" number(12) NOT NULL,
   PRIMARY KEY ("objectId","contributionId")
-) ;
+) ENGINE=MyISAM;
 
 
 DROP TABLE "tiki_webmail_contacts_ext";
@@ -6295,11 +6315,9 @@ CREATE TABLE `tiki_mypage` (
   `wintextcolor` varchar(16) default NULL,
   `bgimage` varchar(255) default NULL,
   `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
-
   `winbgimage` varchar(255) default NULL,
   `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
-
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY ("`id`")
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
