@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25.2.1 2007-11-13 17:37:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,28 +11,27 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y') {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_assign_my_groups != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST["assign_user"])) {
-	$smarty->assign('msg', tra("Unknown user"));
-
-	$smarty->display("error.tpl");
-	die;
+if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y')) {
+	$_REQUEST['assign_user'] = $user;
+	$userChoice = 'y';
+	$smarty->assign_by_ref('userChoice', $userChoice);
+} else {
+	if (!$userlib->user_exists($_REQUEST['assign_user'])) {
+		$smarty->assign('msg', tra("User doesnt exist"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$userChoice = '';
+	$smarty->assign_by_ref('assign_user', $_REQUEST['assign_user']);
 }
 
 $assign_user = $_REQUEST["assign_user"];
-$smarty->assign_by_ref('assign_user', $assign_user);
-
-if (!$userlib->user_exists($assign_user)) {
-	$smarty->assign('msg', tra("User doesnt exist"));
-
-	$smarty->display("error.tpl");
-	die;
-}
 
 if (isset($_REQUEST["action"])) {
 	check_ticket('admin-assign-user');
@@ -42,15 +41,22 @@ if (isset($_REQUEST["action"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	if ($tiki_p_admin != 'y')
-			$groups = $userlib->get_user_groups_inclusion($user);
+	if ($userChoice == 'y') {
+		$gps = $userlib->get_groups(0, -1, 'groupName_asc', '', '', '', '', $userChoice);
+		$groups = array();
+		foreach($gps['data'] as $g) {
+			$groups[$g['groupName']] = $g;
+		}
+	} elseif ($tiki_p_admin != 'y') {
+		$groups = $userlib->get_user_groups_inclusion($user);
+	}
 	if ($_REQUEST["action"] == 'assign') {
 		if (!$userlib->group_exists($_REQUEST["group"])) {
 			$smarty->assign('msg', tra("This group is invalid"));
 			$smarty->display("error.tpl");
 			die;
 		}
-		if ($tiki_p_admin == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
+		if ($tiki_p_admin_users == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
 			$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 			$logslib->add_log('perms',sprintf("Assigned %s in group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 		}			
@@ -58,7 +64,7 @@ if (isset($_REQUEST["action"])) {
 		$area = 'deluserfromgroup';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			if ($tiki_p_admin == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
+			if ($tiki_p_admin_users == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
 				$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 				$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 			}
@@ -105,11 +111,12 @@ if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
 
-if ($tiki_p_admin != 'y')
-	$groups = $userlib->get_user_groups_inclusion($user);
+if ($tiki_p_admin != 'y' && $userChoice != 'y')
+	$ingroups = $userlib->get_user_groups_inclusion($user);
 else
-	$groups = '';
-$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y', $groups);
+	$ingroups = '';
+$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y', $ingroups, $userChoice);
+
 foreach ($users['data'] as $key=>$group) {
 	if (isset($user_info['groups'][$group['groupName']])) {
 		$users['data'][$key]['what'] = $user_info['groups'][$group['groupName']];

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.3 2007-11-12 18:44:50 ntavares Exp $
+// CVS: $Id: userslib.php,v 1.247.2.4 2007-11-13 17:37:16 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1041,7 +1041,7 @@ function get_included_groups($group, $recur=true) {
 	$result = $this->query($query, array($userid));
     }
 
-    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_asc', $find = '', $initial = '', $details="y", $inGroups='') {
+    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_asc', $find = '', $initial = '', $details="y", $inGroups='', $userChoice='') {
 
 	$mid = "";
 	$bindvars = array();
@@ -1066,8 +1066,13 @@ function get_included_groups($group, $recur=true) {
 		}
 		$mid .= ')';
 	}
+	if ($userChoice) {
+		$mid .= $mid? ' and ': ' where ';
+		$mid .= '`userChoice` = ?';
+		$bindvars[] = 'y';
+	}
 
-	$query = "select `groupName` , `groupDesc`, `registrationChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select `groupName` , `groupDesc`, `registrationChoice`, `userChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `users_groups` $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars);
@@ -2162,28 +2167,27 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='') {
+	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='', $userChoice='') {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
-		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`) values(?,?,?,?,?,?)";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $rufields) );
+		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?)";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
 		$cachelib->invalidate('grouplist');
 		return true;
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='') {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='') {
 		global $cachelib;
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
 			if ( $group != $olgroup ) return false;
 		}
-
 		if (!$this->group_exists($olgroup))
-			return $this->add_group($group, $desc, $home,$utracker,$gtracker);
+			return $this->add_group($group, $desc, $home,$utracker,$gtracker, $userChoice);
 		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
-		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $olgroup));
+		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $olgroup));
 		$query = "update `users_usergroups` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `users_grouppermissions` set `groupName`=? where `groupName`=?";

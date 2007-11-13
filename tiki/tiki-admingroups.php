@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.1 2007-11-13 17:37:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,7 +72,12 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
-	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields);
+	if (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on') {
+		$_REQUEST['userChoice'] = 'y';
+	} else {
+		$_REQUEST['userChoice'] = '';
+	}
+	$userlib->change_group($_REQUEST['olgroup'],$_REQUEST['name'],$_REQUEST['desc'],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields, $_REQUEST['userChoice']);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
 		foreach ($_REQUEST["include_groups"] as $include) {
@@ -155,7 +160,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$groupperms,$trackerinfo,$memberlist) = array('','','','','','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$groupperms,$trackerinfo,$memberlist,$userChoice) = array('','','','','','','','','','','');
 
 if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
@@ -168,6 +173,9 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 
 	if(isset($re["groupHome"]))
 		$grouphome = $re["groupHome"];
+
+	if(isset($re['userChoice']))
+		$userChoice = $re['userChoice'];
 
 	if ($prefs['userTracker'] == 'y') {
 		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
@@ -242,6 +250,7 @@ $smarty->assign('groupname', $groupname);
 $smarty->assign('groupdesc', $groupdesc);
 $smarty->assign('grouphome',$grouphome);
 $smarty->assign('groupperms', $groupperms);
+$smarty->assign_by_ref('userChoice', $userChoice);
 
 $cant_pages = ceil($users["cant"] / $numrows);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

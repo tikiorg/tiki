@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-11-07 16:58:16 $
-# $Author: pkdille $
+# $Date: 2007-11-13 17:37:14 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4111,6 +4111,7 @@ CREATE TABLE users_groups (
   groupFieldId int(11),
   registrationChoice char(1) default NULL,
   registrationUsersFieldIds text,
+  userChoice char(1) default NULL,
   PRIMARY KEY  (groupName(30))
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
@@ -4355,6 +4356,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki');
 # --------------------------------------------------------
 
 #

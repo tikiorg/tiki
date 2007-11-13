@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.4 2007-11-07 20:44:23 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.5 2007-11-13 17:37:15 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1612,3 +1612,7 @@ UPDATE tiki_menu_options set url='javascript:toggle(\'debugconsole\')' where url
 
 #2007-11-07 pkdille
 UPDATE `tiki_preferences` SET `name`='preset_galleries_thumb' WHERE `name`='preset_galleries_scale';
+
+#2007-11-13 sylvieg
+ALTER TABLE users_groups ADD userChoice CHAR(1) DEFAULT NULL;
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki');
