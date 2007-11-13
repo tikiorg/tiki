@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.1 2007-11-13 20:35:14 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,11 +61,11 @@ function byref_set_value($feature, $pref = "") {
 	simple_set_value($feature, $pref);
 }
 
-$crumbs[] = new Breadcrumb('Administration',
-                              'Sections',
+$crumbs[] = new Breadcrumb(tra('Administration'),
+                              tra('Sections'),
                               'tiki-admin.php',
                               'Admin+Home',
-                              'Help on Configuration Sections');
+                              tra('Help on Configuration Sections'));
 
 $adminPage = '';
 if (isset($_REQUEST["page"])) {
