@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.3 2007-11-08 17:15:43 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.4 2007-11-13 18:36:39 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -15,7 +15,9 @@
 {if $tiki_p_forum_post_topic eq 'y'}
 <a class="linkbut" href="#" onclick="flip('forumpost');return false;">{tr}New Topic{/tr}</a>
 {/if}
+{if $tiki_p_admin_forum eq 'y' or $all_forums|@count > 1 }{* No need for users to go to forum list if they are already looking at the only forum *}
 <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
+{/if}
 {if $tiki_p_admin_forum eq 'y'}
 <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
 {/if}
