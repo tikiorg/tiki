@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.6 2007-11-11 01:03:21 ntavares Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.7 2007-11-13 19:14:41 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -41,11 +41,11 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {cycle print=false values="even,odd"}
 {section name=user loop=$user_modules}
 <tr>
-<td class="{cycle advance=false}">{$user_modules[user].name}</td>
-<td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a></td>
+<td class="{cycle advance=false}">{$user_modules[user].name|escape}</td>
+<td class="{cycle advance=false}">{$user_modules[user].title|escape}</td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
@@ -96,7 +96,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
-<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
+<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
 {/section}
 </select>
 </td></tr>
@@ -110,7 +110,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}"><input type="submit" name="assign" value="{tr}Assign{/tr}"></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td></tr>
 </table>
 </form>
 <br />
@@ -130,11 +130,11 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {cycle print=false values="even,odd"}
 {section name=user loop=$left}
 <tr>
-<td class="{cycle advance=false}">{$left[user].name}</td>
+<td class="{cycle advance=false}">{$left[user].name|escape}</td>
 <td class="{cycle advance=false}">{$left[user].ord}</td>
 <td class="{cycle advance=false}">{$left[user].cache_time}</td>
 <td class="{cycle advance=false}">{$left[user].rows}</td>
-<td class="{cycle advance=false}">{$left[user].params}</td>
+<td class="{cycle advance=false}">{$left[user].params|escape}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
@@ -166,11 +166,11 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
 {cycle print=false values="even,odd"}
 {section name=user loop=$right}
 <tr>
-<td class="{cycle advance=false}">{$right[user].name}</td>
+<td class="{cycle advance=false}">{$right[user].name|escape}</td>
 <td class="{cycle advance=false}">{$right[user].ord}</td>
 <td class="{cycle advance=false}">{$right[user].cache_time}</td>
 <td class="{cycle advance=false}">{$right[user].rows}</td>
-<td class="{cycle advance=false}">{$right[user].params}</td>
+<td class="{cycle advance=false}">{$right[user].params|escape}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
@@ -267,6 +267,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
    {section name=ix loop=$galleries}
    <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId}{literal}}{/literal}">{$galleries[ix].name}</option>
    {/section}
+   </select>
   </td>
   <td class="form">
    <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}Use Gallery{/tr}</a>
@@ -372,7 +373,7 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
     {tr}Wiki{/tr} {tr}Structures{/tr}:
   </td>
   <td>
-    <select name=wiki"structures" id='list_wikistructures'>
+    <select name="structures" id='list_wikistructures'>
     {section name=ix loop=$wikistructures}
     <option value="{literal}{{/literal}wikistructure id={$wikistructures[ix].page_ref_id}{literal}}{/literal}">{$wikistructures[ix].pageName}</option>
     {/section}
