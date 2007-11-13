@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.2 2007-11-09 15:17:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.3 2007-11-13 14:49:39 ricks99 Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -19,8 +19,27 @@
 {else}
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
 {/if}
-
+{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
+{* show quicktags in help *}
+<table width="95%" class="normal">
+ <tr>
+  <th>{tr}Quicktag{/tr}</th>
+  <th>{tr}Description{/tr}</th>
+  <th>{tr}Wiki Syntax{/tr}</th>
+ </tr>
+{section name=qtg loop=$quicktags}
+ <tr>
+  <td><img src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' /></td>
+  <td>{tr}{$quicktags[qtg].taglabel}{/tr}</td>
+  <td>{$quicktags[qtg].taginsert|escape}</td>
+ </tr>
+{/section}
+  </td>
+ </tr>
+</table>
+{/if}
 <table width="100%">
+ <tr><th colspan="2">{tr}Wiki Help{/tr}</th></tr>
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%"><strong>{tr}Bold text{/tr}:</strong></td><td> 2 {tr}underscores{/tr} "_". {tr}Example{/tr}: __{tr}text{/tr}__</td></tr>
 <tr><td width="20%"><strong>{tr}Italic text{/tr}:</strong></td><td> 2 {tr}single quotes{/tr} "'". {tr}Example{/tr}: ''{tr}text{/tr}''</td></tr>
