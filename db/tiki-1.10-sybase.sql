@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-11-04 22:08:06 $
--- $Author: nyloth $
+-- $Date: 2007-11-13 22:21:20 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -40,7 +40,7 @@ CREATE TABLE "galaxia_activities" (
   "description" text default '',
   "expirationTime" numeric(6,0) default '0' NOT NULL,
   PRIMARY KEY ("activityId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -61,7 +61,7 @@ CREATE TABLE "galaxia_activity_roles" (
   "activityId" numeric(14,0) default '0' NOT NULL,
   "roleId" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("activityId","roleId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -86,7 +86,7 @@ CREATE TABLE "galaxia_instance_activities" (
   "user" varchar(200) default '',
   "status" varchar(11) default NULL NULL CHECK ("status" IN ('running','completed')),
   PRIMARY KEY ("instanceId","activityId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -114,7 +114,7 @@ CREATE TABLE "galaxia_instance_comments" (
   "activity" varchar(80) default NULL NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("cId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -143,7 +143,7 @@ CREATE TABLE "galaxia_instances" (
   "status" varchar(11) default NULL NULL CHECK ("status" IN ('active','exception','aborted','completed')),
   "properties" image default '',
   PRIMARY KEY ("instanceId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -170,7 +170,7 @@ CREATE TABLE "galaxia_processes" (
   "lastModif" numeric(14,0) default NULL NULL,
   "normalized_name" varchar(80) default NULL NULL,
   PRIMARY KEY ("pId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -194,7 +194,7 @@ CREATE TABLE "galaxia_roles" (
   "name" varchar(80) default NULL NULL,
   "description" text default '',
   PRIMARY KEY ("roleId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -216,7 +216,7 @@ CREATE TABLE "galaxia_transitions" (
   "actFromId" numeric(14,0) default '0' NOT NULL,
   "actToId" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("actFromId","actToId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -238,7 +238,7 @@ CREATE TABLE "galaxia_user_roles" (
   "roleId" numeric(14 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("roleId","user")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -265,7 +265,7 @@ CREATE TABLE "galaxia_workitems" (
   "ended" numeric(14,0) default NULL NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("itemId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -299,7 +299,7 @@ CREATE TABLE "messu_messages" (
   "isFlagged" char(1) default NULL NULL,
   "priority" numeric(2,0) default NULL NULL,
   PRIMARY KEY ("msgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -336,7 +336,7 @@ CREATE TABLE "messu_archive" (
   "isFlagged" char(1) default NULL NULL,
   "priority" numeric(2,0) default NULL NULL,
   PRIMARY KEY ("msgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -371,7 +371,7 @@ CREATE TABLE "messu_sent" (
   "isFlagged" char(1) default NULL NULL,
   "priority" numeric(2,0) default NULL NULL,
   PRIMARY KEY ("msgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -387,7 +387,7 @@ CREATE TABLE "sessions"(
   "expireref" varchar(64) default '',
   "data" text NOT NULL,
   PRIMARY KEY ("sesskey")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -416,7 +416,7 @@ CREATE TABLE "tiki_actionlog" (
   "comment" varchar(200) default NULL NULL,
   "categId" numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY ("actionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -430,7 +430,7 @@ CREATE TABLE "tiki_actionlog_params" (
   "name" varchar(40) NOT NULL,
   "value" text default '',
   KEY (actionId)
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -484,7 +484,7 @@ CREATE TABLE "tiki_articles" (
   "rating" decimal(3,2) default NULL NULL,
   "isfloat" char(1) default NULL NULL,
   PRIMARY KEY ("articleId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -536,7 +536,7 @@ CREATE TABLE "tiki_article_types" (
   "creator_edit" varchar(1) default NULL NULL,
   "comment_can_rate_article" char(1) default NULL NULL,
   PRIMARY KEY ("type")
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -604,7 +604,7 @@ CREATE TABLE "tiki_banners" (
   "clicks" numeric(8,0) default NULL NULL,
   "zone" varchar(40) default NULL NULL,
   PRIMARY KEY ("bannerId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -636,7 +636,7 @@ CREATE TABLE "tiki_banning" (
   "created" numeric(14,0) default NULL NULL,
   "message" text default '',
   PRIMARY KEY ("banId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -657,7 +657,7 @@ CREATE TABLE "tiki_banning_sections" (
   "banId" numeric(12,0) default '0' NOT NULL,
   "section" varchar(100) default '' NOT NULL,
   PRIMARY KEY ("banId","section")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -679,7 +679,7 @@ CREATE TABLE "tiki_blog_activity" (
   "day" numeric(14,0) default '0' NOT NULL,
   "posts" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("blogId","day")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -709,7 +709,7 @@ CREATE TABLE "tiki_blog_posts" (
   "title" varchar(80) default NULL NULL,
   "priv" varchar(1) default NULL NULL,
   PRIMARY KEY ("postId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -742,7 +742,7 @@ CREATE TABLE "tiki_blog_posts_images" (
   "filesize" numeric(14,0) default NULL NULL,
   "data" image default '',
   PRIMARY KEY ("imgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -780,7 +780,7 @@ CREATE TABLE "tiki_blogs" (
   "allow_comments" char(1) default NULL NULL,
   "show_avatar" char(1) default NULL NULL,
   PRIMARY KEY ("blogId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -810,7 +810,7 @@ CREATE TABLE "tiki_calendar_categories" (
   "calendarId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("calcatId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -847,7 +847,7 @@ CREATE TABLE "tiki_calendar_items" (
   "created" numeric(14,0) default '0' NOT NULL,
   "lastmodif" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("calitemId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -872,7 +872,7 @@ CREATE TABLE "tiki_calendar_locations" (
   "name" varchar(255) default '' NOT NULL,
   "description" image default '',
   PRIMARY KEY ("callocId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -896,7 +896,7 @@ CREATE TABLE "tiki_calendar_roles" (
   "username" varchar(200) default '' NOT NULL,
   "role" varchar(3) default '0' NOT NULL CHECK ("role" IN ('0','1','2','3','6')),
   PRIMARY KEY ("calitemId","username","role")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -928,7 +928,7 @@ CREATE TABLE "tiki_calendars" (
   "lastmodif" numeric(14,0) default '0' NOT NULL,
   "personal" enum ('n', 'y') default 'n' NOT NULL,
   PRIMARY KEY ("calendarId")
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -943,7 +943,7 @@ CREATE TABLE "tiki_calendar_options" (
   "optionName" varchar(120) default '' NOT NULL,
   "value" varchar(255) default '',
   PRIMARY KEY (calendarId,optionName)
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -966,7 +966,7 @@ CREATE TABLE "tiki_categories" (
   "parentId" numeric(12,0) default NULL NULL,
   "hits" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("categId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -995,7 +995,7 @@ CREATE TABLE "tiki_objects" (
   PRIMARY KEY ("objectId")
   KEY (type, objectId),
   KEY (itemId, type)
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1011,7 +1011,7 @@ go
 CREATE TABLE `tiki_categorized_objects` (
   `catObjectId` numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("`catObjectId`")
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -1032,7 +1032,7 @@ CREATE TABLE "tiki_category_objects" (
   "catObjectId" numeric(12,0) default '0' NOT NULL,
   "categId" numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY ("catObjectId","categId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1053,7 +1053,7 @@ CREATE TABLE "tiki_object_ratings" (
   "catObjectId" numeric(12,0) default '0' NOT NULL,
   "pollId" numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY ("catObjectId","pollId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1074,7 +1074,7 @@ CREATE TABLE "tiki_category_sites" (
   "categId" numeric(10,0) default '0' NOT NULL,
   "siteId" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("categId","siteId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1102,7 +1102,7 @@ CREATE TABLE "tiki_chart_items" (
   "points" numeric(14,0) default NULL NULL,
   "average" decimal(4,2) default NULL NULL,
   PRIMARY KEY ("itemId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1139,7 +1139,7 @@ CREATE TABLE "tiki_charts" (
   "voteAgainAfter" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("chartId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1166,7 +1166,7 @@ CREATE TABLE "tiki_charts_rankings" (
   "rvotes" numeric(14,0) default '0' NOT NULL,
   "raverage" decimal(4,2) default '0.00' NOT NULL,
   PRIMARY KEY ("chartId","itemId","period")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1189,7 +1189,7 @@ CREATE TABLE "tiki_charts_votes" (
   "timestamp" numeric(14,0) default NULL NULL,
   "chartId" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("user","itemId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1216,7 +1216,7 @@ CREATE TABLE "tiki_chat_channels" (
   "active" char(1) default NULL NULL,
   "refresh" numeric(6,0) default NULL NULL,
   PRIMARY KEY ("channelId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1240,7 +1240,7 @@ CREATE TABLE "tiki_chat_messages" (
   "poster" varchar(200) default 'anonymous' NOT NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("messageId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1262,7 +1262,7 @@ CREATE TABLE "tiki_chat_users" (
   "channelId" numeric(8,0) default '0' NOT NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("nickname","channelId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1302,7 +1302,7 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(128) default NULL NULL,
   "comment_rating" numeric(2,0) default NULL NULL,  
   PRIMARY KEY ("threadId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1339,7 +1339,7 @@ CREATE TABLE "tiki_content" (
   "contentId" numeric(8 ,0) identity,
   "description" text default '',
   PRIMARY KEY ("contentId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1362,7 +1362,7 @@ CREATE TABLE "tiki_content_templates" (
   "name" varchar(200) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("templateId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1383,7 +1383,7 @@ CREATE TABLE "tiki_content_templates_sections" (
   "templateId" numeric(10,0) default '0' NOT NULL,
   "section" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("templateId","section")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1404,7 +1404,7 @@ CREATE TABLE "tiki_cookies" (
   "cookieId" numeric(10 ,0) identity,
   "cookie" text default '',
   PRIMARY KEY ("cookieId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1430,7 +1430,7 @@ CREATE TABLE "tiki_copyrights" (
   "copyright_order" numeric(11,0) default NULL NULL,
   "userName" varchar(200) default '',
   PRIMARY KEY ("copyrightId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1460,7 +1460,7 @@ CREATE TABLE "tiki_directory_categories" (
   "editorGroup" varchar(200) default NULL NULL,
   "hits" numeric(12,0) default NULL NULL,
   PRIMARY KEY ("categId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1481,7 +1481,7 @@ CREATE TABLE "tiki_directory_search" (
   "term" varchar(250) default '' NOT NULL,
   "hits" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("term")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1513,7 +1513,7 @@ CREATE TABLE "tiki_directory_sites" (
   PRIMARY KEY ("siteId")
   KEY (isValid),
   KEY (url)
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1541,7 +1541,7 @@ CREATE TABLE "tiki_drawings" (
   "timestamp" numeric(14,0) default NULL NULL,
   "user" varchar(200) default '',
   PRIMARY KEY ("drawId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1563,7 +1563,7 @@ CREATE TABLE "tiki_dsn" (
   "name" varchar(200) default '' NOT NULL,
   "dsn" varchar(255) default NULL NULL,
   PRIMARY KEY ("dsnId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1600,7 +1600,7 @@ CREATE TABLE "tiki_extwiki" (
   "name" varchar(200) default '' NOT NULL,
   "extwiki" varchar(255) default NULL NULL,
   PRIMARY KEY ("extwikiId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1625,7 +1625,7 @@ CREATE TABLE "tiki_faq_questions" (
   "question" text default '',
   "answer" text default '',
   PRIMARY KEY ("questionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1660,7 +1660,7 @@ CREATE TABLE "tiki_faqs" (
   "hits" numeric(8,0) default NULL NULL,
   "canSuggest" char(1) default NULL NULL,
   PRIMARY KEY ("faqId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1693,7 +1693,7 @@ CREATE TABLE "tiki_featured_links" (
   "position" numeric(6,0) default NULL NULL,
   "type" char(1) default NULL NULL,
   PRIMARY KEY ("url")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1740,7 +1740,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_creator" char(1) default NULL NULL,
   "subgal_conf" varchar(200) default NULL NULL,
   PRIMARY KEY ("galleryId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1784,7 +1784,7 @@ CREATE TABLE "tiki_files" (
   "comment" varchar(200) default NULL NULL,
   "archiveId" numeric(14,0) default 0,
   PRIMARY KEY ("fileId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1828,7 +1828,7 @@ CREATE TABLE "tiki_forum_attachments" (
   "created" numeric(14,0) default NULL NULL,
   "path" varchar(250) default NULL NULL,
   PRIMARY KEY ("attId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1853,7 +1853,7 @@ CREATE TABLE "tiki_forum_reads" (
   "forumId" numeric(14,0) default NULL NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("user","threadId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -1929,7 +1929,7 @@ CREATE TABLE "tiki_forums" (
   "commentsPerPage" varchar(100) default NULL NULL,
   "is_flat" char(1) default NULL NULL,
   PRIMARY KEY ("forumId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1962,7 +1962,7 @@ CREATE TABLE "tiki_forums_queue" (
   "summary" varchar(240) default NULL NULL,
   "in_reply_to" varchar(128) default NULL NULL,
   PRIMARY KEY ("qId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -1987,7 +1987,7 @@ CREATE TABLE "tiki_forums_reported" (
   "timestamp" numeric(14,0) default NULL NULL,
   "reason" varchar(250) default NULL NULL,
   PRIMARY KEY ("threadId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2036,7 +2036,7 @@ CREATE TABLE "tiki_galleries" (
   "showfilename" char(1) default 'n' NOT NULL,
   "defaultscale" varchar(10) DEFAULT 'o' NOT NULL,
   PRIMARY KEY ("galleryId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2069,7 +2069,7 @@ CREATE TABLE "tiki_galleries_scales" (
   "galleryId" numeric(14,0) default '0' NOT NULL,
   "scale" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("galleryId","scale")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2092,7 +2092,7 @@ CREATE TABLE "tiki_games" (
   "votes" numeric(8,0) default NULL NULL,
   "points" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("gameName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2113,7 +2113,7 @@ CREATE TABLE "tiki_group_inclusion" (
   "groupName" varchar(255) default '' NOT NULL,
   "includeGroup" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("groupName","includeGroup")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2144,7 +2144,7 @@ CREATE TABLE "tiki_history" (
   "type" varchar(50) default NULL NULL,
   PRIMARY KEY ("pageName","version")
   KEY(historyId)
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2165,7 +2165,7 @@ CREATE TABLE "tiki_hotwords" (
   "word" varchar(40) default '' NOT NULL,
   "url" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("word")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2189,7 +2189,7 @@ CREATE TABLE "tiki_html_pages" (
   "type" char(1) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("pageName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2212,7 +2212,7 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
   "type" char(2) default NULL NULL,
   "content" text default '',
   PRIMARY KEY ("pageName","zone")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2242,7 +2242,7 @@ CREATE TABLE "tiki_images" (
   "hits" numeric(14,0) default NULL NULL,
   "path" varchar(255) default NULL NULL,
   PRIMARY KEY ("imageId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2285,7 +2285,7 @@ CREATE TABLE "tiki_images_data" (
   "data" image default '',
   "etag" varchar(32) default NULL NULL,
   PRIMARY KEY ("imageId","xsize","ysize","type")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2309,7 +2309,7 @@ CREATE TABLE "tiki_language" (
   "lang" char(16) default '' NOT NULL,
   "tran" image default '',
   PRIMARY KEY ("source","lang")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2330,7 +2330,7 @@ CREATE TABLE "tiki_languages" (
   "lang" char(16) default '' NOT NULL,
   "language" varchar(255) default NULL NULL,
   PRIMARY KEY ("lang")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2358,7 +2358,7 @@ CREATE TABLE "tiki_link_cache" (
   "data" image default '',
   "refresh" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("cacheId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2385,7 +2385,7 @@ CREATE TABLE "tiki_links" (
   "fromPage" varchar(160) default '' NOT NULL,
   "toPage" varchar(160) default '' NOT NULL,
   PRIMARY KEY ("fromPage","toPage")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2413,7 +2413,7 @@ CREATE TABLE "tiki_live_support_events" (
   "data" text default '',
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("eventId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2436,7 +2436,7 @@ CREATE TABLE "tiki_live_support_message_comments" (
   "data" text default '',
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("cId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2467,7 +2467,7 @@ CREATE TABLE "tiki_live_support_messages" (
   "module" numeric(4,0) default NULL NULL,
   "email" varchar(250) default NULL NULL,
   PRIMARY KEY ("msgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2488,7 +2488,7 @@ CREATE TABLE "tiki_live_support_modules" (
   "modId" numeric(4 ,0) identity,
   "name" varchar(90) default NULL NULL,
   PRIMARY KEY ("modId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2547,7 +2547,7 @@ CREATE TABLE "tiki_live_support_operators" (
   "points" numeric(10,0) default NULL NULL,
   "status_since" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("user")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2580,7 +2580,7 @@ CREATE TABLE "tiki_live_support_requests" (
   "chat_started" numeric(14,0) default NULL NULL,
   "chat_ended" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("reqId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2606,7 +2606,7 @@ CREATE TABLE "tiki_logs" (
   "logclient" text NOT NULL,
   "logtime" numeric(14,0) NOT NULL,
   PRIMARY KEY ("logId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2630,7 +2630,7 @@ CREATE TABLE "tiki_mail_events" (
   "event" varchar(200) default NULL NULL,
   "object" varchar(200) default NULL NULL,
   "email" varchar(200) default NULL
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -2666,7 +2666,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "article_type" varchar(50) default NULL NULL,
   "discard_after" varchar(255) default NULL NULL,
   PRIMARY KEY ("accountId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2687,7 +2687,7 @@ CREATE TABLE "tiki_menu_languages" (
   "menuId" numeric(8 ,0) identity,
   "language" char(16) default '' NOT NULL,
   PRIMARY KEY ("menuId","language")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -2716,11 +2716,11 @@ CREATE TABLE "tiki_menu_options" (
   "groupname" varchar(255) default NULL NULL,
   "userlevel" numeric(4,0) default 0,
   PRIMARY KEY ("optionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
-CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm")
+CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm","groupname")
 go
 -- --------------------------------------------------------
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Home','./',10,'','','')
@@ -2771,7 +2771,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','')
 go
 
 
@@ -3280,6 +3280,10 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','')
 go
 
@@ -3301,6 +3305,10 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','')
 go
 
 
@@ -3352,7 +3360,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','')
 go
 
 
@@ -3372,7 +3380,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin,tiki_p_admin_quicktags','')
 go
 
 
@@ -3524,7 +3532,7 @@ CREATE TABLE "tiki_menus" (
   "description" text default '',
   "type" char(1) default NULL NULL,
   PRIMARY KEY ("menuId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3558,7 +3566,7 @@ CREATE TABLE "tiki_minical_events" (
   "topicId" numeric(12,0) default NULL NULL,
   "reminded" char(1) default NULL NULL,
   PRIMARY KEY ("eventId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3586,7 +3594,7 @@ CREATE TABLE "tiki_minical_topics" (
   "path" varchar(250) default NULL NULL,
   "isIcon" char(1) default NULL NULL,
   PRIMARY KEY ("topicId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3615,7 +3623,7 @@ CREATE TABLE "tiki_modules" (
   "params" varchar(255) default NULL NULL,
   "groups" text default '',
   PRIMARY KEY ("name","position","ord")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3661,7 +3669,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
   "subscribed" numeric(14,0) default NULL NULL,
   "isUser" char(1) default 'n' NOT NULL,
   PRIMARY KEY ("nlId","email","isUser")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3683,7 +3691,7 @@ CREATE TABLE "tiki_newsletter_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "code" varchar(32) default NULL NULL,
   PRIMARY KEY ("nlId","groupName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3704,7 +3712,7 @@ CREATE TABLE "tiki_newsletter_included" (
   "nlId" numeric(12,0) default '0' NOT NULL,
   "includedId" numeric(12,0) default '0' NOT NULL,
   PRIMARY KEY ("nlId","includedId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3737,7 +3745,7 @@ CREATE TABLE "tiki_newsletters" (
   "frequency" numeric(14,0) default NULL NULL,
   "author" varchar(200) default NULL NULL,
   PRIMARY KEY ("nlId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3760,7 +3768,7 @@ CREATE TABLE "tiki_newsreader_marks" (
   "groupName" varchar(255) default '' NOT NULL,
   "timestamp" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("`user`","serverId","groupName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3785,7 +3793,7 @@ CREATE TABLE "tiki_newsreader_servers" (
   "username" varchar(200) default NULL NULL,
   "password" varchar(200) default NULL NULL,
   PRIMARY KEY ("serverId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3808,7 +3816,7 @@ CREATE TABLE "tiki_page_footnotes" (
   "pageName" varchar(250) default '' NOT NULL,
   "data" text default '',
   PRIMARY KEY ("`user`","pageName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3852,7 +3860,7 @@ CREATE TABLE "tiki_pages" (
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -3884,7 +3892,7 @@ CREATE TABLE "tiki_page_drafts" (
   "comment" varchar(200) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("pageName","`user`")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3905,7 +3913,7 @@ CREATE TABLE "tiki_pageviews" (
   "day" numeric(14,0) default '0' NOT NULL,
   "pageviews" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("day")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3924,7 +3932,7 @@ CREATE TABLE `tiki_poll_objects` (
   `pollId` numeric(11,0) default '0' NOT NULL,
   `title` varchar(255) default NULL NULL,
   PRIMARY KEY ("`catObjectId`","`pollId`")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -3948,7 +3956,7 @@ CREATE TABLE "tiki_poll_options" (
   "position" numeric(4,0) default '0' NOT NULL,
   "votes" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("optionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3972,7 +3980,7 @@ CREATE TABLE "tiki_polls" (
   "active" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("pollId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -3993,7 +4001,7 @@ CREATE TABLE "tiki_preferences" (
   "name" varchar(40) default '' NOT NULL,
   "value" text default '',
   PRIMARY KEY ("name")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4020,7 +4028,7 @@ CREATE TABLE "tiki_private_messages" (
   "key"(received),
   "key"(timestamp),
   PRIMARY KEY ("messageId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4043,7 +4051,7 @@ CREATE TABLE "tiki_programmed_content" (
   "publishDate" numeric(14,0) default '0' NOT NULL,
   "data" text default '',
   PRIMARY KEY ("pId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4066,7 +4074,7 @@ CREATE TABLE "tiki_quiz_question_options" (
   "optionText" text default '',
   "points" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("optionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4091,7 +4099,7 @@ CREATE TABLE "tiki_quiz_questions" (
   "type" char(1) default NULL NULL,
   "maxPoints" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("questionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4115,7 +4123,7 @@ CREATE TABLE "tiki_quiz_results" (
   "toPoints" numeric(4,0) default NULL NULL,
   "answer" text default '',
   PRIMARY KEY ("resultId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4138,7 +4146,7 @@ CREATE TABLE "tiki_quiz_stats" (
   "optionId" numeric(10,0) default '0' NOT NULL,
   "votes" numeric(10,0) default NULL NULL,
   PRIMARY KEY ("quizId","questionId","optionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4163,7 +4171,7 @@ CREATE TABLE "tiki_quiz_stats_sum" (
   "avgavg" decimal(5,2) default NULL NULL,
   "avgtime" decimal(5,2) default NULL NULL,
   PRIMARY KEY ("quizId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4219,7 +4227,7 @@ CREATE TABLE "tiki_quizzes" (
   "sEpilogue" text default '',
   "passingperct" numeric(4,0) default 0,
   PRIMARY KEY ("quizId","nVersion")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4261,7 +4269,7 @@ CREATE TABLE "tiki_received_articles" (
   "type" varchar(50) default NULL NULL,
   "rating" decimal(3,2) default NULL NULL,
   PRIMARY KEY ("receivedArticleId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4287,11 +4295,17 @@ CREATE TABLE "tiki_received_pages" (
   "receivedFromSite" varchar(200) default NULL NULL,
   "receivedFromUser" varchar(200) default NULL NULL,
   "receivedDate" numeric(14,0) default NULL NULL,
+  "structureName"  varchar(250) default NULL NULL,
+  "parentName"  varchar(250) default NULL NULL,
+  "page_alias" varchar(250) default '',
+  "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("receivedPageId")
-)   
+) ENGINE=MyISAM  
 go
 
 
+CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("structureName")
+go
 -- --------------------------------------------------------
 
 --
@@ -4310,7 +4324,7 @@ CREATE TABLE "tiki_referer_stats" (
   "hits" numeric(10,0) default NULL NULL,
   "last" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("referer")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4331,7 +4345,7 @@ CREATE TABLE "tiki_related_categories" (
   "categId" numeric(10,0) default '0' NOT NULL,
   "relatedTo" numeric(10,0) default '0' NOT NULL,
   PRIMARY KEY ("categId","relatedTo")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4359,7 +4373,7 @@ CREATE TABLE "tiki_rss_modules" (
   "showPubDate" char(1) default 'n',
   "content" image default '',
   PRIMARY KEY ("rssId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4385,7 +4399,7 @@ CREATE TABLE "tiki_rss_feeds" (
   "lastUpdated" numeric(14,0) default NULL NULL,
   "cache" image default '',
   PRIMARY KEY ("name","rssVer")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4402,7 +4416,7 @@ CREATE TABLE "tiki_searchindex"(
   "count" numeric(11,0) default '1' NOT NULL,
   "last_update" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("searchword","location","page")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4421,7 +4435,7 @@ CREATE TABLE "tiki_searchsyllable"(
   "lastUsed" numeric(11,0) default '0' NOT NULL,
   "lastUpdated" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("syllable")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4437,7 +4451,7 @@ CREATE TABLE "tiki_searchwords"(
   "syllable" varchar(80) default '' NOT NULL,
   "searchword" varchar(80) default '' NOT NULL,
   PRIMARY KEY ("syllable","searchword")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4457,7 +4471,7 @@ CREATE TABLE "tiki_search_stats" (
   "term" varchar(50) default '' NOT NULL,
   "hits" numeric(10,0) default NULL NULL,
   PRIMARY KEY ("term")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4478,7 +4492,7 @@ CREATE TABLE "tiki_secdb"(
   "tiki_version" varchar(60) NOT NULL,
   "severity" numeric(4,0) default '0' NOT NULL,
   PRIMARY KEY ("md5_value","filename","tiki_version")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4502,7 +4516,7 @@ CREATE TABLE "tiki_semaphores" (
   "user" varchar(200) default NULL NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("semName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4528,7 +4542,7 @@ CREATE TABLE "tiki_sent_newsletters" (
   "data" image default '',
   "datatxt" image default '',
   PRIMARY KEY ("editionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4548,7 +4562,7 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
   "login" varchar(40) default '',
   "error" char(1) default '',
   KEY  (editionId)
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -4572,7 +4586,7 @@ CREATE TABLE "tiki_sessions" (
   "timestamp" numeric(14,0) default NULL NULL,
   "tikihost" varchar(200) default NULL NULL,
   PRIMARY KEY ("sessionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4594,7 +4608,7 @@ CREATE TABLE "tiki_sheet_layout" (
   "headerRow" numeric(4,0) default '0' NOT NULL,
   "footerRow" numeric(4,0) default '0' NOT NULL,
   "className" varchar(64) default NULL NULL
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4617,7 +4631,7 @@ CREATE TABLE "tiki_sheet_values" (
   "height" numeric(4,0) default '1' NOT NULL,
   "format" varchar(255) default NULL NULL,
   "user" varchar(200) default NULL NULL
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4636,7 +4650,7 @@ CREATE TABLE "tiki_sheets" (
   "description" text default '',
   "author" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("sheetId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4659,7 +4673,7 @@ CREATE TABLE "tiki_shoutbox" (
   "user" varchar(200) default NULL NULL,
   "hash" varchar(32) default NULL NULL,
   PRIMARY KEY ("msgId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4677,7 +4691,7 @@ CREATE TABLE "tiki_shoutbox_words" (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY ("word")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4698,7 +4712,7 @@ CREATE TABLE "tiki_structure_versions" (
   "structure_id" numeric(14 ,0) identity,
   "version" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("structure_id")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4724,7 +4738,7 @@ CREATE TABLE "tiki_structures" (
   "page_alias" varchar(240) default '' NOT NULL,
   "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("page_ref_id")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4780,7 +4794,7 @@ CREATE TABLE "tiki_submissions" (
   "rating" decimal(3,2) default NULL NULL,
   "isfloat" char(1) default NULL NULL,
   PRIMARY KEY ("subId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4805,7 +4819,7 @@ CREATE TABLE "tiki_suggested_faq_questions" (
   "created" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   PRIMARY KEY ("sfqId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4828,7 +4842,7 @@ CREATE TABLE "tiki_survey_question_options" (
   "qoption" text default '',
   "votes" numeric(10,0) default NULL NULL,
   PRIMARY KEY ("optionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4856,7 +4870,7 @@ CREATE TABLE "tiki_survey_questions" (
   "value" numeric(10,0) default NULL NULL,
   "average" decimal(4,2) default NULL NULL,
   PRIMARY KEY ("questionId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4882,7 +4896,7 @@ CREATE TABLE "tiki_surveys" (
   "created" numeric(14,0) default NULL NULL,
   "status" char(1) default NULL NULL,
   PRIMARY KEY ("surveyId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -4912,7 +4926,7 @@ CREATE TABLE "tiki_tags" (
   "ip" varchar(15) default NULL NULL,
   "flag" char(1) default NULL NULL,
   PRIMARY KEY ("tagName","pageName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4933,7 +4947,7 @@ CREATE TABLE "tiki_theme_control_categs" (
   "categId" numeric(12,0) default '0' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("categId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4956,7 +4970,7 @@ CREATE TABLE "tiki_theme_control_objects" (
   "name" varchar(250) default '' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("objId","type")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -4977,7 +4991,7 @@ CREATE TABLE "tiki_theme_control_sections" (
   "section" varchar(250) default '' NOT NULL,
   "theme" varchar(250) default '' NOT NULL,
   PRIMARY KEY ("section")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5004,7 +5018,7 @@ CREATE TABLE "tiki_topics" (
   "active" char(1) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("topicId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5037,7 +5051,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMultilingual" char(1) default 'n',
   "description" text default '',
   PRIMARY KEY ("fieldId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5069,7 +5083,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "longdesc" image default '',
   "version" varchar(40) default NULL NULL,
   PRIMARY KEY ("attId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5094,7 +5108,7 @@ CREATE TABLE "tiki_tracker_item_comments" (
   "title" varchar(200) default NULL NULL,
   "posted" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("commentId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5117,7 +5131,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
   "lang" char(16) default NULL NULL,
   "value" text default '',
   PRIMARY KEY ("itemId","fieldId","lang")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5143,7 +5157,7 @@ CREATE TABLE "tiki_tracker_items" (
   "status" char(1) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("itemId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5165,7 +5179,7 @@ CREATE TABLE "tiki_tracker_options" (
   "name" varchar(80) default '' NOT NULL,
   "value" text default NULL NULL,
   PRIMARY KEY ("trackerId","name")
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -5199,7 +5213,7 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL NULL,
   "orderAttachments" varchar(255) default 'filename,created,filesize,downloads,desc' NOT NULL,
   PRIMARY KEY ("trackerId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5221,7 +5235,7 @@ CREATE TABLE "tiki_untranslated" (
   "source" image NOT NULL,
   "lang" char(16) default '' NOT NULL,
   PRIMARY KEY ("source","lang")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5248,7 +5262,7 @@ CREATE TABLE "tiki_user_answers" (
   "questionId" numeric(10,0) default '0' NOT NULL,
   "optionId" numeric(10,0) default '0' NOT NULL,
   PRIMARY KEY ("userResultId","quizId","questionId","optionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5276,7 +5290,7 @@ CREATE TABLE "tiki_user_answers_uploads" (
   "filesize" varchar(255) default '' NOT NULL,
   "filecontent" image NOT NULL,
   PRIMARY KEY ("answerUploadId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5301,7 +5315,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "type" char(1) default NULL NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("name","user","position")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5324,7 +5338,7 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
   "user" varchar(200) default '' NOT NULL,
   "name" varchar(30) default NULL NULL,
   PRIMARY KEY ("user","folderId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5350,7 +5364,7 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
   "folderId" numeric(12,0) default '0' NOT NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("urlId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5381,7 +5395,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "useAuth" char(1) default NULL NULL,
   "smtpPort" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("accountId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5406,7 +5420,7 @@ CREATE TABLE "tiki_user_menus" (
   "position" numeric(4,0) default NULL NULL,
   "mode" char(1) default NULL NULL,
   PRIMARY KEY ("menuId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5429,7 +5443,7 @@ CREATE TABLE "tiki_user_modules" (
   "data" image default '',
   "parse" char(1) default NULL NULL,
   PRIMARY KEY ("name")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5460,7 +5474,7 @@ CREATE TABLE "tiki_user_notes" (
   "size" numeric(14,0) default NULL NULL,
   "parse_mode" varchar(20) default NULL NULL,
   PRIMARY KEY ("noteId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5484,7 +5498,7 @@ CREATE TABLE "tiki_user_postings" (
   "first" numeric(14,0) default NULL NULL,
   "level" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("user")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5506,7 +5520,7 @@ CREATE TABLE "tiki_user_preferences" (
   "prefName" varchar(40) default '' NOT NULL,
   "value" varchar(250) default NULL NULL,
   PRIMARY KEY ("user","prefName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5533,7 +5547,7 @@ CREATE TABLE "tiki_user_quizzes" (
   "resultId" numeric(10,0) default NULL NULL,
   "userResultId" numeric(10 ,0) identity,
   PRIMARY KEY ("userResultId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5554,7 +5568,7 @@ CREATE TABLE "tiki_user_taken_quizzes" (
   "user" varchar(200) default '' NOT NULL,
   "quizId" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("user","quizId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5590,7 +5604,7 @@ CREATE TABLE "tiki_user_tasks_history" (
   "accepted_creator" char(1) DEFAULT NULL NULL,             -- y - yes, n - no, null - waiting
   "accepted_user" char(1) DEFAULT NULL NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5620,7 +5634,7 @@ CREATE TABLE "tiki_user_tasks" (
   "percentage" numeric(4,0) default NULL NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -5643,7 +5657,7 @@ CREATE TABLE "tiki_user_votings" (
   "id" varchar(255) default '' NOT NULL,
   "optionId" numeric(10,0) default 0 NOT NULL,
   PRIMARY KEY ("`user`","id")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5670,7 +5684,7 @@ CREATE TABLE "tiki_user_watches" (
   "url" varchar(250) default NULL NULL,
   "email" varchar(200) default NULL NULL,
   PRIMARY KEY ("`user`","event","object")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5700,7 +5714,7 @@ CREATE TABLE "tiki_userfiles" (
   "path" varchar(255) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("fileId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5721,7 +5735,7 @@ CREATE TABLE "tiki_userpoints" (
   "user" varchar(200) default NULL NULL,
   "points" decimal(8,2) default NULL NULL,
   "voted" numeric(8,0) default NULL
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5744,7 +5758,7 @@ CREATE TABLE "tiki_users" (
   "email" varchar(200) default NULL NULL,
   "lastLogin" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("user")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5769,7 +5783,7 @@ CREATE TABLE "tiki_webmail_contacts" (
   "nickname" varchar(200) default NULL NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("contactId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5783,7 +5797,7 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
   "contactId" numeric(12,0) NOT NULL,
   "groupName" varchar(255) NOT NULL,
   PRIMARY KEY ("contactId","groupName")
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -5808,7 +5822,7 @@ CREATE TABLE "tiki_webmail_messages" (
   "isReplied" char(1) default NULL NULL,
   "isFlagged" char(1) default NULL NULL,
   PRIMARY KEY ("accountId","mailId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5838,7 +5852,7 @@ CREATE TABLE "tiki_wiki_attachments" (
   "created" numeric(14,0) default NULL NULL,
   "comment" varchar(250) default NULL NULL,
   PRIMARY KEY ("attId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -5858,7 +5872,7 @@ go
 CREATE TABLE "tiki_zones" (
   "zone" varchar(40) default '' NOT NULL,
   PRIMARY KEY ("zone")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5882,7 +5896,7 @@ CREATE TABLE "tiki_download" (
   "date" numeric(14,0) default '0' NOT NULL,
   "IP" varchar(50) default '' NOT NULL,
   PRIMARY KEY ("id")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5912,7 +5926,7 @@ CREATE TABLE "users_grouppermissions" (
   "permName" varchar(31) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5944,8 +5958,9 @@ CREATE TABLE "users_groups" (
   "groupFieldId" numeric(11,0) default NULL NULL,
   "registrationChoice" char(1) default NULL NULL,
   "registrationUsersFieldIds" text default '',
+  "userChoice" char(1) default NULL NULL,
   PRIMARY KEY ("groupName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5968,7 +5983,7 @@ CREATE TABLE "users_objectpermissions" (
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
   PRIMARY KEY ("objectId","objectType","groupName","permName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -5992,7 +6007,7 @@ CREATE TABLE "users_permissions" (
   "type" varchar(20) default NULL NULL,
   "admin" varchar(1) default NULL NULL,
   PRIMARY KEY ("permName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -6153,6 +6168,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms')
 go
 
@@ -6181,7 +6200,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directoy Batch Load', 'editors', 'file galleries')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries')
 go
 
 
@@ -6533,7 +6552,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_receive', 'Can  receive tasks from other users', 'registered', 'user')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user')
 go
 
 
@@ -6797,6 +6816,22 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -6814,7 +6849,7 @@ CREATE TABLE "users_usergroups" (
   "userId" numeric(8,0) default '0' NOT NULL,
   "groupName" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("userId","groupName")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -6870,7 +6905,7 @@ CREATE TABLE "users_users" (
   "unsuccessful_logins" numeric(14,0) default 0,
   "openid_url" varchar(255) default NULL NULL,
   PRIMARY KEY ("userId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -6925,7 +6960,7 @@ CREATE TABLE "tiki_integrator_reps" (
   "expiration" numeric(11,0) default '0' NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("repID")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -6957,7 +6992,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "enabled" char(1) default 'n' NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("ruleID")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -6967,15 +7002,15 @@ go
 --
 -- Dumping data for table 'tiki_integrator_rules'
 --
-INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags')
+INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags')
 go
 
 
-INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path')
+INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths')
 go
 
 
-INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.')
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.')
 go
 
 
@@ -6994,7 +7029,7 @@ CREATE TABLE "tiki_quicktags" (
   "tagicon" varchar(255) default NULL NULL,
   "tagcategory" varchar(255) default NULL NULL,
   PRIMARY KEY ("tagId")
-)   
+) ENGINE=MyISAM  
 go
 
 
@@ -7664,7 +7699,7 @@ CREATE TABLE "tiki_translated_objects" (
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL NULL,
   PRIMARY KEY (type, objId)
-)  
+) ENGINE=MyISAM 
 go
 
 
@@ -7684,7 +7719,7 @@ CREATE TABLE "tiki_friends" (
   "user" char(200) default '' NOT NULL,
   "friend" char(200) default '' NOT NULL,
   PRIMARY KEY ("`user`","friend")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7698,7 +7733,7 @@ CREATE TABLE "tiki_friendship_requests" (
   "userTo" char(200) default '' NOT NULL,
   "tstamp" timestamp NOT NULL,
   PRIMARY KEY ("userFrom","userTo")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7712,7 +7747,7 @@ CREATE TABLE "tiki_score" (
   "score" numeric(11,0) default '0' NOT NULL,
   "expiration" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("event")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7849,7 +7884,7 @@ CREATE TABLE "tiki_users_score" (
   "expire" numeric(14,0) default '0' NOT NULL,
   "tstamp" timestamp NOT NULL,
   PRIMARY KEY ("user","event_id")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7875,7 +7910,7 @@ go
 CREATE TABLE "tiki_file_handlers" (
   "mime_type" varchar(64) default NULL NULL,
   "cmd" varchar(238) default NULL
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7897,7 +7932,7 @@ CREATE TABLE "tiki_stats" (
   "day" numeric(14,0) default '0' NOT NULL,
   "hits" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("object","type","day")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7921,7 +7956,7 @@ CREATE TABLE "tiki_events" (
   "object" varchar(200) default '' NOT NULL,
   "method" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("callback_type","`order`")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7966,7 +8001,7 @@ CREATE TABLE "tiki_registration_fields" (
   `show` numeric(1,0) default '0' NOT NULL,
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -7982,7 +8017,7 @@ CREATE TABLE "tiki_actionlog_conf" (
  `status` char(1) default '',
 PRIMARY KEY (action, objectType),
 KEY (id)
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -8144,7 +8179,7 @@ CREATE TABLE "tiki_freetags" (
   "tag" varchar(30) default '' NOT NULL,
   "raw_tag" varchar(50) default '' NOT NULL,
   PRIMARY KEY ("tagId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -8162,7 +8197,7 @@ CREATE TABLE "tiki_freetagged_objects" (
   KEY (tagId),
   KEY (user),
   KEY (objectId)
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -8177,7 +8212,7 @@ CREATE TABLE "tiki_contributions" (
   "name" varchar(100) default NULL NULL,
   "description" varchar(250) default NULL NULL,
   PRIMARY KEY ("contributionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -8190,7 +8225,7 @@ CREATE TABLE "tiki_contributions_assigned" (
   "contributionId" numeric(12,0) NOT NULL,
   "objectId" numeric(12,0) NOT NULL,
   PRIMARY KEY ("objectId","contributionId")
-) 
+) ENGINE=MyISAM
 go
 
 
@@ -8243,10 +8278,10 @@ CREATE TABLE `tiki_mypage` (
   `wintitlecolor` varchar(16) default NULL NULL,
   `wintextcolor` varchar(16) default NULL NULL,
   `bgimage` varchar(255) default NULL NULL,
-  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL
+  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
   `winbgimage` varchar(255) default NULL NULL,
-  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL
-  PRIMARY KEY  (`id`),
+  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
+  PRIMARY KEY ("`id`")
   KEY `id_users` (`id_users`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM
