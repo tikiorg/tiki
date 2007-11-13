@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.1 2007-11-02 15:01:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.2 2007-11-13 11:32:08 frank_p Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -199,7 +199,7 @@ class WikiLib extends TikiLib {
 		// Move email notifications
 		$oldId = 'wikipage' . $oldName;
 		$newId = 'wikipage' . $newName;
-		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
+		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
 		$this->query($query, array( $newId, $oldId ) );
 
 		// theme_control_objects(objId,name)
