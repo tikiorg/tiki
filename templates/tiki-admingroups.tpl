@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.1 2007-11-13 17:37:16 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -74,6 +74,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}desc{/tr}</a></td>
 <td class="heading">{tr}Includes{/tr}</td>
+<td class="heading">{tr}User Choice{/tr}</td>
 <td class="heading">{tr}Permissions{/tr}</td>
 <td class="heading" style="width: 20px;">&nbsp;</td>
 </tr>
@@ -88,6 +89,7 @@ class="prevnext">{tr}All{/tr}</a>
 {$users[user].included[ix]}<br />
 {/section}
 </td>
+<td>{tr}{$users[user].userChoice}{/tr}</td>
 <td>
 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /> {$users[user].permcant}</a>
 </td>
@@ -189,6 +191,7 @@ To use a relative link, use ex.: <i>http:tiki-forums.php</i>
 <tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 <td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
 {/if}
+<tr class="formcolor"><td>{tr}User can assign to the group himself{/tr}</td><td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}></td></tr>
 {if $group ne ''}
 <tr class="formcolor"><td>&nbsp;
 <input type="hidden" name="olgroup" value="{$group|escape}" />
