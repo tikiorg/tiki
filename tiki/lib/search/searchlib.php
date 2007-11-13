@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.38.2.1 2007-11-04 12:53:58 nyloth Exp $
+// $Id: searchlib.php,v 1.38.2.2 2007-11-13 13:54:24 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -742,7 +742,7 @@ class SearchLib extends TikiLib {
             $ret[] = array(
               'pageName' => $res["page"],
               'location' => tra("Wiki"),
-              'data' => $tikilib->parse_data($res["data"], $res["is_html"]),
+              'data' => $tikilib->get_snippet($res['data'], $res['is_html']),
               'hits' => $res["hits"],
               'lastModif' => $res["lastModif"],
               'href' => $href,

@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.3 2007-11-13 13:54:22 sylvieg Exp $ *}
 
 {if $prefs.feature_search_stats eq 'y'}
   <div class="rbox" name="tip">
@@ -28,7 +29,16 @@
               {if $prefs.feature_referer_highlight eq 'y'}checked="checked"{/if}/>
           </td>
         </tr>
-        
+        <tr>
+          <td class="form">
+            {tr}Parsed the result (can be slow){/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="search_parsed_snippet"
+              {if $prefs.search_parsed_snippet eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+          
         <tr>
           <th class="heading" colspan="2" align="center">{tr}Database Search using MySQL 'Full-Text' Feature{/tr}</th>
         </tr>

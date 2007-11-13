@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48 2007-10-12 07:55:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.1 2007-11-13 13:54:24 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -49,6 +49,8 @@ class SearchLib extends TikiLib {
 			'permName': the permission the user needs to see each result
 			'objectKey': the field corresponding to objectId according to users_objectpermissions table
 			'objectType': the object type according to users_objectpermissions
+			'parsed': true data needs to be parsed - optional
+			'is_html': if switch html or not - optional
  * \param fulltext: if true a full text search is done, if no result, a simple search is done
  * \param $words the list of words
  * //todo: extract the short words from the list and do a simple search on them, them merge with the full search results on the remaining words
@@ -71,9 +73,11 @@ class SearchLib extends TikiLib {
 		$bindJoin = array();
 		$bindHaving = array();
 
-		$sqlFields = sprintf(
-			'SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s AS pageName',
+		$sqlFields = sprintf('SELECT %s AS name, '.(isset($h['parsed'])? '%s':'LEFT(%s, 240) AS data').', %s AS hits, %s AS lastModif, %s AS pageName',
 					$h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
+		if (isset($h['is_html'])) {
+			$sqlFields .= ', `is_html`';
+		}
 		
 		$id = $h['id'];
 		$temp_max = count($id);
@@ -247,11 +251,10 @@ class SearchLib extends TikiLib {
 			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
-			$res['data'] = preg_replace("/<[^>]+>/","",$res['data']);
-			$res['data'] = preg_replace("/<[^>]+$/","",$res['data']);
+			global $tikilib;
 			$ret[] = array(
 				'pageName' => $res["pageName"],
-				'data' => $res["data"],
+				'data' => $tikilib->get_snippet($res['data'], $res['is_html']),
 				'hits' => $res["hits"],
 				'lastModif' => $res["lastModif"],
 				'href' => $href,
@@ -266,6 +269,7 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
+		global $tikilib, $prefs;
 		$rv = array();
 		$search_wikis_comments = array(
 			'from' => '`tiki_comments` c, `tiki_pages` p',
@@ -300,6 +304,10 @@ class SearchLib extends TikiLib {
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
+		if ($prefs['search_parsed_snippet'] == 'y') {
+			$search_wikis['is_html'] = 'is_html';
+			$search_wikis['parsed'] = true;
+		}
 
 		// that pagerank re-calculation was speed handicap (timex30)
 		//$this->pageRank();
@@ -318,7 +326,7 @@ class SearchLib extends TikiLib {
 			$data['cant'] += $rv['cant'];
 			return $data;
 		}
-			
+
 	}
 	function find_relevance_cmp($a, $b) {
 		return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);

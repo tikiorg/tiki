@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.21 2007-11-12 20:24:21 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.22 2007-11-13 13:54:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7218,6 +7218,14 @@ if (!$simple_wiki) {
 		closedir ($h);
 		sort($flags);
 		return $flags;
+	}
+	function get_snippet($data, $is_html='n', $highlight='', $length=240) {
+		global $prefs;
+		if ($prefs['search_parsed_snippet'] == 'y') {
+			$data = $this->parse_data($data, $is_html);
+			$data = strip_tags($data);
+		}
+		return substr($data, 0, $length);
 	}
 
 }
