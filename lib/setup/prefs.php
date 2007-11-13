@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.12 2007-11-11 18:33:57 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.13 2007-11-13 13:54:22 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -460,6 +460,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_search_show_forbidden_obj'] = 'n';
 	$prefs['feature_search_show_forbidden_cat'] = 'n';
 	$prefs['search_refresh_index_mode'] = 'normal';
+	$prefs['search_parsed_snippet'] = 'y';
 	
 	# chat
 	$prefs['feature_chat'] = 'n';
