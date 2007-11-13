@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.1 2007-10-30 05:58:56 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.2 2007-11-13 15:22:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,8 +76,6 @@ if (isset($_REQUEST["new_prefs"])) {
         "short_date_format",
         "short_time_format",
         "siteTitle",
-        "slide_style",
-        "style",
         "tikiIndex"
     );
 
@@ -133,20 +131,6 @@ elseif (isset($_REQUEST["newadminpass"])) {
     $userlib->change_user_password("admin", $_REQUEST["adminpass"]);
     $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
-
-$llist = $tikilib->list_styles();
-$smarty->assign_by_ref( "styles", $llist);
-
-// Get list of available slideshow styles
-$slide_styles = array();
-$h = opendir("styles/slideshows");
-while ($file = readdir($h)) {
-    if (strstr($file, "css")) {
-        $slide_styles[] = $file;
-    }
-}
-closedir ($h);
-$smarty->assign_by_ref("slide_styles", $slide_styles);
 
 // Get list of time zones
 $smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
