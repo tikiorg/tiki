@@ -1,0 +1,40 @@
+{* $Header: /cvsroot/tikiwiki/tiki/css/cssmenu_horiz.css,v 1.1.2.1 2007-11-14 15:41:14 sylvieg Exp $ *}
+.cssmenu_horiz, .cssmenu_horiz ul { /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+.cssmenu_horiz a {
+	display: block;
+	width: 10em;
+	text-decoration : none;
+}
+
+.cssmenu_horiz li { /* all list items */
+	float: left;
+	border-bottom: 1px solid gray;
+	width: 10em; /* width needed or else Opera goes nuts */
+}
+.cssmenu_horiz li.menuSection1, .cssmenu_horiz li.menuSection2, .cssmenu_horiz li.menuSection3 {
+	background: url('../pics/icons/arrow_small.png') right no-repeat;
+}
+
+.cssmenu_horiz li ul { /* second-level lists */
+	position: absolute;
+	width: 10em;
+	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+}
+
+.cssmenu_horiz li ul ul { /* third-and-above-level lists */
+	margin: -1em 0 0 10em;
+}
+
+.cssmenu_horiz li:hover ul ul, .cssmenu_horiz li:hover ul ul ul, .cssmenu_horiz li.sfhover ul ul, .cssmenu_horiz li.sfhover ul ul ul {
+	left: -999em;
+}
+
+.cssmenu_horiz li:hover ul, .cssmenu_horiz li li:hover ul, .cssmenu_horiz li li li:hover ul, .cssmenu_horiz li.sfhover ul, .cssmenu_horiz li li.sfhover ul, .cssmenu_horiz li li li.sfhover ul { /* lists nested under hovered list items */
+	left: auto;
+}

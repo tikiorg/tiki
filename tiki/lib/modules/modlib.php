@@ -141,8 +141,8 @@ class ModLib extends TikiLib {
 		return true;
 	}
 
-	function list_user_modules() {
-		$query = "select * from `tiki_user_modules`";
+	function list_user_modules($sort_mode='name_asc') {
+		$query = "select * from `tiki_user_modules` order by ".$this->convert_sortmode($sort_mode);
 
 		$result = $this->query($query,array());
 		$query_cant = "select count(*) from `tiki_user_modules`";
