@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75 2007-10-12 07:55:39 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.1 2007-11-14 19:14:50 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -52,7 +52,7 @@ class CalendarLib extends TikiLib {
 			$bindvars=array();
 		}
 		$result = $this->query($query,$bindvars);
-		$ret = array();
+		$res = array();
 		while ($r = $result->fetchRow()) {
 			$res[] = $r['calendarId'];
 		}
