@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.3 2007-11-14 18:26:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.4 2007-11-14 19:28:08 sylvieg Exp $ *}
+{if count($channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -60,3 +61,4 @@ while ($opensec) {
 {/if}
 
 </ul>
+{/if}

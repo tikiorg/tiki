@@ -234,11 +234,11 @@ class MenuLib extends TikiLib {
 					++$optionLevel;
 				}
 			}
-			if (!empty($subMenu) && $findUrl) {
+			if (!empty($subMenu) && $findUrl && $cant) {
 				$channels['data'] = $subMenu;
 				$channels['cant'] = $cant;
 			} else {
-				$channels['data'] = '';
+				$channels['data'] = array();
 				$channels['cant'] = 0;
 			}
 		} else {
