@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/css/cssmenu_horiz.css,v 1.1.2.1 2007-11-14 15:41:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/css/cssmenu_horiz.css,v 1.1.2.2 2007-11-14 18:26:00 sylvieg Exp $ *}
 .cssmenu_horiz, .cssmenu_horiz ul { /* all lists */
 	padding: 0;
 	margin: 0;
@@ -37,4 +37,8 @@
 
 .cssmenu_horiz li:hover ul, .cssmenu_horiz li li:hover ul, .cssmenu_horiz li li li:hover ul, .cssmenu_horiz li.sfhover ul, .cssmenu_horiz li li.sfhover ul, .cssmenu_horiz li li li.sfhover ul { /* lists nested under hovered list items */
 	left: auto;
+}
+
+.cssmenu_horiz li.selected a {
+	background-color: #D3D3D3;
 }

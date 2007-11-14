@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.2 2007-11-14 15:41:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.3 2007-11-14 18:26:01 sylvieg Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -26,7 +26,7 @@ $smarty->assign('opensec', $opensec);
 {/php}
 {/if}
 
-<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}">
+<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}">
 {if $icon}<img src="pics/icons/folder.png" width="16" height="16" border="0" align="left" />{/if}
 {if $chdata.url and $link_on_section ne 'n'}<a href="{$chdata.url|escape}">{/if}
 {tr}{$chdata.name}{/tr}
@@ -37,7 +37,7 @@ $smarty->assign('opensec', $opensec);
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}"><a href="{$chdata.url|escape}">{tr}{$chdata.name}{/tr}</a></li>
+<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if $chdata.selected} selected{/if}"><a href="{$chdata.url|escape}">{tr}{$chdata.name}{/tr}</a></li>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}

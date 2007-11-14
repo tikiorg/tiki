@@ -227,7 +227,7 @@ class MenuLib extends TikiLib {
 					++$cant;
 					if (!empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
 						$findUrl = true;
-						$selectedPosition = $position;
+						$selectedPosition = $cant - 1;
 					}
 				}
 				if (is_numeric($option['type'])) {
