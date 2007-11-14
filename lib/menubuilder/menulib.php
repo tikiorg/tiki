@@ -223,12 +223,15 @@ class MenuLib extends TikiLib {
 					$cant = 0;
 				}
 				if (($option['type'] == 'o' && $optionLevel == $sectionLevel) || $optionLevel > $sectionLevel) {
-					$subMenu[$position] = $option;
+					$subMenu[] = $option;
 					++$cant;
 					if (!empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
 						$findUrl = true;
 						$selectedPosition = $position;
 					}
+				}
+				if (is_numeric($option['type'])) {
+					++$optionLevel;
 				}
 			}
 			if (!empty($subMenu) && $findUrl) {
