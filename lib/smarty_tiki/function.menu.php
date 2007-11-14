@@ -12,7 +12,7 @@ function smarty_function_menu($params, &$smarty)
     extract($params);
     // Param = zone
 
-    $smarty->caching = true;
+    $smarty->caching = false;
 	if (empty($link_on_section) || $link_on_section == 'y') {
 		$smarty->assign('link_on_section', 'y');
 	} else {
@@ -28,8 +28,15 @@ function smarty_function_menu($params, &$smarty)
 	$cache_id = "menu$id";
     }
 		if (isset($css)) {
-			$headerlib->add_cssfile('css/cssmenu.css',50);
+			if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
+				$css = "cssmenu_$type.css";
+			} else {
+				$css = 'cssmenu.css';
+				$type = '';
+			}
+			$headerlib->add_cssfile("css/$css", 50);
 			$tpl = 'tiki-user_cssmenu.tpl';
+			$smarty->assign('type', $type);
 		} else {
 			$tpl = 'tiki-user_menu.tpl';
 		}
