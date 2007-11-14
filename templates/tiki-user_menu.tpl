@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31 2007-10-12 07:55:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31.2.1 2007-11-14 19:38:13 sylvieg Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
-{foreach key=pos item=chdata from=$channels}
+{foreach key=pos item=chdata from=$menu_channels}
 {assign var=cname value=$menu_info.menuId|cat:'__'|cat:$chdata.position}
 {* ----------------------------- section *}
 {if $chdata.type ne 'o' and  $chdata.type ne '-'}
@@ -76,7 +76,7 @@ while ($opensec) {
 {* --------------------Dynamic menus *}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 <script type='text/javascript'>
-{foreach key=pos item=chdata from=$channels}
+{foreach key=pos item=chdata from=$menu_channels}
 {if $chdata.type ne 'o' and $chdata.type ne '-'}
   {if $prefs.feature_menusfolderstyle eq 'y'}
     setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
