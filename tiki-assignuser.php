@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25.2.1 2007-11-13 17:37:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25.2.2 2007-11-14 20:31:47 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_assign_my_groups != 'y') {
+if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_subscribe_groups != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
