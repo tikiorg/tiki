@@ -1,0 +1,51 @@
+{* $Header: /cvsroot/tikiwiki/tiki/css/cssmenu_vert.css,v 1.1.2.1 2007-11-14 15:41:15 sylvieg Exp $ *}
+.cssmenu_vert, .cssmenu_vert ul { /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	float : left;
+	width : 11em;
+}
+	
+.cssmenu_vert li { /* all list items */
+	position : relative;
+	float : left;
+	line-height : 1.25em;
+	margin-bottom : -1px;
+	width: 11em;
+}
+	
+.cssmenu_vert li ul { /* second-level lists */
+	position : absolute;
+	left: -999em;
+	margin-left : 11.05em;
+	margin-top : -1.35em;
+}
+	
+.cssmenu_vert li ul ul { /* third-and-above-level lists */
+	left: -999em;
+}
+	
+.cssmenu_vert li a {
+	width: 11em;
+	w\idth : 10em;
+	display : block;
+	font-weight : bold;
+	text-decoration : none;
+	background-color : white;
+	border : 1px solid gray;
+	padding : 0 0.5em;
+}
+	
+.cssmenu_vert li a:hover {
+	color : white;
+	background-color : gray;
+}
+	
+.cssmenu_vert li:hover ul ul, .cssmenu_vert li:hover ul ul ul, .cssmenu_vert li.sfhover ul ul, .cssmenu_vert li.sfhover ul ul ul {
+	left: -999em;
+}
+	
+.cssmenu_vert li:hover ul, .cssmenu_vert li li:hover ul, .cssmenu_vert li li li:hover ul, .cssmenu_vert li.sfhover ul, .cssmenu_vert li li.sfhover ul, .cssmenu_vert li li li.sfhover ul { /* lists nested under hovered list items */
+	left: auto;
+}

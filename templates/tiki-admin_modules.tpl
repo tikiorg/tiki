@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.7 2007-11-13 19:14:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.8 2007-11-14 15:41:15 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -319,14 +319,14 @@ have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups alwa
   <td>
     <select name="menus" id='list_menus'>
     {section name=ix loop=$menus}
-    <option value="{literal}{{/literal}menu id={$menus[ix].menuId} link_on_section=y{literal}}{/literal}">{$menus[ix].name}</option>
+    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
     {/section}
     </select>
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}Use Menu{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= css= link_on_section=y" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>  </td>
+	<a {popup text="Params: id= css= link_on_section=y type=vert|horiz" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>  </td>
 </tr>
 
 {if $prefs.feature_phplayers eq "y"}
