@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.22 2007-11-13 13:54:22 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.23 2007-11-14 18:57:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1861,10 +1861,11 @@ function add_pageview() {
 
 	$sorted_channels = array();
 
-	if (isset($channels['data'])) {
-	    $cant = $channels['cant'];
-	    $channels = $channels['data'];
+	if (!isset($channels['data']) || $channels['cant'] == 0) {
+		return $channels;
 	}
+	$cant = $channels['cant'];
+	$channels = $channels['data'];
 
 	$temp_max = sizeof($channels);
 	for ($i=0; $i < $temp_max; $i++) {
