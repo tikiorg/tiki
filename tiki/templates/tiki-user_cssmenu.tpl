@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.4 2007-11-14 19:28:08 sylvieg Exp $ *}
-{if count($channels) > 0}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.5 2007-11-14 19:38:13 sylvieg Exp $ *}
+{if count($menu_channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
 <ul class="cssmenu{if $type}_{$type}{/if} menu{$menu_info.menuId}">
 
-{foreach key=pos item=chdata from=$channels}
+{foreach key=pos item=chdata from=$menu_channels}
 
 {* ----------------------------- section *}
 {if $chdata.type ne 'o' and  $chdata.type ne '-'}
