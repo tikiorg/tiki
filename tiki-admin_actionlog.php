@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.2 2007-11-04 22:08:03 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.3 2007-11-15 14:47:49 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -7,8 +7,12 @@
 // Initialization
 require_once ('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
-require_once ('lib/ajax/ajaxlib.php');
+	require_once ('lib/ajax/ajaxlib.php');
 }
+if (empty($prefs['feature_jpgraph'])) {
+	$prefs['feature_jpgraph'] = 'n';//optional package does not go througp prefs
+}
+
 include_once('lib/logs/logslib.php');
 include_once('lib/userslib.php');
 include_once('lib/commentslib.php');
@@ -130,10 +134,10 @@ if ($tiki_p_admin == 'y') {
  	$groups = $tikilib->get_user_groups($user);
 	$groups = array_diff($groups, array('Anonymous'));
 	$_REQUEST['selectedUsers'] = array($user);
-	$selectedGroups = array();
-	foreach ($groups as $g) {
-		$selectedGroups[$g] = 'y';
-	}
+}
+$selectedGroups = array();
+foreach ($groups as $g) {
+	$selectedGroups[$g] = 'y';
 }
 
 $smarty->assign_by_ref('users', $users);
@@ -429,7 +433,7 @@ if (isset($_REQUEST['graph'])) {
 	$widthGroup = 70*count($groupContributions)+100+$legendWidth+$yTickWidth;
 	$space = 20;
 	//echo "$legendWidth _ $xUserTickWidth _ $xGroupTickWidth _ $yTickWidth _$widthWeek _ $widthTotal _ $widthUser _ $widthGroup";die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		require_once('lib/jpgraph/src/jpgraph.php');
 		require_once('lib/jpgraph/src/jpgraph_bar.php');
 		require_once('lib/jpgraph/src/jpgraph_mgraph.php');
@@ -467,7 +471,7 @@ if (isset($_REQUEST['graph'])) {
 		$title = sprintf(tra('%s Contributions: Addition'), $user);
 	}
 	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthUser, $height+$xUserTickWidth);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -504,7 +508,7 @@ if (isset($_REQUEST['graph'])) {
 		$title = sprintf(tra('%s Contributions: Suppression'), $user);
 	}
 	//echo '<pre>XXX';print_r($userContributions);print_r($series); die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthUser, $height+$xUserTickWidth);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -543,7 +547,7 @@ if (isset($_REQUEST['graph'])) {
 		$title2 = tra('Weeks');
 	}
 	//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthWeek, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -579,7 +583,7 @@ if (isset($_REQUEST['graph'])) {
 		$title2 = tra('Weeks');
 	}
 	//echo '<pre>XXX';print_r($contributionStat);print_r($series); die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthWeek, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -609,7 +613,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 	$title = tra('Total Contributions: Addition');
 	//echo "<pre>";print_r($contributionStat);print_r($series);die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthTotal, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -637,7 +641,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 	$title = tra('Total Contributions: Suppression');
 	//echo "<pre>";print_r($contributionStat);print_r($series);die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthTotal, $height);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -665,7 +669,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 	$title = tra('Groups Contributions: Addition');
 	//echo "<pre>";print_r($groupContributions);print_r($series);die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthGroup, $height+$xGroupTickWidth);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -696,7 +700,7 @@ if (isset($_REQUEST['graph'])) {
 	if ($series['totalVol']) {
 	$title = tra('Groups Contributions: Suppression');
 	//echo "<pre>";print_r($groupContributions);print_r($series);die;
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$graph = new Graph($widthGroup, $height+$xGroupTickWidth);
 		$graph->img->SetImgFormat($ext);
 		$logslib->graph_to_jpgraph($graph, $series, $accumulated, $_REQUEST['bgcolor'],$_REQUEST['legendBgcolor']);
@@ -723,7 +727,7 @@ if (isset($_REQUEST['graph'])) {
 	}
 	}
 
-	if ($feature_jpgraph == 'y') {
+	if ($prefs['feature_jpgraph'] == 'y') {
 		$background->Stroke();
 	} else {
 		ob_start();
@@ -732,7 +736,7 @@ if (isset($_REQUEST['graph'])) {
 		ob_end_flush();
 	}
 	die;
-} elseif ($feature_jpgraph == 'y') {
+} elseif ($prefs['feature_jpgraph'] == 'y') {
 	$smarty->assign('bgcolors' , array('white', 'gray', 'silver', 'ivory', 'whitesmoke', 'beige', 'darkgrey'));
 	//get_strings tra('white'), tra('gray'), tra('silver'), tra('ivory'), tra('whitesmoke'), tra('beige'),tra('darkgrey')
 	$smarty->assign('defaultBgcolor', 'whitesmoke');
