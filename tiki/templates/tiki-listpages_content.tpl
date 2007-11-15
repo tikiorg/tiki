@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.2 2007-10-30 20:06:53 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.3 2007-11-15 22:39:28 sylvieg Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}
   <div align="center">
@@ -273,6 +273,11 @@
         {if $prefs.feature_wiki_multiprint eq 'y'}
           <option value="print_pages" >{tr}Print{/tr}</option>
         {/if}
+
+		{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}
+			<option value="lock_pages" >{tr}Lock{/tr}</option>
+			<option value="unlock_pages" >{tr}Unlock{/tr}</option>
+		{/if}
       
         {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
       </select>                
