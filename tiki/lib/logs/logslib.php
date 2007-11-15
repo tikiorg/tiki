@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54 2007-10-16 17:23:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.1 2007-11-15 14:46:46 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -435,6 +435,8 @@ class LogsLib extends TikiLib {
 			foreach ($groups as $key=>$group) {
 				if (isset($selectedGroups) && $selectedGroups[$group] != 'y')
 					continue;
+				if (empty($action['contributions']))
+					continue;
 				foreach ($action['contributions'] as $contribution) {
 					if (!isset($statGroups[$group])) {
 						$statGroups[$group][$contribution['name']]['add'] = 0;
@@ -545,6 +547,8 @@ class LogsLib extends TikiLib {
 		$stats = array();
 		$actionlogConf = $this->get_all_actionlog_conf();
 		foreach ($actions as $action) {
+			if (empty($action['categId']))
+				continue;
 			$key = $action['categId'].'/'.$action['user'];;
 			if (!array_key_exists($key, $stats)) {
 				$stats[$key]['category'] = $categNames[$action['categId']];
