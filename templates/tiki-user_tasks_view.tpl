@@ -6,7 +6,7 @@
 {if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)} 
 
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">
- 		{html_image file='img/icons/edit.gif' width='20' height='16' border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}'}
+ 		{html_image file='pics/icons/page_edit.png' width='16' height='16' border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}'}
 	</a>&nbsp;
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">
     	{html_image file='img/icons2/tick.gif' width='15' height='15' border='0' title='{tr}Accept{/tr}' alt='{tr}Accept{/tr}'}
