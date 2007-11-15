@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.35 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.35.2.1 2007-11-15 19:00:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,12 @@ if (isset($_REQUEST["topic"])) {
     $uniqueid = $feed;
     $topic = "";
 }
+if (isset($_REQUEST['lang'])) {
+	$articleLang = $_REQUEST['lang'];
+} else {
+	$articleLang = '';
+}
+$uniqueid .= '/'.$articleLang;
 
 if ($topic and !$tikilib->user_has_perm_on_object($user,$topic,'topic','tiki_p_topic_read')) {
 	$errmsg=tra("Permission denied you cannot view this section");
@@ -56,7 +62,7 @@ if ($output["data"]=="EMPTY") {
 	$tmp = $prefs['desc_rss_'.$feed];
 	if ($desc<>'') $desc = $tmp;
 
-	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', $tikilib->now, $user, '', $topic);
+	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', $tikilib->now, $user, '', $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
