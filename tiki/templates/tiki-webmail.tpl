@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46.2.3 2007-11-15 21:19:55 sylvieg Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -296,7 +296,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email|escape}</a>
 [&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
-title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 </tr>

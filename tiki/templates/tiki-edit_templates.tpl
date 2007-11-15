@@ -49,7 +49,7 @@
 {/if}
 <input type="submit" name="saveTheme" value="{tr}Save Only in the Theme:{/tr} {$prefs.style|replace:'.css':''}" />
 {if $prefs.style_local eq 'y'}
-<a class="blogt" href="tiki-edit_templates.php?template={$template}&amp;delete=y}"><img src="img/icons2/delete.gif" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" border="0" title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" /></a>
+<a class="blogt" href="tiki-edit_templates.php?template={$template}&amp;delete=y}"><img src="pics/icons/cross.png" alt="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" border="0" title="{tr}Delete the copy in the theme:{/tr} {$prefs.style|replace:'.css':''}" /></a>
 {/if}
 {/if}
 </div>

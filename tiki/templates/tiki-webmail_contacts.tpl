@@ -46,7 +46,7 @@
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
 <td class="{cycle advance=false}"><a class="link" href="#" onclick="javascript:window.opener.document.getElementById('{$element}').value=window.opener.document.getElementById('{$element}').value + '{$channels[user].email}' + ' ';">{$channels[user].email}</a>
 [&nbsp;&nbsp;<a class="link" href="tiki-webmail_contacts.php?element={$element}&amp;section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
-title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]
+title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>&nbsp;&nbsp;]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 </tr>

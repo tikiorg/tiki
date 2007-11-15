@@ -35,7 +35,7 @@
 
 {if $edition_errors}
 <h2>{tr}Errors:{/tr} {$edition_info.subject} / {$edition_info.sent|tiki_short_datetime}</h2>
-<a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+<a href="tiki-newsletter_archives.php?deleteError={$edition_info.editionId}" title="{tr}Delete errors{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 <table class="normal">
 <tr><th>{tr}Email{/tr}</th><th>{tr}User{/tr}</th><th>{tr}Status{/tr}</th></tr>
 {cycle values="odd,even" print=false}

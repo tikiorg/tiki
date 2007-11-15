@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.1 2007-10-17 20:36:05 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.2 2007-11-15 21:19:55 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
@@ -111,7 +111,7 @@
 {section name=ix loop=$groups_g}
 <tr>
 <td class="{cycle advance=false}">{$groups_g[ix].groupName|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$groups_g[ix].nlId}&amp;group={$groups_g[ix].groupName}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 </tr>
 {/section}
 </table>
@@ -130,7 +130,7 @@
 {foreach key=incId item=incName from=$included_n}
 <tr>
 <td class="{cycle advance=false}">{$incName|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$nlId}&amp;included={$incId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
+<td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$nlId}&amp;included={$incId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 </tr>
 {/foreach}
 </table>

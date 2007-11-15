@@ -111,8 +111,8 @@
 <td  class="{cycle advance=false}">{$channels[user].questionId}</td>
 <td class="{cycle advance=false}">{$channels[user].question}</td>
 <td  class="{cycle}">
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{html_image file='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'}</a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{html_image file='pics/icons/page_edit.png' width="16" height="16" border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'}</a>
 </td>
 </tr>
 {/section}
