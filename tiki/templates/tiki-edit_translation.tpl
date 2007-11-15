@@ -68,7 +68,7 @@
 	<tr class="{cycle}">
 		<td>{$trads[i].langName}</td>
 		<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName}</a></td>
-		<td><a class="link" href="tiki-edit_translation.php?detach&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{html_image file='img/icons2/delete.gif' border='0' alt='{tr}detach{/tr}' title='{tr}detach{/tr}'}</a>
+		<td><a class="link" href="tiki-edit_translation.php?detach&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{html_image file='pics/icons/cross.png' border='0' alt='{tr}detach{/tr}' title='{tr}detach{/tr}'}</a>
 	</td></tr>
 	{/section}
 	</table>
