@@ -34,7 +34,7 @@ function smarty_function_menu($params, &$smarty)
 		}
 		$headerlib->add_cssfile("css/$css", 50);
 		$tpl = 'tiki-user_cssmenu.tpl';
-		$smarty->assign('type', $type);
+		$smarty->assign('menu_type', $type);
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}
