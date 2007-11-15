@@ -253,7 +253,7 @@ class Graphic // {{{1
 
 	function addDataHandler( $handler ) // {{{2
 	{
-		if( $handler instanceof DataHandler )
+		if( is_a($handler, 'DataHandler') )
 			$this->dataHandlers[] = $handler;
 	}
 
