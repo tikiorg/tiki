@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.3 2007-11-15 21:19:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.4 2007-11-16 19:26:59 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -78,7 +78,7 @@
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph{/tr}" />
-{if $feature_jpgraph eq 'y'}
+{if $prefs.feature_jpgraph eq 'y'}
 <br />{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" checked="checked" />
 <br />{tr}Background color:{/tr} <select name="bgcolor">{foreach item=color from=$bgcolors}<option value="{$color|escape}"{if $defaultBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>{/foreach}</select> 
 {tr}Legend background color:{/tr} <select name="legendBgcolor">{foreach item=color from=$bgcolors}<option value="{$color|escape}"{if $defaultLegendBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>{/foreach}</select>
