@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.23 2007-11-14 18:57:32 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.24 2007-11-16 20:36:24 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3429,7 +3429,7 @@ function add_pageview() {
 
 	// If the user is not admin then select `it` 's own galleries or public galleries
 	if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
-	    $whuser = "and `user`=? or `public`=?";
+	    $whuser = "and (`user`=? or `public`=?)";
 	    $bindvars=array('y',$user,'y');
 	} else {
 	    $whuser = "";
