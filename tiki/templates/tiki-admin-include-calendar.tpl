@@ -74,7 +74,7 @@
 <td><input type="text" name="calendar_start_year" value="{$prefs.calendar_start_year}" /></td>
 </tr>
 <tr class="form">
-<td><label>{tr}First year in the dropdown, either year number, or relative to current year (+/- N){/tr}<br /><i>{tr}if no jscalendar{/tr}</i></label></td>
+<td><label>{tr}Last year in the dropdown, either year number, or relative to current year (+/- N){/tr}<br /><i>{tr}if no jscalendar{/tr}</i></label></td>
 <td><input type="text" name="calendar_end_year" value="{$prefs.calendar_end_year}" /></td>
 </tr>
 
