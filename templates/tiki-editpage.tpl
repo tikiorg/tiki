@@ -1,11 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.2 2007-11-16 00:38:07 frank_p Exp $ *}
 {popup_init src="lib/overlib.js"}
-
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
-
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
 {if isset($data.draft)}
   {tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
@@ -24,7 +21,6 @@
 {if $contribution_needed eq 'y'}
 <div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
 {/if}
-
 {if $likepages}
 <div>
 {tr}Perhaps you are looking for:{/tr}
@@ -45,7 +41,6 @@
 </div>
 <br />
 {/if}
-
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
@@ -54,24 +49,20 @@
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
-<input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
+  <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm=false;" />
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 {/if}
 {/if}
-
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
-
 {if $current_page_id}
   <input type="hidden" name="current_page_id" value="{$current_page_id}" />
 {/if}
-
 {if $add_child}
   <input type="hidden" name="add_child" value="true" />
 {/if}
-
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
     <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
@@ -79,17 +70,13 @@
     <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
   {/if}
 {/if}
-
 <table class="normal">
-
 {if $categIds}
 {section name=o loop=$categIds}
   <input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
 {/section}
-
 <input type="hidden" name="categId" value="{$categIdstr}" />
 <input type="hidden" name="cat_categorize" value="on" />
-
 {if $prefs.feature_wiki_categorize_structure eq 'y'}
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
@@ -99,7 +86,6 @@
 {/if}
 {/if}
 {include file=structures.tpl}
-
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
   <tr class="formcolor">
     <td>{tr}Apply template{/tr}:</td>
@@ -113,7 +99,6 @@
     </td>
   </tr>
 {/if}
-
 {if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 <tr class="formcolor"><td>{tr}Use rating{/tr}:</td><td>
 {if $poll_rated.info}
@@ -152,7 +137,6 @@
 {/if}
 </td></tr>
 {/if}
-
 {if $prefs.feature_smileys eq 'y'&&!$wysiwyg}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
@@ -165,7 +149,6 @@
     <td><input style="width:98%;" type="text" name="description" value="{$description|escape}" /></td>
   </tr>
 {/if}
-
 <tr class="formcolor">
 {if $wysiwyg ne 'y'}
 <td>
@@ -187,7 +170,6 @@
 {editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 {/if}
 </td></tr>
-
 {if $prefs.feature_wiki_replace eq 'y'}
 <script type="text/javascript">
 {literal}
@@ -196,7 +178,6 @@ function searchrep() {
   s = document.getElementById('search')
   r = document.getElementById('replace')
   t = document.getElementById('editwiki')
-
   var opt = 'g';
   if (c.checked == true) {
     opt += 'i'
@@ -207,7 +188,6 @@ function searchrep() {
 }
 {/literal}
 </script>
-
 <tr class="formcolor"><td>{tr}Regex search {/tr}:</td><td>
 <input style="width:100;" class="wikitext" type="text" id="search"/>
 {tr}Replace to{/tr}:
@@ -216,13 +196,11 @@ function searchrep() {
 <input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
 {/if}
-
 {if $prefs.feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr class="formcolor"><td>{tr}My Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:98%;" >{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
-
 {if $prefs.feature_multilingual eq 'y'}
 <tr class="formcolor"><td>{tr}Language{/tr}:</td><td>
 <select name="lang">
@@ -234,7 +212,6 @@ function searchrep() {
 </td></tr>
 {*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:98%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
 {/if}
-
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $prefs.wiki_feature_copyrights  eq 'y'}
@@ -257,7 +234,6 @@ function searchrep() {
 {if $prefs.wiki_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-
 {if $prefs.feature_wiki_import_html eq 'y'}
 <tr class="formcolor">
   <td>{tr}Import HTML{/tr}:</td>
@@ -274,7 +250,6 @@ function searchrep() {
   </td>
 </tr>
 {/if}
-
 {if $tiki_p_admin_wiki eq 'y' && $prefs.feature_wiki_import_page eq 'y'}
 <tr class="formcolor"><td>{tr}Import page{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -284,7 +259,6 @@ function searchrep() {
 {/if}
 </td></tr>
 {/if}
-
 {if $wysiwyg neq 'y'}
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
@@ -312,7 +286,6 @@ function searchrep() {
 </td></tr>
 {/if}
 {/if}
-
 {if $prefs.feature_wiki_icache eq 'y'}
 <tr class="formcolor"><td>{tr}Cache{/tr}</td><td>
     <select name="wiki_cache">
@@ -327,11 +300,9 @@ function searchrep() {
     </select> 
 </td></tr>
 {/if}
-
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
 {include file=antibot.tpl}
 {/if}
-
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$prefs.wikiLicensePage}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
 {if $prefs.wikiSubmitNotice neq ""}
@@ -349,18 +320,14 @@ function searchrep() {
 <td>&nbsp;</td>
 <td>
 <input type="hidden" name="page" value="{$page|escape}" />
-
+<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 {if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
   <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm=false;" />
 {/if}
-
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
-
 {if $prefs.feature_ajax eq 'y'}
   <input type="submit" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
 {/if}
-
 {if $page|lower ne 'sandbox'}
   <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
 {/if}
@@ -372,9 +339,5 @@ function searchrep() {
 {/if}
 </form>
 <br />
-
 {include file="tiki-page_bar.tpl"}
 {include file=tiki-edit_help.tpl}
-
-
-
