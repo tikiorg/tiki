@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.2 2007-11-15 22:39:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.3 2007-11-16 22:22:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $page) {
 				$info = $tikilib->get_page_info($page);
-				if (!empty($info['lockedby']) && ($tiki_p_admin_wiki == 'y' || ($user && $user == $info['lockedby']) || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_lock'))) {
+				if ($info['flag'] == 'L' && ($tiki_p_admin_wiki == 'y' || ($user && ($user == $info['lockedby']) || (!$info['lockedby'] && $user == $info['user'])))) {
 					$wikilib->unlock_page($page);
 					}	
 			}
@@ -109,7 +109,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $page) {
 				$info = $tikilib->get_page_info($page);
-				if (empty($info['lockedby']) && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_lock'))) {
+				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_lock'))) {
 					$wikilib->lock_page($page);
 					}	
 			}

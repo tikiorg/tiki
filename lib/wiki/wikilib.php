@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.2 2007-11-13 11:32:08 frank_p Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.3 2007-11-16 22:22:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -564,10 +564,10 @@ class WikiLib extends TikiLib {
     function lock_page($page) {
 	global $user;
 
-	$query = "update `tiki_pages` set `flag`=? where `pageName`=?";
-	$result = $this->query($query, array( "L",$page ) );
+	$query = "update `tiki_pages` set `flag`=?, `lockedby`=? where `pageName`=?";
+	$result = $this->query($query, array( "L", $user, $page ) );
 
-	if (isset($user)) {
+	if (!empty($user)) {
 		$query = "update `tiki_pages` set `user`=?  where `pageName`=?";
 
 		$result = $this->query($query, array( $user, $page ) );
