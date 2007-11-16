@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.4 2007-11-16 19:26:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.5 2007-11-16 20:28:05 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -82,7 +82,7 @@
 <br />{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" checked="checked" />
 <br />{tr}Background color:{/tr} <select name="bgcolor">{foreach item=color from=$bgcolors}<option value="{$color|escape}"{if $defaultBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>{/foreach}</select> 
 {tr}Legend background color:{/tr} <select name="legendBgcolor">{foreach item=color from=$bgcolors}<option value="{$color|escape}"{if $defaultLegendBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>{/foreach}</select>
-<br />{tr}Save graphs to file gallery:{/tr} <select name="galleryId"><option value="" selected="selected" />{section name=idx loop=$galleries}<option  value="{$galleries[idx].galleryId|escape}">{$galleries[idx].name}</option>{/section}</select>
+<br />{tr}Save graphs to image gallery:{/tr} <select name="galleryId"><option value="" selected="selected" />{section name=idx loop=$galleries}<option  value="{$galleries[idx].galleryId|escape}">{$galleries[idx].name}</option>{/section}</select>
 {/if}</td></tr>
 {if $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
