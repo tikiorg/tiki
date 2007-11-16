@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.6 2007-11-14 20:31:47 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.7 2007-11-16 20:26:02 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1616,5 +1616,5 @@ UPDATE `tiki_preferences` SET `name`='preset_galleries_thumb' WHERE `name`='pres
 #2007-11-13 sylvieg
 ALTER TABLE users_groups ADD userChoice CHAR(1) DEFAULT NULL;
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki');
-UPDATE  users_permissions set permName='tiki_p_subscribe_groups', permDesc='Can subscribe to groups' where perName='tiki_p_assign_my_groups';
+UPDATE  users_permissions set permName='tiki_p_subscribe_groups', permDesc='Can subscribe to groups' where permName='tiki_p_assign_my_groups';
 UPDATE users_grouppermissions set permName='tiki_p_subscribe_groups' where permName='tiki_p_assign_my_groups';
