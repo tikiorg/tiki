@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.24 2007-11-16 20:36:24 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.25 2007-11-17 08:11:48 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3384,98 +3384,6 @@ function add_pageview() {
 		    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 		    $ret[] = $aux;
 		}
-	}
-
-	if ($old_sort_mode == 'images asc') {
-	    usort($ret, 'compare_images');
-	}
-
-	if ($old_sort_mode == 'images desc') {
-	    usort($ret, 'r_compare_images');
-	}
-
-	if (in_array($old_sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    /*shared*/
-    function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
-	global $tiki_p_admin_galleries;
-	// If $user is admin then get ALL galleries, if not only user galleries are shown
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	// If the user is not admin then select `it` 's own galleries or public galleries
-	if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
-	    $whuser = "and (`user`=? or `public`=?)";
-	    $bindvars=array('y',$user,'y');
-	} else {
-	    $whuser = "";
-	    $bindvars=array('y');
-	}
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-
-	    if (empty($whuser)) {
-		$whuser = " and (`name` like ? or `description` like ?)";
-		$bindvars=array('y',$findesc,$findesc);
-	    } else {
-		$whuser .= " and (`name` like ? or `description` like ?)";
-		$bindvars[]=$findesc;
-		$bindvars[]=$findesc;
-	    }
-	}
-
-	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $aux = array();
-
-	    $aux["name"] = $res["name"];
-	    $gid = $res["galleryId"];
-	    $aux["visible"] = $res["visible"];
-	    $aux["id"] = $gid;
-	    $aux["galleryId"] = $res["galleryId"];
-	    $aux["description"] = $res["description"];
-	    $aux["created"] = $res["created"];
-	    $aux["lastModif"] = $res["lastModif"];
-	    $aux["user"] = $res["user"];
-	    $aux["hits"] = $res["hits"];
-	    $aux["public"] = $res["public"];
-	    $aux["theme"] = $res["theme"];
-	    $aux["geographic"] = $res["geographic"];
-	    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
-	    $ret[] = $aux;
 	}
 
 	if ($old_sort_mode == 'images asc') {
