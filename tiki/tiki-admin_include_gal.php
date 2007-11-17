@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.1 2007-11-07 20:44:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.2 2007-11-17 08:11:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -150,7 +150,7 @@ if ($prefs['feature_categories'] == 'y') {
 	$smarty->assign('catree', $catree);
 }
 
-$galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
+$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());

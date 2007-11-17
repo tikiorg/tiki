@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.3 2007-11-15 14:47:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.4 2007-11-17 08:11:47 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -286,7 +286,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 			else
 				$actions[$i]['link'] = 'tiki-browse_gallery.php?galleryId='.$actions[$i]['object'];
 			if (!isset($imageGalleryNames)) {
-				include_once('lib/imagegals/imagegallib.php');
+				global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 				$objects = $imagegallib->list_galleries(0, -1, 'name_asc', 'admin');
 				foreach ($objects['data'] as $object) {
 					$imageGalleryNames[$object['galleryId']] = $object['name'];
@@ -741,7 +741,8 @@ if (isset($_REQUEST['graph'])) {
 	//get_strings tra('white'), tra('gray'), tra('silver'), tra('ivory'), tra('whitesmoke'), tra('beige'),tra('darkgrey')
 	$smarty->assign('defaultBgcolor', 'whitesmoke');
 	$smarty->assign('defaultLegendBgcolor', 'white');
-	$galleries = $tikilib->list_visible_galleries(0, -1, 'name_asc', $user, '');
+	global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+	$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_asc', $user, '');
 	$smarty->assign('galleries', $galleries['data']);
 }
 
