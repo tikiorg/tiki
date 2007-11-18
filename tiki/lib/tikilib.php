@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.25 2007-11-17 08:11:48 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.26 2007-11-18 17:37:18 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5931,11 +5931,10 @@ if (!$simple_wiki) {
 }
 
 if (!$simple_wiki) {
-	// 26-Jun-2003, by zaufi
-	//
-	// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
-	//
-	preg_match_all("/\{maketoc.*?\}/", $data, $tocs);
+
+	$need_maketoc = stripos($data, '{maketoc');
+	$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
+
 	$anch = array();
 	$pageNum = 1;
 
@@ -5943,7 +5942,7 @@ if (!$simple_wiki) {
 	// HotWords will be replace only in ordinal text
 	// It looks __really__ goofy in Headers or Titles
 
-	if ($prefs['feature_hotwords'] == 'y') {
+	if ( $prefs['feature_hotwords'] == 'y' ) {
 		// Get list of HotWords
 		$words = $this->get_hotwords();
 	}
@@ -6176,15 +6175,19 @@ if (!$simple_wiki) {
 
 			$hdr_structure[$nb_hdrs] = '';
 
-			// If the current title for maketoc is the first, just initialize values
-
 			// Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
 			//   - if the current title deepest level is lesser than (or equal to)
 			//     the deepest level of the previous title : then we increment the last level number,
 			//   - else : we simply add new levels with value '1' (only if the previous level number was shown),
+			//
 			if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
 				$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
-				if ( $show_title_level[$hdrlevel] ) {
+				if ( $show_title_level[$hdrlevel] || ! $need_autonumbering ) {
+					//
+					// Increment the level number only if :
+					//     - the last title of the same level number has a displayed number
+					//  or - no title has a displayed number (no autonumbering)
+					//
 					$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
 				}
 			} else {
@@ -6200,6 +6203,8 @@ if (!$simple_wiki) {
 			// Update last_hdr info for the next header
 			$last_hdr = $hdr_structure[$nb_hdrs];
 			$nb_last_hdr = count($last_hdr);
+
+			$current_title_real_num = implode('.', $hdr_structure[$nb_hdrs]).'. ';
 
 			// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
 			$hideall = false;
@@ -6245,7 +6250,8 @@ if (!$simple_wiki) {
 			}
 
 			// Generate the final title text
-			$title_text = $current_title_num.substr($line, $hdrlevel + $addremove);
+			$title_text_base = substr($line, $hdrlevel + $addremove);
+			$title_text = $current_title_num.$title_text_base;
 
 			// create stable anchors for all headers
 			// use header but replace non-word character sequences
@@ -6260,12 +6266,18 @@ if (!$simple_wiki) {
 				$all_anchors[$thisid] = 1;
 			}
 
-			// Is any {maketoc} present on page?
-			if (count($tocs[0]) > 0) {
-				// OK. Must collect TOC entry
-				$pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=".urlencode($page)."&amp;pagenum=$pageNum": "";
-				array_push($anch, str_repeat("*", $hdrlevel)." <a href='$pageNumLink#$thisid' class='link'>".$title_text.'</a>');
+			// Collect TOC entry if any {maketoc} is present on the page
+			if ( $need_maketoc !== false ) {
+				array_push($anch, array(
+					'id' => $thisid,
+					'hdrlevel' => $hdrlevel,
+					'pagenum' => $pageNum,
+					'title' => $title_text_base,
+					'title_displayed_num' => $current_title_num,
+					'title_real_num' => $current_title_real_num
+				));
 			}
+
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
 				$line = '<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
@@ -6328,58 +6340,148 @@ if (!$simple_wiki) {
 	// Close open paragraph, lists, and div's
 	$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 
-	// 26-Jun-2003, by zaufi
-	// Replace {maketoc} from collected list of headers
-	$html = '';
+	/*
+	 * Replace special "maketoc" plugins
+	 *  Valid arguments :
+	 *    - type (look of the maketoc),
+	 *    - maxdepth (max level displayed),
+	 *    - title (replace the default title),
+	 *    - showhide (if set to y, add the Show/Hide link)
+	 *    - nolinks (if set to y, don't add links on toc entries)
+	 *    - nums : 
+	 *       * 'n' means 'no title autonumbering' in TOC,
+	 *       * 'force' means :
+	 *	    ~ same as 'y' if autonumbering is used in the page,
+	 *	    ~ 'number each toc entry as if they were all autonumbered'
+	 *       * any other value means 'same as page's headings autonumbering',
+	 *
+	 *  (Note that title will be translated if a translation is available)
+	 *
+	 *  Examples: {maketoc}, {maketoc type=box maxdepth=1 showhide=y}, {maketoc title="Page Content" maxdepth=3}, ...
+	 *  Obsolete syntax: {maketoc:box}
+	 */
+	$new_data = '';
+	$search_start = 0;
+	while ( ($maketoc_start = stripos($data, '{maketoc', $search_start)) !== false ) {
+		$maketoc_length = strpos($data, '}', $maketoc_start) + 1 - $maketoc_start;
+		$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
 
-	// replacement for {maketoc}
-	foreach ($anch as $tocentry) {
-	    $html .= $tocentry . "\n";
-	}
-
-	if (count($anch)) {
-	    $html = $this->parse_data($html);
-		$html= preg_replace("/^<ul>/", '<ul class="toc">', $html);
-	}
-	$data = str_replace("{maketoc}", $html, $data);
-
-	$html = '';
-
-	// replacement for {maketoc:box}
-    $html .= "<table id='toc' class='toc' summary='".tra("index")."'>\n";
-    $html .= "<tr>";
-    $html .= "<td>";
-    $html .= "<div id='toctitle'>";
-    $html .= "<h3>".tra("index")."</h3>";
-    $html .= "</div>";
-    $html .= "<ul>\n";
-
-    foreach ($anch as $tocentry) {
-		$tocdepth=0;
-		while (substr($tocentry,0,1)=="*") {
-			$tocdepth++;
-			$tocentry = substr($tocentry,1);
+		// Handle old type definition for type "box" (and preserve environment for the title also)
+		if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
+			$maketoc_string = '{maketoc type=box showhide=y title="'.tra('index').'"'.substr($maketoc_string, 12);
 		}
-		$html .= "<li class='toclevel-".$tocdepth."'>".$tocentry."</li>\n";
+
+		$maketoc_string = str_replace('&quot;', '"', $maketoc_string);
+		$maketoc_regs = array();
+
+		if ( $maketoc_length == 9 || preg_match_all('/([^\s=\(]+)=([^"\s=\)\}]+|"[^"]*")/', $maketoc_string, $maketoc_regs) ) {
+
+			if ( $maketoc_start > 0 ) {
+				$new_data .= substr($data, 0, $maketoc_start);
+			}
+
+			// Set maketoc default values
+			$maketoc_args = array(
+				'type' => '',
+				'maxdepth' => 0, // No limit
+				'title' => 'Table Of Contents',
+				'showhide' => '',
+				'nolinks' => '',
+				'nums' => ''
+			);
+
+			// Build maketoc arguments list (and remove " chars if they are around the value)
+			if ( is_array($maketoc_regs) ) {
+				$nb_args = count($maketoc_regs[1]);
+				for ( $a = 0; $a < $nb_args ; $a++ ) {
+					$maketoc_args[strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
+				}
+			}
+
+			if ( $maketoc_args['title'] != '' ) {
+				// Translate maketoc title
+				$maketoc_summary = ' summary="'.tra($maketoc_args['title']).'"';
+				$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title']).'</h3></div>';
+			} else {
+				$maketoc_summary = '';
+				$maketoc_title = '';
+			}
+
+			// Build maketoc
+			switch ( $maketoc_args['type'] ) {
+				case 'box': 
+					$maketoc_header = '';
+					$maketoc = "<table id='toc' class='toc'$maketoc_summary>\n<tr><td>$maketoc_title<ul>";
+					$maketoc_footer = "</ul></td></tr></table>\n";
+					$link_class = 'toclink';
+					break;
+				default: 
+					$maketoc = '';
+					$maketoc_header = "<span id='toc'>".$maketoc_title;
+					$maketoc_footer = '</span>';
+					$link_class = 'link';
+			}
+			if ( count($anch) ) {
+				foreach ( $anch as $tocentry ) {
+					if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
+						continue;
+					}
+
+					// Generate the toc entry title (with nums)
+					if ( $maketoc_args['nums'] == 'n' ) {
+						$tocentry_title = '';
+					} elseif ( $maketoc_args['nums'] == 'force' && ! $need_autonumbering ) {
+						$tocentry_title = $tocentry['title_real_num'];
+					} else {
+						$tocentry_title = $tocentry['title_displayed_num'];
+					}
+					$tocentry_title .= $tocentry['title'];
+
+					// Generate the toc entry link
+					$tocentry_link = '#'.$tocentry['id'];
+					if ( $tocentry['pagenum'] > 1 ) {
+						$tocentry_link = $PHP_SELF.'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
+					}
+					if ( $maketoc_args['nolinks'] != 'y' ) {
+						$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
+					}
+					
+					if ( $maketoc != '' ) $maketoc.= "\n";
+					switch ( $maketoc_args['type'] ) {
+						case 'box':
+							$maketoc .= "<li class='toclevel-".$tocentry['hdrlevel']."'>".$tocentry_title."</li>";
+							break;
+						default:
+							$maketoc .= str_repeat('*', $tocentry['hdrlevel']).$tocentry_title;
+					}
+				}
+				$maketoc = $this->parse_data($maketoc);
+				$maketoc = ereg_replace("^<ul>", '<ul class="toc">', $maketoc);
+
+				if ( $link_class != 'link' ) {
+					$maketoc = ereg_replace("'link'", "'$link_class'", $maketoc);
+				}
+			}
+			$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
+
+			// Add a Show/Hide link
+			if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
+				$maketoc .= "<script type='text/javascript'>\n"
+					. "//<![CDATA[\n"
+					. " if (window.showTocToggle) { var tocShowText = '".tra('Show')."'; var tocHideText = '".tra('Hide')."'; showTocToggle(); }\n"
+					. "//]]>;\n"
+					. "</script>\n";
+			}
+
+			$new_data .= $maketoc;
+			$data = substr($data, $maketoc_start + $maketoc_length);
+			$search_start = 0; // Reinitialize search start cursor, since data now begins after the last replaced maketoc
+		} else {
+			$search_start = $maketoc_start + $maketoc_length;
+		}
 	}
+	$data = $new_data.$data;
 
-	if (count($anch)) {
-		$html = $this->parse_data($html);
-		$html= preg_replace("'link'", "'toclink'", $html);
-    }
-    $html .= "</ul>";
-    $html .= "</td>";
-    $html .= "</tr>";
-    $html .= "</table>\n";
-    $html .= "<p><script type='text/javascript'>\n";
-    $html .= "//<![CDATA[\n";
-    $html .= " if (window.showTocToggle) { var tocShowText = '".tra("show")."'; var tocHideText = '".tra("hide")."'; showTocToggle(); }\n";
-    $html .= "//]]>;\n";
-    $html .= "</script></p>\n";
-
-	$data = str_replace("{maketoc:box}", $html, $data);
-
-	$data = str_replace("{maketoc}", "<h2>".tra("Table Of Contents")."</h2>" . $html, $data);
 // closing if ($simple_wiki){
 }
 
