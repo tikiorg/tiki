@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.4 2007-11-13 17:37:16 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.5 2007-11-19 21:27:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1024,9 +1024,10 @@ function get_included_groups($group, $recur=true) {
 }
 
     function remove_user_from_group($user, $group) {
-	global $cachelib;
-	require_once("lib/cache/cachelib.php");
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	global $tikilib;
 	$cachelib->invalidate('user_details_'.$user);
+	$tikilib->invalidate_usergroups_cache($user);
 
 	$userid = $this->get_user_id($user);
 
@@ -1763,9 +1764,10 @@ function get_included_groups($group, $recur=true) {
     }
 
     function assign_user_to_group($user, $group) {
-	global $cachelib;
-	require_once("lib/cache/cachelib.php");
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	global $tikilib;
 	$cachelib->invalidate('user_details_'.$user);
+	$tikilib->invalidate_usergroups_cache($user);
 
 	$group_ret = false;
 	$userid = $this->get_user_id($user);
