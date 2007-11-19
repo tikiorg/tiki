@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6.2.2 2007-11-06 20:51:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_group.php,v 1.6.2.3 2007-11-19 22:09:20 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
@@ -12,7 +12,7 @@ function wikiplugin_group_help() {
 	return $help;
 }
 function wikiplugin_group($data, $params) {
-	global $user, $userlib;
+	global $user, $tikilib;
 	$dataelse = '';
 	if (strpos($data,'{ELSE}')) {
 		$dataelse = substr($data,strpos($data,'{ELSE}')+6);
@@ -29,7 +29,7 @@ function wikiplugin_group($data, $params) {
 		return '';
 	}
 
-	$userGroups = $userlib->get_user_groups($user);
+	$userGroups = $tikilib->get_user_groups($user);
 
 	if (count($userGroups) > 1) { //take away the anonynous as everybody who is registered is anonynmous
 		foreach ($userGroups as $key=>$grp) {
