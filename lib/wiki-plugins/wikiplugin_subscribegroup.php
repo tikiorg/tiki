@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.4 2007-11-19 23:23:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.5 2007-11-19 23:41:20 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
 
 function wikiplugin_subscribegroup_help() {
 	$help = tra('Subscribe or unsubscribe to a group').":\n";
-	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text, action=Name of submit button) /}<br />~/np~";
+	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text, subscribe_action=Name of subscribe submit button, unsubscribe_action=Name of unsubscribe submit button) /}<br />~/np~";
 	return $help;
 }
 function wikiplugin_subscribegroup($data, $params) {
@@ -50,15 +50,18 @@ function wikiplugin_subscribegroup($data, $params) {
 			return tra('Incorrect param');
 		}
 		$text = empty($unsubscribe)? 'Unsubscribe %s': $unsubscribe;
+		if (!isset($subscribe_action)) {
+			$subscribe_action = 'OK';
+		}
+		$smarty->assign('action', $subscribe_action);
 	} else {
 		$text = empty($subscribe)? 'Subscribe to %s': $subscribe;
+		if (!isset($unsubscribe_action)) {
+			$unsubscribe_action = 'OK';
+		}
+		$smarty->assign('action', $unsubscribe_action);
 	}
 	$smarty->assign('text', sprintf(tra($text), $group));
-	if (!isset($action)) {
-		$action = 'OK';
-	}
-	echo 'GGGG'.$action;
-	$smarty->assign('action' , $action);
 	$smarty->assign('subscribeGroup', $group);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroup.tpl');
 	return $data;
