@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.26 2007-11-18 17:37:18 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.27 2007-11-19 05:34:44 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5932,7 +5932,7 @@ if (!$simple_wiki) {
 
 if (!$simple_wiki) {
 
-	$need_maketoc = stripos($data, '{maketoc');
+	$need_maketoc = strpos($data, '{maketoc');
 	$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 	$anch = array();
@@ -6362,7 +6362,7 @@ if (!$simple_wiki) {
 	 */
 	$new_data = '';
 	$search_start = 0;
-	while ( ($maketoc_start = stripos($data, '{maketoc', $search_start)) !== false ) {
+	while ( ($maketoc_start = strpos($data, '{maketoc', $search_start)) !== false ) {
 		$maketoc_length = strpos($data, '}', $maketoc_start) + 1 - $maketoc_start;
 		$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
 
