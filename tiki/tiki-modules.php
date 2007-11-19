@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69 2007-10-14 17:51:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.1 2007-11-19 21:29:06 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ global $prefs, $user, $userlib, $tiki_p_configure_modules, $smarty, $tikidomain,
 clearstatcache();
 
 if ($user != 'admin') {
-	$user_groups = $userlib->get_user_groups($user);
+	$user_groups = $tikilib->get_user_groups($user);
 } else {
 	$allgroups = $userlib->list_all_groups();
 	$user_groups = array();

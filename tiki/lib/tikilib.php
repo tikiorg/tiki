@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.29 2007-11-19 18:44:40 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.30 2007-11-19 21:27:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1416,6 +1416,9 @@ function add_pageview() {
 	    return $this->usergroups_cache[$user];
 	}
     }
+	function invalidate_usergroups_cache($user) {
+		unset($this->usergroups_cache[$user]);
+	}
 
     function get_user_cache_id($user) {
       $groups = $this->get_user_groups($user);
