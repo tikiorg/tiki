@@ -8,7 +8,7 @@
     <select name="category" onchange="this.form.submit()">
       <option value="All">{tr}All{/tr}</option>
       {section name=ct loop=$list_categories}
-        <option {if $category eq $list_categories[ct]} selected="selected"{/if}>{tr}{$list_categories[ct]}{/tr}</option>
+        <option value="{$list_categories[ct]}" {if $category eq $list_categories[ct]} selected="selected"{/if}>{tr}{$list_categories[ct]}{/tr}</option>
       {/section}
     </select>
   </form>
