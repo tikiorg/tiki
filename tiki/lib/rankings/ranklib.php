@@ -22,7 +22,7 @@ class RankLib extends TikiLib {
 			if ($this->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$aux['name'] = $res['pageName'];
 				$aux['hits'] = $res['hits'];
-				$aux['href'] = 'tiki-index.php?page=' . $res['pageName'];
+				$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
 				$ret[] = $aux;
 				++$count;
 			}
@@ -47,7 +47,7 @@ class RankLib extends TikiLib {
 			if ($this->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$aux['name'] = $res['pageName'];
 				$aux['hits'] = $res['pageRank'];
-				$aux['href'] = 'tiki-index.php?page=' . $res['pageName'];
+				$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
 				$ret[] = $aux;
 				++$count;
 			}
@@ -71,7 +71,7 @@ class RankLib extends TikiLib {
 			if ($this->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$aux['name'] = $res['pageName'];
 				$aux['hits'] = $res['lastModif'];
-				$aux['href'] = 'tiki-index.php?page=' . $res['pageName'];
+				$aux['href'] = 'tiki-index.php?page=' . urlencode($res['pageName']);
 				$ret[] = $aux;
 				++$count;
 			}
