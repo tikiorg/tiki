@@ -12,7 +12,7 @@
 <tr class="formcolor"><td>{tr}Category{/tr}:</td><td>
 <select name="tagcategory">
 {section name=ct loop=$list_categories}
-<option {if $info.tagcategory eq $list_categories[ct]} selected="selected"{/if}>{tr}{$list_categories[ct]}{/tr}</option>
+<option {if $info.tagcategory eq $list_categories[ct]} value="{$list_categories[ct]}" selected="selected"{/if}>{tr}{$list_categories[ct]}{/tr}</option>
 {/section}
 </select>
 </td></tr>
