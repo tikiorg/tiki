@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.3 2007-11-19 22:30:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.4 2007-11-19 23:23:03 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
 
 function wikiplugin_subscribegroup_help() {
 	$help = tra('Subscribe or unsubscribe to a group').":\n";
-	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text) /}<br />~/np~";
+	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text, action=Name of submit button) /}<br />~/np~";
 	return $help;
 }
 function wikiplugin_subscribegroup($data, $params) {
@@ -54,6 +54,11 @@ function wikiplugin_subscribegroup($data, $params) {
 		$text = empty($subscribe)? 'Subscribe to %s': $subscribe;
 	}
 	$smarty->assign('text', sprintf(tra($text), $group));
+	if (!isset($action)) {
+		$action = 'OK';
+	}
+	echo 'GGGG'.$action;
+	$smarty->assign('action' , $action);
 	$smarty->assign('subscribeGroup', $group);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroup.tpl');
 	return $data;
