@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.2 2007-11-05 14:12:54 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.3 2007-11-19 17:02:59 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -58,7 +58,7 @@ $crumbs[] = new Breadcrumb($prefs['siteTitle'], '', $prefs['tikiIndex']);
 
 if ( $prefs['site_closed'] == 'y' ) require_once('lib/setup/site_closed.php');
 require_once('lib/setup/error_reporting.php');
-if ( $prefs['display_server_load'] == 'y' || $prefs['use_load_threshold'] == 'y' ) require_once('lib/setup/load_threshold.php');
+if ( $prefs['feature_bot_bar_debug'] == 'y' || $prefs['use_load_threshold'] == 'y' ) require_once('lib/setup/load_threshold.php');
 require_once('lib/setup/absolute_urls.php');
 if ( ($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $prefs['case_patched'] == 'n' ) require_once('lib/setup/patches.php');
 require_once('lib/setup/sections.php');
