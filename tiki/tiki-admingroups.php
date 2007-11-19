@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.1 2007-11-13 17:37:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.2 2007-11-19 23:00:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,8 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 		$smarty->display("error.tpl");
 		die;
 	} else {
-		$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
+		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on')? 'y': '';
+	$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker, '', $_REQUEST['userChoice']);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -100,7 +101,7 @@ if (isset($_REQUEST["action"])) {
 			$logslib->add_log('admingroups','removed group '.$_REQUEST["group"]);
 			unset($_REQUEST['group']);
 		} else {
-			key_get($area);
+			key_get($area, tra('Remove group: ').$_REQUEST['group']);
 		}
 	}
 	if ($_REQUEST["action"] == 'remove') {
@@ -110,7 +111,7 @@ if (isset($_REQUEST["action"])) {
 			$userlib->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed permission '.$_REQUEST["permission"].' from group '.$_REQUEST["group"]);
     } else {
-      key_get($area);
+			key_get($area, sprintf(tra('Remove permission: %s on %s'), $_REQUEST['permission'], $_REQUEST['group']));
     }
 	}
 }
