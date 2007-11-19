@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.1 2007-10-29 20:20:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.2 2007-11-19 16:49:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -186,12 +186,12 @@ if ($_SESSION['CalendarViewGroups']) {
     } else {
       $sort_mode = "start_asc";
 		}
-    $listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50, $sort_mode);
+    $listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, -1, $sort_mode);
     for ($i = count($listevents) - 1; $i >= 0; --$i) {
       $listevents[$i]['modifiable'] = in_array($listevents[$i]['calendarId'], $modifiable)? "y": "n";
 		}
   } else {
-    $listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50);
+    $listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, -1);
   }
   $smarty->assign_by_ref('listevents', $listevents);
 } else {
