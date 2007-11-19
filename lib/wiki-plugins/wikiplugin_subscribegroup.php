@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.2 2007-11-19 19:18:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_subscribegroup.php,v 1.1.2.3 2007-11-19 22:30:48 sylvieg Exp $
 // Display wiki text if user is in one of listed groups
 // Usage:
 // {GROUP(groups=>Admins|Developers)}wiki text{GROUP}
@@ -22,6 +22,7 @@ function wikiplugin_subscribegroup($data, $params) {
 			return tra('Missing parameter');
 		}
 	}
+	echo $group;
 	if ($group == 'Anonymous' || $group == 'Registered') {
 		return tra('Incorrect param');
 	}
@@ -34,7 +35,7 @@ function wikiplugin_subscribegroup($data, $params) {
 
 	$groups = $userlib->get_user_groups_inclusion($user);
 
-	if (!empty($_REQUEST['subscribeGroup'])) {
+	if (!empty($_REQUEST['subscribeGroup']) && $_REQUEST['group'] == $group) {
 		if (isset($groups[$group])) {
 			$userlib->remove_user_from_group($user, $group);
 			unset($groups[$group]);
