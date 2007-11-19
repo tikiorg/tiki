@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.1 2007-11-13 13:54:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.2 2007-11-19 16:08:10 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -422,6 +422,7 @@ class SearchLib extends TikiLib {
 			'permName' => 'tiki_p_forum_read',
 			'objectType' => 'forum',
 			'objectKey' => 'f.`forumId`',
+			'objectKeyGroup' => 'c.`threadId`'
 		);
 		if (!empty($filter) && !empty($filter['forumId'])) {
 			$search_forums['filter'] .= ' AND f.forumId='.$filter['forumId'];
