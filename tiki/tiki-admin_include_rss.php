@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.19 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.19.2.1 2007-11-20 22:49:52 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,16 +12,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-
 $feeds = array('articles','directories','image_galleries','file_galleries','image_gallery','file_gallery', 'wiki','blogs','blog','forum','forums','mapfiles','tracker', 'trackers','calendar');
 
 if (isset($_REQUEST['rss'])) {
 	check_ticket('admin-inc-rss');
 
 	foreach($feeds as $feed){
-		$tikilib->set_preference('max_rss_'.$feed, htmlentities(trim($_REQUEST['max_rss_'.$feed])));
-		$tikilib->set_preference('title_rss_'.$feed, htmlentities(trim($_REQUEST['title_rss_'.$feed])));
-		$tikilib->set_preference('desc_rss_'.$feed, htmlentities(trim($_REQUEST['desc_rss_'.$feed])));
+		$tikilib->set_preference('max_rss_'.$feed, trim($_REQUEST['max_rss_'.$feed]));
+		$tikilib->set_preference('title_rss_'.$feed, trim($_REQUEST['title_rss_'.$feed]));
+		$tikilib->set_preference('desc_rss_'.$feed, trim($_REQUEST['desc_rss_'.$feed]));
 
 		if (isset($_REQUEST['rss_'.$feed]) && $_REQUEST['rss_'.$feed] == 'on') {
 		  $tikilib->set_preference('rss_'.$feed, 'y');
