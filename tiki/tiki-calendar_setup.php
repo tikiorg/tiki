@@ -10,7 +10,7 @@ $trunc = "20"; // put in a pref, number of chars displayed in cal cells
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
-} elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
+ } elseif (!isset($_REQUEST['todate']) && isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
 	$focusdate = $tikilib->now;
