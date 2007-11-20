@@ -7,7 +7,7 @@
 {if $listevents|@count eq 0}<tr><td colspan="5">{tr}No records found{/tr}</td></tr>{/if}
 {cycle values="odd,even" print=false}
 {section name=w loop=$listevents}
-<tr class="{cycle}">
+<tr class="{cycle}{if $listevents[w].start <= $smarty.now and $listevents[w].end >= $smarty.now} selected{/if}">
 <td>
 <a href="{$myurl}?todate={$listevents[w].start}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
 {$listevents[w].start|tiki_short_time}
