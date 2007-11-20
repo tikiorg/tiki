@@ -31,7 +31,7 @@ function tra($content, $lg='') {
 				  ${"lang_$l"} = $lang;
 				  unset($lang);
 				}
-				$lang = &${"lang_".$prefs['language']};
+				$lang = &${"lang_".$l};
 			}
 			if ($l and isset(${"lang_$l"}[$content])) {
 				return ${"lang_$l"}[$content];
