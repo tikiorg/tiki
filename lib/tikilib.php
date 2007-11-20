@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.30 2007-11-19 21:27:06 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.31 2007-11-20 00:14:09 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5147,6 +5147,27 @@ function add_pageview() {
 			return $data;
 		}
 	}
+    
+	// Replace dynamic content occurrences
+	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
+	    $temp_max = count($dcs[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
+		$repl = $this->get_actual_content($dcs[1][$i]);
+		$data = str_replace($dcs[0][$i], $repl, $data);
+	    }
+	}
+
+	// Replace Dynamic content with random selection
+	if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
+	    global $dcslib; include_once("dcs/dcslib.php");
+	    $temp_max = count($dcs[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
+		$repl = $dcslib->get_random_content($dcs[1][$i]);
+
+		$data = str_replace($dcs[0][$i], $repl, $data);
+	    }
+	}
+	
 	// Process pre_handlers here
 	if (is_array($this->pre_handlers)) {
 		foreach ($this->pre_handlers as $handler) {
@@ -5466,26 +5487,6 @@ function add_pageview() {
 	    //At the end put an update button
 	    //<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables').'"/></div>
 	    $data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
-	}
-
-	// Replace dynamic content occurrences
-	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
-	    $temp_max = count($dcs[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$repl = $this->get_actual_content($dcs[1][$i]);
-		$data = str_replace($dcs[0][$i], $repl, $data);
-	    }
-	}
-
-	// Replace Dynamic content with random selection
-	if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
-	    global $dcslib; include_once("dcs/dcslib.php");
-	    $temp_max = count($dcs[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$repl = $dcslib->get_random_content($dcs[1][$i]);
-
-		$data = str_replace($dcs[0][$i], $repl, $data);
-	    }
 	}
 
 	if (!$simple_wiki) {
