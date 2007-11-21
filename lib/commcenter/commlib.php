@@ -39,8 +39,11 @@ class CommLib extends TikiLib {
 						}
 					}
 				}
-				$this->create_page($page['pageName'], 0, $page['data'], $this->now, $page['comment'], $page['receivedFromUser'], $page['receivedFromSite'], $page['description']);
+				if ($parent_id)
+					$this->create_page($page['pageName'], 0, $page['data'], $this->now, $page['comment'], $page['receivedFromUser'], $page['receivedFromSite'], $page['description']);
 				$pages['data'][$key]['page_ref_id'] = $structlib->s_create_page($parent_id, $after_ref_id, $page['pageName'], $page['page_alias']);
+				if (!$parent_id)
+					$this->update_page($page['pageName'], $page['data'], $page['comment'], $page['receivedFromUser'],  $page['receivedFromSite'], $page['description'], true);
 			}
 			$query = "delete from `tiki_received_pages` where `structureName`=?";
 			$this->query($query, $info['structureName']);
