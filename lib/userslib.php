@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.7 2007-11-21 19:28:41 ntavares Exp $
+// CVS: $Id: userslib.php,v 1.247.2.8 2007-11-21 21:40:59 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -932,9 +932,12 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	
 	//TODO : recurse included groups 
 	if($group) {
-		$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName`=?';
+		if (!is_array($group)) {
+			$group = array($group);
+		}
+		$mid = ', `users_usergroups` uug where uu.`userId`=uug.`userId` and uug.`groupName` in ('.implode(',',array_fill(0, count($group),'?')).')';
 		$mmid = $mid;
-	    	$bindvars = array($group);
+		$bindvars = $group;
 		$mbindvars = $bindvars;
 	}
 	if($email) {
@@ -1022,6 +1025,16 @@ function get_included_groups($group, $recur=true) {
 		return $this->groupinclude_cache[$engroup];
 	}
 }
+	function get_including_groups($group) {
+		$query = 'select `groupName` from `tiki_group_inclusion` where `includeGroup`=?';
+		$result = $this->query($query, array($group));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['groupName'];
+			$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
+		}
+		return $ret;
+	}
 
     function remove_user_from_group($user, $group) {
 	global $cachelib; require_once("lib/cache/cachelib.php");
