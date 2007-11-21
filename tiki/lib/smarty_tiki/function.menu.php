@@ -26,6 +26,7 @@ function smarty_function_menu($params, &$smarty)
 		$cache_id = "menu$id|";
 	}
 	if (isset($css)) {
+		static $idCssmenu;
 		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
 			$css = "cssmenu_$type.css";
 		} else {
@@ -33,8 +34,10 @@ function smarty_function_menu($params, &$smarty)
 			$type = '';
 		}
 		$headerlib->add_cssfile("css/$css", 50);
+		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
 		$smarty->assign('menu_type', $type);
+		$smarty->assign('idCssmenu', $idCssmenu++);
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}

@@ -1,10 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.6 2007-11-15 20:57:37 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.7 2007-11-21 15:05:54 sylvieg Exp $ *}
 {if count($menu_channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
-{assign var=idCssMenu value=$idCssMenu+1}
 
-<ul id="cssMenu{$idCssMenu}" class="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}">
+<ul id="cssmenu{$idCssmenu}" class="cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}">
 
 {foreach key=pos item=chdata from=$menu_channels}
 
