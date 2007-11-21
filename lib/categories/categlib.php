@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.2 2007-11-21 18:26:37 ntavares Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.3 2007-11-21 19:28:41 ntavares Exp $
  *
  * \brief Categories support class
  *
@@ -1374,7 +1374,9 @@ class CategLib extends ObjectLib {
 			*/
 			global $userlib, $user;
 			$forcedcat = $userlib->get_user_group_default_category($user);
-			$categories[] = $forcedcat;
+			if ( !is_null($forcedcat) ) {
+				$categories[] = $forcedcat;
+			}
 		} else {
 			$new_categories = array_diff($categories, $old_categories);
 			$removed_categories = array_diff($old_categories, $categories);						

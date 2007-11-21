@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.6 2007-11-21 18:26:37 ntavares Exp $
+// CVS: $Id: userslib.php,v 1.247.2.7 2007-11-21 19:28:41 ntavares Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1963,7 +1963,7 @@ function get_included_groups($group, $recur=true) {
 	{
 	    // Create a group just for this user, for permissions
 	    // assignment.
-	    $this->add_group($user, "Personal group for $user.",'','','',0,0);
+	    $this->add_group($user, "Personal group for $user.",'',0,0,0,'');
 
 	    $this->assign_user_to_group($user, $user);
 	}
@@ -2205,7 +2205,7 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc, $home, $defcat, $theme, $utracker=0, $gtracker=0, $rufields='', $userChoice='') {
+	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='') {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
@@ -2215,14 +2215,14 @@ function get_included_groups($group, $recur=true) {
 		return true;
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$defcat,$theme,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='') {
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='') {
 		global $cachelib;
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
 			if ( $group != $olgroup ) return false;
 		}
 		if (!$this->group_exists($olgroup))
-			return $this->add_group($group, $desc, $home,$utracker,$gtracker, $userChoice);
+			return $this->add_group($group, $desc, $home, $utracker,$gtracker, $userChoice, $defcat, $theme);
 		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
 		$query .= "`groupDefCat`=?, `groupTheme`=?, ";
 		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=? where `groupName`=?";
