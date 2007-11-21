@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.1 2007-11-05 21:11:38 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.2 2007-11-21 18:26:37 ntavares Exp $
  *
  * \brief Categories support class
  *
@@ -1368,6 +1368,13 @@ class CategLib extends ObjectLib {
 		if (empty($categories)) {
 			$new_categories = array();
 			$removed_categories = $old_categories;
+
+			/* Fallback to group default category, if specified and none has been set
+			* NOTE this will only work if you set the user's default_group
+			*/
+			global $userlib, $user;
+			$forcedcat = $userlib->get_user_group_default_category($user);
+			$categories[] = $forcedcat;
 		} else {
 			$new_categories = array_diff($categories, $old_categories);
 			$removed_categories = array_diff($old_categories, $categories);						

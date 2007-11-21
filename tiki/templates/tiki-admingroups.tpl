@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.1 2007-11-13 17:37:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.2 2007-11-21 18:26:37 ntavares Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -147,8 +147,30 @@ class="prevnext">{tr}All{/tr}</a>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:<br />
 ({tr}Use wiki page name or full URL{/tr})<br />
-To use a relative link, use ex.: <i>http:tiki-forums.php</i>
+{tr}To use a relative link, use ex.{/tr}: <i>http:tiki-forums.php</i>
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
+<tr class="formcolor"><td><label for="groups_defcat">{tr}Group Default Category{/tr}:</label>
+  	 </td><td>
+  	 
+  	 <select name="defcat" id="groups_defcat" size="4">
+  	 <option value="" {if $groupdefcat eq ""} selected="selected"{/if}>{tr}none{/tr}</option>
+  	         {section name=ix loop=$categories}
+  	         <option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath}</option>
+  	         {/section}
+  	 </select>
+  	 </td></tr>
+  	 
+  	 <tr class="formcolor"><td><label for="groups_theme">{tr}Group Theme{/tr}:</label>
+  	 </td><td>
+  	 <select name="theme" id="groups_theme" multiple="multiple" size="4">
+  	 <option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr}</option>
+  	             {section name=ix loop=$av_themes}
+  	               <option value="{$av_themes[ix]|escape}"
+  	                 {if $grouptheme eq $av_themes[ix]}selected="selected"{/if}>
+  	                 {$av_themes[ix]}</option>
+  	             {/section}
+  	 </select>
+  	 </td></tr>
 {if $prefs.groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
 <select name="groupstracker">

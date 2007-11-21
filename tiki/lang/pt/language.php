@@ -2775,7 +2775,7 @@ $lang=Array(
 // "Only directly included" => "Only directly included",
 // "The group will have all the permissions of the included groups" => "The group will have all the permissions of the included groups",
 // "Group Homepage" => "Group Homepage",
-// "Use wiki page name or full URL" => "Use wiki page name or full URL",
+"Use wiki page name or full URL" => "Indique o nome da página wiki, ou um URL completo",
 // "Group Information Tracker" => "Group Information Tracker",
 // "choose a group tracker ..." => "choose a group tracker ...",
 // "choose a field ..." => "choose a field ...",
@@ -7207,5 +7207,10 @@ $lang=Array(
 "Your email was sent" => "Seu email foi enviado",
 "Top pages" => "Páginas mais populares",
 "Last pages" => "Páginas recentes",
+
+
+"Group Default Category" => "Categoria do grupo por omissão",
+"Group Theme" => "Tema para o grupo",
+
 "###end###"=>"###end###");
 ?>
