@@ -1,7 +1,7 @@
-{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_current.tpl,v 1.3 2007-10-14 17:51:00 mose Exp $ *}
+{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_current.tpl,v 1.3.2.1 2007-11-21 01:52:02 nkoth Exp $ *}
 
 {if $prefs.feature_freetags eq 'y' && count($modFreetagsCurrent) gt 0}
-  {eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}
+  {if !isset($tpl_module_title)}{eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}{/if}
 
   {tikimodule title=$tpl_module_title name="freetags_current" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
   {section name=ix loop=$modFreetagsCurrent.data}
