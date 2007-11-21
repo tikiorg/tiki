@@ -20,6 +20,8 @@ class CommLib extends TikiLib {
 			foreach ($pages['data'] as $page) {
 				$names[] = $page['pageName'];
 			}
+			if (empty($names))
+				return true;
 			$query = "select count(*) from `tiki_pages` where `pageName` in (".implode(',',array_fill(0,count($names),'?')).")";
 			if ($this->getOne($query, $names))
 				return false;
