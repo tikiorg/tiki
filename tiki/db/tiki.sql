@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-11-21 21:49:55 $
+# $Date: 2007-11-21 21:53:18 $
 # $Author: nkoth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4113,7 +4113,7 @@ CREATE TABLE users_groups (
   registrationUsersFieldIds text,
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
-  groupThemechar(1) varchar(255) default '',  
+  groupTheme varchar(255) default '',  
   PRIMARY KEY  (groupName(30))
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
