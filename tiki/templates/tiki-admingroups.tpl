@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.2 2007-11-21 18:26:37 ntavares Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.3 2007-11-21 18:37:08 ntavares Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -153,7 +153,7 @@ class="prevnext">{tr}All{/tr}</a>
   	 </td><td>
   	 
   	 <select name="defcat" id="groups_defcat" size="4">
-  	 <option value="" {if $groupdefcat eq ""} selected="selected"{/if}>{tr}none{/tr}</option>
+  	 <option value="" {if ($groupdefcat eq "") or ($groupdefcat eq 0)} selected="selected"{/if}>{tr}none{/tr}</option>
   	         {section name=ix loop=$categories}
   	         <option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $groupdefcat}selected="selected"{/if}>{$categories[ix].categpath}</option>
   	         {/section}
