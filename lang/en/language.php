@@ -6476,7 +6476,10 @@ $lang=Array(
 // "Tiki RSS feed for the wiki pages" => "Tiki RSS feed for the wiki pages",
 // "Last modifications to the Wiki." => "Last modifications to the Wiki.",
 // "invalid mapfile name" => "invalid mapfile name",
+// "Group Default Category" => "Group Default Category",
+// "Group Theme" => "Group Theme",
 "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}",
 "Your account request have been stored and will be activated by the admin as soon as possible." => "Your account request has been stored and will be activated by the admin as soon as possible.",
+
 "###end###"=>"###end###");
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/theme.php,v 1.2.2.2 2007-11-07 12:40:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/theme.php,v 1.2.2.3 2007-11-21 18:26:37 ntavares Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -22,6 +22,8 @@ if ( isset($_SESSION['try_style']) ) {
 if ( ! is_file('styles/'.$prefs['style']) and ! is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
 	$prefs['style'] = 'tikineat.css';
 }
+
+$prefs['style'] = $userlib->get_user_group_theme($user);
 
 include_once("csslib.php");
 $transition_style = $csslib->transition_css('styles/'.$prefs['style']);

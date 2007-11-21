@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.5 2007-11-19 21:27:06 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.6 2007-11-21 18:26:37 ntavares Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1352,8 +1352,44 @@ function get_included_groups($group, $recur=true) {
 		return $p;
 	}
 
-    //modified get_user_groups() to know if the user is part of the group directly or through groups inclusion
-        function get_user_groups_inclusion($user) {
+	/* Returns a theme/style for this group. It
+	* should honour any established precedence on theme policy
+	* TODO Enforce this style to propagate to template dir (get $resg templates, not default site style)
+	*/
+	function get_user_group_theme($user) {
+		global $tikilib;
+
+		$query = "select `default_group` from `users_users` where `login` = ?";
+		$result = $this->getOne($query, array($user));
+		if ( isset($result) && ($result!="") ) {
+			$query = "select `groupTheme` from `users_groups` where `groupName` = ?";
+			$resg = $this->getOne($query, array($result));
+			if ( isset($resg) && ($resg != "") ) {
+				return $resg;
+			}
+		}
+		return $tikilib->get_preference("style", "default.css");
+	}
+
+	/* Returns a default category for user's default_group
+	*/
+	function get_user_group_default_category($user) {
+		global $tikilib;
+		$query = "select `default_group` from `users_users` where `login` = ?";
+		$result = $this->getOne($query, array($user));
+  	
+		if ( isset($result) && ($result!="") ) {
+			$query = "select `groupDefCat` from `users_groups` where `groupName` = ?";
+			$resg = $this->getOne($query, array($result));
+			if ( !is_null($resg) ) {
+				return $resg;
+			}
+		}
+		return null;
+	}
+	
+  	//modified get_user_groups() to know if the user is part of the group directly or through groups inclusion
+    function get_user_groups_inclusion($user) {
 	    $userid = $this->get_user_id($user);
 
 	    $query = "select `groupName` from `users_usergroups` where `userId`=?";
@@ -1927,7 +1963,7 @@ function get_included_groups($group, $recur=true) {
 	{
 	    // Create a group just for this user, for permissions
 	    // assignment.
-	    $this->add_group($user, "Personal group for $user.", '',0,0);
+	    $this->add_group($user, "Personal group for $user.",'','','',0,0);
 
 	    $this->assign_user_to_group($user, $user);
 	}
@@ -2169,17 +2205,17 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='', $userChoice='') {
+	function add_group($group, $desc, $home, $defcat, $theme, $utracker=0, $gtracker=0, $rufields='', $userChoice='') {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
-		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?)";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
+		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?)";
+		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
 		$cachelib->invalidate('grouplist');
 		return true;
 	}
 
-	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='') {
+	function change_group($olgroup,$group,$desc,$home,$defcat,$theme,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='') {
 		global $cachelib;
 		if ( $olgroup == 'Anonymous' || $olgroup == 'Registered' ) {
 			// Changing group name of 'Anonymous' and 'Registered' is not allowed.
@@ -2188,8 +2224,9 @@ function get_included_groups($group, $recur=true) {
 		if (!$this->group_exists($olgroup))
 			return $this->add_group($group, $desc, $home,$utracker,$gtracker, $userChoice);
 		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
+		$query .= "`groupDefCat`=?, `groupTheme`=?, ";
 		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? , `registrationUsersFieldIds`=?, `userChoice`=? where `groupName`=?";
-		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $olgroup));
+		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $rufields, $userChoice, $olgroup));
 		$query = "update `users_usergroups` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `users_grouppermissions` set `groupName`=? where `groupName`=?";

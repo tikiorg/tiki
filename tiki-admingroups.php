@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.2 2007-11-19 23:00:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.3 2007-11-21 18:26:35 ntavares Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,11 @@ if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 $smarty->assign('trackers', $trackers);
 
 $ag_home = '';
+$ag_defcat = '';
+$ag_theme = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
+if (isset($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
+if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 
 // Process the form to add a group
 if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
@@ -57,7 +61,7 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 		die;
 	} else {
 		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on')? 'y': '';
-	$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker, '', $_REQUEST['userChoice']);
+		$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_defcat,$ag_theme,$ag_utracker,$ag_gtracker, '', $_REQUEST['userChoice']);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -78,7 +82,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	} else {
 		$_REQUEST['userChoice'] = '';
 	}
-	$userlib->change_group($_REQUEST['olgroup'],$_REQUEST['name'],$_REQUEST['desc'],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields, $_REQUEST['userChoice']);
+	$userlib->change_group($_REQUEST['olgroup'],$_REQUEST['name'],$_REQUEST['desc'],$ag_home,$ag_defcat,$ag_theme,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields, $_REQUEST['userChoice']);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
 		foreach ($_REQUEST["include_groups"] as $include) {
@@ -161,7 +165,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$groupperms,$trackerinfo,$memberlist,$userChoice) = array('','','','','','','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$defcatfieldid,$themefieldid,$groupperms,$trackerinfo,$memberlist,$userChoice) = array('','','','','','','','','','','');
 
 if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
@@ -174,6 +178,12 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 
 	if(isset($re["groupHome"]))
 		$grouphome = $re["groupHome"];
+
+	if(isset($re["groupDefCat"]))
+		$groupdefcat = $re["groupDefCat"];
+  	 
+	if(isset($re["groupHome"]))
+		$grouptheme = $re["groupTheme"];
 
 	if(isset($re['userChoice']))
 		$userChoice = $re['userChoice'];
@@ -243,6 +253,13 @@ if ($_REQUEST['group'] and isset($_REQUEST['show'])) {
 } else {
 	$memberslist = '';
 }
+
+include_once ('lib/categories/categlib.php');
+include_once ('categorize_list.php');  	 
+  	 
+$av_themes = $tikilib->list_styles();
+$smarty->assign_by_ref('av_themes', $av_themes);
+
 $smarty->assign('memberslist',$memberslist);
 
 $smarty->assign('inc', $inc);
@@ -250,6 +267,8 @@ $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);
 $smarty->assign('groupdesc', $groupdesc);
 $smarty->assign('grouphome',$grouphome);
+$smarty->assign('groupdefcat', $groupdefcat);
+$smarty->assign('grouptheme', $grouptheme);
 $smarty->assign('groupperms', $groupperms);
 $smarty->assign_by_ref('userChoice', $userChoice);
 
