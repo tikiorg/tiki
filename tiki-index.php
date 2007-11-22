@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.3 2007-11-22 21:43:15 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.4 2007-11-22 21:54:31 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -655,10 +655,10 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 
 if ($prefs['feature_wikiapproval'] == 'y') {
+	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
+		$smarty->assign('outOfSync', 'y');
+	}
 	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
-		if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
-			$smarty->assign('outOfSync', 'y');
-		}
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');
 		$smarty->assign('approvedPageName', $approvedPageName);
