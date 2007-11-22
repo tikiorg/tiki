@@ -34,9 +34,14 @@ $calids=$calendarlib->list_user_calIds();
 if (isset($module_params["calendarId"])) { $calids = array($module_params["calendarId"]); }
 if ($calids=="") $calids=array(0);
 
-// get all calendar entries for user from thedate-32 days to thedate+32 days, maximum of 90 entries...
-// that are not private or somehow else locked:
-$items = $calendarlib->list_items($calids, $user, $thedate - 60*60*24*16, $thedate + 60*60*24*31, 0, 90 );
+// get all calendar entries for user for the month
+$firstDay =  TikiLib::make_time(0,0,0,intval($mon),1,intval($year));
+if ($mon == 12) {
+	$lastDay = TikiLib::make_time(0,0,0,1,1,intval($year)+1) - 1;
+} else {
+	$lastDay = TikiLib::make_time(0,0,0,intval($mon)+1,1,intval($year)) - 1; 
+}
+$items = $calendarlib->list_items($calids, $user, $firstDay, $lastDay, 0, -1 );
 
 // Calculate number of days in month
 // The format is S M T W T F S
@@ -150,11 +155,11 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 				$newval="";
 				unset($tmp);
 				$valtime = intval($val);
-				if (array_key_exists(mktime(0, 0, 0, intval($mon), intval($valtime), intval($year)),$items)) {
-					$tmp = $items[mktime(0, 0, 0, intval($mon), intval($valtime), intval($year))];
+				if (array_key_exists(TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year)),$items)) {
+					$tmp = $items[TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))];
 				}
 				if (isset($tmp)) if (is_array($tmp)) {
-					unset($items[mktime(0, 0, 0, intval($mon), intval($valtime), intval($year))]);
+					unset($items[TikiLib::make_time(0, 0, 0, intval($mon), intval($valtime), intval($year))]);
 
 
 
