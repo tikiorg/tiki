@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.2 2007-10-30 21:19:19 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.3 2007-11-22 19:58:45 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -36,6 +36,24 @@
 </select>
 <div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>
+
+{* Section that allows to reduce the user list item choices through a multiselect list of all list items of this field type (if supported by this fieldtype) *}
+
+<tr class="formcolor" id='itemChoicesRow' {if empty($field_types.$type.itemChoicesList)}style="display:none;"{/if}><td>{tr}Select list items that will be displayed:{/tr}</td><td>
+{foreach key=fk item=fi from=$field_types name=foreachname}
+{if isset($fi.itemChoicesList)}
+<select name="itemChoices[]" id='{$fk}itemChoices' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;"{else}style="display:none;"{/if} size="{math equation="min(10,x)" x=$fi.itemChoicesList|@count}" multiple="multiple">
+{sortlinks}
+{foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
+{$choice_k}
+<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{tr}{$choice_i}{/tr}</option>
+{/foreach}
+{/sortlinks}
+</select>
+{/if}
+{/foreach}
+</td></tr>
+
 <tr class="formcolor"><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"  ><td id='multilabel1' {if $type eq 'a' or $type eq 't' or $type eq 'o' or $type eq '' } style="" {else} style="visibility:hidden;" {/if}>{tr}Multilingual content{/tr}:</td><td id='multilabel2' {if $type eq 'a' or $type eq 't' or $type eq 'o' or $type eq '' } style="" {else} style="visibility:hidden;" {/if}><input type="checkbox" name="isMultilingual" {if $isMultilingual eq 'y'}checked="checked"{/if} /></td></tr>

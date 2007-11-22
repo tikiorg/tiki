@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.11 2007-11-09 19:18:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.12 2007-11-22 19:58:45 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -482,7 +482,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""{if $cur_field.value eq '' or $cur_field.value eq 'None'} selected="selected"{/if}></option>{/if}
 {sortlinks}
 {foreach item=flag from=$cur_field.flags}
-{if $flag ne 'None'}
+{if $flag ne 'None' and ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($flag, $cur_field.itemChoices) ) }
 {capture name=flag}
 {tr}{$flag}{/tr}
 {/capture}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.1 2007-10-30 21:19:18 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.2 2007-11-22 19:58:42 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["isHidden"] = 'n';
 	$info["isMandatory"] = 'n';
 	$info['description'] = '';
+	$info['itemChoices'] = array();
 }
 
 if (isset($_REQUEST['up']) && $_REQUEST['fieldId']) {
@@ -91,6 +92,7 @@ $smarty->assign('isPublic', $info["isPublic"]);
 $smarty->assign('isHidden', $info["isHidden"]);
 $smarty->assign('isMandatory', $info["isMandatory"]);
 $smarty->assign('description', $info["description"]);
+$smarty->assign_by_ref('itemChoices', $info['itemChoices']);
 
 
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != 'Rating')) {
@@ -172,7 +174,8 @@ function replace_tracker_from_request( $tracker_info )
 
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-	    $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],$isMultilingual);
+	$isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],
+	$isMultilingual, $_REQUEST["itemChoices"]);
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
@@ -186,6 +189,7 @@ function replace_tracker_from_request( $tracker_info )
     $smarty->assign('isHidden', $isHidden);
     $smarty->assign('isMandatory', $isMandatory);
     $smarty->assign('description', '');
+    $smarty->assign('itemChoices', '');
     $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.31 2007-11-20 00:14:09 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.32 2007-11-22 19:58:43 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7222,7 +7222,7 @@ if (!$simple_wiki) {
 		}
 	}
 
-	function get_flags() {
+	function get_flags($with_names = false, $translate = false, $sort_names = false) {
 		$flags = array();
 		$h = opendir("img/flags/");
 		while ($file = readdir($h)) {
@@ -7233,6 +7233,21 @@ if (!$simple_wiki) {
 		}
 		closedir ($h);
 		sort($flags);
+
+		if ( $with_names ) {
+			$ret = array();
+			foreach ( $flags as $f ) {
+				$ret[$f] = strtr($f, '_', ' ');
+				if ( $translate ) {
+					$ret[$f] = tra($ret[$f]);
+				}
+			}
+			if ( $sort_names ) {
+				asort($ret, SORT_STRING);
+			}
+			return $ret;
+		}
+
 		return $flags;
 	}
 	function get_snippet($data, $is_html='n', $highlight='', $length=240) {

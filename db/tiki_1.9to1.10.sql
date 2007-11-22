@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.8 2007-11-21 21:46:12 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.9 2007-11-22 19:58:42 nyloth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1622,3 +1622,6 @@ UPDATE users_grouppermissions set permName='tiki_p_subscribe_groups' where permN
 #2007-11-21 nkoth on behalf of ntavares==Panora200
 ALTER TABLE `users_groups` ADD `groupDefCat` int(12) DEFAULT 0;
 ALTER TABLE `users_groups` ADD `groupTheme` varchar(255) DEFAULT '';
+
+#2007-11-21 nyloth
+ALTER TABLE tiki_tracker_fields ADD itemChoices text;
