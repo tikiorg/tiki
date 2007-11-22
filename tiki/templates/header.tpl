@@ -35,7 +35,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {else}
 {$prefs.siteTitle}
 {if !empty($headtitle)} : {$headtitle}
-{elseif !empty($page)} : {$page|escape} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 {elseif !empty($arttitle)} : {$arttitle}
 {elseif !empty($title)} : {$title}
 {elseif !empty($thread_info.title)} : {$thread_info.title}
