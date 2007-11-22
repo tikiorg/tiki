@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: mod-users_list.php,v 1.2 2007-11-22 14:35:44 sylvieg Exp $
+// CVS: $Id: mod-users_list.php,v 1.3 2007-11-22 16:26:01 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -21,11 +21,16 @@ if (isset($module_params['group'])) {
  }
 $users = $userlib->get_users(0, -1, 'login_asc', '',!empty($module_params['initial'])? $module_params['initial']:'', isset($module_params['groups'])?true: false, $group);
 for ($i = 0; $i < $users['cant']; ++$i) {
+	$my_user = $users['data'][$i]['user'];
 	if (isset($module_params['realName']) && $module_params['realName'] == 'y') {
-		$users['data'][$i]['realName'] = $tikilib->get_user_preference($users['data'][$i]['user'],'realName','');
+		$users['data'][$i]['realName'] = $tikilib->get_user_preference($my_user,'realName','');
 	}
 	if (isset($module_params['avatar']) && $module_params['avatar'] == 'y') {
-		$users['data'][$i]['avatar'] = $tikilib->get_user_avatar($users['data'][$i]['user']);
+		$users['data'][$i]['avatar'] = $tikilib->get_user_avatar($my_user);
+	}
+	if ((isset($module_params['realName']) && $module_params['realName'] == 'y')
+		|| (isset($module_params['login']) && $module_params['login'] == 'y')) {
+		$users['data'][$i]['info_public'] = $tikilib->get_user_preference($my_user, 'user_information', 'public')!= 'private'?'y':'n';
 	}
 	if (isset($module_params['userPage']) && $module_params['userPage'] == 'y') {
 		global $feature_wiki_userpage;
@@ -36,8 +41,8 @@ for ($i = 0; $i < $users['cant']; ++$i) {
 			} else {
 				$pre = $prefs['feature_wiki_userpage_prefix'];
 			}
-			if ($tikilib->page_exists($pre.$users['data'][$i]['user'])) {
-				$users['data'][$i]['userPage'] = $pre.$users['data'][$i]['user'];
+			if ($tikilib->page_exists($pre.$my_user)) {
+				$users['data'][$i]['userPage'] = $pre.$my_user;
 			}
 		}
 	}
