@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.9 2007-11-10 22:21:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.10 2007-11-22 21:43:15 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -910,6 +910,20 @@ if (!$user or $user == 'anonymous') {
 }
 if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
+}
+if ($prefs['feature_wikiapproval'] == 'y') {
+	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+		if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
+			$smarty->assign('outOfSync', 'y');
+		}
+		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
+		$smarty->assign('beingStaged', 'y');
+		$smarty->assign('approvedPageName', $approvedPageName);
+	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
+		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
+		$smarty->assign('needsStaging', 'y');
+		$smarty->assign('stagingPageName', $stagingPageName);		
+	}
 }
 ask_ticket('edit-page');
 $ajaxlib->registerTemplate('tiki-editpage.tpl');
