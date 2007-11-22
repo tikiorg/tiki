@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/modules/users_list/mod-users_list.tpl,v 1.2 2007-11-22 14:35:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/modules/users_list/mod-users_list.tpl,v 1.3 2007-11-22 14:46:02 sylvieg Exp $ *}
 <table class="normal">
 {if $module_params_users_list.heading ne 'n'}
 <tr>
@@ -15,7 +15,7 @@
 {section name=user loop=$users}
 <tr class="{cycle}">
 {if $module_params_users_list.login ne 'n'}<td>{if $prefs.feature_display_my_to_others eq 'y' or $feature_display_my_to_others eq 'y'}<a class="link" href="tiki-user_information.php?user={$users[user].user|escape:"url"}" title="{tr}view{/tr}">{$users[user].user}</a>{else}{$users[user].user}{/if}</td>{/if}
-{if $module_params_users_list.realName eq 'y'}<td>{$users[user].realName}</td>{/if}
+{if $module_params_users_list.realName eq 'y'}<td>{if $prefs.feature_display_my_to_others eq 'y' or $feature_display_my_to_others eq 'y'}<a class="link" href="tiki-user_information.php?user={$users[user].user|escape:"url"}" title="{tr}view{/tr}">{$users[user].realName}</a>{else}{$users[user].realName}{/if}</td>{/if}
 {if $module_params_users_list.email eq 'y'}<td>{$users[user].email}</td>{/if}
 {if $module_params_users_list.lastLogin eq 'y'}<td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>{/if}
 {if $module_params_users_list.groups eq 'y'}<td>
