@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.1 2007-11-04 21:49:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.2 2007-11-22 18:09:43 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,7 +102,7 @@ $smarty->assign('allowMsgs',$allowMsgs);
 
 $smarty->assign_by_ref('user_prefs', $user_preferences[$userwatch]);
 
-$user_style = $tikilib->get_user_preference($userwatch,'theme',$site_style);
+$user_style = $tikilib->get_user_preference($userwatch,'theme',$prefs['site_style']);
 $smarty->assign_by_ref('user_style',$user_style);
 
 $user_language = $tikilib->get_language($userwatch);
