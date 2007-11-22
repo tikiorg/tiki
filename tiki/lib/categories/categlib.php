@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.3 2007-11-21 19:28:41 ntavares Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.4 2007-11-22 16:32:14 nkoth Exp $
  *
  * \brief Categories support class
  *
@@ -987,6 +987,11 @@ class CategLib extends ObjectLib {
 					$catp["{$info['categId']}"] = $info["name"];
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
+				// this line here needed to preserve old behavior where multiple categpaths
+				// are shown on different lines, since the line break has been taken out of categpath.tpl
+				// to avoid line break in the case where there is only one categpath
+				// TODO: perhaps the categpath should be returned as array so that templates can style with complete control?  
+				if ($catpath > '') $catpath .= '<br />';
 				$catpath.= $smarty->fetch('categpath.tpl');
 			}
 			return $catpath;
