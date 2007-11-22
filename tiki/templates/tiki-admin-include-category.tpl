@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td class="form"> {tr}Exclude These Category IDs from Path (comma delimited){/tr} </td>
-		<td><input type="text" name="categorypath_excluded" length="15" /></td>
+		<td><input type="text" name="categorypath_excluded" value="{$prefs.categorypath_excluded}" length="15" /></td>
 	</tr>
 	<tr>
 		<td class="form"> {tr}Show Category Objects{/tr} </td>
