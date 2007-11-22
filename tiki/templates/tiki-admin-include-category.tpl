@@ -27,6 +27,10 @@
 		<td><input type="checkbox" name="feature_categorypath" {if $prefs.feature_categorypath eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
+		<td class="form"> {tr}Exclude These Category IDs from Path (comma delimited){/tr} </td>
+		<td><input type="text" name="categorypath_excluded" length="15" /></td>
+	</tr>
+	<tr>
 		<td class="form"> {tr}Show Category Objects{/tr} </td>
 		<td><input type="checkbox" name="feature_categoryobjects" {if $prefs.feature_categoryobjects eq 'y'}checked="checked"{/if}/></td>
 	</tr>

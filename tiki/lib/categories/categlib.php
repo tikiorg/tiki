@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.4 2007-11-22 16:32:14 nkoth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.5 2007-11-22 16:38:22 nkoth Exp $
  *
  * \brief Categories support class
  *
@@ -974,9 +974,14 @@ class CategLib extends ObjectLib {
     }
 
     // Moved from tikilib.php
-    function get_categorypath($cats) {
+    function get_categorypath($cats, $include_excluded=false) {
 			global $smarty, $prefs;
 
+			if ($include_excluded == false) {
+				$excluded = split(',', $prefs['categorypath_excluded']);
+				$cats = array_diff($cats, $excluded);
+			}			
+			
 			$catpath = '';
 			foreach ($cats as $categId) {
 			        $catp = array();
