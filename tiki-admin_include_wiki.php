@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.1 2007-11-22 18:50:32 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -231,6 +231,16 @@ if(isset($_REQUEST["wikisetwatch"])) {
 	simple_set_toggle('wiki_watch_author');
 	simple_set_toggle('wiki_watch_comments');
 	simple_set_toggle('wiki_watch_editor');
+}
+
+if (isset($_REQUEST["wikiapprovalprefs"])) {
+	check_ticket('admin-inc-wiki');
+	simple_set_toggle('feature_wikiapproval');
+	simple_set_value('wikiapproval_staging_category');
+	simple_set_value('wikiapproval_approved_category');
+	simple_set_value('wikiapproval_outofsync_category');
+	simple_set_value('wikiapproval_prefix');
+	simple_set_toggle('wikiapproval_hideprefix');	
 }
 
 if ($prefs['feature_forums'] == 'y') {
