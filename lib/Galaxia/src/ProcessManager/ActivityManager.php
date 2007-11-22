@@ -56,8 +56,7 @@ class ActivityManager extends BaseManager {
   */
   function remove_activity_role($activityId, $roleId)
   {
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles
-              where activityId=$activityId and roleId=$roleId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=$activityId and roleId=$roleId";
     $this->query($query);
   }
   
@@ -442,15 +441,28 @@ class ActivityManager extends BaseManager {
 		$mid .= " AND ($where) ";
     }
 
-    $query  = "SELECT DISTINCT ga.* FROM " . GALAXIA_TABLE_PREFIX . "activities ga, ";
-	$query .= GALAXIA_TABLE_PREFIX . "activity_roles gar ";
-	$query .= " $mid ORDER BY $sort_mode";
+	// Queries will fail when trying to pull a distinct list of activities
+	// if the activity_roles table is empty. The result is that no
+	// activities ever show up until a role is associated with them - a
+	// catch-22. In order to avoid this, we will first see if there are no
+	// activity_roles, and if that's the case, then we will ignore that 
+	// table in the query.  If there are activity_roles, then we will
+	// execute the originally intended query.
+    	$query_gar = "SELECT COUNT(*) FROM " . GALAXIA_TABLE_PREFIX . "activity_roles gar";
+	$num_gar = $this->getOne($query_gar);
+	if ($num_gar == 0) {
+		$query  = "SELECT DISTINCT ga.* FROM " . GALAXIA_TABLE_PREFIX . "activities ga ";
+		$query .= " $mid ORDER BY $sort_mode";
+	} else {
+		$query  = "SELECT DISTINCT ga.* FROM " . GALAXIA_TABLE_PREFIX . "activities ga, ";
+		$query .= GALAXIA_TABLE_PREFIX . "activity_roles gar ";
+		$query .= " $mid ORDER BY $sort_mode";
+	}
 
     $query_cant  = "SELECT COUNT(*) FROM " . GALAXIA_TABLE_PREFIX . "activities ga, ";
 	$query_cant .= GALAXIA_TABLE_PREFIX . "activity_roles gar $mid";
 
-	$query_roles = "SELECT gr.roleId, gr.name FROM " . GALAXIA_TABLE_PREFIX . "activity_roles gar INNER JOIN
-					" . GALAXIA_TABLE_PREFIX . "roles gr ON gar.roleId = gr.roleId WHERE gar.activityId = ?";
+	$query_roles = "SELECT gr.roleId, gr.name FROM " . GALAXIA_TABLE_PREFIX . "activity_roles gar INNER JOIN " . GALAXIA_TABLE_PREFIX . "roles gr ON gar.roleId = gr.roleId WHERE gar.activityId = ?";
 
     $result = $this->query($query, $bindvars, $maxRecords, $offset);
     $cant = $this->getOne($query_cant, $bindvars);

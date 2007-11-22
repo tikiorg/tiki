@@ -514,7 +514,7 @@ class ProcessManager extends BaseManager {
     $this->query($query,array($pId));
 
 	$query  = "DELETE FROM `" . GALAXIA_TABLE_PREFIX . "instances` WHERE `pId` = ?";
-	$this->query($query);
+	$this->query($query,array($pId));
 
     // Remove the directory structure
     if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
