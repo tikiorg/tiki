@@ -211,14 +211,18 @@
 	{section name=ix loop=$catree}	
 	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_approved_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}	
-	</td></tr>
+	</td></tr>	
 	<tr><td class="form">{tr}Category for pages out of sync{/tr}:</td><td>
 	<select name="wikiapproval_outofsync_category">
 	<option value="0" {if $prefs.feature_wikiapproval_outofsync_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 	{section name=ix loop=$catree}	
 	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_outofsync_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}	
-	</td></tr> 
+	</td></tr>
+	<tr><td class="form">
+    {tr}Force bounce of editing of approved pages to staging{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_block_editapproved" {if $prefs.wikiapproval_block_editapproved eq 'y'}checked="checked"{/if}/>
+    </td></tr> 
     <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
     </tr></table>

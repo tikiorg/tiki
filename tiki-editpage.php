@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.11 2007-11-22 21:54:31 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.12 2007-11-22 22:45:55 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -911,7 +911,7 @@ if (!$user or $user == 'anonymous') {
 if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
-if ($prefs['feature_wikiapproval'] == 'y') {
+if ($prefs['feature_wikiapproval'] == 'y') {	
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
 		$smarty->assign('outOfSync', 'y');
 	}
@@ -919,8 +919,11 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');
 		$smarty->assign('approvedPageName', $approvedPageName);
-	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
+	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {		
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
+		if ($prefs['wikiapproval_block_editapproved']) {
+			header("location: tiki-editpage.php?page=$stagingPageName");
+		}
 		$smarty->assign('needsStaging', 'y');
 		$smarty->assign('stagingPageName', $stagingPageName);		
 	}

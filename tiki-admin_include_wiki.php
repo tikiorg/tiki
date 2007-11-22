@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.1 2007-11-22 18:50:32 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.2 2007-11-22 22:45:55 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -240,7 +240,8 @@ if (isset($_REQUEST["wikiapprovalprefs"])) {
 	simple_set_value('wikiapproval_approved_category');
 	simple_set_value('wikiapproval_outofsync_category');
 	simple_set_value('wikiapproval_prefix');
-	simple_set_toggle('wikiapproval_hideprefix');	
+	simple_set_toggle('wikiapproval_hideprefix');
+	simple_set_toggle('wikiapproval_block_editapproved');	
 }
 
 if ($prefs['feature_forums'] == 'y') {
