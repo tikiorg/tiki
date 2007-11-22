@@ -180,6 +180,51 @@
     </form>
     </div>
   </div>
+
+  <div class="cbox">
+    <div class="cbox-title">
+    {tr}Wiki Page Staging and Approval{/tr}
+    </div>
+    <div class="cbox-data">
+    <form method="post" action="tiki-admin.php?page=wiki">
+    <table class="admin">
+    <tr><td class="form">
+    {tr}Use wiki page staging and approval{/tr}: </td><td>
+    <input type="checkbox" name="feature_wikiapproval" {if $prefs.feature_wikiapproval eq 'y'}checked="checked"{/if}/>
+    </td></tr>
+    <tr><td class="form">{tr}Unique page name prefix to indicate staging copy{/tr}:</td><td>
+    <input type="text" name="wikiapproval_prefix" value="{if $prefs.wikiapproval_prefix}{$prefs.wikiapproval_prefix|escape}{else}*{/if}" /></td></tr>
+    <tr><td class="form">
+    {tr}Hide page name prefix{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_hideprefix" {if $prefs.wikiapproval_hideprefix eq 'y'}checked="checked"{/if}/>
+    </td></tr>    
+	<tr><td class="form">{tr}Category for staging pages{/tr}:</td><td>
+	<select name="wikiapproval_staging_category">
+	<option value="0" {if $prefs.feature_wikiapproval_staging_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+	{section name=ix loop=$catree}	
+	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_staging_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
+	{/section}	
+	</td></tr>
+	<tr><td class="form">{tr}Category for approved pages{/tr}:</td><td>
+	<select name="wikiapproval_approved_category">
+	<option value="0" {if $prefs.feature_wikiapproval_approved_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+	{section name=ix loop=$catree}	
+	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_approved_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
+	{/section}	
+	</td></tr>
+	<tr><td class="form">{tr}Category for pages out of sync{/tr}:</td><td>
+	<select name="wikiapproval_outofsync_category">
+	<option value="0" {if $prefs.feature_wikiapproval_outofsync_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+	{section name=ix loop=$catree}	
+	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_outofsync_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
+	{/section}	
+	</td></tr> 
+    <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
+    </td>
+    </tr></table>
+    </form>
+    </div>
+  </div>
       
   <div class="cbox">
     <div class="cbox-title">
@@ -493,10 +538,10 @@
     <option value="none" {if $prefs.wiki_authors_style eq 'none'}selected="selected"{/if}>{tr}no (disabled){/tr}</option>
     </select> 
     </td></tr>
-    <tr><td class="form">{tr}Protect email against spam{/tr}</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
-    <tr><td class="form">{tr}When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page{/tr}</td><td><input type="checkbox" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></td></tr>
-     <tr><td class="form">{tr}Show/hide heading icon displayed before the heading{/tr}</td><td><input type="checkbox" name="feature_wiki_show_hide_before" {if $prefs.feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Force and limit categorization to within subtree of{/tr}</td>
+    <tr><td class="form">{tr}Protect email against spam{/tr}:</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
+    <tr><td class="form">{tr}When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page{/tr}:</td><td><input type="checkbox" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></td></tr>
+     <tr><td class="form">{tr}Show/hide heading icon displayed before the heading{/tr}:</td><td><input type="checkbox" name="feature_wiki_show_hide_before" {if $prefs.feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Force and limit categorization to within subtree of{/tr}:</td>
     <td class="form"><select name="feature_wiki_mandatory_category">
 	<option value="-1" {if $prefs.feature_wiki_mandatory_category eq -1 or $prefs.feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 	<option value="0" {if $prefs.feature_wiki_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
