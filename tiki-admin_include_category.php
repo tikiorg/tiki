@@ -28,6 +28,13 @@ ask_ticket('admin-inc-category');
         simple_set_toggle ($toggle);
     }
 
+    $pref_simple_values = array(
+        "categorypath_excluded"
+    );
+
+    foreach ($pref_simple_values as $svitem) {
+        simple_set_value ($svitem);
+    }
 
 }
 
