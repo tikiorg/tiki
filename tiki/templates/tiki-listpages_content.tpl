@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.3 2007-11-15 22:39:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.4 2007-11-22 22:29:21 sylvieg Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}
   <div align="center">
@@ -249,7 +249,7 @@
   </tr>
   {/section}
 
-  {if $checkboxes_on eq 'y'}
+  {if $checkboxes_on eq 'y' && count($listpages) > 0}
     <script type='text/javascript'>
       <!--
         // check / uncheck all.
@@ -262,7 +262,7 @@
   {/if}
 </table>
 
-  {if $checkboxes_on eq 'y'} {* what happens to the checked items? *}
+  {if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
     <p align="left"> {*on the left to have it close to the checkboxes*}
       <select name="submit_mult" onchange="this.form.submit();">
         <option value="" selected="selected">{tr}with checked{/tr}:</option>
@@ -293,6 +293,7 @@
       </noscript>
     </p>
   {/if}
+  {if $find && $tiki_p_edit eq 'y'}{tr}Create Page{/tr}: <a href="tiki-editpage.php?page={$find}" title="{tr}Create{/tr}"> {$find}</a>{/if}
 
 </form>
 
