@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.29.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-blogs.tpl,v 1.29.2.2 2007-11-22 17:53:03 nkoth Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -67,7 +67,7 @@
               </select></td>
         </tr>
        {if $prefs.feature_categories eq 'y'}
-    	  <tr><td class="form">{tr}Mandatory category in the category tree{/tr}</td>
+    	  <tr><td class="form">{tr}Force and limit categorization to within subtree of{/tr}:</td>
         <td class="form"><select name="feature_blog_mandatory_category">
         <option value="-1" {if $prefs.feature_blog_mandatory_category eq -1 or $prefs.feature_blog_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
         <option value="0" {if $prefs.feature_blog_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>

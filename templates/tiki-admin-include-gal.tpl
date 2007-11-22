@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.2 2007-11-12 20:22:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.3 2007-11-22 17:53:02 nkoth Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -44,7 +44,7 @@
     <tr class="form"><td><label>{tr}Enable directory batch loading{/tr}:</label></td><td><input type="checkbox" name="feature_gal_batch" {if $prefs.feature_gal_batch eq 'y'}checked="checked"{/if}/></td></tr>
     <tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="gal_batch_dir" value="{$prefs.gal_batch_dir|escape}" size="50" /></td></tr>
 {if $prefs.feature_categories eq 'y'}
-    <tr><td class="form">{tr}Mandatory category in the category tree{/tr}</td>
+    <tr><td class="form">{tr}Force and limit categorization to within subtree of{/tr}:</td>
     <td class="form"><select name="feature_image_gallery_mandatory_category">
 	<option value="-1" {if $prefs.feature_image_gallery_mandatory_category eq -1 or $prefs.feature_image_gallery_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 	<option value="0" {if $prefs.feature_image_gallery_mandatory_category eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
