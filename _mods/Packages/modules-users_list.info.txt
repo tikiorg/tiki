@@ -2,10 +2,10 @@ contributor:
 $Author: sylvieg $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2007-03-13 13:27:56 $
+$Date: 2007-11-22 14:35:44 $
 
 files: 
 modules/users_list/mod-users_list.php modules/
@@ -23,3 +23,4 @@ ChangeLog:
 1.1 Initial Module
 
 help: List users
+http://doc.tikiwiki.org/tiki-index.php?page=Module+Users+List
