@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.2 2007-10-21 19:27:53 pkdille Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.3 2007-11-22 21:43:15 nkoth Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -6,6 +6,13 @@
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $prefs.feature_page_title eq 'y'}
 {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+{/if}
+
+{if $beingStaged eq 'y'}
+<div class="tocnav">
+{tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
+{if $outOfSync eq 'y'} {tr}Latest changes will be synchronized after approval.{/tr}{/if}
+</div>
 {/if}
 
 <div class="wikitopline">
@@ -23,7 +30,7 @@
 {if $print_page ne 'y'}
 	<td style="vertical-align:top;text-align:right;padding-left:10px;wrap:nowrap">
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
-		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
+		<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
 	{/if}       
 	{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
 		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})"><img src="pics/icons/wiki3d.png" border="0" width="16" height="16" alt="{tr}3d browser{/tr}" /></a>

@@ -1,9 +1,22 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.2 2007-11-16 00:38:07 frank_p Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.3 2007-11-22 21:43:15 nkoth Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
+{if $beingStaged eq 'y'}
+<div class="tocnav">
+{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
+{if $outOfSync eq 'y'} {tr}There are currently changes that have yet to be synchronized.{/tr}{/if}
+</div>
+{/if}
+{if $needsStaging eq 'y'}
+<div class="tocnav">
+{tr}You are editing the approved copy of this page.{/tr}
+{if $outOfSync eq 'y'} {tr}There are currently changes in the staging copy that have yet to be synchronized.{/tr}{/if}
+{tr}Are you sure you do not want to edit{/tr} <a class="link" href="tiki-editpage.php?page={$stagingPageName|escape:'url'}">{tr}the staging copy{/tr}</a> {tr}instead?{/tr}
+</div>
+{/if}
 {if isset($data.draft)}
   {tr}Draft written on{/tr} {$data.draft.lastModif|tiki_long_time}<br/>
   {if $data.draft.lastModif < $data.lastModif}
