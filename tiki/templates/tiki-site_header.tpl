@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.12.2.1 2007-10-24 17:21:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.12.2.2 2007-11-22 23:17:17 nkoth Exp $ *}
 {* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}{/if}
 {if $prefs.feature_sitelogo eq 'y'}
@@ -39,14 +39,14 @@
 				{if $structure_path[ix].page_alias}
 					{$structure_path[ix].page_alias}
 				{else}
-					{$structure_path[ix].pageName}
+					{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$structure_path[ix].pageName}{/if}
 				{/if}
 				{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
 					</a>
 				{/if}
 			{/section}
 		{else}
-			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {$page}
+			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$page}{/if}
 			{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
 			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
 			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}{/if}
