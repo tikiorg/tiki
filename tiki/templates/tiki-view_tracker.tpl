@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.9 2007-11-09 19:15:48 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.10 2007-11-22 19:58:45 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -575,10 +575,12 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
+{if ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($one, $fields[ix].itemChoices) )}
 {if $fields[ix].value}
 <option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
 {else}
 <option value="{$one|escape}"{if $one eq $user and $fields[ix].options_array[0] ne '2'}} selected="selected"{/if}>{$one}</option>
+{/if}
 {/if}
 {/foreach}
 </select>
@@ -600,7 +602,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
+{if ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($groups[ux], $fields[ix].itemChoices) )}
 <option value="{$groups[ux]|escape}" {if $input_err and $fields[ix].value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
+{/if}
 {/section}
 </select>
 {else}
@@ -758,7 +762,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <option value=""{if $fields[ix].value eq '' or $fields[ix].value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 {sortlinks}
 {foreach item=flag from=$fields[ix].flags}
-{if $flag ne 'None'}
+{if $flag ne 'None' and ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($flag, $fields[ix].itemChoices) )}
 {capture name=flag}
 {tr}{$flag}{/tr}
 {/capture}

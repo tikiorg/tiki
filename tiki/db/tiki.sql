@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-11-21 21:53:18 $
-# $Author: nkoth $
+# $Date: 2007-11-22 19:58:42 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3426,6 +3426,7 @@ CREATE TABLE tiki_tracker_fields (
   isMandatory char(1) NOT NULL default 'n',
   isMultilingual char(1) default 'n',
   description text,
+  itemChoices text,
   PRIMARY KEY  (fieldId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

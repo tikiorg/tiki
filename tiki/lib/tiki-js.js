@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.2 2007-11-04 21:49:21 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.3 2007-11-22 19:58:43 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -165,9 +165,12 @@ function chgTrkFld(f,o) {
 	document.getElementById('z').style.display = "none";
 	document.getElementById('zDescription').style.display = "block";
 	document.getElementById('zStaticText').style.display = "none";
+
 	for (var i = 0; i < f.length; i++) {
 		var c = f.charAt(i);
 		if (document.getElementById(c)) { 
+			var ichoiceParent = document.getElementById('itemChoicesRow');
+			var ichoice = document.getElementById(c + 'itemChoices');
 			if (c == o) {
 				document.getElementById(c).style.display = "block";
 				if (c == 'S') {
@@ -176,8 +179,17 @@ function chgTrkFld(f,o) {
 				} else {
 					document.getElementById('z').style.display = "block";
 				}
+				if (ichoice) {
+					ichoice.style.display = "";
+					ichoiceParent.style.display = "";
+				} else {
+					ichoiceParent.style.display = "none";
+				}
 			} else {
 				document.getElementById(c).style.display = "none";
+				if (ichoice) {
+					ichoice.style.display = "none";
+				}
 			}
 		}
 	}

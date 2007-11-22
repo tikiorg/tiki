@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.6 2007-11-22 16:54:07 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.7 2007-11-22 19:58:45 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1508,6 +1508,7 @@ class TrackerLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res['options_array'] = split(',', $res['options']);
+			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
 				$res['name'] = tra($res['name']);
 			if ($res['type'] == 'd' || $res['type'] == 'D') { // drop down
@@ -1588,8 +1589,16 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual) {
-		if ($fieldId) {			
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual='', $itemChoices=null) {
+
+		// Serialize choosed items array (items of the tracker field to be displayed in the list proposed to the user)
+		if ( is_array($itemChoices) && count($itemChoices) > 0 ) {
+			$itemChoices = serialize($itemChoices);
+		} else {
+			$itemChoices = '';
+		}
+
+		if ($fieldId) {
 			// -------------------------------------
 			// remove images when needed
 			$old_field = $this->get_tracker_field($fieldId);
@@ -1598,21 +1607,21 @@ class TrackerLib extends TikiLib {
 					$this->remove_field_images( $fieldId );
 				}
 				$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=? where `fieldId`=?";
-				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, (int) $fieldId);
+					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=?, `itemChoices`=? where `fieldId`=?";
+				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, $itemChoices, (int) $fieldId);
 			} else {
 				$query = "insert into `tiki_tracker_fields` (`trackerId`,`name`,`type`,`isMain`,`isSearchable`,
-					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`,`isMultilingual`, `description`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description);
+					`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`fieldId`,`isMultilingual`, `description`, `itemChoices`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description, $itemChoices);
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`)
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual, $itemChoices));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";
@@ -1757,6 +1766,7 @@ class TrackerLib extends TikiLib {
 			return false;
 		$res = $result->fetchRow();
 		$res['options_array'] = split(',', $res['options']);
+		$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 		return $res;
 	}
 
@@ -1814,6 +1824,14 @@ class TrackerLib extends TikiLib {
 	}
 
 	function field_types() {
+
+		global $userlib;
+		$tmp = $userlib->list_all_users();
+		foreach ( $tmp as $u ) $all_users[$u] = $u;
+		$tmp = $userlib->list_all_groups();
+		foreach ( $tmp as $u ) $all_groups[$u] = $u;
+		unset($tmp);
+
 		$type['t'] = array(
 			'label'=>tra('text field'),
 			'opt'=>true,
@@ -1853,10 +1871,12 @@ class TrackerLib extends TikiLib {
 		$type['u'] = array(
 			'label'=>tra('user selector'),
 			'opt'=>true,
+			'itemChoicesList' => $all_users,
 			'help'=>tra('User Selector options: automatic field feeding,email - feeding=1 for author login or feeding=2 for modificator login - email=1 to send an email to the user if the tracker is modified'));
 		$type['g'] = array(
 			'label'=>tra('group selector'),
 			'opt'=>true,
+			'itemChoicesList' => $all_groups,
 			'help'=>tra('Group Selector: use options for automatic field feeding : you can use 1 for group of creation and 2 for group where modification come from. The default group has to be set, or the first group that come is chosen for a user, or the default group is Registered.'));
 		$type['I'] = array(
 			'label'=>tra('IP selector'),
@@ -1865,6 +1885,7 @@ class TrackerLib extends TikiLib {
 		$type['y'] = array(
 			'label'=>tra('country selector'),
 			'opt'=>true,
+			'itemChoicesList' => $this->get_flags(true, true, true),
 			'help'=>tra('Country Selector options: 1|2 where 1 show only country name and 2 show only country flag. By default show both country name and flag') );
 		$type['f'] = array(
 			'label'=>tra('date and time'),
