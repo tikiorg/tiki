@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.1 2007-10-30 10:19:43 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.2 2007-11-22 18:24:11 kerrnel22 Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>
@@ -52,6 +52,7 @@
         </tr><tr class="form">
           <td><label>{tr}Ordering for forums in the forum listing{/tr}</label></td>
           <td><select name="forums_ordering">
+              <option value="created_asc" {if $prefs.forums_ordering eq 'created_asc'}selected="selected"{/if}>{tr}Creation Date (asc){/tr}</option>
               <option value="created_desc" {if $prefs.forums_ordering eq 'created_desc'}selected="selected"{/if}>{tr}Creation Date (desc){/tr}</option>
               <option value="threads_desc" {if $prefs.forums_ordering eq 'threads_desc'}selected="selected"{/if}>{tr}Topics (desc){/tr}</option>
               <option value="comments_desc" {if $prefs.forums_ordering eq 'comments_desc'}selected="selected"{/if}>{tr}Threads (desc){/tr}</option>
