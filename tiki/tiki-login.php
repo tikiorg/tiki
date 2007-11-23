@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.4 2007-11-08 18:18:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.5 2007-11-23 13:32:44 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -338,7 +338,7 @@ if ( ! eregi('^https?\:', $url) ) $url = ( ereg('^/', $url) ? $url_scheme.'://'.
 // Force HTTP mode if needed
 if ( $stay_in_ssl_mode != 'y' || ! $https_mode ) $url = str_replace('https://', 'http://', $url);
 
-if ( SID ) $url .= '?'.SID;
+if ( SID ) $url .= (( strpos('?', $url) === false ) ? '?' : '').SID;
 header('Location: '.$url);
 exit;
 ?>
