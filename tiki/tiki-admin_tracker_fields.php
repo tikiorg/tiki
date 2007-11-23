@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.2 2007-11-22 19:58:42 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.47.2.3 2007-11-23 12:57:18 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -259,6 +259,10 @@ $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $channels["cant"];
 include "tiki-pagination.php";
+
+include_once('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-tracker-fields');

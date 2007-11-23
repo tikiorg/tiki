@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.3 2007-11-22 19:58:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.4 2007-11-23 12:57:19 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -69,8 +69,20 @@
 </td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><div  id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" ><input type="text"  size="50" name="description" value="{$description|escape}" /></div>
-	<div  id='zStaticText' {if $type eq 'S'}style="display:block;"{else}style="display:none;"{/if}><textarea name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:
+{if $prefs.quicktags_over_textarea neq 'y'}
+	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
+	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	</div>
+{/if}
+</td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" ><input type="text"  size="50" name="description" value="{$description|escape}" /></div>
+<div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
+{if $prefs.quicktags_over_textarea eq 'y'}
+	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
+	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	</div>
+{/if}
+<textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

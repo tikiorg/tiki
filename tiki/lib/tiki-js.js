@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.3 2007-11-22 19:58:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.4 2007-11-23 12:57:19 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -163,8 +163,9 @@ function toggleToc() {
 function chgTrkFld(f,o) {
 	var opt = 0;
 	document.getElementById('z').style.display = "none";
-	document.getElementById('zDescription').style.display = "block";
+	document.getElementById('zDescription').style.display = "";
 	document.getElementById('zStaticText').style.display = "none";
+	document.getElementById('zStaticTextQuicktags').style.display = "none";
 
 	for (var i = 0; i < f.length; i++) {
 		var c = f.charAt(i);
@@ -172,10 +173,11 @@ function chgTrkFld(f,o) {
 			var ichoiceParent = document.getElementById('itemChoicesRow');
 			var ichoice = document.getElementById(c + 'itemChoices');
 			if (c == o) {
-				document.getElementById(c).style.display = "block";
+				document.getElementById(c).style.display = "";
 				if (c == 'S') {
 					document.getElementById('zDescription').style.display = "none";
-					document.getElementById('zStaticText').style.display = "block";
+					document.getElementById('zStaticText').style.display = "";
+					document.getElementById('zStaticTextQuicktags').style.display = "";
 				} else {
 					document.getElementById('z').style.display = "block";
 				}
