@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.4 2007-11-23 12:57:19 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.5 2007-11-23 13:40:21 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -197,15 +197,8 @@ function chgTrkFld(f,o) {
 	}
 }
 
-function chgTrkLingual(item){
-
-if (item=='t' || item =='a'){
-document.getElementById("multilabel1").style.visibility = "visible";
-document.getElementById("multilabel2").style.visibility = "visible";
-}else{
-document.getElementById("multilabel1").style.visibility = "hidden";
-document.getElementById("multilabel2").style.visibility = "hidden";
-}
+function chgTrkLingual(item) {
+	document.getElementById("multilabelRow").style.display = ( item == 't' || item == 'a' ) ? '' : 'none';
 }
 
 function multitoggle(f,o) {
