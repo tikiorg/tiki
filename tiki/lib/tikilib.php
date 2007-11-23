@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.32 2007-11-22 19:58:43 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.33 2007-11-23 23:03:44 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1052,7 +1052,7 @@ class TikiLib extends TikiDB {
 		break;
 
 	    case 'u':
-		$ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt='$user' />";
+		$ret = "<img border='0' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt='$user' />";
 		break;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26.2.1 2007-11-02 13:30:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.26.2.2 2007-11-23 23:03:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	fclose ($fp);
 	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);
 
-	if ($iwidth == 45 and $iheight == 45) {
+	if (($iwidth == 45 and $iheight <= 45) || ($iwidth <= 45 and $iheight == 45)) {
 		$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $itype, $data);
 	} else {
 		if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
@@ -79,6 +79,8 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 
 			$tw = ((int)($size_x / $tscale));
 			$ty = ((int)($size_y / $tscale));
+			if ($tw > $size_x) $tw = $size_x;
+			if ($ty > $size_y) $ty = $size_y;
 
 			if (chkgd2()) {
 				$t = imagecreatetruecolor($tw, $ty);
