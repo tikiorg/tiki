@@ -38,7 +38,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class Calendar {
 	var $lan;
 
-	function Calendar($lan = 'ar') {
+	function Calendar($lan = 'en') {
 		$this->lan = $lan;
 	}
 
@@ -298,37 +298,6 @@ class Calendar {
 			$lan = $this->lan;
 		}
 
-		$ar = array(
-			'',
-			'Enero',
-			'Febrero',
-			'Marzo',
-			'Abril',
-			'Mayo',
-			'Junio',
-			'Julio',
-			'Agosto',
-			'Setiembre',
-			'Octubre',
-			'Noviembre',
-			'Diciembre'
-		);
-
-		$br = array(
-			'',
-			'Janeiro',
-			'Fevereiro',
-			'Março',
-			'Abril',
-			'Junho',
-			'Julho',
-			'Agosto',
-			'Stembro',
-			'Outubro',
-			'Novembro',
-			'Dezembro'
-		);
-
 		$en = array(
 			'',
 			'January',
@@ -345,8 +314,8 @@ class Calendar {
 			'December'
 		);
 
-		$coso = ${$lan}[$month];
-		return ${$lan}[$month];
+		include_once('/lib/init/tra.php');
+		return tra($en[$month], $lan);
 	}
 
 	// Returns the number of days in the given month for a give 4 DIGITS year.
@@ -391,17 +360,6 @@ class Calendar {
 			$lan = $this->lan;
 		}
 
-		$ar = array(
-			'',
-			'Domingo',
-			'Lunes',
-			'Martes',
-			'Miercoles',
-			'Jueves',
-			'Viernes',
-			'Sabado'
-		);
-
 		$en = array(
 			'',
 			'Sunday',
@@ -413,18 +371,8 @@ class Calendar {
 			'Saturday'
 		);
 
-		$br = array(
-			'',
-			'Domingo',
-			'Segunda-feira',
-			'Terça-feira',
-			'Quarta-feira',
-			'Quinta-feira',
-			'Sexta-feira',
-			'Sábado'
-		);
-
-		return ${$lan}[$x];
+		include_once('/lib/init/tra.php');
+		return tra($en[$x], $lan);
 	}
 
 	// Returns the day_of_week in the language choosen.
@@ -433,17 +381,6 @@ class Calendar {
 			$lan = $this->lan;
 		}
 
-		$ar = array(
-			'',
-			'Domingo',
-			'Lunes',
-			'Martes',
-			'Miercoles',
-			'Jueves',
-			'Viernes',
-			'Sabado'
-		);
-
 		$en = array(
 			'',
 			'Sunday',
@@ -455,19 +392,9 @@ class Calendar {
 			'Saturday'
 		);
 
-		$br = array(
-			'',
-			'Domingo',
-			'Segunda-feira',
-			'Terça-feira',
-			'Quarta-feira',
-			'Quinta-feira',
-			'Sexta-feira',
-			'Sábado'
-		);
-
 		$w = $this->dayOfWeek($dia, $mes, $anio);
-		return ${$lan}[$w];
+		include_once('/lib/init/tra.php');
+		return tra($en[$w], $lan);
 	}
 }
 
