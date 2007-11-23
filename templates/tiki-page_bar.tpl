@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.1 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.2 2007-11-23 23:04:30 nkoth Exp $ *}
 
 {strip}
 <hr/>
@@ -13,9 +13,9 @@
 {else}
 
 {* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
-{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y'}
+{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
       <span class="button2" >
-      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href} class="linkbut">
+      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if $page_ref_id and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href} class="linkbut">      		
         {if $beingEdited eq 'y'}
           <span class="highlight">{tr}Edit{/tr}</span>
         {else}
