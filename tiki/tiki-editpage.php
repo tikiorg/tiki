@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.12 2007-11-22 22:45:55 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.13 2007-11-23 19:35:47 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -549,6 +549,16 @@ if(isset($_REQUEST["edit"])) {
 	$edit_data = $info['draft']['data'];
     } elseif (isset($info["data"])) {
 	$edit_data = $info["data"];
+	} elseif ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && !$tikilib->page_exists($page)) {
+	// Handle first creation of staging copy 
+	$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));	
+	// Get page data
+		if ($tikilib->page_exists($oldpage)) {
+			$oldinfo = $tikilib->get_page_info($oldpage);
+			$edit_data = $oldinfo["data"];
+		} else {
+			$edit_data = '';
+		}
     } else {
 	$edit_data = '';
     }
