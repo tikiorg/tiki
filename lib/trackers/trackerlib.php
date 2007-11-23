@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.7 2007-11-22 19:58:45 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.8 2007-11-23 16:24:35 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -988,15 +988,16 @@ class TrackerLib extends TikiLib {
 							if ($is_visible) {
 								$old_value = $row['value'];
 								if ($is_date) {
-									$old_value = $this->date_format("%a, %e %b %Y %H:%M:%S %O",(int)$old_value);
-									$new_value = $this->date_format("%a, %e %b %Y %H:%M:%S %O",(int)$value);
+									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
+									$old_value = $this->date_format($dformat, (int)$old_value);
+									$new_value = $this->date_format($dformat, (int)$value);
 								} else {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
 									$the_data .= "$name" . ":\n ".tra("Old:")." $old_value\n ".tra("New:")." $new_value\n\n";
 								} else {
-									$the_data .= "$name ".tra('(unchanged)') . ":\n $value\n\n";
+									$the_data .= "$name ".tra('(unchanged)') . ":\n $new_value\n\n";
 								}
 							}
 
@@ -1005,7 +1006,8 @@ class TrackerLib extends TikiLib {
 						} else {
 							if ($is_visible) {
 								if ($is_date) {
-									$new_value = $this->date_format("%a, %e %b %Y %H:%M:%S %O",(int)$value);
+									$dformat = $prefs['short_date_format'].' '.$prefs['short_time_format'];
+									$new_value = $this->date_format($dformat, (int)$value);
 								} else {
 									$new_value = $value;
 								}
