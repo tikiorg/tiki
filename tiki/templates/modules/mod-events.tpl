@@ -1,9 +1,14 @@
 {* $Header$ *}
+{* param : popup=y|n, default y *}
+
+{if $module_params.popup ne 'n'}
+{popup_init src="lib/overlib.js"}
+{/if}
 
 {php}
 include_once("lib/class_calendar.php");
 global $calendarlib; include_once ('lib/calendar/calendarlib.php');
-global $dbTiki,$tikilib,$user;
+global $dbTiki,$tikilib,$user, $smarty, $prefs;
 
 // get date for which to display the calendar view:
 if(isset($_SESSION["thedate"])) {
@@ -45,7 +50,7 @@ $items = $calendarlib->list_items($calids, $user, $firstDay, $lastDay, 0, -1 );
 
 // Calculate number of days in month
 // The format is S M T W T F S
-$c = new Calendar("en");
+$c = new Calendar($prefs['language']);
 $v = mb_substr(tra($c->nameOfMonth($mon)),0,3);
 $dayofweek = tra($c->dayOfWeekStr($day,$mon,$year));
 {/php}
@@ -84,7 +89,7 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 	<table	border="0" cellspacing="0" cellpadding="0" class="caltable">
 	<!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
 	<tr>
-	<td align="center" colspan="2">
+	<td align="center" colspan="2" class="nav">
 {php}
 	$pmonth = $mon -1;
 	$nmonth = $mon +1;
@@ -114,7 +119,7 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 	$pmat = $c->getPureMatrix($day,$mon,$year);
 {/php}
 	<tr>
-	<td align="center" colspan="2">
+	<td align="center" colspan="2" class="days">
 		<table	border="0" cellspacing="0" cellpadding="0">
 		<!-- DAYS OF THE WEEK -->
 		<tr>
@@ -130,6 +135,7 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 		<!-- TRs WITH DAYS -->
 {php}
 		$lastval=0; $dateIsIn="past";
+		$module_params = $smarty->get_template_vars('module_params');
 		for ($i=0;$i<6;$i++) {
 			print("<tr>");
 			for ($j=0;$j<7;$j++) {
@@ -170,7 +176,9 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 				}
 				$mouseover="";
 				if ($newval <> "") {
-					$mouseover="onmouseover=\"return overlib('".$newval."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("Events")."</div>');\" onmouseout=\"nd()\" ";
+					if (empty($module_params['popup']) || $module_params['popup'] != 'n') {
+					   $mouseover="onmouseover=\"return overlib('".$newval."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("Events")."</div>');\" onmouseout=\"nd()\" ";
+					}
 					$fc="event";
 					if ($classval=="today") {
 						$todaymouseover=$mouseover;
