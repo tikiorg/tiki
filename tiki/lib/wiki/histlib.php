@@ -143,10 +143,20 @@ class HistLib extends TikiLib {
 	}
 
 	// Returns one version of the page from the history
-	// without the data itself
+	// without the data itself (version = 0 now returns data from current version)
 	function get_page_from_history($page,$version,$fetchdata=false) {
 
-		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? and `version`=?";
+		if ($fetchdata==true) {
+			if ($version > 0)
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? and `version`=?";				
+			else
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_pages` where `pageName`=? and `version`=?";
+		} else {
+			if ($version > 0)
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_history` where `pageName`=? and `version`=?";
+			else
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_pages` where `pageName`=? and `version`=?";
+		}
 		$result = $this->query($query,array($page,$version));
 
 		$ret = array();
@@ -169,6 +179,8 @@ class HistLib extends TikiLib {
 		return $ret[0];
 	}
 	
+	// note that this function returns the latest version in the
+	// history db table, which is one less than the current version 
 	function get_page_latest_version($page) {
 
 		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
