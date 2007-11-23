@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.5 2007-11-22 16:38:22 nkoth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.6 2007-11-23 22:09:55 nkoth Exp $
  *
  * \brief Categories support class
  *
@@ -1307,6 +1307,20 @@ class CategLib extends ObjectLib {
 				);
 	}
 
+	/**
+	 * Returns true if the given user has edit permission for the category.
+	 */
+	function has_edit_permission($user, $categoryId) {
+		global $userlib;
+							
+		return ($userlib->user_has_permission($user,'tiki_p_admin')
+				|| ($userlib->user_has_permission($user,'tiki_p_edit_categories') && !$userlib->object_has_one_permission($categoryId,"category"))
+				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit_categories") 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
+				);
+	}
+	
 	/**
 	 * Notify the users, watching this category, about changes.
 	 * The Array $values contains a selection of the following items:
