@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.13 2007-11-23 19:35:47 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.14 2007-11-24 00:35:15 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -922,20 +922,31 @@ if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
 if ($prefs['feature_wikiapproval'] == 'y') {	
-	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
-		$smarty->assign('outOfSync', 'y');
-	}
 	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');
 		$smarty->assign('approvedPageName', $approvedPageName);
 	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {		
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
-		if ($prefs['wikiapproval_block_editapproved']) {
+		if ($prefs['wikiapproval_block_editapproved'] == 'y') {
 			header("location: tiki-editpage.php?page=$stagingPageName");
 		}
 		$smarty->assign('needsStaging', 'y');
 		$smarty->assign('stagingPageName', $stagingPageName);		
+	}
+	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
+		$smarty->assign('outOfSync', 'y');
+		if (isset($approvedPageName)) {
+			include_once('lib/wiki/histlib.php');
+			$approvedPageInfo = $histlib->get_page_from_history($approvedPageName, 0);
+			if ($info['lastModif'] > $approvedPageInfo['lastModif']) {
+				$lastSyncVersion = $histlib->get_version_by_time($page, $approvedPageInfo['lastModif']);
+				// get very first version if unable to get last sync version.
+				if ($lastSyncVersion == 0) $lastSyncVersion = $histlib->get_version_by_time($page, 0, 'after');
+				// if really not possible, just give up.
+				if ($lastSyncVersion > 0) $smarty->assign('lastSyncVersion', $lastSyncVersion );
+			}
+		}		
 	}
 }
 ask_ticket('edit-page');
