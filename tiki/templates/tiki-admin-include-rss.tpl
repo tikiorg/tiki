@@ -16,9 +16,9 @@
     <form action="tiki-admin.php?page=rss" method="post">
       <table class="admin">
         <tr>
-          <td class="form">{tr}<b>Feed</b>{/tr}</td>
-          <td class="form">{tr}<b>enable/disable</b>{/tr}</td>
-          <td class="form">{tr}<b>Max number of items</b>{/tr}</td>
+          <td class="form"><b>{tr}Feed{/tr}</b></td>
+          <td class="form"><b>{tr}Enable{/tr}/{tr}Disable{/tr}</b></td>
+          <td class="form"><b>{tr}Max number of items{/tr}</b></td>
 	  <td class='form'><b>{tr}Title{/tr}</b></td>
 	  <td class='form'><b>{tr}Description{/tr}</b></td>
         </tr>
