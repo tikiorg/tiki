@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22 2006-07-14 11:00:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.1 2007-11-24 15:28:41 nyloth Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -19,12 +19,6 @@ function wikiplugin_code_help() {
 	return tra($help);
 }
 
-function decodeHTML($string) {
-    $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-    $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-    return $string;
-}
-
 function wikiplugin_code($data, $params) {
 	if( is_array( $params ) ) {
 		extract ($params,EXTR_SKIP);
@@ -40,7 +34,7 @@ function wikiplugin_code($data, $params) {
 		$out .= '<div dir="ltr">'; // default is left to right
 	}
 	if (isset($colors) and ($colors == 'php')) {
-		$out.= "<div class='codelisting'>~np~".highlight_string(decodeHTML(trim($code)),1)."~/np~</div>";
+		$out.= "<div class='codelisting'>~np~".highlight_string(TikiLib::htmldecode(trim($code)),1)."~/np~</div>";
 	} else {
 		if (isset($ln) && $ln == 1) {
 			$lines = explode("\n", trim($code));

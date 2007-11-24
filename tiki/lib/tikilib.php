@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.33 2007-11-23 23:03:44 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.34 2007-11-24 15:28:38 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7259,6 +7259,33 @@ if (!$simple_wiki) {
 		return substr($data, 0, $length);
 	}
 
+	function htmldecode($string, $quote_style = ENT_COMPAT) {
+		if ( version_compare(phpversion(), '5', '>=') ) {
+			// Use html_entity_decode with UTF-8 only with PHP5 or later, since
+			//   this function was available in PHP4 but _without_ multi-byte charater sets support
+			$string = html_entity_decode($string, $quote_style, 'utf-8');
+		} else {
+			// For compatibility purposes with php < 5
+			$trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
+
+			// Not translating double quotes
+			if ($quote_style & ENT_NOQUOTES) {
+				// Remove double quote from translation table
+				unset($trans_tbl['&quot;']);
+			}
+
+			$string = strtr($string, $trans_tbl);
+			if (function_exists('recode_string')) {
+				$string = recode_string('iso-8859-15..utf-8', $string);
+			}
+		}
+
+		$string = preg_replace('~&#x([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
+		$string = preg_replace('~&#([0-9]+);~e', 'chr(\\1)', $string);
+
+		return $string;
+	}
+
 }
 
 
@@ -7399,32 +7426,6 @@ if (!function_exists('file_get_contents')) {
 			return false;
 		}
 	}
-}
-/**
- * Replace html_entity_decode()
- *
- * Borrowed from PEAR:PHP_Compat
- * @author      David Irvine <dave@codexweb.co.za>
- * @author      Aidan Lister <aidan@php.net>
- * @internal    Setting the charset will not do anything
- */
-if (!function_exists('html_entity_decode')) {
-    function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
-    {
-        $trans_tbl = get_html_translation_table(HTML_ENTITIES);
-        $trans_tbl = array_flip($trans_tbl);
-
-        // Add single quote to translation table;
-        $trans_tbl['&#039;'] = '\'';
-
-        // Not translating double quotes
-        if ($quote_style & ENT_NOQUOTES) {
-            // Remove double quote from translation table
-            unset($trans_tbl['&quot;']);
-        }
-
-        return strtr($string, $trans_tbl);
-    }
 }
 
 /**

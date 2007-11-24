@@ -30,28 +30,15 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 {elseif $mail_diffdata[ix].type == "diffdeleted"}
 {section name=iy loop=$mail_diffdata[ix].data}
-{* html_entity_decode doesn't exist in PHP 4.1 *}
-{if function_exists("html_entity_decode")}
-- {$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
-{else}
-- {$mail_diffdata[ix].data[iy]|strip_tags:false}
-{/if}
+- {$mail_diffdata[ix].data[iy]|strip_tags:false|htmldecode}
 {/section}
 {elseif $mail_diffdata[ix].type == "diffadded"}
 {section name=iy loop=$mail_diffdata[ix].data}
-{if function_exists("html_entity_decode")}
-+ {$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
-{else}
-+ {$mail_diffdata[ix].data[iy]|strip_tags:false}
-{/if}
++ {$mail_diffdata[ix].data[iy]|strip_tags:false|htmldecode}
 {/section}
 {elseif $mail_diffdata[ix].type == "diffbody"}
 {section name=iy loop=$mail_diffdata[ix].data}
-{if function_exists("html_entity_decode")}
-{$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
-{else}
-{$mail_diffdata[ix].data[iy]|strip_tags:false}
-{/if}
+{$mail_diffdata[ix].data[iy]|strip_tags:false|htmldecode}
 {/section}
 {/if}
 {/section}

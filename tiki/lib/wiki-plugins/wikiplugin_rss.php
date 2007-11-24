@@ -82,11 +82,11 @@ function wikiplugin_rss($data,$params) {
 		if ($author==1 || $date==1) $repl .= ')';
 		$repl .= '</td></tr>';
 		if ($desc==1) {
-			$repl .= '<tr><td class="even" colspan="2">'.html_entity_decode($items[$j]["description"]).'</td></tr>';
+			$repl .= '<tr><td class="even" colspan="2">'.TikiLib::htmldecode($items[$j]["description"]).'</td></tr>';
 		    $repl .= '</tr>';
 		}
 		if ($desc>1) {
-					$repl .= '<tr><td class="even" colspan="2">'.substr(strip_tags(html_entity_decode($items[$j]["description"])),0,$desc).' <a class="wiki" href="'.$items[$j]["link"].'">[[...]</a></td></tr>';
+					$repl .= '<tr><td class="even" colspan="2">'.substr(strip_tags(TikiLib::htmldecode($items[$j]["description"])),0,$desc).' <a class="wiki" href="'.$items[$j]["link"].'">[[...]</a></td></tr>';
 		    $repl .= '</tr>';
 		}
 	}

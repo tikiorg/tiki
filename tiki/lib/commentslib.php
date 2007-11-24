@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.1 2007-10-19 15:48:36 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.2 2007-11-24 15:28:38 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -381,7 +381,7 @@ class Comments extends TikiLib {
 	    } elseif (isset($output['body'])) {
 		$body = $output['body'];
 		} elseif (isset($output['parts'][0]['html'][0])) {// some html message does not have a text part
-			$body = html_entity_decode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
+			$body = $this->htmldecode(strip_tags(preg_replace('/\n\r/', '', $output['parts'][0]['html'][0])));
 		} elseif (isset($output['parts'][0]['parts'][0]['text'][0])) {
 			$body = $output['parts'][0]['parts'][0]['text'][0];
   	    } else {
