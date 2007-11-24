@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.36 2007-10-12 13:55:55 sylvieg Exp $
+// $Id: notificationemaillib.php,v 1.36.2.1 2007-11-24 15:28:40 nyloth Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -204,8 +204,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	if ($edit_user=='') $edit_user = tra('Anonymous');
 
 	if (count($nots)) {
-	    if (function_exists("html_entity_decode"))
-		$edit_data = html_entity_decode($edit_data);
+	    $edit_data = TikiLib::htmldecode($edit_data);
 	    include_once('lib/webmail/tikimaillib.php');
 	    $mail = new TikiMail();
 	    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);

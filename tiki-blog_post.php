@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.63.2.1 2007-11-08 21:38:33 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.63.2.2 2007-11-24 15:28:37 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	if (empty($data["data"]))
 		$data["data"] = '';
 
-	$smarty->assign('data', htmldecode( $data["data"] ) );
+	$smarty->assign('data', TikiLib::htmldecode( $data["data"] ) );
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('created', $data["created"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($data["data"]));
@@ -175,7 +175,7 @@ if (isset($_REQUEST["preview"])) {
 		}
 	}
 
-	$smarty->assign('data', htmldecode( $edit_data ) );
+	$smarty->assign('data', TikiLib::htmldecode( $edit_data ) );
 
 	if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
@@ -280,7 +280,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
 	$parsed_data = $tikilib->parse_data($parsed_data);
 
-	$smarty->assign('data', htmldecode( $edit_data ) );
+	$smarty->assign('data', TikiLib::htmldecode( $edit_data ) );
 
 	if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);	
@@ -292,7 +292,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 if ($contribution_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
 	$smarty->assign('parsed_data', $tikilib->parse_data($_REQUEST['data']));
-	$smarty->assign('data', htmldecode( $_REQUEST['data'] ) );
+	$smarty->assign('data', TikiLib::htmldecode( $_REQUEST['data'] ) );
 	if ($prefs['feature_freetags'] == 'y') {
 		$smarty->assign('taglist',$_REQUEST["freetag_string"]);
 	}
@@ -320,12 +320,6 @@ $sameurl_elements = array(
 	'blogId',
 	'postId'
 );
-
-function htmldecode($string) {
-   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-   return $string;
-}
 
 $smarty->assign_by_ref('blogs', $blogs);
 

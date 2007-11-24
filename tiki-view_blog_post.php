@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.46 2007-10-12 07:55:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.46.2.1 2007-11-24 15:28:37 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,7 +93,7 @@ if ($user && $user == $blog_data["user"]) {
 
 $smarty->assign('ownsblog', $ownsblog);
 
-$post_info['data']=htmldecode($post_info['data']);
+$post_info['data'] = TikiLib::htmldecode($post_info['data']);
 $smarty->assign('post_info', $post_info);
 $smarty->assign('postId', $postId);
 $smarty->assign('blog_data', $blog_data);
@@ -200,11 +200,5 @@ ask_ticket('view-blog-post');
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog_post.tpl');
 $smarty->display("tiki.tpl");
-
-function htmldecode($string) {
-   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-   return $string;
-}
 
 ?>

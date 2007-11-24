@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.14 2007-11-24 00:35:15 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.15 2007-11-24 15:28:37 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -630,7 +630,7 @@ $smarty->assign('lang', $pageLang);
 if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
 	// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
 	//   then we need to convert database's HTML entities into their "normal chars" equivalents
-	$smarty->assign('pagedata', htmldecode($edit_data));
+	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
 } else {
 	$smarty->assign('pagedata', $edit_data);
 }
@@ -664,22 +664,7 @@ $smarty->assign('preview',0);
 if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview',1);
 }
-function htmldecode($string) {
-	if ( version_compare(phpversion(), '5', '>=') ) {
-		// Use html_entity_decode with UTF-8 only with PHP5 or later, since
-		//   this function was available in PHP4 but _without_ multi-byte charater sets support
-		$string = html_entity_decode($string, ENT_COMPAT, 'utf-8');
-		return $string;
-	} else {
-		// For compatibility purposes with php < 5
-		$string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-		$string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
-		if (function_exists('recode_string')) {
-			$string =  recode_string('iso-8859-15..utf-8', $string);
-		}
-		return $string;
-	}
-}
+
 function parse_output(&$obj, &$parts,$i) {
   if(!empty($obj['parts'])) {
     for($i=0; $i<count($obj['parts']); $i++)
