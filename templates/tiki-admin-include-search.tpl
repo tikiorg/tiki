@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.3 2007-11-13 13:54:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.4 2007-11-24 23:53:22 ntavares Exp $ *}
 
 {if $prefs.feature_search_stats eq 'y'}
   <div class="rbox" name="tip">
@@ -88,7 +88,7 @@
         </tr>
         
         <tr>
-          <th class="heading" colspan="2" align="center">{tr}Database Independant Full Text Search or Tiki Search{/tr}</th>
+          <th class="heading" colspan="2" align="center">{tr}Database Independent Full Text Search or Tiki Search{/tr}</th>
         </tr>
 	
         <tr>
