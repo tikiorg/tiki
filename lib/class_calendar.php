@@ -314,7 +314,7 @@ class Calendar {
 			'December'
 		);
 
-		include_once('/lib/init/tra.php');
+		include_once('lib/init/tra.php');
 		return tra($en[$month], $lan);
 	}
 
@@ -371,7 +371,7 @@ class Calendar {
 			'Saturday'
 		);
 
-		include_once('/lib/init/tra.php');
+		include_once('lib/init/tra.php');
 		return tra($en[$x], $lan);
 	}
 
@@ -393,7 +393,7 @@ class Calendar {
 		);
 
 		$w = $this->dayOfWeek($dia, $mes, $anio);
-		include_once('/lib/init/tra.php');
+		include_once('lib/init/tra.php');
 		return tra($en[$w], $lan);
 	}
 }
