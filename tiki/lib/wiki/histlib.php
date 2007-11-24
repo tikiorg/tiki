@@ -255,6 +255,36 @@ class HistLib extends TikiLib {
 		$cant = $this->getOne($query_cant, array($page));
 		return $cant;
 	}
+	
+	// This function gets the version number of the version before or after the time specified
+	// (note that current version is not included in search)
+	function get_version_by_time($page, $unixtimestamp, $before_or_after = 'before', $include_minor = true) {
+		$query = "select `version`, `version_minor`, `lastModif` from `tiki_history` where `pageName`=? order by `version` desc";
+		$result = $this->query($query,array($page));
+		$ret = array();
+		$version = 0;
+		while ($res = $result->fetchRow()) {
+			$aux = array();
+			$aux["version"] = $res["version"];
+			$aux["version_minor"] = $res["version_minor"];
+			$aux["lastModif"] = $res["lastModif"];
+			$ret[] = $aux;
+		}
+		foreach ($ret as $ver) {
+			if ($ver["lastModif"] <= $unixtimestamp && ($include_minor || $ver["version_minor"] == 0)) {
+				if ($before_or_after == 'before') { 
+					$version = (int) $ver["version"];
+					break;
+				} elseif ($before_or_after == 'after') {
+					break;
+				}
+			}
+			if ($before_or_after == 'after' && ($include_minor || $ver["version_minor"] == 0)) {
+				$version = (int) $ver["version"];				
+			}		
+		}
+		return max(0, $version);		
+	}
 }
 
 global $dbTiki;

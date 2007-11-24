@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.3 2007-11-22 21:43:15 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.4 2007-11-24 00:35:15 nkoth Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -11,7 +11,14 @@
 {if $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
-{if $outOfSync eq 'y'} {tr}Latest changes will be synchronized after approval.{/tr}{/if}
+{if $outOfSync eq 'y'}
+	{if $canApproveStaging == 'y' && $lastSyncVersion}
+	<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}">{tr}View changes since last approval.{/tr}</a>
+	{tr}Approve changes.{/tr}
+	{else}
+	{tr}Latest changes will be synchronized after approval.{/tr}
+	{/if}
+{/if}
 </div>
 {/if}
 
