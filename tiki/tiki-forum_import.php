@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.1 2007-11-24 19:39:25 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.2 2007-11-24 19:47:17 kerrnel22 Exp $
 //
 // Copyright (c)2002-2003
 // Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -32,6 +32,15 @@
  ** Roadmap
  ** -------
  ** v1.1 - Allow to migrate phpBB2 (perhaps other forum types) to Tiki forums.
+ **
+ ** STATE OF THE CODE
+ ** -----------------
+ ** - Currently only works when importing Tiki forums from an SQL file.
+ ** - SQL file dump must be set to escape single quotes with \' instead of ''
+ ** - If you get timeout problems, you may need to increase your php.ini
+ **   'max_execution_time' to something like 120 or more, depending on the
+ **   size of your SQL file.  120 is good for a file around 20Mb.
+ **
  ****************************************************************************/
 
 // Initialization
