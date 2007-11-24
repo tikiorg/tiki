@@ -1,68 +1,109 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.1 2007-11-24 15:28:41 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.2 2007-11-24 17:12:43 nyloth Exp $
 // Displays a snippet of code
-// Parameters: ln => line numbering (default false)
-// Example:
-// {CODE()}
-//  print("foo");
-// {CODE}
 function wikiplugin_code_help() {
-//	$help = "Displays a snippet of code.\n";
-//	$help.= "Parameters\n";
-//	$help.= "* ln=>1 provides line-numbering\n";
-//	$help.= "* colors=>php highlights phpcode (other syntaxes to come)\n";
-//	$help.= "( note : those parameters are exclusive for now )\n";
-//	$help.= "* caption=>provides a caption for the code\n";
-//	$help.= "* wrap=>allows line wrapping in the code\n";
-//	$help.= "* wiki=>allow wiki interpolation of the code\n";
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
 	return tra($help);
 }
 
 function wikiplugin_code($data, $params) {
-	if( is_array( $params ) ) {
-		extract ($params,EXTR_SKIP);
+	if ( is_array($params) ) {
+		extract($params, EXTR_SKIP);
 	}
-	$code = $data;
-	$out = '';
-	if (isset($caption)) {
-		$out .= '<div class="codecaption">'.$caption.'</div>';
+	$code = trim($data);
+	$parse_wiki = ( isset($wiki) && $wiki == 1 );
+
+	// Detect if GeSHI (Generic Syntax Highlighter) is available
+	$use_geshi = false;
+	$geshi_paths = array(
+		'lib/geshi/class.geshi.php', // Tiki manual (or mod) install of GeSHI v1.2 in lib/geshi/
+		'lib/geshi/geshi.php', // Tiki manual (or mod) install of GeSHI v1.0 in lib/geshi/
+		'/usr/share/php-geshi/geshi.php' // php-geshi package v1.0
+	);
+	foreach ( $geshi_paths as $gp ) {
+		if ( file_exists($gp) ) {
+			require_once($gp);
+			break;
+		}
 	}
-	if (isset($rtl) && $rtl == 1) {
-		$out .= '<div dir="rtl">'; // force writing the code right to left
+
+	// If 'color' is specified and GeSHI installed, use syntax highlighting with GeSHi
+	if ( isset($colors) && $colors != 'highlights' && class_exists('GeSHI') ) {
+
+		$geshi =& new GeSHi(TikiLib::htmldecode($code), $colors);
+
+		if ( version_compare(GESHI_VERSION, 1.1) == -1) { // Old API
+			if ( isset($ln) && $ln > 0 ) {
+				$geshi->set_header_type(GESHI_HEADER_NONE);
+				$geshi->set_link_target('_blank');
+				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+				$geshi->start_line_numbers_at($ln);
+			}
+			$out = $geshi->parse_code();
+		} else { // New API
+			$out = $geshi->parseCode();
+		}
+
+		// Remove first <pre> tag
+		if ( $out != '' ) {
+			$out = ereg_replace('^<pre[^>]*>(.*)</pre>$', '\\1', $out);
+			$out = trim($out);
+		}
+
+	} elseif ( $colors == 'highlights' || $colors == 'php' ) {
+
+		$out = highlight_string(TikiLib::htmldecode($code), true);
+
+		// Convert &nbsp; into spaces and <br /> tags into real line breaks, since it will be displayed in a <pre> tag
+		$out = str_replace('&nbsp;', ' ', $out);
+		$out = eregi_replace('<br[^>]+>', "\n", $out);
+
+		// Remove first <code> tag
+		$out = eregi_replace('^\s*<code[^>]*>(.*)</code>$', '\\1', $out);
+
+		// Remove spaces after the first tag and before the start of the code
+		$out = ereg_replace("^\s*(<[^>]+>)\n", '\\1', $out);
+		$out = trim($out);
+
 	} else {
-		$out .= '<div dir="ltr">'; // default is left to right
-	}
-	if (isset($colors) and ($colors == 'php')) {
-		$out.= "<div class='codelisting'>~np~".highlight_string(TikiLib::htmldecode(trim($code)),1)."~/np~</div>";
-	} else {
-		if (isset($ln) && $ln == 1) {
-			$lines = explode("\n", trim($code));
-			$code = '';
+
+		$out = trim($code);
+		if ( isset($ln) && $ln == 1) {
+			$out = '';
+			$lines = explode("\n", $code);
 			$i = 1; 
-			foreach ($lines as $line) {
-				$code .= sprintf("% 3d",$i) . ' . ' . $line . "\n";
+			foreach ( $lines as $line ) {
+				$out .= sprintf('% 3d', $i).' . '.$line."\n";
 				$i++;
 			}
-		}
-		if (isset($wrap) && $wrap == 1) {
-			if (isset($wiki) && $wiki == 1) {
-				$out.= "<div class='codelisting'>". $code."</div>";
-			} else {
-				$code = preg_replace("/\n/", "<br />", $code);
-				$out.= "<div class='codelisting'>~np~".$code."~/np~</div>";
-			}
 		} else {
-			if (isset($wiki) && $wiki == 1) {
-				$out.= "<pre class='codelisting'>". $code."</pre>";
-			} else {
-				$out.= "<pre class='codelisting'>~np~".$code."~/np~</pre>";
-			}
+			$out = $code;
 		}
+
 	}
-	$out = str_replace("\\", "\\\\", $out);//prevents vanishing of backslash occurences
-	$out = str_replace("$", "\\$", $out);//prevents vanishing of e.g. $1 strings from code listing
-	$out .= '</div>'; 
+
+	if ( isset($wrap) && $wrap == 1 ) {
+		// Force wrapping in <pre> tag through a CSS hack
+		$pre_style = 'white-space:pre-wrap;'
+			.' white-space:-moz-pre-wrap !important;'
+			.' white-space:-pre-wrap;'
+			.' white-space:-o-pre-wrap;'
+			.' word-wrap:break-word;';
+	} else {
+		// If there is no wrapping, display a scrollbar (only if needed) to avoid truncating the text
+		$pre_style = 'overflow:auto;';
+	}
+
+	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
+		.(( $parse_wiki ) ? '' : '~np~')
+		.$out
+		.(( $parse_wiki ) ? '' : '~/np~')
+		.'</div>';
+
+	if ( isset($caption) ) {
+		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
+	}
+
 	return $out;
 }
 
