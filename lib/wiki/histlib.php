@@ -150,15 +150,18 @@ class HistLib extends TikiLib {
 			if ($version > 0)
 				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? and `version`=?";				
 			else
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_pages` where `pageName`=? and `version`=?";
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_pages` where `pageName`=?";
 		} else {
 			if ($version > 0)
 				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_history` where `pageName`=? and `version`=?";
 			else
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_pages` where `pageName`=? and `version`=?";
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_pages` where `pageName`=?";
 		}
-		$result = $this->query($query,array($page,$version));
-
+		if ($version > 0)
+			$result = $this->query($query,array($page,$version));
+		else
+			$result = $this->query($query,array($page));
+			
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
