@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/importerlib.php,v 1.1.2.1 2007-11-24 08:43:50 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/importerlib.php,v 1.1.2.2 2007-11-24 19:40:32 kerrnel22 Exp $
 //
 // Copyright (c)2002-2003
 // Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -48,7 +48,7 @@ class Importer extends Comments {
 function importSQLForum($dbType, $dbPrefix, $sqlFile, $fF, $tF) {
 	$fHash = array();
 	$row = array();
-	$hash = array();
+	$hash = array();	// If part of a thread, this is the new parent threadId.
 
 	// Select the table for the main forum information.
 	if ($dbType == 'TikiWiki') {
@@ -62,12 +62,21 @@ function importSQLForum($dbType, $dbPrefix, $sqlFile, $fF, $tF) {
 	// Parse the SQL file and grab all posts for the source forum.
 	$fHash = $this->parseSQL($dbType, $dbPrefix, $table, $sqlFile, $fF);
 	$fPosts = count($fHash);
+	$fPosts2 = $fPosts;
 	
-	// Add each post to the target forum.
-	for ($count = 0; $count < $fPosts; $count++) {
-		$row = $fHash[$count];
+	// In order to accommodate out of order posts and still keep integrity
+	// with threads, if a record has a parent ID (meaning it is part of a
+	// thread), then when looping through the array, stick it on the end
+	// and continue with the next one.
+	for ($count = 0; $count < $fPosts2; $count++) {
+		$row = array_shift($fHash);
+
 		$pid = 0;
-		if ($row["parentId"] != 0) {
+		if ($row["parentId"] != 0 && !$hash[$row["parentId"]]) {
+				array_push($fHash, $row);
+				$fPosts2++;
+				continue;
+		} else if ($row["parentId"] != 0) {
 				$pid = $hash[$row["parentId"]];
 		}
 
@@ -77,23 +86,23 @@ function importSQLForum($dbType, $dbPrefix, $sqlFile, $fF, $tF) {
 					`userName`, `title`, `data`, `votes`, `points`, `hash`,
 					`parentId`, `average`, `hits`, `type`, `summary`, `user_ip`,
 					`message_id`, `in_reply_to`)
-				values ( 'forum', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-					?, ?, ?)";
-			$result = $this->query($query,
-					array((int) $tF, (int) $row["commentDate"],
-						$row["userName"], $row["title"], $row["data"], 
-						(int) $row["votes"], $row["points"], $row["hash"],
-						(int) $pid, $row["average"], $row["hits"], 
-						$row["type"], $row["summary"], $row["user_ip"], 
-						$row["message_id"], (string) $row["in_reply_to"])
-					);
+				values ( 'forum', '$tF', " . $row["commentDate"] . 
+					", \"" . $row["userName"] . "\", \"" . $row["title"] . 
+					"\", \"" . $row["data"] . "\", " . (int) $row["votes"] .
+					", '" . $row["points"] . "', '" . $row["hash"] . 
+					"', $pid, \"" . $row["average"] . "\", " .
+					(int) $row["hits"] . ", '" . $row["type"] . "', \"" .
+					$row["summary"] . "\", '" . $row["user_ip"] . "', \"" .
+					$row["message_id"] . "\", \"" . $row["in_reply_to"] . "\")";
+			$result = $this->query($query);
+
 			$abbb = $this->getOne("SELECT LAST_INSERT_ID() from $ftable");
 			if (!$abbb) {
 				$abbb = $this->getOne("SELECT max(tableId) from $ftable");
 			}
 			$hash[$row["threadId"]] = $abbb;
 		} else {
-			die ("Only TikiWiki is supported.\n");
+			die ("Only TikiWiki is supported at this time.\n");
 		}
 	}
 
