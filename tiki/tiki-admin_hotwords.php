@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.21.2.1 2007-11-25 21:35:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.21.2.2 2007-11-25 21:42:35 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,11 @@ if ($prefs['feature_hotwords'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-$access->check_admin($user, tra("Admin: Hotwords"));
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 
 // Process the form to add a user here
