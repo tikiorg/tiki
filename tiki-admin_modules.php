@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.52 2007-08-03 20:08:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.52.2.1 2007-11-25 21:42:35 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,11 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 }
 
 // PERMISSIONS: NEEDS p_admin
-$access->check_admin($user, tra("Admin: Modules"));
-
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 // Values for the user_module edit/create form
 $smarty->assign('um_name', '');
