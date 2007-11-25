@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.3 2007-11-25 00:41:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.4 2007-11-25 00:46:57 nyloth Exp $
 // Displays a snippet of code
 function wikiplugin_code_help() {
 	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
@@ -36,7 +36,6 @@ function wikiplugin_code($data, $params) {
 				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 				$geshi->start_line_numbers_at($ln);
 			}
-			$geshi->set_header_type(GESHI_HEADER_NONE);
 			$geshi->set_link_target('_blank');
 			$out = $geshi->parse_code();
 		} else { // New API
