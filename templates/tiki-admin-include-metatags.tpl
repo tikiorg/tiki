@@ -6,8 +6,8 @@
 <div class="cbox-data">
         <form action="tiki-admin.php?page=metatags" method="post">
         <table class="admin">
-        <tr><td class="form">{tr}<b>Item</b>{/tr}</td>
-            <td class="form">{tr}<b>Value</b>{/tr}</td>
+        <tr><td class="form"><b>{tr}Item{/tr}</b></td>
+            <td class="form"><b>{tr}Value{/tr}</b></td>
         </tr>
         <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /></td></tr>
         <tr><td class="form">{tr}Meta Description{/tr}:</td><td><input type="text" name="metatag_description" value="{$prefs.metatag_description}" size="50" /></td></tr>
