@@ -1,36 +1,24 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.5 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/help.php,v 1.5.2.1 2007-11-25 20:58:11 mose Exp $
 
 // Initialization
-require_once ('tiki-setup.php');
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-include_once ('lib/wiki/wikilib.php');
-include_once ('lib/structures/structlib.php');
-include_once ('lib/notifications/notificationlib.php');
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+	exit;
+}
+
+require_once ('tiki-setup.php');
 
 if ($prefs['feature_wiki'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
   $smarty->display("error.tpl");
   die;
 }
 
-// 27-Jun-2003, by zaufi
-// Get plugins with descriptions
-global $wikilib;
-$plugin_files = $wikilib->list_plugins();
-$plugins = array();
-
-// Request help string from each plugin module
-foreach ($plugin_files as $pfile) {
-  $pinfo["file"] = $pfile;
-
-  $pinfo["help"] = $wikilib->get_plugin_description($pfile);
-  $pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-  $plugins[] = $pinfo;
-}
+include_once ('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true);
 
 $smarty->assign_by_ref('plugins', $plugins);
 

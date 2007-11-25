@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.3 2007-11-16 22:22:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.4 2007-11-25 20:58:11 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -601,7 +601,7 @@ class WikiLib extends TikiLib {
 
     function list_plugins($with_help = false) {
 	$files = array();
-
+	
 	if (is_dir(PLUGINS_DIR)) {
 	    if ($dh = opendir(PLUGINS_DIR)) {
 		while (($file = readdir($dh)) !== false) {
@@ -613,12 +613,18 @@ class WikiLib extends TikiLib {
 	}
 	sort($files);
 	if ($with_help) {
-		$plugins = array();
-		foreach ($files as $pfile) {
-  			$pinfo['file'] = $pfile;
-			$pinfo["help"] = $this->get_plugin_description($pfile);
-			$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-			$plugins[] = $pinfo;
+		global $cachelib;
+		if (!$cachelib->isCached('plugindesc')) {
+			$plugins = array();
+			foreach ($files as $pfile) {
+					$pinfo['file'] = $pfile;
+				$pinfo["help"] = $this->get_plugin_description($pfile);
+				$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
+				$plugins[] = $pinfo;
+			}
+			$cachelib->cacheItem("plugindesc",serialize($plugins));
+		} else {
+			$plugins = unserialize($cachelib->getCached("plugindesc"));
 		}
 		return $plugins;
 	} else {
