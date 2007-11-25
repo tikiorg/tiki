@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.2 2007-11-24 19:47:17 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.3 2007-11-25 07:33:07 kerrnel22 Exp $
 //
 // Copyright (c)2002-2003
 // Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -45,16 +45,10 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-if ($feature_forums != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled: feature_forums"));
-	$smarty->display("error.tpl");
-	die;
-}
-if ($tiki_p_admin != 'y' && $tiki_p_admin_forum != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature."));
-	$smarty->display("error.tpl");
-	die;
-}
+
+$access->check_feature('feature_forums');
+$access->check_admin($user, tra("Import Forums"));
+
 include_once ('lib/importerlib.php');
 $import = new Importer($dbTiki);
 
