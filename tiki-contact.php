@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25 2007-10-14 17:13:27 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.1 2007-11-25 21:35:24 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,11 @@ include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 
 
-$access->check_feature('feature_contact');
+if ($prefs['feature_contact'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_contact');
+	$smarty->display('error.tpl');
+	die;
+}
 if ($prefs['contact_anon'] != 'y') {
   $access->check_user($user);
 }
