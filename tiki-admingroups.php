@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.4 2007-11-21 19:28:41 ntavares Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.5 2007-11-25 21:19:57 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -165,9 +165,9 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$defcatfieldid,$themefieldid,$groupperms,$trackerinfo,$memberlist,$userChoice) = array('','','','','','','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$defcatfieldid,$themefieldid,$groupperms,$trackerinfo,$memberslist,$userChoice) = array('','','','','','','','','','','','','');
 
-if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
+if (!empty($_REQUEST["group"])) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
 
 	if (isset($re["groupName"]))
@@ -234,6 +234,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$smarty->assign('hasOneIncludedGroup', "y");
 		}
 	}
+	$memberslist = $userlib->get_group_users($_REQUEST['group']);
 	$cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();
@@ -247,15 +248,65 @@ if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
 
-if ($_REQUEST['group'] and isset($_REQUEST['show'])) {
-	$memberslist = $userlib->get_group_users($_REQUEST['group']);
-	$cookietab = "3";
-} else {
-	$memberslist = '';
+if (!empty($_REQUEST['group']) && isset($_REQUEST['export'])) {
+	$users = $userlib->get_users(0,-1,'login_asc', '', '', false, $_REQUEST['group']);
+	$smarty->assign_by_ref('users', $users['data']);
+	$listfields = array();
+	if (isset($_REQUEST['username'])) {
+		$listfields[] = 'user';
+	}
+	if (isset($_REQUEST['email'])) {
+		$listfields[] = 'email';
+	}
+	$smarty->assign_by_ref('listfields', $listfields);
+	$data = $smarty->fetch('tiki-export_users.tpl');
+	if (!empty($_REQUEST['encoding']) && $_REQUEST['encoding'] == 'ISO-8859-1') {
+		$data = utf8_decode($data);
+	} else {
+		$_REQUEST['encoding'] = "UTF-8";
+	}
+	header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+	header("Content-Disposition: attachment; filename=".tra('users')."_".$_REQUEST['group'].".csv");
+	header("Expires: 0");
+	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+	header("Pragma: public");
+	echo $data;
+	die;
 }
 
-include_once ('lib/categories/categlib.php');
-include_once ('categorize_list.php');  	 
+if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
+	$fname = $_FILES['csvlist']['tmp_name'];
+	$fhandle = fopen($fname, 'r');
+	$fields = fgetcsv($fhandle, 1000);
+	if (!$fields[0]) {
+		$smarty->assign('msg', tra('The file is not a CSV file or has not a correct syntax'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($fields[0]!='user') {
+		$smarty->assign('msg', tra('The file does not have the required header:').' user');
+		$smarty->display('error.tpl');
+		die;	
+	}
+	$data = @fgetcsv($fhandle, 1000);	
+	while (!feof($fhandle)) {
+		if (function_exists("mb_detect_encoding") && mb_detect_encoding($data[0], "ASCII, UTF-8, ISO-8859-1") ==  "ISO-8859-1") {
+				$data[0] = utf8_encode($data[0]);
+			}
+		if (!$userlib->user_exists($data[0])) {
+			$errors[] = tra('User doesnt exist').': '.$data[0];
+		} else {
+			$userlib->assign_user_to_group($data[0], $_REQUEST['group']);
+		}
+		$data = fgetcsv($fhandle, 1000);
+	}
+	if (!empty($errors)) {
+		$smarty->assign_by_ref('errors', $errors);
+	}
+	$cookietab = 4;
+}
+
+include_once ('categorize_list.php');
   	 
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);

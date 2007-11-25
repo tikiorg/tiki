@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.4 2007-11-25 03:05:42 ntavares Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.5 2007-11-25 21:19:57 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
-<h1><a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admingroups.php{if !empty($groupname)}?group={$groupname|escape:'url'}{/if}">{tr}Admin groups{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
 <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
@@ -25,19 +25,20 @@
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
+{cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}List{/tr}</a></span>
 {if $groupname}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Members{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Members{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Import/Export{/tr}</a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Add a new group{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $smarty.cookies.tab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},6);">{tr}Add a new group{/tr}</a></span>
 {/if}
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+{cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 {* ----------------------- tab with list --------------------------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
@@ -247,7 +248,6 @@ class="prevnext">{tr}All{/tr}</a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Members List{/tr}: {$groupname}</h2>
 <table class="normal"><tr>
-{if $memberslist}
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=ix loop=$memberslist}
 <td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
@@ -255,9 +255,43 @@ class="prevnext">{tr}All{/tr}</a>
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
 </div>
-{else}
-<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1{if $prefs.feature_tabs ne 'y'}#3{/if}" class="linkbut">{tr}List all members{/tr}</a></td>
-</tr></table>
+{/if}
+
+{* ----------------------- tab with import/export --------------------------------------- *}
+<a name="4" ></a>
+{if $groupname}
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<form method="post" action="tiki-admingroups.php"  enctype="multipart/form-data">
+<input type="hidden" name="group" value="{$groupname|escape}" />
+
+{if $errors}
+<div class="simple highlight">
+{foreach from=$errors item=e}
+{$e}</br />
+{/foreach}
 </div>
 {/if}
+
+<h2>{tr}Download CSV export{/tr}</h2>
+<table class="normal">
+<tr>
+<td class="formcolor auto">{tr}Charset encoding:{/tr}</td><td  class="formcolor auto"><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
+</tr><tr>
+<td class="formcolor auto"></td><td class="formcolor auto"><input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br /><input type="checkbox" name="email">{tr}Email{/tr}</td>
+</tr><tr>
+<td class="formcolor auto"></td><td class="formcolor auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
+</tr>
+</table>
+
+<h2>{tr}Batch upload (CSV file):{/tr}</h2>
+{tr}Assign users to group:{/tr} {$groupname} <br />{tr}User must already exist.{/tr}<br />{tr}To create users and assign them to groups, got to admin->users{/tr}
+<table class="normal">
+<tr>
+<td class="formcolor auto">{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a></td><td class="formcolor auto"><input name="csvlist" type="file" /></td>
+</tr><tr>
+<td class="formcolor auto"></td><td class="formcolor auto"><input type="submit" name="import" value="{tr}Import{/tr}" /></td>
+</tr>
+</table>
+</form>
+</div>
 {/if}
