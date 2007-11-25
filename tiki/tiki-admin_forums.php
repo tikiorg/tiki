@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.2 2007-11-25 21:35:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.3 2007-11-25 22:12:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,8 +47,11 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 	}
 }
 
-$access->check_permission(array('tiki_p_admin_forum'), tra("Admin: Forums"));
-
+if ($tiki_p_admin_forum != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);

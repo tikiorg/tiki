@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.1 2007-11-25 21:35:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.2 2007-11-25 22:12:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,8 +18,10 @@ if ($prefs['feature_contact'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-if ($prefs['contact_anon'] != 'y') {
-  $access->check_user($user);
+if ($prefs['contact_anon'] != 'y' && !$user) {
+	$smarty->assign('msg', 'You are not logged in');
+	$smarty->display('error.tpl');
+	die;
 }
 
 $smarty->assign('mid', 'tiki-contact.tpl');

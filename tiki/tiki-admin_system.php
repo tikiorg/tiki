@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28.2.1 2007-10-17 18:33:53 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28.2.2 2007-11-25 22:12:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,11 @@
 
 require_once ('tiki-setup.php');
 
-$access->check_permission(array('tiki_p_admin'));
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 $done = '';
 $output = '';
