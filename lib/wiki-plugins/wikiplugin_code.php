@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.2 2007-11-24 17:12:43 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.3 2007-11-25 00:41:36 nyloth Exp $
 // Displays a snippet of code
 function wikiplugin_code_help() {
 	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
@@ -14,7 +14,6 @@ function wikiplugin_code($data, $params) {
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
-	$use_geshi = false;
 	$geshi_paths = array(
 		'lib/geshi/class.geshi.php', // Tiki manual (or mod) install of GeSHI v1.2 in lib/geshi/
 		'lib/geshi/geshi.php', // Tiki manual (or mod) install of GeSHI v1.0 in lib/geshi/
@@ -34,11 +33,11 @@ function wikiplugin_code($data, $params) {
 
 		if ( version_compare(GESHI_VERSION, 1.1) == -1) { // Old API
 			if ( isset($ln) && $ln > 0 ) {
-				$geshi->set_header_type(GESHI_HEADER_NONE);
-				$geshi->set_link_target('_blank');
 				$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
 				$geshi->start_line_numbers_at($ln);
 			}
+			$geshi->set_header_type(GESHI_HEADER_NONE);
+			$geshi->set_link_target('_blank');
 			$out = $geshi->parse_code();
 		} else { // New API
 			$out = $geshi->parseCode();
@@ -50,7 +49,7 @@ function wikiplugin_code($data, $params) {
 			$out = trim($out);
 		}
 
-	} elseif ( $colors == 'highlights' || $colors == 'php' ) {
+	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
 		$out = highlight_string(TikiLib::htmldecode($code), true);
 
