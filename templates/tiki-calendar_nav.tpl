@@ -5,7 +5,7 @@
 <a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" /></a>
 <a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" /></a>
 <a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" /></a>
-<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quater{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" /></a>
+<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quarter{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" /></a>
 <a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" /></a>
 <a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" /></a>
 </div>
