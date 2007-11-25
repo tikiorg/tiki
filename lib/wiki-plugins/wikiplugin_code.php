@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.4 2007-11-25 00:46:57 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.5 2007-11-25 17:03:29 mose Exp $
 // Displays a snippet of code
 function wikiplugin_code_help() {
 	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
@@ -95,8 +95,7 @@ function wikiplugin_code($data, $params) {
 	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
 		.(( $parse_wiki ) ? '' : '~np~')
 		.$out
-		.(( $parse_wiki ) ? '' : '~/np~')
-		.'</div>';
+		.(( $parse_wiki ) ? '' : '~/np~');
 
 	if ( isset($caption) ) {
 		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
