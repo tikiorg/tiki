@@ -7,7 +7,11 @@ require_once ('tiki-setup.php');
 // do we need it?
 require_once('lib/admin/adminlib.php');
 
-$access->check_page($user, null, array('tiki_p_admin'), tra("Admin: Security"));
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 // get all dangerous php settings and check them 
 $phpsettings=array();

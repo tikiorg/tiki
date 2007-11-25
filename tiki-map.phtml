@@ -14,7 +14,11 @@ if ($prefs['feature_maps'] != 'y') {
 	$smarty->display('error.tpl');
 	die;
 }
-$access->check_permission(array('tiki_p_map_view'), tra("View maps"));
+if ($tiki_p_map_view != 'y') {
+	$smarty->assign('msg', tra('You do not have permission to use this feature'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 //setting up xajax
 require_once("lib/ajax/xajax.inc.php");
