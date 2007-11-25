@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.1 2007-11-25 21:35:24 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,10 +12,23 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/histlib.php');
 
+if ($prefs['feature_wiki'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
+	$smarty->display('error.tpl');
+	die;
+}
 if (!isset($_REQUEST["source"])) {
-    $access->check_feature(array('feature_wiki', 'feature_history'));
+	if ($prefs['feature_history'] != 'y') {
+		$smarty->assign('msg', tra('This feature is disabled').': feature_history');
+		$smarty->display('error.tpl');
+		die;
+	}
 } else {
-    $access->check_feature(array('feature_wiki', 'feature_source'));
+	if ($prefs['feature_source'] != 'y') {
+		$smarty->assign('msg', tra('This feature is disabled').': feature_source');
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 
 // Get the page from the request var or default it to HomePage

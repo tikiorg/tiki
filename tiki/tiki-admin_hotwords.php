@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.21 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.21.2.1 2007-11-25 21:35:24 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,11 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/hotwords/hotwordlib.php');
 
-$access->check_feature('feature_hotwords');
+if ($prefs['feature_hotwords'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_hotwords');
+	$smarty->display('error.tpl');
+	die;
+}
 $access->check_admin($user, tra("Admin: Hotwords"));
 
 

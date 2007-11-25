@@ -9,7 +9,11 @@ if (!function_exists('ms_newMapObj')) {
   $access->display_error(basename(__FILE__), $msg);
 }
 
-$access->check_feature('feature_maps');
+if ($prefs['feature_maps'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_maps');
+	$smarty->display('error.tpl');
+	die;
+}
 $access->check_permission(array('tiki_p_map_view'), tra("View maps"));
 
 //setting up xajax

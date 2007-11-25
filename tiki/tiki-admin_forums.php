@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.1 2007-11-08 21:34:48 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.2 2007-11-25 21:35:24 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,11 @@ if (!isset($_REQUEST["forumId"])) {
 	$_REQUEST["forumId"] = 0;
 }
 
-$access->check_feature('feature_forums');
+if ($prefs['feature_forums'] != 'y') {
+	$smarty->assign('msg', tra('This feature is disabled').': feature_forums');
+	$smarty->display('error.tpl');
+	die;
+}
 
 
 $smarty->assign('individual', 'n');
