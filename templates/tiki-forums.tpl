@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.1 2007-10-17 20:36:08 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.2 2007-11-26 21:00:19 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -60,8 +60,8 @@
 {/if}	
 </tr>
 {assign var=section_old value=""}
-{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
+{cycle values="odd,even" print=false}
 {assign var=section value=$channels[user].section}
 {if $section ne $section_old}
   {assign var=section_old value=$section}
@@ -94,7 +94,7 @@
 </td>
 {/if}
 {if $prefs.forum_list_visits eq 'y'}
-	<td style="text-align:right;" class="{cycle}">{$channels[user].hits}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 {/if}	
 </tr>
 {/section}
