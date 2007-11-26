@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.32 2007-10-04 22:17:42 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.32.2.1 2007-11-26 20:25:52 nyloth Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -97,8 +97,8 @@
 <tr><td class="even">{tr}Forums{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.forums}</td></tr>
 <tr><td class="odd">{tr}Total topics{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.topics}</td></tr>
 <tr><td class="even">{tr}Average topics per forums{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.tpf|string_format:"%.2f"}</td></tr>
-<tr><td class="odd">{tr}Total threads{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.threads}</td></tr>
-<tr><td class="even">{tr}Average threads per topic{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.tpt|string_format:"%.2f"}</td></tr>
+<tr><td class="odd">{tr}Total replies{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.threads}</td></tr>
+<tr><td class="even">{tr}Average number of replies per topic{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.tpt|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Visits to forums{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.visits}</td></tr>
 {/if}
 {* Forum stats *}
