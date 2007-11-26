@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.36 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.36.2.1 2007-11-26 15:43:38 sylvieg Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -49,7 +49,7 @@
 {else}
 <a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}"><img border="0" alt="{tr}deactivate{/tr}" title='{tr}inactive - click to activate{/tr}' src="pics/icons/delete.png" width='16' height='16' /></a>
 {/if}
-{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{if $topics[user].individual eq 'y'}){/if}
+{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=cms&amp;objectId={$topics[user].topicId}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{if $topics[user].individual eq 'y'}){/if}
  <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' width='16' height='16' /></a>
 </td>
 </tr>
