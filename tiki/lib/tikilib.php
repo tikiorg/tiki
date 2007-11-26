@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.35 2007-11-26 15:25:43 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.36 2007-11-26 16:01:16 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2804,7 +2804,7 @@ function add_pageview() {
 	} else {
 	    return '';
 	}
-	if ($tiki_p_admin_cms != 'y' && !$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && !$this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read')) {
+	if (!($tiki_p_admin_cms == 'y' || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && (!$res['topicId'] || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
 		return false;
 	}
 
