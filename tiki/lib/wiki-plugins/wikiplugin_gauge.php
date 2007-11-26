@@ -100,7 +100,7 @@ function wikiplugin_gauge($data, $params) {
 
 	$html  ='<table border="0" cellpadding="0" cellspacing="0"><tr>' . $label_td . '<td width="' . $size . '" height="' . $height . '">';
 	$html .='<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>' . $h_td . '</tr></table>';
-	$html .='</td>' . $perc_td . '<td width="*">&nbsp;</td></tr>';
+	$html .='</td>' . $perc_td . '<td>&nbsp;</td></tr>';
 
 	if (!empty($data)) {
 		$html .= '<tr><td><small>' . $data . '</small></td></tr>';
