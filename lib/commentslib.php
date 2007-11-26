@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.4 2007-11-26 17:07:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.5 2007-11-26 18:56:13 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -921,39 +921,40 @@ class Comments extends TikiLib {
 	$cant = 0;
 	$off = 0;
 	while ( $res = $result->fetchRow() ) {
-	    if ( $this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read') ) {
-		    $cant++; // Count the whole number of topics the user has access to
+	    if ( $res['forumId'] != '' && $this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read') ) {
+		    $cant++; // Count the whole number of forums the user has access to
 		    if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
 
 		    $forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
-		    $res["age"] = $forum_age;
+		    // Get number of topics on this forum
+		    $res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
 
-		    if ($forum_age) {
-				$res["posts_per_day"] = $res["comments"] / $forum_age;
+		    // Get number of users that posted at least one comment on this forum
+		    $res['users'] = $this->getOne(
+			'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
+			array($res['forumId'], 'forum')
+		    );
+
+		    // Get data of the last post of this forum
+		    $result2 = $this->query(
+			'select * from `tiki_comments` where `object`= ? and `objectType` = ? and `commentDate`=?',
+			array($res['forumId'], 'forum', (int)$res['lastPost']),
+			1
+		    );
+		    $res['lastPostData'] = $result2->fetchRow();
+
+		    // Generate stats based on this forum's age
+		    if ( $forum_age > 0 ) {
+			$res['age'] = $forum_age;
+			$res['posts_per_day'] = $res['comments'] / $forum_age;
+			$res['users_per_day'] = $res['users'] / $forum_age;
 		    } else {
-				$res["posts_per_day"] = 0;
+			$res['age'] = 0;
+			$res['posts_per_day'] = 0;
+			$res['users_per_day'] = 0;
 		    }
 
-		    // Now select users
-		    $query = "select distinct `userName` from
-					`tiki_comments` where `object`=? and `objectType` =
-					'forum'";
-		    $result2 = $this->query($query,array((string) $res["forumId"]));
-		    $res["users"] = $result2->numRows();
-
-		    if ($forum_age) {
-				$res["users_per_day"] = $res["users"] / $forum_age;
-		    } else {
-				$res["users_per_day"] = 0;
-		    }
-
-		    $query2 = "select * from `tiki_comments`
-			    where `object`= ? and `objectType` = ?
-			    and `commentDate`=?";
-		    $result2 = $this->query($query2,array($res["forumId"], 'forum',(int) $res["lastPost"]));
-		    $res2 = $result2->fetchRow();
-		    $res["lastPostData"] = $res2;
 		    $ret[] = $res;
 		    ++$count;
 		}
