@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.25 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.25.2.1 2007-11-26 14:41:02 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,8 @@ $info = array();
 $info["name"] = '';
 $info["description"] = '';
 $info["publishDate"] = $tikilib->now;
-$info["expireDate"] = $tikilib->now + 365*24*60*60;
+$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
+$info["expireDate"] = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1);
 $info["canRepeat"] = 'n';
 $info["storeResults"] = 'n';
 $info["immediateFeedback"] = 'n';
