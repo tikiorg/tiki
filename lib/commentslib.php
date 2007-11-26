@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.5 2007-11-26 18:56:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.6 2007-11-26 20:27:40 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -829,7 +829,7 @@ class Comments extends TikiLib {
 			    );
 	} else {
 	    $query = "insert into `tiki_forums`(`name`, `description`,
-	    `created`, `lastPost`, `threads`, `comments`,
+	    `created`, `lastPost`, `comments`,
 	    `controlFlood`,`floodInterval`, `moderator`, `hits`, `mail`,
 	    `useMail`, `usePruneUnreplied`, `pruneUnrepliedAge`,
 	    `usePruneOld`,`pruneMaxAge`, `topicsPerPage`,
@@ -850,8 +850,8 @@ class Comments extends TikiLib {
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	    $bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0, 0,
+			?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	    $bindvars=array($name, $description, (int) $this->now, (int) $this->now, 0,
 		    $controlFlood, (int) $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, (int) $pruneUnrepliedAge,
 		    $usePruneOld, (int) $pruneMaxAge, (int) $topicsPerPage,  $topicOrdering,
@@ -1073,11 +1073,7 @@ class Comments extends TikiLib {
     }
 
     function register_forum_post($forumId, $parentId) {
-	if (!$parentId) {
-	    $query = "update `tiki_forums` set `threads`=`threads`+1, `comments`=`comments`+1 where `forumId`=?";
-	} else {
-	    $query = "update `tiki_forums` set `comments`=`comments`+1 where `forumId`=?";
-	}
+	$query = "update `tiki_forums` set `comments`=`comments`+1 where `forumId`=?";
 
 	$result = $this->query($query,array((int) $forumId));
 
@@ -1170,10 +1166,8 @@ class Comments extends TikiLib {
 	if ($forum["usePruneUnreplied"] == 'y' || $forum["usePruneOld"] == 'y') {	// Recalculate comments and threads
 		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object`=?";
 		$comments = $this->getOne($query, array( $forumId ) );
-		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object`=? and `parentId`=0";
-		$threads = $this->getOne($query, array( $forumId ));
-		$query = "update `tiki_forums` set `comments`=?, `threads`=? where `forumId`=?";
-		$result = $this->query($query, array( (int) $comments, (int) $threads, (int) $forumId) );
+		$query = "update `tiki_forums` set `comments`=? where `forumId`=?";
+		$result = $this->query($query, array( (int) $comments, (int) $forumId) );
 	}
 	return true;
     }
