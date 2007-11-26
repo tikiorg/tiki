@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.2 2007-11-24 15:28:38 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.3 2007-11-26 16:31:12 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -914,9 +914,7 @@ class Comments extends TikiLib {
 	}
 
 	$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_forums` $mid";
 	$result = $this->query($query,$bindvars);
-	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 	$count = 0;
 	$off = 0;
@@ -961,7 +959,7 @@ class Comments extends TikiLib {
 
 	$retval = array();
 	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
+	$retval["cant"] = $count;
 	return $retval;
     }
 
