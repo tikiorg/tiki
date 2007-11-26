@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.3 2007-11-26 16:31:12 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.4 2007-11-26 17:07:27 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -902,6 +902,7 @@ class Comments extends TikiLib {
     }
 
     function list_forums($offset, $maxRecords, $sort_mode, $find = '') {
+	global $user;
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -917,12 +918,13 @@ class Comments extends TikiLib {
 	$result = $this->query($query,$bindvars);
 	$ret = array();
 	$count = 0;
+	$cant = 0;
 	$off = 0;
-	while (($res = $result->fetchRow()) && ($maxRecords == -1 || $count < $maxRecords)) {
-	    global $user;
-	    if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-		    if ($off++ < $offset)
-			continue;
+	while ( $res = $result->fetchRow() ) {
+	    if ( $this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read') ) {
+		    $cant++; // Count the whole number of topics the user has access to
+		    if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
+
 		    $forum_age = ceil(($this->now - $res["created"]) / (24 * 3600));
 
 		    $res["age"] = $forum_age;
@@ -959,7 +961,7 @@ class Comments extends TikiLib {
 
 	$retval = array();
 	$retval["data"] = $ret;
-	$retval["cant"] = $count;
+	$retval["cant"] = $cant;
 	return $retval;
     }
 
