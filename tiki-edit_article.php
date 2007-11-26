@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.71.2.3 2007-11-26 14:41:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.71.2.4 2007-11-26 16:21:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ include_once ('lib/articles/artlib.php');
 $smarty->assign('headtitle',tra('Edit article'));
 
 if ($prefs['feature_freetags'] == 'y') {
-	include_once('lib/freetag/freetaglib.php');
+	global $freetaglib;include_once('lib/freetag/freetaglib.php');
 }
 
 if ($prefs['feature_articles'] != 'y') {
@@ -82,6 +82,17 @@ $smarty->assign('emails', '');
 //  really do not want to do $tikilib->get_article if the articleId is 0
 if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
+	if ($article_data === false) {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
+	if (!$article_data) {
+		$smarty->assign('msg', tra("Article not found"));
+		$smarty->display("error.tpl");
+		die;
+	}
 
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];
