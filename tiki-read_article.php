@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61 2007-10-12 07:55:31 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61.2.1 2007-11-26 15:27:17 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,13 +21,6 @@ if ($prefs['feature_categories'] == 'y') {
 
 if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($tiki_p_read_article != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -66,41 +59,18 @@ if ($prefs['feature_freetags'] == 'y') {
 	$smarty->assign('articleId', $_REQUEST["articleId"]);
 	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
 
+	if ($article_data === false) {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
 	if (!$article_data) {
 		$smarty->assign('msg', tra("Article not found"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	if ($tiki_p_admin != 'y' && $tiki_p_admin_cms != 'y' && $userlib->object_has_one_permission($article_data["topicId"], 'topic')) {
-		if (!$userlib->object_has_permission($user, $article_data["topicId"], 'topic', 'tiki_p_topic_read')) {
-			$smarty->assign('msg', tra("Permision denied"));
-
-			$smarty->display("error.tpl");
-			die;
-		}
-	} elseif ($prefs['feature_categories'] == 'y') {
-		$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
-	   	if ($perms_array) {
-	   		$is_categorized = TRUE; // this var is used below
-	    	foreach ($perms_array as $perm => $value) {
-	    		$$perm = $value;
-	    	}
-	   	} else {
-	   		$is_categorized = FALSE; // this var is used below
-	   	}
-		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y' && $tiki_p_admin_cms != 'y') {
-			if (!isset($user)){
-				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-				$smarty->assign('errortitle',tra("Please login"));
-			} else {
-				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-	    	}
-		    $smarty->display("error.tpl");
-			die;
-		}
-	}
 
 	if (($article_data["publishDate"] > $tikilib->now) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data["type"] != 'Event')) {
 		$smarty->assign('msg', tra("Article is not published yet"));
