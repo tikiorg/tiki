@@ -327,6 +327,7 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 <tt>role:login_or_email,login_or_email</tt><br />
 {tr}If no role is provided, default role will be "Chair participant".{/tr}
 {/if}
+</div>
 
 </td></tr></table>
 
