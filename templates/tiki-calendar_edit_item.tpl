@@ -107,7 +107,7 @@
 {if $prefs.feature_jscalendar eq 'y'}
 {jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 {else}
-{html_select_date prefix="end_date_" time=$calitem.start field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
