@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.50.2.2 2007-10-17 20:58:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.50.2.3 2007-11-26 15:18:22 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -61,7 +61,7 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}&amp;maxRecords={
 {if $prefs.art_list_img eq 'y'}
 	<td class="heading">{tr}Img{/tr}</td>
 {/if}
-{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage)}<td  class="heading">{tr}Action{/tr}</td>{/if}
+{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}<td  class="heading">{tr}Action{/tr}</td>{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
@@ -106,8 +106,14 @@ $sort_mode eq 'nbreads_desc'}nbreads_asc{else}nbreads_desc{/if}&amp;maxRecords={
 	<td class="{cycle advance=false}">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 {/if}
 <td class="{cycle}">
+{if $tiki_p_read_article eq 'y'}
+<a href="tiki-read_article.php?articleId={$listpages[changes].articleId}" title="{$listpages[changes].title|escape}"><img src='pics/icons/magnifier.png' border='0' alt='{tr}View{/tr}' title='{tr}View{/tr}' width='16' height='16' /></a>
+{/if}
 {if $tiki_p_edit_article eq 'y' or ($listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
 <a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>{/if}
+{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
+<a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:'url'}&amp;objectType=article&amp;permType=cms&amp;objectId={$listpages[changes].articleId}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
+{/if}
 {if $tiki_p_remove_article eq 'y'}
 &nbsp;<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>{/if}
 </td>
