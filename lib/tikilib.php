@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.34 2007-11-24 15:28:38 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.35 2007-11-26 15:25:43 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2773,8 +2773,6 @@ function add_pageview() {
 
     function get_article($articleId) {
 	global $user, $tiki_p_admin_cms, $prefs;
-	if ($tiki_p_admin_cms != 'y' && !$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article'))
-		return false;
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,
@@ -2804,7 +2802,10 @@ function add_pageview() {
 	    $res = $result->fetchRow();
 	    $res["entrating"] = floor($res["rating"]);
 	} else {
-	    return false;
+	    return '';
+	}
+	if ($tiki_p_admin_cms != 'y' && !$this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && !$this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read')) {
+		return false;
 	}
 
 	if ($prefs['feature_score'] == 'y') {
