@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.10 2007-11-22 19:58:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.11 2007-11-26 14:00:33 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -456,7 +456,11 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 <td class="auto">
 {if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}&nbsp;</span>{/if}
+{if $items[user].field_values[ix].type eq 'c'}
+{tr}{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"|default:"&nbsp;"}{/tr}
+{else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
+{/if}
 {if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
  and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
 </td>
@@ -464,7 +468,6 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {/if}
 {/if}
 {/section}
-
 
 {if $tracker_info.showCreated eq 'y'}
 <td>{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
@@ -521,7 +524,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 <tr class="formcolor"><td  class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 
-{if $tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
@@ -797,7 +800,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
 </table>
 </form>
-<br /><em>{tr}Fields marked with a * are mandatory{/tr}</em>
+<br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 </div>
 {/if}
 {section name=ix loop=$fields}
