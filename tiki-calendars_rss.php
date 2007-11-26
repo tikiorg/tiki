@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.12 2007-10-12 07:55:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.12.2.1 2007-11-26 14:41:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,7 +79,8 @@ if ($output["data"]=="EMPTY") {
 	}
 
 	$maxCalEntries = $prefs['max_rss_calendar'];
-	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->now+365*24*60*60, 0, $maxCalEntries);
+	$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
+	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1), 0, $maxCalEntries);
 
 	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");
 
