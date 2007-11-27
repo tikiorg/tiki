@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.8.2.4 2007-11-14 19:13:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/user_prefs.php,v 1.8.2.5 2007-11-27 16:46:00 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -57,7 +57,10 @@ if ( isset($_SERVER['REMOTE_ADDR']) ) {
 	$smarty->assign('IP', $IP);
 }
 
-if ( ! isset($user_preferences[$user]['display_timezone']) || $user_preferences[$user]['display_timezone'] == '' ) {
+if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences[$user]['display_timezone']) && $user_preferences[$user]['display_timezone'] == 'Site')) {
+	// Everybody stays in the time zone of the server
+	$prefs['display_timezone'] = $prefs['server_timezone'];
+} elseif ( ! isset($user_preferences[$user]['display_timezone']) || $user_preferences[$user]['display_timezone'] == '' ) {
 	// If the display timezone is not known ...
 	if ( isset($_COOKIE['local_tz']) ) {
 		//   ... we try to use the timezone detected by javascript and stored in cookies
