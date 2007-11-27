@@ -586,6 +586,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			}
 	    $this->query($query, $bindvars);
 		
+			$this->cleanup_tags();
 	    return true;
 
 	} 
