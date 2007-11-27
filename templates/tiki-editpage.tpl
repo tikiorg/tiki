@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.6 2007-11-24 00:35:15 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.7 2007-11-27 19:08:14 nkoth Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -7,7 +7,7 @@
 {if $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
-{if $outOfSync eq 'y'} {tr}There are currently changes that have yet to be synchronized.{/tr}{/if}
+{if $outOfSync eq 'y'} {tr}There may be changes that have yet to be synchronized.{/tr}{/if}
 {if $lastSyncVersion}
 	<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}" target="_blank">{tr}View changes since last approval.{/tr}</a>
 {/if}

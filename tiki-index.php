@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.5 2007-11-24 00:35:15 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.6 2007-11-27 19:08:14 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -668,8 +668,8 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		$smarty->assign('needsStaging', 'y');
 		$smarty->assign('stagingPageName', $stagingPageName);		
 	}
-	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
-		$smarty->assign('outOfSync', 'y');
+	if ($prefs['wikiapproval_outofsync_category'] == 0 || $prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
+		if (isset($approvedPageName)) $smarty->assign('outOfSync', 'y');
 		if ($canApproveStaging == 'y' && isset($approvedPageName)) {
 			include_once('lib/wiki/histlib.php');
 			$approvedPageInfo = $histlib->get_page_from_history($approvedPageName, 0);
