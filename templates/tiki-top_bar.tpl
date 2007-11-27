@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.2 2007-11-27 10:08:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.3 2007-11-27 15:09:45 mose Exp $ *}
 {if $prefs.feature_siteidentity eq 'y'}
 {if $prefs.feature_topbar_version eq 'y'}
 {tr}This is{/tr} Tikiwiki v1.10.1 (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
@@ -18,6 +18,6 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {phplayers id=$prefs.feature_topbar_id_menu type=horiz}
 {/if}
 {/if}
-{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
+{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y')}
 <div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a></div>
 {/if}
