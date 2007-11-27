@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.6 2007-11-27 10:28:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.7 2007-11-27 10:35:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -306,7 +306,11 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 	$cookietab = 4;
 }
 
-include_once ('categorize_list.php');
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib; include_once ('lib/categories/categlib.php');
+	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$smarty->assign_by_ref('categories', $categories);
+}
   	 
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
