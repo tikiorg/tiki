@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.2 2007-11-27 14:31:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.3 2007-11-27 14:53:11 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -178,9 +178,9 @@ $smarty->assign_by_ref('allchannels', $allchannels["data"]);
 
 if ( isset($info['groupname']) && ! is_array($info['groupname']) ) $info['groupname'] = explode(',', $info['groupname']);
 $all_groups = $userlib->list_all_groups();
-if ( is_array($all_groups) && is_array($info['groupname']))
+if ( is_array($all_groups) )
 	foreach ( $all_groups as $g )
-		$option_groups[$g] = ( in_array($g, $info['groupname']) ) ? 'selected="selected"' : '';
+		$option_groups[$g] = ( is_array($info['groupname']) && in_array($g, $info['groupname']) ) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
 
 ask_ticket('admin-menu-options');
