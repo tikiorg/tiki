@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.5 2007-11-25 21:19:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.6 2007-11-27 10:28:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -165,7 +165,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$defcatfieldid,$themefieldid,$groupperms,$trackerinfo,$memberslist,$userChoice) = array('','','','','','','','','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$defcatfieldid,$themefieldid,$groupperms,$trackerinfo,$memberslist,$userChoice,$groupdefcat,$grouptheme) = array('','','','','','','','','','','','','','','');
 
 if (!empty($_REQUEST["group"])) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
