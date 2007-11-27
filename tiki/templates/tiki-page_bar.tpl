@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.2 2007-11-23 23:04:30 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.3 2007-11-27 19:39:55 nkoth Exp $ *}
 
 {strip}
 <hr/>
@@ -39,7 +39,7 @@
 <span class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}Remove{/tr}</a></span>
 {/if}
 {if $tiki_p_rename eq 'y' && $editable}
-<span class="button2"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="linkbut">{tr}Rename{/tr}</a></span>
+<span class="button2"><a href="tiki-rename_page.php?page={if $beingStaged eq 'y'}{$approvedPageName|escape:"url"}{else}{$page|escape:"url"}{/if}" class="linkbut">{tr}Rename{/tr}</a></span>
 {/if}
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="linkbut">{tr}Unlock{/tr}</a></span>
