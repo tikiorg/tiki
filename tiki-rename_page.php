@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.21 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.21.2.1 2007-11-27 19:39:55 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,13 @@ if (!isset($_REQUEST["page"])) {
 	$page = $_REQUEST["page"];
 
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
+}
+
+if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+	$smarty->assign('msg', tra("You cannot rename staging pages. Please rename the approved page instead."));
+
+	$smarty->display("error.tpl");
+	die;		
 }
 
 include_once ("tiki-pagesetup.php");
@@ -77,6 +84,17 @@ if (isset($_REQUEST["rename"])) {
 		die;
 	}
 
+	if ($prefs['feature_wikiapproval'] == 'y') {
+		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
+		if ($tikilib->page_exists($stagingPageName)) {
+			$newStagingPageName = $prefs['wikiapproval_prefix'] . $newName;
+			if (!$wikilib->wiki_rename_page($stagingPageName, $newStagingPageName)) {
+				$smarty->assign('msg', tra("Cannot rename page because maybe new staging page name already exists"));
+				$smarty->display("error.tpl");
+				die;
+			}			
+		}		
+	}
 	header ('location: tiki-index.php?page='.urlencode($newName));
 }
 
