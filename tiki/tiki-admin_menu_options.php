@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.1 2007-10-26 20:36:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.31.2.2 2007-11-27 14:31:25 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,7 +98,10 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 }
 
 if (isset($_REQUEST["save"])) {
-	if ( is_array($_REQUEST["groupname"] ) ) $_REQUEST["groupname"] = implode(',', $_REQUEST["groupname"]);
+	if (!isset($_REQUEST['groupname']))
+		$_REQUEST['groupname'] = '';
+	elseif (is_array($_REQUEST['groupname'] ) )
+		$_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
 	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
 
 include_once('lib/modules/modlib.php');
@@ -175,7 +178,9 @@ $smarty->assign_by_ref('allchannels', $allchannels["data"]);
 
 if ( isset($info['groupname']) && ! is_array($info['groupname']) ) $info['groupname'] = explode(',', $info['groupname']);
 $all_groups = $userlib->list_all_groups();
-if ( is_array($all_groups) ) foreach ( $all_groups as $g ) $option_groups[$g] = ( in_array($g, $info['groupname']) ) ? 'selected="selected"' : '';
+if ( is_array($all_groups) && is_array($info['groupname']))
+	foreach ( $all_groups as $g )
+		$option_groups[$g] = ( in_array($g, $info['groupname']) ) ? 'selected="selected"' : '';
 $smarty->assign_by_ref('option_groups', $option_groups);
 
 ask_ticket('admin-menu-options');
