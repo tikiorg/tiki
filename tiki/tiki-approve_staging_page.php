@@ -90,13 +90,13 @@ if ($begin_version > 0) {
 		$version_info = $histlib->get_version($staging_page, $v);
 		$history = array();
 		if ($version_info) {
-			$tikilib->update_page($page, $version_info["data"], tra('approved from staging'), $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+			$tikilib->update_page($page, $version_info["data"], tra('approved by ').$user, $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
 			$history[] = $version_info;
 		} 
 	}
 }
 // finally approve current staging version
-$tikilib->update_page($page, $staging_info["data"], tra('approved from staging'), $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+$tikilib->update_page($page, $staging_info["data"], tra('approved by ').$user, $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
 $smarty->assign('history', $history);
 $smarty->assign('staging_info', $staging_info);
 $smarty->assign('staging_page', $staging_page);
