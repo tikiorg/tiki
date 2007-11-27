@@ -491,9 +491,9 @@ class ADODB_mysql extends ADOConnection {
 		if ($nrows < 0) $nrows = '18446744073709551615'; 
 		
 		if ($secs)
-			$rs =& $this->CacheExecute($secs,$sql." LIMIT $offsetStr".((integer)$nrows),$inputarr);
+			$rs = $this->CacheExecute($secs,$sql." LIMIT $offsetStr".((integer)$nrows),$inputarr);
 		else
-			$rs =& $this->Execute($sql." LIMIT $offsetStr".((integer)$nrows),$inputarr);
+			$rs = $this->Execute($sql." LIMIT $offsetStr".((integer)$nrows),$inputarr);
 		return $rs;
 	}
 	

@@ -819,7 +819,7 @@
 	 * @param [inputarr]	holds the input data to bind to. Null elements will be set to null.
 	 * @return 		RecordSet or false
 	 */
-	function &Execute($sql,$inputarr=false) 
+	function Execute($sql,$inputarr=false) 
 	{
 		if ($this->fnExecute) {
 			$fn = $this->fnExecute;
@@ -869,7 +869,7 @@
 					} else if ($i != sizeof($sqlarr))	
 						ADOConnection::outp( "Input array does not match ?: ".htmlspecialchars($sql));
 		
-					$ret =& $this->_Execute($sql);
+					$ret = $this->_Execute($sql);
 					if (!$ret) return $ret;
 				}	
 			} else {
@@ -888,14 +888,14 @@
 				}
 			}
 		} else {
-			$ret =& $this->_Execute($sql,false);
+			$ret = $this->_Execute($sql,false);
 		}
 
 		return $ret;
 	}
 	
 	
-	function &_Execute($sql,$inputarr=false)
+	function _Execute($sql,$inputarr=false)
 	{
 		if ($this->debug) {
 			global $ADODB_INCLUDED_LIB;
@@ -3122,7 +3122,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	*
 	* @return false or array containing the current record
 	*/
-	function &FetchRow()
+	function FetchRow()
 	{
 		if ($this->EOF) {
 			$false = false;
