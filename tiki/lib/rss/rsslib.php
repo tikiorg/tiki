@@ -227,7 +227,7 @@ class RSSLib extends TikiLib {
 
 		$url = htmlspecialchars($this->httpPrefix().$_SERVER["REQUEST_URI"]);
 		$home = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$prefs['tikiIndex']);
-		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname."img/tiki.jpg");
+		$img = htmlspecialchars($this->httpPrefix().dirname( $urlarray["path"] ).$dirname.$prefs['rssfeed_img']);
 
 		$title = htmlspecialchars($title);
 		$desc = htmlspecialchars($desc);

@@ -200,6 +200,15 @@
             <input type="text" name="rssfeed_webmaster" size="50" value="{$prefs.rssfeed_webmaster|escape}" />
           </td>
         </tr>
+
+        <tr>
+          <td class="form">
+            {tr}Image Path{/tr}:
+          </td>
+          <td colspan="4">
+            <input type="text" name="rssfeed_img" size="50" value="{$prefs.rssfeed_img|escape}" />
+          </td>
+        </tr>
         
         <tr>
           <td class="form">{tr}Caching time :{/tr}</td>
