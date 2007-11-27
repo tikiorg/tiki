@@ -222,7 +222,19 @@
 	<tr><td class="form">
     {tr}Force bounce of editing of approved pages to staging{/tr}: </td><td>
     <input type="checkbox" name="wikiapproval_block_editapproved" {if $prefs.wikiapproval_block_editapproved eq 'y'}checked="checked"{/if}/>
+    </td></tr>
+    <tr><td class="form">
+    {tr}Categorize approved pages with categories of staging copy on approval{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_sync_categories" {if $prefs.wikiapproval_sync_categories eq 'y'}checked="checked"{/if}/>
     </td></tr> 
+    <tr><td class="form">
+    {tr}Replace freetags with that of staging pages on approval{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_update_freetags" {if $prefs.wikiapproval_update_freetags eq 'y'}checked="checked"{/if}/>
+    </td></tr>
+    <tr><td class="form">
+    {tr}Combine freetags with that of staging pages on approval{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
     </tr></table>

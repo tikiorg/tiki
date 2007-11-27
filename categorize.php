@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.25 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.25.2.1 2007-11-27 18:06:49 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,17 @@ if ($prefs['feature_categories'] == 'y') {
 		$smarty->assign('cat_categorize', 'y');
 	} else {
 		$_REQUEST['cat_categories'] = NULL;
+	}
+	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
+		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
+			$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_approved_category']));
+		}
+		if ($prefs['wikiapproval_staging_category'] > 0 && !in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories'])) {	
+			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_staging_category'];	
+		}
+		if ($prefs['wikiapproval_outofsync_category'] > 0 && !in_array($prefs['wikiapproval_outofsync_category'], $_REQUEST['cat_categories'])) {	
+			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
+		}
 	}
 	$categlib->update_object_categories($_REQUEST['cat_categories'], $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 
