@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.3 2007-11-05 18:39:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.4 2007-11-27 23:44:30 luciash Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -454,71 +454,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
   </tr>
-</table>
-{* --- General Layout options --- *}
-<table class="admin" width="100%">
-<tr>
-
-
-        <td class="heading" colspan="5" 
-            align="center">{tr}General Layout options{/tr}</td>
-      </tr><tr>
-        <td class="form">
-	        	{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
-        		{tr}Left column{/tr}
-        		{if $prefs.feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><select name="feature_left_column">
-            <option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
-            <option value="user" {if $prefs.feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
-            <option value="n" {if $prefs.feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
-        </select></td>
-        <td>&nbsp;</td>
-        <td class="form">{tr}Layout per section{/tr}</td>
-        <td><input type="checkbox" name="layout_section"
-            {if $prefs.layout_section eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
-        <td class="form">
-	        	{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
-        		{tr}Right column{/tr}
-        		{if $prefs.feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><select name="feature_right_column">
-            <option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
-            <option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
-            <option value="n" {if $prefs.feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
-        </select></td>
-        <td>&nbsp;</td>
-        <td align="center" colspan="2"><a href="tiki-admin_layout.php" 
-            class="link">{tr}Admin layout per section{/tr}</a></td>
-      </tr><tr>
-        <td class="form">{tr}Top bar{/tr}</td>
-        <td><input type="checkbox" name="feature_top_bar"
-            {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/></td>
-        <td colspan="3">&nbsp;</td>
-      </tr><tr>
-        <td class="form">{tr}Bottom bar{/tr}</td>
-        <td><input type="checkbox" name="feature_bot_bar"
-            {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
-        <td colspan="3">&nbsp;</td>
-      </tr><tr>
-      <td class="form">{tr}Bottom bar icons{/tr}</td>
-        <td><input type="checkbox" name="feature_bot_bar_icons"
-            {if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/></td>
-        <td colspan="3">&nbsp;</td>
-      </tr><tr>
-        <td class="form">{tr}Bottom bar debug{/tr}</td>
-        <td><input type="checkbox" name="feature_bot_bar_debug"
-	    {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/></td>
-	<td colspan="3">&nbsp;</td>
-      </tr><tr>
-        <td class="form">{tr}Bottom bar{/tr} (RSS)</td>
-        <td><input type="checkbox" name="feature_bot_bar_rss"
-	    {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/></td>
-	<td colspan="3">&nbsp;</td>
-      </tr><tr>
+  <tr>
         <td colspan="5" class="button">
-          <input type="submit" name="features" value="{tr}Change preferences{/tr}" />
+          <input type="submit" name="features" value="{tr}Save{/tr}" />
         </td>
       </tr></table>
     </div>

@@ -18,28 +18,25 @@
 {/literal}
 </script>
 
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox">
+	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data" name="tip">
-	
-	
 	{tr}Please also see:{/tr}
 	<a class="rbox-link" href="tiki-admin.php?page=siteid">{tr}Site Identity{/tr}</a>
-	
-	
-
 	</div>
 </div>
-<br />
+
 
 <div class="cbox">
   <div class="cbox-title">
-    {tr}{$crumbs[$crumb]->description}{/tr}
-    {help crumb=$crumbs[$crumb]}
+    <h3>{tr}{$crumbs[$crumb]->description}{/tr}
+    {help crumb=$crumbs[$crumb]}</h3>
   </div>
 
 
       <form action="tiki-admin.php?page=theme" method="post">
+      <fieldset>
+      <legend class="heading">{tr}Theme{/tr}</legend>
         <table class="admin">
       
 		<tr>
@@ -51,8 +48,6 @@
                 {$styles[ix]}</option>
             {/section}
             </select>
-            &nbsp;<a href="javascript:previous_site_style();" title="{tr}Prev{/tr}"><img src="img/icons2/nav_dot_right.gif" alt="&#9665;" height="11" width="8" border="0" /></a>
-            <a href="javascript:next_site_style();" title="{tr}Next{/tr}"><img src="img/icons2/nav_dot_left.gif" alt="&#9655" height="11" width="8" border="0" /></a>&nbsp;
             <input type="submit" name="style" value="{tr}Change style only{/tr}" />
         </td>
       </tr><tr>
@@ -65,15 +60,13 @@
             {/section}
             </select>
         </td>
-	</tr><tr>
-	<td class="form" >&nbsp;</td><td>{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if}</td>
-      </tr>
+	</tr>	<tr>
+		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td><input type="checkbox" name="feature_editcss" {if $prefs.feature_editcss eq 'y'}checked="checked"{/if}/>
+		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if} </td>
+	</tr>
       
       <tr><td colspan="2"><hr/></td></tr>        
-    <tr>
-    	<td class="form">{tr}Use Tabs{/tr}</td>
-        <td><input type="checkbox" name="feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/></td>
-    </tr>
         <tr>
 		<td class="form"> {tr}Theme Control{/tr} </td>
 		<td><input type="checkbox" name="feature_theme_control" {if $prefs.feature_theme_control eq 'y'}checked="checked"{/if}/>
@@ -89,19 +82,76 @@
 		<td><input type="checkbox" name="feature_edit_templates" {if $prefs.feature_edit_templates eq 'y'}checked="checked"{/if}/>
 		{if $prefs.feature_edit_templates eq 'y'}<a href="tiki-edit_templates.php" class="link" title="{tr}Edit Templates{/tr}">{tr}Edit Templates{/tr}</a>{/if} </td>
 	</tr>
-	<tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
-		<td><input type="checkbox" name="feature_editcss" {if $prefs.feature_editcss eq 'y'}checked="checked"{/if}/>
-		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if} </td>
-	</tr>
-	<tr>
-
-		
-          <td colspan="2" class="button"><input type="submit" name="themesetup" value="{tr}Save{/tr}" /></td>
-		  
-        </tr>
         </table>
-      </form>
+       </fieldset> 
+
+{* --- General Layout options --- *}
+<fieldset class="admin">
+	<legend class="heading">{tr}General Layout options{/tr}</legend>
+	<table class="admin" width="100%">
+		<tr>
+        <td class="form">
+	        	{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
+        		{tr}Left column{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><select name="feature_left_column">
+            <option value="y" {if $prefs.feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+            <option value="user" {if $prefs.feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
+            <option value="n" {if $prefs.feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
+        </select></td>
+        <td>&nbsp;</td>
+        <td class="form">{tr}Layout per section{/tr}</td>
+        <td><input type="checkbox" name="layout_section"
+            {if $prefs.layout_section eq 'y'}checked="checked"{/if}/></td>
+      </tr><tr>
+        <td class="form">
+	        	{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
+        		{tr}Right column{/tr}
+        		{if $prefs.feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><select name="feature_right_column">
+            <option value="y" {if $prefs.feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+            <option value="user" {if $prefs.feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
+            <option value="n" {if $prefs.feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
+        </select></td>
+        <td>&nbsp;</td>
+        <td align="center" colspan="2"><a href="tiki-admin_layout.php" 
+            class="link">{tr}Admin layout per section{/tr}</a></td>
+      </tr><tr>
+        <td class="form">{tr}Top bar{/tr}</td>
+        <td><input type="checkbox" name="feature_top_bar"
+            {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/></td>
+        <td colspan="3">&nbsp;</td>
+      </tr><tr>
+        <td class="form">{tr}Bottom bar{/tr}</td>
+        <td><input type="checkbox" name="feature_bot_bar"
+            {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
+        <td colspan="3">&nbsp;</td>
+      </tr><tr>
+      <td class="form">{tr}Bottom bar icons{/tr}</td>
+        <td><input type="checkbox" name="feature_bot_bar_icons"
+            {if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/></td>
+        <td colspan="3">&nbsp;</td>
+      </tr><tr>
+        <td class="form">{tr}Bottom bar debug{/tr}</td>
+        <td><input type="checkbox" name="feature_bot_bar_debug"
+	    {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/></td>
+	<td colspan="3">&nbsp;</td>
+      </tr><tr>
+        <td class="form">{tr}Bottom bar{/tr} (RSS)</td>
+        <td><input type="checkbox" name="feature_bot_bar_rss"
+	    {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/></td>
+	<td colspan="3">&nbsp;</td>
+      </tr>    <tr>
+    	<td class="form">{tr}Use Tabs{/tr}</td>
+        <td><input type="checkbox" name="feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/></td>
+	<td colspan="3">&nbsp;</td>
+    </tr>
+      </table>
+</fieldset>
+<div class="button" style="text-align: center"><input type="submit" name="themesetup" value="{tr}Save{/tr}" /></div>
+        
+
+	</form>
 
 </div>
-

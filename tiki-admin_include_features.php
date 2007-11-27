@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.1 2007-11-05 18:39:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.2 2007-11-27 23:44:31 luciash Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -24,10 +24,6 @@ $features_toggles = array(
 	"feature_banners",
 	"feature_banning",
 	"feature_blogs",
-	"feature_bot_bar",
-	"feature_bot_bar_debug",
-	"feature_bot_bar_icons",
-	"feature_bot_bar_rss",
 	"feature_calendar",
 	"feature_categories",
 	"feature_charts",
@@ -85,7 +81,6 @@ $features_toggles = array(
 	"feature_stats",
 	"feature_surveys",
 	"feature_tasks",
-	"feature_top_bar",
 	"feature_trackers",
 	"feature_use_quoteplugin",
 	"feature_mytiki",
@@ -112,11 +107,8 @@ $features_toggles = array(
 );
 
     $pref_byref_values = array(
-	"feature_left_column",
-	"feature_right_column",
-        "user_flip_modules"
+		"user_flip_modules"
     );
-
 
     check_ticket('admin-inc-features');
     foreach ($features_toggles as $toggle) {

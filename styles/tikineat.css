@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.1 2007-11-07 15:10:55 jyhem Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.2 2007-11-27 23:44:31 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -132,6 +132,7 @@ FORM {
 button, input, textarea, select {
 	font-size : 12px;
 	color : #112233;
+	margin: 1px 1px 2px;
 }
 button, input, select {
 	vertical-align: middle;
@@ -508,15 +509,17 @@ table.email td.closeButton {
  width: 100%;
 }
 
-/* Table headings */
+/* headings */
 DIV.heading, TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading,
 td.listfgalheading, td.jukeboxlistheading, td.listfilesheading,
-td.listartheading, td.forumheading, td.viewthread {
+td.listartheading, td.forumheading, td.viewthread, legend {
 	color : black;
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
 	padding : 0 2px;
 }
+
+fieldset {border: solid 1px #8CACBB; margin: 2px}
 
 DIV.heading {
 	margin: 3px 2px;

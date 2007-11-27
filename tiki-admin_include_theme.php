@@ -19,11 +19,17 @@ if (isset($_REQUEST["themesetup"])) {
 ask_ticket('admin-inc-theme');
 
     $pref_toggles = array(
-	"feature_tabs",
-	"feature_theme_control",
+	"feature_bot_bar",
+	"feature_bot_bar_debug",
+	"feature_bot_bar_icons",
+	"feature_bot_bar_rss",
 	"feature_edit_templates",
 	"feature_editcss",
+	"feature_tabs",
+	"feature_theme_control",
+	"feature_top_bar",
 	"feature_view_tpl",
+	"layout_section"
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -31,7 +37,9 @@ ask_ticket('admin-inc-theme');
     }
 
     $pref_byref_values = array(
-        "slide_style"
+	"feature_left_column",
+	"feature_right_column",
+    "slide_style"
     );
 
     foreach ($pref_byref_values as $britem) {
