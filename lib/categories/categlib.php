@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.6 2007-11-23 22:09:55 nkoth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.7 2007-11-28 22:14:47 nkoth Exp $
  *
  * \brief Categories support class
  *
@@ -1389,6 +1389,15 @@ class CategLib extends ObjectLib {
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
 		global $prefs;
 		$old_categories = $this->get_object_categories($objType, $objId);
+		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
+		if ($prefs['feature_category_reinforce'] == "n") {
+			foreach ($old_categories as $old_cat) {
+				if (!$this->has_edit_permission($user, $old_cat)) {
+					$categories[] = $old_cat;
+				}			
+			}
+			$categories = array_unique($categories);
+		}		
 		if (empty($categories)) {
 			$new_categories = array();
 			$removed_categories = $old_categories;
