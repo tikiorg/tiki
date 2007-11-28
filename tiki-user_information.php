@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.2 2007-11-22 18:09:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.3 2007-11-28 08:01:46 kerrnel22 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,7 +61,9 @@ if ($prefs['feature_friends'] == 'y') {
 
 if ($tiki_p_admin != 'y') {
 	$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
-	if ($user_information == 'private') {
+
+	// If the user is trying to pull info on themselves, allow it.
+	if ($user_information == 'private' && $userwatch != $user) {
 		$smarty->assign('msg', tra("The user has chosen to make his information private"));
 		$smarty->display("error.tpl");
 		die;
