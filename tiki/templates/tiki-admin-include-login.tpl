@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.3 2007-11-27 16:45:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.4 2007-11-28 11:18:02 sylvieg Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -373,8 +373,8 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </td></tr>
 <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
 <td class="form">
-<input type="radio" name="users_prefs_display_timezone" value="Site" {if $prefs.users_prefs_display_timezone eq 'Site'}checked="checked"{/if}/> {tr}Site default{/tr}
-<input type="radio" name="users_prefs_display_timezone" value="Local" {if $prefs.users_prefs_display_timezone ne 'Site'}checked="checked"{/if}/> {tr}Local{/tr}
+<input type="radio" name="users_prefs_display_timezone" value="Site" {if $prefs.users_prefs_display_timezone eq 'Site'}checked="checked"{/if}/> {tr}Site default{/tr}<br />
+<input type="radio" name="users_prefs_display_timezone" value="Local" {if $prefs.users_prefs_display_timezone ne 'Site'}checked="checked"{/if}/> {tr}Detect user timezone if browser allows, otherwise site default{/tr}
 </td>
 </tr>
 <tr><td class="form">{tr}User information{/tr}:</td><td class="form">
