@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.6 2007-11-27 16:45:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.7 2007-11-28 11:18:02 sylvieg Exp $ *}
 <h1>{if $userwatch ne $user}<a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>{else}<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>{/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -151,7 +151,7 @@
   <tr><td class="{cycle advance=false}">{tr}Displayed time zone{/tr}:</td>
   <td class="{cycle}">
 	<select name="display_timezone" id="display_timezone">
-		<option value="" style="font-style:italic;">{tr}My local if browser allows, otherwise site default{/tr}</option>
+		<option value="" style="font-style:italic;">{tr}Detect user timezone if browser allows, otherwise site default{/tr}</option>
 	    <option value="Site" style="font-style:italic;border-bottom:1px dashed #666;"{if $user_prefs.display_timezone eq 'Site'} selected="selected"{/if}>{tr}Site default{/tr}</option>
 	  {foreach key=tz item=tzinfo from=$timezones}
 	    {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
