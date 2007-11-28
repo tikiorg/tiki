@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.1 2007-11-13 20:35:14 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.2 2007-11-28 03:28:00 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -218,11 +218,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Module";//get_strings tra("Module")
 		$helpUrl = "Module";
 		include_once ('tiki-admin_include_module.php');
-	} else if ($adminPage == "theme") {
-		$admintitle = "Theme";//get_strings tra("Theme")
-		$description = "Theme";//get_strings tra("Theme")
-		$helpUrl = "Theme";
-		include_once ('tiki-admin_include_theme.php');
+	} else if ($adminPage == "look") {
+		$admintitle = "Look &amp; Feel";//get_strings tra("Look &amp Feel")
+		$description = "Customize look and feel of your Tiki";//get_strings tra("Customize look and feel of your Tiki")
+		$helpUrl = "Look and Feel";
+		include_once ('tiki-admin_include_look.php');
 	} else if ($adminPage == "textarea") {
 		$admintitle = "Text area";//get_strings tra("Text area")
 		$description = "Text area";//get_strings tra("Text area")

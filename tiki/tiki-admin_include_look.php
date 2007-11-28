@@ -15,8 +15,8 @@ if (isset($_REQUEST["site_style"])) {
     simple_set_value("site_style", "style");
 }
 
-if (isset($_REQUEST["themesetup"])) {
-ask_ticket('admin-inc-theme');
+if (isset($_REQUEST["looksetup"])) {
+ask_ticket('admin-inc-look');
 
     $pref_toggles = array(
 	"feature_bot_bar",
@@ -65,7 +65,7 @@ $smarty->assign_by_ref("slide_styles", $slide_styles);
 
 if ( isset($_REQUEST["site_style"]) ) {
 	// If the theme has changed, reload the page to use the new theme
-	header("location: tiki-admin.php?page=theme");
+	header("location: tiki-admin.php?page=look");
 	exit;
 }
 ?>

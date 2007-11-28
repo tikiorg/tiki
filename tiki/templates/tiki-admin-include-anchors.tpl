@@ -76,8 +76,8 @@
 <a href="tiki-admin.php?page=module" title="{tr}Module{/tr}" class="link"><img border="0"
    src="img/mytiki/modules.gif" alt="{tr}Module{/tr}" /></a>   
    
-<a href="tiki-admin.php?page=theme" title="{tr}Theme{/tr}" class="link"><img border="0"
-   src="img/icons/admin_theme.png" alt="{tr}Theme{/tr}" /></a>
+<a href="tiki-admin.php?page=look" title="{tr}Customize look and feel of your Tiki{/tr}" class="link"><img border="0"
+   src="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" /></a>
 
 <a href="tiki-admin.php?page=textarea" title="{tr}Text area{/tr}" class="link"><img border="0"
    src="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" /></a>      

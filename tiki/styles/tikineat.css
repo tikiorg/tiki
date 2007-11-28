@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.2 2007-11-27 23:44:31 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.3 2007-11-28 03:28:00 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -132,7 +132,7 @@ FORM {
 button, input, textarea, select {
 	font-size : 12px;
 	color : #112233;
-	margin: 1px 1px 2px;
+	margin: 1px;
 }
 button, input, select {
 	vertical-align: middle;
@@ -144,12 +144,12 @@ button, input {
 input[type=checkbox], input[type=radio] {
 	border : 0;
 }
-button, input[type=submit] {
+button, input[type=submit], .button input {
 	border : 1px solid #46596f;
 	background-color: #C7D0D9;
 	font-weight : bold;
 }
-button:hover, input[type=submit]:hover {
+button:hover, input[type=submit]:hover, .button input:hover {
 	background-color : #FFFFFF;
 	cursor : pointer;
 }
@@ -404,10 +404,10 @@ div.cbox-data {
   background-color: #ECECEF;
   border: 1px solid #CCCCDD;
 }
-.rbox-title[name="comment"], .rbox-title[name="tip"] {
+.rbox-title[name="comment"], .rbox-title[name="tip"], .rbox-title.tip {
   background-color: #CCCCDD;
 }
-.rbox-data[name="comment"], .rbox-data[name="tip"] {            
+.rbox-data[name="comment"], .rbox-data[name="tip"], .rbox-data.tip {            
   background-color: #ECEFEC;
   border: 1px solid #CCDDCC;
 }
@@ -512,14 +512,44 @@ table.email td.closeButton {
 /* headings */
 DIV.heading, TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading,
 td.listfgalheading, td.jukeboxlistheading, td.listfilesheading,
-td.listartheading, td.forumheading, td.viewthread, legend {
+td.listartheading, td.forumheading, td.viewthread {
 	color : black;
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
 	padding : 0 2px;
 }
 
-fieldset {border: solid 1px #8CACBB; margin: 2px}
+fieldset {border: solid 1px #8CACBB; margin: 2px; margin-bottom: 3px}
+
+legend.heading {
+	background-color: #fff;
+	line-height: 2em; padding-left: 0px; padding-right: 0px;
+	}
+
+legend.heading a {
+	background-color: #8CACBB;
+	display: block;
+	top: -1em;
+	margin-top: 2px;
+	padding: 1px 1px 0;
+	position: relative;
+	text-decoration: none;
+}
+legend.heading a:hover {
+	background-color: #ACBB8C;
+	padding: 1px 0px 0;
+}
+legend.heading a span {
+	background-color: #fff;
+	display: block;
+	font-size: 1em;
+	line-height: 2em;
+	padding: 0 1em;
+}
+legend.heading a:hover span {
+	line-height: 1.9em;
+	margin-top: 0.1em; border-left: solid 1px #8CACBB; border-right: solid 1px #8CACBB;
+}
 
 DIV.heading {
 	margin: 3px 2px;
@@ -530,9 +560,10 @@ th.listfgalheading, th.jukeboxlistheading, th.listfilesheading,
 th.listartheading, th.forumheading, th.viewthread {
 }
 
-TD.button {
+.button {
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
+	margin: 2px;
 	padding : 0 2px;
 	text-align : center;
 	vertical-align : middle;

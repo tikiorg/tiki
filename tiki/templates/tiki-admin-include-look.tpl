@@ -1,26 +1,7 @@
-<script type="text/javascript">
-{literal}
-
-  function previous_site_style() {
-	var select = document.getElementById('general-theme');
-	if (select.selectedIndex > 0) {
-		select.selectedIndex--;
-	}
-  }
-
-  function next_site_style() {
-	var select = document.getElementById('general-theme');
-	if (select.selectedIndex < select.length-1) {
-		select.selectedIndex++;
-	}
-  }
-
-{/literal}
-</script>
-
+{*$Header $*}
 <div class="rbox">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-	<div class="rbox-data" name="tip">
+	<div class="rbox-title tip">{tr}Tip{/tr}</div>
+	<div class="rbox-data tip">
 	{tr}Please also see:{/tr}
 	<a class="rbox-link" href="tiki-admin.php?page=siteid">{tr}Site Identity{/tr}</a>
 	</div>
@@ -29,14 +10,14 @@
 
 <div class="cbox">
   <div class="cbox-title">
-    <h3>{tr}{$crumbs[$crumb]->description}{/tr}
+    <h3>{tr}{$crumbs[$crumb]->title}{/tr}
     {help crumb=$crumbs[$crumb]}</h3>
   </div>
 
 
-      <form action="tiki-admin.php?page=theme" method="post">
+      <form action="tiki-admin.php?page=look" method="post">
       <fieldset>
-      <legend class="heading">{tr}Theme{/tr}</legend>
+      <legend class="heading"><a href="#theme" name="theme"><span>{tr}Theme{/tr}</span></a></legend>
         <table class="admin">
       
 		<tr>
@@ -87,7 +68,7 @@
 
 {* --- General Layout options --- *}
 <fieldset class="admin">
-	<legend class="heading">{tr}General Layout options{/tr}</legend>
+	<legend class="heading"><a href="#layout" name="layout"><span>{tr}General Layout options{/tr}</span></a></legend>
 	<table class="admin" width="100%">
 		<tr>
         <td class="form">
@@ -149,7 +130,7 @@
     </tr>
       </table>
 </fieldset>
-<div class="button" style="text-align: center"><input type="submit" name="themesetup" value="{tr}Save{/tr}" /></div>
+<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Save{/tr}" /></div>
         
 
 	</form>
