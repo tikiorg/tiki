@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.2 2007-11-28 01:04:58 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.2 2007-11-28 01:04:58 nkoth Exp $
 //
 
 // Initialization
@@ -91,7 +91,7 @@ if (isset($_REQUEST["broaden"]) && $_REQUEST["broaden"] == 'n' || isset($_REQUES
 
 $smarty->assign('broaden', $broaden);
 
-$tagArray = preg_split('/\s*(,|\s)\s*/',trim($_REQUEST['tag']));
+$tagArray = preg_split('/\s*(,|\s)\s*/',trim(strip_tags($_REQUEST['tag'])));
 $tagArray = array_unique($tagArray);
 $tagString = '';
 foreach ($tagArray as $t_ar) {
