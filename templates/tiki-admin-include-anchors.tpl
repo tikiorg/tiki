@@ -1,4 +1,4 @@
-
+{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.2 2007-11-28 05:40:28 luciash Exp $*}
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}" class="link"><img border="0" src="pics/large/icon-configuration.png" alt="{tr}General{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}" class="link"><img border="0" src="pics/large/boot.png" alt="{tr}Features{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="link"><img border="0" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
@@ -53,9 +53,6 @@
 {/if}
 <a href="tiki-admin.php?page=metatags" title="{tr}Meta Tags{/tr}" class="link"><img border="0" src="pics/large/metatags.png" alt="{tr}Meta Tags{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=community" title="{tr}Community{/tr}" class="link"><img border="0" src="pics/large/users.png" alt="{tr}Community{/tr}" width="32" height="32" /></a>
-{if $prefs.feature_siteidentity eq 'y'}
-<a href="tiki-admin.php?page=siteid" title="{tr}Site Identity{/tr}" class="link"><img border="0" src="pics/large/gnome-settings-background.png" alt="{tr}Site Identity{/tr}" width="32" height="32" /></a>
-{/if}
 {if $prefs.feature_intertiki eq 'y'}
 <a href="tiki-admin.php?page=intertiki" title="{tr}Intertiki{/tr}" class="link"><img border="0" src="pics/large/intertiki.png" alt="{tr}InterTiki{/tr}" width="32" height="32" /></a>
 {/if}
