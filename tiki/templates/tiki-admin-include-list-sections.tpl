@@ -80,9 +80,6 @@
     <a href="tiki-admin.php?page=community" class="admbox" style="background-image: url('pics/large/users48x48.png')">
       <img src="pics/trans.png" alt="{tr}Community{/tr}" title="{tr}Community{/tr}" /><span>{tr}Community{/tr}</span>
     </a>
-    <a href="tiki-admin.php?page=siteid" class="admbox{if $prefs.feature_siteidentity ne 'y'} off{/if}" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Site Identity{/tr}" title="{tr}Site Identity{/tr}{if $prefs.feature_siteidentity ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Site Identity{/tr}</span>
-    </a>
     <a href="tiki-admin.php?page=intertiki" class="admbox{if $prefs.feature_intertiki ne 'y'} off{/if}" style="background-image: url('pics/large/intertiki48x48.png')">
       <img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>
     </a>
@@ -107,8 +104,8 @@
     <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('img/mytiki/modules.gif')">
       <img src="pics/trans.png" alt="{tr}Module{/tr}" title="{tr}Module{/tr}" /><span>{tr}Module{/tr}</span>
     </a>
-    <a href="tiki-admin.php?page=theme" class="admbox" style="background-image: url('img/icons/admin_theme.png')">
-      <img src="pics/trans.png" alt="{tr}Theme{/tr}" title="{tr}Theme{/tr}" /><span>{tr}Theme{/tr}</span>
+    <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look &amp; Feel{/tr}</span>
     </a>
    <a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
       <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
