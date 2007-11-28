@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.18 2006-11-07 14:21:53 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.18.2.1 2007-11-28 23:29:23 sylvieg Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -12,7 +12,7 @@
  * 
  */
 function wikiplugin_box_help() {
-	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class}".tra("text")."{BOX}~/np~";
+	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class, id=id}".tra("text")."{BOX}~/np~";
 }
 
 function wikiplugin_box($data, $params) {
@@ -23,17 +23,18 @@ function wikiplugin_box($data, $params) {
     
 	extract ($params,EXTR_SKIP);
 	$bg   = (isset($bg))    ? " background:$bg;" : "";
+	$id = (isset($id)) ? " id=\"$id\" ":'';
 	$class = (isset($class))? ' '.$class: ' ';
 	if (isset($float)) {// box without table 
 		$w = (isset($width)) ? " width:$width"  : "";
 		$f = ($float == "left" || $float == "right")? " float:$float;" : "";
 		$c = (isset($clear))    ? " clear:both;" : "";
-		$begin = "<div class='cbox$class' style='$bg;$f;$w;$c'>";
+		$begin = "<div class='cbox$class' $id style='$bg;$f;$w;$c'>";
 	} else { // box in a table
 		$w = (isset($width)) ? " width=\"$width\""  : "";
 		$al = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
 		$c = (isset($clear))    ? " style='clear:both;'" : "";
-		$begin  = "<table$al$w$c><tr><td><div class='cbox$class'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+		$begin  = "<table$al$w$c><tr><td><div class='cbox$class'$id".(strlen($bg) > 0 ? " style='$bg'" : "").">";
 	}
     
 	if (isset($title)) {
