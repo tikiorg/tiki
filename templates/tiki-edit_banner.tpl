@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.21.2.1 2007-11-28 22:04:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.21.2.2 2007-11-28 23:38:46 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a></h1>
 <div class="navbar">
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>
@@ -21,7 +21,7 @@
       </td>
    </tr>
    <tr><td class="form">{tr}Max impressions{/tr}:</td>
-       <td class="form"><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /> <i>-1 for illimitted</i></td>
+       <td class="form"><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i></td>
    </tr>
    <tr><td  class="form">{tr}Zone{/tr}:</td>
        <td class="form"><select name="zone">
