@@ -299,10 +299,10 @@ class RSSLib extends TikiLib {
 		$rss->feedURL = $url;
 		
 		$image = new FeedImage();
-		$image->title = tra("tikiwiki logo");
+		$image->title = $prefs['siteTitle'];
 		$image->url = $img;
 		$image->link = $home;
-		$image->description = tra(sprintf("Feed provided by %s. Click to visit.", $home));
+		$image->description = sprintf(tra('Feed provided by %s. Click to visit.'), $prefs['siteTitle']);
 	
 		//optional
 		$image->descriptionTruncSize = 500;
