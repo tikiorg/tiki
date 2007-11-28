@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.40 2007-07-27 14:21:17 jyhem Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.40.2.1 2007-11-28 14:33:28 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -121,7 +121,7 @@ function wikiplugin_split($data, $params, $pos) {
 				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
 				."\n"
 				// now prepend any carriage return and newline char with br
-				.preg_replace("/\\r\\n/", "<br />\r\n", $i)
+				.preg_replace("/\r?\n/", "<br />\r\n", $i)
                      . '</td>';
          }
         
@@ -163,7 +163,7 @@ $result .= "$pos-$icell-".htmlspecialchars(substr($data,$pos, 10));
 			}
 			else
 				$result .= '<div>';
-			$result .= preg_replace("/\\r\\n/", "<br />\r\n", $i). '</div>';
+			$result .= preg_replace("/\r?\n/", "<br />\r\n", $i). '</div>';
 			++$idx;
 			++$icell;
 		}
