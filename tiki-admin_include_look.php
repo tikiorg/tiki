@@ -1,5 +1,5 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_look.php,v 1.1.2.2 2007-11-28 05:23:32 luciash Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,17 +29,52 @@ ask_ticket('admin-inc-look');
 	"feature_theme_control",
 	"feature_top_bar",
 	"feature_view_tpl",
-	"layout_section"
+	"layout_section",
+  			        "feature_sitemycode",
+				"feature_breadcrumbs",
+				"feature_siteloclabel",
+				"feature_sitelogo",
+				"feature_sitenav",
+				"feature_sitead",
+				"feature_sitesearch",
+				"feature_sitemenu",
+				"feature_topbar_version",
+				"feature_topbar_date",
+				"feature_topbar_debug",
+				"sitemycode_publish",
+				"sitead_publish",
+				"feature_bot_logo"
     );
 
     foreach ($pref_toggles as $toggle) {
         simple_set_toggle ($toggle);
     }
 
+ 	$pref_simple_values = array(
+				"sitelogo_src",
+				"sitelogo_bgcolor",
+				"sitelogo_title",
+				"sitelogo_alt",
+				"sitemycode",
+				"sitead",
+				"feature_topbar_id_menu",
+				"sitenav",
+                                "bot_logo_code"
+    );
+
+    foreach ($pref_simple_values as $svitem) {
+        simple_set_value ($svitem);
+    }
+
     $pref_byref_values = array(
 	"feature_left_column",
 	"feature_right_column",
-    "slide_style"
+    "slide_style",
+    "feature_siteloc",
+        "feature_sitetitle",
+        "feature_sitedesc",
+        "sitelogo_align"
+    
     );
 
     foreach ($pref_byref_values as $britem) {
