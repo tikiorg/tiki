@@ -36,7 +36,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
     }
 
     if ($prefs['feature_score'] == 'y') {
-	if ($other_user == "admin" || $other_user == "system" || $other_user == "Anonymous") {
+	if (empty($info['score']) || $other_user == "admin" || $other_user == "system" || $other_user == "Anonymous") {
 		$star = "";
 	} else {
 		$star = $tikilib->get_star($info['score']);
