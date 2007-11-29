@@ -35,21 +35,19 @@ class TikiDate extends Date {
 		$return = parent::format($format);
 
 		// Translate the date if we are not already in english
-		if ( $prefs['language'] != 'en' ) {
 
-			// Divide the date into an array of strings by looking for dates elements (specified in $this->trad)
-			$words = preg_split('/('.implode('|',$this->trad).')/', $return, -1, PREG_SPLIT_DELIM_CAPTURE);
+		// Divide the date into an array of strings by looking for dates elements (specified in $this->trad)
+		$words = preg_split('/('.implode('|',$this->trad).')/', $return, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-			// For each strings in $words array...
-			$return = '';
-			foreach ( $words as $w ) {
-				if ( in_array($w, $this->trad) ) {
-					// ... either we have a date element that needs a translation
-					$return .= tra($w);
-				} else {
-					// ... either we have a string that should not be translated
-					$return .= $w;
-				}
+		// For each strings in $words array...
+		$return = '';
+		foreach ( $words as $w ) {
+			if ( in_array($w, $this->trad) ) {
+				// ... either we have a date element that needs a translation
+				$return .= tra($w);
+			} else {
+				// ... either we have a string that should not be translated
+				$return .= $w;
 			}
 		}
 
