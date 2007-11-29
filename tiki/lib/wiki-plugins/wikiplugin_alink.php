@@ -53,7 +53,7 @@ function wikiplugin_alink($data, $params)
 	    }
 
 	} else {
-	    return "<A HREF=\"#$aname\">$data</A>";
+	    return "<a href=\"#$aname\">$data</a>";
 	}
 }
 
