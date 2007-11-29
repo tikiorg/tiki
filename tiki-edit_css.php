@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.15 2007-10-12 07:55:26 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.15.2.1 2007-11-29 05:19:13 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// $Id: tiki-edit_css.php,v 1.15 2007-10-12 07:55:26 nyloth Exp $
+// $Id: tiki-edit_css.php,v 1.15.2.1 2007-11-29 05:19:13 mose Exp $
 include_once ("tiki-setup.php");
 
 include_once ("lib/csslib.php");
@@ -23,6 +23,7 @@ function load_css2_file($filename, $styledir) {
 
 	//
 	foreach ($lines as $line) {
+	/*
 		if (preg_match_all("/@import( |\t)+('|\")(.*)(|\")( |\t)*;/U", $line, $importfiles, PREG_SET_ORDER)) {
 			foreach ($importfiles as $file) {
 				$import = $styledir . '/' . $file[3];
@@ -31,7 +32,7 @@ function load_css2_file($filename, $styledir) {
 				$line = str_replace($file[0], "", $line);
 			}
 		}
-
+	*/
 		// TODO: Does it matter what $line may contain smth before '@import'? :)
 		$data .= $line;
 	}
