@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.21.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.21.2.2 2007-11-29 14:31:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -116,7 +116,7 @@ if (!isset($_REQUEST['calendarId']) and count($caladd)) {
 } 
 
 if ($prefs['feature_categories'] == 'y') {
-  include_once ('lib/categories/categlib.php');
+  global $categlib; include_once ('lib/categories/categlib.php');
   $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $_REQUEST['calendarId']);
   if ($perms_array) {
     foreach ($perms_array as $p=>$v) {
@@ -128,13 +128,10 @@ if ($prefs['feature_categories'] == 'y') {
       die;
     }
   } 
-} 
+}
 
-if (isset($_POST['act'])) {
+if (isset($_POST['act']) || isset($_POST['preview'])) {
 	$save = $_POST['save'];
-	if (empty($save['user'])) $save['user'] = $user;
-	$newcalid = $save['calendarId'];
-
 	// Take care of timestamps dates coming from jscalendar
 	if ( isset($save['date_start']) || isset($save['date_end']) ) {
 		$_REQUEST['start_date_Month'] = TikiLib::date_format("%m", $save['date_start']);
@@ -145,34 +142,39 @@ if (isset($_POST['act'])) {
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
 	}
 
+	$save['start'] = TikiLib::make_time(
+		$_REQUEST['start_Hour'],
+		$_REQUEST['start_Minute'],
+		0,
+		$_REQUEST['start_date_Month'],
+		$_REQUEST['start_date_Day'],
+		$_REQUEST['start_date_Year']
+	);
+
+	if ($save['end_or_duration'] == 'duration') {
+		$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
+		$save['end'] = $save['start'] + $save['duration'];
+	} else {
+		$save['end'] = TikiLib::make_time(
+			$_REQUEST['end_Hour'],
+			$_REQUEST['end_Minute'],
+			0,
+			$_REQUEST['end_date_Month'],
+			$_REQUEST['end_date_Day'],
+			$_REQUEST['end_date_Year']
+		);
+		$save['duration'] = max(0, $save['end'] - $save['start']);
+	}
+}
+
+if (isset($_POST['act'])) {
+	if (empty($save['user'])) $save['user'] = $user;
+	$newcalid = $save['calendarId'];
+
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events']) 
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
-		
-		$save['start'] = TikiLib::make_time(
-			$_REQUEST['start_Hour'],
-			$_REQUEST['start_Minute'],
-			0,
-			$_REQUEST['start_date_Month'],
-			$_REQUEST['start_date_Day'],
-			$_REQUEST['start_date_Year']
-		);
 
-		if ($save['end_or_duration'] == 'duration') {
-			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
-			$save['end'] = $save['start'] + $save['duration'];
-		} else {
-			$save['end'] = TikiLib::make_time(
-				$_REQUEST['end_Hour'],
-				$_REQUEST['end_Minute'],
-				0,
-				$_REQUEST['end_date_Month'],
-				$_REQUEST['end_date_Day'],
-				$_REQUEST['end_date_Year']
-			);
-			$save['duration'] = max(0, $save['end'] - $save['start']);
-		}
-		
 		$calendarlib->set_item($user,$save['calitemId'],$save);
 		header('Location: tiki-calendar.php');
 		die;
@@ -211,6 +213,13 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   }
 	$smarty->assign('edit',true);
 	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+} elseif (isset($_REQUEST['preview'])) {
+	$save['parsed'] = $tikilib->parse_data($save['description']);
+	$save['parsedName'] = $tikilib->parse_data($save['name']);
+	$id = $save['calitemId'];
+	$calitem = $save;
+	$smarty->assign('edit',true);
+	$smarty->assign('preview', 'y');
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
