@@ -55,6 +55,18 @@ $lang=Array(
 "save_to" => "to",
 "DATE-of" => "of",
 // ### end of unused words
+// ABBREV
+"Jan" => "Jan.",
+"Feb" => "Feb.",
+"Mar" => "March",
+"Apr" => "April",
+"Jun" => "June",
+"Jul" => "July",
+"Aug" => "Aug.",
+"Sep" => "Sept.",
+"Oct" => "Oct.",
+"Nov" => "Nov.",
+"Dec" => "Dec.",
 
 // "Cannot write to this file:" => "Cannot write to this file:",
 // "Cannot upload this file maximum upload size exceeded" => "Cannot upload this file maximum upload size exceeded",
