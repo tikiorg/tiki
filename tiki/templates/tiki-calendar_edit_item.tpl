@@ -28,6 +28,12 @@
 <div class="wikitext">
 
 {if $edit}
+{if $preview}
+<h2>{tr}Preview{/tr}</h2>
+{$calitem.parsedName}
+<div class="wikitext">{$calitem.parsed}</div>
+<h2>{if $id}{tr}Edit Calendar Item{/tr}{else}{tr}New Calendar Item{/tr}{/if}</h2>
+{/if}
 <form action="{$myurl}" method="post" name="f" id="editcalitem">
 <input type="hidden" name="save[user]" value="{$calitem.user}" />
 {if $id}
@@ -333,6 +339,7 @@ indicating role in a prefix separated by a column like in:{/tr}<br />
 
 {if $edit}
 <table class="normal">
+<tr><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 {tr}in{/tr}
 <span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
