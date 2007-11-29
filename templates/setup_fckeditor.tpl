@@ -1,5 +1,6 @@
 var _TikiPath = '{$tikipath}' ;
 var _TikiRoot = '{$tikiroot}' ;
+var _TikiDomain = '{$tikidomain}' ;
 var _TikiBaseHost = '{$base_host}' ;
 var _FileBrowserLanguage      = 'php' ;
 var _QuickUploadLanguage      = 'php' ;
@@ -50,9 +51,9 @@ FCKConfig.ProcessHTMLEntities = false;
 
 {if $prefs.feature_filegals_manager eq 'y'}
 FCKConfig.ImageDlgHideAdvanced = true ;
-FCKConfig.ImageUpload = false ;
 FCKConfig.ImageDlgHideLink = true ;
 {/if}
+FCKConfig.ImageUpload = false ;
 FCKConfig.Plugins.Add( 'tikiimage' ) ;
 FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
 FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;
