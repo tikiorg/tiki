@@ -40,7 +40,8 @@ FCKTikiImages.SetupImage  = function( img, sSrc, sHeight, sWidth, sLink, sAlign,
 	if ( sWidth ) img.width = sWidth ;
 	if ( sAlign ) img.align = sAlign ;
 	if ( sAlt ) img.alt = sAlt ;
-	img.src = sSrc ;
+	var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
+	img.src = sSrc.replace(reg,'$1'+_TikiDomain+'/$3') ;
 	img._tikiimage = true ;
 	img.onresizestart = function() {
 		FCK.EditorWindow.event.returnValue = false ;
@@ -110,11 +111,12 @@ if ( FCKBrowserInfo.IsIE ) {
 				}
 				if ( sSrc ) {
 					var extra = '' ;
+					var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
 					if ( sHeight ) extra = extra + ' height="' + sHeight + '"' ;
 					if ( sWidth ) extra = extra + ' width="' + sWidth + '"' ;
 					if ( sClass ) extra = extra + ' class="' + sClass + '"' ;
 					if ( sAlign ) extra = extra + ' align="' + sAlign + '"' ;
-					oRange.pasteHTML( '<img src="' + sSrc + '" ' + extra + 'contenteditable="false" _tikiimage="true" />' );
+					oRange.pasteHTML( '<img src="' + sSrc.replace(reg,'$1'+_TikiDomain+'/$3') + '" ' + extra + 'contenteditable="false" _tikiimage="true" />' );
 				}
 			}
 		}
@@ -142,13 +144,14 @@ if ( FCKBrowserInfo.IsIE ) {
 						var sAlt = '' ;
 						var sUsemap = '' ;
 						var sClass = '' ;
+						var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
 						for ( var j = 0 ; j < sImg.length ; j++ ) {
 							var equalindex=sImg[j].indexOf( '=' );
 							if ( equalindex != -1 ) {
 								var lParam = sImg[j].substring(0, equalindex);
 								var lValue = sImg[j].substring(equalindex+1);
 								if ( lParam == 'src') {
-									sSrc = lValue ;
+									sSrc = lValue.replace(reg,'$1'+_TikiDomain+'/$3') ;
 								} else if ( lParam == 'height' ) {
 									sHeight = lValue ;
 								} else if ( lParam == 'width' ) {
@@ -205,7 +208,8 @@ FCKXHtml.TagProcessors['img'] = function( node, htmlNode ) {
 		// we clean the src of the image if the image is local to the
 		// server
 		var reg = new RegExp ("^(?:"+_TikiBaseHost+")?([\"'])?([^\"']*)([\"'])?.*","gi");
-		node = FCKXHtml.XML.createTextNode( '{img src=' + htmlNode.src.replace(reg,'$2') + ' ' + extra + '}' ) ;
+		var reg2 = new RegExp ("(img/wiki_up)/("+_TikiDomain+"/)?(.*)","gi");
+		node = FCKXHtml.XML.createTextNode( '{img src=' + htmlNode.src.replace(reg,'$2').replace(reg2,'$1/$3') + ' ' + extra + '}' ) ;
 	} else {
 		FCKXHtml._AppendChildNodes( node, htmlNode, false ) ;
 	}

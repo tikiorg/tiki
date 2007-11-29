@@ -22,9 +22,9 @@
  * Configuration file for the File Manager Connector for PHP.
  */
 
-$tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(getcwd()))))))));
+$tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))))));
 $tikidomain = '';
-if (is_file('db/virtuals.inc')) {
+if (is_file($tikiroot.'/db/virtuals.inc')) {
 	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file($tikiroot.'/db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
 		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
 	} elseif (isset($_SERVER['SERVER_NAME']) and is_file($tikiroot.'/db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
