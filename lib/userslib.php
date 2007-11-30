@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.8 2007-11-21 21:40:59 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.9 2007-11-30 17:09:19 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2222,7 +2222,7 @@ function get_included_groups($group, $recur=true) {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
-		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?)";
+		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
 		$cachelib->invalidate('grouplist');
 		return true;
@@ -2319,7 +2319,6 @@ function get_included_groups($group, $recur=true) {
 	    $bindvars[] = $u['login'];
 	    $result = $this->query($query, $bindvars);
 	}
-
 
 	$aUserPrefs = array('realName','homePage','country');
 	foreach ($aUserPrefs as $pref){
@@ -2660,7 +2659,7 @@ function get_included_groups($group, $recur=true) {
 		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
-		$client->setDebug(1);
+		$client->setDebug(0);
 		$msg = new XML_RPC_Message(
 				   'intertiki.validate',
 				   array(
