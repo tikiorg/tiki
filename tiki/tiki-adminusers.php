@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.2 2007-11-26 18:26:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.3 2007-11-30 21:56:48 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -244,11 +244,11 @@ if (isset($_REQUEST["newuser"])) {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		if ($tiki_p_admin != 'y')
 			$userGroups = $userlib->get_user_groups_inclusion($user);
-		foreach ($_REQUEST['checked'] as $user) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
-				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
-					$userlib->assign_user_to_group($user, $group);
-					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
+				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {					
+					$userlib->assign_user_to_group($assign_user, $group);
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>."),tra("user"),$assign_user,tra("group"),$group));
 				}
 			}
 		}
@@ -258,10 +258,10 @@ if (isset($_REQUEST["newuser"])) {
 	}					
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
-		foreach ($_REQUEST['checked'] as $user) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
-				$userlib->remove_user_from_group($user, $group);
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
+				$userlib->remove_user_from_group($assign_user, $group);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$assign_user,tra("group"),$group));
 			}
 		}
 	}
@@ -270,10 +270,10 @@ if (isset($_REQUEST["newuser"])) {
 	}					
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
-		foreach ($_REQUEST['checked'] as $user) {
+		foreach ($_REQUEST['checked'] as $assign_user) {
 			$group = $_REQUEST["checked_group"];
-			$userlib->set_default_group($user, $group);
-			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$user));
+			$userlib->set_default_group($assign_user, $group);
+			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$assign_user));
 		}
 	}
 	if (isset($tikifeedback[0]['msg'])) {
