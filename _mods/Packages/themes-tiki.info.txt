@@ -1,0 +1,35 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-11-30 20:06:27 $
+
+files: 
+themes/tiki/styles/tiki.css styles/tiki.css
+themes/tiki/styles/tiki/mozilla-menubar.png styles/tiki/mozilla-menubar.png
+themes/tiki/styles/tiki/tiki_face.png styles/tiki/tiki_face.png
+themes/tiki/styles/tiki/tiki_head.png styles/tiki/tiki_head.png
+themes/tiki/templates/styles/tiki.tpl templates/styles/tiki/tiki.tpl
+themes/tiki/templates/styles/header.tpl templates/styles/tiki/header.tpl
+themes/tiki/templates/styles/tiki-show_page.tpl templates/styles/tiki/tiki-show_page.tpl
+themes/tiki/templates/styles/tiki-top_links.tpl templates/styles/tiki/tiki-top_links.tpl
+themes/tiki/templates/styles/tiki-top_tiki_bar.tpl templates/styles/tiki/tiki-top_tiki_bar.tpl
+themes/tiki/templates/styles/tiki-top_user_menu.tpl templates/styles/tiki/tiki-top_user_menu.tpl
+themes/tiki/templates/styles/modules/mod-featured_links.tpl templates/styles/tiki/modules/mod-featured_links.tpl
+themes/tiki/templates/styles/modules/mod-quick_edit.tpl templates/styles/tiki/modules/mod-quick_edit.tpl
+
+author:
+mose
+
+licence:
+GNU/LGPL
+
+Description: 
+Themes inspired by the statue image representing tiki, the polynesian goddess of fertility
+
+Changelog:
+1 initial package proted from main trunk
+
