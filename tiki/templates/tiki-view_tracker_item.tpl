@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.12 2007-11-22 19:58:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.13 2007-11-30 16:53:15 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -11,6 +11,7 @@
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Stop Monitor{/tr}" /></a>
 {/if}
 {/if}
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}" class="linkbut">{tr}items list{/tr}</a></span>
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {/if}
 {if $tiki_p_view_trackers eq 'y'}
@@ -35,19 +36,29 @@
 	{/if}
 </div>
 
-{if $tiki_p_view_trackers eq 'y'}
 {* ------- return/next/previous tab --- *}
-<div class="navbar">
-<span class="button2">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}Back{/tr} {tr}items list{/tr}</a></span>
-<span class="button2">
-{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
-<span class="button2">
-{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}Next{/tr} -></a>{/if}</span>
-</div>
+{if $tiki_p_view_trackers eq 'y'}
+  <div class="mini">
+    {if ! $prevmsg}
+      [<a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev{/ajax_href}>{tr}Prev{/tr}</a>]
+    {/if}
+    
+    {tr}Item{/tr}: {math equation="x + y + 1" x=$offset|default:0 y=$urlquery.reloff|default:0}/{$cant}
+    
+    {if ! $nextmsg}
+      [<a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next{/ajax_href}>{tr}Next{/tr}</a>]
+    {/if}
+
+    {if $prefs.direct_pagination eq 'y'}
+      <br />
+      {section loop=$cant name=foo}
+          <a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}&amp;move={$smarty.section.foo.index}{/foreach}{/ajax_href}>
+          {$smarty.section.foo.index_next}</a>
+      {/section}
+    {/if}
+  </div>
 {/if}
+
 
 {****  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
@@ -588,6 +599,24 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/foreach}
 {* ------------------- *}
 </form>
+{*********************************************************************}
+{*
+<div class="navbar">
+<span class="button2">
+<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}Back{/tr} {tr}items list{/tr}</a></span>
+<span class="button2">
+{if $show_nextprev_links eq 'y'}
+{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
+<span class="button2">
+{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}Next{/tr} -></a>{/if}</span>
+{/if}
+</div>
+{/if}
+*}
+{*********************************************************************}
+
 {if $trkact}
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
