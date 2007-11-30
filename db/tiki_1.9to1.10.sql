@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.9 2007-11-22 19:58:42 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.10 2007-11-30 22:42:04 nkoth Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1625,3 +1625,6 @@ ALTER TABLE `users_groups` ADD `groupTheme` varchar(255) DEFAULT '';
 
 #2007-11-21 nyloth
 ALTER TABLE tiki_tracker_fields ADD itemChoices text;
+
+#2007-11-30 nkoth 
+ALTER TABLE `tiki_content` ADD `contentLabel` varchar(255) NOT NULL DEFAULT '';
