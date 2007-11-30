@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.9 2007-11-30 17:09:19 mose Exp $
+// CVS: $Id: userslib.php,v 1.247.2.10 2007-11-30 17:15:22 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2288,7 +2288,7 @@ function get_included_groups($group, $recur=true) {
 	$q = array();
 	$bindvars = array();
 
-	if (@$u['password']) {
+	if (isset($u['password'])) {
 	    if ($prefs['feature_clear_passwords'] == 's') {
 		$q[] = "`password` = ?";
 		$bindvars[] = strip_tags($u['password']);
@@ -2301,12 +2301,12 @@ function get_included_groups($group, $recur=true) {
 	    $bindvars[] = $hash;
 	}
 
-	if (@$u['email']) {
+	if (isset($u['email'])) {
 	    $q[] = "`email` = ?";
 	    $bindvars[] = strip_tags($u['email']);
 	}
 
-    if (@$u['openid_url']) {
+    if (isset($u['openid_url'])) {
 	    if (isset($_SESSION['openid_url'])) {
 		$q[] = "`openid_url` = ?";
 		$bindvars[] = $u['openid_url'];
@@ -2322,7 +2322,7 @@ function get_included_groups($group, $recur=true) {
 
 	$aUserPrefs = array('realName','homePage','country');
 	foreach ($aUserPrefs as $pref){
-		if (@$u[$pref]) {
+		if (isset($u[$pref])) {
 		    $bindvars = array();
 
 		    $bindvars[] = strip_tags($u[$pref]);
