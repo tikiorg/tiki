@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.14 2007-11-30 16:55:35 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.15 2007-11-30 17:05:35 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -39,13 +39,13 @@
 {* ------- return/next/previous tab --- *}
 {if $tiki_p_view_trackers eq 'y'}
   <div class="mini">
-    {if ! $prevmsg}
+    {if $show_prev_link eq 'y'}
       [<a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev{/ajax_href}>{tr}Prev{/tr}</a>]
     {/if}
     
     {tr}Item{/tr}: {math equation="x + y + 1" x=$offset|default:0 y=$urlquery.reloff|default:0}/{$cant}
     
-    {if ! $nextmsg}
+    {if $show_next_link eq 'y'}
       [<a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next{/ajax_href}>{tr}Next{/tr}</a>]
     {/if}
 

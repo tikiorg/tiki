@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.5 2007-11-30 16:53:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.6 2007-11-30 17:05:35 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -206,6 +206,9 @@ if ( isset($_REQUEST['move']) ) {
 	// Get number of items from the URL query, if we don't "move" (no click on "next" or "prev" links), to avoid a call to list_items
 	$trycant = $_REQUEST['cant'];
 }
+
+$smarty->assign('show_prev_link', (( $offset + $tryreloff <= 0 ) ? 'n' : 'y'));
+$smarty->assign('show_next_link', (( $offset + $tryreloff >= $trycant - 1 ) ? 'n' : 'y'));
 $smarty->assign('cant', $trycant);
 
 $smarty->assign_by_ref('urlquery', $urlquery);
