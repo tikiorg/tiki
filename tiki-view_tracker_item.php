@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.4 2007-11-28 23:53:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.5 2007-11-30 16:53:13 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -181,29 +181,33 @@ if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
   $trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $xfield);
  }
 
+//*********** handle prev/next links *****************
+$trycant = 0;
+if ( isset($_REQUEST['move']) ) {
 
-
-
-
-if (isset($_REQUEST["move"])) {
-    $move = ($_REQUEST["move"] == 'prev') ? -1 : 1;
-	if ($offset + ($tryreloff += $move) >= 0) {
-    	$trymove = 
-    	  $trklib->list_items($_REQUEST["trackerId"], $offset + $tryreloff, 1,
-    	    $_REQUEST["sort_mode"], array(),
-    	    $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
-    }
-	if (isset($trymove["data"][0]["itemId"])) {
-    	$_REQUEST["itemId"] = $trymove["data"][0]["itemId"];
-	unset($item_info);
-    	$urlquery['reloff'] = $tryreloff;
-	} elseif ($move > 0) {
-        	$smarty->assign('nextmsg', tra("Last page"));
+	switch ( $_REQUEST['move'] ) {
+		case 'prev': $tryreloff += -1; break;
+		case 'next': $tryreloff += 1; break;
+		default: $tryreloff = (int)$_REQUEST['move'];
 	}
+
+	if ( $offset + $tryreloff >= 0 ) {
+		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $_REQUEST['sort_mode'], array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+	}
+	if ( isset($trymove) && is_array($trymove) ) {
+		if ( isset($trymove['data'][0]['itemId']) ) {
+			$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
+			unset($item_info);
+			$urlquery['reloff'] = $tryreloff;
+		}
+	}
+	$trycant = $trymove['cant'];
+} elseif ( isset($_REQUEST['cant']) ) {
+	// Get number of items from the URL query, if we don't "move" (no click on "next" or "prev" links), to avoid a call to list_items
+	$trycant = $_REQUEST['cant'];
 }
-if ($offset + $tryreloff <= 0) {
-	$smarty->assign('prevmsg', tra("First page"));
-}
+$smarty->assign('cant', $trycant);
+
 $smarty->assign_by_ref('urlquery', $urlquery);
 //*********** that's all for prev/next *****************
 
@@ -1146,6 +1150,12 @@ if ($prefs['feature_jscalendar']) {
 }
 
 ask_ticket('view-trackers-items');
+
+if ( $prefs['feature_ajax'] == 'y' ) {
+	require_once ("lib/ajax/ajaxlib.php");
+	$ajaxlib->registerTemplate('tiki-view_tracker_item.tpl');
+	$ajaxlib->processRequests();
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
