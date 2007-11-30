@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.13 2007-11-30 16:53:15 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.14 2007-11-30 16:55:35 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -599,23 +599,6 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/foreach}
 {* ------------------- *}
 </form>
-{*********************************************************************}
-{*
-<div class="navbar">
-<span class="button2">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}">{tr}Back{/tr} {tr}items list{/tr}</a></span>
-<span class="button2">
-{if $show_nextprev_links eq 'y'}
-{if $prevmsg}<span class="attention">{$prevmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev"><- {tr}Previous{/tr}</a>{/if}</span>
-<span class="button2">
-{if $nextmsg}<span class="attention">{$nextmsg}</span>{else}
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=next">{tr}Next{/tr} -></a>{/if}</span>
-{/if}
-</div>
-{/if}
-*}
-{*********************************************************************}
 
 {if $trkact}
 <h2>{tr}Special Operations{/tr}</h2>
