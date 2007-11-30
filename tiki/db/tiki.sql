@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-11-22 19:58:42 $
-# $Author: nyloth $
+# $Date: 2007-11-30 22:42:04 $
+# $Author: nkoth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1016,6 +1016,7 @@ DROP TABLE IF EXISTS tiki_content;
 CREATE TABLE tiki_content (
   contentId int(8) NOT NULL auto_increment,
   description text,
+  contentLabel varchar(255) NOT NULL default '',
   PRIMARY KEY  (contentId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
