@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.11 2007-11-26 14:00:33 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.12 2007-11-30 16:35:30 sylvieg Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -701,7 +701,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
