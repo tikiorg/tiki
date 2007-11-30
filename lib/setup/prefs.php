@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.18 2007-11-27 17:20:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.19 2007-11-30 18:13:16 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -973,6 +973,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	$prefs['feature_bidi'] = 'n';
 	$prefs['feature_lastup'] = 'y';
+	$prefs['transition_style_ver'] = '1.9';
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {	

@@ -1,4 +1,4 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.2 2007-11-28 05:23:33 luciash Exp $*}
+{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.3 2007-11-30 18:13:16 nkoth Exp $*}
 <div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
@@ -39,6 +39,15 @@
                 {if $prefs.slide_style eq $slide_styles[ix]}selected="selected"{/if}>
                 {$slide_styles[ix]}</option>
             {/section}
+            </select>
+        </td>
+      </tr><tr>
+        <td class="form"><label for="transition_style_ver">{tr}Use transition style sheet from version{/tr}:</label></td>
+        <td><select name="transition_style_ver" id="transition_style_ver">            
+              <option value="none" {if $prefs.transition_style_ver eq 'none'}selected="selected"{/if}>{tr}Never use transition css{/tr}</option>
+              <option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
+              <option value="1.8" {if $prefs.transition_style_ver eq '1.8'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.8 if not specified{/tr}</option>
+              <option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
             </select>
         </td>
 	</tr>	<tr>
