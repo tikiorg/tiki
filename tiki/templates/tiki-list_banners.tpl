@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.2 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.3 2007-11-30 20:52:07 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Admin Banners{/tr}">
@@ -32,6 +32,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'bannerId_desc'}bannerId_asc{else}bannerId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'client_desc'}client_asc{else}client_desc{/if}">{tr}Client{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}Zone{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'which_desc'}which_asc{else}which_desc{/if}">{tr}Method{/tr}</a></td>
@@ -46,6 +47,7 @@
 <tr>
 <td class="{cycle advance=false}">{$listpages[changes].bannerId}</td>
 <td class="{cycle advance=false}">{$listpages[changes].client}</td>
+<td class="{cycle advance=false}">{$listpages[changes].url}</td>
 <td class="{cycle advance=false}">{$listpages[changes].zone}</td>
 <td class="{cycle advance=false}">{$listpages[changes].created|tiki_short_date}</td>
 <td class="{cycle advance=false}">{$listpages[changes].which}</td>
