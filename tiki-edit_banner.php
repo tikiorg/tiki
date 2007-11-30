@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.29.2.2 2007-11-28 22:04:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.29.2.3 2007-11-30 20:46:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -166,10 +166,6 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$smarty->assign('zone', $_REQUEST["zone"]);
 	} else {
 		$smarty->assign('zone', '');
-	}
-
-	if (substr($_REQUEST["url"], 0, 4) != 'http') {
-		$_REQUEST["url"] = $tikilib->httpScheme(). '://' . $_REQUEST["url"];
 	}
 
 	$smarty->assign('url', $_REQUEST["url"]);
