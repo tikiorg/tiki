@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.2 2007-11-30 16:08:58 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -28,15 +28,15 @@
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
 {if $ix.type eq 'l'}
-<td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
+<td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $perms.tiki_p_tracker_view_ratings eq 'y'}
-<td class="heading auto"{if $perms.tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
+<td class="heading auto field{$ix.fieldId}"{if $perms.tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
 <a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
 {else}
-<td class="heading auto"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
+<td class="heading auto field{$ix.fieldId}"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
 <a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
 {/if}
