@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.4 2007-11-25 20:58:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.5 2007-11-30 18:33:03 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -337,7 +337,7 @@ class WikiLib extends TikiLib {
 	        }
 	}
 
-	function list_wiki_attachments($page, $offset, $maxRecords, $sort_mode, $find) {
+	function list_wiki_attachments($page, $offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
 
 	if ($find) {
 	    $mid = " where `page`=? and (`filename` like ?)"; // why braces?
