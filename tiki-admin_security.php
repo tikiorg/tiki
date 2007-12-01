@@ -242,6 +242,105 @@ if (isset($_REQUEST['check_files'])) {
   $smarty->assign_by_ref('tikifiles',$result);
 }
 
+define('S_ISUID','2048');
+define('S_ISGID','1024');
+define('S_ISVTX','512');
+define('S_IRUSR','256');
+define('S_IWUSR','128');
+define('S_IXUSR','64');
+define('S_IRGRP','32');
+define('S_IWGRP','16');
+define('S_IXGRP','8');
+define('S_IROTH','4');
+define('S_IWOTH','2');
+define('S_IXOTH','1');
+
+
+// Function to check Filesystem permissions
+function check_dir_perms($dir,&$result) {
+  static $depth=0;
+  $depth++;
+  $d=dir($dir);
+  while (false !== ($e = $d->read())) {
+    $entry=$dir.'/'.$e;
+    if($e != '..' && ( $e != '.' || $depth==1)) {
+      $result[$entry]['w']=is_writable($entry);
+      $result[$entry]['r']=is_readable($entry);
+      $result[$entry]['t']=filetype($entry);
+      $s=stat($entry);
+      if(function_exists('posix_getpwuid')) {
+        $t=posix_getpwuid($s['uid']);
+        $result[$entry]['u']=$t['name'];
+        $t=posix_getgrgid($s['gid']);
+        $result[$entry]['g']=$t['name'];
+      } else {
+        $result[$entry]['u']=$s['uid'];
+        $result[$entry]['g']=$s['gid'];
+      }
+      $m=(int) $s['mode'];
+      if($m>=32768) $m-=32768; // clear file type indicators
+      if($m>=16384) $m-=16384;
+      if($m>=8192) $m-=8192;
+      if($m>=4096) $m-=4096;
+      $result[$entry]['p']=$m;
+      $result[$entry]['suid']=($m>=S_ISUID && ($m-=S_ISUID)>=0);
+      $result[$entry]['sgid']=($m>=S_ISGID && ($m-=S_ISGID)>=0);
+      $result[$entry]['sticky']=($m>=S_ISVTX && ($m-=S_ISVTX)>=0);
+      $result[$entry]['ur']=($m>=S_IRUSR && ($m-=S_IRUSR)>=0);
+      $result[$entry]['uw']=($m>=S_IWUSR && ($m-=S_IWUSR)>=0);
+      $result[$entry]['ux']=($m>=S_IXUSR && ($m-=S_IXUSR)>=0);
+      $result[$entry]['gr']=($m>=S_IRGRP && ($m-=S_IRGRP)>=0);
+      $result[$entry]['gw']=($m>=S_IWGRP && ($m-=S_IWGRP)>=0);
+      $result[$entry]['gx']=($m>=S_IXGRP && ($m-=S_IXGRP)>=0);
+      $result[$entry]['or']=($m>=S_IROTH && ($m-=S_IROTH)>=0);
+      $result[$entry]['ow']=($m>=S_IWOTH && ($m-=S_IWOTH)>=0);
+      $result[$entry]['ox']=($m>=S_IXOTH && ($m-=S_IXOTH)>=0);
+
+      if($result[$entry]['t']=='dir' && $e!='.') {
+        check_dir_perms($entry,$result);
+      }
+    }
+  }
+  $depth--;
+}
+
+
+if (isset($_REQUEST['check_file_permissions'])) {
+  $fileperms=array();
+  check_dir_perms('.',$fileperms);
+  // echo "<pre>"; print_r($fileperms);echo "</pre><br />";
+  // walk throug array to find problematic entries
+  $worldwritable=array();
+  $suid=array();
+  $executable=array();
+  $strangeinode=array();
+  $apachewritable=array();
+  foreach($fileperms as $fname => $fperms) {
+    if($fperms['suid']) {
+      $suid[$fname]=&$fileperms[$fname];
+    }
+    if($fperms['ow']) {
+      $worldwritable[$fname]=&$fileperms[$fname];
+    }
+    if($fperms['t']!='dir' && ($fperms['ux'] || $fperms['gx'] || $fperms['ox'])) {
+      $executable[$fname]=&$fileperms[$fname];
+    }
+    if($fperms['t']!='dir' && $fperms['t']!='file' && $fperms['t']!='link') {
+      $strangeinode[$fname]=&$fileperms[$fname];
+    }
+
+    if($fperms['w']) {
+      $apachewritable[$fname]=&$fileperms[$fname];
+    }
+  }
+  $smarty->assign_by_ref('worldwritable',$worldwritable);
+  $smarty->assign_by_ref('suid',$suid);
+  $smarty->assign_by_ref('executable',$executable);
+  $smarty->assign_by_ref('strangeinode',$strangeinode);
+  $smarty->assign_by_ref('apachewritable',$apachewritable);
+  $smarty->assign('permcheck',TRUE);
+}
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 

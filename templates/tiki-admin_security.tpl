@@ -61,3 +61,169 @@
 {/foreach}
 </table>
 {/if}
+
+<br />
+<div class="form">
+<a href="tiki-admin_security.php?check_file_permissions">{tr}Check file permissions{/tr}</a><br />
+{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}<br />
+{tr}This check tries to find files with problematic file permissions. Some file permissions that are shown here as problematic may be unproblematic or unavoidable in some environments.{/tr}<br />
+{tr}See end of table for detailed explanations.{/tr}
+<br />
+</div>
+{if $permcheck}
+<table>
+<tr><td class="heading" rowspan="2">{tr}Filename{/tr}</td>
+<td class="heading" rowspan="2">{tr}type{/tr}</td>
+<td class="heading" colspan="2">{tr}owner{/tr}</td>
+<td class="heading" colspan="3">{tr}special{/tr}</td>
+<td class="heading" colspan="3">{tr}user{/tr}</td>
+<td class="heading" colspan="3">{tr}group{/tr}</td>
+<td class="heading" colspan="3">{tr}other{/tr}</td>
+</tr>
+<tr>
+<td class="heading">{tr}uid{/tr}</td>
+<td class="heading">{tr}gid{/tr}</td>
+<td class="heading">{tr}suid{/tr}</td>
+<td class="heading">{tr}sgid{/tr}</td>
+<td class="heading">{tr}sticky{/tr}</td>
+<td class="heading">{tr}r{/tr}</td>
+<td class="heading">{tr}w{/tr}</td>
+<td class="heading">{tr}x{/tr}</td>
+<td class="heading">{tr}r{/tr}</td>
+<td class="heading">{tr}w{/tr}</td>
+<td class="heading">{tr}x{/tr}</td>
+<td class="heading">{tr}r{/tr}</td>
+<td class="heading">{tr}w{/tr}</td>
+<td class="heading">{tr}x{/tr}</td>
+</tr>
+<tr><td colspan="16" class="heading">{tr}Set User ID (suid) files{/tr}</td></tr>
+{foreach from=$suid key=key item=item}
+<tr><td class="form">{$key}</td>
+<td class="form">{$item.t}</td>
+<td class="form">{$item.u}</td>
+<td class="form">{$item.g}</td>
+<td class="form">{$item.suid|truex}</td>
+<td class="form">{$item.sgid|truex}</td>
+<td class="form">{$item.sticky|truex}</td>
+<td class="form">{$item.ur|truex}</td>
+<td class="form">{$item.uw|truex}</td>
+<td class="form">{$item.ux|truex}</td>
+<td class="form">{$item.gr|truex}</td>
+<td class="form">{$item.gw|truex}</td>
+<td class="form">{$item.gx|truex}</td>
+<td class="form">{$item.or|truex}</td>
+<td class="form">{$item.ow|truex}</td>
+<td class="form">{$item.ox|truex}</td>
+</tr>
+{/foreach}
+
+<tr><td colspan="16" class="heading">{tr}World writable files or directories{/tr}</td></tr>
+{foreach from=$worldwritable key=key item=item}
+<tr><td class="form">{$key}</td>
+<td class="form">{$item.t}</td>
+<td class="form">{$item.u}</td>
+<td class="form">{$item.g}</td>
+<td class="form">{$item.suid|truex}</td>
+<td class="form">{$item.sgid|truex}</td>
+<td class="form">{$item.sticky|truex}</td>
+<td class="form">{$item.ur|truex}</td>
+<td class="form">{$item.uw|truex}</td>
+<td class="form">{$item.ux|truex}</td>
+<td class="form">{$item.gr|truex}</td>
+<td class="form">{$item.gw|truex}</td>
+<td class="form">{$item.gx|truex}</td>
+<td class="form">{$item.or|truex}</td>
+<td class="form">{$item.ow|truex}</td>
+<td class="form">{$item.ox|truex}</td>
+</tr>
+{/foreach}
+
+<tr><td colspan="16" class="heading">{tr}Files or directories the Webserver can write to{/tr}</td></tr>
+{foreach from=$apachewritable key=key item=item}
+<tr><td class="form">{$key}</td>
+<td class="form">{$item.t}</td>
+<td class="form">{$item.u}</td>
+<td class="form">{$item.g}</td>
+<td class="form">{$item.suid|truex}</td>
+<td class="form">{$item.sgid|truex}</td>
+<td class="form">{$item.sticky|truex}</td>
+<td class="form">{$item.ur|truex}</td>
+<td class="form">{$item.uw|truex}</td>
+<td class="form">{$item.ux|truex}</td>
+<td class="form">{$item.gr|truex}</td>
+<td class="form">{$item.gw|truex}</td>
+<td class="form">{$item.gx|truex}</td>
+<td class="form">{$item.or|truex}</td>
+<td class="form">{$item.ow|truex}</td>
+<td class="form">{$item.ox|truex}</td>
+</tr>
+{/foreach}
+
+<tr><td colspan="16" class="heading">{tr}Strange Inodes (not file, not link, not directory){/tr}</td></tr>
+{foreach from=$strangeinode key=key item=item}
+<tr><td class="form">{$key}</td>
+<td class="form">{$item.t}</td>
+<td class="form">{$item.u}</td>
+<td class="form">{$item.g}</td>
+<td class="form">{$item.suid|truex}</td>
+<td class="form">{$item.sgid|truex}</td>
+<td class="form">{$item.sticky|truex}</td>
+<td class="form">{$item.ur|truex}</td>
+<td class="form">{$item.uw|truex}</td>
+<td class="form">{$item.ux|truex}</td>
+<td class="form">{$item.gr|truex}</td>
+<td class="form">{$item.gw|truex}</td>
+<td class="form">{$item.gx|truex}</td>
+<td class="form">{$item.or|truex}</td>
+<td class="form">{$item.ow|truex}</td>
+<td class="form">{$item.ox|truex}</td>
+</tr>
+{/foreach}
+
+<tr><td colspan="16" class="heading">{tr}Executable files{/tr}</td></tr>
+{foreach from=$executable key=key item=item}
+<tr><td class="form">{$key}</td>
+<td class="form">{$item.t}</td>
+<td class="form">{$item.u}</td>
+<td class="form">{$item.g}</td>
+<td class="form">{$item.suid|truex}</td>
+<td class="form">{$item.sgid|truex}</td>
+<td class="form">{$item.sticky|truex}</td>
+<td class="form">{$item.ur|truex}</td>
+<td class="form">{$item.uw|truex}</td>
+<td class="form">{$item.ux|truex}</td>
+<td class="form">{$item.gr|truex}</td>
+<td class="form">{$item.gw|truex}</td>
+<td class="form">{$item.gx|truex}</td>
+<td class="form">{$item.or|truex}</td>
+<td class="form">{$item.ow|truex}</td>
+<td class="form">{$item.ox|truex}</td>
+</tr>
+{/foreach}
+
+</table>
+
+<div class="form">
+<br />
+<br />
+<br />
+
+{tr}What to do with these check results?{/tr}<br /><br />
+{tr}Set User ID (suid) files{/tr}<br />
+{tr}Suid files are not part of tiki and there is no need for suid files in a webspace. Sometimes intruders that gain elevated privileges leave suid files to "keep the door open".{/tr}<br />
+<br />
+{tr}World writable files or directories{/tr}<br />
+{tr}In some environments where you cannot get root or have no other possibilities, it is unavoidable to let your webserver write to some tiki directories like "templates_c" or "temp". In any other case this is not needed. A bug in a script or other users could easily put malicious scripts on your webspace or upload illegal content.{/tr}<br />
+<br />
+{tr}Files or directories the Webserver can write to{/tr}<br />
+{tr}The risk is almost the same in shared hosting environments without proper privilege separation (suexec wrappers). The webserver has to be able to write to some directories like "templates_c" or "temp". Review the tiki install guide for further information.{/tr}<br />
+<br />
+{tr}Strange Inodes (not file, not link, not directory){/tr}<br />
+{tr}Inodes that are not files or directories are not part of tiki. Review these Inodes!{/tr}<br />
+<br />
+{tr}Executable files{/tr}<br />
+{tr}Setting the executable bit can be dangerous if the webserver is configured to execute cgi scripts from that directories. If you use the usual php module (for apache) then php scripts and other files in tiki do not need to have the executable bit. You can safely remove the executable bit with chmod.{/tr}<br />
+</div>
+
+{/if}
+
