@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.1 2007-10-30 13:38:10 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.2 2007-12-01 21:50:22 sylvieg Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}
@@ -57,7 +57,7 @@
     <select name="feature_intertiki_mymaster" onchange="check_server_visibility(this);">
       <option value="">{tr}No{/tr}</option>
   {foreach from=$prefs.interlist key=k item=i}
-      <option value="{$k|escape:'url'}"{if $prefs.feature_intertiki_mymaster eq $k} selected="selected"{/if}>{$i.name} {tr} as master{/tr}</option>
+      <option value="{$k|escape}"{if $prefs.feature_intertiki_mymaster eq $k} selected="selected"{/if}>{$i.name} {tr} as master{/tr}</option>
   {/foreach}
     </select>
     <div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
