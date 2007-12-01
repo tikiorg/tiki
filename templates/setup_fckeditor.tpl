@@ -34,12 +34,10 @@ FCKConfig.FormatOutput = true ;
 {if $prefs.feature_filegals_manager eq 'y'}
 FCKConfig.ImageBrowserURL = _TikiRoot + 'tiki-file_galleries.php?filegals_manager';
 {else}
-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/php/connector.php' ;
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../connectors/' + _FileBrowserLanguage + '/connector.' + _FileBrowserExtension ;
 {/if}
 
-FCKConfig.PluginsPath = _TikiRoot + 'lib/fckeditor_tiki/plugins' ;
-
-FCKConfig.Plugins.Add( 'tikilink' ) ;
+FCKConfig.Plugins.Add( 'tikilink', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
 FCKConfig.tikilinkBtn     = '{tr}Insert/Edit an internal wiki link{/tr}' ;
 FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
 FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
@@ -54,6 +52,8 @@ FCKConfig.ImageDlgHideAdvanced = true ;
 FCKConfig.ImageDlgHideLink = true ;
 {/if}
 FCKConfig.ImageUpload = false ;
-FCKConfig.Plugins.Add( 'tikiimage' ) ;
+FCKConfig.Plugins.Add( 'tikiimage', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
 FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
 FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;
+
+FCKConfig.Plugins.Add( 'dragresizetable' );
