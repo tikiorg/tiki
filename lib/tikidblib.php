@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41.2.1 2007-10-20 20:55:52 fr_rodo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41.2.2 2007-12-01 19:52:53 nyloth Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -363,7 +363,12 @@ function convert_sortmode($sort_mode) {
 	// force ending to either _asc or _desc unless it's "random"
 	$sep = strrpos($sort, '_');
 	$dir = substr($sort, $sep);
-	if (($dir !== '_asc') && ($dir !== '_desc')) $sort.='_asc';
+	if (($dir !== '_asc') && ($dir !== '_desc')) {
+		if ( $sep != (strlen($sort) - 1) ) {
+			$sort .= '_';
+		}
+		$sort .= 'asc';
+	}
 	
 	switch ($ADODB_LASTDB) {
         case "postgres7":
