@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.2 2007-11-01 16:12:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.3 2007-12-01 22:56:34 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,8 +78,12 @@ function validate($params) {
 	if ($slave) {
 	    $logslib->add_log('intertiki','auth granted from '.$prefs['known_hosts'][$key]['name'],$login);
 	    global $userlib;
-	    $user_details = $userlib->get_user_details($login);
-	    return new XML_RPC_Response(new XML_RPC_Value(serialize($user_details), "string"));
+		$user_details = $userlib->get_user_info($login);
+		$ret['avatarData'] = new XML_RPC_Value($user_details['avatarData'], "base64");
+		unset($user_details['avatarData']);
+		$ret['user_details'] = new XML_RPC_Value(serialize($user_details), "string");
+		$fp=fopen('temp/toto', 'w+');fwrite($fp, var_export($ret, true));fclose($fp);
+		return new XML_RPC_Response(new XML_RPC_Value($ret, "struct"));
 	} else {
 	    $logslib->add_log('intertiki','auth granted from '.$prefs['known_hosts'][$key]['name'],$login);
 	    return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));

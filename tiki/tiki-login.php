@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.5 2007-11-23 13:32:44 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.6 2007-12-01 22:56:34 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,7 +109,21 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 
 		// this is slave intertiki site
 		$response_value = $rpcauth->value();
-		$user_details = unserialize($response_value->scalarval());
+		$avatarData = '';
+		if ($response_value->kindOf() == 'struct') {
+			for (;;) {
+				list($key, $value) = $response_value->structeach();
+				if ($key == '') {
+					break;
+				} elseif ($key == 'user_details') {
+					$user_details = unserialize($value->scalarval());
+				} elseif ($key == 'avatarData') {
+					$avatarData = $value->scalarval();
+				}
+			}
+		} else {
+			$user_details = unserialize($response_value->scalarval());
+		}
 
 		if (!$userlib->user_exists($user)) {
 		    if ($userlib->add_user($user, '', $user_details['info']['email'])) {
@@ -124,6 +138,8 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 		    $userlib->set_user_fields($user_details['info']);
 		    $userlib->update_lastlogin($user);
 		}
+		global $userprefslib; include_once('lib/userprefs/userprefslib.php');
+		$userprefslib->set_user_avatar($user, 'u', '', $user_details['avatarName'], $user_details['avatarSize'], $user_details['avatarFileType'], $avatarData);
 
 		if ($prefs['feature_userPreferences'] == 'y' && $prefs['feature_intertiki_import_preferences'] == 'y') {
 		    $userlib->set_user_preferences($user, $user_details['preferences']);
