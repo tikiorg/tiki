@@ -36,14 +36,13 @@ Patches for specific Tikiwiki use
 ---------------------------------
 
 * Filemanager MultiTiki patch
-Files to patch get similar changes, in browser and upload connectors:
-lib/fckeditor/editor/filemanager/browser/default/connectors/php/config.php
-lib/fckeditor/editor/filemanager/upload/default/connectors/php/config.php
+File to patch get similar changes, in browser and upload connectors:
+lib/fckeditor/editor/filemanager/connectors/php/config.php
 ===================================================================
 20a21,38
-> $tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(getcwd()))))))));
+> $tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))));
 > $tikidomain = '';
-> if (is_file('db/virtuals.inc')) {
+> if (is_file($tikiroot.'db/virtuals.inc')) {
 > 	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file($tikiroot.'/db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
 > 		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
 > 	} elseif (isset($_SERVER['SERVER_NAME']) and is_file($tikiroot.'/db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
@@ -64,6 +63,7 @@ lib/fckeditor/editor/filemanager/upload/default/connectors/php/config.php
 ---
 > $Config['UserFilesPath'] = $tikipath.'img/wiki_up/'.$tikidomain ;
 
+* Also enable the filemanager connector with this line:  $Config['Enabled'] = true ;
 
 
 Translation status

@@ -74,7 +74,7 @@ FCKIcon.prototype.CreateIconElement = function( document )
 			eIcon = document.createElement( 'IMG' ) ;
 			eIcon.src = FCK_SPACER_PATH ;
 			eIcon.style.backgroundPosition	= '0px ' + sPos ;
-			eIcon.style.backgroundImage		= 'url(' + this.Path + ')' ;
+			eIcon.style.backgroundImage		= 'url("' + this.Path + '")' ;
 		}
 	}
 	else					// It is using a single icon image.

@@ -24,7 +24,23 @@
 // Get the selection type.
 FCKSelection.GetType = function()
 {
-	return FCK.EditorDocument.selection.type ;
+	// It is possible that we can still get a text range object even when type=='None' is returned by IE.
+	// So we'd better check the object returned by createRange() rather than by looking at the type.
+	try
+	{
+		var ieType = FCK.EditorDocument.selection.type ;
+		if ( ieType == 'Control' || ieType == 'Text' )
+			return ieType ;
+
+		if ( FCK.EditorDocument.selection.createRange().parentElement )
+			return 'Text' ;
+	}
+	catch(e)
+	{
+		// Nothing to do, it will return None properly.
+	}
+
+	return 'None' ;
 } ;
 
 // Retrieves the selected element (if any), just in the case that a single
@@ -46,11 +62,39 @@ FCKSelection.GetParentElement = function()
 	switch ( this.GetType() )
 	{
 		case 'Control' :
-			return FCKSelection.GetSelectedElement().parentElement ;
+			var el = FCKSelection.GetSelectedElement() ;
+			return el ? el.parentElement : null ;
+
 		case 'None' :
 			return null ;
+
 		default :
 			return FCK.EditorDocument.selection.createRange().parentElement() ;
+	}
+} ;
+
+FCKSelection.GetBoundaryParentElement = function( startBoundary )
+{
+	switch ( this.GetType() )
+	{
+		case 'Control' :
+			var el = FCKSelection.GetSelectedElement() ;
+			return el ? el.parentElement : null ;
+
+		case 'None' :
+			return null ;
+
+		default :
+			var doc = FCK.EditorDocument ;
+			
+			var range = doc.selection.createRange() ;
+			range.collapse( startBoundary !== false ) ;
+			
+			var el = range.parentElement() ;
+			
+			// It may happen that range is comming from outside "doc", so we
+			// must check it (#1204).
+			return FCKTools.GetElementDocument( el ) == doc ? el : null ;
 	}
 } ;
 
@@ -155,5 +199,3 @@ FCKSelection.Delete = function()
 
 	return oSel ;
 } ;
-
-

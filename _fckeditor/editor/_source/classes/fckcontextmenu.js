@@ -47,6 +47,11 @@ FCKContextMenu.prototype.SetMouseClickWindow = function( mouseClickWindow )
 	if ( !FCKBrowserInfo.IsIE )
 	{
 		this._Document = mouseClickWindow.document ;
+		if ( FCKBrowserInfo.IsOpera && !( 'oncontextmenu' in document.createElement('foo') ) )
+		{
+			this._Document.addEventListener( 'mousedown', FCKContextMenu_Document_OnMouseDown, false ) ;
+			this._Document.addEventListener( 'mouseup', FCKContextMenu_Document_OnMouseUp, false ) ;
+		}
 		this._Document.addEventListener( 'contextmenu', FCKContextMenu_Document_OnContextMenu, false ) ;
 	}
 }
@@ -76,8 +81,6 @@ FCKContextMenu.prototype.AttachToElement = function( element )
 		FCKTools.AddEventListenerEx( element, 'contextmenu', FCKContextMenu_AttachedElement_OnContextMenu, this ) ;
 	else
 		element._FCKContextMenu = this ;
-
-//	element.onmouseup		= FCKContextMenu_AttachedElement_OnMouseUp ;
 }
 
 function FCKContextMenu_Document_OnContextMenu( e )
@@ -93,18 +96,69 @@ function FCKContextMenu_Document_OnContextMenu( e )
 
 			FCKTools.CancelEvent( e ) ;
 			FCKContextMenu_AttachedElement_OnContextMenu( e, el._FCKContextMenu, el ) ;
+			return false ;
 		}
 		el = el.parentNode ;
+	}
+	return true ;
+}
+
+var FCKContextMenu_OverrideButton ;
+
+function FCKContextMenu_Document_OnMouseDown( e )
+{
+	if( !e || e.button != 2 )
+		return false ;
+
+	var el = e.target ;
+
+	while ( el )
+	{
+		if ( el._FCKContextMenu )
+		{
+			if ( el._FCKContextMenu.CtrlDisable && ( e.ctrlKey || e.metaKey ) )
+				return true ;
+
+			var overrideButton = FCKContextMenu_OverrideButton ;
+			if( !overrideButton )
+			{
+				var doc = e.target.ownerDocument ;
+				overrideButton = FCKContextMenu_OverrideButton = doc.createElement('input') ;
+				overrideButton.type = 'button' ;
+				var buttonHolder = doc.createElement('p') ;
+				doc.body.appendChild( buttonHolder ) ;
+				buttonHolder.appendChild( overrideButton ) ;
+			}
+
+			overrideButton.style.cssText = 'position:absolute;top:' + ( e.clientY - 2 ) + 
+				'px;left:' + ( e.clientX - 2 ) + 
+				'px;width:5px;height:5px;opacity:0.01' ;
+		}
+		el = el.parentNode ;
+	}
+	return false ;
+}
+
+function FCKContextMenu_Document_OnMouseUp( e )
+{
+	var overrideButton = FCKContextMenu_OverrideButton ;
+
+	if ( overrideButton )
+	{
+		var parent = overrideButton.parentNode ;
+		parent.parentNode.removeChild( parent ) ;
+		FCKContextMenu_OverrideButton = undefined ;
+
+		if( e && e.button == 2 )
+		{
+			FCKContextMenu_Document_OnContextMenu( e ) ;
+			return false ;
+		}
 	}
 }
 
 function FCKContextMenu_AttachedElement_OnContextMenu( ev, fckContextMenu, el )
 {
-//	var iButton = e ? e.which - 1 : event.button ;
-
-//	if ( iButton != 2 )
-//		return ;
-
 	if ( fckContextMenu.CtrlDisable && ( ev.ctrlKey || ev.metaKey ) )
 		return true ;
 
@@ -126,11 +180,24 @@ function FCKContextMenu_AttachedElement_OnContextMenu( ev, fckContextMenu, el )
 	// as the content of the panel is recreated we need to do it every time
 	FCKTools.DisableSelection( fckContextMenu._Panel.Document.body ) ;
 
-	fckContextMenu._Panel.Show(
-		ev.pageX || ev.screenX,
-		ev.pageY || ev.screenY,
-		ev.currentTarget || null
-	) ;
+	var x = 0 ;
+	var y = 0 ;
+	if ( FCKBrowserInfo.IsIE )
+	{
+		x = ev.screenX ;
+		y = ev.screenY ;
+	}
+	else if ( FCKBrowserInfo.IsSafari )
+	{
+		x = ev.clientX ;
+		y = ev.clientY ;
+	}
+	else
+	{
+		x = ev.pageX ;
+		y = ev.pageY ;
+	}
+	fckContextMenu._Panel.Show( x, y, ev.currentTarget || null ) ;
 
 	return false ;
 }

@@ -27,8 +27,9 @@
 
 body
 {
-    padding: 1px 1px 1px 1px;
-    margin: 0px 0px 0px 0px;
+	padding: 1px;
+	margin: 0;
+	background-color: #ffffff;
 }
 
 #xEditingArea
@@ -97,7 +98,7 @@ body
     background-repeat: no-repeat;
     background-position: center left;
     height: 24px;
-    width: 12px;
+    width: 4px;
 }
 
 .TB_ExpandImg
@@ -139,7 +140,7 @@ body
 
 .TB_Button_On, .TB_Button_Off, .TB_Button_On_Over, .TB_Button_Off_Over, .TB_Button_Disabled
 {
-    border: #f7f8fd 1px solid;
+    margin: 1px;
     height: 22px; /* The height is necessary, otherwise IE will not apply the alpha */
 }
 
@@ -339,7 +340,6 @@ body
     border: 1px solid #8f8f73;
     padding-left: 2px;
     padding-right: 2px;
-    background-color: #ffffff;
 }
 
 .SC_Panel, .SC_Panel TD

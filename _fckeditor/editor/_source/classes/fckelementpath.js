@@ -18,11 +18,9 @@
  *
  * == END LICENSE ==
  *
- * Manages the DOM anscensors element list of a specific DOM node
+ * Manages the DOM ascensors element list of a specific DOM node
  * (limited to body, inclusive).
  */
-
-// TODO: Implement IE cleanup.
 
 var FCKElementPath = function( lastNode )
 {
@@ -47,7 +45,13 @@ var FCKElementPath = function( lastNode )
 					eBlock = e ;
 
 				if ( FCKListsLib.PathBlockLimitElements[ sElementName ] != null )
-					eBlockLimit = e ;
+				{
+					// DIV is considered the Block, if no block is available (#525).
+					if ( !eBlock && sElementName == 'div' )
+						eBlock = e ;
+					else
+						eBlockLimit = e ;
+				}
 			}
 
 			aElements.push( e ) ;

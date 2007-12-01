@@ -25,11 +25,11 @@ var s = navigator.userAgent.toLowerCase() ;
 
 var FCKBrowserInfo =
 {
-	IsIE		: s.Contains('msie'),
-	IsIE7		: s.Contains('msie 7'),
+	IsIE		: /*@cc_on!@*/false,
+	IsIE7		: /*@cc_on!@*/false && s.Contains('msie 7'),
 	IsGecko		: s.Contains('gecko/'),
-	IsSafari	: s.Contains('safari'),
-	IsOpera		: s.Contains('opera'),
+	IsSafari	: s.Contains(' applewebkit/'),		// Read "IsWebKit"
+	IsOpera		: !!window.opera,
 	IsMac		: s.Contains('macintosh')
 } ;
 
@@ -52,6 +52,7 @@ var FCKBrowserInfo =
 		// TODO: Future versions may consider the rv number only, but it is
 		// still to check that all Gecko based browser present the rv number.
 		browserInfo.IsGecko10 = ( ( geckoVersion < 20051111 ) || ( /rv:1\.7/.test(s) ) ) ;
+		browserInfo.IsGecko19 = /rv:1\.9/.test(s) ;
 	}
 	else
 		browserInfo.IsGecko10 = false ;
