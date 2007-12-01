@@ -537,6 +537,7 @@
     </td></tr>
     <tr><td class="form">{tr}Uses Slideshow{/tr}:</td><td><input type="checkbox" name="wiki_uses_slides" {if $prefs.wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure{/tr}:</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $prefs.feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Make structure from page{/tr}:</td><td><input type="checkbox" name="feature_wiki_make_structure" {if $prefs.feature_wiki_make_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Categorize structure pages together{/tr}:</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Create webhelp from structure{/tr}:</td><td><input type="checkbox" name="feature_create_webhelp" {if $prefs.feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons{/tr}:</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>

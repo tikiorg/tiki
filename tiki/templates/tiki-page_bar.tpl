@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.3 2007-11-27 19:39:55 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.4 2007-12-01 15:33:25 mose Exp $ *}
 
 {strip}
 <hr/>
@@ -65,7 +65,7 @@
 {if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}Undo{/tr}</a></span>
 {/if}
-{if $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
+{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1" class="linkbut">{tr}Make Structure{/tr}</a></span>
 {/if}
 {if $prefs.wiki_uses_slides eq 'y'}

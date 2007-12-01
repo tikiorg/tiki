@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.19 2007-11-30 18:13:16 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.20 2007-12-01 15:33:25 mose Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -74,6 +74,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_monosp'] = 'n';
 	$prefs['feature_wiki_multiprint'] = 'n';
 	$prefs['feature_wiki_notepad'] = 'n';
+	$prefs['feature_wiki_make_structure'] = 'n';
 	$prefs['feature_wiki_open_as_structure'] = 'n';
 	$prefs['feature_wiki_pageid'] = 'n';
 	$prefs['feature_wiki_paragraph_formatting'] = 'n';
@@ -902,8 +903,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_create_webhelp'] = '';
 	$prefs['feature_forums_search'] = '';
 	$prefs['feature_forums_tiki_search'] = '';
-	$prefs['feature_trackbackpings'] = '';
-	$prefs['feature_wiki_ext_icon'] = '';
+	$prefs['feature_trackbackpings'] = 'n';
+	$prefs['feature_wiki_ext_icon'] = 'y';
 	$prefs['feature_wiki_mandatory_category'] = '';
 	$prefs['freetags_3d_autoload'] = '';
 	$prefs['freetags_3d_camera_distance'] = '';
@@ -917,7 +918,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['freetags_3d_spring_size'] = '';
 	$prefs['freetags_3d_text_size'] = '';
 	$prefs['feature_intertiki_imported_groups'] = '';
-	$prefs['feature_wiki_history_ip'] = '';
+	$prefs['feature_wiki_history_ip'] = 'y';
 	$prefs['pam_create_user_tiki'] = '';
 	$prefs['pam_service'] = '';
 	$prefs['pam_skip_admin'] = '';
@@ -1022,3 +1023,4 @@ $smarty->assign_by_ref('maxRecords', $maxRecords);
 // DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
 extract($prefs);
 foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
+
