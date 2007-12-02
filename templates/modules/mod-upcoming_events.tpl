@@ -3,7 +3,13 @@
 {if $prefs.feature_calendar eq 'y'}
 {if !isset($tpl_module_title)}
 	{if $nonums eq 'y'}
-		{eval var="{tr}Upcoming `$module_rows` events{/tr}" assign="tpl_module_title"}
+		{if $module_rows gt 1}
+			{eval var="{tr}Upcoming `$module_rows` events{/tr}" assign="tpl_module_title"}
+		{elseif $module_rows eq 1}
+			{assign var="tpl_module_title" value="{tr}The Next Event{/tr}"}
+		{else}
+			{assign var="tpl_module_title" value="{tr}No Upcoming Events{/tr}"}
+		{/if}
 	{else}
 		{eval var="{tr}Upcoming events{/tr}" assign="tpl_module_title"}
 	{/if}
