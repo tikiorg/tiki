@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.3 2007-11-19 17:02:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.4 2007-12-02 23:53:12 kerrnel22 Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -142,3 +142,15 @@ $smarty->assign('base_url_https', $base_url_https);
 $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
 $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 
+// Enable Versioning
+require_once('lib/setup/versioning.class.php');
+$version = new Versioning();
+$smarty->assign('tiki_version', $version->getVersion());
+if ($user == 'admin') {
+	$current_release = $version->pollVersion();
+	$smarty->assign('tiki_release', $current_release);
+	$smarty->assign('tiki_upgrade', 'n');
+	if ($version->newVersionAvailable($version->getVersion(), $current_release)) {
+		$smarty->assign('tiki_upgrade', 'y');
+	}
+}

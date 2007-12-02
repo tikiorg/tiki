@@ -223,17 +223,9 @@ function md5_check_dir($dir,&$result) { // save all suspicious files in $result
 // if check installation is pressed, walk through all files and compute md5 sums
 if (isset($_REQUEST['check_files'])) {
   global $tiki_versions;
-  $tiki_versions=array(
-		1=>'1.9.1',
-		2=>'1.9.1.1',
-		3=>'1.9.2',
-		4=>'1.9.3.1',
-		5=>'1.9.3.2',
-		6=>'1.9.4',
-		7=>'1.9.5',
-		8=>'1.9.6',
-		9=>'1.9.7'
-	); // all valid versions. Newer versions have a higher array index
+  require_once('lib/setup/versioning.class.php');
+  $version = new Versioning();
+  $tiki_versions=$version->tikiVersions();
   $result=array();
   md5_check_dir(".",$result);
   // echo "<pre>"; print_r($tikimd5);echo "</pre><br />";
