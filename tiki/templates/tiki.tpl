@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.38.2.1 2007-11-07 17:07:07 jyhem Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki.tpl,v 1.38.2.2 2007-12-02 23:53:13 kerrnel22 Exp $ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $prefs.feature_bidi eq 'y'}
 <div dir="rtl">
@@ -8,6 +8,9 @@
 {/if}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 <div id="tiki-main">
+	{if $user eq 'admin' and $tiki_upgrade eq 'y'}
+		<div style="background: #ee0000; color: white; border: 2px solid #990000; margin: 1px 1px; width: 99$; clear: both; font-weight: bold; text-align: center;">A new version of TikiWiki has been released: {$tiki_release}!  You are currently running {$tiki_version}.</div>
+	{/if}
   {if $prefs.feature_top_bar eq 'y'}
   <div id="tiki-top">
     {include file="tiki-top_bar.tpl"}

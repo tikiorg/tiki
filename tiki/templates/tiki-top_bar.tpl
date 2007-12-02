@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.3 2007-11-27 15:09:45 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.4 2007-12-02 23:53:13 kerrnel22 Exp $ *}
 {if $prefs.feature_siteidentity eq 'y'}
 {if $prefs.feature_topbar_version eq 'y'}
-{tr}This is{/tr} Tikiwiki v1.10.1 (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
+{* The "1.10-BRANCH" should be replaced with "{$tiki_version}" when 1.10.0 is a full release. *}
+{tr}This is{/tr} Tikiwiki v1.10-BRANCH (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
 title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {/if}
 {if $prefs.feature_topbar_date eq 'y'}
