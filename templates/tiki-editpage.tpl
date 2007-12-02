@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.7 2007-11-27 19:08:14 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.8 2007-12-02 21:49:40 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -81,9 +81,9 @@
 {/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
-    <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
   {else}
-    <span class="button2"><a class="linkbut" href="?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
   {/if}
 {/if}
 <table class="normal">
