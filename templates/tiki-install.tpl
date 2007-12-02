@@ -10,7 +10,7 @@
 <table><tr><td width="180">
 <div class="box">
 <div class="box-title">
-<a title='{tr}Help{/tr}' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
+<a title='{tr}Help{/tr}' href='http://doc.tikiwiki.org/MultiTiki' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
 {tr}MultiTiki setup{/tr}</div>
 <div class="box-data">
 <div><a href="tiki-install.php">default</a></div><br />
@@ -139,7 +139,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		    </td></tr><tr>
 			<td height="100" valign="top">
 			</td><td height="100" valign="top">
-			<a target="_blank" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">{tr}Descriptions of the available profiles{/tr}</a>
+			<a target="_blank" href="http://doc.tikiwiki.org/Profiles" class="link">{tr}Descriptions of the available profiles{/tr}</a>
 		    </td>
 		    <tr><td colspan="2">
 
