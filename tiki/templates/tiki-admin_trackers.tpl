@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.1 2007-12-02 01:17:10 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -99,7 +99,7 @@
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl colsCategorize=2}
-{if $prefs.feature_categories}
+{if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Auto create corresponding categories{/tr}</td><td>
 <input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} /></td></tr>
 {/if}

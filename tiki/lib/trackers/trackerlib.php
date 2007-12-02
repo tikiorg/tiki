@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.9 2007-11-29 23:13:35 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.10 2007-12-02 01:17:10 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -748,7 +748,8 @@ class TrackerLib extends TikiLib {
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers;
-		include_once ('lib/notifications/notificationlib.php');
+		include_once('lib/categories/categlib.php');
+		include_once('lib/notifications/notificationlib.php');
 
 		if ($itemId && $itemId!=0) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
@@ -771,7 +772,6 @@ class TrackerLib extends TikiLib {
 		}
 
 		if ($prefs['feature_categories'] == 'y') {
-			global $categlib; include_once('lib/categories/categlib.php');
 			$old_categs = $categlib->get_object_categories("tracker $trackerId", $itemId ? $itemId : $new_itemId);
 
 			$new_categs = array_diff($ins_categs, $old_categs);
@@ -1150,37 +1150,36 @@ class TrackerLib extends TikiLib {
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 		
+		$options = $this->get_tracker_options($trackerId);
 		
-		$options=$this->get_tracker_options($trackerId);
-		
-		if (isset ($options) && isset($options['autoCreateCategories']) && $options['autoCreateCategories']=='y') {
-		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-		$trackerDescription = $this->getOne("select `description` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-		$tracker_item_desc=$this->get_isMain_value($trackerId,$itemId);
-		
-		// Verify that parentCat exists Or Create It
-		$parentcategId=$categlib->get_category_id("Tracker $trackerId");
-		if (!isset($parentcategId))
-		    $parentcategId=$categlib->add_category(0,"Tracker $trackerId",$trackerDescription);
-		// Verify that the sub Categ doesn't already exists
-		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
-		if (!isset($currentCategId) || $currentCategId == 0 )    
-		     $currentCategId=$categlib->add_category($parentcategId,"Tracker Item $itemId",$tracker_item_desc);
-		else 
-		     $categlib->update_category($currentCategId, "Tracker Item $itemId", $tracker_item_desc, $parentcategId) ;
-		$cat_type = "tracker $trackerId";
-		$cat_objid = $itemId;
-		$cat_desc = '';
-		$cat_name = "Tracker Item $itemId";
-		$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
-		// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
-		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-			if (!$catObjectId) {
+		if ( isset($options) && isset($options['autoCreateCategories']) && $options['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
+			$trackerDescription = $this->getOne("select `description` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
+			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
+
+			// Verify that parentCat exists Or Create It
+			$parentcategId = $categlib->get_category_id("Tracker $trackerId");
+			if ( ! isset($parentcategId) ) {
+				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$trackerDescription);
+			}
+			// Verify that the sub Categ doesn't already exists
+			$currentCategId = $categlib->get_category_id("Tracker Item $itemId");
+			if ( ! isset($currentCategId) || $currentCategId == 0 ) {
+				$currentCategId = $categlib->add_category($parentcategId,"Tracker Item $itemId",$tracker_item_desc);
+			} else {
+				$categlib->update_category($currentCategId, "Tracker Item $itemId", $tracker_item_desc, $parentcategId);
+			}
+			$cat_type = "tracker $trackerId";
+			$cat_objid = $itemId;
+			$cat_desc = '';
+			$cat_name = "Tracker Item $itemId";
+			$cat_href = "tiki-view_tracker_item.php?trackerId=$trackerId&itemId=$itemId";
+			// ?? HAS to do it ?? $categlib->uncategorize_object($cat_type, $cat_objid);
+			$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+			if ( ! $catObjectId ) {
 				$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 			}
 			$categlib->categorize($catObjectId, $currentCategId);
-		
-		
 		}
 
 		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
