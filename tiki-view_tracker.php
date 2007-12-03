@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.4 2007-10-30 21:19:18 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.5 2007-12-03 19:38:13 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -567,7 +567,7 @@ if (isset($_REQUEST['import'])) {
 				$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);
 			}
 			if(isset($_REQUEST["viewitem"])) {
-				header("location: tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid);
+				header('location: '.preg_replace('#[\r\n]+#', '',"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid));
 				die;
 			}
 			if (isset($tracker_info["defaultStatus"])) {
@@ -580,10 +580,6 @@ if (isset($_REQUEST['import'])) {
 		if (isset($newItemRate)) {
 			$trackerId = $_REQUEST["trackerId"];
 			$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);
-		}
-		if(isset($_REQUEST["viewitem"])) {
-			header("location: ".preg_replace('#[\r\n]+#', '',"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid));
-			die;
 		}
 	}
 }
