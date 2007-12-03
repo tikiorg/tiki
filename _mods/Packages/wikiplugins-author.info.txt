@@ -1,0 +1,21 @@
+contributor:
+$Author: sylvieg $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-12-03 23:05:09 $
+
+files: 
+wiki-plugins/author/wiki-plugins/wikiplugin_author.php lib/wiki-plugins/wikiplugin_author.php
+
+author:
+sylvieg
+
+licence:
+GNU/LGPL
+
+Description: 
+Shows content only for author or contributors of a wiki page
+
