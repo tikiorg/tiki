@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.16 2007-12-03 19:16:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.17 2007-12-03 19:40:20 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -37,7 +37,7 @@
 </div>
 
 {* ------- return/next/previous tab --- *}
-{if $tiki_p_view_trackers eq 'y'}
+{if $cant > 0 && $tiki_p_view_trackers eq 'y'}
   <div class="mini">
     {if $show_prev_link eq 'y'}
       [<a class="prevnext" {ajax_href template="tiki-view_tracker_item.tpl" htmlelement="tiki-center"}{$smarty.server.PHP_SELF}?trackerId={$trackerId}&amp;itemId={$itemId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}&amp;move=prev{/ajax_href}>{tr}Prev{/tr}</a>]
