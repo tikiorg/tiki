@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.36 2007-11-26 16:01:16 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.37 2007-12-03 20:34:29 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1931,18 +1931,15 @@ function add_pageview() {
 	if (!$user) {
 	    $_SESSION["votes"][] = $id;
 	} else {
-	    if( $optionId !== false )
-	    {
-		$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-		$result = $this->query($query,array($user,(string) $id));
-		$query = "insert into `tiki_user_votings`(`user`,`id`, `optionId` ) values(?,?,?)";
-		$result = $this->query($query,array($user,(string) $id, $optionId));
-	    } else {
-		$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-		$result = $this->query($query,array($user,(string) $id));
-		$query = "insert into `tiki_user_votings`(`user`,`id` ) values(?,?)";
-		$result = $this->query($query,array($user,(string) $id));
-	    }
+		if ( $optionId === false ) {
+			$optionId = 0;
+		}
+		$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
+		$result = $this->query($query, array($user, (string)$id));
+		if ( $optionId !== null ) {
+			$query = 'insert into `tiki_user_votings` (`user`,`id`,`optionId`) values(?,?,?)';
+			$result = $this->query($query, array($user, (string)$id, $optionId));
+		}
 	}
     }
 
