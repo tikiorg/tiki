@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.10 2007-11-30 17:15:22 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.11 2007-12-03 08:03:07 kerrnel22 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2552,6 +2552,10 @@ function get_included_groups($group, $recur=true) {
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
 			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {
+				if ($prefs['feature_messages'] != 'y') {
+					$smarty->assign('msg', tra("The registration mail can't be sent because there is no server email address set, and this feature is disabled").": feature_messages");
+					return false;
+				}
 				include_once('lib/messu/messulib.php');
 				$messulib->post_message($prefs['contact_user'], $prefs['contact_user'], $prefs['contact_user'], '', $mail_subject, $mail_data, 5);
 				$smarty->assign('msg', $smarty->fetch('mail/user_validation_waiting_msg.tpl'));
