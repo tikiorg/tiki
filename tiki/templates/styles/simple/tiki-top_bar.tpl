@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-top_bar.tpl,v 1.10 2007-10-06 15:18:47 nyloth Exp $ *}
-{tr}This is{/tr} Tikiwiki v1.10 (CVS) -Arcturus- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-top_bar.tpl,v 1.10.2.1 2007-12-03 02:45:26 kerrnel22 Exp $ *}
+{tr}This is{/tr} Tikiwiki v{$tiki_version} -{$tiki_star}- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   <a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
 {else}
