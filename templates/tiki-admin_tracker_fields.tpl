@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.5 2007-11-23 13:40:21 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.6 2007-12-03 18:43:14 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -75,7 +75,7 @@
 	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
-</td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" ><input type="text"  size="50" name="description" value="{$description|escape}" /></div>
+</td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" ><textarea style="width:95%;" rows="4" name="description" value="{$description|escape}"></textarea></div>
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 {if $prefs.quicktags_over_textarea eq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
