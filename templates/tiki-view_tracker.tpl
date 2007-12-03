@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.13 2007-11-30 16:53:14 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.14 2007-12-03 19:17:32 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -582,7 +582,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $fields[ix].value}
 <option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
 {else}
-<option value="{$one|escape}"{if $one eq $user and $fields[ix].options_array[0] ne '2'}} selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}"{if $one eq $user and $fields[ix].options_array[0] ne '2'} selected="selected"{/if}>{$one}</option>
 {/if}
 {/if}
 {/foreach}
