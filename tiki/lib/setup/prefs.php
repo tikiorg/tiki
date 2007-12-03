@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.21 2007-12-01 18:34:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.22 2007-12-03 22:05:49 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -771,7 +771,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# mods
 	$prefs['feature_mods_provider'] = 'n';
 	$prefs['mods_dir'] = 'mods';
-	$prefs['mods_server'] = 'http://tikiwiki.org/mods';
+	$prefs['mods_server'] = 'http://mods.tikiwiki.org';
 	
 	# dev
 	$prefs['feature_experimental'] = 'n';
