@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.8 2007-12-02 21:49:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.9 2007-12-03 22:22:40 nkoth Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -7,7 +7,7 @@
 {if $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
-{if $outOfSync eq 'y'} {tr}There may be changes that have yet to be synchronized.{/tr}{/if}
+{if $outOfSync eq 'y'} {tr}The current staging copy may contain changes that have yet to be approved.{/tr}{/if}
 {if $lastSyncVersion}
 	<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}" target="_blank">{tr}View changes since last approval.{/tr}</a>
 {/if}
@@ -16,7 +16,7 @@
 {if $needsStaging eq 'y'}
 <div class="tocnav">
 {tr}You are editing the approved copy of this page.{/tr}
-{if $outOfSync eq 'y'} {tr}There are currently changes in the staging copy that have yet to be synchronized.{/tr}{/if}
+{if $outOfSync eq 'y'} {tr}There are currently changes in the staging copy that have yet to be approved.{/tr}{/if}
  {tr}Are you sure you do not want to edit{/tr} <a class="link" href="tiki-editpage.php?page={$stagingPageName|escape:'url'}">{tr}the staging copy{/tr}</a> {tr}instead?{/tr}
 </div>
 {/if}
@@ -61,7 +61,7 @@
 {include file="tiki-preview.tpl"}
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
-{if $preview}
+{if $preview && $staging_preview neq 'y'}
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.16 2007-11-25 21:35:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.17 2007-12-03 22:22:39 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -925,6 +925,12 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 	}
 	if ($prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
 		$smarty->assign('outOfSync', 'y');
+		if (!isset($_REQUEST['preview'])) {
+			$smarty->assign('preview',1);
+			$parsed = $tikilib->parse_data($edit_data,$is_html);
+			$smarty->assign('parsed', $parsed);
+			$smarty->assign('staging_preview', 'y');
+		}
 		if (isset($approvedPageName)) {
 			include_once('lib/wiki/histlib.php');
 			$approvedPageInfo = $histlib->get_page_from_history($approvedPageName, 0);
