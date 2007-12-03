@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.5 2007-12-03 19:38:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.6 2007-12-03 20:34:29 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -675,12 +675,17 @@ $smarty->assign('status', $_REQUEST["status"]);
 // this isn't too beautiful, but works and doesn't break anything existing - amette
 if (isset($_REQUEST["trackerId"])) $trackerId = $_REQUEST["trackerId"];
 if (isset($_REQUEST["rateitemId"])) $rate_itemId = $_REQUEST["rateitemId"];
-if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
-		and $user and isset($_REQUEST['rateitemId']) and isset($_REQUEST["rate_$trackerId"])
-		and isset($_REQUEST['fieldId']) and isset($_REQUEST["trackerId"])
-		and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
-	if ($_REQUEST["rate_$trackerId"] == 'NULL') $_REQUEST["rate_$trackerId"] = NULL;
-	$trklib->replace_rating($trackerId,$rate_itemId,$_REQUEST['fieldId'],$user,$_REQUEST["rate_$trackerId"]);
+
+if ( isset($tracker_info['useRatings'])
+	and $tracker_info['useRatings'] == 'y' and $user
+	and isset($_REQUEST['rateitemId']) and isset($_REQUEST["rate_$trackerId"])
+	and isset($_REQUEST['fieldId']) and isset($_REQUEST["trackerId"])
+	and ( $_REQUEST["rate_$trackerId"] == 'NULL' || in_array($_REQUEST["rate_$trackerId"], split(',',$tracker_info['ratingOptions'])) )
+) {
+	if ( $_REQUEST["rate_$trackerId"] == 'NULL' ) {
+		$_REQUEST["rate_$trackerId"] = NULL;
+	}
+	$trklib->replace_rating($trackerId, $rate_itemId, $_REQUEST['fieldId'], $user, $_REQUEST["rate_$trackerId"]);
 }
 
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
