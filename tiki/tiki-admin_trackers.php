@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.2 2007-12-03 14:17:52 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.3 2007-12-03 17:25:17 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 		global $userlib; include_once('lib/userslib.php');
 		$userlib->copy_object_permissions($_REQUEST['trackerId'], $newTrackerId, 'tracker');
 	}  
-	$_REQUEST['trackerId'] = $newTrackerId;
+	unset($_REQUEST); // Used to show the list of trackers instead of the new tracker after duplication
 }
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
