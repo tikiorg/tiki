@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods_admin.php,v 1.7 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods_admin.php,v 1.7.2.1 2007-12-03 22:05:50 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (isset($_REQUEST['save'])) {
 	if (isset($_REQUEST['mods_server'])) {
 		$tikilib->set_preference('mods_server',$_REQUEST['mods_server']);
 	} else {
-		$tikilib->set_preference('mods_server','http://tikiwiki.org/mods');
+		$tikilib->set_preference('mods_server','http://mods.tikiwiki.org');
 	}
 }
 
