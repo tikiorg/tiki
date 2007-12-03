@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.1 2007-11-04 21:49:20 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.2 2007-12-03 14:17:52 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,12 +26,30 @@ if ($tiki_p_admin_trackers != 'y') {
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
+
+if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['trackerId'])) {
+  $newTrackerId = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
+	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
+		global $categlib; include_once('lib/categories/categlib.php');
+		$cats = $categlib->get_object_categories('tracker', $_REQUEST['trackerId']);
+		$catObjectId = $categlib->add_categorized_object('tracker', $newTrackerId, isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST['name'], "tiki-view_tracker.php?trackerId=$newTrackerId");
+		foreach($cats as $cat) {
+			$categlib->categorize($catObjectId, $cat);
+		}
+	}
+	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
+		global $userlib; include_once('lib/userslib.php');
+		$userlib->copy_object_permissions($_REQUEST['trackerId'], $newTrackerId, 'tracker');
+	}  
+	$_REQUEST['trackerId'] = $newTrackerId;
+}
+
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
@@ -339,22 +357,6 @@ if (isset($_REQUEST["save"])) {
 	include_once("categorize.php");
 }
 
-if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['trackerId'])) {
-  $newTrackerId = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
-	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
-		global $categlib; include_once('lib/categories/categlib.php');
-		$cats = $categlib->get_object_categories('tracker', $_REQUEST['trackerId']);
-		$catObjectId = $categlib->add_categorized_object('tracker', $newTrackerId, isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST['name'], "tiki-view_tracker.php?trackerId=$newTrackerId");
-		foreach($cats as $cat) {
-			$categlib->categorize($catObjectId, $cat);
-		}
-	}
-	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
-		global $userlib; include_once('lib/userslib.php');
-		$userlib->copy_object_permissions($_REQUEST['trackerId'], $newTrackerId, 'tracker');
-	}  
-	$_REQUEST['trackerId'] = $newTrackerId;
-}
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
