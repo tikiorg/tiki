@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.15 2007-03-02 19:49:09 luciash Exp $
+# $Id: tikirelease.sh,v 1.15.2.1 2007-12-03 00:25:14 kerrnel22 Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release Tikiwiki ?
@@ -14,10 +14,13 @@
 #        previous version give the same db structure 
 #    - cd db/convertscripts and run convertsqls.sh
 #    - commit your changes
-#    - update list of valid releases in tiki-admin_security.php: 
-#        $tiki_versions=array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1');
+#    - update list of valid releases in lib/setup/versioning.class.php
+#        array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1', etc etc etc);
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
 #        and load that page in your browser
+#    - Replace version number in templates/tiki-install.tpl and
+#        templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl)
+#        with "{$tiki_version}"
 #
 # 0/ Setup the lines in the configuration section just below with your own
 #    identity and settings (note that the script could be used on other projects)
