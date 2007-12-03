@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/versioning.class.php,v 1.1.2.1 2007-12-02 23:53:13 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/versioning.class.php,v 1.1.2.2 2007-12-03 02:45:26 kerrnel22 Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -13,6 +13,52 @@ if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
 }
 
 class Versioning {
+	// This is a pre-candidate release of 1.10.0
+	var $cvs_tree;
+	var $cvs_branch;
+
+	function Versioning() {
+		// Set the development cycle.
+		// If this is a RELEASE version (ie. being bundled for tarball
+		// packaging), then set $cvs_tree to FALSE.  If this is a
+		// POST-release version then set $cvs_tree to
+		// TRUE, and set the $cvs_branch to be either the release
+		// version, or the next version number for which a release
+		// candidate is being prepared.  This value will be used as a
+		// display value to accurately depict the version being used.
+		// For example, current release is 1.9.8.3, but this version
+		// is actually a pre-candidate 1.10-BRANCH version.  We can't
+		// use 1.10 as a release value because it hasn't been released,
+		// so we use a $dev_version of 1.10a (1.10 alpha).  For
+		// versioning, the system compares 1.9.8.3 to the master release
+		// version, but for display purposes, an "actual_version" variable
+		// can now be used and display 1.10a instead.  Likewise, if we're 
+		// using a 1.9.8.3 CVS version, we would set $cvs_tree to TRUE as 
+		// soon as the 1.9.8.3 package is released and leave the 
+		// $cvs_branch as 1.9.8.3.
+
+		$this->cvs_tree = TRUE;
+		$this->cvs_branch = '1.10a';
+	}
+
+	// Returns an array of all used Tiki stars.
+	function tikiStars() {
+		return array(
+			1=>'Spica',
+			2=>'Shaula',
+			3=>'Ras Algheti',
+			4=>'Capella',
+			5=>'Antares',
+			6=>'Pollux',
+			7=>'Mira',
+			8=>'Regulus',
+			9=>'Tau Ceti',
+			10=>'Era Carinae',
+			11=>'Polaris',
+			12=>'Sirius',
+			13=>'Arcturus'
+		);
+	}
 
 	// Returns an array of all valid versions of Tikiwiki.
 	function tikiVersions() {
@@ -37,6 +83,14 @@ class Versioning {
 		);
 	}
 	
+	// Gets the latest star used by Tiki.
+	function getStar() {
+		$stars = $this->tikiStars();
+		$star = $stars[count($stars)];
+
+		return $star;
+	}
+
 	// Determines the currently-running version of Tikiwiki.
 	function getVersion() {
 		$versions = $this->tikiVersions();
@@ -87,4 +141,16 @@ class Versioning {
 
 		return $upgrade;
 	}
+
+	// Get the display version.
+	function getDisplayVersion() {
+		if ($this->cvs_tree) {
+			$version = $this->cvs_branch . " (CVS)";
+		} else {
+			$version = $this->setVersion();
+		}
+
+		return $version;
+	}
 }
+
