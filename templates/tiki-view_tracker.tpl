@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.14 2007-12-03 19:17:32 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.15 2007-12-03 19:48:04 nyloth Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -429,23 +429,13 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 			{if $items[user].my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
 			{else}
-				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
-					trackerId={$items[user].trackerId}
-					&amp;rateitemId={$items[user].itemId}
-					&amp;fieldId={$rateFieldId}
-					&amp;rate_{$items[user].trackerId}=NULL"
-					class="linkbut">-</a>
+				<a href="{$smarty.server.PHP_SELF}?{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}trackerId={$items[user].trackerId}&amp;rateitemId={$items[user].itemId}&amp;fieldId={$rateFieldId}&amp;rate_{$items[user].trackerId}=NULL" class="linkbut">-</a>
 			{/if}
 				{section name=i loop=$items[user].field_values[ix].options_array}
 					{if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
 						<b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
 					{else}
-						<a href="{$smarty.server.PHP_SELF}?
-						trackerId={$items[user].trackerId}
-						&amp;rateitemId={$items[user].itemId}
-						&amp;fieldId={$rateFieldId}
-						&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}"
-						class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
+						<a href="{$smarty.server.PHP_SELF}?{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}&amp;trackerId={$items[user].trackerId}&amp;rateitemId={$items[user].itemId}&amp;fieldId={$rateFieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
 					{/if}
 				{/section}
 			</span>
