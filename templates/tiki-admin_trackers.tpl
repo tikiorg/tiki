@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.1 2007-12-02 01:17:10 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.2 2007-12-03 17:14:40 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -303,13 +303,13 @@ categories = {$catsdump}
 
 <form action="tiki-admin_trackers.php" method="post">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr class="formcolor"><td>{tr}Tracker{/tr}</td>
 <td>
 <select name="trackerId">
 {section name=ix loop=$trackers}
-<option value="{$trackers[ix].trackerId}">{$trackers[ix].name|escape}</option>
+<option value="{$trackers[ix].trackerId}"{if $trackerId eq $trackers[ix].trackerId} selected="selected"{/if}>{$trackers[ix].name|escape}</option>
 {/section}
 </select>
 </td>
