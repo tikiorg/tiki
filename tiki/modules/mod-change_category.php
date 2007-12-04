@@ -1,8 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.2 2007-12-04 20:29:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.3 2007-12-04 21:14:54 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
-// param: id, shy, notop, detail, categorize
+// param: id, shy, notop, detail, categorize,multiple
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
@@ -61,9 +61,14 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 			}
 		}
 	}
-    if ($_REQUEST['modcatchange'] != 0) {
-      $categlib->categorize_page($_REQUEST['page'], $_REQUEST['modcatchange']);
-      $logslib->add_log('step',"changed ".$_REQUEST['page']." from $cs to ".$_REQUEST['modcatchange']);
+    if (isset($_REQUEST['modcatchange'])) {
+		if (!is_array($_REQUEST['modcatchange'])) {
+			$_REQUEST['modcatchange'] = array($_REQUEST['modcatchange']);
+		}
+		foreach ($_REQUEST['modcatchange'] as $cat) {
+			$categlib->categorize_page($_REQUEST['page'], $cat);
+			$logslib->add_log('step',"changed ".$_REQUEST['page']." from $cs to ".$_REQUEST['modcatchange']);
+		}
     }
     else {
       $logslib->add_log('step',"changed ".$_REQUEST['page']." from $cs to top");

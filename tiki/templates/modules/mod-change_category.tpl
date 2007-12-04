@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.2 2007-12-04 20:29:47 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.3 2007-12-04 21:14:54 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -22,10 +22,15 @@ note : lists the objects from a given category not a recursive tree
 </table>
 {/if}
 
+<div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}" target="_self">
 <input type="hidden" name="page" value="{$smarty.request.page|escape}" />
 <input type="hidden" name="modcatid" value="{$modcatid}" />
+{if $module_params.multiple eq 'y'}
+<select name="modcatchange[]" multiple="multiple">
+{else}
 <select name="modcatchange" size="1" onchange="this.form.submit();">
+{/if}
 {if $module_params.detail eq 'y'} <option value="0"><i>{if $module_params.categorize}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}</i></option>
 {elseif !isset($module_params.notop)} <option value="0"><i>{tr}None{/tr}</i></option>{/if}
 {foreach key=k item=i from=$modcatlist}
@@ -33,6 +38,10 @@ note : lists the objects from a given category not a recursive tree
 	<option value="{$k}"{if $i.incat eq 'y'} selected="selected"{/if}>{$i.categpath}</option>
 	{/if}
 {/foreach}
+</div>
+{if $module_params.multiple eq 'y'}
+<div align="center"><input type="submit" name="categorize" value="{if $module_params.categorize}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}" /></div>
+{/if}
 </select>
 </form>
 {/tikimodule}
