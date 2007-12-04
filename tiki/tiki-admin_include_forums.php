@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.18 2007-10-09 15:26:11 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.18.2.1 2007-12-04 11:10:22 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,7 +30,8 @@ if (isset($_REQUEST["forumprefs"])) {
 	'feature_forums_search',
         'feature_forum_content_search',
         'feature_forums_name_search',
-	'feature_forums_allow_thread_titles'
+	'feature_forums_allow_thread_titles',
+	'forum_comments_no_title_prefix'
 	);
 	foreach ( $pref_toggles as $toggle) simple_set_toggle($toggle);
 
