@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.4 2007-11-30 13:35:44 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.5 2007-12-04 21:59:38 nkoth Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -61,7 +61,7 @@
 <tr><td><strong>{tr}Horizontal rule{/tr}:</strong></td><td>"-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}</td></tr>
 {/if}{* wysiwyg *}
 
-<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
+<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
 <tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an external link: [URL] or [URL|link_description] or [URL|description|nocache]  (that last form prevents the local Wiki from caching the page; please use that form for large pages!).{/tr}<br />{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
 <tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center imalign=right link=http://www.yahoo.com desc=foo alt=txt usemap=name class=xyz}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Non cacheable images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg?nocache=1 width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
