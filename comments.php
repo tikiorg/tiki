@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80 2007-10-12 07:55:23 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.1 2007-12-04 11:10:22 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -532,7 +532,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 	}
     }
 
-    $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
+    $smarty->assign('comment_title', ( $prefs['forum_comments_no_title_prefix'] != 'y' ? tra('Re:').' ' : '' ).$comment_info["title"]);
     $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 } else {
     $smarty->assign('comment_title', '');

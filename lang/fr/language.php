@@ -7189,5 +7189,6 @@ $lang=Array(
 "Show quicktags over textareas (instead on left side)"=>"Afficher les raccourcis au-dessus des zones de texte (en lieu et place du coté gauche)",
 "Text area (that apply throughout many features)" => "Zones de texte (que l'on retrouve à travers plusieurs fonctionnalités)",
 "Send a link" => "Envoyer un lien",
+"Do not prefix messages titles by 'Re: '" => "Ne pas préfixer les titres des messages par 'Re : '",
 "###end###"=>"###end###");
 ?>

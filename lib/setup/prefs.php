@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.22 2007-12-03 22:05:49 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.23 2007-12-04 11:10:26 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -307,6 +307,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['forum_thread_user_settings'] = 'y';
 	$prefs['forum_thread_user_settings_keep'] = 'n';
 	$prefs['forum_comments_per_page'] = 20;
+	$prefs['forum_comments_no_title_prefix'] = 'n';
 	$prefs['forum_thread_style'] = 'commentStyle_plain';
 	$prefs['forum_thread_sort_mode'] = 'commentDate_desc';
 	

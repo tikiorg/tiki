@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.2 2007-11-22 18:24:11 kerrnel22 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.3 2007-12-04 11:10:28 nyloth Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>
@@ -81,6 +81,10 @@
           <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $prefs.feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
+        </tr><tr class="form">
+          <td><label>{tr}Do not prefix messages titles by 'Re: '{/tr}</label></td>
+          <td><input type="checkbox" name="forum_comments_no_title_prefix"
+              {if $prefs.forum_comments_no_title_prefix eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr class="form">
           <td colspan="2" class="button"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>
