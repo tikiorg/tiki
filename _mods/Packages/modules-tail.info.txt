@@ -1,0 +1,26 @@
+contributor:
+$Author: mose $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-12-04 22:46:36 $
+
+files: 
+modules/tail/mod-tail.php modules/mod-tail.php
+modules/tail/templates/mod-tail.php templates/modules/mod-tail.php
+modules/tail/lib/taillib.php lib/tail/taillib.php
+
+author:
+mose
+
+licence:
+GNU/LGPL
+
+Description: 
+Tails a file, ie. displays the last x lines from a given file.
+Use with caution, it could be used to access files you don't want to be accessed.
+
+ChangeLog:
+1.1 initial move from trunk
