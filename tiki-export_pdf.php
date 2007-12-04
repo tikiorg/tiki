@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.3 2007-11-08 18:01:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.20.2.4 2007-12-04 14:33:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,6 +127,7 @@ if(is_file("templates/header-pdf.tpl")){
 //Fetchinf the data in HTML and put it into a temp file
 foreach (array_values($convertpages)as $page) {
 	if(isset($_REQUEST["page_ref_id"])){
+		global $structlib; include_once('lib/structures/structlib.php');
 		$page_ref_id = $structlib->get_struct_ref_id($page);
 		
 		$page_info = $structlib->s_get_page_info($page_ref_id);
