@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.37 2007-12-03 20:34:29 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.38 2007-12-04 05:56:06 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1346,8 +1346,7 @@ function add_pageview() {
 		if ( $u == '' ) return -1;
 
 		// If we ask for the current user id and if we already know it in session
-		global $user;
-		$current = ( $u == $user );
+		$current = ( $u == $_SESSION['u_info']['login'] );
 		if ( isset($_SESSION['u_info']['id']) && $current ) return $_SESSION['u_info']['id'];
 
 		// In other cases, we look in db
