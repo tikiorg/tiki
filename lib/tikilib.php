@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.39 2007-12-05 15:40:17 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.40 2007-12-05 16:42:24 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5212,6 +5212,10 @@ function add_pageview() {
 		$anchor = $parts1[1];
 	    }
 
+	    if ( !$anchor_page && $page ) {
+	    	$anchor_page = $page;
+	    	if ( !$anchor_desc )  $anchor_desc = $page;
+	    }
 	    $repl = "{ALINK(pagename=>".$anchor_page.",aname=>".$anchor.")}".$anchor_desc."{ALINK}";
 	    $data = str_replace( "((".$anchor_line."))", $repl, $data);
 	}
