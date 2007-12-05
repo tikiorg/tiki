@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.6 2007-12-05 16:04:43 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.7 2007-12-05 16:06:28 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -15,7 +15,7 @@ note : lists the objects from a given category not a recursive tree
 	{if $i.incat eq 'y'}
 	<tr>
 	<td class="{cycle advance=false}">{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</td>
-	<td class="{cycle}"><a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}remove={$i.categId}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}"></a></td>
+	<td class="{cycle}"><a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}remove={$i.categId}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}" /></a></td>
 	</tr>
 	{/if}
 {/foreach}
