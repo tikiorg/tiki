@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.17 2007-12-03 22:22:39 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.18 2007-12-05 07:51:16 mose Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -239,8 +239,10 @@ if (($prefs['feature_wiki_pictures'] == 'y') && (isset($tiki_p_upload_picture)) 
 		if ( is_uploaded_file($_FILES['picfile'.$i]['tmp_name']) ) {
 			$picname = $_FILES['picfile'.$i]['name'];
 			if ( preg_match('/\.(gif|png|jpe?g)$/i',$picname) ) {
-				move_uploaded_file($_FILES['picfile'.$i]['tmp_name'], "$wiki_up/$picname");
-				chmod("$wiki_up/$picname", 0644); // seems necessary on some system (see move_uploaded_file doc on php.net)
+				if (@getimagesize($_FILES['picfile'.$i]['tmp_name'])) {
+					move_uploaded_file($_FILES['picfile'.$i]['tmp_name'], "$wiki_up/$picname");
+					chmod("$wiki_up/$picname", 0644); // seems necessary on some system (see move_uploaded_file doc on php.net)
+				}
 			}
 		}
 		$i++;
