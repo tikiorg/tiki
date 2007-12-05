@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.5 2007-11-30 18:33:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.6 2007-12-05 15:40:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -60,25 +60,36 @@ class WikiLib extends TikiLib {
 
     /**
      *  Get the contributors for page
-     *  the returned array does not contain the last editor/contributor
+     *  the returned array does not contain the user $last (usually the current or last user)
      */
-    function get_contributors($page, $last) {
-	$notus = "`user` not like 'system' and `user` not like ?";
-        $query = "select DISTINCT `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
-        $result = $this->query($query,array($last,$page));
-        $ret = array();
-        $seen = array();
-        //$seen = array("system", "admin", $last); // would it be more efficient to put admin and system in here rather than in the where clause, above?
+    function get_contributors($page, $last='') {
+		static $cache_page_contributors;
+		if ($cache_page_contributors['page'] == $page) {
+			if (empty($last)) {
+				return $cache_page_contributors['contributors'];
+			}
+			$ret = array();
+			foreach ($cache_page_contributors['contributors'] as $res) {
+				if ($res['user'] != $last) {
+					$ret[] = $res;
+				}
+			}
+			return $ret;
+		}
+		$query = "select DISTINCT `user` from `tiki_history` where `pageName`=? order by `version` desc";
+		$result = $this->query($query,array($page));
+		$cache_page_contributors = array();
+		$cache_page_contributors['contributors'] = array();
+		$ret = array();
 
-        while ($res = $result->fetchRow()) {
-            if ( isset($seen[$res["user"]] )) {
-                continue;
-            } else {
-                $seen[$res["user"]] = $res["user"];
-            }
-            $ret[] = $res["user"];
-        }
-        return $ret;
+		while ($res = $result->fetchRow()) {
+			if ($res['user'] != $last) {
+				$ret[] = $res['user'];
+			}
+			$cache_page_contributors['contributors'][] = $res['user'];
+		}
+		$cache_page_contributors['page'] = $page;
+		return $ret;
     }
 
     // Returns all pages that links from here or to here, without distinction
@@ -420,6 +431,13 @@ class WikiLib extends TikiLib {
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
+	}
+	function get_item_attachement_data($att_info) {
+		if ($att_info['path']) {
+			return file_get_contents($att_info['filename']);
+		} else {
+			return $att_info['data'];
+		}
 	}
 
 

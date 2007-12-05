@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.38 2007-12-04 05:56:06 mose Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.39 2007-12-05 15:40:17 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1809,6 +1809,7 @@ function add_pageview() {
 		$res['canonic'] = $res['url'];
 		if (preg_match('|\(\(('.$res['url'].')\)\)|', $res['url'], $matches)) {
 			$res['url'] = 'tiki-index.php?page='.$matches[1];
+			$res['sefurl'] = $matches[1];
 		}
 	    if (!$full) {
 		$display = true;
@@ -4465,6 +4466,10 @@ function add_pageview() {
     }
 
     function get_page_info($pageName) {
+	static $cache_page_info;
+	if (isset($cache_page_info) && $cache_page_info['pageName'] == $page) {
+		return $cache_page_info;
+	}
 	$query = "select * from `tiki_pages` where `pageName`=?";
 
 	$result = $this->query($query, array($pageName));
@@ -4472,18 +4477,18 @@ function add_pageview() {
 	if (!$result->numRows()) {
 	    return false;
 	} else {
-	    $res = $result->fetchRow();
+	    $cache_page_info = $result->fetchRow();
 
 	    global $user;
 	    if ($user) {
 		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
 		$result = $this->query($query, array($user, $pageName));
 		if ($result->numRows()) {
-		    $res['draft'] = $result->fetchRow();
+		    $cache_page_info['draft'] = $result->fetchRow();
 		}
 	    }
 
-	    return $res;
+	    return $cache_page_info;
 	}
     }
 
@@ -6875,7 +6880,6 @@ if (!$simple_wiki) {
 				if ( $tz != 'UTC' ) {
 					$tikidate->convertTZbyID($tz);
 				}
-
 				return $tikidate->format($format);
 			}
 
