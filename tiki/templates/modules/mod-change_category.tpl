@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.4 2007-12-05 13:58:20 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.5 2007-12-05 15:56:37 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -31,8 +31,8 @@ note : lists the objects from a given category not a recursive tree
 {else}
 <select name="modcatchange" size="1" onchange="this.form.submit();">
 {/if}
-{if $module_params.detail eq 'y'} <option value="0"><i>{if $module_params.categorize}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}</i></option>
-{elseif !isset($module_params.notop)} <option value="0"><i>{tr}None{/tr}</i></option>{/if}
+{if $module_params.detail eq 'y'} <option value="0" style="font-style: italic;">{if $module_params.categorize}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}</option>
+{elseif !isset($module_params.notop)} <option value="0" style="font-style: italic;">{tr}None{/tr}</option>{/if}
 {foreach key=k item=i from=$modcatlist}
 	{if $module_params.detail ne 'y' or $i.incat ne 'y'}
 	<option value="{$k}"{if $i.incat eq 'y'} selected="selected"{/if}>{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</option>
