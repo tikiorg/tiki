@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.2 2007-10-17 20:01:04 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.3 2007-12-05 09:28:04 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -349,7 +349,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 		require_once("lib/cache/cachelib.php");
 		$cachelib->invalidate('user_details_'.$user);
 		$user_details = $userlib->get_user_details($user);
-		if ( ! is_array($user_details) || ! is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0 ) {
+		if ( ! is_array($user_details) || ! is_array($user_details['info'])) {
 			$user = NULL;
 		}
 	}
