@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.1 2007-11-19 21:29:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.2 2007-12-05 15:40:16 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,8 +68,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$pass = 'n';
 	} elseif (isset($module_params['page']) && (!isset($section) || $section != 'wiki page' || !isset($page) || $page != $module_params['page'])) {
 		$pass = 'n';
-	}
-	elseif ($prefs['modallgroups'] != 'y') {
+	} elseif ($prefs['modallgroups'] != 'y') {
 		if ($mod_reference["groups"]) {
 			$module_groups = unserialize($mod_reference["groups"]);
 		} else {
@@ -99,6 +98,18 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 					}
 				}
 			}
+		}
+	}
+	if ($pass == 'y' && isset($module_params['creator']) && $module_params['creator'] == 'y' && $section == 'wiki page' && isset($page)) {
+		if (($page_info = $tikilib->get_page_info($page)) && $page_info['creator'] != $user) {
+			$pass = 'n';
+		}
+	}
+	if ($pass == 'y' && isset($module_params['contributor']) && $module_params['contributor'] == 'y' && $section == 'wiki page' && isset($page)) {
+		global $wikilib; include_once('lib/wiki/wikilib.php');
+		$contributors = $wikilib->get_contributors($page);
+		if (empty($contributors) || !in_array($user, $contributors)) {
+			$pass = 'n';
 		}
 	}
 	if ($pass == 'y') {
