@@ -36,6 +36,10 @@ function wikiplugin_alink($data, $params)
 		return ("<b>missing parameter for aname</b><br />");
 	}
 
+	// the following replace is necessary to maintain compliance with XHTML 1.0 Transitional
+	// and the same behavior as tikilib.php. This will change when the world arrives at XHTML 1.0 Strict.
+	$aname = ereg_replace('[^a-zA-Z0-9]+', '_', $aname);
+		
 	if( isset($pagename) && $pagename ) {
 	    // Stolen, with some modifications, from tikilib.php line 4717-4723
 	    if( $desc = $tikilib->page_exists_desc($pagename) )
@@ -51,7 +55,6 @@ function wikiplugin_alink($data, $params)
 			'" title="' . tra("Create page:") . ' ' . urlencode($pagename) . 
 			'"  class="wiki wikinew">?</a>';
 	    }
-
 	} else {
 	    return "<a href=\"#$aname\">$data</a>";
 	}
