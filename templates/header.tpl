@@ -55,7 +55,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $prefs.feature_phplayers eq 'y'}
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu-hidden.css" type="text/css" />
-<script type="text/javascript">var numl;var toBeHidden;<!--
+<script type="text/javascript"><!--
+var numl;var toBeHidden;
 {php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;{/php}
 // --></script>
 <script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
