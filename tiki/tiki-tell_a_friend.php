@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.1 2007-10-20 21:45:16 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.2 2007-12-05 21:34:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,7 +69,9 @@ if (isset($_REQUEST['send'])) {
 		$txt = $smarty->fetch('mail/tellAFriend.tpl');
 		$mail->setText($txt);
 		$mail->buildMessage();
-		$mail->send($emails);
+		foreach ($emails as $email) {
+			$mail->send($email);
+		}
 		$smarty->assign_by_ref('sent', $_REQUEST['addresses']);
 		$smarty->assign('comment', '');
 		$smarty->assign('addresses', '');
