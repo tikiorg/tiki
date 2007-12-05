@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.3 2007-12-04 21:14:54 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.4 2007-12-05 13:58:20 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -14,7 +14,7 @@ note : lists the objects from a given category not a recursive tree
 {foreach key=k item=i from=$modcatlist}
 	{if $i.incat eq 'y'}
 	<tr>
-	<td class="{cycle advance=false}">{$i.categpath}</td>
+	<td class="{cycle advance=false}">{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</td>
 	<td class="{cycle}"><a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}remove={$i.categId}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}"></a></td>
 	</tr>
 	{/if}
@@ -35,7 +35,7 @@ note : lists the objects from a given category not a recursive tree
 {elseif !isset($module_params.notop)} <option value="0"><i>{tr}None{/tr}</i></option>{/if}
 {foreach key=k item=i from=$modcatlist}
 	{if $module_params.detail ne 'y' or $i.incat ne 'y'}
-	<option value="{$k}"{if $i.incat eq 'y'} selected="selected"{/if}>{$i.categpath}</option>
+	<option value="{$k}"{if $i.incat eq 'y'} selected="selected"{/if}>{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</option>
 	{/if}
 {/foreach}
 </div>

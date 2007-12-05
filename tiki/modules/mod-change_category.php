@@ -1,13 +1,13 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.3 2007-12-04 21:14:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.4 2007-12-05 13:58:20 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
-// param: id, shy, notop, detail, categorize,multiple
+// param: id, shy, notop, detail, categorize,multiple,group,path
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $prefs;
+global $prefs, $user;
 global $logslib; require_once('lib/logs/logslib.php');
 global $categlib; require_once('lib/categories/categlib.php');
   
@@ -24,7 +24,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 	$cat_parent = $categlib->get_category_name($id);
   } else {
 	$id = 0;
-	$cat_parent = 0;
+	$cat_parent = '';
   }
   if (isset($module_params['shy'])) {
     $notshy = false;
@@ -36,7 +36,33 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
   $cat_objid = $_REQUEST['page'];
   
   $categs = $categlib->list_categs($id);
+
+  if (!empty($module_params['group']) && $module_params['group'] == 'y') {
+	  if (!$user) {
+		  return;
+	  }
+	  $userGroups = $userlib->get_user_groups_inclusion($user);
+	  foreach ($categs as $i=>$cat) {
+		  if (isset($userGroups[$cat['name']])) {
+			  continue;
+		  }
+		  $ok = false;
+		  foreach ($cat['tepath'] as $c) {
+			  if (isset($userGroups[$c])) {
+				  $ok = true;
+				  break;
+			  }
+		  }
+		  if (!$ok) {
+			  unset($categs[$i]);
+		  }
+	  }
+  }
+
   $num = count($categs);
+  if (!$num) {
+	  return;
+  }
   $modcatlist = array();
   $categsid = array();
   for ($i=0;$i<$num;$i++) {
