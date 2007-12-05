@@ -1,8 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.4 2007-12-05 13:58:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.5 2007-12-05 19:01:43 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
-// param: id, shy, notop, detail, categorize,multiple,group,path
+// param: id, shy, notop, detail, categorize,multiple,group,path, add, del
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
@@ -69,7 +69,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
     $categsid[] = $categs[$i]['categId'];
   }
 
-  if (isset($_REQUEST['remove']) && in_array($_REQUEST['remove'], $categsid)) {
+  if (isset($_REQUEST['remove']) && in_array($_REQUEST['remove'], $categsid) && (!isset($module_params['del']) || $module_params['del'] != 'n')) {
 	  $catObjectId = $categlib->is_categorized($cat_type, $_REQUEST['page']);
 	  $query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 	  $result = $tikilib->query($query,array((int) $catObjectId, (int)$_REQUEST['remove']));
