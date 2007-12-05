@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.5 2007-12-05 15:56:37 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.6 2007-12-05 16:04:43 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -38,11 +38,11 @@ note : lists the objects from a given category not a recursive tree
 	<option value="{$k}"{if $i.incat eq 'y'} selected="selected"{/if}>{if $module_params.path eq 'n'}{$i.name}{else}{$i.categpath}{/if}</option>
 	{/if}
 {/foreach}
-</div>
 {if $module_params.multiple eq 'y'}
 <div align="center"><input type="submit" name="categorize" value="{if $module_params.categorize}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}" /></div>
 {/if}
 </select>
 </form>
+</div>
 {/tikimodule}
 {/if}
