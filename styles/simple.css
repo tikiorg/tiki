@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.56 2007-08-21 08:21:18 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.56.2.1 2007-12-05 13:54:32 luciash Exp $
  *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
@@ -18,12 +18,20 @@
  */
 
 body {
-  /* setting up the background. the color, then bg image and its form of repeating. */
-  background: #ffffff url("simple/bg.png") top center repeat-y;
-  /* shorthand for default font setting. size in percentage and font-family here */
-  font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	/* setting up the background. the color, then bg image and its form of repeating. */
+	background: #ffffff url("simple/bg.png") top center repeat-y;
+	/* shorthand for default font setting. size in percentage and font-family here */
+	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	font-size: 0.8em !important;
+	font-size /**/:75%;/* simmilar font size across all browsers 
+	(CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
 }
-
+/* and this is a special workaround for IE 7 */
+*:first-child+html
+body {
+	font-size: 75%;
+}
+	
 #header {
 	background-color: transparent;
 }
