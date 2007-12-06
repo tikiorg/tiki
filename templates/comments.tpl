@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.2 2007-12-06 16:09:23 nkoth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -177,9 +177,8 @@
 
 {* Post dialog *}	
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
-
-	{if $forum_mode eq 'y'}
 <span id="form" />
+	{if $forum_mode eq 'y'}
 		{if $post_reply > 0 || $edit_reply > 0 || $comment_preview}
 			{* posting, editing or previewing a reply: show form *}
 <div id='{$postclass}open' class="threadpost">
