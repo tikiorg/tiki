@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.9 2007-12-06 18:32:21 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.10 2007-12-06 20:41:38 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1312,7 +1312,6 @@ class CategLib extends ObjectLib {
 	 */
 	function has_edit_permission($user, $categoryId) {
 		global $userlib;
-							
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
 				|| ($userlib->user_has_permission($user,'tiki_p_edit_categories') && !$userlib->object_has_one_permission($categoryId,"category"))
 				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
@@ -1387,7 +1386,7 @@ class CategLib extends ObjectLib {
 		return $result;
 	}
 	function update_object_categories($categories, $objId, $objType, $desc='', $name='', $href='') {
-		global $prefs;
+		global $prefs, $user;
 		$old_categories = $this->get_object_categories($objType, $objId);
 		// need to prevent categories where user has no perm (but is set by other users with perm) to be wiped out
 		if ($prefs['feature_category_reinforce'] == "n") {
