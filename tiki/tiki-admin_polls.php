@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.26 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.26.2.1 2007-12-06 13:46:07 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,13 @@ include_once ('lib/polls/polllib.php');
 
 if (!isset($polllib)) {
 	$polllib = new PollLib($dbTiki);
+}
+
+if ($prefs['feature_polls'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_polls");
+
+	$smarty->display("error.tpl");
+	die;
 }
 
 if ($tiki_p_admin_polls != 'y') {
