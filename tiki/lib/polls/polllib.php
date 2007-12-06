@@ -48,11 +48,11 @@ class PollLib extends PollLibShared {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? and (`title` like ?)";
-			$bindvars=array('a','c',(int) $this->now,$findesc);
+			$mid = " where (`active`=? or `active`=? or `active`=?) and `publishDate`<=? and (`title` like ?)";
+			$bindvars=array('a','c','o',(int) $this->now,$findesc);
 		} else {
-			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? ";
-			$bindvars=array('a','c',(int) $this->now);
+			$mid = " where (`active`=? or `active`=? or `active`=?) and `publishDate`<=? ";
+			$bindvars=array('a','c','o',(int) $this->now);
 		}
 
 		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
