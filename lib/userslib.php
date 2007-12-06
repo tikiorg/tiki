@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.11 2007-12-03 08:03:07 kerrnel22 Exp $
+// CVS: $Id: userslib.php,v 1.247.2.12 2007-12-06 18:31:49 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1387,18 +1387,9 @@ function get_included_groups($group, $recur=true) {
 	/* Returns a default category for user's default_group
 	*/
 	function get_user_group_default_category($user) {
-		global $tikilib;
-		$query = "select `default_group` from `users_users` where `login` = ?";
+		$query = "select `groupDefCat` from `users_groups` ug, `users_users` uu where `login` = ? and ug.`groupName` = uu.`default_group`";
 		$result = $this->getOne($query, array($user));
-  	
-		if ( isset($result) && ($result!="") ) {
-			$query = "select `groupDefCat` from `users_groups` where `groupName` = ?";
-			$resg = $this->getOne($query, array($result));
-			if ( !is_null($resg) ) {
-				return $resg;
-			}
-		}
-		return null;
+		return $result;
 	}
 	
   	//modified get_user_groups() to know if the user is part of the group directly or through groups inclusion
