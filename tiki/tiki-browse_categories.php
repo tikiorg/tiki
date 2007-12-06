@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.37 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.37.2.1 2007-12-06 16:43:43 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,10 @@ if (!isset($_REQUEST["parentId"])) {
 }
 
 $smarty->assign('parentId', $_REQUEST["parentId"]);
+
+if (isset($_REQUEST["maxRecords"]) && $_REQUEST["maxRecords"] >= 1) {
+	$maxRecords = $_REQUEST["maxRecords"];
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
