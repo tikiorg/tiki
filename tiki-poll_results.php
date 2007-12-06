@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21.2.1 2007-12-06 06:28:16 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21.2.2 2007-12-06 06:47:42 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,11 +29,6 @@ if (!isset($_REQUEST["maxRecords"])) {
 	$_REQUEST["maxRecords"] = -1;
 	$smarty->assign('maxRecords', '');
 }
-
-if (!isset($_REQUEST['offset'])) {
-	$_REQUEST['offset'] = 0;
-}
-$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 if (!isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
@@ -126,6 +121,10 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['
 		$_REQUEST['sort_mode'] = 'user_asc';
 	}
 	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
+	if (!isset($_REQUEST['offset'])) {
+		$_REQUEST['offset'] = 0;
+	}
+	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 	
 	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title');
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
@@ -157,8 +156,6 @@ if ($prefs['feature_poll_comments'] == 'y' && isset($_REQUEST['pollId'])) {
 }
 
 $smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
-$smarty->assign('find_show_languages', 'n');
-$smarty->assign('find_show_categories', 'n');
 
 // the following 4 lines preserved to preserve environment for old templates
 $smarty->assign_by_ref('poll_info', $poll_info);
