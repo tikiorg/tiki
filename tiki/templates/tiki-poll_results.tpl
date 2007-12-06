@@ -1,21 +1,46 @@
-{* $Id: tiki-poll_results.tpl,v 1.17.2.1 2007-10-17 20:36:11 niclone Exp $ *}
-<h1><a href="tiki-poll_results.php?pollId={$poll_info.pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info.title}</a></h1>
+{* $Id: tiki-poll_results.tpl,v 1.17.2.2 2007-12-06 06:28:16 nkoth Exp $ *}
+<h1><a href="tiki-poll_results.php">{tr}Poll Results{/tr}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
-{if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
-<h2>{tr}Results{/tr}</h2>
+{if !isset($list_votes)}
+<div align="center">
+<form method="post" action="{$smarty.server.PHP_SELF}">
+{if !empty($offset)}<input type="hidden" name="offset" value="{$offset}" />{/if}
+{if !empty($scoresort_desc)}<input type="hidden" name="scoresort_desc" value="{$scoresort_desc}" />{/if}
+{if !empty($scoresort_asc)}<input type="hidden" name="scoresort_asc" value="{$scoresort_asc}" />{/if}
+<table class="findtable">
+<tr>
+<td class="findtitle">{if empty($what)}{tr}Find{/tr}{else}{tr}{$what}{/tr}{/if}</td>
+<td class="findtitle">
+	<input type="text" name="find" value="{$find|escape}" />
+	{if isset($exact_match)}{tr}Exact&nbsp;match{/tr}<input type="checkbox" name="exact_match" {if $exact_match ne 'n'}checked="checked"{/if}/>{/if}
+</td>
+<td class="findtitle">{tr}Number of top voted polls to show{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" /></td>
+<td class="findtitle"><input type="submit" name="search" value="{tr}Find{/tr}" /></td>
+</tr>
+</table>
+</form>
+</div>
+{/if}
+{section name=x loop=$poll_info_arr}
+<h2><a href="tiki-poll_results.php?pollId={$poll_info_arr[x].pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info_arr[x].title}</a></h2>
+{if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info_arr[x].pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
 <div class="pollresults">
 <table class="pollresults">
-{section name=ix loop=$options}
-<tr><td class="pollr">{$options[ix].title}</td>
-    <td class="pollr"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$options[ix].percent}% ({$options[ix].votes})</td></tr>
+{section name=ix loop=$poll_info_arr[x].options}
+<tr><td class="pollr">
+{if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
+{$poll_info_arr[x].options[ix].title}
+{if $smarty.section.x.total > 1}</a>{/if}
+</td>
+    <td class="pollr"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$poll_info_arr[x].options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})</td></tr>
 {/section}
 </table>
 <br />
-{tr}Total{/tr}: {$poll_info.votes} {tr}votes{/tr}<br /><br />
-{if isset($total) and $total > 0}{tr}Average:{/tr} {math equation="x/y" x=$total y=$poll_info.votes format="%.2f"}{/if}
+{tr}Total{/tr}: {$poll_info_arr[x].votes} {tr}votes{/tr}<br /><br />
+{if isset($poll_info_arr[x].total) and $poll_info_arr[x].total > 0}{tr}Average:{/tr} {math equation="x/y" x=$poll_info_arr[x].total y=$poll_info_arr[x].votes format="%.2f"}{/if}
 <br />
 </div>
-
+{/section}
 {if isset($list_votes)}
 <h2>{tr}List Votes{/tr}</h2>
 <div align="center">
