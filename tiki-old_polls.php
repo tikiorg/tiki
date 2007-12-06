@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-old_polls.php,v 1.14 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-old_polls.php,v 1.14.2.1 2007-12-06 13:46:07 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,22 +22,12 @@ if ($prefs['feature_polls'] != 'y') {
 	die;
 }
 
-/*
-if($prefs['feature_listPages'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
-
-/*
 // Now check permissions to access this page
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
+if ($tiki_p_vote_poll != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
   $smarty->display("error.tpl");
   die;  
 }
-*/
 
 // This script can receive the thresold
 // for the information as the number of
