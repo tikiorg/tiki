@@ -44,11 +44,11 @@
                 {if $prefs.feature_search_show_forbidden_cat eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Permissions of multiple categories reinforce{/tr}">{/if} {tr}Permission to all (not just any) of an object's categories is required for access{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td class="form">{tr}Permission to all (not just any) of an object's categories is required for access{/tr}</td>
 		<td><input type="checkbox" name="feature_category_reinforce" {if $prefs.feature_category_reinforce eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Category" target="tikihelp" class="tikihelp" title="{tr}Category{/tr}">{/if} {tr}Categories browse uses PhpLayers{/tr} <i>({tr}The feature must be activated{/tr})</i> {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td class="form">{tr}Categories browse uses PhpLayers{/tr} <i>({tr}The feature must be activated{/tr})</i></td>
 		<td><input type="checkbox" name="feature_category_use_phplayers" {if $prefs.feature_category_use_phplayers eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
