@@ -32,6 +32,8 @@ class ModLib extends TikiLib {
 			$query = "update `tiki_modules` set `name`=?,`title`=?,`position`=?,`ord`=?,`cache_time`=?,`rows`=?,`groups`=?,`params`=?,`type`=? where `moduleId`=?";
 			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type, $moduleId));
 		} else {
+			$query = "delete from `tiki_modules` where `name`=? and `position`=? and `ord`=? and `params`=?";
+			$this->query($query, array($name, $position, (int)$order, $params));
 			$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
 			if ($type == "D" || $type == "P") {
