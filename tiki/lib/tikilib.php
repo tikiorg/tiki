@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.40 2007-12-05 16:42:24 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.41 2007-12-06 23:20:39 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4337,7 +4337,8 @@ function add_pageview() {
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);
-
+	
+	if (!$user) $user = 'anonymous';
 	// Collect pages before modifying data
 	$pages = $this->get_pages($data);
 
@@ -6608,6 +6609,8 @@ if (!$simple_wiki) {
 
 	$commentslib = new Comments($dbTiki);
 
+	if (!$edit_user) $edit_user = 'anonymous';
+	
 	$this->invalidate_cache($pageName);
 	// Collect pages before modifying edit_data (see update of links below)
 	$pages = $this->get_pages($edit_data);
@@ -6623,6 +6626,7 @@ if (!$simple_wiki) {
 	$old_version = $histlib->get_page_latest_version($pageName) + 1;
 	$lastModif = $info["lastModif"];
 	$user = $info["user"];
+	if (!$user) $user = 'anonymous';
 	$ip = $info["ip"];
 	$comment = $info["comment"];
 	$data = $info["data"];
