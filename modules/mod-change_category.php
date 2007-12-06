@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.5 2007-12-05 19:01:43 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.6 2007-12-06 15:44:29 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 // param: id, shy, notop, detail, categorize,multiple,group,path, add, del
@@ -105,6 +105,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 
   $incategs = $categlib->get_object_categories($cat_type, $cat_objid);
 
+  $remainCateg = false;  
   for ($i=0;$i<$num;$i++) {
     $cid = $categs[$i]['categId'];
     $modcatlist[$cid] = $categs[$i];
@@ -113,9 +114,11 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
       $notshy = true;
     } else {
       $modcatlist[$cid]['incat'] = 'n';
+      $remainCateg = true;
     }
   }
 
+  $smarty->assign_by_ref('remainCateg', $remainCateg);
   $smarty->assign('showmodule',$notshy);
   if (isset($changecateg)) /* big pacth... changecateg is not defined somewhere else */
     $smarty->assign('modname',$changecateg.$id);
