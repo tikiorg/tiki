@@ -45,6 +45,8 @@ $smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
 if (isset($_REQUEST["viewlist"])) {
 	$viewlist = $_REQUEST["viewlist"];
 	$_SESSION['CalendarViewList'] = $viewlist;
+} elseif (!empty($_SESSION['CalendarViewList'])) {
+	$viewlist = 	$_SESSION['CalendarViewList'];
 } else {
 	$viewlist = "";
 }
