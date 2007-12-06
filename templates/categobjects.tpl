@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.9 2007-10-06 15:18:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.9.2.1 2007-12-06 19:03:23 sylvieg Exp $ *}
 
 <div class="catblock">
 <div class="cattitle">
@@ -10,10 +10,10 @@
 <div class="catlists">
 {foreach key=t item=i from=$listcat}
 <b>{tr}{$t}{/tr}:</b>
-{if $one eq 'y'}<br />{/if}
+{if $one}<br />{/if}
 {section name=o loop=$i}
 <a href="{$i[o].href}" class="link">{$i[o].name}</a>
-{if $one eq 'y'}<br />{else !$smarty.section.o.last} &middot; {/if}
+{if $one}<br />{else !$smarty.section.o.last} &middot; {/if}
 {/section}<br />
 {/foreach}
 </div>
