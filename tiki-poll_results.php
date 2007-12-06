@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.21.2.1 2007-12-06 06:28:16 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,17 +22,39 @@ if ($prefs['feature_polls'] != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["pollId"])) {
-	$smarty->assign('msg', tra("No poll indicated"));
-
-	$smarty->display("error.tpl");
-	die;
+if (!isset($_REQUEST["maxRecords"])) {
+	$_REQUEST["maxRecords"] = 30;
+	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);	
+} elseif ($_REQUEST["maxRecords"] == '') {
+	$_REQUEST["maxRecords"] = -1;
+	$smarty->assign('maxRecords', '');
 }
 
-$poll_info = $polllib->get_poll($_REQUEST["pollId"]);
-$polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
-$options = $polllib->list_poll_options($_REQUEST["pollId"]);
+if (!isset($_REQUEST['offset'])) {
+	$_REQUEST['offset'] = 0;
+}
+$smarty->assign_by_ref('offset', $_REQUEST['offset']);
+if (!isset($_REQUEST['find'])) {
+	$_REQUEST['find'] = '';
+}
+$smarty->assign_by_ref('find', $_REQUEST['find']);
+	
+$polls = $polllib->list_active_polls(0, $_REQUEST["maxRecords"], "votes_desc", $_REQUEST['find']);
+$pollIds = array();
+if (isset($_REQUEST["pollId"])) {
+	$pollIds[] = $_REQUEST["pollId"];	
+} else {
+	foreach ($polls["data"] as $pId) {
+		$pollIds[] = $pId["pollId"];	
+	}
+}
 
+$poll_info_arr = array();
+foreach ($pollIds as $pK => $pId) {
+// iterate each poll
+$poll_info = $polllib->get_poll($pId);
+$poll_info_arr[$pK] = $poll_info;
+$options = $polllib->list_poll_options($pId);
 $temp_max = count($options);
 $total = 0;
 $isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
@@ -53,25 +75,58 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 
 	$width = $percent * 200 / 100;
-	$options[$i]["width"] = $percent;
+	$options[$i]["width"] = $percent;	
 }
-if ($isNum) {
-	$smarty->assign('total', $total);
+$poll_info_arr[$pK]["options"] = $options;
+$poll_info_arr[$pK]["total"] = $total;
+} // end iterate each poll
+
+function scoresort($a, $b) {
+	if (isset($_REQUEST["scoresort_asc"])) {
+		$i = $_REQUEST["scoresort_asc"];
+	} else {
+		$i = $_REQUEST["scoresort_desc"]; 
+	}
+	// must first sort based on missing, otherwise missing index will occur when trying to read more info. 
+	if (count($a["options"]) <= $i && count($b["options"]) <= $i ) {
+		return 0;
+	} elseif (count($a["options"]) <= $i ) {
+		return -1;
+	} elseif (count($b["options"]) <= $i ) {
+		return 1;
+	}
+	if ($a["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] ) {
+    	return 1;  
+    }
+	if ($a["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] ) {
+    	return -1;  
+    }
+    if ($a["options"][$i]["width"] == $b["options"][$i]["width"]) {
+    	return 0;  
+    }
+	if (isset($_REQUEST["scoresort_asc"])) {
+		return ($a["options"][$i]["width"] < $b["options"][$i]["width"]) ? -1 : 1;
+	} else {
+		return ($a["options"][$i]["width"] > $b["options"][$i]["width"]) ? -1 : 1; 
+	}    
 }
-if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list'])) {
+if (isset($_REQUEST["scoresort_desc"])) {
+	$smarty->assign('scoresort_desc', $_REQUEST["scoresort_desc"]);
+} elseif (isset($_REQUEST["scoresort_asc"])) {
+	$smarty->assign('scoresort_asc', $_REQUEST["scoresort_asc"]);
+}
+if (isset($_REQUEST["scoresort_asc"]) || isset($_REQUEST["scoresort_desc"])) {	
+	$t_arr = $poll_info_arr;
+	$sort_ok = usort($t_arr, "scoresort");
+	if ($sort_ok)  $poll_info_arr = $t_arr;
+}
+
+if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {	
 	if (empty($_REQUEST['sort_mode'])) {
 		$_REQUEST['sort_mode'] = 'user_asc';
 	}
 	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
-	if (!isset($_REQUEST['offset'])) {
-		$_REQUEST['offset'] = 0;
-	}
-	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
-	if (!isset($_REQUEST['find'])) {
-		$_REQUEST['find'] = '';
-	}
-	$smarty->assign_by_ref('find', $_REQUEST['find']);
-
+	
 	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title');
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
 
@@ -91,7 +146,7 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list'])) {
 }
 
 // Poll comments
-if ($prefs['feature_poll_comments'] == 'y') {
+if ($prefs['feature_poll_comments'] == 'y' && isset($_REQUEST['pollId'])) {
 	$comments_per_page = $prefs['poll_comments_per_page'];
 
 	$thread_sort_mode = $prefs['poll_comments_default_ordering'];
@@ -101,6 +156,11 @@ if ($prefs['feature_poll_comments'] == 'y') {
 	include_once ("comments.php");
 }
 
+$smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
+$smarty->assign('find_show_languages', 'n');
+$smarty->assign('find_show_categories', 'n');
+
+// the following 4 lines preserved to preserve environment for old templates
 $smarty->assign_by_ref('poll_info', $poll_info);
 $smarty->assign('title', $poll_info['title']);
 $smarty->assign_by_ref('polls', $polls["data"]);
