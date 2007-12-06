@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.6 2007-11-27 10:42:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.7 2007-12-06 16:57:34 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php{if !empty($groupname)}?group={$groupname|escape:'url'}{/if}">{tr}Admin groups{/tr}</a>
@@ -150,7 +150,7 @@ class="prevnext">{tr}All{/tr}</a>
 ({tr}Use wiki page name or full URL{/tr})<br />
 {tr}To use a relative link, use ex.{/tr}: <i>http:tiki-forums.php</i>
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
-{if $prefs.feature_categoires eq 'y'}
+{if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td><label for="groups_defcat">{tr}Group Default Category{/tr}:</label>
   	 </td><td>
   	 
