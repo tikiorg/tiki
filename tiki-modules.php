@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.3 2007-12-06 14:31:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.4 2007-12-06 23:21:16 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,10 +109,11 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	}
 	if ($pass == 'y' && isset($module_params['contributor'])  && $section == 'wiki page' && isset($page)) {
 		global $wikilib; include_once('lib/wiki/wikilib.php');
-		$contributors = $wikilib->get_contributors($page);
-		if (empty($contributors)) {
+		if (!$page_info = $tikilib->get_page_info($page)) {
 			$pass = 'n';
 		} else {
+			$contributors = $wikilib->get_contributors($page);
+			$contributors[] = $page_info['creator'];
 			$in = in_array($user, $contributors);
 			if (($module_params['contributor'] == 'y' && !$in) || ($module_params['contributor'] == 'n' && $in)) {
 				$pass = 'n';
