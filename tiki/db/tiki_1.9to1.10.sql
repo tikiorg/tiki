@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.11 2007-12-06 14:14:11 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.12 2007-12-06 16:35:53 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.9 to 1.10
 # 
@@ -1633,3 +1633,7 @@ ALTER TABLE `tiki_content` ADD `contentLabel` varchar(255) NOT NULL DEFAULT '';
 UPDATE users_permissions set type='polls' where permName='tiki_p_vote_poll';
 UPDATE users_permissions set type='polls', admin='y' where permName='tiki_p_admin_polls';
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
+
+#2007-12-06
+ALTER TABLE `tiki_modules` DROP PRIMARY KEY;
+ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name(100), position, ord, params(140));=======

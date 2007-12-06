@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-12-06 14:14:11 $
-# $Author: nkoth $
+# $Date: 2007-12-06 16:35:53 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -2360,7 +2360,7 @@ CREATE TABLE tiki_modules (
   rows int(4) default NULL,
   params varchar(255) default NULL,
   groups text,
-  PRIMARY KEY  (name, position, ord),
+  PRIMARY KEY  (name(100), position, ord, params(140)),
   KEY positionType (position, type),
   KEY moduleId (moduleId)
 ) ENGINE=MyISAM;
