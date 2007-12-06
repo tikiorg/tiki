@@ -182,7 +182,9 @@ if ($calendarViewMode == 'month' ||
    }
 
    // move viewstart back to Sunday....
-   $viewstart -= $TmpWeekday * $d;
+   if ($viewlist != 'list') {
+	   $viewstart -= $TmpWeekday * $d;
+   }
    // this is the last day of $focus_month
    if ($calendarViewMode == 'month') {
      $viewend = TikiLib::make_time(0,0,0,$focus_month + 1, 1, $focus_year);
@@ -198,7 +200,9 @@ if ($calendarViewMode == 'month' ||
    $viewend -= 1;
    $dayend=$viewend;
    $TmpWeekday = TikiLib::date_format("%w", $viewend);
-   $viewend += (6 - $TmpWeekday) * $d;
+   if ($viewlist != 'list') {
+	   $viewend += (6 - $TmpWeekday) * $d;
+   }
    // ISO weeks --- kinda mangled because ours begin on Sunday...
    $firstweek = TikiLib::date_format("%U", $viewstart + $d);
    $lastweek = TikiLib::date_format("%U", $viewend);
