@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.2 2007-11-19 16:49:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.73.2.3 2007-12-07 05:56:37 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -103,7 +103,7 @@ if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
 		} else {
 			$is_categorized = FALSE;
 		}
-		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 			if (!isset($user)){
 				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 				$smarty->assign('errortitle',tra("Please login"));

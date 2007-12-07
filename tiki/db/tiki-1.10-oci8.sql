@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-11-21 15:26:25 $
--- $Author: sylvieg $
+-- $Date: 2007-12-07 05:56:41 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1196,6 +1196,7 @@ CREATE SEQUENCE "tiki_content_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_content" (
   "contentId" number(8) NOT NULL,
   "description" clob,
+  "contentLabel" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("contentId")
 ) ENGINE=MyISAM  ;
 
@@ -2927,7 +2928,7 @@ CREATE TABLE "tiki_modules" (
   "rows" number(4) default NULL,
   "params" varchar(255) default NULL,
   "groups" clob,
-  PRIMARY KEY ("name","position","ord")
+  PRIMARY KEY ("name","position","ord","params")
 ) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_modules_trig" BEFORE INSERT ON "tiki_modules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -4166,6 +4167,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMandatory" char(1) default 'n' NOT NULL,
   "isMultilingual" char(1) default 'n',
   "description" clob,
+  "itemChoices" clob,
   PRIMARY KEY ("fieldId")
 ) ENGINE=MyISAM  ;
 
@@ -4956,6 +4958,8 @@ CREATE TABLE "users_groups" (
   "registrationChoice" char(1) default NULL,
   "registrationUsersFieldIds" clob,
   "userChoice" char(1) default NULL,
+  "groupDefCat" number(12) default 0,
+  "groupTheme" varchar(255) default '',  
   PRIMARY KEY ("groupName")
 ) ENGINE=MyISAM;
 
@@ -5049,7 +5053,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y');
 
@@ -5131,7 +5135,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit categorized items', 'registered', 'category');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_comments', 'Can edit all comments', 'editors', 'comments');
 
@@ -5299,7 +5303,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_calendar', 'Can browse the calendar', 'basic', 'calendar');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'category');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categorized', 'Can view categorized items', 'basic', 'category');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
 
@@ -5351,7 +5357,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'registered', 'trackers');
 

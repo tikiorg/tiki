@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-11-21 15:26:25 $
--- $Author: sylvieg $
+-- $Date: 2007-12-07 05:56:42 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1338,6 +1338,7 @@ go
 CREATE TABLE "tiki_content" (
   "contentId" numeric(8 ,0) identity,
   "description" text default '',
+  "contentLabel" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("contentId")
 ) ENGINE=MyISAM  
 go
@@ -3622,7 +3623,7 @@ CREATE TABLE "tiki_modules" (
   "rows" numeric(4,0) default NULL NULL,
   "params" varchar(255) default NULL NULL,
   "groups" text default '',
-  PRIMARY KEY ("name","position","ord")
+  PRIMARY KEY ("name","position","ord","params")
 ) ENGINE=MyISAM
 go
 
@@ -5050,6 +5051,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMandatory" char(1) default 'n' NOT NULL,
   "isMultilingual" char(1) default 'n',
   "description" text default '',
+  "itemChoices" text default '',
   PRIMARY KEY ("fieldId")
 ) ENGINE=MyISAM  
 go
@@ -5959,6 +5961,8 @@ CREATE TABLE "users_groups" (
   "registrationChoice" char(1) default NULL NULL,
   "registrationUsersFieldIds" text default '',
   "userChoice" char(1) default NULL NULL,
+  "groupDefCat" numeric(12,0) default 0,
+  "groupTheme" varchar(255) default '',  
   PRIMARY KEY ("groupName")
 ) ENGINE=MyISAM
 go
@@ -6120,7 +6124,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y')
 go
 
 
@@ -6284,7 +6288,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit categorized items', 'registered', 'category')
 go
 
 
@@ -6620,7 +6624,11 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'category')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categorized', 'Can view categorized items', 'basic', 'category')
 go
 
 
@@ -6724,7 +6732,11 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls')
 go
 
 

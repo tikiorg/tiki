@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24 2007-10-12 07:55:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.1 2007-12-07 05:56:38 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,7 @@ if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
    	} else {
    		$is_categorized = FALSE;
    	}
-	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));

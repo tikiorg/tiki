@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.42 2007-12-07 02:26:50 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.43 2007-12-07 05:56:38 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3596,7 +3596,7 @@ function add_pageview() {
   // - category permission
   // if O.K. this function shall replace similar constructs in list_pages and other functions above.
   // $categperm is the category permission that should grant $perm. if none, pass 0
-  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categories') {
+  function user_has_perm_on_object($user,$object,$objtype,$perm,$categperm='tiki_p_view_categorized') {
             global $prefs, $userlib;
 		static $cacheUserPerm;
 		$keyCache = "$user/$object/$objtype/$perm";
@@ -3632,15 +3632,15 @@ function add_pageview() {
                         if (!is_object($categlib)) {
                                 include_once('lib/categories/categlib.php');
                         }
-                unset($tiki_p_view_categories); // unset this var in case it was set previously
+                unset($tiki_p_view_categorized); // unset this var in case it was set previously
                 $perms_array = $categlib->get_object_categories_perms($user, $objtype, $object);
                 if ($perms_array) {
                         $is_categorized = TRUE;
                         foreach ($perms_array as $p => $value) {
                                 $$p = $value;
                         }
-			if ($tiki_p_admin_categories == 'y' && $tiki_p_view_categories == 'n')
-				$tiki_p_view_categories = 'y';
+			if ($tiki_p_admin_categories == 'y' && $tiki_p_view_categorized == 'n')
+				$tiki_p_view_categorized = 'y';
                 } else {
                         $is_categorized = FALSE;
                 }
@@ -3849,23 +3849,23 @@ function add_pageview() {
 			global $$perm['permName'];
 			$ret[$perm['permName']] = $$perm['permName'];
 		}
-		if (empty($categPerms['tiki_p_view_categories'])) {
-			$categPerms['tiki_p_view_categories'] = 'n';
+		if (empty($categPerms['tiki_p_view_categorized'])) {
+			$categPerms['tiki_p_view_categorized'] = 'n';
 		}
-		if (empty($categPerms['tiki_p_edit_categories'])) {
-			$categPerms['tiki_p_edit_categories'] = 'n';
+		if (empty($categPerms['tiki_p_edit_categorized'])) {
+			$categPerms['tiki_p_edit_categorized'] = 'n';
 		}
 		if (empty($categPerms['tiki_p_admin_categories'])) {
 			$categPerms['tiki_p_admin_categories'] = 'n';
 		}
 		switch ($objectType) {
 		case 'tracker':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_trackers'] = 'y';
 			} else {
 				$ret['tiki_p_view_trackers'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_modify_tracker_items'] = 'y';
 				$ret['tiki_p_create_tracker_items'] = 'y';
 			} else {
@@ -3875,14 +3875,14 @@ function add_pageview() {
 			break;
 		case 'image gallery':
 		case 'image':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_image_gallery'] = 'y';
 				$ret['tiki_p_download_files'] = 'y';
 			} else {
 				$ret['tiki_p_view_image_gallery'] = 'n';
 				$ret['tiki_p_download_files'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_upload_images'] = 'y';
 			} else {
 				$ret['tiki_p_upload_images'] = 'n';
@@ -3890,12 +3890,12 @@ function add_pageview() {
 			break;
 		case 'file gallery':
 		case 'file':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_file_gallery'] = 'y';
 			} else {
 				$ret['tiki_p_view_file_gallery'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_upload_files'] = 'y';
 			} else {
 				$ret['tiki_p_upload_files'] = 'n';
@@ -3903,12 +3903,12 @@ function add_pageview() {
 			break;
 		case 'article':
 		case 'submission':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_read_article'] = 'y';
 			} else {
 				$ret['tiki_p_read_article'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_edit_article'] = 'y';
 				$ret['tiki_p_submit_article'] = 'y';
 			} else {
@@ -3917,12 +3917,12 @@ function add_pageview() {
 			}
 			break;
 		case 'forum':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_forum_read'] = 'y';
 			} else {
 				$ret['tiki_p_forum_read'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_forum_post_topic'] = 'y';
 				$ret['tiki_p_forum_post'] = 'y';
 			} else {
@@ -3932,12 +3932,12 @@ function add_pageview() {
 			break;
 		case 'blog':
 		case 'blog post':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_read_blog'] = 'y';
 			} else {
 				$ret['tiki_p_read_blog'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_create_blogs'] = 'y';
 				$ret['tiki_p_blog_post'] = 'y';
 			} else {
@@ -3947,19 +3947,19 @@ function add_pageview() {
 			break;
 		case 'wiki page':
 		case 'history':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view'] = 'y';
 			} else {
 				$ret['tiki_p_view'] = 'n';
 			}
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_edit'] = 'y';
 			} else {
 				$ret['tiki_p_edit'] = 'n';
 			}
 			break;
 		case 'faq':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_faqs'] = 'y';
 			} else {
 				$ret['tiki_p_view_faqs'] = 'n';
@@ -3968,14 +3968,14 @@ function add_pageview() {
 		case 'survey':
 			break;
 		case 'newsletter':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_subscribe_newsletters'] = 'y';
 			} else {
 				$ret['tiki_p_subscribe_newsletters'] = 'n';
 			}
 			break;
 		case 'mypage':
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_mypage'] = 'y';
 			} else {
 				$ret['tiki_p_view_mypage'] = 'n';
@@ -3984,12 +3984,12 @@ function add_pageview() {
 			
 		/* TODO */
 		default:
-			if ($categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret["tiki_p_edit_$objectType"] = 'y';
 			} else {
 				$ret["tiki_p_edit_$objectType"] = 'n';
 			}
-			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
+			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret["tiki_p_view_$objectType"] = 'y';
 			} else {
 				$ret["tiki_p_view_$objectType"] = 'n';
