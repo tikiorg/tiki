@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.4 2007-02-12 11:12:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.4.2.1 2007-12-07 12:55:20 pkdille Exp $
 
 // Wiki plugin to display last modification information.
 // rlpowell 31 Dec 2006
 
 function wikiplugin_lastmod_help() {
-        return tra("The last_mod plugin replaces itself with last modification time of the named wiki page, or the current page if no name given").":<br :>~np~{LASTMOD(page=>pagename)/}~/np~";
+        return tra("The last_mod plugin replaces itself with last modification time of the named wiki page, or the current page if no name given").":<br />~np~{LASTMOD(page=>pagename)/}~/np~";
 }
 
 function wikiplugin_lastmod($data, $params) {
