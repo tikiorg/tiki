@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.18 2007-12-07 18:36:35 jyhem Exp $ *}
-<script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.19 2007-12-07 20:39:55 pkdille Exp $ *}
+<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
 {* --------- navigation ------ *}
@@ -616,7 +616,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {foreach from=$ins_fields key=ix item=cur_field}
 {if $cur_field.http_request}
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue={$cur_field.http_request[7]|escape:"url"}&selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
 </script>
 {/if}
