@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.16 2007-12-03 19:49:14 nyloth Exp $ *}
-<script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.17 2007-12-07 20:39:55 pkdille Exp $ *}
+<script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
 {/if}
@@ -796,7 +796,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 {if $listfields.$fid.http_request}
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$fields[ix].ins_id}')
 </script>
 {/if}
