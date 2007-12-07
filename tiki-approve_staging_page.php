@@ -78,6 +78,13 @@ if ($tiki_p_edit != 'y') {
 
 $staging_info = $tikilib->get_page_info($staging_page);
 
+if ( $staging_info['lastModif'] < $info['lastModif'] ) { 
+	$smarty->assign('msg', tra("Approved page was last saved after most recent staging edit"));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 // update approved page contents
 // multiple commits are needed to make sure contributor list and history are synced
 
