@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.41 2007-12-06 23:20:39 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.42 2007-12-07 02:26:50 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3977,6 +3977,8 @@ function add_pageview() {
 		case 'mypage':
 			if ($categPerms['tiki_p_view_categories'] == 'y' || $categPerms['tiki_p_edit_categories'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_view_mypage'] = 'y';
+			} else {
+				$ret['tiki_p_view_mypage'] = 'n';
 			}
 			break;
 			
