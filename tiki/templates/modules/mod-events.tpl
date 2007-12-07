@@ -11,7 +11,11 @@ global $calendarlib; include_once ('lib/calendar/calendarlib.php');
 global $dbTiki,$tikilib,$user, $smarty, $prefs;
 
 // get date for which to display the calendar view:
-if(isset($_SESSION["thedate"])) {
+if (isset($_REQUEST['todate'])) {
+	$day=TikiLib::date_format("%d",$_REQUEST['todate']);
+	$mon=TikiLib::date_format("%m",$_REQUEST['todate']);
+	$year=TikiLib::date_format("%Y",$_REQUEST['todate']);
+}elseif(isset($_SESSION["thedate"])) {
 	$day=TikiLib::date_format("%d",$_SESSION["thedate"]);
 	$mon=TikiLib::date_format("%m",$_SESSION["thedate"]);
 	$year=TikiLib::date_format("%Y",$_SESSION["thedate"]);
