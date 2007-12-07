@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.17 2007-12-03 19:40:20 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.18 2007-12-07 18:36:35 jyhem Exp $ *}
 <script language="JavaScript" type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -11,7 +11,7 @@
 <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}"><img src="pics/icons/no_eye.png" width="16" height="16" border="0" align="right" hspace="5" alt="{tr}Stop Monitor{/tr}" /></a>
 {/if}
 {/if}
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}" class="linkbut">{tr}items list{/tr}</a></span>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{foreach key=urlkey item=urlval from=$urlquery}&amp;{$urlkey}={$urlval|escape:"url"}{/foreach}" class="linkbut">{tr}Items list{/tr}</a></span>
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {/if}
 {if $tiki_p_view_trackers eq 'y'}
@@ -188,7 +188,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 <input type="hidden" name="attId" value="{$attId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Upload file{/tr}</td><td>{if $attach_file}{tr}Edit{/tr}: {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file"  />{if $attach_file}<br />{$attach_file|escape}{/if}</td></tr>
-<tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
@@ -203,8 +203,8 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" w
 {section name=ix loop=$attfields}
 <td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
 {/section}
-<td class="heading">{tr}filename{/tr}</td>
-<td class="heading">{tr}comment{/tr}</td>
+<td class="heading">{tr}Filename{/tr}</td>
+<td class="heading">{tr}Comment{/tr}</td>
 <td class="heading">{tr}Version{/tr}</td>
 <td class="heading">{tr}Description{/tr}</td>
 <td class="heading">&nbsp;</td>
@@ -275,7 +275,7 @@ src="pics/icons/page_edit.png" border="0" height="16" width="16" alt="{tr}Edit{/
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}items list{/tr}" />
+<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}
 {/if}
 {* ------------------- *}
@@ -592,7 +592,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to retrun to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}items list{/tr}" /> <span>
+<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" /> <span>
 {/if}
 </td></tr>
 </table>

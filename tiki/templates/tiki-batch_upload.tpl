@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.14 2007-08-12 04:28:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.14.2.1 2007-12-07 18:36:35 jyhem Exp $ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}
@@ -17,7 +17,7 @@
 <table border="0" class="normal" id="imagelist" width="100%">
 <tr>
 <th width="42" class="heading"></th>
-<th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}filename{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}Filename{/tr}</a></th>
 <th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></th>
 <th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></th>
 <th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}filesize{/tr}</th>

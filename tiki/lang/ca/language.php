@@ -3752,6 +3752,7 @@ $lang=Array(
 "category" => "categoria",
 "item link" => "enllaç de l'ítem",
 "items list" => "llista d'ítems",
+"Items list" => "Llista d'ítems",
 "email" => "correu-e",
 "Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto." => "Opcions de l'adreça de correu electrònic: 0|1|2 on 0 posa l'adreça com a text pla, 1 fa un enllaç mailto codificat hex (més difícil que web spiders recullin el mail i enviïn correu brossa) i 2 fa el href mailto normal.",
 "system" => "sistema",
