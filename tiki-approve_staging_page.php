@@ -82,8 +82,6 @@ $staging_info = $tikilib->get_page_info($staging_page);
 // multiple commits are needed to make sure contributor list and history are synced
 
 $begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
-// get very first version if unable to get anything
-if ($begin_version == 0) $begin_version = $histlib->get_version_by_time($staging_page, 0, 'after');
 if ($begin_version > 0) {
 	$lastversion = $histlib->get_page_latest_version($staging_page);
 	for ($v = $begin_version; $v <= $lastversion; $v++) {
