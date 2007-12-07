@@ -112,7 +112,7 @@ var numl;var toBeHidden;
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
-<script language="JavaScript">
+<script type="text/javascript">
 {literal}
   var needToConfirm = true;
   
