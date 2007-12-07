@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31.2.1 2007-11-14 19:38:13 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31.2.2 2007-12-07 15:40:24 sylvieg Exp $ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 
@@ -34,7 +34,7 @@ $smarty->assign('opensec', $opensec);
 	{/if}
 {/if} 
 {if $chdata.url and $link_on_section eq 'y'}
-<a href="{$chdata.url|escape}" class="separator">
+<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="separator">
 {else}
 <a href="javascript:icntoggle('menu{$cname}');" class="separator">
 {/if}
@@ -52,7 +52,7 @@ $smarty->assign('opensec', $opensec);
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}"><a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div class="option{$sep}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}
