@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.1 2007-12-07 21:43:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.2 2007-12-07 21:44:37 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,7 +136,6 @@ if (isset($_REQUEST["create"])) {
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
-			echo "JJJ";
 			$new_page_ref_id = $structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
       $after = $new_page_ref_id;      
 		}	
