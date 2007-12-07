@@ -5232,6 +5232,7 @@ $lang=Array(
 "reply" => "válasz",
 "Save to notepad" => "Az oldal tartalmát mentem a jegyzettömbe",
 "monitor this topic" => "kövesd ezt a témát",
+"Monitor this Topic" => "Kövesd ezt a témát",
 "Stop Monitoring this Topic" => "Ne kövesd ezt a témát",
 "Moderator actions" => "Moderátor beavatkozás",
 "reported:" => "jelentve:",

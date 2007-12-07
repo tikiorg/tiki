@@ -3274,6 +3274,7 @@ $lang=Array(
 "reply" => "responder",
 "Save to notepad" => "Gardar no caderno de notas",
 "monitor this topic" => "monitorizar este tema",
+"Monitor this Topic" => "Monitorizar este tema",
 "Stop Monitoring this Topic" => "Deixar de monitorizar este tema",
 "Moderator actions" => "Accións do moderador",
 "reported:" => "enviado:",

@@ -4623,6 +4623,7 @@ $lang=Array(
 "reply" => "besvara",
 "Save to notepad" => "Spara till anteckningsblock",
 "monitor this topic" => "bevaka detta ämne",
+"Monitor this Topic" => "Bevaka detta ämne",
 "Stop Monitoring this Topic" => "Sluta bevaka detta ämne",
 "Moderator actions" => "moderatorns åtgärder",
 "reported:" => "rapporterat:",

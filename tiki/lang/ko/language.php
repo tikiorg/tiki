@@ -5864,6 +5864,7 @@ $lang=Array(
 "Vote" => "평가",
 "reply" => "답장",
 "monitor this topic" => "이 글(스레드) 관찰하기",
+"Monitor this Topic" => "이 글(스레드) 관찰하기",
 "Stop Monitoring this Topic" => "이 글(스레드) 관찰중지",
 "Messages" => "메시지들",
 "All" => "모두",

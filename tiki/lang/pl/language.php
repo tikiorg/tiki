@@ -4566,6 +4566,7 @@ $lang=Array(
 "user online" => "user online",
 "user offline" => "user offline",
 "monitor this topic" => "monitor this topic",
+"Monitor this Topic" => "Monitor this topic",
 "Moderator actions" => "Moderator actions",
 "reported:" => "reported:",
 "queued:" => "queued:",

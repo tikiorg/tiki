@@ -3970,6 +3970,7 @@ $lang=Array(
 "reply" => "respon",
 "Save to notepad" => "Guardar al bloc de notes",
 "monitor this topic" => "Segueix aquest tema",
+"Monitor this Topic" => "Segueix aquest tema",
 "Stop Monitoring this Topic" => "Deixa de seguir aquest tòpic",
 "Moderator actions" => "Accions del moderador",
 "reported:" => "reportat:",

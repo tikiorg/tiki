@@ -5037,6 +5037,7 @@ $lang=Array(
 "reply" => "回覆",
 "Save to notepad" => "儲存到筆記本",
 "monitor this topic" => "監控此主題",
+"Monitor this Topic" => "監控此主題",
 "Stop Monitoring this Topic" => "停止監控此主題",
 "Moderator actions" => "板主命令",
 "reported:" => "已回報項目:",

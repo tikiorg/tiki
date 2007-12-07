@@ -5159,6 +5159,7 @@ $lang=Array(
 "reply" => "ответить",
 "Save to notepad" => "Сохранить в блокноте",
 "monitor this topic" => "наблюдать за этой темой",
+"Monitor this Topic" => "наблюдать за этой темой",
 "Stop Monitoring this Topic" => "прекратить наблюдение",
 "Moderator actions" => "Действия модератора",
 "Move to topic:" => "Переместить в тему:",

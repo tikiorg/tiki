@@ -2383,6 +2383,7 @@ $lang=Array(
 "reply" => "répondre",
 "Save to notepad" => "Enregistrer dans le bloc-note",
 "monitor this topic" => "surveiller ce sujet",
+"Monitor this Topic" => "Surveiller ce sujet",
 "Stop Monitoring this Topic" => "Arrêter de surveiller ce sujet",
 "Moderator actions" => "Actions du modérateur",
 "reported:" => "dénoncé :",

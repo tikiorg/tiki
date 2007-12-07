@@ -1219,6 +1219,7 @@ $lang=Array(
 // "reply" => "reply",
 // "Save to notepad" => "Save to notepad",
 // "monitor this topic" => "monitor this topic",
+// "Monitor this Topic" => "Monitor this topic",
 // "Stop Monitoring this Topic" => "Stop Monitoring this Topic",
 // "Moderator actions" => "Moderator actions",
 // "reported:" => "reported:",
