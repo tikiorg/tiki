@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.5 2007-12-04 21:59:38 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.6 2007-12-07 22:09:18 pkdille Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -34,8 +34,6 @@
   <td>{$quicktags[qtg].taginsert|escape}</td>
  </tr>
 {/section}
-  </td>
- </tr>
 </table>
 {/if}
 <table width="100%">
