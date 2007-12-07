@@ -188,12 +188,17 @@ class MenuLib extends TikiLib {
 	}
    	// look if the current url matches the menu option - do be improved a lot
 	function menuOptionMatchesUrl($option) {
+		global $prefs;
 		if (empty($option['url'])) {
 			return false;
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
-		$pos = strpos($url, $option['url']);
-		if ($pos) {
+		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
+			$pos = strpos($url, '/'.$option['sefurl']);
+		} else {
+			$pos = strpos($url, $option['url']);
+		}
+		if ($pos !== false) {
 			$last = $pos + strlen($option['url']);
 			if ($last >= strlen($url) || $url['last'] == '#' || $url['last'] == '?' || $url['last'] == '&') {
 				return true;
