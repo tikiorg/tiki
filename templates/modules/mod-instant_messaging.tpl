@@ -12,7 +12,7 @@
 <script src="lib/cpaint/cpaint2.inc.compressed.js" type="text/javascript"></script>
 <script src="lib/cpaint/tiki-ajax.js" type="text/javascript"></script>
 
-<script type="text/javascript" language="JavaScript" src="lib/chat/im_ui.js"></script>
-<script type="text/javascript" language="JavaScript" src="lib/chat/im.js"></script>
+<script type="text/javascript" src="lib/chat/im_ui.js"></script>
+<script type="text/javascript" src="lib/chat/im.js"></script>
 
 {/if}
