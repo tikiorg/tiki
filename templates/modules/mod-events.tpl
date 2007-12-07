@@ -9,9 +9,10 @@
 include_once("lib/class_calendar.php");
 global $calendarlib; include_once ('lib/calendar/calendarlib.php');
 global $dbTiki,$tikilib,$user, $smarty, $prefs;
+$module_params = $smarty->get_template_vars('module_params');
 
 // get date for which to display the calendar view:
-if (isset($_REQUEST['todate'])) {
+if (isset($_REQUEST['todate']) && $module_params['sync'] == 'y') {
 	$day=TikiLib::date_format("%d",$_REQUEST['todate']);
 	$mon=TikiLib::date_format("%m",$_REQUEST['todate']);
 	$year=TikiLib::date_format("%Y",$_REQUEST['todate']);
@@ -139,7 +140,6 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
 		<!-- TRs WITH DAYS -->
 {php}
 		$lastval=0; $dateIsIn="past";
-		$module_params = $smarty->get_template_vars('module_params');
 		for ($i=0;$i<6;$i++) {
 			print("<tr>");
 			for ($j=0;$j<7;$j++) {
