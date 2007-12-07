@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.2 2007-11-19 16:08:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.3 2007-12-07 14:14:12 sylvieg Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -184,7 +184,7 @@ class SearchLib extends TikiLib {
 			$sqlHaving .= "allow=? ";
 			$bindHaving = array(0, 1);
 		    } else {
-			$sqlHaving = " HAVING NOT categorized OR NOT forbidden ";
+			$sqlHaving = " HAVING NOT categorized OR NOT forbidden OR forbidden IS NULL ";
 			$bindHaving = array();
 		    }
 		}
