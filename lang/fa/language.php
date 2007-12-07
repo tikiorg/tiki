@@ -3135,6 +3135,7 @@ $lang=Array(
 "category" => "طبقه",
 "item link" => "پيوند به فقره",
 "items list" => "فهرست اقلام",
+"Items list" => "فهرست اقلام",
 "Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere, linkToItems displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere. linkToItems 1|0 to create a link to items in view mode and listing" => "اختيارات: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere  نمايش‌گر فهرست displayFieldIdThere هستند كه اقلام در tracker مشخص‌شده با trackerId، كه fieldIdThere معادل fieldIdHere باشد.",
 "email" => "پست الكترونيكي",
 "Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto." => "اختيارات: 0،1و2. كه 0 آدرس را با عنوان متن ساده قرار مي‌دهد، 1 يك پست با كدهاي شانزده‌تايي قرار مي‌دهد(براي spamها و spiderها كار مشكل‌تر مي‌شود)، و 2 يك كد mailto با صورت عادي href قرار مي‌دهد.",

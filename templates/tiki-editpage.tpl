@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.9 2007-12-03 22:22:40 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.10 2007-12-07 18:36:35 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -297,7 +297,7 @@ function searchrep() {
 <input type="hidden" name="hasAlreadyInserted2" value="" />
 <input type="hidden" name="page2" value="{$page}" />
 <input name="userfile2" type="file" id="attach-upload" />
- {tr}comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
+ {tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
 <input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onClick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 </td></tr>
 {/if}

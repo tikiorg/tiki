@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.1 2007-11-09 19:18:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.2 2007-12-07 18:36:35 jyhem Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -33,7 +33,7 @@
   </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}&amp;atts_show=y#attachments">{tr}Size{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}&amp;atts_show=y#attachments">{tr}downloads{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
   </td>
  </tr>
 {cycle values="odd,even" print=false advance=false}
@@ -70,7 +70,7 @@
  <td>
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
                         <input size="16 " name="userfile1" type="file" id="attach-upload" />
-   <label for="attach-comment">{tr}comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
+   <label for="attach-comment">{tr}Comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
                         <input type="submit" name="attach" value="{tr}attach{/tr}"/>
  </td>
 </tr>

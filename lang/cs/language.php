@@ -3451,6 +3451,7 @@ $lang=Array(
 "category" => "Kategorie",
 "item link" => "položka je odkazem",
 "items list" => "seznam položek",
+"Items list" => "Seznam položek",
 "email" => "E-mail",
 "Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto." => "Možnosti pro e-mailovou adresu: 0|1|2 where 0 puts address as plain text, 1 does hex encoded mailto odkaz (more difficult pro web spiders to pick it up a&nbsp;spam) a&nbsp;2 does normal href mailto.",
 "system" => "systém",

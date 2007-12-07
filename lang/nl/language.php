@@ -3098,6 +3098,7 @@ $lang=Array(
 "category" => "categorie",
 "item link" => "item koppeling",
 "items list" => "items lijst",
+"Items list" => "Items lijst",
 "email" => "e-mail",
 "Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto." => "Email adres opties: 0|1|2 waar 0 het adres invoegt als gewone tekst, 1 een hex encoded mailto koppeling invoegt (moeilijker op te pikken voor web spiders en spam bots) and 2 een normal href mailto koppeling invoegt.",
 "system" => "systeem",

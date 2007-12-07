@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.2 2007-12-03 17:14:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.3 2007-12-07 18:36:35 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -196,10 +196,10 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <div id="attachmentsconf" style="display:{if $useAttachments eq 'y'}block{else}none{/if};">
 {tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}<br />
 <table width="100%"><tr>
-<td>{tr}filename{/tr}</td>
+<td>{tr}Filename{/tr}</td>
 <td>{tr}Created{/tr}</td>
-<td>{tr}downloads{/tr}</td>
-<td>{tr}comment{/tr}</td>
+<td>{tr}Downloads{/tr}</td>
+<td>{tr}Comment{/tr}</td>
 <td>{tr}filesize{/tr}</td>
 <td>{tr}Version{/tr}</td>
 <td>{tr}filetype{/tr}</td>

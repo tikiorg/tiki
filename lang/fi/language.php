@@ -3107,6 +3107,7 @@ $lang=Array(
 "category" => "luokka",
 "item link" => "osan linkki",
 "items list" => "osien lista",
+"Items list" => "Osien lista",
 "Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere, linkToItems displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere. linkToItems 1|0 to create a link to items in view mode and listing" => "Osien listaus vaihtoehdot: kortistoId,kenttäIdSiellä, kenttäIdTäällä, näyttökenttäIdSiellä, linkkiOsiin näyttää listauksen näyttöKenttäIdSiellä osasta kortistoa jonka kortistoId:n kenttäIdSiellä täsmää kenttäIdTäällä. linkkiOsiin 1|0 luodaksesi linkin näytöllä olevan osaan ja listaukseen",
 "email" => "sähköposti",
 "Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto." => "Sähköposti Osoitteen vaihtoehdot: 0|1|2 missä 0 on tavallista tekstiä, 1 tekee hex-koodatun linkin osoitteeseen (vaikeampi vakoojille selvittää joten vähemmän roskapostia) ja 2 tekee normaalin href mailto linkin.",
