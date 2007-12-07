@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.18 2007-12-05 07:51:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.19 2007-12-07 21:46:36 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -76,12 +76,16 @@ function compare_import_versions($a1, $a2) {
   return $a1["version"] - $a2["version"];
 }
 if (isset($_REQUEST['cancel_edit'])) {
+	if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && !$tikilib->page_exists($page)) {
+		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));
+		$page = $approvedPageName;  
+	}
 	$page = urlencode($page);
 	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
 	$url = "location: tiki-index.php?page=$page";
 	if (!empty($_REQUEST['page_ref_id'])) {
 		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
-	}
+	}	
     header($url);
     die;
 }
