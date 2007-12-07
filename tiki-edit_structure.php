@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46 2007-10-12 12:42:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.1 2007-12-07 21:43:11 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,16 +136,14 @@ if (isset($_REQUEST["create"])) {
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
+			echo "JJJ";
 			$new_page_ref_id = $structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
       $after = $new_page_ref_id;      
 		}	
 	}
 	
 	if ($prefs['feature_wiki_categorize_structure'] == 'y') {      	
-		global $categlib;
-		if (!is_object($categlib)) {
-			include_once('lib/categories/categlib.php');
-		}
+		global $categlib; include_once('lib/categories/categlib.php');
 		$pages_added = array();
 		if (!(empty($_REQUEST['name']))) { 
 			$pages_added[] = $_REQUEST['name'];
@@ -345,8 +343,11 @@ if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') 
  	$cat_desc = '';
  	$cat_type='wiki page'; 		
 	include_once("categorize_list.php");
+} elseif ($prefs['feature_categories'] == 'y') {
+	global $categlib; include_once('lib/categories/categlib.php');
+	$categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 }
-	
+
 ask_ticket('edit-structure');
 
 include_once ('tiki-section_options.php');
