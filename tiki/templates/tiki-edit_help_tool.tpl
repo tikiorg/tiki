@@ -1,8 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.2 2007-12-07 22:23:53 pkdille Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
-<!--
 function taginsert(area_name,tagid)
 {
 //fill variables
@@ -15,7 +14,6 @@ function taginsert(area_name,tagid)
 {literal}  
   insertAt(area_name,tag[tagid]);
 }
--->
 </script>
 {/literal}
 {if $prefs.quicktags_over_textarea neq 'y'}
@@ -55,7 +53,7 @@ function taginsert(area_name,tagid)
               {tr}New Outputformat{/tr}
               {tr}New Mapfile{/tr} 
               *}
-<div id='helptool{$qtnum}' 
+<div id='helptool{$qtnum}'
   {assign var=show value="show_helptool"|cat:$qtnum}
 
 {if $prefs.quicktags_over_textarea neq 'y'}
@@ -63,11 +61,11 @@ function taginsert(area_name,tagid)
     style="display:block;"
   {else}
     style="display:none;"
-  {/if}>
-{/if}
+  {/if}
+{/if}>
   
-  <div>
   {if $prefs.quicktags_over_textarea neq 'y'}
+    <div>
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
   {/if}
     {section name=qtg loop=$quicktags}
@@ -86,5 +84,6 @@ function taginsert(area_name,tagid)
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}
     <a href="tiki-admin_quicktags.php" class="link">{tr}Admin Quicktags{/tr}</a>
   {/if}
-</div>
-</div>
+</div> <!-- helptool{$qtnum} -->
+</div> <!-- Quicktag -->
+
