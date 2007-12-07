@@ -5270,6 +5270,7 @@ $lang=Array(
 "reply" => "raet gobaek",
 "Save to notepad" => "Sevem go long notepad",
 "monitor this topic" => "monitoriim disfala topik",
+"Monitor this Topic" => "Monitoriim disfala topik",
 "Stop Monitoring this Topic" => "Stop fo monitorim disfala topik",
 "Moderator actions" => "Olketa Moderator action",
 "reported:" => "ripotem:",

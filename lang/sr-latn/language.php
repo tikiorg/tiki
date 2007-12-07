@@ -4444,6 +4444,7 @@ $lang=Array(
 "reply" => "odgovori",
 "Save to notepad" => "Snimi u notes",
 "monitor this topic" => "nadgledaj ovu temu",
+"Monitor this Topic" => "Nadgledaj ovu temu",
 "Stop Monitoring this Topic" => "Prestani sa nadgledanjem ove teme",
 "Moderator actions" => "Moderatorske akcije",
 "reported:" => "prijavljeno:",

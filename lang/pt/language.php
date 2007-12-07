@@ -4503,6 +4503,7 @@ $lang=Array(
 "Vote" => "Votar",
 "Save to notepad" => "Salvar no bloco de notas",
 "monitor this topic" => "monitorizar este tópico",
+"Monitor this Topic" => "Monitorizar este tópico",
 "Stop Monitoring this Topic" => "Para de monitorizar  este tópico",
 "Moderator actions" => "acções de moderador",
 "reported:" => "assinaladas:",

@@ -3659,6 +3659,7 @@ $lang=Array(
 "reply" => "Odpovědět",
 "Save to notepad" => "Uložit do poznámkového bloku",
 "monitor this topic" => "Sledovat tento téma",
+"Monitor this Topic" => "Sledovat tento téma",
 "Stop Monitoring this Topic" => "Ukončit sledování tohoto tématu",
 "Moderator actions" => "Akce moderátora",
 "reported:" => "Reportováno:",

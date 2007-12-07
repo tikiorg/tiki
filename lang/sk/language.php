@@ -4978,6 +4978,7 @@ $lang=Array(
 "reply" => "odpovedať",
 "Save to notepad" => "Uložiť do poznámkového bloku",
 "monitor this topic" => "sledovať tento topic",
+"Monitor this Topic" => "Sledovať tento topic",
 "Stop Monitoring this Topic" => "Ukončiť sledovanie tejto témy",
 "Moderator actions" => "Moderátorské funkcie",
 "reported:" => "nahlásené:",

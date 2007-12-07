@@ -4984,6 +4984,7 @@ $lang=Array(
 "reply" => "besvar",
 "Save to notepad" => "Gem i notesblok",
 "monitor this topic" => "overvåg dette emner",
+"Monitor this Topic" => "Overvåg dette emner",
 "Stop Monitoring this Topic" => "Stop overvågningen af dette emne",
 "Moderator actions" => "Moderator handlinger",
 "reported:" => "meddelt:",

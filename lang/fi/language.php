@@ -3363,6 +3363,7 @@ $lang=Array(
 "reply" => "vastaa",
 "Save to notepad" => "Tallenna muistioon",
 "monitor this topic" => "tarkkaile tätä aihetta",
+"Monitor this Topic" => "Tarkkaile tätä aihetta",
 "Stop Monitoring this Topic" => "Lopeta tämän aiheen tarkkailu",
 "Moderator actions" => "Moderaattorin toiminnot",
 "reported:" => "raportoitu:",

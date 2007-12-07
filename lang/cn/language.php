@@ -4859,6 +4859,7 @@ $lang=Array(
 "reply" => "回复",
 "Save to notepad" => "保存到记事本",
 "monitor this topic" => "监控此主题",
+"Monitor this Topic" => "监控此主题",
 "Stop Monitoring this Topic" => "停止监控此主题",
 "Moderator actions" => "版主命令",
 "reported:" => "已报告项目:",

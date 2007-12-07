@@ -4754,6 +4754,7 @@ $lang=Array(
 "reply" => "відповісти",
 "Save to notepad" => "Записати в нотатник",
 "monitor this topic" => "слідкувати за цією темою",
+"Monitor this Topic" => "слідкувати за цією темою",
 "Stop Monitoring this Topic" => "припинити слідкування за цією темою",
 "Moderator actions" => "Дії цензора",
 "queued:" => "в черзі:",

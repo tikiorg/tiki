@@ -3301,6 +3301,7 @@ $lang=Array(
 "reply" => "beantwoorden",
 "Save to notepad" => "Naar kladblok opslaan",
 "monitor this topic" => "monitor dit onderwerp",
+"Monitor this Topic" => "Monitor dit onderwerp",
 "Stop Monitoring this Topic" => "Stop monitoring van dit onderwerp",
 "Moderator actions" => "Moderator acties",
 "reported:" => "gemelde:",

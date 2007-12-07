@@ -5372,6 +5372,7 @@ $lang=Array(
 "Vote" => "投票",
 "reply" => "返信",
 "monitor this topic" => "トピック監視開始",
+"Monitor this Topic" => "トピック監視開始",
 "Stop Monitoring this Topic" => "トピック監視中止",
 "Move" => "ページをストラクチャー内で移動する",
 "Delete Selected" => "選択アイテムを削除",

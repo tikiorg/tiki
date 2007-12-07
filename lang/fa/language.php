@@ -3336,6 +3336,7 @@ $lang=Array(
 "reply" => "پاسخ",
 "Save to notepad" => "ذخيره در دفترچه‌ي يادداشت",
 "monitor this topic" => "اين عنوان را ديده‌باني كن",
+"Monitor this Topic" => "اين عنوان را ديده‌باني كن",
 "Stop Monitoring this Topic" => "ديده‌باني اين عنوان با متوقف كن",
 "Moderator actions" => "اعمال ناظم",
 "reported:" => "گزارش داده شده:",
