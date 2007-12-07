@@ -36,7 +36,7 @@ for ($index = 0; $index < count($arrayTrackerId); $index++)
    		} else {
    			$is_categorized = FALSE;
    		}
-		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 			die;
 		}
 	}

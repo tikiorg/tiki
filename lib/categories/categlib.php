@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.10 2007-12-06 20:41:38 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.11 2007-12-07 05:56:40 mose Exp $
  *
  * \brief Categories support class
  *
@@ -286,6 +286,7 @@ class CategLib extends ObjectLib {
 	}
 
 	function get_category_descendants($categId) {
+		global $user,$userlib;
 		$query = "select `categId` from `tiki_categories` where `parentId`=?";
 
 		$result = $this->query($query,array((int) $categId));
@@ -293,7 +294,6 @@ class CategLib extends ObjectLib {
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["categId"];
-
 			$aux = $this->get_category_descendants($res["categId"]);
 			$ret = array_merge($ret, $aux);
 		}
@@ -445,16 +445,18 @@ class CategLib extends ObjectLib {
 
 		while ($res = $result->fetchRow()) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
-			    if (preg_match('/tracker/',$res['type'])&&$res['description']==''){
-                              	$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
-                                $res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
-                                $filed=$trklib->get_field_id($trackerId,"description");
-                                $res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
-                                $res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-                            }
+				if (!$userlib->object_has_one_permission($res['categId'], 'category') 
+					or ($userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categories') and $userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categorized'))) {
+			    if (preg_match('/tracker/',$res['type'])&&$res['description']=='') {
+							$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
+							$res['name']=$trklib->get_isMain_value($trackerId,$res['itemId']);
+							$filed=$trklib->get_field_id($trackerId,"description");
+							$res['description']=$trklib->get_item_value($trackerId,$res['itemId'],$filed);
+							$res['type']=$this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+					}
 			    $ret[] = $res;
-
-			    $objs[] = $res['catObjectId'].'-'.$res['categId'];
+					$objs[] = $res['catObjectId'].'-'.$res['categId'];
+				}
 			}
 		}
 
@@ -1145,8 +1147,8 @@ class CategLib extends ObjectLib {
     function list_forbidden_categories($parentId=0, $parentAllowed='') {
 	global $user, $userlib;
 	if (empty($parentAllowed)) {
-	    global $tiki_p_view_categories;
-	    $parentAllowed = $tiki_p_view_categories;
+	    global $tiki_p_view_categorized;
+	    $parentAllowed = $tiki_p_view_categorized;
 	}
 
 	$query = "select `categId` from `tiki_categories` where `parentId`=?";
@@ -1157,7 +1159,7 @@ class CategLib extends ObjectLib {
 	while ($row = $result->fetchRow()) {
 	    $child = $row['categId'];
 	    if ($userlib->object_has_one_permission($child, 'category')) {
-		if ($userlib->object_has_permission($user, $child, 'category', 'tiki_p_view_categories')) {
+		if ($userlib->object_has_permission($user, $child, 'category', 'tiki_p_view_categorized')) {
 		    $forbidden = array_merge($forbidden, $this->list_forbidden_categories($child, 'y'));
 		} else {
 		    $forbidden[] = $child;
@@ -1300,9 +1302,9 @@ class CategLib extends ObjectLib {
 		global $userlib;
 							
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
-				|| ($userlib->user_has_permission($user,'tiki_p_view_categories') && !$userlib->object_has_one_permission($categoryId,"category"))
+				|| ($userlib->user_has_permission($user,'tiki_p_view_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
 				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_view_categories") 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_view_categorized") 
 				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
 				);
 	}
@@ -1313,9 +1315,9 @@ class CategLib extends ObjectLib {
 	function has_edit_permission($user, $categoryId) {
 		global $userlib;
 		return ($userlib->user_has_permission($user,'tiki_p_admin')
-				|| ($userlib->user_has_permission($user,'tiki_p_edit_categories') && !$userlib->object_has_one_permission($categoryId,"category"))
+				|| ($userlib->user_has_permission($user,'tiki_p_edit_categorized') && !$userlib->object_has_one_permission($categoryId,"category"))
 				|| ($userlib->user_has_permission($user,'tiki_p_admin_categories') && !$userlib->object_has_one_permission($categoryId,"category"))				 
-				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit_categories") 
+				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_edit_categorized") 
 				|| $userlib->object_has_permission($user, $categoryId, "category", "tiki_p_admin_categories")
 				);
 	}

@@ -124,7 +124,7 @@ class DirLib extends TikiLib {
 				if (!is_object($categlib)) {
 					include_once('lib/categories/categlib.php');
 				}
-		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    	unset($tiki_p_view_categorized); // unset this var in case it was set previously
 		    	$perms_array = $categlib->get_object_categories_perms($user, 'directory', $res['categId']);
 		    	if ($perms_array) {
 		    		$is_categorized = TRUE;
@@ -135,7 +135,7 @@ class DirLib extends TikiLib {
 		    		$is_categorized = FALSE;
 		    	}
 
-		    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 		    		$add = FALSE;
 		    	}
 		    }

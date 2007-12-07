@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57 2007-10-15 07:34:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.1 2007-12-07 05:56:38 mose Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -65,7 +65,7 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
    	  } else {
    	    $is_categorized = FALSE;
    	  }
-	  if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	  if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 	    if (!isset($user)){
 	      $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 	      $smarty->assign('errortitle',tra("Please login"));

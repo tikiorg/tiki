@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.1 2007-11-28 21:43:34 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.2 2007-12-07 05:56:37 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$all_categories = $categlib->list_categs();
 	$categories = array();
 	for ($i = 0; $i < count($all_categories); $i++) {
-		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_edit_categories')) {
+		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_edit_categorized')) {
 			$categories[] = $all_categories[$i];
 		}
 	}

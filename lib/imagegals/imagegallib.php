@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97 2007-10-12 07:55:41 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.1 2007-12-07 05:56:40 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1359,7 +1359,7 @@ class ImageGalsLib extends TikiLib {
 		    if (!is_object($categlib)) {
 			include_once('lib/categories/categlib.php');
 		    }
-		    unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    unset($tiki_p_view_categorized); // unset this var in case it was set previously
 		    $perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
 		    if ($perms_array) {
 			$is_categorized = TRUE;
@@ -1370,7 +1370,7 @@ class ImageGalsLib extends TikiLib {
 			$is_categorized = FALSE;
 		    }
 
-		    if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 			$add = FALSE;
 		    }
 		}
