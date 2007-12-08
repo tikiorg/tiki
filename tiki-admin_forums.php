@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.4 2007-12-08 10:12:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.5 2007-12-08 11:01:28 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,6 +103,9 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST['topics_list_pts'] = isset($_REQUEST['topics_list_pts']) ? 'y' : 'n';
 	$_REQUEST['topics_list_lastpost'] = isset($_REQUEST['topics_list_lastpost']) ? 'y' : 'n';
 	$_REQUEST['topics_list_author'] = isset($_REQUEST['topics_list_author']) ? 'y' : 'n';
+	if (empty($_REQUEST['threadOrdering'])) $_REQUEST['threadOrdering'] = '';
+	if (empty($_REQUEST['threadStyle'])) $_REQUEST['threadStyle'] = '';
+	if (empty($_REQUEST['commentsPerPage'])) $_REQUEST['commentsPerPage'] = '';
 
 	if ($_REQUEST["section"] == '__new__')
 		$_REQUEST["section"] = $_REQUEST["new_section"];
