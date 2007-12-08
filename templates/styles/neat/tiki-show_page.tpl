@@ -67,9 +67,11 @@
 <a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' width='16' height='16' /></a>
 {/if}
 
+{*
 {if $prefs.feature_wiki_pdf eq 'y'}
 <a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img src='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}' width='16' height='16' /></a>
 {/if}
+*}
 
 {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}' width='16' height='16' /></a>

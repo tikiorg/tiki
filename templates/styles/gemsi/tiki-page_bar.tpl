@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.25 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.25.2.1 2007-12-08 03:59:49 mose Exp $ *}
 
 <div id="page-bar">
 
@@ -58,9 +58,11 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
 <div class="button2"><a href="tiki-print.php?page={$page|escape:"url"}" class="linkbut">{tr}Print{/tr}</a></div>
 {/if}
 
+{*
 {if $prefs.feature_wiki_pdf eq 'y'}
 <div class="button2"><a href="tiki-config_pdf.php?page={$page|escape:"url"}" class="linkbut">{tr}pdf{/tr}</a></div>
 {/if}
+*}
 
 {if $prefs.feature_wiki_discuss eq 'y'}
 <div class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="linkbut">{tr}Discuss{/tr}</a></div>

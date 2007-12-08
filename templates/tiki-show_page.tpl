@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.7 2007-12-07 05:56:41 mose Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.8 2007-12-08 03:59:49 mose Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -55,10 +55,11 @@
             <img src="pics/icons/email_link.png" border="0" width="16" height="16" alt="{tr}Send a link{/tr}" />
           </a>
         {/if}
-	
+{*	
         {if $prefs.feature_wiki_pdf eq 'y'}
 		<a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img src="pics/icons/page_white_acrobat.png" border="0" width="16" height="16" alt="{tr}pdf{/tr}" /></a>
 	{/if}
+*}
 	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}"><img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Save{/tr}" /></a>
 	{/if}
