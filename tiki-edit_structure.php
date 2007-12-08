@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.2 2007-12-07 21:44:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.3 2007-12-08 09:27:38 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -344,7 +344,8 @@ if ($prefs['feature_wiki_categorize_structure'] == 'y' && $all_editable == 'y') 
 	include_once("categorize_list.php");
 } elseif ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
-	$categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
+	$smarty->assign_by_ref('categories', $categories);
 }
 
 ask_ticket('edit-structure');
