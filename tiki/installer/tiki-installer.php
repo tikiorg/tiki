@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.1 2007-11-04 22:08:08 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.2 2007-12-08 11:12:00 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -327,38 +327,43 @@ function error_and_exit() {
 
         ob_end_clean();
 */
-        print "<html><body>\n<h2><font color='red'>Tiki Installer cannot proceed:</font></h2>\n<pre>\n$errors";
+
+        print "<html><body>\n<h2><IMG SRC=\"img/tiki/tikilogo.png\" ALT=\"\" BORDER=0><br /\>
+	<font color='red'>Tiki Installer cannot proceed</font></h2>\n<pre>\n$errors";
+
         if (!isWindows()) {
-                print "<br />You may either create missing directories and chmod directories manually to 777, or run one of the sets of commands below.
-<b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> after you run the commands below.
+                print "<br /><br />Your options:
 
-If you cannot become root, and are NOT part of the group $wwwgroup:
-        \$ bash
-        \$ cd $docroot
-        \$ chmod +x setup.sh
-        \$ ./setup.sh yourlogin yourgroup 02777
-        Tip: You can find your group using the command 'id'.
 
-If you cannot become root, but are a member of the group $wwwgroup:
-        \$ bash
-        \$ cd $docroot
-        \$ chmod +x setup.sh
-        \$ ./setup.sh mylogin $wwwgroup</i>
+1- With FTP access:
+	a) Change the permissions (chmod) of the directories to 777.
+	b) Create any missing directories
+	c) <a href='tiki-install.php'>Execute the Tiki installer again</a> (Once you have executed these commands, this message will disappear!)
 
-If you can become root:
-        \$ bash
-        \$ cd $docroot
-        \$ chmod +x setup.sh
-        \$ su -c './setup.sh $wwwuser'
+or
 
-If you have problems accessing a directory, check the open_basedir entry in 
+2- With shell (SSH) access, you can run the command below.
+
+	a) Run setup.sh and follow the instructions:
+		\$ bash
+		\$ cd $docroot
+		\$ chmod +x setup.sh
+		\$ ./setup.sh 
+
+		The script will offer you options depending on your server configuration.
+
+	b) <a href='tiki-install.php'>Execute the Tiki installer again</a> (Once you have executed these commands, this message will disappear!)
+
+
+<hr>
+If you have problems accessing a directory, check the open_basedir entry in
 $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
-Once you have executed these commands, this message will disappear!
+<hr>
 
-<a href='http://tikiwiki.org/InstallTiki' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help.
+<a href='http://doc.tikiwiki.org/Installation' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help or <a href='http://tikiwiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
 
-<b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> if you have completed the steps above.";
+";
         }
 	print "</pre></body></html>";
         exit;
