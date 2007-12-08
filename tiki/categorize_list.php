@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.2 2007-12-07 05:56:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.3 2007-12-08 16:48:06 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,6 +25,16 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+	
+	if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_sync_categories'] == 'y' && !$cats
+	 && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
+	 && !$tikilib->page_exists($cat_objid) ) {
+	 	// to pre-populate categories of original page if this is the first creation of a staging page
+		$approvedPageName = substr($cat_objid, strlen($prefs['wikiapproval_prefix']));
+		$cats = $categlib->get_object_categories($cat_type, $approvedPageName);
+		$cats = array_diff($cats,Array($prefs['wikiapproval_approved_category']));		
+	}
+	
 	if ($cat_type == 'wiki page' || $cat_type == 'blog' || $cat_type == 'image gallery' || $cat_type == 'mypage') {
 		$ext = ($cat_type == 'wiki page')? 'wiki':str_replace(' ', '_', $cat_type);
 		$pref = 'feature_'.$ext.'_mandatory_category';
