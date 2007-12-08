@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.5 2007-12-08 20:27:34 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.6 2007-12-08 21:54:38 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -221,7 +221,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$allActions = $actions;
 		$allContributorsActions = $contributorActions;
 	}
-
+	$actions = $logslib->get_more_info($actions);
+	
 	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
 	$smarty->assign_by_ref('userActions', $userActions);
 	$objectActions = $logslib->get_stat_actions_per_field($actions, 'object');
@@ -245,116 +246,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 		$smarty->assign_by_ref('typeVol', $typeVol);
 		$statUserCateg = $logslib->get_actions_per_user_categ($contributorActions, $categNames);
 		$smarty->assign_by_ref('statUserCateg', $statUserCateg);
-	}
-	for ($i = 0; $i < sizeof($actions); ++$i) {
-		if ($actions[$i]['categId'])
-			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
-		if ($bytes = $logslib->get_volume_action($actions[$i])) {
-			if (isset($bytes['add'] ))
-				$actions[$i]['add'] = $bytes['add'];
-			if (isset($bytes['del']))
-				$actions[$i]['del'] = $bytes['del'];
-		}
-		switch ($actions[$i]['objectType']) {
-		case 'wiki page':
-			if (preg_match("/old=(.*)/", $actions[$i]['comment'], $matches))
-				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'].'&amp;old='.$matches[1];
-			else
-				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
-			break;
-		case 'category':
-			$actions[$i]['link'] = 'tiki-browse_categories.php?parentId='.$actions[$i]['object'];
-			if (!empty($categNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $categNames[$actions[$i]['object']];
-			break;
-		case 'forum':
-			if ($actions[$i]['action'] == 'Removed')
-				$actions[$i]['link'] = 'tiki-view_forum.php?forumId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];// threadId dded for debug info
-			else
-				$actions[$i]['link'] = 'tiki-view_forum_thread.php?forumId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
-			if (!isset($forumNames)) {
-				$objects = $commentslib->list_forums(0, -1, 'name_asc', '');
-				$forumNames = array();
-				foreach ($objects['data'] as $object) {
-					$forumNames[$object['forumId']] = $object['name'];
-				}
-			}
-			if (!empty($forumNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $forumNames[$actions[$i]['object']];
-			break;
-		case 'image gallery':
-			if ($actions[$i]['action'] == 'Uploaded')
-				$actions[$i]['link'] = 'tiki-browse_image.php?galleryId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
-			else
-				$actions[$i]['link'] = 'tiki-browse_gallery.php?galleryId='.$actions[$i]['object'];
-			if (!isset($imageGalleryNames)) {
-				global $imagegallib; include_once('lib/imagegals/imagegallib.php');
-				$objects = $imagegallib->list_galleries(0, -1, 'name_asc', 'admin');
-				foreach ($objects['data'] as $object) {
-					$imageGalleryNames[$object['galleryId']] = $object['name'];
-				}
-			}
-			if (!empty($imageGalleryNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $imageGalleryNames[$actions[$i]['object']];
-			break;
-		case 'file gallery':
-			if ($actions[$i]['action'] == 'Uploaded' || $actions[$i]['action'] == 'Downloaded')
-				$actions[$i]['link'] = 'tiki-upload_file.php?galleryId='.$actions[$i]['object'].'&'.$actions[$i]['comment'];
-			else
-				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'];
-			if (!isset($fileGalleryNames)) {
-				include_once('lib/filegals/filegallib.php');
-				$objects = $filegallib->list_file_galleries(0, -1, 'name_asc', 'admin', '');
-				foreach ($objects['data'] as $object) {
-					$fileGalleryNames[$object['galleryId']] = $object['name'];
-				}
-			}
-			if (!empty($fileGalleryNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $fileGalleryNames[$actions[$i]['object']];
-			break;
-		case 'comment':
-			preg_match('/type=([^&]*)(&.*)/', $actions[$i]['comment'], $matches);
-			switch ($matches[1]) {
-			case 'wiki page': case 'wiki+page': case 'wiki%20page':
-				$actions[$i]['link'] = 'tiki-index.php?page='.$actions[$i]['object'];
-				if (preg_match("/old=(.*)&amp;/", $actions[$i]['comment'], $ms))
-					$actions[$i]['link'] .= '&amp;old='.$ms[1];
-				$actions[$i]['link'] .= $matches[2];
-				break;
-			case 'file gallery':
-				$actions[$i]['link'] = 'tiki-list_file_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
-				break;
-			case 'image gallery':
-				$actions[$i]['link'] = 'tiki-browse_gallery.php?galleryId='.$actions[$i]['object'].$matches[2];
-				break;
-			}
-			break;
-		case 'sheet':
-			if (!isset($sheetNames)) {
-				global $sheetlib; include_once('lib/sheet/grid.php');
-				$objects = $sheetlib->list_sheets();
-				foreach ($objects['data'] as $object) {
-					$sheetNames[$object['sheetId']] = $object['title'];
-				}
-			}
-			if (!empty($sheetNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $sheetNames[$actions[$i]['object']];
-			$actions[$i]['link'] = 'tiki-view_sheets.php?sheetId='.$actions[$i]['object'];
-			break;
-		case 'blog':
-
-			if (!isset($blogNames)) {
-				$objects = $tikilib->list_blogs();
-				foreach ($objects['data'] as $object) {
-					$blogNames[$object['blogId']] = $object['title'];
-				}
-		}
-			$actions[$i]['link'] = 'tiki-view_blog.php?'.$actions[$i]['comment'];
-			if (!empty($blogNames[$actions[$i]['object']]))
-				$actions[$i]['object'] = $blogNames[$actions[$i]['object']];
-			break;
-		}
-	}
+	}	
 	if ($showLogin) {
 		$logins = $logslib->list_logs('login', $_REQUEST['selectedUsers'], 0, -1, 'logtime_asc', '', $startDate, $endDate, $actions);
 		$logTimes = $logslib->get_login_time($logins['data'], $startDate, $endDate, $actions);

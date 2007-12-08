@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.9 2007-12-08 20:27:34 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.10 2007-12-08 21:54:38 nkoth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -93,7 +93,7 @@
 </form>
 {/if}
 
-{if $actionlogs}<a href="#Statistic" class="buttom">See Statictics</a>{/if}
+{if $actionlogs}<a href="#Statistics" class="buttom">See Statistics</a>{/if}
 
 <a name="List" />
 <h2>{tr}List{/tr}
@@ -123,7 +123,7 @@
 <td class="{cycle advance=false}">{$actionlogs[ix].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].action}{/tr}</td>
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].objectType}{/tr}</td>
-<td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" title="{tr}View{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
+<td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" target="_blank" title="{tr}View{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}
 <td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
@@ -169,8 +169,8 @@
 </form>
 {/if}
 
-<a name="Statistic" />
-<h2>{tr}Statistic{/tr}
+<a name="Statistics" />
+<h2>{tr}Statistics{/tr}
 {if $selectedUsers}&nbsp;&mdash;&nbsp;{tr}User:{/tr}{foreach  key=ix item=auser from=$users}{if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}{/foreach}{/if}
 {if $selectedGroups}&nbsp;&mdash;&nbsp;{tr}Group:{/tr}{foreach  key=ix item=group from=$groups}{if $selectedGroups[$group] eq 'y'} {$group|escape}{/if}{/foreach}{/if}
 {if $reportCategory}&nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}{/if}
@@ -274,15 +274,15 @@
 <tr>
 <th class="heading">{tr}Object{/tr}</th>
 {foreach key=title item=nb from=$objectActions[0]}
-{if $title ne 'object'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $title ne 'object' and $title ne 'link'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
 {foreach item=stat from=$objectActions name=objectActions}
 <tr>
-<td class="{cycle advance=false}">{$stat.object}</td>
+<td class="{cycle advance=false}">{if $stat.link}<a href="{$stat.link}" target="_blank" title="{tr}View{/tr}">{$stat.object|escape}</a>{else}{$stat.object|escape}{/if}</td>
 {foreach key=a item=nb from=$stat}
-{if $a ne 'object'}<td class="{cycle advance=false}">{$nb}</td>{/if}
+{if $a ne 'object' and $a ne 'link'}<td class="{cycle advance=false}">{$nb}</td>{/if}
 {/foreach}
 <!-- {cycle} -->
 </tr>
