@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.5.2.2 2007-12-08 17:13:03 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.5.2.3 2007-12-08 17:15:43 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,10 +27,9 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 	if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_combine_freetags'] == 'y' && (!$tags || !$tags["data"])
 	 && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
 	 && !$tikilib->page_exists($cat_objid) ) {
-	 	// to pre-populate categories of original page if this is the first creation of a staging page
+	 	// to pre-populate tags of original page if this is the first creation of a staging page
 		$approvedPageName = substr($cat_objid, strlen($prefs['wikiapproval_prefix']));
 		$tags = $freetaglib->get_tags_on_object($approvedPageName, $cat_type);
-		echo ("hi");		
 	}
 	 
 	$taglist = '';
