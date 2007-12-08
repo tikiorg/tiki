@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.1 2007-11-15 14:46:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.2 2007-12-08 20:27:34 nkoth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -397,18 +397,23 @@ class LogsLib extends TikiLib {
 			return '';
 	}
 	function get_stat_actions_per_user($actions) {
+		$stats = $this->get_stat_actions_per_field($actions, 'user');
+		return $stats;
+	}
+	function get_stat_actions_per_field($actions, $field='user') {
 		$stats = array();
 		$actions2 = array();
+		
 		foreach ($actions as $action) {
 			unset($action['categId']);
 			if (!in_array($action, $actions2))
 				$actions2[] = $action;
 		}
 		$actionlogConf = $this->get_all_actionlog_conf();
-		foreach ($actions2 as $action) {
-			$key = $action['user'];
-			if (!array_key_exists($action['user'], $stats)) {
-				$stats[$key]['user'] = $action['user'];
+		foreach ($actions2 as $action) {			
+			$key = $action[$field];
+			if (!array_key_exists($action[$field], $stats)) {
+				$stats[$key][$field] = $action[$field];
 				foreach ($actionlogConf as $conf) {
 					if ($conf['action'] != '*')// don't take category
 						$stats[$key][$conf['action'].'/'.$conf['objectType']] = 0;
@@ -416,7 +421,7 @@ class LogsLib extends TikiLib {
 			}
 			++$stats[$key][$action['action'].'/'.$action['objectType']];
 		}
-		sort($stats); // will sort on the first field user
+		sort($stats); // will sort on the first field
 		return $stats;
 	}
 	function get_stat_contributions_per_group($actions, $selectedGroups) {
