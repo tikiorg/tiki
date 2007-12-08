@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.75 2007-10-08 13:28:31 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/tiki-show_page.tpl,v 1.75.2.1 2007-12-08 03:59:49 mose Exp $ *}
 {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -57,9 +57,11 @@
 <a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}'}</a>
 {/if}
 
+{*
 {if $prefs.feature_wiki_pdf eq 'y'}
 <a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">{html_image file='pics/icons/page_white_acrobat.png' border='0' alt='{tr}pdf{/tr}'}</a>
 {/if}
+*}
 
 {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>

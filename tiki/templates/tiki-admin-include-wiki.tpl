@@ -489,7 +489,7 @@
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Undo{/tr}:</td><td><input type="checkbox" name="feature_wiki_undo" {if $prefs.feature_wiki_undo eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}MultiPrint{/tr}:</td><td><input type="checkbox" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}PDF generation{/tr}:</td><td><input type="checkbox" name="feature_wiki_pdf" {if $prefs.feature_wiki_pdf eq 'y'}checked="checked"{/if}/></td></tr>
+{*    <tr><td class="form">{tr}PDF generation{/tr}:</td><td><input type="checkbox" name="feature_wiki_pdf" {if $prefs.feature_wiki_pdf eq 'y'}checked="checked"{/if}/></td></tr> *}
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $prefs.feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td>{if $prefs.lib_spellcheck eq 'y'}<input type="checkbox" name="wiki_spellcheck" {if $prefs.wiki_spellcheck eq 'y'}checked="checked"{/if}/>{else}{tr}Not Installed{/tr}{/if}</td></tr>
     <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $prefs.feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>

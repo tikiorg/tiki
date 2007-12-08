@@ -17,9 +17,11 @@
 <a title="{tr}Print{/tr}" href="tiki-print.php?page={$page}" class="linkbuttop">{tr}Print{/tr}</a>
 {/if}
 
+{*
 {if $prefs.feature_wiki_pdf eq 'y'}
 <a title="{tr}Create pdf{/tr}" href="tiki-config_pdf.php?page={$page}" class="linkbuttop">{tr}pdf{/tr}</a>
 {/if}
+*}
 
 {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1" class="linkbuttop">{tr}Save{/tr}</a>
