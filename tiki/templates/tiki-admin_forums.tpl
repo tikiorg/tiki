@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.1 2007-11-24 19:37:05 kerrnel22 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.2 2007-12-08 10:12:11 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $prefs.feature_help eq 'y'}
@@ -356,7 +356,7 @@
 {/if}
 
 <a name="editforums" id="editforums"></a>
-<h2>{tr}Edit Existing Forums{/tr}</h2>
+<h2>{tr}List Forums{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -369,6 +369,8 @@
    </td>
 </tr>
 </table>
+
+<form>
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></td>
@@ -403,12 +405,27 @@
   {else}
     <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}Perms{/tr}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt="{tr}Perms{/tr}" /></a>
    {/if}
-  &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Delete{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}Delete{/tr}' /></a>
+  <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Delete{/tr}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}Delete{/tr}' /></a>
 {/if}
+<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
 {/section}
 </table>
+<div style="text-align:right;">
+<script type="text/javascript"> /* <![CDATA[ */
+	document.write('<label for="clickall">{tr}select all{/tr}</label> ');
+	document.write('<input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
+/* ]]> */</script>
+<br />
+{tr}Perform action with checked:{/tr} 
+<select name="batchaction" onchange="show('groups');">
+	<option value="">{tr}with checked{/tr}</option>
+	{if $tiki_p_admin_forum eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
+</select>
+<input type="submit" name="batchaction" value="{tr}OK{/tr}" />
+</div>
+</form>
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#editforums">{tr}Prev{/tr}</a>]
