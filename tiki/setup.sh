@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42 2007-03-06 19:29:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.1 2007-12-08 12:19:48 marclaporte Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,7 @@ if [ -z "$1" ]; then
 	cat <<EOF
 This script assigns necessary permissions for the directories that the
 webserver writes files to. It also creates the (initially empty) cache 
-directories.
+directories, if necessary.
 
 Usage $0 user [group] [rights] [list of virtual host domains]
 
@@ -81,11 +81,23 @@ your system does not support ACL's then type:
 
   $0 $USER yourgroup 02777
 
-Replace yourgroup with your default group.
+Replace yourgroup with your default group. Tip: You can find your group using the command 'id'.
 
-NOTE: If you do execute on of the two last commands, you will not be able 
+If you are on a shared hosting account, you can't become root, and your 
+group is probably the same as your user name. The following should work for you:
+
+  $0 $USER $USER 02777
+
+
+NOTE: If you do execute on of the three last commands, you will not be able 
 to delete certain files created by apache, and will need to ask your system
-administrator to delete them for you if needed.
+administrator to delete them for you if needed. However, you may still be able to 
+rename (move) them.
+
+
+---MultiTiki---
+More information here:
+http://doc.tikiwiki.org/MultiTiki
 
 To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot)
 add a list of domains to the command to create all the needed directories.
@@ -97,7 +109,11 @@ or, if you can't become root:
 
   $0 $USER $AGROUP 02777 domain1 domain2 domain3
 
----------
+
+---Mods----
+More information here:
+http://mods.tikiwiki.org/
+
 special for mods installer
 
   $0 $AUSER all
