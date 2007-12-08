@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.8 2007-12-08 19:20:52 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.9 2007-12-08 20:27:34 nkoth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -266,6 +266,29 @@
 {/foreach}
 </table>
 {tr}Total number of users{/tr}: {$smarty.foreach.userActions.total}
+{/if}
+
+{if $objectActions|@count ne 0}
+<table class="normal">
+<caption>{tr}Number of actions per object{/tr}</caption>
+<tr>
+<th class="heading">{tr}Object{/tr}</th>
+{foreach key=title item=nb from=$objectActions[0]}
+{if $title ne 'object'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{/foreach}
+</tr>
+{cycle values="even,odd" print=false}
+{foreach item=stat from=$objectActions name=objectActions}
+<tr>
+<td class="{cycle advance=false}">{$stat.object}</td>
+{foreach key=a item=nb from=$stat}
+{if $a ne 'object'}<td class="{cycle advance=false}">{$nb}</td>{/if}
+{/foreach}
+<!-- {cycle} -->
+</tr>
+{/foreach}
+</table>
+{tr}Total number of objects{/tr}: {$smarty.foreach.objectActions.total}
 {/if}
 
 {if $showCateg eq 'y' and $tiki_p_admin eq 'y'}

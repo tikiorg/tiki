@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.4 2007-11-17 08:11:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_actionlog.php,v 1.47.2.5 2007-12-08 20:27:34 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -224,6 +224,8 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 
 	$userActions = $logslib->get_stat_actions_per_user($contributorActions);
 	$smarty->assign_by_ref('userActions', $userActions);
+	$objectActions = $logslib->get_stat_actions_per_field($actions, 'object');
+	$smarty->assign_by_ref('objectActions', $objectActions);
 	$groupContributions = $logslib->get_stat_contributions_per_group($allContributorsActions, $selectedGroups);
 	$smarty->assign_by_ref('groupContributions', $groupContributions);
 	$userContributions = $logslib->get_stat_contributions_per_user($contributorActions);
