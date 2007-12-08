@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-12-07 05:56:42 $
-# $Author: mose $
+# $Date: 2007-12-08 12:53:18 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4183,7 +4183,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
