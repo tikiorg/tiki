@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.7 2007-12-08 17:59:57 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.8 2007-12-08 19:20:52 nkoth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -255,7 +255,7 @@
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
-{foreach item=stat from=$userActions}
+{foreach item=stat from=$userActions name=userActions}
 <tr>
 <td class="{cycle advance=false}">{$stat.user}</td>
 {foreach key=a item=nb from=$stat}
@@ -265,6 +265,7 @@
 </tr>
 {/foreach}
 </table>
+{tr}Total number of users{/tr}: {$smarty.foreach.userActions.total}
 {/if}
 
 {if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
