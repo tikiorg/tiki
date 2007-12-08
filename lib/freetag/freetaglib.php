@@ -287,6 +287,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$bindvals = array_merge($bindvals, array($findesc, $findesc));
 	}
 	
+	global $prefs;
+	if ($prefs['feature_wikiapproval'] == 'y') {
+		$mid .= " AND o.`itemId` not like ?";
+		$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
+	}
 	// We must adjust for duplicate normalized tags appearing multiple times in the join by 
 	// counting only the distinct tags. It should also work for an individual user.
 	
@@ -1012,12 +1017,21 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$maxResults = (int) $maxResults;
 		if( $maxResults <= 0 )
 			$maxResults = 10;
+
+		$mid = " oa.objectId <> ob.objectId	AND ob.type = ? AND oa.type = ? AND oa.itemId = ?";
+		$bindvals = array($type, $type, $objectId);
 			
+		global $prefs;
+		if ($prefs['feature_wikiapproval'] == 'y') {
+			$mid .= " AND ob.`itemId` not like ?";
+			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
+		}
+		
 		switch( $algorithm )
 		{
 		case 'basic': // {{{
 			$minCommon = (int) $this->get_preference( 'morelikethis_basic_mincommon', 2 );
-
+				
 			$query = "
 				SELECT
 					ob.itemId pageName, COUNT(DISTINCT fb.tagId) cnt
@@ -1026,25 +1040,16 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId
 					INNER JOIN tiki_freetagged_objects fb USING(tagId)
 					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
-				WHERE
-					oa.objectId <> ob.objectId
-					AND ob.type = '$type'
-					AND oa.type = ? AND oa.itemId = ?
-				GROUP BY
+				WHERE" . $mid .					
+				"GROUP BY
 					ob.itemId
 				HAVING
-					cnt >= $minCommon
+					cnt >= ?
 				ORDER BY
 					cnt DESC, RAND()
-				LIMIT $maxResults
+				LIMIT ?
 				";
-
-			$result = $this->query( $query, array( $type, $objectId ) );
-			$tags = array();
-			while( $row = $result->fetchRow() )
-				$tags[] = $row;
-
-			return $tags;
+			
 		// }}}
 
 		case 'weighted': // {{{
@@ -1059,28 +1064,28 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 					INNER JOIN tiki_freetagged_objects fb USING(tagId)
 					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
 					INNER JOIN tiki_freetagged_objects fc ON fb.tagId = fc.tagId
-				WHERE
-					oa.objectId <> ob.objectId
-					AND ob.type = '$type'
-					AND oa.type = ? AND oa.itemId = ?
-				GROUP BY
+				WHERE " . $mid . 
+				" GROUP BY
 					ob.itemId
 				HAVING
-					having_cnt >= $minCommon
-				ORDER BY
-					-- Sort based on the global popularity of all tags in common
+					having_cnt >= ?
+				ORDER BY					
 					sort_cnt DESC, RAND()
-				LIMIT $maxResults
-				";
-
-			$result = $this->query( $query, array( $type, $objectId ) );
-			$tags = array();
-			while( $row = $result->fetchRow() )
-				$tags[] = $row;
-
-			return $tags;
+				LIMIT ?
+				";	
+			// Sort based on the global popularity of all tags in common
 		// }}}
 		}
+		
+		$bindvals[] = $minCommon;
+		$bindvals[] = $maxResults;
+		
+		$result = $this->query( $query, $bindvals );
+		$tags = array();
+		while( $row = $result->fetchRow() )
+			$tags[] = $row;
+
+		return $tags;
 	}
 	
 	/**
