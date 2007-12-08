@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.3 2007-11-25 22:12:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.4 2007-12-08 10:12:11 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,6 +64,12 @@ if (isset($_REQUEST["remove"])) {
   } else {
     key_get($area);
   }
+}
+if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
+	check_ticket('admin-forums');
+	foreach($_REQUEST['checked'] as $id) {
+		$commentslib->remove_forum($id);
+	}
 }
 
 if (isset($_REQUEST["save"])) {
