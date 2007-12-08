@@ -167,12 +167,12 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				<li>{tr}If you upgrade from a previous 1.9.x version, use tiki_1.8to1.9, too. (ex.: 1.9.2 to 1.9.5){/tr}</li>
 			</ol>
 		    <tr><td colspan="2">
-		    	{tr}For database update from 1.7.x, please visit <a target="help" href="http://tikiwiki.org/UpgradeTo18">Tiki database 1.7.x to 1.8x instructions{/tr}</a>
+		    	{tr}For database update from 1.7.x, please visit <a target="help" href="http://doc.tikiwiki.org/Upgrade+1.7+to+1.8">Tiki database 1.7.x to 1.8x instructions{/tr}</a>
 
 			
 		</td></tr>
 		    <tr><td colspan="2">
-		    	{tr}For information about tiki-secdb_*.sql files, please see <a target="help" href="http://tikiwiki.org/AdminSecurity">http://tikiwiki.org/AdminSecurity{/tr}</a>
+		    	{tr}For information about tiki-secdb_*.sql files, please see <a target="help" href="http://doc.tikiwiki.org/Security+Admin">http://doc.tikiwiki.org/Security+Admin{/tr}</a>
 
 			
 		</td></tr>		
