@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.3 2007-12-04 11:10:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.4 2007-12-08 16:03:59 pkdille Exp $ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>
@@ -149,7 +149,7 @@
 	</tr>
         
         <tr class="form">
-          <td><label>{tr}Configuration bar settings are the kept for all forums during the user session:{/tr}</label></td>
+          <td><label>{tr}Configuration bar settings are kept for all forums during the user session:{/tr}</label></td>
 	  <td><input type="checkbox" name="forum_thread_user_settings_keep"
 		{if $prefs.forum_thread_user_settings_keep eq 'y'}checked="checked"{/if} />
 	  </td>
