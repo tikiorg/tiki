@@ -195,11 +195,13 @@ class MenuLib extends TikiLib {
 		$url = urldecode($_SERVER['REQUEST_URI']);
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
 			$pos = strpos($url, '/'.$option['sefurl']);
+			$lg = 1 + strlen($option['sefurl']);
 		} else {
 			$pos = strpos($url, $option['url']);
+			$lg = strlen($option['url']);
 		}
 		if ($pos !== false) {
-			$last = $pos + strlen($option['url']);
+			$last = $pos + $lg;
 			if ($last >= strlen($url) || $url['last'] == '#' || $url['last'] == '?' || $url['last'] == '&') {
 				return true;
 			}
