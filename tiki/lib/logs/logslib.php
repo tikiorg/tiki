@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.2 2007-12-08 20:27:34 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.3 2007-12-08 21:09:31 nkoth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -415,7 +415,7 @@ class LogsLib extends TikiLib {
 			if (!array_key_exists($action[$field], $stats)) {
 				$stats[$key][$field] = $action[$field];
 				foreach ($actionlogConf as $conf) {
-					if ($conf['action'] != '*')// don't take category
+					if ($conf['status'] == 'v' && $conf['action'] != '*')// don't take category
 						$stats[$key][$conf['action'].'/'.$conf['objectType']] = 0;
 				}
 			}
@@ -467,7 +467,7 @@ class LogsLib extends TikiLib {
 			if (!array_key_exists($key, $stats)) {
 				$stats[$key]['category'] = $key? $categNames[$key]: '';
 				foreach ($actionlogConf as $conf) {
-					if ($conf['action'] != '*')// don't take category
+					if ($conf['status'] == 'v' && $conf['action'] != '*')// don't take category
 						$stats[$key][$conf['action'].'/'.$conf['objectType']] = 0;
 				}
 			}
@@ -559,7 +559,7 @@ class LogsLib extends TikiLib {
 				$stats[$key]['category'] = $categNames[$action['categId']];
 				$stats[$key]['user'] = $action['user'];
 				foreach ($actionlogConf as $conf) {
-					if ($conf['action'] != '*')// don't take category
+					if ($conf['status'] == 'v' && $conf['action'] != '*')// don't take category
 						$stats[$key][$conf['action'].'/'.$conf['objectType']] = 0;
 				}
 			}
