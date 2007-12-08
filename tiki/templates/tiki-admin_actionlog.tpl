@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.6 2007-11-17 13:13:44 xavidp Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.7 2007-12-08 17:59:57 nkoth Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -197,7 +197,7 @@
 </table>
 {/if}
 
-{if $showCateg eq 'y' and $volCateg|@count ne 0 and tiki_p_admin eq 'y'}
+{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
 <table class="smallnormal">
 <caption>{tr}Volumn per category{/tr}</caption>
 <tr>
@@ -267,7 +267,7 @@
 </table>
 {/if}
 
-{if $showCateg eq 'y' and tiki_p_admin eq 'y'}
+{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
 <table class="normal">
 <caption>{tr}Number of actions per category{/tr}</caption>
 <tr>
