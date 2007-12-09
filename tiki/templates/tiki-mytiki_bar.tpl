@@ -1,5 +1,5 @@
 <div>
-{if $prefs.feature_mootools eq 'y'}
+{if $prefs.feature_mootools eq 'y' and $prefs.feature_ajax eq 'y'}
 {include file="tiki-mytiki_mootabs.tpl"}
 {else}
 <table>
