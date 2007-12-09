@@ -1,17 +1,14 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.9 2007-06-26 18:25:45 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_thumb.php,v 1.9.2.1 2007-12-09 16:04:07 frank_p Exp $ */
 function wikiplugin_thumb_help() {
 	return tra("Displays the thumbnail for an image").":<br />~np~{THUMB(image=>url,id=url,max=>,float=>,url=>,original=y, sticky=n)}".tra("description")."{THUMB}~/np~";
 }
-
 function wikiplugin_thumb($data, $params) {
 	global $smarty, $tikidomain;
 	extract ($params,EXTR_SKIP);
-
 	if (!isset($data) or !$data) {
 		$data = '&nbsp;';
 	}
-
 	if (!isset($max)) {
 		$max = 84;
 	}
@@ -25,11 +22,9 @@ function wikiplugin_thumb($data, $params) {
 	} else {
 		$float = "none";
 	}
-
 	if (!isset($url)) {
 		$url = "javascript:void()";
 	}
-
 	if (empty($image)) {
 		if (empty($id)) {
 			return "''no image''";
@@ -63,7 +58,6 @@ function wikiplugin_thumb($data, $params) {
 		list($width, $height, $type, $attr) = getimagesize($image);
 		$imageOver = $image;
 	}
-
 	if ($width > $max or $height > $max) {
 		if ($width > $height) {
 			$factor = $width / $max;
@@ -78,8 +72,8 @@ function wikiplugin_thumb($data, $params) {
 	}
 	$html = '';
 	if (!$smarty->get_template_vars('overlib_loaded')) {
-		$html = '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
-		$html.= '<script type="text/javascript" src="lib/overlib.js"></script>';
+		$html = '<div id=\"overDiv\" style=\"position:absolute; visibility:hidden; z-index:1000;\"></div>';
+		$html.= '<script type=\"text/javascript\" src=\"lib/overlib.js\"></script>';
 		$smarty->assign('overlib_loaded',1);
 	}
 	$html.= "<a href='$url' style='float:$float;$style' ";
@@ -89,8 +83,6 @@ function wikiplugin_thumb($data, $params) {
 	}
 	$html .= ");\" onmouseout='nd();' >";
 	$html.= "<img src='$image' width='$twidth' height='$theight' /></a>";
-
 	return $html;
 }
-
 ?>
