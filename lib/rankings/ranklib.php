@@ -12,10 +12,18 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_top_pages($limit) {
-		global $user;
-		$query = "select `pageName`, `hits` from `tiki_pages` order by `hits` desc";
+		global $user, $prefs;
+		
+		$bindvals = array();
+		$mid = '';		
+		if ($prefs['feature_wikiapproval'] == 'y') {
+			$mid = " WHERE `pageName` not like ?";
+			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
+		}
+		
+		$query = "select `pageName`, `hits` from `tiki_pages` $mid order by `hits` desc";
 
-		$result = $this->query($query,array());
+		$result = $this->query($query, $bindvals);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
@@ -36,11 +44,19 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_top_pagerank($limit) {
-		global $user;
+		global $user, $prefs;
 		$this->pageRank();
 
-		$query = "select `pageName`, `pageRank` from `tiki_pages` order by `pageRank` desc";
-		$result = $this->query($query,array());
+		$bindvals = array();
+		$mid = '';		
+		if ($prefs['feature_wikiapproval'] == 'y') {
+			$mid = " WHERE `pageName` not like ?";
+			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
+		}
+		
+		$query = "select `pageName`, `pageRank` from `tiki_pages` $mid order by `pageRank` desc";
+		
+		$result = $this->query($query, $bindvals);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
@@ -61,10 +77,18 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_last_pages($limit) {
-		global $user;
-		$query = "select `pageName`,`lastModif`,`hits` from `tiki_pages` order by `lastModif` desc";
+		global $user, $prefs;
+		
+		$bindvals = array();
+		$mid = '';		
+		if ($prefs['feature_wikiapproval'] == 'y') {
+			$mid = " WHERE `pageName` not like ?";
+			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
+		}
+		
+		$query = "select `pageName`,`lastModif`,`hits` from `tiki_pages` $mid order by `lastModif` desc";
 
-		$result = $this->query($query,array());
+		$result = $this->query($query, $bindvals);
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
