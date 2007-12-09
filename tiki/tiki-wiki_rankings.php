@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rankings.php,v 1.16.2.1 2007-11-08 21:31:12 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rankings.php,v 1.16.2.2 2007-12-09 19:17:57 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,12 +36,19 @@ if ($tiki_p_view != 'y') {
 	die;
 }
 
-// Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["limit"])) {
 	$limit = 10;
 } else {
 	$limit = $_REQUEST["limit"];
 }
+
+if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
+	$smarty->assign('categIdstr', $_REQUEST["categId"]);
+	$categs = split(",",$_REQUEST["categId"]);
+} else {
+	$categs = array();	
+}
+$smarty->assign('categId',$categs);
 
 $allrankings = array(
 	array(
@@ -80,7 +87,7 @@ $smarty->assign_by_ref('limit', $limit);
 // Top Authors
 $rankings = array();
 
-$rk = $ranklib->$which($limit);
+$rk = $ranklib->$which($limit, $categs);
 $rank["data"] = $rk["data"];
 $rank["title"] = $rk["title"];
 $rank["y"] = $rk["y"];
