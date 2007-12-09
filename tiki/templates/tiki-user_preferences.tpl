@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.8 2007-12-09 08:55:30 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.9 2007-12-09 08:58:18 pkdille Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -46,7 +46,7 @@
   {cycle values="odd,even" print=false}
   <table class="normal">
 
-    <tr id="1">
+    <tr>
       <td class="heading" colspan="2">{tr}Personal Information{/tr}</td>
     </tr>
   
@@ -165,10 +165,8 @@
         </tr>
       {/if}
     {/section}
-    </td>
-    </tr>
 
-    <tr id="2">
+    <tr>
       <td class="heading" colspan="2">{tr}Preferences{/tr}</td>
     </tr>
   
@@ -208,7 +206,7 @@
         <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
         <td class="{cycle}">
           <select name="mystyle">
-            <option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
+            <option value="{$prefs.site_style}" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
               {section name=ix loop=$styles}
                 {if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
                   <option value="{$styles[ix]|escape}" {if $user_prefs.theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
@@ -263,7 +261,7 @@
           {foreach key=tz item=tzinfo from=$timezones}
             {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}
             {math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-            <option value="{$tz}"{if $user_prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+            <option value="{$tz|escape}"{if $user_prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz|escape} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
           {/foreach}
         </select>
       </td>
@@ -308,7 +306,7 @@
     {/if}
 
     {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-      <tr id="3">
+      <tr>
         <td class="heading" colspan="2">{tr}User Messages{/tr}</td>
       </tr>
     
@@ -395,7 +393,7 @@
       </tr>
     {/if}
 
-    <tr id="MyTiki">
+    <tr>
       <td class="heading" colspan="2">{tr}My Tiki{/tr}</td>
     </tr>
 
@@ -489,7 +487,7 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="normal">
-    <tr id="4">
+    <tr>
       <td class="heading" colspan="2">{tr}Account Information{/tr}</td>
     </tr>
     
