@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.6 2007-11-22 18:09:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.7 2007-12-09 21:26:51 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,9 +90,22 @@ if (isset($_REQUEST["new_prefs"])) {
 		if (isset($_REQUEST["mystyle"])) {
 			if ($user == $userwatch) {
 				$t = $tikidomain? $tikidomain.'/':'';
-				$headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$_REQUEST['mystyle'], 51);
+                                if ($_REQUEST["mystyle"] == "") {
+                                  //If mystyle is empty --> user has selected "Site Default" theme
+                                  $sitestyle = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", 'style');
+		                  $headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$sitestyle, 51);
+                                }
+                                else  {
+				  $headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$_REQUEST['mystyle'], 51);
+                                }
 			}
-			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
+                        
+                        if ($_REQUEST["mystyle"] == "") {
+			  $tikilib->set_user_preference($userwatch, 'theme', "");
+                        }
+                        else {
+                          $tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
+                        }
 		}
 	}
 

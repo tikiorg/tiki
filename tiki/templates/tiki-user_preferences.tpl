@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.9 2007-12-09 08:58:18 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.10 2007-12-09 21:26:51 pkdille Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -206,7 +206,7 @@
         <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
         <td class="{cycle}">
           <select name="mystyle">
-            <option value="{$prefs.site_style}" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
+            <option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
               {section name=ix loop=$styles}
                 {if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
                   <option value="{$styles[ix]|escape}" {if $user_prefs.theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
