@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.2 2007-12-09 16:47:05 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.3 2007-12-09 16:50:00 pkdille Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
@@ -16,7 +16,7 @@
   {/if}
 </h1>
 
-{if $prefs.feature_mootools eq 'y'}
+{if $prefs.feature_mootools eq 'y' and $prefs.feature_ajax eq 'y'}
   {include file=tiki-mytiki_mootabs.tpl}
 {else}
   {include file=tiki-mytiki_bar.tpl}
