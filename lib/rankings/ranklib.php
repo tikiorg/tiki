@@ -17,7 +17,7 @@ class RankLib extends TikiLib {
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
-			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
@@ -63,7 +63,7 @@ class RankLib extends TikiLib {
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
-			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
@@ -107,7 +107,7 @@ class RankLib extends TikiLib {
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
-			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
@@ -579,7 +579,7 @@ class RankLib extends TikiLib {
 		$bindvals = array();
 		$mid = '';
 		if ($categ) {
-			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE tob.`type` = 'wiki page' AND (tco.`categId` = ?";
 			$bindvals[] = $categ[0]; 	
 			for ($i = 1; $i < count($categ); $i++) {
 				$mid .= " OR tco.`categId` = " . $categ[$i];
