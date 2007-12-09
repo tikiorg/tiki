@@ -11,6 +11,7 @@
 <option value="50" {if $limit eq 50}selected="selected"{/if}>{tr}Top 50{/tr}</option>
 <option value="100" {if $limit eq 100}selected="selected"{/if}>{tr}Top 100{/tr}</option>
 </select>
+{if $categIdstr}<input type="hidden" name="categId" value="{$categIdstr}" />{/if}
 <input type="submit" name="selrank" value="{tr}View{/tr}" />
 </form>
 <br /><br />

@@ -11,17 +11,30 @@ class RankLib extends TikiLib {
 		$this->TikiLib($db);
 	}
 
-	function wiki_ranking_top_pages($limit) {
+	function wiki_ranking_top_pages($limit, $categ=array()) {
 		global $user, $prefs;
 		
 		$bindvals = array();
-		$mid = '';		
+		$mid = '';
+		if ($categ) {
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$bindvals[] = $categ[0]; 	
+			for ($i = 1; $i < count($categ); $i++) {
+				$mid .= " OR tco.`categId` = " . $categ[$i];
+			}
+			$mid .= ")";
+		}
+		
 		if ($prefs['feature_wikiapproval'] == 'y') {
-			$mid = " WHERE `pageName` not like ?";
+			if ($mid) {
+				$mid .= " AND tp.`pageName` not like ?";
+			} else {
+				$mid .= " WHERE tp.`pageName` not like ?";	
+			}
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select `pageName`, `hits` from `tiki_pages` $mid order by `hits` desc";
+		$query = "select tp.`pageName`, tp.`hits` from `tiki_pages` tp $mid order by `hits` desc";
 
 		$result = $this->query($query, $bindvals);
 		$ret = array();
@@ -43,18 +56,30 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function wiki_ranking_top_pagerank($limit) {
+	function wiki_ranking_top_pagerank($limit, $categ=array()) {
 		global $user, $prefs;
 		$this->pageRank();
 
 		$bindvals = array();
-		$mid = '';		
+		$mid = '';
+		if ($categ) {
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$bindvals[] = $categ[0]; 	
+			for ($i = 1; $i < count($categ); $i++) {
+				$mid .= " OR tco.`categId` = " . $categ[$i];
+			}
+			$mid .= ")";
+		}
 		if ($prefs['feature_wikiapproval'] == 'y') {
-			$mid = " WHERE `pageName` not like ?";
+			if ($mid) {
+				$mid .= " AND tp.`pageName` not like ?";
+			} else {
+				$mid .= " WHERE tp.`pageName` not like ?";	
+			}
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select `pageName`, `pageRank` from `tiki_pages` $mid order by `pageRank` desc";
+		$query = "select tp.`pageName`, tp.`pageRank` from `tiki_pages` tp $mid order by `pageRank` desc";
 		
 		$result = $this->query($query, $bindvals);
 		$ret = array();
@@ -76,17 +101,29 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function wiki_ranking_last_pages($limit) {
+	function wiki_ranking_last_pages($limit, $categ=array()) {
 		global $user, $prefs;
 		
 		$bindvals = array();
-		$mid = '';		
+		$mid = '';
+		if ($categ) {
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$bindvals[] = $categ[0]; 	
+			for ($i = 1; $i < count($categ); $i++) {
+				$mid .= " OR tco.`categId` = " . $categ[$i];
+			}
+			$mid .= ")";
+		}
 		if ($prefs['feature_wikiapproval'] == 'y') {
-			$mid = " WHERE `pageName` not like ?";
+			if ($mid) {
+				$mid .= " AND tp.`pageName` not like ?";
+			} else {
+				$mid .= " WHERE tp.`pageName` not like ?";	
+			}
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
-		$query = "select `pageName`,`lastModif`,`hits` from `tiki_pages` $mid order by `lastModif` desc";
+		$query = "select tp.`pageName`,tp.`lastModif`,tp.`hits` from `tiki_pages` tp $mid order by `lastModif` desc";
 
 		$result = $this->query($query, $bindvals);
 		$ret = array();
@@ -536,11 +573,22 @@ class RankLib extends TikiLib {
 		return $retval;
 	}
 
-	function wiki_ranking_top_authors($limit) {
+	function wiki_ranking_top_authors($limit, $categ=array()) {
 		global $user;
-		$query = "select distinct `user`, count(*) as `numb` from `tiki_pages` group by `user` order by ".$this->convert_sortmode("numb_desc");
+		
+		$bindvals = array();
+		$mid = '';
+		if ($categ) {
+			$mid .= " INNER JOIN (`tiki_objects` as tob, `tiki_category_objects` as tco) ON (tp.`pageName` = tob.`itemId` and tob.`objectId` = tco.`catObjectId`) WHERE (tco.`categId` = ?";
+			$bindvals[] = $categ[0]; 	
+			for ($i = 1; $i < count($categ); $i++) {
+				$mid .= " OR tco.`categId` = " . $categ[$i];
+			}
+			$mid .= ")";
+		}
+		$query = "select distinct tp.`user`, count(*) as `numb` from `tiki_pages` tp $mid group by `user` order by ".$this->convert_sortmode("numb_desc");
 
-		$result = $this->query($query,array(),$limit,0);
+		$result = $this->query($query,$bindvals,$limit,0);
 		$ret = array();
 		$retu = array();
 
