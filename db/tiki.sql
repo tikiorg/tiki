@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-12-08 12:53:18 $
+# $Date: 2007-12-10 16:13:58 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2638,6 +2638,7 @@ CREATE TABLE tiki_preferences (
   value text,
   PRIMARY KEY  (name)
 ) ENGINE=MyISAM;
+INSERT INTO `tiki_preferences` (name, value) VALUES ('pref_syntax', '1.10');
 # --------------------------------------------------------
 
 #

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.2 2007-11-13 15:22:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.3 2007-12-10 16:14:00 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "load_threshold",
         "site_busy_msg",
         "site_closed_msg",
-        "helpurl"
+        "helpurl",
+        "pref_syntax",
     );
 
     foreach ($pref_simple_values as $svitem) {
