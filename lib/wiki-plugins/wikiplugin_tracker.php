@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.2 2007-10-22 06:16:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.3 2007-12-10 18:59:18 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -376,6 +376,9 @@ function wikiplugin_tracker($data, $params) {
 			$back.= '<table class="wikiplugin_tracker">';
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
+				if ($f['isPublic'] == 'n') {
+					continue;
+				}
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
 				}
@@ -478,7 +481,7 @@ function wikiplugin_tracker($data, $params) {
 							if ($f['type'] == 'R') {
 								foreach ($list as $item) {
 									$selected = $f['value'] == $item ? 'checked="checked"' : '';
-									$back .= $item.' <input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.'>';
+									$back .= '<div class="radio"><input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.'>'.$item.'</div>';
 								}
 							} else {
 								$back.= '<select name="track['.$f["fieldId"].']">';
