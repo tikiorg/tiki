@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.3 2007-10-19 20:55:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.4 2007-12-10 22:23:40 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -142,7 +142,7 @@ title="{tr}Edit Account Settings{/tr}: {$users[user].user}"><img border="0" alt=
 <td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr}">{$users[user].user}</a></td>
 {if $prefs.login_is_email ne 'y'}<td>{$users[user].email}</td>{/if}
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
-<td class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="pics/icons/key.png" width='16' height='16' /></a>{/if}</td>
+<td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="pics/icons/key.png" width='16' height='16' /></a></td>
 <td>
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
