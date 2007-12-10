@@ -17,7 +17,7 @@ function smarty_block_ajax_href($params, $content, &$smarty)
     if ($prefs['feature_ajax'] != 'y') {
 	return " href=\"$url\" ";
     } else {
-	return " href=\"#\" title=\"$template\" onclick=\"loadComponent('$url','$template','$htmlelement');\" ";
+	return " href=\"#\" onclick=\"loadComponent('$url','$template','$htmlelement');return false;\" ";
     }
 }
 
