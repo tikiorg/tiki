@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.6 2007-12-07 22:09:18 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.7 2007-12-10 22:31:38 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -6,7 +6,7 @@
 <div id="wikihelp-tab">
 {if count($plugins) ne 0 and !($wysiwyg ne 'y' and $prefs.wysiwyg_wiki_parsed ne 'y' and $prefs.wysiwyg_wiki_semi_parsed ne 'y')}
   <div style="text-align: right;">
-    <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');">{tr}Show Plugins Help{/tr}</a>
+    <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');" onclick="needToConfirm = false;">{tr}Show Plugins Help{/tr}</a>
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
   </div>
 {/if}
