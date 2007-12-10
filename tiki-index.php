@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.9 2007-12-07 21:20:35 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.10 2007-12-10 16:26:20 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -670,6 +670,8 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		if ($tikilib->user_has_perm_on_object($user,$stagingPageName,'wiki page','tiki_p_edit')) {
 			$smarty->assign('canEditStaging', 'y');
 		} 	
+	} elseif ($prefs['wikiapproval_staging_category'] > 0 && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
+		$smarty->assign('needsFirstApproval', 'y');		
 	}
 	if ($prefs['wikiapproval_outofsync_category'] == 0 || $prefs['wikiapproval_outofsync_category'] > 0 && in_array($prefs['wikiapproval_outofsync_category'], $cats)) {
 		if (isset($approvedPageName)) $smarty->assign('outOfSync', 'y');

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.8 2007-12-08 03:59:49 mose Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.9 2007-12-10 16:26:19 nkoth Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -20,6 +20,11 @@
 	{tr}Latest changes will be synchronized after approval.{/tr}
 	{/if}
 {/if}
+</div>
+{/if}
+{if $needsFirstApproval == 'y' and $canApproveStaging == 'y'}
+<div class="tocnav">
+{tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
 </div>
 {/if}
 
