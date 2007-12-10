@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.11 2007-12-07 05:56:40 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.12 2007-12-10 21:01:21 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -503,7 +503,7 @@ class CategLib extends ObjectLib {
 			$return_perms = array(); // initialize array for storing perms to be returned
 
 			if (!$cachelib->isCached("categories_permission_names")) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
 				$cachelib->cacheItem("categories_permission_names",serialize($perms));
 			} else {
 				$perms = unserialize($cachelib->getCached("categories_permission_names"));
