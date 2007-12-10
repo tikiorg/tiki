@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.6 2007-12-05 15:40:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.7 2007-12-10 15:18:38 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -124,6 +124,7 @@ class WikiLib extends TikiLib {
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
 	function wiki_rename_page($oldName, $newName) {
+		global $prefs, $tikilib;
 		// if page already exists, stop here
 		if ($this->page_exists($newName)) {
 			// if it is a case change of same page: allow it, else stop here
@@ -288,6 +289,10 @@ class WikiLib extends TikiLib {
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->rename_wiki_page($oldName, $newName);
+
+		if ($prefs['wikiHomePage'] == $oldName) {
+			$tikilib->set_preference('wikiHomePage', $newName);
+		}
 
 		return true;
 	}
