@@ -1,5 +1,6 @@
 <div class="navbar">
   <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
+</div>
 
 {include file="blog-heading.tpl"}
 
