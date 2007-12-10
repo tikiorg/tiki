@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.4 2007-11-08 18:18:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.5 2007-12-10 16:14:00 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -336,6 +336,13 @@
                                                 </div>
                                         </td>
                                 </tr>
+<tr>
+<td class="form"><label for="site_nav_seper">{tr}Preference syntax{/tr}:</label></td>
+<td><select name="pref_syntax">
+<option value="1.9" {if $prefs.pref_syntax eq '1.9'}selected="selected"{/if}>1.9 - $feature_foobar</option>
+<option value="1.10" {if $prefs.pref_syntax eq '1.10'}selected="selected"{/if}>1.10 - $prefs.feature_foobar, $prefs['feature_foobar']</option>
+</select></td>
+</tr>
 
       <tr>
         <td class="button" colspan='2'>
