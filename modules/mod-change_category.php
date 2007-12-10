@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.7 2007-12-07 05:56:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.8 2007-12-10 14:34:55 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 // param: id, shy, notop, detail, categorize,multiple,group,path, add, del
@@ -36,6 +36,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
   $cat_objid = $_REQUEST['page'];
   
   $categs = $categlib->list_categs($id);
+	global $tiki_p_admin;
 
 	if ($tiki_p_admin != 'y') {
 		foreach ($categs as $i=>$cat) {
