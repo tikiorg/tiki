@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.4 2007-12-11 12:49:55 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.5 2007-12-11 13:05:38 pkdille Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -44,60 +44,60 @@
 
 {if $prefs.feature_ajax eq 'y'}
   <div class="navbar">
-    <a class="linkbut {if $type eq ''} highlight{/if}"  href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
+    <a class="linkbut" {if $type eq ''}id="highlight{/if} href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
 
     {if $prefs.feature_wiki eq 'y'}
-      <a class="linkbut {if $type eq "wiki page"} highlight{/if}"  href="javascript:setObjectType('wiki page','typeWikiPage');" id="typeWikiPage">{tr}Wiki pages{/tr}</a>
+      <a class="linkbut" {if $type eq "wiki page"} id="highlight"{/if} href="javascript:setObjectType('wiki page','typeWikiPage');" id="typeWikiPage">{tr}Wiki pages{/tr}</a>
     {/if}
 
     {if $prefs.feature_galleries eq 'y'}
-      <a class="linkbut {if $type eq 'image gallery'} highlight{/if}"  href="javascript:setObjectType('image gallery','typeImageGalleries');" id="typeImageGalleries">{tr}Image galleries{/tr}</a>
+      <a class="linkbut" {if $type eq 'image gallery'} id="highlight"{/if} href="javascript:setObjectType('image gallery','typeImageGalleries');" id="typeImageGalleries">{tr}Image galleries{/tr}</a>
     {/if}
 
     {if $prefs.feature_galleries eq 'y'}
-      <a class="linkbut {if $type eq "image"} highlight{/if}"  href="javascript:setObjectType('image','typeImage');" id="typeImage">{tr}Images{/tr}</a>
+      <a class="linkbut" {if $type eq "image"}id=" highlight"{/if} href="javascript:setObjectType('image','typeImage');" id="typeImage">{tr}Images{/tr}</a>
     {/if}
   
     {if $prefs.feature_file_galleries eq 'y'}
-      <a class="linkbut {if $type eq "file gallery"} highlight{/if}"  href="javascript:setObjectType('file gallery','typeFileGallery');" id="typeFileGallery">{tr}File galleries{/tr}</a>
+      <a class="linkbut" {if $type eq "file gallery"} id="highlight"{/if} href="javascript:setObjectType('file gallery','typeFileGallery');" id="typeFileGallery">{tr}File galleries{/tr}</a>
     {/if}
 
     {if $prefs.feature_blogs eq 'y'}
-      <a class="linkbut {if $type eq "blog post"} highlight{/if}"  href="javascript:setObjectType('blog post','typeBlogPost');" id="typeBlogPost">{tr}Blogs{/tr}</a>
+      <a class="linkbut" {if $type eq "blog post"} id="highlight"{/if} href="javascript:setObjectType('blog post','typeBlogPost');" id="typeBlogPost">{tr}Blogs{/tr}</a>
     {/if}
 
     {if $prefs.feature_trackers eq 'y'}
-      <a class="linkbut {if $type eq "tracker"} highlight{/if}"  href="javascript:setObjectType('tracker','typeTracker');" id="typeTracker">{tr}Trackers{/tr}</a>
+      <a class="linkbut" {if $type eq "tracker"} id="highlight"{/if} href="javascript:setObjectType('tracker','typeTracker');" id="typeTracker">{tr}Trackers{/tr}</a>
     {/if}
     
-    <a class="linkbut {if $type eq "tracker item"} highlight{/if}"  href="javascript:setObjectType('tracker item','typeTrackerItem');" id="typeTrackerItem">{tr}Trackers Items{/tr}</a>
+    <a class="linkbut" {if $type eq "tracker item"} id="highlight"{/if} href="javascript:setObjectType('tracker item','typeTrackerItem');" id="typeTrackerItem">{tr}Trackers Items{/tr}</a>
     
     {if $prefs.feature_quizzes eq 'y'}
-      <a class="linkbut {if $type eq "quizz"} highlight{/if}"  href="javascript:setObjectType('quizz','typeQuiz');" id="typeQuiz">{tr}Quizzes{/tr}</a>
+      <a class="linkbut" {if $type eq "quizz"} id="highlight"{/if} href="javascript:setObjectType('quizz','typeQuiz');" id="typeQuiz">{tr}Quizzes{/tr}</a>
     {/if}
     
     {if $prefs.feature_polls eq 'y'}
-      <a class="linkbut {if $type eq "poll"} highlight{/if}"  href="javascript:setObjectType('poll','typePoll');" id="typePoll">{tr}Polls{/tr}</a>
+      <a class="linkbut" {if $type eq "poll"} id="highlight"{/if} href="javascript:setObjectType('poll','typePoll');" id="typePoll">{tr}Polls{/tr}</a>
     {/if}
 
     {if $prefs.feature_surveys eq 'y'}
-      <a class="linkbut {if $type eq "survey"} highlight{/if}"  href="javascript:setObjectType('survey','typeSurvey');" id="typeSurvey">{tr}Surveys{/tr}</a>
+      <a class="linkbut" {if $type eq "survey"} id="highlight"{/if} href="javascript:setObjectType('survey','typeSurvey');" id="typeSurvey">{tr}Surveys{/tr}</a>
     {/if}
 
     {if $prefs.feature_directory eq 'y'}
-      <a class="linkbut {if $type eq "directory"} highlight{/if}"  href="javascript:setObjectType('directory','typeDirectory');" id="typeDirectory">{tr}Directory{/tr}</a>
+      <a class="linkbut" {if $type eq "directory"} id="highlight"{/if} href="javascript:setObjectType('directory','typeDirectory');" id="typeDirectory">{tr}Directory{/tr}</a>
     {/if}
 
     {if $prefs.feature_faqs eq 'y'}
-      <a class="linkbut {if $type eq "faq"} highlight{/if}"  href="javascript:setObjectType('faq','typeFaq');" id="typeFaq">{tr}FAQs{/tr}</a>
+      <a class="linkbut" {if $type eq "faq"} id="highlight"{/if} href="javascript:setObjectType('faq','typeFaq');" id="typeFaq">{tr}FAQs{/tr}</a>
     {/if}
 
     {if $prefs.feature_sheet eq 'y'}
-      <a class="linkbut {if $type eq "sheet"} highlight{/if}"  href="javascript:setObjectType('sheet','typeSheet');" id="typeSheet">{tr}Sheets{/tr}</a>
+      <a class="linkbut" {if $type eq "sheet"} id="highlight"{/if} href="javascript:setObjectType('sheet','typeSheet');" id="typeSheet">{tr}Sheets{/tr}</a>
     {/if}
   
     {if $prefs.feature_articles eq 'y'}
-      <a class="linkbut {if $type eq "article"} highlight{/if}"  href="javascript:setObjectType('article','typeArticle');" id="typeArticle">{tr}Articles{/tr}</a>
+      <a class="linkbut" {if $type eq "article"} id="highlight"{/if} href="javascript:setObjectType('article','typeArticle');" id="typeArticle">{tr}Articles{/tr}</a>
     {/if}
   </div>
 
@@ -106,60 +106,57 @@
 
 {else}
 
-  <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}All{/tr}</a>
+  <a class="linkbut" {if $type eq ''} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}All{/tr}</a>
   
   {if $prefs.feature_wiki eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=wiki+page">{if $type eq 'wiki page'}<span class="highlight">{/if}{tr}Wiki pages{/tr}{if $type eq 'wiki page'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'wiki page'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=wiki+page">{tr}Wiki pages{/tr}</a>
   {/if}
   
   {if $prefs.feature_galleries eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image+gallery">{if $type eq 'image gallery'}<span class="highlight">{/if}{tr}Image galleries{/tr}{if $type eq 'image gallery'}</span>{/if}</a>
-  {/if}
-  
-  {if $prefs.feature_galleries eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image">{if $type eq 'image'}<span class="highlight">{/if}{tr}Images{/tr}{if $type eq image}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'image gallery'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image+gallery">{tr}Image galleries{/tr}</a>
+    <a class="linkbut" {if $type eq 'image'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image">{tr}Images{/tr}</a>
   {/if}
   
   {if $prefs.feature_file_galleries eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=file+gallery">{if $type eq 'file gallery'}<span class="highlight">{/if}{tr}File galleries{/tr}{if $type eq 'file gallery'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'file gallery'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=file+gallery">{tr}File galleries{/tr}</a>
   {/if}
   
   {if $prefs.feature_blogs eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=blog+post">{if $type eq 'blog'}<span class="highlight">{/if}{tr}Blogs{/tr}{if $type eq 'blog'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'blog post'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=blog+post">{tr}Blogs{/tr}</a>
   {/if}
   
   {if $prefs.feature_trackers eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=tracker">{if $type eq 'tracker'}<span class="highlight">{/if}{tr}Trackers{/tr}{if $type eq 'tracker'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'tracker'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=tracker">{tr}Trackers{/tr}</a>
+  
+    <a class="linkbut" {if $type eq 'trackerItem'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=trackerItem">{tr}Trackers Items{/tr}</a>
   {/if}
   
-  <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=trackerItem">{if $type eq 'trackerItem'}<span class="highlight">{/if}{tr}Trackers Items{/tr}{if $type eq 'trackerItem'}</span>{/if}</a>
-  
   {if $prefs.feature_quizzes eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=quiz">{if $type eq 'quiz'}<span class="highlight">{/if}{tr}Quizzes{/tr}{if $type eq 'quiz'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'quiz'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=quiz">{tr}Quizzes{/tr}</a>
   {/if}
   
   {if $prefs.feature_polls eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=poll">{if $type eq 'poll'}<span class="highlight">{/if}{tr}Polls{/tr}{if $type eq 'poll'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'poll'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=poll">{tr}Polls{/tr}</a>
   {/if}
   
   {if $prefs.feature_surveys eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=survey">{if $type eq 'survey'}<span class="highlight">{/if}{tr}Surveys{/tr}{if $type eq 'survey'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'survey'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=survey">{tr}Surveys{/tr}</a>
   {/if}
   
   {if $prefs.feature_directory eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=directory">{if $type eq 'directory'}<span class="highlight">{/if}{tr}Directory{/tr}{if $type eq 'directory'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'directory'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=directory">{tr}Directory{/tr}</a>
   {/if}
   
   {if $prefs.feature_faqs eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=faq">{if $type eq 'faq'}<span class="highlight">{/if}{tr}FAQs{/tr}{if $type eq 'faq'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'faq'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=faq">{tr}FAQs{/tr}</a>
   {/if}
   
   {if $prefs.feature_sheet eq 'y'}
-  <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=sheet">{if $type eq 'sheet'}<span class="highlight">{/if}{tr}Sheets{/tr}{if $type eq 'sheet'}</span>{/if}</a>
+  <a class="linkbut" {if $type eq 'sheet'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=sheet">{tr}Sheets{/tr}</a>
   {/if}
   
   {if $prefs.feature_articles eq 'y'}
-    <a class="linkbut" href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=article">{if $type eq 'article'}<span class="highlight">{/if}{tr}Articles{/tr}{if $type eq 'article'}</span>{/if}</a>
+    <a class="linkbut" {if $type eq 'article'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=article">{tr}Articles{/tr}</a>
   {/if}   
 
   <br /> 
