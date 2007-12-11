@@ -16,28 +16,16 @@
 {/if}
 <h2>{tr}User Files{/tr}</h2>
 
-<div align="center">
-<table border='0' cellpadding='0' cellspacing='0'>
-	<tr>
-		<td>
-			<table border='0' height='20' cellpadding='0' cellspacing='0'
-			       width='200' style='background-color:#666666;'>
-				<tr>
-					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td>
-			<small>{$percentage}%</small>
-		</td>
-	</tr>
-	<tr>
-		<td colspan='2'>
-			<small>{tr}quota{/tr}</small>
-		</td>
-	</tr>
-</table>
+<div style="text-align:center;">
+  <div style="height:20px; width:200px; border:1px solid black; background-color:#666666; text-align:left; margin:0 auto;">
+    <div style="background-color:red; height:100%; width:{$cellsize}px;"> 
+    </div>
+  </div>
+  {if $user neq admin}
+    <small>{tr}Used space:{/tr} {$percentage}% {tr}up to{/tr} {$limitmb} Mb</small>
+  {else}
+    <small>{tr}Used space:{/tr} {tr}no limit for admin{/tr}</small>
+  {/if}
 </div>
 
 <form action="tiki-userfiles.php" method="post">
@@ -85,27 +73,18 @@
 
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-userfiles.php" method="post">
-<table class="normal">
-<!--
-<tr>
-  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
-</tr>
--->
-<!--You've got to see how easy it is to add more to the smarty code to get more upload areas
-made the input size legible for longer file names-->
-<tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor">
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile1" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile2" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile3" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile4" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile5" type="file" /><br />
-  <input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />
-  </td>
-</tr>
-<tr>
-
-</tr>
-</table>
+  <table class="normal">
+    <tr>
+      <td class="formcolor">{tr}Upload file{/tr}:</td>
+      <td class="formcolor">
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile1" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile2" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile3" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile4" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile5" type="file" /><br />
+        <input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />
+      </td>
+    </tr>
+  </table>
 </form>
 
