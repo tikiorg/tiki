@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.7 2007-12-11 22:28:15 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.8 2007-12-11 22:32:18 nkoth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -241,11 +241,11 @@ a moderator approves it.{/tr}
 <br />    
   <table class="normal" id="commentshelp">
   <tr><td class="even">
-  <b>{tr}Posting comments{/tr}:</b>
+  <b>{tr}Editing posts{/tr}:</b>
   <br />
   <br />
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
-  {tr}HTML tags are not allowed inside comments{/tr}<br />
+  {tr}HTML tags are not allowed inside posts{/tr}<br />
   </td>
   </tr>
   </table>
