@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.3 2007-12-10 18:59:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.4 2007-12-11 14:54:59 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -512,7 +512,6 @@ function wikiplugin_tracker($data, $params) {
 						$back .= "<tr><td colspan=\"2\" class=\"trackerheader\"><h2>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</h2>';
 						if (!empty($f['description']))
 							$back .= '<i>'.$f['description'].'</i>';
-						$back .= '</td></tr><tr><td>';
 					} elseif ($f['type'] == 'e') {
 						$back .="<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
