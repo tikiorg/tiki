@@ -27,6 +27,16 @@ ask_ticket('admin-inc-textarea');
         simple_set_toggle ($toggle);
     }
 
+    $pref_simple_values = array(
+        "default_rows_textarea_wiki",
+        "default_rows_textarea_comment",
+        "default_rows_textarea_forum",
+        "default_rows_textarea_forumthread",
+    );
+
+    foreach ($pref_simple_values as $svitem) {
+        simple_set_value ($svitem);
+    }
 
 }
 

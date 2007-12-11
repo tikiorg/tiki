@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.2 2007-12-11 16:41:23 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -710,7 +710,7 @@ if ($prefs['feature_freetags'] == 'y') {
     }
 }
 
-
+$defaultRows = $prefs['default_rows_textarea_forum'];
 include_once("textareasize.php");
 
 if ($prefs['feature_forum_parse'] == "y") {

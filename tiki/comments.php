@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.1 2007-12-04 11:10:22 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.2 2007-12-11 16:41:21 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -651,19 +651,8 @@ if ($comments_offset > 0) {
     $smarty->assign('comments_prev_offset', -1);
 }
 
-if (isset($_REQUEST['rows'])) {
-	$rows = $_REQUEST['rows'];
-} else {
-	$rows = 6;
-}
-$smarty->assign('rows', $rows );
-
-if (isset($_REQUEST['cols'])) {
-	$cols = $_REQUEST['cols'];
-} else {
-	$cols = 60;
-}
-$smarty->assign('cols', $cols );
+$defaultRows = $prefs['default_rows_textarea_comment'];
+include_once("textareasize.php");
 
 $smarty->assign('comments_coms', $comments_coms["data"] );
 

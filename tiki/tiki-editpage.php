@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.19 2007-12-07 21:46:36 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.20 2007-12-11 16:41:21 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -905,6 +905,7 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 	if ($copyrights['cant'])
 	$smarty->assign_by_ref('copyrights', $copyrights['data']);
 }
+$defaultRows = $prefs['default_rows_textarea_wiki'];
 include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
