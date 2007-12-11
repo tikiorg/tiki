@@ -23,11 +23,11 @@
 </tr>
 <tr>
   <td class="formcolor">{tr}Overwrite existing pages if the name is the same{/tr}:</td>
-  <td class="formcolor">{tr}yes{/tr}<input type="radio" name="crunch" value='y' /><input checked="checked" type="radio" name="crunch" value='n' />{tr}no{/tr}</td>
+  <td class="formcolor">{tr}Yes{/tr}<input type="radio" name="crunch" value='y' /><input checked="checked" type="radio" name="crunch" value='n' />{tr}No{/tr}</td>
 </tr>
 <tr>
   <td class="formcolor">{tr}Previously remove existing page versions{/tr}:</td>
-  <td class="formcolor">{tr}yes{/tr}<input type="radio" name="remo" value='y' /><input checked="checked" type="radio" name="remo" value='n' />{tr}no{/tr}</td>
+  <td class="formcolor">{tr}Yes{/tr}<input type="radio" name="remo" value='y' /><input checked="checked" type="radio" name="remo" value='n' />{tr}No{/tr}</td>
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>

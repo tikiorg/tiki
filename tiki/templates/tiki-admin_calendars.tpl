@@ -113,40 +113,40 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Permissions{
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Locations{/tr}:</td><td>
 <select name="customlocations">
-<option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[location]" value="on"{if $show_location eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Participants{/tr}:</td><td>
 <select name="customparticipants">
-<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[participants]" value="on"{if $show_participants eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Categories{/tr}:</td><td>
 <select name="customcategories">
-<option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[category]" value="on"{if $show_category eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom Languages{/tr}:</td><td>
 <select name="customlanguages">
-<option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[language]" value="on"{if $show_language eq 'y'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom URL{/tr}:</td><td>
 <select name="options[customurl]">
-<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customurl eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customurl eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 {tr}Show in popup box{/tr}
 <input type="checkbox" name="show[url]" value="on"{if $show_url eq 'y'} checked="checked"{/if} />
@@ -154,21 +154,21 @@ src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Permissions{
 {if $prefs.feature_newsletters eq 'y'}
 <tr class="formcolor"><td>{tr}Custom Subscription List{/tr}:</td><td>
 <select name="customsubscription">
-<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $customsubscription eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $customsubscription eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 </td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Custom Priorities{/tr}:</td><td>
 <select name="custompriorities">
-<option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Personal Calendar{/tr}:</td><td>
 <select name="personal">
-<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Start of day{/tr}:</td><td>

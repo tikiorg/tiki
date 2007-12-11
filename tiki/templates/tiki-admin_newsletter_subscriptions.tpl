@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.2 2007-11-15 21:19:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.3 2007-12-11 18:19:52 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
@@ -162,8 +162,8 @@
 <tr>
 <td class="{cycle advance=false}">{if $channels[user].isUser == "y"}{$channels[user].email|userlink}{else}{$channels[user].email}{/if}</td>
 <td class="{cycle advance=false}">{if $channels[user].valid == "n"}
-<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;valid={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}" title="{tr}valid{/tr}">{tr}no{/tr}</a>
-{else}{tr}yes{/tr}{/if}</td>
+<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;valid={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email}" title="{tr}valid{/tr}">{tr}No{/tr}</a>
+{else}{tr}Yes{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>

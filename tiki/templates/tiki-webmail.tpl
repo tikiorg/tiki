@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46.2.3 2007-11-15 21:19:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46.2.4 2007-12-11 18:19:54 jyhem Exp $ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -77,7 +77,7 @@
 <tr>
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}" title="{if $accounts[ix].current ne 'y'}{tr}Activate{/tr}{/if}">{$accounts[ix].account}</a>
 </td>
-<td class="{cycle advance=false}">{if $accounts[ix].current eq 'y'}{tr}yes{/tr}{else}{tr}no{/tr}{/if}</td>
+<td class="{cycle advance=false}">{if $accounts[ix].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
 <td class="{cycle advance=false}">{$accounts[ix].username}</td>
 <td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" 
