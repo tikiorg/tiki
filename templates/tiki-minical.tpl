@@ -60,7 +60,7 @@
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}Previous{/tr}' /></a>
 {$pdate|tiki_long_date} 
 <a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
 </b>
@@ -97,7 +97,7 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|tiki_date_format:"%d"}&amp;mon={$prev_week_start|tiki_date_format:"%m"}&amp;year={$prev_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}previous{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|tiki_date_format:"%d"}&amp;mon={$prev_week_start|tiki_date_format:"%m"}&amp;year={$prev_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}Previous{/tr}' /></a>
 <b>{$week_start|tiki_date_format:"%b"} {$week_start|tiki_date_format:"%d"}-{$week_end|tiki_date_format:"%b"} {$week_end|tiki_date_format:"%d"}</b>
 <a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
 <table class="normal"  >
@@ -154,7 +154,7 @@
 <tr>
 <td class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}start{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}Start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'duration_desc'}duration_asc{else}duration_desc{/if}">{tr}duration{/tr}</a></td>
 <td style="text-align:center;" class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicId_desc'}topicId_asc{else}topicId_desc{/if}">{tr}Topic{/tr}</a></td>
 </tr>

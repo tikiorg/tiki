@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.36.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.36.2.2 2007-12-11 18:19:53 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -90,8 +90,8 @@
 
 <tr><td class="formcolor">{tr}Use Image{/tr}:</td><td class="formcolor">
 <select name="useImage">
-<option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
-<option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+<option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Image x size{/tr}:</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>

@@ -41,8 +41,8 @@ Errors:<br />
   <td class="formcolor">{tr}Type{/tr}</td>
   <td class="formcolor">
   <select name="type">
-  <option value="start" {if $info.type eq 'start'}selected="selected"{/if}>{tr}start{/tr}</option>
-  <option value="end" {if $info.type eq 'end'}selected="selected"{/if}>{tr}end{/tr}</option>		  
+  <option value="start" {if $info.type eq 'start'}selected="selected"{/if}>{tr}Start{/tr}</option>
+  <option value="end" {if $info.type eq 'end'}selected="selected"{/if}>{tr}End{/tr}</option>		  
   <option value="activity" {if $info.type eq 'activity'}selected="selected"{/if}>{tr}activity{/tr}</option>		  
   <option value="switch" {if $info.type eq 'switch'}selected="selected"{/if}>{tr}Switch{/tr}</option>		  
   <option value="split" {if $info.type eq 'split'}selected="selected"{/if}>{tr}split{/tr}</option>		  
@@ -172,8 +172,8 @@ Errors:<br />
 	<td>
 		<select name="filter_type">
 		  <option value="">{tr}All{/tr}</option>
-		  <option value="start">{tr}start{/tr}</option>
-		  <option value="end" >{tr}end{/tr}</option>		  
+		  <option value="start">{tr}Start{/tr}</option>
+		  <option value="end" >{tr}End{/tr}</option>		  
 		  <option value="activity" >{tr}activity{/tr}</option>		  
 		  <option value="switch" >{tr}Switch{/tr}</option>		  
 		  <option value="split" >{tr}split{/tr}</option>		  

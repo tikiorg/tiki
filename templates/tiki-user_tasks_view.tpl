@@ -26,11 +26,11 @@
 {if ($tiki_view_mode eq 'view')}
     <div style="text-align:right;">
 	{if ($info.task_version > 0) }
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}previous{/tr}" /></a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}Previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Previous{/tr}" /></a>
     {/if}
         version: <b>{$info.task_version+1}</b>
     {if $info.task_version < $info.last_version }
-        <a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}next{/tr}" /></a>
+        <a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}Next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Next{/tr}" /></a>
     {/if}
 	</div>
 {/if}
@@ -51,8 +51,8 @@
     </tr>
     <tr><td  style="font-weight:bold;">{tr}Status{/tr}:</td>
         <td >
-            {if $info.status eq ''} {tr}waiting / not started{/tr} {/if}
-            {if $info.status eq 'o'} {tr}open / in process{/tr} {/if}
+            {if $info.status eq ''} {tr}Waiting / Not Started{/tr} {/if}
+            {if $info.status eq 'o'} {tr}Open / In Process{/tr} {/if}
             {if $info.status eq 'c'} {tr}completed (100%){/tr} {/if}
         &nbsp;&nbsp;
         <b>{$info.completed|date_format:"%d.%m.%Y -- %H:%M"}</b>
@@ -94,14 +94,14 @@
 {tr}Public for group{/tr}:{ $info.public_for_group }<br />
 {/if}
 {if $info.creator ne $info.user}
-{tr}accepted by user{/tr}:
-            {if $info.accepted_user eq 'y'} {tr}yes{/tr}
-            {else} {if $info.accepted_user eq 'n'} {tr}no / rejected{/tr}
-            {else} {tr}waiting{/tr}{/if}{/if}<br />
-{tr}accepted by creator{/tr}:
-            {if $info.accepted_creator eq 'y'} {tr}yes{/tr}
-            {else} {if $info.accepted_creator eq 'n'} {tr}no / rejected{/tr}
-            {else} {tr}waiting{/tr}{/if}{/if}<br />
+{tr}Accepted by User{/tr}:
+            {if $info.accepted_user eq 'y'} {tr}Yes{/tr}
+            {else} {if $info.accepted_user eq 'n'} {tr}No / Rejected{/tr}
+            {else} {tr}Waiting{/tr}{/if}{/if}<br />
+{tr}Accepted by Creator{/tr}:
+            {if $info.accepted_creator eq 'y'} {tr}Yes{/tr}
+            {else} {if $info.accepted_creator eq 'n'} {tr}No / Rejected{/tr}
+            {else} {tr}Waiting{/tr}{/if}{/if}<br />
 
 {/if}
 </div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.32.2.1 2007-10-17 20:36:06 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.32.2.2 2007-12-11 18:19:52 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
@@ -45,7 +45,7 @@
 <td>
 <select name="status">
 <!-- the survey has an on and off button... could be applied to quizzes -->
-<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}open{/tr}</option>
+<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
 <option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
@@ -95,7 +95,7 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td style="text-align:center;" class="{cycle advance=false}">
 {if $channels[user].status eq 'o'}
-	<img src="img/icons/ofo.gif" alt="{tr}open{/tr}" />
+	<img src="img/icons/ofo.gif" alt="{tr}Open{/tr}" />
 {else}
 	<img src="img/icons/fo.gif" alt="{tr}closed{/tr}" />
 {/if}

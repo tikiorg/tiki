@@ -24,7 +24,7 @@
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
     </span>
     <span class="tabbut">
-    {html_image file='img/icons2/error.gif' width='14' height='14' border='0' alt='{tr}red{/tr}'}
+    {html_image file='img/icons2/error.gif' width='14' height='14' border='0' alt='{tr}Red{/tr}'}
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
     </span>
 {/if}
@@ -35,7 +35,7 @@
 {else}
     <span class="tabbut">
 	{html_image file='img/icons/trash.gif' width='16' height='16' border='0' alt='{tr}Trash{/tr}'}
-    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">{tr}move into trash{/tr}</a>
+    <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">{tr}Move into Trash{/tr}</a>
     </span>
 {/if}
 {/if}
@@ -69,11 +69,11 @@
 		&nbsp;&nbsp; <b>{$info.created|date_format:"%d/%m/%Y -- %H:%M"}</b>
 		&nbsp;&nbsp; 
 		{if ($info.task_version > 0) } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}previous{/tr}" /></a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}Previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Previous{/tr}" /></a>
   		{/if}
 		{tr}Version{/tr}: <b>{$info.task_version+1}</b>
 		{if $info.task_version < $info.last_version } 
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}next{/tr}" /></a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}Next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Next{/tr}" /></a>
   		{/if}
 		
 		&nbsp;&nbsp; 
@@ -150,9 +150,9 @@
 	</tr>
 	<tr><td class="formcolor">{tr}Status{/tr}</td>
 		<td colspan="3" class="formcolor">
-		{if $info.status eq 'o'}{tr}open / in process{/tr}
-		{else} {if $info.status eq 'o'}{tr}open / in process{/tr}
-		{else} {tr}waiting / not started{/tr}
+		{if $info.status eq 'o'}{tr}Open / In Process{/tr}
+		{else} {if $info.status eq 'o'}{tr}Open / In Process{/tr}
+		{else} {tr}Waiting / Not Started{/tr}
 		{/if}
 		{/if}
 		&nbsp;&nbsp;
@@ -176,14 +176,14 @@
 		<td class="formcolor">{tr}Percentage completed{/tr}</td>
 		<td colspan="3"  class="formcolor">  
 			 <select name="percentage">
-					<option value="w" {if $info.percentage_null } selected = "selected"  {/if}>{tr}waiting{/tr}</option>	
+					<option value="w" {if $info.percentage_null } selected = "selected"  {/if}>{tr}Waiting{/tr}</option>	
 				{section name=zz loop=$percs}
 					<option value="{$percs[zz]|escape}" {if $info.percentage eq $percs[zz] and !$info.percentage_null} selected = "selected" {/if} > {$percs[zz]}% </option>	
 				{/section}
       		</select>
 		</td>
 	</tr>
-	<tr><td  class="formcolor">{tr}shared for group{/tr}</td>
+	<tr><td  class="formcolor">{tr}Shared for Group{/tr}</td>
 		<td colspan="3" class="formcolor">
 		<select name="public_for_group">
 			<option></option>
@@ -197,17 +197,17 @@
 		</td>
 	</tr> 
 	{if (($info.taskId > 0) and ($info.user ne $info.creator))}
-	<tr><td class="formcolor">{tr}accepted by user{/tr}</td>
+	<tr><td class="formcolor">{tr}Accepted by User{/tr}</td>
 		<td class="formcolor">
-			{if $info.accepted_user eq 'y'} {tr}yes{/tr}
-			{else} {if $info.accepted_user eq 'n'} {tr}no / rejected{/tr}
-			{else} {tr}waiting{/tr}{/if}{/if}
+			{if $info.accepted_user eq 'y'} {tr}Yes{/tr}
+			{else} {if $info.accepted_user eq 'n'} {tr}No / Rejected{/tr}
+			{else} {tr}Waiting{/tr}{/if}{/if}
 		</td>
-		<td class="formcolor">{tr}accepted by creator{/tr}</td>
+		<td class="formcolor">{tr}Accepted by Creator{/tr}</td>
 		<td class="formcolor">
-			{if $info.accepted_creator eq 'y'} {tr}yes{/tr}
-			{else} {if $info.accepted_creator eq 'n'} {tr}no / rejected{/tr}
-			{else} {tr}waiting{/tr}{/if}{/if}
+			{if $info.accepted_creator eq 'y'} {tr}Yes{/tr}
+			{else} {if $info.accepted_creator eq 'n'} {tr}No / Rejected{/tr}
+			{else} {tr}Waiting{/tr}{/if}{/if}
 		</td>
 	</tr> 
 	{/if} 

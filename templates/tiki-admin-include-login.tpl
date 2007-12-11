@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.4 2007-11-28 11:18:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.5 2007-12-11 18:19:52 jyhem Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -379,7 +379,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </tr>
 <tr><td class="form">{tr}User information{/tr}:</td><td class="form">
 <select name="users_prefs_user_information">
-<option value='private' {if $prefs.users_prefs_user_information eq 'private'}selected="selected"{/if}>{tr}private{/tr}</option>
+<option value='private' {if $prefs.users_prefs_user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
 <option value='public' {if $prefs.users_prefs_user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
 </select>
 </td></tr>

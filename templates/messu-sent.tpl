@@ -85,7 +85,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
 
 	<td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">
-    {if $items[user].isReplied eq 'n'}{tr}no{/tr}{else}
+    {if $items[user].isReplied eq 'n'}{tr}No{/tr}{else}
 	<a class="readlink" href="messu-mailbox.php?replyto={$items[user].hash}">
 	    <img src="pics/icons/email_go.png" alt='{tr}replied{/tr}' border='0' width='16' height='16' />
 	</a>

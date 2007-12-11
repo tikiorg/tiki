@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.10 2007-12-09 21:26:51 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.11 2007-12-11 18:19:53 jyhem Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -271,7 +271,7 @@
       <td class="{cycle advance=false}">{tr}User information{/tr}:</td>
       <td class="{cycle}">
         <select name="user_information">
-          <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}private{/tr}</option>
+          <option value='private' {if $user_prefs.user_information eq 'private'}selected="selected"{/if}>{tr}Private{/tr}</option>
           <option value='public' {if $user_prefs.user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
         </select>
       </td>
