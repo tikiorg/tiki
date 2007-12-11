@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.6 2007-12-11 22:22:28 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.7 2007-12-11 22:28:15 nkoth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -127,7 +127,7 @@ a moderator approves it.{/tr}
 
 <div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
   {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New Comment{/tr}</a>)
+    {tr}Editing{/tr}: {$comment_title|escape} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Post New{/tr}</a>)
     {/if}
     <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php" id="editpageform">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -194,7 +194,7 @@ a moderator approves it.{/tr}
     {/if}
     
     <tr class="formcolor">
-      <td>{tr}Comment{/tr}
+      <td>{tr}Edit{/tr}
 			<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}
 			{if $prefs.feature_forum_parse eq 'y' and $prefs.quicktags_over_textarea neq 'y'}
 			  {include file=tiki-edit_help_tool.tpl area_name="editpost"}
