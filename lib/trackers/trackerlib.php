@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.11 2007-12-03 15:51:58 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.12 2007-12-11 17:28:28 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -230,7 +230,9 @@ class TrackerLib extends TikiLib {
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 			$mail->setText($mail_data);
 			$mail->setHeader("From", $prefs['sender_email']);
-			$mail->send($emails);
+			foreach ($emails as $email) {
+				$mail->send(array($email));
+			}
 		}
 
 		return $commentId;
@@ -1098,7 +1100,9 @@ class TrackerLib extends TikiLib {
 					$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
 					$mail->setText($mail_data);
 					$mail->setHeader("From", $prefs['sender_email']);
-					$mail->send($emails);
+					foreach ($emails as $email) {
+						$mail->send(array($email));
+					}
 				} else {
 			    		// Use simple email
 
@@ -1135,7 +1139,9 @@ class TrackerLib extends TikiLib {
 			    		if( ! empty( $my_sender ) ) {
 							$mail->setHeader("From", $my_sender);
 			    		}
-			    		$mail->send( $emails );
+						foreach ($emails as $email) {
+							$mail->send(array($email));
+						}
 				}
 			}
 		}
