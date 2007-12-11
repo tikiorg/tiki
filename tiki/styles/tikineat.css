@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.3 2007-11-28 03:28:00 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.4 2007-12-11 13:05:40 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -682,7 +682,7 @@ div.searchdate {
 .attention {
 	color: red;
 }
-.highlight {
+.highlight, #highlight  {
 	background-color : #eeee99 !important;
 	color : #000000;
 }

@@ -1,18 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.20.2.1 2007-11-04 12:51:59 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.20.2.2 2007-12-11 13:05:38 pkdille Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
 
 {if !( $searchStyle eq "menu" )}
-<div class="nohighlight">
-{tr}Search in{/tr}:<br />
-{foreach item=name key=k from=$where_list}
-<a class="linkbut" href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">
-{if $where eq $k}<span class="highlight">{tr}{$name}{/tr}</span>{else}{tr}{$name}{/tr}{/if}
-</a>
-{/foreach}
-</div><!--nohighlight-->
-<br /><br /> 
+  <div class="nohighlight">
+    {tr}Search in{/tr}:
+    <br /><br />
+    {foreach item=name key=k from=$where_list}
+      <a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
+    {/foreach}
+  </div><!--nohighlight-->
+
+  <br /><br /> 
+
 {if $words neq ''}{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}{/if}
 {/if}
 <form class="forms" method="get" action="tiki-searchindex.php">
