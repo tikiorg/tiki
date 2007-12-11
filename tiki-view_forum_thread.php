@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.2 2007-12-11 16:41:21 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -371,7 +371,7 @@ if ($prefs['feature_freetags'] == 'y') {
     $smarty->assign('freetags',$tags);
 }
 
-
+$defaultRows = $prefs['default_rows_textarea_forumthread'];
 include_once("textareasize.php");
 
 if ($prefs['feature_forum_parse'] == "y") {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.27 2007-12-11 16:05:31 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.28 2007-12-11 16:41:20 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -795,6 +795,16 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# swffix
 	$prefs['feature_swffix'] = 'n';
 	
+	# textarea
+	$prefs['feature_smileys'] = 'y';
+	$prefs['popupLinks'] = 'n';
+	$prefs['feature_autolinks'] = 'y';
+	$prefs['quicktags_over_textarea'] = 'n';
+	$prefs['default_rows_textarea_wiki'] = '20';
+	$prefs['default_rows_textarea_comment'] = '6';
+	$prefs['default_rows_textarea_forum'] = '20';
+	$prefs['default_rows_textarea_forum_thread'] = '10';
+	
 	# unsorted features
 	$prefs['anonCanEdit'] = 'n';
 	$prefs['cacheimages'] = 'n';
@@ -807,7 +817,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['smarty_notice_reporting'] = 'n';
 	$prefs['feature_ajax'] = 'n';
 	$prefs['feature_antibot'] = 'n';
-	$prefs['feature_autolinks'] = 'y';
 	$prefs['feature_banners'] = 'n';
 	$prefs['feature_banning'] = 'n';
 	$prefs['feature_comm'] = 'n';
@@ -849,7 +858,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_score'] = 'n';
 	$prefs['feature_sheet'] = 'n';
 	$prefs['feature_shoutbox'] = 'n';
-	$prefs['feature_smileys'] = 'y';
 	$prefs['feature_source'] = 'y';
 	$prefs['feature_stats'] = 'n';
 	$prefs['feature_tabs'] = 'n';
@@ -870,7 +878,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['modallgroups'] = 'y';
 	$prefs['modseparateanon'] = 'n';
 	$prefs['php_docroot'] = 'http://php.net/';
-	$prefs['popupLinks'] = 'n';
 	$prefs['proxy_host'] = '';
 	$prefs['proxy_port'] = '';
 	$prefs['sender_email'] = $userlib->get_admin_email();
@@ -896,8 +903,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['use_load_threshold'] = 'n';
 	$prefs['load_threshold'] = 3;
 	$prefs['site_busy_msg'] = 'Server is currently too busy; please come back later.';
-	$prefs['quicktags_over_textarea'] = 'n';
-
 
 	$prefs['bot_logo_code'] = '';
 	$prefs['feature_blogposts_pings'] = '';
