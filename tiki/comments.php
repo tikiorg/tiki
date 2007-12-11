@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.3 2007-12-11 17:15:35 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.4 2007-12-11 18:47:43 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -414,12 +414,14 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			    unset ($parts[count($parts) - 1]);
 
 			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+			// TODO: mail_machine_site may be required for some sef url with rewrite to sub-directory. To refine. (nkoth)  
+			$smarty->assign('mail_machine_site', $tikilib->httpPrefix());
 			$mail = new TikiMail();
 		    }
 		    global $prefs;// TODO: optimise by grouping user by language
 		    $languageEmail = $tikilib->get_user_preference($not['user'], "language", $prefs['site_language']);
 		    $mail->setUser($not['user']);
-		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
+		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment_subject.tpl');
 		    $mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
 		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment.tpl');
 		    $mail->setText($mail_data);
