@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.5 2007-12-12 17:13:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.6 2007-12-12 21:49:47 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -392,9 +392,6 @@ function wikiplugin_tracker($data, $params) {
 			$back.= '<table class="wikiplugin_tracker">';
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
-				if ($f['isPublic'] == 'n') {
-					continue;
-				}
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
 				}
@@ -474,7 +471,7 @@ function wikiplugin_tracker($data, $params) {
 					// user selector
 					} elseif (($f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'I') and ($f['options_array'][0] == '1' or $f['options_array'][0] == '2')) {
 						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>';
-						$back .= ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: ($f['type'] == 'g')? $group: $user;
+						$back .= ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: (($f['type'] == 'g')? $group: $user);
 					// drop down, user selector or group selector
 					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
 						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
