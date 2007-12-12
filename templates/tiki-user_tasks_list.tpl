@@ -106,9 +106,9 @@
 </tr>
 {/section}
 <tr>
-	<td class="formcolor" colspan="3" style="text-align:left;">
+	<td class="formcolor" colspan="3" style="text-align:left; vertical-align:bottom;">
 		<img src="img/icons2/arrow.gif" width="16" height="24" style="border:0" alt="arrow" />
-        <select name="action">
+        <select name="action" style="vertical-align:bottom;">
           <option value="" >{tr}Select One{/tr}</option>
           <option value="waiting_marked" >{tr}Waiting{/tr}</option>
           <option value="open_marked" >{tr}Open{/tr}</option>
@@ -116,10 +116,10 @@
           <option value="move_marked_to_trash">{tr}Trash{/tr}</option>
           <option value="remove_marked_from_trash">{tr}Undo Trash{/tr}</option>
         </select>
-		<input type="submit" name="update_tasks" value="{tr}Go{/tr}" />
+		<input type="submit" name="update_tasks" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
 	</td>
 		<td class="formcolor" colspan="3" style="text-align:right;">
-		<input type="submit" name="update_percentage" value="{tr}Go{/tr}" />
+		<input type="submit" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;" />
 		<img src="img/icons2/arrow_fliped.gif" width="16" height="24" style="border:0" alt="arrow" />
 	</td>
 </tr>
@@ -148,6 +148,8 @@
 
 </table>
 </form>
+
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-user_tasks.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;

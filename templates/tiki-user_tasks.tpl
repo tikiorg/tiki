@@ -29,6 +29,29 @@
 {/if}
 <span class="button2"><a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}Task help{/tr}</a></span>
 
+{if (not $show_form)} 
+  <span class="button2"><a href="tiki-user_tasks.php?emty_trash=Empty trash" class="linkbut">{tr}Empty Trash{/tr}</a></span>
+{/if}
+
+<br /><br />
+{* start ************ Search  ***************}
+{if (not $show_form)} 
+  <table class="findtable">
+    <tr>
+      <td class="findtable">{tr}Find{/tr}</td>
+      <td class="findtable">
+        <div align="left">
+	  <form method="get" action="tiki-user_tasks.php">
+	    <input type="text" name="find" value="{$find|escape}" />
+            <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+            <input type="submit" value="{tr}Find{/tr}" name="search" />
+	  </form>
+        </div>
+      </td>
+    </tr>
+  </table>
+{/if}
+
 <div class="wiki-edithelp"  id='edithelpzone' >
 <table width="100%">
 {if $tiki_p_tasks_receive eq 'y'}
@@ -99,7 +122,7 @@
 {/if}
 </table>
 </div>
-<br /><br />
+<br />
 {if $admin_mode}<div align="center"><a class="highlight" >{tr}Admin Mode{/tr}</a></div><br />{/if}
 {* start ************ view  ***************}
 {if (($tiki_view_mode eq 'view') or ($tiki_view_mode eq 'preview'))}
@@ -128,31 +151,6 @@
 {* end ************ Task list ***************}
 
 
-{* start ************ Search  ***************}
-{if (not $show_form)} 
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <div align="left">
-	<form method="get" action="tiki-user_tasks.php">
-		<input type="text" name="find" value="{$find|escape}" />
-		<input type="submit" value="{tr}Find{/tr}" name="search" />
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	</form>
-   </div>
-   </td>
-   <td class="findtable">
-	<div align="right">
-		<form method="get" action="tiki-user_tasks.php">
-			<img src="img/icons/trash.gif" title="{tr}Trash{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Trash{/tr}" /> 
-			&nbsp;
-			<input type="submit" value="{tr}Empty Trash{/tr}" name="emty_trash" />
-		</form>
-	</div>
-   </td>
-</tr>
-</table>
-{/if}
 <br />
 <br />
 {* start ************ Search ***************}
