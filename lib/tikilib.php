@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.45 2007-12-12 18:18:57 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.46 2007-12-12 21:23:57 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7226,7 +7226,7 @@ if (!$simple_wiki) {
 	/* get explicit message on upload problem */
 	function uploaded_file_error($iError) {
 		switch($iError) {
-		case 0: return tra('Possible file attack!');
+		case 0: return tra('You are not allowed to upload this type of file.');
 		case 1: return tra('Cannot upload this file maximum upload size exceeded').'(upload_max_filesize)';
 		case 2: return tra('Cannot upload this file maximum upload size exceeded');
 		case 3: return tra('The file you are trying upload was only partially uploaded.');
