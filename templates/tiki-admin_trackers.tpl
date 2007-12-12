@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.3 2007-12-07 18:36:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.4 2007-12-12 14:07:21 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -13,6 +13,7 @@
 {if $trackerId}
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker fields{/tr}</span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+<span class="button2"><a href="tiki-objectpermissions.php?objectName=Date&objectType=tracker&permType=trackers&objectId={$trackerId}" class="linkbut">{tr}Perms{/tr}</a></span>
 {/if}
 </div>
 
@@ -86,11 +87,16 @@
 <a name="mod"></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Create/edit trackers{/tr}</h2>
-{if $individual eq 'y'}
+{if $trackerId}
 <div class="simplebox">
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">
-<img src='pics/icons/key.png' border='0' alt="{tr}Permissions{/tr}" width='16' height='16' />
-{tr}There are individual permissions set for this tracker{/tr}</a>
+{if $individual eq 'y'}
+<img src='pics/icons/key.png' border='0' alt="{tr}Permissions{/tr}" width='16' height='16' /></a>
+{tr}There are individual permissions set for this tracker{/tr}
+{else}
+<img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' /></a>
+{tr}No individual permissions global permissions apply{/tr}
+{/if}
 </div>
 {/if}
 <form action="tiki-admin_trackers.php" method="post" name="editpageform" id="editpageform">
