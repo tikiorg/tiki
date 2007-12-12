@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.5 2007-12-11 13:05:38 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.6 2007-12-12 21:46:27 sylvieg Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -164,7 +164,7 @@
 
   <table width="100%">
     <tr>
-      <td width="200">
+      <td width="200" style="vertical-align:top;">
         {if $prefs.freetags_browse_show_cloud eq 'y'}
           <script type="text/javascript">
             {literal}
@@ -183,7 +183,7 @@
         {/if}
       </td>
   
-      <td>
+      <td style="vertical-align:top;">
   
         <h3>{$cantobjects} {tr}results found{/tr}</h3>
         <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
