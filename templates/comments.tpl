@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.3 2007-12-12 15:33:42 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.4 2007-12-12 16:02:12 nkoth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -18,6 +18,7 @@
   {* This section (comment) is only displayed * }
   {* if a reply to it is being composed * }
   {* The $parent_com is only set in this case *}
+  {* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
   {if $comments_cant gt 0}
 
@@ -191,7 +192,7 @@
 	<div>
 		<h2 style="text-align: left">
 		{if $forum_mode eq 'y'}
-			{if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
+			{if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $comment_preview eq 'y'}{tr}Preview{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new message{/tr}{/if}
 		{else}
 			{if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
 		{/if}
@@ -202,7 +203,7 @@
 
 	{if $comment_preview eq 'y'}
 	<div class="post_preview">
-		<b>{tr}Preview{/tr}</b>
+		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
 			<div class="postbody-title"><div class="title">{$comments_preview_title}</div></div>
 			<div class="content">
