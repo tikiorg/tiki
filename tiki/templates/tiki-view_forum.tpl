@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.8 2007-12-11 22:32:18 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.9 2007-12-12 00:33:55 nkoth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -13,7 +13,8 @@
 <tr>
 <td>
 {if $tiki_p_forum_post_topic eq 'y'}
-<a class="linkbut" href="#" onclick="flip('forumpost');return false;">{tr}New Topic{/tr}</a>
+<a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onClick="javascript:show('forumpost');return false;"{/if}>
+{tr}New Topic{/tr}</a>
 {/if}
 {if $tiki_p_admin_forum eq 'y' or $all_forums|@count > 1 }{* No need for users to go to forum list if they are already looking at the only forum *}
 <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
@@ -233,7 +234,7 @@ a moderator approves it.{/tr}
       <td>
       <input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
-      <input type="button" name="comments_postComment" value="{tr}Cancel{/tr}" onclick="hide('forumpost');"/>
+      <input type="button" name="comments_postComment" value="{tr}Cancel{/tr}" onclick="hide('forumpost');window.location='#header';"/>
       </td>
     </tr>
     </table>
