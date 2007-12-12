@@ -5,7 +5,7 @@
 <a class="linkbut" href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}days{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=7">{tr}Last{/tr} {tr}week{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}Weeks{/tr}</a>
+<a class="linkbut" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}weeks{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
 </div>

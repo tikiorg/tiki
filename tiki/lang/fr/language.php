@@ -4263,6 +4263,7 @@ $lang=Array(
 "connection seconds" => "seconde de connexion",
 "Days" => "Jours",
 "Weeks" => "Semaines",
+"weeks" => "semaines",
 "recorded" => "enregistré",
 "viewed" => "vu",
 "Wiki page actions except viewed will always be recorded but can be not reported" => "Les actions sur les pages Wiki sauf la visualisation seront toujours enregistrées mais peuvent ne pas être affichées",
