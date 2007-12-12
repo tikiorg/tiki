@@ -1,13 +1,13 @@
 <h1><a href="tiki-lastchanges.php?days={$days}" class="pagetitle">{tr}Last Changes{/tr}</a></h1>
 <div class="navbar">
-<a class="linkbut" href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=2">{tr}Last{/tr} 2 {tr}days{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}days{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=7">{tr}Last{/tr} {tr}week{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}weeks{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
-<a class="linkbut" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
+<a class="linkbut" {if $days eq '1'}id="highlight"{/if} href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>
+<a class="linkbut" {if $days eq '2'}id="highlight"{/if} href="tiki-lastchanges.php?days=2">{tr}Last{/tr} 2 {tr}days{/tr}</a>
+<a class="linkbut" {if $days eq '3'}id="highlight"{/if} href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>
+<a class="linkbut" {if $days eq '5'}id="highlight"{/if} href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}days{/tr}</a>
+<a class="linkbut" {if $days eq '7'}id="highlight"{/if} href="tiki-lastchanges.php?days=7">{tr}Last{/tr} {tr}week{/tr}</a>
+<a class="linkbut" {if $days eq '14'}id="highlight"{/if} href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}weeks{/tr}</a>
+<a class="linkbut" {if $days eq '31'}id="highlight"{/if} href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
+<a class="linkbut" {if $days eq '0'}id="highlight"{/if} href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
 </div>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
