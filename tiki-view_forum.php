@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.3 2007-12-12 20:33:20 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.4 2007-12-12 23:45:51 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -342,6 +342,11 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			// The thread/topic does not already exist
 			if( ! $threadId )
 			{
+				if ( isset($_REQUEST["anonymous_name"]) ) {
+					$anonymous_name = trim(strip_tags($_REQUEST["anonymous_name"]));
+				} else {
+					$anonymous_name = '';
+				}
 			    $threadId =
 				$commentslib->post_new_comment(
 					$comments_objectId,
@@ -352,7 +357,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					$_REQUEST["comment_topictype"],
 					$_REQUEST["comment_topicsummary"],
 					$_REQUEST['comment_topicsmiley'],
-					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: ''
+					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '',
+					$anonymous_name
 					);
 			    // The thread *WAS* successfully created.
 
