@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.44 2007-12-12 17:34:41 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.45 2007-12-12 18:18:57 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1786,7 +1786,8 @@ function add_pageview() {
 
     /*shared*/
     function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0) {
-	  global $smarty,$user, $tiki_p_admin, $prefs;
+		global $smarty,$user, $tiki_p_admin, $prefs;
+		global $wikilib; include_once('lib/wiki/wikilib.php');
 	$ret = array();
 	$retval = array();
 	$bindvars = array((int)$menuId);
@@ -1809,7 +1810,7 @@ function add_pageview() {
 		$res['canonic'] = $res['url'];
 		if (preg_match('|\(\(('.$res['url'].')\)\)|', $res['url'], $matches)) {
 			$res['url'] = 'tiki-index.php?page='.$matches[1];
-			$res['sefurl'] = $matches[1];
+			$res['sefurl'] = $wikilib->sefurl($matches[1]);
 		}
 	    if (!$full) {
 		$display = true;
@@ -5140,6 +5141,7 @@ function add_pageview() {
 	}
 	
 	global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain;
+	global $wikilib; include_once('lib/wiki/wikilib.php');
 
 	// if simple_wiki is tru, disable some wiki syntax
 	// basically, allow wiki plugins, wiki links and almost
@@ -5568,8 +5570,7 @@ function add_pageview() {
 			$desc1 = $desc;
 		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl" : "";
-			$script = ($prefs['feature_sefurl'] == 'y')? '': 'tiki-index.php?page=';
-		    $uri_ref = $script . urlencode($pages[1][$i]).$bestLang;
+		    $uri_ref = $wikilib->sefurl($pages[1][$i]).$bestLang;
 
 			// check to see if desc is blank in ((page|desc))
 			if (strlen(trim($text[0])) > 0) {
@@ -5625,8 +5626,7 @@ function add_pageview() {
 		    // why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl" : ""; // to choose the best page language
-			$script = ($prefs['feature_sefurl'] == 'y')? '': 'tiki-index.php?page=';
-		    $repl = "<a title=\"$desc\" href='$script" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
+		    $repl = "<a title=\"$desc\" href='$script" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		} else {
 		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		}
@@ -5653,8 +5653,7 @@ function add_pageview() {
 		if (!array_key_exists($page_parse, $words)) {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-				$script = ($prefs['feature_sefurl'] == 'y')? '': 'tiki-index.php?page=';
-			$repl = '<a title="' . htmlspecialchars($desc) . '" href="'.$script. urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+			$repl = '<a title="' . htmlspecialchars($desc) . '" href="'.$wikilib->sefurl($page_parse). '" class="wiki">' . $page_parse . '</a>';
 		    } elseif ($prefs['feature_wiki_plurals'] == 'y') {
 # Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
@@ -5670,8 +5669,7 @@ function add_pageview() {
 			if($desc = $this->page_exists_desc($plural_tmp)) {
 			    // $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			    // $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
-			    $script = ($prefs['feature_sefurl'] == 'y')? '': 'tiki-index.php?page=';
-			    $repl = "<a title='".$desc."' href='$script$plural_tmp' class='wiki'>$page_parse</a>";
+			    $repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$page_parse</a>";
 			} else {
 			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 			}
