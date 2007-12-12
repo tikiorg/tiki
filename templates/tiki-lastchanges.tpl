@@ -61,7 +61,7 @@
 </td>
 
 <td>{tr}{$lastchanges[changes].action}{/tr}</td>
-<td>&nbsp;{$lastchanges[changes].user}&nbsp;</td>
+<td>&nbsp;{$lastchanges[changes].user|userlink}&nbsp;</td>
 <td>&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
 <td>&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
 
