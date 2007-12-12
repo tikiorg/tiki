@@ -80,7 +80,7 @@
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}Waiting for Me{/tr}" title="{tr}Waiting for Me{/tr}"} >
+		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}Waiting for Me{/tr}" title="{tr}Waiting for Me{/tr}" />
 	</td>
 	<td>
 		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.
