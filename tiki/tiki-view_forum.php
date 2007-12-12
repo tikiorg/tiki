@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.2 2007-12-11 16:41:23 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.3 2007-12-12 20:33:20 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,6 +51,12 @@ if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_RE
 
     $smarty->display("error.tpl");
     die;
+}
+
+if (isset($_REQUEST["comments_postCancel"])) {
+	unset ($_REQUEST["comments_threadId"]);
+	unset ($_REQUEST["comments_title"]);
+	unset ($_REQUEST["openpost"]);
 }
 
 if (isset($_REQUEST["openpost"])) {
