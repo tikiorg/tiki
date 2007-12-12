@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.7 2007-12-10 15:18:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.8 2007-12-12 18:18:57 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -714,6 +714,14 @@ class WikiLib extends TikiLib {
 	    $bindvals = array($user, $pageName, $pageData, $pageDesc, $pageComment, time());
 
 	    return $this->query($query, $bindvals) ? true : false;
+	}
+	function sefurl($page) {
+		global $prefs;
+		if ($prefs['feature_sefurl'] == 'y') {
+			return urlencode($page);
+		} else {
+			return 'tiki-index.php?page='.urlencode($page);
+		}
 	}
 
 }
