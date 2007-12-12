@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.4 2007-12-11 14:54:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.5 2007-12-12 17:13:33 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -53,7 +53,14 @@ function wikiplugin_tracker($data, $params) {
 		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	if (!isset($action)) {
-		$action = tra("Save");
+		$action = 'Save';
+	}
+	if (isset($preview)) {
+		if (empty($preview)) {
+			$preview = 'Preview';
+		}
+	} else {
+		unset($_REQUEST['preview']);
 	}
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
@@ -78,7 +85,7 @@ function wikiplugin_tracker($data, $params) {
 
 	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
 
-	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin) {
+	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['preview'])) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
@@ -95,11 +102,12 @@ function wikiplugin_tracker($data, $params) {
 			$mainfield = '';
 
 			if ($thisIsThePlugin) {
+				/* ------------------------------------- Recup all values from REQUEST -------------- */
 				$cpt = 0;
 				if (!isset($fields)) {
 					$fields_plugin = split(':', $fields);
 				}
-				foreach ($flds['data'] as $fl) {
+				foreach ($flds['data'] as $fl) { // {{{3
 					// store value to display it later if form
 					// isn't fully filled.
 					if ($flds['data'][$cpt]['type'] == 'f') {
@@ -141,7 +149,7 @@ function wikiplugin_tracker($data, $params) {
 					if ($fl['type'] == 'e')
 						$ins_fields['data'][] = array_merge(array('value' => ''), $fl);
 					$cpt++;
-				}
+				} /*foreach */
 
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
@@ -196,12 +204,13 @@ function wikiplugin_tracker($data, $params) {
 						$categorized_fields[] = $m[1];
 					}
 		 		}
+				/* ------------------------------------- End recup all values from REQUEST -------------- */
 
-				// Check field values for each type and presence of mandatory ones
+				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
 			
-				// values are OK, then lets add a new item
-				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
+				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && !isset($_REQUEST['preview'])) {
+					/* ------------------------------------- save the item ---------------------------------- */
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
@@ -257,6 +266,7 @@ function wikiplugin_tracker($data, $params) {
 						header("Location: $url");
 						die;
 					}
+					/* ------------------------------------- end save the item ---------------------------------- */
 				} elseif (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
@@ -371,6 +381,12 @@ function wikiplugin_tracker($data, $params) {
 			if ($showdesc == 'y' && $tracker['description']) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
+			if ($_REQUEST['preview']) {
+				$asscoValues = array();
+				foreach ($flds['data'] as $f) {
+					$assocValues[$f['fieldId']] = $f['value'];
+				}
+			}
 
 			// Loop on tracker fields and display form
 			$back.= '<table class="wikiplugin_tracker">';
@@ -457,7 +473,8 @@ function wikiplugin_tracker($data, $params) {
 						}
 					// user selector
 					} elseif (($f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'I') and ($f['options_array'][0] == '1' or $f['options_array'][0] == '2')) {
-						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>'.$user;
+						$back.= '<tr><td>'.wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</td><td>';
+						$back .= ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: ($f['type'] == 'g')? $group: $user;
 					// drop down, user selector or group selector
 					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
 						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
@@ -481,7 +498,7 @@ function wikiplugin_tracker($data, $params) {
 							if ($f['type'] == 'R') {
 								foreach ($list as $item) {
 									$selected = $f['value'] == $item ? 'checked="checked"' : '';
-									$back .= '<div class="radio"><input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.'>'.$item.'</div>';
+									$back .= '<div class="radio"><input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.' />'.$item.'</div>';
 								}
 							} else {
 								$back.= '<select name="track['.$f["fieldId"].']">';
@@ -496,9 +513,9 @@ function wikiplugin_tracker($data, $params) {
 									}
 									$back.= '<option value="'.$item.'" '.$selected.'>'.tra($item).'</option>';
 								}
+							$back.= "</select>";
 							}
 
-							$back.= "</select>";
 							if ($f['type'] == 'D') {
 								$back .= '<br />'.tra('Other:').' <input type="text" name="track_other['.$f["fieldId"].']" value="'.$otherValue.'" />';
 							}
@@ -509,7 +526,9 @@ function wikiplugin_tracker($data, $params) {
 						if (strlen($back) != $backLength0) {
 							$back .= '</td></tr>';
 						}
-						$back .= "<tr><td colspan=\"2\" class=\"trackerheader\"><h2>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors).'</h2>';
+						$back .= "<tr><td colspan=\"2\" class=\"trackerheader\"><h2>";
+						$n = wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						$back .= $n? $n : ' '.'</h2>';
 						if (!empty($f['description']))
 							$back .= '<i>'.$f['description'].'</i>';
 					} elseif ($f['type'] == 'e') {
@@ -593,6 +612,11 @@ function wikiplugin_tracker($data, $params) {
 							$params['date'] = $f['value'];
 						}
 						$back .= smarty_function_jscalendar_body($params,$smarty);
+					} elseif ($f['type'] == 'C' && isset($_REQUEST['preview'])) {
+						$back .= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</td><td>";
+						$calc = preg_replace('/#([0-9]+)/','$assocValues[\1]',$f['options_array'][0]);
+						eval('$computed = '.$calc.';');
+						$back .= $computed;
 					} else {
 					}
 					if (!empty($f['description']) && $f['type'] != 'h')
@@ -600,7 +624,11 @@ function wikiplugin_tracker($data, $params) {
 					$back.= "</td></tr>";
 				}
 			}
-			$back.= "<tr><td></td><td><input type='submit' name='action' value='".$action."'>";
+			$back.= "<tr><td></td><td>";
+			if (!empty($preview)) {
+				$back .= "<input type='submit' name='preview' value='".tra($preview)."' />";
+			}
+			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
 			}
