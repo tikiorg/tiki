@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14 2007-10-12 07:55:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.1 2007-12-12 23:36:59 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -78,8 +78,10 @@ function wikiplugin_trackerstat($data, $params) {
 		if ($i < 0 ) {
 			return tra("incorrect fieldId")." ".$fieldId;
 		}
-
-		if ($allFields["data"][$i]['isPublic'] != 'y' || $allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
+		if ($allFields["data"][$i]['type'] == 'u' || $allFields["data"][$i]['type'] == 'I' || $allFields["data"][$i]['type'] == 'g' || $allFields["data"][$i]['type'] == 's') {
+			continue;
+		}
+		if (!($allFields["data"][$i]['isPublic'] == 'n' || $allFields["data"][$i]['isPublic'] == 'p' || ($allFields["data"][$i]['isPublic'] == 'y' && $tiki_p_admin_trackers == 'y'))) {
 			continue;
 		}
 		if ($allFields["data"][$i]['type'] == 'e') {
