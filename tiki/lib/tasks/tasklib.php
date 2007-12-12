@@ -354,10 +354,10 @@ class TaskLib extends TikiLib {
 				$query .= "`t_head`.`user` like ? or ";
 				$query .= "`t_head`.`creator` like ? ";
 				$query .= ") ";
-				$values[] = "'%" . $find . "%'";
-				$values[] = "'%" . $find . "%'";
-				$values[] = "'%" . $find . "%'";
-				$values[] = "'%" . $find . "%'";
+				$values[] = "%" . $find . "%";
+				$values[] = "%" . $find . "%";
+				$values[] = "%" . $find . "%";
+				$values[] = "%" . $find . "%";
 			}
 			if($show_trash == false){
 				$query .= " AND ";
