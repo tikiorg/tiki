@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.3 2007-12-03 17:25:17 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.4 2007-12-12 14:36:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,8 +48,6 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 	}  
 	unset($_REQUEST); // Used to show the list of trackers instead of the new tracker after duplication
 }
-
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 	$cookietab = '2';
@@ -357,6 +355,7 @@ if (isset($_REQUEST["save"])) {
 	include_once("categorize.php");
 }
 
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
