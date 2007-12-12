@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.6 2007-11-26 20:27:40 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.7 2007-12-12 23:45:51 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1831,7 +1831,7 @@ class Comments extends TikiLib {
 
     function post_new_comment($objectId, $parentId, $userName,
 	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
-	    $summary = '', $smiley = '', $contributions = ''
+	    $summary = '', $smiley = '', $contributions = '', $anonymous_name = ''
 	    )
     {
 	if (!$userName) {
@@ -1847,7 +1847,11 @@ class Comments extends TikiLib {
 	$title = strip_tags($title);
 
 	if (!$userName) {
-	    $userName = tra('Anonymous');
+		if ($anonymous_name) {
+			$userName = $anonymous_name . ' ' . tra('(not registered)');
+		} else {
+	    	$userName = tra('Anonymous');
+		}
 	} else {
 
 	    if ($this->getOne("select count(*) from 

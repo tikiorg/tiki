@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.4 2007-12-12 16:02:12 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.5 2007-12-12 23:45:50 nkoth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -325,8 +325,9 @@
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"/>
-				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}"/>
+			    {if empty($user)}{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />{/if}
+				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onClick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onClick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				{if $forum_mode eq 'y'}
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{/if}
@@ -354,3 +355,10 @@
 {* End of Post dialog *}
 
 </div>{if $forum_mode neq 'y'}<!-- comzone end -->{/if}
+
+{if empty($user)}
+<script type="text/javascript">
+var js_anonymous_name = getCookie('anonymous_name');
+if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
+</script>
+{/if}
