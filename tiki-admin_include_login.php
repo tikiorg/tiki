@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61 2007-10-06 17:16:58 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.1 2007-12-13 23:33:28 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -173,6 +173,8 @@ if (isset($_REQUEST['users_defaults'])) {
 		'users_prefs_mytiki_tasks',
 		'users_prefs_mytiki_items',
 		'users_prefs_mytiki_workflow',
+		'users_prefs_mytiki_forum_topics',
+		'users_prefs_mytiki_forum_replies',
 		'users_prefs_mess_sendReadStatus'
 	);
 	foreach($_prefs as $pref) {
