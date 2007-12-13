@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.11 2007-12-11 18:19:53 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.12 2007-12-13 23:24:45 nkoth Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -442,6 +442,21 @@
       </tr>
     {/if}
 
+    {if $prefs.feature_forums eq 'y' and $tiki_p_forum_read eq 'y'}
+      <tr>
+        <td class="{cycle advance=false}">{tr}My forum topics{/tr}</td>
+        <td class="{cycle}">
+          <input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if} />
+        </td>
+      </tr>
+      <tr>
+        <td class="{cycle advance=false}">{tr}My forum replies{/tr}</td>
+        <td class="{cycle}">
+          <input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if} />
+        </td>
+      </tr>
+    {/if}
+    
     {if $prefs.feature_trackers eq 'y'}
       <tr>
         <td class="{cycle advance=false}">{tr}My items{/tr}</td>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.28 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.28.2.1 2007-12-13 23:24:45 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,6 +69,20 @@ if ($prefs['feature_trackers'] == 'y') {
 	$user_items = $tikilib->get_user_items($userwatch);
 	$smarty->assign('user_items', $user_items);
 	$smarty->assign('mytiki_items', $tikilib->get_user_preference($user, 'mytiki_items'), 'y');
+}
+
+if ($prefs['feature_forums'] == 'y') {
+	include_once ("lib/commentslib.php");
+	$commentslib = new Comments($dbTiki);
+	
+	$user_forum_replies = $commentslib->get_user_forum_comments($userwatch, -1, 'replies');
+	$smarty->assign('user_forum_replies', $user_forum_replies);	
+	
+	$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');
+	$smarty->assign('user_forum_topics', $user_forum_topics);
+		
+	$smarty->assign('mytiki_forum_replies', $tikilib->get_user_preference($user, 'mytiki_forum_replies'), 'y');
+	$smarty->assign('mytiki_forum_topics', $tikilib->get_user_preference($user, 'mytiki_forum_topics'), 'y');
 }
 
 if ($prefs['feature_tasks'] == 'y') {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.7 2007-12-09 21:26:51 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.8 2007-12-13 23:24:45 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,6 +249,18 @@ if (isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'mytiki_tasks', 'n');
 	}
 
+	if (isset($_REQUEST['mytiki_forum_topics']) && $_REQUEST['mytiki_forum_topics'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_forum_topics', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_forum_topics', 'n');
+	}
+	
+	if (isset($_REQUEST['mytiki_forum_replies']) && $_REQUEST['mytiki_forum_replies'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_forum_replies', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_forum_replies', 'n');
+	}
+	
 	if (isset($_REQUEST['mytiki_items']) && $_REQUEST['mytiki_items'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'y');
 	} else {
