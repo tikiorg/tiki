@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.5 2007-12-11 18:19:52 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.6 2007-12-13 23:33:28 nkoth Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -513,6 +513,11 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 
 {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <tr><td class="form">{tr}My tasks{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_tasks" {if $prefs.users_prefs_mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $prefs.feature_forums eq 'y'}
+<tr><td class="form">{tr}My forum topics{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_forum_topics" {if $prefs.users_prefs_mytiki_forum_topics eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My forum replies{/tr}</td><td class="form"><input type="checkbox" name="users_prefs_mytiki_forum_replies" {if $prefs.users_prefs_mytiki_forum_replies eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 
 {if $prefs.feature_trackers eq 'y'}
