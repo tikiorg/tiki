@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.15 2007-12-13 19:35:54 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.16 2007-12-13 19:37:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -410,7 +410,6 @@ class TrackerLib extends TikiLib {
                 $tmp=$this->get_all_items($trackerId,$field,$status);
                 $options = split(',', $myfield["options"]);
                 foreach ($tmp as $key=>$value){
-					echo $value.'<br>';
                     if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
                     if ($is_trackerlink){
                       $value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
