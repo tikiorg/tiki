@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.8 2007-12-13 02:02:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.9 2007-12-13 14:47:58 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -383,9 +383,11 @@ function wikiplugin_tracker($data, $params) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
 			if ($_REQUEST['preview']) {
-				$asscoValues = array();
+				$assocValues = array();
+				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
 					$assocValues[$f['fieldId']] = $f['value'];
+					$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $f['value']); // get rid off the $ and such unit
 				}
 			}
 
@@ -425,6 +427,9 @@ function wikiplugin_tracker($data, $params) {
 					// item link
 					} elseif ($f['type'] == 'r') {
 						$list = $trklib->get_all_items($f['options_array'][0],$f['options_array'][1],'o');
+						if (isset($f['options_array'][3])) {
+							$displayedList = $trklib->concat_all_items_from_fieldslist($f['options_array'][0],$f['options_array'][3]);
+						}
 						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<b>*</b>&nbsp;";
@@ -435,7 +440,9 @@ function wikiplugin_tracker($data, $params) {
 						$back.= '<option value=""></option>';
 						foreach ($list as $key=>$item) {
 							$selected = $f['value'] == $item ? 'selected="selected"' : '';
-							$back.= '<option value="'.$item.'" '.$selected.'>'.$item.'</option>';
+							$back .= '<option value="'.$item.'" '.$selected.'>';
+							$back .= isset($displayedList[$key])? $displayedList[$key]: $item;
+							$back .= '</option>';
 						}
 						$back.= "</select>";
 					// country
@@ -610,11 +617,23 @@ function wikiplugin_tracker($data, $params) {
 							$params['date'] = $f['value'];
 						}
 						$back .= smarty_function_jscalendar_body($params,$smarty);
-					} elseif ($f['type'] == 'C' && isset($_REQUEST['preview'])) {
+					} elseif ($f['type'] == 'C' && isset($_REQUEST['preview'])) { // computed
 						$back .= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</td><td>";
-						$calc = preg_replace('/#([0-9]+)/','$assocValues[\1]',$f['options_array'][0]);
+						$calc = preg_replace('/#([0-9]+)/','$assocNumerics[\1]',$f['options_array'][0]);
 						eval('$computed = '.$calc.';');
 						$back .= $computed;
+					} elseif ($f['type'] ==  'l'  && isset($_REQUEST['preview'])) { // itemlist
+						$back .= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</td><td>";
+						$items = $trklib->get_items_list($f['options_array'][0], $f['options_array'][1], $assocValues[$f['options_array'][2]]);
+						$i = 0;
+						foreach ($items as $id) {
+							$value .=  $trklib->get_item_value($f['options_array'][0], $id, $f['options_array'][3]);
+							$assocValues[$f['fieldId']] = $value; // can be used in another computed field
+							$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $value);
+							if ($i++ > 0)
+								$back .= ',';
+							$back .= $value;
+						}
 					} else {
 					}
 					if (!empty($f['description']) && $f['type'] != 'h')
