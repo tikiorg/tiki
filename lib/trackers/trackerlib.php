@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.14 2007-12-13 18:53:56 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.15 2007-12-13 19:35:54 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -401,6 +401,7 @@ class TrackerLib extends TikiLib {
 
         function concat_all_items_from_fieldslist($trackerId,$fieldsId,$status='o',$separator=' ') {
            $sts = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		   $res = array();
            foreach ($sts as $field){
                 $myfield=$this->get_tracker_field($field);
                 $is_date=($myfield['type']=='f');
@@ -409,6 +410,7 @@ class TrackerLib extends TikiLib {
                 $tmp=$this->get_all_items($trackerId,$field,$status);
                 $options = split(',', $myfield["options"]);
                 foreach ($tmp as $key=>$value){
+					echo $value.'<br>';
                     if ($is_date) $value=$this->date_format("%e/%m/%y",$value);
                     if ($is_trackerlink){
                       $value=$this->concat_item_from_fieldslist($options[0],$this->get_item_id($options[0],$options[1],$value),$options[3]);
@@ -419,8 +421,8 @@ class TrackerLib extends TikiLib {
 						$res[$key] = $value;
                     }
                 }
-                return $res;
 			}
+            return $res;
         }
         
         
