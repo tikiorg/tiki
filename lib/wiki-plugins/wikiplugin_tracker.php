@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.6 2007-12-12 21:49:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.7 2007-12-13 01:57:25 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -104,10 +104,10 @@ function wikiplugin_tracker($data, $params) {
 			if ($thisIsThePlugin) {
 				/* ------------------------------------- Recup all values from REQUEST -------------- */
 				$cpt = 0;
-				if (!isset($fields)) {
+				if (isset($fields)) {
 					$fields_plugin = split(':', $fields);
 				}
-				foreach ($flds['data'] as $fl) { // {{{3
+				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
 					// isn't fully filled.
 					if ($flds['data'][$cpt]['type'] == 'f') {
@@ -127,14 +127,14 @@ function wikiplugin_tracker($data, $params) {
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
-						$flds['data'][$cpt]['value'] = '';
-						if ($fl['type'] == 'R' && $fl['isMandatory'] == 'y' && !isset($_REQUEST['track'][$fl['fieldId']])) {
+						if ($fl['type'] == 'c' && (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin))) {
+							$_REQUEST['track'][$fl['fieldId']] = 'n';
+						} elseif ($fl['type'] == 'R' && $fl['isMandatory'] == 'y' && !isset($_REQUEST['track'][$fl['fieldId']])) {
 							// if none radio is selected, there will be no value and no error if mandatory
 							if (empty($fields_plugin) || in_array($fl['fieldId'], $fields_plugin)) {
 								$_REQUEST['track'][$fl['fieldId']] = '';
 							}
 						}
-
 					}
 					if (!empty($_REQUEST['track_other'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track_other'][$fl['fieldId']];
