@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.4 2007-12-11 15:27:02 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.5 2007-12-13 23:24:48 nkoth Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
@@ -189,6 +189,56 @@
     </div>
   {/if}
 
+  {if $prefs.feature_forums eq 'y' && $mytiki_forum_topics eq 'y'}
+    <div id="content8" class="content">
+      <div class="cbox">
+        <div class="cbox-title">
+          {if $userwatch eq $user}{tr}My forum topics{/tr}{else}{tr}User forum topics{/tr}{/if}
+        </div>
+        <div class="cbox-data">
+          <table  class="normal">
+            <tr>
+              <th class="heading">{tr}Forum topics{/tr}</th>              
+            </tr>
+            {cycle values="even,odd" print=false}
+            {section name=ix loop=$user_forum_topics}
+              <tr>
+                <td class="{cycle}">
+                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
+                </td>                
+              </tr>
+            {/section}
+          </table>
+        </div>
+      </div>
+    </div>
+  {/if}
+  
+    {if $prefs.feature_forums eq 'y' && $mytiki_forum_replies eq 'y'}
+    <div id="content9" class="content">
+      <div class="cbox">
+        <div class="cbox-title">
+          {if $userwatch eq $user}{tr}My forum replies{/tr}{else}{tr}User forum replies{/tr}{/if}
+        </div>
+        <div class="cbox-data">
+          <table  class="normal">
+            <tr>
+              <th class="heading">{tr}Forum replies{/tr}</th>              
+            </tr>
+            {cycle values="even,odd" print=false}
+            {section name=ix loop=$user_forum_replies}
+              <tr>
+                <td class="{cycle}">
+                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
+                </td>                
+              </tr>
+            {/section}
+          </table>
+        </div>
+      </div>
+    </div>
+  {/if}
+  
   {if $prefs.feature_blogs eq 'y' && $mytiki_blogs eq 'y'}
     <div id="content6" class="content">
       <div class="cbox">
