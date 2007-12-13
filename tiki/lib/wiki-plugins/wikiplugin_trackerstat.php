@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.2 2007-12-13 02:35:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.3 2007-12-13 15:32:17 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -101,6 +101,10 @@ function wikiplugin_trackerstat($data, $params) {
 					}
 				}
 			}
+		} else	if ($allFields["data"][$i]['type'] == 'h') {
+			$stat['name'] = $allFields["data"][$i]['name'];
+			$stat['values'] = array();
+			$stats[] = $stat;
 		} else {
 			if ($iUser >= 0) {
 				global $user;
@@ -108,6 +112,7 @@ function wikiplugin_trackerstat($data, $params) {
 			} else if ($iIp >= 0 && isset($_SERVER['REMOTE_ADDR'])) {
 				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $_SERVER['REMOTE_ADDR'], $allFields["data"][$i]['fieldId']);
 			}
+			
 			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
 			$j = -1;
 			foreach ($allValues as $value) {
