@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.10 2007-12-13 18:53:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.11 2007-12-13 20:49:21 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -382,10 +382,13 @@ function wikiplugin_tracker($data, $params) {
 			if ($showdesc == 'y' && $tracker['description']) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
-			if (isset($_REQUEST['preview'])) {
+			if (isset($_REQUEST['preview'])) { // use for the computed and join fields
 				$assocValues = array();
 				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
+					if (empty($f['value']) && ($f['type'] == 'u' || $f['type'] == 'g' || $f['type'] == 'I') && ($f['options_array'][0] == '1' || $f['options_array'][0] == '2')) { //need to fill the selector fields for the join
+						$f['value'] = ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: (($f['type'] == 'g')? $group: $user);
+					}
 					$assocValues[$f['fieldId']] = $f['value'];
 					$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $f['value']); // get rid off the $ and such unit
 				}
@@ -627,7 +630,7 @@ function wikiplugin_tracker($data, $params) {
 						$items = $trklib->get_items_list($f['options_array'][0], $f['options_array'][1], $assocValues[$f['options_array'][2]]);
 						$i = 0;
 						foreach ($items as $id) {
-							$value .=  $trklib->get_item_value($f['options_array'][0], $id, $f['options_array'][3]);
+							$value =  $trklib->get_item_value($f['options_array'][0], $id, $f['options_array'][3]);
 							$assocValues[$f['fieldId']] = $value; // can be used in another computed field
 							$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $value);
 							if ($i++ > 0)
