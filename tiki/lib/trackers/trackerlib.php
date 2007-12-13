@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.12 2007-12-11 17:28:28 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.13 2007-12-13 02:35:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -421,6 +421,14 @@ class TrackerLib extends TikiLib {
         }
         
         
+	function valid_status($status) {
+		if ($status == 'o' || $status == 'c' || $status == 'p' || $status == 'op' || $status == 'oc'
+			|| $status == 'pc' || $status == 'opc') {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib, $prefs;
 
@@ -434,7 +442,7 @@ class TrackerLib extends TikiLib {
 			unset($multi_languages);
                 
 		
-		if (!$cachelib->isCached($cache)) {
+		if (!$cachelib->isCached($cache) || !$this->valid_status($status)) {
 			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 			$mid = "  (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
 			$fieldIdArray = preg_split('/\|/', $fieldId, -1, PREG_SPLIT_NO_EMPTY);

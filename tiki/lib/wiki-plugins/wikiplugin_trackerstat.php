@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.1 2007-12-12 23:36:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.2 2007-12-13 02:35:46 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -26,6 +26,8 @@ function wikiplugin_trackerstat($data, $params) {
 
 	if (!isset($status)) {
 		$status = 'o';
+	} elseif (!$trklib->valid_status($status)) {
+		return "invalid status";
 	}
 	if (isset($show_percent) && $show_percent == 'y') {
 		$average = 'y';
