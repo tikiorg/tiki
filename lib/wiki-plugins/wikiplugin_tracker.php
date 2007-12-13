@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.9 2007-12-13 14:47:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.10 2007-12-13 18:53:57 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -382,7 +382,7 @@ function wikiplugin_tracker($data, $params) {
 			if ($showdesc == 'y' && $tracker['description']) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
-			if ($_REQUEST['preview']) {
+			if (isset($_REQUEST['preview'])) {
 				$assocValues = array();
 				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
