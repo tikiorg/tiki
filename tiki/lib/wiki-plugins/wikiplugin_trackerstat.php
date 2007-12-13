@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.3 2007-12-13 15:32:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerstat.php,v 1.14.2.4 2007-12-13 15:51:19 sylvieg Exp $
 /* to have some statistiques about a tracker
  * will returns a table with for each tracker field, the list of values and the number of times the values occurs
  * trackerId = the id of the tracker
@@ -105,6 +105,7 @@ function wikiplugin_trackerstat($data, $params) {
 			$stat['name'] = $allFields["data"][$i]['name'];
 			$stat['values'] = array();
 			$stats[] = $stat;
+			continue;
 		} else {
 			if ($iUser >= 0) {
 				global $user;
