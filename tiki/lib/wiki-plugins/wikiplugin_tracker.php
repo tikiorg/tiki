@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.11 2007-12-13 20:49:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.12 2007-12-14 15:31:06 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -459,6 +459,12 @@ function wikiplugin_tracker($data, $params) {
 						$back.= '<select name="track['.$f["fieldId"].']">';
 						$back .= '<option value=""></option>';
 						$flags = $tikilib->get_flags();
+						if ($prefs['language'] != 'en') {
+							foreach ($flags as $key=>$flag) {
+								$flagsTranslated = tra($flag);
+							}
+							array_multisort($flagsTranslated, $flags);
+						}
 						foreach ($flags as $flag) {
 							$selected = $f['value'] == $flag ? 'selected="selected"' : '';
 							if (!isset($f['options_array'][0]) ||  $f['options_array'][0] != '1')
