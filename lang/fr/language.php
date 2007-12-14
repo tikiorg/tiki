@@ -44,7 +44,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 $lang=Array(
@@ -6347,7 +6347,7 @@ $lang=Array(
 "Send blog post" => "Envoyer l'article de blogue",
 "A link to this post was sent to the following addresses:" => "Un lien vers cet article a été envoyé aux adresses suivantes :",
 "Send post to this addresses" => "Envoyer les articles à ces adresses",
-"List of email addresses separated by commas" => "Listes des adresse électroniques séparées par une virgule",
+"List of email addresses separated by commas" => "Listes des adresses électroniques séparées par une virgule",
 "HTML version" => "Version HTML",
 "Text version" => "Version texte",
 "Apply content template" => "Appliquer un gabarit de contenu",
