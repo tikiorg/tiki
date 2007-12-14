@@ -1,9 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-cms.tpl,v 1.24 2007-10-04 22:17:36 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-cms.tpl,v 1.24.2.1 2007-12-14 16:42:07 sylvieg Exp $ *}
+{popup_init src="lib/overlib.js"}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}Look under "Articles" on the application menu for links to{/tr} "<a class="rbox-link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="rbox-link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div>
 </div>
 <br />
+
+{if !empty($msgs)}
+	<div class="simplebox highlight">
+	{foreach from=$msgs item=msg}
+	{$msg}			 
+	{/foreach}
+	</div>
+{/if}
 
 <div class="cbox">
   <div class="cbox-title">{tr}CMS features{/tr}</div>
@@ -144,4 +153,16 @@
       </form>    
     </div>
   </div>
+</div>
+
+<div class="cbox">
+<div class="cbox-title">{tr}Import CSV file{/tr}</div>
+<div class="cbox-data">
+<form action="tiki-admin.php?page=cms" method="post" enctype="multipart/form-data">
+<table class="admin">
+<tr><td>{tr}Batch upload (CSV file):{/tr}<a {popup text='title,authorName,heading,body,lang,user....'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a></td><td><input type="file" name="csvlist" /></td></tr>
+<tr><td colspan="2" class="button"><input type="submit" name="import" value="{tr}Import{/tr}" /></td></tr>
+</table>
+</form>
+</div>
 </div>

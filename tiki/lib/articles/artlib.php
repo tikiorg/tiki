@@ -247,9 +247,11 @@ class ArtLib extends TikiLib {
 				if (!in_array($n['email'], $nots3))
 					$nots[] = $n;
 			}
-			foreach ($emails as $n) {
-				if (!in_array($n, $nots3))
-					$nots[] = array('email'=>$n);
+			if (is_array($emails)) {
+				foreach ($emails as $n) {
+					if (!in_array($n, $nots3))
+						$nots[] = array('email'=>$n);
+				}
 			}
 		    if (!isset($_SERVER["SERVER_NAME"])) {
 			    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
@@ -510,7 +512,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		return $ret;
 	}
 
-        function get_user_articles($user, $max) {
+	function get_user_articles($user, $max) {
 	    $query = "select `articleId` ,`title`  from `tiki_articles` where `author`=? order by `publishDate` desc";
 	    
 	    $result = $this->query($query,array($user),$max);
@@ -521,6 +523,75 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	    }
 	    
 	    return $ret;
+	}
+	function import_csv($fileName, &$msgs, $csvDelimiter=',') {
+		global $user, $prefs, $tikilib;
+		$fhandle = fopen($fileName, 'r');
+		if (($fds = fgetcsv($fhandle, 4096, $csvDelimiter)) === false || empty($fds[0])) {
+			$msgs[] = tra('The file is not a CSV file or has not a correct syntax');
+			return false;
+		}
+		for ($i = 0; $i < count($fds); $i++) {
+			$fields[trim($fds[$i])] = $i;
+		}
+		if (!isset($fields['title'])) $fields['title'] = $i++;
+		if (!isset($fields['authorName'])) $fields['authorName'] = $i++;
+		if (!isset($fields['topicId'])) $fields['topicId'] = $i++;
+		if (!isset($fields['useImage'])) $fields['useImage'] = $i++;
+		if (!isset($fields['imgname'])) $fields['imgname'] = $i++;
+		if (!isset($fields['imgsize'])) $fields['imgsize'] = $i++;
+		if (!isset($fields['imgtype'])) $fields['imgtype'] = $i++;
+		if (!isset($fields['imgdata'])) $fields['imgdata'] = $i++;
+		if (!isset($fields['heading'])) $fields['heading'] = $i++;
+		if (!isset($fields['body'])) $fields['body'] = $i++;
+		if (!isset($fields['publishDate'])) $fields['publishDate'] = $i++;
+		if (!isset($fields['expireDate'])) $fields['expireDate'] = $i++;
+		if (!isset($fields['user'])) $fields['user'] = $i++;
+		if (!isset($fields['image_x'])) $fields['image_x'] = $i++;
+		if (!isset($fields['image_y'])) $fields['image_y'] = $i++;
+		if (!isset($fields['type'])) $fields['type'] = $i++;
+		if (!isset($fields['topline'])) $fields['topline'] = $i++;
+		if (!isset($fields['subtitle'])) $fields['subtitle'] = $i++;
+		if (!isset($fields['linkto'])) $fields['linkto'] = $i++;
+		if (!isset($fields['image_caption'])) $fields['image_caption'] = $i++;
+		if (!isset($fields['lang'])) $fields['lang'] = $i++;
+		if (!isset($fields['rating'])) $fields['rating'] = $i++;
+		if (!isset($fields['isfloat'])) $fields['isfloat'] = $i++;
+		if (!isset($fields['emails'])) $fields['emails'] = $i++;
+		$line = 1;
+		while (($data = fgetcsv($fhandle, 4096, $csvDelimiter)) !== false) {
+			++$line;
+			if (!isset($data[$fields['title']])) $data[$fields['title']] = '';
+			if (!isset($data[$fields['authorName']])) $data[$fields['authorName']] = '';
+			if (!isset($data[$fields['topicId']])) $data[$fields['topicId']] = 0;
+			if (!isset($data[$fields['useImage']])) $data[$fields['useImage']] = 'n';
+			if (!isset($data[$fields['imgname']])) $data[$fields['imgname']] = '';
+			if (!isset($data[$fields['imgsize']])) $data[$fields['imgsize']] = '';
+			if (!isset($data[$fields['imgtype']])) $data[$fields['imgtype']] = '';
+			if (!isset($data[$fields['imgdata']])) $data[$fields['imgdata']] = '';
+			if (!isset($data[$fields['heading']])) $data[$fields['heading']] = '';
+			if (!isset($data[$fields['body']])) $data[$fields['body']] = '';
+			if (!isset($data[$fields['publishDate']])) $data[$fields['publishDate']] = $tikilib->now;
+			if (!isset($data[$fields['expireDate']])) $data[$fields['expireDate']] = $tikilib->now+365*24*60*60;
+			if (!isset($data[$fields['user']])) $data[$fields['user']] = $user;
+			if (!isset($data[$fields['image_x']])) $data[$fields['image_x']] = 0;
+			if (!isset($data[$fields['image_y']])) $data[$fields['image_y']]= 0;
+			if (!isset($data[$fields['type']])) $data[$fields['type']] = 'Article';
+			if (!isset($data[$fields['topline']])) $data[$fields['topline']] = '';
+			if (!isset($data[$fields['subtitle']])) $data[$fields['subtitle']] = '';
+			if (!isset($data[$fields['linkto']])) $data[$fields['linkto']] = '';
+			if (!isset($data[$fields['image_caption']])) $data[$fields['image_caption']] = '';
+			if (!isset($data[$fields['lang']])) $data[$fields['lang']] = $prefs['language'];
+			if (!isset($data[$fields['rating']])) $data[$fields['rating']] = 7;
+			if (!isset($data[$fields['isfloat']])) $data[$fields['isfloat']] = 'n';
+			if (!isset($data[$fields['emails']])) $data[$fields['emails']] = '';
+			$articleId = $this->replace_article($data[$fields['title']], $data[$fields['authorName']], $data[$fields['topicId']], $data[$fields['useImage']], $data[$fields['imgname']], $data[$fields['imgsize']], $data[$fields['imgtype']], $data[$fields['imgdata']], $data[$fields['heading']], $data[$fields['body']], $data[$fields['publishDate']], $data[$fields['expireDate']], $data[$fields['user']], 0, $data[$fields['image_x']], $data[$fields['image_y']], $data[$fields['type']], 
+			$data[$fields['topline']], $data[$fields['subtitle']], $data[$fields['linkto']], $data[$fields['image_caption']], $data[$fields['lang']], $data[$fields['rating']], $data[$fields['isfloat']], $data[$fields['emails']]);
+			if (empty($articleId)) {
+				$msgs[] = sprintf(tra('Error line: %d'), $line);
+			}
+		}
+return true;
 	}
 }
 
