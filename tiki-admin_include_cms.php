@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.18 2007-03-16 16:40:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.18.2.1 2007-12-14 16:42:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,17 @@ if (isset($_REQUEST['artlist'])) {
 		simple_set_toggle ($toggle);
 	}
 	simple_set_int("art_list_title_len");
+}
+if (isset($_REQUEST['import'])) {
+	global $artlib; include_once('lib/articles/artlib.php');
+	check_ticket('admin-inc-cms');
+	$fname = $_FILES['csvlist']['tmp_name'];
+	$msgs = array();
+	$artlib->import_csv($fname, $msgs);
+	if (!empty($msgs)) {
+		print_r($msgs);
+		$smarty->assign_by_ref('msgs', $msgs);
+	}
 }
 ask_ticket('admin-inc-cms');
 ?>
