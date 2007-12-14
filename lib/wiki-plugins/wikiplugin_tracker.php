@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.13 2007-12-14 16:00:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.14 2007-12-14 16:44:42 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -461,7 +461,7 @@ function wikiplugin_tracker($data, $params) {
 						$flags = $tikilib->get_flags();
 						if ($prefs['language'] != 'en') {
 							foreach ($flags as $flag) {
-								$flagsTranslated[] = $tikilib->took_away_accent(tra($flag));
+								$flagsTranslated[] = $tikilib->take_away_accent(tra($flag));
 							}
 							array_multisort($flagsTranslated, $flags);
 						}
