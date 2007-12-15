@@ -17,14 +17,20 @@ if (!function_exists('mod_forums_last_topics_help')) {
 
 global $ranklib; include_once ('lib/rankings/ranklib.php');
 
+if (isset($module_params['lastreplied']) && $module_params['lastreplied'] == 'y') {
+	$lastreplied = true;	
+} else {
+	$lastreplied = false;	
+}
+
 if (isset($module_params['forumId'])) {
 	if (strstr($module_params['forumId'], ':')) {
-		$ranking = $ranklib->forums_ranking_last_topics($module_rows, explode(':',$module_params['forumId']));
+		$ranking = $ranklib->forums_ranking_last_topics($module_rows, explode(':',$module_params['forumId']), $lastreplied);
 	} else {
-		$ranking = $ranklib->forums_ranking_last_topics($module_rows, $module_params['forumId']);
+		$ranking = $ranklib->forums_ranking_last_topics($module_rows, $module_params['forumId'], $lastreplied);
 	}
 } else {	
-	$ranking = $ranklib->forums_ranking_last_topics($module_rows);
+	$ranking = $ranklib->forums_ranking_last_topics($module_rows, '', $lastreplied);
 }
 $smarty->assign('modForumsLastTopics', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');

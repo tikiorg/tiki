@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_rankings.php,v 1.15.2.1 2007-11-08 21:34:48 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_rankings.php,v 1.15.2.2 2007-12-15 17:59:40 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,10 @@ $allrankings = array(
 	array(
 	'name' => tra('Last forum topics'),
 	'value' => 'forums_ranking_last_topics'
+),
+	array(
+	'name' => tra('Last replied forum topics'),
+	'value' => 'forums_ranking_last_replied_topics'
 ),
 	array(
 	'name' => tra('Most read topics'),
