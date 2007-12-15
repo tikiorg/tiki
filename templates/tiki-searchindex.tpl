@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.20.2.2 2007-12-11 13:05:38 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.20.2.3 2007-12-15 01:28:04 luciash Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
@@ -56,7 +56,7 @@
 {/section}
 </div>
 
-<div class="mini">
+{if $cant_pages gt 0}<div class="mini">
 {if $prev_offset >= 0}
 [<a class="link" href="tiki-searchindex.php?where={$where}&amp;highlight={$words}&amp;offset={$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
@@ -64,6 +64,6 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="link" href="tiki-searchindex.php?where={$where}&amp;highlight={$words}&amp;offset={$next_offset}">{tr}Next{/tr}</a>]
 {/if}
-</div>
+</div>{/if}
 {/if}
 {/if}
