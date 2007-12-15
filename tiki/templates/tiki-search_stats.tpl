@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-search_stats.tpl,v 1.24.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-search_stats.tpl,v 1.24.2.2 2007-12-15 01:31:42 luciash Exp $ *}
 <h1><a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}Search Stats{/tr}">
@@ -51,7 +51,7 @@
 {/section}
 </table>
 <br />
-<div class="mini">
+{if $cant_pages gt 0}<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-search_stats.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
@@ -67,5 +67,5 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
+</div>{/if}
 
