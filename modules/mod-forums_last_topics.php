@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (!function_exists('mod_forums_last_topics_help')) {
         function mod_forums_last_topics_help() {
-                return 'forumId=id1:id2';
+                return 'forumId=id1:id2,lastreplied=y|n';
         }
 }
 
