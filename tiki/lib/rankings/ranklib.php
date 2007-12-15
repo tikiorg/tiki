@@ -323,8 +323,7 @@ class RankLib extends TikiLib {
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];
-				$aux['title'] = $res['title'];
+				$aux['name'] = $res['name'];				
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 				$ret[] = $aux;
@@ -348,8 +347,7 @@ class RankLib extends TikiLib {
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'];
-				$aux['title'] = $res['title'];
+				$aux['name'] = $res['name'];				
 				$aux['hits'] = $res['comments'];
 				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 				$ret[] = $aux;
