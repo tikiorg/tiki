@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.4 2007-11-07 20:44:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.5 2007-12-15 02:44:51 luciash Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -25,7 +25,7 @@
 <div class="simplebox hoghlight">{tr}A category is mandatory{/tr}</div>
 {/if}
 
-<div align="center">
+<div style="text-align: center">
 {if $individual eq 'y'}
 <a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this gallery{/tr}</a>
 {/if}
@@ -254,7 +254,7 @@
 </table>
 <br />
 {if $prefs.feature_maps eq 'y'}{$map_error}{/if}
-<div class="mini">
+{if $cant_pages gt 0}<div class="mini">
 {if $prev_offset >= 0}
 [<a class="galprevnext" href="tiki-galleries.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
@@ -270,5 +270,5 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
+</div>{/if}
 </div>
