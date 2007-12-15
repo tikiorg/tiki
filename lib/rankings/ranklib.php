@@ -182,6 +182,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
                   if ($this->user_has_perm_on_object($user, $res['object'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
+				$aux['title'] = $res['title'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['object'] . '&amp;comments_parentId=' . $res['threadId'];
 				if ($last_replied == false) {
 					$aux['date'] = $res['commentDate'];
@@ -219,6 +220,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
                  if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
+				$aux['title'] = $res['title'];
 				$aux['hits'] = $this->get_long_datetime($res['commentDate']);
 				$tmp = $res['parentId'];
 				if ($tmp == 0) $tmp = $res['threadId'];
@@ -251,6 +253,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
                  if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
+				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
 				$ret[] = $aux;
@@ -296,6 +299,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'] . ': ' . $res['title'];
+				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['average'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $res['threadId'];
 				$ret[] = $aux;
@@ -320,6 +324,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'];
+				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['hits'];
 				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 				$ret[] = $aux;
@@ -344,6 +349,7 @@ class RankLib extends TikiLib {
 		while (($res = $result->fetchRow()) && $count < $limit) {
 			if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 				$aux['name'] = $res['name'];
+				$aux['title'] = $res['title'];
 				$aux['hits'] = $res['comments'];
 				$aux['href'] = 'tiki-view_forum.php?forumId=' . $res['forumId'];
 				$ret[] = $aux;
