@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.8 2007-12-13 23:24:45 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.9 2007-12-15 19:31:46 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -341,7 +341,7 @@ $tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 0);
 $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
 $tikilib->get_user_preference($userwatch, 'minPrio', 6);
 $tikilib->get_user_preference($userwatch, 'theme', '');
-$tikilib->get_user_preference($userwatch, 'language', '');
+$tikilib->get_user_preference($userwatch, 'language', $prefs['language']);
 $tikilib->get_user_preference($userwatch, 'realName', '');
 $tikilib->get_user_preference($userwatch, 'country', 'Other');
 $tikilib->get_user_preference($userwatch, 'lat', '');
