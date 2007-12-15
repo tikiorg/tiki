@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.12 2007-12-12 23:45:50 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.13 2007-12-15 00:26:00 nkoth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -229,6 +229,16 @@ a moderator approves it.{/tr}
      {include file=freetag.tpl}
    {/if}
 
+	{if $user and $prefs.feature_user_watches eq 'y' and (!isset($comments_threadId) or $comments_threadId eq 0)}
+	<tr class="formcolor">
+      <td>{tr}Watch for replies{/tr}</td>
+      <td>
+		<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked"><label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label><br />
+		<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no"><label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
+      </td>
+    </tr>
+    {/if}
+    
     <tr class="formcolor">
       <td>{tr}Post{/tr}</td>
       <td>

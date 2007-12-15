@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.4 2007-12-12 23:45:51 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.5 2007-12-15 00:26:00 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -375,6 +375,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				// Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
+			    // Set watch if requested
+					if ($prefs['feature_user_watches'] == 'y' && $user && isset($_REQUEST['set_thread_watch']) && $_REQUEST['set_thread_watch'] == 'y') 
+					$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST["comments_title"], "tiki-view_forum_thread.php?forumId=" . $forum_info['forumId'] . "&amp;comments_parentId=" . $threadId);			    
+
 			    }
 			} else {
 				$smarty->assign('duplic', 'y');
