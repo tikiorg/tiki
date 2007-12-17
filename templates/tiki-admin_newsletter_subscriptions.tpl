@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.3 2007-12-11 18:19:52 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.4 2007-12-17 11:53:34 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
@@ -67,6 +67,14 @@
 </form> 	 
 {/if}
 
+<h2>{tr}Export Subscriber Emails{/tr}</h2>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
+<table class="normal">
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor" colspan="2"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+</table>
+</form>
+
 <h2>{tr}Subscribe group{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -87,7 +95,7 @@
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
-<tr><td class="formcolor" width="30%">{tr}Group{/tr}:</td><td class="formcolor" colspan="2">
+<tr><td class="formcolor" width="30%">{tr}Newsletter{/tr}:</td><td class="formcolor" colspan="2">
 <select name="included">
 <option value="">---</option>
 {section name=x loop=$newsletters}

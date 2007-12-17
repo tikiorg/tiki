@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.1 2007-12-17 11:53:33 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,6 +163,22 @@ if (isset($_REQUEST["addgroup"]) && isset($_REQUEST['group']) && $_REQUEST['grou
 if (isset($_REQUEST["addincluded"]) && isset($_REQUEST['included']) && $_REQUEST['included'] != ""){
 	check_ticket('admin-nl-subsriptions');
 	$nllib->add_included($_REQUEST["nlId"], $_REQUEST['included']);
+}
+
+if (isset($_REQUEST['export'])) {
+	check_ticket('admin-nl-subsriptions');
+	$users = $nllib->get_all_subscribers($_REQUEST['nlId'], 'y');
+	$data = "email\n";
+	foreach ($users as $u) {
+		$data .= $u['email']."\n";
+	}
+	header('Content-type: text/plain');
+	header('Content-Disposition: attachment; filename='.$info['name'].'.csv');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0,pre-check=0');
+	header('Pragma: public');
+	echo $data;
+	die;
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
