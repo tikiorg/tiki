@@ -528,6 +528,7 @@
     <tr><td class="form">{tr}Accept dashes and underscores in WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords_usedash" {if $prefs.feature_wikiwords_usedash eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Link plural WikiWords to their singular forms{/tr}:</td><td><input type="checkbox" name="feature_wiki_plurals" {if $prefs.feature_wiki_plurals eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use Wiki paragraph formatting{/tr}:</td><td><input type="checkbox" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}But still create line breaks within paragraphs{/tr}:</td><td><input type="checkbox" name="feature_wiki_paragraph_formatting_add_br" {if $prefs.feature_wiki_paragraph_formatting_add_br eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Automonospaced text{/tr}:</td><td><input type="checkbox" name="feature_wiki_monosp" {if $prefs.feature_wiki_monosp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
     <select name="feature_wiki_tables">
