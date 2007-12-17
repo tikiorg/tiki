@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.5 2007-12-08 03:59:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.6 2007-12-17 16:12:37 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,6 +125,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wikiwords_usedash',
 	'feature_wiki_plurals',
 	'feature_wiki_paragraph_formatting',
+	'feature_wiki_paragraph_formatting_add_br',
 	'feature_dump',
 	'feature_wiki_export',
 	'feature_wiki_rankings',
