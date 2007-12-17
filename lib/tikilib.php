@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.51 2007-12-17 17:25:21 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.52 2007-12-17 17:29:32 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6339,8 +6339,8 @@ if (!$simple_wiki) {
 				    // First non-blank line; start a paragraph
 				    $data .= "<p>";
 				    $in_paragraph = 1;
-				} elseif ($prefs['feature_wiki_paragraph_formatting_add_br'] == 'y') {
-					// A normal in-paragraph line or a consecutive blank line.
+				} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y') {
+					// A normal in-paragraph line
 					$line = '<br />' . $line;
 				} else {
 				    // A normal in-paragraph line or a consecutive blank line.
