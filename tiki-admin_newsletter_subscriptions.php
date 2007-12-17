@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.1 2007-12-17 11:53:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.2 2007-12-17 11:59:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,7 +170,8 @@ if (isset($_REQUEST['export'])) {
 	$users = $nllib->get_all_subscribers($_REQUEST['nlId'], 'y');
 	$data = "email\n";
 	foreach ($users as $u) {
-		$data .= $u['email']."\n";
+		if (!empty( $u['email']))
+			$data .= $u['email']."\n";
 	}
 	header('Content-type: text/plain');
 	header('Content-Disposition: attachment; filename='.$info['name'].'.csv');
