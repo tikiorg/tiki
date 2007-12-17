@@ -20,9 +20,9 @@
 {section name=ix loop=$ratings.options}
 <tr><td valign="top" {if $user_vote eq $ratings.options[ix].optionId}class="highlight"{/if}>
 <input type="radio" name="polls_optionId" value="{$ratings.options[ix].optionId}" 
-id="{$ratings.info.pollId}{$ratings.options[ix].optionId}" {if $user_vote eq $ratings.options[ix].optionId} checked="checked"{/if} />
+id="poll{$ratings.info.pollId}{$ratings.options[ix].optionId}" {if $user_vote eq $ratings.options[ix].optionId} checked="checked"{/if} />
 </td><td valign="top" {if $user_vote eq $ratings.options[ix].optionId}class="highlight"{/if}>
-<label for="{$ratings.info.pollId}{$ratings.options[ix].optionId}">{$ratings.options[ix].title}</label></td>
+<label for="poll{$ratings.info.pollId}{$ratings.options[ix].optionId}">{$ratings.options[ix].title}</label></td>
 <td valign="top" {if $user_vote eq $ratings.options[ix].optionId}class="highlight"{/if}>
 ({$ratings.options[ix].votes})
 </td></tr>
