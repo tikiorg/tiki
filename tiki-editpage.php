@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.20 2007-12-11 16:41:21 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.21 2007-12-17 19:07:24 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -80,9 +80,8 @@ if (isset($_REQUEST['cancel_edit'])) {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));
 		$page = $approvedPageName;  
 	}
-	$page = urlencode($page);
 	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
-	$url = "location: tiki-index.php?page=$page";
+	$url = "location: tiki-index.php?page=" . urlencode($page);
 	if (!empty($_REQUEST['page_ref_id'])) {
 		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
 	}	
@@ -125,6 +124,7 @@ if ($prefs['feature_warn_on_edit'] == 'y') {
 		$msg .= urlencode($page);
 		$msg .= '&conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
 		$smarty->assign('msg',$msg);
+		$smarty->assign('errortitle',tra('Page is currently being edited'));
 		$smarty->display("error.tpl");
 		die;
 	}
