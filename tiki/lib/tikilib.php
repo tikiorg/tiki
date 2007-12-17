@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.50 2007-12-17 16:12:37 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.51 2007-12-17 17:25:21 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6335,7 +6335,7 @@ if (!$simple_wiki) {
 				if ($in_paragraph && (0 == strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
 				    // First non-blank line; start a paragraph; if not a div created by plugins
 				    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-				} elseif (!$in_paragraph && (0 != strcmp("", trim($line)))) {
+				} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
 				    // First non-blank line; start a paragraph
 				    $data .= "<p>";
 				    $in_paragraph = 1;
