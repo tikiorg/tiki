@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment.tpl,v 1.35 2007-07-08 17:39:05 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment.tpl,v 1.35.2.1 2007-12-17 18:20:46 sylvieg Exp $ *}
 {if $comment.doNotShow != 1 }
 <div class="post {$thread_style}" id="threadId{$comment.threadId}">
 	<div class="inner"><span class="corners-top"><span></span></span>
@@ -19,12 +19,12 @@
 
 {if $first neq 'y' and $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != ''}
 	{foreach from=$comment.replies_info.replies item="comment"}
-		{if $comment.doNotShow != 1 }
+		{if $comment.doNotShow != 1 && $thread_style != 'commentStyle_plain' }
 		<div class="sub_comment_area">
 			<div class="sub_comment">
 		{/if}
 		{include file="comment.tpl" comment=$comment}
-		{if $comment.doNotShow != 1 }
+		{if $comment.doNotShow != 1  && $thread_style != 'commentStyle_plain' }
 			</div>
 		</div>
 		{/if}
