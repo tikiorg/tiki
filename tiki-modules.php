@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.4 2007-12-06 23:21:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.5 2007-12-18 01:06:44 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,6 +68,13 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$pass = 'n';
 	} elseif (isset($module_params['page']) && (!isset($section) || $section != 'wiki page' || !isset($page) || $page != $module_params['page'])) {
 		$pass = 'n';
+	} elseif (isset($module_params['theme'])) {
+		global $tc_theme;
+		if (isset($tc_theme) && $tc_theme > '' && $module_params['theme'] != $tc_theme) {
+			$pass = 'n';
+		} elseif ($module_params['theme'] != $prefs['style']) {
+			$pass = 'n';
+		}
 	} elseif ($prefs['modallgroups'] != 'y') {
 		if ($mod_reference["groups"]) {
 			$module_groups = unserialize($mod_reference["groups"]);
