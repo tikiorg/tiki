@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.15.2.1 2007-11-07 12:37:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.15.2.2 2007-12-18 01:06:44 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 
 	include_once ('lib/categories/categlib.php');
 
+	global $tc_theme;
 	$tc_theme = '';
 
 	//SECTIONS
