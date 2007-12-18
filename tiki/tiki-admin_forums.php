@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.5 2007-12-08 11:01:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.6 2007-12-18 14:08:59 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,7 +141,7 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-view_forum.php?forumId=" . $cat_objid;
 	include_once ("categorize.php");
 
-	$_REQUEST["forumId"] = 0;
+	$_REQUEST["forumId"] = $fid;
 }
 
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['forumId'])) {
