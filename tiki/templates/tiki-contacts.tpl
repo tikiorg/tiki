@@ -148,7 +148,7 @@ title="{tr}Delete{/tr}"><img src="pics/icons/cross_admin.png" border="0" height=
 	var tr,td, input;
 	tr=newelem('tr', { 'class':'formcolor', 'id':'tr_ext_'+extid });
 	td=newelem('td', { });
-	input=newelem('input', { 'type':'button', 'value':'-', 'onClick':'ext_remove(\''+extid+'\');' });
+	input=newelem('input', { 'type':'button', 'value':'-', 'onclick':'ext_remove(\''+extid+'\');' });
 	td.appendChild(input);
 	td.innerHTML+=text+':';
 	tr.appendChild(td);

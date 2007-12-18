@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.17 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.17.2.1 2007-12-18 15:51:46 pkdille Exp $ *}
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
 {* here is missing body tag when above link to CSS remains!!! (luci) *}
 <h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
@@ -17,10 +17,10 @@
 	{/if}
 	<div id="panel">
 		<menu>
-			<li><a href="#" onClick="insertRowClick()" class="linkbut">{tr}Insert Row{/tr}</a></li>
-			<li><a href="#" onClick="insertColumnClick()" class="linkbut">{tr}Insert Column{/tr}</a></li>
-			<li><a href="#" onClick="removeRowClick()" class="linkbut">{tr}Remove Row{/tr}</a></li>
-			<li><a href="#" onClick="removeColumnClick()" class="linkbut">{tr}Remove Column{/tr}</a></li>
+			<li><a href="#" onclick="insertRowClick()" class="linkbut">{tr}Insert Row{/tr}</a></li>
+			<li><a href="#" onclick="insertColumnClick()" class="linkbut">{tr}Insert Column{/tr}</a></li>
+			<li><a href="#" onclick="removeRowClick()" class="linkbut">{tr}Remove Row{/tr}</a></li>
+			<li><a href="#" onclick="removeColumnClick()" class="linkbut">{tr}Remove Column{/tr}</a></li>
 			<li><a href="#" onclick="mergeCellClick()" class="linkbut">{tr}Merge Cells{/tr}</a></li>
 			<li><a href="#" onclick="restoreCellClick()" class="linkbut">{tr}Restore Cells{/tr}</a></li>
 			<li><a href="#" onclick="copyCalculationClick()" class="linkbut">{tr}Copy Calculation{/tr}</a></li>

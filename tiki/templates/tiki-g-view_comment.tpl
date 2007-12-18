@@ -19,8 +19,8 @@
 	</tr>
 	<tr>
 	    <td class="formcolor" colspan="4">
-	    	<input type="button" name="print" value="Print" onClick="{$jPrint}" />
-		<input type="button" name="print" value="Close" onClick="{$jClose}" />
+	    	<input type="button" name="print" value="Print" onclick="{$jPrint}" />
+		<input type="button" name="print" value="Close" onclick="{$jClose}" />
 	    </td>
 	</tr>
 </table>
