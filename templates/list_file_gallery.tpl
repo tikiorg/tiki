@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31 2007-10-13 15:13:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.1 2007-12-18 15:51:45 pkdille Exp $ *}
 {* param:$gal_info, $files *}
 {strip}
 
@@ -250,7 +250,7 @@
 	{if $file_offset}<input type="hidden" name="file_offset" value="{$file_offset}" />{/if}
 	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}move selected files{/tr}' />
 {/if}
-<input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onClick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
+<input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onclick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
 </div>
 {if $smarty.request.movesel_x and !isset($file_info)} 
 <div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40 2007-10-04 22:17:46 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40.2.1 2007-12-18 15:51:46 pkdille Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -266,7 +266,7 @@
 						{else}
 						<td class="even" width=20px>
 						{/if}
-						<input type="checkbox" onClick="changelayer({$smarty.section.i.index})" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]} />
+						<input type="checkbox" onclick="changelayer({$smarty.section.i.index})" name="{$my_layers[i]->name}" value="1" {$my_layers_checked[i]} />
 						</td>
 						{if $smarty.section.i.index % 2}
 						<td class="odd" width=20px>
@@ -274,7 +274,7 @@
 						<td class="even" width=20px>
 						{/if}
 						{if $layer_label[i] eq "On"}
-						<input type="checkbox" onClick="changelabel({$smarty.section.i.index})" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]} />
+						<input type="checkbox" onclick="changelabel({$smarty.section.i.index})" name="{$my_layers[i]->name}_label" value="1" {$my_layers_label_checked[i]} />
 						{else}
 						&nbsp;
 						{/if}
@@ -325,7 +325,7 @@
 				{else}
 				<td class="even">
 				{/if}
-				<input type="checkbox" onClick="changelayer({$smarty.section.j.index})" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
+				<input type="checkbox" onclick="changelayer({$smarty.section.j.index})" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
 				</td>
 				{if $smarty.section.j.index % 2}
 				<td class="odd">
@@ -333,7 +333,7 @@
 				<td class="even">
 				{/if}
 				{if $layer_label[j] eq "On"}
-				<input type="checkbox" onClick="changelabel({$smarty.section.j.index})" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
+				<input type="checkbox" onclick="changelabel({$smarty.section.j.index})" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
 				{else}
 				&nbsp;
 				{/if}

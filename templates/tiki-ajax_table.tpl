@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.6.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_table.tpl,v 1.6.2.2 2007-12-18 15:51:45 pkdille Exp $ *}
 <form action="" method="">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="tag" value="{$tag|escape}" />
 	{tr}Find:{/tr} <input type="text" name="find" />
-	<input type="submit" onClick="setFilter(this.form.find.value);return false;"/>
+	<input type="submit" onclick="setFilter(this.form.find.value);return false;"/>
 </form>
 
 {* Table-based layout - table headings make it easy to play with sort-mode *}

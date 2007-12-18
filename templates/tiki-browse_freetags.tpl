@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.6 2007-12-12 21:46:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.7 2007-12-18 15:51:45 pkdille Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -178,7 +178,7 @@
           </script>
         
           {foreach from=$most_popular_tags item=popular_tag}
-            <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onClick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;">{$popular_tag.tag}</a> 
+            <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;">{$popular_tag.tag}</a> 
           {/foreach}
         {/if}
       </td>
@@ -189,7 +189,7 @@
         <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
           <b>{tr}Tags{/tr}</b> 
           <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
-          <a class="link" onClick="clearTags();">{tr}clear{/tr}</a>
+          <a class="link" onclick="clearTags();">{tr}clear{/tr}</a>
           <br />
           <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
           <input type="checkbox" id="stopb" name="stopbroaden" {if $broaden eq 'n'}checked{/if}> 

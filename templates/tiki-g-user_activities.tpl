@@ -83,7 +83,7 @@
 		{/if}
 		{if $items[ix].isInteractive eq 'y'}
 			{if $items[ix].type eq 'start'}
-				<a onClick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$items[ix].activityId}&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
+				<a onclick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$items[ix].activityId}&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
 			{/if}
 			{if $items[ix].type eq 'standalone'}
 				<a class="link" href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>

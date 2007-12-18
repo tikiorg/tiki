@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.13 2007-12-15 00:26:00 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.14 2007-12-18 15:51:46 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -13,7 +13,7 @@
 <tr>
 <td>
 {if $tiki_p_forum_post_topic eq 'y'}
-<a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onClick="javascript:show('forumpost');return false;"{/if}>
+<a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>
 {tr}New Topic{/tr}</a>
 {/if}
 {if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
@@ -243,8 +243,8 @@ a moderator approves it.{/tr}
       <td>{tr}Post{/tr}</td>
       <td>
       {if empty($user)}{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />{/if}
-      <input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onClick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
-      <input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onClick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+      <input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+      <input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
       <input type="submit" name="comments_postCancel" value="{tr}Cancel{/tr}" {if $comment_preview neq 'y'}onclick="hide('forumpost');window.location='#header';return false;"{/if} />
       </td>
     </tr>
