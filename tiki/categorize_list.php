@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.4 2007-12-11 15:01:43 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.5 2007-12-19 22:50:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$all_categories = $categlib->list_categs();
 	$categories = array();
 	for ($i = 0; $i < count($all_categories); $i++) {
-		if($userlib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_edit_categorized')) {
+		if($tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_edit_categorized') || $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_admin_categories')) {
 			$categories[] = $all_categories[$i];
 			// remove category for approved pages from category list if this is a staging page
 			if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
