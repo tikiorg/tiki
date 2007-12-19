@@ -1,6 +1,6 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.13 2007-12-07 05:56:43 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.14 2007-12-19 17:14:47 marclaporte Exp $
 
-# The following script will update a tiki database from verion 1.9 to 1.10
+# The following script will update a tiki database from version 1.9 to 1.10
 # 
 # To execute this file do the following:
 #
