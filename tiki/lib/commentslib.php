@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.8 2007-12-13 23:24:45 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.9 2007-12-19 20:25:16 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1173,13 +1173,20 @@ class Comments extends TikiLib {
     }
 
     function get_user_forum_comments($user, $max, $type = '') {
-    $mid = " where `objectType`='forum' AND `userName`=?";
+    // get parent title as well, especially useful in flat forum
+	$parentinfo = '';
+	$mid = '';
+	if ($type == 'replies') {
+		$parentinfo .= ", b.`title` as parentTitle";
+		$mid .= " inner join `tiki_comments` b on b.`threadId` = a.`parentId`";
+	}
+    $mid .= " where a.`objectType`='forum' AND a.`userName`=?";
     if ($type == 'topics') {
-    	$mid .= " AND `parentId`=0";
+    	$mid .= " AND a.`parentId`=0";
     } elseif ($type == 'replies') {
-    	$mid .= " AND `parentId`>0";
+    	$mid .= " AND a.`parentId`>0";
     }
-	$query = "select `threadId`, `object`, `title` from `tiki_comments` $mid ORDER BY `commentDate` desc";
+	$query = "select a.`threadId`, a.`object`, a.`title` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
 	
 	$result = $this->query($query,array($user),$max);
 	$ret = array();
@@ -1190,7 +1197,6 @@ class Comments extends TikiLib {
 	
 	return $ret;
     }
-
     // FORUMS END
     function get_comment($id, $message_id=null) {
 	if ($message_id) {
