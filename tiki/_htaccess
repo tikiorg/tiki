@@ -1,3 +1,15 @@
+# These are suggested Rewrite Rules for use with TikiWiki.
+# They enhance security and permit short URLS. 
+#
+# To use
+# 1- rename _htaccess to .htaccess
+# or
+# 2- add the content of this file to your httpd.conf
+#
+# Please find more info here
+# http://doc.tikiwiki.org/Rewrite+Rules
+#
+# This prevents reading of files with certain extensions.
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
 	order deny,allow
 	deny from all
