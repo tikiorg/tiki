@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.5 2007-12-12 23:45:51 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.6 2007-12-19 22:55:24 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -435,7 +435,21 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		    $mail->send(array($not['email']));
 		}
 	    }
-
+	  	// redirect back to parent after edit/post to create GET request instead of POST to allow proper bookmarking/refreshing, etc.
+		if ($forum_mode == 'y') {
+			$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
+			if (!empty($_REQUEST['comments_threshold'])) 
+				$url .= "&comments_threshold=".$_REQUEST['comments_threshold'];
+			if (!empty($_REQUEST['comments_offset'])) 
+				$url .= "&comments_offset=".$_REQUEST['comments_offset'];
+			if (!empty($_REQUEST['comments_per_page'])) 
+				$url .= "&comments_per_page=".$_REQUEST['comments_per_page'];
+			if (!empty($_REQUEST['thread_style'])) 
+				$url .= "&thread_style=".$_REQUEST['thread_style'];
+			if (!empty($_REQUEST['thread_sort_mode'])) 
+				$url .= "&thread_sort_mode=".$_REQUEST['thread_sort_mode'];			
+			header('location: ' . $url);
+		}
 	} else {
 	    $msgError = '';
 	    if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
