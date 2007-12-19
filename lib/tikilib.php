@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.55 2007-12-19 04:34:19 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.56 2007-12-19 16:34:59 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2770,7 +2770,7 @@ function add_pageview() {
     }
 
     function get_article($articleId) {
-	global $user, $tiki_p_admin_cms, $prefs;
+    global $user, $tiki_p_admin_cms, $prefs, $userlib;
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,
@@ -2802,7 +2802,7 @@ function add_pageview() {
 	} else {
 	    return '';
 	}
-	if (!($tiki_p_admin_cms == 'y' || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && (!$res['topicId'] || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
+	if (!($tiki_p_admin_cms == 'y' || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && (!$res['topicId'] || !$userlib->object_has_one_permission($res['topicId'], 'topic') || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
 		return false;
 	}
 
