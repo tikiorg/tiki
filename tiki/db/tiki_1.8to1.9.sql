@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.118 2007-07-24 14:47:49 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.118.2.1 2007-12-19 15:38:15 marclaporte Exp $
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
@@ -1281,3 +1281,16 @@ ALTER TABLE messu_messages ADD INDEX  userIsRead (user, isRead);
 
 #2007-07-18
 ALTER TABLE users_users ADD valid varchar(32) default NULL;
+
+# 2007-08-25 marclaporte "Password invalid after days" has been always on by default and at 999 days. 
+# While this seems like a long time, many sites are reaching that age and users are being asked to change 
+# their password. This process is not vert good at the moment. So, I'm going to assume that the vast majority 
+# of people left the default but don't want this feature. So the upgrade script will change to 1999 days. 
+# And clean installs will be at 1999 days as well.  In 1.10, the default will be that this feature is turned off (-1)
+UPDATE tiki_preferences SET value = '1999' WHERE value='999' and name='pass_due';
+
+# 2007-09-12 marclaporte: following on Luciash's recent fixes on tiki.sql
+# This alters db column 'value' of tiki_preferences to support more than 255 characters (up to 65535 actually) 
+# which is essential to do anything significative with Site Identity (and avoid getting locked out of Tiki by accident)
+# It is also used if you have many entries in InterTiki.
+ALTER TABLE tiki_preferences CHANGE `value` `value` text;
