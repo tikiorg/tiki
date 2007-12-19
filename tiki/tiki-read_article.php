@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61.2.1 2007-11-26 15:27:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.61.2.2 2007-12-19 16:11:26 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,29 +9,44 @@
 // Initialization
 $section = 'cms';
 require_once ('tiki-setup.php');
-include_once ('lib/stats/statslib.php');
-
-include_once ('lib/articles/artlib.php');
-if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-}
 
 if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('msg', tra("No article indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
+
+$article_data = $tikilib->get_article($_REQUEST["articleId"]);
+
+if ($article_data === false) {
+	$smarty->assign('msg', tra('Permission denied'));
+	$smarty->display('error.tpl');
+	die;
+}
+
+if (!$article_data) {
+	$smarty->assign('msg', tra("Article not found"));
+	$smarty->display("error.tpl");
+	die;
+}
+if (($article_data['publishDate'] > $tikilib->now) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data['type'] != 'Event')) {
+	$smarty->assign('msg', tra("Article is not published yet"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+include_once ('lib/stats/statslib.php');
+include_once ('lib/articles/artlib.php');
+if ($prefs['feature_categories'] == 'y') {
+	global $categlib; include_once('lib/categories/categlib.php');
+}
+
 
 //This is basicaly a copy of part of the freetag code from tiki-setup.php and should be only there. The problem is that the section name for articles is "cms" and the object name for article in the table tiki_objects is "article". Maybe it is a good idea to use "cms" on tiki_objects instead "article" and then this block of code can be removed. Another solution?
 if ($prefs['feature_freetags'] == 'y') {
@@ -49,35 +64,9 @@ if ($prefs['feature_freetags'] == 'y') {
 	$headerlib->add_cssfile('css/freetags.css');
 }
 
-// no need to check articleId; if it doesn't exist script would have died above
-// if (isset($_REQUEST["articleId"])) {
-
-
-	
 	$artlib->add_article_hit($_REQUEST["articleId"]);
 
 	$smarty->assign('articleId', $_REQUEST["articleId"]);
-	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
-
-	if ($article_data === false) {
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	if (!$article_data) {
-		$smarty->assign('msg', tra("Article not found"));
-		$smarty->display("error.tpl");
-		die;
-	}
-
-
-	if (($article_data["publishDate"] > $tikilib->now) && ($tiki_p_admin != 'y' && $tiki_p_admin_cms !='y') && ($article_data["type"] != 'Event')) {
-		$smarty->assign('msg', tra("Article is not published yet"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
 
 	$smarty->assign('arttitle', $article_data["title"]);
 	$smarty->assign('topline', $article_data["topline"]);
