@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.54 2007-12-19 04:24:26 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.55 2007-12-19 04:34:19 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6332,11 +6332,11 @@ if (!$simple_wiki) {
 				&& ! substr_count(strtolower($line), "-->")
 			) {
 			    if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-			    	if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' ) && substr(trim($line),0,4) != '<div') {
-				    // First blank line or end of div created by plugins; close a paragraph
+			    if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
+				    // If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
 				    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 				} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
-				    // First non-blank line; start a paragraph; if not a div created by plugins
+				    // If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
 				    $data .= "<p>";
 				    $in_paragraph = 1;
 				    } elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && substr(trim($line),0,5) != '</div' && substr(trim($line),0,4) != '<div') {
