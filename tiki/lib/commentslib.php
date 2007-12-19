@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.9 2007-12-19 20:25:16 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.10 2007-12-19 20:43:01 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1186,7 +1186,7 @@ class Comments extends TikiLib {
     } elseif ($type == 'replies') {
     	$mid .= " AND a.`parentId`>0";
     }
-	$query = "select a.`threadId`, a.`object`, a.`title` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
+	$query = "select a.`threadId`, a.`object`, a.`title`, a.`commentDate` $parentinfo from `tiki_comments` a $mid ORDER BY a.`commentDate` desc";
 	
 	$result = $this->query($query,array($user),$max);
 	$ret = array();
