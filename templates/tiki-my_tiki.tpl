@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.5 2007-12-13 23:24:48 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.6 2007-12-19 20:43:01 nkoth Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
@@ -200,12 +200,18 @@
             <tr>
               <th class="heading">{tr}Forum topics{/tr}</th>              
             </tr>
+            <tr>
+              <th class="heading">{tr}Date of post{/tr}</th>              
+            </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_topics}
               <tr>
-                <td class="{cycle}">
+                <td class="{cycle advance=false}">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
                 </td>                
+                <td class="{cycle}">
+                  {$user_forum_topics[ix].commentDate|tiki_short_datetime}
+                </td>  
               </tr>
             {/section}
           </table>
@@ -225,12 +231,18 @@
             <tr>
               <th class="heading">{tr}Forum replies{/tr}</th>              
             </tr>
+            <tr>
+              <th class="heading">{tr}Date of post{/tr}</th>              
+            </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_replies}
               <tr>
-                <td class="{cycle}">
+                <td class="{cycle advance=false}">
                   <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
-                </td>                
+                </td>
+                <td class="{cycle}">
+                  {$user_forum_replies[ix].commentDate|tiki_short_datetime}
+                </td>                  
               </tr>
             {/section}
           </table>
