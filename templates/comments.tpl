@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.6 2007-12-18 15:51:45 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.7 2007-12-19 22:31:15 nkoth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -292,7 +292,7 @@
                                 {/if}
 			</td>
 			<td class="formcolor">
-				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
+				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
 				<input type="hidden" name="rows" value="{$rows}"/>
 				<input type="hidden" name="cols" value="{$cols}"/>
 			</td>
