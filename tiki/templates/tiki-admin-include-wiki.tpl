@@ -232,7 +232,7 @@
     <input type="checkbox" name="wikiapproval_update_freetags" {if $prefs.wikiapproval_update_freetags eq 'y'}checked="checked"{/if}/>
     </td></tr>
     <tr><td class="form">
-    {tr}Combine freetags with that of staging pages on approval{/tr}: </td><td>
+    {tr}Add new freetags of approved copy (into tags field) when editing staging pages{/tr}: </td><td>
     <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
     </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />

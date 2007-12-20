@@ -153,14 +153,6 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
     	$taglist .= $tags['data'][$i]['tag'] . ' ';
 	}
 	
-	if ($prefs['wikiapproval_combine_freetags'] == 'y') {
-		$tags = $freetaglib->get_tags_on_object($page, 'wiki page');
-		for ($i=0; $i<sizeof($tags['data']); $i++) {
-    		$taglist .= $tags['data'][$i]['tag'] . ' ';
-		}
-		$freetaglib->update_tags($user, $staging_page, 'wiki page', $taglist);
-	}	
-	
 	$freetaglib->update_tags($user, $page, 'wiki page', $taglist);
 }
 
