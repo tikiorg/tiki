@@ -1,0 +1,21 @@
+contributor:
+$Author: franck $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2007-12-20 23:37:10 $
+
+files: 
+wiki-plugins/dopplr/wiki-plugins/wikiplugin_dopplr.php lib/wiki-plugins/wikiplugin_dopplr.php
+
+author:
+Franck
+
+licence:
+GNU/LGPL
+
+Description: 
+Add a dopplr.com badge to a wiki page
+
