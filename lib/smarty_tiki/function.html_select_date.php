@@ -39,12 +39,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_html_select_date($params, &$smarty)
 {
+	global $prefs;
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
     $prefix          = "Date_";
-    $start_year      = strftime("%Y");
-    $end_year        = $start_year;
+    $start_year      = $prefs['calendar_start_year'];
+    $end_year        = $prefs['calendar_end_year'];
     $display_days    = true;
     $display_months  = true;
     $display_years   = true;
