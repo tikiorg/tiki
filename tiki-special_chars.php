@@ -1,5 +1,5 @@
 <?php // -*- coding:utf-8 -*-
-/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5 2007-02-28 16:21:24 sylvieg Exp $ */
+/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5.2.1 2007-12-22 01:56:52 mose Exp $ */
 echo  '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html
@@ -162,9 +162,10 @@ onchange="handleListChange(this)">
   </tr>
   <tr>
     <td align="left" class="fixed">
+			<?php $area = preg_replace('/[^-_0-9a-zA-Z\.]/','',$_REQUEST["area_name"]); ?>
       <input type="text" id='spec' />
   <input type="button" class="button"
-onclick="javascript:window.opener.document.getElementById('<?php print($_REQUEST["area_name"]);?>').value=window.opener.document.getElementById('<?php print($_REQUEST["area_name"]);?>').value+getElementById('spec').value;" name="ins" value="ins" />
+onclick="javascript:window.opener.document.getElementById('<?php echo $area; ?>').value=window.opener.document.getElementById('<?php echo $area; ?>').value+getElementById('spec').value;" name="ins" value="ins" />
       <input type="button" class="button"
 onclick="window.close();" name="close" value="close" />
     </td>

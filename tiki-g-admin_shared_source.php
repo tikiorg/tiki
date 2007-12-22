@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.13 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.13.2.1 2007-12-22 01:56:52 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,6 +78,11 @@ if ($_REQUEST['activityId']) {
 //First of all save
 if (isset($_REQUEST['source'])) {
 	check_ticket('g-admin-shared-source');
+	if (!isset($_REQUEST['source_name']) or !preg_match('#^lib/Galaxia/processes/'.preg_quote($procname,'#').'/code/(templates/|activities/|)[-0-9A-Za-z_]+(.php|.tpl)$#',$_REQUEST['source_name'])))  {
+		$smarty->assign('msg', tra("Invalid source path"));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$fp = fopen($_REQUEST['source_name'], "w");
 
 	fwrite($fp, $_REQUEST['source']);
