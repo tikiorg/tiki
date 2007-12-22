@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.57 2007-12-22 18:52:58 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.58 2007-12-22 21:01:31 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1703,10 +1703,17 @@ function add_pageview() {
 	global $objectlib;require_once('lib/objectlib.php');
 	$categlib->uncategorize_object($type, $id);
 	// Now remove comments
-	$object = $type . $id;
-	$query = "delete from `tiki_comments` where `object`=?  and `objectType`=?";
+	$query = "select * from `tiki_comments` where `object`=?  and `objectType`=?";
 	$result = $this->query($query, array( $id, $type ));
+	if ($result) {		
+		include_once ("lib/commentslib.php");
+		$commentslib = new Comments($dbTiki);
+	}
+	while ($res = $result->fetchRow()) {
+		$commentslib->remove_comment($res['threadId']);
+	}
 	// Remove individual permissions for this object if they exist
+	$object = $type . $id;
 	$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
 	$result = $this->query($query,array(md5($object),$type));
 	// remove links from this object to pages
