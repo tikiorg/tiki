@@ -14,7 +14,7 @@ if ($handle = opendir('tikimovies')) {
 }
 
 // Get the page from the request var or default it to HomePage
-if(isset($_GET["movie"])) {
+if(isset($_GET["movie"])  and in_array($_GET['movie'],$movies)) {
   $movie = $_GET["movie"]; 
 } else {
   $movie = "";
