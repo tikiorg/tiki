@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.8 2007-12-12 18:18:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.9 2007-12-22 18:52:58 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -99,7 +99,7 @@ class WikiLib extends TikiLib {
 	   $neighbours = array();
 	   $already = array();
 
-           $query = "select `toPage` from `tiki_links` where `fromPage`=?";
+           $query = "select `toPage` from `tiki_links` where `fromPage`=? and `fromPage` not like 'objectlink:%'";
 	   $result = $this->query($query,array($page));
 	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 	       $neighbour = $row['toPage'];
@@ -107,7 +107,7 @@ class WikiLib extends TikiLib {
 	       $already[$neighbour] = 1;
 	   }
 
-           $query = "select `fromPage` from `tiki_links` where `toPage`=?";
+           $query = "select `fromPage` from `tiki_links` where `toPage`=? and `fromPage` not like 'objectlink:%'";
 	   $result = $this->query($query,array($page));
 	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 	       $neighbour = $row['fromPage'];
@@ -156,20 +156,40 @@ class WikiLib extends TikiLib {
 		$result = $this->query($query, array( $oldName ) );
 
 		$linksToOld=array();
-		while ($res = $result->fetchRow()) {
+		while ($res = $result->fetchRow()) {			
 		    $page = $res['fromPage'];
+		    $is_wiki_page = true;
+		    if (substr($page,0,11) == 'objectlink:') {
+		    	$is_wiki_page = false;
+		    	$objectlinkparts = split(':', $page);
+		    	$type = $objectlinkparts[1];
+		    	$objectId = $objectlinkparts[2];
+		    }
 		    $linksToOld[] = $res['fromPage'];
-		    $info = $this->get_page_info($page);
-		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
-		    $data = $info['data'];
+		    if ($is_wiki_page) {
+		    	$info = $this->get_page_info($page);
+			    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
+			    $data = $info['data'];
+		    } elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+		    	include_once ("lib/commentslib.php");
+		    	global $dbTiki;
+				$commentslib = new Comments($dbTiki);
+				$comment_info = $commentslib->get_comment($objectId);
+				$data = $comment_info['data'];
+		    }
 		    $oldName = quotemeta( $oldName );
  		    if (strstr($newName, " "))
 		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
 		    else
 		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
-		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
-		    $this->query($query, array( $data,(int) strlen($data), $page));
+		    if ($is_wiki_page) {
+		    	$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+		    	$this->query($query, array( $data,(int) strlen($data), $page));
+		    } elseif ($type == 'forum post' || substr($type, -7) == 'comment') {
+		    	$query = "update `tiki_comments` set `data`=? where `threadId`=?";
+		    	$this->query($query, array( $data, $objectId));
+		    }
 		    $this->invalidate_cache($page);
 		}
 
@@ -608,7 +628,8 @@ class WikiLib extends TikiLib {
     // Returns backlinks for a given page
     function get_backlinks($page) {
 	global $user;
-	$query = "select `fromPage` from `tiki_links` where `toPage` = ?";
+	$query = "select `fromPage` from `tiki_links` where `toPage` = ? and `fromPage` not like 'objectlink:%'";
+	// backlinks do not include links from non-page objects TODO: full feature allowing this with options
 	$result = $this->query($query, array( $page ));
 	$ret = array();
 

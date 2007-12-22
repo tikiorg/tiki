@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.56 2007-12-19 16:34:59 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.57 2007-12-22 18:52:58 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1526,7 +1526,8 @@ function add_pageview() {
 	    foreach ($pages as $pagename => $rank) {
 		// Get all the pages linking to this one
 		// Fixed query.  -rlpowell
-		$query = "select `fromPage`  from `tiki_links` where `toPage` = ?";
+		$query = "select `fromPage`  from `tiki_links` where `toPage` = ? and `fromPage` not like 'objectlink:%'";
+		// page rank does not count links from non-page objects TODO: full feature allowing this with options 
 		$result = $this->query($query, array( $pagename ) );
 		$sum = 0;
 
@@ -1535,7 +1536,8 @@ function add_pageview() {
 
 		    if (isset($pages[$linking])) {
 			// Fixed query.  -rlpowell
-			$q2 = "select count(*) from `tiki_links` where `fromPage`= ?";
+			$q2 = "select count(*) from `tiki_links` where `fromPage`= ? and `fromPage` not like 'objectlink:%'";
+			// page rank does not count links from non-page objects TODO: full feature allowing this with options
 			$cant = $this->getOne($q2, array($linking) );
 			if ($cant == 0) $cant = 1;
 			$sum += $pages[$linking] / $cant;
@@ -1707,6 +1709,10 @@ function add_pageview() {
 	// Remove individual permissions for this object if they exist
 	$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
 	$result = $this->query($query,array(md5($object),$type));
+	// remove links from this object to pages
+	$linkhandle = "objectlink:$type:$id";
+	$query = "delete from `tiki_links` where `fromPage` = ?";
+	$result = $this->query($query, array( $linkhandle ) );
 	// remove object
 	$objectlib->delete_object($type, $id);
 	return true;
@@ -3558,7 +3564,8 @@ function add_pageview() {
 			if ($forListPages && $prefs['wiki_list_links'] == 'y')
 				$res['links'] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
 			if ($forListPages && $prefs['wiki_list_backlinks'] == 'y')
-				$res['backlinks'] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
+				$res['backlinks'] = $this->getOne("select count(*) from `tiki_links` where `toPage`=? and `fromPage` not like 'objectlink:%'",array($page));
+				// backlinks do not include links from non-page objects TODO: full feature allowing this with options
 		    }
 		    $ret[] = $res;
 		}
