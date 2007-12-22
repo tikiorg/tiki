@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.12 2007-12-22 18:52:58 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.13 2007-12-22 21:59:41 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1121,6 +1121,27 @@ class Comments extends TikiLib {
 	return true;
     }
 
+    function get_all_children($threadId, $generations = 99) {
+    	$children = array();
+    	$current_generation = 0;
+    	if (!is_array($threadId)) $threadId = array($threadId);
+    	while ($current_generation < $generations) {
+    		$children_this_generation = array();
+    		foreach ($threadId as $t) {
+    			$query = "select `threadId` from `tiki_comments` where `parentId`=?";
+	    		$result = $this->query($query, array($t));
+    			while ($res = $result->fetchRow()) {
+    				$children_this_generation[] = $res["threadId"];
+    			}
+    		}
+    		$children[] = $children_this_generation; 
+    		if (!$children_this_generation) return array_unique($children);
+    		$current_generation++;
+    		$threadId = $children_this_generation;
+    	}
+    	return array_unique($children);
+    }
+    
     function forum_prune($forumId) {
 	$forum = $this->get_forum($forumId);
 
@@ -1144,23 +1165,31 @@ class Comments extends TikiLib {
 		    where `parentId`=?";
 		$cant = $this->getOne($query2, array( (int) $id ));
 
-		if ($cant == 0) {
-		    // Remove this old thread without replies
-		    $query3 = "delete from `tiki_comments` where
-			`threadId` = ?";
-
-		    $result3 = $this->query($query3, array( (int) $id ));
-		}
-	    }
+		// Remove this old thread without replies
+		if ($cant == 0) $this->remove_comment($id);
+					    		
+		} // end while
 	}
 
 	if ($forum["usePruneOld"] == 'y') { // this is very dangerous as you can delete some posts in the middle or root of a tree strucuture
 	    $maxAge = $forum["pruneMaxAge"];
 
 	    $old = $this->now - $maxAge;
-	    $query = "delete from `tiki_comments` where `object`=?
+	    $query = "select * from `tiki_comments` where `object`=?
 		and `objectType` = 'forum' and `commentDate`<?";
 	    $result = $this->query($query, array($forumId, (int) $old));
+	    // this aims to make it safer, by pruning only those with no children that are younger than age threshold
+		while ($res = $result->fetchRow()) {
+			$children = $this->get_all_children($res['threadId']);
+			if ($children) {
+				$csv_children = implode(',', $children);
+				$query = "select max(`commentDate`) from `tiki_comments` where `threadId` in (?)";
+				$maxDate = $this->getOne($query, array( $csv_children ) );
+				if ($maxDate < $old) $this->remove_comment($res['threadId']);
+			} else {
+				$this->remove_comment($res['threadId']);
+			}
+		}
 	}
 
 	if ($forum["usePruneUnreplied"] == 'y' || $forum["usePruneOld"] == 'y') {	// Recalculate comments and threads
