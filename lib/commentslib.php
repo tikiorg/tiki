@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.13 2007-12-22 21:59:41 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.14 2007-12-22 22:07:47 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1152,8 +1152,8 @@ class Comments extends TikiLib {
 	    // Get all the top_level threads
 	    $oldage = $this->now - $age;
 	    $query = "select `threadId` from `tiki_comments` where
-	    `parentId`=0  and `commentDate`<?";
-	    $result = $this->query($query, array( (int) $oldage ));
+	    `parentId`=0  and `commentDate`<? and `object`=? and `objectType` = 'forum'";
+	    $result = $this->query($query, array( (int) $oldage, $forumId ));
 
 	    while ($res = $result->fetchRow()) {
 		// Check if this old top level thread has replies
