@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.11 2007-12-19 20:47:59 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.12 2007-12-22 18:52:58 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1812,6 +1812,20 @@ class Comments extends TikiLib {
 	$this->query($query, array( (int) $threadId ) );
     }
 
+    function update_comment_links($data, $objectType, $threadId) {
+        if ($objectType == 'forum' ) {
+    		$type = 'forum post'; // this must correspond to that used in tiki_objects
+    	} else {
+    		$type = $objectType . ' comment'; // comment types are not used in tiki_objects yet but maybe in future
+    	}
+    	$pages = $this->get_pages($data);
+		$linkhandle = "objectlink:$type:$threadId";
+		$this->clear_links($linkhandle);    
+		foreach ($pages as $a_page) {
+	    	$this->replace_link($linkhandle, $a_page);
+		}
+    }
+    
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='', $contributions='') {
 	global $prefs;
 	if ($prefs['feature_actionlog'] == 'y') {
@@ -1839,6 +1853,9 @@ class Comments extends TikiLib {
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('comments', $threadId);
 	}
+
+	$this->update_comment_links($data, $object[0], $threadId);
+	
     }
 
     function post_new_comment($objectId, $parentId, $userName,
@@ -1994,6 +2011,8 @@ class Comments extends TikiLib {
 		refresh_index('comments', $threadId);
 	}
 
+	$this->update_comment_links($data, $object[0], $threadId);
+
 	return $threadId;
 	//return $return_result;
     }
@@ -2012,21 +2031,29 @@ class Comments extends TikiLib {
 	if ($threadId == 0)
 		return false;
 	global $prefs;
-	if ($prefs['feature_actionlog'] == 'y') {
-		global $logslib; include_once('lib/logs/logslib.php');
-		$query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
-		$result = $this->query($query, array((int)$threadId, (int)$threadId));
-		while ($res = $result->fetchRow()) {
-			if ($res['objectType'] == 'forum')
+	
+    $query = "select * from `tiki_comments` where `threadId`=? or `parentId`=?";
+	$result = $this->query($query, array((int)$threadId, (int)$threadId));
+	while ($res = $result->fetchRow()) {
+		if ($res['objectType'] == 'forum') {
+			$this->remove_object('forum post', $res['threadId']);
+			if ($prefs['feature_actionlog'] == 'y') {
+				global $logslib; include_once('lib/logs/logslib.php');
 				$logslib->add_action('Removed', $res['object'], 'forum', "comments_parentId=$threadId&amp;del=".strlen($res['data']));
-			else
+			}
+		} else {
+			$this->remove_object($res['objectType'].' comment', $res['threadId']);
+			if ($prefs['feature_actionlog'] == 'y') {
+				global $logslib; include_once('lib/logs/logslib.php');
 				$logslib->add_action('Removed', $res['object'], 'comment', 'type='.$res['objectType'].'&amp;del='.strlen($res['data'])."threadId#$threadId");
+			}
+		}
+		if ($prefs['feature_contribution'] == 'y') {
+			global $contributionlib;require_once('lib/contribution/contributionlib.php');
+			$contributionlib->remove_comment($res['threadId']);
 		}
 	}
-	if ($prefs['feature_contribution'] == 'y') {
-		global $contributionlib;require_once('lib/contribution/contributionlib.php');
-		$contributionlib->remove_comment($threadId);
-	}
+	
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
 //TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
 
@@ -2034,8 +2061,6 @@ class Comments extends TikiLib {
 	$query = "delete from `tiki_forum_attachments` where `threadId`=?";
 	$this->query($query, array( (int) $threadId ) );
 	$this->remove_reported($threadId);
-
-	$this->remove_object('forum post', $threadId);
 
 	return true;
     }
