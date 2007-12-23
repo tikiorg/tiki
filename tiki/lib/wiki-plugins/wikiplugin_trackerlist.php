@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40 2007-10-15 13:35:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.1 2007-12-23 12:11:22 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5, showtitle=>y|n, showlinks=>y|n, showdesc=>y|n, showinitials=>y|n, showstatus=>y|n, showcreated=>y|n, showfieldname=>y|n, status=>o|p|c|op|oc|pc|opc, sort_mode=>, max=>, filterfield=>, filtervalue=>, exactvalue=>, checkbox=>fieldId/name/title/submit/action/tpl,goIfOne=>y|n)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -24,11 +24,15 @@ function wikiplugin_trackerlist($data, $params) {
 
 		$smarty->assign('trackerId', $trackerId);
 		$tracker_info = $trklib->get_tracker($trackerId);
+		if ($t = $trklib->get_tracker_options($trackerId)) {
+			$tracker_info = array_merge($tracker_info, $t);
+		}
 
 		if ($tiki_p_admin != 'y') {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
-			if ($perms['tiki_p_view_trackers'] != 'y')
+			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y') {
 				return;
+			}
 			$smarty->assign_by_ref('perms', $perms);
 		}
 
@@ -86,6 +90,9 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (isset($showcreated)) {
 			$smarty->assign_by_ref('showcreated', $showcreated);
+		}
+		if (!isset($sort)) {
+			$sort = 'n';
 		}
 
 		if (isset($checkbox)) {
@@ -177,7 +184,9 @@ function wikiplugin_trackerlist($data, $params) {
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		if (!empty($fields)) {
 			$listfields = split(':',$fields);
-			$allfields = $trklib->sort_fields($allfields, $listfields);
+			if ($sort == 'y') {
+				$allfields = $trklib->sort_fields($allfields, $listfields);
+			}
 		} else {
 			foreach($allfields['data'] as $f) {
 				$listfields[] = $f['fieldId'];
