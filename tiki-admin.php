@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.2 2007-11-28 03:28:00 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.3 2007-12-23 17:11:21 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -255,6 +255,40 @@ if(isset($admintitle)) {
   $smarty->assign_by_ref('admintitle', $admintitle);
   $headtitle = breadcrumb_buildHeadTitle($crumbs);
   $smarty->assign_by_ref('headtitle', $headtitle);
+}
+
+if (!empty($_GET['forcecheck'])) {
+  $tiki_release = $adminlib->get_last_version($tiki_branch);
+  if ($tiki_release != $tiki_version) {
+    $prefs['tiki_needs_upgrade'] = 'y';
+  } else {
+    $prefs['tiki_needs_upgrade'] = 'n';
+    $tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Current version is up to date : %s"),$tiki_version));
+  }
+  if ($feature_version_checks == 'y') {
+    $tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
+    $tikilib->set_preference('tiki_release', $tiki_release);
+  }
+}
+
+if ($prefs['feature_version_checks'] == 'y') {
+  if ($prefs['tiki_needs_upgrade'] == 'y' && $prefs['tiki_release'] == $tiki_version) {
+    // need to reset $tiki_needs_upgrade in case new upgrades do not update $tiki_needs_upgrade in prefs
+    $prefs['tiki_needs_upgrade'] = 'n';
+    $tikilib->set_preference('tiki_needs_upgrade', 'n');
+  }
+  if ($prefs['tiki_needs_upgrade'] != 'y' and $tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
+
+    $tikilib->set_preference('tiki_version_last_check',$tikilib->now);
+
+    $tiki_release = $adminlib->get_last_version($tiki_branch);
+    $tikilib->set_preference('tiki_release',$tiki_release);
+
+    if ($tiki_release != $tiki_version) {
+      $prefs['tiki_needs_upgrade'] = 'y';
+      $tikilib->set_preference('tiki_needs_upgrade', 'y');
+    }
+  }
 }
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);

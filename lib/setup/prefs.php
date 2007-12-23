@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.29 2007-12-17 16:12:36 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.30 2007-12-23 17:11:21 mose Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -45,8 +45,12 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 } else {
 	$prefs=array();
 
-	# tiki
-	$prefs['tiki_release'] = '1.10';
+	# tiki and version
+	$prefs['tiki_release'] = '0';
+	$prefs['feature_version_checks'] = 'y';
+	$prefs['tiki_needs_upgrade'] = 'n';
+	$prefs['tiki_version_last_check'] = 0;
+	$prefs['tiki_version_check_frequency'] = 604800;
 	
 	# wiki
 	$prefs['feature_wiki'] = 'y';

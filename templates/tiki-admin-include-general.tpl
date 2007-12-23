@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.5 2007-12-10 16:14:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.6 2007-12-23 17:11:21 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -11,7 +11,7 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
-	<tr><td width="40%" class="form">{tr}Tikiwiki release{/tr} : </td><td class="form">{$prefs.tiki_release}</td></tr>
+	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$prefs.tiki_version}</td></tr>
 	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>
@@ -249,10 +249,31 @@
         <td class="form"></td>
         <td>{tr}Please expect not found help-pages with the default-URL.{/tr}<br />
 	    {tr}Any help with the documentation is welcome.{/tr}</td>
-
       </tr>
-     
-			
+
+			<tr>
+        <td class="heading" colspan="2" align="center"><a name="help">{tr}Release check{/tr}</a></td>
+			</tr>
+			<tr>
+				<td class="form"><label for="general-versioncheck">{tr}Release check{/tr}</label></td>
+				<td><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked"{/if}/></td>
+      </tr>
+			<tr>
+        <td class="form">{tr}Check frequency{/tr}:</td>
+        <td>
+        <select name="tiki_version_check_frequency">
+        <option value="86400"{if $prefs.tiki_version_check_frequency eq 86400} selected="selected"{/if}>{tr}Each day{/tr}</option>
+        <option value="604800"{if $prefs.tiki_version_check_frequency eq 604800} selected="selected"{/if}>{tr}Each week{/tr}</option>
+        <option value="2592000"{if $prefs.tiki_version_check_frequency eq 2592000} selected="selected"{/if}>{tr}Each month{/tr}</option>
+        </select>
+        </td>
+      </tr>   
+			<tr>
+        <td class="form"></td>
+        <td>{tr}Release checks are made when you browse admin main page only{/tr}
+				<br /><a href="tiki-admin.php?page=general&amp;forcecheck=1">{tr}Force immediate check{/tr}</a></td>
+      </tr>
+
 			<tr>
         <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
