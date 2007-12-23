@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41.2.1 2007-12-23 21:52:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41.2.2 2007-12-23 23:18:49 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,6 +169,9 @@ if (isset($_REQUEST["save"])) {
 		$parsed = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	} else {
 		$parsed = $tikilib->parse_data($_REQUEST["data"]);
+	}
+	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
+		$parsed = $_REQUEST['datatxt'];
 	}
 	if (stristr($parsed, "<body>") === false) {
 		$parsed = "<html><body>$parsed</body></html>";
