@@ -443,6 +443,23 @@ class AdminLib extends TikiLib {
 	   return($errc);
 	}
 
+	function get_last_version($branch) {
+    global $tiki_version;
+    $fp = fsockopen("tikiwiki.org", 80, $errno, $errstr, 30);
+    if ($fp) {
+      $send = 'GET /'. $branch .".version HTTP/1.1\r\n";
+      $send .= "Host: tikiwiki.org\r\n";
+      $send .= "Connection: Close\r\n\r\n";
+      fputs ($fp, $send);
+      while ($f = fgets($fp)) {
+        $version = trim($f);
+      }
+      fclose($fp);
+      return $version;
+    }
+    return $tiki_version;
+  }
+
 
 }
 global $dbTiki;
