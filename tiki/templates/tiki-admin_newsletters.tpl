@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.40.2.2 2007-11-07 18:15:29 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.40.2.3 2007-12-23 23:07:41 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -32,7 +32,7 @@
 <input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Validate email addresses{/tr}</td><td class="formcolor">
 <input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Allow customized text message{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Allow customized text message to be sent with the html version{/tr}</td><td class="formcolor">
 <input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} /></td></tr>
 {* <tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
 <select name="frequency">
