@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.41.2.1 2007-12-23 21:52:52 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -301,7 +301,7 @@ $smarty->assign_by_ref('ed_find', $ed_find);
 $smarty->assign_by_ref('dr_find', $dr_find);
 	
 $editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
-$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find, true);
+$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find);
 
 $ed_cant_pages = ceil($editions["cant"] / $maxRecords);
 $dr_cant_pages = ceil($drafts["cant"] / $maxRecords);
