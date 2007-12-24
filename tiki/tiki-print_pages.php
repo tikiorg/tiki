@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.20.2.1 2007-10-24 17:36:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.20.2.2 2007-12-24 20:32:32 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,7 @@ if ($tiki_p_view != 'y') {
 	die;
 }
 
+$cookietab = 1;
 if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 	$printpages = array();
 	$printstructures = array();
@@ -54,10 +55,14 @@ if (isset($_REQUEST["addpage"])) {
 	if (!in_array($_REQUEST["pageName"], $printpages)) {
 		$printpages[] = $_REQUEST["pageName"];
 	}
+	$cookietab = 2;
 }
 
 if (isset($_REQUEST["clearpages"])) {
 	$printpages = array();
+	$cookietab = 2;
+}
+if (isset($_REQUEST["clearstructures"])) {
 	$printstructures = array();
 }
 
@@ -68,6 +73,7 @@ if (isset($_REQUEST['addstructurepages'])) {
 		if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
 		$printpages[] = $struct_page["pageName"];
 	}
+	$cookietab = 2;
 }
 if (isset($_REQUEST['addstructure'])) {
 	$info = $structlib->s_get_page_info($_REQUEST['structureId']);
@@ -96,7 +102,7 @@ foreach ($printstructures as $page_ref_id) {
 	}
 }
 $smarty->assign_by_ref('printnamestructures', $printnamestructures);
-
+$smarty->assign('cookietab',$cookietab);
 include_once ('tiki-section_options.php');
 
 ask_ticket('print-pages');
