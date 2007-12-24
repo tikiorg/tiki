@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.4 2007-12-10 22:23:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.5 2007-12-24 20:15:23 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -64,7 +64,6 @@
 {else}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a new user{/tr}</a></span>
 {/if}
-</span>
 </div>
 {/if}
 
@@ -91,18 +90,17 @@
 <td><select name="filterGroup">
 	<option value=""></option>
 {section name=ix loop=$all_groups}
-	<option value="{$all_groups[ix].groupName}" {if $filterGroup eq $all_groups[ix].groupName}selected{/if}>{$all_groups[ix].groupName}</option>
+	<option value="{$all_groups[ix].groupName|escape}" {if $filterGroup eq $all_groups[ix].groupName}selected{/if}>{$all_groups[ix].groupName|escape}</option>
 {/section}
 </select></td>
 </tr><tr>
-</td><td>{tr}Email{/tr}</td>
+<td>{tr}Email{/tr}</td>
 <td><input type="text" name="filterEmail" value="{$filterEmail}" /></td>
 </tr>
 </table>
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-</form>
-<br />
 </div>
+</form>
 
 {if $cant_pages > 1 or !empty($initial)}
 <div align="center">
