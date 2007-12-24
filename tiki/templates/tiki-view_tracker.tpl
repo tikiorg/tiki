@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.18 2007-12-14 14:04:01 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.19 2007-12-24 14:59:47 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -101,11 +101,12 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 </select></div>
 {elseif $field.type eq 'd' or $field.type eq 'D'}
 <div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
+{if $field.type eq 'D'}<option value="" />{/if}
 {section name=jx loop=$field.options_array}
-<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]|tr_if}</option>
+<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}{assign var=gotit value=y}selected="selected"{/if}>{$field.options_array[jx]|tr_if}</option>
 {/section}
 </select>
-{if $field.type eq 'D'}<input type="text" name="filtervalue_other" />{/if}
+{if $field.type eq 'D'}<input type="text" name="filtervalue_other"{if $gotit ne 'y'} value="{$filtervalue}"{/if} />{/if}
 </div>
 
 {elseif $field.type eq 'R'}
@@ -692,7 +693,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4" field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year=start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year end_year=start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
