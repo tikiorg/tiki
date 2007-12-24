@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.58 2007-12-22 21:01:31 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.59 2007-12-24 20:34:13 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4485,7 +4485,7 @@ function add_pageview() {
 
     function get_page_info($pageName) {
 	static $cache_page_info;
-	if (isset($cache_page_info) && $cache_page_info['pageName'] == $page) {
+	if (isset($cache_page_info) && $cache_page_info['pageName'] == $pageName) {
 		return $cache_page_info;
 	}
 	$query = "select * from `tiki_pages` where `pageName`=?";
