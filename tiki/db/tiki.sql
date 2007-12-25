@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2007-12-10 16:13:58 $
+# $Date: 2007-12-25 14:28:12 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3630,7 +3630,7 @@ CREATE TABLE tiki_user_assigned_modules (
   ord int(4) default NULL,
   type char(1) default NULL,
   user varchar(200) NOT NULL default '',
-  PRIMARY KEY  (name(30),user,position)
+  PRIMARY KEY  (name(30),user,position, ord)
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
 
