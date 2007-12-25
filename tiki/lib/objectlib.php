@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.9 2007-08-10 13:34:06 guidoscherp Exp $
+// CVS: $Id: objectlib.php,v 1.9.2.1 2007-12-25 17:22:56 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -17,13 +17,19 @@ class ObjectLib extends TikiLib {
 	$objectId = $this->get_object_id($type, $itemId);
 
 	if ($objectId) {
-	    if (!empty($description) || !empty($name) || !empty($href)) {
-		$description = strip_tags($description);
-		$name = strip_tags($name);
-		$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
-		$this->query($query,array($description,$name,$href,$objectId));
+		if (!empty($description) || !empty($name) || !empty($href)) {
+			$description = strip_tags($description);
+			$name = strip_tags($name);
+			$query = "update `tiki_objects` set `description`=?,`name`=?,`href`=? where `objectId`=?";
+			$this->query($query,array($description,$name,$href,$objectId));
 	    }
 	} else {
+		if (empty($href) || empty($name)) { //DIRTY patch: these information are needed in browse freetag even if the freetag module does not provide them: fix->freetag module must provide them
+			if ($type == 'wiki page') {
+				$href = "tiki-index.php?page=".urlencode($itemId);
+				$name = $itemId;
+			}
+		}
 	    $objectId = $this->insert_object($type, $itemId, $description, $name, $href);
 	}
     return $objectId;
