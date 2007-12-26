@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.16 2007-12-26 23:16:50 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.17 2007-12-26 23:28:01 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -507,7 +507,7 @@ class Comments extends TikiLib {
 	$hash2 = md5($title . $data);
 
 	if ($qId == 0 && $this->getOne("select count(*) from
-		    `tiki_forums_queue` where `title`=? and `data`=?",array($title,$hash2)))
+		    `tiki_forums_queue` where `hash`=?",array($hash2)))
 	    return false;
 
 	if ($qId) {
