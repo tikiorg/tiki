@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.49 2007-10-08 19:02:23 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.49.2.1 2007-12-26 17:27:37 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,15 +10,31 @@
  * $Header: /cvsroot/tikiwiki/tiki/get_strings.php
  * \brief Update the language.php files
  * call example: get_strings.php?lang=fr&close
- * \param lang=xx    : only translate lang 'xx' - if the parameter is not given all languages are translated
- * \param comments   : generate all comments (equal to close&module)
- * \param close      : look for similar strings that are already translated and generate a comment if a 'match' is made
- * \param module     : generate comments that describe in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
- * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintainer
- * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
+
+ * \param lang=xx    : Only translate lang 'xx' - if the parameter is not given all languages are translated
+
+ * \param comments   : Generate all comments (equal to close&module)
+
+ * \param close      : Looks for similar strings that are already translated and generate a comment if a 'match' is made
+
+ * \param module     : Generate comments that describe in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
+
+ * \param patch      : Looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintainer
+
+ * \param spelling   : Generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
+
  * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
- * \param sort ='n' don't sort the filenames 
- * \param completion=y produce only the completion status
+
+ * \param sort ='n'  : Don't sort the filenames 
+
+ * \param completion=y: Produce only the completion status
+
+ * \param nosections : Don't print sections delimiters
+
+ * \param nohelp     : Don't print help section
+
+ * \param tagunused  : Tags the unused strings with "// ## UNUSED".
+
  */
 
 
@@ -213,6 +229,7 @@ $module   = isset ($_REQUEST['module']) || $comments;
 $patch    = isset ($_REQUEST['patch']);
 $spelling = isset ($_REQUEST['spelling']);
 $group_w  = isset ($_REQUEST['groupwrite']);
+$tagunused= isset ($_REQUEST['tagunused']);
 
 $nohelp     = isset ($_REQUEST['nohelp']);
 $nosections = isset ($_REQUEST['nosections']);
@@ -373,7 +390,7 @@ foreach ($languages as $sel) {
 
     writeFile_and_User ($fw, "// Examples:\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv\n");
-    writeFile_and_User ($fw, "// Will translate langauage 'sv' and (almost) avoiding comment generation\n\n");
+    writeFile_and_User ($fw, "// Will translate language 'sv' and (almost) avoiding comment generation\n\n");
 
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv&comments\n");
     writeFile_and_User ($fw, "// Will translate language 'sv' and generate all possible comments.\n");
@@ -520,17 +537,28 @@ foreach ($languages as $sel) {
 
   unset ($unused['']);
   if (count ($unused) > 0) {
-    writeFile_and_User ($fw, "// ### Start of unused words\n");
-    writeFile_and_User ($fw, "// ### Please remove manually!\n");
-    writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
-    writeFile_and_User ($fw, "// ### as unused!\n");
-    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info\n");
+    if ('en' != $sel && !$nosections) {
+      writeFile_and_User ($fw, "// ### Start of unused words\n");
+      writeFile_and_User ($fw, "// ### Please remove manually!\n");
+      writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
+      writeFile_and_User ($fw, "// ### as unused!\n");
+      writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info\n");
+    }
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
       addToWordlist ($wordlist, $val);
-      writeFile_and_User ($fw, "\n");
+      if ($tagunused || $tagunused == "y") {
+        writeFile_and_User ($fw, " // ## UNUSED \n");
+      }
+      else
+      {
+        writeFile_and_User ($fw, "\n");
+      }
+
     }
-    writeFile_and_User ($fw, "// ### end of unused words\n\n");
+    if ('en' != $sel && !$nosections) {
+      writeFile_and_User ($fw, "// ### end of unused words\n\n");
+    }
     unset($unused); // free memory
   }
 
