@@ -115,7 +115,7 @@ Errors:<br />
   </td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}Add role{/tr}</td>
+  <td class="formcolor">{tr}Add Role{/tr}</td>
   <td class="formcolor">
   {if count($all_roles)}
   <select name="userole">
