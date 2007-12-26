@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.59 2007-12-24 20:34:13 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.60 2007-12-26 21:27:02 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7487,7 +7487,7 @@ function alterprefs() {
 }
 
 function validate_email($email,$checkserver='n') {
-	$valid_syntax = eregi("^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
+	$valid_syntax = eregi("^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
 	if (!$valid_syntax) {
 		return false;
 	} elseif ($checkserver == 'y') {
