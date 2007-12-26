@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.15 2007-12-26 22:59:49 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.16 2007-12-26 23:16:50 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1861,9 +1861,13 @@ class Comments extends TikiLib {
 	$hash = md5($title . $data);
 	$query = "select `threadId` from `tiki_comments` where `hash`=?";
 	$result = $this->query($query, array( $hash ) );
+	$existingThread = array();
+    while ($res = $result->fetchRow()) {
+	    $existingThread[] = $res['threadId'];
+	}
 
-	// if exactly same title and data comment does not already exist.
-	if (!$result->numRows())
+	// if exactly same title and data comment does not already exist, and is not the current thread
+	if (!$result->numRows() || in_array($threadId, $existingThread))
 	{
 	
 	if ($prefs['feature_actionlog'] == 'y') {
