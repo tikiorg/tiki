@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.14 2007-12-22 22:07:47 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.15 2007-12-26 22:59:49 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1857,6 +1857,15 @@ class Comments extends TikiLib {
     
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '', $objectId='', $contributions='') {
 	global $prefs;
+	
+	$hash = md5($title . $data);
+	$query = "select `threadId` from `tiki_comments` where `hash`=?";
+	$result = $this->query($query, array( $hash ) );
+
+	// if exactly same title and data comment does not already exist.
+	if (!$result->numRows())
+	{
+	
 	if ($prefs['feature_actionlog'] == 'y') {
 		$object = explode( ":", $objectId, 2);
 		$comment= $this->get_comment($threadId);
@@ -1869,10 +1878,10 @@ class Comments extends TikiLib {
 			$logslib->add_action('Updated', $object[1], 'comment', "type=".$object[0]."&amp;$bytes#threadId$threadId", '', '', '', '', $contributions);
 	}
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
-	`data`=?, `type`=?, `summary`=?, `smiley`=?
+	`data`=?, `type`=?, `summary`=?, `smiley`=?, `hash`=?
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
-		    $summary, $smiley, (int) $threadId ) );
+		    $summary, $smiley, $hash, (int) $threadId ) );
 	if ($prefs['feature_contribution'] == 'y') {
 		global $contributionlib; include_once('lib/contribution/contributionlib.php');
 		$contributionlib->assign_contributions($contributions, $threadId, 'comment', $title, '', '');
@@ -1884,7 +1893,7 @@ class Comments extends TikiLib {
 	}
 
 	$this->update_comment_links($data, $object[0], $threadId);
-	
+	} // end hash check
     }
 
     function post_new_comment($objectId, $parentId, $userName,
