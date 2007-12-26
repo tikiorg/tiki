@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.2 2007-11-08 21:31:12 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.3 2007-12-26 10:08:06 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -214,7 +214,7 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$where_list = array('pages' => 'entire site');
+$where_list = array('pages' => 'Entire Site');
 if ( $prefs['feature_wiki'] == 'y' ) {
 	$where_list['wikis'] = 'Wiki Pages';
 }
