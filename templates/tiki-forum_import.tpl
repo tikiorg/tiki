@@ -1,10 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forum_import.tpl,v 1.1.2.1 2007-11-24 19:39:25 kerrnel22 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forum_import.tpl,v 1.1.2.2 2007-12-27 16:10:53 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forum_import.php">{tr}Forum Importer{/tr}</a>
 </h1>
 <a title="{tr}Admin Forums{/tr}" href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a>
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="img/icons/config.gif"
-border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
+<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="img/icons/config.gif" border="0" width="16" height="16" alt="{tr}Configure/Options{/tr}" /></a>
 <a title="{tr}List Forums{/tr}" href="tiki-forums.php" class="linkbut">{tr}List forums{/tr}</a>
 <p> </p>
 
@@ -19,8 +18,8 @@ border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 <div class="cbox-title">{tr}Import Forum Contents from Tiki's DB and Server{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
-	<input type="hidden" name="step1" value="true">
-	<input type="hidden" name="import" value="same">
+	<input type="hidden" name="step1" value="true" />
+	<input type="hidden" name="import" value="same" />
 	<table class="normal">
 		<tr><td class="formcolor">{tr}Forum Type{/tr}:</td><td class="formcolor">
 		<select name="forum">
@@ -38,7 +37,7 @@ border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 	</table>
 	<br />
 	<div align="center">
-		<input type="submit" value="Get Forum List">
+		<input type="submit" value="Get Forum List" />
 	</div>
 	<br />
 	</form>
@@ -49,8 +48,8 @@ border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 <div class="cbox-title">{tr}Import from Another DB or Server{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
-	<input type="hidden" name="step1" value="true">
-	<input type="hidden" name="import" value="other">
+	<input type="hidden" name="step1" value="true" />
+	<input type="hidden" name="import" value="other" />
 	<table class="normal">
 		<tr><td class="formcolor">{tr}Server{/tr}:</td><td class="formcolor">
 		<input type="text" name="server" />
@@ -72,7 +71,7 @@ border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}' /></a>
 	</table>
 	<br />
 	<div align="center">
-		<input type="submit" value="Test Connection">
+		<input type="submit" value="Test Connection" />
 	</div>
 	<br />
 	</form>
@@ -88,8 +87,8 @@ End hiding of unfinished section... *}
 <div class="cbox-title">{tr}Import from a Local SQL File{/tr}</div>
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
-	<input type="hidden" name="step1" value="true">
-	<input type="hidden" name="import" value="sql">
+	<input type="hidden" name="step1" value="true" />
+	<input type="hidden" name="import" value="sql" />
 	<table class="normal">
 		<tr><td class="formcolor">{tr}Forum Type{/tr}:</td><td class="formcolor">
 		<select name="ftype">
@@ -108,10 +107,10 @@ End hiding of unfinished section... *}
 		<tr><td class="formcolor">{tr}Local SQL Filename on Server (path will be stripped){/tr}:<br />
 		<i>{tr}Must be in tikiroot/{$tmpdir} or tikiroot/img/wiki_up{/tr}</i></td><td class="formcolor">
 		<input type="text" name="server" />
-	<br />
+	</td></tr>
 	</table>
 	<div align="center">
-		<input type="submit" value="Get Forum List">
+		<input type="submit" value="Get Forum List" />
 	</div>
 	<br />
 	</form>
@@ -125,16 +124,16 @@ End hiding of unfinished section... *}
 <div class="cbox-data">
 	<form action="tiki-forum_import.php" method="post">
 	{if $passed eq 'true'}
-	  <input type="hidden" name="step2" value="true">
+	  <input type="hidden" name="step2" value="true" />
 	{else}
-	  <input type="hidden" name="step0" value="true">
+	  <input type="hidden" name="step0" value="true" />
 	{/if}
-	<input type="hidden" name="import" value="{$iMethod}">
-	<input type="hidden" name="ftype" value="{$fi_type}">
-	<input type="hidden" name="prefix" value="{$fi_prefix}">
-	<input type="hidden" name="server" value="{$server}">
+	<input type="hidden" name="import" value="{$iMethod}" />
+	<input type="hidden" name="ftype" value="{$fi_type}" />
+	<input type="hidden" name="prefix" value="{$fi_prefix}" />
+	<input type="hidden" name="server" value="{$server}" />
 
-	{tr}<b>File must be an SQL file and exist in either <i>$tikiroot/temp</i> or <i>$tikiroot/img/wiki_up</i>.</b>{/tr}
+	<b>{tr}File must be an SQL file and exist in either <i>$tikiroot/temp</i> or <i>$tikiroot/img/wiki_up</i>.{/tr}</b>
 	<p> </p>
 	{if $passed eq 'true'}
 	    File found: {$server}.
@@ -145,9 +144,9 @@ End hiding of unfinished section... *}
 	<p> </p>
 	<div align="center">
 		{if $passed eq 'true'}
-		  <input type="submit" value="Proceed">
+		  <input type="submit" value="Proceed" />
 		{else}
-		  <input type="submit" value="Go Back">
+		  <input type="submit" value="Go Back" />
 		{/if}
 	</div>
 	<br />
@@ -161,11 +160,11 @@ End hiding of unfinished section... *}
 <div class="cbox">
 <div class="cbox-title">{tr}Select a Forum You Wish to Move (ONE at a time!){/tr}</div>
 <div class="cbox-data">
-	<input type="hidden" name="step3" value="true">
-	<input type="hidden" name="import" value="{$iMethod}">
-	<input type="hidden" name="ftype" value="{$fi_type}">
-	<input type="hidden" name="prefix" value="{$fi_prefix}">
-	<input type="hidden" name="server" value="{$server}">
+	<input type="hidden" name="step3" value="true" />
+	<input type="hidden" name="import" value="{$iMethod}" />
+	<input type="hidden" name="ftype" value="{$fi_type}" />
+	<input type="hidden" name="prefix" value="{$fi_prefix}" />
+	<input type="hidden" name="server" value="{$server}" />
 
 	<table class="normal">
 	<tr>
@@ -177,7 +176,9 @@ End hiding of unfinished section... *}
 	{cycle values="odd,even" print=false}
 	{section name=fforum loop=$fromForums}
 	<tr>
-	<td class="{cycle advance=false}"><input type="radio" name="fForumid" value="{$fromForums[fforum].id}"></td>
+	<td class="{cycle advance=false}">
+          <input type="radio" name="fForumid" value="{$fromForums[fforum].id}" />
+        </td>
 	<td class="{cycle advance=false}">{$fromForums[fforum].name}</td>
 	<td class="{cycle advance=true}">{$fromForums[fforum].comments}</td>
 	</tr>
@@ -199,7 +200,9 @@ End hiding of unfinished section... *}
 	{cycle values="odd,even" print=false}
 	{section name=tforum loop=$toForums}
 	<tr>
-	<td class="{cycle advance=false}"><input type="radio" name="tForumid" value="{$toForums[tforum].forumId}"></td>
+	<td class="{cycle advance=false}">
+          <input type="radio" name="tForumid" value="{$toForums[tforum].forumId}" />
+        </td>
 	<td class="{cycle advance=false}">{$toForums[tforum].name}</td>
 	<td class="{cycle advance=true}">{$toForums[tforum].comments}</td>
 	</tr>
@@ -225,15 +228,15 @@ End hiding of unfinished section... *}
 {elseif $step eq 'import'}
 	{if $failed eq 'true'}
 		<form action="tiki-forum_import.php" method="post">
-		<input type="hidden" name="step2" value="true">
-		<input type="hidden" name="import" value="{$iMethod}">
-		<input type="hidden" name="ftype" value="{$fi_type}">
-		<input type="hidden" name="prefix" value="{$fi_prefix}">
-		<input type="hidden" name="server" value="{$server}">
+		<input type="hidden" name="step2" value="true" />
+		<input type="hidden" name="import" value="{$iMethod}" />
+		<input type="hidden" name="ftype" value="{$fi_type}" />
+		<input type="hidden" name="prefix" value="{$fi_prefix}" />
+		<input type="hidden" name="server" value="{$server}" />
 
 		You must select both a source forum and a destination forum!
 		<div align="center">
-			<input type="submit" value="Go Back">
+			<input type="submit" value="Go Back" />
 		</div>
 		<br />
 		</form>
