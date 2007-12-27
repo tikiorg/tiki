@@ -1,12 +1,16 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.27 2007-10-12 07:55:48 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_articles.php,v 1.27.2.1 2007-12-27 21:46:42 pkdille Exp $
 // Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
 //
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName,topicId=>id,type=>type,categId=>Category parent ID,lang=>en,sort=>columnName_asc|columnName_desc)}{ARTICLES} Insert articles into a wikipage");
+        $help = tra("Includes articles listing into a wiki page");
+        $help .= "<br />";
+        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc)}{ARTICLES}~/np~");
+
+        return $help;
 }
 
 function wikiplugin_articles($data,$params) {

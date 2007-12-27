@@ -4,9 +4,15 @@
 // Usage:
 // {ARTICLE(Id=>articleId, Field=>FieldName)}{ARTICLE}
 // FieldName can be any field in the tiki_articles table, but title,heading, or body are probably the most useful.
+
 function wikiplugin_article_help() {
-	return tra("Include an article").":<br />~np~{ARTICLE(Field=>[,Id=>])}{ARTICLE}<br />Id is optional. if not given, last article is used. default field is
-	heading.~/np~";
+        $help = tra("Includes an article");
+        $help .="<br />";
+        $help .= tra("~np~{ARTICLE(Field=>[,Id=>])}{ARTICLE}~/np~");
+        $help .= "<br />";
+        $help .= tra("Id is optional. If not given, last article is used. Default field is heading.");
+
+        return $help;
 }
 function wikiplugin_article($data, $params) {
 	global $tikilib,$user,$userlib;
