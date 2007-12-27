@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.7 2007-12-10 22:31:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.8 2007-12-27 20:58:43 pkdille Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -93,13 +93,24 @@
 
 {tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.
 
-<table width="100%">
-{section name=i loop=$plugins}
- <tr>
-  <td width="20%"><code>{$plugins[i].name}</code></td>
-  <td>{if $plugins[i].help eq ''}{tr}No description available{/tr}{else}{$plugins[i].help}{/if}</td>
- </tr>
-{/section}
+
+<table width="100%" class="normal">
+  {cycle values="even,odd" print=false}
+  {section name=i loop=$plugins}
+    <tr>
+      <td width="20%" class="{cycle advance=false}">
+        <code>{$plugins[i].name}</code>
+      </td>
+      <td class="{cycle advance=false}">
+        {if $plugins[i].help eq ''}
+          {tr}No description available{/tr}
+        {else}
+          {$plugins[i].help}
+        {/if}
+      </td>
+    </tr>
+  {cycle print=false}
+  {/section}
 </table>
 </div>
 {/if}
