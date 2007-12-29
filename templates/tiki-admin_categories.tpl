@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.1 2007-12-29 18:24:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.2 2007-12-29 18:31:57 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -22,7 +22,7 @@
 &nbsp;::&nbsp;
 <a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
 {/section}
-<br />{tr}ID:{/tr} {$parentId}
+<br />{tr}Current Category ID:{/tr} {$parentId}
 </div>
 <div>
 {section name=dx loop=$catree}
