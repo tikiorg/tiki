@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.7 2007-11-27 10:35:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.8 2007-12-29 16:30:00 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -294,7 +294,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 				$data[0] = utf8_encode($data[0]);
 			}
 		if (!$userlib->user_exists($data[0])) {
-			$errors[] = tra('User doesnt exist').': '.$data[0];
+			$errors[] = tra("User doesn't exist").': '.$data[0];
 		} else {
 			$userlib->assign_user_to_group($data[0], $_REQUEST['group']);
 		}

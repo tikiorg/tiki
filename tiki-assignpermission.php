@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.35 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.35.2.1 2007-12-29 16:30:00 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,7 +30,7 @@ if (!isset($_REQUEST["group"])) {
 $group = $_REQUEST["group"];
 
 if (!$userlib->group_exists($group)) {
-	$smarty->assign('msg', tra("Group doesnt exist"));
+	$smarty->assign('msg', tra("Group doesn't exist"));
 
 	$smarty->display("error.tpl");
 	die;
