@@ -3,7 +3,7 @@
 #    Copyright Council of Europe - Conseil de l'Europe
 #Division  :  DIT / STI
 #Project   :  Espaces Collaboratifs Open-Source
-#Filename  :  jml_translate_buttons-vxx.pl
+#Filename  :  capitalize_buttons.pl
 #Author    :  Jean-Marc LIBS
 #Company   :  Council of Europe - Conseil de l'Europe
 #Date      :  2007-07-17
@@ -14,20 +14,23 @@
 #
 #Output    :  Edit all language files
 #
-#Abstract  :  Gets a lowercase word and the uppercase version of the word
+#Abstract  :  Gets a lowercase "word" and the uppercase (correct) version of the
+#             word: "Word"
 #             In each language file:
-#             If the line with '"Word" => "Truc"' is found. Leave alone
-#             Sinon:
-#               On cherche la ligne avec '"word" => "truc"' (commenté ou pas)
-#                 Si langage "simple", et on la duplique en '"Word" => "Truc"'
-#                 Sinon, on garde '"Word" => "truc"'
-#               Si on ne trouve pas cette ligne, 
-#                 on rajoute '// "Word" => "Word"'
+#               If the line with '"Word" => "Truc"' is found. Leave alone
+#               else:
+#                 look for line with '"word" => "truc"' (commented or not)
+#                   if language is "simple", duplicate line into 
+#                     '"Word" => "Truc"'
+#                   if language looks complicated, duplicate into 
+#                     '"Word" => "truc"'
+#                   if no line found at all, add line
+#                     '// "Word" => "Word"'
 #
-#Warning: This was written quickly as a use-once script. Use as inspiration, don't
-#         trust blindly
+#Warning: This was written quickly as a use-once script. Use as inspiration,
+#         don't trust blindly
 #
-#Usage     :  perl jml_translate_buttons-vxx.pl word Word
+#Usage     :  perl capitalize_buttons.pl word Word
 #
 #Revision history :
 #  Date       Author  Description
@@ -36,9 +39,10 @@
 #  2007-07-23  JML    3: renaming, add license, add TODO, all for publication
 #  2007-11-12  JML    4: remove calls to unused libs, add --ignorecase, handle
 #                        slashes in text
+#  2007-12-29  JML    5: Now handles strings with single quotes (')
+#                        Abstract translated
 #
 #TODO:
-#translate all comments
 #
 ################################################################################
 
@@ -72,7 +76,9 @@ my $word_correct = $ARGV[1];
 my $word_lowercase_escaped = $word_lowercase;
 my $word_correct_escaped = $word_correct;
 $word_lowercase_escaped =~ s/\//\\\//g;
+$word_lowercase_escaped =~ s/'/'\\''/g;
 $word_correct_escaped =~ s/\//\\\//g;
+$word_correct_escaped =~ s/'/'\\''/g;
 #if($opt_verbose) {print "escaped lowercase: '$word_lowercase_escaped'\n";}
 if($opt_verbose){print "'$word_lowercase' --> '$word_correct' (given) '\u$word_lowercase' (auto)\n";}
 
@@ -106,7 +112,7 @@ while ( my $langfile = <lang/*/language.php> ){
 	}
 	print "\n";
 	# Looking for '"Word" => "Translation"'
-	my $command="grep '\"$word_correct\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
+	my $command="grep '\"$word_correct_escaped\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
 	if($opt_verbose){print "-> $command\n";}
 	if(system($command)) {
 		print STDERR "Ignore system call failure ($!)\n";
@@ -119,7 +125,7 @@ while ( my $langfile = <lang/*/language.php> ){
 		next;
 	}
 	print "Need to add translation of '$word_correct' (lines found: $result)\n";
-	$command="grep '\"$word_lowercase\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
+	$command="grep '\"$word_lowercase_escaped\"[ 	]*=>[ 	]*\"[^\"]*\"[ 	]*,.*\$' $langfile | wc -l > /tmp/result.txt";
 	if($opt_verbose){print "-> $command\n";}
 	if(system($command)) {
 		print STDERR "Ignore system call failure ($!)\n";
