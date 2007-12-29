@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25.2.2 2007-11-14 20:31:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.25.2.3 2007-12-29 16:30:00 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,7 @@ if (!isset($_REQUEST["assign_user"]) || ($tiki_p_admin != 'y' && $tiki_p_admin_u
 	$smarty->assign_by_ref('userChoice', $userChoice);
 } else {
 	if (!$userlib->user_exists($_REQUEST['assign_user'])) {
-		$smarty->assign('msg', tra("User doesnt exist"));
+		$smarty->assign('msg', tra("User doesn't exist"));
 		$smarty->display("error.tpl");
 		die;
 	}
