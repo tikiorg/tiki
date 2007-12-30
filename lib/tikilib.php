@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.60 2007-12-26 21:27:02 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.61 2007-12-30 02:13:29 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2895,6 +2895,9 @@ function add_pageview() {
 	$this->query($query, $bindvars, -1, -1, false);
 	$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
 	$result = $this->query($query, array($sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
+	// clean up adodb sessions as well in case adodb session garbage collection not working
+	$query = "delete from `sessions` where `expiry`<?";
+	$this->query($query, array($oldy));
 	return true;
     }
 
