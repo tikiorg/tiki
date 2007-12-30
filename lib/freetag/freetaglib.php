@@ -706,9 +706,6 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      * @return string Returns the tag in normalized form.
      */
     function tag_object($user, $itemId, $type, $tag_string) {
-	if($tag_string == '') {
-	    return true;
-	}
 	
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
