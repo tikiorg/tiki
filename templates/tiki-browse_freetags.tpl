@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.8 2007-12-25 17:18:03 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.9 2007-12-31 13:00:22 sylvieg Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -42,8 +42,9 @@
 <br />
 <br />
 
+{tr}Browse in{/tr}:<br />
 {if $prefs.feature_ajax eq 'y'}
-  <div class="navbar">
+
     <a class="linkbut" {if $type eq ''}id="highlight{/if} href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
 
     {if $prefs.feature_wiki eq 'y'}
@@ -99,7 +100,6 @@
     {if $prefs.feature_articles eq 'y'}
       <a class="linkbut" {if $type eq "article"} id="highlight"{/if} href="javascript:setObjectType('article','typeArticle');" id="typeArticle">{tr}Articles{/tr}</a>
     {/if}
-  </div>
 
   {include file="tiki-ajax_table.tpl"}
   <script type="text/javascript">listObjects('{$tagString}','{if $broaden}{$broaden}{else}y{/if}');</script>
@@ -162,6 +162,22 @@
   <br /> 
   <br /> 
 
+	<div align="center">
+        <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
+          <b>{tr}Tags{/tr}</b> 
+          <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
+          <a class="link" onclick="clearTags();">{tr}clear{/tr}</a>
+          <br />
+          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+          <input type="checkbox" id="stopb" name="stopbroaden" {if $broaden eq 'n'}checked{/if}> 
+          <label for="stopb">{tr}Show only objects with all selected tags{/tr}</label>
+          <br />
+          {tr}Find:{/tr} 
+          <input type="text" name="find" value="{$find}" />
+          <br />
+          <input type="submit" value="{tr}Find{/tr}" />
+        </form>
+	</div>
   <table width="100%">
     <tr>
       <td width="200" style="vertical-align:top;">
@@ -186,22 +202,10 @@
       <td style="vertical-align:top;">
   
         <h3>{$cantobjects} {tr}results found{/tr}</h3>
-        <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
-          <b>{tr}Tags{/tr}</b> 
-          <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
-          <a class="link" onclick="clearTags();">{tr}clear{/tr}</a>
-          <br />
-          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-          <input type="checkbox" id="stopb" name="stopbroaden" {if $broaden eq 'n'}checked{/if}> 
-          <label for="stopb">{tr}Show only objects with all selected tags{/tr}</label>
-          <br />
-          {tr}Find:{/tr} 
-          <input type="text" name="find" />
-          <input type="submit" />
-        </form>
   
         {if $cantobjects > 0}
           <table class="normal">
+			<tr><th>{tr}Type{/tr}</th><th>{tr}Name{/tr}</th><th>{tr}Description{/tr}</th><th>{tr}Remove Tags{/tr}</th></tr>
             {cycle values="odd,even" print=false}
             {section name=ix loop=$objects}
               <tr class="{cycle}" >
