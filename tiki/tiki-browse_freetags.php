@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.2 2007-11-28 01:04:58 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.3 2007-12-31 13:00:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.2 2007-11-28 01:04:58 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.3 2007-12-31 13:00:21 sylvieg Exp $
 //
 
 // Initialization
@@ -58,6 +58,7 @@ if (isset($_REQUEST["find"])) {
 }
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
+$smarty->assign_by_ref('find', $find);
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
