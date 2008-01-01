@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.62 2007-12-31 20:15:46 rischconsulting Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.63 2008-01-01 00:14:01 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5326,7 +5326,8 @@ function add_pageview() {
   // not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
 //			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') {
 //above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
-		if (!$simple_wiki and $_SESSION['wysiwyg'] == 'n') {
+// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
+		if (!$simple_wiki) {
 				$this->parse_htmlchar($data);
 			}
 	// Now replace a TOC
