@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.9.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.9.2.2 2008-01-02 09:48:24 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,7 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 	simple_set_toggle('freetags_browse_show_cloud');
 	simple_set_toggle('freetags_ascii_only');
 	simple_set_toggle('freetags_lowercase_only');
+	simple_set_toggle('freetags_preload_random_search');
 
 	simple_set_value('freetags_browse_amount_tags_in_cloud');
 }
@@ -46,7 +47,8 @@ if (isset($_REQUEST["freetagsset3d"])) {
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
-	$pref_values = array(
+	
+  $pref_values = array(
 	'freetags_3d_width',
 	'freetags_3d_height',
 	'freetags_3d_navigation_depth',
@@ -65,9 +67,11 @@ if (isset($_REQUEST["freetagsset3d"])) {
 	'freetags_3d_node_mass',
 	'freetags_3d_node_charge'
 	);
+
 	foreach ($pref_values as $value) {
 		simple_set_value ($value);
 	}
+
 	if (isset($_REQUEST["freetags_3d_adjust_camera"]) && $_REQUEST["freetags_3d_adjust_camera"] == "on") {
 	    $tikilib->set_preference("freetags_3d_adjust_camera", 'true');
 	} else {

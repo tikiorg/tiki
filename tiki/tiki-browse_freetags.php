@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.3 2007-12-31 13:00:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.4 2008-01-02 09:48:24 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.3 2007-12-31 13:00:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.4 2008-01-02 09:48:24 pkdille Exp $
 //
 
 // Initialization
@@ -34,16 +34,17 @@ if ($tiki_p_admin == 'y') {
 	}
 }
 
-if (!isset($_REQUEST['tag'])) {
-	$tag = $freetaglib->get_tag_suggestion('', 1);
-	if ($tag) {
-		header("Location: tiki-browse_freetags.php?tag=$tag[0]");
-	} else {
+if ($freetaglib->count_tags() == 0) {
 		$smarty->assign('msg', tra("Nothing tagged yet").'.');
 		$smarty->display("error.tpl");
 		die;
-	}
 }
+
+if (!isset($_REQUEST['tag']) && $prefs['freetags_preload_random_search'] == 'y') {
+	$tag = $freetaglib->get_tag_suggestion('', 1);
+  header("Location: tiki-browse_freetags.php?tag=$tag[0]");
+}
+
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
