@@ -15,7 +15,7 @@
 
 <div class="navbar">
 <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
-<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>
+{if $blogId > 0}<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>{/if}
 </div>
 {if $category_needed eq 'y'}
 <div class="simplebox hoghlight">{tr}A category is mandatory{/tr}</div>
