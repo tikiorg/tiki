@@ -328,9 +328,10 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 1: {tr}required participant{/tr}<br />
 2: {tr}optional participant{/tr}<br />
 3: {tr}non participant{/tr}<br />
-{tr}Give participant list separated by commas, <br />
-indicating role in a prefix separated by a column like in:{/tr}<br />
-<tt>role:login_or_email,login_or_email</tt><br />
+<br />
+{tr}Give participant list separated by commas. Roles have to be given in a prefix separated by a column like in:{/tr}
+<tt>{tr}role:login_or_email,login_or_email{/tr}</tt>
+<br />
 {tr}If no role is provided, default role will be "Chair participant".{/tr}
 {/if}
 </div>
