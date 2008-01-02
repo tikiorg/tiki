@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.1 2007-12-23 12:11:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.2 2008-01-02 23:28:17 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -196,6 +196,23 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		} else {
+			if (strstr($filterfield, ':') !== false) {
+				$filterfield = split(':', $filterfield);
+				if (!empty($filtervalue)) {
+					$fvs = split(':', $filtervalue);
+					unset($filtervalue);
+					for ($i = 0; $i < count($filterfield); ++$i) {
+						$filtervalue[$filterfield[$i]] = isset($fvs[$i])? $fvs[$i]:'';
+					}
+				}
+				if (!empty($exactvalue)) {
+					$evs = split(':', $exactvalue);
+					unset($exactvalue);
+					for ($i = 0; $i < count($filterfield); ++$i) {
+						$exactvalue[$filterfield[$i]] = isset($evs[$i])?$evs[$i]:'';
+					}
+				}
+			}
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $ff) {
 					unset($filterfieldok);
