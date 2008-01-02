@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2007-12-10 17:16:32 $
--- $Author: jonnybradley $
+-- $Date: 2008-01-02 15:53:47 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -3068,6 +3068,8 @@ CREATE TABLE 'tiki_preferences' (
   PRIMARY KEY ("name")
 ) ENGINE=MyISAM;
 
+INSERT INTO "," ("name","value") VALUES ('pref_syntax', '1.10');
+
 -- ******************************************************
 
 --
@@ -4160,7 +4162,7 @@ CREATE TABLE 'tiki_user_assigned_modules' (
   "ord" smallint default NULL,
   "type" char(1) default NULL,
   "user" varchar(200) NOT NULL default '',
-  PRIMARY KEY ("name","user","position")
+  PRIMARY KEY ("name","user","position","ord")
 ) ENGINE=MyISAM;
 
 -- ******************************************************
