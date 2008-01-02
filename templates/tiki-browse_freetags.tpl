@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.9 2007-12-31 13:00:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.10 2008-01-02 14:19:56 sylvieg Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -164,13 +164,18 @@
 
 	<div align="center">
         <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
+          {tr}Select tags in the list or put them separated by spaces.{/tr}<br />
           <b>{tr}Tags{/tr}</b> 
           <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
-          <a class="link" onclick="clearTags();">{tr}clear{/tr}</a>
+          <a class="linkbut" onclick="clearTags();">{tr}Clear{/tr}</a>
           <br />
           <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-          <input type="checkbox" id="stopb" name="stopbroaden" {if $broaden eq 'n'}checked{/if}> 
-          <label for="stopb">{tr}Show only objects with all selected tags{/tr}</label>
+          <input type="radio" name="broaden" value="n"{if $broaden eq 'n'} checked{/if}> 
+          <label for="stopb">{tr}With all selected tags{/tr}</label>
+          <input type="radio" name="broaden" value="y"{if $broaden eq 'y'} checked{/if}> 
+          <label for="stopb">{tr}With one selected tag{/tr}</label>
+		  <input type="radio" name="broaden" value="last"{if $broaden eq 'last'} checked{/if}> 
+          <label for="stopb">{tr}With last selected tag{/tr}</label>
           <br />
           {tr}Find:{/tr} 
           <input type="text" name="find" value="{$find}" />
@@ -201,7 +206,7 @@
   
       <td style="vertical-align:top;">
   
-        <h3>{$cantobjects} {tr}results found{/tr}</h3>
+        {if $tagString}<h3>{$cantobjects} {tr}results found{/tr}</h3>{/if}
   
         {if $cantobjects > 0}
           <table class="normal">
