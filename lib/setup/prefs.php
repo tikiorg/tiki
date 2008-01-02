@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.30 2007-12-23 17:11:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.31 2008-01-02 09:48:24 pkdille Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -449,6 +449,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# freetags
 	$prefs['feature_freetags'] = 'n';
 	$prefs['freetags_browse_show_cloud'] = 'y';
+  $prefs['freetags_preload_random_search'] = 'y';
 	$prefs['freetags_browse_amount_tags_in_cloud'] = '100';
 	$prefs['freetags_ascii_only'] = 'y';
 	$prefs['freetags_lowercase_only'] = 'y';

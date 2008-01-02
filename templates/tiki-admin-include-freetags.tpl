@@ -21,6 +21,10 @@
           <td><input type="checkbox" name="freetags_browse_show_cloud" {if $prefs.freetags_browse_show_cloud eq 'y'}checked="checked"{/if} /></td>
         </tr>
         <tr>
+          <td class="form">{tr}Preload freetag random search when arriving on <a href="tiki-browse_freetags.php">freetag search grid</a>{/tr}: </td>
+          <td><input type="checkbox" name="freetags_preload_random search" {if $prefs.freetags_preload_random_search eq 'y'}checked="checked"{/if} /></td>
+        </tr>
+        <tr>
           <td class="form">{tr}Number of Tags to show in Cloud{/tr}: </td>
           <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$prefs.freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
         </tr>
