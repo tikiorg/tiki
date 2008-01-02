@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.16 2007-12-13 19:37:18 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.17 2008-01-02 16:09:46 jyhem Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1372,7 +1372,7 @@ class TrackerLib extends TikiLib {
 				// numeric
 				case 'n':
 					if(!is_numeric($f['value'])) {
-						$f['error'] = tra('field is not numeric');
+						$f['error'] = tra('Field is not numeric');
 						$erroneous_values[] = $f;
 					}
 					break;
@@ -1394,7 +1394,7 @@ class TrackerLib extends TikiLib {
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
 					  if ( $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
-					$f['error'] = tra('field is not a link to mp3 in the gallery');
+					$f['error'] = tra('Field is not a link to mp3 in the gallery');
 					$erroneous_values[] = $f; 				
 					  }
 					}
@@ -1406,7 +1406,7 @@ class TrackerLib extends TikiLib {
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
 					  if ( $filetype != "video/x-flv" ) {
-				   	   $f['error'] = tra('field is not a link to FLV in the gallery');
+				   	   $f['error'] = tra('Field is not a link to FLV in the gallery');
 					   $erroneous_values[] = $f; 				
 					  }
 					}
@@ -1418,7 +1418,7 @@ class TrackerLib extends TikiLib {
 					  $info = $filegallib->get_file_info($idfilegal);
 					  $filetype = $info['filetype'];
 					  if ( $filetype != "video/x-flv" && $filetype != "audio/x-mp3" && $filetype != "audio/mpeg" ) {
-				   	   $f['error'] = tra('field is not a link to FLV or MP3 in the gallery');
+				   	   $f['error'] = tra('Field is not a link to FLV or MP3 in the gallery');
 					   $erroneous_values[] = $f; 				
 					  }
 					}
@@ -1836,7 +1836,7 @@ class TrackerLib extends TikiLib {
 			$res["trackerId"] = $resu['trackerId'];
 			$res["longdesc"] = $this->parse_data($res['longdesc']);
 		} else {
-			$res = array(tra("message") => tra("No extra information for that attached file. "));
+			$res = array(tra("Message") => tra("No extra information for that attached file. "));
 			$res['trackerId'] = 0;
 		}
 		return $res;
