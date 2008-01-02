@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2007-12-10 17:16:33 $
--- $Author: jonnybradley $
+-- $Date: 2008-01-02 15:53:47 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -4006,6 +4006,10 @@ CREATE TABLE "tiki_preferences" (
 go
 
 
+INSERT INTO "," ("name","value") VALUES ('pref_syntax', '1.10')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -5316,7 +5320,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "ord" numeric(4,0) default NULL NULL,
   "type" char(1) default NULL NULL,
   "user" varchar(200) default '' NOT NULL,
-  PRIMARY KEY ("name","user","position")
+  PRIMARY KEY ("name","user","position","ord")
 ) ENGINE=MyISAM
 go
 
