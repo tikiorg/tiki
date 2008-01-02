@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.3 2007-12-15 02:44:51 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.4 2008-01-02 22:59:20 pkdille Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -185,7 +185,7 @@
 		{if $tiki_p_assign_perm_file_gallery eq 'y'}{foreach from=$perms item=perm}<option value="assign_{$perm.permName|escape}">{tr}Assign:{/tr} {$perm.permName|escape}</option>{/foreach}{/if}
 	</select>
 	<span style="display:none" id="groups">
-	<select name="groups[]" multiple="multiple" size="5"}
+	<select name="groups[]" multiple="multiple" size="5">
 	{section name=grp loop=$groups}
 	<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
 	{/section}
