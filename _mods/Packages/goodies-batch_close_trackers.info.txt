@@ -1,0 +1,24 @@
+contributor:
+$Author: sylvieg $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2008-01-03 16:24:34 $
+
+files:
+goodies/batch_close_trackers/batch_close_trackers.php
+
+author:
+sylvieg
+
+licence:
+GNU/LGPL
+
+Description:
+Batch to change the status to close of the items that has a value for the fieldId smaller taht the current date
+2 ways to run the script:
+- crontab line(for each day): 0 0 * * * /usr/local/bin/php ~cron/batch_close_trackers.php 282 /var/www/html/tiki
+- command line: php ~cron/batch_close_trackers.php 282 /var/www/html/tiki
+where 282 if the fieldId (for example expiration date) and /var/www/html/tiki is the tiki repository
