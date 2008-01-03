@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.12 2007-12-06 18:31:49 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.13 2008-01-03 17:23:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1499,7 +1499,7 @@ function get_included_groups($group, $recur=true) {
     function set_default_group($user,$group) {
     	// if user is not in group, assign user to group before setting default group
     	$user_groups = $this->get_user_groups($user);
-		if (!in_array($group, $user_groups)) {
+		if (!in_array($group, $user_groups) && !empty($group)) {
 			$this->assign_user_to_group($user, $group);
 		}
 	$query = "update `users_users` set `default_group` = ?
