@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.63 2008-01-01 00:14:01 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.64 2008-01-03 23:37:28 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6768,7 +6768,7 @@ if (!$simple_wiki) {
 		   }
 		}
 
-		if ($prefs['feature_user_watches'] == 'y') {
+		if ($prefs['feature_user_watches'] == 'y' && !$minor) {
 			//  Deal with mail notifications.
 			include_once('lib/notifications/notificationemaillib.php');
 			global $histlib; include_once ("lib/wiki/histlib.php");
