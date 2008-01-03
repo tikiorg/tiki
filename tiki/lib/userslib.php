@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.13 2008-01-03 17:23:19 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.14 2008-01-03 17:41:18 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1314,7 +1314,7 @@ function get_included_groups($group, $recur=true) {
 		} else {
 			$groups = $this->get_user_groups($user);
 			foreach ($groups as $gr) {
-				if ($gr != "Anonymous" and $gr != "Registered") {
+				if ($gr != "Anonymous" and $gr != "Registered" and $gr != "") {
 					$ret = $gr;
 					break;
 				}
