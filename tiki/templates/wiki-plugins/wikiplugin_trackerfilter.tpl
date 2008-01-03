@@ -18,6 +18,8 @@
 			{/section}
 			</select>
 			{if $filters[if].format eq "m"} {tr}Tip: hold down CTRL to select multiple{/tr}{/if}
+		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T'}
+			<input type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 		{else}
 			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input><br />
 			{section name=io loop=$filters[if].opts}
