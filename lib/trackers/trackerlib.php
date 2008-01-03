@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.17 2008-01-02 16:09:46 jyhem Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.18 2008-01-03 21:41:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -503,8 +503,10 @@ class TrackerLib extends TikiLib {
 		return true;
 	}
 	
-	/* to filter filterfield is an array of fieldId
-	 * and the values are either filtervalue or exactvalue : each elt of the array is the filter of each elt of filterfield
+	/* to filter filterfield is an array of fieldIds
+	 * and the value of each field is either filtervalue or exactvalue
+	 * ex: filterfield=array('1','2', '3'), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these')
+	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
@@ -545,6 +547,7 @@ class TrackerLib extends TikiLib {
 
 			if ( ! is_array($filterfield) ) {
 				$fv = $filtervalue;
+				$ev = $exactvalue;
 				$ff = $filterfield;
 				$nb_filtered_fields = 1;
 			} else {
@@ -552,9 +555,10 @@ class TrackerLib extends TikiLib {
 			}
 
 			for ( $i = 0 ; $i < $nb_filtered_fields ; $i++ ) {
-				if ( is_array($filterfield) ) {
+				if ( is_array($filterfield) ) { //multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = $filterfield[$i];
-					$fv = $filtervalue[$ff];
+					$ev = $exactvalue[$i];
+					$fv = $filtervalue[$i];
 				}
 
 				$filter = $this->get_tracker_field($ff);
@@ -572,39 +576,43 @@ class TrackerLib extends TikiLib {
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
 					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( 0 ";
-					$value = empty($fv) ? (is_array($exactvalue)? $exactvalue[$i]: $exactvalue) : $fv;
-					if ( ! is_array($value) && $value != '' ) $value = array($value);
+					$value = empty($fv) ? $ev : $fv;
+					if ( ! is_array($value) && $value != '' )
+						$value = array($value);
 					foreach ( $value as $catId ) {
 						$bindvars[] = $catId;
 						$mid .= ',?';
 					}
 					$mid .= " ) ";
 		
-				} else if ( $exactvalue ) {
-					if (is_array($exactvalue) && !empty($exactvalue[$i])) {
-						if (is_array($exactvalue[$i])) {
-							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue[$i]),'?')).")";
-							$bindvars = array_merge($bindvars, $exactvalue[$i]);
-						} else {
-							$mid.= " AND ttif$i.`value`=? ";
-							$bindvars[] = $exactvalue[$i];
-						}
-					} elseif (is_array($exactvalue)) {
-						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($exactvalue),'?')).")";
-						$bindvars = array_merge($bindvars, $exactvalue);
+				} elseif ($ev) {
+					if (is_array($ev)) {
+						$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0,count($ev),'?')).")";
+						$bindvars = array_merge($bindvars, $ev);
 					} else {
 						$mid.= " AND ttif$i.`value`=? ";
-						$bindvars[] = $exactvalue;
+						$bindvars[] = $ev;
 					}
 		
-				} elseif ( $ff && $fv ) {
-		
-					$mid .= " AND ttif$i.`value` like ? ";
-		
-					if ( substr($fv, 0, 1) == '*' ) $bindvars[] = '%'.substr($fv, 1);
-					elseif ( substr($fv, -1, 1) == '*' ) $bindvars[] = substr($fv, 0, strlen($fv)-1).'%';
-					else $bindvars[] = '%'.$fv.'%';
-		
+				} elseif ( $fv ) {
+					if (!is_array($fv)) {
+						$value = array($fv);
+					}
+					$mid .= ' AND(';
+					$cpt = 0;
+					foreach ($value as $v) {
+						if ($cpt++)
+							$mid .= ' OR ';
+						$mid .= " ttif$i.`value` like ? ";
+						if ( substr($v, 0, 1) == '*' ) {
+							$bindvars[] = '%'.substr($v, 1);
+						} elseif ( substr($v, -1, 1) == '*' ) {
+							$bindvars[] = substr($v, 0, strlen($v)-1).'%';
+						} else {
+							$bindvars[] = '%'.$v.'%';
+						}
+					}
+					$mid .= ')';
 				}
 			}
 		} else {
@@ -625,7 +633,6 @@ class TrackerLib extends TikiLib {
 			.$mid
 			.' GROUP BY tti.`itemId`'
 			.' ORDER BY '.$this->convert_sortmode('sortvalue_'.$corder);
-
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
 
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.2 2008-01-02 23:28:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.3 2008-01-03 21:41:46 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -17,7 +17,6 @@ function wikiplugin_trackerlist($data, $params) {
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
-
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
@@ -202,14 +201,14 @@ function wikiplugin_trackerlist($data, $params) {
 					$fvs = split(':', $filtervalue);
 					unset($filtervalue);
 					for ($i = 0; $i < count($filterfield); ++$i) {
-						$filtervalue[$filterfield[$i]] = isset($fvs[$i])? $fvs[$i]:'';
+						$filtervalue[] = isset($fvs[$i])? $fvs[$i]:'';
 					}
 				}
 				if (!empty($exactvalue)) {
 					$evs = split(':', $exactvalue);
 					unset($exactvalue);
 					for ($i = 0; $i < count($filterfield); ++$i) {
-						$exactvalue[$filterfield[$i]] = isset($evs[$i])?$evs[$i]:'';
+						$exactvalue[] = isset($evs[$i])?$evs[$i]:'';
 					}
 				}
 			}
