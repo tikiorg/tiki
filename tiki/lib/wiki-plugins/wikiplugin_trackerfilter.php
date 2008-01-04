@@ -1,8 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.1 2008-01-03 21:41:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.2 2008-01-04 19:05:46 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
-  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
+  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|nTRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
@@ -22,7 +22,12 @@ function wikiplugin_trackerfilter($data, $params) {
 			$formats[$f] = 'r'; // radio as default
 		}
 	}
-	if (isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
+	if (!isset($displayList)) {
+		$displayList = 'n';
+	} elseif ($displayList == 'y' && isset($trackerId)) {
+		$_REQUEST['trackerId'] = $trackerId;
+	}
+	if ($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
 		if ($prefs['feature_trackers'] != 'y' || empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 			return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -165,7 +170,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 
 	if (!isset($action)) {
-		$action = 'filter';// tra('filter');
+		$action = 'Filter';// tra('Filter');
 	}
 	$smarty->assign('action', $action);
 
@@ -173,7 +178,15 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$smarty->assign_by_ref('filters', $filters);
 	$smarty->assign_by_ref('trackerId', $trackerId);
+	static $iTrackerFilter = 0;
+	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
+	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
+		$open = 'y';
+	} else {
+		$open = 'n';
+	}
+	$smarty->assign('open', $open);
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
-	return $data.$dataRes.$dataF;
+	return $data.$dataF.$dataRes;
 }
 ?>
