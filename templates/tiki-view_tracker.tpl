@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.19 2007-12-24 14:59:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.20 2008-01-04 15:22:11 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -693,7 +693,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {* -------------------- date and time -------------------- *}
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year=start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year end_year=start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
 
 {* -------------------- drop down -------------------- *}
 {elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
