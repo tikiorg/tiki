@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.31 2008-01-02 09:48:24 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.32 2008-01-04 14:11:58 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -143,6 +143,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_watch_author'] = 'n';
 	$prefs['wiki_watch_comments'] = 'y';
 	$prefs['wiki_watch_editor'] = 'n';
+	$prefs['wiki_watch_minor'] = 'y';
 	$prefs['feature_wiki_history_full'] = 'n';
 	$prefs['feature_wiki_categorize_structure'] = 'n';
 	$prefs['feature_wiki_watch_structure'] = 'n';
