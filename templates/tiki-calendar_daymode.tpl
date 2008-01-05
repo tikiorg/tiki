@@ -14,14 +14,22 @@
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}Remove{/tr}">
 <img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}Remove{/tr}" /></a>{/if}</span>
 {/if}
-<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type}"{/if}>
+<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type} vevent"{/if}>
 {$hours[$h]}:{$hrows[$h][hr].mins} : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 {if $myurl eq "tiki-action_calendar.php"}
-<a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
+<a href="{$hrows[$h][hr].url}" class="linkmenu summary">{$hrows[$h][hr].name}</a>
 {else}
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}" class="linkmenu">{$hrows[$h][hr].name}</a>
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}" class="linkmenu summary">{$hrows[$h][hr].name}</a>
 {/if}
+{* these hidden spans are for microformat hCalendar support *}
+<span class="dtstart" style="display:none;">{$hrows[$h][hr].startTimeStamp|isodate}</span>
+<span class="dtend" style="display:none;">{$hrows[$h][hr].endTimeStamp|isodate}</span>
+<span class="url" style="display:none;">{$hrows[$h][hr].web|escape}</span>
+<span class="location" style="display:none;">{$hrows[$h][hr].location|escape}</span>
+<span class="category" style="display:none;">{$hrows[$h][hr].category|escape}</span>
+<span class="description">
 {if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}
+</span>
 </div>
 {/section}
 </td></tr>
