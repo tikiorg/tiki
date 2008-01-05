@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.10 2008-01-02 14:19:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.11 2008-01-05 21:30:40 sylvieg Exp $ *}
 
 {if $prefs.feature_ajax eq 'y'}
   {include file='tiki-ajax_header.tpl' test=$test}
@@ -190,6 +190,7 @@
           <script type="text/javascript">
             {literal}
               function addTag(tag) {
+			  if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
 	        document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;	
               }
               function clearTags() {
