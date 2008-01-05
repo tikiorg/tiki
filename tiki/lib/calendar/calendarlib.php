@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.1 2007-11-14 19:14:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.2 2008-01-05 23:46:04 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -210,6 +210,8 @@ class CalendarLib extends TikiLib {
 					"end" => $tend, /* user time */
 					"type" => $res["status"],
 					"web" => $res["url"],
+					"startTimeStamp" => $res["start"],
+					"endTimeStamp" => $res["end"],
 					"nl" => $res["nlId"],
 					"prio" => $res["priority"],
 					"location" => $res["locationName"],
@@ -535,12 +537,12 @@ class CalendarLib extends TikiLib {
 		if(is_array($calendarId) && count($calendarId) > 0) {
 			$cond = $cond."and (0=1";
 			foreach($calendarId as $id) {
-				$cond = $cond." or `calendarId` = ? ";
+				$cond = $cond." or i.`calendarId` = ? ";
 			}
 			$cond = $cond.")";
 			$bindvars += $calendarId;
 		} elseif (!is_array($calendarId) and $calendarId > 0) {
-			$cond = $cond." and `calendarId` = ? ";
+			$cond = $cond." and i.`calendarId` = ? ";
 			$bindvars += array($calendarId);
 		}
 		$cond .= " and `end` >= (unix_timestamp(now()))";
@@ -549,8 +551,8 @@ class CalendarLib extends TikiLib {
 			$maxSeconds = ($maxDays * 24 * 60 * 60);
 			$cond .= " and `end` <= (unix_timestamp(now())) +".$maxSeconds;
 		}
-		$query = "select `start`, `end`, `name`, `description`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
-
+		$ljoin = "left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId`";
+		$query = "select i.`start`, i.`end`, i.`name`, i.`description`, i.`calitemId`, i.`calendarId`, i.`user`, i.`lastModif`, i.`url`, l.`name` as location, c.`name` as category from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
 		$result = $this->query($query,$bindvars,$maxrows,0);
 			
 		$ret = array();

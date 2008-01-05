@@ -41,7 +41,7 @@
 {/if}
 {/if}
 
-<table class="normal">
+<table class="normal{if !$edit} vevent{/if}">
 {if not $edit}
 <tr class="formcolor"><td>
 {tr}Calendar{/tr}</td>
@@ -55,7 +55,7 @@
 {if $edit}
 <input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
 {else}
-{$calitem.name}
+<span class="summary">{$calitem.name|escape}</span>
 {/if}
 </td>
 </tr>
@@ -95,7 +95,7 @@
 </td></tr>
 </table>
 {else}
-{$calitem.start|tiki_long_datetime}
+<abbr class="dtstart" title="{$calitem.start|isodate}">{$calitem.start|tiki_long_datetime}</abbr>
 {/if}
 </td>
 </tr>
@@ -157,7 +157,7 @@
 </table>
 
 {else}
-{$calitem.end|tiki_long_datetime}
+{if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
 {/if}
 </td>
 </tr>
@@ -180,7 +180,7 @@
   <input type="hidden" name="rows" value="{$rows}"/>
   <input type="hidden" name="cols" value="{$cols}"/>
 {else}
-  {$calitem.parsed|default:"<i>No description</i>"}
+  <span class="description">{$calitem.parsed|default:"<i>No description</i>"}</span>
 {/if}
 </td></tr>
 
@@ -242,7 +242,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {tr}or new{/tr} {/if}
 <input type="text" name="save[newcat]" value="" />
 {else}
-{$calitem.categoryName}
+<span class="category">{$calitem.categoryName|escape}</span>
 {/if}
 </td>
 </tr>
@@ -260,7 +260,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {tr}or new{/tr} {/if}
 <input type="text" name="save[newloc]" value="" />
 {else}
-{$calitem.locationName}
+<span class="location">{$calitem.locationName|escape}</span>
 {/if}
 </td>
 </tr>
@@ -270,7 +270,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {if $edit}
 <input type="text" name="save[url]" value="{$calitem.url}" size="32" style="width:90%;" />
 {else}
-<a href="{$calitem.url}">{$calitem.url}</a>
+<a class="url" href="{$calitem.url}">{$calitem.url|escape}</a>
 {/if}
 </td>
 </tr>
@@ -299,7 +299,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers}{$org}, {/foreach}" style="width:90%;" />
 {else}
 {foreach item=org from=$calitem.organizers}
-{$org}<br />
+{$org|escape}<br />
 {/foreach}
 {/if}
 </td>
@@ -315,7 +315,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}, {/foreach}" style="width:90%;" />
 {else}
 {foreach item=ppl from=$calitem.participants}
-{$ppl.name} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
+{$ppl.name|escape} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
 {/foreach}
 {/if}
 </td>

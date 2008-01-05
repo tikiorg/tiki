@@ -7,7 +7,7 @@
 {if $listevents|@count eq 0}<tr><td colspan="5">{tr}No records found{/tr}</td></tr>{/if}
 {cycle values="odd,even" print=false}
 {section name=w loop=$listevents}
-<tr class="{cycle}{if $listevents[w].start <= $smarty.now and $listevents[w].end >= $smarty.now} selected{/if}">
+<tr class="{cycle}{if $listevents[w].start <= $smarty.now and $listevents[w].end >= $smarty.now} selected{/if} vevent">
 <td>
 <a href="{$myurl}?todate={$listevents[w].start}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
 {$listevents[w].start|tiki_short_time}
@@ -17,8 +17,14 @@
 {if $listevents[w].start ne $listevents[w].end}{$listevents[w].end|tiki_short_time}{/if}
 </td>
 <td>
-<a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$listevents[w].calitemId}" title="{tr}View{/tr}">{$listevents[w].name}</a><br />
-<span style= "font-style:italic">{$listevents[w].parsedDescription}</span>
+<a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$listevents[w].calitemId}" title="{tr}View{/tr}"><span class="summary">{$listevents[w].name|escape}</span></a><br />
+<span class="description" style="font-style:italic">{$listevents[w].parsed}</span>
+{* these hidden spans are for microformat hCalendar support *}
+<span class="dtstart" style="display:none;">{$listevents[w].start|isodate}</span>
+<span class="dtend" style="display:none;">{$listevents[w].end|isodate}</span>
+<span class="url" style="display:none;">{$listevents[w].url|escape}</span>
+<span class="location" style="display:none;">{$listevents[w].location|escape}</span>
+<span class="category" style="display:none;">{$listevents[w].category|escape}</span>
 {if $listevents[w].web}
 <br /><a href="{$listevents[w].web}" target="_other" class="calweb" title="{$listevents[w].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 {/if}
