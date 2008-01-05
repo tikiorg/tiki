@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.5 2008-01-02 14:19:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.6 2008-01-05 21:30:40 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.5 2008-01-02 14:19:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.6 2008-01-05 21:30:40 sylvieg Exp $
 //
 
 // Initialization
@@ -95,11 +95,14 @@ if (isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'last') {
 
 $smarty->assign('broaden', $broaden);
 
-$tagArray = preg_split('/\s*(,|\s)\s*/',trim(strip_tags($_REQUEST['tag'])));
-$tagArray = array_unique($tagArray);
+$tagArray = $freetaglib->_parse_tag($_REQUEST['tag']);
 $tagString = '';
 foreach ($tagArray as $t_ar) {
-	$tagString .= $t_ar . ' ';	
+	if (strstr($t_ar, ' ')) {
+		$tagString .= '"'.$t_ar . '" ';
+	} else {
+		$tagString .= $t_ar . ' ';	
+	}
 }
 
 $smarty->assign('tagString', trim($tagString));
