@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.65 2008-01-04 14:11:55 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.66 2008-01-05 22:25:38 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -32,6 +32,9 @@ class TikiLib extends TikiDB {
 
     var $num_queries = 0;
 		var $now;
+
+	var $cache_page_info;
+
 
     // Constructor receiving a PEAR::Db database object.
     function TikiLib($db) {
@@ -4487,9 +4490,8 @@ function add_pageview() {
     }
 
     function get_page_info($pageName) {
-	static $cache_page_info;
-	if (isset($cache_page_info) && $cache_page_info['pageName'] == $pageName) {
-		return $cache_page_info;
+	if ( isset($this->cache_page_info['pageName']) && $this->cache_page_info['pageName'] == $pageName) {
+		return $this->cache_page_info;
 	}
 	$query = "select * from `tiki_pages` where `pageName`=?";
 
@@ -4498,18 +4500,18 @@ function add_pageview() {
 	if (!$result->numRows()) {
 	    return false;
 	} else {
-	    $cache_page_info = $result->fetchRow();
+	    $this->cache_page_info = $result->fetchRow();
 
 	    global $user;
 	    if ($user) {
 		$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
 		$result = $this->query($query, array($user, $pageName));
 		if ($result->numRows()) {
-		    $cache_page_info['draft'] = $result->fetchRow();
+		    $this->cache_page_info['draft'] = $result->fetchRow();
 		}
 	    }
 
-	    return $cache_page_info;
+	    return $this->cache_page_info;
 	}
     }
 
@@ -6629,7 +6631,7 @@ if (!$simple_wiki) {
 	/** Update a wiki page
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null) {
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null) {
 	global $smarty, $prefs, $dbTiki, $histlib;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
@@ -6671,7 +6673,12 @@ if (!$simple_wiki) {
 		$edit_data = $purifier->purify($edit_data);
 	}
 	$mid = '';
-	$bindvars = array($description,$edit_data,$edit_comment,(int) $this->now,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
+
+	if( is_null( $saveLastModif ) ) {
+		$saveLastModif = $this->now;
+	}
+
+	$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
 	if ($lang) {
 		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
@@ -6716,7 +6723,7 @@ if (!$simple_wiki) {
 		// Select only versions older than keep_versions days
 		$keep = $prefs['keep_versions'];
 
-		$oktodel = $this->now - ($keep * 24 * 3600);
+		$oktodel = $saveLastModif - ($keep * 24 * 3600);
 		$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
 		$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
 		$toelim = $result->numRows();
@@ -6742,6 +6749,7 @@ if (!$simple_wiki) {
 		    values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+
 		if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');
 			$query = 'select max(`historyId`) from `tiki_history`where `pageName`=? and `version`=?';
