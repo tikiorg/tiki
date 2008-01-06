@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.20 2008-01-04 15:22:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.21 2008-01-06 12:41:41 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -77,103 +77,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
-
-<form action="tiki-view_tracker.php" method="get">
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-{if $status}<input type="hidden" name="status" value="{$status}" />{/if}
-{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
-<table class="normal"><tr>
-{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-{foreach key=st item=stdata from=$status_types}
-<td><div class="{$stdata.class}">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
-class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" border="0" width="12" height="12" /></a></div></td>
-{/foreach}
-{/if}
-<td class="formcolor" style="width:100%;">
-{assign var=cnt value=0}
-{foreach key=fid item=field from=$listfields}
-{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
-{if $field.type eq 'c'}
-<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
-<option value="y"{if $filtervalue eq 'y'} selected="selected"{/if}>{tr}Yes{/tr}</option>
-<option value="n"{if $filtervalue eq 'n'} selected="selected"{/if}>{tr}No{/tr}</option>
-</select></div>
-{elseif $field.type eq 'd' or $field.type eq 'D'}
-<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
-{if $field.type eq 'D'}<option value="" />{/if}
-{section name=jx loop=$field.options_array}
-<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}{assign var=gotit value=y}selected="selected"{/if}>{$field.options_array[jx]|tr_if}</option>
-{/section}
-</select>
-{if $field.type eq 'D'}<input type="text" name="filtervalue_other"{if $gotit ne 'y'} value="{$filtervalue}"{/if} />{/if}
-</div>
-
-{elseif $field.type eq 'R'}
-<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-{section name=jx loop=$field.options_array}
-<input type="radio" name="filtervalue[{$fid}]" value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}checked="checked"{/if}>{$field.options_array[jx]}</input>
-{/section}
-</div>
-
-{elseif $field.type eq 'e'}{* category *}
-
-<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-<table><tr>
-
-{cycle name=rows values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$field.categories name=eforeach}
-  <td width="50%" nowrap="nowrap">
-    <input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}" 
-      {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked{/if}
-    />
-    <label for="cat{$i.categId}">{$iu.name}</label>
-  </td>
-  {if !$smarty.foreach.eforeach.last}{cycle name=rows}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}</tr>{/if}
-{/foreach}
-
-</tr></table>
-</div>
-
-{else}
-
-<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><input type="text" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}" /></div>
-{/if}
-{assign var=cnt value=$cnt+1}
-{/if}
-{/foreach}
-</td>
-{if $show_filters eq 'y'}
-<td>
-<script type="text/javascript">
-fields = new Array({$cnt})
-{assign var=c value=0}
-{foreach key=fid item=field from=$listfields}
-{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
-fields[{$c}] = '{$fid}'
-{assign var=c value=$c+1}
-{/if}
-{/foreach}
-</script>
-<select name="filterfield" onchange="multitoggle(fields,this.options[selectedIndex].value);">
-<option value="">{tr}Choose a filter{/tr}</option>
-{foreach key=fid item=field from=$listfields}
-{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
-<option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
-{assign var=filter_button value='y'}
-{/if}
-{/foreach}
-</select>
-</td>
-{/if}
-
-{if $filter_button eq 'y'}
-<td><input type="submit" name="filter" value="{tr}Filter{/tr}" /></td>
-{/if}
-</tr>
-</table>
-<div align='left'>{$item_count}{if $item_count eq 1}{tr} item found{/tr}{else}{tr} items found{/tr}{/if}</div>
-</form>
+{include file="tracker_filter.tpl"}
 {/if}
 
 {if $cant_pages > 1 or $initial}
@@ -190,6 +94,7 @@ class="prevnext">{$initials[ini]}</a> .
 class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
+
 {* ------- list headings --- *}
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <table class="normal">
