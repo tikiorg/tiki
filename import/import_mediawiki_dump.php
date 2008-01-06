@@ -8,7 +8,13 @@
 if( phpversion() < '5.0.0' )
 	die( 'PHP 5 Required. Version ' . phpversion() . " detected\n" );
 
-class ImportTikiDump
+# Require Text_Wiki libraries
+
+require_once('Text/Wiki.php');
+require_once('Text/Wiki/Mediawiki.php');
+require_once('Text/Wiki/Tiki.php');
+
+class ImportMediaWikiDump
 {
 	function import( DOMDocument $dom )
 	{
@@ -116,13 +122,15 @@ class ImportTikiDump
 		$first = true;
 		foreach( $data['revisions'] as $rev )
 		{
+			$text = $this->convertMarkup($rev['text']);
+			
 			if( $first )
 			{
 				// Invalidate cache
 				$tikilib->create_page(
 					$data['title'],
 					0,
-					$rev['text'],
+					$text,
 					$rev['timestamp'],
 					$rev['comment'],
 					$rev['contributor']['username'],
@@ -134,7 +142,7 @@ class ImportTikiDump
 				$tikilib->cache_page_info = null;
 				$tikilib->update_page(
 					$data['title'],
-					$rev['text'],
+					$text,
 					$rev['comment'],
 					$rev['contributor']['username'],
 					$rev['contributor']['ip'],
@@ -149,6 +157,16 @@ class ImportTikiDump
 
 			$first = false;
 		}
+	}
+
+	# Utility for converting MediaWiki markup to TikiWiki markup
+	# Uses Text_Wiki PEAR library for heavy lifting
+	
+	function convertMarkup($mediawiki_text)
+	{
+		$tw = new Text_Wiki_Mediawiki();
+		$tiki_text = $tw->transform($mediawiki_text, 'Tiki');
+		return $tiki_text;
 	}
 }
 

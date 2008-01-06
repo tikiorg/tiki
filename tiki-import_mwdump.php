@@ -3,7 +3,7 @@
 error_reporting( E_ALL );
 
 require_once( 'tiki-setup.php' );
-require_once( 'import/import_tiki_dump.php' );
+require_once( 'import/import_mediawiki_dump.php' );
 
 header( 'Content-Type: text/plain' );
 
@@ -23,7 +23,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	echo "Processing...\n";
 	flush();
 
-	$importer = new ImportTikiDump;
+	$importer = new ImportMediaWikiDump;
 	$importer->import( $dom );
 
 	exit;
