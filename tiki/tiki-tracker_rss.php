@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12.2.1 2008-01-06 15:15:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12.2.2 2008-01-06 15:24:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,6 +56,8 @@ if ($output["data"]=="EMPTY") {
 	$listfields = $trklib->list_tracker_fields($_REQUEST[$id]);
 	$fields = array();
 	foreach ($listfields['data'] as $f) {
+		if ($f['isHidden'] == 'y' || $f['isHidden'] == 'c')
+			continue;
 		$fields[$f['fieldId']] = $f;
 	}
 	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $dateId.'_desc', $fields);
