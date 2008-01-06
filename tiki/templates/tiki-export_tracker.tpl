@@ -6,6 +6,8 @@ section name=ix loop=$items[user].field_values}{
 
 if $items[user].field_values[ix].type eq 'a'}
 "{$items[user].field_values[ix].value|replace:"\r\n":"%%%"}",{
+elseif isset($items[user].field_values[ix].links)}
+{foreach key=k item=l from=$items[user].field_values[ix].links name=links}{$l}{if !$smarty.foreach.links.last},{/if}{/foreach}",{
 else}
 "{$items[user].field_values[ix].value}",{/if}
 {/section}
