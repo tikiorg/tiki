@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12.2.1 2008-01-06 15:15:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,7 +53,12 @@ if ($output["data"]=="EMPTY") {
 	$urlparam = "itemId";
 	$readrepl = "tiki-view_tracker_item.php?$id=%s&$urlparam=%s";
 	
-	$tmp = $tikilib->list_tracker_items($_REQUEST["$id"], 0, $prefs['max_rss_tracker'], $dateId.'_desc', '', '');
+	$listfields = $trklib->list_tracker_fields($_REQUEST[$id]);
+	$fields = array();
+	foreach ($listfields['data'] as $f) {
+		$fields[$f['fieldId']] = $f;
+	}
+	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $dateId.'_desc', $fields);
 	foreach ($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:').' #'.$data["$urlparam"];
 		$data[$descId] = '';
@@ -62,6 +67,7 @@ if ($output["data"]=="EMPTY") {
 		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
 				if ($data2["type"] != "e") {
+					if ($data2['type'] == 'a') $data2['value'] = $data2['pvalue'];
 					if ($data2["value"] == "") $data2["value"] = "(".tra('empty').")";
 					$data[$descId] .= $data2["name"].": ".$data2["value"]."<br />";
 				}
