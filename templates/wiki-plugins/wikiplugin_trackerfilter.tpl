@@ -2,18 +2,20 @@
 {if $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
-<div id="bTrackerFilter{$iTrackerFilter}" style="display:{if $open ne 'y'}block{else}none{/if}"><a href="javascript:toggleBlock('trackerFilter{$iTrackerFilter}');toggleBlock('bTrackerFilter{$iTrackerFilter}');" class="linkbut">{tr}Show Filters{/tr}</a></div>
+<div id="bTrackerFilter{$iTrackerFilter}" style="valign:top;display:{if $open ne 'y'}block{else}none{/if}"><a href="javascript:toggleBlock('trackerFilter{$iTrackerFilter}');toggleBlock('bTrackerFilter{$iTrackerFilter}');" class="linkbut">{tr}Show Filters{/tr}</a></div>
 <div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y'}block{else}none{/if}">
 <form method="post">
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <table class="normal">
+{if $line eq 'y'}<tr>{/if}
 {cycle values="even,odd" print=false}
 {section name=if loop=$filters}
-	<tr class="{cycle}">
-		<td>{$filters[if].name|tr_if}</td>
+	{if $line ne 'y'}<tr class="{cycle}">{/if}
 		<td>
-		{if $filters[if].format eq 'd'}
-			<select name="f_{$filters[if].fieldId}[]" size="5"{if $filters[if].format eq "m"} multiple="multiple"{/if}> 
+		{$filters[if].name|tr_if}
+		{if $line ne 'y'}</td><td>{else}:{/if}
+		{if $filters[if].format eq 'd' or  $filters[if].format eq 'm'}
+			<select name="f_{$filters[if].fieldId}[]" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
 			<option value=""{if !$filters[if].selected} selected="selected"{/if}>{tr}Any{/tr}</option>
 			{section name=io loop=$filters[if].opts}
 				<option value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} selected="selected"{/if}>{$filters[if].opts[io].name|tr_if}</option>
@@ -23,15 +25,17 @@
 		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T'}
 			<input type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 		{else}
-			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input><br />
+			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
 			{section name=io loop=$filters[if].opts}
-				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input><br />
+				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input>{if $line ne 'y'}<br />{/if}
 			{/section}
 		{/if}
 		</td>
-	</tr>
+		{if $line ne 'y'}</tr>{else} {/if}
 {/section}
-<tr><td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}{$action}{/tr}" /></td></tr>
+{if $line ne 'y'}<tr>{/if}
+<td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}{$action}{/tr}" /></td>
+</tr>
 </table>
 </form>
 </div>

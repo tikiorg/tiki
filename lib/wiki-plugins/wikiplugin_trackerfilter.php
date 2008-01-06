@@ -1,8 +1,8 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.2 2008-01-04 19:05:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.3 2008-01-06 22:31:23 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
-  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|nTRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
+  $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
@@ -26,6 +26,9 @@ function wikiplugin_trackerfilter($data, $params) {
 		$displayList = 'n';
 	} elseif ($displayList == 'y' && isset($trackerId)) {
 		$_REQUEST['trackerId'] = $trackerId;
+	}
+	if (!isset($line)) {
+		$line = 'n';
 	}
 	if ($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
@@ -178,6 +181,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	$smarty->assign_by_ref('filters', $filters);
 	$smarty->assign_by_ref('trackerId', $trackerId);
+	$smarty->assign_by_ref('line', $line);
 	static $iTrackerFilter = 0;
 	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
 	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
