@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.8 2007-12-29 16:30:00 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.9 2008-01-07 23:07:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,7 @@ if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
 $smarty->assign('trackers', $trackers);
 
 $ag_home = '';
-$ag_defcat = '';
+$ag_defcat = 0;
 $ag_theme = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (isset($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
