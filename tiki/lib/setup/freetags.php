@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.2.2.1 2007-11-04 22:08:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.2.2.2 2008-01-07 15:13:26 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -24,6 +24,16 @@ if ( isset($section) and isset($sections[$section])) {
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $section, $_POST['addtags']);
 		}
+	}
+	if ($tiki_p_admin == 'y' && isset($_REQUEST['delTag'])) {
+		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+			$freetaglib->delete_object_tag($_REQUEST[$here['itemkey']], $section, $_REQUEST['delTag']);
+		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
+			$freetaglib->delete_object_tag($_REQUEST[$here['key']], $section, $_REQUEST['delTag']);
+		}
+		$url = str_replace('&delTag='.$_REQUEST['delTag'], '', $_SERVER['REQUEST_URI']);
+		header("Location: $url");
+		die;
 	}
 	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
 		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']]);
