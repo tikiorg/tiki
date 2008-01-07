@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.6 2008-01-05 21:30:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.7 2008-01-07 23:01:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.6 2008-01-05 21:30:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.7 2008-01-07 23:01:48 sylvieg Exp $
 //
 
 // Initialization
@@ -87,7 +87,7 @@ if (isset($_REQUEST["user_only"]) && $_REQUEST["user_only"] == 'on') {
 
 if (isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'last') {
 	$broaden = 'last';
- } elseif ((isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'n') || (isset($_REQUEST['stopbroaden']) && $_REQUEST['stopbroaden'] == 'on')) {
+} elseif ((isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'n') || (isset($_REQUEST['stopbroaden']) && $_REQUEST['stopbroaden'] == 'on')) {
 	$broaden = 'n';
 } else {
 	$broaden = 'y';
@@ -110,6 +110,22 @@ $smarty->assign('tag', $tagArray[0]);
 
 $maxRecords = $maxRecords;
 $most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $prefs['freetags_browse_amount_tags_in_cloud']);
+if (!empty($prefs['freetags_cloud_colors'])) {
+	$colors = split(',', $prefs['freetags_cloud_colors']);
+	$prev = '';
+	foreach($most_popular_tags as $id=>$tag) {
+		if (count($colors) == 1) {
+			$i = 0;
+		} elseif (count($colors) == 2) {
+			$i = $prev?0: 1;
+		} else {
+			while (($i = rand(0, count($colors) - 1)) == $prev) {
+			}
+		}
+		$most_popular_tags[$id]['color'] = $colors[$i];
+		$prev = $i;
+	}
+}
 $smarty->assign('most_popular_tags', $most_popular_tags);
 if ($broaden == 'last') {
 	$broaden = 'n';

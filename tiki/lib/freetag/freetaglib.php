@@ -61,11 +61,6 @@ class FreetagLib extends ObjectLib {
     var $_normalize_in_lowercase = 1;
     /**
      * @access private
-     * @param string Whether to normalize tags at all.
-     */
-    var $_normalize_tags = 1;
-    /**
-     * @access private
      * @param string Whether to prevent multiple users from tagging the same object. By default, set to block (ala Upcoming.org)
      */
     var $_block_multiuser_tag_on_object = 1;
@@ -75,12 +70,6 @@ class FreetagLib extends ObjectLib {
      * @param int The maximum length of a tag.
      */ 
     var $_MAX_TAG_LENGTH = 30;
-    /**
-     * @access private
-     * @param string The file path to the installation of ADOdb used.
-     */ 
-    var $_ADODB_DIR = 'adodb/';
-
     /**
      * @access public
      * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
@@ -100,7 +89,10 @@ class FreetagLib extends ObjectLib {
 	// update private vars with tiki preferences
     	global $prefs;
 	if ( $prefs['freetags_lowercase_only'] != 'y' ) $this->_normalize_in_lowercase = 0;
-	if ( $prefs['freetags_ascii_only'] != 'y' ) $this->_normalize_tags = 0;
+	if ( isset($prefs['freetags_ascii_only']) && $prefs['freetags_ascii_only'] != 'y' )
+		$this->_normalized_valid_chars = '';
+	else 
+		$this->_normalized_valid_chars = $prefs['freetags_normalized_valid_chars'];
     }
 
     /**
@@ -543,7 +535,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      * @return string Returns the tag in normalized form.
      */ 
     function normalize_tag($tag) {
-	if ($this->_normalize_tags) {
+	if (!empty($this->_normalized_valid_chars) && $this->_normalized_valid_chars != '*') {
 	    $normalized_valid_chars = $this->_normalized_valid_chars;
 	    $tag = preg_replace("/[^$normalized_valid_chars]/", "", $tag);
 	}
@@ -565,18 +557,19 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      *
      * @param int The unique ID of the person who tagged the object with this tag.
      * @param int The ID of the object in question.
-     * @param string The raw string form of the tag to delete. See above for notes.
+     * @param string The raw string or the string form of the tag to delete.
+	 * @param bool The tag is the raw or the normalized form
      *
      * @return string Returns the tag in normalized form.
      */ 
-    function delete_object_tag($itemId, $type, $tag, $user=false) {
+    function delete_object_tag($itemId, $type, $tag, $user=false, $raw=false) {
 	if (!isset($itemId) || !isset($type) || !isset($tag) ||
 	    empty($itemId) || empty($type) || empty($tag)) {
 	    die("delete_object_tag argument missing");
 	    return false;
 	}
 
-	$tagId = $this->get_raw_tag_id($tag);
+	$tagId = $raw? $this->get_raw_tag_id($tag): $this->get_tag_id($tag);
 
 	if ( !($tagId > 0)) {
 	    return false;
@@ -659,7 +652,6 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	$query = "SELECT `tagId` FROM `tiki_freetags`
 			WHERE 
 			`tag` = ?
-			LIMIT 1
 			";
 
 	return $this->getOne($query, array($tag));
@@ -813,9 +805,8 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	}
 
 	$query = "SELECT `tag`, COUNT(*) as count
-			FROM `tiki_freetags` t,
-                             `tiki_freetagged_objects` o
-			WHERE t.`tagId` = o.`tagId`
+			FROM `tiki_freetags` tf,  `tiki_freetagged_objects` tfo 
+			WHERE tf.`tagId`= tfo.`tagId`
 			$mid
 			GROUP BY `tag`
 			ORDER BY count DESC, tag ASC
