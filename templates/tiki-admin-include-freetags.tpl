@@ -6,7 +6,7 @@
   <br />
 {/if}
 
-  <div class="cbox">
+  <div id ="Browsing" class="cbox">
     <div class="cbox-title">
       {tr}Freetag Browsing{/tr}
     </div>
@@ -21,6 +21,18 @@
           <td><input type="checkbox" name="freetags_browse_show_cloud" {if $prefs.freetags_browse_show_cloud eq 'y'}checked="checked"{/if} /></td>
         </tr>
         <tr>
+          <td class="form">{tr}Random tag cloud colors (separated by comma){/tr}: </td>
+          <td><input type="text" name="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color naem=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" /></td>
+        </tr>
+{*
+        <tr>
+          <td class="form">{tr}Tagging remembers tagger{/tr}: </td>
+          <td><input type="checkbox" name="freetags_taggers"{if $prefs.freetags_taggers eq 'y'} checked="checked"{/if} /></td>
+        <tr>
+          <td class="form">{tr}Color of tags used by user{/tr}: </td>
+          <td><input type="text" name="freetags_user_color" value="{$prefs.freetags_user_color}" /></td>
+        <tr>
+*}
           <td class="form">{tr}Preload freetag random search when arriving on <a href="tiki-browse_freetags.php">freetag search grid</a>{/tr}: </td>
           <td><input type="checkbox" name="freetags_preload_random search" {if $prefs.freetags_preload_random_search eq 'y'}checked="checked"{/if} /></td>
         </tr>
@@ -29,8 +41,12 @@
           <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$prefs.freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
         </tr>
         <tr>
-          <td class="form">{tr}Only accept alphanumeric ASCII freetags (no accents or special chars){/tr}: </td>
-          <td><input type="checkbox" name="freetags_ascii_only" {if $prefs.freetags_ascii_only eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Valid characters pattern{/tr}: </td>
+          <td>
+            <input type="text" id="freetags_normalized_valid_chars" name="freetags_normalized_valid_chars" value="{$prefs.freetags_normalized_valid_chars}" /><br />
+			<a href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='a-zA-Z0-9';">{tr}Only accept alphanumeric ASCII freetags (no accents or special chars){/tr}</a><br />
+			<a href='#Browsing' onclick="document.getElementById('freetags_normalized_valid_chars').value='';">{tr}Accept all{/tr}</a>
+          </td>
         </tr>
         <tr>
           <td class="form">{tr}Only accept lowercase freetags{/tr}: </td>
