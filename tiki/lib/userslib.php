@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.14 2008-01-03 17:41:18 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.15 2008-01-08 18:13:38 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -812,6 +812,9 @@ class UsersLib extends TikiLib {
 		return array(USER_VALID, $user);
  
 	    if ($this->hash_pass($pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(pass))
+		return array(USER_VALID, $user);
+		
+		if ($res['valid'] > '' && $pass == $res['valid']) // used for validation of user account before activation
 		return array(USER_VALID, $user);
 
 	    return array(PASSWORD_INCORRECT, $user);
