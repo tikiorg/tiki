@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2007-12-25 14:28:12 $
-# $Author: sylvieg $
+# $Date: 2008-01-08 16:01:39 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -992,7 +992,8 @@ CREATE TABLE tiki_comments (
   smiley varchar(80) default NULL,
   message_id varchar(128) default NULL,
   in_reply_to varchar(128) default NULL,
-  comment_rating tinyint(2) default NULL,  
+  comment_rating tinyint(2) default NULL,
+  archived char(1) default NULL,
   PRIMARY KEY  (threadId),
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),

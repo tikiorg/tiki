@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.17 2007-12-26 23:28:01 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.18 2008-01-08 16:01:40 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -627,8 +627,7 @@ class Comments extends TikiLib {
 	 */
     }
 
-    function get_forum_topics($forumId, $offset = 0, $max = -1,
-	    $sort_mode = 'commentDate_asc') {
+    function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false) {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -647,20 +646,27 @@ class Comments extends TikiLib {
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
 	    a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
 	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,".
+		$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
 		on b.`parentId`=a.`threadId`
-		where a.`object`=?
-		and a.`type` $stickytest ?  and a.`objectType` = 'forum'
+		where a.`object`=?"
+		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
+		." and a.`type` $stickytest ?  and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
 	    global $ADODB_LASTDB;
 	    if($ADODB_LASTDB != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
 	    }
 	    $query .="order by ".$this->convert_sortmode($sort_mode).", `threadId`";
-	    $result = $this->query($query, array_merge(array((string) $forumId, 's', 0),
-			$bind_time), $max, $offset);
+
+	    $bind_vars = array((string) $forumId);
+	    if ( ! $include_archived ) $bind_vars[] = 'n';
+	    $bind_vars[] = 's';
+	    $bind_vars[] = 0;
+
+	    $result = $this->query($query, array_merge($bind_vars, $bind_time), $max, $offset);
 
 	    while ($res = $result->fetchRow()) {
 		$tid = $res['threadId'];
@@ -1522,7 +1528,7 @@ class Comments extends TikiLib {
 	$this->time_control = $time;
     }
 
-    function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
+    function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0,
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
     {
 	global $userlib;
@@ -2195,6 +2201,22 @@ class Comments extends TikiLib {
 	    $forum_info['is_flat']);
 
 		return $newForumId;		
+	}
+
+	function archive_thread($threadId, $parentId = 0) {
+	    if ( $threadId > 0 && $parentId >= 0 ) {
+	        $query = 'update `tiki_comments` set `archived`=? where `threadId`=? and `parentId`=?';
+	        return $this->query($query, array( 'y', (int)$threadId, (int)$parentId ) );
+	    }
+	    return false;
+	}
+
+	function unarchive_thread($threadId, $parentId = 0) {
+	    if ( $threadId > 0 && $parentId >= 0 ) {
+	        $query = 'update `tiki_comments` set `archived`=? where `threadId`=? and `parentId`=?';
+	        return $this->query($query, array( 'n', (int)$threadId, (int)$parentId ) );
+	    }
+	    return false;
 	}
 }
 

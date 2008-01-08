@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.5 2007-12-15 00:26:00 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.6 2008-01-08 16:01:38 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -222,6 +222,15 @@ if ($tiki_p_admin_forum == 'y') {
 		    $commentslib->set_parent($topic, $_REQUEST['mergetopic']);
 		}
 	    }
+	}
+    }
+
+    if ( $prefs['feature_forum_topics_archiving'] && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['archive'] == 'y' ) {
+	    $commentslib->archive_thread($_REQUEST['comments_parentId']);
+	} elseif ( $_REQUEST['archive'] == 'n' ) {
+	    $commentslib->unarchive_thread($_REQUEST['comments_parentId']);
 	}
     }
 }
@@ -611,9 +620,10 @@ if (!isset($_REQUEST['time_control']))
 $_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
+$view_archived_topics = ( $tiki_p_admin_forum == 'y' || $prefs['feature_forum_topics_archiving'] == 'n' );
 $comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'],
 		$comments_offset, $_REQUEST['comments_per_page'],
-		$_REQUEST['thread_sort_mode']);
+		$_REQUEST['thread_sort_mode'], $view_archived_topics);
 
 // Get the last "n" comments to this forum
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'],

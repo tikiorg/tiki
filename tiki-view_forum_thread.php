@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.2 2007-12-11 16:41:21 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.3 2008-01-08 16:01:38 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -232,6 +232,15 @@ if($tiki_p_admin_forum == 'y') {
 	    }
 	}
     }
+
+    if ( $prefs['feature_forum_topics_archiving'] == 'y' && isset($_REQUEST['archive']) && isset($_REQUEST['comments_parentId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['archive'] == 'y' ) {
+	    $commentslib->archive_thread($_REQUEST['comments_parentId']);
+	} elseif ( $_REQUEST['archive'] == 'n' ) {
+	    $commentslib->unarchive_thread($_REQUEST['comments_parentId']);
+	}
+    }
 }
 
 if ($tiki_p_forums_report == 'y') {
@@ -271,6 +280,10 @@ $commentslib->process_inbound_mail($_REQUEST['forumId']);
 //$end_time = microtime(true);
 
 //print "TIME1: ".($end_time - $start_time)."\n";
+
+if ( isset($_REQUEST['print']) && $_REQUEST['print'] == 'all' ) {
+	$_REQUEST['comments_per_page'] = 0; // unlimited
+}
 
 $forum_mode = 'y';
 include_once ("comments.php");
@@ -394,14 +407,25 @@ if ($prefs['feature_actionlog'] == 'y') {
 
 ask_ticket('view-forum');
 
-////$start_time = microtime(true);
-//$end_time = microtime(true);
-
-//print "TIME: ".($end_time - $start_time)."\n";
-//print "-->\n";
-
 // Display the template
-$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
-$smarty->display("tiki.tpl");
+if ( isset($_REQUEST['print']) ) {
+
+	// Remove icons and actions that should not be printed
+	$prefs['forum_thread_user_settings'] = 'n';
+	$smarty->assign('print_page', 'y');
+	$smarty->assign('thread_show_comment_footers', 'n');
+	$smarty->assign('thread_show_pagination', 'n');
+	$smarty->assign('tiki_p_forum_post', 'n');
+	$smarty->assign('tiki_p_admin_forum', 'n');
+	$smarty->assign('tiki_p_forum_edit_own_posts', 'n');
+
+	// Display the forum messages
+	$smarty->assign('mid', 'tiki-print_forum_thread.tpl');
+	$smarty->display('tiki-print.tpl');
+
+} else {
+	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
+	$smarty->display('tiki.tpl');
+}
 
 ?>
