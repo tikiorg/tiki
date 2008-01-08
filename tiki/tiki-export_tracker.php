@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.2 2008-01-08 16:08:35 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,6 +91,11 @@ if ($tiki_p_view_trackers != 'y') {
 	die;
 }
 
+if (empty($_REQUEST['which'])) {
+	$_REQUEST['which'] = 'all';
+}
+$smarty->assign_by_ref('which', $_REQUEST['which']);
+
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);
 
@@ -125,7 +130,7 @@ if (count($status_types) == 0) {
 	$tracker_info["showStatus"] = 'n';
 }
 
-$smarty->assign('tracker_info', $tracker_info);
+$smarty->assign_by_ref('tracker_info', $tracker_info);
 
 $xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 
@@ -160,7 +165,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
-	if ( (($tiki_p_admin == 'y' or $tiki_p_admin_trackers == 'y') && (empty($_REQUEST['which']) || $_REQUEST['which'] == 'all'))
+	if ( (($tiki_p_admin == 'y' or $tiki_p_admin_trackers == 'y') && $_REQUEST['which'] == 'all')
 		|| (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y') && $_REQUEST['which'] == 'list')
 		|| ($xfields["data"][$i]['isHidden'] != 'y' && $_REQUEST['which'] == 'item')
 		) {
