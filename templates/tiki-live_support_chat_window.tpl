@@ -89,7 +89,8 @@
   	<iframe name='chat_data' src='tiki-live_support_chat_frame.php' width="290" height="300" scrolling="yes">
   	</iframe>
   	{literal}
-  	<input type="text" id="data" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
+  	<input type="text" id="data" size="30" width="290" style="width:290px;" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
+	<br/>
   	<input type="button" value="send" onclick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
   	{/literal}
   	<script type='text/javascript'>

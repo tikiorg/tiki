@@ -39,6 +39,10 @@ if ($tiki_p_live_support_admin == 'y') {
 		check_ticket('ls-admin');
 		$lsadminlib->add_operator($_REQUEST['user']);
 	}
+        if (isset($_REQUEST['offline'])) {
+		check_ticket('ls-offline');
+                $lslib->set_operator_status($_REQUEST['offline'],'offline');
+        }
 
 	if (isset($_REQUEST['removeuser'])) {
 		$area = 'dellsuser';
