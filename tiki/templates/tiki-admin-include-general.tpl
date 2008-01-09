@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.6 2007-12-23 17:11:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.7 2008-01-09 14:48:57 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -11,7 +11,7 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
-	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$prefs.tiki_version}</td></tr>
+	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}</td></tr>
 	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>
