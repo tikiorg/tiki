@@ -6,12 +6,33 @@
 
 <div class="cbox">
   <div class="cbox-title">{tr}I18n setup{/tr}</div>
+  <script type="text/javascript">
+  {literal}
+  // <![CDATA[
+	function updateList( active )
+	{
+  		if( active )
+		{
+			show('available_languages');
+		}
+		else
+		{
+			hide('available_languages');
+			
+			var optionList = document.getElementById( 'available_languages_select' ).options;
+			for( i in optionList )
+				optionList[i].selected = false;
+		}
+	}
+  // ]]>
+  {/literal}
+  </script>
   <div class="cbox-data">
       <form action="tiki-admin.php?page=i18n" method="post">
         <table class="admin"><tr>
 
 		
-			<td class="form"><label for="general-lang">{tr}Language{/tr}:</label></td>
+			<td class="form"><label for="general-lang">{tr}Default Language{/tr}:</label></td>
 			<td>
 				<select name="language" id="general-lang">
 					{section name=ix loop=$languages}
@@ -29,7 +50,7 @@
         </tr><tr>
 		
 		
-			<td class="form"><label for="feature_best_language">{tr}Best Language{/tr}:</label></td>
+			<td class="form"><label for="feature_best_language">{tr}Show pages in user's preferred language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_best_language" id="feature_best_language"
 			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
@@ -41,31 +62,24 @@
 		</tr><tr>
 		
 		
-			<td class="form"><label for="change_language">{tr}Reg users can change language{/tr}:</label></td>
-			<td>
-			<table><tr>
-			<td style="width: 20px"><input type="checkbox" name="change_language" id="change_language"
-			{if $prefs.change_language eq 'y'}checked="checked"{/if}/></td>
-			<td>
+			<td class="form"><label for="restrict_language">{tr}Restrict supported languages{/tr}:</label></td>
+			<td><input type="checkbox" name="restrict_language" id="restrict_language"
+				{if count($prefs.available_languages) > 0}checked="checked"{/if} 
+				onclick="updateList( this.checked )"/>
+				<div id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
+					{tr}Available languages:{/tr}<br />
+					<select name="available_languages[]" multiple="multiple" size="5" id="available_languages_select">
+						{section name=ix loop=$languages}
+						<option value="{$languages[ix].value|escape}"
+							{if in_array($languages[ix].value, $prefs.available_languages)}selected="selected"{/if}>
+							{$languages[ix].name}
+						</option>
+					{/section}
+					</select>
+				</div>
+			</td>
 			
-			<div id="select_available_languages" {if count($prefs.available_languages) > 0}style="display:none;"{else}style="display:block;"{/if}>
-				<a class="link" href="javascript:show('available_languages');hide('select_available_languages');">{tr}Restrict available languages{/tr}</a>
-			</div>
-			
-      <div id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
-        {tr}Available languages:{/tr}<br />
-        <select name="available_languages[]" multiple="multiple" size="5">
-          {section name=ix loop=$languages}
-            <option value="{$languages[ix].value|escape}"
-              {if in_array($languages[ix].value, $prefs.available_languages)}selected="selected"{/if}>
-              {$languages[ix].name}
-            </option>
-          {/section}
-        </select>
-      </div>
 	  
-    </td>
-    </tr></table>
   </td>
 		</tr><tr>
 

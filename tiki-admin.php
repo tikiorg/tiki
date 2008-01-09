@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.4 2007-12-27 23:21:38 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.5 2008-01-09 15:24:29 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,7 +37,7 @@ function simple_set_toggle($feature) {
 	}
 }
 
-function simple_set_value($feature, $pref = '') {
+function simple_set_value($feature, $pref = '', $isMultiple = false) {
 	global $_REQUEST, $tikilib ,$prefs;
 	if (isset($_REQUEST[$feature])) {
 		if ( $pref != '' ) {
@@ -45,6 +45,17 @@ function simple_set_value($feature, $pref = '') {
 			$prefs[$feature] = $_REQUEST[$feature];
 		} else {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
+		}
+	}
+	elseif( $isMultiple )
+	{
+		// Multiple selection controls do not exist if no item is selected.
+		// We still want the value to be updated.
+		if ( $pref != '' ) {
+			$tikilib->set_preference($pref, array());
+			$prefs[$feature] = $_REQUEST[$feature];
+		} else {
+			$tikilib->set_preference($feature, array());
 		}
 	}
 }

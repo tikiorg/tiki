@@ -19,6 +19,12 @@ $smarty->assign_by_ref("languages", $languages);
 if (isset($_REQUEST["i18nsetup"])) { 	
 ask_ticket('admin-inc-i18n');
 
+	if( isset( $_REQUEST['available_languages'] )
+	 && count( $_REQUEST['available_languages'] ) > 0 )
+	{
+		$_REQUEST['change_language'] = 'on';
+	}
+
     $pref_toggles = array(
 		"feature_multilingual",
 		"feature_best_language",
@@ -36,15 +42,8 @@ ask_ticket('admin-inc-i18n');
         simple_set_toggle ($toggle);
     }	
 
-    $pref_values = array(
-	'language',
-	'available_languages',
-    );
-	
-    foreach ($pref_values as $britem) {
-        simple_set_value ($britem);
-    }
-	
+	simple_set_value( 'language' );
+	simple_set_value( 'available_languages', '', true );
 }
 
 ?>
