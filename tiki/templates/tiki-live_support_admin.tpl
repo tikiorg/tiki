@@ -71,7 +71,8 @@
 		</td>
 		<td class="{cycle}" style="text-align:right;">
 		{if $tiki_p_live_support_admin eq 'y'}
-			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+			<a href='tiki-live_support_admin.php?removeuser={$online_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+<a href='tiki-live_support_admin.php?offline={$online_operators[ix].user}'><img src='img/icons/icon_unwatch.png' border='0' alt='{tr}offline{/tr}' title='{tr}offline{/tr}' /></a>
 		{else}
 			&nbsp;
 		{/if}
