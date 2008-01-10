@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.83 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.83.2.1 2008-01-10 18:00:00 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
@@ -38,7 +38,7 @@ none
 
 <span class="button2">
 {if $viewlist eq 'list'}
-<a href="{$myurl}?viewlist=table" class="linkbut" title="{tr}calendar view{/tr}">{tr}calendar view{/tr}</a>{else}
+<a href="{$myurl}?viewlist=table" class="linkbut" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>{else}
 <a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
 </span>
 
@@ -62,7 +62,7 @@ none
 {if count($listcals) >= 1}
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
-<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}Check / Uncheck All{/tr}</label></div>
 {foreach item=k from=$listcals}
 <div class="calcheckbox"><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
 <label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name} (id #{$k})</label>

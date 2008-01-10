@@ -59,7 +59,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="odd">{$channels[user].timeTaken} secs</td>
 <td class="odd">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
 <td class="odd">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}Result{/tr}</a>
-{if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
+{if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
 <td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>
@@ -70,7 +70,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="even">{$channels[user].timeTaken} secs</td>
 <td class="even">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
 <td class="even">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}Result{/tr}</a>
-{if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
+{if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
 <td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>

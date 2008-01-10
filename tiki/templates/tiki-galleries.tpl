@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.5 2007-12-15 02:44:51 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.6 2008-01-10 18:00:00 jyhem Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -231,7 +231,7 @@
   {/if}
   {if $tiki_p_admin eq 'y'}
     {if $galleries[changes].individual eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' title='{tr}Active Perms{/tr}' height="16" width="16" border='0' /></a>
     {else}
 	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key.png' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' height="16" width="16" border='0' /></a>
     {/if}

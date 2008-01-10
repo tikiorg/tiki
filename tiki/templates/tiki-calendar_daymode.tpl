@@ -6,8 +6,8 @@
 <td class="{cycle}">
 {section name=hr loop=$hrows[$h]}
 {if ($prefs.calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}"{if $prefs.feature_tabs ne "y"}#details{/if} title="{tr}details{/tr}">
-<img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}zoom{/tr}" /></a>&nbsp;
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}"{if $prefs.feature_tabs ne "y"}#details{/if} title="{tr}Details{/tr}">
+<img src="img/icons/zoom.gif" border="0" width="16" height="16" alt="{tr}Zoom{/tr}" /></a>&nbsp;
 {if $hrows[$h][hr].modifiable eq "y"}
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}Edit{/tr}">
 <img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>

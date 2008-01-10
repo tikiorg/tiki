@@ -41,12 +41,12 @@ class TikiCalendarLib extends TikiLib {
 							case 'blog': $res['name'] = $res['parent'].' :: '.$res['name']; break;
 							case 'dir': $res['description'] = addslashes($res['dir_url']).'<br />'.$res['description']; break;
 							case 'forum': if ( $res['fid'] > 0 ) $url_vars = array($res['fid'], $res['id2'], 'threadId'.$res['id']); break;
-							case 'gal': $res['description'] = tra('new image uploaded by').' %s'; break;
+							case 'gal': $res['description'] = tra('New Image Uploaded by').' %s'; break;
 							case 'nl':
-								$res['description'] = tra('new subscriptions');
+								$res['description'] = tra('New Subscriptions');
 								$res['head'] = ' ... '.$res['head'];
 								break;
-							case 'track': $res['description'] = tra('new item in tracker'); break;
+							case 'track': $res['description'] = tra('New Item in Tracker'); break;
 							case 'wiki page': $res['parent'] = 'wiki'; break;
 						} 
 						$res['url'] = $this->get_object_url($res['type'], $url_vars);
