@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.6 2007-11-30 17:05:35 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.7 2008-01-10 22:29:01 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,6 +78,15 @@ if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 	}
 }
 $smarty->assign_by_ref('special', $special);
+
+//url to a user user tracker tiki-view_tracker_item.php?group=xxxx&user=yyyyy&view=+user
+if ($prefs['userTracker'] == 'y' && isset($_REQUEST['group']) && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && isset($_REQUEST['user'])) {
+	$utid = $userlib->get_usertrackerid($_REQUEST['group']);
+	if (!empty($utid['usersTrackerId'])) {
+		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$_REQUEST['user']);
+	}
+}
 
 if ((!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) && isset($_REQUEST["itemId"])) {
 	$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
