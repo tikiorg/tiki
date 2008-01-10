@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.33.2.2 2007-10-18 08:10:21 ohertel Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.33.2.3 2008-01-10 18:00:00 jyhem Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -56,7 +56,7 @@
 	<td class="formcolor">
 		<div class="toggle">
 			<input type="checkbox" name="checkall" onclick="CheckAll();" />
-			<label for="sectionswitch">{tr}check / uncheck all{/tr}</label>
+			<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
 		</div>
 
 		<table><tr>

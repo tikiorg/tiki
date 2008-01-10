@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.22.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.22.2.2 2008-01-10 18:00:00 jyhem Exp $ *}
 <h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
@@ -88,7 +88,7 @@
   {if $tiki_p_admin_sheet eq 'y'}
      <a class="gallink" href="tiki-objectpermissions.php?objectName={$sheets[changes].title|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheets[changes].sheetId}">
     {if $sheets[changes].individual eq 'y'}
-	<img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="16" border='0' />
+	<img src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' title='{tr}Active Perms{/tr}' height="16" width="16" border='0' />
     {else}
 	<img src='pics/icons/key.png' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' height="16" width="16" border='0' />
     {/if}

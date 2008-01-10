@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.2 2007-12-08 10:12:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.3 2008-01-10 18:00:00 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $prefs.feature_help eq 'y'}
@@ -401,7 +401,7 @@
   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
 
   {if $channels[user].individual eq 'y'}
-    <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}active perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}active perms{/tr}' /></a>
+    <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}Active Perms{/tr}"><img src='pics/icons/key_active.png' border='0' width="16" height="16" alt='{tr}Active Perms{/tr}' /></a>
   {else}
     <a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name|escape}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}" title="{tr}Perms{/tr}"><img src='pics/icons/key.png' border='0' width="16" height="16" alt="{tr}Perms{/tr}" /></a>
    {/if}

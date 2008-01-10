@@ -2,12 +2,12 @@
 <div class="tabrow">
 
 <div class="viewmode">
-<a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" /></a>
-<a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" /></a>
-<a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" /></a>
-<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quarter{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" /></a>
-<a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" /></a>
-<a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" /></a>
+<a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}Day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" /></a>
+<a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}Week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" /></a>
+<a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}Month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" /></a>
+<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}Quarter{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" /></a>
+<a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}Semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" /></a>
+<a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}Year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" /></a>
 </div>
 
 {if $prefs.feature_jscalendar eq 'y'}
@@ -35,28 +35,28 @@
 
 <div class="calnavigation">
 {if $viewmode eq "day"}
-<a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}day{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$dayafter}" title="{tr}day{/tr} &raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$dayafter}" title="{tr}Day{/tr} &raquo;" class="next">&raquo;</a>
 {$viewstart|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "week"}
-<a href="{$myurl}?todate={$weekbefore}" title="&laquo; {tr}week{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$weekafter}" title="{tr}week{/tr} &raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$weekbefore}" title="&laquo; {tr}Week{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$weekafter}" title="{tr}Week{/tr} &raquo;" class="next">&raquo;</a>
 {$viewstart|tiki_date_format:"%B %e"} - {$viewend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "month"}
-<a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}month{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$monthafter}" title="{tr}month{/tr}&raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}Month{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$monthafter}" title="{tr}Month{/tr}&raquo;" class="next">&raquo;</a>
 {$daystart|tiki_date_format:"%B"}
 {elseif $viewmode eq "quarter"}
-<a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}quarter{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$quarterafter}" title="{tr}quarter{/tr} &raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}Quarter{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$quarterafter}" title="{tr}Quarter{/tr} &raquo;" class="next">&raquo;</a>
 {$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "semester"}
-<a href="{$myurl}?todate={$semesterbefore}" title="&laquo; {tr}semester{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$semesterafter}" title="{tr}semester{/tr} &raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$semesterbefore}" title="&laquo; {tr}Semester{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$semesterafter}" title="{tr}Semester{/tr} &raquo;" class="next">&raquo;</a>
 {$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
 {elseif $viewmode eq "year"}
-<a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}year{/tr}" class="prev">&laquo;</a>
-<a href="{$myurl}?todate={$yearafter}" title="{tr}year{/tr} &raquo;" class="next">&raquo;</a>
+<a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}Year{/tr}" class="prev">&laquo;</a>
+<a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next">&raquo;</a>
 {$daystart|tiki_date_format:"%Y"}
 {/if}
 </div>

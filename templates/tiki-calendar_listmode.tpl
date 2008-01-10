@@ -9,11 +9,11 @@
 {section name=w loop=$listevents}
 <tr class="{cycle}{if $listevents[w].start <= $smarty.now and $listevents[w].end >= $smarty.now} selected{/if} vevent">
 <td>
-<a href="{$myurl}?todate={$listevents[w].start}" title="{tr}change focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
+<a href="{$myurl}?todate={$listevents[w].start}" title="{tr}Change Focus{/tr}">{$listevents[w].start|tiki_short_date}</a><br />
 {$listevents[w].start|tiki_short_time}
 </td>
 <td>
-{if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<a href="{$myurl}?todate={$listevents[w].end}" title="{tr}change focus{/tr}">{$listevents[w].end|tiki_short_date}</a>{/if}<br />
+{if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<a href="{$myurl}?todate={$listevents[w].end}" title="{tr}Change Focus{/tr}">{$listevents[w].end|tiki_short_date}</a>{/if}<br />
 {if $listevents[w].start ne $listevents[w].end}{$listevents[w].end|tiki_short_time}{/if}
 </td>
 <td>

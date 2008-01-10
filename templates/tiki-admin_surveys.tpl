@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.32.2.2 2007-12-11 18:19:52 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_surveys.tpl,v 1.32.2.3 2008-01-10 18:00:00 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
@@ -106,7 +106,7 @@
    <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='pics/icons/help.png' alt='{tr}question{/tr}' border='0' title='{tr}Questions{/tr}' width='16' height='16' /></a>
    <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
    {if $channels[user].individual eq 'y'}
-	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='pics/icons/key_active.png' alt='{tr}active perms{/tr}' border='0' title='{tr}active perms{/tr}' width='16' height='16' /></a>
+	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' border='0' title='{tr}Active Perms{/tr}' width='16' height='16' /></a>
    {else}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src="pics/icons/key.png" border="0" width="16" height="16" alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
    {/if}

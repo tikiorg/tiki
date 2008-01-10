@@ -102,7 +102,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			$leday_item['action']++;
 
 			$leday_item['name'] = $lte['name'].' (x<b>'.$leday_item['action'].'</b>)';
-			$leday_item['desc_name'] = $leday_item['action'].' '.tra('actions');
+			$leday_item['desc_name'] = $leday_item['action'].' '.tra('Actions');
 
 			if ( $lte['show_description'] == 'y' && ! empty($lte['description']) ) {
 				$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
