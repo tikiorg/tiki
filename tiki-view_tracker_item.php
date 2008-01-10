@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.7 2008-01-10 22:29:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.8 2008-01-10 23:09:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ($prefs['feature_trackers'] != 'y') {
 
 $special = false;
 
-if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y') {
+if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user'])) {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		$utid = $userlib->get_usertrackerid($group);
 		if($utid['usersTrackerId']) {
@@ -79,12 +79,23 @@ if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 }
 $smarty->assign_by_ref('special', $special);
 
-//url to a user user tracker tiki-view_tracker_item.php?group=xxxx&user=yyyyy&view=+user
-if ($prefs['userTracker'] == 'y' && isset($_REQUEST['group']) && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && isset($_REQUEST['user'])) {
-	$utid = $userlib->get_usertrackerid($_REQUEST['group']);
-	if (!empty($utid['usersTrackerId'])) {
-		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
-		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$_REQUEST['user']);
+//url to a user user tracker tiki-view_tracker_item.php?user=yyyyy&view=+user or tiki-view_tracker_item.php?greoup=yyy&user=yyyyy&view=+user or tiki-view_tracker_item.php?trackerId=xxx&user=yyyyy&view=+user
+if ($prefs['userTracker'] == 'y' && isset($_REQUEST['view']) && $_REQUEST['view'] = ' user' && !empty($_REQUEST['user'])) {
+	if (empty($_REQUEST['trackerId']) && empty($_REQUEST['group'])) {
+		$_REQUEST['group'] = $userlib->get_user_default_group($_REQUEST['user']);
+	}
+	if (empty($_REQUEST['trackerId']) && !empty($_REQUEST['group'])) {
+		$utid = $userlib->get_usertrackerid($_REQUEST['group']);
+		if (!empty($utid['usersTrackerId']) && !empty($utid['usersFieldId'])) {
+			$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+			$fieldId = $utid['usersFieldId'];
+		}
+	}
+	if (!empty($_REQUEST['trackerId']) && empty($fieldId)) {
+		$fieldId = $trklib->get_field_id_from_type($_REQUEST['trackerId'], 'u', '1%');
+	}
+	if (!empty($_REQUEST['trackerId']) && !empty($fieldId)) {
+		$_REQUEST['itemId'] = $trklib->get_item_id($_REQUEST['trackerId'], $fieldId, $_REQUEST['user']);
 	}
 }
 
