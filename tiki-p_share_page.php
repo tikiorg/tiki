@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-p_share_page.php,v 1.1 2007-07-19 20:55:17 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-p_share_page.php,v 1.1.2.1 2008-01-10 20:44:40 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,8 +16,7 @@ include_once ('lib/tree/categ_browse_tree.php');
 include_once ('lib/sharelib.php');
 
 // Basic validation {{{
-
-if ($tiki_p_share_page != 'y') {
+if ($tiki_p_assign_perm_wiki_page != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
