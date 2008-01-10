@@ -82,22 +82,30 @@
 		<p>{tr}Enter the name of the page for which the current page is the translation.{/tr}</p>
 		{tr}Translation of:{/tr}&nbsp;
 	{/if}
-{/if}		
+{/if}
+{if $trads|@count > 0}
+	<p>{tr}Add existing page to the set of translations.{/tr}</p>
+{/if}
 {if $articles}
 	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {else}
 	<select name="srcName">{section name=ix loop=$pages}{if !empty($pages[ix].lang) and $pages[ix].lang ne $langpage}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {/if}
 &nbsp;
-{if $trads|@count <= 1}
-	<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
-{else}
-	<input type="submit" class="wikiaction" name="set" value="{tr}Add to the Set{/tr}"/>
-{/if}
+<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
 {/if}
 
-{if !$articles}
-{tr}or create a new page{/tr} <input type="text" name="newpage" id="newpage" value="" /> <a href="#" onclick="document.location='tiki-editpage.php?page='+document.getElementById('newpage').value;return false;">{tr}Create{/tr}</a>
-{/if}
-
+</form>
+<form method="get" action="tiki-editpage.php">
+	<p>{tr}Create a new translation of this page.{/tr}
+	<br/>{tr}Language: {/tr}
+		<select name="lang" size="1">
+			{section name=ix loop=$languages}
+			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
+			<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
+			{/if}
+			{/section}
+		</select>
+	<br/>{tr}Page name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<input type="submit" value="{tr}Edit page{/tr}"/></p>
 </form>
