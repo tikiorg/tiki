@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.4 2007-12-01 15:33:25 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.5 2008-01-10 20:44:40 pkdille Exp $ *}
 
 {strip}
 <hr/>
@@ -47,7 +47,7 @@
 {if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
 {/if}
-{if $tiki_p_share_page eq 'y'}
+{if $tiki_p_assign_perm_wiki_page eq 'y'}
 <span class="button2"><a href="tiki-p_share_page.php?objectId={$page|escape:"url"}&amp;objectType=wiki+page" class="linkbut">{tr}Share Page{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
