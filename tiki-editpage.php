@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.21 2007-12-17 19:07:24 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.22 2008-01-10 15:17:16 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -768,6 +768,22 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       if ($prefs['wiki_watch_author'] == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
+
+		if( $prefs['feature_multilingual'] == 'y'
+		 && isset( $_REQUEST['translationOf']  )
+		 && ! empty( $_REQUEST['translationOf'] )
+		 && ! empty( $pageLang ) )
+		{
+			include_once("lib/multilingual/multilinguallib.php");
+			$infoSource = $tikilib->get_page_info($_REQUEST['translationOf']);
+			$infoCurrent = $tikilib->get_page_info($_REQUEST['page']);
+			if ($multilinguallib->insertTranslation('wiki page', $infoSource['page_id'], $infoSource['lang'], $infoCurrent['page_id'], $pageLang)){
+				$pageLang = $info['lang'];
+				$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
     } else {
       $links = $tikilib->get_links($edit);
       /*
@@ -850,6 +866,10 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
+
+	if( isset( $_REQUEST['translationOf'] ) ) {
+		$smarty->assign( 'translationOf', $_REQUEST['translationOf'] );
+	}
 }
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
