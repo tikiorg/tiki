@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.66 2008-01-05 22:25:38 lphuberdeau Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.67 2008-01-10 16:36:40 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4128,8 +4128,8 @@ function add_pageview() {
 				$prefs[$name] = $value;
 				$_SESSION['s_prefs'][$name] = $value;
 			}
-			$prefs['lastUpdatePrefs'] = $this->now;
-			$_SESSION['s_prefs']['lastUpdatePrefs'] = $this->now;
+			++$prefs['lastUpdatePrefs'];
+			$_SESSION['s_prefs']['lastUpdatePrefs'] = $prefs['lastUpdatePrefs'];
 		}
 		return true;
     }
