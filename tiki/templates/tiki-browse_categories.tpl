@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.4 2007-12-11 13:05:38 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.5 2008-01-11 14:04:50 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -132,7 +132,7 @@
               {tr}Type{/tr}
             </th>
             {if $deep eq 'on'}
-              <th>
+              <th class="heading">
                 {tr}Category{/tr}
               </th>
             {/if}
