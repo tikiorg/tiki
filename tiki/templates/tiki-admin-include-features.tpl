@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.5 2007-12-07 15:40:23 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.6 2008-01-11 22:11:43 pkdille Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -144,7 +144,7 @@
 {tr}Mail-in{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td class="form"> <a href="tiki-admin.php?page=theme"> {tr}Tiki Template Viewing{/tr} </a></td>
+    <td class="form"> <a href="tiki-admin.php?page=look"> {tr}Tiki Template Viewing{/tr} </a></td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_integrator" {if $prefs.feature_integrator eq 'y'}checked="checked"{/if}/></td>
@@ -159,7 +159,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=JsCalendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JsCalendar{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td class="form"> <a href="tiki-admin.php?page=theme">{tr}Use Tabs{/tr}</a> </td>
+    <td class="form"> <a href="tiki-admin.php?page=look">{tr}Use Tabs{/tr}</a> </td>
     </tr>
   <tr>
     <td><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></td>
@@ -335,7 +335,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     </tr>
   <tr>
     <td>&nbsp;</td>
-    <td class="form"> <a href="tiki-admin.php?page=theme">{tr}Theme Control{/tr}</a></td>
+    <td class="form"> <a href="tiki-admin.php?page=look">{tr}Theme Control{/tr}</a></td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_xmlrpc"
             {if $prefs.feature_xmlrpc eq 'y'}checked="checked"{/if}/></td>
