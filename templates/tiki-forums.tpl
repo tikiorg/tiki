@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.2 2007-11-26 21:00:19 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.3 2008-01-11 15:47:49 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -68,13 +68,17 @@
   <tr><td class="third" colspan="6"><div align="center">{$section}</div></td></tr>
 {/if}
 <tr>
+<td class="{cycle advance=false}"><span style="float:left">
 {if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-<td class="{cycle advance=false}"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
+<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
 {else}
-<td class="{cycle advance=false}">{$channels[user].name}
+{$channels[user].name}
 {/if}
+</span>
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+<span style="float:right">
 <a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
+</span>
 {/if}{if $prefs.forum_list_desc eq 'y'}<br />
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>

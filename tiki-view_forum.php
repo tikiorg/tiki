@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.6 2008-01-08 16:01:38 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.7 2008-01-11 15:47:48 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -620,7 +620,11 @@ if (!isset($_REQUEST['time_control']))
 $_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
-$view_archived_topics = ( $tiki_p_admin_forum == 'y' || $prefs['feature_forum_topics_archiving'] == 'n' );
+
+$show_archived = isset($_REQUEST['show_archived']);
+$smarty->assign('show_archived', $show_archived);
+$view_archived_topics = ( $show_archived == 'y' && ( $tiki_p_admin_forum == 'y' || $prefs['feature_forum_topics_archiving'] == 'n' ) );
+
 $comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'],
 		$comments_offset, $_REQUEST['comments_per_page'],
 		$_REQUEST['thread_sort_mode'], $view_archived_topics);
