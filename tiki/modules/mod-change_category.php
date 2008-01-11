@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.8 2007-12-10 14:34:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.9 2008-01-11 12:12:29 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 // param: id, shy, notop, detail, categorize,multiple,group,path, add, del
@@ -39,6 +39,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 	global $tiki_p_admin;
 
 	if ($tiki_p_admin != 'y') {
+		$ctg = array();
 		foreach ($categs as $i=>$cat) {
 			if (!$userlib->object_has_one_permission($cat['categId'], 'category') or $userlib->object_has_permission($user, $cat['categId'], 'category', 'tiki_p_view_categories')) {
 				$ctg[] = $cat;
@@ -115,7 +116,8 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 
   $incategs = $categlib->get_object_categories($cat_type, $cat_objid);
 
-  $remainCateg = false;  
+  $remainCateg = false;
+  $modcatlist = array();
   for ($i=0;$i<$num;$i++) {
     $cid = $categs[$i]['categId'];
     $modcatlist[$cid] = $categs[$i];
