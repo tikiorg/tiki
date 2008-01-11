@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.17 2008-01-08 16:01:40 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.18 2008-01-11 21:31:12 pkdille Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1647,7 +1647,7 @@ UPDATE users_grouppermissions set permName='tiki_p_view_categorized' where permN
 # INSERT INTO users_grouppermissions(groupName,permName) values ('Anonymous','tiki_p_view_categories');
 
 #2007-12-07 sylvieg
-ALTER TABLE `tiki_user_assigned_modules` DROP PRIMARY KEY , ADD PRIMARY KEY ( `name` ( 30 ) , `user` , `position` , `ord` )
+ALTER TABLE `tiki_user_assigned_modules` DROP PRIMARY KEY , ADD PRIMARY KEY ( `name` ( 30 ) , `user` , `position` , `ord` );
 
 #2008-01-07 sylvie
 DELETE FROM tiki_preferences WHERE name='freetags_ascii_only';
@@ -1655,3 +1655,5 @@ DELETE FROM tiki_preferences WHERE name='freetags_ascii_only';
 #2008-01-07 nyloth
 ALTER TABLE tiki_comments ADD COLUMN archived CHAR(1) DEFAULT NULL;
 
+#2008-01-11 pkdille
+UPDATE tiki_menu_options set name='Multiple Print' WHERE menuId=42 and type='o' and name='Print' and url='tiki-print_pages.php';
