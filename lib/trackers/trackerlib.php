@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.18 2008-01-03 21:41:46 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.19 2008-01-11 23:09:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -484,6 +484,9 @@ class TrackerLib extends TikiLib {
 
 	function getSqlStatus($status, &$mid, &$bindvars) {
 		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed;
+		if (is_array($status)) {
+			implode('', $status);
+		}
 		if ($tiki_p_view_trackers_pending != 'y')
 			$status = str_replace('p','',$status);
 		if ($tiki_p_view_trackers_closed != 'y')
@@ -507,6 +510,7 @@ class TrackerLib extends TikiLib {
 	 * and the value of each field is either filtervalue or exactvalue
 	 * ex: filterfield=array('1','2', '3'), filtervalue=array(array('this', '*that'), ''), exactvalue('', array('there', 'those'), 'these')
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
+	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
@@ -1503,6 +1507,31 @@ class TrackerLib extends TikiLib {
 		return true;
 	}
 
+	// filter examples: array('fieldId'=>array(1,2,3)) to look for a list of fields
+	// array('or'=>array('isSearchable'=>'y', 'isTplVisible'=>'y')) for fields that are visible ou searchable
+	// array('not'=>array('isHidden'=>'y')) for fields that are not hidden
+	function parse_filter($filter, &$mids, &$bindvars) {
+		foreach ($filter as $type=>$val) {
+			if ($type == 'or') {
+				$midors = array();
+				$this->parse_filter($val, $midors, $bindvars);
+				$mids[] = '('.implode(' or ', $midors).')';
+			} elseif ($type == 'not') {
+				$midors = array();
+				$this->parse_filter($val, $midors, $bindvars);
+				$mids[] = '!('.implode(' and ', $midors).')';
+			} elseif (is_array($val)) {
+				if (count($val) > 0) {
+					$mids[] = "`$type` in (".implode(",",array_fill(0,count($val),'?')).')';
+					$bindvars = array_merge($bindvars, $val);
+				}
+			} else {
+				$mids[] = "`$type`=?";
+				$bindvars[] = $val;
+			}
+		}
+	}
+
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $tra_name=true, $filter='') {
 		global $prefs;
@@ -1516,14 +1545,9 @@ class TrackerLib extends TikiLib {
 		}
 
 		if (!empty($filter)) {
-			foreach ($filter as $type=>$val) {
-				if ($type == 'fields') {
-					if (count($val) > 0) {
-						$mid .= ' and `fieldId` in ('.implode(",",array_fill(0,count($val),'?')).')';
-						$bindvars = array_merge($bindvars, $val);
-					}
-				}
-			}
+			$mids = array();
+			$this->parse_filter($filter, $mids, $bindvars);
+			$mid .= 'and '.implode(' and ', $mids);
 		}
 
 		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);

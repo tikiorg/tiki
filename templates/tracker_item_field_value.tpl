@@ -1,6 +1,6 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.3 2008-01-11 21:55:34 sylvieg Exp $ *}
-{* param: list_mode(y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.4 2008-01-11 23:09:19 sylvieg Exp $ *}
+{* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
 {if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
@@ -49,7 +49,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.type ne 'U'}
-	&nbsp;
+	{if $list_mode ne 'csv'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- test field, numeric, grop down, radio,user/group/IP selector, autopincrement, dynamic list *}
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
@@ -191,8 +191,8 @@
 
 {* -------------------- subscription -------------------- *}
 {elseif $field_value.type eq 'U'}
-	{$field_value.value|how_many_user_inscriptions} {tr}Subscriptions{/tr}
-	{if $list_mode ne 'y'}
+	{$field_value.value|how_many_user_inscriptions}{if $list_mode ne 'csv'} {tr}Subscriptions{/tr}{/if}
+	{if $list_mode eq 'n'}
 	{if $field_value.maxsubscriptions}(max : {$field_value.maxsubscriptions}){/if} :
 	{foreach from=$field_value.users_array name=U_user item=U_user}
 		{$U_user.login|userlink}{if $U_user.friends} (+{$U_user.friends}){/if}{if $smarty.foreach.U_user.last}{else},&nbsp;{$last}{/if}
