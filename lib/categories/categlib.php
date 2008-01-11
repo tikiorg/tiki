@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.12 2007-12-10 21:01:21 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.13 2008-01-11 16:05:55 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -445,7 +445,8 @@ class CategLib extends ObjectLib {
 
 		while ($res = $result->fetchRow()) {
 			if (!in_array($res['catObjectId'].'-'.$res['categId'], $objs)) { // same object and same category
-				if (!$userlib->object_has_one_permission($res['categId'], 'category') 
+				global $tiki_p_admin_categories;
+				if ($tiki_p_admin_categories == 'y' || !$userlib->object_has_one_permission($res['categId'], 'category') 
 					or ($userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categories') and $userlib->object_has_permission($user, $res['categId'], 'category', 'tiki_p_view_categorized'))) {
 			    if (preg_match('/tracker/',$res['type'])&&$res['description']=='') {
 							$trackerId=preg_replace('/^.*trackerId=([0-9]+).*$/','$1',$res['href']);
