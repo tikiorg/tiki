@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.9 2007-12-22 18:52:58 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.10 2008-01-11 23:14:45 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -371,6 +371,12 @@ class WikiLib extends TikiLib {
 	        if ($prefs['feature_score'] == 'y') {
         	    $this->score_event($user, 'wiki_attach_file');
 	        }
+	}
+	function get_wiki_attach_file($page, $name, $type, $size) {
+		$query = 'select * from `tiki_wiki_attachments` where `page`=? and `filename`=? and `filetype`=? and `filesize`=?';
+		$result = $this->query($query, array($page, $name, $type, $size));
+		$res = $result->fetchRow();
+		return $res;
 	}
 
 	function list_wiki_attachments($page, $offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
