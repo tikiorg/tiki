@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.6 2008-01-02 16:09:47 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.7 2008-01-11 22:10:34 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -61,13 +61,14 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr class="{cycle}">
-<td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}" title="{tr}View{/tr}">{$channels[user].name}</a></td>
+<td><a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name}</a></td>
 <td>{$channels[user].description}</td>
 <td>{$channels[user].created|tiki_short_date}</td>
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
 <td class="auto">
-<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
+<a title="{tr}Edit{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
+<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/magnifier.png' alt="{tr}View{/tr}" border='0' width='16' height='16' /></a>
 <a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/table.png' alt="{tr}Fields{/tr}" border='0' width='16' height='16' /></a>
 {if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
 <img src='pics/icons/key_active.png' border='0' alt="{tr}active permissions{/tr}" width='16' height='16' /></a>{else}
@@ -280,14 +281,15 @@ categories = {$catsdump}
 </form>
 
 {if $trackerId}
-<h3>{tr}Import/Export CSV Data{/tr}</h3>
+<h2>{tr}Import/Export CSV Data{/tr}</h2>
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}Download CSV export{/tr}</td>
 <td>{tr}File: {/tr}{tr}Tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
-<br /><input type="radio" name="which" value="list"/> {tr}Fields searchable and visible in items list{/tr}
+<br /><input type="radio" name="which" value="list"/> {tr}Fields searchable or visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
+<br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
