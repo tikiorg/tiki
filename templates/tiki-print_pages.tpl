@@ -87,7 +87,7 @@
 
   <h2>{tr}Add Pages{/tr}</h2>
   <form action="tiki-print_pages.php" method="post">
-    <input type="hidden" name="printstructures" value="{$form_printstructures|escape}" />
+    <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
     <input type="hidden" name="find" value="{$find|escape}" />
     <select name="pageName" size="5">
       {section name=ix loop=$pages}
@@ -99,7 +99,7 @@
       {/section}
     </select>
     <br />
-    <input type="submit" name="addpage" value="{tr}add page{/tr}" />
+    <input type="submit" name="addpage" value="{tr}Add Page{/tr}" />
 
     <h2>{tr}Add Pages from Structures{/tr}</h2>
     <select name="structureId" size="5">
@@ -112,7 +112,7 @@
       {/section}
     </select>
     <br />
-    <input type="submit" name="addstructurepages" value="{tr}add structure pages{/tr}"/>
+    <input type="submit" name="addstructurepages" value="{tr}Add Structure Pages{/tr}"/>
   </form>
 </div>
 
