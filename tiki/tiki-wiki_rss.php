@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.43 2007-10-12 07:55:33 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.43.2.1 2008-01-11 14:16:01 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,7 @@ if ($output["data"]=="EMPTY") {
 		} else {
 			$prev_page = $histlib->get_page_from_history($data["pageName"], $pageversion, true);
 		}
+		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation 
 		$curr_page_p = $tikilib->parse_data($curr_page["$descId"]);
 		$prev_page_p = $tikilib->parse_data($prev_page["$descId"]);
 	
