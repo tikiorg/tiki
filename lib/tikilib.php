@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.67 2008-01-10 16:36:40 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.68 2008-01-11 17:39:06 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5763,8 +5763,7 @@ function add_pageview() {
 
 	    if ($imgdata["link"]) {
 		$imgtarget= '';
-		if ($prefs['popupLinks'] == 'y')
-		{
+		if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['link']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['link']))) {
 		    $imgtarget = ' target="_blank"';
 		}
 		$repl = '<a href="' . $imgdata["link"] .'"' . $imgtarget . '>' . $repl . '</a>';
