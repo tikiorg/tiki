@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.4 2007-12-11 13:05:40 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.5 2008-01-12 16:28:37 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -722,7 +722,7 @@ div.titlebar {
 
 /* The bar where the actions for a page are displayed */
 DIV#page-bar {
-	margin : 0 5px;
+	margin : 0;
 }
 DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	margin: 0;
@@ -747,7 +747,7 @@ DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	border-bottom : 0;
 }
 body .button2 {
-	margin-left : 5px;
+	margin-right : 5px;
 }
 /* Links in buttons */
 .linkbut, .linkbut:visited {
