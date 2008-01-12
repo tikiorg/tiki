@@ -12,10 +12,8 @@
 {if !empty($listfields)}
 ,
 {foreach item=field key=fieldId from=$listfields name=list}
-	{if $field.isHidden ne 'c' or $item.creator eq $user}
-		"{$field.name} -- {$fieldId}"
-		{if !$smarty.foreach.list.last},{/if}
-	{/if}
+	"{$field.name} -- {$fieldId}"
+	{if !$smarty.foreach.list.last},{/if}
 {/foreach}
 {/if}
 {/strip}
@@ -37,8 +35,9 @@
 	{if $field.isHidden ne 'c' or $item.creator eq $user}
 		{*{capture}{include file="tracker_item_field_value.tpl"}{/capture}"{$smarty.capture.line|replace:"\r\n":"%%%"}"*}
 		"{include file="tracker_item_field_value.tpl" list_mode='csv'}"
-		{if !$smarty.foreach.list.last},{/if}
+	{else}""
 	{/if}
+	{if !$smarty.foreach.list.last},{/if}
 {/foreach}
 {/if}
 {/strip}
