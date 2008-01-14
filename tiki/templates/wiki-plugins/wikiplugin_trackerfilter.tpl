@@ -17,6 +17,7 @@
 		<td>
 		{$filters[if].name|tr_if}
 		{if $line ne 'y'}</td><td>{else}:{/if}
+		<input type="hidden" name="x_{$filters[if].fieldId}" value="{$filters[if].format}" />
 {*------drop-down, multiple *}
 		{if $filters[if].format eq 'd' or  $filters[if].format eq 'm'}
 			<select name="f_{$filters[if].fieldId}[]" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
@@ -42,7 +43,9 @@
 		{if $line ne 'y'}</tr>{else} {/if}
 {/section}
 {if $line ne 'y'}<tr>{/if}
-<td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}{$action}{/tr}" /></td>
+{if $action}
+<td>&nbsp;</td><td><input type="submit" name="filter" value="{if empty($action)}{tr}Filter{/tr}{else}{tr}{$action}{/tr}{/if}" /></td>
+{/if}
 </tr>
 </table>
 </form>
