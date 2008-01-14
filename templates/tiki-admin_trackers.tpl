@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.8 2008-01-14 18:51:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.9 2008-01-14 22:31:34 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -291,7 +291,7 @@ categories = {$catsdump}
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 <br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl"}</td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y"}</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
 </form>
