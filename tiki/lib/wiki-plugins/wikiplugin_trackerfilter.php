@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.3 2008-01-06 22:31:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.4 2008-01-14 15:57:00 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -13,13 +13,18 @@ function wikiplugin_trackerfilter($data, $params) {
 	if (isset($_REQUEST['msgTrackerFilter'])) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
+	if (!isset($filters)) {
+		$smarty->assign('msg', tra("missing parameters"));
+		return $dataRes.$smarty->fetch("error_simple.tpl");
+	}
 	$listfields = split(':',$filters);
-	foreach ($listfields as $f) {
+	foreach ($listfields as $i=>$f) {
 		if (strchr($f, '/')) {
 			list($fieldId, $format) = split('/',$f);
+			$listfields[$i] = $fieldId;
 			$formats[$fieldId] = $format;
 		} else {
-			$formats[$f] = 'r'; // radio as default
+			$formats[$f] = '';
 		}
 	}
 	if (!isset($displayList)) {
@@ -67,117 +72,110 @@ function wikiplugin_trackerfilter($data, $params) {
 	} else {
 		$data = '';
 	}
-	if (!isset($filters)) {
-		$smarty->assign('msg', tra("missing parameters"));
-		return $dataRes.$smarty->fetch("error_simple.tpl");
-	}
-	$listfields = split(':',$filters);
 
 	$filters = array();
-	if (!isset($trackerId))
-		$trackerId = 0;
-	foreach ($listfields as $f) {
-	if (strchr($f, '/')) {
-		list($fieldId, $format) = split('/',$f);
- 	} else {
- 		$fieldId = $f;
-		$format = 'r'; // radio as default
-	}
-	$field = $trklib->get_tracker_field($fieldId);
-	if ($trackerId) {
-		if ($field['trackerId'] != $trackerId) {
-			$smarty->assign('msg', tra('All fields must be from the same tracker'));
-			return $dataRes.$smarty->fetch('error_simple.tpl');
-		}
-	} else {
+	if (!isset($trackerId) && !empty($listfields[0])) {
+		$field = $trklib->get_tracker_field($listfields[0]);
 		$trackerId = $field['trackerId'];
 	}
 
-	$selected = false;
-	$opts = array();
-	switch ($field['type']){
-	case 'e': // category
-		global $categlib;
-		include_once('lib/categories/categlib.php');
-		$res = $categlib->get_child_categories($field['options_array'][0]);
-		foreach ($res as $opt) {
-			$opt['id'] = $opt['categId'];
-			if (!empty($_REQUEST['f_'.$fieldId]) && in_array($opt['id'], $_REQUEST['f_'.$fieldId])) {
-				$opt['selected'] = 'y';
-				$selected = true;
-			} else {
-				$opt['selected'] = 'n';
+	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, array('fieldId'=>$listfields));
+
+	foreach ($fields['data'] as $field) {
+		$fieldId = $field['fieldId'];
+		$res = array();
+		if (empty($formats[$fieldId])) { // default format depends on field type
+			switch ($field['type']){
+			case 'e':// category
+				global $categlib; include_once('lib/categories/categlib.php');
+				$res = $categlib->get_child_categories($field['options_array'][0]);
+				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
+				break;
+			case 'd': // drop down list
+				$formats[$fieldId] = 'd';
+				break;
+			case 'R': // radio
+				$formats[$fieldId] = 'r';
+				break;
+			default:
+				$formats[$fieldId] = 't';
+				break;
 			}
-			$opts[] = $opt;
 		}
-		break;
-	case 'd': // drop down list
-		foreach ($field['options_array'] as $val) {
-			$opt['id'] = $val;
-			$opt['name'] = $val;
-			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
-				$opt['selected'] = 'y';
-				$selected = true;
-			} else {
-				$opt['selected'] = 'n';
+		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T')) { // do not accept a format text for a categ for the moment
+			if (empty($res)) {
+				global $categlib; include_once('lib/categories/categlib.php');
+				$res = $categlib->get_child_categories($field['options_array'][0]);
 			}
-			$opts[] = $opt;
+			$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 		}
-		break;
-	case 'R': // radio buttons
-		foreach ($field['options_array'] as $val) {
-			$opt['id'] = $val;
-			$opt['name'] = $val;
-			if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
-				$opt['selected'] = 'y';
-				$selected = true;
-			} else {
-				$opt['selected'] = 'n';
-			}
-			$opts[] = $opt;
-		}
-		break;
-	case 'n': // numeric
-	case 't': // text
-	case 'a': // textarea
-	case 'm': // email
-	case 'y': // country
-	case 'w': //dynamic item lists
-		if ($format == 't') {
-			if (!empty($_REQUEST['f_'.$fieldId])) {
-				$selected = $_REQUEST['f_'.$fieldId];
-			}
+		$opts = array();
+		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T') {
+			$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
 		} else {
-			if (isset($status)) {
-				$res = $trklib->list_tracker_field_values($fieldId, $status);
-			} else {
-				$res = $trklib->list_tracker_field_values($fieldId);
-			}
-			foreach ($res as $val) {
-				$opt['id'] = $val;
-				$opt['name'] = $val;
-				if (!empty($_REQUEST['f_'.$fieldId]) && ($_REQUEST['f_'.$fieldId][0] == $val || in_array($val, $_REQUEST['f_'.$fieldId]))) {
-					$opt['selected'] = 'y';
-					$selected = true;
-				} else {
-					$opt['selected'] = 'n';
+			$selected = false;
+			switch ($field['type']){
+			case 'e': // category
+				if (empty($res)) {
+					global $categlib; include_once('lib/categories/categlib.php');
+					$res = $categlib->get_child_categories($field['options_array'][0]);
 				}
-				$opts[] = $opt;
+				foreach ($res as $opt) {
+					$opt['id'] = $opt['categId'];
+					if (!empty($_REQUEST['f_'.$fieldId]) && in_array($opt['id'], $_REQUEST['f_'.$fieldId])) {
+						$opt['selected'] = 'y';
+						$selected = true;
+					} else {
+						$opt['selected'] = 'n';
+					}
+					$opts[] = $opt;
+				}
+				break;
+			case 'd': // drop down list
+			case 'R': // radio buttons
+				foreach ($field['options_array'] as $val) {
+					$opt['id'] = $val;
+					$opt['name'] = $val;
+					if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
+						$opt['selected'] = 'y';
+						$selected = true;
+					} else {
+						$opt['selected'] = 'n';
+					}
+					$opts[] = $opt;
+				}
+				break;
+			case 'n': // numeric
+			case 'D': // drop down + other
+			case 't': // text
+			case 'a': // textarea
+			case 'm': // email
+			case 'y': // country
+			case 'w': //dynamic item lists
+				if (isset($status)) {
+					$res = $trklib->list_tracker_field_values($fieldId, $status);
+				} else {
+					$res = $trklib->list_tracker_field_values($fieldId);
+				}
+				foreach ($res as $val) {
+					$opt['id'] = $val;
+					$opt['name'] = $val;
+					if (!empty($_REQUEST['f_'.$fieldId]) && ($_REQUEST['f_'.$fieldId][0] == $val || in_array($val, $_REQUEST['f_'.$fieldId]))) {
+						$opt['selected'] = 'y';
+						$selected = true;
+					} else {
+						$opt['selected'] = 'n';
+					}
+					$opts[] = $opt;
+				}
+				break;		
+		
+			default:
+				$smarty->assign('msg', tra("tracker field type not processed yet"));
+				return $dataRes.$smarty->fetch("error_simple.tpl");
 			}
 		}
-		break;		
-		
-	default:
-		$smarty->assign('msg', tra("tracker field type not processed yet"));
-		return $dataRes.$smarty->fetch("error_simple.tpl");
-	}
-
-	if (!isset($action)) {
-		$action = 'Filter';// tra('Filter');
-	}
-	$smarty->assign('action', $action);
-
-	$filters[] = array('name' => $field['name'], 'fieldId' => $field['fieldId'], 'format'=>$format, 'opts' => $opts, 'selected'=>$selected);
+		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected);
 	}
 	$smarty->assign_by_ref('filters', $filters);
 	$smarty->assign_by_ref('trackerId', $trackerId);
@@ -189,8 +187,14 @@ function wikiplugin_trackerfilter($data, $params) {
 	} else {
 		$open = 'n';
 	}
-	$smarty->assign('open', $open);
+	$smarty->assign_by_ref('open', $open);
+	if (!isset($action)) {
+		$action = 'Filter';// tra('Filter');
+	}
+	$smarty->assign_by_ref('action', $action);
+
 	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
+
 	return $data.$dataF.$dataRes;
 }
 ?>
