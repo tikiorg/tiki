@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.4 2008-01-11 23:09:19 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.5 2008-01-14 20:50:21 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
 {if $field_value.type ne 'x'}
@@ -32,8 +32,10 @@
 {* -------------------- items list -------------------- *}
 {elseif $field_value.type eq 'l'}
 	{foreach key=tid item=tlabel from=$field_value.links}
-		{if $field_value.options_array[4] eq '1'}
+		{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'}
 			<div><a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}&amp;show=view" class="link">{$tlabel|truncate:255:"..."}</a></div>
+		{elseif $list_mode eq 'csv'}
+			{$tlabel}
 		{else}
 			<div>{$tlabel|truncate:255:"..."}</div>
 	{/if}
