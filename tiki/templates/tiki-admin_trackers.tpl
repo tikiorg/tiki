@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.9 2008-01-14 22:31:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.10 2008-01-14 23:36:01 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -286,7 +286,8 @@ categories = {$catsdump}
 <table class="normal">
 <tr class="formcolor"><td>{tr}Download CSV export{/tr}</td>
 <td>{tr}File: {/tr}{tr}Tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
-<br /><input type="radio" name="which" value="list"/> {tr}Fields searchable or visible in items list{/tr}
+<br /><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
+<br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 <br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
