@@ -1,13 +1,13 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.4 2008-01-14 15:57:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.5 2008-01-14 16:21:04 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
-	global $smarty, $prefs, $trklib;
-	include_once('lib/trackers/trackerlib.php');
+	global $smarty, $prefs, $tiki_p_admin_trackers;
+	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	if (isset($_REQUEST['msgTrackerFilter'])) {
@@ -82,6 +82,9 @@ function wikiplugin_trackerfilter($data, $params) {
 	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, array('fieldId'=>$listfields));
 
 	foreach ($fields['data'] as $field) {
+		if (($field['isHidden'] == 'y' && $tiki_p_admin_trackers != 'y') || $field['isHidden'] == 'c') {
+			continue;
+		}
 		$fieldId = $field['fieldId'];
 		$res = array();
 		if (empty($formats[$fieldId])) { // default format depends on field type
