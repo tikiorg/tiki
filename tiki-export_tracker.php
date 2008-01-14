@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.3 2008-01-11 23:09:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.4 2008-01-14 18:51:02 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,12 +68,24 @@ if (!isset($_REQUEST['status'])) {
 if (!isset($_REQUEST['initial'])) {
 	$_REQUEST['initial'] = '';
 }
-$filterfield = '';
-$filtervalue = '';
-$exacvalue = '';
+$filterFields = '';
+$values = '';
+$exactValues = '';
+foreach ($_REQUEST as $key =>$val) {
+	if (substr($key, 0, 2) == 'f_' && $val[0] != '') {
+		$fieldId = substr($key, 2);
+		$filterFields[] = $fieldId;
+		if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't' ) {
+			$exactValues[] = '';
+			$values[] = $val;
+		} else {
+			$exactValues[] = $val;
+			$values[] = '';
+		}
+	}
+}
 
-
-$items = $trklib->list_items($_REQUEST['trackerId'], 0, -1, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST['status'], $_REQUEST['initial'], $exactvalue);
+$items = $trklib->list_items($_REQUEST['trackerId'], 0, -1, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues);
 // still need to filter the fields that are view only by the admin and the item creator
 $smarty->assign_by_ref('items', $items["data"]);
 $smarty->assign_by_ref('item_count', $items['cant']);

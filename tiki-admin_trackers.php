@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.4 2007-12-12 14:36:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.5 2008-01-14 18:51:02 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -403,6 +403,10 @@ if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 	$cookietab = '2';
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+	$smarty->assign('action', '');
+	include_once('lib/wiki-plugins/wikiplugin_trackerfilter.php');
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
+	$smarty->assign_by_ref('filters', $filters);
 }
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
 foreach ($dstatus as $ds) {

@@ -1,13 +1,16 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.5 2008-01-14 16:21:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.6 2008-01-14 18:51:01 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
-	global $smarty, $prefs, $tiki_p_admin_trackers;
+	global $smarty, $prefs;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
+	if ($prefs['feature_trackers'] != 'y') {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
+	}
 	extract($params, EXTR_SKIP);
 	$dataRes = '';
 	if (isset($_REQUEST['msgTrackerFilter'])) {
@@ -37,7 +40,7 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	if ($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
-		if ($prefs['feature_trackers'] != 'y' || empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		if (empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 			return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 		}
 		if (!isset($fields)) {
@@ -48,7 +51,7 @@ function wikiplugin_trackerfilter($data, $params) {
 			if (substr($key, 0, 2) == 'f_' && $val[0] != '') {
 				$fieldId = substr($key, 2);
 				$ffs[] = $fieldId;
-				if ($formats[$fieldId] == 't') {
+				if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't') {
 					$exactValues[] = '';
 					$values[] = $val;
 				} else {
@@ -73,16 +76,43 @@ function wikiplugin_trackerfilter($data, $params) {
 		$data = '';
 	}
 
+	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats);
+	$smarty->assign_by_ref('filters', $filters);
+	$smarty->assign_by_ref('trackerId', $trackerId);
+	$smarty->assign_by_ref('line', $line);
+	static $iTrackerFilter = 0;
+	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
+	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
+		$open = 'y';
+	} else {
+		$open = 'n';
+	}
+	$smarty->assign_by_ref('open', $open);
+	if (!isset($action)) {
+		$action = 'Filter';//tra('Filter')
+	}
+	$smarty->assign_by_ref('action', $action);
+
+	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
+	return $data.$dataF.$dataRes;
+}
+
+function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $formats='') {
+	global $tiki_p_admin_trackers;
+	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	$filters = array();
-	if (!isset($trackerId) && !empty($listfields[0])) {
+	if (empty($trackerId) && !empty($listfields[0])) {
 		$field = $trklib->get_tracker_field($listfields[0]);
 		$trackerId = $field['trackerId'];
 	}
 
-	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, array('fieldId'=>$listfields));
+	$fields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, empty($listfields)?'': array('fieldId'=>$listfields));
 
 	foreach ($fields['data'] as $field) {
-		if (($field['isHidden'] == 'y' && $tiki_p_admin_trackers != 'y') || $field['isHidden'] == 'c') {
+		if (($field['isHidden'] == 'y' || $field['isHidden'] == 'c') && $tiki_p_admin_trackers != 'y') {
+			continue;
+		}
+		if ($field['type'] == 'i' || $field['type'] == 'h' || $field['type'] == 'G') {
 			continue;
 		}
 		$fieldId = $field['fieldId'];
@@ -180,24 +210,6 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected);
 	}
-	$smarty->assign_by_ref('filters', $filters);
-	$smarty->assign_by_ref('trackerId', $trackerId);
-	$smarty->assign_by_ref('line', $line);
-	static $iTrackerFilter = 0;
-	$smarty->assign('iTrackerFilter', $iTrackerFilter++);
-	if ($displayList == 'n' || !empty($_REQUEST['filter'])) {
-		$open = 'y';
-	} else {
-		$open = 'n';
-	}
-	$smarty->assign_by_ref('open', $open);
-	if (!isset($action)) {
-		$action = 'Filter';// tra('Filter');
-	}
-	$smarty->assign_by_ref('action', $action);
-
-	$dataF = $smarty->fetch('wiki-plugins/wikiplugin_trackerfilter.tpl');
-
-	return $data.$dataF.$dataRes;
+	return $filters;
 }
 ?>
