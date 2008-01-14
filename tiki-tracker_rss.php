@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12.2.2 2008-01-06 15:24:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tracker_rss.php,v 1.12.2.3 2008-01-14 12:44:11 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,11 +68,11 @@ if ($output["data"]=="EMPTY") {
 		$aux_subject = null;
 		foreach ($data["field_values"] as $data2) {
 			if (isset($data2["name"])) {
-				if ($data2["type"] != "e") {
-					if ($data2['type'] == 'a') $data2['value'] = $data2['pvalue'];
-					if ($data2["value"] == "") $data2["value"] = "(".tra('empty').")";
-					$data[$descId] .= $data2["name"].": ".$data2["value"]."<br />";
-				}
+				$smarty->assign_by_ref('field_value', $data2);
+				$smarty->assign_by_ref('item', $data);
+				$data2['value'] = $smarty->fetch('tracker_item_field_value.tpl');
+				if ($data2["value"] == "") $data2["value"] = "(".tra('empty').")";
+				$data[$descId] .= $data2["name"].": ".$data2["value"]."<br />";
 				$field_name_check = strtolower($data2["name"]);
 				if ($field_name_check=="subject") {
 					$aux_subject = " - ".$data2["value"];
