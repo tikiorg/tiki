@@ -12,7 +12,7 @@
 {if !empty($listfields)}
 ,
 {foreach item=field key=fieldId from=$listfields name=list}
-	"{$field.name} -- {$fieldId}"{$field.isHidden}
+	"{$field.name} -- {$fieldId}"
 	{if !$smarty.foreach.list.last},{/if}
 {/foreach}
 {/if}
@@ -32,8 +32,8 @@
 {if !empty($listfields)}
 ,
 {foreach item=field_value from=$item.field_values name=list}
-	{if $field_value.isHidden ne 'c' or $item.creator eq $user}
-		{capture name="line"}{include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}{/capture}"{$smarty.capture.line|replace:"\r\n":"%%%"|replace:"<br />":"%%%"}"
+	{if $field_value.isHidden ne 'c' or $item.creator eq $user or $tiki_p_admin_trackers eq 'y'}
+		{capture name="line"}{include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}{/capture}"{$smarty.capture.line|replace:"\r\n":"%%%"|replace:"\n":"%%%"|replace:"<br />":"%%%"}"
 	{else}
 		""
 	{/if}

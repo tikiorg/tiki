@@ -1,5 +1,5 @@
 {strip}
-{*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)) *}
+{*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
 {if $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
@@ -16,6 +16,7 @@
 	{if $line ne 'y'}<tr class="{cycle}">{/if}
 		<td>
 		{$filters[if].name|tr_if}
+		{if $showFieldId eq 'y'} -- {$filters[if].fieldId}{/if}
 		{if $line ne 'y'}</td><td>{else}:{/if}
 		<input type="hidden" name="x_{$filters[if].fieldId}" value="{$filters[if].format}" />
 {*------drop-down, multiple *}
