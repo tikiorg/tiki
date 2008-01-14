@@ -33,8 +33,7 @@
 ,
 {foreach item=field_value from=$item.field_values name=list}
 	{if $field_value.isHidden ne 'c' or $item.creator eq $user}
-		{*{capture}{include file="tracker_item_field_value.tpl"}{/capture}"{$smarty.capture.line|replace:"\r\n":"%%%"}"*}
-		"{include file="tracker_item_field_value.tpl" list_mode='csv'}"
+		{capture name="line"}{include file="tracker_item_field_value.tpl" list_mode='csv'}{/capture}"{$smarty.capture.line|replace:"\r\n":"%%%"|replace:"<br />":"%%%"}"
 	{else}
 		""
 	{/if}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.6 2008-01-14 18:51:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.7 2008-01-14 20:10:46 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -48,7 +48,7 @@ function wikiplugin_trackerfilter($data, $params) {
 			return $msg;
 		}
 		foreach ($_REQUEST as $key =>$val) {
-			if (substr($key, 0, 2) == 'f_' && $val[0] != '') {
+			if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
 				$fieldId = substr($key, 2);
 				$ffs[] = $fieldId;
 				if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't') {
@@ -69,6 +69,7 @@ function wikiplugin_trackerfilter($data, $params) {
 			$params['exactvalue'] = $exactValues;
 			$params['filtervalue'] = $values;
 		}
+		//echo '<pre>'; print_r($params);echo '</pre>';
 		include_once('lib/wiki-plugins/wikiplugin_trackerlist.php');
 		$dataRes .= wikiplugin_trackerlist($data, $params);
 		$dataRes .= '<br />';
@@ -155,7 +156,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				}
 				foreach ($res as $opt) {
 					$opt['id'] = $opt['categId'];
-					if (!empty($_REQUEST['f_'.$fieldId]) && in_array($opt['id'], $_REQUEST['f_'.$fieldId])) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((is_array($_REQUEST['f_'.$fieldId]) && in_array($opt['id'], $_REQUEST['f_'.$fieldId])) || (!is_array($_REQUEST['f_'.$fieldId]) && $opt['id'] == $_REQUEST['f_'.$fieldId]))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {
@@ -193,7 +194,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				foreach ($res as $val) {
 					$opt['id'] = $val;
 					$opt['name'] = $val;
-					if (!empty($_REQUEST['f_'.$fieldId]) && ($_REQUEST['f_'.$fieldId][0] == $val || in_array($val, $_REQUEST['f_'.$fieldId]))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {

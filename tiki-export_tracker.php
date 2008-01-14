@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.4 2008-01-14 18:51:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.5 2008-01-14 20:10:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,7 +72,7 @@ $filterFields = '';
 $values = '';
 $exactValues = '';
 foreach ($_REQUEST as $key =>$val) {
-	if (substr($key, 0, 2) == 'f_' && $val[0] != '') {
+	if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
 		$fieldId = substr($key, 2);
 		$filterFields[] = $fieldId;
 		if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't' ) {

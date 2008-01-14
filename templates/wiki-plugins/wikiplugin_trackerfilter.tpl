@@ -20,7 +20,7 @@
 		<input type="hidden" name="x_{$filters[if].fieldId}" value="{$filters[if].format}" />
 {*------drop-down, multiple *}
 		{if $filters[if].format eq 'd' or  $filters[if].format eq 'm'}
-			<select name="f_{$filters[if].fieldId}[]" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
+			<select name="f_{$filters[if].fieldId}{if $filters[if].format eq "m"}[]{/if}" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
 			<option value=""{if !$filters[if].selected} selected="selected"{/if}>{tr}Any{/tr}</option>
 			{section name=io loop=$filters[if].opts}
 				<option value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} selected="selected"{/if}>
@@ -32,11 +32,11 @@
 {*------text *} 
 		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T'}
 			<input type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
-{*------checkbox *}
+{*------checkbox, radio *}
 		{else}
-			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
+			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
 			{section name=io loop=$filters[if].opts}
-				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}[]" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input>{if $line ne 'y'}<br />{/if}
+				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input>{if $line ne 'y'}<br />{/if}
 			{/section}
 		{/if}
 		</td>
