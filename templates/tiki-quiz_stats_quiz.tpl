@@ -62,7 +62,7 @@ Set the names of the table headings to reflect the names of the db
 {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
-<td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>
+<td class="odd">{if $channels[user].ispassing}{tr}Passed{/tr}{else}{tr}Failed{/tr}{/if}</td>
 {else}
 <tr>
 <td class="even">{$channels[user].user|userlink}</td>
@@ -73,7 +73,7 @@ Set the names of the table headings to reflect the names of the db
 {if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
-<td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>
+<td class="odd">{if $channels[user].ispassing}{tr}Passed{/tr}{else}{tr}Failed{/tr}{/if}</td>
 {/if}
 </tr>
 {/section}
