@@ -1,8 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5.2.1 2008-01-15 21:06:59 nkoth Exp $
 
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) != FALSE) { header('location: index.php'); exit; }
 
+global $parsemode_setup;
+$parsemode_setup = 'y';
 $is_html = false;
 if ($prefs['feature_wysiwyg'] == 'y') {
 	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $prefs['wysiwyg_optional'] == 'y') or ($prefs['wysiwyg_optional'] == 'n' or ($prefs['wysiwyg_default'] == 'y' and !isset($_REQUEST['wysiwyg'])))) {
