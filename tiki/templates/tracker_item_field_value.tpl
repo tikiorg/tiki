@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.6 2008-01-15 17:58:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.7 2008-01-15 19:23:10 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
 {if $field_value.type ne 'x'}
@@ -224,6 +224,7 @@
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	{if $prefs.feature_gmap eq 'y'}
+{/strip}
 	Google Map : X = {$field_value.x} ; Y = {$field_value.y} ; Zoom = {$field_value.z}
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}" type="text/javascript">
 	</script>
@@ -254,6 +255,7 @@
 	//]]>
 	window.onload=load;
 	</script>
+{strip}
 	{else}
 	  {tr}Google Maps is not enabled.{/tr}
 	{/if}
