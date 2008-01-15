@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.19 2008-01-13 19:36:09 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.20 2008-01-15 08:26:08 pkdille Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1660,3 +1660,6 @@ UPDATE tiki_menu_options set name='Multiple Print' WHERE menuId=42 and type='o' 
 
 #2008-01-13 sylvieg
 INSERT INTO users_objectpermissions (groupName, permName,objectType, objectId)  select groupName, 'tiki_p_view_categorized', objectType , objectId FROM users_objectpermissions where permName='tiki_p_view_categories';
+
+#2008-01-15 pkdille
+UPDATE tiki_menu_options set section='lang_use_db', perm='tiki_p_edit_languages' WHERE menuId=42 and type='o' and name='Edit languages' and url='tiki-edit_languages.php';
