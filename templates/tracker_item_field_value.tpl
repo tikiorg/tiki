@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.5 2008-01-14 20:50:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.6 2008-01-15 17:58:08 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item *}
 
 {if $field_value.type ne 'x'}
@@ -64,7 +64,11 @@
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
 	{if $field_value.value ne ''}
-		<img border="0" src="{$field_value.value}"  width="{$field_value.options_array[0]}" height="{$field_value.options_array[1]}" alt="n/a" />
+		{if $list_mode ne 'n'}
+			<img border="0" src="{$field_value.value}"  width="{$field_value.options_array[0]}" height="{$field_value.options_array[1]}" alt="n/a" />
+		{else}
+			<img border="0" src="{$field_value.value}"  width="{$field_value.options_array[2]}" height="{$field_value.options_array[3]}" alt="n/a" />
+		{/if}
 	{else}
 		<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 	{/if}
