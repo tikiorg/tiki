@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.7 2007-12-24 14:59:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.8 2008-01-15 22:47:28 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -212,7 +212,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 	} 
 
-	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')) {
+	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 		if ($fields["data"][$i]["type"] == 'f') { // date and time

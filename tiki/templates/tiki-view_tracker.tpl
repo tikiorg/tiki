@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.21 2008-01-06 12:41:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.22 2008-01-15 22:47:28 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -113,7 +113,7 @@ class="prevnext">{tr}All{/tr}</a>
 		</a>
 	</td>
 	{assign var=rateFieldId value=$fields[ix].fieldId}
-{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'c' or $tiki_p_admin_trackers eq 'y')}
+{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y')}
 <td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
 {/if}
@@ -438,7 +438,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {assign var=fid value=$fields[ix].fieldId}
 
 {* -------------------- header and others -------------------- *}
-{if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq '-'  or $tiki_p_admin_trackers eq 'y'}
+{if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
 {if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q' and (($fields[ix].type ne 'u' and $fields[ix].type ne 'g' and $fields[ix].type ne 'I') or !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y')}
 {if $fields[ix].type eq 'h'}
 </table>
