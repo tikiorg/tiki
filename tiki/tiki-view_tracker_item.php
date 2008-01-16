@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.8 2008-01-10 23:09:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.9 2008-01-16 15:50:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,7 +196,7 @@ if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
   }
   $sql_value.=$sql_value2?substr($sql_value2,0,strlen($sql_value2)-1):"";
   
-  $xfield = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array('fields'=>array($U_fieldId)));
+  $xfield = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '', true, array('fieldId'=>array($U_fieldId)));
   $xfield['data'][0]['value'] = $sql_value;
   $trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $xfield);
  }
