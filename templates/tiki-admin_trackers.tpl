@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.11 2008-01-16 19:17:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.12 2008-01-16 21:53:41 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -281,25 +281,31 @@ categories = {$catsdump}
 </form>
 
 {if $trackerId}
-<h2>{tr}Import/Export CSV Data{/tr}</h2>
+<h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Download CSV export{/tr}</td>
-<td>{tr}File: {/tr}{tr}Tracker{/tr}_{$trackerId}.csv<br />{tr}Charset encoding:{/tr} <select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select>
-<br /><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
+<tr class="formcolor"><td>{tr}File{/tr}</td><td>{tr}Tracker{/tr}_{$trackerId}.csv</td></tr>
+<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td></tr>
+<tr class="formcolor"><td></td><td><input name="showItemId" type="checkbox" checked="checked" />itemId
+<br /><input type="checkbox" name="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if}>{tr}status{/tr}
+<br /><input type="checkbox" name="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if}>{tr}created{/tr}
+<br /><input type="checkbox" name="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if}>{tr}lastModif{/tr}
+<br /><input type="checkbox" name="parse" checked="checked">{tr}Parse{/tr}</td></tr>
+<tr class="formcolor"><td>{tr}Fields{/tr}</td><td><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
 <br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 <br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y"}</td></tr>
+<tr class="formcolor"><td>{tr}Filter{/tr}</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y"}</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
 </form>
 
+<h2>{tr}Import CSV data{/tr}</h2>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}Import CSV file{/tr}</td><td><input name="importfile" type="file" /></td></tr>
+<tr class="formcolor"><td>{tr}File{/tr}</td><td><input name="importfile" type="file" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
