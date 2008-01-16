@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.10 2008-01-14 23:36:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.11 2008-01-16 19:17:45 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -67,7 +67,7 @@
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
 <td class="auto">
-<a title="{tr}Edit{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
+<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
 <a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/magnifier.png' alt="{tr}View{/tr}" border='0' width='16' height='16' /></a>
 <a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/table.png' alt="{tr}Fields{/tr}" border='0' width='16' height='16' /></a>
 {if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
