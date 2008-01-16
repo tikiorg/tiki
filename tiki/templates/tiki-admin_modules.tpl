@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.12 2008-01-16 02:40:53 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.13 2008-01-16 11:15:41 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
@@ -217,7 +217,7 @@
 <tr><td class="form">{tr}Data{/tr}</td><td>
 
 
-<textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:99%">{$um_data|escape}</textarea>
+<textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data|escape}</textarea>
 
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
