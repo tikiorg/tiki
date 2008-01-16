@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.6 2008-01-14 23:36:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.7 2008-01-16 21:53:41 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,22 +86,66 @@ foreach ($_REQUEST as $key =>$val) {
 		}
 	}
 }
-
-$items = $trklib->list_items($_REQUEST['trackerId'], 0, -1, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues);
-// still need to filter the fields that are view only by the admin and the item creator
-$smarty->assign_by_ref('items', $items["data"]);
-$smarty->assign_by_ref('item_count', $items['cant']);
 $smarty->assign_by_ref('listfields', $listfields);
 
-foreach ($items['data'] as $f=>$v) {
-	$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'],$user);
+if (isset($_REQUEST['showStatus'])) {
+	$showStatus = $_REQUEST['showStatus'] == 'on'?'y':'n';
+} else {
+	$showStatus = 'n';
+}
+$smarty->assign_by_ref('showStatus', $showStatus);
+
+if (isset($_REQUEST['showItemId'])) {
+	$showItemId = $_REQUEST['showItemId'] == 'on'?'y':'n';
+} else {
+	$showItemId = 'n';
+}
+$smarty->assign_by_ref('showItemId', $showItemId);
+
+if (isset($_REQUEST['showCreated'])) {
+	$showCreated = $_REQUEST['showCreated'] == 'on'?'y':'n';
+} else {
+	$showCreated = 'n';
+}
+$smarty->assign_by_ref('showCreated', $showCreated);
+
+if (isset($_REQUEST['showLastModif'])) {
+	$showLastModif = $_REQUEST['showLastModif'] == 'on'?'y':'n';
+} else {
+	$showLastModif = 'n';
+}
+$smarty->assign_by_ref('showLastModif', $showLastModif);
+
+if (isset($_REQUEST['parse'])) {
+	$parse = $_REQUEST['parse'] == 'on'?'y':'n';
+} else {
+	$parse = 'n';
+}
+$smarty->assign_by_ref('parse', $parse);
+
+if (empty($_REQUEST['encoding'])) {
+	$_REQUEST['encoding'] = 'UTF-8';
 }
 
-$data = $smarty->fetch('tiki-export_tracker.tpl');
-if (!empty($_REQUEST['encoding']) && $_REQUEST['encoding'] == 'ISO-8859-1') {
-	$data = utf8_decode($data);
-} else {
-	$_REQUEST['encoding'] = "UTF-8";
+$offset = 0;
+$maxRecords = 100;
+$datas = '';
+$smarty->assign_by_ref('heading', $heading);
+while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
+	// still need to filter the fields that are view only by the admin and the item creator
+	foreach ($items['data'] as $f=>$v) {
+		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'],$user);
+	}
+	$smarty->assign('items', $items["data"]);
+
+	$data = $smarty->fetch('tiki-export_tracker.tpl');
+	if (!empty($_REQUEST['encoding']) && $_REQUEST['encoding'] == 'ISO-8859-1') {
+		$data = utf8_decode($data);
+	}
+
+	$datas .= $data;
+	$offset += $maxRecords;
+	$heading = 'n';
 }
 
 header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
@@ -109,5 +153,5 @@ header("Content-Disposition: attachment; filename=".tra('tracker')."_".$_REQUEST
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 header("Pragma: public");
-echo $data;
+echo $datas;
 ?>
