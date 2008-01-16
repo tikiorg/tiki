@@ -4,7 +4,7 @@
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
 {/if}
 {if $line ne 'y'}
-<div id="bTrackerFilter{$iTrackerFilter}" style="valign:top;display:{if $open ne 'y'}block{else}none{/if}"><a href="javascript:toggleBlock('trackerFilter{$iTrackerFilter}');toggleBlock('bTrackerFilter{$iTrackerFilter}');" class="linkbut">{tr}Show Filters{/tr}</a></div>
+<div id="bTrackerFilter{$iTrackerFilter}" style="valign:top;display:{if $open ne 'y'}block{else}none{/if}"><span class="button2"><a href="javascript:toggleBlock('trackerFilter{$iTrackerFilter}');toggleBlock('bTrackerFilter{$iTrackerFilter}');" class="linkbut">{tr}Show Filters{/tr}</a></span></div>
 {/if}
 <div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y'}block{else}none{/if}">
 <form method="post">
