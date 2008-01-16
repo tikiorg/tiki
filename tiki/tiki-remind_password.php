@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.34 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.34.2.1 2008-01-16 13:48:10 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,8 @@ if (isset($_REQUEST["remind"])) {
 			} elseif (empty($info['email'])) { //only renew if i can mail the pass
 				$showmsg = 'e';
 				$smarty->assign('msg', tra('Unable to send mail. User has not configured email'));
+			} else {
+				$_REQUEST['email'] = $info['email'];
 			}
 		}
 	} else if (!empty($_REQUEST['email'])) {
