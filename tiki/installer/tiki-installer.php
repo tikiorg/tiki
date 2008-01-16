@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.3 2008-01-16 18:03:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.4 2008-01-16 18:21:47 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,6 +101,7 @@ function process_sql_file($file,$db_tiki) {
 			}
 		}
 	}
+	$dbTiki->Execute("update `tiki_preferences` set `value`=`value`+1 where `name`='lastUpdatePrefs'");
 
 	$smarty->assign_by_ref('succcommands', $succcommands);
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
