@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.2 2007-12-08 11:12:00 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.3 2008-01-16 18:03:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -463,14 +463,19 @@ function check_password() {
 		return array('num'=>1,'mes'=>"No admin account set.");
 	} else {
 		$res = $result->fetchRow();
-		$hash = md5('admin' . $pass . $res['email']);
-		$hash2 = md5('admin' . $pass);
-		$hash3 = md5($pass);
+		$hash[] = md5('admin' . $pass . $res['email']);
+		$hash[] = md5('admin' . $pass);
+		$hash[] = md5($pass);
 		// next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
-		$query = "select login from users_users where lower(login) = 'admin' and (hash='$hash' or hash='$hash2' or hash='$hash3')";
+		$query = "select login, hash from users_users where lower(login) = 'admin'";
 		$result = $dbTiki->Execute($query);
+		
+		$res = $result->fetchRow();
+		if ($res) {
+			$hash[] = crypt($pass, $res['hash']);
+		}
 
-		if ($result->numRows()) {
+		if ($res  && in_array($res['hash'], $hash)) {
 			$logged = 'y';
 			$_SESSION["install-logged-$multi"] = 'y';
 			return array('num'=>0,'mes'=>"admin logged in.");
