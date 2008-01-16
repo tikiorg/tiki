@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.3 2007-11-28 08:01:46 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.45.2.4 2008-01-16 15:50:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,7 +158,7 @@ if ( $prefs['user_tracker_infos'] ) {
 	$trackerinfo = explode(',',$prefs['user_tracker_infos']) ;
 	$userTrackerId = $trackerinfo[0] ;
 	array_shift ($trackerinfo);
-	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fields'=>$trackerinfo));
+	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fieldId'=>$trackerinfo));
 	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
