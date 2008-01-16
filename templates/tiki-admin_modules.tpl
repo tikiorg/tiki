@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.11 2007-12-22 23:28:32 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.12 2008-01-16 02:40:53 ricks99 Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
@@ -217,7 +217,7 @@
 <tr><td class="form">{tr}Data{/tr}</td><td>
 
 
-<textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data|escape}</textarea>
+<textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:99%">{$um_data|escape}</textarea>
 
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
@@ -237,6 +237,7 @@
 </td><td valign="top" class="even">
 <h3>{tr}Objects that can be included{/tr}</h3>
 <table>
+{if $polls}
 <tr>
   <td class="form">
     {tr}Available polls{/tr}:
@@ -249,6 +250,7 @@
     <option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>
     {/section}
     </select>
+
   </td>
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}Use Poll{/tr}</a>
@@ -256,7 +258,8 @@
 	<a {popup text="Params: id= rate=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
-
+{/if}
+{if $galleries}
 <tr>
   <td class="form">
    {tr}Random image from{/tr}:
@@ -275,8 +278,8 @@
 	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
-
-
+{/if}
+{if $contents}
 <tr>
   <td class="form">
     {tr}Dynamic content blocks{/tr}:
@@ -294,6 +297,8 @@
 	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
+{/if}
+{if $rsss}
 <tr>
   <td class="form">
     {tr}RSS modules{/tr}:
@@ -311,7 +316,8 @@
 	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
-
+{/if}
+{if $menus}
 <tr>
   <td class="form">
     {tr}Menus{/tr}:
@@ -328,7 +334,6 @@
   </td><td class="form">
 	<a {popup text="Params: id= css= link_on_section=y type=vert|horiz" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>  </td>
 </tr>
-
 {if $prefs.feature_phplayers eq "y"}
 <tr>
   <td class="form">
@@ -348,8 +353,9 @@
 
   </td>
 </tr>
-
 {/if}
+{/if}
+{if $banners}
 <tr>
   <td class="form">
     {tr}Banner zones{/tr}:
@@ -367,7 +373,8 @@
 	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
-
+{/if}
+{if $wikistructures}
 <tr>
   <td class="form">
     {tr}Wiki{/tr} {tr}Structures{/tr}:
@@ -385,7 +392,6 @@
 	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
   </td>
 </tr>
-
-
+{/if}
 </table>
 </td></tr></table>
