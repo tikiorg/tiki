@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.3 2008-01-03 21:41:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.4 2008-01-16 14:56:04 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showlastmodif=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -87,9 +87,15 @@ function wikiplugin_trackerlist($data, $params) {
 		$tr_status = $status;
 		$smarty->assign_by_ref('tr_status', $tr_status);
 
-		if (isset($showcreated)) {
-			$smarty->assign_by_ref('showcreated', $showcreated);
+		if (!isset($showcreated)) {
+			$showcreated = $tracker_info['showCreated'];
 		}
+		$smarty->assign_by_ref('showcreated', $showcreated);
+		if (!isset($showlastmodif)) {
+			$showlastmodif = $tracker_info['showLastModif'];
+		}
+		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
+
 		if (!isset($sort)) {
 			$sort = 'n';
 		}

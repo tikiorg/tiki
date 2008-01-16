@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.2 2007-11-30 16:08:58 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.3 2008-01-16 14:56:07 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -26,7 +26,7 @@
 {/if}
 
 {foreach key=jx item=ix from=$fields}
-{if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
+{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'}
 {if $ix.type eq 'l'}
 <td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
@@ -42,11 +42,11 @@
 {/if}
 {/if}
 {/foreach}
-{if (empty($showcreated) && $tracker_info.showCreated eq 'y') || (!empty($showcreated) && $showcreated eq 'y')}
+{if $showcreated eq 'y'}
 <td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
 	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}Created{/tr}</a></td>
 {/if}
-{if $tracker_info.showLastModif eq 'y'}
+{if $showlastmodif eq 'y'}
 <td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
 	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}LastModif{/tr}</a></td>
 {/if}
@@ -71,7 +71,7 @@
 
 {* ------------------------------------ *}
 {section name=ix loop=$items[user].field_values}
-{if $items[user].field_values[ix].isPublic eq 'y' and $items[user].field_values[ix].isHidden ne 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
+{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
 	{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
 		$tiki_p_view_trackers=$perms.tiki_p_view_trackers $tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items $tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
@@ -80,10 +80,10 @@
 {/section}
 {* ------------------------------------ *}
 
-{if $tracker_info.showCreated eq 'y'}
+{if $showcreated eq 'y'}
 <td>{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
 {/if}
-{if $tracker_info.showLastModif eq 'y'}
+{if showlastmodif eq 'y'}
 <td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
