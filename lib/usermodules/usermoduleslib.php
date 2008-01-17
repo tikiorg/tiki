@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.35 2007-10-12 07:55:48 nyloth Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.35.2.1 2008-01-17 18:38:08 sylvieg Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -183,14 +183,14 @@ class UserModulesLib extends TikiLib {
 		return $ret;
 	}
     /// Swap current module and above one
-	function swap_up_user_module($name, $user)
+	function swap_up_user_module($moduleId, $user)
     {
-        $this->swap_adjacent($name, $user, '<');
+        $this->swap_adjacent($moduleId, $user, '<');
 	}
     /// Swap current module and below one
-	function swap_down_user_module($name, $user)
+	function swap_down_user_module($moduleId, $user)
     {
-        $this->swap_adjacent($name, $user, '>');
+        $this->swap_adjacent($moduleId, $user, '>');
     }
     /// Function to swap (up/down) two adjacent modules
     function swap_adjacent($moduleId, $user, $op)
@@ -200,12 +200,14 @@ class UserModulesLib extends TikiLib {
     	$r = $this->query($query, array($moduleId, $user));
         $cur = $r->fetchRow();
         // Get name and order of module to swap with
-	    $query = "select `moduleId`, `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and `ord`".$op."? and `user`=? order by `ord` ".($op == '<' ? 'desc' : '');
-        $r = $this->query($query, array($cur['position'], $cur['ord'], $user));
+	    $query = "select `moduleId`, `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and `ord`".$op."=? and `user`=? and `moduleId` != ? order by `ord` ".($op == '<' ? 'desc' : '');
+        $r = $this->query($query, array($cur['position'], $cur['ord'], $user, $moduleId));
         $swap = $r->fetchRow();
         if (!empty($swap))
         {
             // Swap 2 adjacent modules
+			if ($swap['ord'] == $cur['ord'])
+				$swap['ord'] += ($op == '<')? -1:+1;
             $query = "update `tiki_user_assigned_modules` set `ord`=? where `moduleId`=? and `user`=?";
   	        $this->query($query, array($swap['ord'], $moduleId, $user));
             $query = "update `tiki_user_assigned_modules` set `ord`=? where `moduleId`=? and `user`=?";
