@@ -1,8 +1,62 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.13 2008-01-17 15:18:44 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.14 2008-01-17 16:23:46 ricks99 Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
+
+{* Display edit time out *}
+
+
+
+<script language='Javascript' type='text/javascript'>
+{literal}
+
+<!-- Begin
+
+function Minutes(data) {
+for (var i = 0; i < data.length; i++)
+if (data.substring(i, i + 1) == ":")
+break;
+return (data.substring(0, i));
+}
+
+function Seconds(data) {
+for (var i = 0; i < data.length; i++)
+if (data.substring(i, i + 1) == ":")
+break;
+return (data.substring(i + 1, data.length));
+}
+function Display(min, sec) {
+var disp;
+if (min <= 9) disp = " 0";
+else disp = " ";
+disp += min + ":";
+if (sec <= 9) disp += "0" + sec;
+else disp += sec; 
+return (disp);
+}
+function Down() { 
+sec--;      
+if (sec == -1) { sec = 59; min--; }
+document.editpageform.clock.value = Display(min, sec);
+window.status = "{/literal}{tr}Your edit session will expire in{/tr}{literal}: " + Display(min, sec);
+if (min == 1 && sec == 0) {
+alert("{/literal}{tr}Your edit session will expire in 1 minute. You must PREVIEW or SAVE your work now, to avoid losing your edits.{/tr}{literal}");
+// window.location.href = timedouturl;
+}
+else down = setTimeout("Down()", 1000);
+}
+function timeIt() {
+min = 1 * Minutes(document.editpageform.clock.value);
+sec = 0 + Seconds(document.editpageform.clock.value);
+Down();
+}
+window.onload = timeIt;
+//  End -->
+{/literal}
+</script>
+
+
 <h1>{tr}Edit{/tr}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
 {if $beingStaged eq 'y'}
 <div class="tocnav">
@@ -61,6 +115,7 @@
 {include file="tiki-preview.tpl"}
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
+<input type="hidden" name="clock" value="{$edittimeout}" />
 {if $preview && $staging_preview neq 'y'}
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
 {if $page|lower neq 'sandbox'}
