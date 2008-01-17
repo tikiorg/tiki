@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.5 2008-01-17 14:47:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.6 2008-01-17 15:47:11 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
 <a class="linkbut" href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a>
- <a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a> 
+ <a class="linkbut" href="tiki-admin_newsletters.php?nlId={$nlId}">{tr}Admin Newsletters{/tr}</a> 
  <a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}Send Newsletters{/tr}</a>
 </div>
 
