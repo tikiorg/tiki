@@ -70,12 +70,12 @@ RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA
 RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
 RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1    [QSA,L]
 
+RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
+
 # todo add support for all characters allowed in a Wiki name
 # make sure this is the last rule!
 RewriteRule ^show:(~?)([-_\+A-Za-z0-9]+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
-RewriteRule ^([-_\+A-Za-z0-9]+)$    tiki-index.php?page=$1                   [QSA,L]
+RewriteRule     ^([^/\.]+)$    tiki-index.php?page=$1                   [QSA,L]
 
-#for multi-byte char support use
-RewriteRule     ^/([^a-z]+)([^\/]+)([^tki-]+)(.*[^.js]+)(~?)(.*)$ tiki-index.php?page=$1$2$3$4$5$6$7$8$9 [QSA,L]
 
 
