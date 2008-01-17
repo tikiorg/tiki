@@ -46,7 +46,10 @@ class TikiCalendarLib extends TikiLib {
 								$res['description'] = tra('New Subscriptions');
 								$res['head'] = ' ... '.$res['head'];
 								break;
-							case 'track': $res['description'] = tra('New Item in Tracker'); break;
+							case 'track': 
+                  $res['description'] = tra('New Item in Tracker');
+                  $res['parent'] = tra('tracker');
+              break;
 							case 'wiki page': $res['parent'] = 'wiki'; break;
 						} 
 						$res['url'] = $this->get_object_url($res['type'], $url_vars);
