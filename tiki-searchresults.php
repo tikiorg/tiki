@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.1 2007-11-08 21:31:12 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.2 2008-01-17 23:52:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,10 +34,10 @@ if (!isset($_REQUEST["where"])) {
 } else {
 	$where = $_REQUEST["where"];
 }
+$where2 = tra($where);
 
 $find_where='find_'.$where;
 $smarty->assign('where',$where);
-$smarty->assign('where2',tra($where));
 $filter = array();
 
 if($where=='wikis') {
@@ -87,6 +87,13 @@ if($where=='forums') {
   }
   if (!empty($_REQUEST['forumId'])) {
 	$filter['forumId'] = $_REQUEST['forumId'];
+	global $commentslib; include('lib/commentslib.php');
+	if (!isset($commentslib)) $commentslib = new Comments($dbTiki);
+	$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
+	$where2 = tra('forum');
+	$smarty->assign_by_ref('where3', $forum_info['name']);
+	$smarty->assign_by_ref('forumId', $_REQUEST['forumId']);
+	$cant_results = '';
   }
 }
 
@@ -164,7 +171,7 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 //}
 
 $cant_pages = ceil($results["cant"] / $maxRecords);
-$smarty->assign('cant_results', $results["cant"]);
+$smarty->assign_by_ref('cant_results', $results["cant"]);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
@@ -180,6 +187,7 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+$smarty->assign_by_ref('where2',$where2);
 
 // Find search results (build array)
 $smarty->assign_by_ref('results', $results["data"]);
