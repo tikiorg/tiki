@@ -85,4 +85,4 @@
 'wikiplugins','trackeritemfield','1.2','Shows the content of a tracker item field or the wiki text of the plugin if the tracker item field is set and not empty. If itemId is not set, will test the user tracker. test default is 0(disply mode and not test mode) {TRACKERITEMFIELD(itemId=>1, fieldId=>1, test=>1|0)}Wiki text{TRACKERITEMFIELD} Exists also a smarty block version','GNU/LGPL'
 'goodies','batch_close_trackers','1.1','Batch to close automatically tracker items that have a past date','GNU/LGPL'
 'goodies','batch_load_pages','1.1','Batch to load a list of pages from a csv file'
-
+'wikiplugins','submit','1.0','Add submit to social networking site links.','GNU/LGPL'
