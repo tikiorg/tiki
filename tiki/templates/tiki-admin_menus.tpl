@@ -69,7 +69,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].menuId}</td>
-<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}"><a href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Edit{/tr}">{$channels[user].name}</a></td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td class="{cycle advance=false}">{$channels[user].type}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
