@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.2 2007-12-07 22:23:53 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.3 2008-01-17 15:18:44 ricks99 Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -82,7 +82,7 @@ function taginsert(area_name,tagid)
   {/if}
 
   {if $tiki_p_admin eq 'y' or $tiki_p_admin_quicktags eq 'y'}
-    <a href="tiki-admin_quicktags.php" class="link">{tr}Admin Quicktags{/tr}</a>
+    <a href="tiki-admin_quicktags.php" class="link" onclick="needToConfirm = true;">{tr}Admin Quicktags{/tr}</a>
   {/if}
 </div> <!-- helptool{$qtnum} -->
 </div> <!-- Quicktag -->
