@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.21.2.3 2007-12-07 05:56:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar_edit_item.php,v 1.21.2.4 2008-01-17 15:53:26 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,9 @@ if ($prefs['feature_calendar'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
   $smarty->display("error.tpl");
   die;
+}
+if ($prefs['feature_ajax'] == "y") {
+require_once ('lib/ajax/ajaxlib.php');
 }
 /*
 if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQUEST['calendarId'],'calendar')) {
@@ -317,6 +320,15 @@ $smarty->assign('hour_minmax', $hour_minmax);
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $_REQUEST['calendarId']);
+if ($prefs['feature_ajax'] == "y") {
+function edit_calendar_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-calendar_edit_item.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+edit_calendar_ajax();
+}
 $smarty->assign('mid', 'tiki-calendar_edit_item.tpl');
 $smarty->display("tiki.tpl");
 ?>
