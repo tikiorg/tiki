@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.35 2008-01-16 16:33:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.36 2008-01-17 16:02:01 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -51,7 +51,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['tiki_needs_upgrade'] = 'n';
 	$prefs['tiki_version_last_check'] = 0;
 	$prefs['tiki_version_check_frequency'] = 604800;
-	
+
 	# wiki
 	$prefs['feature_wiki'] = 'y';
 	$prefs['default_wiki_diff_style'] = 'minsidediff';
@@ -148,8 +148,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_categorize_structure'] = 'n';
 	$prefs['feature_wiki_watch_structure'] = 'n';
 	$prefs['feature_wikiapproval'] = 'n';
-	$prefs['wikiapproval_prefix'] = '*';	
-	
+	$prefs['wikiapproval_prefix'] = '*';
+
 	# wysiwyg
 	$prefs['feature_wysiwyg'] = 'n';
 	$prefs['wysiwyg_optional'] = 'y';
@@ -164,7 +164,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
 	/
 	Style,FontName,FontSize,-,TextColor,BGColor,-,Source";
-	
+
 	# wiki3d
 	$prefs['wiki_feature_3d'] = 'n';
 	$prefs['wiki_3d_width'] = 500;
@@ -173,7 +173,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_3d_feed_animation_interval'] = 500;
 	$prefs['wiki_3d_existing_page_color'] = '#00CC55';
 	$prefs['wiki_3d_missing_page_color'] = '#FF5555';
-	
+
 	# blogs
 	$prefs['feature_blogs'] = 'n';
 	$prefs['blog_list_order'] = 'created_desc';
@@ -194,7 +194,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['blog_list_activity'] = 'y';
 	$prefs['feature_blog_mandatory_category'] = '-1';
 	$prefs['feature_blog_heading'] = 'y';
-	
+
 	# filegals
 	$prefs['feature_file_galleries'] = 'n';
 	$prefs['home_file_gallery'] = 0;
@@ -223,7 +223,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['fgal_list_type'] = 'n';
 	$prefs['fgal_sort_mode'] = 'created_desc';
 	$prefs['feature_file_galleries_author'] = 'n';
-	
+
 	# imagegals
 	$prefs['feature_galleries'] = 'n';
 	$prefs['feature_gal_batch'] = 'n';
@@ -249,7 +249,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_image_gallery_mandatory_category'] = '-1';
 	$prefs['preset_galleries_thumb'] ='n';
 	$prefs['gal_image_mouseover'] = 'n';
-	
+
 	# multimedia
 	$prefs['ProgressBarPlay']='#FF8D41';
 	$prefs['ProgressBarLoad']="#A7A7A7";
@@ -280,7 +280,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['MultimediaGalerie']=1;
 	$prefs['MultimediaDefaultLength']=200;
 	$prefs['MultimediaDefaultHeight']=100;
-	
+
 	# spellcheck
 	if ( file_exists('lib/bablotron.php') ) {
 		$prefs['lib_spellcheck'] = 'y';
@@ -288,7 +288,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 		$prefs['cms_spellcheck'] = 'n';
 		$prefs['blog_spellcheck'] = 'n';
 	}
-	
+
 	# forums
 	$prefs['feature_forums'] = 'n';
 	$prefs['home_forum'] = 0;
@@ -317,7 +317,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['forum_comments_no_title_prefix'] = 'n';
 	$prefs['forum_thread_style'] = 'commentStyle_plain';
 	$prefs['forum_thread_sort_mode'] = 'commentDate_desc';
-	
+
 	# articles
 	$prefs['feature_articles'] = 'n';
 	$prefs['feature_submissions'] = 'n';
@@ -352,7 +352,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['cms_right_column'] = 'y';
 	$prefs['cms_top_bar'] = 'n';
 	$prefs['cms_spellcheck'] = 'n';
-	
+
 	# trackers
 	$prefs['feature_trackers'] = 'n';
 	$prefs['t_use_db'] = 'y';
@@ -360,7 +360,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['groupTracker'] = 'n';
 	$prefs['userTracker'] = 'n';
 	$prefs['trk_with_mirror_tables'] = 'n';
-	
+
 	# user
 	$prefs['feature_userlevels'] = 'n';
 	$prefs['userlevels'] = array('1'=>tra('Simple'),'2'=>tra('Advanced'));
@@ -436,7 +436,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['users_prefs_userbreadCrumb'] = '4';
 	$prefs['users_prefs_mailCharset'] = 'utf-8';
 	$prefs['validateRegistration'] = 'n';
-	
+
 	# user messages
 	$prefs['feature_messages'] = 'n';
 	$prefs['messu_mailbox_size'] = '0';
@@ -444,10 +444,10 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['messu_sent_size'] = '200';
 	$prefs['allowmsg_by_default'] = 'n';
 	$prefs['allowmsg_is_optional'] = 'y';
-	
+
 	# newsreader
 	$prefs['feature_newsreader'] = 'n';
-	
+
 	# freetags
 	$prefs['feature_freetags'] = 'n';
 	$prefs['freetags_browse_show_cloud'] = 'y';
@@ -465,7 +465,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['freetags_3d_missing_page_color'] = '#FF5555';
 	$prefs['morelikethis_algorithm'] = 'basic';
 	$prefs['morelikethis_basic_mincommon'] = '2';
-	
+
 	# search
 	$prefs['feature_search_stats'] = 'n';
 	$prefs['feature_search'] = 'y';
@@ -474,27 +474,27 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_search_show_forbidden_cat'] = 'n';
 	$prefs['search_refresh_index_mode'] = 'normal';
 	$prefs['search_parsed_snippet'] = 'y';
-	
+
 	# chat
 	$prefs['feature_chat'] = 'n';
-	
+
 	# webmail
 	$prefs['feature_webmail'] = 'n';
 	$prefs['webmail_max_attachment'] = 1500000;
 	$prefs['webmail_view_html'] = 'y';
-	
+
 	# contacts
 	$prefs['feature_contacts'] = 'n';
-	
+
 	# faq
 	$prefs['feature_faqs'] = 'n';
 	$prefs['feature_faq_comments'] = 'y';
 	$prefs['faq_comments_default_ordering'] = 'points_desc';
 	$prefs['faq_comments_per_page'] = 10;
-	
+
 	# quizzes
 	$prefs['feature_quizzes'] = 'n';
-	
+
 	# polls
 	$prefs['feature_polls'] = 'n';
 	$prefs['feature_poll_comments'] = 'n';
@@ -503,13 +503,13 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['poll_comments_per_page'] = 10;
 	$prefs['poll_list_categories'] = 'n';
 	$prefs['poll_list_objects'] = 'n';
-	
+
 	# surveys
 	$prefs['feature_surveys'] = 'n';
-	
+
 	# featured links
 	$prefs['feature_featuredLinks'] = 'n';
-	
+
 	# directories
 	$prefs['feature_directory'] = 'n';
 	$prefs['directory_columns'] = 3;
@@ -518,7 +518,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['directory_validate_urls'] = 'n';
 	$prefs['directory_cool_sites'] = 'y';
 	$prefs['directory_country_flag'] = 'y';
-	
+
 	# calendar
 	$prefs['feature_calendar'] = 'n';
 	$prefs['calendar_sticky_popup'] = 'n';
@@ -531,7 +531,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_action_calendar'] = 'n';
 	$prefs['calendar_start_year'] = '+0';
 	$prefs['calendar_end_year'] = '+3';
-	
+
 	# dates
 	$prefs['server_timezone'] = $tikidate->tz->getID();
 	$prefs['long_date_format'] = '%A %d of %B, %Y';
@@ -539,10 +539,10 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['short_date_format'] = '%a %d of %b, %Y';
 	$prefs['short_time_format'] = '%H:%M %Z';
 	$prefs['display_field_order'] = 'MDY';
-	
+
 	# charts
 	$prefs['feature_charts'] = 'n';
-	
+
 	# rss
 	$prefs['rss_forums'] = 'y';
 	$prefs['rss_forum'] = 'y';
@@ -583,7 +583,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['rssfeed_css'] = 'y';
 	$prefs['rssfeed_publisher'] = '';
 	$prefs['rssfeed_img'] = 'img/tiki.jpg';
-	
+
 	# maps
 	$prefs['feature_maps'] = 'n';
 	$prefs['map_path'] = '';
@@ -593,14 +593,14 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['gdaltindex'] = '';
 	$prefs['ogr2ogr'] = '';
 	$prefs['mapzone'] = '';
-	
+
 	# gmap
 	$prefs['feature_gmap'] = 'n';
 	$prefs['gmap_defaultx'] = '0';
 	$prefs['gmap_defaulty'] = '0';
 	$prefs['gmap_defaultz'] = '17';
 	$prefs['gmap_key'] = '';
-	
+
 	# auth
 	$prefs['allowRegister'] = 'n';
 	$prefs['eponymousGroups'] = 'n';
@@ -663,7 +663,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 		$prefs['cas_port'] = '';
 		$prefs['cas_path'] = '';
 	}
-	
+
 	# intertiki
 	$prefs['feature_intertiki'] = 'n';
 	$prefs['feature_intertiki_server'] = 'n';
@@ -676,7 +676,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['tiki_key'] = '';
 	$prefs['intertiki_logfile'] = '';
 	$prefs['intertiki_errfile'] = '';
-	
+
 	# search
 	$prefs['search_lru_length'] = '100';
 	$prefs['search_lru_purge_rate'] = '5';
@@ -684,29 +684,29 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['search_min_wordlength'] = '3';
 	$prefs['search_refresh_rate'] = '5';
 	$prefs['search_syll_age'] = '48';
-	
+
 	# categories
 	$prefs['feature_categories'] = 'n';
 	$prefs['feature_categoryobjects'] = 'n';
 	$prefs['feature_categorypath'] = 'n';
 	$prefs['feature_category_reinforce'] = 'y';
 	$prefs['feature_category_use_phplayers'] = 'y';
-	
+
 	# games
 	$prefs['feature_games'] = 'n';
-	
+
 	# html pages
 	$prefs['feature_html_pages'] = 'n';
-	
+
 	# use filegals for image inclusion
 	$prefs['feature_filegals_manager'] = 'n';
-	
+
 	# contact & mail
 	$prefs['feature_contact'] = 'n';
 	$prefs['contact_user'] = 'admin';
 	$prefs['contact_anon'] = 'n';
 	$prefs['mail_crlf'] = 'LF';
-	
+
 	# i18n
 	$prefs['feature_detect_language'] = 'n';
 	$prefs['feature_homePage_if_bl_missing'] = 'n';
@@ -716,7 +716,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['language'] = 'en';
 	$prefs['feature_babelfish'] = 'n';
 	$prefs['feature_babelfish_logo'] = 'n';
-	
+
 	# html header
 	$prefs['metatag_keywords'] = '';
 	$prefs['metatag_description'] = '';
@@ -729,7 +729,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['head_extra_js'] = array();
 	$prefs['keep_versions'] = 1;
 	$prefs['feature_custom_home'] = 'n';
-	
+
 	# site identity
 	$prefs['feature_siteidentity'] = 'n';
 	$prefs['site_crumb_seper'] = '>';
@@ -760,7 +760,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_sitetitle'] = 'y';
 	$prefs['feature_sitedesc'] = 'n';
 	$prefs['feature_bot_logo'] = 'n';
-	
+
 	# layout
 	$prefs['feature_left_column'] = 'y';
 	$prefs['feature_right_column'] = 'y';
@@ -777,33 +777,33 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['site_favicon'] = 'favicon.png';
 	$prefs['site_favicon_type'] = 'image/png';
 	$prefs['style'] = 'tikineat.css';
-	
+
 	# mods
 	$prefs['feature_mods_provider'] = 'n';
 	$prefs['mods_dir'] = 'mods';
 	$prefs['mods_server'] = 'http://mods.tikiwiki.org';
-	
+
 	# dev
 	$prefs['feature_experimental'] = 'n';
-	
+
 	# admin
 	$prefs['feature_actionlog'] = 'y';
 	$prefs['siteTitle'] = '';
 	$prefs['tmpDir'] = 'temp';
-	
+
 	# tell a friend
 	$prefs['feature_tell_a_friend'] = 'n';
-	
+
 	# copyright
 	$prefs['feature_copyright']='n';
 	$prefs['feature_multimedia']='n';
-	
+
 	# mypage
 	$prefs['feature_mypage_mandatory_category'] = -1;
-	
+
 	# swffix
 	$prefs['feature_swffix'] = 'n';
-	
+
 	# textarea
 	$prefs['feature_smileys'] = 'y';
 	$prefs['popupLinks'] = 'n';
@@ -812,8 +812,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['default_rows_textarea_wiki'] = '20';
 	$prefs['default_rows_textarea_comment'] = '6';
 	$prefs['default_rows_textarea_forum'] = '20';
-	$prefs['default_rows_textarea_forum_thread'] = '10';
-	
+	$prefs['default_rows_textarea_forumthread'] = '10';
+
 	# unsorted features
 	$prefs['anonCanEdit'] = 'n';
 	$prefs['cacheimages'] = 'n';
@@ -995,7 +995,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['transition_style_ver'] = '1.9';
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-	if ( ! isset($_SESSION['serialized_prefs']) ) {	
+	if ( ! isset($_SESSION['serialized_prefs']) ) {
 		$_SESSION['serialized_prefs'] = array();
 		foreach ( $prefs as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
