@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.9 2008-01-16 15:50:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.10 2008-01-17 21:30:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,6 +120,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
@@ -135,7 +136,6 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 $smarty->assign('find', $find);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 // ************* previous/next **************
 $urlquery = array();
@@ -1162,6 +1162,9 @@ if (isset($_REQUEST['from'])) {
 	$from = false;
 }
 $smarty->assign('from',$from);
+
+if (isset($_REQUEST['status']))
+	$smarty->assign_by_ref('status', $_REQUEST['status']);
 
 $section = 'trackers';
 include_once ('tiki-section_options.php');

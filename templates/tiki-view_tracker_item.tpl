@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.20 2007-12-18 22:30:00 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.21 2008-01-17 21:30:39 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -15,7 +15,7 @@
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {/if}
 {if $tiki_p_view_trackers eq 'y'}
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&status={$status}{/if}{if $sort_mode}&sort_mode={$sort_mode}{/if}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 &nbsp;&nbsp;
