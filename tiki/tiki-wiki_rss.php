@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.43.2.1 2008-01-11 14:16:01 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.43.2.2 2008-01-17 17:52:22 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,8 +25,8 @@ $uniqueid = $feed;
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$title = (!empty($title_rss_wiki)) ? $title_rss_wiki : tra("Tiki RSS feed for the wiki pages");
-	$desc = (!empty($desc_rss_wiki)) ? $desc_rss_wiki : tra("Last modifications to the Wiki.");
+	$title = (!empty($prefs['title_rss_wiki'])) ? $prefs['title_rss_wiki'] : tra("Tiki RSS feed for the wiki pages");
+	$desc = (!empty($prefs['desc_rss_wiki'])) ? $prefs['desc_rss_wiki'] : tra("Last modifications to the Wiki.");
 	$id = "pageName";
 	$titleId = "pageName";
 	$descId = "data";
@@ -39,11 +39,6 @@ if ($output["data"]=="EMPTY") {
 		$readrepl = "tiki-index.php?page=%s";
 	}
 	$param = "previous";
-	
-        $tmp = $prefs['title_rss_'.$feed];
-        if ($tmp<>'') $title = $tmp;
-        $tmp = $prefs['desc_rss_'.$feed];
-        if ($desc<>'') $desc = $tmp;
 	
 	$changes = $tikilib -> list_pages(0, $prefs['max_rss_wiki'], 'lastModif_desc');
 	$tmp = array();
