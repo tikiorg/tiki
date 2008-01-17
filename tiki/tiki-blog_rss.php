@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.35 2007-10-12 07:55:24 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.35.2.1 2008-01-17 17:47:01 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,19 +62,16 @@ $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
 	$tmp = $tikilib -> get_blog($_REQUEST["$id"]);
-	$title = tra("Tiki RSS feed for blog: ").$tmp["title"];
-	$desc = $tmp["description"];
+	$title = (!empty($prefs['title_rss_'.$feed]))? $prefs['title_rss_'.$feed]: tra('Tiki RSS feed for blog: ');
+	$title .= $tmp['title'];
+	$desc .= (!empty($prefs['desc_rss_'.$feed]))? $prefs['desc_rss_'.$feed]: tra('Last modifications to the blog.');
+	$desc .= $tmp["description"];
 	$descId = "data";
 	$dateId = "created";
 	$authorId = "user";
 	$titleId = "title";
 	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 
-	$tmp = $prefs['title_rss_'.$feed];
-	if ($tmp<>'') $title = $tmp;
-	$tmp = $prefs['desc_rss_'.$feed];
-	if ($desc<>'') $desc = $tmp;
-	
 	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId.'_desc', '', $tikilib->now);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
