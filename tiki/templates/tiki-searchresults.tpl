@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.2 2007-12-15 01:28:04 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.3 2008-01-17 23:52:44 sylvieg Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}
@@ -43,7 +43,7 @@
 {/if}
 </div><!--nohighlight-->
 <br /><br />
-{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
+{tr}Found{/tr} "{$words}" {tr}in{/tr} {if $where3}{$where2}: {$where3}{else}{$cant_results} {$where2}{/if}
 {/if}
 <form class="forms" method="get" action="tiki-searchresults.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
@@ -80,6 +80,7 @@
     </select>
 {else}
     <input type="hidden" name="where" value="{$where|escape}" />
+	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
