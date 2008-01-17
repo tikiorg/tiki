@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.6 2008-01-11 22:11:43 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.7 2008-01-17 19:07:32 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -373,23 +373,15 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $prefs.feature_userPreferences eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserPreferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences Screen{/tr}">{/if} {tr}User Preferences Screen{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td align="right"><div align="right">
-      <input type="checkbox" name="user_assigned_modules"
-            {if $prefs.user_assigned_modules eq 'y'}checked="checked"{/if}/>
-    </div></td>
-    <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Configure+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Configure Modules{/tr}">{/if} {tr}Users can Configure Modules{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+    <td></td>
+    <td class="form"><a href="tiki-admin.php?page=module">Modules</a></td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_bookmarks"
             {if $prefs.feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UserBookmarkDoc" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">{/if} {tr}User Bookmarks{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td colspan="2"><select name="user_flip_modules">
-      <option value="y" {if $prefs.user_flip_modules eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
-      <option value="module" {if $prefs.user_flip_modules eq 'module'}selected="selected"{/if}>{tr}module decides{/tr}</option>
-      <option value="n" {if $prefs.user_flip_modules eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
-    </select>
-    {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Users+Shade+Modules" target="tikihelp" class="tikihelp" title="{tr}Users can Shade Modules{/tr}">{/if} {tr}Users can Shade Modules{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+    <td colspan="2"></td>
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_watches"
