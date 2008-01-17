@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.63.2.1 2008-01-17 14:47:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.63.2.2 2008-01-17 15:47:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -82,7 +82,7 @@ class NlLib extends TikiLib {
 		$ret = array();
 		$groups =array();
 		while ($res = $result->fetchRow()) {
-			$groups = array_merge($groups, array($res["groupName"]), $this->get_groups_all($res["groupName"]));
+			$groups = array_merge($groups, array($res["groupName"]), $this->get_included_groups($res["groupName"]));
 		}
 		 	/* users already in or unsubscribed */
 		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=? and `isUser`!='g'";
@@ -129,20 +129,21 @@ class NlLib extends TikiLib {
 						$res["code"] = $code;
 					}
 					$ret[] = $res;
+					$in[] = $res['login'];
 				}
 			}
 		}
 
 		$incnl = $this->list_newsletter_included($nlId);
 		foreach ($incnl as $incid=>$incname) {
-			$incall = $this->get_all_subscribers($incid,'');
+			$incall = $this->get_all_subscribers($incid,$genUnsub);
 			foreach ($incall as $res) {
 				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail) && !in_array($res['login'], $unsub_groupusers)) {
 					$ret[] = $res;
 				}
 			}
 		}
-//if ($nlId == '13') { echo "<pre>Subscribers:";print_r($ret); echo "</pre>"; }
+//{echo "<pre>Subscribers:$nlId";print_r($ret); echo "</pre>"; }
 		return $ret;
 	}
 
@@ -415,8 +416,8 @@ class NlLib extends TikiLib {
 				$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res['nlId']));
 				$res["users"] = $ok + $notok;
 				$res["confirmed"] = $ok;
-				$ret[] = $res;
 			}
+			$ret[] = $res;
 		}
 		$retval = array();
 		$retval["data"] = $ret;
