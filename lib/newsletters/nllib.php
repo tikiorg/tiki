@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.63 2007-10-12 07:55:42 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/newsletters/nllib.php,v 1.63.2.1 2008-01-17 14:47:57 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -373,7 +373,7 @@ class NlLib extends TikiLib {
 		$result = $this->query($query,array($users,(int)$nlId));
 	}
 /* perms = a or between perms */
-	function list_newsletters($offset, $maxRecords, $sort_mode, $find, $update='', $perms='') {
+	function list_newsletters($offset, $maxRecords, $sort_mode, $find, $update='', $perms='', $full='y') {
 		global $user, $tikilib;
 		$bindvars = array();
 		if ($find) {
@@ -387,7 +387,8 @@ class NlLib extends TikiLib {
 
 		$query = "select * from `tiki_newsletters` $mid order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = 0;
+		$query_cant = "select count(*) from  `tiki_newsletters` $mid";
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -409,12 +410,13 @@ class NlLib extends TikiLib {
 				if (!$hasPerm)
 					continue;
 			}
-			++$cant;
-			$ok = count($this->get_all_subscribers($res['nlId'], ""));
-			$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res['nlId']));
-			$res["users"] = $ok + $notok;
-			$res["confirmed"] = $ok;
-			$ret[] = $res;
+			if ($full != 'n') {
+				$ok = count($this->get_all_subscribers($res['nlId'], ""));
+				$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res['nlId']));
+				$res["users"] = $ok + $notok;
+				$res["confirmed"] = $ok;
+				$ret[] = $res;
+			}
 		}
 		$retval = array();
 		$retval["data"] = $ret;

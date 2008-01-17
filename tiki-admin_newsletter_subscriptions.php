@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.2 2007-12-17 11:59:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.24.2.3 2008-01-17 14:47:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -276,7 +276,7 @@ $smarty->assign_by_ref('groups', $groups);
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
 
-$newsletters = $nllib->list_newsletters(0,-1,"created_desc",false);
+$newsletters = $nllib->list_newsletters(0,-1,"created_desc",false, '', '', 'n');
 $smarty->assign_by_ref('newsletters', $newsletters['data']);
 
 /*

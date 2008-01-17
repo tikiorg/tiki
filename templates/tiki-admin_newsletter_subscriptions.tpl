@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.4 2007-12-17 11:53:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.5 2008-01-17 14:47:58 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">
@@ -99,7 +99,7 @@
 <select name="included">
 <option value="">---</option>
 {section name=x loop=$newsletters}
-<option value="{$newsletters[x].nlId|escape}">{$newsletters[x].name|escape}</option>
+{if $nlId ne $newsletters[x].nlId}<option value="{$newsletters[x].nlId|escape}">{$newsletters[x].name|escape}</option>{/if}
 {/section}
 </select><br />
 </td></tr>
@@ -137,7 +137,7 @@
 {cycle values="odd,even" print=false}
 {foreach key=incId item=incName from=$included_n}
 <tr>
-<td class="{cycle advance=false}">{$incName|escape}</td>
+<td class="{cycle advance=false}"><a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId}">{$incName|escape}</a></td>
 <td class="{cycle}"><a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$nlId}&amp;included={$incId}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>
 </tr>
 {/foreach}
