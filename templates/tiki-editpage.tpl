@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.12 2008-01-10 15:17:17 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.13 2008-01-17 15:18:44 ricks99 Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -79,11 +79,14 @@
 {if $add_child}
   <input type="hidden" name="add_child" value="true" />
 {/if}
+{if $page|lower neq 'sandbox'}
+   <p><strong>{tr}Note{/tr}</strong>: {tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}</p>
+{/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
-    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=y" onclick="needToConfirm = false;">{tr}Use wysiwyg editor{/tr}</a></span>
   {else}
-    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=n" onclick="needToConfirm = false;">{tr}Use normal editor{/tr}</a></span>
   {/if}
 {/if}
 <table class="normal">
