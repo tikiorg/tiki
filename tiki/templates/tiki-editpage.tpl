@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.14 2008-01-17 16:23:46 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.15 2008-01-18 02:19:30 ricks99 Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -169,7 +169,7 @@ window.onload = timeIt;
       {section name=ix loop=$templates}
         <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
       {/section}
-      </select>
+      </select>{if $tiki_p_edit_content_templates eq 'y'} <a href="tiki-admin_content_templates.php" class="link" onclick="needToConfirm = true;">{tr}Content templates{/tr}</a>{/if}
     </td>
   </tr>
 {/if}
