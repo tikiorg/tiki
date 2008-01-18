@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.2 2008-01-18 16:58:20 sylvieg Exp $ *}
-{* param:$gal_info, $files, $show_find, $show_action *}
 {strip}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.3 2008-01-18 21:56:26 sylvieg Exp $ *}
+{* param:$gal_info, $files, $show_find *}
 
 {if !isset($show_find) or $show_find ne 'n'}
 <table class="findtable">
@@ -33,7 +33,7 @@
 
 <table class="normal">
 <tr>
-{if (empty($show_action) or $show_action ne 'n') and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <td  class="heading">&nbsp;</td>
 {/if}
 {if $gal_info.show_id eq 'y'}
@@ -93,7 +93,9 @@
 	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lockedby_desc'}lockedby_asc{else}lockedby_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Locked by{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
-{if empty($show_action) or $show_action ne 'n'}
+{if empty($show_action) or $show_action eq 'y'}
+	<td class="heading">{tr}Actions{/tr}</td>
+{else}
 	<td class="heading">{tr}Actions{/tr}</td>
 {/if}
 </tr>
@@ -103,7 +105,7 @@
 {section name=changes loop=$files}
 <tr>
 
-{if (empty($show_action) or $show_action ne 'n') and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <td  style="text-align:center;" class="{cycle advance=false}">
 	<input type="checkbox" name="file[]" value="{$files[changes].fileId|escape}"  {if $smarty.request.file and in_array($files[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
 </td>
@@ -113,8 +115,8 @@
 	<td class="{cycle advance=false}">{$files[changes].fileId}</td>
 {/if}
 
-{if $gal_info.name eq ''}
-	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[ix].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
+{if $gal_info.name eq '' or $gal_info.show_gallery eq 'y'}
+	<td class="{cycle advance=false}"><a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}" title="{tr}List{/tr}">{tr}{$files[changes].gallery}{/tr}</a></td>
 {/if}
 
 {if $gal_info.show_icon eq 'y'}
@@ -171,15 +173,47 @@
 	<td class="{cycle advance=false}">{$files[changes].created|tiki_short_date}</td>
 {/if}
 {if $gal_info.show_creator eq 'y'}
-	<td class="{cycle advance=false}">{$files[changes].user|userlink}</td>
+	<td class="{cycle advance=false}">
+		{if $gal_info.show_userlink eq 'n'}
+			{$files[changes].user|escape}
+		{else}
+			{$files[changes].user|userlink}
+		{/if}
+	</td>
 {/if}
 {if $gal_info.show_author eq 'y'}
-	<td class="{cycle advance=false}">{if $files[changes].author}{$files[changes].author|escape}{elseif $gal_info.show_creator ne 'y'}{$files[changes].user|userlink}{/if}</td>
+	<td class="{cycle advance=false}">
+		{if $files[changes].author}
+			{if $gal_info.show_userlink eq 'n'}
+				{$files[changes].author|escape}
+			{else}
+				{$files[changes].author|userlink}
+			{/if}
+		{elseif $gal_info.show_creator ne 'y'}
+			{if $gal_info.show_userlink eq 'n'}
+				{$files[changes].user|escape}
+			{else}
+				{$files[changes].user|userlink}
+			{/if}
+		{/if}
+	</td>
 {/if}
 
-{if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
-	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModif|tiki_short_date}{/if}</td>
-	<td class="{cycle advance=false}">{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}{$files[changes].lastModifUser|userlink}{/if}</td>
+{if $gal_info.show_modified eq 'y'}
+	<td class="{cycle advance=false}">
+		{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}
+			{$files[changes].lastModif|tiki_short_date}
+		{/if}
+	</td>
+	<td class="{cycle advance=false}">
+		{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}
+			{if $gal_info.show_userlink eq 'n'}
+				{$files[changes].lastModifUser|escape}
+			{else}
+				{$files[changes].lastModifUser|userlink}
+			{/if}
+		{/if}
+	</td>
 {/if}
 
 {if isset($gal_info.show_comment) and $gal_info.show_comment eq 'y'}
@@ -194,8 +228,7 @@
 	<td class="{cycle advance=false}">{$files[changes].lockedby|escape}</td>
 {/if}
 
-{if empty($show_action) or $show_action ne 'n'}
-<td class="{cycle advance=false}">
+<td class="{cycle}">
 	{if (isset($files[changes].p_download_files) and  $files[changes].p_download_files eq 'y')
 	 or (!isset($files[changes].p_download_files) and $tiki_p_download_files eq 'y')}
 		{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
@@ -204,17 +237,20 @@
 			<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}" title="{tr}Download{/tr}">
 		{/if}
 		<img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> 
+		{if empty($show_action) or $show_action eq 'y'}
 		{* can locked if the gall can be locked or I am the locker or the file is not locked - this only for regular file *}
-		{if $files[changes].archiveId == 0
-			and $user
-			and $gal_info.lockable == 'y'
-			and $tiki_p_edit_gallery_file == 'y'
-			and ($files[changes].lockedby eq '' or $files[changes].lockedby eq $user)
-			and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
-			<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;user={$user|escape}" title="{tr}Download and lock{/tr}">
-			<img src="pics/icons/disk_lock.png" border="0" width="16" height="16" alt="{tr}Download and lock{/tr}" /></a> 
-		{/if}	
+		   {if $files[changes].archiveId == 0
+			   and $user
+			   and $gal_info.lockable == 'y'
+			   and $tiki_p_edit_gallery_file == 'y'
+			   and ($files[changes].lockedby eq '' or $files[changes].lockedby eq $user)
+			   and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
+			   <a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;user={$user|escape}" title="{tr}Download and lock{/tr}">
+			   <img src="pics/icons/disk_lock.png" border="0" width="16" height="16" alt="{tr}Download and lock{/tr}" /></a> 
+			  {/if}
+		{/if}
 	{/if}
+	{if empty($show_action) or $show_action eq 'y'}
 	{if $files[changes].nbArchives gt 0}
 		<a href="tiki-file_archives.php?fileId={$files[changes].fileId}" title="{tr}Archive{/tr}({$files[changes].nbArchives})"><img src="pics/icons/disk_multiple.png" border="0" width="16" height="16" alt="{tr}Archive{/tr}" /></a> 
 	{/if}
@@ -230,16 +266,15 @@
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
 			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
 	{/if}
+	{/if}
 </td>
-{/if}
-<!-- {cycle} -->
 </tr>
 {sectionelse}
 <tr><td colspan="{$nbCols}">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
-{if (empty($show_action) or $show_action ne 'n') and $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan=\"{$nbCols}\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'file[]',this.checked)\"/>");
 	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
@@ -247,7 +282,7 @@
 {/if}
 </table>
 
-{if (empty($show_action) or $show_action ne 'n') and $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+{if $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
 <div>
 <div style="float:left">
 {tr}Perform action with checked:{/tr} 
