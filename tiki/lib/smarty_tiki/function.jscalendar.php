@@ -11,7 +11,7 @@ function smarty_function_jscalendar($params, &$smarty) {
 }
 
 function smarty_function_jscalendar_body($params, &$smarty) {
-	global $headerlib, $firstDayofWeek, $tikilib, $prefs;
+	global $headerlib, $tikilib, $prefs;
 
 	$headerlib->add_cssfile('lib/jscalendar/calendar-system.css');
 	$headerlib->add_cssfile('css/jscalendar.css');
@@ -104,7 +104,6 @@ function smarty_function_jscalendar_body($params, &$smarty) {
 	$back.= "displayArea : \"disp_$id\",\n";
 	$back.= "daFormat : \"$format\",\n";
 	// $back.= "singleClick : true,\n";
-	// $back.= "  firstDay : \"$firstDayofWeek\",\n";
 	if ($showtime) {
 		$back.= "showsTime : true,\n";
 	}
