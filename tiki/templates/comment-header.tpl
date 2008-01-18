@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.11.2.2 2007-12-17 18:48:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.11.2.3 2008-01-18 12:55:28 nyloth Exp $ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -40,7 +40,7 @@
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}{$comments_per_page_param}&amp;savenotepad={$comment.threadId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>
 		{/if}
 	
-		{if $user and $prefs.feature_user_watches eq 'y'}
+		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $forum_mode eq 'y'}
 		{if $user_watching_topic eq 'n'}
 		<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}Monitor this Topic{/tr}' title='{tr}Monitor this Topic{/tr}'}</a>
