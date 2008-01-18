@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83.2.2 2008-01-18 12:55:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83.2.3 2008-01-18 16:56:15 nyloth Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}</h1>
 
@@ -26,6 +26,7 @@
 	{if $next_topic}<a href="tiki-view_forum_thread.php?forumId={$forumId}&amp;comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
 	</span>
 	<span style="margin-left:10px;">
+		{if $pdf_export eq 'y'}<a href="{$smarty.server.PHP_SELF}?{query display="pdf"}" title="{tr}PDF{/tr}"><img width="16" height="16" border="0" alt="{tr}PDF{/tr}" src="pics/icons/page_white_acrobat.png"/></a>{/if}
 		<a href="{$smarty.server.PHP_SELF}?{query display="print"}" title="{tr}Print this page only{/tr}"><img width="16" height="16" border="0" alt="{tr}Print this page only{/tr}" src="pics/icons/printer.png"/></a>
 		<a href="{$smarty.server.PHP_SELF}?{query display="print_all"}" title="{tr}Print all pages{/tr}"><img width="16" height="16" border="0" alt="{tr}Print all pages{/tr}" src="pics/icons/printer_add.png"/></a>
 		{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
