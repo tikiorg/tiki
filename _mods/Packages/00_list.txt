@@ -11,6 +11,7 @@
 'features','kamap','0.0.3','kamap adds a tiled map interface to tikiwiki maps feature.','Public Domain'
 'lib','nusoap','1.1','Web Services Toolkit for PHP','GNU/LGPL'
 'lib','vtiger','1.2','Support for solve Helpdesk / vtiger CRM','Mozilla Public License 1.1'
+'lib','mozilla2ps','1.0','PDF feature that uses mozilla2ps XUL application','GNU/GPL'
 'menus','tikiring','1.3','The menu including all tiki sites. hardstamped to menuId=41','GNU/LGPL'
 'modules','calculator','1.5','Kewl little calculator for your right or left column within TikiWiki','GNU/LGPL'
 'modules','clock','1.4','Very neat borderless module holding a ticking clock','GNU/LGPL'

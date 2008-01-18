@@ -1,0 +1,18 @@
+* Usage and configuration
+
+Make sure you have Xulrunner correctly installed.
+
+xulrunner --install-app mozilla2ps-0.6.xulapp /tmp
+xulrunner /tmp/mozilla2ps/application.ini file:///tmp/foo.html /tmp/foo.ps
+xulrunner /tmp/mozilla2ps/application.ini http://www.lwn.net /tmp/lwn.ps ; \
+  ps2pdf /tmp/lwn.ps; evince lwn.pdf
+
+* Note: Running on Windows
+
+In order to get mozilla2ps to work on windows you'll need to install
+a suitable postscript printer. Download the "winsteng.exe" from Adobe
+http://www.adobe.com/support/downloads/product.jsp?product=44&platform=Windows
+install and configure a printer called "Generic PostScript Printer" that prints
+to a FILE: port.
+At this point mozill2ps should work normally on windows as well with no 
+changes.

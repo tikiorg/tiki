@@ -1,0 +1,40 @@
+Fri May 04 13:23:05 CEST 2007  Michele Baldessari <michele@pupazzo.org>
+
+  * Release 0.6
+
+Fri Apr 20 18:22:54 CEST 2007  Michele Baldessari <michele@pupazzo.org>
+
+  * Added orientation support (request from Anvar Sosnitski <anvar.sosnitski@mandator.com>)
+
+Mon Apr 09 23:54:01 CEST 2007  Michele Baldessari <michele@pupazzo.org>
+
+  * Release 0.5
+
+Thu Feb 08 21:29:03 CET 2007  Michele Baldessari <michele@pupazzo.org>
+
+  * Added fix to hide headers and footers from Mark Hunting <mark@netexpo.nl> 
+
+Tue Jan 30 13:31:31 CET 2007  Michele Baldessari <michele@pupazzo.org>
+
+  * Fixed bgImages parameter (reported by Mark Hunting <mark@netexpo.nl>)
+
+Thu Dec 14 23:08:28 CET 2006  Paul Schilling <paul@netkeva.com>
+
+  * Release 0.4
+  * Added command line parameter support
+
+Thu Jul 27 18:08:22 CEST 2006  Michele Baldessari <michele@pupazzo.org>
+
+  * Release 0.3
+  * Make it work on windows (presume Adobe Postscript drivers are installed and printer is called
+    "Generic PostScript Printer").
+  * Added a short README to the .xulapp distribution file
+
+Sat Mar 25 15:13:35 CET 2006  Michele Baldessari <michele@pupazzo.org>
+
+  * Cleanup a spurious warning because of gPrinterSettings not being declared
+    variable
+
+Sun Mar 19 11:02:18 CET 2006  Michele Baldessari <michele@pupazzo.org>
+
+  * Initial release
