@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.11.2.1 2007-12-23 17:11:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.11.2.2 2008-01-18 12:57:05 nyloth Exp $ *}
 
+{if (! isset($display) or $display eq '')}
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
 <div id="errors" style="display:{if isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y'}block{else}none{/if};">
@@ -20,6 +21,7 @@
 
 {if $lastup}
 <div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
+{/if}
 {/if}
 </body>
 </html>  
