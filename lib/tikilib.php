@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.68 2008-01-11 17:39:06 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.69 2008-01-18 22:46:09 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7302,14 +7302,19 @@ if (!$simple_wiki) {
 		return substr($data, 0, $length);
 	}
 
-	function htmldecode($string, $quote_style = ENT_COMPAT) {
-		if ( version_compare(phpversion(), '5', '>=') ) {
-			// Use html_entity_decode with UTF-8 only with PHP5 or later, since
+	function htmldecode($string, $quote_style = ENT_COMPAT, $translation_table = HTML_ENTITIES) {
+		if ( $translation_table == HTML_ENTITIES && version_compare(phpversion(), '5', '>=') ) {
+			// Use html_entity_decode with UTF-8 only with PHP 5.0 or later, since
 			//   this function was available in PHP4 but _without_ multi-byte charater sets support
 			$string = html_entity_decode($string, $quote_style, 'utf-8');
+
+		} elseif ( $translation_table == HTML_SPECIALCHARS && version_compare(phpversion(), '5.1.0', '>=') ) {
+			// Only available in PHP 5.1.0 or later
+			$string = htmlspecialchars_decode($string, $quote_style);
+
 		} else {
 			// For compatibility purposes with php < 5
-			$trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
+			$trans_tbl = array_flip(get_html_translation_table($translation_table));
 
 			// Not translating double quotes
 			if ($quote_style & ENT_NOQUOTES) {
