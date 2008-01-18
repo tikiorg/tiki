@@ -78,7 +78,7 @@ function mod_urltopdf($url = null, $filename = 'file.pdf', $options = null, $dis
 
 	// Wait for the file
 	$t = $timeout;
-	do { sleep(1); $t--; } while ( ! file_exists($temp_file) );
+	do { sleep(1); $t--; } while ( ! file_exists($temp_file) && $t > 0 );
 	sleep(1);
 
 	// Send the generated PDF content to the browser
