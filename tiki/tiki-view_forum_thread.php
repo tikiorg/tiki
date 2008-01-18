@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.4 2008-01-18 12:55:31 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.5 2008-01-18 16:45:34 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -425,7 +425,9 @@ if ( isset($_REQUEST['display']) ) {
 
 	// Allow PDF export by installing a Mod that define an appropriate function
 	if ( $_REQUEST['display'] == 'pdf' ) {
-		if ( function_exists('mod_urltopdf') ) {
+		// Method using 'mozilla2ps' mod
+		if ( file_exists('lib/mozilla2ps/mod_urltopdf.php') ) {
+			include_once('lib/mozilla2ps/mod_urltopdf.php');
 			mod_urltopdf();
 		}
 	} else {
