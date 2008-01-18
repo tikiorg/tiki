@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.6 2007-12-23 17:11:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.7 2008-01-18 12:57:49 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -35,7 +35,7 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
-if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
+///if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
 $num_queries = 0;
 $elapsed_in_db = 0.0;
 $server_load = '';
