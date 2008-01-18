@@ -1,0 +1,20 @@
+contributor:
+$Author: sylvieg $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2008-01-18 17:31:08 $
+
+files: 
+wiki-plugins/files/wiki-plugins/wikiplugin_files.php lib/wiki-plugins/wikiplugin_files.php
+
+author:
+sylvieg
+
+licence:
+GNU/LGPL
+
+Description: 
+List the files of a gallery or/and a category

@@ -57,6 +57,7 @@
 'themes','ztheme','1.3','Simple theme, conservative colors. Designed for easy \"readability\" and use.','GNU/LGPL'
 'wikiplugins','dopplr','1.0','add a dopplr.com badge','GNU/LGPL'
 'wikiplugins','ebay','1.1','Currently only works with ebay.co.uk','GNU/LGPL'
+'wikiplugins','files','1.1','List the files of a gallery or/and a category'
 'wikiplugins','formula','1.1','This plugin renders mathematical formulas in wiki pages. The formulas should be written in LaTeX format, simple ones will be in plain html and complex ones will render a graphic. Requires latex installed, or at least path-accesible installed latex, dvips, and Imagemagic\'s convert.','GNU/LGPL'
 'wikiplugins','galaxia_sweet_ui','1.2','This package provides a set of wiki plugins that allow Galaxia workflow developers to make user interfaces that abstract galaxia concepts from final user. So, user will run the activities from the wiki pages and don\'t have to know what\'s an instance, activity or proccess, they just click and go through application.','GNU/LGPL'
 'wikiplugins','group','1.1','Shows content only for desired group(s)','GNU/LGPL'
