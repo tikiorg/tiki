@@ -25,6 +25,18 @@ function smarty_function_query($params, &$smarty) {
       }
     }
   }
-  echo http_build_query($query,'', '&amp;');
+
+  $sep = '&amp;';
+  if ( function_exists('http_build_query') ) {
+    echo http_build_query($query, '', $sep);
+  } else {
+    $ret = '';
+    if ( is_array($query) ) {
+      foreach ( $query as $k => $v ) {
+        if ( $ret != '' ) $ret .= $sep;
+        $ret .= urlencode($k).'='.urlencode($v);
+      }
+    }
+  }
 }
 ?>
