@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.19 2008-01-11 23:09:19 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.20 2008-01-18 22:26:12 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -549,7 +549,9 @@ class TrackerLib extends TikiLib {
 				$csort_mode = 'tti.`'.$csort_mode.'` ';
 			}
 
-			if ( ! is_array($filterfield) ) {
+			if (empty($filterfield)) {
+				$nb_filtered_fields = 0;
+			} elseif ( ! is_array($filterfield) ) {
 				$fv = $filtervalue;
 				$ev = $exactvalue;
 				$ff = $filterfield;
@@ -608,9 +610,9 @@ class TrackerLib extends TikiLib {
 						if ($cpt++)
 							$mid .= ' OR ';
 						$mid .= " ttif$i.`value` like ? ";
-						if ( substr($v, 0, 1) == '*' ) {
+						if ( substr($v, 0, 1) == '*' || substr($v, 0, 1) == '%') {
 							$bindvars[] = '%'.substr($v, 1);
-						} elseif ( substr($v, -1, 1) == '*' ) {
+						} elseif ( substr($v, -1, 1) == '*' || substr($v, -1, 1) == '%') {
 							$bindvars[] = substr($v, 0, strlen($v)-1).'%';
 						} else {
 							$bindvars[] = '%'.$v.'%';
