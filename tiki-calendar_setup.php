@@ -28,25 +28,29 @@ $focuscell = TikiLib::make_time(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-	$_SESSION['CalendarViewMode'] = $prefs['calendar_view_mode'];
-}
+if ( isset($calendarViewMode) && $calendarViewMode != '' ) {
+	$smarty->assign('viewmode', $calendarViewMode);
+} else {
+	if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
+		$_SESSION['CalendarViewMode'] = $prefs['calendar_view_mode'];
+	}
 
-if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
-	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
-}
+	if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
+		$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
+	}
 
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-	$_SESSION['CalendarViewMode'] = 'month';
+	if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
+		$_SESSION['CalendarViewMode'] = 'month';
+	}
+	$smarty->assign('viewmode', $_SESSION['CalendarViewMode']);
+	$calendarViewMode = $_SESSION['CalendarViewMode'];
 }
-
-$smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
 
 if (isset($_REQUEST["viewlist"])) {
 	$viewlist = $_REQUEST["viewlist"];
 	$_SESSION['CalendarViewList'] = $viewlist;
 } elseif (!empty($_SESSION['CalendarViewList'])) {
-	$viewlist = 	$_SESSION['CalendarViewList'];
+	$viewlist = $_SESSION['CalendarViewList'];
 } else {
 	$viewlist = "";
 }
@@ -60,18 +64,14 @@ if (isset($_REQUEST["gbi"])) {
 }
 $smarty->assign_by_ref('group_by_item', $_SESSION['CalendarGroupByItem']);
 
-$calendarViewMode = $_SESSION['CalendarViewMode'];
 $calendarViewGroups = $_SESSION['CalendarViewGroups'];
 $calendarViewList = $_SESSION['CalendarViewList'];
 $calendarGroupByItem = $_SESSION['CalendarGroupByItem'];
 
 global $calendar_firstDayofWeek;
 if ($calendar_firstDayofWeek == 'user') {
-  $strRef = "First day of week: Sunday (its ID is 0) - translators you need to localize this string!";
-  //get_strings tra("First day of week: Sunday (its ID is 0) - translators you need to localize this string!");
-	$str = tra($strRef);
-  $firstDayofWeek = ereg_replace("[^0-9]", "",$str);
-  if ($firstDayofWeek < 1 || $firstDayofWeek > 6) {
+  $firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
+  if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
     $firstDayofWeek = 0;
   } 
 } else {
@@ -86,9 +86,7 @@ if (strstr($strRef, "%h") || strstr($strRef, "%g")) {
 	$timeFormat12_24 = "24";
 }
 $smarty->assign('timeFormat12_24', $timeFormat12_24);
-
-$short_format_day = tra("%m/%d");
-$smarty->assign('short_format_day', $short_format_day);
+$smarty->assign('short_format_day', tra('%m/%d'));
 
 $focus_day_limited = min($focus_day, 28); // To make "previous month" work if the current focus is on, for example, the last day of march.
 
@@ -131,6 +129,7 @@ $smarty->assign('quarterafter', $focus_nextquarter);
 $smarty->assign('semesterafter', $focus_nextsemester);
 $smarty->assign('yearafter', $focus_nextyear);
 
+$smarty->assign('focusday', $focus_day);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
@@ -166,14 +165,14 @@ if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarV
 } elseif ($calendarViewMode == 'year') {
 	$daystart = TikiLib::make_time(0,0,0, 1, 1, $focus_year);
 } else {
-	$daystart = TikiLib::make_time(0,0,0,$focus_month, $focus_day, $focus_year);
+	$daystart = TikiLib::make_time(0,0,0, $focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
 	
 if ($calendarViewMode == 'month' ||
 	 $calendarViewMode == 'quarter' ||
 	 $calendarViewMode == 'semester' ||
-	 $calendarViewMode == 'year'	) {
+	 $calendarViewMode == 'year' ) {
    $TmpWeekday = TikiLib::date_format("%w",$viewstart);
 //prepare for select first day of week (Hausi)
    if($firstDayofWeek == 1){
@@ -209,12 +208,12 @@ if ($calendarViewMode == 'month' ||
    $firstweek = TikiLib::date_format("%U", $viewstart + $d);
    $lastweek = TikiLib::date_format("%U", $viewend);
    if ($lastweek <= $firstweek) {
-		   $startyear = TikiLib::date_format("%Y",$daystart-1);
-		   $weeksinyear = TikiLib::date_format("%U",TikiLib::make_time(0,0,0,12,31,$startyear));
-		   if ($weeksinyear == 1){
-			$weeksinyear = TikiLib::date_format("%U",TikiLib::make_time(0,0,0,12,28,$startyear));
-		   }
-		   $lastweek += $weeksinyear;
+	   $startyear = TikiLib::date_format("%Y",$daystart-1);
+	   $weeksinyear = TikiLib::date_format("%U",TikiLib::make_time(0,0,0,12,31,$startyear));
+	   if ($weeksinyear == 1){
+		   $weeksinyear = TikiLib::date_format("%U",TikiLib::make_time(0,0,0,12,28,$startyear));
+	   }
+	   $lastweek += $weeksinyear;
    }
 
    $numberofweeks = $lastweek - $firstweek;
@@ -238,22 +237,23 @@ if ($calendarViewMode == 'month' ||
 }
 // untested (by me, anyway!) function grabbed from the php.net site:
 // [2004/01/05:rpg]
-function m_weeks($y, $m){
-  // monthday array
-  $monthdays = array(1=>31, 3=>31, 4=>30, 5=>31, 6=>30,7=>31,
-               8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
-  // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
-  $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
-  $date = TikiLib::make_time( 0, 0, 0, $m, 1, $y);
-  $leap = (TikiLib::date_format("%y", $date) % 4 == 0) ? true : false;
-  // if it is a leap year set February to 29 days, otherwise 28
-  $monthdays[2] = ($leap ? 29 : 28);
-  // get the weekday of the first day of the month
-  $wn = TikiLib::date_format("%w",$date);
-  $days = $monthdays[$m] - $weekdays[$wn];
-  return (ceil($days/7) + 1);
+if ( ! function_exists('m_weeks') ) {
+	function m_weeks($y, $m){
+		// monthday array
+		$monthdays = array(1=>31, 3=>31, 4=>30, 5=>31, 6=>30,7=>31,
+				8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
+		// weekdays remaining in a week starting on 7 - Sunday...(could be changed)
+		$weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
+		$date = TikiLib::make_time( 0, 0, 0, $m, 1, $y);
+		$leap = (TikiLib::date_format("%y", $date) % 4 == 0) ? true : false;
+		// if it is a leap year set February to 29 days, otherwise 28
+		$monthdays[2] = ($leap ? 29 : 28);
+		// get the weekday of the first day of the month
+		$wn = TikiLib::date_format("%w",$date);
+		$days = $monthdays[$m] - $weekdays[$wn];
+		return (ceil($days/7) + 1);
+	}
 }
-
 
 $smarty->assign('viewstart', $viewstart);
 $smarty->assign('viewend', $viewend);
