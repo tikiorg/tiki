@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.4 2007-12-06 16:38:27 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.5 2008-01-18 13:58:44 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,6 +84,12 @@ if ($prefs['session_db'] == 'y') {
 	include('session/adodb-session.php');
 }
 
+// Only accept PHP's session ID in URL when the request comes from the tiki server itself
+// This is used by features that need to query the server to retrieve tiki's generated html and images (e.g. pdf export)
+if ( isset($_GET['PHPSESSID']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
+	$_COOKIE['PHPSESSID'] = $_GET['PHPSESSID'];
+	session_id($_GET['PHPSESSID']);
+}
 if ($sessions_silent == 'disabled' or !empty($_COOKIE)) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	session_start();
