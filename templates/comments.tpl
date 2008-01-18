@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.8 2008-01-08 16:01:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.9 2008-01-18 12:55:27 nyloth Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -152,17 +152,17 @@
 	{if $comments_cant_pages gt 1}
 	<div class="mini">
 
-		{if $comments_prev_offset >= 0 && ! (isset($print_page) && $print_page eq 'y')}
+		{if $comments_prev_offset >= 0 && ! $display eq ''}
 		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Prev{/tr}</a>]&nbsp;
 		{/if}
 
 		{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
 
-		{if $comments_next_offset >= 0 && ! (isset($print_page) && $print_page eq 'y')}
+		{if $comments_next_offset >= 0 && $display eq ''}
 		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Next{/tr}</a>]
 		{/if}
 
-		{if $prefs.direct_pagination eq 'y' && ! (isset($print_page) && $print_page eq 'y')}
+		{if $prefs.direct_pagination eq 'y' && $display eq ''}
 		<br />
 		{section loop=$comments_cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}

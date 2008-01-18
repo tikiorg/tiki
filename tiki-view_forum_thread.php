@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.3 2008-01-08 16:01:38 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.4 2008-01-18 12:55:31 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -281,7 +281,7 @@ $commentslib->process_inbound_mail($_REQUEST['forumId']);
 
 //print "TIME1: ".($end_time - $start_time)."\n";
 
-if ( isset($_REQUEST['print']) && $_REQUEST['print'] == 'all' ) {
+if ( isset($_REQUEST['display']) && $_REQUEST['display'] == 'print_all' ) {
 	$_REQUEST['comments_per_page'] = 0; // unlimited
 }
 
@@ -408,22 +408,32 @@ if ($prefs['feature_actionlog'] == 'y') {
 ask_ticket('view-forum');
 
 // Display the template
-if ( isset($_REQUEST['print']) ) {
+if ( isset($_REQUEST['display']) ) {
 
 	// Remove icons and actions that should not be printed
 	$prefs['forum_thread_user_settings'] = 'n';
-	$smarty->assign('print_page', 'y');
+	$smarty->assign('display', $_REQUEST['display']);
 	$smarty->assign('thread_show_comment_footers', 'n');
 	$smarty->assign('thread_show_pagination', 'n');
 	$smarty->assign('tiki_p_forum_post', 'n');
 	$smarty->assign('tiki_p_admin_forum', 'n');
 	$smarty->assign('tiki_p_forum_edit_own_posts', 'n');
+	$smarty->assign('tiki_p_notepad', 'n');
 
 	// Display the forum messages
 	$smarty->assign('mid', 'tiki-print_forum_thread.tpl');
-	$smarty->display('tiki-print.tpl');
+
+	// Allow PDF export by installing a Mod that define an appropriate function
+	if ( $_REQUEST['display'] == 'pdf' ) {
+		if ( function_exists('mod_urltopdf') ) {
+			mod_urltopdf();
+		}
+	} else {
+		$smarty->display('tiki-print.tpl');
+	}
 
 } else {
+	$smarty->assign('display', '');
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
 }
