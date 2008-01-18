@@ -21,7 +21,7 @@ class TikiCalendarLib extends TikiLib {
 				$objectType = ( $type == 'wiki comment' ) ? 'wiki page' : $type;
 				$result = $this->get_object_cal_infos($type, array($tstart, $tstop, $objectType));
 
-				while ($res = $result->fetchRow()) {
+				if ( is_object($result) ) while ($res = $result->fetchRow()) {
 					if ( $res['start'] > 0 ) {
 						$res['show_description'] = 'y';
 						$res['visible'] = 'y';
@@ -46,10 +46,10 @@ class TikiCalendarLib extends TikiLib {
 								$res['description'] = tra('New Subscriptions');
 								$res['head'] = ' ... '.$res['head'];
 								break;
-							case 'track': 
-                  $res['description'] = tra('New Item in Tracker');
-                  $res['parent'] = tra('tracker');
-              break;
+							case 'track':
+								$res['description'] = tra('New Item in Tracker');
+								$res['parent'] = tra('tracker');
+								break;
 							case 'wiki page': $res['parent'] = 'wiki'; break;
 						} 
 						$res['url'] = $this->get_object_url($res['type'], $url_vars);
@@ -66,7 +66,9 @@ class TikiCalendarLib extends TikiLib {
 						if ( $res['name'] == '' ) $res['name'] = $res['id'];
 						
 						$res['where'] = str_replace("\n|\r", '', addslashes($res['parent']));
-						if ( $where == '' && $res['parent'] != '' ) $where = ' '.tra('in').' <b>'.$res['where'].'</b>';
+						if ( ( ! isset($where) || $where == '' ) && $res['parent'] != '' ) {
+							$where = ' '.tra('in').' <b>'.$res['where'].'</b>';
+						}
 						if ( $res['head'] == '' ) $res['head'] = $when.$where;
 						
 						$ret[$dstart][] = $res;
@@ -129,9 +131,177 @@ class TikiCalendarLib extends TikiLib {
 		}
 	}
 
+	function getTikiItems($with_infos = true) {
+		global $prefs;
+		global $tiki_p_view, $tiki_p_view_image_gallery, $tiki_p_read_article, $tiki_p_read_blog, $tiki_p_forum_read, $tiki_p_view_directory, $tiki_p_view_file_gallery, $tiki_p_view_faqs, $tiki_p_take_quiz, $tiki_p_view_trackers, $tiki_p_take_survey, $tiki_p_subscribe_newsletters, $tiki_p_view_chart;
+
+		$return = array(
+			"wiki" => array( "label" => tra("Wiki"), "feature" => ''.$prefs['feature_wiki'], "right" => "$tiki_p_view"),
+			"gal" => array( "label" => tra("Image Gallery"), "feature" => ''.$prefs['feature_galleries'], "right" => "$tiki_p_view_image_gallery"),
+			"art" => array( "label" => tra("Articles"), "feature" => ''.$prefs['feature_articles'], "right" => "$tiki_p_read_article"),
+			"blog" => array( "label" => tra("Blogs"), "feature" => ''.$prefs['feature_blogs'], "right" => "$tiki_p_read_blog"),
+			"forum" => array( "label" => tra("Forums"), "feature" => ''.$prefs['feature_forums'], "right" => "$tiki_p_forum_read"),
+			"dir" => array( "label" => tra("Directory"), "feature" => ''.$prefs['feature_directory'], "right" => "$tiki_p_view_directory"),
+			"fgal" => array( "label" => tra("File Gallery"), "feature" => ''.$prefs['feature_file_galleries'], "right" => "$tiki_p_view_file_gallery"),
+			"faq" => array( "label" => tra("FAQs"), "feature" => ''.$prefs['feature_faqs'], "right" => $tiki_p_view_faqs),
+			"quiz" => array( "label" => tra("Quizzes"), "feature" => ''.$prefs['feature_quizzes'], "right" => $tiki_p_take_quiz),
+			"track" => array( "label" => tra("Trackers"), "feature" => ''.$prefs['feature_trackers'], "right" => "$tiki_p_view_trackers"),
+			"surv" => array( "label" => tra("Survey"), "feature" => ''.$prefs['feature_surveys'], "right" => "$tiki_p_take_survey"),
+			"nl" => array( "label" => tra("Newsletter"), "feature" => ''.$prefs['feature_newsletters'], "right" => "$tiki_p_subscribe_newsletters"),
+			"chart" => array( "label" => tra("Charts"), "feature" => ''.$prefs['feature_charts'], "right" => "$tiki_p_view_chart")
+		);
+		return ( $with_infos ? $return : array_keys($return) );
+	}
+
+	function getCalendar($tikiItems, &$viewstart, &$viewend, $group_by = '') {
+		global $user, $prefs, $smarty;
+
+		// Global vars used by tiki-calendar_setup.php (this has to be changed)
+		global $tikilib, $calendarViewMode, $request_day, $request_month, $request_year, $dayend, $myurl;
+		include('tiki-calendar_setup.php');
+
+		$listtikievents = $this->list_tiki_items($tikiItems, $user, $viewstart, $viewend, 0, 50, 'name_desc', '');
+	
+		$mloop = TikiLib::date_format('%m', $viewstart);
+		$dloop = TikiLib::date_format('%d', $viewstart);
+		$yloop = TikiLib::date_format('%Y', $viewstart);
+	
+		// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
+		for ($i = 0; $i <= $numberofweeks; $i++) {
+			$wee = TikiLib::date_format('%U', $viewstart + ($i * weekInSeconds) + $d);
+			$weeks[] = $wee;
+	
+			// $startOfWeek is a unix timestamp
+			$startOfWeek = $viewstart + $i * weekInSeconds;
+	
+			foreach ( $weekdays as $w ) {
+				$leday = array();
+				if ( $group_by == 'day' ) {
+					$key = 0;
+				}
+				if ( $calendarViewMode == 'day' ) {
+					$dday = $daystart;
+				} else {
+					$dday = TikiLib::make_time(0,0,0, $mloop, $dloop++, $yloop);
+				}
+				$cell[$i][$w]['day'] = $dday;
+	
+				if ( $calendarViewMode == 'day' or ( $dday >= $daystart && $dday <= $dayend ) ) {
+					$cell[$i][$w]['focus'] = true;
+				} else {
+					$cell[$i][$w]['focus'] = false;
+				}
+				if ( isset($listtikievents["$dday"]) ) {
+					$e = -1;
+	
+					foreach ( $listtikievents["$dday"] as $lte ) {
+						$lte['desc_name'] = $lte['name'];
+						if ( $calendarGroupByItem != 'n' ) {
+							if ( $group_by != 'day' ) $key = $lte['id'].'|'.$lte['type'];
+							if ( ! isset($leday[$key]) ) {
+								$leday[$key] = $lte;
+								if ( $group_by == 'day' ) {
+									$leday[$key]['description'] = array($lte['where'] => array($lte['name']));
+									$leday[$key]['head'] = TikiLib::date_format($prefs['short_date_format'], $cell[$i][$w]['day']);
+								} else {
+									$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
+									$leday[$key]['head'] = $lte['name'].', <i>'.tra('in').' '.$lte['where'].'</i>';
+								}
+								$leday[$key]['desc_name'] = '';
+							} else {
+								$leday_item =& $leday[$key];
+								$leday_item['user'] .= ', '.$lte['user'];
+	
+								if ( ! is_integer($leday_item['action']) ) {
+									$leday_item['action'] = 1;
+								}
+								$leday_item['action']++;
+	
+								if ( $group_by == 'day' ) {
+									$leday_item['name'] .= '<br />'.$lte['name'];
+									$leday_item['desc_name'] = $leday_item['action'].' '.tra('Actions').' '.tra('in').': ';
+									$leday_item['description'][$lte['where']][] = $lte['name'];
+								} else {
+									$leday_item['name'] = $lte['name'].' (x<b>'.$leday_item['action'].'</b>)';
+									$leday_item['desc_name'] = $leday_item['action'].' '.tra('Actions');
+									if ( $lte['show_description'] == 'y' && ! empty($lte['description']) ) {
+										$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
+										$leday_item['show_description'] = 'y';
+									}
+								}
+							}
+						} else {
+							$e++;
+							$key = "{$lte['time']}$e";
+							$leday[$key] = $lte;
+							$lte['desc_name'] .= tra($lte['action']);
+						}
+					}
+	
+					foreach ( $leday as $key => $lte ) {
+						if ( $group_by == 'day' ) {
+							$desc = '';
+							foreach ( $lte['description'] as $desc_where => $desc_items ) {
+								$desc_items = array_unique($desc_items);
+								foreach ( $desc_items as $desc_item ) {
+									if ( $desc != '' ) $desc .= '<br />';
+									$desc .= '- '.$desc_item.' <i>['.$desc_where.']</i>';
+								}
+							}
+							$lte['description'] = $desc;
+						}
+	
+						$smarty->assign_by_ref('cellhead', $lte["head"]);
+						$smarty->assign_by_ref('cellprio', $lte["prio"]);
+						$smarty->assign_by_ref('cellcalname', $lte["calname"]);
+						$smarty->assign('celllocation', "");
+						$smarty->assign('cellcategory', "");
+						$smarty->assign_by_ref('cellname', $lte["desc_name"]);
+						$smarty->assign('cellid', "");
+						$smarty->assign_by_ref('celldescription', $lte["description"]);
+						$smarty->assign('show_description', $lte["show_description"]);
+	
+						if ( ! isset($leday[$key]["over"]) ) {
+							$leday[$key]["over"] = '';
+						} else {
+							$leday[$key]["over"] .= "<br />\n";
+						}
+						$leday[$key]["over"] .= $smarty->fetch("tiki-calendar_box.tpl");
+					}
+				}
+	
+				if ( is_array($leday) ) {
+					ksort ($leday);
+					$cell[$i][$w]['items'] = array_values($leday);
+				}
+			}
+		}
+
+		if ( $_SESSION['CalendarViewList'] == 'list' ) {
+			if ( is_array($listtikievents) ) {
+				foreach ( $listtikievents as $le ) {
+					if ( is_array($le) ) {
+						foreach ( $le as $e ) {
+							$listevents[] = $e;
+						}
+					}
+				}
+			}
+		}
+
+		return array(
+			'cell' => $cell,
+			'listevents' => $listevents,
+			'weeks' => $weeks,
+			'weekdays' => $weekdays,
+			'daysnames' => $daysnames,
+			'trunc' => $trunc
+		);
+	}
 
 }
 global $dbTiki;
 $tikicalendarlib = new TikiCalendarLib($dbTiki);
+define('weekInSeconds', 604800);
 
 ?>
