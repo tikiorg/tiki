@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_query($params, &$smarty) {
-  parse_str(htmlspecialchars_decode($_SERVER['QUERY_STRING']),$query);
+  parse_str(TikiLib::htmldecode($_SERVER['QUERY_STRING'], ENT_COMPAT, HTML_SPECIALCHARS), $query);
   foreach($params as $param_name=>$param_value) {
     $list = explode(",",$param_value);
     if (isset($query[$param_name])) {
