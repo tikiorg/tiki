@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/wiki-plugins/wikiplugin_files.php,v 1.1 2008-01-18 17:31:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/wiki-plugins/wikiplugin_files.php,v 1.2 2008-01-18 22:00:48 sylvieg Exp $
 /*	list files of galleries
  * galleryId
  * categId
@@ -123,9 +123,26 @@ function wikiplugin_files($data, $params) {
 		$smarty->assign_by_ref('data', $data);
 	else
 		$smarty->assign('data', '');
-	if (isset($gal_info))
+	if (isset($gal_info)) {
+		$gal_info['show_checked' ] = 'n'; // the multiple action will not work
+		if (!empty($showid)) $gal_info['show_id'] = $showid;
+		if (!empty($showicon)) $gal_info['show_size'] = $showicon;
+		if (empty($galleryId)) $gal_info['show_gallery'] = 'y';
+		if (!empty($showsize)) $gal_info['show_size'] = $showsize;
+		if (!empty($showdescription)) $gal_info['show_description'] = $showdescription;
+		if (!empty($showcreated)) $gal_info['show_created'] = $showcreated;
+		if (!empty($showcreator)) $gal_info['show_creator'] = $showcreator;
+		if (!empty($showauthor)) $gal_info['show_author'] = $showauthor;
+		if (!empty($showmodified)) $gal_info['show_modified'] = $showmodified;
+		if (!empty($showcomment)) $gal_info['show_comment'] = $showcomment;
+		if (!empty($showdl)) $gal_info['show_dl'] = $showdl;
+		if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
+		if (!empty($showname) && $showname == 'y' && !empty($showfilename) && $showfilename == 'y') $gal_info['show_name'] = 'a';
+		if (!empty($showname) && $showname == 'y' && !empty($showfilename) && $showfilename == 'n') $gal_info['show_name'] = 'n';
+		if (!empty($showname) && $showname == 'n' && !empty($showfilename) && $showfilename == 'y') $gal_info['show_name'] = 'f';
+		$gal_info['show_userlink'] = 'n'; // overlib is not necessary there
 		$smarty->assign_by_ref('gal_info', $gal_info);
-	else
+	} else
 		$smarty->assign('gal_info', '');
 	if (isset($categId)) {
 		$category = $categlib->get_category_name($categId);
@@ -136,10 +153,7 @@ function wikiplugin_files($data, $params) {
 		$showfind = 'n';
 	}
 	$smarty->assign_by_ref('show_find', $showfind);
-	if (!isset($showaction)) {
-		$showaction = 'n';
-	}
-	$smarty->assign_by_ref('show_action', $showaction);
-	return $smarty->fetch('list_file_gallery.tpl');
+	$smarty->assign('show_action', 'n');
+	return $smarty->fetch('wiki-plugins/wikiplugin_files.tpl');
 }
 ?>

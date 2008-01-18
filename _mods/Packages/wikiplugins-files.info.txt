@@ -2,13 +2,14 @@ contributor:
 $Author: sylvieg $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2008-01-18 17:31:08 $
+$Date: 2008-01-18 22:00:48 $
 
 files: 
 wiki-plugins/files/wiki-plugins/wikiplugin_files.php lib/wiki-plugins/wikiplugin_files.php
+wiki-plugins/files/templates/wikiplugin_files.tpl templates/wiki-plugins/wikiplugin_files.tpl
 
 author:
 sylvieg
