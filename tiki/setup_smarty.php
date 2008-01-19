@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.45.2.1 2008-01-18 13:55:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.45.2.2 2008-01-19 12:38:46 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,16 +61,6 @@ class Smarty_Tikiwiki extends Smarty {
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
-		if (isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
-			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
-			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
-			}
-		}
-
 		if (($tpl = $this->get_template_vars('mid')) && $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl') {
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
 				$this->assign('print_page', 'y');
@@ -80,6 +70,16 @@ class Smarty_Tikiwiki extends Smarty {
 			include_once('tiki-modules.php');
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'information.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			include_once('tiki-modules.php');
+		}
+
+		if (isset($style_base)) {
+			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
+			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
+			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
+			}
 		}
 
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
