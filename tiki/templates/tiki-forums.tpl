@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.3 2008-01-11 15:47:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.4 2008-01-20 20:54:38 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -93,8 +93,10 @@
 {/if}
 {if $prefs.forum_list_lastpost eq 'y'}	
 <td class="{cycle advance=false}">
+{if isset($channels[user].lastPost)}
 {$channels[user].lastPost|tiki_short_datetime}<br />
 <small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+{/if}
 </td>
 {/if}
 {if $prefs.forum_list_visits eq 'y'}
