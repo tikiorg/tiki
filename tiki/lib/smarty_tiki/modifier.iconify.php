@@ -6,22 +6,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/*
+/**
  * Smarty plugin
  * -------------------------------------------------------------
  * Type:     modifier
- * Name:     capitalize
- * Purpose:  capitalize words in the string
+ * Name:     iconify
+ * Purpose:  Returns a filetype icon if the filetype is known and there's an icon in pics/icons/mime. Returns a default file type icon in any other case
  * -------------------------------------------------------------
  */
 function smarty_modifier_iconify($string)
 {
   
-  $string=strtolower(substr($string,strlen($string)-3));
-  if(file_exists("pics/icons/mime/$string".".png")) {
-    return "<img border='0' src='pics/icons/mime/{$string}.png' alt='{$string}' width='16' height='16' />";
+  $filetype=strtolower(substr($string,strrpos($string, '.')+1));
+ 
+  if(file_exists("pics/icons/mime/$filetype".".png")) {
+    return "<img border='0' src='pics/icons/mime/{$filetype}.png' alt='{$filetype}' width='16' height='16' />";
   } else {
-    return "<img border='0' src='pics/icons/mime/default.png' alt='{$string}' width='16' height='16' />";
+    return "<img border='0' src='pics/icons/mime/default.png' alt='{$filetype}' width='16' height='16' />";
   }     
 	
 }
