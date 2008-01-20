@@ -1,110 +1,78 @@
-This directory contains source code to Tiki! The wiki with lots of features!
+This directory contains source code to TikiWiki CMS/Groupware
 
-ABOUT DOCUMENTATION
--------------------
-* official Tikiwiki documentation website (for all versions) :
+
+TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project. 
+It exists and improves by the participation of people just like YOU.
+
+
+
+IMPORTANT LINKS
+---------------
+* General information & overview
+  http://info.tikiwiki.org
+  
+* Official TikiWiki documentation website
   http://doc.tikiwiki.org
+  
+* Forums & community
+  http://tikiwiki.org/tiki-forums.php
 
-* It is highly recommended that you refer to the online documentation:
-* http://tikiwiki.org/InstallTiki for a setup guide
-* http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
-* It might also be helpful to look into the official Manual. Last released
-  documentation, in pdf format (350 pages) (outdated at the time of this
-  writing) and a pdf snapshot of doc.tikiwiki.org:
-  http://sourceforge.net/project/showfiles.php?group_id=64258&package_id=68737
-* Tikiwiki also has an active IRC channel: #tikiwiki on irc.freenode.net
-  see http://tikiwiki.org/ConnectingToIRC for how to join the IRC channel
+* Developers
+  http://dev.tikiwiki.org
+    
+* Themes & styling
+  http://themes.tikiwiki.org
+  
+* Security
+  http://security.tikiwiki.org
+  
+* IRC chat channel: #tikiwiki on irc.freenode.net
+  http://irc.tikiwiki.org/
 
+
+
+INSTALLATION
+------------
 The rest of this document includes parts of the online documentation that
-might be enough to get you running Tiki.
+might be enough to get you running TikiWiki. For more details, please see:
+ http://doc.tikiwiki.org/Installation
 
-INSTALL TIKI WITH POSTGRESQL
-----------------------------
-Refer to http://tikiwiki.org/TikiPostgres
- 
 
-INSTALL TIKI WITH MYSQL
------------------------
 Before you get started it is a good idea to know:
 
-    * your database name, database user name and password
-    * your Apache user and group ID (e.g. www-user and www-data)
+    * Your database name, database user name and password
+    * Your Apache user and group ID (e.g. www-user and www-data)
 
 
 If you are using the RPM that is available you can skip down to browser-based
-install.
+installation.
 
-These are notes on how to setup and configure Tiki.
+These are notes on how to setup and configure TikiWiki.
 
 
 ----------------------------
 Step one: unpack the archive
 ----------------------------
-Unpack the Tiki files to the document root of where you want Tiki installed,
+Unpack the TikiWiki files to the document root of where you want it installed,
 e.g. /var/www/tiki/ 
 
 To unpack the bz2 file, use:
 tar xjf tikiwiki-[version].tar.bz2
 
 
+
 -----------------------------------------
 Step two: run setup.sh to set permissions
 -----------------------------------------
-CHMOD the file setup.sh to 755. "chmod 755 setup.sh"
+CHMOD the file setup.sh to 755.
 
-* Set permissions and virtual host domains with setup.sh:
-  o Determine what user and group your web server runs as 
+# chmod 755 setup.sh
 
-The script setup.sh in this directory assigns necessary permissions for the
-directories that the web server writes files to. It also creates the
-(initially empty) cache directories.
 
-Usage ./setup.sh user [group] [rights] [list of virtual host domains]
+Run .setup and follow the instructions
 
-For example, if :
-    * Apache is running as user $AUSER and group $AGROUP
-    AND
-    * Your user name is $YOURUSER and you belong to group $YOURGROUP
-type:
+# ./setup.sh
 
-  su -c './setup.sh $AUSER'
- 
-Alternatively, you may wish to set both the user and the group:
-  
-  su -c './setup.sh $YOURUSER $AGROUP'
-
-This will allow you to delete certain files/directories without becoming root.
-  
-Or, if you can't become root, but are a member of the group Apache runs under
-(for example: $AGROUP), you can type:
-
-  ./setup.sh $YOURUSER $AGROUP
-
-Be aware that you probably have to do a 
-
-  chown -R $YOURUSER *
-
-if your Tiki runs in a PHP-safe-mode environment.
-
-If you can't become root, and are not a member of the Apache group, then type:
-
-  ./setup.sh $YOURUSER $YOURGROUP 02777
-
-Replace $YOURGROUP with your default group.
-
-NOTE: If you do execute this last command, you will not be able to delete 
-certain files created by Apache, and will need to ask your system
-administrator to delete them for you if needed.
-
-To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot)
-add a list of domains to the command to create all the needed directories.
-For example:
-
-  su -c './setup.sh $YOURUSER $AGROUP $RIGHTS domain1 domain2 domain3'
-
-or, if you can't become root:
-
-  ./setup.sh $YOURUSER $AGROUP 02777 domain1 domain2 domain3
 
 
 --------------------------------------------------------------------
@@ -124,13 +92,14 @@ active .htaccess files, just call the script with the parameter off to rename
 the .htaccess files back to _htaccess. That's it!
 
 
+
 ------------------------------
 Step four: browser-based setup
 ------------------------------
-* create a database for Tiki
+* create a database for TikiWiki
   - often using PhpMyAdmin and MySQL
   - or on the command line "mysqladmin create dbname"
-    the database name is usually called "tiki" 
+    the database name is usually called "tikiwiki" 
 * Point your browser to the web address that corresponds to the file
   tiki-install.php (e.g. http://localhost/tiki/tiki-install.php)
 * Follow the instructions there
@@ -138,7 +107,7 @@ Step four: browser-based setup
 * use a profile to populate your database.
   default values are very minimal, and basicEnabled maybe suits more
   immediate use
-* To log into Tiki for the first time:
+* To log into TikiWiki for the first time:
   - user: admin
   - password: admin
 
@@ -146,7 +115,7 @@ Step four: browser-based setup
 ------------------------------
 Step five: configure your site
 ------------------------------
-Next you can configure Tiki to your suit needs:
+Next you can configure TikiWiki to your suit needs:
 
 * Choose which features you want enabled
   - go to tiki-admin.php by clicking on the "Admin" or "Admin Home" link
@@ -155,9 +124,9 @@ Next you can configure Tiki to your suit needs:
 * Assign appropriate permissions 
 
 
-Good luck and have fun with Tiki!
+Good luck and have fun with TikiWiki CMS/Groupware!
 
 
 ps:
-Now you may want to come to http://tikiwiki.org and join the community !
+Now you may want to come to http://tikiwiki.org and join the community!
 

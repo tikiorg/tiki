@@ -8,35 +8,50 @@
 /**
 \mainpage
 
-Tikiwiki
 
-DOCUMENTATION
+TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project.
+It exists and improves by the participation of people just like YOU.
 
-* It is highly recommended you refer to the online documentation:
-* http://tikiwiki.org/InstallTiki for a setup guide
-* http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
-* It might also be helpful to look into the official Manual. Last released
-  documentation, in pdf format (350 pages) (outdated at the time of this writing):
-  http://tikiwiki.org/tiki.pdf (version 1.6 but with many valuable help)
 
-* The documentation for all versions is maintained on http://doc.tikiwiki.org,
-  come and help if you can and wish.
+IMPORTANT LINKS
+---------------
+* General information & overview
+  http://info.tikiwiki.org
 
-* Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess110
-* Tikiwiki is also a live community on irc.freenode.net channel #tikiwiki
+* Official TikiWiki documentation website
+  http://doc.tikiwiki.org
+
+* Forums & community
+  http://tikiwiki.org/tiki-forums.php
+
+* Developers
+  http://dev.tikiwiki.org
+
+* Themes & styling
+  http://themes.tikiwiki.org
+
+* Security
+  http://security.tikiwiki.org
+
+* IRC chat channel: #tikiwiki on irc.freenode.net
+  http://irc.tikiwiki.org/
+
 
 
 INSTALLATION
+------------
+Please see the INSTALL file in this folder for basic installation instructions.
+For more details, please see:
+http://doc.tikiwiki.org/Installation
 
-* There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see http://tikiwiki.org/InstallTiki for the latest install help.
 
 
 COPYRIGHT
-
-Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.All
+---------
+Copyright (c) 2002-2008, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.All
 Rights Reserved. See copyright.txt for details and a complete list of authors.
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 
 ... Have fun!
 */
