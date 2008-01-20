@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.18 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mods.php,v 1.18.2.1 2008-01-20 21:25:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,7 @@ if (isset($_REQUEST['dl'])) {
 	    $smarty->display('error.tpl');
 	    die;
 	}
-	$modslib->dl_remote($mods_server,$_REQUEST['dl'],$prefs['mods_dir']);
+	$modslib->dl_remote($prefs['mods_server'],$_REQUEST['dl'],$prefs['mods_dir']);
 	$modslib->rebuild_list($prefs['mods_dir']."/Packages");
 }
 
@@ -113,13 +113,13 @@ if (!is_file($prefs['mods_dir']."/Packages/00_list.txt") or isset($_REQUEST['reb
 	$modslib->rebuild_list($prefs['mods_dir']."/Installed");
 }
 
-if ($mods_server) {
-	if (!is_file($prefs['mods_dir']."/Packages/00_list.". urlencode($mods_server) .".txt")) {
-		touch($prefs['mods_dir']."/Packages/00_list.". urlencode($mods_server) .".txt");
+if ($prefs['mods_server']) {
+	if (!is_file($prefs['mods_dir']."/Packages/00_list.". urlencode($prefs['mods_server']) .".txt")) {
+		touch($prefs['mods_dir']."/Packages/00_list.". urlencode($prefs['mods_server']) .".txt");
 		$_REQUEST['reload'] = true;
 	}
 	if (isset($_REQUEST['reload'])) {
-		$modslib->refresh_remote($mods_server."/Packages/00_list.public.txt",$prefs['mods_dir']."/Packages/00_list.". urlencode($mods_server). ".txt");
+		$modslib->refresh_remote($prefs['mods_server']."/Packages/00_list.public.txt",$prefs['mods_dir']."/Packages/00_list.". urlencode($prefs['mods_server']). ".txt");
 	}
 }
 
@@ -137,27 +137,27 @@ if (isset($_REQUEST['action']) and isset($package) and $iswritable) {
 		$_REQUEST['action'] = 'upgrade';
 	}
 	if ($_REQUEST['action'] == 'remove') {
-		$deps=$modslib->find_deps_remove($prefs['mods_dir'], $mods_server, array($packtype.'-'.$package));
+		$deps=$modslib->find_deps_remove($prefs['mods_dir'], $prefs['mods_server'], array($packtype.'-'.$package));
 		$smarty->assign('installask', $deps);
 	} elseif (($_REQUEST['action'] == 'install') || ($_REQUEST['action'] == 'upgrade')) {
-		$deps=$modslib->find_deps($prefs['mods_dir'], $mods_server, array($packtype.'-'.$package));
+		$deps=$modslib->find_deps($prefs['mods_dir'], $prefs['mods_server'], array($packtype.'-'.$package));
 		$smarty->assign('installask', $deps);
 	}
 } elseif (isset($_REQUEST['button-check'])) {
-	$deps=$modslib->find_deps($prefs['mods_dir'], $mods_server, $_REQUEST['install-wants']);
+	$deps=$modslib->find_deps($prefs['mods_dir'], $prefs['mods_server'], $_REQUEST['install-wants']);
 	$smarty->assign('installask', $deps);
 } elseif (isset($_REQUEST['button-install'])) {
-	$deps=$modslib->find_deps($prefs['mods_dir'], $mods_server, $_REQUEST['install-wants']);
-	$modslib->install_with_deps($prefs['mods_dir'], $mods_server, $deps);
+	$deps=$modslib->find_deps($prefs['mods_dir'], $prefs['mods_server'], $_REQUEST['install-wants']);
+	$modslib->install_with_deps($prefs['mods_dir'], $prefs['mods_server'], $deps);
 } elseif (isset($_REQUEST['button-remove'])) {
-	$deps=$modslib->find_deps_remove($prefs['mods_dir'], $mods_server, $_REQUEST['install-wants']);
-	$modslib->remove_with_deps($prefs['mods_dir'], $mods_server, $deps);
+	$deps=$modslib->find_deps_remove($prefs['mods_dir'], $prefs['mods_server'], $_REQUEST['install-wants']);
+	$modslib->remove_with_deps($prefs['mods_dir'], $prefs['mods_server'], $deps);
 }
 
 $local = $modslib->read_list($prefs['mods_dir']."/Packages/00_list.txt",'local',$type,$find,false);
 $smarty->assign('local', $local);
 
-$remote = $modslib->read_list($prefs['mods_dir']."/Packages/00_list.". urlencode($mods_server).".txt",'remote',$type,$find,false);
+$remote = $modslib->read_list($prefs['mods_dir']."/Packages/00_list.". urlencode($prefs['mods_server']).".txt",'remote',$type,$find,false);
 $smarty->assign('remote', $remote);
 
 $installed = $modslib->read_list($prefs['mods_dir']."/Installed/00_list.txt",'installed',$type,$find,false);
