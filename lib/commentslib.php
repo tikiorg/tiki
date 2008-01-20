@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.18 2008-01-08 16:01:40 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.19 2008-01-20 20:54:37 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -936,6 +936,9 @@ class Comments extends TikiLib {
 		    // Get number of topics on this forum
 		    $res['threads'] = $this->count_comments_threads('forum:'.$res['forumId']);
 
+		    // Get number of posts on this forum
+		    $res['comments'] = $this->count_comments('forum:'.$res['forumId']);
+
 		    // Get number of users that posted at least one comment on this forum
 		    $res['users'] = $this->getOne(
 			'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
@@ -943,12 +946,17 @@ class Comments extends TikiLib {
 		    );
 
 		    // Get data of the last post of this forum
-		    $result2 = $this->query(
-			'select * from `tiki_comments` where `object`= ? and `objectType` = ? and `commentDate`=?',
-			array($res['forumId'], 'forum', (int)$res['lastPost']),
-			1
-		    );
-		    $res['lastPostData'] = $result2->fetchRow();
+		    if ( $res['comments'] > 0 ) {
+			    $result2 = $this->query(
+				'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
+				array($res['forumId'], 'forum', (int)$res['lastPost']),
+				1
+			    );
+			    $res['lastPostData'] = $result2->fetchRow();
+			    $res['lastPost'] = $res['lastPostData']['commentDate'];
+		    } else {
+			    unset($res['lastPost']);
+		    }
 
 		    // Generate stats based on this forum's age
 		    if ( $forum_age > 0 ) {
