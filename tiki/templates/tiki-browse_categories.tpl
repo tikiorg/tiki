@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.5 2008-01-11 14:04:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.6 2008-01-21 22:48:38 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -70,6 +70,11 @@
 {if $prefs.feature_articles eq 'y'}
 <a class="linkbut" {if $type eq 'article'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=article&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Articles{/tr}</a>
 {/if}
+
+{if $prefs.feature_forums eq 'y'}
+<a class="linkbut" {if $type eq 'forum'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape}&amp;deep={$deep}&amp;type=forum&amp;parentId={$parentId}&amp;sort_mode={$sort_mode}">{tr}Forums{/tr}</a>
+{/if}
+
 
 <br /><br />
 <form method="post" action="tiki-browse_categories.php">
