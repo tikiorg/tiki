@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.20 2008-01-18 22:26:12 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.21 2008-01-21 03:01:25 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -539,10 +539,9 @@ class TrackerLib extends TikiLib {
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				list($a, $asort_mode, $corder) = split('_', $sort_mode);
 				$csort_mode = 'sttif.`value` ';
-				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif, `tiki_tracker_fields` sttf)'
+				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
 					.' ON (tti.`itemId` = sttif.`itemId`'
 						." AND sttif.`fieldId` = $asort_mode"
-						.' AND sttf.`fieldId` = sttif.`fieldId`'
 					.')';
 			} else {
 				list($csort_mode, $corder) = split('_', $sort_mode);
