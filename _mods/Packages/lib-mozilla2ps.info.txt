@@ -2,17 +2,17 @@ contributor:
 $Author: nyloth $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2008-01-18 15:41:42 $
+$Date: 2008-01-21 09:17:55 $
 
 files:
 lib/mozilla2ps/chrome/locale/en-US/mozilla2ps/mozilla2ps.dtd lib/mozilla2ps/chrome/locale/en-US/mozilla2ps/mozilla2ps.dtd
 lib/mozilla2ps/chrome/content/mozilla2ps/mozilla2ps.xul lib/mozilla2ps/chrome/content/mozilla2ps/mozilla2ps.xul
 lib/mozilla2ps/chrome/content/mozilla2ps/mozilla2ps.js lib/mozilla2ps/chrome/content/mozilla2ps/mozilla2ps.js
 lib/mozilla2ps/chrome/chrome.manifest lib/mozilla2ps/chrome/chrome.manifest
-lib/mozilla2ps/defaults/preferences/mozilla2ps-prefs.jslib/mozilla2ps/defaults/preferences/mozilla2ps-prefs.js
+lib/mozilla2ps/defaults/preferences/mozilla2ps-prefs.js lib/mozilla2ps/defaults/preferences/mozilla2ps-prefs.js
 lib/mozilla2ps/application.ini lib/mozilla2ps/application.ini
 lib/mozilla2ps/mozilla2ps lib/mozilla2ps/mozilla2ps
 lib/mozilla2ps/mod_urltopdf.php lib/mozilla2ps/mod_urltopdf.php
@@ -21,9 +21,10 @@ licence:
 GNU/GPL
 
 Description:
-XUL application to transform HTML (with CSS) into PDF format. It requires the following applications to be installed on the server: xulrunner (to run XUL applications), Xvfb (or another X server) on display :1 or xvfb-run, and some basic fonts to be used by the X server. This mod supports everything that firefox supports and will generate a PDF that really looks like what the user sees in it's browser, even with complex Cascading Style Sheets. It's also faster than html2pdf or dompdf.
+XUL application to transform HTML (with CSS) into PDF format. It requires the following applications to be installed on the server: xulrunner (to run XUL applications), Xvfb (or another X server) on display :1 or xvfb-run, ps2pdf, and some basic fonts to be used by the X server. This mod supports everything that firefox supports and will generate a PDF that really looks like what the user sees in it's browser, even with complex Cascading Style Sheets. It's also faster than html2pdf or dompdf.
 
 Changelog:
+1.2 fix installation files and add ps2pdf as a requirement in description
 1.1 initial commit
 
 Author:
