@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.1 2007-11-25 21:35:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.2 2008-01-21 17:08:05 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -160,53 +160,46 @@ if (!isset($newver)) {
 	$newver = 0;
 }
 
-if (isset($_REQUEST["compare"])) {
-	if ($oldver == 0 || $oldver == $info["version"]) {
-		$old = & $info;
-		$smarty->assign_by_ref('old', $info);
-	} else {
-		// fetch the required page from history, including its content
-		if ($histlib->version_exists($page, $oldver)) {
-			$old = $histlib->get_page_from_history($page,$oldver,true);
-			$smarty->assign_by_ref('old', $old);
-		}
-	}
-	if ($newver == 0 || $newver == $info["version"]) {
-		$new =& $info;
-		$smarty->assign_by_ref('new', $info);
-	} else {
-		// fetch the required page from history, including its content
-		if ($histlib->version_exists($page, $newver)) {
-			$new = $histlib->get_page_from_history($page,$newver,true);
-			$smarty->assign_by_ref('new', $new);
-		}
-	}
+if ($prefs['feature_multilingual'] == 'y') {
+	include_once("lib/multilingual/multilinguallib.php");
+	$languages = $tikilib->list_languages();
+	$smarty->assign_by_ref( 'languages', $languages );
 
-	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old") {
-		$_REQUEST["diff_style"] = 'unidiff';
-	}
-	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
-	if ($_REQUEST["diff_style"] == "sideview") {
-		$old["data"] = $tikilib->parse_data($old["data"]);
-		$new["data"] = $tikilib->parse_data($new["data"]);
-	} else {
-		require_once('lib/diff/difflib.php');
-		if ($info['is_html'] == 1 and $_REQUEST["diff_style"] != "htmldiff") {
-			$search[] = "~</(table|td|th|div|p)>~";
-			$replace[] = "\n";
-			$search[] = "~<(hr|br) />~";
-			$replace[] = "\n";
-			$old['data'] = strip_tags(preg_replace($search,$replace,$old['data']),'<h1><h2><h3><h4><b><i><u><span>');
-			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']),'<h1><h2><h3><h4><b><i><u><span>');
+	if (isset($_REQUEST["update_translation"])) {
+
+		// Update translation button clicked. Forward request to edit page of translation.
+		if (isset($_REQUEST['tra_lang'])) {
+			$target = $_REQUEST['tra_lang'];
+		} else {
+			die( 'Invalid call to this page. Specify tra_lang' );
 		}
-		if ($_REQUEST["diff_style"] == "htmldiff") {
-			$old["data"] = $tikilib->parse_data($old["data"],$info['is_html'] == 1 );
-			$new["data"] = $tikilib->parse_data($new["data"],$info['is_html'] == 1 );
+
+		// Find appropriate translation page
+		$langs = $multilinguallib->getTranslations( 'wiki page', $info['page_id'], $info['pageName'], true );
+		$pageName = '';
+		foreach ($langs as $pageInfo)
+			if ($target == (string)$pageInfo['lang']) {
+				$pageName = $pageInfo['objName'];
+			}
+
+		// Build URI / Redirect
+		$diff_style = isset( $_REQUEST['diff_style'] ) ? rawurlencode( $_REQUEST['diff_style'] ) : '';
+		$comment = rawurlencode( "Updating from $page at version $newver" );
+
+		if( $pageName ) {
+			$uri = "tiki-editpage.php?page=$pageName&source_page=$page&diff_style=$diff_style&oldver=$oldver&newver=$newver&comment=$comment";
+		} else {
+			$uri = "tiki-edit_translation.php?page=$page";
 		}
-		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
-		$smarty->assign_by_ref('diffdata', $html);
+
+		header( "Location: $uri" );
+		exit;
 	}
-} else
+}
+
+if (isset($_REQUEST["compare"]))
+	histlib_helper_setup_diff( $page, $oldver, $newver );
+else
 	$smarty->assign('diff_style', '');
 
 if($info["flag"] == 'L')

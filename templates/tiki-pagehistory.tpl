@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.3 2007-12-07 22:00:11 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.4 2008-01-21 17:08:06 lphuberdeau Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -24,80 +24,8 @@
 <div  class="wikitext">{$sourced}</div>
 {/if}
 
-{if $diff_style}
-<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
-<table class="normal diff">
-<tr>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}View{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}current{/tr}){/if}</b></th>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}View{/tr}">{$new.version}</a>{if $new.version == $info.version} ({tr}current{/tr}){/if}</b></th>
-</tr>
-<tr>
-  <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$old.user|userlink} - {/if}{$old.lastModif|tiki_short_datetime}</td>
-  <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$new.user|userlink} - {/if}{$new.lastModif|tiki_short_datetime}</td>
-</tr>
-{if $old.comment || $new.comment}
-<tr>
-  <td colspan="2" class="editdate">{if $old.comment}{$old.comment}{else}&nbsp;{/if}</td>
-  <td colspan="2" class="editdate">{if $new.comment}{$new.comment}{else}&nbsp;{/if}</td>
-</tr>
-{/if}
-{if $old.description != $new.description}
-<tr>
-  <td colspan="2" class="diffdeleted">{if $old.description}{$old.description}{else}&nbsp;{/if}</td>
-  <td colspan="2" class="diffadded">{if $new.description}{$new.description}{else}&nbsp;{/if}</td>
-</tr>
-{/if}
-{/if}
+{include file=pagehistory.tpl}
 
-{if $diff_style eq "sideview"}
-<tr>
-  <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
-  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
-</tr>
-</table>
-{/if}
-
-{if $diff_style eq 'unidiff'}
- <tr><td colspan="4">
- {if $diffdata}
-   {section name=ix loop=$diffdata}
-      {if $diffdata[ix].type == "diffheader"}
-		{assign var="oldd" value=$diffdata[ix].old}
-		{assign var="newd" value=$diffdata[ix].new}
-           <br /><div class="diffheader">@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@</div>
-      {elseif $diffdata[ix].type == "diffdeleted"}
-		<div class="diffdeleted">
-			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
-				- {$diffdata[ix].data[iy]}
-			{/section}
-            </div>
-      {elseif $diffdata[ix].type == "diffadded"}
-            <div class="diffadded">
-			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
-				+ {$diffdata[ix].data[iy]}
-			{/section}
-		</div>
-      {elseif $diffdata[ix].type == "diffbody"}
-            <div class="diffbody">
-			{section name=iy loop=$diffdata[ix].data}
-				{if not $smarty.section.iy.first}<br />{/if}
-				{$diffdata[ix].data[iy]}
-			{/section}
-		</div>
-      {/if}
-   {/section}
- {else}
- <div class="diffheader">{tr}Versions are identical{/tr}</div>
- {/if}
-</td></tr>
-</table>
-{/if}
-
-{if $diff_style && $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr></table>{/if}
-{/if}
 <br />
 
 {if (!isset($noHistory))}                                              
@@ -199,6 +127,18 @@
 {/if}
 </tr>
 {/section}
+{if $prefs.feature_multilingual eq 'y'}
+<tr>
+	<td colspan="9" class="right">
+		<select name="tra_lang">
+			{section name=ix loop=$languages}
+			<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+			{/section}
+		</select>
+		<input type="submit" name="update_translation" value="{tr}Update Translation{/tr}"/>
+	</td>
+</tr>
+{/if}
 </table>
 </div>
 </form>
