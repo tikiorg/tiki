@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.15 2008-01-18 02:19:30 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.16 2008-01-21 17:08:06 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -114,6 +114,7 @@ window.onload = timeIt;
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
+{include file=pagehistory.tpl}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $preview && $staging_preview neq 'y'}
