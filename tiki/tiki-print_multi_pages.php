@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.2 2007-11-08 18:48:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.3 2008-01-21 09:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,7 +36,7 @@ if (!isset($_REQUEST['printpages']) && !isset($_REQUEST['printstructures'])) {
 		
 }
 
-if (isset($_REQUEST["print"])) {
+if ( isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 	check_ticket('multiprint');
 	// Create XMLRPC object
 	$pages = array();
@@ -95,7 +95,16 @@ ask_ticket('multiprint');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('print_page', 'y');
-// Display the template
-$smarty->display("tiki-print_multi_pages.tpl");
 
+$smarty->assign('display', $_REQUEST['display']);
+// Allow PDF export by installing a Mod that define an appropriate function
+if ( isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf' ) {
+	// Method using 'mozilla2ps' mod
+	if ( file_exists('lib/mozilla2ps/mod_urltopdf.php') ) {
+		include_once('lib/mozilla2ps/mod_urltopdf.php');
+		mod_urltopdf();
+	}
+} else {
+	$smarty->display("tiki-print_multi_pages.tpl");
+}
 ?>

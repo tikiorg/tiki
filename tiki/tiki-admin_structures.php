@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.36 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.36.2.1 2008-01-21 09:47:14 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -292,6 +292,9 @@ include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+// Detect if we have a PDF export mod installed
+$smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');
