@@ -10,19 +10,17 @@ function smarty_function_query($params, &$smarty) {
   $query = array_merge($_POST, $_GET);
   foreach($params as $param_name=>$param_value) {
     $list = explode(",",$param_value);
-    if (isset($query[$param_name])) {
-      if ($param_value === NULL or $param_value == 'NULL') {
-        unset($query[$param_name]);
-        continue;
-      }
-    $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
-		if ($query[$param_name] === NULL or $query[$param_name] == 'NULL') {
-		  unset($query[$param_name]);
-		}
+    if (isset($query[$param_name]) and in_array($query[$param_name],$list)) {
+      $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
+		  if ($query[$param_name] === NULL or $query[$param_name] == 'NULL') {
+		    unset($query[$param_name]);
+		  }
     } else {
-      if ($param_value !== NULL and $param_value != 'NULL' ) {
+      if ($list[0] !== NULL and $list[0] != 'NULL' ) {
         $query[$param_name] = $list[0];
-      }
+      } else {
+			  unset($query[$param_name]);
+			}
     }
   }
 
