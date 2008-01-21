@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.3 2007-12-10 16:14:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.4 2008-01-21 05:28:29 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,8 +45,6 @@ if (isset($_REQUEST["new_prefs"])) {
         "site_crumb_seper",
         "site_nav_seper",
         "contact_user",
-        "site_favicon",
-        "site_favicon_type",
         "maxRecords",
         "sender_email",
         "system_os",

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_look.php,v 1.1.2.3 2007-11-30 18:13:16 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_look.php,v 1.1.2.4 2008-01-21 05:28:28 luciash Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -57,6 +57,8 @@ ask_ticket('admin-inc-look');
 				"sitelogo_alt",
 				"sitemycode",
 				"sitead",
+		        "site_favicon",
+        		"site_favicon_type",
 				"feature_topbar_id_menu",
 				"sitenav",
 				"bot_logo_code",

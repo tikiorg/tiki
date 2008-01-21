@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.7 2008-01-09 14:48:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.8 2008-01-21 05:28:30 luciash Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -320,21 +320,7 @@
 				<td class="form"><label for="user_show_realnames">{tr}When possible, show the real user name instead of login:{/tr}</label></td>
 				<td><input type="checkbox" name="user_show_realnames" id="user_show_realnames" {if $prefs.user_show_realnames eq 'y'}checked="checked"{/if}/></td>
 				</tr>
-				<tr>
-					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
-					<td><input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
-					<td>
-						<select name="site_favicon_type" id="site_favicon_type">
-							<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
-							<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-							<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
-						</select>
-					</td>
-				</tr>
-
+				
 				<tr>
 					<td colspan="2"><hr/></td>
 				</tr>

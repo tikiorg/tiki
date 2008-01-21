@@ -1,29 +1,31 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.3 2007-11-30 18:13:16 nkoth Exp $*}
-<div class="rbox">
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.4 2008-01-21 05:28:30 luciash Exp $ *}
+<!--div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
 	{tr}Please also see:{/tr}
 	<a class="rbox-link" href="tiki-admin.php?page=siteid">{tr}Site Identity{/tr}</a>
 	</div>
-</div>
-
+</div-->
 
 <div class="cbox">
-  <div class="cbox-title">
-    <h3>{tr}{$crumbs[$crumb]->title}{/tr}
-    {help crumb=$crumbs[$crumb]}</h3>
-  </div>
+	<div class="cbox-title">
+	<h3>{tr}{$crumbs[$crumb]->title}{/tr}
+	{help crumb=$crumbs[$crumb]}</h3>
+	</div>
 
+	<form action="tiki-admin.php?page=look" method="post">
+		<div class="heading button" style="text-align: right">
+			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
+			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
+		</div>
 
-      <form action="tiki-admin.php?page=look" method="post">
-      <fieldset>
-      <legend class="heading"><a href="#theme" name="theme"><span>{tr}Theme{/tr}</span></a></legend>
-        <table class="admin">
-      
-		<tr>
-        <td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
-        <td width="67%"><select name="site_style" id="general-theme">
-            {section name=ix loop=$styles}
+		<fieldset>
+			<legend class="heading"><a href="#theme" name="theme"><span>{tr}Theme{/tr}</span></a></legend>
+			<table class="admin">
+				<tr>
+					<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
+					<td width="67%"><select name="site_style" id="general-theme">
+	{section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
                 {if $prefs.site_style eq $styles[ix]}selected="selected"{/if}>
                 {$styles[ix]}</option>
@@ -77,10 +79,11 @@
 
 {* --- General Layout options --- *}
 <fieldset class="admin">
-	<legend class="heading"><a href="#layout" name="layout"><span>{tr}General Layout options{/tr}</span></a></legend>
-	<table class="admin" width="100%">
-		<tr>
-        <td class="form" colspan="5">
+	<legend class="heading"><a href="#layout" name="layout" onclick="flip('layout'); return false;"><span>{tr}General Layout options{/tr}</span></a></legend>
+	<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">
+		<table class="admin" width="100%">
+			<tr>
+        		<td class="form" colspan="5">
         
 {* --- Customize Site Header --- *}
 	<fieldset class="admin">
@@ -312,7 +315,30 @@
       </tr>
     
     
-      </table>
+		</table>
+	</div>
+</fieldset>
+
+<fieldset>
+	<legend class="heading"><a href="#layout" name="layout" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
+	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
+			<table class="admin" width="100%">
+				<tr>
+					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
+					<td><input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
+					<td>
+						<select name="site_favicon_type" id="site_favicon_type">
+							<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
+							<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
+							<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+	</div>
 </fieldset>
 
 
@@ -337,6 +363,6 @@
 				</tr></table>
 </fieldset>                                
 
-<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Save{/tr}" /></div>
+			<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
         </form>
-</div>
+</div><!-- cbox end -->
