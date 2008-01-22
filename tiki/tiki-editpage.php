@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.24 2008-01-21 17:08:05 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.25 2008-01-22 15:25:27 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -874,6 +874,9 @@ if ($prefs['feature_multilingual'] == 'y') {
 	if( isset( $_REQUEST['source_page'] ) && isset( $_REQUEST['oldver'] ) && isset( $_REQUEST['newver'] ) ) {
 		include_once('lib/wiki/histlib.php');
 		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
+		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
+		$smarty->assign( 'diff_newver', (int) $_REQUEST['newver'] );
+		$smarty->assign( 'source_page', $_REQUEST['source_page'] );
 	}
 }
 $cat_type = 'wiki page';
