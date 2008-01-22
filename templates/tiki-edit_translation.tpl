@@ -1,4 +1,4 @@
-<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Translate:{/tr}&nbsp;{$name}</a>
+<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Translate:{/tr}&nbsp;{$name} ({$languageName}, {$langpage})</a>
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
@@ -30,58 +30,26 @@
 	<br />
 {/if}
 
-<table style="width: 100%">
-	<col width="40%"/>
-	<col width="10%"/>
-	<col width="50%"/>
-	<tr>
-		<td style="vertical-align: middle">
-			<form action="tiki-edit_translation.php" method="post">
-			<input type="hidden" name="id" value="{$id}" />
-			<input type="hidden" name="type" value="{$type|escape}" />
-			{tr}Current language:{/tr}
-			<br/>
-			<select name="langpage" size="1">
-			{if !$langpage || $langpage == "NULL"}
-			<option value="">{tr}Unknown{/tr}</option>
-			{/if}
+<form method="post" action="tiki-editpage.php">
+	{tr}Translate to language: {/tr}
+		<select name="lang" size="1">
 			{section name=ix loop=$languages}
 			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
-			<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+			<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
 			{/if}
 			{/section}
-			</select>
-			{if count(trads)}
-				<input type="submit" value="{tr}Change{/tr}" />
-			{/if}
-			</form>
-		</td>
-		<td style="vertical-align: middle; text-align: center">
-			-&gt;
-		</td>
-		<td style="vertical-align: middle">
-			<form method="post" action="tiki-editpage.php">
-				<p>{tr}Create a new translation of this page.{/tr}
-				<br/>{tr}Language: {/tr}
-					<select name="lang" size="1">
-						{section name=ix loop=$languages}
-						{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
-						<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
-						{/if}
-						{/section}
-					</select>
-				<br/>{tr}Page name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
-				<br/><input type="submit" value="{tr}Create translation{/tr}"/></p>
-				<textarea name="edit" style="display:none">^{$translate_message}^
+		</select>
+	<br/>{tr}Translation name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<br/><input type="submit" value="{tr}Create translation{/tr}"/></p>
+	<textarea name="edit" style="display:none">^{$translate_message}^
 
 {$pagedata|escape:'htmlall':'UTF-8'}</textarea>
-			</form>
-		</td>
-	</tr>
-</table>
+</form>
+
+<hr/>
 
 {if !empty($langpage)}
-<h2>{tr}All translations for this page{/tr}</h2>
+<h3>{tr}All translations for this page{/tr}</h3>
 
 {if $trads|@count > 1}
 	<table class="normal">
