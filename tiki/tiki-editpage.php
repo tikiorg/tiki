@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.25 2008-01-22 15:25:27 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.26 2008-01-22 17:19:54 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -869,6 +869,13 @@ if ($prefs['feature_multilingual'] == 'y') {
 
 	if( isset( $_REQUEST['translationOf'] ) ) {
 		$smarty->assign( 'translationOf', $_REQUEST['translationOf'] );
+
+		if( $tikilib->page_exists( $page ) ) {
+			// Display an error if the page already exists
+			$smarty->assign('msg',tra("Page already exists. Go back and choose a different name."));
+			$smarty->display("error.tpl");
+			die;
+		}
 	}
 
 	if( isset( $_REQUEST['source_page'] ) && isset( $_REQUEST['oldver'] ) && isset( $_REQUEST['newver'] ) ) {
