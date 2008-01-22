@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.1 2008-01-22 16:58:14 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,10 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 	$type = "wiki page";
 	$objId = $info['page_id'];
 	$langpage = $info['lang'];
+
+	$edit_data = $info['data'];
+	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
+	$smarty->assign('translate_message', tra('Translation in progress.', $langpage));
 }
 else if ($_REQUEST['id']) {
 	if (!isset($_REQUEST['type'])) {
