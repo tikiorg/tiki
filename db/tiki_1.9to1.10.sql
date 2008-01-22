@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.20 2008-01-15 08:26:08 pkdille Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.21 2008-01-22 22:27:16 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1663,3 +1663,9 @@ INSERT INTO users_objectpermissions (groupName, permName,objectType, objectId)  
 
 #2008-01-15 pkdille
 UPDATE tiki_menu_options set section='lang_use_db', perm='tiki_p_edit_languages' WHERE menuId=42 and type='o' and name='Edit languages' and url='tiki-edit_languages.php';
+
+#2008-01-22 sylvieg
+ALTER TABLE tiki_file_galleries ADD show_last_user char(1) default '?';
+UPDATE tiki_file_galleries SET show_last_user='y' WHERE show_modified='y' AND show_last_user='?';
+UPDATE tiki_file_galleries SET show_last_user=NULL WHERE show_last_user='?';
+ALTER TABLE tiki_file_galleries CHANGE show_last_user show_last_user char(1) default NULL;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.2 2008-01-22 22:27:16 sylvieg Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -108,6 +108,7 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 	$smarty->assign('max_desc',1024);
 	$smarty->assign('show_lockedby', 'y');
 	$smarty->assign('show_modified', 'n');
+	$smarty->assign('show_last_user', 'n');
 	
 	$smarty->assign('maxRows',10);
 	$smarty->assign('public','n');
@@ -147,6 +148,7 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 		$smarty->assign('fgal_type',$info['type']);
 		$smarty->assign('show_lockedby',$info['show_lockedby']);
 		$smarty->assign('show_modified',$info['show_modified']);
+		$smarty->assign('show_last_user',$info['show_last_user']);
 	    $smarty->assign_by_ref('maxRows',$info["maxRows"]);
 	    $smarty->assign_by_ref('public',$info["public"]);
 		$smarty->assign_by_ref('lockable', $info['lockable']);
@@ -211,6 +213,7 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 	  $smarty->assign('fgal_type',isset($_REQUEST['type'])? $_REQUEST['type']: '');
 	  $smarty->assign('show_lockedby',isset($_REQUEST['show_lockedby'])?'y':'n');
 	  $smarty->assign('show_modified',isset($_REQUEST['show_modified'])?'y':'n');
+	  $smarty->assign('show_last_user',isset($_REQUEST['show_last_user'])?'y':'n');
 	  $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
 	  $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
 	  $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
@@ -251,11 +254,12 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 	  $_REQUEST['user'] = isset($_REQUEST['user'])?$_REQUEST['user']:(isset($info['user'])?$info['user']:$user);
 	  $_REQUEST['show_lockedby']=isset($_REQUEST['show_lockedby'])?'y':'n';
 	  $_REQUEST['show_modified']=isset($_REQUEST['show_modified'])?'y':'n';
+	  $_REQUEST['show_last_user']=isset($_REQUEST['show_last_user'])?'y':'n';
 	  $_REQUEST['sortorder']=isset($_REQUEST['sortorder'])?$_REQUEST['sortorder']:'created';
 	  $_REQUEST['sortdirection']=isset($_REQUEST['sortdirection']) && $_REQUEST['sortdirection'] == 'asc'? 'asc':'desc';
 	  
 	  $_REQUEST['subgal_conf']=implode(':', array(isset($_REQUEST['fgal_list_id'])?'y':'n', isset($_REQUEST['fgal_list_name'])?'y':'n', isset($_REQUEST['fgal_list_description'])?'y':'n', isset($_REQUEST['fgal_list_type'])?'y':'n', isset($_REQUEST['fgal_list_created'])?'y':'n', isset($_REQUEST['fgal_list_lastmodif'])?'y':'n', isset($_REQUEST['fgal_list_user'])?'y':'n', isset($_REQUEST['fgal_list_files'])?'y':'n', isset($_REQUEST['fgal_list_hits'])?'y':'n', isset($_REQUEST['fgal_list_parent'])?'y':'n'));
-	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author'], $_REQUEST['subgal_conf']);
+	  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST['user'], $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc'],$_REQUEST['fgal_type'], $_REQUEST['parentId'], $lockable, $_REQUEST['show_lockedby'], $_REQUEST['archives'], $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'], $_REQUEST['show_modified'], $_REQUEST['show_creator'], $_REQUEST['show_author'], $_REQUEST['subgal_conf'], $_REQUEST['show_last_user']);
 	  
 		if ($prefs['feature_categories'] == 'y') {
 			$cat_type='file gallery';

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66.2.1 2007-12-07 18:36:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66.2.2 2008-01-22 22:27:16 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">
@@ -23,6 +23,7 @@
 <div class="navbar">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
 <a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}">{tr}List Galleries{/tr}</a>
+{if $galleryId}<a class="linkbut" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Browse Gallery{/tr}</a>{/if}
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
 <a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Create New File Gallery{/tr}</a>
@@ -99,7 +100,8 @@
 				<td class="formcolor">{tr}Author{/tr}</td>
 			</tr>
 			<tr>
-				<td class="formcolor"><input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /></td>
+				<td class="formcolor">{tr}Date{/tr}<input type="checkbox" name="show_modified" {if $show_modified eq 'y'} checked="checked"{/if} /><br />
+					{tr}User{/tr}<input type="checkbox" name="show_last_user" {if $show_last_user eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_creator" {if $show_creator eq 'y'} checked="checked"{/if} /></td>
 				<td class="formcolor"><input type="checkbox" name="show_author" {if $show_author eq 'y'} checked="checked"{/if} /><i>{tr}If creator is not checked, will display creator if author not set{/tr}</td>
