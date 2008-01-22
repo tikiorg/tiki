@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.8 2008-01-16 21:53:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.9 2008-01-22 19:22:03 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item, parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -50,7 +50,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.type ne 'U'}
+{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's'}
 	{if $list_mode ne 'csv'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- test field, numeric, grop down, radio,user/group/IP selector, autopincrement, dynamic list *}

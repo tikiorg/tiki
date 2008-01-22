@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.23 2008-01-22 16:05:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.24 2008-01-22 19:22:03 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -105,7 +105,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {section name=ix loop=$fields}
 {if $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $fields[ix].isTblVisible eq 'y'}
-	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y' and $user ne ''} colspan="2"{/if}>
+	<td class="heading auto">
 		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
 		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
 			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
@@ -151,221 +151,41 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {section name=user loop=$items}
 <tr class="{cycle}">
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<td class="auto" style="width:20px;">
-{assign var=ustatus value=$items[user].status|default:"c"}
-{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
-</td>
+	<td class="auto" style="width:20px;">
+	{assign var=ustatus value=$items[user].status|default:"c"}
+	{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+	</td>
 {/if}
 
 {* ------- list values --- *}
 {section name=ix loop=$items[user].field_values}
 
 {if $items[user].field_values[ix].isTblVisible eq 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
-{if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
-{foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
-{if $items[user].field_values[ix].options_array[4] eq '1'}
-<div><a href="tiki-view_tracker_item.php?itemId={$tid}&trackerId={$items[user].field_values[ix].options_array[0]}" class="link">{$tlabel|truncate:255:"..."}</a></div>
-{else}
-<div>{$tlabel|truncate:255:"..."}</div>
-{/if}
-{/foreach}
-</td>
-{elseif $items[user].field_values[ix].isMain eq 'y'}
-<td class="auto">
-
-{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
- or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group)}
+{if $items[user].field_values[ix].isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+ or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 {if !empty($tracker_info.showPopup)}
-{capture name=popup}
-<div class="cbox">
-<table>
-{cycle values="odd,even" print=false}
-{foreach from=$items[user].field_values item=f}
-	{if in_array($f.fieldId, $popupFields)}
-<tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
-	{/if}
-{/foreach}
-</table>
-</div>
-{/capture}
+	{capture name=popup}
+	<div class="cbox">
+	<table>
+	{cycle values="odd,even" print=false}
+	{foreach from=$items[user].field_values item=f}
+		{if in_array($f.fieldId, $popupFields)}
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
+		{/if}
+		{/foreach}
+		</table>
+		</div>
+	{/capture}
 {/if}
 <a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view&amp;{if $offset}offset={$offset}{/if}&amp;reloff={$smarty.section.user.index}&amp;cant={$item_count}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if !empty($tracker_info.showPopup)} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true  }{/if}>
 {/if}
 
-{if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
- and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
+{include file="tracker_item_field_value.tpl" field_value=$items[user].field_values[ix] list_mode="y" item=$items[user]}
 
-{if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
-{if $items[user].field_values[ix].value}{if $items[user].field_values[ix].options_array[0] eq 'd'}{$items[user].field_values[ix].value|tiki_short_date|truncate:255:"..."|default:"&nbsp;"}{else}{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}{/if}{else}&nbsp;{/if}
-
-{elseif $items[user].field_values[ix].type eq 'c'}
-{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"}
-
-{elseif $items[user].field_values[ix].type eq 'r'}
-    {if $items[user].field_values[ix].displayedvalue ne ""}
-        {$items[user].field_values[ix].displayedvalue}
-    {else}
-        {$items[user].field_values[ix].value}
-    {/if}
-{elseif $items[user].field_values[ix].type eq 'a'}
-{if $items[user].field_values[ix].options_array[4] ne ''}
-{$items[user].field_values[ix].pvalue|truncate:$items[user].field_values[ix].options_array[4]:"...":true}
-{else}
-{$items[user].field_values[ix].pvalue}
-{/if}
-
-{elseif $items[user].field_values[ix].type eq 'i'}
-{assign var=width value=$items[user].field_values[ix].options_array[0]}
-{assign var=height value=$items[user].field_values[ix].options_array[1]}
-{if $items[user].field_values[ix].value ne ''}
-<img border="0" src="{$items[user].field_values[ix].value}"  width="{$width}" height="{$height}" alt="n/a" />
-{else}
-<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
-{/if}
-
-{elseif $items[user].field_values[ix].type eq 'M'}
-{if $items[user].field_values[ix].value ne ''}
-<img border="0" src="img/icons/multimedia.png"  width=20 height=20 alt="Flash multimedia content" />
-{/if}
-{elseif $items[user].field_values[ix].type eq 'm'}
-{$items[user].field_values[ix].value|default:"&nbsp;"}
-
-{elseif $items[user].field_values[ix].type eq 'e'}
-{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
-
-{elseif $items[user].field_values[ix].type eq 'y'}
-{if !empty($items[user].field_values[ix].value) and $items[user].field_values[ix].value ne 'None'}
-{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{capture name=flag}
-{tr}{$items[user].field_values[ix].value}{/tr}
-{/capture}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
-{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
-{else}
-&nbsp;
-{/if}
-
-{else}
-{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
-
-{/if}
-
-{if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
- and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
-
-{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
+{if $items[user].field_values[ix].isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+ or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}</a>{/if}
 </td>
-{else}
-
-{if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
-<td class="auto">
-{if $items[user].field_values[ix].options_array[2] eq '1'}
-<a href="tiki-view_tracker_item.php?itemId={$items[user].field_values[ix].linkId}&amp;trackerId={$items[user].field_values[ix].trackerId}" class="link">
-{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
-</a>
-{else}
-{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
-{/if}
-</td>
-
-{elseif $items[user].field_values[ix].type eq 'm'}
-<td class="auto">
-{if $items[user].field_values[ix].options_array[0] eq '1' and $items[user].field_values[ix].value}
-{mailto address=$items[user].field_values[ix].value|escape encode="hex"}
-{elseif $items[user].field_values[ix].options_array[0] eq '2' and $items[user].field_values[ix].value}
-{mailto address=$items[user].field_values[ix].value|escape encode="none"}
-{else}
-{$items[user].field_values[ix].value|escape|default:"&nbsp;"}
-{/if}
-</td>
-{elseif $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
-<td class="auto">
-{$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
-</td>
-{elseif $items[user].field_values[ix].type eq 'a'}
-<td class="auto">
-{if $items[user].field_values[ix].options_array[4] ne ''}
-{$items[user].field_values[ix].pvalue|truncate:$items[user].field_values[ix].options_array[4]:"...":true}
-{else}
-{$items[user].field_values[ix].pvalue}
-{/if}
-</td>
-{elseif $items[user].field_values[ix].type eq 'e'}
-<td class="auto">
-{foreach item=ii from=$items[user].field_values[ix].categs}{$ii.name}<br />{/foreach}
-</td>
-{elseif $items[user].field_values[ix].type eq 'i'}
-<td class="auto">
-{assign var=width value=$items[user].field_values[ix].options_array[0]}
-{assign var=height value=$items[user].field_values[ix].options_array[1]}
-{if $items[user].field_values[ix].value ne ''}
-<img border="0" src="{$items[user].field_values[ix].value}" width="{$width}" height="{$height}" alt="n/a" />
-{else}
-<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
-{/if}
-</td>
-{elseif $items[user].field_values[ix].type eq 'y'}
-<td class="auto">
-{if !empty($items[user].field_values[ix].value) and $items[user].field_values[ix].value ne 'None'}
-{assign var=o_opt value=$items[user].field_values[ix].options_array[0]}
-{capture name=flag}
-{tr}{$items[user].field_values[ix].value}{/tr}
-{/capture}
-{if $o_opt ne '1'}<img border="0" src="img/flags/{$items[user].field_values[ix].value}.gif"  title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}"/>{/if}
-{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
-{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
-{/if}
-</td>
-
-
-{elseif $items[user].field_values[ix].type eq 'U'}
-<td class="auto">
-
-{$items[user].field_values[ix].value|how_many_user_inscriptions} {tr}subscriptions{/tr}
-
-</td>
-
-{elseif $items[user].field_values[ix].type eq 's' and ($items[user].field_values[ix].name eq "Rating" or $items[user].field_values[ix].name eq tra("Rating"))  and $tiki_p_tracker_view_ratings eq 'y'}
-	<td class="auto">
-		<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">
-			&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;
-		</b>
-	</td>
-	{if $tiki_p_tracker_vote_ratings eq 'y'}
-		<td class="auto" nowrap="nowrap">
-			<span class="button2">
-			{if $items[user].my_rate eq NULL}
-				<b class="linkbut highlight">-</b>
-			{else}
-				<a href="{$smarty.server.PHP_SELF}?{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}&amp;trackerId={$items[user].trackerId}&amp;rateitemId={$items[user].itemId}&amp;fieldId={$rateFieldId}&amp;rate_{$items[user].trackerId}=NULL" class="linkbut">-</a>
-			{/if}
-				{section name=i loop=$items[user].field_values[ix].options_array}
-					{if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
-						<b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>
-					{else}
-						<a href="{$smarty.server.PHP_SELF}?{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}&amp;trackerId={$items[user].trackerId}&amp;rateitemId={$items[user].itemId}&amp;fieldId={$rateFieldId}&amp;rate_{$items[user].trackerId}={$items[user].field_values[ix].options_array[i]}" class="linkbut">{$items[user].field_values[ix].options_array[i]}</a>
-					{/if}
-				{/section}
-			</span>
-		</td>
-	{/if}
-
-{elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
-<td class="auto">
-{if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
- and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}&nbsp;</span>{/if}
-{if $items[user].field_values[ix].type eq 'c'}
-{tr}{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"|replace:"on":"Yes"|default:"&nbsp;"}{/tr}
-{else}
-{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
-{/if}
-{if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
- and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
-</td>
-{/if}
-{/if}
 {/if}
 {/section}
 
