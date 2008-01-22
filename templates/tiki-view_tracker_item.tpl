@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.21 2008-01-17 21:30:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.22 2008-01-22 21:30:55 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -306,7 +306,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 			{elseif $tiki_p_tracker_vote_ratings eq 'y'}
 				<td>
 					{section name=i loop=$cur_field.options_array}
-						{if $cur_field.options_array[i] eq $my_rate}
+						{if $cur_field.options_array[i] eq $item['my_rate']}
 							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
 						{else}
 							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
