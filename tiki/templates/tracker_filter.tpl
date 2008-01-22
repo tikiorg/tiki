@@ -79,7 +79,7 @@ fields[{$c}] = '{$fid}'
 <select name="filterfield" onchange="multitoggle(fields,this.options[selectedIndex].value);">
 <option value="">{tr}Choose a filter{/tr}</option>
 {foreach key=fid item=field from=$listfields}
-{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
+{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i' and ($field.isHidden ne 'y' or $tiki_p_admin_trackers eq 'y')}
 <option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
 {assign var=filter_button value='y'}
 {/if}
