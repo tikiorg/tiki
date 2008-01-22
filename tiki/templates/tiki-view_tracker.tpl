@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.25 2008-01-22 20:35:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.26 2008-01-22 21:30:55 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -346,7 +346,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].categories name=eforeach}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type={if $fields[ix].options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$fields[ix].fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}</tr>{/if}
+<td width="50%" nowrap="nowrap"><input type={if $fields[ix].options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$fields[ix].fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}{/if}
 {/foreach}
 </tr></table>
 
@@ -458,7 +458,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {* -------------------- item link -------------------- *}
 {elseif $fields[ix].type eq 'r'}
 <select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{if $fields[ix].isMandatory ne 'y'}<option value="" />{/if}
+{if $fields[ix].isMandatory ne 'y'}<option value=""></option>{/if}
 {foreach key=id item=label from=$fields[ix].list}
 <option value="{$label|escape}" {if $input_err}{if $fields[ix].value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $fields[ix].listdisplay.$id eq ''}{$label}{else}{$fields[ix].listdisplay.$id}{/if}</option>
 {/foreach}

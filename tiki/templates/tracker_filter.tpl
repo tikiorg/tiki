@@ -33,7 +33,7 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 {elseif $field.type eq 'R'}
 <div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
 {section name=jx loop=$field.options_array}
-<input type="radio" name="filtervalue[{$fid}]" value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}checked="checked"{/if} />{$field.options_array[jx]}
+<input type="radio" name="filtervalue[{$fid}]" value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}checked="checked"{/if} />{$field.options_array[jx]|escape}
 {/section}
 </div>
 
@@ -48,9 +48,9 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
     <input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}" 
       {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked{/if}
     />
-    <label for="cat{$i.categId}">{$iu.name}</label>
+    <label for="cat{$i.categId}">{$iu.name|escape}</label>
   </td>
-  {if !$smarty.foreach.eforeach.last}{cycle name=rows}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}</tr>{/if}
+  {if !$smarty.foreach.eforeach.last}{cycle name=rows}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}{/if}
 {/foreach}
 
 </tr></table>

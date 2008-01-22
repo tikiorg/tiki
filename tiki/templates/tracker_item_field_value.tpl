@@ -1,6 +1,6 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.9 2008-01-22 19:22:03 sylvieg Exp $ *}
-{* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item, parse(default y) *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.10 2008-01-22 21:30:55 sylvieg Exp $ *}
+{* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
@@ -169,25 +169,25 @@
 	{if $tiki_p_tracker_vote_ratings eq 'y'}
 		<div nowrap="nowrap">
 			<span class="button2">
-			{if $field_value.my_rate eq NULL}
+			{if $item.my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
-					trackerId={$field_value.trackerId}
-					&amp;rateitemId={$field_value.itemId}
+					trackerId={$item.trackerId}
+					&amp;rateitemId={$item.itemId}
 					&amp;fieldId={$rateFieldId}
-					&amp;rate_{$field_value.trackerId}=NULL"
+					&amp;rate_{$item.trackerId}=NULL"
 					class="linkbut">-</a>
 			{/if}
 				{section name=i loop=$field_value.options_array}
-					{if $field_value.options_array[i] eq $field_value.my_rate}
+					{if $field_value.options_array[i] eq $item.my_rate}
 						<b class="linkbut highlight">{$field_value.options_array[i]}</b>
 					{else}
 						<a href="{$smarty.server.PHP_SELF}?
-						trackerId={$field_value.trackerId}
-						&amp;rateitemId={$field_value.itemId}
+						trackerId={$item.trackerId}
+						&amp;rateitemId={$item.itemId}
 						&amp;fieldId={$rateFieldId}
-						&amp;rate_{$field_value.trackerId}={$field_value.options_array[i]}"
+						&amp;rate_{$item.trackerId}={$field_value.options_array[i]}"
 						class="linkbut">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
