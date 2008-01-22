@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.10 2007-12-08 21:54:38 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.11 2008-01-22 16:59:07 sylvieg Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -125,7 +125,7 @@
 <td class="{cycle advance=false}">{tr}{$actionlogs[ix].objectType}{/tr}</td>
 <td class="{cycle advance=false}">{if $actionlogs[ix].link}<a href="{$actionlogs[ix].link}" target="_blank" title="{tr}View{/tr}">{$actionlogs[ix].object|escape}</a>{else}{$actionlogs[ix].object|escape}{/if}</td>
 {if !$reportCateg and $showCateg eq 'y'}
-<td class="{cycle advance=false}">{$actionlogs[ix].categName|escape}</td>{/if}
+<td class="{cycle advance=false}">{assign var=ic value=$actionlogs[ix].categId}{$categNames[$ic]|escape}</td>{/if}
 <td class="{cycle advance=false}{if $actionlogs[ix].add} diffadded{/if}">{if $actionlogs[ix].add or $actionlogs[ix].add eq '0'}{$actionlogs[ix].add}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}{if $actionlogs[ix].del} diffdeleted{/if}">{if $actionlogs[ix].del or $actionlogs[ix].del eq '0'}{$actionlogs[ix].del}{else}&nbsp;{/if}</td>
 {if $prefs.feature_contribution eq 'y'}
