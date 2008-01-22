@@ -1,4 +1,4 @@
-<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Edit Translation:{/tr}&nbsp;{$name}</a>
+<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Translate:{/tr}&nbsp;{$name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
@@ -96,7 +96,7 @@
 {/if}
 
 </form>
-<form method="get" action="tiki-editpage.php">
+<form method="post" action="tiki-editpage.php">
 	<p>{tr}Create a new translation of this page.{/tr}
 	<br/>{tr}Language: {/tr}
 		<select name="lang" size="1">
@@ -107,5 +107,9 @@
 			{/section}
 		</select>
 	<br/>{tr}Page name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
-	<input type="submit" value="{tr}Edit page{/tr}"/></p>
+	<input type="submit" value="{tr}Create translation{/tr}"/></p>
+	<textarea name="edit" style="display:none">
+^{$translate_message}^
+
+{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
