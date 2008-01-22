@@ -30,35 +30,58 @@
 	<br />
 {/if}
 
-<form action="tiki-edit_translation.php" method="post">
-<input type="hidden" name="id" value="{$id}" />
-<input type="hidden" name="type" value="{$type|escape}" />
-
-<h2>{tr}Language: {/tr}{$name}</h2>
-<p>{tr}Use this section to set the language of the version you are currently working on.{/tr}</p>
-<table>
-<tr>
-	<td><select name="langpage" size="1">
-	{if !$langpage || $langpage == "NULL"}
-	<option value="">{tr}Unknown{/tr}</option>
-	{/if}
-	{section name=ix loop=$languages}
-	{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
-	<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
-	{/if}
-	{/section}</select>
-	</td>
-	{if count(trads)}
-		<td class="form">
-		<input type="submit" value="{tr}Save{/tr}" /><br />
+<table style="width: 100%">
+	<col width="40%"/>
+	<col width="10%"/>
+	<col width="50%"/>
+	<tr>
+		<td style="vertical-align: middle">
+			<form action="tiki-edit_translation.php" method="post">
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="type" value="{$type|escape}" />
+			{tr}Current language:{/tr}
+			<br/>
+			<select name="langpage" size="1">
+			{if !$langpage || $langpage == "NULL"}
+			<option value="">{tr}Unknown{/tr}</option>
+			{/if}
+			{section name=ix loop=$languages}
+			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
+			<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+			{/if}
+			{/section}
+			</select>
+			{if count(trads)}
+				<input type="submit" value="{tr}Change{/tr}" />
+			{/if}
+			</form>
 		</td>
-	{/if}
-</tr>
+		<td style="vertical-align: middle; text-align: center">
+			-&gt;
+		</td>
+		<td style="vertical-align: middle">
+			<form method="post" action="tiki-editpage.php">
+				<p>{tr}Create a new translation of this page.{/tr}
+				<br/>{tr}Language: {/tr}
+					<select name="lang" size="1">
+						{section name=ix loop=$languages}
+						{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
+						<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
+						{/if}
+						{/section}
+					</select>
+				<br/>{tr}Page name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+				<br/><input type="submit" value="{tr}Create translation{/tr}"/></p>
+				<textarea name="edit" style="display:none">^{$translate_message}^
+
+{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+			</form>
+		</td>
+	</tr>
 </table>
-<br />
 
 {if !empty($langpage)}
-<h2>{tr}Set of Translations{/tr}</h2>
+<h2>{tr}All translations for this page{/tr}</h2>
 
 {if $trads|@count > 1}
 	<table class="normal">
@@ -74,6 +97,10 @@
 	</table>
 {/if}
 
+<form action="tiki-edit_translation.php" method="post">
+<input type="hidden" name="id" value="{$id}" />
+<input type="hidden" name="type" value="{$type|escape}" />
+
 {if $trads|@count <= 1}
 	{if $articles}
 		<p>{tr}Select the article for which the current article is the translation.{/tr}</p>
@@ -84,7 +111,7 @@
 	{/if}
 {/if}
 {if $trads|@count > 0}
-	<p>{tr}Add existing page to the set of translations.{/tr}</p>
+	<p>{tr}Add existing page to the list above.{/tr}</p>
 {/if}
 {if $articles}
 	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
@@ -95,21 +122,4 @@
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
 {/if}
 
-</form>
-<form method="post" action="tiki-editpage.php">
-	<p>{tr}Create a new translation of this page.{/tr}
-	<br/>{tr}Language: {/tr}
-		<select name="lang" size="1">
-			{section name=ix loop=$languages}
-			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
-			<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
-			{/if}
-			{/section}
-		</select>
-	<br/>{tr}Page name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
-	<input type="submit" value="{tr}Create translation{/tr}"/></p>
-	<textarea name="edit" style="display:none">
-^{$translate_message}^
-
-{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
