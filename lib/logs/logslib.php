@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.4 2007-12-08 21:54:38 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.54.2.5 2008-01-22 16:58:23 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -940,7 +940,8 @@ class LogsLib extends TikiLib {
 		$imagegallib->insert_image($_REQUEST['galleryId'], $title.$period, '', $title.$period.'.'.$ext, 'image/'.$ext, $data, $size, $info[0], $info[1], $user, '', '');
 	}
 
-	function get_more_info($actions) {
+	function get_more_info($actions, $categNames) {
+		global $tikilib;
 	for ($i = 0; $i < sizeof($actions); ++$i) {
 		if ($actions[$i]['categId'])
 			$actions[$i]['categName'] = $categNames[$actions[$i]['categId']];
