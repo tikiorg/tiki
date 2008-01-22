@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.3 2008-01-18 21:56:26 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.4 2008-01-22 23:31:03 sylvieg Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 {if !isset($show_find) or $show_find ne 'n'}
@@ -78,6 +78,8 @@
 {/if}
 {if isset($gal_info.show_modified) and $gal_info.show_modified eq 'y'}
 	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Modified{/tr}</a></td>
+{/if}
+{if isset($gal_info.show_last_user) and $gal_info.show_last_user eq 'y'}
 	<td  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if $find}&amp;{$ext}find={$find}{/if}{if isset($page)}&amp;page={$page}{/if}&amp;{$ext}sort_mode={if $sort_mode eq 'lastModifUser_desc'}lastModifUser_asc{else}lastModifUser_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Last editor{/tr}</a></td>
 	{assign var=nbCols value=`$nbCols+1`}
 {/if}
@@ -205,6 +207,9 @@
 			{$files[changes].lastModif|tiki_short_date}
 		{/if}
 	</td>
+{/if}
+
+{if $gal_info.show_last_user eq 'y'}
 	<td class="{cycle advance=false}">
 		{if $gal_info.show_created ne 'y' or $files[changes].created ne $files[changes].lastModif}
 			{if $gal_info.show_userlink eq 'n'}
