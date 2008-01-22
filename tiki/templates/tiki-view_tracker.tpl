@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.22 2008-01-15 22:47:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.23 2008-01-22 16:05:09 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -102,10 +102,9 @@ class="prevnext">{tr}All{/tr}</a>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
+
 {section name=ix loop=$fields}
-{if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
-<td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
-{elseif $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $fields[ix].isTblVisible eq 'y'}
+{if $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $fields[ix].isTblVisible eq 'y'}
 	<td class="heading auto"{if $tiki_p_tracker_vote_ratings eq 'y' and $user ne ''} colspan="2"{/if}>
 		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
 		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
@@ -113,11 +112,16 @@ class="prevnext">{tr}All{/tr}</a>
 		</a>
 	</td>
 	{assign var=rateFieldId value=$fields[ix].fieldId}
-{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y')}
-<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
+{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
+	<td class="heading auto">
+		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
+'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">
+			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
+		</a>
+	</td>
 {/if}
 {/section}
+
 {if $tracker_info.showCreated eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if 
 $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
@@ -156,7 +160,7 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {* ------- list values --- *}
 {section name=ix loop=$items[user].field_values}
 
-{if $items[user].field_values[ix].isTblVisible eq 'y'}
+{if $items[user].field_values[ix].isTblVisible eq 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
