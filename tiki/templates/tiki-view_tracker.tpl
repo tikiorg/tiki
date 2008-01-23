@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.27 2008-01-23 14:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.28 2008-01-23 15:29:40 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -103,24 +103,24 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
 
-{section name=ix loop=$fields}
-{if $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $fields[ix].isTblVisible eq 'y'}
+{foreach from=$fields key=ix item=field_value}
+{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y'}
 	<td class="heading auto">
-		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$fields[ix].fieldId|cat:'_asc'}
-		{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">
-			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
+		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$field_value.fieldId|cat:'_asc'}
+		{$field_value.fieldId|escape:"url"}_desc{else}{$field_value.fieldId|escape:"url"}_asc{/if}">
+			{$field_value.name|truncate:255:"..."|default:"&nbsp;"}
 		</a>
 	</td>
-	{assign var=rateFieldId value=$fields[ix].fieldId}
-{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h' and ($fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
+	{assign var=rateFieldId value=$field_value.fieldId}
+{elseif $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
 	<td class="heading auto">
 		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">
-			{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}
+'f_'|cat:$field_value.fieldId|cat:'_asc'}{$field_value.fieldId|escape:"url"}_desc{else}{$field_value.fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">
+			{$field_value.name|truncate:255:"..."|default:"&nbsp;"}
 		</a>
 	</td>
 {/if}
-{/section}
+{/foreach}
 
 {if $tracker_info.showCreated eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if 
@@ -158,11 +158,11 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 {/if}
 
 {* ------- list values --- *}
-{section name=ix loop=$items[user].field_values}
+{foreach from=$items[user].field_values key=ix item=field_value}
 
-{if $items[user].field_values[ix].isTblVisible eq 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
+{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
 <td class="auto">
-{if $items[user].field_values[ix].isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 {if !empty($tracker_info.showPopup)}
 	{capture name=popup}
@@ -173,21 +173,21 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 		{if in_array($f.fieldId, $popupFields)}
 			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
 		{/if}
-		{/foreach}
-		</table>
-		</div>
+	{/foreach}
+	</table>
+	</div>
 	{/capture}
 {/if}
 <a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view&amp;{if $offset}offset={$offset}{/if}&amp;reloff={$smarty.section.user.index}&amp;cant={$item_count}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if !empty($tracker_info.showPopup)} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true  }{/if}>
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$items[user].field_values[ix] list_mode="y" item=$items[user]}
+{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user]}
 
-{if $items[user].field_values[ix].isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}</a>{/if}
 </td>
 {/if}
-{/section}
+{/foreach}
 
 {if $tracker_info.showCreated eq 'y'}
 <td>{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}</td>
@@ -258,28 +258,28 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 
-{section name=ix loop=$fields}
-{assign var=fid value=$fields[ix].fieldId}
+{foreach from=$fields key=ix item=field_value}
+{assign var=fid value=$field_value.fieldId}
 
 {* -------------------- header and others -------------------- *}
-{if $fields[ix].isHidden eq 'n' or $fields[ix].isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
-{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l' and $fields[ix].type ne 'q' and (($fields[ix].type ne 'u' and $fields[ix].type ne 'g' and $fields[ix].type ne 'I') or !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y')}
-{if $fields[ix].type eq 'h'}
+{if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
+{if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y')}
+{if $field_value.type eq 'h'}
 </table>
-<h2>{$fields[ix].name}</h2>
+<h2>{$field_value.name}</h2>
 <table class="normal">
 {else}
-{if ($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td class="formlabel" >{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td class="formcontent">
+{if ($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0] eq '1'}
+<tr class="formcolor"><td class="formlabel" >{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}</td><td class="formcontent">
 {elseif $stick eq 'y'}
-<td class="formlabel right">{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}</td><td >
+<td class="formlabel right">{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}</td><td >
 {else}
-<tr class="formcolor"><td class="formlabel" >{$fields[ix].name}{if $fields[ix].isMandatory eq 'y'} *{/if}
-{if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
+<tr class="formcolor"><td class="formlabel" >{$field_value.name}{if $field_value.isMandatory eq 'y'} *{/if}
+{if $field_value.type eq 'a' and $field_value.options_array[0] eq 1}
 {* --- display quicktags --- *}
   <br />
   {if $prefs.quicktags_over_textarea neq 'y'}
-    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
+    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$field_value.ins_id}
   {/if}
 {/if}
 </td><td colspan="3" class="formcontent" >
@@ -287,23 +287,23 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {* -------------------- system -------------------- *}
-{if $fields[ix].type eq 's' and ($fields[ix].name eq "Rating" or $fields[ix].name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
-	{section name=i loop=$fields[ix].options_array}
-		<input name="{$fields[ix].ins_id}" type="radio" value="{$fields[ix].options_array[i]|escape}" />{$fields[ix].options_array[i]}
+{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
+	{section name=i loop=$field_value.options_array}
+		<input name="{$field_value.ins_id}" type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
 	{/section}
 {/if}
 
 {* -------------------- user selector -------------------- *}
-{if $fields[ix].type eq 'u'}
-{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+{if $field_value.type eq 'u'}
+{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
+<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-{if ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($one, $fields[ix].itemChoices) )}
-{if $fields[ix].value}
-<option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
+{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
+{if $field_value.value}
+<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one}</option>
 {else}
-<option value="{$one|escape}"{if $one eq $user and $fields[ix].options_array[0] ne '2'} selected="selected"{/if}>{$one}</option>
+<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one}</option>
 {/if}
 {/if}
 {/foreach}
@@ -313,21 +313,21 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {* -------------------- IP selector -------------------- *}
-{elseif $fields[ix].type eq 'I'}
-{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
-<input type="text" name="{$fields[ix].ins_id}" value="{if $input_err}{$fields[ix].value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
+{elseif $field_value.type eq 'I'}
+{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
+<input type="text" name="{$field_value.ins_id}" value="{if $input_err}{$field_value.value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
 {else}
 {$IP}
 {/if}
 
 {* -------------------- group selector -------------------- *}
-{elseif $fields[ix].type eq 'g'}
-{if !$fields[ix].options_array[0] or $tiki_p_admin_trackers eq 'y'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+{elseif $field_value.type eq 'g'}
+{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
+<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-{if ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($groups[ux], $fields[ix].itemChoices) )}
-<option value="{$groups[ux]|escape}" {if $input_err and $fields[ix].value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
+{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($groups[ux], $field_value.itemChoices) )}
+<option value="{$groups[ux]|escape}" {if $input_err and $field_value.value eq $groups[ux]} selected="selected"{/if}>{$groups[ux]}</option>
 {/if}
 {/section}
 </select>
@@ -336,181 +336,181 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {* -------------------- category -------------------- *}
-{elseif $fields[ix].type eq 'e'}
-{if !empty($fields[ix].options_array[2]) && ($fields[ix].options_array[2] eq '1' or $fields[ix].options_array[2] eq 'y')}
+{elseif $field_value.type eq 'e'}
+{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
 <script type="text/javascript"> /* <![CDATA[ */
-document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$fields[ix].fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
+document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$field_value.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
 /* ]]> */</script>
 {/if}
-{assign var=fca value=$fields[ix].options}
+{assign var=fca value=$field_value.options}
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$fields[ix].categories name=eforeach}
+{foreach key=ku item=iu from=$field_value.categories name=eforeach}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type={if $fields[ix].options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$fields[ix].fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $fields[ix].categories|@count%2}<td></td>{/if}{/if}
+<td width="50%" nowrap="nowrap"><input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$field_value.fieldId}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if $field_value.cat.$fcat eq 'y'}checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.categories|@count%2}<td></td>{/if}{/if}
 {/foreach}
 </tr></table>
 
 {* -------------------- image -------------------- *}
-{elseif $fields[ix].type eq 'i'}
-<input type="file" name="{$fields[ix].ins_id}" {if $input_err}value="{$fields[ix].value}"{/if}/>
+{elseif $field_value.type eq 'i'}
+<input type="file" name="{$field_value.ins_id}" {if $input_err}value="{$field_value.value}"{/if}/>
 
 {* -------------------- multimedia -------------------- *}
-{elseif $fields[ix].type eq 'M'}
-{if ($fields[ix].options_array[0] > '2')}
-<input type="file" name="{$fields[ix].ins_id}" /><br />
+{elseif $field_value.type eq 'M'}
+{if ($field_value.options_array[0] > '2')}
+<input type="file" name="{$field_value.ins_id}" /><br />
 {else}
-<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" /><br />
+<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" /><br />
 {/if}
 
 {* -------------------- text field / email -------------------- *}
-{elseif $fields[ix].type eq 't' || $fields[ix].type eq 'm'}
-{if $fields[ix].isMultilingual ne "y"}
-{if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} value="{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}" />
-{if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
+{elseif $field_value.type eq 't' || $field_value.type eq 'm'}
+{if $field_value.isMultilingual ne "y"}
+{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} value="{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}" />
+{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
 {else}
 <table>
-    {foreach from=$fields[ix].lingualvalue item=ling}
-    <TR><TD>{$ling.lang}</td><td>
-            {if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
-        <input type="text" name="{$fields[ix].ins_id}_{$ling.lang}" value="{$ling.value|escape}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} />
-        {if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
-        </td></tr>
+    {foreach from=$field_value.lingualvalue item=ling}
+    <tr><td>{$ling.lang}</td><td>
+            {if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
+        <input type="text" name="{$field_value.ins_id}_{$ling.lang}" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} />
+        {if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
+    </td></tr>
     {/foreach}
 </table>
 {/if}
 
 
 {* -------------------- numeric field -------------------- *}
-{elseif $fields[ix].type eq 'n'}
-{if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} value="{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}" />
-{if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
+{elseif $field_value.type eq 'n'}
+{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} value="{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}" />
+{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
 
 {* -------------------- static text -------------------- *}
-{elseif $fields[ix].type eq 'S'}
-{if $fields[ix].description}
-{$fields[ix].description|escape|nl2br}
+{elseif $field_value.type eq 'S'}
+{if $field_value.description}
+{$field_value.description|escape|nl2br}
 {/if}
 
 {* -------------------- textarea -------------------- *}
-{elseif $fields[ix].type eq 'a'}
-{if $fields[ix].description}
-<em>{$fields[ix].description|escape|nl2br}</em><br />
+{elseif $field_value.type eq 'a'}
+{if $field_value.description}
+<em>{$field_value.description|escape|nl2br}</em><br />
 {/if}
-{if $fields[ix].isMultilingual ne "y"}
-  {if $prefs.quicktags_over_textarea eq 'y' and $fields[ix].options_array[0] eq 1}
-    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=`$fields[ix].ins_id`}
+{if $field_value.isMultilingual ne "y"}
+  {if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
+    {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=`$field_value.ins_id`}
   {/if}
-<textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
-rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{if $input_err}{$fields[ix].value}{else}{$defaultvalues.$fid|escape}{/if}</textarea>
+<textarea id="{$field_value.ins_id}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" 
+rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}">{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}</textarea>
 {else}
 <table>
-{foreach from=$fields[ix].lingualvalue item=ling}
-    <TR>
-      <TD>{$ling.lang}</td>
+{foreach from=$field_value.lingualvalue item=ling}
+    <tr>
+      <td>{$ling.lang}</td>
       <td>
-        {if $prefs.quicktags_over_textarea eq 'y' and $fields[ix].options_array[0] eq 1}
-          {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=ins_`$fields[ix].id`_`$ling.lang`}
+        {if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
+          {include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=ins_`$field_value.id`_`$ling.lang`}
         {/if}
-        <textarea name="ins_{$fields[ix].id}_{$ling.lang}" id="area_{$fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea>
+        <textarea name="ins_{$field_value.id}_{$ling.lang}" id="area_{$field_value.id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea>
       </td>
     </tr>
-    {/foreach}
+{/foreach}
 </table>
 {/if}
 
 {* -------------------- date and time -------------------- *}
-{elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $fields[ix].options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}{/if}
+{elseif $field_value.type eq 'f'}
+{html_select_date prefix=$field_value.ins_id time=$field_value.value start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $field_value.options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$field_value.value display_seconds=false}{/if}
 
 {* -------------------- drop down -------------------- *}
-{elseif $fields[ix].type eq 'd' or $fields[ix].type eq 'D'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{assign var=otherValue value=$fields[ix].value}
+{elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
+<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+{assign var=otherValue value=$field_value.value}
 <option value="">&nbsp;</option>
-{section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}{assign var=otherValue value=''}selected="selected"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx] or $fields[ix].defaultvalue eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]|tr_if}</option>
+{section name=jx loop=$field_value.options_array}
+<option value="{$field_value.options_array[jx]|escape}" {if $input_err}{if $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{/if}{elseif $defaultvalues.$fid eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
 {/section}
 </select>
-{if $fields[ix].type eq 'D'}
-<br />{tr}Other:{/tr} <input type="text" name="{$fields[ix].ins_id}_other" value="{$otherValue|escape}" />
+{if $field_value.type eq 'D'}
+<br />{tr}Other:{/tr} <input type="text" name="{$field_value.ins_id}_other" value="{$otherValue|escape}" />
 {/if}
 
 {* -------------------- radio buttons -------------------- *}
-{elseif $fields[ix].type eq 'R'}
-{section name=jx loop=$fields[ix].options_array}
-<input type="radio" name="{$fields[ix].ins_id}" value="{$fields[ix].options_array[jx]|escape}" {if $input_err}{if $fields[ix].value eq $fields[ix].options_array[jx]}checked="checked"{/if}{elseif $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if} />{$fields[ix].options_array[jx]}
+{elseif $field_value.type eq 'R'}
+{section name=jx loop=$field_value.options_array}
+<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $input_err}{if $field_value.value eq $field_value.options_array[jx]}checked="checked"{/if}{elseif $defaultvalues.$fid eq $field_value.options_array[jx]}selected="selected"{/if} />{$field_value.options_array[jx]}
 {/section}
 
 {* -------------------- checkbox -------------------- *}
-{elseif $fields[ix].type eq 'c'}
-<input type="checkbox" name="{$fields[ix].ins_id}" {if $input_err}{if $fields[ix].value eq 'y'}checked="checked"{/if}{elseif $defaultvalues.$fid eq 'y'}checked="checked"{/if}/>
+{elseif $field_value.type eq 'c'}
+<input type="checkbox" name="{$field_value.ins_id}" {if $input_err}{if $field_value.value eq 'y'}checked="checked"{/if}{elseif $defaultvalues.$fid eq 'y'}checked="checked"{/if}/>
 
 {* -------------------- jscalendar ------------------- *}
-{elseif $fields[ix].type eq 'j'}
-{if $fields[ix].options_array[0] eq 'd'}
-{jscalendar date=$now id=$fields[ix].ins_id fieldname=$fields[ix].ins_id showtime="n"}
+{elseif $field_value.type eq 'j'}
+{if $field_value.options_array[0] eq 'd'}
+{jscalendar date=$now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
 {else}
-{jscalendar date=$now id=$fields[ix].ins_id fieldname=$fields[ix].ins_id showtime="y"}
+{jscalendar date=$now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
 {/if}
 
 {* -------------------- item link -------------------- *}
-{elseif $fields[ix].type eq 'r'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{if $fields[ix].isMandatory ne 'y'}<option value=""></option>{/if}
-{foreach key=id item=label from=$fields[ix].list}
-<option value="{$label|escape}" {if $input_err}{if $fields[ix].value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $fields[ix].listdisplay.$id eq ''}{$label}{else}{$fields[ix].listdisplay.$id}{/if}</option>
+{elseif $field_value.type eq 'r'}
+<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+{if $field_value.isMandatory ne 'y'}<option value=""></option>{/if}
+{foreach key=id item=label from=$field_value.list}
+<option value="{$label|escape}" {if $input_err}{if $field_value.value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $field_value.listdisplay.$id eq ''}{$label}{else}{$field_value.listdisplay.$id}{/if}</option>
 {/foreach}
 </select>
 
 {* -------------------- dynamic list -------------------- *}
-{elseif $fields[ix].type eq 'w'}
-<select name="{$fields[ix].ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
+{elseif $field_value.type eq 'w'}
+<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 </select>
 
 
 {* -------------------- User subscription -------------------- *}
-{elseif $fields[ix].type eq 'U'}
-<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" />
+{elseif $field_value.type eq 'U'}
+<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 
 
 {* -------------------- Google Map -------------------- *}
-{elseif $fields[ix].type eq 'G'}
-<input type="text" name="{$fields[ix].ins_id}" value="{$fields[ix].value}" />
+{elseif $field_value.type eq 'G'}
+<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 <br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
 
 {* -------------------- country selector -------------------- *}
-{elseif $fields[ix].type eq 'y'}
-<select name="{$fields[ix].ins_id}">
-<option value=""{if $fields[ix].value eq '' or $fields[ix].value eq 'None'} selected="selected"{/if}>&nbsp;</option>
+{elseif $field_value.type eq 'y'}
+<select name="{$field_value.ins_id}">
+<option value=""{if $field_value.value eq '' or $field_value.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 {sortlinks}
-{foreach item=flag from=$fields[ix].flags}
-{if $flag ne 'None' and ( ! isset($fields[ix].itemChoices) || $fields[ix].itemChoices|@count eq 0 || in_array($flag, $fields[ix].itemChoices) )}
+{foreach item=flag from=$field_value.flags}
+{if $flag ne 'None' and ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($flag, $field_value.itemChoices) )}
 {capture name=flag}
 {tr}{$flag}{/tr}
 {/capture}
-<option value="{$flag|escape}" {if $input_err}{if $fields[ix].value eq $flag}selected="selected"{/if}{elseif $flag eq $fields[ix].defaultvalue}selected="selected"{/if}{if $fields[ix].options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
+<option value="{$flag|escape}" {if $input_err}{if $field_value.value eq $flag}selected="selected"{/if}{elseif $flag eq $field_value.defaultvalue}selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
 {/if}
 {/foreach}
 {/sortlinks}
 </select>
 
 {/if}
-{if $fields[ix].type ne 'a' and $fields[ix].type ne 'S'}
-{if $fields[ix].description}
-<br /><em>{$fields[ix].description|escape}</em>
+{if $field_value.type ne 'a' and $field_value.type ne 'S'}
+{if $field_value.description}
+<br /><em>{$field_value.description|escape}</em>
 {/if}
 {/if}
 </td>
-{if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
+{if (($field_value.type eq 'c' or $field_value.type eq 't' or $field_value.type eq 'n') and $field_value.options_array[0]) eq '1' and $stick ne 'y'}
 {assign var=stick value="y"}
 {else}
 </tr>{assign var=stick value="n"}
 {/if}
 {/if}
 {/if}
-{/section}
+{/foreach}
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
@@ -524,11 +524,11 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 <br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 </div>
 {/if}
-{section name=ix loop=$fields}
-{assign var=fid value=$fields[ix].fieldId}
+{foreach from=$fields key=ix item=field_value}
+{assign var=fid value=$field_value.fieldId}
 {if $listfields.$fid.http_request}
 <script type="text/javascript">
-selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$fields[ix].ins_id}')
+selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$field_value.ins_id}')
 </script>
 {/if}
-{/section}
+{/foreach}
