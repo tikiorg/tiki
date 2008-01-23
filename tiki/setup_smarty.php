@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.45.2.2 2008-01-19 12:38:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.45.2.3 2008-01-23 18:05:42 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,10 +58,18 @@ class Smarty_Tikiwiki extends Smarty {
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
 		global $prefs, $style_base, $tikidomain;
+
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
 		if (($tpl = $this->get_template_vars('mid')) && $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl') {
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] == 'y' ) {
+				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate($tpl);
+				$ajaxlib->processRequests();
+			}
+
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
 				$this->assign('print_page', 'y');
 			}
