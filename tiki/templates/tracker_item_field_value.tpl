@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.11 2008-01-23 21:01:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.12 2008-01-23 21:12:31 nyloth Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -163,11 +163,11 @@
 
 {* -------------------- rating -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
-	<b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}">
-		&nbsp;{$field_value.value|default:"-"}&nbsp;
-	</b>
+	<span style="padding-right:2em"><b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}" style="position:absolute">
+		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;
+	</b></span>
 	{if $tiki_p_tracker_vote_ratings eq 'y'}
-		<div nowrap="nowrap">
+		<span nowrap="nowrap">
 			<span class="button2">
 			{if $item.my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
@@ -192,7 +192,7 @@
 					{/if}
 				{/section}
 			</span>
-		</div>
+		</span>
 	{/if}
 
 {* -------------------- header ------------------------- *}
