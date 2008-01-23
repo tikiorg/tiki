@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - itemname: Untranslated string to use as the item name. Defaults to 'Page'.
  *  - noimg: If set to 'y', will use text instead of images for next/prev links. Only images mode supports first/last links. Defaults to 'n'.
  *  - class: CSS class to use for the whole div. Defaults to 'mini'.
- *  - template: template (.tpl file) used for AJAX_href links. Special value 'auto',
+ *  - template: template (.tpl file) used for AJAX_href links. Special value 'noauto',
  *       to get the template that has the same name of the current script (by changing the file extension from .php to .tpl)
  *       and set htmlelement to 'tiki-center' as a default.
  *  - htmlelement: htmlelement used for AJAX_hred links.
@@ -56,17 +56,11 @@ function smarty_block_pagination_links($params, $url, &$smarty) {
 	if ( ! isset($params['noimg']) ) $params['noimg'] = 'n';
 	if ( ! isset($params['usedots']) ) $params['usedots'] = 'y';
 	if ( ! isset($params['class']) ) $params['class'] = 'mini';
-	if ( ! isset($params['template']) ) $params['template'] = '';
-	if ( ! isset($params['htmlelement']) ) {
+	if ( ! isset($params['htmlelement']) ) $params['htmlelement'] = 'tiki-center';
+	if ( ! isset($params['template']) ) $params['template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
+	if ( ! file_exists('templates/'.$params['template']) || $params['template'] == 'noauto' ) {
 		$params['htmlelement'] = '';
-		if ( $params['template'] == 'auto' ) {
-			$params['template'] = str_replace('.php', '.tpl', $_SERVER['PHP_SELF']);
-			if ( file_exists('templates/'.$params['template']) ) {
-				$params['htmlelement'] = 'tiki-center';
-			} else {
-				$params['template'] = '';
-			}
-		}
+		$params['template'] = '';
 	}
 
 	if ( ! isset($params['step']) || $params['step'] <= 0 ) {
@@ -176,9 +170,9 @@ function smarty_block_pagination_links($params, $url, &$smarty) {
 		if ( $prefs['direct_pagination'] == 'y' ) {
 			$html .= "\n<br />";
 			$last_dots = false;
-			$page_num = ceil($real_offset / $params['step']);
+			$page_num = floor($real_offset / $params['step']);
 			foreach ( range(0, $nb_pages - 1) as $k ) {
-				if ( $k == floor($real_offset / $params['step']) ) {
+				if ( $k == $page_num ) {
 					$html .= "\n".'<span class="prevnext" style="font-weight:bold">'.($k + 1).'</span>';
 					$last_dots = false;
 				} elseif ( $params['usedots'] != 'y' ||

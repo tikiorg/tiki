@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.23 2008-01-23 14:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.24 2008-01-23 18:05:44 nyloth Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -38,7 +38,7 @@
 
 {* ------- return/next/previous tab --- *}
 {if $tiki_p_view_trackers eq 'y'}
-{pagination_links cant=$cant template='auto' offset=$offset reloff=$urlquery.reloff itemname='Item'}
+{pagination_links cant=$cant offset=$offset reloff=$urlquery.reloff itemname='Item'}
 	{$smarty.server.php_self}?{query itemId=$itemId}
 {/pagination_links}
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.5 2008-01-23 14:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.6 2008-01-23 18:05:44 nyloth Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}
   <div align="center">
@@ -298,4 +298,4 @@
 </form>
 
 <br />
-{pagination_links cant=$cant template='tiki-listpages_content.tpl' htmlelement='tiki-listpages-content' step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant template='tiki-listpages_content.tpl' htmlelement='tiki-listpages-content' step=$maxRecords offset=$offset}{/pagination_links}
