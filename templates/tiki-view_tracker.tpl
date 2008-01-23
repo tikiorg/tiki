@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.26 2008-01-22 21:30:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.27 2008-01-23 14:18:50 nyloth Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -229,7 +229,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 </div>
 {/if}
 </form>
-{include file="tiki-pagination.tpl"}
+{pagination_links cant=$item_count step=$maxRecords offset=$offset}{/pagination_links}
 </div>
 {else}<!-- {cycle name=content assign=focustab} -->
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.4 2007-11-22 22:29:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.5 2008-01-23 14:18:50 nyloth Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}
   <div align="center">
@@ -298,26 +298,4 @@
 </form>
 
 <br />
-
-{if count($listpages) > 0}
-  <div class="mini">
-    {if $prev_offset >= 0}
-      [<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Prev{/tr}</a>]
-    {/if}
-    
-    {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-    
-    {if $next_offset >= 0}
-      [<a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Next{/tr}</a>]
-    {/if}
-
-    {if $prefs.direct_pagination eq 'y'}
-      <br />
-      {section loop=$cant_pages name=foo}
-        {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-          <a class="prevnext" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$selector_offset}&amp;sort_mode={$sort_mode}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find|escape}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>
-          {$smarty.section.foo.index_next}</a>
-      {/section}
-    {/if}
-  </div>
-{/if}
+{pagination_links cant=$cant template='tiki-listpages_content.tpl' htmlelement='tiki-listpages-content' step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.3 2007-11-16 22:22:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.4 2008-01-23 14:18:49 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -236,6 +236,7 @@ if ( ! empty($multiprint_pages) ) {
 	}
 
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
+	$smarty->assign_by_ref('cant', $listpages['cant']);
 	
 	ask_ticket('list-pages');
 	

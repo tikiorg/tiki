@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.18 2007-10-15 13:35:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.18.2.1 2008-01-23 14:18:49 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,6 +103,7 @@ $section = 'trackers';
 include_once('tiki-section_options.php');
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign('channels_cant', $channels["cant"]);
 ask_ticket('list-trackers');
 
 // Display the template
