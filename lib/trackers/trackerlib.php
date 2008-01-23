@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.21 2008-01-21 03:01:25 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.22 2008-01-23 20:35:07 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2225,6 +2225,7 @@ class TrackerLib extends TikiLib {
 		$query = "select ttif.`value`, ttf.`options` from `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif";
 		$query .= " where ttif.`itemId`=? and ttf.`type`=? and ttf.`fieldId`=ttif.`fieldId`";
 		$result = $this->query($query, array($itemId, $typeField));
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$res['options_array'] = split(',', $res['options']);
 			$ret[] = $res;
@@ -2236,6 +2237,8 @@ class TrackerLib extends TikiLib {
 		global $userlib;
 		$emails = array();
 		$res = $this->get_item_values_by_type($itemId, 'u');
+		if (!is_array($res))
+			return $emails;
 		foreach ($res as $f) {
 			if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
 				$email = $userlib->get_user_email($f['value']);
