@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.7 2008-01-16 21:53:41 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.8 2008-01-23 19:31:57 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,9 +127,15 @@ if (empty($_REQUEST['encoding'])) {
 	$_REQUEST['encoding'] = 'UTF-8';
 }
 
+header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+header("Content-Disposition: attachment; filename=".tra('tracker')."_".$_REQUEST['trackerId'].".csv");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+header("Pragma: public");
+
 $offset = 0;
 $maxRecords = 100;
-$datas = '';
+$sort_mode = '';
 $smarty->assign_by_ref('heading', $heading);
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	// still need to filter the fields that are view only by the admin and the item creator
@@ -143,15 +149,8 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 		$data = utf8_decode($data);
 	}
 
-	$datas .= $data;
 	$offset += $maxRecords;
 	$heading = 'n';
+	echo $data;
 }
-
-header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
-header("Content-Disposition: attachment; filename=".tra('tracker')."_".$_REQUEST['trackerId'].".csv");
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-header("Pragma: public");
-echo $datas;
 ?>
