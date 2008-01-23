@@ -8,6 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_query($params, &$smarty) {
   $query = array_merge($_POST, $_GET);
+  if (is_array($params)) {
   foreach($params as $param_name=>$param_value) {
     $list = explode(",",$param_value);
     if (isset($query[$param_name]) and in_array($query[$param_name],$list)) {
@@ -22,6 +23,7 @@ function smarty_function_query($params, &$smarty) {
 			  unset($query[$param_name]);
 			}
     }
+  }
   }
 
   $ret = '';

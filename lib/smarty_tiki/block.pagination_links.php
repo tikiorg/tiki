@@ -137,7 +137,7 @@ function smarty_block_pagination_links($params, $url, &$smarty) {
 
 	if ( $params['cant'] > 0 ) {
 		if ( ! function_exists('make_prevnext_link') ) {
-			function make_prevnext_link($url, $content, $class = 'prevnext') {
+			function make_prevnext_link($url, $content, $params, $class = 'prevnext') {
 				global $smarty;
 				return "\n".'<a class="'.$class.'" '.smarty_block_ajax_href(
 					array('template' => $params['template'], 'htmlelement' => $params['htmlelement']),
@@ -152,23 +152,23 @@ function smarty_block_pagination_links($params, $url, &$smarty) {
 			if ( isset($images) ) {
 				$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
 						'offset='.$params['offset'].'&amp;reloff=-'.$params['offset'] : 'offset=0'
-					), $images['first']
+					), $images['first'], $params
 				);
 			}
 			$html .= ( isset($images) ? '' : '[' )
-				.make_prevnext_link($url.$prev_offset, ( isset($images) ? $images['previous'] : tra('Prev') ) )
+				.make_prevnext_link($url.$prev_offset, ( isset($images) ? $images['previous'] : tra('Prev') ), $params )
 				.( isset($images) ? '' : ']' );
    		}
 		$html .= ' '.tra($params['itemname']).': '.ceil((1+$real_offset) / $params['step']).'/'.$nb_pages;
 		if ( $params['next'] == 'y' ) {
 			$html .= ( isset($images) ? '' : '[' )
-				.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ) )
+				.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
 				.( isset($images) ? '' : ']' );
 			if ( isset($images) ) {
 				$i = ( $nb_pages - 1 ) * $params['step'] ;
 				$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
 						'offset='.$params['offset'].'&amp;reloff='.($i - $params['offset']) : 'offset='.$i
-					), $images['last']
+					), $images['last'], $params
 				);
 			}
    		}
@@ -191,7 +191,7 @@ function smarty_block_pagination_links($params, $url, &$smarty) {
 					} else {
 						$url_k = 'offset='.($params['step'] * $k);
 					}
-					$html .= make_prevnext_link($url.$url_k, $k+1);
+					$html .= make_prevnext_link($url.$url_k, $k+1, $params);
 					$last_dots = false;
 				} elseif ( ! $last_dots )  {
 					$html .= "\n".'<span class="prevnext" style="font-weight:bold">...</span>';
