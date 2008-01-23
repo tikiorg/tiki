@@ -36,6 +36,6 @@ function smarty_function_query($params, &$smarty) {
       }
     }
   }
-  echo $ret;
+  return $ret;
 }
 ?>

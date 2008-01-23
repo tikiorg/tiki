@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.11 2008-01-22 21:30:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.12 2008-01-23 14:18:49 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -202,36 +202,32 @@ if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
  }
 
 //*********** handle prev/next links *****************
-$trycant = 0;
-if ( isset($_REQUEST['move']) ) {
 
+if ( isset($_REQUEST['move']) ) {
 	switch ( $_REQUEST['move'] ) {
 		case 'prev': $tryreloff += -1; break;
 		case 'next': $tryreloff += 1; break;
 		default: $tryreloff = (int)$_REQUEST['move'];
 	}
-
-	if ( $offset + $tryreloff >= 0 ) {
-		$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $_REQUEST['sort_mode'], array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
-	}
-	if ( isset($trymove) && is_array($trymove) ) {
-		if ( isset($trymove['data'][0]['itemId']) ) {
-			$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
-			unset($item_info);
-			$urlquery['reloff'] = $tryreloff;
-		}
-	}
-	$trycant = $trymove['cant'];
-} elseif ( isset($_REQUEST['cant']) ) {
-	// Get number of items from the URL query, if we don't "move" (no click on "next" or "prev" links), to avoid a call to list_items
-	$trycant = $_REQUEST['cant'];
 }
 
-$smarty->assign('show_prev_link', (( $offset + $tryreloff <= 0 ) ? 'n' : 'y'));
-$smarty->assign('show_next_link', (( $offset + $tryreloff >= $trycant - 1 ) ? 'n' : 'y'));
-$smarty->assign('cant', $trycant);
+$cant = 0;
+$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $_REQUEST['sort_mode'], array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 
+if ( isset($trymove['data'][0]['itemId']) ) {
+	$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
+	unset($item_info);
+	$cant = $trymove['cant'];
+} elseif ( isset($_REQUEST['cant']) ) {
+	$cant = $_REQUEST['cant'];
+}
+if ( ! isset($urlquery['reloff']) ) {
+	$urlquery['reloff'] = 0;
+}
+
+$smarty->assign('cant', $cant);
 $smarty->assign_by_ref('urlquery', $urlquery);
+
 //*********** that's all for prev/next *****************
 
 $smarty->assign('itemId', $_REQUEST["itemId"]);
