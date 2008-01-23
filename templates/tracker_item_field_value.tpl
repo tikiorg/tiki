@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.10 2008-01-22 21:30:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.11 2008-01-23 21:01:39 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -153,9 +153,9 @@
 
 {* -------------------- mail -------------------- *}
 {elseif $field_value.type eq 'm'}
-	{if $field_value.options_array[0] eq '1' and $field_value.value}
+	{if $list_mode ne 'csv' and $field_value.options_array[0] eq '1' and $field_value.value}
 		{mailto address=$field_value.value|escape encode="hex"}
-	{elseif $field_value.options_array[0] eq '2' and $field_value.value}
+	{elseif $list_mode ne 'csv' and $field_value.options_array[0] eq '2' and $field_value.value}
 		{mailto address=$field_value.value|escape encode="none"}
 	{else}
 		{$field_value.value|escape|default:"&nbsp;"}
