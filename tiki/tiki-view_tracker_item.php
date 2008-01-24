@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.12 2008-01-23 14:18:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.13 2008-01-24 19:18:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -756,32 +756,15 @@ if ($_REQUEST["itemId"]) {
 					}
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
-						
-						//if (isset($last["{$fields["data"][$i]["options_array"][2]}"])) {
-						if (isset($last[$fields["data"][$i]["options_array"][2]])) {
-							//$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
-							$lst = $last[$fields["data"][$i]["options_array"][2]];
+						$l = split(':', $fields["data"][$i]["options_array"][1]);
+						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['itemId'], array_merge(array($fields["data"][$i]["options_array"][2]), $l, array($fields["data"][$i]["options_array"][3])));
+
+						if (count($ins_fields["data"][$i]['links']) == 1 && is_numeric($ins_fields["data"][$i]['links'][$link])) { //if later a computed field use this field
+							$info[$fields['data'][$i]['fieldId']] = $ins_fields["data"][$i]['links'][$link];
 						}
-						else {
-							$lst = $trklib->get_item_value($_REQUEST['trackerId'], $_REQUEST['itemId'],
-															$fields["data"][$i]["options_array"][2]);
-						}
-						
-						$ins_fields["data"][$i]['links'] = array();
-						if ($lst) {
-							$links = $trklib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
-							foreach ($links as $link) {
-								$ins_fields["data"][$i]['links'][$link] = $trklib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
-							}							
-							if (count($links) == 1 && is_numeric($ins_fields["data"][$i]['links'][$link])) { //if later a computed field use this field
-								$info[$fields['data'][$i]['fieldId']] = $ins_fields["data"][$i]['links'][$link];
-							}
-							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
-						}					
+						$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
 					}
 					
-					//ob_start();var_dump($last);$output = ob_get_contents();ob_end_clean();
-					//$ins_fields["data"][$i]["links"][] = $output;
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info[$fid]);
 					$ins_fields["data"][$i]["value"] = $info[$fid];
