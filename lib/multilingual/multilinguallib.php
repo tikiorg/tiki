@@ -311,15 +311,23 @@ class MultilingualLib extends TikiLib {
 		return $ret;
 	}
 
-	function createTranslationBit($type, $objId, $version = 0, $flags = array()) {
-		if( $type != 'wiki page' )
-			die('Translation sync only available for wiki pages.');
+	function getSupportedTranslationBitFlags() {
+		return array( 'critical' );
+	}
 
+	function normalizeTranslationBitFlags( $flags ) {
 		if( !is_array( $flags ) )
 			$flags = explode( ',', $flags );
 
 		// Add supported flags as they get added
-		$flags = array_intersect( $flags, array( 'critical' ) );
+		return array_intersect( $flags, $this->getSupportedTranslationBitFlags() );
+	}
+
+	function createTranslationBit($type, $objId, $version = 0, $flags = array()) {
+		if( $type != 'wiki page' )
+			die('Translation sync only available for wiki pages.');
+
+		$flags = $this->normalizeTranslationBitFlags( $flags );
 		$flags = implode( ',', $flags );
 
 		if( $version == 0 ) {
@@ -420,6 +428,62 @@ class MultilingualLib extends TikiLib {
 					$row['flags'] ) );
 			}
 		}
+	}
+
+	function getMissingTranslationBits( $type, $objId, $flags = array() ) {
+		if( $type != 'wiki page' )
+			die('Translation sync only available for wiki pages.');
+
+		$objId = (int) $objId;
+		$flags = $this->normalizeTranslationBitFlags( $flags );
+
+		$conditions = array( '1 = 1' );
+		foreach( $flags as $flag )
+			$conditions[] = "( FIND_IN_SET('$flag', bits.flags) > 0 )";
+
+		$conditions = implode( ' AND ', $conditions );
+		$result = $this->query( "
+			SELECT
+				bits.translation_bit_id
+			FROM
+				tiki_translated_objects a
+				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
+				INNER JOIN tiki_pages_translation_bits bits ON b.objId = bits.page_id
+				LEFT JOIN tiki_pages_translation_bits self
+					ON bits.translation_bit_id = self.original_translation_bit AND self.page_id = ?
+			WHERE
+				a.objId = ?
+				AND bits.original_translation_bit IS NULL
+				AND self.original_translation_bit IS NULL
+				AND $conditions
+		", array( $objId, $objId ) );
+
+		$bits = array();
+		while( $row = $result->fetchRow() )
+			$bits[] = $row['translation_bit_id'];
+
+		return $bits;
+	}
+
+	function getTranslationsWithBit( $translationBit )
+	{
+		$result = $this->query( "
+			SELECT
+				pageName page, lang
+			FROM
+				tiki_pages_translation_bits bits
+				INNER JOIN tiki_pages pages ON pages.page_id = bits.page_id
+			WHERE
+				translation_bit_id = ?
+				OR original_translation_bit = ?
+		", array( $translationBit, $translationBit ) );
+
+		$pages = array();
+		while( $row = $result->fetchRow() ) {
+			$pages[] = $row;
+		}
+
+		return $pages;
 	}
 }
 global $dbTiki;

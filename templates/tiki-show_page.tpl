@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.10 2008-01-21 09:47:16 nyloth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.11 2008-01-24 20:55:48 lphuberdeau Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -135,6 +135,22 @@
         {/if}			
     {/if}
 </div>
+
+{section name=i loop=$translation_alert}
+<div class="cbox">
+<div class="cbox-title">
+{tr}Content may be out of date{/tr}
+</div>
+<div class="cbox-data">
+	<p>{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}</p>
+	<ul>
+	{section name=j loop=$translation_alert[i]}
+		<li><a href="tiki-index.php?page={$translation_alert[i][j].page|escape}">{$translation_alert[i][j].page}</a> ({$translation_alert[i][j].lang})
+	{/section}
+	</ul>
+</div>
+</div>
+{/section}
 
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
 {include file="freetag_list.tpl"}
