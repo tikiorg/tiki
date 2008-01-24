@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.4 2008-01-16 14:56:04 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.5 2008-01-24 18:16:17 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -277,7 +277,7 @@ function wikiplugin_trackerlist($data, $params) {
 				die;
 			}
 			
-			if ($rated) {
+			if ($rated && !empty($items['data'])) {
 				foreach ($items['data'] as $f=>$v) {
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'],$user);
 				}
