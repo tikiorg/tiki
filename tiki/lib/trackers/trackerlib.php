@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.22 2008-01-23 20:35:07 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.23 2008-01-24 18:17:33 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -512,7 +512,7 @@ class TrackerLib extends TikiLib {
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $numsort = false) {
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
@@ -521,6 +521,7 @@ class TrackerLib extends TikiLib {
 		$csort_mode = '';
 		$corder = '';
 		$trackerId = (int)$trackerId;
+		$numsort = false;
 
 		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
@@ -543,6 +544,12 @@ class TrackerLib extends TikiLib {
 					.' ON (tti.`itemId` = sttif.`itemId`'
 						." AND sttif.`fieldId` = $asort_mode"
 					.')';
+				// Do we need a numerical sort on the field ?
+				$field = $this->get_tracker_field($asort_mode);
+				switch ($field['type']) {
+				  case 'q':
+					case 'n': $numsort = true; 
+				}
 			} else {
 				list($csort_mode, $corder) = split('_', $sort_mode);
 				$csort_mode = 'tti.`'.$csort_mode.'` ';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.9 2008-01-22 16:05:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.10 2008-01-24 18:17:33 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -605,12 +605,7 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-$sorts = split('_',$sort_mode);
-if (is_array($sorts) and isset($sorts[1]) and isset($listfields["{$sorts[1]}"]['type']) and ($listfields["{$sorts[1]}"]['type'] == 'n' or $listfields["{$sorts[1]}"]['type'] == 'q')) {
-	$numsort = true;
-} else {
-	$numsort = false;
-}
+
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
@@ -687,10 +682,8 @@ if ( isset($tracker_info['useRatings'])
 	$trklib->replace_rating($trackerId, $rate_itemId, $_REQUEST['fieldId'], $user, $_REQUEST["rate_$trackerId"]);
 }
 
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
-//var_dump($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
-//die;
-//var_dump($items);die();
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue);
+
 $urlquery['status'] = $_REQUEST['status'];
 $urlquery['initial'] = $initial;
 $urlquery['trackerId'] = $_REQUEST["trackerId"];
