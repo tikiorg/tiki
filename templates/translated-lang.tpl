@@ -12,11 +12,30 @@
 				</select>
 				</form>
 			{else} {* get method to have the param in the url *}
+				<script type="text/javascript">
+				current_page = "{$page}";
+				{literal}
+				function quick_switch_language( element )
+				{
+					var index = element.selectedIndex;
+					var option = element.options[index];
+
+					if( option.value == "-" )
+						return;
+					else if( option.value == "_translate_" )
+						document.location.href = "tiki-edit_translation.php?page=" + escape(current_page);
+					else
+						element.form.submit();
+				}
+				{/literal}
+				</script>
 				<form action="tiki-index.php" method="get">
-				<select name="page" onchange="this.form.submit()">
+				<select name="page" onchange="quick_switch_language( this )">
 					{section name=i loop=$trads}
 					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
 					{/section}
+					<option value="-">---</option>
+					<option value="_translate_">{tr}Translate{/tr}</option>
 				</select>
 				</form>
 			{/if}
