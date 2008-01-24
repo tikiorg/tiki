@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.18 2008-01-24 13:43:54 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.19 2008-01-24 15:29:03 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -286,6 +286,8 @@ function searchrep() {
 </select>
 {if $translationOf}
 <input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
+{/if}
+{if $diff_style}
 <input type="hidden" name="diff_style" value="{$diff_style|escape}"/>
 <input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
 <input type="hidden" name="newver" value="{$diff_newver|escape}"/>
