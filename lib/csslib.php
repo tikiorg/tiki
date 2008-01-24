@@ -25,6 +25,7 @@ class cssLib extends TikiLib {
 		}
 
 		chdir ($oldir);
+		sort($back);
 		return $back;
 	}
 
