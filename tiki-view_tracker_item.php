@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.14 2008-01-24 20:47:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.15 2008-01-24 21:22:50 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -212,7 +212,7 @@ if ( isset($_REQUEST['move']) ) {
 }
 
 $cant = 0;
-$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $_REQUEST['sort_mode'], array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 
 if ( isset($trymove['data'][0]['itemId']) ) {
 	$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
