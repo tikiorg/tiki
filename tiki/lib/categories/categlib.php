@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.14 2008-01-23 20:38:53 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.15 2008-01-24 15:26:17 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1185,8 +1185,14 @@ class CategLib extends ObjectLib {
 		$fromSql .= ",`tiki_objects` co, `tiki_category_objects` cat ";
 		$whereSql .= " AND co.`type`=? AND co.`itemId`= $sqlObj ";
 		$whereSql .= " AND co.`objectId`=cat.`catObjectId` ";
-		$whereSql .= " AND cat.`categId`= ? ";
-		$bind = array( $objType, $categId);
+		if (is_array($categId)) {
+			$whereSql .= 'AND cat.`categId` IN ('.implode(',',array_fill(0,count($categId),'?')).')';
+			$bind = array($objType);
+			$bind = array_merge($bind, $categId);
+		} else {
+			$whereSql .= " AND cat.`categId`= ? ";
+			$bind = array( $objType, $categId);
+		}
 		if (is_array($bindVars))
 			$bindVars = array_merge($bindVars, $bind);
 		else
