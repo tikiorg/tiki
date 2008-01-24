@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.19 2008-01-24 15:29:03 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.20 2008-01-24 20:55:48 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -294,7 +294,13 @@ function searchrep() {
 <input type="hidden" name="source_page" value="{$source_page|escape}"/>
 {/if}
 </td></tr>
-{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:98%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
+<tr class="formcolor">
+	<td>{tr}Translation request{/tr}:</td>
+	<td>
+		<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
+		<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
+	</td>
+</tr>
 {/if}
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>

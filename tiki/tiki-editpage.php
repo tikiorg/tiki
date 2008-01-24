@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.27 2008-01-24 19:09:37 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.28 2008-01-24 20:55:47 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -263,7 +263,11 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 
 				} else {
 					$info = $tikilib->get_page_info( $pagename );
-					$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'] );
+					$flags = array();
+					if( isset( $_REQUEST['translation_critical'] ) ) {
+						$flags[] = 'critical';
+					}
+					$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'], $flags );
 				}
 			}
         }
@@ -687,6 +691,11 @@ if (isset($_REQUEST["lang"])) {
   $pageLang = "";
 }
 $smarty->assign('lang', $pageLang);
+if( isset( $_REQUEST['translation_critical'] ) ) {
+	$smarty->assign( 'translation_critical', 1 );
+} else {
+	$smarty->assign( 'translation_critical', 0 );
+}
 if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
 	// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
 	//   then we need to convert database's HTML entities into their "normal chars" equivalents
@@ -881,7 +890,11 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );
-				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'] );
+				$flags = array();
+				if( isset( $_REQUEST['translation_critical'] ) ) {
+					$flags[] = 'critical';
+				}
+				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'], $flags );
 			}
 		}
 	}

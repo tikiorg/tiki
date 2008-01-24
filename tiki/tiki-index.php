@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.12 2008-01-21 09:47:14 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.13 2008-01-24 20:55:47 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -260,13 +260,24 @@ if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) =
 }
 
 // Get translated page
-if ($prefs['feature_multilingual'] == 'y' && $info['lang'] && $info['lang'] != 'NULL') { //NULL is a temporary patch
+if ($prefs['feature_multilingual'] == 'y') {
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
-	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
-	$smarty->assign('trads', $trads);
-	$pageLang = $info['lang'];
-	$smarty->assign('pageLang', $pageLang);
+
+	if( $info['lang'] && $info['lang'] != 'NULL') { //NULL is a temporary patch
+		$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
+		$smarty->assign('trads', $trads);
+		$pageLang = $info['lang'];
+		$smarty->assign('pageLang', $pageLang);
+	}
+
+	$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $info['page_id'], 'critical' );
+	$alertData = array();
+	foreach( $bits as $translationBit ) {
+		$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit );
+	}
+
+	$smarty->assign( 'translation_alert', $alertData );
 }
 
 if(isset($_REQUEST['copyrightpage'])) {
