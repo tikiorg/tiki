@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.6 2007-12-19 22:55:24 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.7 2008-01-24 17:21:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,7 +190,7 @@ if (!isset($_REQUEST["comments_reply_threadId"])) {
 }
 $smarty->assign("comments_reply_threadId", $_REQUEST["comments_reply_threadId"]);
 
-include_once ("lib/commentslib.php");
+include_once ("lib/commentslib.php");global $dbTiki;
 $commentslib = new Comments($dbTiki);
 
 // Include the library for comments (if not included)
