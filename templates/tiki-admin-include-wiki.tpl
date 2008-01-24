@@ -144,24 +144,35 @@
     <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
-    <tr><td class="form">
-    {tr}Discuss pages on forums{/tr}: </td><td>
-    <input type="checkbox" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
-    <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
-	  <select name="wiki_forum_id">
-    {section name=ix loop=$all_forums}
+     <tr>
+      <td width="10"><input type="checkbox" onclick="flip('discussforum');" name="feature_wiki_discuss" {if $prefs.feature_wiki_discuss eq 'y'}checked="checked"{/if} {if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} /></td>
+      <td class="form">{tr}Discuss pages on forums{/tr}{if $prefs.feature_forums ne 'y'}<br />({tr}Forums are disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.){/if}
+      <div id="discussforum" style="display:{if ($prefs.feature_wiki_discuss eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};">
+       <p>{tr}Forum for discussion{/tr}:<br /> <select name="wiki_forum_id"{if $prefs.feature_forums ne 'y'} disabled="disabled"{/if}>
+{if $all_forums}    {section name=ix loop=$all_forums}
     <option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $prefs.wiki_forum_id}selected="selected"{/if}>{$all_forums[ix].name}</option>
     {/section}
+{else}    <option value="">{tr}No forums{/tr}</option>
+{/if}
     </select>
-
-    </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
-    </td>
-    </tr></table>
+       </p>
+{if ($prefs.feature_forums eq 'y') and !$all_forums}       <p><a href="tiki-admin_forums.php" title="{tr}Forums{/tr}">Create a forum</a>.</p>
+{/if}
+      </div>
+      </td>
+     </tr>
+    </table>
     </form>
     </div>
   </div>
   
+
+
+
+
+
+
+
   <div class="cbox">
     <div class="cbox-title">
     {tr}Wiki Link Format{/tr}
