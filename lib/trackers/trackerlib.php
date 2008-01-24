@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.23 2008-01-24 18:17:33 sept_7 Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.24 2008-01-24 18:40:57 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1357,7 +1357,7 @@ class TrackerLib extends TikiLib {
         if (isset($ins_fields)&&isset($ins_fields['data']))        
 		foreach($ins_fields['data'] as $f) {
 
-			if (isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
+			if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 			
 				if (isset($f['type']) &&  $f['type'] == 'e') {
 					if (!in_array($f['fieldId'], $categorized_fields))
