@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.13 2008-01-24 19:18:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.14 2008-01-24 20:47:16 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -759,8 +759,12 @@ if ($_REQUEST["itemId"]) {
 						$l = split(':', $fields["data"][$i]["options_array"][1]);
 						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['itemId'], array_merge(array($fields["data"][$i]["options_array"][2]), $l, array($fields["data"][$i]["options_array"][3])));
 
-						if (count($ins_fields["data"][$i]['links']) == 1 && is_numeric($ins_fields["data"][$i]['links'][$link])) { //if later a computed field use this field
-							$info[$fields['data'][$i]['fieldId']] = $ins_fields["data"][$i]['links'][$link];
+						if (count($ins_fields["data"][$i]['links']) == 1) {
+							foreach ($ins_fields["data"][$i]['links'] as $linkItemId=>$linkValue) {
+								if (is_numeric($ins_fields["data"][$i]['links'][$linkItemId])) { //if later a computed field use this field
+									$info[$fields['data'][$i]['fieldId']] = $linkValue;
+								}
+							}
 						}
 						$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
 					}
