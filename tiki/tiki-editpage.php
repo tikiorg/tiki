@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.26 2008-01-22 17:19:54 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.27 2008-01-24 19:09:37 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -12,6 +12,23 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 require_once ("lib/ajax/ajaxlib.php");
 require_once ("lib/wiki/wiki-ajax.php");
+
+function isNewTranslationMode()
+{
+	global $prefs;
+
+	return $prefs['feature_multilingual'] == 'y'
+		&& isset( $_REQUEST['translationOf']  )
+		&& ! empty( $_REQUEST['translationOf'] );
+}
+
+function isUpdateTranslationMode()
+{
+	return isset( $_REQUEST['source_page'] )
+		&& isset( $_REQUEST['oldver'] )
+		&& isset( $_REQUEST['newver'] );
+}
+
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
 	$smarty->display('error.tpl');
@@ -216,6 +233,39 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
         	} else {
           	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
         	}
+
+			// Handle the translation bits after actual creation/update
+			// This path is never used by minor updates
+			if ($prefs['feature_multilingual'] == 'y') {
+				include_once("lib/multilingual/multilinguallib.php");
+				unset( $tikilib->cache_page_info );
+
+				if( isNewTranslationMode() ) {
+					$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+					$targetInfo = $tikilib->get_page_info( $pagename );
+
+					$multilinguallib->propagateTranslationBits( 
+						'wiki page',
+						$sourceInfo['page_id'],
+						$targetInfo['page_id'],
+						$sourceInfo['version'],
+						$targetInfo['version'] );
+
+				} elseif( isUpdateTranslationMode() ) {
+					$targetInfo = $tikilib->get_page_info( $pagename );
+
+					$multilinguallib->propagateTranslationBits( 
+						'wiki page',
+						$_REQUEST['source_page'],
+						$targetInfo['page_id'],
+						(int) $_REQUEST['newver'],
+						$targetInfo['version'] );
+
+				} else {
+					$info = $tikilib->get_page_info( $pagename );
+					$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'] );
+				}
+			}
         }
       } else {
         $_REQUEST["edit"] = $last_part;
@@ -769,10 +819,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
 
-		if( $prefs['feature_multilingual'] == 'y'
-		 && isset( $_REQUEST['translationOf']  )
-		 && ! empty( $_REQUEST['translationOf'] )
-		 && ! empty( $pageLang ) )
+		if( isNewTranslationMode() && ! empty( $pageLang ) )
 		{
 			include_once("lib/multilingual/multilinguallib.php");
 			$infoSource = $tikilib->get_page_info($_REQUEST['translationOf']);
@@ -784,18 +831,60 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				die;
 			}
 		}
-    } else {
-      $links = $tikilib->get_links($edit);
-      /*
-      $tikilib->cache_links($links);
-      */
-      if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
-        $minor=true;
-      } else {
-        $minor=false;
-      }
-      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash);
-    }
+		if ($prefs['feature_multilingual'] == 'y') {
+			include_once("lib/multilingual/multilinguallib.php");
+
+			unset( $tikilib->cache_page_info );
+			if( isNewTranslationMode() ) {
+				$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
+
+				$multilinguallib->propagateTranslationBits( 
+					'wiki page',
+					$sourceInfo['page_id'],
+					$targetInfo['page_id'],
+					$sourceInfo['version'],
+					$targetInfo['version'] );
+
+			} else {
+				$info = $tikilib->get_page_info( $_REQUEST['page'] );
+				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], 1 );
+			}
+		}
+	} else {
+		$links = $tikilib->get_links($edit);
+		/*
+		   $tikilib->cache_links($links);
+		 */
+		if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
+			$minor=true;
+		} else {
+			$minor=false;
+		}
+		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash);
+
+		// Handle translation bits
+		if ($prefs['feature_multilingual'] == 'y' && !$minor) {
+			include_once("lib/multilingual/multilinguallib.php");
+			unset( $tikilib->cache_page_info );
+
+			if( isUpdateTranslationMode() ) {
+				$sourceInfo = $tikilib->get_page_info( $_REQUEST['source_page'] );
+				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
+
+				$multilinguallib->propagateTranslationBits( 
+						'wiki page',
+						$sourceInfo['page_id'],
+						$targetInfo['page_id'],
+						(int) $_REQUEST['newver'],
+						$targetInfo['version'] );
+
+			} else {
+				$info = $tikilib->get_page_info( $_REQUEST['page'] );
+				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $info['version'] );
+			}
+		}
+	}
   //Page may have been inserted from a structure page view
   if (isset($_REQUEST['current_page_id']) ) {
     $page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
@@ -867,7 +956,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	$languages = $tikilib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 
-	if( isset( $_REQUEST['translationOf'] ) ) {
+	if( isNewTranslationMode() ) {
 		$smarty->assign( 'translationOf', $_REQUEST['translationOf'] );
 
 		if( $tikilib->page_exists( $page ) ) {
@@ -878,7 +967,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 		}
 	}
 
-	if( isset( $_REQUEST['source_page'] ) && isset( $_REQUEST['oldver'] ) && isset( $_REQUEST['newver'] ) ) {
+	if( isUpdateTranslationMode() ) {
 		include_once('lib/wiki/histlib.php');
 		histlib_helper_setup_diff( $_REQUEST['source_page'], $_REQUEST['oldver'], $_REQUEST['newver'] );
 		$smarty->assign( 'diff_oldver', (int) $_REQUEST['oldver'] );
