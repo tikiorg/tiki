@@ -130,13 +130,13 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 				<div id="tiki-columns"><!-- START of Tiki columns switchers -->
 	{if $prefs.feature_left_column eq 'user'}
-					<span style="float: left"><a class="flip" href="javascript:icntoggle('col2');">
-						<img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a>
+					<span style="float: left"><a class="flip" 
+					href="#" onclick="toggleCols('col2','left'); return false">{tr}Show/Hide Left Menus{/tr}</a>
 					</span>
 	{/if}
 	{if $prefs.feature_right_column eq 'user'}
-					<span style="float: right"><a class="flip" href="javascript:icntoggle('col3');">
-						<img name="rightcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;</a>
+					<span style="float: right"><a class="flip"
+					href="#" onclick="toggleCols('col3','right'); return false">{tr}Show/Hide Right Menus{/tr}</a>
 					</span>
 	{/if}
 					<br style='clear: both' />
