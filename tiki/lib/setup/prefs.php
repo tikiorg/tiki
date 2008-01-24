@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.36 2008-01-17 16:02:01 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.37 2008-01-24 20:00:21 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -820,7 +820,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['cachepages'] = 'n';
 	$prefs['count_admin_pvs'] = 'y';
 	$prefs['default_mail_charset'] ='utf-8';
-	$prefs['direct_pagination'] = 'n';
+	$prefs['direct_pagination'] = 'y';
 	$prefs['error_reporting_adminonly'] = 'y';
 	$prefs['error_reporting_level'] = 0;
 	$prefs['smarty_notice_reporting'] = 'n';
