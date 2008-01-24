@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.14 2007-12-14 16:44:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.15 2008-01-24 18:27:21 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -209,8 +209,14 @@ function wikiplugin_tracker($data, $params) {
 
 				/* ------------------------------------- Check field values for each type and presence of mandatory ones ------------------- */
 				$field_errors = $trklib->check_field_values($ins_fields, $categorized_fields);
+
+				if (empty($user) && $prefs['feature_antibot'] == 'y') {
+					if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+						$field_errors['err_antibot'] = 'y';
+					}
+				}
 			
-				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && !isset($_REQUEST['preview'])) {
+				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
@@ -348,6 +354,12 @@ function wikiplugin_tracker($data, $params) {
 					$back.= $f['name'];
 					$back.= --$coma_cpt > 0 ? ',&nbsp;' : '';
 				}
+				$back.= '</div><br />';
+				$_REQUEST['error'] = 'y';
+			}
+			if (isset($field_errors['err_antibot'])) {
+				$back.= '<div class="simplebox highlight">';
+				$back .= tra('You have mistyped the anti-bot verification code; please try again.');
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}
@@ -649,6 +661,9 @@ function wikiplugin_tracker($data, $params) {
 						$back .= '<br /><i>'.$f['description'].'</i>';
 					$back.= "</td></tr>";
 				}
+			}
+			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
+				$back .= $smarty->fetch('antibot.tpl');
 			}
 			$back.= "<tr><td></td><td>";
 			if (!empty($preview)) {
