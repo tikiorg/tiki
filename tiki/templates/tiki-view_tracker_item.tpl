@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.24 2008-01-23 18:05:44 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.25 2008-01-24 20:47:16 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -320,9 +320,6 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
   {/if}
 {elseif ($cur_field.type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
 <br />
-
-{* <a href="tiki-view_tracker.php?trackerId={$cur_field.trackerId}&amp;vals%5B{$cur_field.options_array[1]}%5D= *}
-
 <a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
 {section name=ox loop=$ins_fields}
 {if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
@@ -372,7 +369,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'l'}
 {foreach key=tid item=tlabel from=$cur_field.links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+<div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
 {/foreach}
 
 {elseif $cur_field.type eq 'e'}
