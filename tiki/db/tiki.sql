@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-01-22 22:27:16 $
-# $Author: sylvieg $
+# $Date: 2008-01-24 16:14:38 $
+# $Author: lphuberdeau $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4996,5 +4996,17 @@ CREATE TABLE `tiki_mypage_types_components` (
   `maxcount` int(11) NOT NULL default '1',
   KEY `id_mypage_types` (`id_mypage_types`)
 ) ENGINE=MyISAM;
+
+CREATE TABLE `tiki_pages_translation_bits` (
+  `translation_bit_id` int(14) NOT NULL auto_increment,
+  `page_id` int(14) NOT NULL,
+  `version` int(8) NOT NULL,
+  `source_translation_bit` int(10) NULL,
+  `original_translation_bit` int(10) NULL,
+  `flags` SET('critical') NOT NULL DEFAULT '',
+  PRIMARY KEY (`translation_bit_id`),
+  KEY(`page_id`),
+  KEY(`original_translation_bit`)
+);
 
 # ------------------------------------

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.21 2008-01-22 22:27:16 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.22 2008-01-24 16:14:38 lphuberdeau Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1669,3 +1669,17 @@ ALTER TABLE tiki_file_galleries ADD show_last_user char(1) default '?';
 UPDATE tiki_file_galleries SET show_last_user='y' WHERE show_modified='y' AND show_last_user='?';
 UPDATE tiki_file_galleries SET show_last_user=NULL WHERE show_last_user='?';
 ALTER TABLE tiki_file_galleries CHANGE show_last_user show_last_user char(1) default NULL;
+
+#2008-01-24 lphuberdeau
+CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
+  `translation_bit_id` int(14) NOT NULL auto_increment,
+  `page_id` int(14) NOT NULL,
+  `version` int(8) NOT NULL,
+  `source_translation_bit` int(10) NULL,
+  `original_translation_bit` int(10) NULL,
+  `flags` SET('critical') NOT NULL DEFAULT '',
+  PRIMARY KEY (`translation_bit_id`),
+  KEY(`page_id`),
+  KEY(`original_translation_bit`)
+);
+
