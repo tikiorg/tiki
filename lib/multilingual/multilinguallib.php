@@ -310,6 +310,117 @@ class MultilingualLib extends TikiLib {
 		$ret= "<span  onclick=\"window.open('tiki-interactive_trans.php?content=$urcontent','traduction','toolbar=no,location=no,scrollbars=yes,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,width=600,height=300,left=10,top=10');return false;\">°</span>";
 		return $ret;
 	}
+
+	function createTranslationBit($type, $objId, $version = 0, $flags = array()) {
+		if( $type != 'wiki page' )
+			die('Translation sync only available for wiki pages.');
+
+		if( !is_array( $flags ) )
+			$flags = explode( ',', $flags );
+
+		// Add supported flags as they get added
+		$flags = array_intersect( $flags, array( 'critical' ) );
+		$flags = implode( ',', $flags );
+
+		if( $version == 0 ) {
+			$info = $this->get_page_info_from_id( $objId );
+			$version = $info['version'];
+		}
+
+		$this->query(
+			"INSERT
+			INTO tiki_pages_translation_bits (`page_id`, `version`,`flags` ) 
+			VALUES(?, ?, ?)",
+			array( (int) $objId, (int) $version, $flags ) );
+	}
+
+	function propagateTranslationBits( $type, $sourceId, $targetId, $sourceVersion = 0, $targetVersion = 0 )
+	{
+		if( $type != 'wiki page' )
+			die('Translation sync only available for wiki pages.');
+
+		// TODO : Add a check to make sure both pages are in the same translation set
+		
+		$sourceId = (int) $sourceId;
+		$sourceVersion = (int) $sourceVersion;
+		$targetId = (int) $targetId;
+		$targetVersion = (int) $targetVersion;
+
+		if( $sourceVersion == 0 ) {
+			$info = $this->get_page_info_from_id( $sourceId );
+			$sourceVersion = (int) $info['version'];
+		}
+
+		if( $targetVersion == 0 ) {
+			$info = $this->get_page_info_from_id( $targetId );
+			$targetVersion = (int) $info['version'];
+		}
+
+		/*
+			Fetch the list of translation bits from the source available in
+			the selected version. From the list, exclude those that originated
+			from the target or were already incorporated in a previous update.
+		*/
+		$result = $this->query( "
+			SELECT translation_bit_id, original_translation_bit, flags
+			FROM tiki_pages_translation_bits
+			WHERE 
+				page_id = ? 
+				AND version <= ? 
+				AND original_translation_bit IS NULL
+				AND translation_bit_id NOT IN(
+					SELECT original_translation_bit 
+					FROM tiki_pages_translation_bits 
+					WHERE page_id = ? AND original_translation_bit IS NOT NULL
+				)
+			UNION
+				SELECT translation_bit_id, original_translation_bit, flags
+				FROM tiki_pages_translation_bits
+				WHERE 
+					page_id = ? 
+					AND version <= ? 
+					AND original_translation_bit IS NOT NULL 
+					AND original_translation_bit NOT IN(
+						SELECT translation_bit_id
+						FROM tiki_pages_translation_bits 
+						WHERE page_id = ?
+					)
+					AND original_translation_bit NOT IN(
+						SELECT original_translation_bit
+						FROM tiki_pages_translation_bits 
+						WHERE page_id = ? AND original_translation_bit IS NOT NULL
+					)
+			",
+			array( $sourceId, $sourceVersion, $targetId, $sourceId, $sourceVersion, $targetId, $targetId ) );
+
+		$query = "
+		INSERT INTO tiki_pages_translation_bits (
+			page_id, 
+			version, 
+			source_translation_bit, 
+			original_translation_bit, 
+			flags)
+		VALUES( ?, ?, ?, ?, ? )";
+		while( $row = $result->fetchRow() ) {
+			if( empty( $row['original_translation_bit'] ) ) {
+				// The translation bit is the original one
+				$this->query( $query, array(
+					$targetId, 
+					$targetVersion, 
+					$row['translation_bit_id'], 
+					$row['translation_bit_id'], 
+					$row['flags'] ) );
+			} else {
+				// The transation bit was propagated to the source
+				$this->query( $query, array(
+					$targetId, 
+					$targetVersion, 
+					$row['translation_bit_id'], 
+					$row['original_translation_bit'], 
+					$row['flags'] ) );
+			}
+		}
+	}
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
