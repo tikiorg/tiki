@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.5 2007-11-23 13:40:21 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.6 2008-01-24 08:22:49 luciash Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -28,6 +28,27 @@ function getElementById(id) {
     for (i=0;i<document.forms.length;i++) {
 	if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
     }
+}
+
+/* toggle CSS (tableless) layout columns */
+function toggleCols(id,zeromargin) {
+	if (!zeromargin) var zeromargin = '';
+	if (!id) var id = '';
+	if (document.getElementById(id).style.display == "none") {
+		document.getElementById(id).style.display = "block";
+		if (zeromargin == 'left') {
+			document.getElementById('col1').style.marginLeft = '';
+		} else {
+			document.getElementById('col1').style.marginRight = '';
+		}
+	} else {
+		document.getElementById(id).style.display = "none";
+		if (zeromargin == 'left') {
+			document.getElementById('col1').style.marginLeft = '0';
+		} else {
+			document.getElementById('col1').style.marginRight = '0';
+		}
+	}
 }
 
 function toggle_dynamic_var(name) {
