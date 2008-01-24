@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.17 2008-01-22 15:25:28 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.18 2008-01-24 13:43:54 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -284,11 +284,13 @@ function searchrep() {
 <option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 {/section}
 </select>
+{if $translationOf}
 <input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
 <input type="hidden" name="diff_style" value="{$diff_style|escape}"/>
 <input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
 <input type="hidden" name="newver" value="{$diff_newver|escape}"/>
 <input type="hidden" name="source_page" value="{$source_page|escape}"/>
+{/if}
 </td></tr>
 {*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:98%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
 {/if}
