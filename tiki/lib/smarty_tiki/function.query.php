@@ -10,18 +10,20 @@ function smarty_function_query($params, &$smarty) {
   $query = array_merge($_POST, $_GET);
   if (is_array($params)) {
   foreach($params as $param_name=>$param_value) {
+    // Arguments starting with an underscore are special and must not be included in URL
+    if ( $param_name[0] == '_' ) continue;
     $list = explode(",",$param_value);
     if (isset($query[$param_name]) and in_array($query[$param_name],$list)) {
       $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
-		  if ($query[$param_name] === NULL or $query[$param_name] == 'NULL') {
-		    unset($query[$param_name]);
-		  }
+      if ($query[$param_name] === NULL or $query[$param_name] == 'NULL') {
+        unset($query[$param_name]);
+      }
     } else {
       if ($list[0] !== NULL and $list[0] != 'NULL' ) {
         $query[$param_name] = $list[0];
       } else {
-			  unset($query[$param_name]);
-			}
+        unset($query[$param_name]);
+      }
     }
   }
   }
@@ -38,6 +40,23 @@ function smarty_function_query($params, &$smarty) {
       }
     }
   }
+
+  if ( is_array($params) && isset($params['_type']) ) {
+    global $base_url;
+    switch ( $params['_type'] ) {
+      case 'absolute_uri':
+        $ret = $base_host.$_SERVER['PHP_SELF'].'?'.$ret;
+        break;
+      case 'absolute_path':
+        $ret = $_SERVER['PHP_SELF'].'?'.$ret;
+        break;
+      case 'relative':
+	$ret = basename($_SERVER['PHP_SELF']).'?'.$ret;
+        break;
+      case 'arguments': /* default */
+    }
+  }
+
   return $ret;
 }
 ?>
