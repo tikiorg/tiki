@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.28 2008-01-23 15:29:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.29 2008-01-25 14:27:41 nyloth Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -104,21 +104,11 @@ class="prevnext">{tr}All{/tr}</a>
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
-{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y'}
+{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) }
 	<td class="heading auto">
-		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode=f_{if $sort_mode eq 'f_'|cat:$field_value.fieldId|cat:'_asc'}
-		{$field_value.fieldId|escape:"url"}_desc{else}{$field_value.fieldId|escape:"url"}_asc{/if}">
-			{$field_value.name|truncate:255:"..."|default:"&nbsp;"}
-		</a>
+		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</td>
 	{assign var=rateFieldId value=$field_value.fieldId}
-{elseif $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
-	<td class="heading auto">
-		<a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$field_value.fieldId|cat:'_asc'}{$field_value.fieldId|escape:"url"}_desc{else}{$field_value.fieldId|escape:"url"}_asc{/if}{if $filterfield}&amp;filterfield={$filterfield}&amp;filtervalue={$filtervalue}{/if}">
-			{$field_value.name|truncate:255:"..."|default:"&nbsp;"}
-		</a>
-	</td>
 {/if}
 {/foreach}
 
