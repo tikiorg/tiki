@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.15 2008-01-24 21:22:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.16 2008-01-25 10:33:45 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -203,29 +203,29 @@ if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
 
 //*********** handle prev/next links *****************
 
-if ( isset($_REQUEST['move']) ) {
-	switch ( $_REQUEST['move'] ) {
-		case 'prev': $tryreloff += -1; break;
-		case 'next': $tryreloff += 1; break;
-		default: $tryreloff = (int)$_REQUEST['move'];
+if ( isset($_REQUEST['reloff']) ) {
+	if ( isset($_REQUEST['move']) ) {
+		switch ( $_REQUEST['move'] ) {
+			case 'prev': $tryreloff += -1; break;
+			case 'next': $tryreloff += 1; break;
+			default: $tryreloff = (int)$_REQUEST['move'];
+		}
 	}
+
+	$cant = 0;
+	$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+
+	if ( isset($trymove['data'][0]['itemId']) ) {
+		$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
+		unset($item_info);
+		$cant = $trymove['cant'];
+	} elseif ( isset($_REQUEST['cant']) ) {
+		$cant = $_REQUEST['cant'];
+	}
+
+	$smarty->assign('cant', $cant);
 }
 
-$cant = 0;
-$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
-
-if ( isset($trymove['data'][0]['itemId']) ) {
-	$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
-	unset($item_info);
-	$cant = $trymove['cant'];
-} elseif ( isset($_REQUEST['cant']) ) {
-	$cant = $_REQUEST['cant'];
-}
-if ( ! isset($urlquery['reloff']) ) {
-	$urlquery['reloff'] = 0;
-}
-
-$smarty->assign('cant', $cant);
 $smarty->assign_by_ref('urlquery', $urlquery);
 
 //*********** that's all for prev/next *****************
