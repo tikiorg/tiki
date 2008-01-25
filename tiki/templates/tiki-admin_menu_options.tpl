@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.4 2008-01-17 12:25:46 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.5 2008-01-25 17:23:31 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">
@@ -82,7 +82,6 @@
 </select></td></tr>
 <tr><td>{tr}General{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
-{if $prefs.feature_chat eq 'y'}<option value="tiki-chat.php,{tr}Chat{/tr},feature_chat,tiki_p_chat">{tr}Chat{/tr}</option>{/if}
 {if $prefs.feature_stats eq 'y'}<option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>{/if}
 {if $prefs.feature_games eq 'y'}<option value="tiki-list_games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>{/if}
 {if $prefs.feature_categories eq 'y'}<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>{/if}

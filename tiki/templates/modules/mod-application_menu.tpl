@@ -1,10 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.125 2007-10-14 17:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.125.2.1 2008-01-25 17:23:32 nyloth Exp $ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Menu{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="application_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 &nbsp;<a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
-{if $prefs.feature_chat eq 'y' and $tiki_p_chat eq 'y'}
-&nbsp;<a href="tiki-chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
-{/if}
 
 {if $prefs.feature_contact eq 'y'}
   &nbsp;<a href="tiki-contact.php" class="linkmenu">{tr}Contact us{/tr}</a><br />
@@ -561,9 +558,6 @@
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
       {/if}
       &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
-    {/if}
-    {if $prefs.feature_chat eq 'y' and $tiki_p_admin_chat eq 'y'}
-      &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
     {/if}
     {if $prefs.feature_categories eq 'y' and $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />

@@ -83,7 +83,6 @@ INSERT INTO tiki_preferences VALUES ('feature_categoryobjects','n');
 INSERT INTO tiki_preferences VALUES ('feature_categorypath','n');
 INSERT INTO tiki_preferences VALUES ('feature_challenge','n');
 INSERT INTO tiki_preferences VALUES ('feature_charts','n');
-INSERT INTO tiki_preferences VALUES ('feature_chat','n');
 INSERT INTO tiki_preferences VALUES ('feature_clear_passwords','n');
 INSERT INTO tiki_preferences VALUES ('feature_cms_rankings','y');
 INSERT INTO tiki_preferences VALUES ('feature_cms_templates','n');
