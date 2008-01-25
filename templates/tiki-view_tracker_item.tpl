@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.25 2008-01-24 20:47:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.26 2008-01-25 14:34:27 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -318,15 +318,6 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
   {if $prefs.quicktags_over_textarea neq 'y'}
     {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
   {/if}
-{elseif ($cur_field.type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
-<br />
-<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
-{section name=ox loop=$ins_fields}
-{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
-{$ins_fields[ox].value}
-{/if}
-{/section}
-">{tr}Insert new item{/tr}<br />
 {/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
@@ -369,8 +360,19 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'l'}
 {foreach key=tid item=tlabel from=$cur_field.links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
+<div style="clear:both"><div style="float:right;text-align:right"><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View item{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16" alt="{tr}View item{/tr}" /></a></div>
+<a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View item{/tr}">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
 {/foreach}
+{if $tiki_p_create_tracker_items eq 'y' and !(count($cur_field.links) >= 1 and $cur_field.tracker_options.oneUserItem eq 'y')}
+<div style="clear:both;text-align:right;"><a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
+{section name=ox loop=$ins_fields}
+{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
+{$ins_fields[ox].value}
+{/if}
+{/section}
+">{tr}Insert new item{/tr}
+</div>
+{/if}
 
 {elseif $cur_field.type eq 'e'}
 {if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')} 
