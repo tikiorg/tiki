@@ -1,9 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.12 2008-01-07 23:01:48 sylvieg Exp $ *}
-
-{if $prefs.feature_ajax eq 'y'}
-  {include file='tiki-ajax_header.tpl' test=$test}
-  <script src="lib/freetag/freetag_ajax.js" type="text/javascript"></script>
-{/if}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.13 2008-01-25 16:17:35 nyloth Exp $ *}
 
 <h1><a href="tiki-browse_freetags.php" class="pagetitle">{tr}Browse related tags{/tr}</a></h1>
 
@@ -43,68 +38,6 @@
 <br />
 
 {tr}Browse in{/tr}:<br />
-{if $prefs.feature_ajax eq 'y'}
-
-    <a class="linkbut" {if $type eq ''}id="highlight{/if} href="javascript:setObjectType('','typeAll');" id="typeAll">{tr}All{/tr}</a>
-
-    {if $prefs.feature_wiki eq 'y'}
-      <a class="linkbut" {if $type eq "wiki page"} id="highlight"{/if} href="javascript:setObjectType('wiki page','typeWikiPage');" id="typeWikiPage">{tr}Wiki pages{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_galleries eq 'y'}
-      <a class="linkbut" {if $type eq 'image gallery'} id="highlight"{/if} href="javascript:setObjectType('image gallery','typeImageGalleries');" id="typeImageGalleries">{tr}Image galleries{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_galleries eq 'y'}
-      <a class="linkbut" {if $type eq "image"}id=" highlight"{/if} href="javascript:setObjectType('image','typeImage');" id="typeImage">{tr}Images{/tr}</a>
-    {/if}
-  
-    {if $prefs.feature_file_galleries eq 'y'}
-      <a class="linkbut" {if $type eq "file gallery"} id="highlight"{/if} href="javascript:setObjectType('file gallery','typeFileGallery');" id="typeFileGallery">{tr}File galleries{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_blogs eq 'y'}
-      <a class="linkbut" {if $type eq "blog post"} id="highlight"{/if} href="javascript:setObjectType('blog post','typeBlogPost');" id="typeBlogPost">{tr}Blogs{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_trackers eq 'y'}
-      <a class="linkbut" {if $type eq "tracker"} id="highlight"{/if} href="javascript:setObjectType('tracker','typeTracker');" id="typeTracker">{tr}Trackers{/tr}</a>
-    {/if}
-    
-    <a class="linkbut" {if $type eq "tracker item"} id="highlight"{/if} href="javascript:setObjectType('tracker item','typeTrackerItem');" id="typeTrackerItem">{tr}Trackers Items{/tr}</a>
-    
-    {if $prefs.feature_quizzes eq 'y'}
-      <a class="linkbut" {if $type eq "quizz"} id="highlight"{/if} href="javascript:setObjectType('quizz','typeQuiz');" id="typeQuiz">{tr}Quizzes{/tr}</a>
-    {/if}
-    
-    {if $prefs.feature_polls eq 'y'}
-      <a class="linkbut" {if $type eq "poll"} id="highlight"{/if} href="javascript:setObjectType('poll','typePoll');" id="typePoll">{tr}Polls{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_surveys eq 'y'}
-      <a class="linkbut" {if $type eq "survey"} id="highlight"{/if} href="javascript:setObjectType('survey','typeSurvey');" id="typeSurvey">{tr}Surveys{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_directory eq 'y'}
-      <a class="linkbut" {if $type eq "directory"} id="highlight"{/if} href="javascript:setObjectType('directory','typeDirectory');" id="typeDirectory">{tr}Directory{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_faqs eq 'y'}
-      <a class="linkbut" {if $type eq "faq"} id="highlight"{/if} href="javascript:setObjectType('faq','typeFaq');" id="typeFaq">{tr}FAQs{/tr}</a>
-    {/if}
-
-    {if $prefs.feature_sheet eq 'y'}
-      <a class="linkbut" {if $type eq "sheet"} id="highlight"{/if} href="javascript:setObjectType('sheet','typeSheet');" id="typeSheet">{tr}Sheets{/tr}</a>
-    {/if}
-  
-    {if $prefs.feature_articles eq 'y'}
-      <a class="linkbut" {if $type eq "article"} id="highlight"{/if} href="javascript:setObjectType('article','typeArticle');" id="typeArticle">{tr}Articles{/tr}</a>
-    {/if}
-
-  {include file="tiki-ajax_table.tpl"}
-  <script type="text/javascript">listObjects('{$tagString}','{if $broaden}{$broaden}{else}y{/if}');</script>
-
-{else}
 
   <a class="linkbut" {if $type eq ''} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}All{/tr}</a>
   
@@ -256,4 +189,3 @@
       </td>
     </tr>
   </table>
-{/if $prefs.feature_ajax}
