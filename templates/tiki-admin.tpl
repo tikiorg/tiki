@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.4 2008-01-21 03:15:34 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.5 2008-01-25 17:23:31 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {breadcrumbs type="trail" loc="admin" crumbs=$crumbs}
@@ -42,7 +42,6 @@ Add a value in first check when you create a new admin page. *}
 {if $prefs.feature_shoutbox eq 'y'} <a href="tiki-shoutbox.php">{tr}Shoutbox{/tr}</a> <a 
 href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 {if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live support{/tr}</a> {/if}
-{if $prefs.feature_chat eq 'y'} <a href="tiki-admin_chat.php">{tr}Chat{/tr}</a> {/if}
 {if $prefs.feature_charts eq 'y'} <a href="tiki-admin_charts.php">{tr}Charts{/tr}</a> {/if}
 {if $feature_eph eq 'y'} <a href="tiki-eph_admin.php">{tr}Ephemerides{/tr}</a> {/if}
 {if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
