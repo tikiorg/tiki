@@ -14,10 +14,10 @@ function smarty_function_show_sort($params, &$smarty) {
 		if (strtolower($prop) == strtolower(trim($params['var']))) {
 		  switch($order) {
 			  case 'asc':
-				  echo "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_up.png'/>";
+				  return "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_up.png'/>";
 					break;
 			  case 'desc':
-				  echo "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_down.png'/>";
+				  return "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_down.png'/>";
 					break;
 			}
 		}
