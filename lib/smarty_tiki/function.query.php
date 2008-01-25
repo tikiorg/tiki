@@ -42,7 +42,7 @@ function smarty_function_query($params, &$smarty) {
   }
 
   if ( is_array($params) && isset($params['_type']) ) {
-    global $base_url;
+    global $base_host;
     switch ( $params['_type'] ) {
       case 'absolute_uri':
         $ret = $base_host.$_SERVER['PHP_SELF'].'?'.$ret;
