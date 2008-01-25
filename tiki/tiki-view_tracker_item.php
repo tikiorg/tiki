@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.16 2008-01-25 10:33:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.141.2.17 2008-01-25 14:34:28 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -767,6 +767,10 @@ if ($_REQUEST["itemId"]) {
 							}
 						}
 						$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
+						if (!isset($tracker_options_l[$fields["data"][$i]["options_array"][0]])) {
+							$tracker_options_l[$fields["data"][$i]["options_array"][0]] = $trklib->get_tracker_options($fields["data"][$i]["options_array"][0]);
+						}
+						$ins_fields["data"][$i]['tracker_options'] = $tracker_options_l[$fields["data"][$i]["options_array"][0]];
 					}
 					
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
