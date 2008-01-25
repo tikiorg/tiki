@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.24 2008-01-24 18:40:57 sept_7 Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.25 2008-01-25 14:45:21 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -717,10 +717,17 @@ class TrackerLib extends TikiLib {
 					break;
 				case 'l':
 					$optsl = split(',', $fopt['options']);
-					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) ) {
+					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) && isset($optsl[3])) {
 						$optsl[1] = split(':', $optsl[1]);
 						$fopt['links'] = $this->get_join_values($res['itemId'], array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
 						$fopt['trackerId'] = $optsl[0];
+					}
+					if (count($fopt['links']) == 1) { //if a computed field use it
+						foreach ($fopt['links'] as $linkItemId=>$linkValue) {
+							if (is_numeric($linkValue)) {
+								$fil[$fieldId] = $linkValue;
+							}
+						}
 					}
 					break;
 				}
@@ -2273,6 +2280,7 @@ class TrackerLib extends TikiLib {
 		}
 		$query = "select t$k.* from ".implode(',',$select).' where '.implode(' and ',$where);
 		$result = $this->query($query, $bindVars);
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[$res['itemId']] = $res['value'];
 		}
