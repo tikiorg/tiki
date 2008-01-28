@@ -202,6 +202,20 @@ class MultilingualLib extends TikiLib {
 				$langs[] = $l;
 		}
 
+		if (isset($prefs['read_language'])) {
+			$tok = strtok($prefs['read_language'], ' ');
+
+			while (false !== $tok) {
+				if (!in_array($tok, $langs) )
+					$langs[] = $tok;
+				$l = $this->rootLang($tok);
+				if (!in_array($l, $langs))
+					$langs[] = $l;
+
+				$tok = strtok(' ');
+			}
+		}
+
 		if (($include_browser_lang)&&(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))) {
 			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
 			foreach ($ls as $l) {
