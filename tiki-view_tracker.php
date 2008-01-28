@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.11 2008-01-28 12:36:07 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.12 2008-01-28 15:39:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -627,7 +627,6 @@ if (isset($_REQUEST["initial"])) {
 	$initial = '';
 }
 $smarty->assign('initial', $initial);
-$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 if ($my and $writerfield) {
 	$filterfield = $writerfield;
