@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.70 2008-01-28 15:38:37 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.71 2008-01-28 16:45:59 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6996,6 +6996,11 @@ if (!$simple_wiki) {
 
 			    // Format and return the list
 			    return $this->format_language_list($languages, $short, $all);
+			}
+
+			function is_valid_language( $language ) {
+				return preg_match("/^[a-zA-Z-_]*$/", $language)
+					&& file_exists('lang/' . $language . '/language.php');
 			}
 
 			function list_styles() {

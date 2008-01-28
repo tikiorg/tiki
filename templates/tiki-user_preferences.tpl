@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.12 2007-12-13 23:24:45 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.13 2008-01-28 16:46:03 lphuberdeau Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -235,6 +235,26 @@
               {/if}
             {/section}
           </select>
+		  {if $prefs.feature_multilingual eq 'y'}
+		  {if $user_prefs.read_language}
+		  <div id="read-lang-div">
+		  {else}
+		  <a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">{tr}Can read more languages?{/tr}</a>
+		  <div id="read-lang-div" style="display: none">
+		  {/if}
+		  	{tr}Additional languages you can read{/tr}:
+			<br/>
+		  	<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}"/>
+            <select name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
+			  <option></option>
+              {section name=ix loop=$languages}
+                  <option value="{$languages[ix].value|escape}">
+                    {$languages[ix].name}
+                  </option>
+              {/section}
+            </select>
+		  </div>
+		  {/if}
         </td>
       </tr>
     {/if}

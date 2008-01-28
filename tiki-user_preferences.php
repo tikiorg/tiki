@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.9 2007-12-15 19:31:46 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.10 2008-01-28 16:45:58 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,13 +112,29 @@ if (isset($_REQUEST["new_prefs"])) {
 	if (isset($_REQUEST["userbreadCrumb"]))
 		$tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
 
-	if (isset($_REQUEST["language"]) && preg_match("/^[a-zA-Z-_]*$/", $_REQUEST['language'])  && file_exists('lang/' . $_REQUEST['language'] . '/language.php')) {
+	if (isset($_REQUEST["language"]) && $tikilib->is_valid_language( $_REQUEST['language'] ) ) {
 		if ($tiki_p_admin || $prefs['change_language'] == 'y') {
 			$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
 		}
 		if ($userwatch == $user) {
 			include ('lang/' . $_REQUEST["language"] . '/language.php');
 		}
+	}
+
+	if (isset($_REQUEST['read_language'])) {
+		$list = array();
+		
+		$tok = strtok($_REQUEST['read_language'], ' ');
+		while (false !== $tok) {
+			$list[] = $tok;
+			$tok = strtok(' ');
+		}
+
+		$list = array_unique( $list );
+		$list = array_filter( $list, array( $tikilib, 'is_valid_language' ) );
+
+		$list = implode( ' ', $list );
+		$tikilib->set_user_preference($userwatch, 'read_language', $list);
 	}
 
 	if (isset($_REQUEST['display_timezone'])) {
@@ -201,8 +217,10 @@ if (isset($_REQUEST["new_prefs"])) {
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 
-	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
-	$tikilib->set_user_preference($userwatch, 'mess_archiveAfter', $_REQUEST['mess_archiveAfter']);
+	if (isset( $_REQUEST['mess_maxRecords'] ))
+		$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
+	if (isset( $_REQUEST['mess_archiveAfter'] ))
+		$tikilib->set_user_preference($userwatch, 'mess_archiveAfter', $_REQUEST['mess_archiveAfter']);
 
 	if (isset($_REQUEST['mess_sendReadStatus']) && $_REQUEST['mess_sendReadStatus'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'y');
@@ -210,7 +228,8 @@ if (isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'n');
 	}
 
-	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
+	if (isset( $_REQUEST['minPrio'] ))
+		$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
 	if ($prefs['allowmsg_is_optional'] == 'y') {
 		if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
@@ -272,7 +291,9 @@ if (isset($_REQUEST["new_prefs"])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
 	}
-	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
+
+	if (isset($_REQUEST['tasks_maxRecords']))
+		$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 
 }
 
