@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.2 2007-12-16 16:21:46 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.3 2008-01-28 17:38:21 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1067,14 +1067,14 @@ class ImageGalsLib extends TikiLib {
 
 	function get_gallery_image($galleryId,$rule='',$sort_mode = '') {
 		$query='select i.`imageId` from `tiki_images` i, `tiki_images_data` d
-                 where i.`imageId`=d.`imageId` and i.`galleryId`=? order by ';
+                 where i.`imageId`=d.`imageId` and i.`galleryId`=? and d.`type`=? order by ';
 		/* if sort by filesize while browsing images it needs to be read from tiki_image_data table */
 		if ($sort_mode == 'filesize_asc' || $sort_mode == 'filesize_desc') {
 			$query.='d.';
 		} else {
 			$query.='i.';
 		}
-		$bindvars=array($galleryId);
+		$bindvars=array($galleryId,'o');
 		switch($rule) {
 			case 'firstu':
 				// first uploaded
