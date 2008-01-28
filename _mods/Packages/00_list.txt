@@ -88,3 +88,4 @@
 'goodies','batch_close_trackers','1.1','Batch to close automatically tracker items that have a past date','GNU/LGPL'
 'goodies','batch_load_pages','1.1','Batch to load a list of pages from a csv file'
 'wikiplugins','submit','1.0','Add submit to social networking site links.','GNU/LGPL'
+'wikiplugins','shelfari','1.0','Add your Shelfari (www.shelfari.com) bookshelf to a wiki page.','GNU/LGPL'

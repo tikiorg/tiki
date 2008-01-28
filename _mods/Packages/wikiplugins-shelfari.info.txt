@@ -1,0 +1,22 @@
+contributor:
+$Author: ricks99 $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2008-01-28 13:20:09 $
+
+files: 
+wiki-plugins/wikiplugin_shelfari.php 
+
+author:
+ricks99
+
+licence:
+GNU/LGPL
+
+Description: 
+Add your Shelfari (www.shelfari.com) bookshelf to a wiki page.
+
+
