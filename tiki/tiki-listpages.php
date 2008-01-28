@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.4 2008-01-23 14:18:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.5 2008-01-28 15:39:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,8 @@
 $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
+
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang');
 
 $smarty->assign('headtitle',tra('Pages'));
 
@@ -192,8 +194,6 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->assign('exact_match', 'n');
 	}                 
 	
-	$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
-	
 	// Get a list of last changes to the Wiki database
 	//   $listpages_orphans must not be initialized here because it can already have received a value from another script
 	if (!isset($listpages_orphans)) {
@@ -239,9 +239,6 @@ if ( ! empty($multiprint_pages) ) {
 	$smarty->assign_by_ref('cant', $listpages['cant']);
 	
 	ask_ticket('list-pages');
-	
-	$ajaxlib->registerTemplate('tiki-listpages_content.tpl');
-	$ajaxlib->processRequests();
 	
 	include_once ('tiki-section_options.php');
 	

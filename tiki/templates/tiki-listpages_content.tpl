@@ -1,19 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.6 2008-01-23 18:05:44 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.7 2008-01-28 15:39:07 nyloth Exp $ *}
 
-{if $cant_pages > 1 or $initial or $find}
-  <div align="center">
-    {section name=ini loop=$initials}
-      {if $initial and $initials[ini] eq $initial}
-        <span class="button2">
-          <span class="linkbuton">{$initials[ini]|capitalize}</span>
-        </span> . 
-      {else}
-        <a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial={$initials[ini]}&amp;maxRecords={$prefs.maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href} class="prevnext">{$initials[ini]}</a> . 
-      {/if}
-    {/section}
-    <a {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?initial=&amp;maxRecords={$prefs.maxRecords}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}{/ajax_href} class="prevnext">{tr}All{/tr}</a>
-  </div>
-{/if}
+{if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
 {if $tiki_p_remove eq 'y' or $prefs.feature_wiki_multiprint eq 'y'}
   {assign var='checkboxes_on' value='y'}
@@ -38,89 +25,76 @@
 
     {if $prefs.wiki_list_name eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-        <td class="heading">
-          <a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Page{/tr}</a>
-        </td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='pageName'}{tr}Page{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_hits eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-        <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Hits{/tr}</a>
-        </td>
+      <td class="heading" style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_lastmodif eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-        <td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Last mod{/tr}</a>
-        </td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last mod{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_creator eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-<td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Creator{/tr}</a></td>
-{/if}
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='creator'}{tr}Creator{/tr}{/self_link}</td>
+    {/if}
 
     {if $prefs.wiki_list_user eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Last author{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='user'}{tr}Last author{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_lastver eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}{if $initial}&amp;initial={$initial}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Last ver{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version'}{tr}Last ver{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_comment eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Com{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='comment'}{tr}Com{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_status eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:center;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Status{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='status'}{tr}Status{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_versions eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Vers{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions'}{tr}Vers{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_links eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Links{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='links'}{tr}Links{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_backlinks eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Backlinks{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='backlinks'}{tr}Backlinks{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_size eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" {ajax_href template="tiki-listpages_content.tpl" htmlelement="tiki-listpages-content"}{$smarty.server.PHP_SELF}?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if !empty($find)}&amp;find={$find|escape}{/if}{if !empty($find_lang)}&amp;lang={$find_lang}{/if}{if !empty($find_categId)}&amp;categId={$find_categId}{/if}&amp;maxRecords={$prefs.maxRecords}{/ajax_href}>{tr}Size{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_language eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'language_desc'}lang_asc{else}lang_desc{/if}{if $initial}&amp;initial={$initial}{/if}{if $find}&amp;find={$find}{/if}{if $exact_match eq 'y'}&amp;exact_match=on{/if}{if !empty($lang)}&amp;lang={$lang}{/if}{if !empty($categId)}&amp;categId={$categId}{/if}">{tr}Language{/tr}</a>
-      </td>
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang'}{tr}Language{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_categories eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
+      {assign var='cntcol' value=$cntcol+1}
       <td class="heading">{tr}Categories{/tr}</td>
     {/if}
 
     {if $prefs.wiki_list_categories_path eq 'y'}
-    {assign var='cntcol' value=$cntcol+1}
+      {assign var='cntcol' value=$cntcol+1}
       <td class="heading">{tr}Categories{/tr}</td>
     {/if}
 
@@ -298,4 +272,4 @@
 </form>
 
 <br />
-{pagination_links cant=$cant template='tiki-listpages_content.tpl' htmlelement='tiki-listpages-content' step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
