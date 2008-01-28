@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.29 2008-01-25 14:27:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.30 2008-01-28 14:01:50 nyloth Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -80,20 +80,7 @@
 {include file="tracker_filter.tpl"}
 {/if}
 
-{if $cant_pages > 1 or $initial}
-<div align="center">
-{section name=ini loop=$initials}
-{if $initial and $initials[ini] eq $initial}
-<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
-{else}
-<a href="tiki-view_tracker.php?initial={$initials[ini]}&amp;trackerId={$trackerId}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if $status}&amp;status={$status|escape:"url"}{/if}" 
-class="prevnext">{$initials[ini]}</a> . 
-{/if}
-{/section}
-<a href="tiki-view_tracker.php?initial=&amp;trackerId={$trackerId}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}{if $status}&amp;status={$status|escape:"url"}{/if}" 
-class="prevnext">{tr}All{/tr}</a>
-</div>
-{/if}
+{if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
 
 {* ------- list headings --- *}
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
