@@ -499,6 +499,66 @@ class MultilingualLib extends TikiLib {
 
 		return $pages;
 	}
+
+	function getSourceHistory( $pageId )
+	{
+		$result = $this->query( "
+			SELECT DISTINCT
+				target.version as `group`,
+				page.page_id,
+				page.pageName as page,
+				source.version as version
+			FROM
+				tiki_pages_translation_bits source
+				INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+				INNER JOIN tiki_pages page ON source.page_id = page.page_id
+			WHERE
+				target.page_id = ?",
+			array( $pageId ) );
+
+		$list = array();
+
+		while( $row = $result->fetchRow() ) {
+			$group = $row['group'];
+
+			if( ! array_key_exists( $group, $list ) )
+				$list[$group] = array();
+
+			$list[$group][] = $row;
+		}
+
+		return $list;
+	}
+
+	function getTargetHistory( $pageId )
+	{
+		$result = $this->query( "
+			SELECT DISTINCT
+				source.version as `group`,
+				page.page_id,
+				page.pageName as page,
+				target.version as version
+			FROM
+				tiki_pages_translation_bits source
+				INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+				INNER JOIN tiki_pages page ON target.page_id = page.page_id
+			WHERE
+				source.page_id = ?",
+			array( $pageId ) );
+
+		$list = array();
+
+		while( $row = $result->fetchRow() ) {
+			$group = $row['group'];
+
+			if( ! array_key_exists( $group, $list ) )
+				$list[$group] = array();
+
+			$list[$group][] = $row;
+		}
+
+		return $list;
+	}
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
