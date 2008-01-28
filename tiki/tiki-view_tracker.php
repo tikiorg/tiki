@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.10 2008-01-24 18:17:33 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.11 2008-01-28 12:36:07 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,8 @@ require_once('tiki-setup.php');
 
 include_once('lib/trackers/trackerlib.php');
 global $notificationlib; include_once('lib/notifications/notificationlib.php');
+
+$auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
