@@ -35,9 +35,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_block_pagination_links($params, $url, &$smarty,&$repeat) {
 	global $prefs;
-	$html = '';
 
 	if ($repeat) return;
+
+	$html = '';
+	$default_type = 'absolute_path';
 
 	// Check main params and return no pagination links if there is a mistake
 	if ( ! isset($params['cant']) || $params['cant'] <= 0 ) return '';
@@ -71,7 +73,9 @@ function smarty_block_pagination_links($params, $url, &$smarty,&$repeat) {
 	} else {
 		$nb_pages = ceil($params['cant'] / $params['step']);
 	}
-	if ( empty($url) || preg_match('/^\s*$/', $url) ) $url = $_SERVER['PHP_SELF'].'?'.smarty_function_query(null, $smarty);
+	if ( empty($url) || preg_match('/^\s*$/', $url) ) {
+		$url = smarty_function_query(array('_type' => $default_type), $smarty);
+	}
 
 	// remove empty url arguments (done by default)
 	if ( ! isset($params['clean']) || $params['clean'] == 'y' ) {
