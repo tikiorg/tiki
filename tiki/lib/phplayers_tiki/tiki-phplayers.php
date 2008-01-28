@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.3 2007-11-12 20:24:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.4 2008-01-28 22:14:58 sylvieg Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -36,8 +36,8 @@ class TikiPhplayers extends TikiLib {
 		}
 	}
 	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='') {
-	  global $tikilib, $wikilib, $mylevel;
-	  global $menulib; include_once('lib/menubuilder/menulib.php');
+		global $tikilib, $wikilib, $mylevel, $prefs;
+		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menu_info = $tikilib->get_menu($idMenu);
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel);
 		$channels = $menulib->setSelected($channels, $sectionLevel);
@@ -96,7 +96,8 @@ class TikiPhplayers extends TikiLib {
 					}
 				}
 			}
-			$res.= ".|".$cd["name"]."|".$cd["url"];
+			$res.= ".|".$cd["name"]."|";
+			$res.= ($prefs['feature_sefurl'] == 'y' && !empty($cd['sefurl']))? $cd['sefurl']: $cd['url'];
 			if (empty($curOption) && $cd['type'] != 'o' && $cd['type'] != '-') {
 				$cur[$level - 1] = $res;
 			}
