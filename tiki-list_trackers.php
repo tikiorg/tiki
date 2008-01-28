@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.18.2.1 2008-01-23 14:18:49 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.18.2.2 2008-01-28 14:35:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,8 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
+
+$auto_query_args = array('sort_mode','offset','find');
 
 if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
