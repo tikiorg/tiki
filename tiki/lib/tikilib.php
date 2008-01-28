@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.69 2008-01-18 22:46:09 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.70 2008-01-28 15:38:37 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3508,37 +3508,38 @@ function add_pageview() {
 	}
 
 	if (!empty($filter)) {
+		$mid .= empty($mid) ? ' where (' : ' and (';
+		$tmp_mid = '';
 		foreach ($filter as $type=>$val) {
 			if ($type == 'categId') {
 				$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
 				$join_bindvars = array('wiki page', $val);
 			} elseif ($type == 'lang') {
-				$mid .= empty($mid)? ' where ': ' and ';
-				$mid .= '`lang`=? ';
+				if ( ! empty($tmp_mid) ) $tmp_mid .= ' and ';
+				$tmp_mid .= '`lang`=? ';
 				$bindvars[] = $val;
 			} elseif ($type == 'structHead') {
 				$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
 				$select .= ',ts.`page_alias`';
 			}
 		}
+		$mid .= $tmp_mid.')';
 	}
 	if (!empty($initial)) {
+		$mid .= empty($mid) ? ' where (' : ' and (';
+		$tmp_mid = '';
 		if (is_array($initial)) {
-			$mid = '';
 			foreach($initial as $i) {
-				if (empty($mid))
-					$mid = 'where ';
-				else
-					$mid .= 'or ';
-				$mid .= '`pageName` like ? ';
+				if ( ! empty($tmp_mid) ) $tmp_mid .= ' or ';
+				$tmp_mid .= '`pageName` like ? ';
 				$bindvars[] = $i.'%';
 			}
-			$mmid = $mid;
 		} else {
-			$mid = " where `pageName` like ?";
-			$mmid = $mid;
-			$bindvars = array($initial.'%');
+			$tmp_mid = " `pageName` like ?";
+			$bindvars[] = $initial.'%';
 		}
+		$mid .= $tmp_mid.')';
+		$mmid = $mid;
 	}
 
 	if ( $only_orphan_pages ) {
