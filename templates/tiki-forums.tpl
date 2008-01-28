@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.5 2008-01-28 16:44:11 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.6 2008-01-28 17:08:51 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -41,24 +41,30 @@
 {/if}  
 
 <table class="normal">
-<tr>
-<td  class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-{if $prefs.forum_list_topics eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}Topics{/tr}</a></td>
-{/if}	
-{if $prefs.forum_list_posts eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}Posts{/tr}</a></td>
-{/if}	
-{if $prefs.forum_list_ppd eq 'y'}
-	<td class="heading">{tr}PPD{/tr}</td>
-{/if}	
-{if $prefs.forum_list_lastpost eq 'y'}	
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></td>
-{/if}
-{if $prefs.forum_list_visits eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
-{/if}	
-</tr>
+  <tr>
+    <td  class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
+    
+    {if $prefs.forum_list_topics eq 'y'}
+	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</td>
+    {/if}	
+
+    {if $prefs.forum_list_posts eq 'y'}
+	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</td>
+    {/if}	
+
+    {if $prefs.forum_list_ppd eq 'y'}
+	    <td class="heading">{tr}PPD{/tr}</td>
+    {/if}	
+
+    {if $prefs.forum_list_lastpost eq 'y'}	
+	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</td>
+    {/if}
+
+    {if $prefs.forum_list_visits eq 'y'}
+	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</td>
+    {/if}	
+  </tr>
+
 {assign var=section_old value=""}
 {section name=user loop=$channels}
 {cycle values="odd,even" print=false}
