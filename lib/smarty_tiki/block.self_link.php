@@ -18,11 +18,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _ajax : if set to 'n', will force disabling AJAX even if the ajax feature is enabled,
  *   _tag : if set to 'n', will only return an URL, not the full A tag + text (AJAX and sorting features are not available in this case),
  *   _class : CSS class to use for the A tag
+ *   _template : (see smarty query function 'template' param)
+ *   _htmlelement : (see smarty query function 'htmlelement' param)
  */
-function smarty_block_self_link($params, $content, &$smarty) {
+function smarty_block_self_link($params, $content, &$smarty, &$repeat) {
     global $prefs;
     $default_type = 'absolute_path';
 
+    if ( $repeat ) return;
     require_once $smarty->_get_plugin_filepath('function', 'query');
 
     if ( is_array($params) ) {
