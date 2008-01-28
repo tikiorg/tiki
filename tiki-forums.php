@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.18.2.1 2007-11-08 21:34:48 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.18.2.2 2008-01-28 16:44:10 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 $section = 'forums';
 require_once ('tiki-setup.php');
 
+$auto_query_args = array('sort_mode', 'offset', 'find', 'mode');
 
 $smarty->assign('headtitle',tra('Forums'));
 
@@ -96,25 +97,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 }
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
 $smarty->assign_by_ref('channels', $channels["data"]);
-
+$smarty->assign('cant',$channels["cant"]);
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
