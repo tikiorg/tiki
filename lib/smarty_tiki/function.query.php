@@ -7,33 +7,48 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_query($params, &$smarty) {
+  global $auto_query_args;
+
   $query = array_merge($_POST, $_GET);
-  if (is_array($params)) {
-  foreach($params as $param_name=>$param_value) {
-    // Arguments starting with an underscore are special and must not be included in URL
-    if ( $param_name[0] == '_' ) continue;
-    $list = explode(",",$param_value);
-    if (isset($query[$param_name]) and in_array($query[$param_name],$list)) {
-      $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
-      if ($query[$param_name] === NULL or $query[$param_name] == 'NULL') {
-        unset($query[$param_name]);
-      }
-    } else {
-      if ($list[0] !== NULL and $list[0] != 'NULL' ) {
-        $query[$param_name] = $list[0];
+  if ( is_array($params) ) {
+    foreach( $params as $param_name => $param_value ) {
+  
+      // Arguments starting with an underscore are special and must not be included in URL
+      if ( $param_name[0] == '_' ) continue;
+  
+      $list = explode(",",$param_value);
+      if ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
+        $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
+        if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
+          unset($query[$param_name]);
+        }
       } else {
-        unset($query[$param_name]);
+        if ( $list[0] !== NULL and $list[0] != 'NULL' ) {
+          $query[$param_name] = $list[0];
+        } else {
+          unset($query[$param_name]);
+        }
       }
     }
   }
-  }
 
-  $ret = '';
-  $sep = '&amp;';
-  if ( function_exists('http_build_query') ) {
-    $ret = http_build_query($query, '', $sep);
-  } else {
-    if ( is_array($query) ) {
+  if ( is_array($query) ) {
+
+    // Only keep params explicitely specified when calling this function or specified in the $auto_query_args global var
+    // This is to avoid including unwanted params (like actions : remove, save...)
+    if ( is_array($auto_query_args) ) {
+      foreach ( $query as $k => $v ) {
+        if ( ! in_array($k, $auto_query_args) && ! ( is_array($params) && in_array($k, $params) ) ) {
+          unset($query[$k]);
+        }
+      }
+    }
+
+    $ret = '';
+    $sep = '&amp;';
+    if ( function_exists('http_build_query') ) {
+      $ret = http_build_query($query, '', $sep);
+    } else {
       foreach ( $query as $k => $v ) {
         if ( $ret != '' ) $ret .= $sep;
         $ret .= urlencode($k).'='.urlencode($v);
