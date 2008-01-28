@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.2 2008-01-23 14:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.3 2008-01-28 14:35:25 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
@@ -31,17 +31,11 @@
 <!-- beginning of table -->
 <table class="normal">
 <tr>
-<td class="heading">
-<a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-</td>
-<td class="heading">
-<a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
-</td>
-<td class="heading">
-<a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
-</td>
-<td class="heading"><a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modif{/tr}</a></td>
-<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'items_desc'}items_asc{else}items_desc{/if}">{tr}Items{/tr}</a></td>
+<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
+<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</td>
+<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
+<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</td>
+<td class="heading" style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
