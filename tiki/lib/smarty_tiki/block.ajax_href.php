@@ -6,9 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_block_ajax_href($params, $content, &$smarty)
+function smarty_block_ajax_href($params, $content, &$smarty, &$repeat)
 {
     global $prefs;
+    if ( $repeat ) return;
 
     $url = $content;
     $template = $params['template'];
