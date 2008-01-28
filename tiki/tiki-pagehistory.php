@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.4 2008-01-24 15:31:19 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.45.2.5 2008-01-28 19:03:04 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,6 +148,20 @@ if (isset($preview)) {
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page,false);
 $smarty->assign_by_ref('history', $history);
+
+if ($prefs['feature_multilingual'] == 'y' && isset($_REQUEST['show_translation_history'])) {
+	include_once("lib/multilingual/multilinguallib.php");
+	$smarty->assign( 'show_translation_history', 1 );
+
+	$sources = $multilinguallib->getSourceHistory($info['page_id']);
+	$targets = $multilinguallib->getTargetHistory($info['page_id']);
+} else {
+	$sources = array();
+	$targets = array();
+}
+
+$smarty->assign_by_ref( 'translation_sources', $sources );
+$smarty->assign_by_ref( 'translation_targets', $targets );
 
 if (isset($_REQUEST["diff2"])) { // previous compatibility
 	if ($_REQUEST["diff2"] == '' && isset($rversion)) {

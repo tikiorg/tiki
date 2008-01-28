@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.4 2008-01-21 17:08:06 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.5 2008-01-28 19:03:05 lphuberdeau Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -75,7 +75,23 @@
 <td class="odd">{$info.lastModif|tiki_short_datetime}</td>
 {if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
-<td class="odd">{if $info.comment}{$info.comment}{else}&nbsp;{/if}</td>
+<td class="odd">
+	{if $info.comment}{$info.comment}{else}&nbsp;{/if}
+	{if $translation_sources[$info.version]}
+		{foreach item=source from=$translation_sources[$info.version]}
+		<div>
+			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}</a>
+		</div>
+		{/foreach}
+	{/if}
+	{if $translation_targets[$info.version]}
+		{foreach item=target from=$translation_targets[$info.version]}
+		<div>
+			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}</a>
+		</div>
+		{/foreach}
+	{/if}
+</td>
 {if $prefs.feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
 {if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
 <td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
@@ -90,43 +106,59 @@
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
-{section name=hist loop=$history}
+{foreach item=element from=$history}
 <tr>
 {if $tiki_p_remove eq 'y'}
-<td class="{cycle advance=false} button"><input type="checkbox" name="hist[{$history[hist].version}]" /></td>
+<td class="{cycle advance=false} button"><input type="checkbox" name="hist[{$element.version}]" /></td>
 {/if}
-<td class="{cycle advance=false}">{$history[hist].lastModif|tiki_short_datetime}</td>
-{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$history[hist].user}</td>{/if}
-{if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$history[hist].ip}</td>{/if}
-<td class="{cycle advance=false}">{if $history[hist].comment}{$history[hist].comment}{else}&nbsp;{/if}</td>
-{if $prefs.feature_contribution eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$history[hist].contributions[ix].name|escape}{/section}</td>{/if}
-{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$history[hist].contributors}{if !$smarty.section.ix.first},{/if}{$history[hist].contributors[ix].login|username}{/section}</td>{/if}
-<td class="{cycle advance=false} button">{$history[hist].version}</td>
+<td class="{cycle advance=false}">{$element.lastModif|tiki_short_datetime}</td>
+{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$element.user}</td>{/if}
+{if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$element.ip}</td>{/if}
+<td class="{cycle advance=false}">
+	{if $element.comment}{$element.comment}{else}&nbsp;{/if}
+	{if $translation_sources[$element.version]}
+		{foreach item=source from=$translation_sources[$element.version]}
+		<div>
+			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}</a>
+		</div>
+		{/foreach}
+	{/if}
+	{if $translation_targets[$element.version]}
+		{foreach item=target from=$translation_targets[$element.version]}
+		<div>
+			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}</a>
+		</div>
+		{/foreach}
+	{/if}
+</td>
+{if $prefs.feature_contribution eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$element.contributions}{if !$smarty.section.ix.first}&nbsp;{/if}{$element.contributions[ix].name|escape}{/section}</td>{/if}
+{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<td class="{cycle advance=false}">{section name=ix loop=$element.contributors}{if !$smarty.section.ix.first},{/if}{$element.contributors[ix].login|username}{/section}</td>{/if}
+<td class="{cycle advance=false} button">{$element.version}</td>
 <td class="{cycle advance=false} button">
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$element.version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}Source{/tr}">s</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$element.version}" title="{tr}Source{/tr}">s</a>
 {/if}
 {if $prefs.default_wiki_diff_style eq "old"}
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
 {/if}
 {if $tiki_p_rollback eq 'y' && $lock neq true}
-&nbsp;<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$history[hist].version}" title="{tr}rollback{/tr}">b</a>
+&nbsp;<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$element.version}" title="{tr}rollback{/tr}">b</a>
 {/if}
 &nbsp;
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
-<input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}older version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
+<input type="radio" name="oldver" value="{$element.version}" title="{tr}older version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
 </td>
 <td class="{cycle} button">
 {* if $smarty.section.hist.last &nbsp; *}
-<input type="radio" name="newver" value="{$history[hist].version}" title="Select a newer version for comparison" {if $new.version == $history[hist].version}checked="checked"{/if} />
+<input type="radio" name="newver" value="{$element.version}" title="Select a newer version for comparison" {if $new.version == $element.version}checked="checked"{/if} />
 </td>
 {/if}
 </tr>
-{/section}
+{/foreach}
 {if $prefs.feature_multilingual eq 'y'}
 <tr>
 	<td colspan="9" class="right">
@@ -136,6 +168,14 @@
 			{/section}
 		</select>
 		<input type="submit" name="update_translation" value="{tr}Update Translation{/tr}"/>
+		<div>
+			{if $show_translation_history}
+				<input type="hidden" name="show_translation_history" value="1"/>
+				<a href="tiki-pagehistory.php?page={$page|escape}">{tr}Hide translation history{/tr}</a>
+			{else}
+				<a href="tiki-pagehistory.php?page={$page|escape}&amp;show_translation_history=1">{tr}Show translation history{/tr}</a>
+			{/if}
+		</div>
 	</td>
 </tr>
 {/if}
