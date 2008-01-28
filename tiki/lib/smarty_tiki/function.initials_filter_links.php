@@ -24,7 +24,10 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 
 	$tag_start = "\n".'<a class="'.$params['_class'].'" '.smarty_block_ajax_href(
 		array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
-		smarty_function_query(array('_type' => $default_type, 'initial' => 'X'), $smarty),
+		smarty_function_query(
+			array('_type' => $default_type, 'initial' => 'X', 'offset' => 'NULL', 'reloff' => 'NULL'),
+			$smarty
+		),
 		$smarty
 	).'>';
 
