@@ -7,8 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_initials_filter_links($params, &$smarty) {
-	extract($params);
-
 	$html = '';
 	$sep = ' . ';
 	$default_type = 'absolute_path';
