@@ -28,18 +28,14 @@
 {cycle values="odd,even" print=false}
 {section name=tag loop=$quicktags}
   <tr>
-    <td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon}</td>
+    <td class="{cycle advance=false}">{icon _id=$quicktags[tag].tagicon}</td>
     {foreach from=$table_headers item=header key=sort_field}
     <td class="{cycle advance=false}">{tr}{$quicktags[tag].$sort_field}{/tr}</td>
     {/foreach}
     <td class="{cycle}">
-      {self_link _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' tagId=$quicktags[tag].tagId}
-        {html_image file='pics/icons/page_edit.png' border=0 alt="{tr}Edit{/tr}"}
-      {/self_link}
+      {self_link _template='tiki-admin_quicktags_edit.tpl' _htmlelement='quicktags-edit' _class='link' tagId=$quicktags[tag].tagId _icon='page_edit'}{tr}Edit{/tr}{/self_link}
       &nbsp;&nbsp;
-      {self_link _class='link' remove=$quicktags[tag].tagId _ajax='n'}
-        {html_image file='pics/icons/cross.png' border=0 alt="{tr}Remove{/tr}"}
-      {/self_link}
+      {self_link _class='link' remove=$quicktags[tag].tagId _ajax='n' _icon='cross'}{tr}Remove{/tr}{/self_link}
     </td>
   </tr>
 {/section}
