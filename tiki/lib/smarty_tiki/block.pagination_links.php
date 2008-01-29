@@ -22,7 +22,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - template: template (.tpl file) used for AJAX_href links. Special value 'noauto',
  *       to get the template that has the same name of the current script (by changing the file extension from .php to .tpl)
  *       and set htmlelement to 'tiki-center' as a default.
- *  - htmlelement: htmlelement used for AJAX_hred links.
+ *  - htmlelement: htmlelement used for AJAX_href links.
  *  - step: number to add to an offset to go to the next item. Defaults to 1.
  *  - clean: remove empty arguments from generated URLs (to reduce URL lenght). Defaults to 'y'.
  *  - next: show (or not) next (and last) links. Defaults to 'y' if next elements exists.
@@ -149,7 +149,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			}
 		}
 
-		$html .= '<div class="'.$params['class'].'">';
+		$html .= '<div class="'.$params['class'].'" style="text-align: center">'; // inline style can be overriden in css using !important
 		if ( $params['prev'] == 'y' ) {
 			if ( isset($images) ) {
 				$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
@@ -196,7 +196,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 					$html .= make_prevnext_link($url.$url_k, $k+1, $params);
 					$last_dots = false;
 				} elseif ( ! $last_dots )  {
-					$html .= "\n".'<span class="prevnext" style="font-weight:bold">...</span>';
+					$html .= "\n".'<span class="prevnext" style="font-weight:bold">&hellip;</span>';
 					$last_dots = true;
 				}
 			}
