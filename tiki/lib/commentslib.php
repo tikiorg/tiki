@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.19 2008-01-20 20:54:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.20 2008-01-29 02:42:31 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -18,8 +18,8 @@ class Comments extends TikiLib {
     /* Functions for the forums */
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
-	$query = "delete from `tiki_forums_reported` where `forumId`=?";
-	$bindvars=array($forumId);
+	$query = "delete from `tiki_forums_reported` where `threadId`=?";
+	$bindvars=array($threadId);
 	$this->query($query,$bindvars,-1,-1,false);
 
 	$query = "insert into `tiki_forums_reported`(`forumId`,
