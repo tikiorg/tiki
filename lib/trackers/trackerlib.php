@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.26 2008-01-28 23:50:58 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.27 2008-01-29 17:31:00 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -755,6 +755,7 @@ class TrackerLib extends TikiLib {
 							$this->get_item_id($fopt['options_array'][0], $fopt['options_array'][1], $fopt['value']),
 							$fopt['options_array'][3]
 						);
+						$fopt = $this->set_default_dropdown_option($fopt);
 					} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
 						if ( $prefs['feature_multilingual'] == 'y' ) {
 							foreach ( $fopt['options_array'] as $key => $l ) {
@@ -1574,7 +1575,7 @@ class TrackerLib extends TikiLib {
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
 				$res['name'] = tra($res['name']);
-			if ($res['type'] == 'd' || $res['type'] == 'D') { // drop down
+			if ($res['type'] == 'd' || $res['type'] == 'D' || $res['type'] == 'R') { // drop down
 				if ($prefs['feature_multilingual'] == 'y') {
 					foreach ($res['options_array'] as $key=>$l) {
 						$res['options_array'][$key] = tra($l);

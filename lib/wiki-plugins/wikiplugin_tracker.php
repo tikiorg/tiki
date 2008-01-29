@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.15 2008-01-24 18:27:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.16 2008-01-29 17:30:59 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -215,7 +215,7 @@ function wikiplugin_tracker($data, $params) {
 						$field_errors['err_antibot'] = 'y';
 					}
 				}
-			
+
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					$itemId = $trklib->get_user_item($trackerId, $tracker);
@@ -504,7 +504,7 @@ function wikiplugin_tracker($data, $params) {
 					// drop down, user selector or group selector
 					} elseif ($f['type'] == 'd' or $f['type'] == 'D' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r' or $f['type'] == 'R') {
 						if ($f['type'] == 'd'  or $f['type'] == 'D' or $f['type'] == 'R') {
-							$list = split(',',$f['options']);
+							$list = $f['options_array'];
 						} elseif ($f['type'] == 'u') {
 							if ($f['options_array'][0] == 1 or $f['options_array'][0] == 2) {
 								$list = false;
@@ -523,7 +523,7 @@ function wikiplugin_tracker($data, $params) {
 							$back.= "</td><td>";
 							if ($f['type'] == 'R') {
 								foreach ($list as $item) {
-									$selected = $f['value'] == $item ? 'checked="checked"' : '';
+									$selected = ($f['value'] == $item || (empty($f['value']) && !empty($f['defaultvalue']) && $item == $f['defaultvalue'])) ? 'checked="checked"' : '';
 									$back .= '<div class="radio"><input type="radio" name="track['.$f["fieldId"].']" value="'.$item.'" '.$selected.' />'.$item.'</div>';
 								}
 							} else {
@@ -531,7 +531,7 @@ function wikiplugin_tracker($data, $params) {
 								$back .= '<option value=""></option>';
 								$otherValue = $f['value'];
 								foreach ($list as $item) {
-									if ($f['value'] == $item) {
+									if ($f['value'] == $item || (empty($f['value']) && !empty($f['defaultvalue']) && $item == $f['defaultvalue'])) {
 										$selected = 'selected="selected"';
 										$otherValue = '';
 									} else {
