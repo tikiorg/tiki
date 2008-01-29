@@ -21,7 +21,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _template : (see smarty query function 'template' param)
  *   _htmlelement : (see smarty query function 'htmlelement' param)
  */
-function smarty_block_self_link($params, $content, &$smarty, &$repeat) {
+function smarty_block_self_link($params, $content, &$smarty, $repeat) {
     global $prefs;
     $default_type = 'absolute_path';
 

@@ -33,7 +33,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *      1 2 3 ... k-2 k-1 k k+1 k+2 ...  n-2 n-1 n
  *
  */
-function smarty_block_pagination_links($params, $url, &$smarty,&$repeat) {
+function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	global $prefs;
 
 	if ($repeat) return;
