@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.20 2008-01-29 02:42:31 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.21 2008-01-29 03:13:39 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -42,7 +42,7 @@ class Comments extends TikiLib {
 	}
 
 	$query = "select `forumId`, tfr.`threadId`, tfr.`parentId`,
-	tfr.`reason`, tfr.`user`, `title` from `tiki_forums_reported`
+	tfr.`reason`, tfr.`user`, `title`, SUBSTRING(`data` FROM 1 FOR 100) as `snippet` from `tiki_forums_reported`
 	    tfr,  `tiki_comments` tc where tfr.`threadId` = tc.`threadId`
 	    and `forumId`=? $mid order by ".
 	    $this->convert_sortmode($sort_mode);
