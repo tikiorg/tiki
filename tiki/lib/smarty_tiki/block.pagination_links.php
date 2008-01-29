@@ -143,7 +143,8 @@ function smarty_block_pagination_links($params, $url, &$smarty,&$repeat) {
 				return "\n".'<a class="'.$class.'" '.smarty_block_ajax_href(
 					array('template' => $params['template'], 'htmlelement' => $params['htmlelement']),
 					$url,
-					$smarty
+					$smarty,
+					false
 				).'>'.$content.'</a>';
 			}
 		}

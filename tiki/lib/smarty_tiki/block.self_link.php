@@ -55,7 +55,8 @@ function smarty_block_self_link($params, $content, &$smarty, &$repeat) {
           $ret = smarty_block_ajax_href(
             array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
             $ret,
-            $smarty
+            $smarty,
+            false
           );
         } else {
           $ret = 'href="'.$ret.'"';
