@@ -38,7 +38,7 @@ function smarty_function_query($params, &$smarty) {
     // This is to avoid including unwanted params (like actions : remove, save...)
     if ( is_array($auto_query_args) ) {
       foreach ( $query as $k => $v ) {
-        if ( ! in_array($k, $auto_query_args) && ! ( is_array($params) && in_array($k, $params) ) ) {
+        if ( ! in_array($k, $auto_query_args) && ! ( is_array($params) && array_key_exists($k, $params) ) ) {
           unset($query[$k]);
         }
       }
