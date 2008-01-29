@@ -20,10 +20,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _class : CSS class to use for the A tag
  *   _template : (see smarty query function 'template' param)
  *   _htmlelement : (see smarty query function 'htmlelement' param)
+ *   _icon : name of the icon to use (e.g. 'page_edit', 'cross', ...)
+ *   _icon_class : CSS class to use for the icon's IMG tag
+ *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
  */
 function smarty_block_self_link($params, $content, &$smarty, $repeat) {
     global $prefs;
     $default_type = 'absolute_path';
+    $default_icon_type = 'relative';
 
     if ( $repeat ) return;
     require_once $smarty->_get_plugin_filepath('function', 'query');
@@ -62,8 +66,22 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
           $ret = 'href="'.$ret.'"';
         }
 
-	$link = ( isset($params['_class']) ? ' class='.$params['_class'] : '' ).' '.$ret;
+        if ( isset($params['_icon']) ) {
+          if ( ! isset($params['_title']) ) $params['_title'] = $content;
+          require_once $smarty->_get_plugin_filepath('function', 'icon');
+
+          $icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
+          if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
+
+          $content = smarty_function_icon($icon_params, $smarty);
+        }
+
+        $link = ( isset($params['_class']) ? 'class='.$params['_class'].' ' : '' )
+              . ( isset($params['_title']) ? 'title='.$params['_title'].' ' : '' )
+              . $ret;
+
         $ret = "<a $link>".$content.'</a>';
+
         if ( isset($params['_sort_field']) ) {
           require_once $smarty->_get_plugin_filepath('function', 'show_sort');
           $ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
