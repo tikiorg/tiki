@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.27.2.2 2008-01-29 12:19:27 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.27.2.3 2008-01-29 18:46:11 luciash Exp $ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}
@@ -9,6 +9,5 @@
 
 <div id="tiki-listpages-content">
 {include file="tiki-listpages_content.tpl"}
-</div>
 </div>
 
