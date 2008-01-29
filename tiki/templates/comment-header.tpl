@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.11.2.3 2008-01-18 12:55:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.11.2.4 2008-01-29 02:32:28 nkoth Exp $ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -35,7 +35,16 @@
 			{/if}
 		>{html_image file='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}'}</a>
 		{/if}
-
+					
+		{if $tiki_p_forums_report eq 'y' and $forum_mode eq 'y'}
+			<form action="tiki-view_forum_thread.php" method="post" style="display: inline;">
+				<input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
+				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
+				<input type="hidden" name="report" value="{$comment.threadId}" />
+				<input type="image" src="pics/icons/delete.png" alt="{tr}Report this post{/tr}" title="{tr}Report this post{/tr}" />
+			</form>
+		{/if}
+					
 	  	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}{$comments_per_page_param}&amp;savenotepad={$comment.threadId}">{html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}</a>
 		{/if}
