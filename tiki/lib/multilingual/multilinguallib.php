@@ -559,6 +559,46 @@ class MultilingualLib extends TikiLib {
 
 		return $list;
 	}
+
+	function getBetterPages( $pageId )
+	{
+		$pageId = (int) $pageId;
+
+		$result = $this->query( "
+			SELECT DISTINCT
+				page.pageName page,
+				IFNULL( (
+					SELECT MAX(source.version)
+					FROM
+						tiki_pages_translation_bits source
+						INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+					WHERE
+						source.page_id = page.page_id
+						AND target.page_id = b.objId
+				), 1) last_update,
+				page.version current_version,
+				page.lang
+			FROM
+				tiki_translated_objects a
+				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
+				INNER JOIN tiki_pages page ON page.page_id = a.objId
+				INNER JOIN tiki_pages_translation_bits candidate ON candidate.page_id = page.page_id
+			WHERE
+				b.objId = ?
+				AND IFNULL( candidate.original_translation_bit, candidate.translation_bit_id ) NOT IN(
+					SELECT IFNULL( original_translation_bit, translation_bit_id )
+					FROM tiki_pages_translation_bits
+					WHERE page_id = b.objId
+				)
+		", array( $pageId ) );
+
+		$pages = array();
+		while( $row = $result->fetchRow() ) {
+			$pages[] = $row;
+		}
+
+		return $pages;
+	}
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
