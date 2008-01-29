@@ -1,5 +1,5 @@
 <?php
-// $Id: notificationemaillib.php,v 1.36.2.1 2007-11-24 15:28:40 nyloth Exp $
+// $Id: notificationemaillib.php,v 1.36.2.2 2008-01-29 19:01:17 sylvieg Exp $
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
@@ -124,7 +124,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
 			$mail->setUser($not['user']);
-			$mail_data = $smarty->fetchLang($not['language'], "mail/notification_subject.tpl");
+			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");
 			$mail->setSubject($mail_data);
 			$mail_data = $smarty->fetchLang($not['language'], "mail/forum_post_notification.tpl");
 			$mail->setText($mail_data);
