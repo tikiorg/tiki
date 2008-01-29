@@ -3,7 +3,7 @@
 //print "<!--\n";
 //$start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.6 2008-01-18 16:56:15 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.96.2.7 2008-01-29 02:58:11 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -243,11 +243,16 @@ if($tiki_p_admin_forum == 'y') {
     }
 }
 
-if ($tiki_p_forums_report == 'y') {
-    if (isset($_REQUEST['report'])) {
+if ($tiki_p_forums_report == 'y' && isset($_REQUEST['report'])) {    
 	check_ticket('view-forum');
 	$commentslib->report_post($_REQUEST['forumId'], $_REQUEST['comments_parentId'], $_REQUEST['report'], $user, '');
-    }
+	$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'] . "&post_reported=y";
+	header('location: ' . $url);
+	die;    
+}
+//shows a "thanks for reporting" message
+if (isset($_REQUEST["post_reported"]) && $_REQUEST["post_reported"] == 'y') {
+	$smarty->assign('post_reported', 'y');
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);
