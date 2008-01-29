@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.2 2008-01-29 18:15:29 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.3 2008-01-29 21:37:34 marclaporte Exp $ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
@@ -76,7 +76,7 @@
 		</div>
 	{/if}
 	{if !$mod_translation_better_known and !$mod_translation_better_other and !$mod_translation_worst_known and !$mod_translation_worst_other}
-		{tr}This page and all it's translations are up to date.{/tr}
+		{tr}This page and all its translations are up to date.{/tr}
 	{/if}
 {/tikimodule}
 {/if}
