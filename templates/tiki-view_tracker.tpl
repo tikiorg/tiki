@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.31 2008-01-29 17:31:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.32 2008-01-29 17:48:14 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -417,7 +417,7 @@ rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{els
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
 {section name=jx loop=$field_value.options_array}
-<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $input_err}{if $field_value.value eq $field_value.options_array[jx]}checked="checked"{/if}{elseif $defaultvalues.$fid eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="ed"{/if} />{$field_value.options_array[jx]}
+<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $input_err}{if $field_value.value eq $field_value.options_array[jx]}checked="checked"{/if}{elseif $defaultvalues.$fid eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} />{$field_value.options_array[jx]}
 {/section}
 
 {* -------------------- checkbox -------------------- *}
