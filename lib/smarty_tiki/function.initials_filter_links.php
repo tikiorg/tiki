@@ -28,7 +28,8 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 			array('_type' => $default_type, 'initial' => 'X', 'offset' => 'NULL', 'reloff' => 'NULL'),
 			$smarty
 		),
-		$smarty
+		$smarty,
+		false
 	).'>';
 
 	foreach ( array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z') as $i ) {
