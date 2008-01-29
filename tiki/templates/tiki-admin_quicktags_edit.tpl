@@ -19,7 +19,7 @@
 <tr class="formcolor"><td>{tr}Path to the tag icon{/tr}:</td><td>
 <select name="tagicon">
 {section name=it loop=$list_icons}
-<option style="background-image:url('{$list_icons[it]|escape}');background-repeat:no-repeat;padding-left:26px;height:14px;"{if $info.tagicon eq $list_icons[it]} selected="selected"{/if}>{$list_icons[it]}</option>
+<option style="background-image:url('{icon _id=$list_icons[it] _notag='y'}');background-repeat:no-repeat;padding-left:26px;height:14px;"{if $info.tagicon eq $list_icons[it]} selected="selected"{/if}>{$list_icons[it]}</option>
 {/section}
 </select>
 </td></tr>
