@@ -11,7 +11,6 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
 
-	$smarty->assign( 'pageName', $page );
 	$langs = $multilinguallib->preferedLangs();
 
 	$info = $tikilib->get_page_info( $page );
@@ -20,12 +19,12 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$known = array();
 	$other = array();
 
-	foreach( $better as $page )
+	foreach( $better as $pageOption )
 	{
-		if( in_array( $page['lang'], $langs ) )
-			$known[] = $page;
+		if( in_array( $pageOption['lang'], $langs ) )
+			$known[] = $pageOption;
 		else
-			$other[] = $page;
+			$other[] = $pageOption;
 	}
 
 	$smarty->assign( 'mod_translation_better_known', $known );
@@ -35,12 +34,12 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$known = array();
 	$other = array();
 
-	foreach( $worst as $page )
+	foreach( $worst as $pageOption )
 	{
-		if( in_array( $page['lang'], $langs ) )
-			$known[] = $page;
+		if( in_array( $pageOption['lang'], $langs ) )
+			$known[] = $pageOption;
 		else
-			$other[] = $page;
+			$other[] = $pageOption;
 	}
 
 	$smarty->assign( 'mod_translation_worst_known', $known );

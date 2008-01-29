@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.3 2008-01-29 21:37:34 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.4 2008-01-29 22:38:25 lphuberdeau Exp $ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
@@ -13,7 +13,7 @@
 					<a href="tiki-index.php?page={$better.page|escape}">{$better.page}</a> ({$better.lang})
 					{if $tiki_p_edit}
 					<div>
-						- <a href="tiki-editpage.php?page={$pageName|escape}&amp;source_page={$better.page|escape}&amp;oldver={$better.last_update|escape}&amp;newver={$better.current_version|escape}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
+						- <a href="tiki-editpage.php?page={$page|escape}&amp;source_page={$better.page|escape}&amp;oldver={$better.last_update|escape}&amp;newver={$better.current_version|escape}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
 					</div>
 					{/if}
 				</li>
@@ -30,7 +30,7 @@
 					<a href="tiki-index.php?page={$better.page|escape}">{$better.page}</a> ({$better.lang})
 					{if $tiki_p_edit}
 					<div>
-						- <a href="tiki-editpage.php?page={$pageName|escape}&amp;source_page={$better.page|escape}&amp;oldver={$better.last_update|escape}&amp;newver={$better.current_version|escape}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
+						- <a href="tiki-editpage.php?page={$page|escape}&amp;source_page={$better.page|escape}&amp;oldver={$better.last_update|escape}&amp;newver={$better.current_version|escape}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
 					</div>
 					{/if}
 				</li>
@@ -49,7 +49,7 @@
 					<a href="tiki-index.php?page={$worst.page|escape}">{$worst.page}</a> ({$worst.lang})
 					{if $tiki_p_edit}
 					<div>
-						- <a href="tiki-editpage.php?page={$worst.page|escape}&amp;source_page={$pageName|escape}&amp;oldver={$worst.last_update|escape}&amp;newver={$pageVersion|escape}&amp;diff_style=inlinediff-full">{tr}update it{/tr}</a>
+						- <a href="tiki-editpage.php?page={$worst.page|escape}&amp;source_page={$page|escape}&amp;oldver={$worst.last_update|escape}&amp;newver={$pageVersion|escape}&amp;diff_style=inlinediff-full">{tr}update it{/tr}</a>
 					</div>
 					{/if}
 				</li>
@@ -66,7 +66,7 @@
 					<a href="tiki-index.php?page={$worst.page|escape}">{$worst.page}</a> ({$worst.lang})
 					{if $tiki_p_edit}
 					<div>
-						- <a href="tiki-editpage.php?page={$worst.page|escape}&amp;source_page={$pageName|escape}&amp;oldver={$worst.last_update|escape}&amp;newver={$pageVersion|escape}&amp;diff_style=inlinediff-full">{tr}update it{/tr}</a>
+						- <a href="tiki-editpage.php?page={$worst.page|escape}&amp;source_page={$page|escape}&amp;oldver={$worst.last_update|escape}&amp;newver={$pageVersion|escape}&amp;diff_style=inlinediff-full">{tr}update it{/tr}</a>
 					</div>
 					{/if}
 				</li>
