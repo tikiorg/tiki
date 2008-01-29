@@ -28,7 +28,24 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 			$other[] = $page;
 	}
 
-	$smarty->assign_by_ref( 'mod_translation_better_known', $known );
-	$smarty->assign_by_ref( 'mod_translation_better_other', $other );
+	$smarty->assign( 'mod_translation_better_known', $known );
+	$smarty->assign( 'mod_translation_better_other', $other );
+
+	$worst = $multilinguallib->getWorstPages( $info['page_id'] );
+	$known = array();
+	$other = array();
+
+	foreach( $worst as $page )
+	{
+		if( in_array( $page['lang'], $langs ) )
+			$known[] = $page;
+		else
+			$other[] = $page;
+	}
+
+	$smarty->assign( 'mod_translation_worst_known', $known );
+	$smarty->assign( 'mod_translation_worst_other', $other );
+	$smarty->assign( 'pageVersion', $info['version'] );
 }
+
 ?>

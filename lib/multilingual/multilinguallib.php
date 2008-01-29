@@ -599,6 +599,54 @@ class MultilingualLib extends TikiLib {
 
 		return $pages;
 	}
+
+	function getWorstPages( $pageId )
+	{
+		$pageId = (int) $pageId;
+
+		$result = $this->query( "
+			SELECT DISTINCT
+				page.pageName page,
+				IFNULL( (
+					SELECT MAX(source.version)
+					FROM
+						tiki_pages_translation_bits source
+						INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+					WHERE
+						source.page_id = b.objId
+						AND target.page_id = a.objId
+				), 1) last_update,
+				page.lang
+			FROM
+				tiki_pages page
+				INNER JOIN tiki_translated_objects a ON a.objId = page.page_id
+				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
+			WHERE
+				b.objId = ?
+				 AND (
+					SELECT COUNT(*)
+					FROM tiki_pages_translation_bits
+					WHERE page_id = b.objId
+				) > (
+					SELECT COUNT(*)
+					FROM
+						tiki_pages_translation_bits self
+						INNER JOIN tiki_pages_translation_bits candidate
+							ON IFNULL(self.original_translation_bit, self.translation_bit_id)
+							 = IFNULL(candidate.original_translation_bit, candidate.translation_bit_id)
+					WHERE
+						self.page_id = b.objId
+						AND candidate.page_id = a.objId
+				)
+		", array( $pageId ) );
+
+		$pages = array();
+		while( $row = $result->fetchRow() ) {
+			$pages[] = $row;
+		}
+
+		return $pages;
+	}
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
