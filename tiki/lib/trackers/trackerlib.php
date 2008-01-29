@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.28 2008-01-29 17:51:02 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.29 2008-01-29 23:02:15 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -203,9 +203,9 @@ class TrackerLib extends TikiLib {
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
 		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
-		$emails = $this->get_notification_emails($trackerId, $itemId, $options);
+		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 
-		if (count($emails > 0)) {
+		if (count($watchers > 0)) {
 			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
@@ -224,14 +224,13 @@ class TrackerLib extends TikiLib {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 			include_once ('lib/webmail/tikimaillib.php');
-			$mail = new TikiMail();
 			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
-			$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
-			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
-			$mail->setText($mail_data);
-			$mail->setHeader("From", $prefs['sender_email']);
-			foreach ($emails as $email) {
-				$mail->send(array($email));
+			foreach ($watchers as $w) {
+				$mail = new TikiMail($w['user']);
+				$mail->setHeader("From", $prefs['sender_email']);
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->send(array($w['email']));
 			}
 		}
 
@@ -1084,37 +1083,22 @@ class TrackerLib extends TikiLib {
 		// Don't send a notification if this operation is part of a bulk import
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
+			$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 
-			$emails = $this->get_notification_emails($trackerId, $itemId, $options);
-
-			if (!isset($_SERVER["SERVER_NAME"])) {
-				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-			}
-
-			if( array_key_exists( "simpleEmail", $options ) )
-			{
-				$simpleEmail = $options["simpleEmail"];
-			} else {
-				$simpleEmail = "n";
-			}
-
-			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
-
-			if (count($emails) > 0) {
-				if( $simpleEmail == "n" )
-				{
+			if (count($watchers) > 0) {
+				if( array_key_exists( "simpleEmail", $options ) ) {
+					$simpleEmail = $options["simpleEmail"];
+				} else {
+					$simpleEmail = "n";
+				}
+				$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+				if (!isset($_SERVER["SERVER_NAME"])) {
+					$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+				}
+				include_once('lib/webmail/tikimaillib.php');
+				if( $simpleEmail == "n" ) {
 					$smarty->assign('mail_date', $this->now);
 					$smarty->assign('mail_user', $user);
-					if ($itemId) {
-						$mail_action = "\r\n".tra('Item Modification')."\r\n\r\n";
-						$mail_action.= tra('Tracker').":\n   ".$trackerName."\r\n";
-						$mail_action.= tra('Item').":\n   ".$itemId;
-					} else {
-						$mail_action = "\r\n".tra('Item creation')."\r\n\r\n";
-						$mail_action.= tra('Tracker').': '.$trackerName;
-					}
-					$smarty->assign('mail_action', $mail_action);
-					$smarty->assign('mail_data', $the_data);
 					if ($itemId) {
 						$smarty->assign('mail_itemId', $itemId);
 					} else {
@@ -1130,17 +1114,26 @@ class TrackerLib extends TikiLib {
 					if (count($parts) > 1)
 						unset ($parts[count($parts) - 1]);
 					$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+					foreach ($watchers as $watcher) {
+						if ($itemId) {
+							$mail_action = "\r\n".tra('Item Modification', $watcher['language'])."\r\n\r\n";
+							$mail_action.= tra('Tracker', $watcher['language']).":\n   ".$trackerName."\r\n";
+							$mail_action.= tra('Item', $watcher['language']).":\n   ".$itemId;
+						} else {
+							$mail_action = "\r\n".tra('Item creation', $watcher['language'])."\r\n\r\n";
+							$mail_action.= tra('Tracker', $watcher['language']).': '.$trackerName;
+						}
+						$smarty->assign('mail_action', $mail_action);
+						$smarty->assign('mail_data', $the_data);
 
 
-					$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
+						$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
 
-					include_once ('lib/webmail/tikimaillib.php');
-					$mail = new TikiMail();
-					$mail->setSubject($smarty->fetch('mail/tracker_changed_notification_subject.tpl'));
-					$mail->setText($mail_data);
-					$mail->setHeader("From", $prefs['sender_email']);
-					foreach ($emails as $email) {
-						$mail->send(array($email));
+						$mail = new TikiMail($watcher['user']);
+						$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
+						$mail->setText($mail_data);
+						$mail->setHeader("From", $prefs['sender_email']);
+						$mail->send(array($watcher['email']));
 					}
 				} else {
 			    		// Use simple email
@@ -1155,8 +1148,6 @@ class TrackerLib extends TikiLib {
 								$my_sender = $this->get_item_value($trackerId, (!empty($itemId)? $itemId:$new_itemId), $fieldId);
 						}
 
-			    		// Default subject
-			    		$subject='['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
 
 			    		// Try to find a Subject in $the_data
 			    		$subject_test = preg_match( '/^Subject:\n   .*$/m', $the_data, $matches );
@@ -1169,17 +1160,15 @@ class TrackerLib extends TikiLib {
 
 			    		$the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
 
-			    		//outbound email ->  will be sent in utf8 - from sender_email
-			    		include_once('lib/webmail/tikimaillib.php');
-			    		$mail = new TikiMail();
-			    		$mail->setSubject($subject);
-			    		$mail->setText($the_data);
+						foreach ($watchers as $watcher) {
+							$mail = new TikiMail($watcher['user']);
+							$mail->setSubject('['.$trackerName.'] '.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"]);
+							$mail->setText($the_data);
 
-			    		if( ! empty( $my_sender ) ) {
-							$mail->setHeader("From", $my_sender);
-			    		}
-						foreach ($emails as $email) {
-							$mail->send(array($email));
+							if( ! empty( $my_sender ) ) {
+								$mail->setHeader("From", $my_sender);
+							}
+							$mail->send(array($watcher['email']));
 						}
 				}
 			}
@@ -2187,26 +2176,33 @@ class TrackerLib extends TikiLib {
 		return $field;
 	}
 	function get_notification_emails($trackerId, $itemId, $options) {
-		global $userlib;
-		$watchers = $this->get_event_watches('tracker_modified',$trackerId);
-		$emails = $this->get_local_notifications($itemId);
-		foreach ($watchers as $w) {
-			$emails[] = $userlib->get_user_email($w['user']);
-		}
+		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
+		$watchers_local = $this->get_local_notifications($itemId);
 		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId));
-		foreach ($watchers_item as $w) {
-			$emails2[] = $userlib->get_user_email($w['user']);
-		}
+		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 			$emails3 = split(',', $options['outboundEmail']);
+			foreach ($emails3 as $w) {
+				global $userlib, $user_preferences;
+				$u = $userlib->get_user_by_email($w);
+				$this->get_user_preferences($u, array('user', 'language', 'mailCharset'));
+				$watchers_outbound[] = array('email'=>$w, 'user'=>$u, 'language'=>$user_preferences[$u]['language'], 'mailCharset'=>$user_preferences[$u]['mailCharset']);
+			}
 		}
-		if (!empty($emails2))
-			$emails = array_merge($emails, $emails2);
-		if (!empty($emails3))
-			$emails = array_merge($emails, $emails3);
-		if (!empty($emails))
-			$emails = array_unique($emails);
-		return $emails;
+		//echo "<pre>GLOBAL ";print_r($watchers_global);echo 'LOCAL ';print_r($watchers_local); echo 'ITEM ';print_r($watchers_item); echo 'OUTBOUND ';print_r($watchers_outbound);
+		$emails = array();
+		$watchers = array();
+		foreach (array('watchers_global', 'watchers_local', 'watchers_item', 'watchers_outbound') as $ws) {
+			if (!empty($$ws)) {
+				foreach($$ws as $w) {
+					if (!in_array($w['email'], $emails)) {
+						$emails[] = $w['email'];
+						$watchers[] = $w;
+					}
+				}
+			}
+		}
+		return $watchers;
 	}
 	/* sort allFileds function of a list of fields */
 	function sort_fields($allFields, $listFields) {
@@ -2247,17 +2243,15 @@ class TrackerLib extends TikiLib {
 	}
 	/* return all the emails that are locally watching an item */
 	function get_local_notifications($itemId) {
-		global $userlib;
+		global $tikilib, $userlib, $user_preferences;
 		$emails = array();
 		$res = $this->get_item_values_by_type($itemId, 'u');
 		if (!is_array($res))
 			return $emails;
 		foreach ($res as $f) {
 			if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
-				$email = $userlib->get_user_email($f['value']);
-				if (!empty($email)) {
-					$emails[] = $email;
-				}
+				$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
+				$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
 			}
 		}
 		return $emails;
