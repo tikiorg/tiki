@@ -1,4 +1,4 @@
-<h1>{tr}Translate:{/tr}&nbsp;{if $type eq 'wiki page'}<a href="tiki-index.php?page={$name}">{else}<a href="tiki-read_article.php?articleId={$id}">{/if}{$name}</a> ({$languageName}, {$langpage})
+<h1>{tr}Translate:{/tr}&nbsp;{if $type eq 'wiki page'}<a href="tiki-index.php?page={$name|escape:'url'}&bl=n">{else}<a href="tiki-read_article.php?articleId={$id}">{/if}{$name}</a> ({$languageName}, {$langpage})
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
@@ -50,7 +50,7 @@
 	{section name=i loop=$trads}
 	<tr class="{cycle}">
 		<td>{$trads[i].langName}</td>
-		<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName}</a></td>
+		<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}&bl=n">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName}</a></td>
 		<td><a class="link" href="tiki-edit_translation.php?detach&amp;page={$name|escape}&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}">{html_image file='pics/icons/cross.png' border='0' alt='{tr}detach{/tr}' title='{tr}detach{/tr}'}</a>
 	</td></tr>
 	{/section}
