@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.13 2008-01-28 16:46:03 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.14 2008-01-30 00:58:10 nkoth Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -234,6 +234,7 @@
                 </option>
               {/if}
             {/section}
+            <option value='' {if !$user_prefs.language}selected="selected"{/if}>{tr}Site default{/tr}</option>
           </select>
 		  {if $prefs.feature_multilingual eq 'y'}
 		  {if $user_prefs.read_language}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.10 2008-01-28 16:45:58 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.11 2008-01-30 00:58:10 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,6 +119,8 @@ if (isset($_REQUEST["new_prefs"])) {
 		if ($userwatch == $user) {
 			include ('lang/' . $_REQUEST["language"] . '/language.php');
 		}
+	} else {
+		$tikilib->set_user_preference($userwatch, 'language', '');
 	}
 
 	if (isset($_REQUEST['read_language'])) {
