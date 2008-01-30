@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/language.php,v 1.5.2.1 2007-11-04 22:08:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/language.php,v 1.5.2.2 2008-01-30 03:20:24 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -10,6 +10,11 @@
 if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
   header('location: index.php');
   exit;
+}
+
+// clear bl if bl is 'n' for backward compatibility
+if ($_REQUEST['bl'] == 'n') {
+	unset($_REQUEST['bl']);
 }
 
 if (!empty($_SESSION['language'])) {
