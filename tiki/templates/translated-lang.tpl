@@ -13,7 +13,11 @@
 				</form>
 			{else} {* get method to have the param in the url *}
 				<script type="text/javascript">
-				current_page = "{$page}";
+				{if $beingStaged == 'y'}
+					page_to_translate = "{$approvedPageName}";
+				{else}
+					page_to_translate = "{$page}";
+				{/if}
 				{literal}
 				function quick_switch_language( element )
 				{
@@ -23,7 +27,7 @@
 					if( option.value == "-" )
 						return;
 					else if( option.value == "_translate_" )
-						document.location.href = "tiki-edit_translation.php?page=" + escape(current_page);
+						document.location.href = "tiki-edit_translation.php?page=" + escape(page_to_translate);
 					else
 						element.form.submit();
 				}
