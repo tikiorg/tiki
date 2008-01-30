@@ -2,7 +2,7 @@
 	{if isset($trads) && (count($trads) > 1 || $trads[0].langName)}
 		{if $td eq 'y'}<td style="vertical-align:top;text-align: left; width:42px;">{/if}
 		{if isset($verbose) && $verbose eq 'y'}The main text of this page is available in the following languages:{/if}
-		{if count($trads) > 1}
+		
 			{if isset($type) && $type == 'article'}
 				<form action="tiki-read_article.php" method="get">
 				<select name="articleId" onchange="this.form.submit()">
@@ -39,8 +39,6 @@
 				</select>
 				</form>
 			{/if}
-		{else}
-			{$trads[0].langName}
-		{/if}
+
 		{if $td eq 'y'}</td>{/if}
 	{/if}
