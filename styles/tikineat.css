@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.5 2008-01-12 16:28:37 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.6 2008-01-30 17:13:09 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -93,7 +93,7 @@ a {
 }
 a:hover {
 	color: #224466;
-	background-color: #FFFFF1;
+/*	background-color: #FFFFF1;*/
 }
 small {
 	font-size : .8em;
@@ -1869,6 +1869,24 @@ table.default	td {
 }
 #sideBarContents {
 	background: #fff;
+}
+
+.icon {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+	-moz-opacity: 0.8;
+	border: 1px solid transparent;
+	padding: 1px;
+}
+.icon:hover {
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+	-moz-opacity: 1;
+	background-color: #8CACBB;
+	background-color: #DDDDDD;
+	border-right: 1px solid #1D49BB;
+	border-bottom: 1px solid #1D49BB;
+	border-top: 1px solid #4C89BB;
+	border-left: 1px solid #4C89BB;
+	color: black;
 }
 
 /* end of css file */
