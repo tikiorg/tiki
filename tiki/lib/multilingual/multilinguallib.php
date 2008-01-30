@@ -20,6 +20,19 @@ class MultilingualLib extends TikiLib {
 	 * @requirment: no translation of the source in this lang must exist
 	 */
 	function insertTranslation($type, $srcId, $srcLang, $objId, $objLang) {
+		global $prefs;
+		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
+			$srcPageName = $this->get_page_name_from_id($srcId);
+			$objPageName = $this->get_page_name_from_id($objId);
+			if (substr($srcPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']
+				&& substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+				$srcStagingPageName = $prefs['wikiapproval_prefix'] . $srcPageName;
+				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
+					$this->insertTranslation($type, $this->get_page_id_from_name($srcStagingPageName), $srcLang, $this->get_page_id_from_name($objStagingPageName), $objLang);
+				}
+			}
+		}
 		$srcTrads = $this->getTrads($type, $srcId);
 		$objTrads = $this->getTrads($type, $objId);
 		if (!$srcTrads && !$objTrads) {
@@ -66,6 +79,19 @@ class MultilingualLib extends TikiLib {
 	 * @param $objId: new object for the translation of $srcId of type $type in the language $objLang
 	 */
 	function updateTranslation($type, $srcId, $objId, $objLang) {
+		global $prefs;
+		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {
+			$srcPageName = $this->get_page_name_from_id($srcId);
+			$objPageName = $this->get_page_name_from_id($objId);
+			if (substr($srcPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']
+				&& substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+				$srcStagingPageName = $prefs['wikiapproval_prefix'] . $srcPageName;
+				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+				if ($this->page_exists($srcStagingPageName) && $this->page_exists($objStagingPageName)) {
+					$this->updateTranslation($type, $this->get_page_id_from_name($srcStagingPageName), $this->get_page_id_from_name($objStagingPageName), $objLang);
+				}
+			}
+		}
 		$query = "update `tiki_translated_objects` set `objId`=? where `type`=? and `srcId`=? and `lang`=?";
 		$this->query($query, array($objId, $type, $srcId, $objLang));
 	}
@@ -156,6 +182,16 @@ class MultilingualLib extends TikiLib {
 	/* @brief: detach one translation
 	 */
 	function detachTranslation($type, $objId) {
+		global $prefs;
+		if ($type == 'wiki page' && $prefs['feature_wikiapproval'] == 'y') {			
+			$objPageName = $this->get_page_name_from_id($objId);
+			if (substr($objPageName, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {				
+				$objStagingPageName = $prefs['wikiapproval_prefix'] . $objPageName;
+				if ($this->page_exists($objStagingPageName)) {
+					$this->detachTranslation($type, $this->get_page_id_from_name($objStagingPageName));
+				}
+			}
+		}
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
 		$this->query($query,array($type, $objId));
 //@@TODO: delete the set if only one remaining object - not necesary but will clean the table
