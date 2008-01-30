@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.15 2008-01-08 18:13:38 nkoth Exp $
+// CVS: $Id: userslib.php,v 1.247.2.16 2008-01-30 15:53:54 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1306,9 +1306,11 @@ function get_included_groups($group, $recur=true) {
     }
 
 	function get_user_default_group($user) {
-  	        if (!isset($user)) {
-		    return 'Anonymous';
-		}  
+		if (!isset($user)) {
+			return 'Anonymous';
+		}
+		if ($user == $_SESSION['u_info']['login'])
+			return $_SESSION['u_info']['group'];
 		$query = "select `default_group` from `users_users` where `login` = ?";
 		$result = $this->getOne($query, array($user));
 		$ret = '';
@@ -1329,10 +1331,7 @@ function get_included_groups($group, $recur=true) {
 		return $ret;
 	}
 	function get_user_default_homepage($user) {
-	    if (!$user) return $this->get_group_home('Anonymous');
-
-		$query = "select `default_group` from `users_users` where `login` = ?";
-		$result = $this->getOne($query, array($user));
+		$result = $this->get_user_default_group($user);
 		if (!is_null($result)) {
 			$home = $this->get_group_home($result);
 			if ($home != '')
@@ -1375,8 +1374,7 @@ function get_included_groups($group, $recur=true) {
 	function get_user_group_theme($user) {
 		global $tikilib;
 
-		$query = "select `default_group` from `users_users` where `login` = ?";
-		$result = $this->getOne($query, array($user));
+		$result = $this->get_user_default_group($user);
 		if ( isset($result) && ($result!="") ) {
 			$query = "select `groupTheme` from `users_groups` where `groupName` = ?";
 			$resg = $this->getOne($query, array($result));
@@ -1574,8 +1572,7 @@ function get_included_groups($group, $recur=true) {
     }
 
 	function get_tracker_usergroup($user) {
-		$query = "select `default_group` from `users_users` where `login` = ?";
-		$result = $this->getOne($query, array($user));
+		$result = $this->get_user_default_group($user);
 		$ret = '';
 		$userTrackerId = $ret;
 		if (!is_null($result)) {
