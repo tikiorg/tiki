@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.2 2008-01-22 19:28:33 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.3 2008-01-30 02:19:43 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,11 @@ if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id'])
 include_once("lang/langmapping.php");
 
 if (isset($_REQUEST['page']) && $_REQUEST['page']) {
+	if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
+		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
+		$smarty->display("error.tpl");
+		die;
+	}
 	$info = $tikilib->get_page_info($_REQUEST['page']);
 	if (empty($info)) {
 		$smarty->assign('msg',tra("Page cannot be found"));
@@ -89,6 +94,15 @@ if ($type == "wiki page") {
 		die;
 	}
   $pages = $tikilib->list_pages(0, -1, 'pageName_asc', '', '',true, false, true);
+  if ($prefs['feature_wikiapproval'] == 'y') {
+  	$pages_data = array();
+  	foreach($pages["data"] as $p) {
+  		if (substr($p["pageName"], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+			$t_pages_data[] = $p;
+  		}
+  	}
+  	$pages["data"] = $t_pages_data;
+  }  
 	$smarty->assign_by_ref('pages', $pages["data"]);
 }
 else if ($type == "article") {
@@ -122,6 +136,11 @@ if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a 
 }
  else if (isset($_REQUEST['set']) && !empty($_REQUEST['srcName'])) { // attach to a translation set
 	check_ticket('edit-translation');
+	if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['srcName'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
+		$smarty->display("error.tpl");
+		die;
+	}	
 	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
