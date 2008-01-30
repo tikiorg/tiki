@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.6 2008-01-22 16:58:15 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.7 2008-01-30 04:38:41 nkoth Exp $ *}
 
 {strip}
 <hr/>
@@ -137,7 +137,7 @@
 {/if}{* attachments *}
 
   {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}Translate{/tr}</a></span>
+     <span class="button2"><a href="tiki-edit_translation.php?page={if $beingStaged == 'y'}{$approvedPageName|escape:'url'}{else}{$page|escape:'url'}{/if}" class="linkbut">{tr}Translate{/tr}</a></span>
   {/if}
 {/if}
 
