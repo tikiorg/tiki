@@ -20,6 +20,7 @@ function smarty_function_icon($params, &$smarty) {
   $basedirs = array('pics/icons', 'images', 'img/icons');
   $icons_extension = '.png';
   $notag = false;
+  $default_class = 'icon';
 
   // Handle _ids that contains the real filename and path
   if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
@@ -90,8 +91,12 @@ function smarty_function_icon($params, &$smarty) {
   if ( $notag ) {
     $html = $params['path_prefix'].$params['file'];
   } else {
+
     // use 'alt' as 'title' if not set
     if ( ! isset($params['title']) ) $params['title'] = $params['alt'];
+    // use default class if not set
+    if ( ! isset($params['class']) ) $params['class'] = $default_class;
+
     $html = smarty_function_html_image($params, $smarty);
   }
 
