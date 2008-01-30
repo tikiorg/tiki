@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.29 2008-01-30 03:25:57 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.30 2008-01-30 16:18:59 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -621,6 +621,7 @@ if(isset($_REQUEST["edit"])) {
 		if ($tikilib->page_exists($oldpage)) {
 			$oldinfo = $tikilib->get_page_info($oldpage);
 			$edit_data = $oldinfo["data"];
+			$edit_lang = $oldinfo["lang"];
 		} else {
 			$edit_data = '';
 		}
@@ -688,6 +689,8 @@ if (isset($_REQUEST["lang"])) {
 	$pageLang = $_REQUEST["lang"];
 } elseif (isset($info["lang"])) {
   $pageLang = $info["lang"];
+} elseif (isset($edit_lang)) {
+  $pageLang = $edit_lang;
 } else {
   $pageLang = "";
 }
