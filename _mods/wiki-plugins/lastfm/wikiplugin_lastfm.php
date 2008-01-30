@@ -12,6 +12,7 @@
 //				or
 //			tag = Genre or tag to seed the music.
 //			NOTE: If both are included, only artist will be used.
+//			SPECIAL: Use tag=tikiwiki to listen to the TikiWiki Member Radio Station (http://www.last.fm/group/Tikiwiki)
 //
 // Optional:
 //			color = Color of the widget (Default is red).
@@ -35,8 +36,15 @@ if (empty($artist)) {
 	if (empty($tag)){
 		return tra("Missing an ARTIST or a TAG.");
 	} 
+
+	if ($tag == 'tikiwiki') {
+		$tunestitle = 'Tikiwiki Member Radio';
+		$tunes = 'group/Tikiwiki';
+	} else {
 	$tunestitle = 'tagged ' .$tag;
 	$tunes = 'globaltags/' . $tag;
+ 	}	
+
 	} else {
 	$tunestitle = 'like '. $artist;
 	$tunes = 'artist/'.$artist.'/similarartists';
