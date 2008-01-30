@@ -133,7 +133,7 @@
   							<td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].creator}{tr}y{/tr}{else}&nbsp;{/if}</td>
   							<td class="{cycle advance=false}" style="text-align:center;">{if $userwatch eq $user_pages[ix].lastEditor}{tr}y{/tr}{else}&nbsp;{/if}</td>
   							<td class="{cycle advance=false}">{$user_pages[ix].date|tiki_short_datetime}</td>
-  							<td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}: {$user_pages[ix].pageName}" src="pics/icons/page_edit.png" width="16" height="16" /></a></td>
+  							<td class="{cycle}" style="text-align:center;"><a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{icon _id='page_edit' title="{tr}Edit{/tr}: `$user_pages[ix].pageName`"}</a></td>
   						</tr>
   					{/section}
   				</table>
@@ -154,7 +154,7 @@
   						<tr><td class="{cycle advance=false}">
   							<a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
   						</td><td class="{cycle}" style="text-align:center;">
-  							<a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}"><img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" /></a>
+  							<a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">{icon _id='page_edit'}</a>
   						</td></tr>
   						{/section}
   					</table>

@@ -29,7 +29,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">{if $channels[user].tiki_p_admin_newsletters eq 'y'}<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>{else}&nbsp;{/if}</td>
+<td class="{cycle advance=false}">{if $channels[user].tiki_p_admin_newsletters eq 'y'}<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].subject}</td>
 {if $view_editions eq 'y'}

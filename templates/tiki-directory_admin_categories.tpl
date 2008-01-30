@@ -118,8 +118,8 @@
 <td class="{cycle advance=false}">{$items[user].editorGroup}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}relate{/tr}' title='{tr}relate{/tr}' /></a>
-   <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}"><img src='pics/icons/page_edit.png'  width="16" height="16" border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-   <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}"><img src='pics/icons/cross.png' border='0' width="16" height="16" alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+   <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{icon _id='page_edit'}</a>
+   <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {/section}

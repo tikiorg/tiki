@@ -1,16 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.6 2008-01-10 18:00:00 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.7 2008-01-30 15:33:51 nyloth Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit Tpl{/tr}'}</a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=gal" class="tikihelp"><img src='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}" title="{tr}Admin Feature{/tr}"  height="16" width="16" /></a>
+<a href="tiki-admin.php?page=gal" class="tikihelp">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
 {/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}
@@ -210,35 +210,35 @@
 {/if}
   <td class="{cycle}" nowrap="nowrap">
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
-  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}"><img border='0' height="16" width="16" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
+  <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">{icon _id='table' alt='{tr}List{/tr}'}</a>
   {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
     {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
       <a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">
-        <img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0' width='16' height='16' />
+        {icon _id='page_edit'}
       </a>
     {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_images eq 'y' ) }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}"><img src='pics/icons/upload.png' border='0' height="16" width="16" alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+    <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
   {if ($galleries[changes].geographic eq 'y')}
-    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}"><img src='pics/icons/wrench.png' alt='{tr}Make Map{/tr}' title='{tr}Make Map{/tr}' height="16" width="16" border='0' /></a>
+    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='wrench' alt='{tr}Make Map{/tr}'}</a>
   {/if}
   {/if}
   {/if}
   {/if}
   {if $tiki_p_admin eq 'y'}
     {if $galleries[changes].individual eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' title='{tr}Active Perms{/tr}' height="16" width="16" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}"><img src='pics/icons/key.png' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' height="16" width="16" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    &nbsp;&nbsp;<a class="gallink" title="{tr}Delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}"><img src='pics/icons/cross.png' height="16" width="16" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+    &nbsp;&nbsp;<a class="gallink" title="{tr}Delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   {/if}
   {/if}
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.3 2008-01-17 15:18:44 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.4 2008-01-30 15:33:50 nyloth Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -18,7 +18,7 @@ function taginsert(area_name,tagid)
 {/literal}
 {if $prefs.quicktags_over_textarea neq 'y'}
   <a href="javascript:flip('helptool{$qtnum}');" class="link">
-    <img src="pics/icons/bullet_toggle_plus.png" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...
+    {icon _id='bullet_toggle_plus' alt='+'}&nbsp;{tr}Quicktags{/tr} ...
   </a>
   <br /><br />
 { /if}
@@ -75,7 +75,7 @@ function taginsert(area_name,tagid)
       {cycle name='cycle'|cat:$qtnum}
     {/section}
     <a title="{tr}special chars{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');">
-      <img src='pics/icons/world_edit.png' alt='{tr}special characters{/tr}' title='{tr}special characters{/tr}' border='0' />
+      {icon _id='world_edit' alt='{tr}special characters{/tr}'}
     </a>
   {if $prefs.quicktags_over_textarea neq 'y'}
     </div>

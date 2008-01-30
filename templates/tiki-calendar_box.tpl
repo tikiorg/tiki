@@ -9,9 +9,7 @@
 {if $cellid and $tiki_p_view_events eq 'y'}
 <div style="text-align:right" class='box-title'>
 {if $prefs.calendar_sticky_popup eq "y"}
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"><img src="pics/icons/magnifier.png" border="0" width="16" height="16"
-alt="{tr}Zoom{/tr}" /></a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edit_item.php?calitemId={$cellid}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}"
-/></a><a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=1" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt="{tr}Remove{/tr}" /></a>{/if}
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}">{icon _id='magnifier' alt="{tr}Zoom{/tr}"}</a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edit_item.php?calitemId={$cellid}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a><a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}
 {elseif $cellmodif eq "y"}
 ... {tr}click to edit{/tr}
 {elseif $prefs.calendar_view_tab eq "y"}

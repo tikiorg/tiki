@@ -119,8 +119,8 @@
   {/foreach}</span>
  </td>
  <td>
-  <a href='#' onclick='showMptypeEdit({$mptype.id});' title='{tr}edit entry{/tr}'><img src="pics/icons/pencil.png" border="0" height="16" width="16" alt='{tr}edit entry{/tr}' /></a>
-  <a href='#' onclick='deleteMptype({$mptype.id});' title='{tr}delete entry{/tr}'><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}delete entry{/tr}' /></a>
+  <a href='#' onclick='showMptypeEdit({$mptype.id});' title='{tr}edit entry{/tr}'>{icon _id='pencil' alt='{tr}edit entry{/tr}'}</a>
+  <a href='#' onclick='deleteMptype({$mptype.id});' title='{tr}delete entry{/tr}'>{icon _id='cross' alt='{tr}delete entry{/tr}'}</a>
  </td>
 </tr>
 {/foreach}

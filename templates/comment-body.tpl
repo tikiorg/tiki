@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.7.2.2 2008-01-18 12:55:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.7.2.3 2008-01-30 15:33:47 nyloth Exp $ *}
 <div class="content">
 
 	<div class="author">
@@ -35,18 +35,18 @@
 			<span class="icons">
 			<span class="actions">
 			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}"><img src="pics/icons/user_go.png" border="0" alt="{tr}private message{/tr}" title="{tr}private message{/tr}" /></a>
+				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}">{icon _id='user_go' alt="{tr}private message{/tr}"}</a>
 			{/if}
 			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}  
-				<a href="mailto:{$comment.user_email|escape:'hex'}"><img src="pics/icons/email.png" alt="{tr}Send eMail to User{/tr}" title="{tr}Send eMail to User{/tr}" border='0' /></a>
+				<a href="mailto:{$comment.user_email|escape:'hex'}">{icon _id='email' alt="{tr}Send eMail to User{/tr}"}</a>
 			{/if}
 			</span>
 			<span class="infos">
 			{if $forum_info.ui_online eq 'y'}
 				{if $comment.user_online eq 'y'}
-				<img src="pics/icons/user_red.png" border="0" alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+				{icon _id='user_red' alt='{tr}user online{/tr}'}
 				{elseif $comment.user_online eq 'n'}
-			  	<img src="pics/icons/user_gray.png" border="0" alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+			  	{icon _id='user_gray' alt='{tr}user offline{/tr}'}
 				{/if}
 			{/if}
 			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
@@ -70,7 +70,7 @@
 <div class="attachments">
 	{section name=ix loop=$comment.attachments}
 	<a class="link" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}">
-	{html_image file="pics/icons/attach.png" border="0" alt='{tr}Attachment{/tr}'}
+	{icon _id='attach' alt='{tr}Attachment{/tr}'}
 	{$comment.attachments[ix].filename} ({$comment.attachments[ix].filesize|kbsize})</a>
 	{if $tiki_p_admin_forum eq 'y'}
 	<a class="link"
@@ -79,7 +79,7 @@
 		{else}
 		href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;thread_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_per_page={$comments_per_page}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comment.attachments[ix].attId}"
 		{/if}
-	>{html_image file="pics/icons/cross.png" border="0" alt='{tr}Remove{/tr}'}</a>
+	>{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 	{/if}
 	<br />
 	{/section}

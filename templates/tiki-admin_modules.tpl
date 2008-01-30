@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.13 2008-01-16 11:15:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.14 2008-01-30 15:33:48 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Modules{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" width="16" height="16" /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Modules Template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
+{icon _id='shape_square_edit'}</a>{/if}</h1>
 
 <div class="navbar">
 <a class="linkbut" href="#assign">{tr}Assign Module{/tr}</a>
@@ -43,9 +43,9 @@
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name|escape}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="pics/icons/accept.png" border="0" width="16" height="16" alt='{tr}Assign{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0"  width="16" height="16" alt='{tr}Delete{/tr}' /></a></td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}#assign" title="{tr}Assign{/tr}">{icon _id='accept' alt='{tr}Assign{/tr}'}</a>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">
@@ -92,7 +92,7 @@
 <tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
-<a {popup text="Params: specific params to the module + lang flip title decorations section overflow page nobox bgcolor color theme" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a></td></tr>
+<a {popup text="Params: specific params to the module + lang flip title decorations section overflow page nobox bgcolor color theme" width=100 center=true}>{icon _id='help'}</a></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
@@ -137,11 +137,11 @@
 <td class="{cycle advance=false}">{$left[user].params|escape}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}Up{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}Down{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}"><img src="pics/icons/arrow_right.png" border="0" width="16" height="16" alt='{tr}Right{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}#leftmod" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+             <a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}#leftmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -173,11 +173,11 @@
 <td class="{cycle advance=false}">{$right[user].params|escape}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}"><img src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt='{tr}Up{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}"><img src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt='{tr}Down{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}"><img src="pics/icons/arrow_left.png" border="0" width="16" height="16" alt='{tr}Left{/tr}' /></a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}#rightmod" title="{tr}Unassign{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}x{/tr}' /></a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}#rightmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -255,7 +255,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}Use Poll{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= rate=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}
@@ -275,7 +275,7 @@
   <td class="form">
    <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}Use Gallery{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}
@@ -294,7 +294,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}Use Dynamic Content{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}
@@ -313,7 +313,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}Use RSS Module{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}
@@ -332,7 +332,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}Use Menu{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= css= link_on_section=y type=vert|horiz" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>  </td>
+	<a {popup text="Params: id= css= link_on_section=y type=vert|horiz" width=100 center=true}>{icon _id='help'}</a>  </td>
 </tr>
 {if $prefs.feature_phplayers eq "y"}
 <tr>
@@ -349,7 +349,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}Use phplayermenu{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 
   </td>
 </tr>
@@ -370,7 +370,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}Use Banner Zone{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}
@@ -389,7 +389,7 @@
   <td class="form">
     <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');">{tr}Use Wiki Structure{/tr}</a>
   </td><td class="form">
-	<a {popup text="Params: id=" width=100 center=true}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
 </tr>
 {/if}

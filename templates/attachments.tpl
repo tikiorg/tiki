@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.2 2007-12-07 18:36:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.3 2008-01-30 15:33:47 nyloth Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -45,10 +45,10 @@
  {$atts[ix].filename|iconify}
  <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}">{$atts[ix].filename}</a>
  </td><td class="{cycle advance=false}">
-  <a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}"><img src="pics/icons/monitor.png" border="0" width="16" height="16" alt="{tr}View{/tr}" /></a>
-  <a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y"><img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> &nbsp;
+  <a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
+  <a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a> &nbsp;
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-  <a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}"><img src="pics/icons/cross.png" border="0" alt='{tr}Remove{/tr}' /></a>
+  <a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
  {/if}
  </td>
  <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>

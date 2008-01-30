@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.14 2008-01-30 00:58:10 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.15 2008-01-30 15:33:51 nyloth Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -9,19 +9,19 @@
 
   {if $prefs.feature_help eq 'y'}
     <a href="{$prefs.helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
-      <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' />
+      {icon _id='help'}
     </a>
   {/if}
 
   {if $prefs.feature_view_tpl eq 'y'}
     <a href="tiki-edit_templates.php?template=tiki-user_preferences.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
-      <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' />
+      {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}
     </a>
   {/if}
 
   {if $tiki_p_admin_users eq 'y'}
     <a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
-      <img border="0" alt="{tr}Assign Group{/tr}" src="pics/icons/key.png" width='16' height='16' />
+      {icon _id='key' alt="{tr}Assign Group{/tr}"}
     </a>
   {/if}
 </h1>

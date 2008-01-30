@@ -65,7 +65,7 @@
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
 <tr><td style="border:0;padding-top:2px;">
 {if $prefs.feature_jscalendar ne 'y'}
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;">
@@ -76,22 +76,22 @@
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td>
 <td rowspan="2" style="border:0;" class="html_select_time">
 {html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td></tr>
 <tr><td style="border:0;">
 {if $prefs.feature_jscalendar ne 'y'}
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 {/if}
 </td><td style="border:0;">
-<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td><td style="border:0;">
-<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td></tr>
 </table>
 {else}
@@ -106,7 +106,7 @@
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:block;" id="end_date"> 
 <tr><td style="border:0;padding-top:2px;">
 {if $prefs.feature_jscalendar ne 'y'}
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;">
@@ -117,41 +117,41 @@
 {/if}
 </td>
 <td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td>
 <td rowspan="2" style="border:0;" class="html_select_time">
 {html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
 </td>
 <td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a></td>
 </tr>
 <tr><td style="border:0;">
 {if $prefs.feature_jscalendar ne 'y'}
-<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 {/if}
 </td><td style="border:0;">
-<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td><td style="border:0;">
-<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td>
 </tr>
 </table>
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
 <tr><td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td><td style="border:0;" rowspan="2" class="html_select_time">
 {html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
 </td><td style="border:0;padding-top:2px;">
-<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);"><img src="pics/icons/plus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);">{icon _id='plus_small' align="left"}</a>
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;"><a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">{tr}Date and time of end{/tr}</a>
 </tr>
 <tr><td style="border:0;">
-<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td><td style="border:0;">
-<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);"><img src="pics/icons/minus_small.png" height="8" width="11" border="0" align="left" /></a>
+<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);">{icon _id='minus_small' align="left"}</a>
 </td>
 </tr>
 </table>
@@ -307,7 +307,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <tr class="formcolor" style="display:{if $calendar.customparticipants eq 'y'}tablerow{else}none{/if};" id="calpart">
 <td>{tr}Participants{/tr}
 {if $edit}
-<a href="#" onclick="flip('calparthelp');"><img src="pics/icons/help.png" width="16" height="16" border="0" alt="{tr}Help{/tr}" /></a>
+<a href="#" onclick="flip('calparthelp');">{icon _id='help'}</a>
 {/if}
 </td>
 <td>
@@ -356,7 +356,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {else}
 <input type="hidden" name="save[calendarId]" value="{$calendarId}" />
 {/if}
-{if $id}&nbsp;&nbsp;<a href="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}
+{if $id}&nbsp;&nbsp;<a href="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
 </td></tr>
 </table>
 {/if}

@@ -65,17 +65,17 @@
           <td align="right">
             {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
               <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}">
-                <img border='0' src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' />
+                {icon _id='page_edit'}
               </a> 
               &nbsp;
               <a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}">
-                <img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' />
+                {icon _id='cross' alt='{tr}Remove{/tr}'}
               </a>
             {/if}
 
             {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
               <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">
-                {html_image file='pics/icons/disk.png' border='0' alt='{tr}Save{/tr}'}
+                {icon _id='disk' alt='{tr}Save{/tr}'}
               </a>
             {/if}
           </td>
@@ -133,10 +133,10 @@
 
           <td style='text-align:right'>
             <a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>
-              <img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' />
+              {icon _id='printer' alt='{tr}Print{/tr}'}
             </a>
             <a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'>
-              <img src='pics/icons/email.png' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' width='16' height='16' />
+              {icon _id='email' alt='{tr}email this post{/tr}'}
             </a>
           </td>
         </tr>

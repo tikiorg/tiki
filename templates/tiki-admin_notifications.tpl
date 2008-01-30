@@ -2,11 +2,11 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Mail Notifications" target="tikihelp" class="tikihelp" title="{tr}Admin Email Notifications{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Notifications Template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
+{icon _id='shape_square_edit'}</a>{/if}</h1>
 
 {if empty($prefs.sender_email)}
 <div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</div>
@@ -77,7 +77,7 @@
 <td>{$channels[user].email}</td>
 <td>{$channels[user].user}</td>
 <td>
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
    <input type="checkbox" name="checked[]" value="{$channels[user].hash|escape}" {if $smarty.request.checked and in_array($channels[user].hash,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>

@@ -11,7 +11,7 @@
 <tr>
   <td class="formcolor">{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}</td>
 {if sizeof($avatars) eq 0 and $avatar}
- <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}reset{/tr}' /></a></td>
+ <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a></td>
 {/if}
 </tr>
 </table>

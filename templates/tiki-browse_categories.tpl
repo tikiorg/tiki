@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.6 2008-01-21 22:48:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.32.2.7 2008-01-30 15:33:49 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-browse_categories.php">{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}</a></h1>
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
@@ -7,11 +7,11 @@
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_category eq 'n'}
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt='{tr}watch only this category{/tr}' title='{tr}watch only this category{/tr}'}</a>
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{html_image file='pics/icons/eye_arrow_down.png' border='0' alt='{tr}watch this category and their descendants{/tr}' title='{tr}watch this category and their descendants{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{icon _id='eye' alt='{tr}watch only this category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{icon _id='eye_arrow_down' alt='{tr}watch this category and their descendants{/tr}'}</a>
 	{else}
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt='{tr}stop watching only this category{/tr}' title='{tr}stop watching only this category{/tr}'}</a>
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove_desc">{html_image file='pics/icons/no_eye_arrow_down.png' border='0' alt='{tr}stop watching this category and their descendants{/tr}' title='{tr}stop watching this category and their descendants{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove">{icon _id='no_eye' alt='{tr}stop watching only this category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove_desc">{icon _id='no_eye_arrow_down' alt='{tr}stop watching this category and their descendants{/tr}'}</a>
 	{/if}
 {/if}  
 <br /><br />

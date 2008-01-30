@@ -3,12 +3,12 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_tasks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Tasks tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
@@ -57,7 +57,7 @@
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<img src="pics/icons/task_received.png" title="{tr}Received{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Received{/tr}" /> 
+		{icon _id='task_received' align="middle"} 
 	</td>
 	<td>
 		{tr}Received task{/tr}. {tr}You received this task, please read and execute it{/tr}.
@@ -67,7 +67,7 @@
 {if $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<img src="pics/icons/task_submitted.png" title="{tr}Submitted{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Submitted{/tr}" /> 
+		{icon _id='task_submitted' align="middle"} 
 	</td>
 	<td>
 		{tr}Send task{/tr}. {tr}You send this task to a other user{/tr}.
@@ -77,7 +77,7 @@
 {if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<img src="pics/icons/task_shared.png" title="{tr}Shared{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Shared{/tr}" /> 
+		{icon _id='task_shared' align="middle"} 
 	</td>
 	<td>
 		{tr}Shared task{/tr}. {tr}This task is public to a special group{/tr}.

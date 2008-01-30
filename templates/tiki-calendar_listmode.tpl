@@ -30,9 +30,8 @@
 {/if}
 </td>
 <td>
-{if $listevents[w].modifiable eq "y"}<a class="link" href="tiki-calendar_edit_item.php?calitemId={$listevents[w].calitemId}" title="{tr}Edit{/tr}"><img 
-src="pics/icons/page_edit.png" border="0" width="16" height="16" alt="{tr}Edit{/tr}" /></a>
-<a class="link" href="tiki-calendar_edit_item.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}Remove{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16" alt='{tr}Remove{/tr}' /></a>{/if}
+{if $listevents[w].modifiable eq "y"}<a class="link" href="tiki-calendar_edit_item.php?calitemId={$listevents[w].calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+<a class="link" href="tiki-calendar_edit_item.php?calitemId={$listevents[w].calitemId}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>{/if}
 </td></tr>
 {/section}
 </table>

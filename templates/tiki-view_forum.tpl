@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.17 2008-01-15 11:01:07 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.18 2008-01-30 15:33:53 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -30,16 +30,16 @@
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_forum eq 'n'}
-			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'><img border='0' alt='{tr}Monitor Topics of this Forum{/tr}' src='pics/icons/eye.png' /></a>
+			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'>{icon _id='eye' alt='{tr}Monitor Topics of this Forum{/tr}'}</a>
 		{else}
-			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
+			<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics of this Forum{/tr}'}</a>
 		{/if}			
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_forum_topic_and_thread eq 'n'}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Monitor Topics and Threads of this Forum{/tr}' src='pics/icons/eye_magnifier.png' /></a>
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics and Threads of this Forum{/tr}'>{icon _id='eye_magnifier' alt='{tr}Monitor Topics and Threads of this Forum{/tr}'}</a>
 	{else}
-		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'><img border='0' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}' src='pics/icons/no_eye.png' /></a>
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'}</a>
 	{/if}
 {/if}
 
@@ -406,20 +406,20 @@ a moderator approves it.{/tr}
 
   {if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"
-     class="admlink">{html_image file='pics/icons/page_edit.png' border='0'  width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}'}</a>
+     class="admlink">{icon _id='page_edit'}</a>
    {/if}
 
   {if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
     {if $comments_coms[ix].archived eq 'y'}
-    <a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{html_image file='pics/icons/package_go.png' border='0' alt='{tr}Unarchive{/tr}' title='{tr}Unarchive{/tr}'}</a>
+    <a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
     {else}
-    <a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{html_image file='pics/icons/package.png' border='0' alt='{tr}Archive{/tr}' title='{tr}Archive{/tr}'}</a>
+    <a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
     {/if}
   {/if}
 
   {if $tiki_p_admin_forum eq 'y' }
    <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}"
-     class="admlink"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+     class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
   {/if}
 
   </td>   

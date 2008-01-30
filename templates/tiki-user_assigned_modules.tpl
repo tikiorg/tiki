@@ -2,12 +2,12 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}UserAssignedModules" target="tikihelp" class="tikihelp" title="{tr}User Assigned Modules{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_assigned_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Assigned Modules tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
@@ -40,11 +40,11 @@
 				<td class="{cycle advance=false}">{$modules_l[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_l[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_up.png' alt='{tr}Up{/tr}' title='{tr}Up{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_down.png' alt='{tr}Down{/tr}' title='{tr}Down{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].moduleId}"><img src='pics/icons/resultset_next.png' alt='{tr}Right{/tr}' title='{tr}Move to Right Column{/tr}' border='0' width='16' height='16' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].moduleId}">{icon _id='resultset_up'}</a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].moduleId}">{icon _id='resultset_down'}</a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].moduleId}">{icon _id='resultset_next' alt='{tr}Right{/tr}' title='{tr}Move to Right Column{/tr}'}</a>
 				  {if $modules_l[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box' and $modules_l[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Unassign{/tr}' title='{tr}Unassign{/tr}' width='16' height='16' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}">{icon _id='cross' alt='{tr}Unassign{/tr}'}</a> 
   				  {/if}
 				</td>
 			</tr>
@@ -66,11 +66,11 @@
 				<td class="{cycle advance=false}">{$modules_r[ix].ord}</td>
 				<td class="{cycle advance=false}">{$modules_r[ix].name}</td>
 				<td class="{cycle}">
-				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_up.png' alt='{tr}Up{/tr}' title='{tr}Up{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_down.png' alt='{tr}Down{/tr}' title='{tr}Down{/tr}' border='0' width='16' height='16' /></a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].moduleId}"><img src='pics/icons/resultset_previous.png' alt='{tr}Left{/tr}' title='{tr}Move to Left Column{/tr}' border='0' width='16' height='16' /></a>
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].moduleId}">{icon _id='resultset_up'}</a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].moduleId}">{icon _id='resultset_down'}</a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].moduleId}">{icon _id='resultset_previous' alt='{tr}Left{/tr}' title='{tr}Move to Left Column{/tr}'}</a>
 				  {if $modules_r[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box' and $modules_r[ix].type ne 'P'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Unassign{/tr}' title='{tr}Unassign{/tr}' width='16' height='16' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}">{icon _id='cross' alt='{tr}Unassign{/tr}'}</a> 
   				  {/if}
 				</td>
 			</tr>

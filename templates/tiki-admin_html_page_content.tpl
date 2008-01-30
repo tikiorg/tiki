@@ -64,7 +64,7 @@
 {/if}
 </td>
 <td class="{cycle advance=true}">
-   <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}Edit{/tr}" src="pics/icons/page_edit.png" border="0" width="16" height="16" /></a>
+   <a title="{tr}Edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{icon _id='page_edit'}</a>
 </td>
 </tr>
 {/section}

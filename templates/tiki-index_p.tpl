@@ -9,7 +9,7 @@
       
       {if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
-<img src="pics/icons/lock.png" height="16" width="16" alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} {$page_user}" />
+{icon _id='lock' alt="{tr}Locked{/tr}" title="{tr}Locked by{/tr} `$page_user`"}
 {/if}
 </h1>{/if}
 <table >
@@ -27,11 +27,11 @@
 
 
 {if $cached_page eq 'y'}
-<a title="{tr}Refresh{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;refresh=1"><img src='pics/icons/arrow_refresh.png' border='0' width='16' height='16' alt='{tr}Refresh{/tr}' /></a>
+<a title="{tr}Refresh{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
 {/if}
 
 {if $user and $prefs.feature_wiki_notepad eq 'y' and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;savenotepad=1"><img src='pics/icons/disk.png' border='0' width='16' height='16' alt='{tr}Save{/tr}' /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index_p.php?page={$page|escape:"url"}&amp;savenotepad=1">{icon _id='disk' alt='{tr}Save{/tr}'}</a>
 {/if}
 
 </td>
@@ -80,11 +80,11 @@
 {/if}{$parsed}
 {if $pages > 1}
 	<div align="center">
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='pics/icons/resultset_first.png' border='0' height='16' width='16' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}"><img src='pics/icons/resultset_previous.png' border='0' height='16' width='16' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt='{tr}First page{/tr}'}</a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
 		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}"><img src='pics/icons/resultset_next.png' border='0' height='16' width='16' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}"><img src='pics/icons/resultset_last.png' border='0' height='16' width='16' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
 </div>

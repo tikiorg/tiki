@@ -46,7 +46,7 @@
 {else}
 	{if ($tasklist[task_i].user eq $user) }
 		{*recived task*}
-		<img src="pics/icons/task_received.png" title="{tr}Received{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Received{/tr}" />
+		{icon _id='task_received' align="middle"}
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
 			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}'  border='0' alt='{tr}Not Accepted User{/tr}' />
 		{else}
@@ -62,7 +62,7 @@
 		{/if}
 	{elseif ($tasklist[task_i].creator eq $user) }
 		{*submitted task*}
-		<img src="pics/icons/task_submitted.png" title="{tr}Submitted{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Submitted{/tr}" />
+		{icon _id='task_submitted' align="middle"}
 		{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n')) }
 			<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}'  border='0' alt='{tr}Not Accepted User{/tr}' />
 		{else}
@@ -82,7 +82,7 @@
 		{/if}
 	{else}
 		{*shared task*}
-		<img src="pics/icons/task_shared.png" title="{tr}Shared{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Shared{/tr}" />
+		{icon _id='task_shared' align="middle"}
 	{/if}
 {/if}
 	</td>

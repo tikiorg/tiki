@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.8 2007-12-07 15:40:24 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.9 2008-01-30 15:33:51 nyloth Exp $ *}
 {if count($menu_channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
@@ -28,7 +28,7 @@ $smarty->assign('opensec', $opensec);
 {/if}
 
 <li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}">
-{if $icon}<img src="pics/icons/folder.png" width="16" height="16" border="0" align="left" />{/if}
+{if $icon}{icon _id='folder' align="left"}{/if}
 {if $chdata.url and $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
 {tr}{$chdata.name}{/tr}
 {if $chdata.url and $link_on_section ne 'n'}</a>{/if}

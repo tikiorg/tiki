@@ -3,11 +3,11 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}User+Contacts+Prefs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit User Contacts Preferences{/tr}">
-<img border='0' width='16' height='16' src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_contacts_prefs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit template{/tr}' />
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}
 </a>
 {/if}</h1>
 
@@ -67,22 +67,22 @@
   <tr>
   	<td class="{cycle advance=false}" width="2%">
 		{if not $smarty.foreach.e.first}
-		<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}"><img src="pics/icons/resultset_up.png" border="0" height="16" width="16" alt='{tr}Up{/tr}' /></a>
+		<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}">{icon _id='resultset_up'}</a>
 		{/if}
 	</td>
   	<td class="{cycle advance=false}" width="2%">
 		{if not $smarty.foreach.e.last}
-		<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}"><img src="pics/icons/resultset_down.png" border="0" height="16" width="16" alt='{tr}Down{/tr}' /></a>
+		<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}">{icon _id='resultset_down'}</a>
 		{/if}
 	</td>
 	<td class="{cycle advance=false}">{tr}{$ext.fieldname|escape}{/tr}</td>
   	<td class="{cycle advance=true}">
 		{if $ext.show eq 'y'}
-		<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}"><img src="pics/icons/no_eye.png" border="0" height="16" width="16" alt='{tr}Hide{/tr}' /></a>
+		<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt='{tr}Hide{/tr}'}</a>
 		{else}
-		<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}"><img src="pics/icons/eye.png" border="0" height="16" width="16" alt='{tr}Show{/tr}' /></a>
+		<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt='{tr}Show{/tr}'}</a>
 		{/if}
-		<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>
+		<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 	</td>
   </tr>
   {/foreach}
