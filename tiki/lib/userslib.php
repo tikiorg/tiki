@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.17 2008-01-30 16:45:30 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.18 2008-01-30 19:34:41 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1573,28 +1573,23 @@ function get_included_groups($group, $recur=true) {
     }
 
 	function get_tracker_usergroup($user) {
-		$result = $this->get_user_default_group($user);
-		$ret = '';
-		$userTrackerId = $ret;
-		if (!is_null($result)) {
-			$ret = $this->get_usertrackerid($result);
-			if ($ret) {
-				$userTrackerId = $ret;
-			}
+		$userTrackerId = '';
+		$group = $this->get_user_default_group($user);
+		if (!empty($group)) {
+			$userTrackerId = $this->get_usertrackerid($group);
 		} 
 		if (!$userTrackerId) {
 			$groups = $this->get_user_groups($user);
-			foreach ($groups as $gr) {
-				if ($gr != "Anonymous" and $gr != "Registered") {
-					$ret = $this->get_usertrackerid($gr);
-					if ($ret) {
-						$userTrackerId = $ret;
-						break;
-					}
-				}
+			$query = 'select `groupName`, `usersTrackerId` from `users_groups` where `groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and `groupName` != ? and `usersTrackerId` > 0';
+			$groups[] = 'Anonymous';
+			$result = $this->query($query, $groups);
+			while ($res = $result->fetchRow()) {
+				$userTrackerId = $res['usersTrackerId'];
+				if ($res['groupName'] != 'Registered')
+					return 	$userTrackerId ;
 			}
 		}
-		return $ret;
+		return $userTrackerId;
 	}
 
 	function get_grouptrackerid($group) {
