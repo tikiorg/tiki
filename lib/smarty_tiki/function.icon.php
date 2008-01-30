@@ -40,7 +40,8 @@ function smarty_function_icon($params, &$smarty) {
 
   // auto-detect 'alt' param if not set
   if ( ! isset($params['alt']) ) {
-    $params['alt'] = tra( ucfirst( substr($params['_id'], strrpos($params['_id'], '_') ) ) );
+    $alt_pos = ( ($alt_pos = strrpos($params['_id'], '_')) === false ) ? 0 : $alt_pos + 1;
+    $params['alt'] = tra( ucfirst( substr($params['_id'], $alt_pos) ) );
   }
 
   // handle special params and clean unrecognized params
@@ -89,6 +90,8 @@ function smarty_function_icon($params, &$smarty) {
   if ( $notag ) {
     $html = $params['path_prefix'].$params['file'];
   } else {
+    // use 'alt' as 'title' if not set
+    if ( ! isset($params['title']) ) $params['title'] = $params['alt'];
     $html = smarty_function_html_image($params, $smarty);
   }
 
