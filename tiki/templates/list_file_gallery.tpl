@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.4 2008-01-22 23:31:03 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.5 2008-01-30 15:33:47 nyloth Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 {if !isset($show_find) or $show_find ne 'n'}
@@ -241,7 +241,7 @@
 		{else}
 			<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}" title="{tr}Download{/tr}">
 		{/if}
-		<img src="pics/icons/disk.png" border="0" width="16" height="16" alt="{tr}Download{/tr}" /></a> 
+		{icon _id='disk' alt="{tr}Download{/tr}"}</a> 
 		{if empty($show_action) or $show_action eq 'y'}
 		{* can locked if the gall can be locked or I am the locker or the file is not locked - this only for regular file *}
 		   {if $files[changes].archiveId == 0
@@ -251,13 +251,13 @@
 			   and ($files[changes].lockedby eq '' or $files[changes].lockedby eq $user)
 			   and $gal_info.type ne "podcast" and $gal_info.type ne "vidcast"}
 			   <a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;user={$user|escape}" title="{tr}Download and lock{/tr}">
-			   <img src="pics/icons/disk_lock.png" border="0" width="16" height="16" alt="{tr}Download and lock{/tr}" /></a> 
+			   {icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}</a> 
 			  {/if}
 		{/if}
 	{/if}
 	{if empty($show_action) or $show_action eq 'y'}
 	{if $files[changes].nbArchives gt 0}
-		<a href="tiki-file_archives.php?fileId={$files[changes].fileId}" title="{tr}Archive{/tr}({$files[changes].nbArchives})"><img src="pics/icons/disk_multiple.png" border="0" width="16" height="16" alt="{tr}Archive{/tr}" /></a> 
+		<a href="tiki-file_archives.php?fileId={$files[changes].fileId}" title="{tr}Archive{/tr}({$files[changes].nbArchives})">{icon _id='disk_multiple' alt="{tr}Archive{/tr}"}</a> 
 	{/if}
 	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gall *}
 	{if $tiki_p_admin_file_galleries eq 'y'
@@ -269,7 +269,7 @@
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y'
 		or (!$files[changes].lockedby and (($user and $user eq $files[changes].user) or $tiki_p_edit_file_gallery eq 'y')) }
-			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}"><img src='pics/icons/cross.png' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+			<a class="link" href="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $offset ne 0}&amp;{$ext}offset={$offset}{/if}{if !empty($sort_mode)}&amp;{$ext}sort_mode={$sort_mode}{/if}&amp;remove={$files[changes].fileId}{if isset($file_info)}&amp;fileId={$file_info.fileId}{/if}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 	{/if}
 	{/if}
 </td>

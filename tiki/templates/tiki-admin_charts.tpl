@@ -3,11 +3,11 @@
 <h1><a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Charts Template{/tr}"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+<a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Charts Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
 <h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}New{/tr}</a>
@@ -155,7 +155,7 @@
 		{$items[ix].periods}
 	</td>
 	<td style="text-align:right;" class="{cycle}">
-		<a title="{tr}View{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="pics/icons/monitor.png" border='0' width='16' height='16' alt='{tr}View{/tr}' /></a>
+		<a title="{tr}View{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}">{icon _id='monitor' alt='{tr}View{/tr}'}</a>
 	</td>
 
 </tr>

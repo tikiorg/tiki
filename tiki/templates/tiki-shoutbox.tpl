@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.31.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.31.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Admin Tiki Shoutbox{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y' and $tiki_p_edit_templates eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-shoutbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Tiki Shoutbox tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
 {if $tiki_p_admin_shoutbox eq 'y'}

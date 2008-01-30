@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.2 2007-12-01 21:50:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.3 2008-01-30 15:33:48 nyloth Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}
@@ -74,7 +74,7 @@
 {if $prefs.interlist}
 {foreach key=k item=i from=$prefs.interlist}
 <tr><td class="button" colspan="2">
-<a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}" /></a>
+<a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
 {tr}InterTiki Server{/tr} <b>{$k}</b></td></tr>
 <tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="interlist[{$k}][name]" value="{$i.name}" /></td></tr>
 <tr><td class="form">{tr}host{/tr}</td><td><input type="text" name="interlist[{$k}][host]" value="{$i.host}" /></td></tr>
@@ -112,7 +112,7 @@
 <tr><td>&nbsp;</td><td>{tr}Name{/tr}</td><td>{tr}Key{/tr}</td><td>{tr}IP{/tr}</td><td>{tr}Contact{/tr}</td></tr>
 {if $prefs.known_hosts}
 {foreach key=k item=i from=$prefs.known_hosts}
-<tr><td><a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}"><img src="pics/icons/cross.png" width="16" height="16" border="0" alt="{tr}Delete{/tr}" /></a></td>
+<tr><td><a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
 <td class="form"><input type="text" name="known_hosts[{$k}][name]" value="{$i.name}" size="12" /></td>
 <td><input type="text" name="known_hosts[{$k}][key]" value="{$i.key}" size="32" /></td>
 <td><input type="text" name="known_hosts[{$k}][ip]" value="{$i.ip}" size="12" /></td>

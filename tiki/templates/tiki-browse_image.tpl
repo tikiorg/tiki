@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.1 2007-11-05 22:18:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.2 2008-01-30 15:33:49 nyloth Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +30,7 @@
 
 {* --- first image --- *}
 	<a href="{$url_base}{$firstId}{$same_scale}"
-		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_first.png' border='none' alt='{tr}First Image{/tr}' title='{tr}First Image{/tr}'}</a>
+		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt='{tr}First Image{/tr}'}</a>
 
 {* --- previous scale --- *}
 	{if $scaleinfo.prevscale}
@@ -49,7 +49,7 @@
 	    
 {* --- previous image --- *}
 	<a href="{$url_base}{$previmg}{$same_scale}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{html_image file='pics/icons/resultset_previous.png' border='none' alt='{tr}Prev Image{/tr}' title='{tr}Prev Image{/tr}'}</a>
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt='{tr}Prev Image{/tr}'}</a>
 
 {* --- popup launch --- *}
 	{if !$popup}
@@ -59,7 +59,7 @@
 
 {* --- next image --- *}
 	<a href="{$url_base}{$nextimg}{$same_scale}"
-    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{html_image file='pics/icons/resultset_next.png' border='none' alt='{tr}Next Image{/tr}' title='{tr}Next Image{/tr}'}</a>
+    	class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">    	{icon _id='resultset_next' alt='{tr}Next Image{/tr}'}</a>
 
 {* --- launch slideshow --- *}
 	{if $listImgId}
@@ -68,7 +68,7 @@
 
 {* --- last image --- *}
 	<a href="{$url_base}{$lastId}{$same_scale}"
-		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{html_image file='pics/icons/resultset_last.png' border='none' alt='{tr}Last Image{/tr}' title='{tr}Last Image{/tr}'}</a>    
+		class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt='{tr}Last Image{/tr}'}</a>    
   </div>
 
 {***** when sliding buttons *****}

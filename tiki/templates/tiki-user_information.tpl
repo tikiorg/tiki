@@ -12,8 +12,8 @@
   <table>
   <tr><td class="form">{tr}User{/tr}:</td><td>
 	{if $tiki_p_admin eq 'y'}
-	<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}"><img src="pics/icons/key.png" border="0" width="16" height="16" alt="{tr}Assign Group{/tr}" align="right" /></a>
-	<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}"><img src="pics/icons/wrench.png" border="0" width="16" height="16" alt="{tr}Change user preferences{/tr}" align="right" /></a>
+	<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title="{tr}Assign Group{/tr}">{icon _id='key' align="right" alt="{tr}Assign Group{/tr}"}</a>
+	<a class="link" href="tiki-user_preferences.php?userId={$userinfo.userId}" title="{tr}Change user preferences{/tr}">{icon _id='wrench' align="right" alt="{tr}Change user preferences{/tr}"}</a>
 	{/if}
 	{$userinfo.login|userlink}
 	</td></tr>
@@ -67,11 +67,11 @@
 {if $prefs.feature_friends eq 'y' && $user ne $userwatch && $user}
   {if $friend}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="pics/icons/user.png" width="16" height="16" border="0" /> {tr}This user is your friend{/tr}
+    {icon _id='user'} {tr}This user is your friend{/tr}
   </td></tr>  
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="pics/icons/user_delete.png" width="16" height="16" border="0" /> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
+    {icon _id='user_delete'} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
   </td></tr>  
   {/if}
 {/if}

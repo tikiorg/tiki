@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.5 2007-12-11 14:26:59 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.6 2008-01-30 15:33:49 nyloth Exp $ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
@@ -135,11 +135,11 @@
             	{if $imagerotate}
             		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' width='11' height='11' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
             	{/if}
-            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}Delete{/tr}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
-            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}"><img src='pics/icons/page_edit.png' border='0' width='16' height='16' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
           {/if}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId=`$item.imageId`&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
-<img src='pics/icons/layers.png' border='0' width='16' height='16' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
+{icon _id='layers' alt='{tr}popup{/tr}'}</a>
           <br />
 	</small>
          </td>

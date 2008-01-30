@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.1 2007-11-16 20:19:46 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
 {if $filegals_manager eq 'y'}
 <div class="rbox" name="tip">
@@ -11,9 +11,9 @@
 <div class="navbar">
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_file_gallery eq 'n'}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager eq 'y'}&filegals_manager{/if}>{html_image file='pics/icons/eye.png' border='0' alt="{tr}Monitor this Gallery{/tr}" title="{tr}Monitor this Gallery{/tr}" align='right'}</a>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager eq 'y'}&filegals_manager{/if}>{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}"}</a>
 	{else}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager eq 'y'}&filegals_manager{/if}">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}Stop Monitoring this Gallery{/tr}" title="{tr}Stop Monitoring this Gallery{/tr}" align='right'}</a>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
 	{/if}
 {/if}  
 {if $prefs.rss_file_gallery eq 'y'}
@@ -22,7 +22,7 @@
 	<img src='img/rss_podcast_80_15.png' border='0' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}"  align='right' /></a>
 	{else}
 	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
-	<img src='pics/icons/feed.png' border='0' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}'"align='right' /></a>
+	{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}'"align='right'}</a>
 	{/if}
 {/if}
 {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}

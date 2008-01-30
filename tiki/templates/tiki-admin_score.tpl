@@ -3,7 +3,7 @@
 {if $prefs.feature_help eq 'y'}
 <!-- the help link info --->
 <a href="http://tikiwiki.org/tiki-index.php?page=ScoreSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score System{/tr}">
-<img border='0' src='pics/icons/help.png' alt="{tr}Help{/tr}" height="16" width="16" /></a>{/if}</h1>
+{icon _id='help'}</a>{/if}</h1>
 
 <div align="center">
 <form method="post">

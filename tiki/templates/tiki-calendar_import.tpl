@@ -13,7 +13,7 @@
 {/foreach}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}CSV File{/tr}<a {popup text='name|subject,description,(start date,start time)|start,(end date,end time)|end,status,lang,categoryId,locationId,priority,url,categoryId'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+<tr><td class="formcolor">{tr}CSV File{/tr}<a {popup text='name|subject,description,(start date,start time)|start,(end date,end time)|end,status,lang,categoryId,locationId,priority,url,categoryId'}>{icon _id='help'}</a>
 </td><td class="formcolor">
 <input type="file" name="fileCSV" size="50" />
 <input type="submit" name="import" value="{tr}import{/tr}" />

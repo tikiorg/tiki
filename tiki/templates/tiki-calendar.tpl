@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.83.2.1 2008-01-10 18:00:00 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.83.2.2 2008-01-30 15:33:50 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
 {if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
 {if $user_watching eq 'y'}
-<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove">{html_image file='pics/icons/no_eye.png' border='0' alt="{tr}Stop Monitoring this Page{/tr}" title="{tr}Stop Monitoring this Page{/tr}"}</a>
+<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}"}</a>
 {else}
-<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add">{html_image file='pics/icons/eye.png' border='0' alt="{tr}Monitor this Page{/tr}" title="{tr}Monitor this Page{/tr}"}</a>
+<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add">{icon _id='eye' alt="{tr}Monitor this Page{/tr}"}</a>
 {/if}
 {/if}
 

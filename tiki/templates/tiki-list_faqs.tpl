@@ -8,7 +8,7 @@
 <img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=faqs" title="{tr}Admin Feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}"}</a>
+<a href="tiki-admin.php?page=faqs" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
 </h1>
 
@@ -64,9 +64,9 @@
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions} ({$channels[user].suggested})</td>
 {if $tiki_p_admin_faqs eq 'y'}
 <td  class="{cycle}">
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0' /></a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}"><img src='pics/icons/comments.png' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}' border='0' /></a>
-   &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='comments' alt='{tr}Questions{/tr}'}</a>
+   &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 {/if}
 </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.7 2008-01-28 15:39:07 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.8 2008-01-30 15:33:51 nyloth Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -113,11 +113,11 @@
       <td class="{cycle advance=false}">
   
       {if $tiki_p_edit eq 'y'}
-        <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}"><img border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' height='16' width='16' /></a>
+        <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
       {/if}
   
       {if $tiki_p_assign_perm_wiki_page eq 'y'}
-        <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
+        <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
       {/if}
       </td>
     {/if}
@@ -155,9 +155,9 @@
     {if $prefs.wiki_list_status eq 'y'}
       <td style="text-align:center;" class="{cycle advance=false}">
         {if $listpages[changes].flag eq 'locked'}
-	  <img src='pics/icons/lock.png' alt='{tr}Locked{/tr}' border='0' height='16' width='16' />
+	  {icon _id='lock' alt='{tr}Locked{/tr}'}
 	{else}
-	  <img src='pics/icons/lock_break.png' alt='{tr}unlocked{/tr}' border='0' height='16' width='16' />
+	  {icon _id='lock_break' alt='{tr}unlocked{/tr}'}
 	{/if}
       </td>
     {/if}

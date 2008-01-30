@@ -2,11 +2,11 @@
 <h1><a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}">{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=messu-mailbox.tpl" target="tikihelp" class="tikihelp"><img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+<a href="tiki-edit_templates.php?template=messu-mailbox.tpl" target="tikihelp" class="tikihelp">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
@@ -89,14 +89,14 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
   {section name=user loop=$items}
   <tr>
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
-    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="pics/icons/flag_blue.png" border="0" width="16" height="16" alt='{tr}flagged{/tr}' />{/if}</td>
+    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}{icon _id='flag_blue' alt='{tr}flagged{/tr}'}{/if}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$items[user].priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
 		<td class="prio{$items[user].priority}">
 		{if $items[user].replyto_hash eq ""}&nbsp;{else}
 			<a class="readlink" href="messu-mailbox.php?origto={$items[user].replyto_hash}">
-		    <img src="pics/icons/email_go.png" alt='{tr}find replied message{/tr}' border='0' width='16' height='16' />
+		    {icon _id='email_go' alt='{tr}find replied message{/tr}'}
 			</a>
 		{/if}
 		</td>

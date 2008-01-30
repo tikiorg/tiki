@@ -6,7 +6,7 @@
 {if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)} 
 
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">
- 		{html_image file='pics/icons/page_edit.png' width='16' height='16' border='0' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}'}
+ 		{icon _id='page_edit'}
 	</a>&nbsp;
     <a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">
     	{html_image file='img/icons2/tick.gif' width='15' height='15' border='0' title='{tr}Accept{/tr}' alt='{tr}Accept{/tr}'}
@@ -26,11 +26,11 @@
 {if ($tiki_view_mode eq 'view')}
     <div style="text-align:right;">
 	{if ($info.task_version > 0) }
-		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}"><img src="pics/icons/resultset_previous.png" title="{tr}Previous{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Previous{/tr}" /></a>
+		<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
     {/if}
         version: <b>{$info.task_version+1}</b>
     {if $info.task_version < $info.last_version }
-        <a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}"><img src="pics/icons/resultset_next.png" title="{tr}Next{/tr}" width="16" height="16" align="middle" border="0" alt="{tr}Next{/tr}" /></a>
+        <a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}">{icon _id='resultset_next' align="middle"}</a>
     {/if}
 	</div>
 {/if}

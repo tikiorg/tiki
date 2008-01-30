@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.3 2007-12-07 18:36:35 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received Pages{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received pages tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+{icon _id='shape_square_edit' alt='{tr}Edit Tpl{/tr}'}</a>{/if}</h1>
 
 {if !empty($errors)}
 <div class="simplebox highlight">
@@ -75,10 +75,10 @@
 <td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
 <td class="{cycle advance=false}">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' border='0' title='{tr}Edit{/tr}' width='16' height='16' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='pics/icons/magnifier.png' border='0' alt='{tr}View{/tr}' title='{tr}View{/tr}' width='16' height='16' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}Accept{/tr}' title='{tr}Accept{/tr}' width='16' height='16' /></a> &nbsp;
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{icon _id='page_edit'}</a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{icon _id='magnifier' alt='{tr}View{/tr}'}</a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{icon _id='accept'}</a> &nbsp;
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {/section}
@@ -129,8 +129,8 @@
 <td class="{cycle advance=false}">{$structures[user].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$structures[user].receivedFromUser}</td>
 <td class="{cycle advance=false}">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}"><img src='pics/icons/accept.png' border='0' alt='{tr}Accept{/tr}' title='{tr}Accept{/tr}' width='16' height='16' /></a> &nbsp;
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}"><img src='pics/icons/cross.png' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a> &nbsp;
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {section name=ix loop=$structures}
@@ -148,8 +148,8 @@
 <td class="{cycle advance=false}">{$structures[ix].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$structures[ix].receivedFromUser}</td>
 <td class="{cycle advance=false}">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}"><img src='pics/icons/page_edit.png' alt='{tr}Edit{/tr}' border='0' title='{tr}Edit{/tr}' width='16' height='16' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}"><img src='pics/icons/magnifier.png' border='0' alt='{tr}View{/tr}' title='{tr}View{/tr}' width='16' height='16' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">{icon _id='page_edit'}</a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt='{tr}View{/tr}'}</a>
 </td>
 </tr>
 {/if}

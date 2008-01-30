@@ -2,12 +2,12 @@
   
 {if $prefs.feature_help eq 'y'}
   <a href="{$prefs.helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}Admin Html Pages{/tr}">
-  <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+  {icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
   <a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Html Pages Template{/tr}">
-  <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
+  {icon _id='shape_square_edit'}</a>
 {/if}
 
 
@@ -130,19 +130,19 @@
     <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
     <td class="{cycle advance=true}">
       <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}">
-        <img src="pics/icons/page_edit.png" border="0" width="16" height="16"  alt='{tr}Edit{/tr}' />
+        {icon _id='page_edit'}
       </a>
       
       <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}" title="View">
-        <img src="pics/icons/monitor.png" border="0" height="16" width="16" alt='{tr}View{/tr}' />
+        {icon _id='monitor' alt='{tr}View{/tr}'}
       </a>
       
       <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}" title='{tr}Admin dynamic zones{/tr}'>
-        <img src="pics/icons/page_gear.png" border="0" height="16" width="16" alt='{tr}content{/tr}' alt='{tr}Admin dynamic zones{/tr}' />
+        {icon _id='page_gear' alt='{tr}Admin dynamic zones{/tr}'}
       </a> 
       
       <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" title="{tr}Delete{/tr}">
-        <img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' />
+        {icon _id='cross' alt='{tr}Delete{/tr}'}
       </a>
     </td>
   </tr>

@@ -79,7 +79,7 @@
   <a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login|userlink}</a>{if $prefs.feature_score eq 'y'}{$listpages[changes].score|star}{/if}
   </td>
   <td class="userlist{cycle advance=false}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
-  <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}"><img src="pics/icons/cross.png" width="16" height="16" alt="{tr}break friendship{/tr}" border="0" /></a></td>
+  <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="?break={$listpages[changes].login}">{icon _id='cross' alt="{tr}break friendship{/tr}"}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6" class="odd">

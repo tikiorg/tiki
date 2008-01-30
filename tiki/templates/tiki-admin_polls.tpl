@@ -1,16 +1,16 @@
-{* $Id: tiki-admin_polls.tpl,v 1.37.2.1 2007-10-17 20:36:05 niclone Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.37.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}Admin Polls{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Polls Template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
+{icon _id='shape_square_edit'}</a>{/if}</h1>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=polls"><img src='pics/icons/wrench.png' border='0' alt="{tr}configure polls{/tr}" title="{tr}configure polls{/tr}" height="16" width="16" /></a>
+<a href="tiki-admin.php?page=polls">{icon _id='wrench' alt="{tr}configure polls{/tr}"}</a>
 {/if}
 
 <br /><br />

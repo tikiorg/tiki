@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.2 2007-12-29 18:31:57 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.3 2008-01-30 15:33:48 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Categories tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>{/if}</h1>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
 
 <div class="navbar"><a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a></div>
 
@@ -36,13 +36,13 @@
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
 <a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">
-<img border="0" src="pics/icons/page_edit.png" height="16" width="16" hspace="5" vspace="1" /></a>
+{icon _id='page_edit' hspace="5" vspace="1"}</a>
 <a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">
-<img border="0" src="pics/icons/cross.png" height="16" width="16" hspace="5" vspace="1" /></a>
+{icon _id='cross' hspace="5" vspace="1"}</a>
 {if $catree[dx].has_perm eq 'y'}
-<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}Permissions{/tr}" src="pics/icons/key_active.png" /></a>
+<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Permissions{/tr}"}</a>
 {else}
-<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" height="16" width="16" hspace="5" vspace="1" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" /></a>
+<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Permissions{/tr}"}</a>
 {/if}
 <span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
@@ -130,7 +130,7 @@
       </tr>
       {section name=ix loop=$objects}
       <tr>
-        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}"><img alt="{tr}Remove from this Category{/tr}" src="pics/icons/link_delete.png" border="0" width="16" height="16" /></a></td>
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a></td>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
       </tr>

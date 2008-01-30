@@ -1,17 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.8 2007-12-06 18:00:06 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.9 2008-01-30 15:33:49 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php{if !empty($groupname)}?group={$groupname|escape:'url'}{/if}">{tr}Admin groups{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Admin Groups{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Groups Template{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=login" title="{tr}Admin Feature{/tr}">{html_image file='pics/icons/wrench.png' border='0'  alt="{tr}Admin Feature{/tr}"}</a>
+<a href="tiki-admin.php?page=login" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
 </h1>
 
@@ -82,7 +82,7 @@ class="prevnext">{tr}All{/tr}</a>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a></td>
+<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a></td>
 <td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
 <td>{tr}{$users[user].groupDesc}{/tr}</td>
 <td>
@@ -92,10 +92,10 @@ class="prevnext">{tr}All{/tr}</a>
 </td>
 <td>{tr}{$users[user].userChoice}{/tr}</td>
 <td>
-<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}"><img border="0" alt="{tr}Permissions{/tr}" src="pics/icons/key.png" width='16' height='16' /> {$users[user].permcant}</a>
+<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}Permissions{/tr}">{icon _id='key' alt="{tr}Permissions{/tr}"} {$users[user].permcant}</a>
 </td>
 <td style="width: 20px;">
-{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="pics/icons/cross.png" width='16' height='16' /></a>{/if}
+{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}
 </td>
 </tr>
 {/section}
@@ -251,7 +251,7 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal"><tr>
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=ix loop=$memberslist}
-<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}"><img src="pics/icons/cross.png" border="0" width="16" height="16"  alt='{tr}Remove{/tr}'></a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}'></a> {$memberslist[ix]|userlink}</td>{cycle name=table}
+<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}&action=removegroup&group={$groupname}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Remove from Group{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a> <a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" class="link" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a> {$memberslist[ix]|userlink}</td>{cycle name=table}
 {/section}
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
@@ -288,7 +288,7 @@ class="prevnext">{tr}All{/tr}</a>
 {tr}Assign users to group:{/tr} {$groupname} <br />{tr}User must already exist.{/tr}<br />{tr}To create users and assign them to groups, got to admin->users{/tr}
 <table class="normal">
 <tr>
-<td class="formcolor auto">{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}><img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a></td><td class="formcolor auto"><input name="csvlist" type="file" /></td>
+<td class="formcolor auto">{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}>{icon _id='help'}</a></td><td class="formcolor auto"><input name="csvlist" type="file" /></td>
 </tr><tr>
 <td class="formcolor auto"></td><td class="formcolor auto"><input type="submit" name="import" value="{tr}Import{/tr}" /></td>
 </tr>

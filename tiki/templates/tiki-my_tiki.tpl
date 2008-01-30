@@ -1,17 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.6 2007-12-19 20:43:01 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.7 2008-01-30 15:33:51 nyloth Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
   {if $prefs.feature_help eq 'y'}
     <a href="{$prefs.helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}My Tiki{/tr}">
-      <img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' />
+      {icon _id='help'}
     </a>
   {/if}
 
   {if $prefs.feature_view_tpl eq 'y'}
     <a href="tiki-edit_templates.php?template=tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
-      <img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' />
+      {icon _id='shape_square_edit' alt='{tr}Edit Template{/tr}'}
     </a>
   {/if}
 </h1>
@@ -62,7 +62,7 @@
                 </td>
                 <td class="{cycle}" style="text-align:center;" width="50px">
                   <a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">
-                    <img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}: {$user_pages[ix].pageName}" src="pics/icons/page_edit.png" width="16" height="16" />
+                    {icon _id='page_edit' title="{tr}Edit{/tr}: `$user_pages[ix].pageName`"}
                   </a>
                 </td>
               </tr>
@@ -93,7 +93,7 @@
                 </td>
                 <td class="{cycle}" style="text-align:center;" width="50px">
                   <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">
-                    <img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" />
+                    {icon _id='page_edit'}
                   </a>
                 </td>
               </tr>
@@ -271,7 +271,7 @@
                 </td>
                 <td class="{cycle}" style="text-align:center;" width="50px">
                   <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">
-                    <img border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" src="pics/icons/page_edit.png" width="16" height="16" />
+                    {icon _id='page_edit'}
                   </a>
                 </td>
               </tr>

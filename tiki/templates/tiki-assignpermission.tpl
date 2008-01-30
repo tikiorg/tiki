@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80.2.3 2007-12-07 05:56:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80.2.4 2008-01-30 15:33:49 nyloth Exp $ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Help for Assigning Permissions{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Article Tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
 <div class="navbar">
@@ -23,7 +23,7 @@
 <tr><td class="even">{tr}Desc{/tr}:</td><td class="odd" colspan="2">{$group_info.groupDesc}</td></tr>
 <tr><td class="even" style="vertical-align:top;">{tr}Permissions{/tr}:</td><td class="odd">
 {section name=grp loop=$group_info.perms}
-{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt='{tr}Delete{/tr}' /></a>{/if}<br />
+{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}<a class="link" href="tiki-assignpermission.php?type={$type}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group|escape:url}&amp;action=remove">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}<br />
 {/section}
 </td></tr>
 </table>

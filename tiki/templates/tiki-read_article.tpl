@@ -22,10 +22,10 @@
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$rating}
-<img src="pics/icons/star.png" alt="{tr}star{/tr}" border="0" width="16" height="16" />
+{icon _id='star' alt="{tr}star{/tr}"}
 {/repeat}
 {if $rating > $entrating}
-<img src="pics/icons/star_half.png" alt="{tr}half star{/tr}" border="0" width="16" height="16" />
+{icon _id='star_half' alt="{tr}half star{/tr}"}
 {/if}
 ({$rating}/10)
 </div>
@@ -67,16 +67,16 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y' type='article'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
+<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
 {/if}
 {if $prefs.feature_cms_print eq 'y'}
-<a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
+<a class="trailer" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 {/if}
 {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a> &nbsp;
+<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a> &nbsp;
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-<a class="trailer" href="tiki-list_articles.php?remove={$articleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' width='16' height='16' /></a>
+<a class="trailer" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 {/if}
 </td>
 </tr>
@@ -88,11 +88,11 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 	<div align="center">
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}"><img src='pics/icons/resultset_previous.png' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' width='16' height='16' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
 
 		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='pics/icons/resultset_next.png' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' width='16' height='16' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
 
 
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='ics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>

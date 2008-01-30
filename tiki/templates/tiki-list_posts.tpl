@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.37.2.1 2007-10-17 20:36:10 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.37.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_posts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}List Posts Tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
+{icon _id='shape_square_edit' alt='{tr}Edit Tpl{/tr}'}</a>{/if}
 </h1>
 
 <div class="navbar">
@@ -43,8 +43,8 @@
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' /></a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
@@ -53,8 +53,8 @@
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' src='pics/icons/page_edit.png' /></a>
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}"><img border='0' height="16" width="16" title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' src='pics/icons/cross.png' /></a>
+<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 {/if}
 </tr>

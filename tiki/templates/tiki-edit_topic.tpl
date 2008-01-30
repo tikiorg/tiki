@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.12 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.12.2.1 2008-01-30 15:33:51 nyloth Exp $ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -28,7 +28,7 @@
       <input name="userfile1" type="file" />
     </td>
 </tr>
-<tr><td class="formcolor">{tr}Add Notification Email{/tr}</td><td class="formcolor"><input type="text" name="email" value="{$email|escape}" />&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}"><img src="pics/icons/wrench.png" border="0" alt="{tr}Admin notifications{/tr}" /></a></td></tr>
+<tr><td class="formcolor">{tr}Add Notification Email{/tr}</td><td class="formcolor"><input type="text" name="email" value="{$email|escape}" />&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}">{icon _id='wrench' alt="{tr}Admin notifications{/tr}"}</a></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}Edit{/tr}" /></td></tr>
 </table>
 </form>

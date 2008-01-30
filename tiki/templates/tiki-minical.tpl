@@ -2,12 +2,12 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Doc tpl{/tr}">
-<img src="pics/icons/shape_square_edit.png" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
+{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
@@ -60,9 +60,9 @@
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}Previous{/tr}' /></a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}">{icon _id='resultset_previous'}</a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}">{icon _id='resultset_next'}</a>
 </b>
 <table clas="normal"  >
 {section name=ix loop=$slots}
@@ -84,7 +84,7 @@
     	{/if}
     	
     	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
-    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">&nbsp; <img src='pics/icons/cross.png' border='0' width='8' height='8' alt='{tr}Remove{/tr}' /></a>
+    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">&nbsp; {icon _id='cross' alt='{tr}Remove{/tr}'}</a>
     	<br />
     	{/section}
     	</td>
@@ -97,9 +97,9 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|tiki_date_format:"%d"}&amp;mon={$prev_week_start|tiki_date_format:"%m"}&amp;year={$prev_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_previous.png' border='0' width='16' height='16' alt='{tr}Previous{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|tiki_date_format:"%d"}&amp;mon={$prev_week_start|tiki_date_format:"%m"}&amp;year={$prev_week_start|tiki_date_format:"%Y"}">{icon _id='resultset_previous'}</a>
 <b>{$week_start|tiki_date_format:"%b"} {$week_start|tiki_date_format:"%d"}-{$week_end|tiki_date_format:"%b"} {$week_end|tiki_date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}"><img src='pics/icons/resultset_next.png' border='0' width='16' height='16' alt='{tr}Next{/tr}' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}">{icon _id='resultset_next'}</a>
 <table class="normal"  >
 {section name=ix loop=$slots}
 <tr>

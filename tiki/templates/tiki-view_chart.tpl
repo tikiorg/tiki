@@ -7,21 +7,21 @@
 {$chart_info.description}<br /><br /><br />
 {/if}
 {if $tiki_p_admin_charts eq 'y'}
-<a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}"><img src='pics/icons/wrench.png' border='0' alt='{tr}Edit Chart{/tr}' title='{tr}Edit Chart{/tr}' width='16' height='16' /></a>
+<a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}">{icon _id='wrench' alt='{tr}Edit Chart{/tr}'}</a>
 {/if}
 {if $tiki_p_admin_charts eq 'y' or $tiki_p_suggest_chart_item eq 'y'}
-<a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='pics/icons/text_list_numbers.png' border='0' alt='{tr}Edit Items{/tr}' title='{tr}Edit Items{/tr}' width='16' height='16' /></a>
+<a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}">{icon _id='text_list_numbers' alt='{tr}Edit Items{/tr}'}</a>
 {/if}
-<a href="tiki-charts.php"><img src='pics/icons/table.png' border='0' alt='{tr}List Charts{/tr}' title='{tr}List Charts{/tr}' /></a>
-<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='pics/icons/chart_line.png' alt='{tr}Last Chart{/tr}' title='{tr}Last Chart{/tr}' width='16' height='16' /></a>
+<a href="tiki-charts.php">{icon _id='table' alt='{tr}List Charts{/tr}'}</a>
+<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{icon _id='chart_line' alt='{tr}Last Chart{/tr}'}</a>
 {if $chart_info.frequency > 0}
     <br />
 	{if $prevPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}"><img border='0' src='pics/icons/resultset_previous.png' alt='{tr}previous chart{/tr}' title='{tr}previous chart{/tr}' width='16' height='16' /></a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}">{icon _id='resultset_previous' alt='{tr}previous chart{/tr}'}</a>
 	{/if}
 	<b>{tr}Chart created{/tr}: {$items[0].timestamp|tiki_long_datetime}</b>
 	{if $nextPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}"><img border='0' src='pics/icons/resultset_next.png' alt='{tr}next chart{/tr}' title='{tr}next chart{/tr}' width='16' height='16' /></a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}">{icon _id='resultset_next' alt='{tr}next chart{/tr}'}</a>
 	{/if}
 {/if}
 <table class="normal">
@@ -53,12 +53,12 @@
 
         {/if}
 	{if $items[ix].dif ne 'new' and $items[ix].dif eq $max_dif}
-		<img src='pics/icons/thumb_up.png' alt='{tr}cool{/tr}' border='0' width='16' height='16' />
+		{icon _id='thumb_up' alt='{tr}cool{/tr}'}
 	{/if}
 	</td>
 	<td style="text-align:right;" class="{cycle advance=false}">
 	{if $items[ix].dif eq 'new'}
-	    <img src='pics/icons/new.png' border='0' alt='{tr}New{/tr}' width='16' height='16' />	
+	    {icon _id='new'}	
 	{else}
 		{if $items[ix].dif eq $max_dif}
 			{if $items[ix].dif > 0}+{/if}{$items[ix].dif}
@@ -78,9 +78,9 @@
 	{if ($chart_info.singleChartVotes eq 'n' or $user_voted_chart eq 'n')
 		and
 		($chart_info.singleItemVotes eq 'n' or $items[ix].voted eq 'n') }
-		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='pics/icons/monitor.png' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' width='16' height='16' /></a>
+		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}">{icon _id='monitor' alt='{tr}info/vote{/tr}'}</a>
 	{else}
-		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='pics/icons/monitor.png' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' width='16' height='16' /></a>
+		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}">{icon _id='monitor' alt='{tr}info/vote{/tr}'}</a>
 	{/if}
 	</td>
 </tr>	

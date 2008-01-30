@@ -29,10 +29,10 @@
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$listpages[ix].rating}
-<img src="pics/icons/star.png" alt="{tr}star{/tr}" border="0" width="16" height="16" />
+{icon _id='star' alt="{tr}star{/tr}"}
 {/repeat}
 {if $listpages[ix].rating > $listpages[ix].entrating}
-<img src="pics/icons/star_half.png" alt="{tr}half star{/tr}" border="0" width="16" height="16" />
+{icon _id='star_half' alt="{tr}half star{/tr}"}
 {/if}
 ({$listpages[ix].rating}/10)
 </div>
@@ -113,16 +113,16 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
-  <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/page_edit.png' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' width='16' height='16' /></a>
+  <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{icon _id='page_edit'}</a>
 {/if}
 {if $prefs.feature_cms_print eq 'y'}
-  <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
+  <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 {/if}
 {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article"><img src='pics/icons/world.png' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' width='16' height='16' /></a>
+<a class="trailer" href="tiki-edit_translation.php?id={$listpages[ix].articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='pics/icons/cross.png' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' width='16' height='16' /></a>
+  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 {/if}
 </td>
 </tr>

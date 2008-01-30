@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31.2.1 2008-01-12 13:07:43 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-admin_integrator.php">{tr}Integrator{/tr}</a>
@@ -109,10 +109,10 @@
       <td class="{cycle advance=false}">{$repositories[rep].css_file}</td>
       <td class="{if (strlen($repositories[rep].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
         <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}Edit{/tr}">
-            <img src="pics/icons/wrench.png" alt="{tr}Edit{/tr}" border="0" width="16" height="16" />
+            {icon _id='wrench' alt="{tr}Edit{/tr}"}
         </a>
         &nbsp;&nbsp;<a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}"  
-		title="{tr}Delete{/tr}"><img alt="{tr}Delete{/tr}" src="pics/icons/cross.png" border="0" width="16" height="16" /></a>&nbsp;&nbsp;
+		title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
       </td>
 
     {* Show description as colspaned row if it is not an empty *}

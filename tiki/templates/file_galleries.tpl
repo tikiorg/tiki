@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.5 2008-01-10 17:59:59 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.6 2008-01-30 15:33:47 nyloth Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -133,32 +133,32 @@
 	
 	<td class="{cycle}" nowrap="nowrap">
 	{if $tiki_p_view_file_gallery == 'y' or $tiki_p_admin_file_galleries eq 'y' or $tiki_p_admin eq 'y'}
-		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img border='0' height="16" width="18" src='pics/icons/table.png' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
+		<a class="gallink" href="tiki-list_file_gallery.php?galleryId={$galleries[changes].galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='table' alt='{tr}List{/tr}'}</a>
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='page_edit'}</a>
 		{/if}
 	{/if}
 
 	{if $tiki_p_upload_files eq 'y'}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
 			{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/upload.png' border='0' width='16' height='16' alt='{tr}Upload{/tr}' title='{tr}Upload{/tr}' /></a>
+				<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='upload'}</a>
 			{/if}
 		{/if}
 	{/if}
 
 	{if $tiki_p_admin eq 'y' || $galleries[changes].individual_tiki_p_assign_perm_file_gallery eq 'y' || ($galleries[changes].individual eq 'n' and $tiki_p_assign_perm_file_gallery eq 'y')}
 	    {if $galleries[changes].individual eq 'y'}
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img border='0' width='16' height='16' src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' title='{tr}Active Perms{/tr}' /></a>
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
 	    {else}
-		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/key.png' border='0' width='16' height='16' alt='{tr}Perms{/tr}' title='{tr}Perms{/tr}' /></a>
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
 	    {/if}
 	{/if}
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
                 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}"><img src='pics/icons/cross.png' border='0' width='16' height='16' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
+                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
                 {/if}
         {/if}
 	</td>

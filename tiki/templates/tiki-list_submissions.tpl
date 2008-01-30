@@ -66,10 +66,10 @@
 {/if}
 <td class="{cycle}" >
 	{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
-		<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}"><img src='pics/icons/page_edit.png' width="16" height="16" border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+		<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
 	{/if}
 	{if $tiki_p_remove_submission eq 'y'}
-		<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}"><img src='pics/icons/cross.png' width="16" height="16" alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
+		<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 	{/if}
 	{if $tiki_p_approve_submission eq 'y'}
 		<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' border='0' alt='{tr}Approve{/tr}' title='{tr}Approve{/tr}' /></a>

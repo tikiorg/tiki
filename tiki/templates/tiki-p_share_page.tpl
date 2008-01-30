@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.2.2.2 2008-01-10 20:44:40 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.2.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-index.php?page={$objectId}">{$objectId}</a></h1>
 <p>
-<img src="pics/icons/key_active.png" /> {tr}Permission assigned to the group{/tr}
+{icon _id='key_active'} {tr}Permission assigned to the group{/tr}
 </p>
 <p>
-<img src="pics/icons/key.png" /> {tr}Permission assigned to the group through a category{/tr}
+{icon _id='key'} {tr}Permission assigned to the group through a category{/tr}
 </p>
 <form method="post" action="">
 	<table class="normal">
@@ -36,11 +36,11 @@
 				<td><input type="radio" name="priv[{$groups[i]->name}]" value="{$columns[j]}"{if $groups[i]->isSelected( $columns[j] )} checked="checked"{/if} /></td>
 				{/if}
 				{if $groups[i]->getLevel( $columns[j] ) eq 'category'}
-				<td><a href="" title="{$groups[i]->getSourceCategory($columns[j])}"><img src="pics/icons/key.png" border="0"/></a></td>
+				<td><a href="" title="{$groups[i]->getSourceCategory($columns[j])}">{icon _id='key'}</a></td>
 				
 				{/if}
 				{if $groups[i]->getLevel( $columns[j] ) eq 'group'}
-				<td><img src="pics/icons/key_active.png" border="0"/></td>
+				<td>{icon _id='key_active'}</td>
 				{/if}
 				{/section}
 				<td><input type="radio" name="priv[{$groups[i]->name|escape}]" value="none"{if ! $groups[i]->hasSelection()} checked="checked"{/if} /></td>

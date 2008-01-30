@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.12 2008-01-16 21:53:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.13 2008-01-30 15:33:49 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="pics/icons/help.png" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+{icon _id='help'}</a>{/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Trackers tpl{/tr}">
-<img border='0' src='pics/icons/shape_square_edit.png' alt="{tr}Edit{/tr}" width='16' height='16' /></a>{/if}</h1>
+{icon _id='shape_square_edit'}</a>{/if}</h1>
 
 <div class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -67,15 +67,15 @@
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
 <td class="auto">
-<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/page_edit.png' alt="{tr}Edit{/tr}" border='0' width='16' height='16' /></a>
-<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/magnifier.png' alt="{tr}View{/tr}" border='0' width='16' height='16' /></a>
-<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='pics/icons/table.png' alt="{tr}Fields{/tr}" border='0' width='16' height='16' /></a>
+<a title="{tr}Edit{/tr}" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}">{icon _id='page_edit'}</a>
+<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}">{icon _id='table' alt="{tr}Fields{/tr}"}</a>
 {if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
-<img src='pics/icons/key_active.png' border='0' alt="{tr}active permissions{/tr}" width='16' height='16' /></a>{else}
+{icon _id='key_active' alt="{tr}active permissions{/tr}"}</a>{else}
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}">
-<img src='pics/icons/key.png' border='0' alt="{tr}Permissions{/tr}" width='16' height='16' /></a>{/if}
+{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
 &nbsp;
-<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='pics/icons/cross.png' alt="{tr}Delete{/tr}" border='0' width='16' height='16' /></a></td>
+<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
 </tr>
 {/section}
 </table>
@@ -91,10 +91,10 @@
 <div class="simplebox">
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">
 {if $individual eq 'y'}
-<img src='pics/icons/key.png' border='0' alt="{tr}Permissions{/tr}" width='16' height='16' /></a>
+{icon _id='key' alt="{tr}Permissions{/tr}"}</a>
 {tr}There are individual permissions set for this tracker{/tr}
 {else}
-<img src='pics/icons/key_active.png' alt='{tr}Active Perms{/tr}' title='{tr}Active Perms{/tr}' height="16" width="16" border='0' /></a>
+{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
 {tr}No individual permissions global permissions apply{/tr}
 {/if}
 </div>
