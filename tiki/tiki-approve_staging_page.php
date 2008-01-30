@@ -106,6 +106,13 @@ $smarty->assign('history', $history);
 $smarty->assign('staging_info', $staging_info);
 $smarty->assign('staging_page', $staging_page);
 
+// update translation set lang for approved pages
+if ($prefs['feature_multilingual'] == 'y') {
+	include_once("lib/multilingual/multilinguallib.php");
+	if (isset($info["lang"]) && $info['lang'] != $staging_info['lang'])
+		$multilinguallib->updatePageLang('wiki page', $info['page_id'], $staging_info['lang'], true);
+}
+
 // make sure approved page has approved category set, and sync categories
 if ($prefs['feature_categories'] == 'y') {	
 
