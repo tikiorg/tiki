@@ -1,4 +1,4 @@
-<h1><a href="tiki-edit_translation.php?type={$type}&amp;{if $type eq 'wiki page'}page={$name|escape}{else}id={$id}{/if}">{tr}Translate:{/tr}&nbsp;{$name} ({$languageName}, {$langpage})</a>
+<h1>{tr}Translate:{/tr}&nbsp;{if $type eq 'wiki page'}<a href="tiki-index.php?page={$name}">{else}<a href="tiki-read_article.php?articleId={$id}">{/if}{$name}</a> ({$languageName}, {$langpage})
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
@@ -6,12 +6,6 @@
 <a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Edit Translations Template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
 {/if}
 </h1>
-
-{if $type == "wiki page"}
-	<a href="tiki-index.php?page={$name|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a>
-{else}
-	<a href="tiki-read_article.php?articleId={$id}" class="linkbut" title="{tr}View{/tr}">{tr}View{/tr}</a>
-{/if}
 
 {if $error}
 	<div class="simplebox hoghlight">
@@ -31,7 +25,7 @@
 {/if}
 
 <form method="post" action="tiki-editpage.php">
-	{tr}Translate to language: {/tr}
+	{tr}Language of newly translated page{/tr}: 
 		<select name="lang" size="1">
 			{section name=ix loop=$languages}
 			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
@@ -39,19 +33,17 @@
 			{/if}
 			{/section}
 		</select>
-	<br/>{tr}Translation name: {/tr}<input type="text" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<br/>{tr}Name of newly translated page{/tr}: <input type="text" size="40" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
 	<br/><input type="submit" value="{tr}Create translation{/tr}"/></p>
 	<textarea name="edit" style="display:none">^{$translate_message}^
 
 {$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 
-<hr/>
-
-{if !empty($langpage)}
-<h3>{tr}All translations for this page{/tr}</h3>
-
 {if $trads|@count > 1}
+<hr />
+{if !empty($langpage)}
+<h3>{tr}Manage existing translations of this page{/tr}</h3>
 	<table class="normal">
 	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{tr}Page{/tr}</td><td class="heading">{tr}Actions{/tr}</td></tr>
 	{cycle values="odd,even" print=false}
@@ -64,23 +56,16 @@
 	{/section}
 	</table>
 {/if}
+{/if}
 
 <form action="tiki-edit_translation.php" method="post">
 <input type="hidden" name="id" value="{$id}" />
 <input type="hidden" name="type" value="{$type|escape}" />
 
-{if $trads|@count <= 1}
-	{if $articles}
-		<p>{tr}Select the article for which the current article is the translation.{/tr}</p>
-		{tr}Translation of:{/tr}&nbsp;
-	{else}
-		<p>{tr}Enter the name of the page for which the current page is the translation.{/tr}</p>
-		{tr}Translation of:{/tr}&nbsp;
-	{/if}
-{/if}
-{if $trads|@count > 0}
-	<p>{tr}Add existing page to the list above.{/tr}</p>
-{/if}
+<hr />
+
+<h3>{tr}Add existing page as a translation of this page{/tr}</h3>
+
 {if $articles}
 	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {else}
@@ -88,6 +73,5 @@
 {/if}
 &nbsp;
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
-{/if}
 
 </form>
