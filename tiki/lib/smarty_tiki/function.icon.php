@@ -21,6 +21,8 @@ function smarty_function_icon($params, &$smarty) {
   $icons_extension = '.png';
   $notag = false;
   $default_class = 'icon';
+  $default_width = 16;
+  $default_height = 16;
 
   // Handle _ids that contains the real filename and path
   if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
@@ -32,7 +34,7 @@ function smarty_function_icon($params, &$smarty) {
     $icons_basedir = $basedirs[0].'/';
   }
 
-  if ( ! eregi('^[a-z0-9_]+$', $params['_id']) ) return;
+  if ( ! eregi('^[a-zA-Z0-9_]+$', $params['_id']) ) return;
 
   global $smarty, $style_base, $tikidomain, $tikipath, $url_path, $base_url;
 
@@ -87,6 +89,8 @@ function smarty_function_icon($params, &$smarty) {
     $params['basedir'] = $tikipath;
     $params['file'] = '/'.$params['file'];
   }
+  if ( ! isset($params['width']) ) $params['width'] = $default_width;
+  if ( ! isset($params['height']) ) $params['height'] = $default_height;
 
   if ( $notag ) {
     $html = $params['path_prefix'].$params['file'];
