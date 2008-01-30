@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.30 2008-01-30 16:18:59 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.31 2008-01-30 20:13:15 nkoth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -241,6 +241,19 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 				include_once("lib/multilingual/multilinguallib.php");
 				unset( $tikilib->cache_page_info );
 
+				if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+					$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));
+					$oldpageid = $tikilib->get_page_id_from_name($oldpage);
+					$oldtrads = $multilinguallib->getTrads('wiki page', $oldpageid);
+					foreach ($oldtrads as $ot) {
+						$oldtradname = $prefs['wikiapproval_prefix'] . $tikilib->get_page_name_from_id($ot["objId"]);
+						if ($ot["lang"] != $pageLang && $tikilib->page_exists($oldtradname)) {
+							$multilinguallib->insertTranslation('wiki page', $tikilib->get_page_id_from_name($page), $pageLang, $tikilib->get_page_id_from_name($oldtradname), $ot["lang"]);
+							break;									
+						}							
+					}
+				}
+				
 				if( isNewTranslationMode() ) {
 					$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
 					$targetInfo = $tikilib->get_page_info( $pagename );
@@ -847,6 +860,19 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		if ($prefs['feature_multilingual'] == 'y') {
 			include_once("lib/multilingual/multilinguallib.php");
 
+			if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
+				$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));
+				$oldpageid = $tikilib->get_page_id_from_name($oldpage);
+				$oldtrads = $multilinguallib->getTrads('wiki page', $oldpageid);
+				foreach ($oldtrads as $ot) {
+					$oldtradname = $prefs['wikiapproval_prefix'] . $tikilib->get_page_name_from_id($ot["objId"]);
+					if ($ot["lang"] != $pageLang && $tikilib->page_exists($oldtradname)) {
+						$multilinguallib->insertTranslation('wiki page', $tikilib->get_page_id_from_name($page), $pageLang, $tikilib->get_page_id_from_name($oldtradname), $ot["lang"]);
+						break;									
+					}							
+				}
+			}
+			
 			unset( $tikilib->cache_page_info );
 			if( isNewTranslationMode() ) {
 				$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
