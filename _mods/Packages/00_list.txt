@@ -89,3 +89,4 @@
 'goodies','batch_load_pages','1.1','Batch to load a list of pages from a csv file'
 'wikiplugins','submit','1.0','Add submit to social networking site links.','GNU/LGPL'
 'wikiplugins','shelfari','1.0','Add your Shelfari (www.shelfari.com) bookshelf to a wiki page.','GNU/LGPL'
+'wikiplugins','lastfm','1.0','Add an embedded music player from last.fm to a wiki page.','GNU/LGPL'
