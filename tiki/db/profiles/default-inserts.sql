@@ -134,7 +134,6 @@ INSERT INTO tiki_preferences VALUES ('feature_newsreader','n');
 INSERT INTO tiki_preferences VALUES ('feature_notepad','n');
 INSERT INTO tiki_preferences VALUES ('feature_obzip','n');
 INSERT INTO tiki_preferences VALUES ('feature_page_title','y');
-INSERT INTO tiki_preferences VALUES ('feature_phpopentracker','n');
 INSERT INTO tiki_preferences VALUES ('feature_poll_comments','n');
 INSERT INTO tiki_preferences VALUES ('feature_polls','n');
 INSERT INTO tiki_preferences VALUES ('feature_quizzes','n');
