@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.19 2008-01-30 20:33:33 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.20 2008-01-31 12:00:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2073,7 +2073,7 @@ function get_included_groups($group, $recur=true) {
 	}
 
 	function get_user_by_cookie($hash) {
-		list($check,$expire,$userCookie) = explode('.',$hash);
+		list($check,$expire,$userCookie) = explode('.',$hash, 3);
 		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'])) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=? and `user`=?';
 			$user = $this->getOne($query, array('cookie',"$check.$expire",$userCookie));
