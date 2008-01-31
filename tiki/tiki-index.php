@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.13 2008-01-24 20:55:47 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.14 2008-01-31 17:24:11 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -270,8 +270,15 @@ if ($prefs['feature_multilingual'] == 'y') {
 		$pageLang = $info['lang'];
 		$smarty->assign('pageLang', $pageLang);
 	}
-
-	$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $info['page_id'], 'critical' );
+	
+	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
+	// temporary fix: simply use info of staging page to determine critical translation bits
+	// TODO: better system of dealing with translation bits with approval		
+		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $tikilib->get_page_id_from_name($prefs['wikiapproval_prefix'] . $page), 'critical' );	
+	} else {
+		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $info['page_id'], 'critical' );
+	}
+	
 	$alertData = array();
 	foreach( $bits as $translationBit ) {
 		$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit );
