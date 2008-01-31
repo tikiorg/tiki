@@ -24,6 +24,7 @@
 	<br />
 {/if}
 
+{if $langpage}
 <form method="post" action="tiki-editpage.php">
 	{tr}Language of newly translated page{/tr}: 
 		<select name="lang" size="1">
@@ -79,3 +80,17 @@
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
 
 </form>
+{else}
+	<p>{tr}No language is assigned to this page. Please select a language before performing translation.{/tr}<p>
+	<form method="post" action="tiki-edit_translation.php">
+		<p>
+			<select name="langpage">
+				{foreach item=lang from=$languages}
+				<option value="{$lang.value|escape}">{$lang.name}</option>
+				{/foreach}
+			</select>
+			<input type="hidden" name="page" value="{$name|escape}"/>
+			<input type="submit" value="{tr}Assign{/tr}"/>
+		</p>
+	</form>
+{/if}
