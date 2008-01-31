@@ -91,17 +91,32 @@ if ( $staging_info['lastModif'] < $info['lastModif'] ) {
 $begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
 if ($begin_version > 0) {
 	$lastversion = $histlib->get_page_latest_version($staging_page);
+	$commitversion = $histlib->get_page_latest_version($page) + 1;
 	for ($v = $begin_version; $v <= $lastversion; $v++) {
 		$version_info = $histlib->get_version($staging_page, $v);
 		$history = array();
 		if ($version_info) {
 			$tikilib->update_page($page, $version_info["data"], tra('approved by ').$user, $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+			$commitversion++;
 			$history[] = $version_info;
-		} 
+			if ($prefs['feature_multilingual'] == 'y') {
+				// update translation bits
+				include_once("lib/multilingual/multilinguallib.php");
+				$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $v );				
+				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
+			}			
+		} 		
 	}
 }
 // finally approve current staging version
 $tikilib->update_page($page, $staging_info["data"], tra('approved by ').$user, $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+$commitversion++;
+if ($prefs['feature_multilingual'] == 'y') {
+	// update translation bits
+	include_once("lib/multilingual/multilinguallib.php");
+	$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $lastversion );
+	$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
+}
 $smarty->assign('history', $history);
 $smarty->assign('staging_info', $staging_info);
 $smarty->assign('staging_page', $staging_page);
