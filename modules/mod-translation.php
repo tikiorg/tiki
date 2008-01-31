@@ -13,7 +13,15 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 
 	$langs = $multilinguallib->preferedLangs();
 
-	$transinfo = $tikilib->get_page_info( $page );
+	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
+	// temporary fix: simply use info of staging page
+	// TODO: better system of dealing with translations with approval
+		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
+		$smarty->assign('stagingPageName', $stagingPageName);
+		$transinfo = $tikilib->get_page_info( $stagingPageName );	
+	} else {
+		$transinfo = $tikilib->get_page_info( $page );
+	}
 
 	$better = $multilinguallib->getBetterPages( $transinfo['page_id'] );
 	$known = array();
