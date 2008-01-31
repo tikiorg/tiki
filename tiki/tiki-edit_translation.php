@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.5 2008-01-31 15:26:34 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.6 2008-01-31 22:58:06 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -210,7 +210,15 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 $trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
 $smarty->assign('trads', $trads);
 
-$languages = $tikilib->list_languages();
+$usedLang = array();
+foreach( $trads as $trad )
+	$usedLang[] = $trad['lang'];
+
+$rawLangs = $tikilib->list_languages();
+$languages = array();
+foreach( $rawLangs as $langInfo )
+	if( ! in_array( $langInfo['value'], $usedLang ) )
+		$languages[] = $langInfo;
 $smarty->assign_by_ref('languages', $languages);
 
 ask_ticket('edit-translation');

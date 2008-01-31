@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.32 2008-01-31 15:09:11 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.33 2008-01-31 22:58:06 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1005,6 +1005,15 @@ if ($prefs['feature_multilingual'] == 'y') {
 		if( $tikilib->page_exists( $page ) ) {
 			// Display an error if the page already exists
 			$smarty->assign('msg',tra("Page already exists. Go back and choose a different name."));
+			$smarty->display("error.tpl");
+			die;
+		}
+
+		include_once("lib/multilingual/multilinguallib.php");
+		$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
+		if( $multilinguallib->getTranslation('wiki page', $sourceInfo['page_id'], $_REQUEST['lang'] ) ) {
+			// Display an error if the page already exists
+			$smarty->assign('msg',tra("The translation set already contains a page in this language."));
 			$smarty->display("error.tpl");
 			die;
 		}
