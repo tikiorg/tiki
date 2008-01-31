@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.12 2008-01-30 15:33:51 nyloth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.13 2008-01-31 21:55:56 nkoth Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -145,7 +145,7 @@
 	<p>{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}</p>
 	<ul>
 	{section name=j loop=$translation_alert[i]}
-		<li><a href="tiki-index.php?page={$translation_alert[i][j].page|escape}">{$translation_alert[i][j].page}</a> ({$translation_alert[i][j].lang})
+		<li><a href="tiki-index.php?page={if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|escape:'url'}{else}{$translation_alert[i][j].page|escape:'url'}{/if}&bl=n">{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage}{else}{$translation_alert[i][j].page}{/if}</a> ({$translation_alert[i][j].lang})</li>
 	{/section}
 	</ul>
 </div>
