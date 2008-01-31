@@ -41,6 +41,10 @@
           <td><input type="text" name="freetags_browse_amount_tags_in_cloud" value="{$prefs.freetags_browse_amount_tags_in_cloud|escape}" size="3" /></td>
         </tr>
         <tr>
+          <td class="form">{tr}Number of Tags to show in Tag Suggestions{/tr}: </td>
+          <td><input type="text" name="freetags_browse_amount_tags_suggestion" value="{$prefs.freetags_browse_amount_tags_suggestion|escape}" size="3" /></td>
+        </tr>
+        <tr>
           <td class="form">{tr}Valid characters pattern{/tr}: </td>
           <td>
             <input type="text" id="freetags_normalized_valid_chars" name="freetags_normalized_valid_chars" value="{$prefs.freetags_normalized_valid_chars}" /><br />
