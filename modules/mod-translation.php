@@ -18,6 +18,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	// TODO: better system of dealing with translations with approval
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
 		$smarty->assign('stagingPageName', $stagingPageName);
+		$smarty->assign('hasStaging', 'y');
 		$transinfo = $tikilib->get_page_info( $stagingPageName );	
 	} else {
 		$transinfo = $tikilib->get_page_info( $page );
