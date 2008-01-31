@@ -1,11 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sup.php,v 1.1.4.2 2008-01-30 17:45:48 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sup.php,v 1.1.4.3 2008-01-31 19:35:12 marclaporte Exp $
 
 // Wiki plugin to output superscript <sup>...</sup>
 // based on sub plugin
 
-function wikiplugin_super_help() {
+function wikiplugin_sup_help() {
         return tra("Displays text in superscript.").":<br />~np~{SUP()}text{SUP}~/np~";
 }
 
