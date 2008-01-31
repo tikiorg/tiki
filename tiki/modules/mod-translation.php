@@ -13,9 +13,9 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 
 	$langs = $multilinguallib->preferedLangs();
 
-	$info = $tikilib->get_page_info( $page );
+	$transinfo = $tikilib->get_page_info( $page );
 
-	$better = $multilinguallib->getBetterPages( $info['page_id'] );
+	$better = $multilinguallib->getBetterPages( $transinfo['page_id'] );
 	$known = array();
 	$other = array();
 
@@ -30,7 +30,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$smarty->assign( 'mod_translation_better_known', $known );
 	$smarty->assign( 'mod_translation_better_other', $other );
 
-	$worst = $multilinguallib->getWorstPages( $info['page_id'] );
+	$worst = $multilinguallib->getWorstPages( $transinfo['page_id'] );
 	$known = array();
 	$other = array();
 
@@ -44,7 +44,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 
 	$smarty->assign( 'mod_translation_worst_known', $known );
 	$smarty->assign( 'mod_translation_worst_other', $other );
-	$smarty->assign( 'pageVersion', $info['version'] );
+	$smarty->assign( 'pageVersion', $transinfo['version'] );
 }
 
 ?>
