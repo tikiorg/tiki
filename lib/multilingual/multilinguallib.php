@@ -683,6 +683,17 @@ class MultilingualLib extends TikiLib {
 
 		return $pages;
 	}
+	
+	function get_page_bit_flags( $pageId, $version ) {
+		$query = "select distinct `flags` from `tiki_pages_translation_bits` where `page_id`=? and `version`=?";
+		$result = $this->query($query, array($pageId, $version));
+		$flags = array();	
+		while( $row = $result->fetchRow() ) {
+			$flags[] = $row['flags'];
+		}
+		return $flags;
+	}
+	
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
