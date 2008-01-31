@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.3 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.4 2008-01-31 18:27:21 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
@@ -40,9 +40,9 @@
 <a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">
 {icon _id='cross' hspace="5" vspace="1"}</a>
 {if $catree[dx].has_perm eq 'y'}
-<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Permissions{/tr}"}</a>
+<a title="{tr}Edit permissions for this category{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
 {else}
-<a title="{tr}Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Permissions{/tr}"}</a>
+<a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 {/if}
 <span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>

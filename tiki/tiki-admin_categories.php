@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.51 2007-10-14 15:17:16 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.51.2.1 2008-01-31 18:27:21 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -179,13 +179,13 @@ if (isset($_REQUEST["removeObject"])) {
 	}
 }
 
-if (isset($_REQUEST["removeCat"])) {
+if (isset($_REQUEST["removeCat"]) && ($info = $categlib->get_category($_REQUEST['removeCat']))) {
 	$area = "delcateg";
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$categlib->remove_category($_REQUEST["removeCat"]);
 	} else {
-		$confirmation = tra('Click here to delete this category');
+		$confirmation = tra('Click here to delete the category:').' '.$info['name'];
 		key_get($area, $confirmation);
 	}
 }
