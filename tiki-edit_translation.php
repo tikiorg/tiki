@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.4 2008-01-31 15:09:11 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.5 2008-01-31 15:26:34 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -137,6 +137,9 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 		$info['lang'] = $_REQUEST['langpage'];	
 		$langpage = $_REQUEST['langpage'];
 	}
+
+	$fullLangName = $langmapping[$langpage][0];
+	$smarty->assign( 'languageName', $fullLangName );
 }
 $smarty->assign('langpage', $langpage);
 
