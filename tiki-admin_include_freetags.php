@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.9.2.3 2008-01-07 23:01:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_freetags.php,v 1.9.2.4 2008-01-31 19:42:49 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,7 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 	simple_set_toggle('freetags_preload_random_search');
 
 	simple_set_value('freetags_browse_amount_tags_in_cloud');
+	simple_set_value('freetags_browse_amount_tags_suggestion');
 	simple_set_value('freetags_normalized_valid_chars');
 	
 	simple_set_value('freetags_cloud_colors');
