@@ -38,6 +38,9 @@
 	<textarea name="edit" style="display:none">^{$translate_message}^
 
 {$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+	{if $prefs.feature_freetags eq 'y'}
+	<input type="hidden" name="freetag_string" value="{$taglist|escape}"/>
+	{/if}
 </form>
 
 {if $trads|@count > 1}
