@@ -53,7 +53,12 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 
 	if ($tiki_p_post_shoutbox == 'y') {
 		if (isset($_REQUEST["shout_send"])) {
-			$shoutboxlib->replace_shoutbox(0, $user, $_REQUEST["shout_msg"]);
+			if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+				$smarty->assign('shout_error', tra('You have mistyped the anti-bot verification code; please try again.'));
+				$smarty->assign_by_ref('shout_msg', $_REQUEST['shout_msg']);
+			} else {
+				$shoutboxlib->replace_shoutbox(0, $user, $_REQUEST["shout_msg"]);
+			}
 		}
 	}
 
