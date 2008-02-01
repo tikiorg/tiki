@@ -43,7 +43,7 @@
 	<input type="hidden" name="freetag_string" value="{$taglist|escape}"/>
 	{/if}
 </form>
-
+{if !isset($allowed_for_staging_only)}
 {if $trads|@count > 1}
 <hr />
 {if !empty($langpage)}
@@ -80,6 +80,7 @@
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
 
 </form>
+{/if} {* end of if !isset($allowed_for_staging_only)}
 {else}
 	<p>{tr}No language is assigned to this page. Please select a language before performing translation.{/tr}<p>
 	<form method="post" action="tiki-edit_translation.php">
