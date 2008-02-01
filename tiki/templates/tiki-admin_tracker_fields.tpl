@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.10 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.11 2008-02-01 17:01:22 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
 
 <div  class="navbar">
@@ -21,21 +21,35 @@
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:
+
+</td>
+<td>
+
+<br />
 {assign var=fld value="z"}
+
+
+<div>
+<select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkLingual(this.options[selectedIndex].value);'>
+{foreach key=fk item=fi from=$field_types}
+<option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
+{/foreach}
+</select>
+
+<div id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}>{tr}Options{/tr}: <input type="text" name="options" value="{$options|escape}" size="50" /></div>
+</div>
+{assign var=fld value="z"}
+
 {foreach key=fk item=fi from=$field_types name=foreachname}
 {if $fi.opt}
 <div id='{$fk}' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;font-style:italic;"{else}style="display:none;font-style:italic;"{/if}>{$fi.help}</div>
 {assign var=fld value=$fld|cat:$fk}
 {/if}
 {/foreach}
-</td><td>
-<select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkLingual(this.options[selectedIndex].value);'>
-{foreach key=fk item=fi from=$field_types}
-<option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
-{/foreach}
-</select>
-<div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
-</td></tr>
+
+
+</td>
+</tr>
 
 {* Section that allows to reduce the user list item choices through a multiselect list of all list items of this field type (if supported by this fieldtype) *}
 
