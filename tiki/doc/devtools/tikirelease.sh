@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.15.2.1 2007-12-03 00:25:14 kerrnel22 Exp $
+# $Id: tikirelease.sh,v 1.15.2.2 2008-02-01 13:24:46 marclaporte Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release Tikiwiki ?
@@ -10,6 +10,7 @@
 #    - update changelog.txt (from CVS commit logs)
 #    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
 #    - update README
+#    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
 #    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
 #        previous version give the same db structure 
 #    - cd db/convertscripts and run convertsqls.sh
