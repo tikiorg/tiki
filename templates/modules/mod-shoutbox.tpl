@@ -1,14 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.32 2007-10-14 17:51:01 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.32.2.1 2008-02-01 18:43:19 sylvieg Exp $ *}
 
 {if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-    {if $tiki_p_post_shoutbox eq 'y' and $user}
+    {if $tiki_p_post_shoutbox eq 'y'}
       {js_maxlength textarea=shout_msg maxlength=255}
       <form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">
+	  {if $shout_error}<div class="highlight">{$shout_error}</div>{/if}
       <div align="center">
-        <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
-	<br />
+        <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg">{$shout_msg|escape:'htmlall'}</textarea>
+		{if $prefs.feature_antibot eq 'y' && $user eq ''}
+			<table>{include file="antibot.tpl"}</table>
+		{/if}
 	<input type="submit" name="shout_send" value="{tr}Send{/tr}" />
       </div><br />
       </form>
