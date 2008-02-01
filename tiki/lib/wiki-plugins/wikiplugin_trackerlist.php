@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.6 2008-02-01 15:49:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.7 2008-02-01 16:27:45 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -13,7 +13,7 @@ function wikiplugin_trackerlist_help() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib;
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
@@ -242,7 +242,7 @@ function wikiplugin_trackerlist($data, $params) {
 				return tra('incorrect filterfield');
 			}
 		}
-		if ($tiki_p_view_tracker != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
+		if ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
 			if ($filterfield != $fieldId || (is_array($filterfield) && !in_array($fieldId, $filterfield))) {
 				if (is_array($filterfield))
 					$filterfield[] = $fieldId;
