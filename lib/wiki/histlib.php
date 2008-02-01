@@ -55,6 +55,14 @@ class HistLib extends TikiLib {
 			return false;
 
 		$res = $result->fetchRow();
+		
+		global $prefs;
+		if ($prefs['feature_wikiapproval'] == 'y') {
+			// for approval and staging feature to work properly, one has to use real commit time of rollbacks
+			//TODO: make this feature to set rollback time as current time as more general optional feature
+			$res["lastModif"] = time();
+			$res["comment"] = $res["comment"] . " [" . tra("rollback version ") . $version . "]"; 		
+		}
 		$query
 			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `pageName`=?";
 		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
