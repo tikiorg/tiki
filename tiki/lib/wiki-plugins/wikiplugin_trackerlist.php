@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.7 2008-02-01 16:27:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.8 2008-02-01 22:46:15 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -242,7 +242,7 @@ function wikiplugin_trackerlist($data, $params) {
 				return tra('incorrect filterfield');
 			}
 		}
-		if ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
+		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
 			if ($filterfield != $fieldId || (is_array($filterfield) && !in_array($fieldId, $filterfield))) {
 				if (is_array($filterfield))
 					$filterfield[] = $fieldId;
