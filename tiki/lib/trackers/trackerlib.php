@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.29 2008-01-29 23:02:15 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.30 2008-02-01 15:49:09 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1831,7 +1831,7 @@ class TrackerLib extends TikiLib {
 		$mid = ' `trackerId`=? and `type`=? ';
 		$bindvars = array((int)$trackerId, $type);
 		if (!empty($option)) {
-			if (strstr('%', $option)) {
+			if (strstr($option, '%') === false) {
 				$mid .= ' and `options`=? ';
 			} else {
 				$mid .= ' and `options` like ? ';
