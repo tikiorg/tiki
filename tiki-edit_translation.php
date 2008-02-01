@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.6 2008-01-31 22:58:06 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.7 2008-02-01 00:16:56 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,8 +97,12 @@ else if ($_REQUEST['id']) {
 	}
 }
 
-if ($type == "wiki page") {
-  if (!($tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_edit') || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user))) {
+if ($type == "wiki page") {	
+  if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit')) {
+		$allowed_for_staging_only = 'y';
+		$smarty->assign('allowed_for_staging_only', 'y');
+  }  
+  if (!($tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $name, 'wiki page', 'tiki_p_edit') || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) || isset($allowed_for_staging_only) && $allowed_for_staging_only == 'y' )) {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;
@@ -142,6 +146,9 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 	$smarty->assign( 'languageName', $fullLangName );
 }
 $smarty->assign('langpage', $langpage);
+
+if (!isset($allowed_for_staging_only)) {
+// people blocked from approved page cannot access the following settings
 
 if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a translation set
 	check_ticket('edit-translation');
@@ -206,6 +213,8 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 	}
 	$smarty->assign('srcId', $_REQUEST['srcId']);
 }
+
+} // end of if $allowed_for_staging_only == 'y'
 
 $trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
 $smarty->assign('trads', $trads);
