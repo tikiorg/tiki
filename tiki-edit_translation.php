@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.7 2008-02-01 00:16:56 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.8 2008-02-01 00:53:53 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,12 +97,13 @@ else if ($_REQUEST['id']) {
 	}
 }
 
-if ($type == "wiki page") {	
-  if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit')) {
+if ($type == "wiki page") {
+  $tikilib->get_perm_object($name, 'wiki page', $info, true);	
+  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
 		$allowed_for_staging_only = 'y';
 		$smarty->assign('allowed_for_staging_only', 'y');
   }  
-  if (!($tiki_p_admin_wiki== 'y' || $tikilib->user_has_perm_on_object($user, $name, 'wiki page', 'tiki_p_edit') || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) || isset($allowed_for_staging_only) && $allowed_for_staging_only == 'y' )) {
+  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;
