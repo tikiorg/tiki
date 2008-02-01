@@ -37,7 +37,7 @@
 				<select name="language" id="general-lang">
 					{section name=ix loop=$languages}
 					<option value="{$languages[ix].value|escape}"
-					{if $prefs.language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 					{/section}
 				</select>
 			</td>
