@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.3 2007-12-08 09:27:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.46.2.4 2008-02-01 01:07:18 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
 $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
-if ($tiki_p_edit_structures  == 'y' && $tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit'))
+if ($tiki_p_edit_structures  == 'y' && $tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
 	$editable = 'y';
 else
 	$editable = 'n';
@@ -68,7 +68,7 @@ if (isset($_REQUEST["remove"])) {
   	$structs = $structlib->get_page_structures($remove_info['pageName'],$structure);
     //If page is member of more than one structure, do not give option to remove page
     $single_struct = count($structs) == 1; 
-	if ($tiki_p_remove == 'y' && $single_struct && $tikilib->user_has_perm_on_object($user,$remove_info["pageName"],'wiki page','tiki_p_edit'))
+	if ($tiki_p_remove == 'y' && $single_struct && $tikilib->user_has_perm_on_object($user,$remove_info["pageName"],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
 		$smarty->assign('page_removable', 'y');
 	else
 		$smarty->assign('page_removable', 'n');

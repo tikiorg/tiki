@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.15 2008-01-31 21:55:56 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.16 2008-02-01 01:07:18 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,7 +120,7 @@ if(isset($page_ref_id)) {
 			$structs_with_perm[] = $t_structs;
 		}
 	}    	
-    if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit'))
+    if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
 		$smarty->assign('struct_editable', 'y');
 	else
 		$smarty->assign('struct_editable', 'n');	
@@ -689,7 +689,7 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
 		$smarty->assign('needsStaging', 'y');
 		$smarty->assign('stagingPageName', $stagingPageName);	
-		if ($tikilib->user_has_perm_on_object($user,$stagingPageName,'wiki page','tiki_p_edit')) {
+		if ($tikilib->user_has_perm_on_object($user,$stagingPageName,'wiki page','tiki_p_edit','tiki_p_edit_categorized')) {
 			$smarty->assign('canEditStaging', 'y');
 		} 	
 	} elseif ($prefs['wikiapproval_staging_category'] > 0 && in_array($prefs['wikiapproval_staging_category'], $cats) && !$tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
