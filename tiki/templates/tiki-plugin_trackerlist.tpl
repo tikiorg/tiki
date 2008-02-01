@@ -1,8 +1,8 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.3 2008-01-16 14:56:07 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.4 2008-02-01 21:21:58 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
-{if $cant_pages > 1 or $tr_initial}
+{if $cant_pages > 1 or $tr_initial or $showinitials eq 'y'}
 <div align="center">
 {section name=ini loop=$initials}
 {if $tr_initial and $initials[ini] eq $tr_initial}
@@ -73,8 +73,12 @@
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
-	{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
+	{if isset($perms)}
+		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
 		$tiki_p_view_trackers=$perms.tiki_p_view_trackers $tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items $tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+	{else}
+		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"}
+	{/if}
 </td>
 {/if}
 {/section}
