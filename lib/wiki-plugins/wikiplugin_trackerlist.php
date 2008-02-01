@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.5 2008-01-24 18:16:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.6 2008-02-01 15:49:10 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -27,7 +27,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$tracker_info = array_merge($tracker_info, $t);
 		}
 
-		if ($tiki_p_admin != 'y') {
+		if ($tiki_p_admin_trackers != 'y') {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
 			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y') {
 				return;
@@ -240,6 +240,22 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			if (!isset($filterfieldok)) {
 				return tra('incorrect filterfield');
+			}
+		}
+		if ($tiki_p_view_tracker != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
+			if ($filterfield != $fieldId || (is_array($filterfield) && !in_array($fieldId, $filterfield))) {
+				if (is_array($filterfield))
+					$filterfield[] = $fieldId;
+				elseif (empty($filterfield))
+					$filterfield = $fieldId;
+				else
+					$filterfield = array($filterfield, $fieldId);
+				if (is_array($exactvalue))
+					$exactvalue[] = $user;
+				elseif (empty($exactvalue))
+					$exactvalue = $user;
+				else
+					$exatvalue = array($exactvalue, $user);
 			}
 		}
 
