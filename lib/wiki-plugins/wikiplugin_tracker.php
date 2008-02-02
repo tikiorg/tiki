@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.16 2008-01-29 17:30:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.17 2008-02-02 13:00:30 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -72,10 +72,7 @@ function wikiplugin_tracker($data, $params) {
 		if (!is_array($values)) {
 			$values = explode(':', $values);
 		}
-	} elseif (isset($_REQUEST['values'])) {
-		$values = $_REQUEST['values'];
 	}
-	
 
 	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
 		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
@@ -278,7 +275,10 @@ function wikiplugin_tracker($data, $params) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
 
-			} else if (!empty($values)) { // assign default values for each filedId specify
+			} else if (!empty($values) || (!empty($_REQUEST['values']) and empty($_REQUEST['prefills']))) { // assign default values for each filedId specify
+				if (empty($values)) { // url with values[]=x&values[] witouth the list of fields
+					$values = $_REQUEST['values'];
+				}
 				if (!is_array($values)) {
 					$values = array($values);
 				}
@@ -297,9 +297,21 @@ function wikiplugin_tracker($data, $params) {
 						$flds['data'][$i++]['value'] = $value;
 					}
 				}
-			} else { // initialize fields with blank values
+			
+			} else {
+				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
+					if (!is_array($_REQUEST['values']))
+						$_REQUEST['values'] = array($_REQUEST['values']);
+					$fl = split(':', $_REQUEST['prefills']);
+				} else {
+					unset($fl);
+				}
 				for($i = 0; $i < count($flds['data']); $i++) {
-					$flds['data'][$i]['value'] = '';
+					if (isset($fl) && ($j = array_search($flds['data'][$i]['fieldId'], $fl)) !== false) {
+						$flds['data'][$i]['value'] = $_REQUEST['values'][$j];
+					} else {
+						$flds['data'][$i]['value'] = ''; // initialize fields with blank values
+					}
 				}
 			}
 			
