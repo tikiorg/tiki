@@ -1,4 +1,3 @@
-{strip}
 {*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
 {if $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>
@@ -18,7 +17,6 @@
 		{$filters[if].name|tr_if}
 		{if $showFieldId eq 'y'} -- {$filters[if].fieldId}{/if}
 		{if $line ne 'y'}</td><td>{else}:{/if}
-		<input type="hidden" name="x_{$filters[if].fieldId}" value="{$filters[if].format}" />
 {*------drop-down, multiple *}
 		{if $filters[if].format eq 'd' or  $filters[if].format eq 'm'}
 			<select name="f_{$filters[if].fieldId}{if $filters[if].format eq "m"}[]{/if}" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
@@ -31,7 +29,11 @@
 			</select>
 			{if $filters[if].format eq "m"} {tr}Tip: hold down CTRL to select multiple{/tr}{/if}
 {*------text *} 
-		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T'}
+		{elseif $filters[if].format eq 't' or $filters[if].format eq 'T' or $filters[if].format eq 'i'}
+			{if $filters[if].format eq 'i'}
+				{capture name=i_f}f_{$filters[if].fieldId}{/capture}
+				{initials_filter_links _initial=$smarty.capture.i_f}
+			{/if}
 			<input type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 {*------checkbox, radio *}
 		{else}
@@ -51,4 +53,3 @@
 </table>
 </form>
 </div>
-{/strip}

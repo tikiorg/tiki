@@ -10,7 +10,8 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	$html = '';
 	$sep = ' . ';
 	$default_type = 'absolute_path';
-	$current_initial = isset($_REQUEST['initial']) ? $_REQUEST['initial'] : '';
+	if ( ! isset($params['_initial']) ) $params['_initial'] = 'initial';
+	$current_initial = isset($_REQUEST[$params['initial']]) ? $_REQUEST[$params['initial']] : '';
 	if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 	if ( ! isset($params['_template']) ) $params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
 	if ( ! isset($params['_class']) ) $params['_class'] = 'prevnext';
@@ -23,7 +24,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	$tag_start = "\n".'<a class="'.$params['_class'].'" '.smarty_block_ajax_href(
 		array('template' => $params['_template'], 'htmlelement' => $params['_htmlelement']),
 		smarty_function_query(
-			array('_type' => $default_type, 'initial' => 'X', 'offset' => 'NULL', 'reloff' => 'NULL'),
+			array('_type' => $default_type,  $params['_initial'] => 'X', 'offset' => 'NULL', 'reloff' => 'NULL'),
 			$smarty
 		),
 		$smarty,
@@ -34,10 +35,10 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 		if ( $current_initial == $i ) {
 			$html .= "\n".'<span class="button2"><span class="linkbuton">'.strtoupper($i).'</span></span>'.$sep;
 		} else {
-			$html .= "\n".str_replace('initial=X', 'initial='.$i, $tag_start).strtoupper($i).'</a>'.$sep;
+			$html .= "\n".str_replace( $params['_initial'].'=X', $params['_initial'].'='.$i, $tag_start).strtoupper($i).'</a>'.$sep;
 		}
 	}
-	$html .= "\n".str_replace('initial=X', 'initial=', $tag_start).tra('All').'</a>';
+	$html .= "\n".str_replace( $params['_initial'].'=X', $params['initial'].'=', $tag_start).tra('All').'</a>';
 	
 	return '<div align="center">'.$html.'</div>';
 }
