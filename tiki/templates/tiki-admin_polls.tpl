@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.37.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.37.2.3 2008-02-04 17:14:51 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -28,7 +28,7 @@
 <option value='c' {if $active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
 <option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
 <option value='t' {if $active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
-<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}Object{/tr}</option>
+<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
 </select>
 </td></tr>
 {include file=categorize.tpl}
@@ -58,7 +58,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {if $prefs.poll_list_categories eq 'y'}<td class="heading">{tr}categories{/tr}</td>{/if}
 {if $prefs.poll_list_objects eq 'y'}<td class="heading">{tr}objects{/tr}</td>{/if}
-<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}Active{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
 <td class="heading">{tr}Options{/tr}</td>

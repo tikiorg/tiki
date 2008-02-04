@@ -22,7 +22,7 @@
 	<select name="status">
 		<option value="active" {if $ins_info.status eq 'active'}selected="selected"{/if}>{tr}active{/tr}</option>
 		<option value="exception" {if $ins_info.status eq 'exception'}selected="selected"{/if}>{tr}exception{/tr}</option>
-		<option value="completed" {if $ins_info.status eq 'completed'}selected="selected"{/if}>{tr}Completed{/tr}</option>
+		<option value="completed" {if $ins_info.status eq 'completed'}selected="selected"{/if}>{tr}completed{/tr}</option>
     	<option value="aborted" {if $ins_info.status eq 'aborted'}selected="selected"{/if}>{tr}aborted{/tr}</option>
 	</select>
 	</td>

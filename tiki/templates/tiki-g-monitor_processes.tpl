@@ -29,7 +29,7 @@
 	<small>{tr}proc{/tr}</small>
 </td>
 <td >
-	<small>{tr}active{/tr}</small>
+	<small>{tr}Active{/tr}</small>
 </td>
 <td >
 	<small>{tr}valid{/tr}</small>
@@ -103,7 +103,7 @@
 
 	<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $proc.isActive eq 'y'}
-	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}active{/tr}) ' title='{tr}active process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}active process{/tr}' />
 	  {else}
 	  &nbsp;
 	  {/if}

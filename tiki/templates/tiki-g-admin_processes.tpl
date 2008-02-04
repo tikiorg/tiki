@@ -134,7 +134,7 @@
 	</td>
 		<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $items[ix].isActive eq 'y'}
-	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}active{/tr}) ' title='{tr}active process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}active process{/tr}' />
 	  {else}
 	  &nbsp;
 	  {/if}

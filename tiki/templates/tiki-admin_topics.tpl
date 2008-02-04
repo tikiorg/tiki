@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.36.2.4 2008-02-04 16:50:25 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.36.2.5 2008-02-04 17:14:51 jyhem Exp $ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -45,11 +45,11 @@
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 <a class="link" href="tiki-admin_topics.php?removeall={$topics[user].topicId}">{tr}Remove with articles{/tr}</a>
 {if $topics[user].active eq 'n'}
-<a class="link" href="tiki-admin_topics.php?activate={$topics[user].topicId}">{icon _id='accept' alt="{tr}activate{/tr}" title='{tr}inactive - click to activate{/tr}'}</a>
+<a class="link" href="tiki-admin_topics.php?activate={$topics[user].topicId}">{icon _id='accept' alt="{tr}Activate{/tr}" title='{tr}Inactive - Click to Activate{/tr}'}</a>
 {else}
-<a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">{icon _id='delete' alt="{tr}deactivate{/tr}" title='{tr}active - click to deactivate{/tr}'}</a>
+<a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">{icon _id='delete' alt="{tr}deactivate{/tr}" title='{tr}Active - Click to Deactivate{/tr}'}</a>
 {/if}
-{if $topics[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=cms&amp;objectId={$topics[user].topicId}">{icon _id='key_active' alt="{tr}active permissions{/tr}"}</a>
+{if $topics[user].individual eq 'y'}<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=cms&amp;objectId={$topics[user].topicId}">{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>
 {else}
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$topics[user].name|escape:"url"}&amp;objectType=topic&amp;permType=cms&amp;objectId={$topics[user].topicId}">{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
  <a class="link" href="tiki-edit_topic.php?topicid={$topics[user].topicId}">{icon _id='page_edit'}</a>

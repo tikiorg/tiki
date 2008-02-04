@@ -16,7 +16,7 @@
 			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;deactivate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/stop.gif' alt='{tr}Stop{/tr}' title='{tr}Stop{/tr}' /></a></td>						
 			{else}
 			{if $proc_info.isValid eq 'y'}
-			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;activate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/refresh2.gif' alt='{tr}activate{/tr}' title='{tr}activate{/tr}' /></a></td>									
+			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;activate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/refresh2.gif' alt='{tr}Activate{/tr}' title='{tr}Activate{/tr}' /></a></td>									
 			{/if}
 			{/if}
 			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}activities{/tr}' title='{tr}activities{/tr}' /></a></td>						
