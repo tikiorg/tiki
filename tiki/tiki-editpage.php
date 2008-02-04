@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.34 2008-02-01 01:07:18 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.35 2008-02-04 16:14:35 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -102,7 +102,9 @@ if (isset($_REQUEST['cancel_edit'])) {
 	if (!empty($_REQUEST['page_ref_id'])) {
 		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
 	}	
-    $url .= '&bl=n';
+    if ($prefs['feature_best_language'] == 'y') {
+		$url .= '&bl=n';
+	}
     header($url);
     die;
 }
@@ -293,10 +295,14 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   if (isset($_REQUEST["save"])) {
     unset ($_REQUEST["save"]);
     if ($page_ref_id) {
-      header ("location: tiki-index.php?page_ref_id=$page_ref_id&bl=n");
+		$url = "tiki-index.php?page_ref_id=$page_ref_id";
     } else {
-      header ("location: tiki-index.php?page=$page&bl=n");
+		$url = "tiki-index.php?page=$page";
     }
+	if ($prefs['feature_best_language'] == 'y') {
+		$url .= '&bl=n';
+	}
+	header("location: $url");
     die;
   }
 }
@@ -955,10 +961,14 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     
   $page = urlencode($page);
   if ($page_ref_id) {
-    header("location: tiki-index.php?page_ref_id=$page_ref_id&bl=n");
+		$url = "tiki-index.php?page_ref_id=$page_ref_id";
   } else {
-    header("location: tiki-index.php?page=$page&bl=n");
+		$url = "tiki-index.php?page=$page";
   }
+  if ($prefs['feature_best_language'] == 'y') {
+		$url .= '&bl=n';
+  }
+  header("location: $url");
   die;
 } //save
 $smarty->assign('pageAlias',$pageAlias);
