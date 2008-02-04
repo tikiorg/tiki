@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.5 2008-01-09 15:24:29 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.6 2008-02-04 01:50:02 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -189,6 +189,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_siteid.php');
 	} else if ($adminPage == "calendar") {
 		$admintitle = "Calendar";//get_strings tra("Calendar")
+		$helpUrl = "Calendar+Admin";
 		$description = "Calendar settings";//get_strings tra("Calendar settings")
 		include_once ('tiki-admin_include_calendar.php');
 	} else if ($adminPage == "intertiki") {
@@ -208,17 +209,17 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "i18n";//get_strings tra("i18n")
 		$description = "Internationalization";//get_strings tra("i18n")
 		$helpUrl = "Ii18h";
-		include_once ('tiki-admin_include_i18n.php');		
+		include_once ('tiki-admin_include_i18n.php');
 	} else if ($adminPage == "wysiwyg") {
 		$admintitle = "wysiwyg";//get_strings tra("i18n")
 		$description = "Wysiwyg editor";//get_strings tra("i18n")
 		$helpUrl = "Wysiwyg Editor Admin";
-		include_once ('tiki-admin_include_wysiwyg.php');		
+		include_once ('tiki-admin_include_wysiwyg.php');
 	} else if ($adminPage == "copyright") {
 		$admintitle = "Copyright";//get_strings tra("i18n")
 		$description = "Copyright management";//get_strings tra("i18n")
 		$helpUrl = "Copyright";
-		include_once ('tiki-admin_include_copyright.php');		
+		include_once ('tiki-admin_include_copyright.php');
 	} else if ($adminPage == "category") {
 		$admintitle = "Category";//get_strings tra("Category")
 		$description = "Category";//get_strings tra("Category")
@@ -245,7 +246,7 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Multimedia";
 		include_once ('tiki-admin_include_multimedia.php');
 	}
-	
+
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}
 	$helpDescription = "Help on $admintitle Config";//get_strings tra("Help on $admintitle Config")
