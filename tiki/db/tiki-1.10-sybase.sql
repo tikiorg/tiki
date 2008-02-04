@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-01-25 17:23:29 $
--- $Author: nyloth $
+-- $Date: 2008-02-04 14:36:26 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1300,7 +1300,8 @@ CREATE TABLE "tiki_comments" (
   "smiley" varchar(80) default NULL NULL,
   "message_id" varchar(128) default NULL NULL,
   "in_reply_to" varchar(128) default NULL NULL,
-  "comment_rating" numeric(2,0) default NULL NULL,  
+  "comment_rating" numeric(2,0) default NULL NULL,
+  "archived" char(1) default NULL NULL,
   PRIMARY KEY ("threadId")
 ) ENGINE=MyISAM  
 go
@@ -1740,6 +1741,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_author" char(1) default NULL NULL,
   "show_creator" char(1) default NULL NULL,
   "subgal_conf" varchar(200) default NULL NULL,
+  "show_last_user" char(1) default NULL NULL,
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM  
 go
@@ -2912,7 +2914,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','')
 go
 
 
@@ -3429,7 +3431,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Edit languages','tiki-edit_languages.php',1200,'','tiki_p_edit_languages,lang_use_db','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Edit languages','tiki-edit_languages.php',1200,'lang_use_db','tiki_p_edit_languages','')
 go
 
 
@@ -7091,15 +7093,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','wiki')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','wiki')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','wiki')
 go
 
 
@@ -7273,15 +7267,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','trackers')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','trackers')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','trackers')
 go
 
 
@@ -7351,15 +7337,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','blogs')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','blogs')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','blogs')
 go
 
 
@@ -7429,15 +7407,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','calendar')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','calendar')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','calendar')
 go
 
 
@@ -7507,15 +7477,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','articles')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','articles')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','articles')
 go
 
 
@@ -7585,15 +7547,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','faqs')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','faqs')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','faqs')
 go
 
 
@@ -7663,15 +7617,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','pics/icons/feed.png','forums')
-go
-
-
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','forums')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','pics/icons/database_go.png','forums')
 go
 
 
@@ -8348,6 +8294,21 @@ CREATE TABLE `tiki_mypage_types_components` (
   `maxcount` numeric(11,0) default '1' NOT NULL,
   KEY `id_mypage_types` (`id_mypage_types`)
 ) ENGINE=MyISAM
+go
+
+
+
+CREATE TABLE `tiki_pages_translation_bits` (
+  `translation_bit_id numeric(14 ,0) identity,
+  `page_id` numeric(14,0) NOT NULL,
+  `version` numeric(8,0) NOT NULL,
+  `source_translation_bit` numeric(10,0) NULL,
+  `original_translation_bit` numeric(10,0) NULL,
+  `flags` SET('critical') DEFAULT '' NOT NULL,
+  PRIMARY KEY (`translation_bit_id`),
+  KEY(`page_id`),
+  KEY(`original_translation_bit`)
+)
 go
 
 
