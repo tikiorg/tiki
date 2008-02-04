@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.9 2008-01-14 22:31:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.10 2008-02-04 22:11:30 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -51,9 +51,9 @@ function wikiplugin_trackerfilter($data, $params) {
 			if (substr($key, 0, 2) == 'f_' && !empty($val) && (!is_array($val) || !empty($val[0]))) {
 				$fieldId = substr($key, 2);
 				$ffs[] = $fieldId;
-				if (isset($_REQUEST["x_$fieldId"]) && $_REQUEST["x_$fieldId"] == 't') {
+				if (isset($formats[$fieldId]) && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'i')) {
 					$exactValues[] = '';
-					$values[] = $val;
+					$values[] = ($formats[$fieldId] == 'i')? "$val%": $val;
 				} else {
 					$exactValues[] = $val;
 					$values[] = '';
@@ -139,7 +139,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				break;
 			}
 		}
-		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T')) { // do not accept a format text for a categ for the moment
+		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i')) { // do not accept a format text for a categ for the moment
 			if (empty($res)) {
 				global $categlib; include_once('lib/categories/categlib.php');
 				$res = $categlib->get_child_categories($field['options_array'][0]);
@@ -147,7 +147,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 		}
 		$opts = array();
-		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T') {
+		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i') {
 			$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
 		} else {
 			$selected = false;
@@ -185,6 +185,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case 'n': // numeric
 			case 'D': // drop down + other
 			case 't': // text
+			case 'i': // text with initial
 			case 'a': // textarea
 			case 'm': // email
 			case 'y': // country
