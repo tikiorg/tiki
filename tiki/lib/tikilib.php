@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.74 2008-02-05 17:15:14 lphuberdeau Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.75 2008-02-05 21:17:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -3511,7 +3511,6 @@ function add_pageview() {
 	}
 
 	if (!empty($filter)) {
-		$mid .= empty($mid) ? ' where (' : ' and (';
 		$tmp_mid = '';
 		foreach ($filter as $type=>$val) {
 			if ($type == 'categId') {
@@ -3526,7 +3525,10 @@ function add_pageview() {
 				$select .= ',ts.`page_alias`';
 			}
 		}
-		$mid .= $tmp_mid.')';
+		if (!empty($tmp_mid)) {
+			$mid .= empty($mid) ? ' where (' : ' and (';
+			$mid .= $tmp_mid.')';
+		}
 	}
 	if (!empty($initial)) {
 		$mid .= empty($mid) ? ' where (' : ' and (';
