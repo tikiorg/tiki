@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.22 2008-01-29 22:17:01 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.23 2008-02-05 17:22:56 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -285,7 +285,7 @@ function searchrep() {
 <select name="lang">
 <option value="">{tr}Unknown{/tr}</option>
 {section name=ix loop=$languages}
-<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value or ($lang eq '' and $languages[ix].value eq $prefs.language)} selected="selected"{/if}>{$languages[ix].name}</option>
 {/section}
 </select>
 {if $translationOf}
