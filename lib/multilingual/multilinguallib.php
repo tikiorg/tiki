@@ -624,14 +624,14 @@ class MultilingualLib extends TikiLib {
 			SELECT DISTINCT
 				page.pageName page,
 				IFNULL( (
-					SELECT MAX(source.version)
+					SELECT IF( MAX(source.version) > MAX(back.version), MAX(source.version), MAX(back.version) )
 					FROM
-						tiki_pages_translation_bits source
-						INNER JOIN tiki_pages_translation_bits target
-							ON source.translation_bit_id = target.source_translation_bit
+						tiki_pages_translation_bits target
+						LEFT JOIN tiki_pages_translation_bits source ON source.translation_bit_id = target.source_translation_bit
+						LEFT JOIN tiki_pages_translation_bits back ON target.translation_bit_id = back.source_translation_bit
 					WHERE
-						source.page_id = b.objId
-						AND target.page_id = page.page_id
+						target.page_id = b.objId
+						AND ( source.page_id = a.objId OR back.page_id = a.objId )
 				), 1) last_update,
 				page.version current_version,
 				page.lang
@@ -665,13 +665,14 @@ class MultilingualLib extends TikiLib {
 			SELECT DISTINCT
 				page.pageName page,
 				IFNULL( (
-					SELECT MAX(source.version)
+					SELECT IF( MAX(source.version) > MAX(back.version), MAX(source.version), MAX(back.version) )
 					FROM
-						tiki_pages_translation_bits source
-						INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+						tiki_pages_translation_bits target
+						LEFT JOIN tiki_pages_translation_bits source ON source.translation_bit_id = target.source_translation_bit
+						LEFT JOIN tiki_pages_translation_bits back ON target.translation_bit_id = back.source_translation_bit
 					WHERE
-						source.page_id = a.objId
-						AND target.page_id = b.objId
+						target.page_id = a.objId
+						AND ( back.page_id = b.objId OR source.page_id = b.objId )
 				), 1) last_update,
 				page.lang
 			FROM
