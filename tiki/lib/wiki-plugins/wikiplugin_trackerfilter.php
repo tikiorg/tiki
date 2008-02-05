@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.10 2008-02-04 22:11:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.11 2008-02-05 14:17:55 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -32,15 +32,24 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 	if (!isset($displayList)) {
 		$displayList = 'n';
-	} elseif ($displayList == 'y' && isset($trackerId)) {
-		$_REQUEST['trackerId'] = $trackerId;
+	}
+	if (empty($trackerId) && !empty($_REQUEST['trackerId'])) {
+		 $trackerId = $_REQUEST['trackerId'];
 	}
 	if (!isset($line)) {
 		$line = 'n';
 	}
+	if (empty($_REQUEST['filter'])) { // look if not coming from an initial
+		foreach ($_REQUEST as $key =>$val) {
+			if (substr($key, 0, 2) == 'f_') {
+				$_REQUEST['filter'] = 'y';
+				break;
+			}
+		}
+	}
 	if ($displayList == 'y' || isset($_REQUEST['filter']) || isset($_REQUEST['tr_offset']) || isset($_REQUEST['tr_sort_mode'])) {
 	  
-		if (empty($_REQUEST['trackerId']) || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+		if (!isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
 			return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 		}
 		if (!isset($fields)) {
@@ -62,7 +71,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		}
 		$params['fields'] = $fields;
 		if (empty($params['trackerId'] ))
-			$params['trackerId'] = $_REQUEST['trackerId'];
+			$params['trackerId'] = $trackerId;
 		unset($params['filterfield']); unset($params['filtervalue']);
 		if (!empty($ffs)) {
 			$params['filterfield'] = $ffs;
