@@ -612,10 +612,11 @@ class MultilingualLib extends TikiLib {
 					SELECT MAX(source.version)
 					FROM
 						tiki_pages_translation_bits source
-						INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
+						INNER JOIN tiki_pages_translation_bits target
+							ON source.translation_bit_id = target.source_translation_bit
 					WHERE
-						source.page_id = page.page_id
-						AND target.page_id = b.objId
+						source.page_id = b.objId
+						AND target.page_id = page.page_id
 				), 1) last_update,
 				page.version current_version,
 				page.lang
@@ -654,8 +655,8 @@ class MultilingualLib extends TikiLib {
 						tiki_pages_translation_bits source
 						INNER JOIN tiki_pages_translation_bits target ON source.translation_bit_id = target.source_translation_bit
 					WHERE
-						source.page_id = b.objId
-						AND target.page_id = a.objId
+						source.page_id = a.objId
+						AND target.page_id = b.objId
 				), 1) last_update,
 				page.lang
 			FROM
