@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.7 2008-01-24 17:21:55 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.8 2008-02-05 17:06:42 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,6 +30,13 @@ require_once ('lib/tikilib.php'); # httpScheme()
 
 // user requests that could be used to change thread display settings
 $handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode');
+
+// Set global site prefs to initialize vars
+foreach ( $handled_requests as $request_name ) {
+  if ( isset($prefs['forum_'.$request_name]) ) {
+    $$request_name = $prefs['forum_'.$request_name];
+  }
+}
 
 // First override existing values (e.g. coming from forum specific settings) by user specific requests if we allow them
 //   (we empty those user specific requests if they are denied)
