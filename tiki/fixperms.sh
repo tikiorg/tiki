@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9 2007-03-06 19:29:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9.2.1 2008-02-05 16:09:32 marclaporte Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,16 @@ if [ "$COMMAND" = 'fix' ]; then
 			AUSER=$REPLY
 		fi
 	else
-		echo "You are not root. ctrl-c to break now."
+		echo "You are not root or you are on a shared hosting account. You can now:
+
+1- ctrl-c to break now.
+
+or
+
+2- If you press enter to continue, you will probably get some error messages but it (the script) will 
+still fix what it can according to the permissions of your user. This script will now ask you some 
+questions. If you don't know what to answer, just press enter to each question (to use default value)"
+	
 		read 
 		AUSER=$USER
 	fi
@@ -135,7 +144,16 @@ elif [ "$COMMAND" = 'open' ]; then
 		chown -R $AUSER .
 		echo " done"
 	else
-		echo "You are not root. ctrl-c to break now."
+		echo "You are not root or you are on a shared hosting account. You can now:
+
+1- ctrl-c to break now.
+
+or
+
+2- If you press enter to continue, you will probably get some error messages but it (the script) will 
+still fix what it can according to the permissions of your user. This script will now ask you some 
+questions. If you don't know what to answer, just press enter to each question (to use default value)"
+
 		read 
 		echo -n "Open global perms ..."
 		find . -type d -exec chmod 777 {} \;
