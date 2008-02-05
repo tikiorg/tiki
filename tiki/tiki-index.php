@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.16 2008-02-01 01:07:18 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.17 2008-02-05 15:12:45 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -274,14 +274,18 @@ if ($prefs['feature_multilingual'] == 'y') {
 	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
 	// temporary fix: simply use info of staging page to determine critical translation bits
 	// TODO: better system of dealing with translation bits with approval		
-		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $tikilib->get_page_id_from_name($prefs['wikiapproval_prefix'] . $page), 'critical' );	
+		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $stagingPageId = $tikilib->get_page_id_from_name($prefs['wikiapproval_prefix'] . $page), 'critical' );	
 	} else {
 		$bits = $multilinguallib->getMissingTranslationBits( 'wiki page', $info['page_id'], 'critical' );
 	}
 	
 	$alertData = array();
 	foreach( $bits as $translationBit ) {
-		$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit );
+		if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
+			$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $stagingPageId );
+		} else {
+			$alertData[] = $multilinguallib->getTranslationsWithBit( $translationBit, $info['page_id'] );
+		}
 	}
 
 	$smarty->assign( 'translation_alert', $alertData );

@@ -515,18 +515,33 @@ class MultilingualLib extends TikiLib {
 		return $bits;
 	}
 
-	function getTranslationsWithBit( $translationBit )
+	function getTranslationsWithBit( $translationBit, $pageIdToUpdate )
 	{
+		$pageIdToUpdate = (int) $pageIdToUpdate;
+		$translationBit = (int) $translationBit;
+
 		$result = $this->query( "
 			SELECT
-				pageName page, lang
+				pageName page,
+				lang,
+				IFNULL( (
+					SELECT MAX(source.version)
+					FROM
+						tiki_pages_translation_bits source
+						INNER JOIN tiki_pages_translation_bits target
+							ON source.translation_bit_id = target.source_translation_bit
+					WHERE
+						source.page_id = pages.page_id
+						AND target.page_id = ?
+				), 1) last_update,
+				pages.version current_version
 			FROM
 				tiki_pages_translation_bits bits
 				INNER JOIN tiki_pages pages ON pages.page_id = bits.page_id
 			WHERE
 				translation_bit_id = ?
 				OR original_translation_bit = ?
-		", array( $translationBit, $translationBit ) );
+		", array( $pageIdToUpdate, $translationBit, $translationBit ) );
 
 		$pages = array();
 		while( $row = $result->fetchRow() ) {
