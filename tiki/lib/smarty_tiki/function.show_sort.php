@@ -8,9 +8,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_show_sort($params, &$smarty) {
 	global $url_path;
-  if (isset($params['sort']) and isset($params['var']) and isset($_REQUEST[$params['sort']])) {
-	  $prop = substr($_REQUEST[$params['sort']],0,strrpos($_REQUEST[$params['sort']],'_'));
-		$order = substr($_REQUEST[$params['sort']],strrpos($_REQUEST[$params['sort']],'_')+1);
+	if (isset($_REQUEST[$params['sort']])) {
+		$p =  $_REQUEST[$params['sort']];
+	} elseif ($s = $smarty->get_template_vars($params['sort'])) {
+		$p = $s;
+	}
+  if (isset($params['sort']) and isset($params['var']) and isset($p)) {
+	  $prop = substr($p,0,strrpos($p,'_'));
+		$order = substr($p,strrpos($p,'_')+1);
 		if (strtolower($prop) == strtolower(trim($params['var']))) {
 		  switch($order) {
 			  case 'asc':
