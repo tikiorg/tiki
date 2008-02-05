@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.9 2008-01-18 12:55:27 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.10 2008-02-05 17:05:30 pkdille Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -134,12 +134,12 @@
 {/if}
 ***}
 
+</form>
+
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
-
-</form>
 
 <div class="thread_pagination">
 
