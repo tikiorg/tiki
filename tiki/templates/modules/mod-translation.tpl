@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.7 2008-02-05 16:33:24 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.8 2008-02-05 19:07:39 lphuberdeau Exp $ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="translation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 	{if $mod_translation_better_known or $mod_translation_better_other}
 		<div>			
+			{tr}Better translations{/tr}:
 			{if $mod_translation_better_known}
-			{tr}Translations with more up-to-date content{/tr}:
 			<ul>
 				{foreach item=better from=$mod_translation_better_known}
 				<li>
@@ -20,7 +20,7 @@
 				{/foreach}
 			</ul>
 			{else}
-				{tr}No translations with more up-to-date content match your{/tr} <a href="tiki-user_preferences.php">{tr}preferred languages{/tr}</a>.
+				<div>{tr}None match your{/tr} <a href="tiki-user_preferences.php">{tr}preferred languages{/tr}</a>.</div>
 			{/if}
 			{if $mod_translation_better_other}
 			<a href="javascript:void(0)" onclick="document.getElementById('mod-translation-better-ul').style.display='block';this.style.display='none'">{tr}More...{/tr}</a>
@@ -41,8 +41,8 @@
 	{/if}
 	{if $mod_translation_worst_known or $mod_translation_worst_other}
 		<div>			
+			{tr}Translations that need improvement{/tr}:
 			{if $mod_translation_worst_known}
-			{tr}Translations with less up-to-date content{/tr}:
 			<ul>
 				{foreach item=worst from=$mod_translation_worst_known}
 				<li>
@@ -56,7 +56,7 @@
 				{/foreach}
 			</ul>
 			{else}
-				{tr}No translations with less up-to-date content match your{/tr} <a href="tiki-user_preferences.php">{tr}preferred languages{/tr}</a>.
+				<div>{tr}None match your{/tr} <a href="tiki-user_preferences.php">{tr}preferred languages{/tr}</a>.</div>
 			{/if}
 			{if $mod_translation_worst_other}
 			<a href="javascript:void(0)" onclick="document.getElementById('mod-translation-worst-ul').style.display='block';this.style.display='none'">{tr}More...{/tr}</a>
