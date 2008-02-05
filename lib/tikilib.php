@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.73 2008-01-29 23:02:15 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.74 2008-02-05 17:15:14 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5617,6 +5617,8 @@ function add_pageview() {
 			$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new").'" />';
 		} else {
 		    $uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
+			if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) )
+				$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
 
 		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:")." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
 		}
@@ -5654,7 +5656,7 @@ function add_pageview() {
 		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : ""; // to choose the best page language
 		    $repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		} else {
-		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
+		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		}
 
 		$page_parse_pq = preg_quote($page_parse, "/");
@@ -5697,10 +5699,10 @@ function add_pageview() {
 			    // $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 			    $repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$page_parse</a>";
 			} else {
-			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'').'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 			}
 		    } else {
-			$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '"  title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+			$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):''). '"  title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 		    }
 
 		    $data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
