@@ -38,7 +38,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 			$html .= "\n".str_replace( $params['_initial'].'=X', $params['_initial'].'='.$i, $tag_start).strtoupper($i).'</a>'.$sep;
 		}
 	}
-	$html .= "\n".str_replace( $params['_initial'].'=X', $params['initial'].'=', $tag_start).tra('All').'</a>';
+	$html .= "\n".str_replace( $params['_initial'].'=X', $params['_initial'].'=', $tag_start).tra('All').'</a>';
 	
 	return '<div align="center">'.$html.'</div>';
 }
