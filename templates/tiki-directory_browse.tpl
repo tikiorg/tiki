@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.26.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.26.2.2 2008-02-05 16:14:44 jyhem Exp $ *}
 
 {* The heading and category path *}
 {if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
@@ -113,7 +113,7 @@ loc="page" crumbs=$crumbs}
 <span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
 <span class="dirsitecats">
-{tr}categories{/tr}:
+{tr}Categories{/tr}:
 {section name=ii loop=$items[ix].cats}
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a>

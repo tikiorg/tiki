@@ -101,25 +101,25 @@
 	</td>
 		<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $items[ix].isActive eq 'y'}
-	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}active process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}Active Process{/tr}' />
 	  {else}
 	  &nbsp;
 	  {/if}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $items[ix].isValid eq 'n'}
-	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}invalid{/tr}) ' title='{tr}invalid process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}Invalid{/tr}) ' title='{tr}Invalid Process{/tr}' />
 	  {else}
-	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}valid{/tr}) ' title='{tr}valid process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}Valid{/tr}) ' title='{tr}Valid Process{/tr}' />
 	  {/if}
 
 	</td>
 
 	<td class="{cycle}">
-	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_graph.php?pid={$items[ix].pId}">{tr}graph{/tr}</a><br />
-	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}Activities{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}Code{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_graph.php?pid={$items[ix].pId}">{tr}Graph{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}Roles{/tr}</a><br />
 	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}Export{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}New Minor{/tr}</a><br />
 	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;filter_name={$filter_name}&amp;filter_active={$filter_active}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}New Major{/tr}</a><br />

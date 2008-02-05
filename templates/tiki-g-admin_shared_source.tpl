@@ -30,7 +30,7 @@ Errors:<br />
     <input type="submit" name='template' value="{tr}template{/tr}" />
     {/if}
     {if $activityId > 0 and $act_info.isInteractive eq 'y' and $template eq 'y'}
-	<input type="submit" name='save' value="{tr}code{/tr}" />
+	<input type="submit" name='save' value="{tr}Code{/tr}" />
     {/if}
   </td>
 

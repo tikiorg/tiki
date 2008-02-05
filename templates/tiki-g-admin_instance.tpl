@@ -23,7 +23,7 @@
 		<option value="active" {if $ins_info.status eq 'active'}selected="selected"{/if}>{tr}active{/tr}</option>
 		<option value="exception" {if $ins_info.status eq 'exception'}selected="selected"{/if}>{tr}exception{/tr}</option>
 		<option value="completed" {if $ins_info.status eq 'completed'}selected="selected"{/if}>{tr}completed{/tr}</option>
-    	<option value="aborted" {if $ins_info.status eq 'aborted'}selected="selected"{/if}>{tr}aborted{/tr}</option>
+    	<option value="aborted" {if $ins_info.status eq 'aborted'}selected="selected"{/if}>{tr}Aborted{/tr}</option>
 	</select>
 	</td>
 </tr>
@@ -98,7 +98,7 @@
 <tr>
 	<td class="odd">
 
-	 <a href="tiki-g-admin_instance.php?iid={$iid}&amp;unsetprop={$key}"><img border="0" src='lib/Galaxia/img/icons/trash.gif' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+	 <a href="tiki-g-admin_instance.php?iid={$iid}&amp;unsetprop={$key}"><img border="0" src='lib/Galaxia/img/icons/trash.gif' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
 	 <b>{$key}</b>
 	 </td>
 	<td class="odd">
@@ -126,7 +126,7 @@
 	<td class="formcolor"><input type="text" name="name" /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}value{/tr}</td>
+	<td class="formcolor">{tr}Value{/tr}</td>
 	<td class="formcolor"><textarea name="value" rows="4" cols="80"></textarea></td>
 </tr>
 <tr>

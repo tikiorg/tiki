@@ -145,7 +145,7 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}question{/tr}</td>
-  <td class="heading">{tr}answer{/tr}</td>
+  <td class="heading">{tr}Answer{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}

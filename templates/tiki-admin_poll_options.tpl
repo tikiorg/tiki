@@ -33,7 +33,7 @@
 <tr>
 <td class="heading">{tr}Position{/tr}</td>
 <td class="heading">{tr}Title{/tr}</td>
-<td class="heading">{tr}votes{/tr}</td>
+<td class="heading">{tr}Votes{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="even,odd" print=false}

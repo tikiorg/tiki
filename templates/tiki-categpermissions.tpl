@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.13 2007-10-04 22:17:39 nyloth Exp $  *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.13.2.1 2008-02-05 16:14:44 jyhem Exp $  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
 ::
 <a href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
 {/section}</h1>
-<div class="navbar"><a class="linkbut" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a></div>
 {if $prefs.feature_search_show_forbidden_cat eq 'y'}
 <div class="simplebox highlight">{tr}Categories checking is not done in the database search.{/tr}</div>
 {/if}

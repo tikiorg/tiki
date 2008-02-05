@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.37.2.3 2008-02-04 17:14:51 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.37.2.4 2008-02-05 16:14:43 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -10,7 +10,7 @@
 {icon _id='shape_square_edit'}</a>{/if}</h1>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=polls">{icon _id='wrench' alt="{tr}configure polls{/tr}"}</a>
+<a href="tiki-admin.php?page=polls">{icon _id='wrench' alt="{tr}Configure Polls{/tr}"}</a>
 {/if}
 
 <br /><br />
@@ -56,10 +56,10 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-{if $prefs.poll_list_categories eq 'y'}<td class="heading">{tr}categories{/tr}</td>{/if}
-{if $prefs.poll_list_objects eq 'y'}<td class="heading">{tr}objects{/tr}</td>{/if}
+{if $prefs.poll_list_categories eq 'y'}<td class="heading">{tr}Categories{/tr}</td>{/if}
+{if $prefs.poll_list_objects eq 'y'}<td class="heading">{tr}Objects{/tr}</td>{/if}
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}Active{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}votes{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}Votes{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></td>
 <td class="heading">{tr}Options{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>

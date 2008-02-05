@@ -46,7 +46,7 @@
 <span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
 <span class="dirsitecats">
-{tr}categories{/tr}:
+{tr}Categories{/tr}:
 {section name=ii loop=$items[ix].cats}
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a>

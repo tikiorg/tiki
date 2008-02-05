@@ -16,7 +16,7 @@
 	<small>{tr}Find{/tr}</small>
 </td>
 <td >
-	<small>{tr}proc{/tr}</small>
+	<small>{tr}Proc{/tr}</small>
 </td>
 <td >
 	<small>{tr}act{/tr}</small>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.14 2008-02-04 17:14:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.15 2008-02-05 16:14:44 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -206,10 +206,10 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}Created{/tr}</td>
 <td>{tr}Downloads{/tr}</td>
 <td>{tr}Comment{/tr}</td>
-<td>{tr}filesize{/tr}</td>
+<td>{tr}Filesize{/tr}</td>
 <td>{tr}Version{/tr}</td>
-<td>{tr}filetype{/tr}</td>
-<td>{tr}longdesc{/tr}</td></tr>
+<td>{tr}Filetype{/tr}</td>
+<td>{tr}LongDesc{/tr}</td></tr>
 <tr>
 <td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
 <td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>

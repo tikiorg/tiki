@@ -23,8 +23,8 @@
 <tr>
 <th class="heading"></th>
 <th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}filesize{/tr}</th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}filetype{/tr}</a></th></tr>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}Filesize{/tr}</th>
+<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$filestring}
 <tr class="{cycle}">

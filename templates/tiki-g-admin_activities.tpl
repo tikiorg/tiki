@@ -105,7 +105,7 @@ Errors:<br />
 </tr>
 
 <tr>
-  <td class="formcolor">{tr}roles{/tr}</td>
+  <td class="formcolor">{tr}Roles{/tr}</td>
   <td class="formcolor">
   {section name=ix loop=$roles}
   {$roles[ix].name}[<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br />
@@ -254,7 +254,7 @@ Errors:<br />
 	</td>
 
 	<td class="{cycle}">
-	<a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}">{tr}code{/tr}</a>
+	<a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}">{tr}Code{/tr}</a>
 	{if $items[ix].isInteractive eq 'y'}
 	<br /><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}&amp;template=1">{tr}template{/tr}</a>
 	{/if}

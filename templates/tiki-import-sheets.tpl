@@ -21,7 +21,7 @@
 <a href="tiki-export_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Export{/tr}</a>
 {/if}
 {if $chart_enabled eq 'y'}
-<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}graph{/tr}</a>
+<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Graph{/tr}</a>
 {/if}
 
 {if $page_mode eq 'submit'}

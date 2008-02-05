@@ -1,4 +1,4 @@
-{* $Id: tiki-syslog.tpl,v 1.16.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.16.2.3 2008-02-05 16:14:45 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -19,7 +19,7 @@
 <form method="get" action="tiki-syslog.php">
 {tr}Clean logs older than{/tr}&nbsp;
 <input type="text" name="months" size="4" /> {tr}months{/tr}
-<input type="submit" value="{tr}clean{/tr}" name="clean" />
+<input type="submit" value="{tr}Clean{/tr}" name="clean" />
 </form>
 
 <div align="center">
