@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-02-04 14:36:26 $
--- $Author: sylvieg $
+-- $Date: 2008-02-05 18:36:30 $
+-- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -8307,7 +8307,8 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `flags` SET('critical') DEFAULT '' NOT NULL,
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
-  KEY(`original_translation_bit`)
+  KEY(`original_translation_bit`),
+  KEY(`source_translation_bit`)
 )
 go
 

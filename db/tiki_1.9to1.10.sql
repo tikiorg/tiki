@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.22 2008-01-24 16:14:38 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.23 2008-02-05 18:36:32 lphuberdeau Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1682,4 +1682,7 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
   KEY(`page_id`),
   KEY(`original_translation_bit`)
 );
+
+#2008-02-05 lphuberdeau
+ ALTER TABLE `tiki_pages_translation_bits` ADD INDEX ( `original_translation_bit` )  ;
 
