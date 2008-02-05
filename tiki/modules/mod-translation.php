@@ -6,12 +6,33 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+global $pivotLanguage;
+
+function filter_languages_from_pivot( $langInfo )
+{
+	global $pivotLanguage;
+	global $pageLang;
+
+	return empty( $pivotLanguage )
+		|| $pageLang == $pivotLanguage
+		|| $langInfo['lang'] == $pivotLanguage;
+}
+
+if( isset( $module_params['pivot_language'] ) ) {
+	$pivotLanguage = $module_params['pivot_language'];
+} else {
+	$pivotLanguage = '';
+}
+
+$smarty->assign( 'pivot_language', $pivotLanguage );
+
 if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$smarty->assign( 'show_translation_module', true );
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
 
 	$langs = $multilinguallib->preferedLangs();
+	$pageLang = $GLOBALS['pageLang'];
 
 	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
 	// temporary fix: simply use info of staging page
@@ -25,6 +46,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	}
 
 	$better = $multilinguallib->getBetterPages( $transinfo['page_id'] );
+	$better = array_filter( $better, 'filter_languages_from_pivot' );
 	$known = array();
 	$other = array();
 
@@ -40,6 +62,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$smarty->assign( 'mod_translation_better_other', $other );
 
 	$worst = $multilinguallib->getWorstPages( $transinfo['page_id'] );
+	$worst = array_filter( $worst, 'filter_languages_from_pivot' );
 	$known = array();
 	$other = array();
 
