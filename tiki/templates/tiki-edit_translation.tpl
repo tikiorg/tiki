@@ -82,7 +82,8 @@
 </form>
 {/if} {* end of if !isset($allowed_for_staging_only)}
 {else}
-	<p>{tr}No language is assigned to this page. Please select a language before performing translation.{/tr}<p>
+	<h2>{tr}No language is assigned to this page!{/tr}</h2>
+	<p>{tr}Please select a language before performing translation.{/tr}<p>
 	<form method="post" action="tiki-edit_translation.php">
 		<p>
 			<select name="langpage">
@@ -91,7 +92,7 @@
 				{/foreach}
 			</select>
 			<input type="hidden" name="page" value="{$name|escape}"/>
-			<input type="submit" value="{tr}Assign{/tr}"/>
+			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
 	</form>
 {/if}
