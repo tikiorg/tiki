@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.15 2008-01-24 15:26:17 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.16 2008-02-05 21:32:15 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -1180,18 +1180,31 @@ class CategLib extends ObjectLib {
 		$this->query($query, array('article', (int)$articleId, "tiki-read_article.php?articleId=$articleId", (int)$subId, 'submission'));
 	}
 	/* build the portion of list join if filter by category
+	 * categId can be a simple value, a list of values=>or between categ, array('AND'=>list values) for an AND
 	 */
 	function getSqlJoin($categId, $objType, $sqlObj, &$fromSql, &$whereSql, &$bindVars) {
-		$fromSql .= ",`tiki_objects` co, `tiki_category_objects` cat ";
+		$fromSql .= ",`tiki_objects` co";
 		$whereSql .= " AND co.`type`=? AND co.`itemId`= $sqlObj ";
-		$whereSql .= " AND co.`objectId`=cat.`catObjectId` ";
-		if (is_array($categId)) {
-			$whereSql .= 'AND cat.`categId` IN ('.implode(',',array_fill(0,count($categId),'?')).')';
-			$bind = array($objType);
+		$bind = array($objType);
+		if (is_array($categId['AND'])) {
+			$i = 0;
+			foreach ($categId['AND'] as $c) {
+				$fromSql .= ", `tiki_category_objects` tco$i ";
+				$whereSql .= " AND tco$i.`categId`= ?  AND co.`objectId`=tco$i.`catObjectId` ";
+				++$i;
+			}
+			$bind = array_merge($bind, $categId['AND']);
+		} elseif (is_array($categId)) {
+			$fromSql .= ", `tiki_category_objects` tco ";
+			$whereSql .= " AND co.`objectId`=tco.`catObjectId` ";
+			$whereSql .= 'AND tco.`categId` IN ('.implode(',',array_fill(0,count($categId),'?')).')';
 			$bind = array_merge($bind, $categId);
 		} else {
-			$whereSql .= " AND cat.`categId`= ? ";
-			$bind = array( $objType, $categId);
+			echo "DDDD";
+			$fromSql .= ", `tiki_category_objects` tco ";
+			$whereSql .= " AND co.`objectId`=tco.`catObjectId` ";
+			$whereSql .= " AND tco.`categId`= ? ";
+			$bind[] = $categId;
 		}
 		if (is_array($bindVars))
 			$bindVars = array_merge($bindVars, $bind);
