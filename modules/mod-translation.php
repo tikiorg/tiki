@@ -32,7 +32,10 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	include_once('lib/multilingual/multilinguallib.php');
 
 	$langs = $multilinguallib->preferedLangs();
-	$pageLang = $GLOBALS['pageLang'];
+	if( isset( $GLOBALS['pageLang'] ) )
+		$pageLang = $GLOBALS['pageLang'];
+	else
+		$pageLang = '';
 
 	if ($prefs['feature_wikiapproval'] == 'y' && $tikilib->page_exists($prefs['wikiapproval_prefix'] . $page)) {
 	// temporary fix: simply use info of staging page
