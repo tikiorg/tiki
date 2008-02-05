@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.40.2.4 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.40.2.5 2008-02-05 16:14:43 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -91,7 +91,7 @@ border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/ic
 <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>
 <a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
-<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}archives{/tr}">{icon _id='database' alt="{tr}archives{/tr}"}</a>
+<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
 </td>
 </tr>
 {/section}

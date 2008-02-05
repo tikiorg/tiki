@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.42 2007-10-04 22:17:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.42.2.1 2008-02-05 16:14:45 jyhem Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -19,7 +19,7 @@
 {/if}
 
 {if $prefs.feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
-  &nbsp;<a href="tiki-browse_categories.php" class="linkmenu">{tr}categories{/tr}</a><br />
+  &nbsp;<a href="tiki-browse_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />
 {/if}
 
 {if $prefs.feature_games eq 'y' and $tiki_p_play_games eq 'y'}

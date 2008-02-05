@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.7 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.8 2008-02-05 16:14:44 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -83,7 +83,7 @@
 </span>
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 <span style="float:right">
-<a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
+<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
 </span>
 {/if}{if $prefs.forum_list_desc eq 'y'}<br />
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}

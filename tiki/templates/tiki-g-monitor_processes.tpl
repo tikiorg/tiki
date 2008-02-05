@@ -26,13 +26,13 @@
 	<small>{tr}Find{/tr}</small>
 </td>
 <td >
-	<small>{tr}proc{/tr}</small>
+	<small>{tr}Proc{/tr}</small>
 </td>
 <td >
 	<small>{tr}Active{/tr}</small>
 </td>
 <td >
-	<small>{tr}valid{/tr}</small>
+	<small>{tr}Valid{/tr}</small>
 </td>
 <td >
 	&nbsp;
@@ -103,16 +103,16 @@
 
 	<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $proc.isActive eq 'y'}
-	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}active process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}Active{/tr}) ' title='{tr}Active Process{/tr}' />
 	  {else}
 	  &nbsp;
 	  {/if}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
 	  {if $proc.isValid eq 'n'}
-	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}invalid{/tr}) ' title='{tr}invalid process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}Invalid{/tr}) ' title='{tr}Invalid Process{/tr}' />
 	  {else}
-	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}valid{/tr}) ' title='{tr}valid process{/tr}' />
+	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}Valid{/tr}) ' title='{tr}Valid Process{/tr}' />
 	  {/if}
 
 	</td>

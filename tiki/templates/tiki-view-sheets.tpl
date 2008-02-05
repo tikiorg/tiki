@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.17.2.1 2007-12-18 15:51:46 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.17.2.2 2008-02-05 16:14:45 jyhem Exp $ *}
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
 {* here is missing body tag when above link to CSS remains!!! (luci) *}
 <h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>
@@ -79,6 +79,6 @@
 <a href="tiki-import_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}import{/tr}</a>
 {/if}
 {if $chart_enabled eq 'y'}
-<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}graph{/tr}</a>
+<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Graph{/tr}</a>
 {/if}
 {/if}

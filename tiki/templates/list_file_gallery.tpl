@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.5 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.6 2008-02-05 16:14:43 jyhem Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 {if !isset($show_find) or $show_find ne 'n'}
@@ -293,7 +293,7 @@
 {tr}Perform action with checked:{/tr} 
 {if !isset($file_info)}
 	{if $file_offset}<input type="hidden" name="file_offset" value="{$file_offset}" />{/if}
-	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}move selected files{/tr}' />
+	<input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' />
 {/if}
 <input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onclick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
 </div>

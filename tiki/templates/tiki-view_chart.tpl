@@ -17,25 +17,25 @@
 {if $chart_info.frequency > 0}
     <br />
 	{if $prevPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}">{icon _id='resultset_previous' alt='{tr}previous chart{/tr}'}</a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}">{icon _id='resultset_previous' alt='{tr}Previous Chart{/tr}'}</a>
 	{/if}
 	<b>{tr}Chart created{/tr}: {$items[0].timestamp|tiki_long_datetime}</b>
 	{if $nextPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}">{icon _id='resultset_next' alt='{tr}next chart{/tr}'}</a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}">{icon _id='resultset_next' alt='{tr}Next Chart{/tr}'}</a>
 	{/if}
 {/if}
 <table class="normal">
 <tr>
-	<td style="text-align:right;"  class="heading">{tr}pos{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}pre{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}permanency{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}Pos{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}Pre{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}Permanency{/tr}</td>
 	<td class="heading">{tr}Item{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}chg{/tr}</td>
 	{if $chart_info.showVotes eq 'y'}
-	<td style="text-align:right;"  class="heading">{tr}votes{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}Votes{/tr}</td>
 	{/if}
 	{if $chart_info.showAverage eq 'y'}
-	<td style="text-align:right;"  class="heading">{tr}avg{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}Avg{/tr}</td>
 	{/if}
 	<td style="text-align:right;"  class="heading">&nbsp;</td>
 </tr>

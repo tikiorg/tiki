@@ -24,7 +24,7 @@
 </tr>
 <tr>
   <td class="{cycle advance=false}">&nbsp;</td>
-  <td class="{cycle}" colspan="5"><i>{tr}categories{/tr}:{assign var=fsfs value=1}
+  <td class="{cycle}" colspan="5"><i>{tr}Categories{/tr}:{assign var=fsfs value=1}
   {section name=ii loop=$items[user].cats}
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   {$items[user].cats[ii].path}

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.4 2008-01-31 18:27:21 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.5 2008-02-05 16:14:43 jyhem Exp $ *}
 
-<h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">

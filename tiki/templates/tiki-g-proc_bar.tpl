@@ -4,9 +4,9 @@
 <tr>
 	<td><b>{$proc_info.name}:{$proc_info.version}</b>
 	{if $proc_info.isValid eq 'y'}
-		<img border='0' src='lib/Galaxia/img/icons/green_dot.gif' alt='{tr}valid{/tr}' title='{tr}valid{/tr}' />	
+		<img border='0' src='lib/Galaxia/img/icons/green_dot.gif' alt='{tr}Valid{/tr}' title='{tr}Valid{/tr}' />	
 	{else}
-		<img border='0' src='lib/Galaxia/img/icons/red_dot.gif' alt='{tr}invalid{/tr}' title='{tr}invalid{/tr}' />
+		<img border='0' src='lib/Galaxia/img/icons/red_dot.gif' alt='{tr}Invalid{/tr}' title='{tr}Invalid{/tr}' />
 	{/if}
 	</td>
 	<td align='right'>
@@ -19,10 +19,10 @@
 			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}&amp;activate_proc={$pid}"><img border='0' src='lib/Galaxia/img/icons/refresh2.gif' alt='{tr}Activate{/tr}' title='{tr}Activate{/tr}' /></a></td>									
 			{/if}
 			{/if}
-			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}activities{/tr}' title='{tr}activities{/tr}' /></a></td>						
-			<td><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/book.gif' alt='{tr}code{/tr}' title='{tr}code{/tr}' /></a></td>		
-			<td><a class="link" href="tiki-g-admin_graph.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/mode_tree.gif' alt='{tr}graph{/tr} 'title='{tr}graph{/tr}' /></a></td>		
-			<td><a class="link" href="tiki-g-admin_roles.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/myinfo.gif' alt='{tr}roles{/tr}' title='{tr}roles{/tr}' /></a></td>		
+			<td><a class="link" href="tiki-g-admin_activities.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}Activities{/tr}' title='{tr}Activities{/tr}' /></a></td>						
+			<td><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/book.gif' alt='{tr}Code{/tr}' title='{tr}Code{/tr}' /></a></td>		
+			<td><a class="link" href="tiki-g-admin_graph.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/mode_tree.gif' alt='{tr}Graph{/tr} 'title='{tr}Graph{/tr}' /></a></td>		
+			<td><a class="link" href="tiki-g-admin_roles.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/myinfo.gif' alt='{tr}Roles{/tr}' title='{tr}Roles{/tr}' /></a></td>		
 			<td><a class="link" href="tiki-g-admin_processes.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/change.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a></td>				
 			<td><a class="link" href="tiki-g-save_process.php?pid={$pid}"><img border='0' src='lib/Galaxia/img/icons/export.gif' alt='{tr}Export{/tr}' title='{tr}Export{/tr}' /></a></td>
 		</tr>
