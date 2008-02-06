@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.76 2008-02-06 01:52:21 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.77 2008-02-06 02:38:47 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7453,8 +7453,8 @@ function detect_browser_language() {
 	    $dh = opendir("lang");
 	    while ($lang = readdir($dh)) {
 		if (!strpos($lang,'.') and is_dir("lang/$lang") and file_exists("lang/$lang/language.php")) {
-		    $available[] = $lang;
-		    $available_aprox[substr($lang, 0, 2)] = $lang;
+		    $available[strtolower($lang)] = $lang;
+		    $available_aprox[substr(strtolower($lang), 0, 2)] = $lang;
 			}
 	    }
 	}
@@ -7464,9 +7464,9 @@ function detect_browser_language() {
     $aproximate_lang = '';
     foreach ($supported as $supported_lang) {
 	$lang = strtolower($supported_lang);
-	if (in_array($lang, $available)) {
+	if (in_array($lang, array_keys($available))) {
 		// exact match is always good 
-	    return $lang;
+	    return $available[$lang];
 	} elseif (in_array($lang, array_keys($available_aprox))) {
 		// otherwise if supported language matches any available dialect, ok also
 	    return $available_aprox[$lang];
