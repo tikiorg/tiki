@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.30 2008-02-01 15:49:09 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.31 2008-02-06 19:18:19 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1567,7 +1567,7 @@ class TrackerLib extends TikiLib {
 			if ($res['type'] == 'd' || $res['type'] == 'D' || $res['type'] == 'R') { // drop down
 				if ($prefs['feature_multilingual'] == 'y') {
 					foreach ($res['options_array'] as $key=>$l) {
-						$res['options_array'][$key] = tra($l);
+						$res['options_array'][$key] = $l;
 					}
 				}
 				$res = $this->set_default_dropdown_option($res);						
