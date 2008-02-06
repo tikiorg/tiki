@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83.2.5 2008-01-30 15:33:53 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83.2.6 2008-02-06 08:58:48 pkdille Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}</h1>
 
@@ -15,7 +15,7 @@
 {/if}
 
 {if $post_reported eq 'y'}
-	<p class="reported_note">{tr}The post has been reported and will be reviewed by a moderator.{/tr}</p>
+	<p class="simplebox highlight reported_note">{tr}The post has been reported and will be reviewed by a moderator.{/tr}</p>
 {/if}
 
 {if $tiki_p_admin_forum eq "y"}
