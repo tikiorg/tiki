@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.13 2008-01-24 20:59:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.14 2008-02-06 20:51:56 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -53,7 +53,15 @@
 {elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's'}
 	{if $list_mode ne 'csv'}&nbsp;{/if} {* to have something to click on *}
 
-{* -------------------- test field, numeric, grop down, radio,user/group/IP selector, autopincrement, dynamic list *}
+{* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
+{elseif $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R'}
+	{if $list_mode eq 'y'}
+		{$field_value.value|tr_if|truncate:255:"..."|default:"&nbsp;"}
+	{else}
+		{$field_value.value|tr_if}
+	{/if}
+
+{* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
 	{if $list_mode eq 'y'}
 		{$field_value.value|truncate:255:"..."|default:"&nbsp;"}
