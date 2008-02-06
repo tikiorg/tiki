@@ -160,7 +160,9 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			$html .= ( isset($images) ? '' : '[' )
 				.make_prevnext_link($url.$prev_offset, ( isset($images) ? $images['previous'] : tra('Prev') ), $params )
 				.( isset($images) ? '' : ']' );
-   		}
+   		} elseif (isset($images)) {
+			$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
+		}
 		$html .= ' '.tra($params['itemname']).': '.(1 + floor(($real_offset) / $params['step'])).'/'.$nb_pages;
 		if ( $params['next'] == 'y' ) {
 			$html .= ( isset($images) ? '' : '[' )
@@ -173,6 +175,8 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 					), $images['last'], $params
 				);
 			}
+   		} elseif (isset($images)) {
+			$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
    		}
 		if ( $prefs['direct_pagination'] == 'y' ) {
 			$html .= "\n<br />";
