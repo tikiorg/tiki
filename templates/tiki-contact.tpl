@@ -19,11 +19,16 @@
     <input type="submit" name="send" value="{tr}Send{/tr}" />
     </td>
   </tr>
+
+{if $feature_antibot eq 'y' && $user eq ''}
+{include file=antibot.tpl}
+{/if}
+  
   <tr>
-    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="" size="80" maxlength="255"/></td>
+    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="{$subject}" size="80" maxlength="255"/></td>
   </tr>
   <tr><td class="form">&nbsp;</td>
-      <td class="form"><textarea rows="20" cols="80" name="body"></textarea></td>
+      <td class="form"><textarea rows="20" cols="80" name="body">{$body}</textarea></td>
   </tr>
 </table>
 </form>

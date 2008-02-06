@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.2 2007-11-25 22:12:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.3 2008-02-06 14:06:18 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,19 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 		// must have a subject or body non-empty (or both)
 		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
 			$smarty->assign('message', tra('ERROR: you must include a subject or a message at least'));
+			$smarty->assign('priority', $_REQUEST['priority']);
 			$smarty->display("tiki.tpl");
 			die;
+		}
+		if ((!$user || $user == 'anonymous') && $feature_antibot == 'y') {
+			if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+				$smarty->assign('message',tra("You have mistyped the anti-bot verification code; please try again."));
+				if (!empty($_REQUEST['subject'])) $smarty->assign_by_ref('subject', $_REQUEST['subject']);
+				if (!empty($_REQUEST['body'])) $smarty->assign_by_ref('body', $_REQUEST['body']);
+				if (!empty($_REQUEST['priority'])) $smarty->assign_by_ref('priority', $_REQUEST['priority']);
+				$smarty->display("tiki.tpl");
+				die;
+			}
 		}
 		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
