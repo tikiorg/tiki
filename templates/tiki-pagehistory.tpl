@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.5 2008-01-28 19:03:05 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.6 2008-02-06 03:59:33 nkoth Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -106,7 +106,7 @@
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
-{foreach item=element from=$history}
+{foreach name=hist item=element from=$history}
 <tr>
 {if $tiki_p_remove eq 'y'}
 <td class="{cycle advance=false} button"><input type="checkbox" name="hist[{$element.version}]" /></td>
@@ -150,10 +150,10 @@
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
-<input type="radio" name="oldver" value="{$element.version}" title="{tr}older version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
+<input type="radio" name="oldver" value="{$element.version}" title="{tr}older version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
 </td>
 <td class="{cycle} button">
-{* if $smarty.section.hist.last &nbsp; *}
+{* if $smarty.foreach.hist.last &nbsp; *}
 <input type="radio" name="newver" value="{$element.version}" title="Select a newer version for comparison" {if $new.version == $element.version}checked="checked"{/if} />
 </td>
 {/if}
