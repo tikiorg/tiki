@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.24 2008-02-06 16:37:04 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.25 2008-02-06 17:42:10 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1686,8 +1686,4 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
 #2008-02-05 lphuberdeau
  ALTER TABLE `tiki_pages_translation_bits` ADD INDEX ( `original_translation_bit` )  ;
 
-#2006-02-06 sylvieg
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries');
-UPDATE tiki_menu_options set perm='tiki_p_list_file_galleries' where menuId=42 and url='tiki-file_galleries.php' and name='List galleries';
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers');
-UPDATE tiki_menu_options set perm='tiki_p_list_trackers' where menuId=42 and url='tiki-list_trackers.php';
+
