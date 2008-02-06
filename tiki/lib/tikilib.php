@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.75 2008-02-05 21:17:32 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.76 2008-02-06 01:52:21 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -7460,13 +7460,18 @@ function detect_browser_language() {
 	}
 
     // Check better language
-    // First try an exact match, then an aproximate
+    // Priority has been changed in 1.10 to that defined in RFC 4647
     $aproximate_lang = '';
     foreach ($supported as $supported_lang) {
 	$lang = strtolower($supported_lang);
-       	if (in_array($lang, $available)) {
+	if (in_array($lang, $available)) {
+		// exact match is always good 
 	    return $lang;
-	} else {
+	} elseif (in_array($lang, array_keys($available_aprox))) {
+		// otherwise if supported language matches any available dialect, ok also
+	    return $available_aprox[$lang];
+	} elseif ($aproximate_lang == '') {
+		// otherwise if supported dialect matches language, store as possible fallback 
 	    $lang = substr($lang, 0, 2);
 	    if (in_array($lang, array_keys($available_aprox))) {
 		$aproximate_lang = $available_aprox[$lang];
