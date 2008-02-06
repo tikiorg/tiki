@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.3 2008-02-06 14:06:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.25.2.4 2008-02-06 14:11:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,6 @@ $email = scrambleEmail($email, $tikilib->get_user_preference('admin', "email is 
 $smarty->assign('email', $email);
 
 if ($user == '' and $prefs['contact_anon'] == 'y') {
-  $user = 'anonymous';
 	$smarty->assign('sent', 0);
 	if (isset($_REQUEST['send'])) {
 		check_ticket('contact');
@@ -46,7 +45,7 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-		if ((!$user || $user == 'anonymous') && $feature_antibot == 'y') {
+		if ($feature_antibot == 'y') {
 			if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 				$smarty->assign('message',tra("You have mistyped the anti-bot verification code; please try again."));
 				if (!empty($_REQUEST['subject'])) $smarty->assign_by_ref('subject', $_REQUEST['subject']);
@@ -56,7 +55,7 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 				die;
 			}
 		}
-		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
+		$messulib->post_message($prefs['contact_user'], 'Anonymous', $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 		$message = tra('Message sent to'). ':' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);
