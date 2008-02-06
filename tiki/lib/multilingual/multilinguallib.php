@@ -524,16 +524,7 @@ class MultilingualLib extends TikiLib {
 			SELECT
 				pageName page,
 				lang,
-				IFNULL( (
-					SELECT MAX(source.version)
-					FROM
-						tiki_pages_translation_bits source
-						INNER JOIN tiki_pages_translation_bits target
-							ON source.translation_bit_id = target.source_translation_bit
-					WHERE
-						source.page_id = pages.page_id
-						AND target.page_id = ?
-				), 1) last_update,
+				" . $this->subqueryObtainUpdateVersion( 'pages.page_id', '?' ) . " last_update,
 				pages.version current_version
 			FROM
 				tiki_pages_translation_bits bits
@@ -616,6 +607,31 @@ class MultilingualLib extends TikiLib {
 		return $list;
 	}
 
+	function subqueryObtainUpdateVersion( $sourcePage, $targetPage )
+	{
+		// Meant to be inlined in an other query. Useful in many cases.
+
+		/*
+			Fetches the lowest version of source containing a bit not present
+			in target. 
+
+			-1 is made on the version so the diff is made properly.
+			IFNULL defaults to 2 so no result is turned back to 1
+		*/
+		return "(
+					SELECT 
+						IFNULL( MIN(version), 2 ) - 1
+					FROM
+						tiki_pages_translation_bits
+					WHERE
+						page_id = $sourcePage
+						AND IFNULL( original_translation_bit, translation_bit_id ) NOT IN(
+							SELECT IFNULL( original_translation_bit, translation_bit_id )
+							FROM tiki_pages_translation_bits
+							WHERE page_id = $targetPage)
+				)";
+	}
+
 	function getBetterPages( $pageId )
 	{
 		$pageId = (int) $pageId;
@@ -623,16 +639,7 @@ class MultilingualLib extends TikiLib {
 		$result = $this->query( "
 			SELECT DISTINCT
 				page.pageName page,
-				IFNULL( (
-					SELECT IF( MAX(source.version) > MAX(back.version), MAX(source.version), MAX(back.version) )
-					FROM
-						tiki_pages_translation_bits target
-						LEFT JOIN tiki_pages_translation_bits source ON source.translation_bit_id = target.source_translation_bit
-						LEFT JOIN tiki_pages_translation_bits back ON target.translation_bit_id = back.source_translation_bit
-					WHERE
-						target.page_id = b.objId
-						AND ( source.page_id = a.objId OR back.page_id = a.objId )
-				), 1) last_update,
+				" . $this->subqueryObtainUpdateVersion( 'a.objId', 'b.objId' ) . " last_update,
 				page.version current_version,
 				page.lang
 			FROM
@@ -664,16 +671,7 @@ class MultilingualLib extends TikiLib {
 		$result = $this->query( "
 			SELECT DISTINCT
 				page.pageName page,
-				IFNULL( (
-					SELECT IF( MAX(source.version) > MAX(back.version), MAX(source.version), MAX(back.version) )
-					FROM
-						tiki_pages_translation_bits target
-						LEFT JOIN tiki_pages_translation_bits source ON source.translation_bit_id = target.source_translation_bit
-						LEFT JOIN tiki_pages_translation_bits back ON target.translation_bit_id = back.source_translation_bit
-					WHERE
-						target.page_id = a.objId
-						AND ( back.page_id = b.objId OR source.page_id = b.objId )
-				), 1) last_update,
+				" . $this->subqueryObtainUpdateVersion( 'b.objId', 'a.objId' ) . " last_update,
 				page.lang
 			FROM
 				tiki_pages page
