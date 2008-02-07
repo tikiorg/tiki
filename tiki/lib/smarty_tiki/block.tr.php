@@ -25,6 +25,6 @@ function smarty_block_tr($params, $content, &$smarty) {
 	} else {
 		$lang = $params['lang'];
 	}
-	echo tra($content,$lang);
+	return tra($content,$lang);
 }
 ?>
