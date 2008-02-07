@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.25 2008-02-06 17:42:10 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.26 2008-02-07 12:57:28 jyhem Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1685,5 +1685,18 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
 
 #2008-02-05 lphuberdeau
  ALTER TABLE `tiki_pages_translation_bits` ADD INDEX ( `original_translation_bit` )  ;
+
+#2008-02-07 Jyhem (split perms tiki_p_view_file_gallery and tiki_p_view_trackers with tiki_p_list_file_galleries and tiki_p_list_trackers)
+# This should work with mysql 4 and upwards. Feel free to replace with a postgresql-compatible approach using temporary tables
+SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_file_galleries' INTO @fgcant;
+INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_file_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
+UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries.php' AND perm='tiki_p_view_file_gallery' AND type='o' AND @fgcant = 0;
+UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries_rankings.php' AND perm='tiki_p_view_file_gallery' AND @fgcant = 0;
+
+INSERT INTO `users_permissions` SELECT  'tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
+SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_trackers' INTO @tcant;
+INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_trackers','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
+UPDATE `tiki_menu_options` SET perm='tiki_p_list_trackers' WHERE perm='tiki_p_view_trackers' AND @tcant = 0;
+INSERT INTO `users_permissions` SELECT  'tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
 
 
