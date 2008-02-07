@@ -20,7 +20,7 @@
     </td>
   </tr>
 
-{if $feature_antibot eq 'y' && $user eq ''}
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
 {include file=antibot.tpl}
 {/if}
   
