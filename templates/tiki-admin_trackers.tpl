@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.15 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.16 2008-02-07 19:37:14 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -11,7 +11,7 @@
 <div class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $trackerId}
-<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker fields{/tr}</span>
+<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker fields{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 {/if}
 </div>
@@ -297,7 +297,7 @@ categories = {$catsdump}
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 <br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
 </td></tr>
-<tr class="formcolor"><td>{tr}Filter{/tr}</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y"}</td></tr>
+<tr class="formcolor"><td>{tr}Filter{/tr}</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 </table>
 </form>
