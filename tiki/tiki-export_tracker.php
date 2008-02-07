@@ -1,11 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.8 2008-01-23 19:31:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.9 2008-02-07 19:38:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+@ini_set('max_execution_time', 0); //will not work in safe_mode is on
 require_once('tiki-setup.php');
 
 if ($prefs['feature_trackers'] != 'y') {
@@ -127,22 +128,27 @@ if (empty($_REQUEST['encoding'])) {
 	$_REQUEST['encoding'] = 'UTF-8';
 }
 
-header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
-header("Content-Disposition: attachment; filename=".tra('tracker')."_".$_REQUEST['trackerId'].".csv");
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-header("Pragma: public");
+if (!empty($_REQUEST['file'])) {
+	$fp = fopen($prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv", 'w');
+} else {
+	header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+	header("Content-Disposition: attachment; filename=".tra('tracker')."_".$_REQUEST['trackerId'].".csv");
+	header("Expires: 0");
+	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+	header("Pragma: public");
+}
 
 $offset = 0;
 $maxRecords = 100;
-$sort_mode = '';
+$sort_mode = 'tti.itemId_asc';
 $smarty->assign_by_ref('heading', $heading);
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	// still need to filter the fields that are view only by the admin and the item creator
-	foreach ($items['data'] as $f=>$v) {
-		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'],$user);
-	}
-	$smarty->assign('items', $items["data"]);
+	if ($tracker_info['useRatings'] == 'y')
+		foreach ($items['data'] as $f=>$v) {
+			$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$items['data'][$f]['itemId'],$user);
+		}
+	$smarty->assign_by_ref('items', $items["data"]);
 
 	$data = $smarty->fetch('tiki-export_tracker.tpl');
 	if (!empty($_REQUEST['encoding']) && $_REQUEST['encoding'] == 'ISO-8859-1') {
@@ -151,6 +157,12 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 
 	$offset += $maxRecords;
 	$heading = 'n';
-	echo $data;
+	if (!empty($fp)) {
+		echo $offset.' ';
+		fwrite($fp, $data);
+	} else
+		echo $data;
 }
+if (!empty($fp))
+	fclose($fp);
 ?>
