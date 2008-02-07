@@ -1,5 +1,4 @@
-#!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.1 2007-12-08 12:19:48 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.2 2008-02-07 21:59:14 lphuberdeau Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,19 +50,19 @@ This script assigns necessary permissions for the directories that the
 webserver writes files to. It also creates the (initially empty) cache 
 directories, if necessary.
 
-Usage $0 user [group] [rights] [list of virtual host domains]
+Usage sh $0 user [group] [rights] [list of virtual host domains]
 
 For example, if apache is running as user $AUSER and group $AGROUP (can be found in phpinfo),
  and if you are running as user $USER, type:
 
-  su -c '$0 $USER $AGROUP'
+  su -c 'sh $0 $USER $AGROUP'
  
 This will allow you to delete certain files/directories without becoming root.
   
 Or, if you can't become root, but are a member of the group apache runs under
 (for example: $AGROUP), you can type:
 
-  $0 $USER $AGROUP
+  sh $0 $USER $AGROUP
 
 Be aware, that you probably have to do a 
 
@@ -74,19 +73,19 @@ if your tiki runs in a PHP-safe-mode environment.
 If you can't become root, and are not a member of the apache group, but if
 your system uses ACL's (check with "mount | grep acl"), then type:
 
-  $0 -acl $USER $AGROUP
+  sh $0 -acl $USER $AGROUP
 
 If you can't become root, and are not a member of the apache group, and
 your system does not support ACL's then type:
 
-  $0 $USER yourgroup 02777
+  sh $0 $USER yourgroup 02777
 
 Replace yourgroup with your default group. Tip: You can find your group using the command 'id'.
 
 If you are on a shared hosting account, you can't become root, and your 
 group is probably the same as your user name. The following should work for you:
 
-  $0 $USER $USER 02777
+  sh $0 $USER $USER 02777
 
 
 NOTE: If you do execute on of the three last commands, you will not be able 
@@ -103,11 +102,11 @@ To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot)
 add a list of domains to the command to create all the needed directories.
 For example:
 
-  su -c '$0 $USER $AGROUP $RIGHTS domain1 domain2 domain3'
+  su -c 'sh $0 $USER $AGROUP $RIGHTS domain1 domain2 domain3'
 
 or, if you can't become root:
 
-  $0 $USER $AGROUP 02777 domain1 domain2 domain3
+  sh $0 $USER $AGROUP 02777 domain1 domain2 domain3
 
 
 ---Mods----
@@ -116,12 +115,12 @@ http://mods.tikiwiki.org/
 
 special for mods installer
 
-  $0 $AUSER all
+  sh $0 $AUSER all
 
 will change perms on all tiki files so you can use the tikimods power.
 Remember to run the perms setup again when mods installer use if done.
   
-	$0 $USER $AGROUP 
+	sh $0 $USER $AGROUP 
 
 EOF
 	exit 1
