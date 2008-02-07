@@ -6,7 +6,7 @@
 <div id="bTrackerFilter{$iTrackerFilter}" style="valign:top;display:{if $open ne 'y'}block{else}none{/if}"><span class="button2"><a href="javascript:toggleBlock('trackerFilter{$iTrackerFilter}');toggleBlock('bTrackerFilter{$iTrackerFilter}');" class="linkbut">{tr}Show Filters{/tr}</a></span></div>
 {/if}
 <div id="trackerFilter{$iTrackerFilter}" style="display:{if $open eq 'y' or $line eq 'y'}block{else}none{/if}">
-<form method="post">
+{if empty($inForm)}<form method="post">{/if}
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <table class="normal">
 {if $line eq 'y'}<tr>{/if}
@@ -51,5 +51,5 @@
 {/if}
 </tr>
 </table>
-</form>
+{if empty($inForm)}</form>{/if}
 </div>
