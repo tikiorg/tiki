@@ -617,10 +617,12 @@ class MultilingualLib extends TikiLib {
 
 			-1 is made on the version so the diff is made properly.
 			IFNULL defaults to 2 so no result is turned back to 1
+
+			If the actual version returned is 1, 1 should be returned and not 0.
 		*/
 		return "(
 					SELECT 
-						IFNULL( MIN(version), 2 ) - 1
+						IFNULL( IF(MIN(version) = 1, 2, MIN(version)), 2 ) - 1
 					FROM
 						tiki_pages_translation_bits
 					WHERE
