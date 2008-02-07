@@ -51,7 +51,13 @@ function smarty_function_query($params, &$smarty) {
     } else {
       foreach ( $query as $k => $v ) {
         if ( $ret != '' ) $ret .= $sep;
-        $ret .= urlencode($k).'='.urlencode($v);
+	if ( is_array($v) ) {
+	  foreach ( $v as $vk => $vv ) {
+	    $ret .= urlencode($k.'['.$vk.']').'='.urlencode($vv);
+	  }
+	} else {
+          $ret .= urlencode($k).'='.urlencode($v);
+	}
       }
     }
   }
