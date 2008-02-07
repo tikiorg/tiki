@@ -1,5 +1,4 @@
-#!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9.2.1 2008-02-05 16:09:32 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9.2.2 2008-02-07 21:59:14 lphuberdeau Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,7 +111,6 @@ questions. If you don't know what to answer, just press enter to each question (
 	chown -R $AUSER:$AGROUP .
 	echo -n " chowned ..."
 	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;
-	chmod og+x setup.sh fixperms.sh
 	echo -n " files perms fixed ..."
 	find . -type d -exec chmod 755 {} \;
 	echo " dirs perms fixed ... done"
@@ -164,6 +162,5 @@ else
 	echo "Type 'fix' or 'open' as command argument."
 fi
 
-chmod +x $0
 exit 0
 
