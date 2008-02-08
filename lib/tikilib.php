@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.77 2008-02-06 02:38:47 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.78 2008-02-08 17:53:16 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5400,7 +5400,7 @@ function add_pageview() {
 	    for ($i = 0; $i < $temp_max; $i++) {
 		// Check if the image exists
 		$name = $pics[1][$i];
-		if ($tikidomain) {
+		if ($tikidomain && !preg_match('|^https?:|', $name)) {
 			$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
 		}
 		if (file_exists($name) and (preg_match('/(gif|jpe?g|png)$/i',$name))) {
@@ -5743,7 +5743,7 @@ function add_pageview() {
 			if (stristr(str_replace(' ', '', $imgdata["src"]),'javascript:')) {
 				$imgdata["src"]  = '';
 			}
-			if ($tikidomain) {
+			if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
 				$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
 			}
 			if (strstr($imgdata["src"],'javascript:')) {
