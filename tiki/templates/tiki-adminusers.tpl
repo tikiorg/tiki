@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.7 2008-02-06 09:35:11 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.8 2008-02-08 13:56:55 jyhem Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -172,8 +172,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
     <option value="" selected>-</option>
     <option value="remove_users" >{tr}Remove{/tr}</option>
     {if $prefs.feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>{/if}
-    <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
-    <option value="set_default_groups">{tr}set default groups{/tr}</option>
+    <option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
+    <option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
   </select>
   <input type="submit" value="{tr}OK{/tr}" />
   {elseif $group_management_mode eq 'y'}
@@ -186,7 +186,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
   {section name=ix loop=$groups}
   	<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
   {/section}
-  </select><br /><input type="submit" value="{tr}OK{/tr}" /><div class="simplebox">{tr}Tip: hold down CTRL to select multiple{/tr}</div>
+  </select><br /><input type="submit" value="{tr}OK{/tr}" /><div class="simplebox">{tr}Tip: Hold down CTRL to select multiple{/tr}</div>
   {elseif $set_default_groups_mode eq 'y'}
   {tr}Set the default group of the selected users to{/tr}:<br />
   <select name="checked_group" size="20">
