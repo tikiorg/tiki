@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.18 2007-10-14 17:51:03 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.18.2.1 2008-02-08 09:10:41 jyhem Exp $ *}
 {if $prefs.feature_tasks eq 'y' and $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>"}{/if}
 {tikimodule title=$tpl_module_title name="user_tasks" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
@@ -26,7 +26,7 @@
 {/section}
 </table>
 <input style="font-size: 9px;" type="submit" name="modTasksCom" value="{tr}done{/tr}" />
-<input style="font-size: 9px;" type="submit" name="modTasksDel" value="{tr}del{/tr}" />
+<input style="font-size: 9px;" type="submit" name="modTasksDel" value="{tr}Del{/tr}" />
 </form>
 {/tikimodule}
 {/if}

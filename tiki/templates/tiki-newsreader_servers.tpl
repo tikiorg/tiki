@@ -41,7 +41,7 @@
 </td>
 <td class="{cycle}">
 	<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}">{icon _id='page_edit'}</a>
-	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">{icon _id='cross' alt='{tr}del{/tr}' title='{tr}Delete{/tr}'}</a>
+	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">{icon _id='cross' alt='{tr}Del{/tr}' title='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
 {/section}

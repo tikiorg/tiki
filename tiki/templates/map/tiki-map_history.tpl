@@ -5,11 +5,11 @@
 {/if}
 
 {if $diff_style}
-<h2><a href="tiki-map_history.php?mapfile={$mapfile}" title="{tr}compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
+<h2><a href="tiki-map_history.php?mapfile={$mapfile}" title="{tr}Compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
 <table class="normal diff">
 <tr>
-  <th colspan="2"><b>{tr}Version:{/tr} {$old.version}{if $old.version == $info.version} ({tr}current{/tr}){/if}</b></th>
-  <th colspan="2"><b>{tr}Version:{/tr} {$new.version}{if $new.version == $info.version} ({tr}current{/tr}){/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} {$old.version}{if $old.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
+  <th colspan="2"><b>{tr}Version:{/tr} {$new.version}{if $new.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
 </tr>
 <tr>
   <td colspan="2">{$old.user|userlink} - {$old.lastModif|tiki_short_datetime}</td>
@@ -105,7 +105,7 @@
 <th class="heading">{tr}Action{/tr}</th>
 {if $prefs.default_wiki_diff_style != "old" and $history}
 <th class="heading" colspan="2">
-<input type="submit" name="compare" value="{tr}compare{/tr}" /><br />
+<input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
 </th>
 {/if}
 </tr>
@@ -119,14 +119,14 @@
 <td class="{cycle advance=false} button">
 &nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;preview={$history[hist].version}" title="{tr}View{/tr}">v</a>
 {if $prefs.default_wiki_diff_style eq "old"}
-&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
-&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
+&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=sideview" title="{tr}Compare{/tr}">c</a>
+&nbsp;<a class="link" href="tiki-map_history.php?mapfile={$mapfile}&amp;diff2={$history[hist].version}&amp;diff_style=unidiff" title="{tr}Diff{/tr}">d</a>
 {/if}
 &nbsp;
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
-<input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}older version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
+<input type="radio" name="oldver" value="{$history[hist].version}" title="{tr}Older Version{/tr}" {if $old.version == $history[hist].version or (!$diff_style and $smarty.section.hist.first)}checked="checked"{/if} />
 </td>
 <td class="{cycle} button">
 {* if $smarty.section.hist.last &nbsp; *}

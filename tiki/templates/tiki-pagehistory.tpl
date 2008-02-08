@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.6 2008-02-06 03:59:33 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.7 2008-02-08 09:10:41 jyhem Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -9,7 +9,7 @@
 {if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
 </h2>
 {if $info.version ne $preview and  $tiki_p_rollback eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}rollback{/tr}">{tr}rollback to this version{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 {/if}
 <div  class="wikitext">{$previewd}</div>
 {/if}
@@ -19,7 +19,7 @@
 {if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
 </h2>
 {if $info.version ne $source and $tiki_p_rollback eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}rollback{/tr}">{tr}rollback to this version{/tr}</a></div>
+<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 {/if}
 <div  class="wikitext">{$sourced}</div>
 {/if}
@@ -53,7 +53,7 @@
 
 <table border="1" cellpadding="2" cellspacing="0">
 <tr>
-{if $tiki_p_remove eq 'y'}<th class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></th>{/if}
+{if $tiki_p_remove eq 'y'}<th class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
 <th class="heading">{tr}Date{/tr}</th>
 {if $tiki_p_wiki_view_author ne 'n'}<th class="heading">{tr}User{/tr}</th>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
@@ -64,7 +64,7 @@
 <th class="heading">{tr}Action{/tr}</th>
 {if $prefs.default_wiki_diff_style != "old" and $history}
 <th class="heading" colspan="2">
-<input type="submit" name="compare" value="{tr}compare{/tr}" /><br />
+<input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
 </th>
 {/if}
 </tr>
@@ -94,15 +94,15 @@
 </td>
 {if $prefs.feature_contribution eq 'y'}<td class="odd">{section name=ix loop=$contributions}{if !$smarty.section.ix.first},{/if}{$contributions[ix].name|escape}{/section}</td>{/if}
 {if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<td class="odd">{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}</td>{/if}
-<td class="odd button">{$info.version}<br />{tr}current{/tr}</td>
+<td class="odd button">{$info.version}<br />{tr}Current{/tr}</td>
 <td class="odd button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}View{/tr}">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}Source{/tr}">s</a>
 {/if}
 </td>
 {if $prefs.default_wiki_diff_style ne "old" and $history}
-<td class="odd button"><input type="radio" name="oldver" value="0" title="{tr}compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} /></td>
-<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if}  /></td>
+<td class="odd button"><input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} /></td>
+<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if}  /></td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
@@ -140,17 +140,17 @@
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$element.version}" title="{tr}Source{/tr}">s</a>
 {/if}
 {if $prefs.default_wiki_diff_style eq "old"}
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=sideview" title="{tr}compare{/tr}">c</a>
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=unidiff" title="{tr}diff{/tr}">d</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=sideview" title="{tr}Compare{/tr}">c</a>
+&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$element.version}&amp;diff_style=unidiff" title="{tr}Diff{/tr}">d</a>
 {/if}
 {if $tiki_p_rollback eq 'y' && $lock neq true}
-&nbsp;<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$element.version}" title="{tr}rollback{/tr}">b</a>
+&nbsp;<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$element.version}" title="{tr}Rollback{/tr}">b</a>
 {/if}
 &nbsp;
 </td>
 {if $prefs.default_wiki_diff_style ne "old"}
 <td class="{cycle advance=false} button">
-<input type="radio" name="oldver" value="{$element.version}" title="{tr}older version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
+<input type="radio" name="oldver" value="{$element.version}" title="{tr}Older Version{/tr}" {if $old.version == $element.version or (!$diff_style and $smarty.foreach.hist.first)}checked="checked"{/if} />
 </td>
 <td class="{cycle} button">
 {* if $smarty.foreach.hist.last &nbsp; *}

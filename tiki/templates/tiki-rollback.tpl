@@ -4,7 +4,7 @@
 <form action="tiki-rollback.php?page={$page|escape}&amp;version={$version|escape}&amp;rollback=y" method="post">
 <input type="hidden"  name="page" value="{$page|escape}" />
 <input type="hidden" name="version" value="{$version|escape}" />
-<input type="submit" name="rollback" value="{tr}rollback{/tr}" />
+<input type="submit" name="rollback" value="{tr}Rollback{/tr}" />
 </form>
 </div>
 

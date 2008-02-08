@@ -49,10 +49,10 @@
 (<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{tr}hist{/tr}</a> {tr}v{/tr}{$lastchanges[changes].version})
 &nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}' title="{tr}View{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
-<a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}' title="{tr}rollback{/tr}">b</a>&nbsp;
+<a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}' title="{tr}Rollback{/tr}">b</a>&nbsp;
 {/if}
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version}' title="{tr}compare{/tr}">c</a>&nbsp;
-<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}' title="{tr}diff{/tr}">d</a>&nbsp;
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version}' title="{tr}Compare{/tr}">c</a>&nbsp;
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}' title="{tr}Diff{/tr}">d</a>&nbsp;
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}' title="{tr}Source{/tr}">s</a>
 {elseif $lastchanges[changes].versionlast}
 (<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{tr}hist{/tr}</a>)
