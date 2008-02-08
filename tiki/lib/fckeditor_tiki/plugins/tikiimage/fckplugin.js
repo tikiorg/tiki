@@ -41,7 +41,10 @@ FCKTikiImages.SetupImage  = function( img, sSrc, sHeight, sWidth, sLink, sAlign,
 	if ( sAlign ) img.align = sAlign ;
 	if ( sAlt ) img.alt = sAlt ;
 	var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
-	img.src = sSrc.replace(reg,'$1'+_TikiDomain+'/$3') ;
+	if (sSrc.match('https?://'))
+		img.src = sSrc;
+	else
+		img.src = sSrc.replace(reg,'$1'+_TikiDomain+'/$3') ;
 	img._tikiimage = true ;
 	img.onresizestart = function() {
 		FCK.EditorWindow.event.returnValue = false ;
