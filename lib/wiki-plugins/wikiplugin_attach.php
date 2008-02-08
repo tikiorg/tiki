@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.19.2.1 2007-12-27 21:46:42 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.19.2.2 2008-02-08 09:31:51 jyhem Exp $
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -12,7 +12,7 @@
 function wikiplugin_attach_help() {
     $help  = tra("Displays an attachment or a list of them");
     $help .= "<br />";
-    $help .= "~np~{ATTACH(name|file=file.ext, page=WikiPage, showdesc=0|1, bullets=>0|1, image=>0|1, inline=0|1, id=1|num=1, dls=0|1, icon=0|1,)}" . tra("comment") . "{ATTACH}~/np~ ";
+    $help .= "~np~{ATTACH(name|file=file.ext, page=WikiPage, showdesc=0|1, bullets=>0|1, image=>0|1, inline=0|1, id=1|num=1, dls=0|1, icon=0|1,)}" . tra("Comment") . "{ATTACH}~/np~ ";
     $help .= "<br />";
     $help .= "name => " . tra("Gives the name of the attached file to link to");
     $help .= "<br />";
@@ -138,7 +138,7 @@ function wikiplugin_attach($data, $params) {
     }
 
     if (!$atts['cant']) {
-	return "''".tra('no such attachment on this page')."''";
+	return "''".tra('No such attachment on this page')."''";
     } elseif ($num > 0 and $num < ($atts['cant']+1)) {
 	$loop[] = $num;
     } else {
@@ -249,7 +249,7 @@ function wikiplugin_attach($data, $params) {
 
     if( strlen( $data ) == 0 )
     {
-	$data = "<strong>".tra('no such attachment on this page')."</strong>";
+	$data = "<strong>".tra('No such attachment on this page')."</strong>";
     }
 
     $atts = $old_atts;
