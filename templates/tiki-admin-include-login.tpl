@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.6 2007-12-13 23:33:28 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.7 2008-02-08 04:57:11 chibaguy Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -8,6 +8,7 @@
         <div class="rbox-data" name="tip">
 	  {tr}Link to{/tr} <a class="rbox-link" href="tiki-adminusers.php">{tr}Admin users{/tr}</a>
         </div>
+</div>
 <br /><br />
 
 <div class="cbox">
