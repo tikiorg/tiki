@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.29 2007-10-14 17:51:01 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.29.2.1 2008-02-08 23:13:18 sylvieg Exp $ *}
 
 {if $prefs.feature_wiki eq 'y'}
 {if !isset($tpl_module_title)}
@@ -25,7 +25,7 @@
         {/if}
           </a>
 		  {else}
-       <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user|username}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
+       <a class="linkmodule" href="{$modLastModif[ix].pageName|sefurl}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user|username}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$modLastModif[ix].pageName|escape|truncate:$maxlen:"...":true}
         {else}
