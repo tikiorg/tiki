@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.40 2008-01-31 19:42:49 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.41 2008-02-08 19:34:33 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -133,6 +133,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_list_language'] = 'n';
 	$prefs['wiki_list_categories'] = 'n';
 	$prefs['wiki_list_categories_path'] = 'n';
+	$prefs['wiki_list_id'] = 'n';
 	$prefs['wiki_page_regex'] = 'strict';
 	$prefs['wiki_page_separator'] = '...page...';
 	$prefs['wiki_page_navigation_bar'] = 'bottom';

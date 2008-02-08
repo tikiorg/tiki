@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.8 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.9 2008-02-08 19:34:32 sylvieg Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -21,6 +21,11 @@
   
     {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
       <td class="heading">&nbsp;</td>
+    {/if}
+
+    {if $prefs.wiki_list_id eq 'y'}
+      {assign var='cntcol' value=$cntcol+1}
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_name eq 'y'}
@@ -119,6 +124,12 @@
       {if $tiki_p_assign_perm_wiki_page eq 'y'}
         <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
       {/if}
+      </td>
+    {/if}
+
+    {if $prefs.wiki_list_id eq 'y'}
+      <td class="{cycle advance=false}">
+        <a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
       </td>
     {/if}
 

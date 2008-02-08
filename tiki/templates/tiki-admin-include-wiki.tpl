@@ -261,6 +261,12 @@
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
     	<tr>
+    		<td class="form">{tr}Id{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_id" {if $prefs.wiki_list_id eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
     		<td class="form">{tr}Name{/tr}</td>
     		<td class="form">
     			<input type="checkbox" name="wiki_list_name" {if $prefs.wiki_list_name eq 'y'}checked="checked"{/if} />
