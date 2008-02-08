@@ -207,8 +207,14 @@ FCKXHtml.TagProcessors['img'] = function( node, htmlNode ) {
 		if ( htmlNode.alt ) extra = extra + ' alt=' + htmlNode.alt ;
 		// we clean the src of the image if the image is local to the
 		// server
-		var reg = new RegExp ("^(?:"+_TikiBaseHost+")?([\"'])?([^\"']*)([\"'])?.*","gi");
-		var reg2 = new RegExp ("(img/wiki_up)/("+_TikiDomain+"/)?(.*)","gi");
+		if (htmlNode.src.indexOf(_TikiBaseHost) == -1) {
+			sSrc = htmlNode.src;
+		} else {
+			var reg = new RegExp ("^(?:"+_TikiBaseHost+")?([\"'])?([^\"']*)([\"'])?.*","gi");
+			var reg2 = new RegExp ("(img/wiki_up)/("+_TikiDomain+"/)?(.*)","gi");
+			sSrc = htmlNode.src.replace(reg,'$2').replace(reg2,'$1/$3');
+		}
+		node = FCKXHtml.XML.createTextNode( '{img src=' + sSrc + ' ' + extra + '}' ) ;
 		node = FCKXHtml.XML.createTextNode( '{img src=' + htmlNode.src.replace(reg,'$2').replace(reg2,'$1/$3') + ' ' + extra + '}' ) ;
 	} else {
 		FCKXHtml._AppendChildNodes( node, htmlNode, false ) ;
