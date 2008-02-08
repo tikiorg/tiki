@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.37.2.4 2008-02-05 16:14:43 jyhem Exp $ *}
+{* $Id: tiki-admin_polls.tpl,v 1.37.2.5 2008-02-08 13:56:55 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -125,7 +125,7 @@
 {section name=ix loop=$listPages}
 <option value="{$listPages[ix].pageName|escape}">{tr}{$listPages[ix].pageName}{/tr}</option>
 {/section}
-</select><br /><i>{tr}Tip: hold down CTRL to select multiple{/tr}</i>
+</select><br /><i>{tr}Tip: Hold down CTRL to select multiple{/tr}</i>
 </td></tr>
 <tr><td class="formcolor">{tr}Lock the pages{/tr}</td><td class="formcolor"><input type="checkbox" name="locked" /></td></tr>
 <tr><td class="formcolor"></td><td class="formcolor"><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td></tr></table>
