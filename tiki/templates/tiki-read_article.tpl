@@ -86,7 +86,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {$parsed_body}
 {if $pages > 1}
 	<div align="center">
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.png' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
 
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
 
@@ -95,7 +95,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
 
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='ics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='pics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
 	</div>
 {/if}
 </div>
