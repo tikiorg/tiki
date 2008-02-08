@@ -8,7 +8,7 @@
 {if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$staging_info.user}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$staging_info.ip}</td>{/if}
 <td class="{cycle advance=false}">{if $staging_info.comment}{$staging_info.comment}{else}&nbsp;{/if}</td>
-<td class="{cycle advance=false} button">{$staging_info.version}<br />{tr}current{/tr}</td>
+<td class="{cycle advance=false} button">{$staging_info.version}<br />{tr}Current{/tr}</td>
 <td class="{cycle} button">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$staging_page|escape:"url"}&amp;preview={$staging_info.version}" title="{tr}View{/tr}" target="_blank">v</a>
 {if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$staging_page|escape:"url"}&amp;source={$staging_info.version}" title="{tr}Source{/tr}" target="_blank">s</a>

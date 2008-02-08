@@ -55,7 +55,7 @@
 <form action="tiki-theme_control_sections.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}Section{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
 </tr>

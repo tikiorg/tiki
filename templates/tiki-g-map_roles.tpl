@@ -88,7 +88,7 @@ Errors:<br />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-g-map_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-g-map_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 </tr>

@@ -155,7 +155,7 @@
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
 				<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}Attachment{/tr}' />
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
-				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
+				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}Del{/tr}]</a>					
 				<br />
 			{/section}
   		  {/if}
