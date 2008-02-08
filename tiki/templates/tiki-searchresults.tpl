@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.5 2008-02-08 04:36:44 chibaguy Exp $ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}
@@ -86,8 +86,8 @@
 </form>
 </div><!--nohighlight-->
 
-<div class="searchresults">
 {if !($searchNoResults) }
+<div class="searchresults">
 <br /><br />
 {section  name=search loop=$results}
 <a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
