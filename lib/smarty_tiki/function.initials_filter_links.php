@@ -11,7 +11,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	$sep = ' . ';
 	$default_type = 'absolute_path';
 	if ( ! isset($params['_initial']) ) $params['_initial'] = 'initial';
-	$current_initial = isset($_REQUEST[$params['initial']]) ? $_REQUEST[$params['initial']] : '';
+	$current_initial = isset($params['initial']) && isset($_REQUEST[$params['initial']]) ? $_REQUEST[$params['initial']] : '';
 	if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 	if ( ! isset($params['_template']) ) $params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
 	if ( ! isset($params['_class']) ) $params['_class'] = 'prevnext';
