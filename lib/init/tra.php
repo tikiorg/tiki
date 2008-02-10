@@ -40,21 +40,22 @@ function tra($content, $lg='') {
 			}
 		} else {
 			global $tikilib,$multilinguallib;
+			$tag=isset($multilinguallib)?$multilinguallib->getInteractiveTag($content):"";
 			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
 			$result = $tikilib->query($query, array($content,$lg == ""? $prefs['language'] : $lg));
 			$res = $result->fetchRow();
 			if (!$res) {
-				return $content;
+				return $content.$tag;
 			}
 			if (!isset($res["tran"])) {
 				if ($prefs['record_untranslated'] == 'y') {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 					$tikilib->query($query, array($content,$prefs['language']),-1,-1,false);
 				}
-				return $content;
+				return $content.$tag;
 			}
 			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
-			return $res["tran"];
+			return $res["tran"].$tag;
 		}
 	}
 }
