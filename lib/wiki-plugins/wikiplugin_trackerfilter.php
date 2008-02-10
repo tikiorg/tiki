@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.14 2008-02-10 18:15:11 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.15 2008-02-10 19:54:38 sylvieg Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
 function wikiplugin_trackerfilter($data, $params) {
-	global $smarty, $prefs, $auto_query_args;
+	global $smarty, $prefs;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');
 	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -21,7 +21,6 @@ function wikiplugin_trackerfilter($data, $params) {
 		return $dataRes.$smarty->fetch("error_simple.tpl");
 	}
 	$listfields = split(':',$filters);
-	$auto_query_args = array();
 	foreach ($listfields as $i=>$f) {
 		if (strchr($f, '/')) {
 			list($fieldId, $format) = split('/',$f);
@@ -30,7 +29,6 @@ function wikiplugin_trackerfilter($data, $params) {
 		} else {
 			$formats[$f] = '';
 		}
-		$auto_query_args[] = "f_$fieldId";
 	}
 	if (!isset($displayList)) {
 		$displayList = 'n';
