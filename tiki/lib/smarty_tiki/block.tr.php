@@ -25,6 +25,9 @@ function smarty_block_tr($params, $content, &$smarty) {
 	} else {
 		$lang = $params['lang'];
 	}
-	return tra($content,$lang);
+	if (empty($params['interactive']) || $params['interactive'] == 'y')
+		return tra($content,$lang);
+	else
+		return tra($content,$lang, true);
 }
 ?>

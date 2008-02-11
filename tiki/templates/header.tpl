@@ -120,7 +120,7 @@ var numl;var toBeHidden;
   function confirmExit()
   {
     if (needToConfirm)
-      return "{tr}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";
+      return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";
   }
 {/literal}
 </script>

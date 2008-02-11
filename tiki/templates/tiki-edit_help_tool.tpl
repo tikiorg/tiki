@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.4 2008-01-30 15:33:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.5 2008-02-11 03:27:45 nkoth Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -69,8 +69,8 @@ function taginsert(area_name,tagid)
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
   {/if}
     {section name=qtg loop=$quicktags}
-      <a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
-        <img src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' title='{tr}{$quicktags[qtg].taglabel}{/tr}' border='0' />
+      <a title="{tr interactive='n'}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
+        <img src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' title='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' border='0' />
       </a>
       {cycle name='cycle'|cat:$qtnum}
     {/section}

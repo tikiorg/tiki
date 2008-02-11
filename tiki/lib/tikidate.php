@@ -44,7 +44,7 @@ class TikiDate extends Date {
 		foreach ( $words as $w ) {
 			if ( in_array($w, $this->trad) ) {
 				// ... either we have a date element that needs a translation
-				$return .= tra($w);
+				$return .= tra($w,'',true);
 			} else {
 				// ... either we have a string that should not be translated
 				$return .= $w;

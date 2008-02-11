@@ -12,15 +12,12 @@ function smarty_prefilter_tr($source) {
 // correction in order to match when a variable is inside {tr} tags. Example: {tr}The newsletter was sent to {$sent} email addresses{/tr}, and where there are parameters with {tr} 
 // take away the smarty comments {* *} in case they have tr tags
 $return=$source;
-if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))){
-	$return=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $1",$return);
-	$return=preg_replace("/alt=(.\[)\{tr\}([^\{]*)\{\/tr\}(\].)/","alt=$1 $2 $1",$return);
-	$return=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $1",$return);
-	$return=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $1",$return);
-	$return=str_replace("{tr}Error{/tr}","Error",$return);
-	$return=preg_replace("/alt=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","alt=$1 $2 $1",$return);
-	$return=preg_replace("/title=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","title=$1 $2 $1",$return);
-	$return=preg_replace("/value=(.)\{tr\}([^\{]*)\{\/tr\}(.)/","value=$1 $2 $1",$return);
+if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))){	
+	for ($i=0;$i<3;$i++){
+		$return=preg_replace("/alt=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([^\"\'])/U","alt=$1$2$3$4",$return);
+		$return=preg_replace("/title=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([^\"\'])/U","title=$1$2$3$4",$return);
+		$return=preg_replace("/value=(.*)\{tr\}([^\{]*)\{\/tr\}([^\"\']*)([\"\'])/U","value=$1$2$3$4",$return);
+	}
 	$return=str_replace("{tr}Error{/tr}","Error",$return);
 }
   $return = preg_replace_callback('/(?s)(\{tr\})(.+?)\{\/tr\}/', '_translate_lang', preg_replace ('/(?s)\{\*.*?\*\}/', '', $return));
