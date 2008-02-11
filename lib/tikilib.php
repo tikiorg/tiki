@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.79 2008-02-09 22:08:57 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.80 2008-02-11 03:27:46 nkoth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -5027,7 +5027,7 @@ function add_pageview() {
 	$replacements[] = "\\1<a $attrib href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4$ext_icon</a>";
 	$patterns[] = "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i";
 	if ($prefs['feature_wiki_protect_email'] == 'y')
-		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at")." \\3</noscript>";
+		$replacements[] = "\\1<script language=\"Javascript\" type=\"text/javascript\">protectEmail('\\2', '\\3', '@');</script><noscript>\\2 ".tra("at","",true)." \\3</noscript>";
 	else
 		$replacements[] = "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>";
 	$patterns[] = "#([\n ])magnet\:\?([^,< \n\r]+)#i";
@@ -5509,8 +5509,8 @@ function add_pageview() {
 		$id = 'dyn_'.$dvar;
 
 		if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
-		    $span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
-		    $span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables').'"/></span>';
+		    $span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable','',true).": $dvar'>$value</a></span>";
+		    $span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables','',true).'"/></span>';
 		} else {
 		    $span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
 		    $span2 = '';
@@ -5524,7 +5524,7 @@ function add_pageview() {
 
 	    }
 	    //At the end put an update button
-	    //<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables').'"/></div>
+	    //<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>
 	    $data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
 	}
 
@@ -5616,13 +5616,13 @@ function add_pageview() {
 		    // Check is timeout expired?
 		    if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
 			// Append small 'new' image. TODO: possible 'updated' image more suitable...
-			$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new").'" />';
+			$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
 		} else {
 		    $uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
 			if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) )
 				$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
 
-		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:")." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
+		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
 		}
 
 		$data = preg_replace($pattern, "$repl", $data);
@@ -5658,7 +5658,7 @@ function add_pageview() {
 		    $bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : ""; // to choose the best page language
 		    $repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		} else {
-		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
+		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		}
 
 		$page_parse_pq = preg_quote($page_parse, "/");
@@ -5701,10 +5701,10 @@ function add_pageview() {
 			    // $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 			    $repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$page_parse</a>";
 			} else {
-			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'').'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'').'" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 			}
 		    } else {
-			$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):''). '"  title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+			$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):''). '"  title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 		    }
 
 		    $data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
@@ -6416,7 +6416,7 @@ if (!$simple_wiki) {
 
 		// Handle old type definition for type "box" (and preserve environment for the title also)
 		if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
-			$maketoc_string = '{maketoc type=box showhide=y title="'.tra('index').'"'.substr($maketoc_string, 12);
+			$maketoc_string = '{maketoc type=box showhide=y title="'.tra('index','',true).'"'.substr($maketoc_string, 12);
 		}
 
 		$maketoc_string = str_replace('&quot;', '"', $maketoc_string);
@@ -6448,7 +6448,7 @@ if (!$simple_wiki) {
 
 			if ( $maketoc_args['title'] != '' ) {
 				// Translate maketoc title
-				$maketoc_summary = ' summary="'.tra($maketoc_args['title']).'"';
+				$maketoc_summary = ' summary="'.tra($maketoc_args['title'],'',true).'"';
 				$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title']).'</h3></div>';
 			} else {
 				$maketoc_summary = '';
@@ -6516,7 +6516,7 @@ if (!$simple_wiki) {
 			if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
 				$maketoc .= "<script type='text/javascript'>\n"
 					. "//<![CDATA[\n"
-					. " if (window.showTocToggle) { var tocShowText = '".tra('Show')."'; var tocHideText = '".tra('Hide')."'; showTocToggle(); }\n"
+					. " if (window.showTocToggle) { var tocShowText = '".tra('Show','',true)."'; var tocHideText = '".tra('Hide','',true)."'; showTocToggle(); }\n"
 					. "//]]>;\n"
 					. "</script>\n";
 			}
