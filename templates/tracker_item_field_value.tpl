@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.14 2008-02-06 20:51:56 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.15 2008-02-11 00:07:05 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -64,9 +64,9 @@
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
 	{if $list_mode eq 'y'}
-		{$field_value.value|truncate:255:"..."|default:"&nbsp;"}
+		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
 	{else}
-		{$field_value.value}
+		{$field_value.value|escape}
 	{/if}
 
 {* -------------------- image -------------------- *}
@@ -102,12 +102,12 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.options_array[4] ne '' and $list_mode eq 'y'}
-		{wiki}{$field_value.value|truncate:$field_value.options_array[4]:"...":true}{/wiki}
+		{wiki}{$field_value.value|escape|truncate:$field_value.options_array[4]:"...":true}{/wiki}
 	{else}
 		{if $parse ne 'n'}
-			{wiki}{$field_value.value}{/wiki}
+			{wiki}{$field_value.value|escape}{/wiki}
 		{else}
-			{$field_value.value}
+			{$field_value.value|escape}
 		{/if}	
 	{/if}
 
