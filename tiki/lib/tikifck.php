@@ -1,4 +1,5 @@
 <?php
+include_once('lib/fckeditor/fckeditor/fckeditor.php');
 
 class TikiFCK {
   var $InstanceName;
@@ -30,7 +31,7 @@ class TikiFCK {
 	function CreateHtml() {
 		global $smarty;
 		$this->HtmlMeat = htmlspecialchars($this->Meat);
-		if ($this->IsCompatible()) {
+		if (FCKeditor_IsCompatibleBrowser()) {
 			if (isset($_GET['fcksource']) && $_GET['fcksource'] == "true") {
 				$this->File = 'fckeditor.original.html';
 			}
@@ -42,19 +43,6 @@ class TikiFCK {
 		$smarty->assign('fck',$this);
 		return $smarty->fetch('fck-edit.tpl');
 	}
-
-  function IsCompatible() {
-		$sAgent = $_SERVER['HTTP_USER_AGENT'];
-    if (strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false) {
-      $iVersion = (float)substr($sAgent, strpos($sAgent, 'MSIE') + 5, 3);
-      return ($iVersion >= 5.5);
-    } elseif (strpos($sAgent, 'Gecko/') !== false) {
-      $iVersion = (int)substr($sAgent, strpos($sAgent, 'Gecko/') + 6, 8);
-      return ($iVersion >= 20030210);
-    } else {
-      return false;
-		}
-  }
 
   function GetConfigFieldString() {
     $sParams = '';
