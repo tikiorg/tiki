@@ -456,16 +456,19 @@ FCKEnterKey.prototype._ExecuteEnterBlock = function( blockTag, range )
 			var elementPath = oSplitInfo.ElementPath ;
 			if ( elementPath )
 			{
-				var eFocusElement = eNewBlock ;
 				for ( var i = 0, len = elementPath.Elements.length ; i < len ; i++ )
 				{
 					var element = elementPath.Elements[i] ;
 
 					if ( element == elementPath.Block || element == elementPath.BlockLimit )
 						break ;
-
+					
 					if ( FCKListsLib.InlineChildReqElements[ element.nodeName.toLowerCase() ] )
-						eFocusElement = eFocusElement.appendChild( FCKDomTools.CloneElement( element ) ) ;
+					{
+						element = FCKDomTools.CloneElement( element ) ;
+						FCKDomTools.MoveChildren( eNewBlock, element ) ;
+						eNewBlock.appendChild( element ) ;
+					}
 				}
 			}
 

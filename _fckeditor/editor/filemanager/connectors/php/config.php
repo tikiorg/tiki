@@ -21,7 +21,6 @@
  *
  * Configuration file for the File Manager Connector for PHP.
  */
-
 $tikiroot = dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))));
 $tikidomain = '';
 if (is_file($tikiroot.'/db/virtuals.inc')) {
@@ -46,6 +45,7 @@ global $Config ;
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only 
 //		authenticated users can access this file or use some kind of session checking.
 $Config['Enabled'] = true ;
+
 
 // Path to user files relative to the document root.
 $Config['UserFilesPath'] = $tikipath.'img/wiki_up/'.$tikidomain ;

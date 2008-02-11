@@ -125,6 +125,11 @@ FCKDomRangeIterator.prototype =
 						break ;
 					}
 
+					// The range must finish right before the boundary,
+					// including possibly skipped empty spaces. (#1603)
+					if ( range )
+						range.SetEnd( currentNode, 3, true ) ;
+
 					closeRange = true ;
 				}
 				else
@@ -181,6 +186,7 @@ FCKDomRangeIterator.prototype =
 					}
 
 					currentNode = parentNode ;
+					includeNode = true ;
 					isLast = ( currentNode == lastNode ) ;
 					continueFromSibling = true ;
 				}

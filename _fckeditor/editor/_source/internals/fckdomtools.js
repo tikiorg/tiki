@@ -23,6 +23,9 @@
 
 var FCKDomTools =
 {
+	/**
+	 * Move all child nodes from one node to another.
+	 */
 	MoveChildren : function( source, target, toTargetStart )
 	{
 		if ( source == target )
@@ -977,4 +980,5 @@ var FCKDomTools =
 			window.scrollTo( 0, offset ) ;
 	}
 } ;
+
 
