@@ -1,5 +1,5 @@
 <?php
-include_once('lib/fckeditor/fckeditor/fckeditor.php');
+include_once('lib/fckeditor/fckeditor.php');
 
 class TikiFCK {
   var $InstanceName;
