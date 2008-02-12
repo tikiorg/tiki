@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.8 2008-02-01 00:53:53 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.9 2008-02-12 20:56:47 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,37 +97,6 @@ else if ($_REQUEST['id']) {
 	}
 }
 
-if ($type == "wiki page") {
-  $tikilib->get_perm_object($name, 'wiki page', $info, true);	
-  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
-		$allowed_for_staging_only = 'y';
-		$smarty->assign('allowed_for_staging_only', 'y');
-  }  
-  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
-  $pages = $tikilib->list_pages(0, -1, 'pageName_asc', '', '',true, false, true);
-  if ($prefs['feature_wikiapproval'] == 'y') {
-  	$pages_data = array();
-  	foreach($pages["data"] as $p) {
-  		if (substr($p["pageName"], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
-			$t_pages_data[] = $p;
-  		}
-  	}
-  	$pages["data"] = $t_pages_data;
-  }  
-	$smarty->assign_by_ref('pages', $pages["data"]);
-}
-else if ($type == "article") {
-	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
-		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
-		$smarty->display("error.tpl");
-		die;
-	}
-}
-
 $smarty->assign('name', $name);
 $smarty->assign('type', $type);
 $smarty->assign('id', $objId);
@@ -216,6 +185,70 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 }
 
 } // end of if $allowed_for_staging_only == 'y'
+
+if ($type == "wiki page") {
+  $tikilib->get_perm_object($name, 'wiki page', $info, true);	
+  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+		$allowed_for_staging_only = 'y';
+		$smarty->assign('allowed_for_staging_only', 'y');
+  }  
+  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	// Fetches the list of pages with a langage assigned
+	// that is different than those already included in the
+	// current set.
+	$result = $tikilib->query("
+		SELECT lang, pageName 
+		FROM tiki_pages 
+		WHERE
+			lang IS NOT NULL
+			AND lang <> ?
+			AND page_id NOT IN(
+				SELECT
+					a.page_id
+				FROM
+					tiki_pages a
+					INNER JOIN tiki_translated_objects b ON a.lang = b.lang
+					INNER JOIN tiki_translated_objects c ON b.traId = c.traId
+				WHERE
+					c.type = 'wiki page'
+					AND c.objId = ?
+			)
+			AND page_id NOT IN(
+				SELECT
+					a.objId
+				FROM
+					tiki_translated_objects a
+					INNER JOIN tiki_translated_objects b ON a.traId = b.traId
+				WHERE
+					b.lang = ?
+			)
+		ORDER BY pageName ASC", array($langpage, $info['page_id'], $langpage) );
+  $pages = array( 'data' => array() );
+  while( $row = $result->fetchRow() )
+    $pages['data'][] = $row;
+
+  if ($prefs['feature_wikiapproval'] == 'y') {
+  	$pages_data = array();
+  	foreach($pages["data"] as $p) {
+  		if (substr($p["pageName"], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
+			$t_pages_data[] = $p;
+  		}
+  	}
+  	$pages["data"] = $t_pages_data;
+  }  
+	$smarty->assign_by_ref('pages', $pages["data"]);
+}
+else if ($type == "article") {
+	if ($tiki_p_admin_cms != 'y' && !$tikilib->user_has_perm_on_object($user, $id, 'article', 'tiki_p_edit_article') and ($info['author'] != $user or $info['creator_edit'] != 'y')) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
 
 $trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
 $smarty->assign('trads', $trads);
