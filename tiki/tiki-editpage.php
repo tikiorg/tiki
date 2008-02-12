@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.35 2008-02-04 16:14:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.36 2008-02-12 15:41:21 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -42,6 +42,9 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 		die;
 	}
 }
+
+$smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
+
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
 	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
@@ -110,6 +113,9 @@ if (isset($_REQUEST['cancel_edit'])) {
 }
 if (isset($_REQUEST['minor'])) {
 	$_REQUEST['isminor'] = 'on';
+	$_REQUEST['save'] = true;
+}
+if (isset($_REQUEST['partial_save'])) {
 	$_REQUEST['save'] = true;
 }
 // We set empty wiki page name as default here if not set (before including Tiki modules)
@@ -260,22 +266,26 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 					$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
 					$targetInfo = $tikilib->get_page_info( $pagename );
 
-					$multilinguallib->propagateTranslationBits( 
-						'wiki page',
-						$sourceInfo['page_id'],
-						$targetInfo['page_id'],
-						$sourceInfo['version'],
-						$targetInfo['version'] );
+					if( !isset($_REQUEST['partial_save']) ) {
+						$multilinguallib->propagateTranslationBits( 
+							'wiki page',
+							$sourceInfo['page_id'],
+							$targetInfo['page_id'],
+							$sourceInfo['version'],
+							$targetInfo['version'] );
+					}
 
 				} elseif( isUpdateTranslationMode() ) {
 					$targetInfo = $tikilib->get_page_info( $pagename );
 
-					$multilinguallib->propagateTranslationBits( 
-						'wiki page',
-						$_REQUEST['source_page'],
-						$targetInfo['page_id'],
-						(int) $_REQUEST['newver'],
-						$targetInfo['version'] );
+					if( !isset($_REQUEST['partial_save']) ) {
+						$multilinguallib->propagateTranslationBits( 
+							'wiki page',
+							$_REQUEST['source_page'],
+							$targetInfo['page_id'],
+							(int) $_REQUEST['newver'],
+							$targetInfo['version'] );
+					}
 
 				} else {
 					$info = $tikilib->get_page_info( $pagename );
@@ -884,12 +894,14 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$sourceInfo = $tikilib->get_page_info( $_REQUEST['translationOf'] );
 				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
 
-				$multilinguallib->propagateTranslationBits( 
-					'wiki page',
-					$sourceInfo['page_id'],
-					$targetInfo['page_id'],
-					$sourceInfo['version'],
-					$targetInfo['version'] );
+				if( !isset($_REQUEST['partial_save']) ) {
+					$multilinguallib->propagateTranslationBits( 
+						'wiki page',
+						$sourceInfo['page_id'],
+						$targetInfo['page_id'],
+						$sourceInfo['version'],
+						$targetInfo['version'] );
+				}
 
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );
@@ -917,12 +929,14 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$sourceInfo = $tikilib->get_page_info( $_REQUEST['source_page'] );
 				$targetInfo = $tikilib->get_page_info( $_REQUEST['page'] );
 
-				$multilinguallib->propagateTranslationBits( 
-						'wiki page',
-						$sourceInfo['page_id'],
-						$targetInfo['page_id'],
-						(int) $_REQUEST['newver'],
-						$targetInfo['version'] );
+				if( !isset($_REQUEST['partial_save']) ) {
+					$multilinguallib->propagateTranslationBits( 
+							'wiki page',
+							$sourceInfo['page_id'],
+							$targetInfo['page_id'],
+							(int) $_REQUEST['newver'],
+							$targetInfo['version'] );
+				}
 
 			} else {
 				$info = $tikilib->get_page_info( $_REQUEST['page'] );

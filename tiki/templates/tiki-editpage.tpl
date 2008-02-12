@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.23 2008-02-05 17:22:56 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.24 2008-02-12 15:41:23 lphuberdeau Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
@@ -123,11 +123,16 @@ window.onload = timeIt;
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $preview && $staging_preview neq 'y'}
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
+{if $translation_mode eq 'y'}
+<input type="submit" class="wikiaction" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
+<input type="submit" class="wikiaction" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
+{else}
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
   <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm=false;" />
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
+{/if}
 {/if}
 {/if}
 {if $page_ref_id}
@@ -415,12 +420,17 @@ function searchrep() {
 <td>
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
+{if $translation_mode eq 'y'}
+<input type="submit" class="wikiaction" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
+<input type="submit" class="wikiaction" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
+{else}
 {if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
   <input type="submit" class="wikiaction" name="minor" value="{tr}Minor{/tr}" onclick="needToConfirm=false;" />
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
 {if $prefs.feature_ajax eq 'y'}
   <input type="submit" class="wikiaction" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
+{/if}
 {/if}
 {if $page|lower ne 'sandbox'}
   <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
