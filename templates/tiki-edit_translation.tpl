@@ -74,7 +74,7 @@
 {if $articles}
 	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
 {else}
-	<select name="srcName">{section name=ix loop=$pages}{if !empty($pages[ix].lang) and $pages[ix].lang ne $langpage}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true}</option>{/if}{/section}</select>
+	<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
 {/if}
 &nbsp;
 <input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
