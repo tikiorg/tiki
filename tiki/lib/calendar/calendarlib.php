@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.3 2008-02-12 19:20:18 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.4 2008-02-12 20:07:52 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -565,8 +565,14 @@ class CalendarLib extends TikiLib {
 	}
 	function cleanEvents($calendarId, $days) {
 		global $tikilib;
-		$query = "delete from `tiki_calendar_items` where `calendarId` = ? and `end`<?";
-		$tikilib->query($query, array($calendarId, $tikilib->now - $days*24*60*60));
+		$mid[] = " `end` < ? ";
+		$bindvars[] = $tikilib->now - $days*24*60*60;
+		if ($calendarId > 0) {
+			$mid[] = " `calendarId` = ? ";
+			$bindvars[] = $calendarId;
+		}
+		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
+		$tikilib->query($query, $bindvars);
 	}
 }
 global $dbTiki;
