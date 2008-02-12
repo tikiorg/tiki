@@ -309,17 +309,23 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 		$smarty->assign_by_ref('old', $info);
 	} else {
 		// fetch the required page from history, including its content
-		if ($histlib->version_exists($page, $oldver)) {
+		while( $oldver > 0 && ! ($exists = $histlib->version_exists($page, $oldver) ) )
+			--$oldver;
+
+		if ( $exists ) {
 			$old = $histlib->get_page_from_history($page,$oldver,true);
 			$smarty->assign_by_ref('old', $old);
 		}
 	}
-	if ($newver == 0 || $newver == $info["version"]) {
+	if ($newver == 0 || $newver >= $info["version"]) {
 		$new =& $info;
 		$smarty->assign_by_ref('new', $info);
 	} else {
 		// fetch the required page from history, including its content
-		if ($histlib->version_exists($page, $newver)) {
+		while( $newver > 0 && ! ($exists = $histlib->version_exists($page, $newver) ) )
+			--$newver;
+
+		if ( $exists ) {
 			$new = $histlib->get_page_from_history($page,$newver,true);
 			$smarty->assign_by_ref('new', $new);
 		}
