@@ -57,7 +57,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 
 	// Make sure every params are initialized
 	if ( ! isset($params['itemname']) ) $params['itemname'] = 'Page';
-	if ( ! isset($params['noimg']) ) $params['noimg'] = 'n';
+	if ( ! isset($params['noimg']) ) $params['noimg'] = ( $prefs['pagination_icons'] == 'n' ? 'y' : 'n' );
 	if ( ! isset($params['usedots']) ) $params['usedots'] = 'y';
 	if ( ! isset($params['class']) ) $params['class'] = 'mini';
 	if ( ! isset($params['htmlelement']) ) $params['htmlelement'] = 'tiki-center';
@@ -112,6 +112,11 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		$params['prev'] = ( $real_offset > 0 ) ? 'y' : 'n';
 	}
 
+	// Max. number of links when using direct pagination
+	$max_middle_links = max(0, $prefs['direct_pagination_max_middle_links']);
+	$max_ending_links = ( $prefs['pagination_firstlast'] != 'n' ) ? max(0, $prefs['direct_pagination_max_ending_links']) : 0;
+	$max_links = ( 1 + $max_ending_links + $max_middle_links ) * 2 + 1;
+
 	// Handle next/prev images
 	if ( $params['noimg'] == 'n' ) {
 		$tmp = array(
@@ -150,34 +155,38 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		}
 
 		$html .= '<div class="'.$params['class'].'" style="text-align: center">'; // inline style can be overriden in css using !important
-		if ( $params['prev'] == 'y' ) {
-			if ( isset($images) ) {
-				$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
-						'offset='.$params['offset'].'&amp;reloff=-'.$params['offset'] : 'offset=0'
-					), $images['first'], $params
-				);
+
+		if ( $prefs['nextprev_pagination'] != 'n' ) {
+			if ( $params['prev'] == 'y' ) {
+				if ( isset($images) && $prefs['pagination_firstlast'] != 'n' ) {
+					$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
+							'offset='.$params['offset'].'&amp;reloff=-'.$params['offset'] : 'offset=0'
+						), $images['first'], $params
+					);
+				}
+				$html .= ( isset($images) ? '' : '[' )
+					.make_prevnext_link($url.$prev_offset, ( isset($images) ? $images['previous'] : tra('Prev') ), $params )
+					.( isset($images) ? '' : '] ' );
+	   		} elseif (isset($images)) {
+				$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
 			}
-			$html .= ( isset($images) ? '' : '[' )
-				.make_prevnext_link($url.$prev_offset, ( isset($images) ? $images['previous'] : tra('Prev') ), $params )
-				.( isset($images) ? '' : ']' );
-   		} elseif (isset($images)) {
-			$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
+			$html .= ' '.tra($params['itemname']).': '.(1 + floor(($real_offset) / $params['step'])).'/'.$nb_pages;
+			if ( $params['next'] == 'y' ) {
+				$html .= ( isset($images) ? '' : ' [' )
+					.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
+					.( isset($images) ? '' : ']' );
+				if ( isset($images) && $prefs['pagination_firstlast'] != 'n' ) {
+					$i = ( $nb_pages - 1 ) * $params['step'] ;
+					$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
+							'offset='.$params['offset'].'&amp;reloff='.($i - $params['offset']) : 'offset='.$i
+						), $images['last'], $params
+					);
+				}
+   			} elseif (isset($images)) {
+				$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
+			}
 		}
-		$html .= ' '.tra($params['itemname']).': '.(1 + floor(($real_offset) / $params['step'])).'/'.$nb_pages;
-		if ( $params['next'] == 'y' ) {
-			$html .= ( isset($images) ? '' : '[' )
-				.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
-				.( isset($images) ? '' : ']' );
-			if ( isset($images) ) {
-				$i = ( $nb_pages - 1 ) * $params['step'] ;
-				$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
-						'offset='.$params['offset'].'&amp;reloff='.($i - $params['offset']) : 'offset='.$i
-					), $images['last'], $params
-				);
-			}
-   		} elseif (isset($images)) {
-			$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
-   		}
+
 		if ( $prefs['direct_pagination'] == 'y' ) {
 			$html .= "\n<br />";
 			$last_dots = false;
@@ -188,7 +197,12 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 					$last_dots = false;
 				} elseif ( $params['usedots'] != 'y' ||
 					( $params['usedots'] == 'y' &&
-						( $nb_pages < 12 || $k < 3 || $k >= $nb_pages - 3 || ( abs( $page_num - $k ) ) < 3 )
+						( $nb_pages <= $max_links
+						|| ( $k <= $max_ending_links && $prefs['pagination_firstlast'] != 'n' )
+						|| ( $k >= $nb_pages - $max_ending_links - 1 && $prefs['pagination_firstlast'] != 'n' )
+						|| ( abs( $page_num - $k ) ) <= $max_middle_links
+						|| ( $prefs['pagination_fastmove_links'] == 'y' && abs( $page_num - $k ) == ceil( $nb_pages / 10 ) )
+						)
 					)
 				) {
 					if ( isset($params['reloff']) ) {
