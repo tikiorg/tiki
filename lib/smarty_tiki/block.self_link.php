@@ -41,7 +41,6 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
         $params['_sort_field'] = '';
       } elseif ( $params['_sort_arg'] != '' and ! isset($params[$params['_sort_arg']]) ) {
 	        $params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
-				}
       }
 
       $params['_type'] = $default_type;
