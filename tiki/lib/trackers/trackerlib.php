@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.31 2008-02-06 19:18:19 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.32 2008-02-13 15:04:47 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -731,7 +731,8 @@ class TrackerLib extends TikiLib {
 				}
 
 				if ( isset($fopt['options']) ) {
-					$fopt['options_array'] = split(',', $fopt['options']);
+					if (!empty($fopt['options']))
+						$fopt['options_array'] = split(',', $fopt['options']);
 					if ( $fopt['type'] == 'i' ) {
 						global $imagegallib;
 						include_once('lib/imagegals/imagegallib.php');
@@ -941,8 +942,15 @@ class TrackerLib extends TikiLib {
 				}
 				$value = @ $ins_fields["data"][$i]["value"];
 
-				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false)
-					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId)) + 1;
+				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false) {
+					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
+					if ($value == NULL) {
+						$value = isset($ins_fields["data"][$i]['options_array'][0]) ? $ins_fields["data"][$i]['options_array'][0] : 1;
+						echo $value;
+					} else {
+						$value += 1;
+					}
+				}
 
 				if ($ins_fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') {
 				// category type
@@ -1989,8 +1997,8 @@ class TrackerLib extends TikiLib {
 			'help'=>tra(' 0|1|2|3|4|5 0,xsize,ysize. First record :0 for URL in file gal of MP3 only, 1 for URL of FLV in file gal video only , 2 for URL of MP3 or Video in file gal, 3 donwload MP3 only, 4 donwload FLV video only, 5 download FLV or MP3 (default is 0). Second record : X size of flash applet(default is 200) , Y size of flash applet (default is 100) ' ));
 		$type['q'] = array(
 			'label'=>tra('auto-increment'),
-			'opt'=>false,
-			'help'=>tra('Sequential auto-increment number') );
+			'opt'=>true,
+			'help'=>tra('Sequential auto-increment number:initial_value,prepend,append: initial_value default is 1, prepend will be displayed before the field, append will be displayed just after') );
 		$type['U'] = array(
 			'label'=>tra('user subscription'),
 			'opt'=>false,
