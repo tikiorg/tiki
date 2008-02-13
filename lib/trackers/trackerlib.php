@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.32 2008-02-13 15:04:47 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.33 2008-02-13 15:12:56 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -946,7 +946,6 @@ class TrackerLib extends TikiLib {
 					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
 					if ($value == NULL) {
 						$value = isset($ins_fields["data"][$i]['options_array'][0]) ? $ins_fields["data"][$i]['options_array'][0] : 1;
-						echo $value;
 					} else {
 						$value += 1;
 					}
