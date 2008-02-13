@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.8 2008-01-21 05:28:30 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.9 2008-02-13 22:29:14 nyloth Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -157,16 +157,6 @@
         <td class="form"><label for="general-cache_ext_imgs">{tr}Use cache for external images{/tr}:</label></td>
         <td><input type="checkbox" name="cacheimages" id="general-cache_ext_imgs"
               {if $prefs.cacheimages eq 'y'}checked="checked"{/if}/>
-        </td>
-      </tr><tr>
-        <td class="form"><label for="general-pagination">{tr}Use direct pagination links{/tr}:</label></td>
-        <td><input type="checkbox" name="direct_pagination" id="general-pagination"
-              {if $prefs.direct_pagination eq 'y'}checked="checked"{/if}/>
-        </td>
-        <td>&nbsp;</td>
-        <td class="form"><label for="general-menu_folders">{tr}Display menus as folders{/tr}:</label></td>
-        <td><input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders"
-              {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
         <td class="form"><label for="general-gzip">

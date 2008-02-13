@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.4 2008-01-21 05:28:29 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.5 2008-02-13 22:29:13 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,8 +19,6 @@ if (isset($_REQUEST["new_prefs"])) {
         "cacheimages",
         "cachepages",
         "count_admin_pvs",
-        "direct_pagination",
-        "feature_menusfolderstyle",
         "feature_obzip",
         "site_closed",
         "useGroupHome",

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.4 2008-01-21 05:28:30 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.5 2008-02-13 22:29:14 nyloth Exp $ *}
 <!--div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
@@ -288,30 +288,53 @@
 			</table>
 </fieldset></td>
       </tr>
-      
-      
       <tr><td colspan="5" class="form">
-      <fieldset>
-					<legend><a href="#"><span><input type="checkbox" name="feature_bot_bar"
+        <fieldset>
+            <legend><a href="#"><span><input type="checkbox" name="feature_bot_bar"
             {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/> {tr}Bottom bar{/tr}</span></a></legend>
             {tr}Bottom bar icons{/tr} <input type="checkbox" name="feature_bot_bar_icons"
             {if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/> | {tr}Bottom bar debug{/tr} <input type="checkbox" name="feature_bot_bar_debug"
 	    {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/> | {tr}Bottom bar{/tr} (RSS) <input type="checkbox" name="feature_bot_bar_rss"
 	    {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/>
-	    </fieldset>
-	  </td>
-      </tr>    <tr>
-    	<td class="form">{tr}Use Tabs{/tr}</td>
-        <td><input type="checkbox" name="feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/></td>
-	<td colspan="3">&nbsp;</td>
+        </fieldset>
+      </td>
+    </tr><tr>
+        <td colspan="5" class="form">
+          <fieldset>
+            <legend><a href="#"><span>{tr}Pagination links{/tr}</span></a></legend>
+            <input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
+            <label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
+            <hr />
+            <input type="checkbox" name="direct_pagination" id="direct_pagination" {if $prefs.direct_pagination eq 'y'}checked="checked"{/if}/>
+            <label for="direct_pagination">{tr}Use direct pagination links{/tr}</label>
+            <div style="margin-left:20px">
+            {tr}Max. number of links around the current item:{/tr}<input type="text" name="direct_pagination_max_middle_links" id="direct_pagination_max_middle_links" value="{$prefs.direct_pagination_max_middle_links}" size="4" /><br />
+            {tr}Max. number of links after the first or before the last item:{/tr}<input type="text" name="direct_pagination_max_ending_links" id="direct_pagination_max_ending_links" value="{$prefs.direct_pagination_max_ending_links}" size="4" />
+            </div>
+            <hr />
+            <input type="checkbox" name="pagination_firstlast" id="pagination_firstlast" {if $prefs.pagination_firstlast eq 'y'}checked="checked"{/if}/>
+            <label for="pagination_firstlast">{tr}Display 'First' and 'Last' links{/tr}</label><br />
+            <input type="checkbox" name="pagination_fastmove_links" id="pagination_fastmove_links" {if $prefs.pagination_fastmove_links eq 'y'}checked="checked"{/if}/>
+            <label for="pagination_fastmove_links">{tr}Display fast move links (by 10 percent of the total number of pages) {/tr}</label><br />
+            <input type="checkbox" name="pagination_icons" id="pagination_icons" {if $prefs.pagination_icons eq 'y'}checked="checked"{/if}/>
+            <label for="pagination_icons">{tr}Use Icons{/tr}</label><br />
+          </fieldset>
+        </td>
+    </tr><tr>
+        <td class="form" colspan="5"><input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders"
+              {if $prefs.feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
+        <label for="general-menu_folders">{tr}Display menus as folders{/tr}</label>
+        </td>
+    </tr><tr>
+        <td class="form" colspan="5"><input type="checkbox" name="feature_tabs" id="general-feature_tabs" {if $prefs.feature_tabs eq 'y'}checked="checked"{/if}/>
+    	<label for="general-feature_tabs">{tr}Use Tabs{/tr}</label>
+        </td>
     </tr>
     <tr>
-        <td class="form">{tr}Layout per section{/tr}</td>
-        <td><input type="checkbox" name="layout_section"
-            {if $prefs.layout_section eq 'y'}checked="checked"{/if}/></td>
-        <td>&nbsp;</td>
-        <td align="center" colspan="2"><a href="tiki-admin_layout.php" 
-            class="link">{tr}Admin layout per section{/tr}</a></td>
+        <td class="form" colspan="2"><input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
+        <label for="general-layout_section">{tr}Layout per section{/tr}</label>
+        </td>
+        <td style="text-align:right" colspan="3"><a href="tiki-admin_layout.php" class="link">{tr}Admin layout per section{/tr}</a></td>
       </tr>
     
     

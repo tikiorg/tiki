@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.41 2008-02-08 19:34:33 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.42 2008-02-13 22:29:13 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -813,13 +813,21 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['default_rows_textarea_forum'] = '20';
 	$prefs['default_rows_textarea_forumthread'] = '10';
 
+	# pagination
+	$prefs['direct_pagination'] = 'y';
+	$prefs['nextprev_pagination'] = 'y';
+	$prefs['pagination_firstlast'] = 'y';
+	$prefs['pagination_icons'] = 'y';
+	$prefs['pagination_fastmove_links'] = 'y';
+	$prefs['direct_pagination_max_middle_links'] = 2;
+	$prefs['direct_pagination_max_ending_links'] = 0;
+
 	# unsorted features
 	$prefs['anonCanEdit'] = 'n';
 	$prefs['cacheimages'] = 'n';
 	$prefs['cachepages'] = 'n';
 	$prefs['count_admin_pvs'] = 'y';
 	$prefs['default_mail_charset'] ='utf-8';
-	$prefs['direct_pagination'] = 'y';
 	$prefs['error_reporting_adminonly'] = 'y';
 	$prefs['error_reporting_level'] = 0;
 	$prefs['smarty_notice_reporting'] = 'n';
