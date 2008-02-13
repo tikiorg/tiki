@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.15 2008-02-11 00:07:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.16 2008-02-13 15:04:47 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -16,9 +16,11 @@
 {/if}
 
 {* ******************** field with preprend ******************** *}
-{if  ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') 
- and !empty($field_value.options_array[2])}
-	<span class="formunit">&nbsp;{$field_value.options_array[2]}</span>
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and !empty($field_value.options_array[2])}
+	<span class="formunit">{$field_value.options_array[2]}</span>
+{/if}
+{if $field_value.type eq 'q' and !empty($field_value.options_array[1])}
+	<span class="formunit">{$field_value.options_array[1]}</span>
 {/if}
 
 {* ******************** field handling emptiness in a specific way  ******************** *}
@@ -50,7 +52,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's'}
+{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q'}
 	{if $list_mode ne 'csv'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -283,8 +285,11 @@
 {/if}
 
 {* ******************** append ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') 
- and $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and $field_value.options_array[3]}
+	<span class="formunit">{$field_value.options_array[3]}</span>
+{/if}
+{if $field_value.type eq 'q' and !empty($field_value.options_array[2])}
+	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
 
 {* ******************** link ******************** *}
