@@ -12,6 +12,8 @@ update=$5
 
 db=tikisqldiff
 
+dumpopts="--skip-opt -c"
+
 echo --- generate first diff file : old sql upgraded
 
 echo make sure there is no old db
@@ -27,7 +29,7 @@ echo apply update to old sql
 mysql -u$user -p$pass -f $db < $update
 
 echo dump updated db to file
-mysqldump -e -c -u$user -p$pass $db > lastversion.dump
+mysqldump $dumpopts -u$user -p$pass $db > lastversion.dump
 
 
 echo --- generate second diff file : new sql
@@ -42,7 +44,7 @@ echo put in new sql
 mysql -u$user -p$pass $db < $new
 
 echo dump db to file
-mysqldump -e -c -u$user -p$pass $db > newversion.dump
+mysqldump $dumpopts -u$user -p$pass $db > newversion.dump
 
 echo remove temporary db again
 mysqladmin -u$user -p$pass drop $db
