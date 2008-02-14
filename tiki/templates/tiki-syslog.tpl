@@ -1,4 +1,4 @@
-{* $Id: tiki-syslog.tpl,v 1.16.2.3 2008-02-05 16:14:45 jyhem Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.16.2.4 2008-02-14 10:25:11 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -59,6 +59,6 @@
 </tr>
 {/section}
 </table>
-
-{include file="tiki-pagination.tpl"}
+<br />
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
