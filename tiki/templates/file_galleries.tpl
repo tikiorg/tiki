@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.6 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.7 2008-02-14 19:47:48 nyloth Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -29,35 +29,35 @@
 {/if}
 {if $fgal_list_id eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'galleryId_desc'}galleryId_asc{else}galleryId_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}ID{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="galleryId"}{tr}ID{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_name eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Name{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="name"}{tr}Name{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_parent eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_desc'}parent_asc{else}parent_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Parent{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="parent"}{tr}Parent{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_description eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Description{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="description"}{tr}Description{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_type eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'name_type'}type_asc{else}type_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Type{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="type"}{tr}Type{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_created eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Created{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="created"}{tr}Created{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_lastmodif eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Last modified{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="lastModif"}{tr}Last modified{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_user eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}User{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</td>
 {/if}
 {if $fgal_list_files eq 'y'}	
 	{assign var='cntcol' value=$cntcol+1}
@@ -65,9 +65,9 @@
 {/if}
 {if $fgal_list_hits eq 'y'}
 	{assign var='cntcol' value=$cntcol+1}
-	<td style="text-align:right;"  class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?offset={$offset}{if isset($galleryId)}&amp;galleryId={$galleryId}{/if}{if $find}find={$find}{/if}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Hits{/tr}</a></td>
+	<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="hits"}{tr}Hits{/tr}{/self_link}</td>
 {/if}
-<td  class="heading">{tr}Actions{/tr}</td>
+<td class="heading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}
