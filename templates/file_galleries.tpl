@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.7 2008-02-14 19:47:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.8 2008-02-14 20:51:15 nyloth Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -137,7 +137,7 @@
 	{/if}
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='page_edit'}</a>
+                	{self_link _class="fgallink" _icon='page_edit' edit_mode=1}{/self_link}
 		{/if}
 	{/if}
 
@@ -158,7 +158,7 @@
 	{/if}
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
                 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-                &nbsp;&nbsp; <a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+                &nbsp;&nbsp; {self_link _class="fgallink" _icon='cross' removegal=$galleries[changes].id}{tr}Delete{/tr}{/self_link}
                 {/if}
         {/if}
 	</td>
@@ -196,23 +196,5 @@
 {/if}
 </form>
 
-{if $prefs.maxRecords > 0}
-	{if $cant_pages gt 0}<div class="mini">
-	{if $prev_offset >= 0}
-		[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-	{/if}
-	{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-	{if $next_offset >= 0}
-		&nbsp;[<a class="fgalprevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-	{/if}
-	{if $prefs.direct_pagination eq 'y' and $cant_pages gt 1}
-		<br />
-		{section loop=$cant_pages name=foo}
-		{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-		<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $find}find={$find}{/if}{if !empty($galleryId)}&amp;galleryId={$galleryId}{/if}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-		{$smarty.section.foo.index_next}</a>&nbsp;
-		{/section}
-	{/if}
-	</div>{/if}
-{/if}
-
+<br />
+{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
