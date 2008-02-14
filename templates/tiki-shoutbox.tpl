@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.31.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.31.2.3 2008-02-14 11:10:14 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -23,12 +23,17 @@
 
 {if $tiki_p_post_shoutbox eq 'y'}
 <h2>{tr}Post or edit a message{/tr}</h2>
+{if $msg}
+<div class="simplebox highlight">{$msg}</div>
+{/if}
 {js_maxlength textarea=message maxlength=255}
 <form action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 <input type="hidden" name="msgId" value="{$msgId|escape}" />
-<input type="hidden" name="user" value="{$user}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
+{include file=antibot.tpl}
+{/if}
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
