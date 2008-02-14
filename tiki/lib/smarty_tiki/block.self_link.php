@@ -23,6 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _icon : name of the icon to use (e.g. 'page_edit', 'cross', ...)
  *   _icon_class : CSS class to use for the icon's IMG tag
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
+ *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
  */
 function smarty_block_self_link($params, $content, &$smarty, $repeat) {
     global $prefs;
@@ -67,17 +68,24 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
         }
 
         if ( isset($params['_icon']) ) {
-          if ( ! isset($params['_title']) ) $params['_title'] = $content;
+          if ( ! isset($params['_title']) && $content != '' ) $params['_title'] = $content;
           require_once $smarty->_get_plugin_filepath('function', 'icon');
 
           $icon_params = array('_id' => $params['_icon'], '_type' => $default_icon_type);
+          if ( isset($params['_alt']) ) {
+            $icon_params['alt'] = $params['_alt'];
+          } elseif ( isset($params['_title']) ) {
+            $icon_params['alt'] = $params['_title'];
+            $icon_params['title'] = ''; // will already be included in the surrounding A tag
+          }
+
           if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
 
           $content = smarty_function_icon($icon_params, $smarty);
         }
 
-        $link = ( isset($params['_class']) ? 'class='.$params['_class'].' ' : '' )
-              . ( isset($params['_title']) ? 'title='.$params['_title'].' ' : '' )
+        $link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
+              . ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' )
               . $ret;
 
         $ret = "<a $link>".$content.'</a>';
