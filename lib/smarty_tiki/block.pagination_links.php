@@ -53,7 +53,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	// Include smarty functions used below
 	require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 	require_once $smarty->_get_plugin_filepath('function', 'query');
-	require_once $smarty->_get_plugin_filepath('function', 'html_image');
+	require_once $smarty->_get_plugin_filepath('function', 'icon');
 
 	// Make sure every params are initialized
 	if ( ! isset($params['itemname']) ) $params['itemname'] = 'Page';
