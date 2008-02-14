@@ -1,8 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.2 2008-01-22 22:27:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.3 2008-02-14 19:47:47 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
+
+$auto_query_args = array('galleryId','offset','find','sort_mode','filegals_manager','edit_mode','dup_mode');
 	
 	if($prefs['feature_file_galleries'] != 'y') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
