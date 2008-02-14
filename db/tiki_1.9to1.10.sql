@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.26 2008-02-07 12:57:28 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.27 2008-02-14 10:38:12 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -537,7 +537,7 @@ alter table tiki_user_assigned_modules change user user varchar(200) not null de
 alter table tiki_tags change user user varchar(200) not null default '';
 alter table tiki_suggested_faq_questions change user user varchar(200) not null default '';
 alter table tiki_submissions change author author varchar(200) not null default '';
-alter table tiki_shoutbox change user user varchar(200) not null default '';
+alter table tiki_shoutbox change user user varchar(200) null default '';
 alter table tiki_sessions change user user varchar(200) not null default '';
 alter table tiki_semaphores change user user varchar(200) not null default '';
 alter table tiki_pages change user user varchar(200) not null default '';
