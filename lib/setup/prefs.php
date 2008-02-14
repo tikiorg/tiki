@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.42 2008-02-13 22:29:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.43 2008-02-14 19:47:15 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -615,7 +615,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['pass_chr_num'] = 'n';
 	$prefs['pass_due'] = 999;
 	$prefs['email_due'] = -1;
-	$prefs['unsuccessful_logins'] = -1;
+	$prefs['unsuccessful_logins'] = 5;
 	$prefs['rnd_num_reg'] = 'n';
 	$prefs['auth_method'] = 'tiki';
 	$prefs['auth_pear'] = 'tiki';

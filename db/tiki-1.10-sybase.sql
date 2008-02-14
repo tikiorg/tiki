@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-02-14 18:55:12 $
+-- $Date: 2008-02-14 19:47:13 $
 -- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -4001,10 +4001,6 @@ go
 
 
 INSERT INTO "," ("name","value") VALUES ('pref_syntax', '1.10')
-go
-
-
-INSERT INTO "," ("name","value") VALUES ('unsuccessful_logins', '5')
 go
 
 
