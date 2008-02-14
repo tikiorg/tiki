@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8.2.1 2008-02-14 10:25:11 nyloth Exp $
 
 require_once ('tiki-setup.php');
 
@@ -47,10 +47,10 @@ $smarty->assign('list', $list['data']);
 $urlquery['sort_mode'] = $sort_mode;
 $urlquery['find'] = $find;
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $list['cant'];
-include "tiki-pagination.php";
 ask_ticket('admin-logs');
 
+$smarty->assign_by_ref('cant', $list['cant']);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign('mid', 'tiki-syslog.tpl');
 $smarty->display('tiki.tpl');
 ?>
