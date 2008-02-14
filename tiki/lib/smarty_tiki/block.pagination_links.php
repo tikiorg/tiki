@@ -133,12 +133,11 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		);
 		$images = array();
 		foreach ( $tmp as $ik => $iv ) {
-			$images[$ik] = smarty_function_html_image(
+			$images[$ik] = smarty_function_icon(
 				array(
-					'file' => "pics/icons/resultset_$ik.png",
+					'_id' => 'resultset_'.$ik,
 					'border' => '0',
 					'alt' => $iv,
-					'title' => $iv,
 					'style' => 'vertical-align:middle;'
 				),
 				$smarty
