@@ -101,6 +101,11 @@ function smarty_function_icon($params, &$smarty) {
     // use default class if not set
     if ( ! isset($params['class']) ) $params['class'] = $default_class;
 
+    // remove empty arguments
+    foreach ( $params as $k => $v ) {
+      if ( $v == '' ) unset($params[$k]);
+    }
+
     $html = smarty_function_html_image($params, $smarty);
   }
 
