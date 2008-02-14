@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.3 2008-02-14 19:47:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries.php,v 1.57.2.4 2008-02-14 20:51:15 nyloth Exp $
 
 	require_once('tiki-setup.php');
 	include_once('lib/filegals/filegallib.php');
@@ -362,6 +362,8 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 	
 	// Get the list of libraries available for this user (or public galleries)
 	$galleries = $filegallib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
+	$smarty->assign('cant', $galleries['cant']);
+
 	// Now traverse the galleries and check if there're individual permissions preventing the
 	// user from browsing/editing/removing/listing/uploading to the gallery
 	for($i=0;$i<count($galleries["data"]);$i++) {
@@ -403,23 +405,6 @@ $fgal_list_parent = $prefs['fgal_list_parent'];
 	  }
 	}
 	
-	// If there're more records then assign next_offset
-	$cant_pages = ceil($galleries["cant"] / $maxRecords);
-	$smarty->assign_by_ref('cant_pages',$cant_pages);
-	$smarty->assign('actual_page',1+($offset/$maxRecords));
-	
-	if($galleries["cant"] > ($offset + $maxRecords)) {
-	  $smarty->assign('next_offset',$offset + $maxRecords);
-	} else {
-	  $smarty->assign('next_offset',-1); 
-	}
-	// If offset is > 0 then prev_offset
-	if($offset>0) {
-	  $smarty->assign('prev_offset',$offset - $maxRecords);  
-	} else {
-	  $smarty->assign('prev_offset',-1); 
-	}
-
 	if ($offset == 0 && ($maxRecords == -1 || $galleries['cant'] <= $maxRecords)) {
 		$smarty->assign_by_ref('allGalleries', $galleries['data']);
 	} else {
