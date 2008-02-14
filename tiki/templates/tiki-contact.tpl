@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a></h1>
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $message}
-{$message}
+<div class="simplebox highlight">{$message}</div>
 {/if}
 <h2>{tr}Send a message to us{/tr}</h2>
   <form method="post" action="tiki-contact.php">

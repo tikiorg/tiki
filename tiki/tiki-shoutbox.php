@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.18 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.18.2.1 2008-02-14 11:10:14 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,15 +29,13 @@ if (!isset($_REQUEST["msgId"])) {
 
 $smarty->assign('msgId', $_REQUEST["msgId"]);
 if ($_REQUEST["msgId"]) {
-        $info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
+	$info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
 	$owner=$info["user"];
 	if ($tiki_p_admin_shoutbox != 'y' &&  $owner != $user) {
 		$smarty->assign('msg', tra("You do not have permission to edit messages $owner"));
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	
 } else {
 	$info = array();
 	$info["message"] = '';
@@ -64,11 +62,16 @@ if ($tiki_p_admin_shoutbox == 'y' || $user == $owner ) {
 }
 
 if ($tiki_p_post_shoutbox == 'y') {
-	if (isset($_REQUEST["save"])) {
+	if (isset($_REQUEST["save"]) && !empty($_REQUEST['message'])) {
 		check_ticket('shoutbox');
-		$shoutboxlib->replace_shoutbox($_REQUEST["msgId"], $_REQUEST["user"], $_REQUEST["message"]);
-		$smarty->assign("msgId", '0');
-		$smarty->assign('message', '');
+		if (($prefs['feature_antibot'] == 'y' && empty($user)) && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
+		} else {
+			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $user, $_REQUEST['message']);
+			$smarty->assign('msgId', '0');
+			$smarty->assign('message', '');
+		}
 	}
 }
 
