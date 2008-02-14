@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2008-02-14 18:55:11 $
+-- $Date: 2008-02-14 19:47:12 $
 -- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -3057,8 +3057,6 @@ CREATE TABLE "tiki_preferences" (
 ) ENGINE=MyISAM;
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('pref_syntax', '1.10');
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('unsuccessful_logins', '5');
 
 -- --------------------------------------------------------
 
