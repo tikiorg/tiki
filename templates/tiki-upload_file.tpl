@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.4 2008-02-15 13:52:25 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.5 2008-02-15 14:18:45 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -47,7 +47,7 @@
 	</div>
 	<br /><br />
 	{/if}
-{elseif isset($fileInfo.lockedby) and $fileInfo.lockedby eq $user}
+{elseif isset($fileInfo.lockedby) and $fileInfo.lockedby neq ''}
 	<div class="rbox" name="tip">
 	<div class="rbox-title" name="note">{tr}Info{/tr}</div>  
 	<div class="rbox-data" name="note">
