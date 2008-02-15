@@ -1,13 +1,21 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-assistant.tpl,v 1.10 2007-10-14 17:51:00 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-assistant.tpl,v 1.10.2.1 2008-02-15 20:51:58 ricks99 Exp $ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Tikiwiki Assistant{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-<div><em>{tr}Thank you for installing Tikiwiki{/tr}!</em><br />
-{tr}Click the :: options in the Menu for more options.{/tr}
-{tr}Please, also see{/tr} <a class="link" href="http://tikiwiki.org/TikiMovies">TikiMovies</a> {tr}for more setup details.{/tr}
+<div align="center"><strong>{tr}Thank you for installing TikiWiki{/tr}!</strong></div>
 {if $tiki_p_admin eq 'y'}
-<p><strong>{tr}Note 1:{/tr}</strong> {tr}You can remove this module in{/tr} <a class="link" href="tiki-admin_modules.php">{tr}Admin{/tr}&#160;»&#160;{tr}Modules{/tr}</a> {tr}as well as assign or edit many others.{/tr}<br />
-<strong>{tr}Note 2:{/tr}</strong> {tr}The menu module installed by default is named{/tr} <em>mnu_application_menu</em> &ndash; {tr}it is a "custom module" which includes menu ID {/tr}42. {tr}That menu is stored in database and it can be edited from {/tr}<a class="link" href="tiki-admin_menus.php">{tr}Admin{/tr}&#160;»&#160;{tr}Menus{/tr}</a>.<br />
-({tr}Do not mix this with the original <em>application_menu</em> module{/tr}. {tr}That one can be heavily customized to match style used but it can be currently done only by editing mod-application_menu.tpl file "manually"{/tr})</p>
+ <p><img src="pics/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left" /><strong>{tr}To configure your Tiki{/tr}</strong>:<br />
+ {tr}Select{/tr} <a class="link" href="tiki-admin.php" title="{tr}Admin Home{/tr}">{tr}Admin{/tr} &gt; {tr}Admin Home{/tr}</a> {tr}from the menu{/tr}.</p>
+ <p>{tr}Read the <a class="link" href="http://doc.tikiwiki.org/Configuration" title="TikiWiki Documentation" target="_blank">configuration documentation</a>{/tr}.</p>
+ <p>{tr}Watch the <a class="link" href="http://tikiwiki.org/TikiMovies" title="Demos" target="_blank">demo movies{/tr}</a>.</p>
+ <p><img src="pics/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left" /><strong>{tr}To remove this module{/tr}</strong>:<br />
+ {tr}Select{/tr} <a class="link" href="tiki-admin_modules.php#leftmod" title="{tr}Admin Modules{/tr}">{tr}Admin{/tr} &gt; {tr}Modules{/tr}</a> {tr}and remove the assistant module{/tr}. {tr}You can also add other modules{/tr}.</p>
+ <p><img src="pics/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left" /><strong>{tr}To customize the menu{/tr}</strong>:<br />
+ {tr}Select{/tr} <a class="link" href="tiki-admin_menus.php" title="{tr}Admin Menus{/tr}">{tr}Admin{/tr} &gt; {tr}Menus{/tr}</a> {tr}and edit menu ID 42{/tr}.<br />{tr}Or, create your own menu and add it to a module{/tr}.<br />{tr}Or, use the mod-application_menu module{/tr}.</p>
+ <hr />
 {/if}
-</div>
+{if $tiki_p_admin ne 'y'}
+ <p><a href="tiki-login.php" title="{tr}Login{/tr}"><img src="pics/icons/accept.png" alt="{tr}Login{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To begin configuring Tiki, please{/tr} <a href="tiki-login.php" title="{tr}Login{/tr}">{tr}login{/tr}</a> {tr}as the Admin{/tr}.</p>
+{/if}
+ <p><a href="http://www.tikiwiki.org" title="{tr}The TikiWiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The TikiWiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://www.tikiwiki.org" title="The TikiWiki Community" target="_blank">http://www.tikiwiki.org</a>{/tr}.</p>
+ <p><a href="http://doc.tikiwiki.org" title="{tr}TikiWiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}TikiWiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tikiwiki.org" title="TikiWiki Documentation" target="_blank">http://doc.tikiwiki.org</a>{/tr}.</p>
 {/tikimodule}
