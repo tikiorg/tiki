@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.20 2008-01-31 12:00:08 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.21 2008-02-15 14:56:24 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2651,17 +2651,58 @@ function get_included_groups($group, $recur=true) {
 		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
-		$msg = new XML_RPC_Message(
-				   'intertiki.validate',
-				   array(
-					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
-					 new XML_RPC_Value($user, 'string'),
-					 new XML_RPC_Value($pass, 'string'),
-					 new XML_RPC_Value($get_info, 'boolean')
-					 ));
+		$params = array();
+		$params[] = new XML_RPC_Value($prefs['tiki_key'], 'string');
+		$params[] = new XML_RPC_Value($user, 'string');
+		$params[] = new XML_RPC_Value($pass, 'string');
+		$params[] = new XML_RPC_Value($get_info, 'boolean');
+		$msg = new XML_RPC_Message('intertiki.validate', $params);
 		$result = $client->send($msg);
 		return $result;
     }
+	/* send via XML_RPC user info to the main */
+	function interSendUserInfo($remote, $user) {
+		global $prefs, $userlib;
+		include_once('XML/RPC.php');
+		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(0);
+		$params = array();
+		$params[] = new XML_RPC_Value($prefs['tiki_key'], 'string');
+		$params[] = new XML_RPC_Value($user, 'string');
+		$user_details = $userlib->get_user_details($user);
+		$user_info = $userlib->get_user_info($user);
+		$ret['avatarData'] = new XML_RPC_Value($user_info['avatarData'], 'base64');
+		$ret['user_details'] = new XML_RPC_Value(serialize($user_details), 'string');
+		$params[] = new XML_RPC_Value($ret, 'struct');
+		$msg = new XML_RPC_Message('intertiki.setUserInfo', $params);
+		$result = $client->send($msg);
+		return $result;
+	}
+	/* interpret the XML_RPC answer about user info */
+	function interSetUserInfo($user, $response_value) {
+		global $userlib, $tikilib;
+		if ($response_value->kindOf() == 'struct') {
+			for (;;) {
+				list($key, $value) = $response_value->structeach();
+				if ($key == '') {
+					break;
+				} elseif ($key == 'user_details') {
+					$user_details = unserialize($value->scalarval());
+				} elseif ($key == 'avatarData') {
+					$avatarData = $value->scalarval();
+				}
+			}
+		} else {
+			$user_details = unserialize($response_value->scalarval());
+		}
+		$userlib->set_user_fields($user_details['info']);
+		$tikilib->set_user_preferences($user, $user_details['preferences']);
+		if (isset($avatarData)) {
+			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
+			$userprefslib->set_user_avatar($user, 'u', '', $user_details['avatarName'], $user_details['avatarSize'], $user_details['avatarFileType'], $avatarData);
+		}
+	}
 
 }
 
