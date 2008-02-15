@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.2 2007-11-05 20:27:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.3 2008-02-15 13:52:25 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,8 @@ if ($prefs['feature_file_galleries'] != 'y') {
 
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
+
+$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','file_sort_mode','file_find','file_offset','page','filegals_manager');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
@@ -81,6 +83,36 @@ if (!empty($gal_info['subgal_conf'])) {
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
+
+if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
+	if (!$fileInfo = $filegallib->get_file_info($_REQUEST['fileId'])) {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display("error.tpl");
+		die;
+	}
+
+	$error_msg = '';
+	if ( $_REQUEST['lock'] == 'n' && ! empty($fileInfo['lockedby']) ) {
+		if ( $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y' ) {
+			$error_msg = tra('You do not have permission to do that');
+		} else {
+			$filegallib->unlock_file($_REQUEST['fileId']);
+		}
+	} elseif ( $_REQUEST['lock'] == 'y' ) {
+		if ( ! empty($fileInfo['lockedby']) ) {
+			$error_msg = sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']);
+		} elseif ( $tiki_p_edit_gallery_file != 'y' ) {
+			$error_msg = tra('You do not have permission to do that');
+		} else {
+			$filegallib->lock_file($_REQUEST['fileId'], $user);
+		}
+	}
+	if ( $error_msg != '' ) {
+		$smarty->assign('msg', $error_msg);
+		$smarty->display('error.tpl');
+		die;
+	}
+}
 
 if (!empty($_REQUEST['remove'])) {
 	// To remove an image the user must be the owner or the file or the gallery or admin
@@ -223,8 +255,7 @@ if (isset($_REQUEST['file_find'])) {
 $smarty->assign('file_find', $file_find);
 
 $files = $tikilib->get_files($file_offset, $maxRecords, $file_sort_mode, $file_find, $_REQUEST["galleryId"], true);
-$cant_pages = ceil($files['cant'] / $maxRecords);
-$smarty->assign_by_ref('file_cant_pages', $cant_pages);
+$smarty->assign_by_ref('file_cant', $files['cant']);
 $smarty->assign('file_actual_page', 1 + ($file_offset / $maxRecords));
 
 if ($files["cant"] > ($file_offset + $maxRecords)) {
@@ -246,7 +277,7 @@ if ($prefs['feature_file_galleries_comments'] == 'y') {
 	$comments_per_page = $prefs['file_galleries_comments_per_page'];
 
 	$thread_sort_mode = $prefs['file_galleries_comments_default_ordering'];
-	$comments_vars = array('galleryId',	'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
+	$comments_vars = array('galleryId', 'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
 
 	$comments_prefix_var = 'file gallery:';
 	$comments_object_var = 'galleryId';
@@ -261,31 +292,18 @@ if (!isset($_REQUEST['sort_mode']))
 if (!isset($_REQUEST['find']))
 	$_REQUEST['find'] = '';
 $galleries = $filegallib->list_file_galleries($_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $user, $_REQUEST['find'], $_REQUEST["galleryId"]);
-if ($galleries['cant']) {
-	if ($galleries['cant'] > ($_REQUEST['offset'] + $maxRecords)) {
-		$smarty->assign('next_offset', $_REQUEST['offset'] + $maxRecords);
-	} else {
-		$smarty->assign('next_offset', -1);
-	}
-	if ($offset > 0) {
-		$smarty->assign('prev_offset', $_REQUEST['offset'] - $maxRecords);
-	} else {
-		$smarty->assign('prev_offset', -1);
-	}
-	$smarty->assign('actual_page', 1 + ($_REQUEST['offset'] / $maxRecords));
-	$smarty->assign_by_ref('cant_pages', ceil($galleries['cant'] / $maxRecords));
-	$smarty->assign_by_ref('galleries', $galleries['data']);
-	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
-	$smarty->assign_by_ref('find', $_REQUEST['find']);
-	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
-}
+
+$smarty->assign('cant', $galleries['cant']);
+$smarty->assign_by_ref('galleries', $galleries['data']);
+$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
+$smarty->assign_by_ref('find', $_REQUEST['find']);
+$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
 	$cat_type = 'file gallery';
-
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');
 }

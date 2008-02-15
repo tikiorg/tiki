@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.3 2007-11-12 01:36:27 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.4 2008-02-15 13:52:25 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -47,6 +47,19 @@
 	</div>
 	<br /><br />
 	{/if}
+{elseif isset($fileInfo.lockedby) and $fileInfo.lockedby eq $user}
+	<div class="rbox" name="tip">
+	<div class="rbox-title" name="note">{tr}Info{/tr}</div>  
+	<div class="rbox-data" name="note">
+	{icon _id="lock" class="" alt=""}
+	{if $user eq $fileInfo.lockedby}
+		{tr}You locked the file{/tr}
+	{else}
+		{tr}The file is locked by {$fileInfo.lockedby}{/tr}
+	{/if}
+	</div>
+	</div>
+	<br />
 {/if}
 
 	<div align="center">
@@ -83,8 +96,7 @@
 
 	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /><i>{tr}Unzip all zip files{/tr}</i></td></tr>
-	{elseif $fileInfo.lockedby}<tr><td class="formcolor">{tr}Unlock{/tr}</td><td class="formcolor">
-	<input type="checkbox" name="unlock" checked="checked"/>{if $user ne $fileInfo.lockedby}{tr}The file is locked by {$fileInfo.lockedby}{/tr}{/if}</td></tr>{/if}
+	{/if}
 
 	{if $tiki_p_admin_file_galleries eq 'y'}
 	<tr><td class="formcolor">{tr}Creator{/tr}</td><td class="formcolor">
