@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.7 2008-02-15 13:52:25 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.8 2008-02-15 15:40:25 nyloth Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 {if !isset($show_find) or $show_find ne 'n'}
@@ -230,7 +230,7 @@
 {/if}
 
 {if $gal_info.show_lockedby eq 'y' and $gal_info.lockable eq 'y'}
-	<td class="{cycle advance=false}">{$files[changes].lockedby|escape}</td>
+	<td class="{cycle advance=false}">{$files[changes].lockedby|userlink}</td>
 {/if}
 
 <td class="{cycle}">
