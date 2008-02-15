@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.34 2008-02-10 19:43:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.35 2008-02-15 14:59:49 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -320,7 +320,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 /* ]]> */</script>
 {/if}
 {assign var=fca value=$field_value.options}
-{* {assign var=onePerLIne value="y"} *}
+{* {assign var=onePerLine value="y"} *}
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$field_value.categories name=eforeach}
 {assign var=fcat value=$iu.categId }
