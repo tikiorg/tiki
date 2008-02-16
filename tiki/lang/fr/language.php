@@ -44,7 +44,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 $lang=Array(
@@ -4484,7 +4484,7 @@ $lang=Array(
 "Details" => "Détails",
 "Change Focus" => "Changer le focus",
 "Hours" => "Heures",
-"Calendar Item" => "Évènement calendaire",
+"Calendar Item" => "Évènement",
 "Config Calendars" => "Config calendriers",
 "Edit Calendar" => "Édit calendrier",
 "View event" => "Voir un évènement",
