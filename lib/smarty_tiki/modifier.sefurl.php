@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: modifier.sefurl.php,v 1.1.2.1 2008-02-08 23:13:18 sylvieg Exp $
+// CVS: $Id: modifier.sefurl.php,v 1.1.2.2 2008-02-16 22:40:31 sylvieg Exp $
 
 // Translate only if feature_multilingual is on
 
@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_modifier_sefurl($source, $type='wiki') {
 	global $prefs, $wikilib;
+	include_once('lib/wiki/wikilib.php');
 	switch($type){
 	case 'wiki page':
 	case 'wiki':
