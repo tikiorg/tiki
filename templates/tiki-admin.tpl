@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.5 2008-01-25 17:23:31 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.6 2008-02-16 08:54:46 luciash Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {breadcrumbs type="trail" loc="admin" crumbs=$crumbs}
@@ -17,7 +17,7 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
-<div class="simplebox highlight">{tr}A new version of TikiWiki, <b>{$tiki_release}</b>, is available.  You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
+<div class="simplebox highlight">{tr}A new version of Tikiwiki, <b>{$tiki_release}</b>, is available. You are currently running <b>{$tiki_version}</b>. Please visit <a href="http://tikiwiki.org/Download">http://tikiwiki.org/Download</a>.{/tr}</div>
 {/if}
 
 {if $tikifeedback}
