@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-adsense.tpl,v 1.4 2007-08-09 10:40:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-adsense.tpl,v 1.4.2.1 2008-02-16 08:02:10 luciash Exp $ *}
 {* look comments in tikiwiki/modules/mod-adsense.php for usage *}
-<center>
+<div style="text-align: center">
 {if $client}
 {capture name=disparam}
 {if $display == '728*90_as'}
@@ -66,4 +66,4 @@
 </script>
 {else}{tr}Display type unknown, you have to enter the banner type{/tr}{/if}
 {else}{tr}You forgot your Google ad_client number !{/tr}{/if}
-</center>
+</div>
