@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.80 2008-02-11 03:27:46 nkoth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.81 2008-02-16 19:46:26 marclaporte Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -6432,7 +6432,7 @@ if (!$simple_wiki) {
 			$maketoc_args = array(
 				'type' => '',
 				'maxdepth' => 0, // No limit
-				'title' => 'Table Of Contents',
+				'title' => tra("Table of contents","",true),
 				'showhide' => '',
 				'nolinks' => '',
 				'nums' => ''
