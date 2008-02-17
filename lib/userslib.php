@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.21 2008-02-15 14:56:24 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.22 2008-02-17 02:27:13 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -320,7 +320,7 @@ class UsersLib extends TikiLib {
 
 	// if we aren't using LDAP this will be quick
 	// if we are using tiki auth or if we're using an alternative auth except for admin  
-	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin") || ($auth_pear && $prefs['auth_create_user_tiki'] == 'y')) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
