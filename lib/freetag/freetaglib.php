@@ -429,6 +429,43 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		     'cant' => $cant);
     }
 
+	function find_or_create_tag( $tag, $lang = null )
+	{
+		$normalized_tag = $this->normalize_tag($tag);
+
+		// Then see if a raw tag in this form exists.
+		$query = "SELECT `tagId` 
+				FROM `tiki_freetags` 
+				WHERE `raw_tag` = ? OR `tag` = ?
+				";
+			
+		$result = $this->query($query, array($tag, $normalized_tag));
+			
+		if ($row = $result->fetchRow()) {
+			$tagId = $row['tagId'];
+		} else {
+			// Add new tag! 
+			if ($this->multilingual && $lang ) {
+				$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`, `lang`) VALUES (?,?,?)";
+				$bindvals = array($normalized_tag, $tag, $lang);
+				$this->query($query, $bindvals);
+			} else {
+				$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`) VALUES (?,?)";
+				$bindvals = array($normalized_tag, $tag);
+				$this->query($query, $bindvals);
+			}
+			
+			$query = "SELECT MAX(`tagId`) FROM `tiki_freetags` WHERE `tag`=? AND `raw_tag`=?";
+			$tagId = $this->getOne($query, array_slice( $bindvals, 0, 2 ) );
+		}
+			
+		if(!($tagId > 0)) {
+			return false;
+		}
+
+		return $tagId;
+	}
+
     /**
      * safe_tag
      *
@@ -482,35 +519,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    return true;
 	}
 	    
-	// Then see if a raw tag in this form exists.
-	$query = "SELECT `tagId` 
-			FROM `tiki_freetags` 
-			WHERE `raw_tag` = ?
-			";
-	    
-	$result = $this->query($query, array($tag));
-	    
-	if ($row = $result->fetchRow()) {
-	    $tagId = $row['tagId'];
-	} else {
-	    // Add new tag! 
-		if ($this->multilingual && $lang ) {
-			$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`, `lang`) VALUES (?,?,?)";
-			$bindvals = array($normalized_tag, $tag, $lang);
-			$this->query($query, $bindvals);
-		} else {
-			$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`) VALUES (?,?)";
-			$bindvals = array($normalized_tag, $tag);
-			$this->query($query, $bindvals);
-		}
-		
-	    $query = "SELECT MAX(`tagId`) FROM `tiki_freetags` WHERE `tag`=? AND `raw_tag`=?";
-	    $tagId = $this->getOne($query, array_slice( $bindvals, 0, 2 ) );
-	}
-	    
-	if(!($tagId > 0)) {
-	    return false;
-	}
+	$tagId = $this->find_or_create_tag( $tag, $lang );
 
 	$objectId = $this->add_object($type, $itemId);
 
@@ -1100,9 +1109,9 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    return true;
 	 }
 
-	 function get_object_tags_multilingual( $type, $objectId, $accept_languages )
-	 {
-	 	$query = "
+	function get_object_tags_multilingual( $type, $objectId, $accept_languages )
+	{
+		$query = "
 			SELECT DISTINCT
 				fo.tagId tagset,
 				(SELECT lang FROM tiki_freetags WHERE tagId = tagset) rootlang,
@@ -1118,9 +1127,8 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			WHERE
 				o.type = ?
 				AND o.itemId = ?
-				-- AND tag.lang IS NULL
-				-- AND tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ")
-			";
+				AND (tag.lang IS NULL OR tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ") )
+				";
 
 		$result = $this->query( $query, array_merge( array( $type, $objectId ), $accept_languages ) );
 
@@ -1136,8 +1144,46 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		}
 
 		return $ret;
-	 }
+	}
 
+	function set_tag_language( $tagId, $lang )
+	{
+		if( ! $this->is_valid_language( $lang ) )
+			return;
+
+		$this->query( "UPDATE tiki_freetags SET lang = ? WHERE tagId = ?", array( $lang, $tagId ) );
+	}
+
+	function translate_tag( $srcLang, $srcTagId, $dstLang, $content )
+	{
+		global $multilinguallib;
+		if( !$multilinguallib )
+			die("Internal error: Multilingual library not imported.");
+
+		if( empty( $content ) )
+			return;
+		if( !$this->is_valid_language( $srcLang )
+			|| !$this->is_valid_language( $dstLang ) )
+			return;
+
+		$tagId = $this->find_or_create_tag( $content, $dstLang );
+
+		$multilinguallib->insertTranslation( 'freetag', $srcTagId, $srcLang, $tagId, $dstLang );
+		$this->query( "
+			UPDATE tiki_freetagged_objects 
+			SET tagId = ? 
+			WHERE 
+				tagId = ?
+				AND objectId IN(
+					SELECT objectId
+					FROM
+						tiki_objects
+						INNER JOIN tiki_pages ON tiki_pages.pageName = tiki_objects.itemId
+					WHERE
+						tiki_objects.type = 'wiki page'
+						AND tiki_pages.lang = ?
+				)", array( $tagId, $srcTagId, $dstLang ) );
+	}
 }
 
 global $dbTiki;
