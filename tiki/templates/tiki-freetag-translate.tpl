@@ -16,7 +16,7 @@
 	<tbody>
 	{foreach item=tag key=group from=$tagList}
 		<tr class="formcolor">
-		{if $tag[''] eq ''}
+		{if $tag[$blank] eq ''}
 		{foreach item=lang from=$languageList}
 		{if $lang neq ''}
 			<td>
@@ -24,20 +24,21 @@
 			{if !$tag[$lang]}
 				<div>
 					<input type="text" name="newtag[{$group}][{$lang}]" value="{$newtags[$group][$lang]}"/>
-					<input type="hidden" name="rootlang[{$group}][{$lang}]" value="{first($tag).rootlang}"/>
+					<input type="hidden" name="rootlang[{$group}][{$lang}]" value="{$rootlang[$group]}"/>
 				</div>
 			{/if}
 			</td>
 		{/if}
 		{/foreach}
 		{else}
+			{assign var=btag value=$tag[$blank]}
 			<td colspan="{$languageList|@count - (in_array('',$languageList)?1:0)}">
-				{$tag[$blank].tag}
+				{$btag.tag}
 				- {tr}Set language{/tr}
-				<select name="setlang[{$tag[$blank].tagId}]">
+				<select name="setlang[{$btag.tagId}]">
 					<option value="">{tr}Universal{/tr}</option>
 					{foreach item=lang from=$languageList}{if $lang neq ''}
-					<option value="{$lang}">{$lang}</option>
+					<option value="{$lang}"{if $setlang[$btag.tagId] eq $lang} selected="selected"{/if}>{$lang}</option>
 					{/if}{/foreach}
 				</select>
 			</td>
