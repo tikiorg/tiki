@@ -75,6 +75,8 @@ class FreetagLib extends ObjectLib {
      * @param int The number of size degrees for tags in cloud. There should be correspondent classes in css.
      */
     var $max_cloud_text_size = 7;
+
+	var $multilingual = false;
      
     
     /**
@@ -83,17 +85,20 @@ class FreetagLib extends ObjectLib {
      * Constructor for the freetag class. 
      *
      */ 
-    function FreetagLib($db) {
-	$this->ObjectLib($db);
-	
-	// update private vars with tiki preferences
-    	global $prefs;
-	if ( $prefs['freetags_lowercase_only'] != 'y' ) $this->_normalize_in_lowercase = 0;
-	if ( isset($prefs['freetags_ascii_only']) && $prefs['freetags_ascii_only'] != 'y' )
-		$this->_normalized_valid_chars = '';
-	else 
-		$this->_normalized_valid_chars = $prefs['freetags_normalized_valid_chars'];
-    }
+	function FreetagLib($db) {
+		$this->ObjectLib($db);
+
+		// update private vars with tiki preferences
+		global $prefs;
+		if ( $prefs['freetags_lowercase_only'] != 'y' ) $this->_normalize_in_lowercase = 0;
+		if ( isset($prefs['freetags_ascii_only']) && $prefs['freetags_ascii_only'] != 'y' )
+			$this->_normalized_valid_chars = '';
+		else 
+			$this->_normalized_valid_chars = $prefs['freetags_normalized_valid_chars'];
+
+		$this->multilingual = ( $prefs['freetags_multilingual'] == 'y'
+			&& $prefs['feature_multilingual'] == 'y' );
+	}
 
     /**
      * get_objects_with_tag
@@ -436,17 +441,17 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      * @param int The unique ID of the person who tagged the object with this tag.
      * @param int The unique ID of the object in question.
      * @param string A raw string from a web form containing tags.
+	 * @param string The language of the tag.
      *
      * @return Returns true if successful, false otherwise. Does not operate as a transaction.
      */ 
 
-    function safe_tag($user, $itemId, $type, $tag) {
+    function safe_tag($user, $itemId, $type, $tag, $lang = null) {
 	if (!isset($user) || !isset($itemId) || !isset($type) || !isset($tag) ||
 	    empty($user) || empty($itemId) || empty($type) || empty($tag)) {
 	    die("safe_tag argument missing");
 	    return false;
 	}
-	    
 	    
 	$normalized_tag = $this->normalize_tag($tag);
 	$bindvals = array($itemId, $type, $normalized_tag);
@@ -457,10 +462,10 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	// Dynamically switch between allowing duplication between users on the
 	// constructor param 'block_multiuser_tag_on_object'.
 	if (!$this->_block_multiuser_tag_on_object) {
-	    $mid = " AND user = ?";
+	    $mid .= " AND user = ?";
 	    $bindvals[] = $user;
 	}
-	    
+
 	$query = "SELECT COUNT(*)
 			FROM `tiki_objects` o,
                              `tiki_freetagged_objects` fto,
@@ -489,12 +494,18 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    $tagId = $row['tagId'];
 	} else {
 	    // Add new tag! 
-	    $query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`) VALUES (?,?)";
-	    $bindvals = array($normalized_tag, $tag);
-	    $this->query($query, $bindvals);
+		if ($this->multilingual && $lang ) {
+			$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`, `lang`) VALUES (?,?,?)";
+			$bindvals = array($normalized_tag, $tag, $lang);
+			$this->query($query, $bindvals);
+		} else {
+			$query = "INSERT INTO `tiki_freetags` (`tag`, `raw_tag`) VALUES (?,?)";
+			$bindvals = array($normalized_tag, $tag);
+			$this->query($query, $bindvals);
+		}
 		
 	    $query = "SELECT MAX(`tagId`) FROM `tiki_freetags` WHERE `tag`=? AND `raw_tag`=?";
-	    $tagId = $this->getOne($query, $bindvals);
+	    $tagId = $this->getOne($query, array_slice( $bindvals, 0, 2 ) );
 	}
 	    
 	if(!($tagId > 0)) {
@@ -697,7 +708,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      *
      * @return string Returns the tag in normalized form.
      */
-    function tag_object($user, $itemId, $type, $tag_string) {    
+    function tag_object($user, $itemId, $type, $tag_string, $lang = null) {
     if($tag_string == '') {
 	    return true;
 	}
@@ -705,12 +716,12 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
 	
-	$this->_tag_object_array($user, $itemId, $type, $tagArray);
+	$this->_tag_object_array($user, $itemId, $type, $tagArray, $lang);
 	    
 	return true;
     }
 
-    function update_tags($user, $itemId, $type, $tag_string, $old_user = false) {
+    function update_tags($user, $itemId, $type, $tag_string, $old_user = false, $lang = null) {
 
 	// Perform tag parsing
 	$tagArray = $this->_parse_tag($tag_string);
@@ -723,7 +734,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    }
 	}
 
-	$this->_tag_object_array($user, $itemId, $type, $tagArray);
+	$this->_tag_object_array($user, $itemId, $type, $tagArray, $lang);
 	    
 	return true;
     }
@@ -753,7 +764,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	return $newwords;
     }
     
-    function _tag_object_array($user, $itemId, $type, $tagArray) {
+    function _tag_object_array($user, $itemId, $type, $tagArray, $lang = null) {
 
 	foreach($tagArray as $tag) {
 	    $tag = trim($tag);
@@ -761,7 +772,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		if(get_magic_quotes_gpc()) {
 		    $tag = addslashes($tag);
 		}
-		$this->safe_tag($user, $itemId, $type, $tag);
+		$this->safe_tag($user, $itemId, $type, $tag, $lang);
 	    }
 	}
     }
