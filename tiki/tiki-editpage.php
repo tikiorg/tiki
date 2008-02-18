@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.37 2008-02-18 15:21:25 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.38 2008-02-18 16:03:27 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -1054,6 +1054,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 }
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
+$cat_lang = $pageLang;
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 if ($prefs['feature_freetags'] == 'y') {
