@@ -404,8 +404,8 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	} else {
 	    $mid = "";
 	}
-	    
-	$query = "SELECT DISTINCT t.`tagId`, `tag`, `raw_tag`, `user`
+
+	$query = "SELECT DISTINCT t.`tagId`, `tag`, `raw_tag`, `user`, `lang`
 			FROM `tiki_objects` o,
                              `tiki_freetagged_objects` fto, 
                              `tiki_freetags` t
@@ -857,9 +857,9 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      * @return array Returns a PHP array with tags ordered randomly
      */
 
-    function get_tag_suggestion($exclude = '', $max = 10) {
-	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` order by " . $this->convert_sortmode('random');
-	$result = $this->query($query);
+    function get_tag_suggestion($exclude = '', $max = 10, $lang = null) {
+	$query = "select t.* from `tiki_freetags` t, `tiki_freetagged_objects` o where t.`tagId`=o.`tagId` and (`lang` = ? or `lang` is null) order by " . $this->convert_sortmode('random');
+	$result = $this->query($query, array( $lang ));
 
 	$tags = array();
 	$index = array();
