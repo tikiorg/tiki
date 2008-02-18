@@ -1100,6 +1100,44 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    return true;
 	 }
 
+	 function get_object_tags_multilingual( $type, $objectId, $accept_languages )
+	 {
+	 	$query = "
+			SELECT DISTINCT
+				fo.tagId tagset,
+				(SELECT lang FROM tiki_freetags WHERE tagId = tagset) rootlang,
+				tag.tagId,
+				tag.lang,
+				tag.tag
+			FROM
+				tiki_objects o
+				INNER JOIN tiki_freetagged_objects fo ON o.objectId = fo.objectId
+				LEFT JOIN tiki_translated_objects to_a ON to_a.type = 'freetag' AND to_a.objId = fo.tagId
+				LEFT JOIN tiki_translated_objects to_b ON to_b.type = 'freetag' AND to_a.traId = to_b.traId
+				LEFT JOIN tiki_freetags tag ON to_b.objId = tag.tagId OR tag.tagId = fo.tagId
+			WHERE
+				o.type = ?
+				AND o.itemId = ?
+				-- AND tag.lang IS NULL
+				-- AND tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ")
+			";
+
+		$result = $this->query( $query, array_merge( array( $type, $objectId ), $accept_languages ) );
+
+		$ret = array();
+		while( $row = $result->fetchRow() ) {
+			$group = $row['tagset'];
+			$lang = $row['lang'];
+
+			if( !array_key_exists( $group, $ret ) )
+				$ret[$group] = array();
+
+			$ret[$group][$lang] = $row;
+		}
+
+		return $ret;
+	 }
+
 }
 
 global $dbTiki;
