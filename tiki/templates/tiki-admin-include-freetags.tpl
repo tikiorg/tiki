@@ -57,6 +57,10 @@
           <td><input type="checkbox" name="freetags_lowercase_only" {if $prefs.freetags_lowercase_only eq 'y'}checked="checked"{/if} /></td>
         </tr>
         <tr>
+          <td class="form">{tr}Handle multilingual freetags{/tr}: </td>
+          <td><input type="checkbox" name="freetags_multilingual" {if $prefs.freetags_multilingual eq 'y'}checked="checked"{/if} /></td>
+        </tr>
+        <tr>
           <td colspan="2" class="button"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
         </tr>
       </table>
