@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.15 2008-02-10 19:54:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerfilter.php,v 1.14.2.16 2008-02-18 11:00:40 nyloth Exp $
 function wikiplugin_trackerfilter_help() {
   $help = tra("Filters the items of a tracker, fields are indicated with numeric ids.").":\n";
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
@@ -201,9 +201,9 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 			case 'w': //dynamic item lists
 			case 'r': //item link
 				if (isset($status)) {
-					$res = $trklib->list_tracker_field_values($fieldId, $status);
+					$res = $trklib->list_tracker_field_values($trackerId, $fieldId, $status);
 				} else {
-					$res = $trklib->list_tracker_field_values($fieldId);
+					$res = $trklib->list_tracker_field_values($trackerId, $fieldId);
 				}
 				foreach ($res as $val) {
 					$opt['id'] = $val;

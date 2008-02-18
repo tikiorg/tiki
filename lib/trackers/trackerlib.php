@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.33 2008-02-13 15:12:56 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.34 2008-02-18 11:00:38 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -480,15 +480,20 @@ class TrackerLib extends TikiLib {
 	     return $ret;
 	}
 
-	function getSqlStatus($status, &$mid, &$bindvars) {
-		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed;
+	function getSqlStatus($status, &$mid, &$bindvars, $trackerId) {
+		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed, $user;
 		if (is_array($status)) {
-			implode('', $status);
+			$status = implode('', $status);
 		}
-		if ($tiki_p_view_trackers_pending != 'y')
-			$status = str_replace('p','',$status);
-		if ($tiki_p_view_trackers_closed != 'y')
-			$status = str_replace('c','',$status);
+
+		// Check perms
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') ) {
+			$status = str_replace('p', '', $status);
+		}
+		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed') ) {
+			$status = str_replace('c', '', $status);
+		}
+
 		if (!$status) {
 			return false;
 		} elseif (strlen($status) > 1) {
@@ -524,7 +529,7 @@ class TrackerLib extends TikiLib {
 		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
 
-		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars) ) {
+		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
 			return array('cant' => 0, 'data' => '');
 		}
 		if ( $initial ) {
@@ -2054,10 +2059,10 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($fieldId, $status='o') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
-		if (!$this->getSqlStatus($status, $mid, $bindvars))
+		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
 			return null;
 		$sort_mode = "value_asc";
 		$query = "select distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
