@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.7.2.1 2007-11-04 22:08:03 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_apply.php,v 1.7.2.2 2008-02-18 15:21:25 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,19 +25,16 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_freetags_tag == 'y') {
 	} else {
 		$tag_string = '';
 	}    
-    
-    // Use same parameters passed to categorize.php, makes simpler implementation
-    // and keep consistency
-    $old_tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
 
     global $user;
 
     if (!isset($cat_desc)) $cat_desc = '';
     if (!isset($cat_name)) $cat_name = '';
     if (!isset($cat_href)) $cat_href = '';
+    if (!isset($cat_lang)) $cat_lang = null;
 
     $freetaglib->add_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);	
-    $freetaglib->update_tags($user, $cat_objid, $cat_type, $tag_string);
+    $freetaglib->update_tags($user, $cat_objid, $cat_type, $tag_string, false, $cat_lang);
 
 }
 
