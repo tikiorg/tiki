@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.8 2008-02-14 20:51:15 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/file_galleries.tpl,v 1.26.2.9 2008-02-19 20:11:03 jyhem Exp $ *}
 {if !isset($show_find) or $show_find ne 'n'}
 <div align="center">
 <table class="findtable">
@@ -172,7 +172,7 @@
 {if $tiki_p_admin_file_galleries eq 'y' or tiki_p_assign_perm_file_gallery eq 'y'}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write('<tr><td colspan="{$cntcol}"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}select all{/tr}</label></td></tr>');
+	document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
 	/* ]]> */</script>
 {/if}
 </table>

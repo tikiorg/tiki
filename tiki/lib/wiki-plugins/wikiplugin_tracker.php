@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.18 2008-02-10 19:08:19 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.19 2008-02-19 20:11:02 jyhem Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -583,7 +583,7 @@ function wikiplugin_tracker($data, $params) {
 						if (!empty($f['options_array'][2]) && ($f['options_array'][2] == '1' || $f['options_array'][2] == 'y')) { 
 							$back .= '<script type="text/javascript"> /* <![CDATA[ */';
 							$back .= "document.write('<div class=\"categSelectAll\"><input type=\"checkbox\" onclick=\"switchCheckboxes(this.form,\'ins_cat_{$f['fieldId']}[]\',this.checked)\"/>";
-							$back .= tra('select all');
+							$back .= tra('Select All');
 							$back .= "</div>')/* ]]> */</script>";
 						}
 						foreach ($cats as $cat) {
