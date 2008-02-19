@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.4 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.73.2.5 2008-02-19 20:11:03 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
  
 {if $prefs.feature_help eq 'y'}
@@ -414,7 +414,7 @@
 </table>
 <div style="text-align:right;">
 <script type="text/javascript"> /* <![CDATA[ */
-	document.write('<label for="clickall">{tr}select all{/tr}</label> ');
+	document.write('<label for="clickall">{tr}Select All{/tr}</label> ');
 	document.write('<input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
 /* ]]> */</script>
 <br />

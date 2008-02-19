@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.5 2008-02-19 20:11:03 jyhem Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received Pages{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -158,7 +158,7 @@
 {/section}
 <script type="text/javascript"> /* <![CDATA[ */
 	document.write('<tr><td colspan="8"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}select all{/tr}</label></td></tr>');
+	document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
 	/* ]]> */</script>
 </table>
 {tr}Prefix the checked:{/tr}<input type="text" name="prefix" />{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />
