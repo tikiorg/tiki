@@ -1,6 +1,6 @@
 <h1><a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a></h1>
 [<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
-|<a href="tiki-inexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
+|<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 
 <table >
 <tr>
