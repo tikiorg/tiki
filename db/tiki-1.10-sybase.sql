@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-02-18 13:36:14 $
+-- $Date: 2008-02-20 16:04:14 $
 -- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8132,6 +8132,7 @@ CREATE TABLE "tiki_freetags" (
   "tagId" numeric(10 ,0) identity,
   "tag" varchar(30) default '' NOT NULL,
   "raw_tag" varchar(50) default '' NOT NULL,
+  "lang" varchar(16) NULL,
   PRIMARY KEY ("tagId")
 ) ENGINE=MyISAM
 go

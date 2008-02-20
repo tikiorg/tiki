@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2008-02-18 13:36:13 $
+-- $Date: 2008-02-20 16:04:13 $
 -- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -6200,6 +6200,7 @@ CREATE TABLE "tiki_freetags" (
   "tagId" number(10) NOT NULL,
   "tag" varchar(30) default '' NOT NULL,
   "raw_tag" varchar(50) default '' NOT NULL,
+  "lang" varchar(16) NULL,
   PRIMARY KEY ("tagId")
 ) ENGINE=MyISAM;
 
