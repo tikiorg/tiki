@@ -13,7 +13,6 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
   </head>
   <body style="margin-left:4px;"></body>
 </html>
