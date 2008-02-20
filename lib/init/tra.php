@@ -18,6 +18,8 @@ function tra($content, $lg='', $no_interactive = false) {
 				}
 			} elseif (is_file('lang/'.$prefs['language'].'/language.php')) {
 				$l = $prefs['language'];
+			} elseif (is_file('lang/'.$prefs['site_language'].'/language.php')) {
+				$l = $prefs['site_language'];
 			} else {
 				$l = false;
 			}
@@ -52,6 +54,10 @@ function tra($content, $lg='', $no_interactive = false) {
 				$tag="";
 			}
 			$query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
+			// set language to site default if no lang specified or for user
+			if ($lg == '' && !$prefs['language']) {
+				 $lg = $prefs['site_language'];
+			}
 			$result = $tikilib->query($query, array($content,$lg == ""? $prefs['language'] : $lg));
 			$res = $result->fetchRow();
 			if (!$res) {
