@@ -14,8 +14,8 @@ function smarty_prefilter_tr($source) {
 $return=$source;
 if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_translation_mode']=='on'))){	
 	for ($i=0;$i<3;$i++){
-		$return=preg_replace("/alt=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([^\"\'])/U","alt=$1$2$3$4",$return);
-		$return=preg_replace("/title=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([^\"\'])/U","title=$1$2$3$4",$return);
+		$return=preg_replace("/alt=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([\"\'])/U","alt=$1$2$3$4",$return);
+		$return=preg_replace("/title=(.*)\{tr\}([^\{]*)\{\/tr\}(.*)([\"\'])/U","title=$1$2$3$4",$return);
 		$return=preg_replace("/value=(.*)\{tr\}([^\{]*)\{\/tr\}([^\"\']*)([\"\'])/U","value=$1$2$3$4",$return);
 	}
 	$return=str_replace("{tr}Error{/tr}","Error",$return);
