@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.9 2008-02-12 20:56:47 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.10 2008-02-21 05:02:27 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,6 +117,19 @@ if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['
 }
 $smarty->assign('langpage', $langpage);
 
+if ($type == "wiki page") {
+  $tikilib->get_perm_object($name, 'wiki page', $info, true);	
+  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
+		$allowed_for_staging_only = 'y';
+		$smarty->assign('allowed_for_staging_only', 'y');
+  }  
+  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+
 if (!isset($allowed_for_staging_only)) {
 // people blocked from approved page cannot access the following settings
 
@@ -187,16 +200,6 @@ else if  (isset($_REQUEST['set']) && !empty($_REQUEST['srcId'])) {
 } // end of if $allowed_for_staging_only == 'y'
 
 if ($type == "wiki page") {
-  $tikilib->get_perm_object($name, 'wiki page', $info, true);	
-  if ($prefs['feature_wikiapproval'] == 'y' && $tiki_p_edit != 'y' && $tikilib->page_exists( $prefs['wikiapproval_prefix'] . $name ) && $tikilib->user_has_perm_on_object($user, $prefs['wikiapproval_prefix'] . $name, 'wiki page', 'tiki_p_edit', 'tiki_p_edit_categorized')) {
-		$allowed_for_staging_only = 'y';
-		$smarty->assign('allowed_for_staging_only', 'y');
-  }  
-  if ((!isset($allowed_for_staging_only) || $allowed_for_staging_only != 'y') && !($tiki_p_admin_wiki== 'y' || $tiki_p_edit == 'y' || ($prefs['wiki_creator_admin'] == 'y' && $user && $info['creator'] == $user) )) {
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
 	// Fetches the list of pages with a langage assigned
 	// that is different than those already included in the
 	// current set.
@@ -232,6 +235,7 @@ if ($type == "wiki page") {
     $pages['data'][] = $row;
 
   if ($prefs['feature_wikiapproval'] == 'y') {
+  	// staging pages should be excluded from list as translation always happens only from the approved pages
   	$pages_data = array();
   	foreach($pages["data"] as $p) {
   		if (substr($p["pageName"], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix']) {
