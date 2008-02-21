@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.5 2008-01-18 13:58:44 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.6 2008-02-21 18:49:07 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,7 @@ function make_clean(&$var,$gpc=false) {
 			make_clean($var);
 		}
 		$var = preg_replace('~(inhibited_|on)(mouseover|mouseout|load|click|dblclick|focus|mousedown|mouseup|mousemove|mouseenter|mouseleave|blur|change|keydown|keypress|keyup|abort|dragdrop|error|load|move|reset|resize|select|submit|unload)(\s*)?=~si','inhibited_$2$3=',$var);
+		$var = preg_replace('~(=\s*["\']?\s*)javascript\s*:~si','$1inhibited_js:',$var);
 	}
 }
 
