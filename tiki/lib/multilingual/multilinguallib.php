@@ -480,7 +480,7 @@ class MultilingualLib extends TikiLib {
 		}
 	}
 
-	function getMissingTranslationBits( $type, $objId, $flags = array() ) {
+	function getMissingTranslationBits( $type, $objId, $flags = array(), $page_unique = false ) {
 		if( $type != 'wiki page' )
 			die('Translation sync only available for wiki pages.');
 
@@ -494,7 +494,7 @@ class MultilingualLib extends TikiLib {
 		$conditions = implode( ' AND ', $conditions );
 		$result = $this->query( "
 			SELECT
-				bits.translation_bit_id
+				bits.translation_bit_id, bits.page_id
 			FROM
 				tiki_translated_objects a
 				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
@@ -509,8 +509,13 @@ class MultilingualLib extends TikiLib {
 		", array( $objId, $objId ) );
 
 		$bits = array();
-		while( $row = $result->fetchRow() )
-			$bits[] = $row['translation_bit_id'];
+		while( $row = $result->fetchRow() ) {
+			if ($page_unique) {
+				$bits[$row['bits.page_id']] = $row['translation_bit_id'];
+			} else { 
+				$bits[] = $row['translation_bit_id'];
+			}
+		}
 
 		return $bits;
 	}
