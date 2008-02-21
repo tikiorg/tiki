@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.16 2008-02-07 19:37:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.17 2008-02-21 16:21:52 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -35,7 +35,7 @@
 <a name="view"></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
-
+{if ($channels) or ($find)}
 <div  align="center">
 <form method="get" action="tiki-admin_trackers.php">
 <table class="findtable">
@@ -46,8 +46,11 @@
 <input type="submit" value="{tr}Find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </td></tr></table>
+{if ($find) and ($channels)}
+<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+{/if}
 </form>
-
+{/if}
 
 <table class="normal">
 <tr>
@@ -77,6 +80,8 @@
 &nbsp;
 <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
 </tr>
+{sectionelse}
+<tr class="odd"><td colspan="6"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td></tr>
 {/section}
 </table>
 {include file="tiki-pagination.tpl"}

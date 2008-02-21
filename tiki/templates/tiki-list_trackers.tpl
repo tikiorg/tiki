@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.5 2008-02-21 16:21:52 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
@@ -18,7 +18,7 @@
 <span class="button2"><a href="tiki-admin_trackers.php?show=mod#mod" class="linkbut">{tr}Create trackers{/tr}</a></span>
 {/if}
 </div>
-
+{if ($channels) or ($find)}
 <form method="get" action="tiki-list_trackers.php">
 <table class="findtable"><tr>
 <td>{tr}Find{/tr}</td>
@@ -26,8 +26,11 @@
 <td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
 <td><input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
 </tr></table>
+{if ($find) and ($channels)}
+<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+{/if}
 </form>
-
+{/if}
 <!-- beginning of table -->
 <table class="normal">
 <tr>
@@ -49,7 +52,7 @@
 {/if}
 </tr>
 {sectionelse}
-<tr><td colspan="5" class="odd">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="5" class="odd">{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</td></tr>
 {/section}
 </table>
 <! --- Beginning of the prev/next advance buttons found at bottom of page -->
