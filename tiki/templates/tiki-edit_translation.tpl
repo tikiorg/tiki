@@ -83,7 +83,7 @@
 {/if} {* end of if !isset($allowed_for_staging_only)}
 {else}
 	<h2>{tr}No language is assigned to this page!{/tr}</h2>
-	<p>{tr}Please select a language before performing translation.{/tr}<p>
+	<p>{tr}Please select a language before performing translation.{/tr}</p>
 	<form method="post" action="tiki-edit_translation.php">
 		<p>
 			<select name="langpage">
