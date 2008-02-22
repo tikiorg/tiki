@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.29 2008-02-04 14:21:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.30 2008-02-22 10:38:01 jyhem Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 
@@ -416,10 +416,15 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {* -------------------- static text -------------------- *}
 {elseif $cur_field.type eq 'S'}
-{if $cur_field.description}
-{wiki}{$cur_field.description|escape|nl2br}{/wiki}
-{/if}
+	{if $cur_field.description}
+		{if $cur_field.options_array[0] eq 1}
+			{wiki}{$cur_field.description|escape}{/wiki}
+		{else}
+			{$cur_field.description|escape|nl2br}
+		{/if}
+	{/if}
 
+{* -------------------- textarea -------------------- *}
 {elseif $cur_field.type eq 'a'}
 {if $cur_field.description}
 <em>{$cur_field.description|escape|nl2br}</em><br />

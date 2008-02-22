@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.35 2008-02-15 14:59:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.36 2008-02-22 10:38:00 jyhem Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -369,9 +369,13 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}
-{if $field_value.description}
-{$field_value.description|escape|nl2br}
-{/if}
+	{if $field_value.description}
+    {if $field_value.options_array[0] eq 1}
+      {wiki}{$field_value.description|escape}{/wiki}
+    {else}
+      {$field_value.description|escape|nl2br}
+    {/if}
+	{/if}
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
