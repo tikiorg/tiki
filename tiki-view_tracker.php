@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.15 2008-02-10 18:55:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.16 2008-02-22 10:37:49 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -205,6 +205,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
 		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
+		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
 
 		if ($listfields[$fid]['type'] == 'e') { //category
 		    $parentId = $listfields[$fid]['options_array'][0];

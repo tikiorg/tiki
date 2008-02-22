@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.34 2008-02-18 11:00:38 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.35 2008-02-22 10:37:59 jyhem Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1974,7 +1974,7 @@ class TrackerLib extends TikiLib {
 		$type['S'] = array(
 			'label'=>tra('static text'),
 			'opt'=>true, 
-			'help'=>tra('Static text options: none yet') );
+			'help'=>tra('Static text options: Wikisyntax,listmax - Use Wikisyntax is 1 or 0, listmax is the maximum number of characters that are displayed in list mode.') );
 		$type['e'] = array(
 			'label'=>tra('category'), 
 			'opt'=>true, 

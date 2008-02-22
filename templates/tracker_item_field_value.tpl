@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.16 2008-02-13 15:04:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.17 2008-02-22 10:38:01 jyhem Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -45,10 +45,18 @@
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}
-	{if $field_value.options_array[0] ne '' and $list_mode eq 'y'}
-		{$field_value.description|truncate:$field_value.options_array[0]:"...":true|escape}
+	{if $field_value.options_array[1] ne '' and $list_mode eq 'y'}
+		{if $field_value.options_array[0] eq 1}
+			{wiki}{$field_value.description|truncate:$field_value.options_array[1]:"...":true|escape}{/wiki}
+		{else}
+			{$field_value.description|truncate:$field_value.options_array[1]:"...":true|escape|nl2br}
+		{/if}
 	{else}
-		{wiki}{$field_value.description|escape|nl2br}{/wiki}
+		{if $field_value.options_array[0] eq 1}
+			{wiki}{$field_value.description|escape}{/wiki}
+		{else}
+			{$field_value.description|escape|nl2br}
+		{/if}
 	{/if}
 
 {* -------------------- empty field -------------------- *}
