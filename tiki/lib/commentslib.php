@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.168 2007-10-20 05:17:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.169 2008-02-23 21:50:06 rlpowell Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1493,6 +1493,11 @@ class Comments extends TikiLib {
 	// $start_time = microtime(true);
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 	$maxRecords = $offset + $maxRecords;
+
+	if ( ! isset($sort_mode) || $sort_mode == '' )
+	{
+		$sort_mode = 'commentDate_asc';
+	}
 
 	$orig_maxRecords = $maxRecords;
 	$orig_offset = $offset;
