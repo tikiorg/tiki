@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.17 2008-02-22 10:38:01 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.18 2008-02-24 20:58:12 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
 
 {if $field_value.type ne 'x'}
@@ -112,10 +112,14 @@
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
 	{if $field_value.options_array[4] ne '' and $list_mode eq 'y'}
-		{wiki}{$field_value.value|escape|truncate:$field_value.options_array[4]:"...":true}{/wiki}
+		{if $parse ne 'n'}
+			{$field_value.pvalue|truncate:$field_value.options_array[4]:"...":true}
+		{else}
+			{$field_value.value|truncate:$field_value.options_array[4]:"...":true}
+		{/if}
 	{else}
 		{if $parse ne 'n'}
-			{wiki}{$field_value.value|escape}{/wiki}
+			{$field_value.pvalue}
 		{else}
 			{$field_value.value|escape}
 		{/if}	
