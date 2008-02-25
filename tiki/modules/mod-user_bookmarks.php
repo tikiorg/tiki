@@ -20,7 +20,9 @@ if (isset($setup_parsed_uri["query"])) {
 	$setup_query_data = array();
 }
 
-if ($prefs['feature_user_bookmarks'] == 'y' && $user && $tiki_p_create_bookmarks == 'y') {
+if ($prefs['feature_user_bookmarks'] != 'y') {
+        $smarty->assign('module_error', tra("This feature is disabled").": feature_user_bookmarks");
+} elseif ($user && $tiki_p_create_bookmarks == 'y') {
 	// check the session to get the parent or create parent =0
 	$smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 
