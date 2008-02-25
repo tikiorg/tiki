@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.38 2007-10-20 05:17:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.39 2008-02-25 17:12:48 yonixxx Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -90,7 +90,7 @@
 {if $prefs.forum_list_lastpost eq 'y'}	
 <td class="{cycle advance=false}">
 {$channels[user].lastPost|tiki_short_datetime}<br />
-<small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+<small><i>{$channels[user].lastPostData.title}</i> {tr}posted by{/tr} {if $channels[user].lastPostData.userName}{$channels[user].lastPostData.userName}{else}{tr}Anonymous{/tr}{/if}</small>
 </td>
 {/if}
 {if $prefs.forum_list_visits eq 'y'}
@@ -104,6 +104,8 @@
 {if $prev_offset >= 0}
 [<a class="forumprevnext" href="tiki-forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
 {/if}
+{if $cant_pages == 1}
+{else}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
 &nbsp;[<a class="forumprevnext" href="tiki-forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
@@ -115,6 +117,7 @@
 <a class="prevnext" href="tiki-forums.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
+{/if}
 {/if}
 </div>
 
