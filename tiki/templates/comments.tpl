@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98 2007-10-15 08:16:39 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.99 2008-02-25 17:15:41 yonixxx Exp $ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -132,7 +132,32 @@
     </td>
 {/if}
 ***}
+{if $comments_cant_pages == 1}
+{else}
+<br /><center>
+	<div class="mini">
 
+		{if $comments_prev_offset >= 0}
+		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Prev{/tr}</a>]&nbsp;
+		{/if}
+
+		{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
+
+		{if $comments_next_offset >= 0}
+		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">{tr}Next{/tr}</a>]
+		{/if}
+
+		{if $prefs.direct_pagination eq 'y'}
+		<br />
+		{section loop=$comments_cant_pages name=foo}
+		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}
+		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$selector_offset}{$thread_sort_mode_param}&amp;comments_per_page={$comments_per_page}&amp;thread_style={$thread_style}">
+		{$smarty.section.foo.index_next}</a>&nbsp;
+		{/section}
+		{/if}
+	</div></center>
+<br />
+{/if}
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
@@ -148,6 +173,8 @@
 	</div>
 	{/if}
 
+{if $comments_cant_pages == 1}
+{else}
 	<div class="mini">
 
 		{if $comments_prev_offset >= 0}
@@ -169,6 +196,7 @@
 		{/section}
 		{/if}
 	</div>
+{/if}
 </div>  
 
   {/if}
@@ -338,7 +366,15 @@
 	{if $forum_mode eq 'y'}
     </div>
 	{/if}
-		
+{else}
+	<table class="normal">
+		<tr>
+			<td class="formcolor">
+				<div class="attention"><center>{tr}You have to registered or gain access to required permissions to post into this topics{/tr}.</center></div>
+			</td>
+			</tr>
+	</table>
+	<br />
 {/if}
 {* End of Post dialog *}
 
