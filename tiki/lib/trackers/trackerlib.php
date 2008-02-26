@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.35 2008-02-22 10:37:59 jyhem Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.36 2008-02-26 17:02:51 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1095,7 +1095,7 @@ class TrackerLib extends TikiLib {
 		// Don't send a notification if this operation is part of a bulk import
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
-			$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
+			$watchers = $this->get_notification_emails($trackerId, $itemId, $options, $new_itemId);
 
 			if (count($watchers) > 0) {
 				if( array_key_exists( "simpleEmail", $options ) ) {
@@ -2187,10 +2187,10 @@ class TrackerLib extends TikiLib {
 		}
 		return $field;
 	}
-	function get_notification_emails($trackerId, $itemId, $options) {
+	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0) {
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
-		$watchers_local = $this->get_local_notifications($itemId);
-		$watchers_item = $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId));
+		$watchers_local = $this->get_local_notifications($itemId, $newItemId);
+		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
 			$emails3 = split(',', $options['outboundEmail']);
@@ -2254,13 +2254,15 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	/* return all the emails that are locally watching an item */
-	function get_local_notifications($itemId) {
+	function get_local_notifications($itemId, $newItemId=0) {
 		global $tikilib, $userlib, $user_preferences;
 		$emails = array();
-		$res = $this->get_item_values_by_type($itemId, 'u');
+		$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'u');
 		if (!is_array($res))
 			return $emails;
 		foreach ($res as $f) {
+			if (isset($f['options_array'][0]) && ($f['options_array'][0] == 1 || $f['options_array'][0] == 2) && empty($itemId))
+				continue;//do not send email on a new item for a creator/modif field
 			if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
 				$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
 				$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
