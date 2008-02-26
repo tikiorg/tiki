@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.5 2008-02-05 16:14:43 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.6 2008-02-26 21:12:55 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
   
@@ -58,11 +58,7 @@
 {/section}
 </div>
 
-<br />
 <a name="editcreate"></a>
-<table class="normalnoborder" cellpadding="0" cellspacing="0">
-<tr>
-  <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
       {if $categId > 0}
@@ -94,14 +90,15 @@
       </form>
       </div>
     </div>
-  </td>
-</tr>
-</table>
-<br />
+
+{if $categId <= 0}
+<div class="cbox">
+<div class="cbox-title">{tr}Batch upload (CSV file):{/tr} <a {popup text='category,description,parent<br />vegetable,vegetable<br />potato,,vegetable'}>{icon _id='help'}</a></div>
+<div class="cbox-data"><form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data"><input type="file" name="csvlist" /><br /><input type="submit" name="import" value="{tr}Add{/tr}" /></form>
+</div></div>
+{/if}
+
 <a name="objects"></a>
-<table class="normalnoborder" cellpadding="0" cellspacing="0">
-<tr>
-  <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
       {tr}Objects in category{/tr} <b>{$categ_name}</b>  
@@ -150,14 +147,8 @@
       
       </div>
     </div>
-  </td>
-  </tr>
-  </table>
+
 {if $parentId != 0}
-  <br />
-<table class="normalnoborder" cellpadding="0" cellspacing="0">  
-  <tr>
-  <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
       {tr}Add objects to category{/tr} <b>{$categ_name}</b>
@@ -262,7 +253,4 @@
       </form>
       </div>
     </div>
-  </td>
-</tr>
-</table>
 {/if}
