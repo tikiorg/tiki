@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.5 2008-02-26 16:33:43 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.6 2008-02-26 18:47:16 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -58,7 +58,7 @@ include_once "lib/multilingual/multilinguallib.php";
 
 if ( $cat_objId ) {
 	$info = $tikilib->get_page_info( $cat_objId );
-} elseif ($tiki_p_admin_freetags != 'y') {
+} elseif (false&&$tiki_p_admin_freetags != 'y') {
 	// Global tag edit only available to admins
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
@@ -97,6 +97,12 @@ if( isset( $_REQUEST['save'] ) )
 
 					$freetaglib->translate_tag( $root[$lang], $tagGroup, $lang, $tag );
 				}
+	}
+
+	if( isset( $_REQUEST['clear'] ) && is_array( $_REQUEST['clear'] ) )
+	{
+		foreach( $_REQUEST['clear'] as $tag )
+			$freetaglib->clear_tag_language_from_id( $tag );
 	}
 }
 else

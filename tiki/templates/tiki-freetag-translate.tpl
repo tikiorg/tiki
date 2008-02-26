@@ -8,7 +8,24 @@
 <form method="post" action="tiki-freetag_translate.php">
 	<input type="hidden" name="type" value="{$type}"/>
 	<input type="hidden" name="objId" value="{$objId}"/>
-<table>
+	<script type="text/javascript">
+	{literal}
+	function show_cleartra_checkboxes()
+	{
+		var table = document.getElementById( 'tagtranslationtable' );
+		var list = table.getElementsByTagName( 'input' );
+		for( key in list )
+		{
+			if( list[key].type == 'checkbox' )
+				list[key].style.display = 'inline';
+		}
+
+		document.getElementById('scblink').style.display = 'none';
+	}
+	{/literal}
+	</script>
+	<a class="linkbut" href="javascript:show_cleartra_checkboxes()" id="scblink">{tr}Show checkboxes to clear language information on tags{/tr}</a>
+<table id="tagtranslationtable">
 	<thead>
 		<tr>
 		{foreach item=lang from=$languageList}
@@ -32,12 +49,13 @@
 		{foreach item=lang from=$languageList}
 		{if $lang neq ''}
 			<td>
-			<div>{$tag[$lang].tag}</div>
 			{if !$tag[$lang]}
 				<div>
 					<input type="text" name="newtag[{$group}][{$lang}]" value="{$newtags[$group][$lang]}"/>
 					<input type="hidden" name="rootlang[{$group}][{$lang}]" value="{$rootlang[$group]}"/>
 				</div>
+			{else}
+				<div>{$tag[$lang].tag} <input style="display: none" type="checkbox" name="clear[]" value="{$tag[$lang].tagId}"/></div>
 			{/if}
 			</td>
 		{/if}
