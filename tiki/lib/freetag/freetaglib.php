@@ -391,43 +391,86 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      *	 - 'raw_tag' => The raw-form tag
      *	 - 'user' => The unique ID of the person who tagged the object with this tag.
      */ 
-    function get_tags_on_object($itemId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
-	if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type)) {
-	    return false;
-	}
+	function get_tags_on_object($itemId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
+		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type)) {
+			return false;
+		}
 
-	$bindvals = array($itemId, $type);
+		$bindvals = array($itemId, $type);
 
-	if (isset($user) && (!empty($user))) {
-	    $mid = "AND `user` = ?"; 
-	    $bindvals[] = $user;
-	} else {
-	    $mid = "";
-	}
+		if (isset($user) && (!empty($user))) {
+			$mid = "AND `user` = ?"; 
+			$bindvals[] = $user;
+		} else {
+			$mid = "";
+		}
 
-	$query = "SELECT DISTINCT t.`tagId`, `tag`, `raw_tag`, `user`, `lang`
+		$query = "SELECT DISTINCT t.`tagId`, `tag`, `raw_tag`, `user`, `lang`
 			FROM `tiki_objects` o,
-                             `tiki_freetagged_objects` fto, 
-                             `tiki_freetags` t
-			WHERE t.`tagId` = fto.`tagId` AND
-                              fto.`objectId` = o.`objectId` AND 
-                              o.`itemId` = ? AND
-                              o.`type` = ?
- 			      $mid
-			";
-	    
-	$result = $this->query($query, $bindvals, $maxRecords, $offset);
-	    
-	$ret = array();
-	$cant = 0;
-	while ($row = $result->fetchRow()) {
-		$ret[] = $row;
-		$cant++;
+				 `tiki_freetagged_objects` fto, 
+				 `tiki_freetags` t
+					 WHERE t.`tagId` = fto.`tagId` AND
+					 fto.`objectId` = o.`objectId` AND 
+					 o.`itemId` = ? AND
+					 o.`type` = ?
+					 $mid
+					 ";
+
+		$result = $this->query($query, $bindvals, $maxRecords, $offset);
+
+		$ret = array();
+		$cant = 0;
+		while ($row = $result->fetchRow()) {
+			$ret[] = $row;
+			$cant++;
+		}
+
+		return array('data' => $ret,
+				'cant' => $cant);
 	}
-	    
-	return array('data' => $ret,
-		     'cant' => $cant);
-    }
+
+	/**
+	 * Derived from get_tags_on_object. The method extracts all tags for an object
+	 * and attempts to find a translation in a given language. If no translation
+	 * exists at this time, the original tag will be used.
+	 *
+	 * This method is to be used when translating a page to create the initial set
+	 * of tags.
+	 */
+	function get_all_tags_on_object_for_language($itemId, $type, $lang ) {
+		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type)) {
+			return false;
+		}
+
+		$query = "
+			SELECT DISTINCT tra.tag tratag, orig.tag srctag
+			FROM
+				`tiki_objects` o
+				INNER JOIN tiki_freetagged_objects fo ON o.objectId = fo.objectId
+				INNER JOIN tiki_freetags orig ON fo.tagId = orig.tagId
+				LEFT JOIN tiki_translated_objects tos ON tos.type = 'freetag' AND fo.tagId = tos.objId
+				LEFT JOIN tiki_translated_objects tot ON tot.type = 'freetag' AND tos.traId = tot.traId
+				LEFT JOIN tiki_freetags tra ON tot.objId = tra.tagId AND tra.lang = ?
+			WHERE
+				 o.`itemId` = ? AND
+				 o.`type` = ?
+		 ";
+
+		$result = $this->query($query, array($lang, $itemId, $type));
+
+		$tra = array();
+		$orig = array();
+		while ($row = $result->fetchRow()) {
+			if( empty( $row['tratag'] ) )
+				$orig[] = $row['srctag'];
+			else
+				$tra[$row['srctag']] = $row['tratag'];
+		}
+
+		return array_merge( 
+			array_values( $tra ),
+			array_diff( $orig, array_keys( $tra ) ) );
+	}
 
 	function find_or_create_tag( $tag, $lang = null )
 	{
@@ -1178,14 +1221,19 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ) );
 
 		$ret = array();
+		$encountered = array();
 		while( $row = $result->fetchRow() ) {
 			$group = $row['tagset'];
 			$lang = $row['lang'];
+
+			if( array_key_exists( $row['tagId'], $encountered ) )
+				continue;
 
 			if( !array_key_exists( $group, $ret ) )
 				$ret[$group] = array();
 
 			$ret[$group][$lang] = $row;
+			$encountered[ $row['tagId'] ] = true;
 		}
 
 		return $ret;

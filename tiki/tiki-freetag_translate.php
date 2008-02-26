@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.3 2008-02-26 14:55:10 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.4 2008-02-26 16:24:26 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -31,7 +31,7 @@ if ($prefs['feature_multilingual'] != 'y') {
 	die;
 }
 
-if ($tiki_p_admin_freetags != 'y') {
+if (false &&$tiki_p_admin_freetags != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.10 2008-02-21 05:02:27 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.11 2008-02-26 16:24:17 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,15 +53,6 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
 	$smarty->assign('translate_message', tra('Translation in progress.', $langpage));
 
-	if( $prefs['feature_freetags'] == 'y' ) {
-		include_once('lib/freetag/freetaglib.php');
-
-		$tags = $freetaglib->get_tags_on_object($name, $type);
-		$taglist = '';
-		foreach( $tags['data'] as $tagData )
-			$taglist .= $tagData['tag'] . ' ';
-		$smarty->assign( 'taglist', $taglist );
-	}
 }
 else if ($_REQUEST['id']) {
 	if (!isset($_REQUEST['type'])) {
