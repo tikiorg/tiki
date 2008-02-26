@@ -1,6 +1,6 @@
-<?php
+><?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.51.2.1 2008-01-31 18:27:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.51.2.2 2008-02-26 21:12:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -228,6 +228,49 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 	$info["name"] = '';
 	$info["description"] = '';
 	$_REQUEST["categId"] = 0;
+}
+
+if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
+	check_ticket('admin-categories');
+	$fhandle = fopen($_FILES['csvlist']['tmp_name'], 'r');
+	if (!$fhandle) {
+		$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$fields = fgetcsv($fhandle, 1000);
+	if (!$fields[0]) {
+		$smarty->assign('msg', tra('The file is not a CSV file or has not a correct syntax'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($fields[0]!='category' && $fields[1]!='description' && $fields[2]!='parent') {
+		$smarty->assign('msg', tra('The file does not have the required header:').' category, description, parent');
+		$smarty->display('error.tpl');
+		die;
+	}
+	while (!feof($fhandle)) {
+		$data = fgetcsv($fhandle, 1000);
+		$temp_max = count($fields);
+		if (strtolower($data[2]) != 'top' && !empty($data[2])) {
+			$parentId = $categlib->get_category_id($data[2]);
+			if (empty($parentId)) {
+				$smarty->assign('msg', tra('Incorrect param').' '.$data[2]);
+				$smarty->display('error.tpl');
+				die;
+			}
+		} else {
+			$parentId = 0;
+		}
+		if (!$categlib->exist_child_category($parentId, $data[0])) {
+			$newcategId = $categlib->add_category($parentId, $data[0], $data[1]);
+			if (empty($newcategId)) {
+				$smarty->assign('msg', tra('Incorrect param').' '.$data[0]);
+				$smarty->display('error.tpl');
+				die;
+			}
+		}
+	}
 }
 
 $smarty->assign('categId', $_REQUEST["categId"]);
