@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.30 2008-02-18 13:36:18 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.31 2008-02-26 17:37:07 nkoth Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1701,4 +1701,7 @@ INSERT INTO `users_permissions` SELECT  'tiki_p_list_trackers', 'Can list tracke
 
 #2008-02-18 lphuberdeau
 ALTER TABLE `tiki_freetags` ADD COLUMN `lang` VARCHAR(16);
+
+#2008-02-26 nkoth
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_freetags', 'Can admin freetags', 'admin', 'freetags', 'y');
 
