@@ -1217,6 +1217,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			WHERE
 				$mid
 				AND (tag.lang IS NULL OR tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ") )
+				AND tag.tagId IS NOT NULL
 				";
 
 		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ) );
