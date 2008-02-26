@@ -1176,15 +1176,12 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      */
     
 	function cleanup_tags() {
-		/* need to fix - cleanup on page removal not done because tiki_freetagged_objects not cleaned. Also, translations of tags that are still used should not be cleared.
-		$query = "SELECT t.`tagId` FROM `tiki_freetags` t LEFT JOIN `tiki_freetagged_objects` fto ON (t.`tagId` = fto.`tagId`) WHERE fto.`tagId` IS NULL";
-		$result = $this->query($query);
-		while( $row = $result->fetchRow() ) {
-			$query = "DELETE FROM `tiki_freetags` WHERE `tagId`= ?";
-			$this->query($query, array($row["tagId"]));
-			$query = "DELETE FROM `tiki_translated_objects` WHERE `type`='freetag' AND `objId`= ?";
-			$this->query($query, array($row["tagId"]));
-		} */
+		$this->query( "
+			DELETE FROM tiki_freetagged_objects WHERE tagId NOT IN(SELECT tagId FROM tiki_freetags)" );
+		$this->query( "
+			DELETE FROM tiki_freetags 
+			WHERE tagId NOT IN(SELECT tagId FROM tiki_freetagged_objects)
+				AND tagId NOT IN(SELECT objId FROM tiki_translated_objects WHERE type = 'freetag')" );
 	    return true;
 	 }
 
@@ -1258,7 +1255,6 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$equiv = array();
 		while( $row = $result->fetchRow() )
 			$equiv[] = $row['tagId'];
-			print_r( $equiv );
 
 		if( count( $equiv ) > 0 )
 		{
@@ -1324,6 +1320,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	{
 		$this->query( "UPDATE tiki_freetags SET lang = NULL WHERE tagId = ?", array( $tagId ) );
 		$this->query( "DELETE FROM tiki_translated_objects WHERE type = 'freetag' AND objId = ?", array( $tagId ) );
+		$this->cleanup_tags();
 	}
 }
 
