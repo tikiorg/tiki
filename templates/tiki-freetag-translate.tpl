@@ -1,5 +1,10 @@
-<h1>{$data.pageName}</h1>
+<h1>{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}</h1>
+{if isset($data)}
 <a href="tiki-index.php?page={$objId}" class="linkbut">View page</a>
+{/if}
+	<p>{tr}Note that tags that were created on pages with no language set will remain
+	universal (i.e. is the same tag in all languages) until a language has been set for the tag.{/tr}
+	{tr}Until then, they cannot be translated.{/tr}</p>
 <form method="post" action="tiki-freetag_translate.php">
 	<input type="hidden" name="type" value="{$type}"/>
 	<input type="hidden" name="objId" value="{$objId}"/>
@@ -14,6 +19,13 @@
 		</tr>
 	</thead>
 	<tbody>
+	{if !$tagList}
+		<tr>
+	<td colspan="{$languageList|@count - (in_array('',$languageList)?1:0)}">
+			{tr}There are no tags on this page in your preferred languages{/tr}
+			</td>
+		</tr>
+	{/if}
 	{foreach item=tag key=group from=$tagList}
 		<tr class="formcolor">
 		{if $tag[$blank] eq ''}
@@ -53,13 +65,13 @@
 	</tbody>
 </table>
 <div>
-{tr}Show additional languages{/tr}:
+{tr}Show the following languages{/tr}:
 <select multiple="multiple" name="additional_languages[]">
 {foreach item=lang from=$fullLanguageList}
 	<option value="{$lang.value}"{if in_array($lang.value, $languageList)} selected="selected"{/if}>{$lang.name}</option>
 {/foreach}
 </select>
-<input type="submit" value="{tr}Add{/tr}"/>
+<input type="submit" value="{tr}Select{/tr}"/>
 </div>
-<div>
 </form>
+
