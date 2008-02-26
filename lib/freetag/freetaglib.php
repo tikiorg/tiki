@@ -650,33 +650,26 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      *
      * @return string Returns the tag in normalized form.
      */ 
-    function delete_object_tag($itemId, $type, $tag, $user=false, $raw=false) {
-	if (!isset($itemId) || !isset($type) || !isset($tag) ||
-	    empty($itemId) || empty($type) || empty($tag)) {
-	    die("delete_object_tag argument missing");
-	    return false;
+	function delete_object_tag($itemId, $type, $tag, $user=false, $raw=false) {
+		if (!isset($itemId) || !isset($type) || !isset($tag) ||
+				empty($itemId) || empty($type) || empty($tag)) {
+			die("delete_object_tag argument missing");
+			return false;
+		}
+
+		$objectId = $this->get_object_id($type, $itemId);
+		$query = "delete from `tiki_freetagged_objects` where `objectId`=? and `tagId` IN(SELECT tagId FROM tiki_freetags WHERE raw_tag = ? OR tag = ?)";
+		$bindvars = array($objectId, $tag, $tag);
+		if ($user) {
+			$query.= " and `user`=?";
+			$bindvars[] = $user;
+		}
+		$this->query($query, $bindvars);
+
+		$this->cleanup_tags();
+		return true;
+
 	}
-
-	$tagId = $raw? $this->get_raw_tag_id($tag): $this->get_tag_id($tag);
-
-	if ( !($tagId > 0)) {
-	    return false;
-	} else {
-
-	    $objectId = $this->get_object_id($type, $itemId);
-	    $query = "delete from `tiki_freetagged_objects` where `objectId`=? and `tagId`=?";
-			$bindvars = array($objectId, $tagId);
-			if ($user) {
-				$query.= " and `user`=?";
-				$bindvars[] = $user;
-			}
-	    $this->query($query, $bindvars);
-		
-			$this->cleanup_tags();
-	    return true;
-
-	} 
-    }
 
     /**
      * delete_all_object_tags_for_user
