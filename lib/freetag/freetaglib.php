@@ -432,14 +432,26 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	function find_or_create_tag( $tag, $lang = null )
 	{
 		$normalized_tag = $this->normalize_tag($tag);
+			
+		$mid = "";
+		$bindvars = array();
 
 		// Then see if a raw tag in this form exists.
+		$mid .= " (`raw_tag` = ? OR `tag` = ?)";
+		$bindvars[] = $tag;
+		$bindvars[] = $normalized_tag;
+		
+		if ($this->multilingual && $lang) {
+			$mid .= " AND (`lang` = ? OR `lang` IS NULL)"; // null lang means universal
+			$bindvars[] = $lang;
+		}
+		
 		$query = "SELECT `tagId` 
-				FROM `tiki_freetags` 
-				WHERE `raw_tag` = ? OR `tag` = ?
-				";
-			
-		$result = $this->query($query, array($tag, $normalized_tag));
+			FROM `tiki_freetags` 
+			WHERE $mid 
+			";
+	
+		$result = $this->query($query, $bindvars);
 			
 		if ($row = $result->fetchRow()) {
 			$tagId = $row['tagId'];
@@ -503,6 +515,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	    $bindvals[] = $user;
 	}
 
+   	if ($this->multilingual && $lang) {
+		$mid .= " AND (`lang` = ? OR `lang` IS NULL)"; // null lang means universal
+		$bindvals[] = $lang;
+	}
+	
 	$query = "SELECT COUNT(*)
 			FROM `tiki_objects` o,
                              `tiki_freetagged_objects` fto,
@@ -1035,6 +1052,15 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			$bindvals[] = $prefs['wikiapproval_prefix'] . '%';
 		}
 		
+		if ($this->multilingual) {
+			// make sure only same lang pages are selected
+			$mid .= " AND pb.`lang` = pa.`lang`";
+			$join_tiki_pages = "INNER JOIN tiki_pages pa ON pa.pageName = oa.itemId
+					INNER JOIN tiki_pages pb ON pb.pageName = ob.itemId";
+		} else {
+			$join_tiki_pages = "";
+		}
+		
 		switch( $algorithm )
 		{
 		case 'basic': // {{{
@@ -1048,6 +1074,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 					INNER JOIN tiki_freetagged_objects fa ON oa.objectId = fa.objectId
 					INNER JOIN tiki_freetagged_objects fb USING(tagId)
 					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
+					$join_tiki_pages
 				WHERE" . $mid .					
 				"GROUP BY
 					ob.itemId
@@ -1072,6 +1099,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 					INNER JOIN tiki_freetagged_objects fb USING(tagId)
 					INNER JOIN tiki_objects ob ON ob.objectId = fb.objectId
 					INNER JOIN tiki_freetagged_objects fc ON fb.tagId = fc.tagId
+					$join_tiki_pages
 				WHERE " . $mid . 
 				" GROUP BY
 					ob.itemId
@@ -1104,13 +1132,31 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      */
     
 	function cleanup_tags() {
-		$query = "DELETE FROM `tiki_freetags` t USING `tiki_freetags` t LEFT JOIN `tiki_freetagged_objects` fto ON (t.`tagId` = fto.`tagId`) WHERE fto.`tagId` IS NULL";
-		$this->query($query);
+		/* need to fix - cleanup on page removal not done because tiki_freetagged_objects not cleaned. Also, translations of tags that are still used should not be cleared.
+		$query = "SELECT t.`tagId` FROM `tiki_freetags` t LEFT JOIN `tiki_freetagged_objects` fto ON (t.`tagId` = fto.`tagId`) WHERE fto.`tagId` IS NULL";
+		$result = $this->query($query);
+		while( $row = $result->fetchRow() ) {
+			$query = "DELETE FROM `tiki_freetags` WHERE `tagId`= ?";
+			$this->query($query, array($row["tagId"]));
+			$query = "DELETE FROM `tiki_translated_objects` WHERE `type`='freetag' AND `objId`= ?";
+			$this->query($query, array($row["tagId"]));
+		} */
 	    return true;
 	 }
 
 	function get_object_tags_multilingual( $type, $objectId, $accept_languages )
 	{
+		$mid = "";
+		$bindvars = array();
+		
+		$mid .= "o.type = ?";
+		$bindvars[] = $type;
+		
+		if ($objectId) {
+			$mid .= " AND o.itemId = ?";
+			$bindvars[] = $objectId;
+		}
+		
 		$query = "
 			SELECT DISTINCT
 				fo.tagId tagset,
@@ -1125,12 +1171,11 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 				LEFT JOIN tiki_translated_objects to_b ON to_b.type = 'freetag' AND to_a.traId = to_b.traId
 				LEFT JOIN tiki_freetags tag ON to_b.objId = tag.tagId OR tag.tagId = fo.tagId
 			WHERE
-				o.type = ?
-				AND o.itemId = ?
+				$mid
 				AND (tag.lang IS NULL OR tag.lang IN(" . implode(',', array_fill(0,count($accept_languages),'?')) . ") )
 				";
 
-		$result = $this->query( $query, array_merge( array( $type, $objectId ), $accept_languages ) );
+		$result = $this->query( $query, array_merge( $bindvars, $accept_languages ) );
 
 		$ret = array();
 		while( $row = $result->fetchRow() ) {
