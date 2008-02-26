@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.5.2.6 2008-02-18 16:03:27 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/freetag_list.php,v 1.5.2.7 2008-02-26 18:27:49 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,10 +24,11 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
     if (isset($cat_objid)) {
 
 	$tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);	
-	 
+	$tagarray = array(); 
 	$taglist = '';
 	for ($i=0; $i<sizeof($tags['data']); $i++) {
 	    $taglist .= $tags['data'][$i]['tag'] . ' ';
+	    $tagarray[] = $tags['data'][$i]['tag'];
 	}
 
     if ($prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_combine_freetags'] == 'y'
@@ -36,7 +37,7 @@ if ($prefs['feature_freetags'] == 'y' and $tiki_p_view_freetags == 'y') {
 		$approvedPageName = substr($cat_objid, strlen($prefs['wikiapproval_prefix']));
 		$approvedTags = $freetaglib->get_tags_on_object($approvedPageName, $cat_type);
 	 	for ($i=0; $i<sizeof($approvedTags['data']); $i++) {
-	    	$taglist .= $approvedTags['data'][$i]['tag'] . ' ';
+	    	if (!in_array($approvedTags['data'][$i]['tag'],$tagarray)) $taglist .= $approvedTags['data'][$i]['tag'] . ' ';
 		}		
 	}
 	
