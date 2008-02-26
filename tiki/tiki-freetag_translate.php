@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.2 2008-02-18 20:23:48 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.3 2008-02-26 14:55:10 nkoth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -31,6 +31,13 @@ if ($prefs['feature_multilingual'] != 'y') {
 	die;
 }
 
+if ($tiki_p_admin_freetags != 'y') {
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 if( !isset($_REQUEST['type']))
 	$_REQUEST['type'] = 'wiki page';
 if( !isset($_REQUEST['objId']))
@@ -49,14 +56,7 @@ if ($cat_type != 'wiki page') {
 include_once "lib/freetag/freetaglib.php";
 include_once "lib/multilingual/multilinguallib.php";
 
-$info = $tikilib->get_page_info( $cat_objId );
-
-if( empty( $info ) ) {
-	$smarty->assign('msg', tra("Object not found").": " . $cat_objId);
-
-	$smarty->display("error.tpl");
-	die;
-}
+if ( $cat_objId ) $info = $tikilib->get_page_info( $cat_objId );
 
 $smarty->assign( 'type', $cat_type );
 $smarty->assign( 'objId', $cat_objId );
@@ -101,32 +101,40 @@ else
 }
 
 $languages = $multilinguallib->preferedLangs();
-
-$tagList = $freetaglib->get_object_tags_multilingual( $cat_type, $cat_objId, $languages );
-
 $used_languages = array();
-$rootlangs = array();
-foreach( $tagList as $tagGroup )
-	foreach( $tagGroup as $k => $tag )
-	{
-		$used_languages[$k] = true;
-		if( $tag['tagset'] == $tag['tagId'] )
-			$rootlangs[$tag['tagset']] = $tag['lang'];
-	}
+foreach ($languages as $l)
+	$used_languages[$l] = true;
 if( array_key_exists( 'additional_languages', $_REQUEST )
 	&& is_array( $_REQUEST['additional_languages'] ) )
 	foreach( $_REQUEST['additional_languages'] as $lang )
 		$used_languages[$lang] = true;
 $used_languages = array_keys( $used_languages );
 
-function remove_existing_languages( $item ) {
-	global $used_languages;
-	return !in_array( $item['value'], $used_languages );
-}
-
 $allLanguages = $tikilib->list_languages();
-$allLanguages = array_filter( $allLanguages, 'remove_existing_languages' );
+// select roughly readable languages
+$t_used_languages = array();
+foreach ($allLanguages as $al) {
+	foreach ($used_languages as $ul) {
+		if (substr($al["value"],0,2) == substr($ul,0,2)) {
+			$t_used_languages[] = $al["value"];
+			break;
+		}
+	}
+}
+$used_languages = $t_used_languages;
 
+$tagList = $freetaglib->get_object_tags_multilingual( $cat_type, $cat_objId, $used_languages );
+
+$rootlangs = array();
+foreach( $tagList as $tagGroup ) {
+	foreach( $tagGroup as $k => $tag )
+	{
+		array_merge($used_languages, array($k));
+		if( $tag['tagset'] == $tag['tagId'] )
+			$rootlangs[$tag['tagset']] = $tag['lang'];
+	}
+}
+	
 $smarty->assign( 'tagList', $tagList );
 $smarty->assign( 'languageList', $used_languages );
 $smarty->assign( 'fullLanguageList', $allLanguages );
