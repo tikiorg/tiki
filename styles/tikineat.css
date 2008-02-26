@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.9 2008-02-24 06:29:17 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.10 2008-02-26 20:46:29 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -648,7 +648,10 @@ td.jukeboxlistvisitseven {
 TD.third {
 	border : 1px solid #8CACBB;
 	color : Black;
-	background-color : #8CACBB;
+	background-color : #FFF;
+        padding:  2px 1% 9px;
+        font-size:  140%;
+        text-align: left;
 }
 
 /* When the page title is a link this is the style */
