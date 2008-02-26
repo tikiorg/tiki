@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.1 2007-12-11 13:05:40 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.2 2008-02-26 20:46:29 pkdille Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -204,4 +204,9 @@ padding-left: 18px;
  *  This class has to be added in the main style sheet */
 #highlight  {
 	background-color : #eeee99 !important;
+}
+
+/* Style for sections in tiki-forums. Alignement "center" was inline before */
+td.third {
+  text-align: center;
 }

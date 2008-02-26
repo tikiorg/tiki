@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.8 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.9 2008-02-26 20:46:29 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -71,7 +71,7 @@
 {assign var=section value=$channels[user].section}
 {if $section ne $section_old}
   {assign var=section_old value=$section}
-  <tr><td class="third" colspan="6"><div align="center">{$section}</div></td></tr>
+  <tr><td class="third" colspan="6">{$section}</td></tr>
 {/if}
 <tr>
 <td class="{cycle advance=false}"><span style="float:left">
