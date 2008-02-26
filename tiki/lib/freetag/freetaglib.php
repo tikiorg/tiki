@@ -472,7 +472,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			array_diff( $orig, array_keys( $tra ) ) );
 	}
 
-	function find_or_create_tag( $tag, $lang = null, $allowUniveral = true )
+	function find_or_create_tag( $tag, $lang = null, $allowUniversal = true )
 	{
 		$normalized_tag = $this->normalize_tag($tag);
 			
