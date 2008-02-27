@@ -1,11 +1,15 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10 2007-05-26 16:25:04 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10.2.1 2008-02-27 06:22:29 marclaporte Exp $
+
+# Usage:
+# move to db/convertscripts and run:
+# ./convertsqls.sh domain.com/subdomain/
 
 
 VERSION="1.10"
 
 if [ -z $1 ]; then
-	echo "Usage: ./convertscript.sh <host> <tikiversion>"
+	echo "Usage: ./convertsqls.sh <host> <tikiversion>"
 	echo "       where <host> is the virtualhost/root/ for your tiki"
 	echo "       and <tikiversion> is the tikiwiki version (automatically set to $VERSION if omitted)"
 	exit 0
