@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.6 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_history.php,v 1.6.2.1 2008-02-27 00:09:14 franck Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once ('lib/map/maplib.php');
 
 if(!isset($prefs['feature_maps']) or $prefs['feature_maps'] != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
@@ -57,16 +58,7 @@ $smarty->assign('mapfile', $mapfile);
 //Get the history
 
 // Get mapfiles from the mapfiles directory
-$files = array();
-$h = opendir($prefs['map_path']);
-
-while (($file = readdir($h)) !== false) {
-	if (preg_match('/\.map/i', $file)) {
-		$files[] = $file;
-	}
-}
-closedir ($h);
-sort ($files);
+$files=$maplib->listMapsWithRev($prefs['map_path']);
 
 $history=array();
 $j=0;	
