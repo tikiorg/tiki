@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.2.2.2 2008-01-07 15:13:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/freetags.php,v 1.2.2.3 2008-02-27 14:26:55 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -44,4 +44,25 @@ if ( isset($section) and isset($sections[$section])) {
 	}
 	$smarty->assign('freetags',$tags);
 	$headerlib->add_cssfile('css/freetags.css');
+
+	if( $tiki_p_freetags_tag == 'y' && $prefs['freetags_multilingual'] == 'y' ) {
+		$ft_lang = null;
+		$ft_multi = false;
+		foreach( $tags['data'] as $row ) {
+			$l = $row['lang'];
+
+			if( ! $l )
+				continue;
+
+			if( ! $ft_lang )
+				$ft_lang = $l;
+			elseif( $ft_lang != $l ) {
+				$ft_multi = true;
+				break;
+			}
+		}
+
+		if( $ft_multi )
+			$smarty->assign( 'freetags_mixed_lang', "tiki-freetag_translate.php?objId={$_REQUEST[$here['key']]}" );
+	}
 }
