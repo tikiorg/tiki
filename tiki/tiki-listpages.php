@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.5 2008-01-28 15:39:07 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.6 2008-02-27 19:10:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,9 +174,14 @@ if ( ! empty($multiprint_pages) ) {
 		$filter['lang'] = $_REQUEST['lang'];
 		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
 	}
-	if (!empty($_REQUEST['categId'])) {
+	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 		$filter['categId'] = $_REQUEST['categId'];
 		$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
+	}
+	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['category'])) {
+		global $categlib; include_once ('lib/categories/categlib.php');
+		$filter['categId'] = $categlib->get_category_id($_REQUEST['category']);
+		$smarty->assign_by_ref('find_categId', $filter['categId']);	
 	}
 
 	if (isset($_REQUEST["initial"])) {
