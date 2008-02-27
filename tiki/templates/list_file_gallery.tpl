@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.11 2008-02-27 16:43:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.12 2008-02-27 21:51:28 nyloth Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
@@ -64,11 +64,6 @@
 	{/if}
 {/foreach}
 
-{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y'}
-	{assign var=nbCols value=`$nbCols+1`}
-	<td class="heading">{tr}Actions{/tr}</td>
-{/if}
-
 {if $other_columns neq ''}
 	{capture name=over_other_columns}{strip}
 	<div class='opaque'>
@@ -84,11 +79,25 @@
 	{/strip}{/capture}
 {/if}
 
+{if $other_columns_selected neq ''}
+	{assign var=nbCols value=`$nbCols+1`}
+	<td class="heading">
+	{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
+	</td>
+{/if}
+
+{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y'}
+	{assign var=nbCols value=`$nbCols+1`}
+	<td class="heading">{tr}Actions{/tr}</td>
+{/if}
+
 {if $other_columns neq '' or $other_columns_selected neq ''}
 	{assign var=nbCols value=`$nbCols+1`}
-	<td class="heading" style="width:1%"{if $other_columns_selected eq ''} rowspan="{math equation="x+1" x=$files|@count}"{/if}>{if $other_columns_selected neq ''}
-		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
-	{/if}{if $other_columns neq ''}<a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"}>{/if}{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}{if $other_columns neq ''}</a>{/if}</td>
+	<td class="heading" style="width:1%">
+	{if $other_columns neq ''}
+		<a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"}>{/if}{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}{if $other_columns neq ''}</a>
+	{/if}
+	</td>
 {/if}
 
 </tr>
@@ -106,6 +115,8 @@
 		</div>
 	</div>
 	{/strip}{/capture}
+{/if}
+
 	{assign var=nb_over_infos value=0}
 	{capture name=over_infos}{strip}
 	<div class='opaque'>
@@ -148,7 +159,6 @@
 	{else}
 		{assign var=over_infos value=''}
 	{/if}
-{/if}
 
 <tr>
 
@@ -160,7 +170,7 @@
 
 {if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n'}
 	<td style="white-space: nowrap" class="{cycle advance=false}">
-		{if $show_infos eq 'y'}{if $over_infos eq ''}{icon _id='information_gray' class='' alt='{tr}No information{/tr}'}{else}<a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"} style="cursor:help">{icon _id='information' class='' title=''}</a>{/if}{/if}<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onMouseOver" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a><noscript>{include file=fgal_context_menu.tpl}</noscript>
+		<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a><noscript>{include file=fgal_context_menu.tpl}</noscript>
 	</td>
 {/if}
 
@@ -227,13 +237,23 @@
 	{/if}
 {/foreach}
 
+{if $other_columns_selected neq ''}
+	<td class="{cycle advance=false}">{$files[changes].$other_columns_selected}</td>
+{/if}
+
 {if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y'}
 	<td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
 {/if}
 
-{if $other_columns_selected neq ''}
-	<td class="{cycle advance=false}">{$files[changes].$other_columns_selected}</td>
+<td class="{cycle advance=false}">
+{if $show_infos eq 'y'}
+	{if $over_infos eq ''}
+		{icon _id='information_gray' class='' alt='{tr}No information{/tr}'}
+	{else}
+		<a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"} style="cursor:help">{icon _id='information' class='' title=''}</a>
+	{/if}
 {/if}
+</td>
 
 </tr>
 {cycle print=false}
