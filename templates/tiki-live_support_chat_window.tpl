@@ -42,7 +42,7 @@
 			<table>
 			<tr>
 				<td  valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br />
-					<b>{$req_info.tiki_user}</b>
+					<b>{$req_info.tiki_user}</b>({$IP})
 				</td>
 				<td valign="top" >
 					{tr}Chat started{/tr}<br />
@@ -54,7 +54,7 @@
 			<table>
 			<tr>
 				<td valign="top" style="text-align:center;">
-					<b>{$req_info.user}</b>
+					<b>{$req_info.user}</b>({$IP})
 				</td>
 				<td valign="top" >
 					{tr}Chat started{/tr}<br />
