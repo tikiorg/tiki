@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.10 2008-02-06 09:35:10 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.11 2008-02-27 22:12:27 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php{if !empty($groupname)}?group={$groupname|escape:'url'}{/if}">{tr}Admin groups{/tr}</a>
@@ -148,7 +148,8 @@ class="prevnext">{tr}All{/tr}</a>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:<br />
 ({tr}Use wiki page name or full URL{/tr})<br />
-{tr}To use a relative link, use ex.{/tr}: <i>http:tiki-forums.php</i>
+{tr}To use a relative link, use ex.{/tr}: <i>http:tiki-forums.php</i><br />
+<a href="tiki-admin.php?page=general">{tr}More Links{/tr}</a> 
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
 {if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td><label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group{/tr}:</label>
