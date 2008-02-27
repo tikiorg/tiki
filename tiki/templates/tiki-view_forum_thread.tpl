@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.83 2007-10-04 22:17:43 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.84 2008-02-27 15:35:49 yonixxx Exp $ *}
 
 <h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
@@ -24,7 +24,47 @@
 	{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?forumId={$forumId}&amp;comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 	{if $next_topic}<a href="tiki-view_forum_thread.php?forumId={$forumId}&amp;comments_parentId={$next_topic}&amp;topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}next topic{/tr}</a>{/if}]{/if}
 </div>
+<table id="forumjumpto" style="clear:both;" ><tr>
 
+	<td style="text-align:left;">
+		<form id='time_control' method="get" action="tiki-view_forum_thread.php">
+
+			<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+			<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+			<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+			<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
+			<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+			<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+			<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
+			<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
+			<input type="hidden" name="forumId" value="{$forumId|escape}" />
+
+			<small>{tr}Show posts{/tr}:</small>
+			<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
+				<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+				<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+				<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+				<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+			</select>
+		</form>
+	</td>
+
+	<td style="text-align:right;">
+		{if $prefs.feature_forum_quickjump eq 'y'}
+		<form id='quick' method="get" action="tiki-view_forum.php">
+			<small>{tr}Jump to forum{/tr}:</small>
+			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
+				{section name=ix loop=$all_forums}
+				<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+				{/section}
+			</select>
+		</form>
+		{else}
+		&nbsp;
+		{/if}
+		</td>
+</tr></table>
 {if $openpost eq 'y'}
 	{assign var="postclass" value="forumpostopen"}
 {else}

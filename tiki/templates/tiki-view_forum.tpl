@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.112 2007-10-20 05:17:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.113 2008-02-27 15:35:25 yonixxx Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -64,7 +64,41 @@
 </tr>
 </table>
 </div>
+<table >  
+<tr>
+<td style="text-align:left;">
 
+<form id='time_control' method="post" action="tiki-view_forum.php">
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
+    <small>{tr}Show posts{/tr}:</small>
+    <select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
+    	<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+    	<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+    	<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+    	<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+    </select>
+</form>
+</td>
+<td style="text-align:right;">
+{if $prefs.feature_forum_quickjump eq 'y'}
+<form id='quick' method="post" action="tiki-view_forum.php">
+<small>{tr}Jump to forum{/tr}:</small>
+<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
+{section name=ix loop=$all_forums}
+<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+{/section}
+</select>
+</form>
+{else}
+&nbsp;
+{/if}
+</td>
+</tr>
+</table>
 {if $unread > 0}
 <a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
 {/if}
