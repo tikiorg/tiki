@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.9 2008-01-11 12:12:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.10 2008-02-27 14:47:05 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 // param: id, shy, notop, detail, categorize,multiple,group,path, add, del
@@ -110,7 +110,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
     else {
       $logslib->add_log('step',"changed ".$_REQUEST['page']." from $cs to top");
     }
-    header('Location: tiki-index.php?page='.urlencode($cat_objid));
+    header('Location: '.$_SERVER['REQUEST_URI']);
     die;
   }
 
