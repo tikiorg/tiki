@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.3 2008-02-27 15:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.4 2008-02-27 15:48:27 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
-<h1>{tr}Gallery{/tr}: <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{$name}</a></h1>
+<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Gallery{/tr}: {$name}</a></h1>
 
 <div name="description">{$description|escape}</div>
 
