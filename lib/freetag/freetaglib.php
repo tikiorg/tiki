@@ -472,7 +472,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 			array_diff( $orig, array_keys( $tra ) ) );
 	}
 
-	function find_or_create_tag( $tag, $lang = null, $allowUniversal = true )
+	function find_or_create_tag( $tag, $lang = null, $anyLanguage = true )
 	{
 		$normalized_tag = $this->normalize_tag($tag);
 			
@@ -484,23 +484,18 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$bindvars[] = $tag;
 		$bindvars[] = $normalized_tag;
 		
-		if ($this->multilingual && $lang) {
-			if( $allowUniversal )
-			{
-				$mid .= " AND (`lang` = ? OR `lang` IS NULL)"; // null lang means universal
-				$bindvars[] = $lang;
-			}
-			else
-			{
-				$mid .= " AND `lang` = ?"; // null lang means universal
-				$bindvars[] = $lang;
-			}
+		if ($this->multilingual && $lang && ! $anyLanguage) {
+			$mid .= " AND `lang` = ?"; // null lang means universal
+			$bindvars[] = $lang;
 		}
 		
 		$query = "SELECT `tagId` 
 			FROM `tiki_freetags` 
 			WHERE $mid 
+			ORDER BY CASE WHEN lang = ? THEN 0 WHEN lang IS NULL THEN 1 ELSE 2 END
 			";
+
+		$bindvars[] = $lang;
 	
 		$result = $this->query($query, $bindvars);
 			
