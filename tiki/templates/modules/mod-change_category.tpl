@@ -1,5 +1,5 @@
 {* 
-$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.9 2007-12-06 15:44:29 sylvieg Exp $ 
+$Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-change_category.tpl,v 1.9.2.10 2008-02-27 14:47:06 sylvieg Exp $ 
 parameters : id=1
 id is the categId of the parent categ to list
 note : lists the objects from a given category not a recursive tree
@@ -26,7 +26,7 @@ note : lists the objects from a given category not a recursive tree
 
 {if $module_params.detail ne 'y' or ($module_params.add ne 'n' and $remainCateg)}
 <div align="center">
-<form method="post" action="{$smarty.server.PHP_SELF}" target="_self">
+<form method="post" action="{$smarty.server.REQUEST_URI}" target="_self">
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="modcatid" value="{$modcatid}" />
 {if $module_params.multiple eq 'y'}
