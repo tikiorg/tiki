@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.4 2008-02-27 15:48:27 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.5 2008-02-27 16:11:25 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Gallery{/tr}: {$name}</a></h1>
 
@@ -63,7 +63,7 @@
 <div class="gallerypath">{$gallery_path}</div>
 <table border="0" cellpadding="3" cellspacing="3" width="100%">
 	<tr>
-		{if isset($tree) and count($tree) gt 0}
+		{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'}
 		<td width="25%" class="fgalexplorer">
 			<div style="overflow-x:auto; overflow-y:hidden">
 			{include file='file_galleries.tpl'}
