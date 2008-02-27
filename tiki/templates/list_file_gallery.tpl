@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.10 2008-02-27 16:32:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.11 2008-02-27 16:43:43 sylvieg Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
@@ -160,7 +160,7 @@
 
 {if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n'}
 	<td style="white-space: nowrap" class="{cycle advance=false}">
-		{if $show_infos eq 'y'}{if $over_infos eq ''}{icon _id='information_gray' class='' alt='{tr}No information{/tr}'}{else}<a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"} style="cursor:help">{icon _id='information' class='' title=''}</a>{/if}{/if}<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onMouseOver" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
+		{if $show_infos eq 'y'}{if $over_infos eq ''}{icon _id='information_gray' class='' alt='{tr}No information{/tr}'}{else}<a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"} style="cursor:help">{icon _id='information' class='' title=''}</a>{/if}{/if}<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onMouseOver" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a><noscript>{include file=fgal_context_menu.tpl}</noscript>
 	</td>
 {/if}
 
