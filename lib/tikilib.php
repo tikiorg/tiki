@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.82 2008-02-27 15:18:43 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.83 2008-02-27 15:52:17 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2011,7 +2011,7 @@ function add_pageview() {
      * @return array of found files and subgals
      */
     function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true) {
-	global $user;
+	global $user, $tiki_p_admin_file_galleries;
 
 	if ( ! $with_files && ! $with_subgals ) return array();
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.4 2008-02-27 15:18:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.5 2008-02-27 15:54:12 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -305,6 +305,7 @@ if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path);
 
 	array_unshift($gallery_path, array(0, $tree['name']));
+	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
 		$gallery_path_str .= ( $dir_id[0] > 0 ? '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager' : '').'">'.$dir_id[1].'</a>' : $dir_id[1]);
