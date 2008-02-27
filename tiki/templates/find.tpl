@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.10.2.4 2007-10-30 17:28:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.10.2.5 2008-02-27 15:18:50 nyloth Exp $ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
-{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
-{if !empty($offset)}<input type="hidden" name="offset" value="{$offset}" />{/if}
+{if $filegals_manager eq 'y'}<input type="hidden" name="filegals_manager" value="y" />{/if}
+{query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL'}
 
 <table class="findtable">
 <tr>
-<td class="findtitle">{if empty($what)}{tr}Find{/tr}{else}{tr}{$what}{/tr}{/if}</td>
+<td class="findtitle" style="vertical-align: middle">{if empty($what)}{tr}Find{/tr}{else}{tr}{$what}{/tr}{/if}</td>
 <td class="findtitle">
 	<input type="text" name="find" value="{$find|escape}" />
 	{if isset($exact_match)}{tr}Exact&nbsp;match{/tr}<input type="checkbox" name="exact_match" {if $exact_match ne 'n'}checked="checked"{/if}/>{/if}
@@ -60,7 +60,7 @@
 	</td>
 {/if}
 
-<td class="findtitle">{tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" /></td>
+<td class="findtitle" style="vertical-align: middle">{tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$maxRecords|escape}" size="3" /></td>
 
 <td class="findtitle"><input type="submit" name="search" value="{tr}Find{/tr}" /></td>
 </tr>

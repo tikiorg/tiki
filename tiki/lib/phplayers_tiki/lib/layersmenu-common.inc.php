@@ -1,7 +1,7 @@
 <?php
 // PHP Layers Menu 3.2.0-rc (C) 2001-2004 Marco Pratesi - http://www.marcopratesi.it/
 // (copy of original, included in lib/smarty_tiki/function.phplayers.php, modified for Tiki purposes, changes marked using "// [MOD] by <sfnick>")
-// CVS: $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/lib/layersmenu-common.inc.php,v 1.2 2006-08-29 20:19:10 sylvieg Exp $
+// CVS: $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/lib/layersmenu-common.inc.php,v 1.2.2.1 2008-02-27 15:18:47 nyloth Exp $
 
 /**
 * This file contains the code of the LayersMenuCommon class.
@@ -389,6 +389,7 @@ function setIcondir($icondir)
 		return false;
 	}
 	$this->icondir = $icondir;
+
 	return true;
 }
 
@@ -794,6 +795,7 @@ function _postParse(
 		$this->tree[$cnt]['parsed_text'] = stripslashes($this->tree[$cnt]['text']);
 		$this->tree[$cnt]['parsed_href'] = (ereg_replace(' ', '', $this->tree[$cnt]['href']) == '') ? '#' : $this->prependedUrl . $this->tree[$cnt]['href'];
 		$this->tree[$cnt]['parsed_title'] = ($this->tree[$cnt]['title'] == '') ? '' : ' title="' . stripslashes($this->tree[$cnt]['title']) . '"';
+
 		$fooimg = $this->icondir . $this->tree[$cnt]['icon'];
 		if ($this->tree[$cnt]['icon'] != '' && (substr($this->tree[$cnt]['icon'], 0, 7) == 'http://' || substr($this->tree[$cnt]['icon'], 0, 8) == 'https://')) {
 			$this->tree[$cnt]['parsed_icon'] = $this->tree[$cnt]['icon'];

@@ -86,7 +86,7 @@ class StatsLib extends TikiLib {
 		$stats["size"] = $stats["size"] / 1000000;
 		$stats["bpf"] = ($stats["galleries"] ? $stats["size"] / $stats["galleries"] : 0);
 		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_file_galleries`",array());
-		$stats["downloads"] = $this->getOne("select sum(`downloads`) from `tiki_files`",array());
+		$stats["hits"] = $this->getOne("select sum(`hits`) from `tiki_files`",array());
 		return $stats;
 	}
 

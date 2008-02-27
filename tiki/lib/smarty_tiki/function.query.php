@@ -45,36 +45,60 @@ function smarty_function_query($params, &$smarty) {
     }
 
     $ret = '';
-    $sep = '&amp;';
-    if ( function_exists('http_build_query') ) {
-      $ret = http_build_query($query, '', $sep);
-    } else {
+    if ( isset($params['_type']) && $params['_type'] == 'form_input' ) {
       foreach ( $query as $k => $v ) {
-        if ( $ret != '' ) $ret .= $sep;
-	if ( is_array($v) ) {
-	  foreach ( $v as $vk => $vv ) {
-	    $ret .= urlencode($k.'['.$vk.']').'='.urlencode($vv);
-	  }
-	} else {
-          $ret .= urlencode($k).'='.urlencode($v);
-	}
+        $ret .= '<input type="hidden"'
+             .' name="'.htmlspecialchars($k, ENT_QUOTES, 'UTF-8').'"'
+             .' value="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'" />'."\n";
+      }
+    } else {
+      $sep = '&amp;';
+      if ( function_exists('http_build_query') ) {
+        $ret = http_build_query($query, '', $sep);
+      } else {
+        foreach ( $query as $k => $v ) {
+          if ( $ret != '' ) $ret .= $sep;
+          if ( is_array($v) ) {
+            foreach ( $v as $vk => $vv ) {
+              $ret .= urlencode($k.'['.$vk.']').'='.urlencode($vv);
+            }
+          } else {
+            $ret .= urlencode($k).'='.urlencode($v);
+          }
+        }
       }
     }
+
   }
 
   if ( is_array($params) && isset($params['_type']) ) {
     global $base_host;
+
+    // If specified, use _script argument to determine the php script to link to
+    // ... else, use PHP_SELF server var
+    if ( isset($params['_script']) && $params['_script'] != '' ) {
+      $php_self = $params['_script'];
+
+      // If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
+      if ( strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
+        $php_self = dirname($_SERVER['PHP_SELF']).'/'.$php_self;
+      }
+
+    } else {
+      $php_self = $_SERVER['PHP_SELF'];
+    }
+
     switch ( $params['_type'] ) {
       case 'absolute_uri':
-        $ret = $base_host.$_SERVER['PHP_SELF'].'?'.$ret;
+        $ret = $base_host.$php_self.'?'.$ret;
         break;
       case 'absolute_path':
-        $ret = $_SERVER['PHP_SELF'].'?'.$ret;
+        $ret = $php_self.'?'.$ret;
         break;
       case 'relative':
-	$ret = basename($_SERVER['PHP_SELF']).'?'.$ret;
+	$ret = basename($php_self).'?'.$ret;
         break;
-      case 'arguments': /* default */
+      case 'form_input': case 'arguments': /* default */
     }
   }
 

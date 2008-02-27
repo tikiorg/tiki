@@ -787,6 +787,7 @@ function _postParse(
 	$menu_name = ''	// non consistent default...
 	)
 {
+
 	for ($cnt=$this->_firstItem[$menu_name]; $cnt<=$this->_lastItem[$menu_name]; $cnt++) {	// this counter scans all nodes of the new menu
 		$this->tree[$cnt]['child_of_root_node'] = ($this->tree[$cnt]['level'] == 1);
 		$this->tree[$cnt]['parsed_text'] = stripslashes($this->tree[$cnt]['text']);

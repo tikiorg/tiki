@@ -1,43 +1,26 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/fgal_listing_conf.tpl,v 1.3 2007-10-15 00:08:52 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/fgal_listing_conf.tpl,v 1.3.2.1 2008-02-27 15:18:50 nyloth Exp $ *}
 
+{if is_array($fgal_listing_conf) and count($fgal_listing_conf) gt 0}
+	{foreach key=key item=item from=$fgal_listing_conf}
 <tr class="formcolor">
-<td>{tr}ID{/tr}</td>
-<td><input type="checkbox" name="fgal_list_id"{if $fgal_list_id eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Name{/tr}</td>
-<td><input type="checkbox" name="fgal_list_name"{if $fgal_list_name eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Description{/tr}</td>
-<td><input type="checkbox" name="fgal_list_description"{if $fgal_list_description eq 'y'} checked="checked"{/if} /></td>
- </tr><tr class="formcolor">
-
-<td>{tr}Type{/tr}</td>
-<td><input type="checkbox" name="fgal_list_type"{if $fgal_list_type eq 'y'} checked="checked"{/if} /></td>
- </tr><tr class="formcolor">
-
-<td>{tr}Created{/tr}</td>
-<td><input type="checkbox" name="fgal_list_created"{if $fgal_list_created eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Last modified{/tr}</td>
-<td><input type="checkbox" name="fgal_list_lastmodif"{if $fgal_list_lastmodif eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}User{/tr}</td>
-<td><input type="checkbox" name="fgal_list_user"{if $fgal_list_user eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Files{/tr}</td>
-<td><input type="checkbox" name="fgal_list_files"{if $fgal_list_files eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Hits{/tr}</td>
-<td><input type="checkbox" name="fgal_list_hits"{if $fgal_list_hits eq 'y'} checked="checked"{/if} /></td>
-</tr><tr class="formcolor">
-
-<td>{tr}Parent gallery{/tr}</td>
-<td><input type="checkbox" name="fgal_list_parent"{if $fgal_list_parent eq 'y'} checked="checked"{/if} /></td>
+	<td>{$item.name}</td>
+	<td>
+		<select name="fgal_list_{$key}">
+		{if $key eq 'name'}
+			<option value="a"{if $item.value eq 'a'} selected="selected"{/if}>{tr}Name-filename{/tr}</option>
+			<option value="n"{if $item.value eq 'n'} selected="selected"{/if}>{tr}Name{/tr}</option>
+			<option value="f"{if $item.value eq 'f'} selected="selected"{/if}>{tr}Filename only{/tr}</option>
+		{else}
+			<option value='n'{if $item.value eq 'n'} selected="selected"{/if}>{tr}Hide{/tr}</option>
+			<option value='y'{if $item.value eq 'y'} selected="selected"{/if}>{tr}Show as a column{/tr}</option>
+			<option value='o'{if $item.value eq 'o'} selected="selected"{/if}>{tr}Show in popup box{/tr}</option>
+			<option value='a'{if $item.value eq 'a'} selected="selected"{/if}>{tr}Both{/tr}</option>
+		{/if}
+		{if $key eq 'lockedby'}
+			<option value='i'{if $item.value eq 'i'} selected="selected"{/if}>{tr}Show an icon in a column{/tr}</option>
+		{/if}
+		</select>
+	</td>
 </tr>
-
+	{/foreach}
+{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.3.2.1 2007-11-04 22:08:04 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_wiki_section.php,v 1.3.2.2 2008-02-27 15:18:36 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,7 @@ if (isset($_REQUEST['page']))
 if (!isset($_REQUEST['object'])) {
 	$smarty->assign('msg', tra('No object indicated'));
 	$smarty->display('error.tpl');
+	die;
 }
 if (!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page')
 	$_REQUEST['type'] = 'wiki';
@@ -22,6 +23,7 @@ $perm = $objectlib->get_needed_perm($_REQUEST['type'], 'edit');
 if (!$userlib->user_has_perm_on_object($user, $_REQUEST['object'], $_REQUEST['type'], $perm)) {
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
+	die;
 }
 
 if (!isset($_REQUEST['referer'])) {

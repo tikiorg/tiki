@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.4 2008-01-28 22:14:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/phplayers_tiki/tiki-phplayers.php,v 1.19.2.5 2008-02-27 15:18:45 nyloth Exp $
 class TikiPhplayers extends TikiLib {
 	/* Build the input to the phplayers lib for a category tree  */
 	function mkCatEntry($categId, $indent="", $back, $categories, $urlEnd, $tpl='') {
@@ -146,7 +146,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		return array($type, $class, $new, $tplFct, $tpl);		
 	}
-	function mkMenu($itall, $name, $style, $file='', $curOption = 0, $sectionLevel='') {
+	function mkMenu($itall, $name, $style, $file='', $curOption = 0, $expandedDefault = 0) {
 		static $name_counter = 0;
 		if ( empty($name) ) {
 			// Name must never be empty to avoid function names conflicts
@@ -162,11 +162,21 @@ class TikiPhplayers extends TikiLib {
 		if (!isset($$plClass)) {
 			$$plClass = new $plClass(); // to have 2 menus of the same type need no reinstanciation
 		}
-		$$plClass->setDirrootCommon("lib/phplayers");
+		$$plClass->setDirrootCommon("lib/phplayers/");
 		$$plClass->setLibjsdir("lib/phplayers/libjs/");
-		$$plClass->setImgdir("lib/phplayers/images/");
-		$$plClass->setImgwww("lib/phplayers/images/");
 		$$plClass->setTpldirCommon("lib/phplayers/templates/");
+
+		if ( $style == 'tree' || $style == 'phptree' ) {
+			// Use Tikiwiki icons for tree menus (especially to have famfamfam folders icons)
+			$$plClass->setImgdir('../../pics/icons/');
+			$$plClass->setImgwww('pics/icons/');
+			$$plClass->setIcondir('../../pics/icons/');
+			$$plClass->setIconwww('pics/icons/');
+		} else {
+			$$plClass->setImgdir("lib/phplayers/images/");
+			$$plClass->setImgwww("lib/phplayers/images/");
+		}
+
 		if ($itall) {
 			$$plClass->setMenuStructureString($itall);
 		} elseif ($file && is_file($file)) {
@@ -187,6 +197,11 @@ class TikiPhplayers extends TikiLib {
 			$res .= $$plClass->getMenu($name);
 //			makeHeader and makeFooter are done in the footer.tpl (if there is more than one LayersMenus)
 		} else {
+			if ( $style == 'tree' || $style == 'phptree' ) {
+				if ( $expandedDefault > 0 && $style == 'phptree' ) {
+					$$plClass->{"set{$plClass}DefaultExpansion"}($expandedDefault);
+				}
+			}
 			$res .= $$plClass->$plNew($name);
 		}
 

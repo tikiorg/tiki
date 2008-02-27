@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.3 2008-02-15 13:52:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.4 2008-02-27 15:18:36 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,13 +18,13 @@ if ($prefs['feature_file_galleries'] != 'y') {
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 
-$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','file_sort_mode','file_find','file_offset','page','filegals_manager');
+$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 }
 
-if (empty($_REQUEST['galleryId']) || !($gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']))) {
+if ( empty($_REQUEST['galleryId']) || !($gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId'])) ) {
 	$smarty->assign('msg', tra("Non-existent gallery"));
 	$smarty->display("error.tpl");
 	die;
@@ -66,20 +66,6 @@ if ($tiki_p_view_file_gallery != 'y') {
 }
 
 $smarty->assign_by_ref('gal_info', $gal_info);
-if (!empty($gal_info['subgal_conf'])) {
-	list($fgal_list_id, $fgal_list_name, $fgal_list_description, $fgal_list_type, $fgal_list_created, $fgal_list_lastmodif, $fgal_list_user, $fgal_list_files, $fgal_list_hits, $fgal_list_parent) = split(':',$gal_info['subgal_conf']);
-	$smarty->assign('fgal_list_id', $fgal_list_id);
-	$smarty->assign('fgal_list_name', $fgal_list_name);
-	$smarty->assign('fgal_list_description', $fgal_list_description);
-	$smarty->assign('fgal_list_type', $fgal_list_type);
-	$smarty->assign('fgal_list_created', $fgal_list_created);
-	$smarty->assign('fgal_list_lastmodif', $fgal_list_lastmodif);
-	$smarty->assign('fgal_list_user', $fgal_list_user);
-	$smarty->assign('fgal_list_files', $fgal_list_files);
-	$smarty->assign('fgal_list_hits', $fgal_list_hits);
-	$smarty->assign('fgal_list_parent', $fgal_list_parent);
-}
-
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
@@ -152,9 +138,8 @@ $smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 $smarty->assign('fname', '');
 $smarty->assign('fdescription', '');
 
-if (isset($_REQUEST["edit_mode"])and ($_REQUEST['edit_mode'])) {
+if ( isset($_REQUEST["edit_mode"]) and ($_REQUEST['edit_mode']) ) {
 	$smarty->assign('edit_mode', 'y');
-
 	$smarty->assign('edited', 'y');
 
 	if ($_REQUEST['fileId'] > 0) {
@@ -199,105 +184,48 @@ if (isset($_REQUEST['edit'])) {
 
 	$fid = $filegallib->replace_file($_REQUEST["fileId"], $_REQUEST["fname"], $_REQUEST["fdescription"], $info['filename'], $info['data'], $info['filesize'], $info['filetype'], $info['user'], $info['path'], $info['galleryId']);
 
-	/*
-	  $cat_type='file gallery';
-	  $cat_objid = $fgid;
-	  $cat_desc = substr($_REQUEST["description"],0,200);
-	  $cat_name = $_REQUEST["name"];
-	  $cat_href="tiki-list_file_gallery.php?galleryId=".$cat_objid;
-	  include_once("categorize.php");
-	*/
 	$smarty->assign('edit_mode', 'n');
 }
 
-if (!isset($gal_info["maxRows"]))
-	$gal_info["maxRows"] = 10;
+if ( ! isset($_REQUEST['maxRecords']) || $_REQUEST['maxRecords'] <= 0 ) {
+	if ( isset($gal_info['maxRows']) && $gal_info['maxRows'] > 0 ) {
+		$_REQUEST['maxRecords'] = $gal_info['maxRows'];
+	} else {
+		$_REQUEST['maxRecords'] = $prefs['maxRecords'];
+	}
+}
+$smarty->assign_by_ref('maxRecords', $_REQUEST['maxRecords']);
 
-if ($gal_info["maxRows"] == 0)
-	$gal_info["maxRows"] = 10;
+if ( ! isset($_REQUEST['offset']) ) $_REQUEST['offset'] = 0;
+$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
-$maxRecords = $gal_info["maxRows"];
-$smarty->assign('maxRecords', $maxRecords);
+if ( ! isset($_REQUEST['sort_mode']) ) {
+	$_REQUEST['sort_mode'] = ( $gal_info['show_name'] == 'f' ? 'filename_asc' : 'name_asc' );
+}
+$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
+
+if ( ! isset($_REQUEST['find']) ) $_REQUEST['find'] = '';
+$smarty->assign_by_ref('find', $_REQUEST['find']);
+
 $smarty->assign_by_ref('name', $gal_info["name"]);
 $smarty->assign_by_ref('description', $gal_info["description"]);
 
-if (!isset($_REQUEST["file_sort_mode"])) {
-	$file_sort_mode = $gal_info['sort_mode']? $gal_info['sort_mode']: 'created_desc';
-
-	$_REQUEST["file_sort_mode"] = $file_sort_mode;
-} else {
-	$file_sort_mode = $_REQUEST["file_sort_mode"];
-}
-
-$smarty->assign_by_ref('file_sort_mode', $file_sort_mode);
-
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
-if (!isset($_REQUEST["file_offset"])) {
-	$file_offset = 0;
-
-	$_REQUEST["file_offset"] = 0;
-} else {
-	$file_offset = $_REQUEST["file_offset"];
-}
-
-$smarty->assign_by_ref('file_offset', $file_offset);
-
-if (isset($_REQUEST['file_find'])) {
-	$file_find = $_REQUEST['file_find'];
-} else {
-	$file_find = '';
-
-	$_REQUEST['file_find'] = '';
-}
-
-$smarty->assign('file_find', $file_find);
-
-$files = $tikilib->get_files($file_offset, $maxRecords, $file_sort_mode, $file_find, $_REQUEST["galleryId"], true);
-$smarty->assign_by_ref('file_cant', $files['cant']);
-$smarty->assign('file_actual_page', 1 + ($file_offset / $maxRecords));
-
-if ($files["cant"] > ($file_offset + $maxRecords)) {
-	$smarty->assign('file_next_offset', $file_offset + $maxRecords);
-} else {
-	$smarty->assign('file_next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($file_offset > 0) {
-	$smarty->assign('file_prev_offset', $file_offset - $maxRecords);
-} else {
-	$smarty->assign('file_prev_offset', -1);
-}
-
+$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
 $smarty->assign_by_ref('files', $files['data']);
+$smarty->assign('cant', $files['cant']);
 
 if ($prefs['feature_file_galleries_comments'] == 'y') {
 	$comments_per_page = $prefs['file_galleries_comments_per_page'];
 
 	$thread_sort_mode = $prefs['file_galleries_comments_default_ordering'];
-	$comments_vars = array('galleryId', 'offset', 'sort_mode', 'find', 'file_offset', 'file_sort_mode', 'file_find');
+	$comments_vars = array('galleryId', 'offset', 'sort_mode', 'find');
 
 	$comments_prefix_var = 'file gallery:';
 	$comments_object_var = 'galleryId';
 	include_once ("comments.php");
 }
 
-// sub galleries
-if (!isset($_REQUEST['offset']))
-	$_REQUEST['offset'] = 0;
-if (!isset($_REQUEST['sort_mode']))
-	$_REQUEST['sort_mode'] = 'name_asc';
-if (!isset($_REQUEST['find']))
-	$_REQUEST['find'] = '';
-$galleries = $filegallib->list_file_galleries($_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $user, $_REQUEST['find'], $_REQUEST["galleryId"]);
 
-$smarty->assign('cant', $galleries['cant']);
-$smarty->assign_by_ref('galleries', $galleries['data']);
-$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
-$smarty->assign_by_ref('find', $_REQUEST['find']);
-$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
@@ -345,11 +273,47 @@ if($prefs['feature_user_watches'] == 'y') {
 	} 	        
 }
 
+$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user);
 
-if ($tiki_p_admin_file_galleries == 'y' && isset($_REQUEST['movesel_x'])) {
-	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
-	$smarty->assign('all_galleries', $all_galleries['data']);
- }
+// Build galleries browsing tree and current gallery path array
+//
+function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, $cur_id = -1) {
+	$i = 0;
+	$current_path = array();
+	$path_found = false;
+	foreach ( $galleries as $gk => $gv ) {
+		if ( $gv['parentId'] == $cur_id && $gv['id'] != $cur_id ) {
+			$tree[$i] = &$galleries[$gk];
+			$tree[$i]['link_var'] = 'galleryId';
+			$tree[$i]['link_id'] = $gv['id'];
+			add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $gv['id']);
+			if ( ! $path_found && $gv['id'] == $gallery_id ) {
+				if ( $_REQUEST['galleryId'] == $gv['id'] ) $tree[$i]['current'] = 1;
+				array_unshift($gallery_path, array($gallery_id, $gv['name']));
+				$gallery_id = $cur_id;
+				$path_found = true;
+			}
+			$i++;
+		}
+	}
+}
+
+if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
+	$tree = array('name' => tra('File Galleries'), 'data' => array());
+	$gallery_path = array();
+
+	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path);
+
+	array_unshift($gallery_path, array(0, $tree['name']));
+	foreach ( $gallery_path as $dir_id ) {
+		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
+		$gallery_path_str .= ( $dir_id[0] > 0 ? '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager' : '').'">'.$dir_id[1].'</a>' : $dir_id[1]);
+	}
+}
+
+$smarty->assign('gallery_path', $gallery_path_str);
+$smarty->assign_by_ref('tree', $tree);
+
 if ($podCastGallery) {
 	$smarty->assign('download_path', $prefs['fgal_podcast_dir']);
 } else {
@@ -363,14 +327,17 @@ if ($prefs['feature_actionlog'] == 'y') {
 	include_once('lib/logs/logslib.php');
 	$logslib->add_action('Viewed', $galleryId, 'file gallery');
 }
-if (isset($_GET['filegals_manager'])) {
-  $smarty->assign('filegals_manager','y');
-  $smarty->assign('mid','tiki-list_file_gallery.tpl');
-  $smarty->display("tiki_full.tpl");
-} else {
+
+include_once('fgal_listing_conf.php');
+
+$smarty->assign('mid','tiki-list_file_gallery.tpl');
+
 // Display the template
-$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
-$smarty->display("tiki.tpl");
+if ( isset($_REQUEST['filegals_manager']) ) {
+	$smarty->assign('filegals_manager','y');
+	$smarty->display('tiki_full.tpl');
+} else {
+	$smarty->display('tiki.tpl');
 }
 
 ?>

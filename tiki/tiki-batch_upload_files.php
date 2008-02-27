@@ -232,26 +232,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		if (!$error) {
 			// check which gallery to upload to
 			$tmpGalId = (int)$_REQUEST["galleryId"];
-/* TODO: NOT WORKING YET! creates a gallery per file
-			if (isset($_REQUEST["subdirToSubgal"])) {
-				// get parent gallery data
-				$parent = $filegallib->get_file_gallery_info((int)$_REQUEST["galleryId"]);
 
-				if ($filePathArray<>"") {
-					$tmpGalName = $filePathArray[$x];
-					// get last subdir 'last' from 'some/path/last'
-					if (strpos($tmpGalName,"/")>0) $tmpGalName = substr($tmpGalName,strrpos($tmpGalName,"/")+1,999);
-					if (substr($tmpGalName,0,1)=="/") { $tmpGalName = substr($tmpGalName,1); }
-					if (substr($tmpGalName,-1,1)=="/") { $tmpGalName = substr($tmpGalName,0,strlen($tmpGalName)-1); }
-					
-					$tmpGalId = @$filegallib->replace_file_gallery(0, $tmpGalName, '', $user, $parent["maxRows"],
-							$parent["public"], $parent["visible"], $parent["show_id"], $parent["show_icon"],
-							$parent["show_name"], $parent["show_size"], $parent["show_description"],
-							$parent["show_created"], $parent["show_dl"], $parent["max_desc"], $parent["type"]);
-					if ($tmpGalId == 0) $tmpGalId = (int)$_REQUEST["galleryId"];
-				}
-			}
-*/
 			// if subToDesc is set, set description:
 			if (isset($_REQUEST["subToDesc"])) {
 				// get last subdir 'last' from 'some/path/last'

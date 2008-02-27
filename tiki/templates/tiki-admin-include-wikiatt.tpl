@@ -16,7 +16,7 @@
 <td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}" class="heading">{tr}Type{/tr}</td>
 <td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=path_{if $sort_mode eq 'path'}asc{else}desc{/if}" class="heading">{tr}Storage{/tr}</td>
 <td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}" class="heading">{tr}Created{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=downloads_{if $sort_mode eq 'downloads'}asc{else}desc{/if}" class="heading">&gt;</td>
+<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}" class="heading">&gt;</td>
 <td class="heading">&nbsp;</td>
 </tr>
 {section name=x loop=$attachements}
@@ -28,7 +28,7 @@
 <td>{$attachements[x].filetype}</td>
 <td>{if $attachements[x].path}file{else}db{/if}</td>
 <td>{$attachements[x].created|tiki_short_date}</td>
-<td>{$attachements[x].downloads}</td>
+<td>{$attachements[x].hits}</td>
 <td><a href="tiki-admin.php?page=wikiatt&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}Change{/tr}</a></td>
 </tr>
 {/section}

@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_icon($params, &$smarty) {
   if ( ! is_array($params) || ! isset($params['_id']) ) return;
 
-  $basedirs = array('pics/icons', 'images', 'img/icons');
+  $basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
   $icons_extension = '.png';
   $notag = false;
   $default_class = 'icon';

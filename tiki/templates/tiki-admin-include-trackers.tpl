@@ -92,7 +92,7 @@
             <a href="tiki-admin.php?page=trackers&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}" class="heading">{tr}Type{/tr}</a>
           </td>
           <td class="heading">
-            <a href="tiki-admin.php?page=trackers&amp;sort_mode=downloads_{if $sort_mode eq 'downloads'}asc{else}desc{/if}" class="heading">{tr}dls{/tr}</a>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}" class="heading">{tr}dls{/tr}</a>
           </td>
           <td class="heading">
             <a href="tiki-admin.php?page=trackers&amp;sort_mode=itemId_{if $sort_mode eq 'itemId'}asc{else}desc{/if}" class="heading">{tr}Item{/tr}</a>
@@ -112,7 +112,7 @@
           <td>{$attachements[x].filename}</td>
           <td>{$attachements[x].filesize|kbsize}</td>
           <td>{$attachements[x].filetype}</td>
-          <td>{$attachements[x].downloads}</td>
+          <td>{$attachements[x].hits}</td>
           <td>{$attachements[x].itemId}</td>
           <td>{if $attachements[x].path}file{else}db{/if}</td>
           <td>{$attachements[x].created|tiki_short_date}</td>

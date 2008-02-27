@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.3 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.32.2.4 2008-02-27 15:18:50 nyloth Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -33,7 +33,7 @@
   </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}&amp;atts_show=y#attachments">{tr}Size{/tr}</a>
   </td><td class="heading">
-   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
   </td>
  </tr>
 {cycle values="odd,even" print=false advance=false}
@@ -54,7 +54,7 @@
  <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>
  <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
  <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
- <td style="text-align:right;" class="{cycle}">{$atts[ix].downloads}</td>
+ <td style="text-align:right;" class="{cycle}">{$atts[ix].hits}</td>
 </tr>
 {/section}
 </table>

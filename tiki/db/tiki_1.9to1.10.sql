@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.31 2008-02-26 17:37:07 nkoth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.32 2008-02-27 15:18:42 nyloth Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1705,3 +1705,14 @@ ALTER TABLE `tiki_freetags` ADD COLUMN `lang` VARCHAR(16);
 #2008-02-26 nkoth
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_freetags', 'Can admin freetags', 'admin', 'freetags', 'y');
 
+#2008-02-27 nyloth
+ALTER TABLE `tiki_file_galleries` CHANGE show_dl show_hits char(1) default NULL;
+ALTER TABLE `tiki_files` DROP KEY downloads;
+ALTER TABLE `tiki_files` CHANGE downloads hits int(14) default NULL;
+ALTER TABLE `tiki_files` ADD KEY hits (`hits`);
+ALTER TABLE `tiki_tracker_item_attachments` CHANGE downloads hits int(10) default NULL;
+ALTER TABLE `tiki_trackers` MODIFY COLUMN `orderAttachments` varchar(255) NOT NULL default 'filename,created,filesize,hits,desc';
+UPDATE `tiki_trackers` SET orderAttachments='filename,created,filesize,hits,desc' WHERE orderAttachments='filename,created,filesize,downloads,desc';
+ALTER TABLE `tiki_wiki_attachments` CHANGE downloads hits int(10) default NULL;
+ALTER TABLE `tiki_file_galleries` ADD COLUMN `show_comment` char(1) default NULL;
+ALTER TABLE `tiki_file_galleries` ADD COLUMN `show_files` char(1) default NULL;

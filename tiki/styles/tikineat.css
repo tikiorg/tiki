@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.10 2008-02-26 20:46:29 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.11 2008-02-27 15:18:49 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -444,6 +444,20 @@ div.simplebox {
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
 	listings in admin screens, etc. */
 
+div.gallerypath, div.gallerypath a {
+	color: #6996C3;
+	font-style: italic;
+	font-weight: normal;
+	margin-left: 3px;
+	text-decoration: none;
+}
+div.gallerypath a:hover {
+	color: black;
+	text-decoration: underline;
+}
+.fgalexplorer { border: 1px solid #8CACBB; }
+.fgallisting table td { padding-left: 2px; padding-right: 2px; }
+
 /* The table */
 table.normal {
 	padding : 0px;
@@ -572,6 +586,9 @@ th.listartheading, th.forumheading, th.viewthread {
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
+a.fgalname { text-decoration: none; font-weight: normal; color: #225566 !important; }
+a.fgalname:hover { text-decoration: underline; }
+ 
 a.tablename, a.galname, a.imagename, a.jukeboxname,
 a.blogname, a.fgalname, a.artname, a.forumname {
 	font-weight : bold;
@@ -626,6 +643,7 @@ td.jukeboxlistvisitsodd {
 	border : 1px solid #8CACBB;
 	border-collapse : collapse;
 	background-color : #F7F9FA;
+	vertical-align: middle;
 }
 TD.even,td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven,td.gallistlastModifeven, td.gallistusereven ,
 td.gallistimageseven,td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
@@ -644,7 +662,9 @@ td.jukeboxlistvisitseven {
 	background-color : #E7E9EA;
 	color : black;
 	border-collapse : collapse;
+	vertical-align: middle;
 }
+tr.even td.even, tr.odd td.odd { background-color: transparent; }
 TD.third {
 	border : 1px solid #8CACBB;
 	color : Black;
@@ -1627,6 +1647,22 @@ div#loadstats {
 }
 
 /* phplayers style */
+a.phplm:link, a.phplm, a.phplm:hover, a.phplm:visited, .phplmnormal a, .phplmnormal a:hover, .phplmnormal a:visited {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
+	color: #000000;
+	font-size: 11px;
+	cursor: pointer;
+	font-weight: normal;
+}
+a.phplm:hover, .phplmnormal a:hover {
+	background-color: transparent;
+	text-decoration: underline;
+}
+#jt1 a.phplm, #jt1 a.phplm:hover, #jt1 a.phplm:link, #jt1 .phplmnormal, #jt1 .phplmnormal a:hover {
+	color: #6996C3;
+	text-decoration: none;
+}
+#jt1 .imgs:first-child, .treemenudiv > .imgs:first-child { display: none; }
 .box-data table {
 	width : 100%;
 	_width : 95%;
@@ -1881,9 +1917,12 @@ table.default	td {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);
 	-moz-opacity: 0.8;
 	border: 1px solid transparent;
+	_border-color: white; /* for IE6 */
+	_filter: chroma(color=white); /* for IE6 */
 	padding: 1px;
+	margin: 0;
 }
-.icon:hover {
+a:hover .icon {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);
 	-moz-opacity: 1;
 	background-color: #DDDDDD;
