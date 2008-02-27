@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.83 2008-02-27 15:52:17 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.84 2008-02-27 16:02:25 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2097,7 +2097,7 @@ function add_pageview() {
 		$bindvars = array_merge($galleryId, $galleryId, $bindvars);
 	} elseif ( $galleryId >= -1 && ! $recursive ) {
 		$galleryId_str = '=?';
-		array_unshift($bindvars, $galleryId);
+		if ( $with_subgals ) array_unshift($bindvars, $galleryId);
 		if ( $with_files ) array_unshift($bindvars, $galleryId);
 	}
 	if ( $galleryId_str != '' ) {
