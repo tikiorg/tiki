@@ -1,3 +1,4 @@
+{strip}
 {if $files[changes].isgal eq 1}
 	{if $files[changes].perms.tiki_p_view_file_gallery eq 'y'}
 		{self_link _script='tiki-list_file_gallery.php' _class='fgalname' _icon='folder_go' galleryId=$files[changes].id}{tr}Go to{/tr}{/self_link}
@@ -61,3 +62,4 @@
 			{self_link _script='tiki-list_file_gallery.php' _class='fgalname' _icon='cross' _ajax='n' remove=$files[changes].fileId}{tr}Delete{/tr}{/self_link}
 	{/if}
 {/if}
+{/strip}
