@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.16 2008-02-22 10:37:49 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.17 2008-02-27 15:18:37 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -713,7 +713,7 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 	foreach ($items["data"] as $itkey=>$oneitem) {
 		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 		$items["data"][$itkey]['attachments']  = $res['attachments'];
-		$items["data"][$itkey]['downloads'] = $res['downloads'];
+		$items["data"][$itkey]['hits'] = $res['hits'];
 	}
 }
 

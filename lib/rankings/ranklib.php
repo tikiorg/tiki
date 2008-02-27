@@ -445,7 +445,7 @@ class RankLib extends TikiLib {
 
 	function filegal_ranking_top_files($limit) {
 		global $user;
-		$query = "select `fileId`,`filename`,`downloads`, `galleryId` from `tiki_files` order by `downloads` desc";
+		$query = "select `fileId`,`filename`,`hits`, `galleryId` from `tiki_files` order by `hits` desc";
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
@@ -453,7 +453,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if ($this->user_has_perm_on_object($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
 				$aux["name"] = $res["filename"];
-				$aux["hits"] = $res["downloads"];
+				$aux["hits"] = $res["hits"];
 				$aux["href"] = 'tiki-download_file.php?fileId=' . $res["fileId"];
 				$ret[] = $aux;
 			}

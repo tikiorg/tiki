@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.36 2008-02-26 17:02:51 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.37 2008-02-27 15:18:48 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -45,7 +45,7 @@ class TrackerLib extends TikiLib {
 	function add_item_attachment_hit($id) {
 		global $prefs, $user;
 		if ($user != 'admin' || $prefs['count_admin_pvs'] == 'y' ) {
-			$query = "update `tiki_tracker_item_attachments` set `downloads`=`downloads`+1 where `attId`=?";
+			$query = "update `tiki_tracker_item_attachments` set `hits`=`hits`+1 where `attId`=?";
 			$result = $this->query($query,array((int) $id));
 		}
 		return true;
@@ -64,7 +64,7 @@ class TrackerLib extends TikiLib {
 			$mid = " where `itemId`=? ";
 			$bindvars=array((int) $itemId);
 		}
-		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`longdesc`,`version` ";
+		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`longdesc`,`version` ";
 		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -82,7 +82,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_item_nb_attachments($itemId) {
-		$query = "select sum(downloads) as downloads, count(*) as attachments from `tiki_tracker_item_attachments` where `itemId`=?";
+		$query = "select sum(hits) as hits, count(*) as attachments from `tiki_tracker_item_attachments` where `itemId`=?";
 		$result = $this->query($query, array($itemId));
 		if ($res = $result->fetchRow())
 			return $res;
@@ -102,7 +102,7 @@ class TrackerLib extends TikiLib {
 			$mid = "";
 			$bindvars=array();
 		}
-		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`path` ";
+		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`hits`,`created`,`comment`,`path` ";
 		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -147,7 +147,7 @@ class TrackerLib extends TikiLib {
 
 	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
 		$comment = strip_tags($comment);
-		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,";
+		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,";
 		$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $this->now,0,$user,$comment,$fhash,$version,$longdesc));
 	}

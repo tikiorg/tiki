@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.6 2008-02-21 18:49:07 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.7 2008-02-27 15:18:37 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -246,7 +246,7 @@ function varcheck($array) {
       	// variable allowed to be empty?
       	if ('+'==substr($vartype[$rq],0,1)) {
       		if ($rv == "") {
-						return(tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font>");
+			return(tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font>");
       		}
       		// remove + from type
       		$vartype[$rq]=substr($vartype[$rq],1);

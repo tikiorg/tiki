@@ -1,12 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
-<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
-{if $filegals_manager eq 'y'}
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-<div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
-</div>
-<br />
-{/if}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.3 2008-02-27 15:18:50 nyloth Exp $ *}
+{popup_init src="lib/overlib.js"}
+<h1>{tr}Gallery{/tr}: <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&filegals_manager{/if}">{$name}</a></h1>
+
+<div name="description">{$description|escape}</div>
 
 <div class="navbar">
 {if $user and $prefs.feature_user_watches eq 'y'}
@@ -42,6 +38,14 @@
 
 </div>
 
+{if $filegals_manager eq 'y'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+<div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
+</div>
+{/if}
+
+
 <div class="navbar" align="right">
     {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
@@ -53,28 +57,28 @@
     {/if}
 </div>
 
-<table>
-<tr><td width="48">
-{if $gal_info.type eq "podcast"}
-<img src='pics/large/gnome-sound-recorder48x48.png' border='0' alt="{tr}podcast (audio){/tr}" />
-{elseif $gal_info.type eq "vidcast"}
-<img src='pics/large/mplayer48x48.png' border='0' alt="{tr}podcast (video){/tr}" />
-{else}
-<img src='pics/large/file-manager48x48.png' border='0' alt="{tr}File Gallery{/tr}" />
-{/if}
-</td>
-<td style="vertical-align:top; text-align:left;" width="100%">
-{$description|escape}
-</td></tr></table>
 
-<h2>{tr}Gallery Files{/tr}</h2>
-{include file=list_file_gallery.tpl ext="file_" offset=$file_offset find=$file_find sort_mode=$file_sort_mode prev_offset=$file_prev_offset next_offset=$file_next_offset cant_pages=$file_cant_pages actual_page=$file_actual_page}
+{include file='find.tpl' find_show_languages='n' find_show_categories='n'}
 
-{if isset($galleries)}
-<h2>{tr}Sub-galleries{/tr}</h2>
-{include file=file_galleries.tpl}
-{/if}
-
+<div class="gallerypath">{$gallery_path}</div>
+<table border="0" cellpadding="3" cellspacing="3" width="100%">
+	<tr>
+		{if isset($tree) and count($tree) gt 0}
+		<td width="25%" class="fgalexplorer">
+			<div style="overflow-x:auto; overflow-y:hidden">
+			{include file='file_galleries.tpl'}
+			</div>
+		</td>
+		<td width="75%" class="fgallisting">
+		{else}
+		<td width="100%" class="fgallisting">
+		{/if}
+			<div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
+			{include file='list_file_gallery.tpl'}
+			</div>
+		</td>
+	</tr>
+</table>
 
 {if $prefs.feature_file_galleries_comments == 'y'
   && (($tiki_p_read_comments  == 'y'

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.28 2007-10-15 00:41:06 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.28.2.1 2008-02-27 15:18:36 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,16 +52,20 @@ if (isset($_REQUEST["filegalfeatures"])) {
 if (isset($_REQUEST["filegallistprefs"])) {
 	check_ticket('admin-inc-fgal');
 
-	simple_set_toggle("fgal_list_id");
-	simple_set_toggle("fgal_list_name");
-	simple_set_toggle("fgal_list_description");
-	simple_set_toggle("fgal_list_type");
-	simple_set_toggle("fgal_list_created");
-	simple_set_toggle("fgal_list_lastmodif");
-	simple_set_toggle("fgal_list_user");
-	simple_set_toggle("fgal_list_files");
-	simple_set_toggle("fgal_list_hits");
-	simple_set_toggle('fgal_list_parent');
+	simple_set_value('fgal_list_id');
+	simple_set_value('fgal_list_type');
+	simple_set_value('fgal_list_name');
+	simple_set_value('fgal_list_description');
+	simple_set_value('fgal_list_size');
+	simple_set_value('fgal_list_created');
+	simple_set_value('fgal_list_lastmodif');
+	simple_set_value('fgal_list_creator');
+	simple_set_value('fgal_list_author');
+	simple_set_value('fgal_list_last_user');
+	simple_set_value('fgal_list_comment');
+	simple_set_value('fgal_list_files');
+	simple_set_value('fgal_list_hits');
+	simple_set_value('fgal_list_lockedby');
 	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder'])?'created':$_REQUEST['fgal_sortorder']).'_'.(empty($_REQUEST['fgal_sortdirection'])?'desc':$_REQUEST['fgal_sortdirection']);
 	$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
 	simple_set_value('fgal_sort_mode');
@@ -110,16 +114,8 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 $handlers = $filegallib->get_file_handlers();
 ksort($handlers);
 $smarty->assign("fgal_handlers",$handlers);
-$smarty->assign("fgal_list_id", $prefs['fgal_list_id']);
-$smarty->assign("fgal_list_name", $prefs['fgal_list_name']);
-$smarty->assign("fgal_list_description", $prefs['fgal_list_description']);
-$smarty->assign("fgal_list_type", $prefs['fgal_list_type']);
-$smarty->assign("fgal_list_created", $prefs['fgal_list_created']);
-$smarty->assign("fgal_list_lastmodif", $prefs['fgal_list_lastmodif']);
-$smarty->assign("fgal_list_user", $prefs['fgal_list_user']);
-$smarty->assign("fgal_list_files", $prefs['fgal_list_files']);
-$smarty->assign("fgal_list_hits", $prefs['fgal_list_hits']);
-$smarty->assign('fgal_list_parent', $prefs['fgal_list_parent']);
+
+include_once('fgal_listing_conf.php');
 
 $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);

@@ -24,6 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _icon_class : CSS class to use for the icon's IMG tag
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
  *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
+ *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
  */
 function smarty_block_self_link($params, $content, &$smarty, $repeat) {
     global $prefs;
@@ -43,13 +44,24 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
       } elseif ( $params['_sort_arg'] != '' and ! isset($params[$params['_sort_arg']]) ) {
 	        $params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
       }
+      // Complete _script path if needed
+      if ( isset($params['_script']) ) {
+        if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
+          $params['_script'] = dirname($_SERVER['PHP_SELF']).'/'.$params['_script'];
+        }
+        if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
+          $params['_script'] = '';
+        }
+      } else {
+        $params['_script'] = '';
+      }
 
       $params['_type'] = $default_type;
       $ret = smarty_function_query($params, $smarty);
 
       if ( $params['_tag'] == 'y' ) {
 
-        if ( $params['_ajax'] == 'y' ) {
+        if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
           require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
           if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
           if ( ! isset($params['_template']) ) $params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
@@ -90,7 +102,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
 
         $ret = "<a $link>".$content.'</a>';
 
-        if ( isset($params['_sort_field']) ) {
+        if ( $params['_sort_field'] != '' ) {
           require_once $smarty->_get_plugin_filepath('function', 'show_sort');
           $ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
             array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),

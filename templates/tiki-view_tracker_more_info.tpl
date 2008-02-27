@@ -14,8 +14,8 @@
 {if $info.longdesc}
 <tr class="formcolor"><td colspan="2">{$info.longdesc}</td></tr>
 {/if}
-{if $info.downloads}
-<tr class="formcolor"><td>{tr}Downloads{/tr}</td><td>{$info.downloads}</td></tr>
+{if $info.hits}
+<tr class="formcolor"><td>{tr}Downloads{/tr}</td><td>{$info.hits}</td></tr>
 {/if}
 </table>
 <div class="cbox">

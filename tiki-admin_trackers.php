@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.5 2008-01-14 18:51:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.60.2.6 2008-02-27 15:18:36 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -393,7 +393,7 @@ $info['oneUserItem'] = '';
 $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
 $info["defaultStatusList"] = array();
-$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
+$info["orderAttachments"] = 'name,created,filesize,hits,desc';
 $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';

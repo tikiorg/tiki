@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.5 2008-02-13 22:29:14 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.6 2008-02-27 15:18:50 nyloth Exp $ *}
 <!--div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
@@ -346,6 +346,10 @@
 	<legend class="heading"><a href="#layout" name="layout" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
 	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			<table class="admin" width="100%">
+				<tr>
+					<td class="form"><label for="use_context_menu">{tr}Use context menus for actions (in file galleries):{/tr}</label></td>
+					<td><input type="checkbox" id="use_context_menu" name="use_context_menu" {if $prefs.use_context_menu eq 'y'}checked="checked"{/if}/>
+				</tr>
 				<tr>
 					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
 					<td><input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></td>

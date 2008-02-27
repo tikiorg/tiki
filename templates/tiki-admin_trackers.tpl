@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.17 2008-02-21 16:21:52 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_trackers.tpl,v 1.95.2.18 2008-02-27 15:18:50 nyloth Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -218,7 +218,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <tr>
 <td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
 <td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
-<td><input type="text" size="2" name="ui[downloads]" value="{$ui.downloads}" /></td>
+<td><input type="text" size="2" name="ui[hits]" value="{$ui.hits}" /></td>
 <td><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
 <td><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
 <td><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
@@ -276,7 +276,7 @@ useComments = {$useComments}
 showComments = {$showComments}
 useAttachments = {$useAttachments}
 showAttachments = {$showAttachments}
-attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.downloads|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0} 
+attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.hits|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0} 
 useRatings = {$useRatings}
 ratingOptions = {$ratingOptions}
 categories = {$catsdump}

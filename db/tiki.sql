@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-02-26 17:37:07 $
-# $Author: nkoth $
+# $Date: 2008-02-27 15:18:42 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1310,7 +1310,7 @@ CREATE TABLE tiki_file_galleries (
   show_description char(1) default NULL,
   max_desc int(8) default NULL,
   show_created char(1) default NULL,
-  show_dl char(1) default NULL,
+  show_hits char(1) default NULL,
   parentId int(14) NOT NULL default -1,
   lockable char(1) default 'n',
   show_lockedby char(1) default NULL,
@@ -1321,6 +1321,8 @@ CREATE TABLE tiki_file_galleries (
   show_creator char(1) default NULL,
   subgal_conf varchar(200) default NULL,
   show_last_user char(1) default NULL,
+  show_comment char(1) default NULL,
+  show_files char(1) default NULL,
   PRIMARY KEY  (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -1346,7 +1348,7 @@ CREATE TABLE tiki_files (
   data longblob,
   user varchar(200) default '',
   author varchar(40) default NULL,
-  downloads int(14) default NULL,
+  hits int(14) default NULL,
   votes int(8) default NULL,
   points decimal(8,2) default NULL,
   path varchar(255) default NULL,
@@ -1362,7 +1364,7 @@ CREATE TABLE tiki_files (
   PRIMARY KEY  (fileId),
   KEY name (name),
   KEY description (description(255)),
-  KEY downloads (downloads),
+  KEY hits (hits),
   KEY created (created),
   KEY archiveId (archiveId),
   KEY galleryId (galleryId),
@@ -3450,7 +3452,7 @@ CREATE TABLE tiki_tracker_item_attachments (
   user varchar(200) default NULL,
   data longblob,
   path varchar(255) default NULL,
-  downloads int(10) default NULL,
+  hits int(10) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
   longdesc blob,
@@ -3553,7 +3555,7 @@ CREATE TABLE tiki_trackers (
   items int(10) default NULL,
   showComments char(1) default NULL,
   showAttachments char(1) default NULL,
-  orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
+  orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY  (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -4035,7 +4037,7 @@ CREATE TABLE tiki_wiki_attachments (
   user varchar(200) default NULL,
   data longblob,
   path varchar(255) default NULL,
-  downloads int(10) default NULL,
+  hits int(10) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
   PRIMARY KEY  (attId)

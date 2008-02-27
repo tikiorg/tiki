@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.81 2008-02-16 19:46:26 marclaporte Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.82 2008-02-27 15:18:43 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1097,7 +1097,7 @@ class TikiLib extends TikiDB {
     function add_wiki_attachment_hit($id) {
 	global $prefs, $user;
 	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-	    $query = "update `tiki_wiki_attachments` set `downloads`=`downloads`+1 where `attId`=?";
+	    $query = "update `tiki_wiki_attachments` set `hits`=`hits`+1 where `attId`=?";
 	    $result = $this->query($query,array((int)$id));
 	}
 	return true;
@@ -1992,77 +1992,271 @@ function add_pageview() {
     }
  
     /**
-     * Get file list with additional data from one or all file galleries
+     * Get files and/or subgals list with additional data from one or all file galleries
      *
      * @param int $offset
      * @param int $maxRecords
      * @param string $sort_mode
      * @param string $find
      * @param int $galleryId (-1 = all galleries (default))
-	 * @param bool $with_archive give back the number of archives
-     * @return array of found files
+     * @param bool $with_archive give back the number of archives
+     * @param bool $with_subgals include subgals in the listing
+     * @param bool $with_subgals_size calculate the size of subgals
+     * @param bool $with_files include files in the listing
+     * @param bool $with_files_data include files data in the listing
+     * @param bool $with_parent_name include parent names in the listing
+     * @param bool $recursive include all subgals recursively (yet only implemented for galleryId == -1)
+     * @param string $my_user use another user than the current one
+     * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
+     * @return array of found files and subgals
      */
-    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false) {
+    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true) {
+	global $user;
+
+	if ( ! $with_files && ! $with_subgals ) return array();
+
+	// galleryId == 0 is a way to get only the main galleries
+	if ( $galleryId == 0 ) {
+		$galleryId = -1;
+		$with_files = false;
+		$with_archive = false;
+		$with_subgals = true;
+	}
+
+	// recursive mode is only available for the whole tree
+	$recursive = ( $recursive && $galleryId == -1 );
+	$with_subgals_size = ( $with_subgals && $with_subgals_size );
+	if ( $my_user == '' ) $my_user = $user;
+
+	$f_table = '`tiki_files` as tf';
+	$g_table = '`tiki_file_galleries` as tfg';
+	$f_group_by = '';
+	$orderby = $this->convert_sortmode($sort_mode);
+
+	$f2g_corresp = array(
+		'0 as `isgal`' => '1 as `isgal`',
+		'tf.`fileId` as `id`' => 'tfg.`galleryId` as `id`',
+		'tf.`galleryId` as `parentId`' => 'tfg.`parentId`',
+		'tf.`name`' => 'tfg.`name`',
+		'tf.`description`' => 'tfg.`description`',
+		'tf.`filesize` as `size`' => "0 as `size`",
+		'tf.`created`' => 'tfg.`created`',
+		'tf.`filename`' => 'tfg.`name` as `filename`',
+		'tf.`filetype` as `type`' => "tfg.`type`",
+		'tf.`user` as `creator`' => 'tfg.`user` as `creator`',
+		'tf.`author`' => "'' as `author`",
+		'tf.`hits`' => "tfg.`hits`",
+		'tf.`votes`' => 'tfg.`votes`',
+		'tf.`points`' => 'tfg.`points`',
+		'tf.`path`' => "'' as `path`",
+		'tf.`reference_url`' => "'' as `reference_url`",
+		'tf.`is_reference`' => "'' as `is_reference`",
+		'tf.`hash`' => "'' as `hash`",
+		'tf.`search_data`' => 'tfg.`name` as `search_data`',
+		'tf.`lastModif` as `lastmodif`' => 'tfg.`lastmodif` as `lastmodif`',
+		'tf.`lastModifUser` as `last_user`' => "'' as `last_user`",
+		'tf.`lockedby`' => "'' as `lockedby`",
+		'tf.`comment`' => "'' as `comment`",
+		'tf.`archiveId`' => '0 as `archiveId`',
+		"'' as `visible`" => 'tfg.`visible`',
+		"'' as `public`" => 'tfg.`public`',
+
+		/// Below are obsolete fields that will be removed soon (they have their new equivalents above)
+		'tf.`fileId`' => 'tfg.`galleryId` as `fileId`', /// use 'id' instead
+		'tf.`galleryId`' => 'tfg.`parentId` as `galleryId`', /// use 'parentId' instead
+		'tf.`filesize`' => "0 as `filesize`", /// use 'size' instead
+		'tf.`filetype`' => "tfg.`type` as `filetype`", /// use 'type' instead
+		'tf.`user`' => 'tfg.`user`', /// use 'creator' instead	
+		'tf.`lastModifUser`' => "'' as `lastModifUser`" /// use 'last_user' instead
+	);
+	if ( $with_files_data ) {
+		$f2g_corresp['tf.`data`'] = "'' as `data`";
+	}
+	if ( $with_files_count ) {
+		$f2g_corresp["'' as `files`"] = 'count(distinct tfc.`fileId`) as `files`';
+	}
+	if ( $with_archive ) {
+		$f2g_corresp['count(tfh.`fileId`) as `nbArchives`'] = '0 as `nbArchives`';
+		$f_table .= ' LEFT JOIN `tiki_files` tfh ON (tf.`fileId` = tfh.`archiveId`)';
+		$f_group_by = ' GROUP BY tf.`fileId`';
+	}
+
+	$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.' WHERE tf.`archiveId`=0';
+	$bindvars = array();
+
+	$mid = '';
+	if ( $find ) {
+		$findesc = '%'.$find.'%';
+		$mid = ' (upper(`name`) LIKE upper(?) OR upper(`description`) LIKE upper(?) OR upper(`filename`) LIKE upper(?))';
+		array_push($bindvars, $findesc, $findesc, $findesc);
+	}
+
+	$galleryId_str = '';
+	if ( is_array($galleryId) ) {
+		$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
+		$bindvars = array_merge($galleryId, $galleryId, $bindvars);
+	} elseif ( $galleryId >= -1 && ! $recursive ) {
+		$galleryId_str = '=?';
+		array_unshift($bindvars, $galleryId);
+		if ( $with_files ) array_unshift($bindvars, $galleryId);
+	}
+	if ( $galleryId_str != '' ) {
+		$f_query .= ' AND tf.`galleryId`'.$galleryId_str;
+	}
+
+	if ( $with_subgals ) {
+
+		$g_mid = '';
+		$g_join = '';
+		$g_group_by = '';
 
 		$join = '';
-		$select = '';
-		$group = '';
-		// gallery id available
-		if (is_array($galleryId)) {
-			$bindvars = $galleryId;
-			$mid = 'where tf.`galleryId` in ('.implode(',',array_fill(0,count($galleryId),'?')).')';
-		} elseif ($galleryId>=0) {
-		    $bindvars=array((int) $galleryId);
-		    $mid = "where tf.`galleryId`=?";
-		} else {
-			$mid='';
-		}
-		// find files by name or description
-		if ($find) {
-		    $findesc='%' . $find . '%';
-		    if ($mid<>'') {
-		    	$mid .= " and ";
-		    } else {
-		    	$mid = "where ";
-		    }
-		    $mid .= "(upper(tf.`name`) like upper(?) or upper(tf.`description`) like upper(?))";
-		    $bindvars[] = $findesc;
-		    $bindvars[] = $findesc;
-		} elseif ($mid=='') {
-		    $mid = "where 1";
-		    $bindvars = array();
-		}
-		if ($with_archive) {
-			$select = ",count(tfh.`fileId`) as nbArchives";
-			$join = "left join `tiki_files` tfh ON (tf.`fileId`=tfh.`archiveId`)";
-			$group = " group by tf.`fileId` ";
-		}
-		$mid .= " and tf.`archiveId`= 0 ";
+		$select = 'tab.*';
 
-		$query = "select tf.* $select from `tiki_files` tf $join $mid $group order by tf.".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_files` tf $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-	
-		while ($res = $result->fetchRow()) {
-			$path_parts = pathinfo($res["filename"]);
-			// generate link for podcasts
-			$res["podcast_filename"] = $res["path"];
-			// store result to return list
-		    $ret[] = $res;
+		if ( $with_files_count ) {
+			$g_join = ' LEFT JOIN `tiki_files` tfc ON (tfg.`galleryId` = tfc.`galleryId`)';
+			$g_group_by = ' GROUP BY tfg.`galleryId`'; 
 		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+
+		// If $user is admin then get ALL galleries, if not only user galleries are shown
+		// If the user is not admin then select it's own galleries or public galleries
+		if ( $tiki_p_admin_file_galleries != 'y' && $my_user != 'admin' && ! $parentId ) {
+			$g_mid = " WHERE (tfg.`user`='$my_user' OR tfg.`public`='y')"; /// FIXME: use bindvars
+		}
+
+		$g_query = 'SELECT '.implode(', ', array_values($f2g_corresp)).' FROM '.$g_table.$g_join.$g_mid;
+
+		if ( $galleryId_str != '' ) {
+			$g_query .= ( $g_mid == '' ? ' WHERE' : ' AND' ).' tfg.`parentId`'.$galleryId_str;
+		}
+
+		if ( $with_parent_name ) {
+			$select .= ', tfgp.`name` as `parentName`';
+			$join .= ' LEFT OUTER JOIN `tiki_file_galleries` tfgp ON (tab.`parentId` = tfgp.`galleryId`)';
+		}
+
+		if ( $with_files ) {
+			$query = "SELECT $select FROM (($f_query $f_group_by) UNION ($g_query $g_group_by)) as tab".$join;
+		} else {
+			$query = "SELECT $select FROM ($g_query $g_group_by) as tab".$join;
+		}
+		if ( $mid != '' ) $query .= ' WHERE'.$mid;
+		if ( $orderby != '' ) $orderby = 'tab.'.$orderby;
+
+	} else {
+		$query = $f_query;
+		if ( $mid != '' ) $query .= ' AND'.$mid;
+		$query .= $f_group_by;
+	}
+
+	if ( $keep_subgals_together ) {
+		$query .= ' ORDER BY `isgal` desc'.($orderby == '' ? '' : ', '.$orderby);
+	} elseif ( $orderby != '' ) {
+		$query .= ' ORDER BY '.$orderby;
+	}
+	$result = $this->query($query, $bindvars);
+
+	if ( $with_subgals_size ) {
+		function galsize($id, &$db) {
+			$return = 0;
+
+			$result = $db->query('SELECT `fileId`,`filesize` FROM tiki_files WHERE `galleryId`=?', array($id));
+			while ( $res = $result->fetchRow() ) {
+				$return += $res['filesize'];
+			}
+			unset($result);
+
+			$result = $db->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
+			while ( $res = $result->fetchRow() ) {
+				$return += galsize($res['galleryId'], $db);
+			}
+			unset($result);
+
+			return $return;
+		}
+	}
+
+	$ret = array();
+	$gal_size_order = array();
+	$cant = 0;
+	$n = -1;
+	$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
+
+	while ( $res = $result->fetchRow() ) {
+
+		$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
+		$res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+
+		// Don't return the current item, if :
+		//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
+		if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
+			&& ( $res['isgal'] == 0 || $res['perms']['tiki_p_list_file_gallery'] != 'y' )
+		) continue;
+
+		$n++;
+		if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
+
+		if ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) {
+			$ret[$cant] = $res;
+			if ( $with_subgals_size && $res['isgal'] == 1 ) {
+				$ret[$cant]['size'] = (string)galsize($res['id'], $this);
+				$ret[$cant]['filesize'] = $ret[$cant]['size']; /// Obsolete
+				if ( $keep_subgals_together ) {
+					$gal_size_order[$cant] = $ret[$cant]['size'];
+				}
+			}
+			if ( $with_subgals_size && ! $keep_subgals_together ) {
+				$gal_size_order[$cant] = $ret[$cant]['size'];
+			}
+			// generate link for podcasts
+			$ret[$cant]['podcast_filename'] = $res['path'];
+		}
+
+		$cant++;
+	}
+	if ( ! $need_everything ) $cant += $offset;
+
+
+	if ( count($gal_size_order) > 0 ) {
+		if ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) {
+			asort($gal_size_order, SORT_NUMERIC);
+		} elseif ( $sort_mode == 'size_desc' || $sort_mode == 'filesize_desc' ) {
+			arsort($gal_size_order, SORT_NUMERIC);
+		}
+		$ret2 = array();
+		foreach ( $gal_size_order as $k => $v ) {
+			$ret2[] = $ret[$k];
+			unset($ret[$k]);
+		}
+		if ( count($ret) > 0 ) {
+			foreach ( $ret as $k => $v ) {
+				$ret2[] = $v;
+			}
+		}
+		unset($ret);
+		$ret =& $ret2;
+	}
+
+	if ( $need_everything && ( $offset > 0 || $maxRecords != -1 ) ) {
+		if ( $maxRecords == -1 ) {
+			$ret = array_slice($ret, $offset);
+		} else {
+			$ret = array_slice($ret, $offset, $maxRecords);
+		}
+	}
+
+	return array('data' => $ret, 'cant' => $cant);
     }
+
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1) {
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId, false, true, false, false, false, true, true, true, $user);
+	}
 
     /*shared*/
     function add_file_hit($id) {
 	global $prefs, $user;
 	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-	    $query = "update `tiki_files` set `downloads`=`downloads`+1 where `fileId`=?";
+	    $query = "update `tiki_files` set `hits`=`hits`+1 where `fileId`=?";
 	    $result = $this->query($query,array((int) $id));
 	}
 

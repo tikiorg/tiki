@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.38.2.2 2007-11-13 13:54:24 sylvieg Exp $
+// $Id: searchlib.php,v 1.38.2.3 2008-02-27 15:18:47 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -984,7 +984,7 @@ class SearchLib extends TikiLib {
 	  global $prefs, $user;
 	  if ($prefs['feature_file_galleries'] == 'y'  && count($words) >0) {
 	  $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`, f.`search_data`,
-	  	f.`data`,f.`lastModif`, f.`filename`, f.`downloads`, f.`description`, f.`name`, g.`name` as `galName` from
+	  	f.`data`,f.`lastModif`, f.`filename`, f.`hits`, f.`description`, f.`name`, g.`name` as `galName` from
 		`tiki_searchindex` s, `tiki_files` f, `tiki_file_galleries` g  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='file' and f.`galleryId`= g.`galleryId` and f.`archiveId`=0 and 
@@ -1001,7 +1001,7 @@ class SearchLib extends TikiLib {
 	      'pageName' => $res["name"]? $res["name"]: $res["filename"],
 	      'location' => tra("File Gallery").":".$res["galName"],
 	      'data' => $res["description"], //$res["search_data"] can be messy
-	      'hits' => $res["downloads"],
+	      'hits' => $res["hits"],
 	      'lastModif' => $res["lastModif"],
 	      'href' => $href,
 	      'relevance' => $res["count"]

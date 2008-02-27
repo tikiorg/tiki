@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2008-02-27 06:23:44 $
--- $Author: marclaporte $
+-- $Date: 2008-02-27 15:18:39 $
+-- $Author: nyloth $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1435,7 +1435,7 @@ CREATE TABLE 'tiki_file_galleries' (
   "show_description" char(1) default NULL,
   "max_desc" integer default NULL,
   "show_created" char(1) default NULL,
-  "show_dl" char(1) default NULL,
+  "show_hits" char(1) default NULL,
   "parentId" bigint NOT NULL default -1,
   "lockable" char(1) default 'n',
   "show_lockedby" char(1) default NULL,
@@ -1446,6 +1446,8 @@ CREATE TABLE 'tiki_file_galleries' (
   "show_creator" char(1) default NULL,
   "subgal_conf" varchar(200) default NULL,
   "show_last_user" char(1) default NULL,
+  "show_comment" char(1) default NULL,
+  "show_files" char(1) default NULL,
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM ;
 
@@ -1473,7 +1475,7 @@ CREATE TABLE 'tiki_files' (
   "data" bytea,
   "user" varchar(200) default '',
   "author" varchar(40) default NULL,
-  "downloads" bigint default NULL,
+  "hits" bigint default NULL,
   "votes" integer default NULL,
   "points" decimal(8,2) default NULL,
   "path" varchar(255) default NULL,
@@ -1491,7 +1493,7 @@ CREATE TABLE 'tiki_files' (
 
 CREATE  INDEX "tiki_files_name" ON "tiki_files"("name");
 CREATE  INDEX "tiki_files_description" ON "tiki_files"("description");
-CREATE  INDEX "tiki_files_downloads" ON "tiki_files"("downloads");
+CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits");
 CREATE  INDEX "tiki_files_created" ON "tiki_files"("created");
 CREATE  INDEX "tiki_files_archiveId" ON "tiki_files"("archiveId");
 CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId");
@@ -3962,7 +3964,7 @@ CREATE TABLE 'tiki_tracker_item_attachments' (
   "user" varchar(200) default NULL,
   "data" bytea,
   "path" varchar(255) default NULL,
-  "downloads" bigint default NULL,
+  "hits" bigint default NULL,
   "created" bigint default NULL,
   "comment" varchar(250) default NULL,
   "longdesc" bytea,
@@ -4075,7 +4077,7 @@ CREATE TABLE 'tiki_trackers' (
   "items" bigint default NULL,
   "showComments" char(1) default NULL,
   "showAttachments" char(1) default NULL,
-  "orderAttachments" varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
+  "orderAttachments" varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY ("trackerId")
 ) ENGINE=MyISAM ;
 
@@ -4608,7 +4610,7 @@ CREATE TABLE 'tiki_wiki_attachments' (
   "user" varchar(200) default NULL,
   "data" bytea,
   "path" varchar(255) default NULL,
-  "downloads" bigint default NULL,
+  "hits" bigint default NULL,
   "created" bigint default NULL,
   "comment" varchar(250) default NULL,
   PRIMARY KEY ("attId")

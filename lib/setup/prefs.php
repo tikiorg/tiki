@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.45 2008-02-25 16:27:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.46 2008-02-27 15:18:47 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -210,20 +210,24 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['file_galleries_comments_per_page'] = 10;
 	$prefs['feature_file_galleries_batch'] = 'n';
 	$prefs['feature_file_galleries_rankings'] = 'n';
-	$prefs['fgal_list_id'] = 'n';
-	$prefs['fgal_list_name'] = 'y';
-	$prefs['fgal_list_description'] = 'y';
-	$prefs['fgal_list_created'] = 'y';
-	$prefs['fgal_list_lastmodif'] = 'y';
-	$prefs['fgal_list_user'] = 'y';
-	$prefs['fgal_list_files'] = 'y';
-	$prefs['fgal_list_hits'] = 'y';
 	$prefs['fgal_enable_auto_indexing'] = 'y';
 	$prefs['fgal_allow_duplicates'] = 'n';
-	$prefs['fgal_list_parent'] = 'n';
-	$prefs['fgal_list_type'] = 'n';
-	$prefs['fgal_sort_mode'] = 'created_desc';
+	$prefs['fgal_sort_mode'] = '';
 	$prefs['feature_file_galleries_author'] = 'n';
+	$prefs['fgal_list_id'] = 'n';
+	$prefs['fgal_list_type'] = 'y';
+	$prefs['fgal_list_name'] = 'n';
+	$prefs['fgal_list_description'] = 'y';
+	$prefs['fgal_list_size'] = 'y';
+	$prefs['fgal_list_created'] = 'n';
+	$prefs['fgal_list_lastmodif'] = 'y';
+	$prefs['fgal_list_creator'] = 'n';
+	$prefs['fgal_list_author'] = 'n';
+	$prefs['fgal_list_last_user'] = 'n';
+	$prefs['fgal_list_comment'] = 'n';
+	$prefs['fgal_list_files'] = 'y';
+	$prefs['fgal_list_hits'] = 'y';
+	$prefs['fgal_list_lockedby'] = 'n';
 
 	# imagegals
 	$prefs['feature_galleries'] = 'n';
@@ -778,6 +782,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['site_favicon'] = 'favicon.png';
 	$prefs['site_favicon_type'] = 'image/png';
 	$prefs['style'] = 'tikineat.css';
+	$prefs['use_context_menu'] = 'y';
 
 	# mods
 	$prefs['feature_mods_provider'] = 'n';

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.32.2.1 2007-11-26 20:25:52 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.32.2.2 2008-02-27 15:18:50 nyloth Exp $ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
@@ -73,7 +73,7 @@
 <tr><td class="odd">{tr}Total size of files{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.size} {tr}Mb{/tr}</td></tr>
 <tr><td class="even">{tr}Average file size{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.bpf|string_format:"%.2f"} {tr}Mb{/tr}</td></tr>
 <tr><td class="odd">{tr}Visits to file galleries{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.visits}</td></tr>
-<tr><td class="even">{tr}Downloads{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.downloads}</td></tr>
+<tr><td class="even">{tr}Downloads{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.hits}</td></tr>
 {/if}
 {* File gallleries stats *}
 

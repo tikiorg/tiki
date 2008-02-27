@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.5 2007-12-15 23:29:43 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.6 2008-02-27 15:18:43 nyloth Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.
@@ -436,7 +436,7 @@ class SearchLib extends TikiLib {
 			'from' => '`tiki_files` f',
 			'name' => 'f.`name`',
 			'data' => 'f.`description`',
-			'hits' => 'downloads',
+			'hits' => 'hits',
 			'lastModif' => 'f.`created`',
 			'href' => 'tiki-download_file.php?fileId=%d',
 			'id' => array('`fileId`'),
