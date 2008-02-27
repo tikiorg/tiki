@@ -43,14 +43,14 @@ if (isset($_REQUEST['mapfile'])) {
   }
   $mapfile = $_REQUEST['mapfile'];
 } else {
-  $mapfile = $default_map;
+  $mapfile = $prefs['default_map'];
 }
 
-$map_path = preg_replace("/\/?$/","/",$map_path);
+$map_path = preg_replace("/\/?$/","/",$prefs['map_path']);
 
 //checking the mapfile
 if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
-  $msg = tra("invalid mapfile name");
+  $msg = tra("invalid mapfile name").$map_path.$mapfile;
   $access->display_error(basename(__FILE__), $msg);
 }
 		      
@@ -331,7 +331,6 @@ if (@$_REQUEST['maponly']=='frame') {
 
 $image = $map->drawquery();
 $image_url = $image->saveWebImage();
-
 
 //the user wants an image only
 if (isset($_REQUEST['maponly']) && $_REQUEST['maponly']=='yes')

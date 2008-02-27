@@ -81,13 +81,13 @@
 <br />
 
 {if $preview || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
-<form action="tiki-map_history.php" method="post">
+<form action="tiki-map_history.php" method="get">
 <input type="hidden" name="page" value="{$page|escape}" />
+<input type="hidden" name="mapfile" value="{$mapfile}" />
 <div style="text-align:center;">
 <div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr} {if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}</div>
 {if $prefs.default_wiki_diff_style ne "old" and $history}
 <div style=" text-align:right;"><select name="diff_style">
-	<option value="minsidediff" {if $diff_style == "minsidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
 	<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
 	<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
@@ -137,3 +137,4 @@
 {/section}
 </table>
 </div>
+</form>

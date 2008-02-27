@@ -32,6 +32,24 @@ class MapLib {
 
 	}
 	
+	function listMapsWithRev($mappath) {
+		if (!isset($mappath) or !$mappath or !is_dir($mappath)) {
+			return ("");
+		}
+	
+	  $files = array();
+    $h = opendir($mappath);
+
+    while (($file = readdir($h)) !== false) {
+      if (preg_match('/\.map/i', $file)) {
+          $files[] = $file;
+      }
+    }
+    closedir ($h);
+    sort ($files);
+		return ($files);
+	}
+	
 	function listKaMaps($mappath) {
 		$files=$this->listMaps($mappath);
 		$kamaps=array();
