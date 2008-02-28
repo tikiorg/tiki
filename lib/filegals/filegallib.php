@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.4 2008-02-27 15:18:45 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.5 2008-02-28 16:25:59 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -48,6 +48,10 @@ class FileGalLib extends TikiLib {
 
 		//Watches
 		$this->notify($fileInfo['galleryId'], $fileInfo['name'], $fileInfo['filename'], '', 'remove file', $user);
+		if ($prefs['feature_actionlog'] == 'y') {
+			global $logslib; include_once('lib/logs/logslib.php');
+			$logslib->add_action('Removed', $fileInfo['fileId'], 'file', '');
+		}
 		return true;
 	}
 
