@@ -2,7 +2,7 @@
 
 // $start_time = microtime(true);
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.8 2008-02-05 17:06:42 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.80.2.9 2008-02-28 12:56:33 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -256,6 +256,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    ) {
 
 		    $smarty->assign('was_queued', 'y');
+		    $_REQUEST['was_queued'] = 'y';
 
 		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, $parent_id,
 			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], 'n', '', '', $thread_info['title'], $in_reply_to);
@@ -282,6 +283,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    } else {
 
 		    $smarty->assign('was_queued', 'n');
+		    $_REQUEST['was_queued'] = 'y';
 
 		    if ( $_REQUEST["comments_threadId"] == 0 ) {
 
@@ -455,6 +457,8 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 				$url .= "&thread_style=".$_REQUEST['thread_style'];
 			if (!empty($_REQUEST['thread_sort_mode'])) 
 				$url .= "&thread_sort_mode=".$_REQUEST['thread_sort_mode'];			
+		    	if (!empty($_REQUEST['was_queued']))
+				$url .= "&was_queued=".$_REQUEST['was_queued'];
 			header('location: ' . $url);
 		}
 	} else {
@@ -711,5 +715,9 @@ if ($prefs['feature_contribution'] == 'y') {
 // $end_time = microtime(true);
 
 // print "TIME in comments.php: ".($end_time - $start_time)."\n";
+
+if ( isset($_REQUEST['was_queued']) ) {
+	$smarty->assign('was_queued', $_REQUEST['was_queued']);
+}
 
 ?>
