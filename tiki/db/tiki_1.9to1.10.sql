@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.32 2008-02-27 15:18:42 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.33 2008-02-28 16:26:00 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1716,3 +1716,6 @@ UPDATE `tiki_trackers` SET orderAttachments='filename,created,filesize,hits,desc
 ALTER TABLE `tiki_wiki_attachments` CHANGE downloads hits int(10) default NULL;
 ALTER TABLE `tiki_file_galleries` ADD COLUMN `show_comment` char(1) default NULL;
 ALTER TABLE `tiki_file_galleries` ADD COLUMN `show_files` char(1) default NULL;
+
+#2008-02-28 sylvieg
+INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'file', 'n');
