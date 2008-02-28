@@ -62,13 +62,13 @@ $orig_url = preg_replace('/(.*[?&]lang=)[a-zA-Z-_]*(&?.*)/', '$1'.$_REQUEST['lan
 
 if ( isset($_GET['language']) ) {
 	$language = $_GET['language'];
-	if ( $prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_language'] == 'y' )  {
+	if ( $user && $prefs['change_language'] == 'y' )  {
 		$tikilib->set_user_preference($user, 'language', $language);
-	}
-	else
+	} else {
 		$_SESSION['s_prefs']['language'] = $language;
-	$prefs['language'] = $language;
+		$prefs['language'] = $language;
 	}
+}
 
 header("location: $orig_url");
 exit;
