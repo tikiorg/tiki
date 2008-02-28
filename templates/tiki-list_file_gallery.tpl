@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.6 2008-02-27 21:45:33 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.7 2008-02-28 13:35:28 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Gallery{/tr}: {$name}</a></h1>
 
@@ -60,11 +60,19 @@
 
 {include file='find.tpl' find_show_languages='n' find_show_categories='n'}
 
-<div class="gallerypath">{$gallery_path}</div>
-<table border="0" cellpadding="3" cellspacing="3" width="100%">
+<div class="fgal_top_bar" style="height:16px; vertical-align:middle">
+
+	<span id="fgalexplorer_close" style="float:left; vertical-align:middle;  display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false,'');show('fgalexplorer_open',false,'');return false;">{icon _id='application_side_tree.png' alt='{tr}Show Tree{/tr}'}</a></span>
+
+	<span id="fgalexplorer_open" style="float:left; vertical-align:middle; display:{if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_open',false,'');show('fgalexplorer_close',false,'');return false;">{icon _id='application_side_contract.png' alt='{tr}Hide Tree{/tr}'}</a></span>
+
+	<span class="gallerypath" style="vertical-align:middle" >&nbsp;&nbsp;{$gallery_path}</span>
+</div>
+
+<table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
 	<tr>
 		{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'}
-		<td width="25%" class="fgalexplorer">
+		<td width="25%" class="fgalexplorer" id="fgalexplorer" {if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y'}style="display:none"{/if}>
 			<div style="overflow-x:auto; overflow-y:hidden">
 			{include file='file_galleries.tpl'}
 			</div>
