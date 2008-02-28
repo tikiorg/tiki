@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.12 2008-02-27 21:51:28 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.13 2008-02-28 17:16:58 sept_7 Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
@@ -245,6 +245,7 @@
 	<td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
 {/if}
 
+{if $other_columns neq '' or $other_columns_selected neq ''}
 <td class="{cycle advance=false}">
 {if $show_infos eq 'y'}
 	{if $over_infos eq ''}
@@ -254,6 +255,7 @@
 	{/if}
 {/if}
 </td>
+{/if}
 
 </tr>
 {cycle print=false}
