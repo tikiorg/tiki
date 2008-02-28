@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.37 2008-02-27 15:18:48 nyloth Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.38 2008-02-28 14:57:13 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -145,13 +145,6 @@ class TrackerLib extends TikiLib {
 		}
 	}
 
-	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
-		$comment = strip_tags($comment);
-		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,";
-		$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $this->now,0,$user,$comment,$fhash,$version,$longdesc));
-	}
-
 	function get_item_attachment($attId) {
 		$query = "select * from `tiki_tracker_item_attachments` where `attId`=?";
 		$result = $this->query($query,array((int) $attId));
@@ -168,9 +161,16 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $attId));
 	}
 
-	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
+	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='') {
 		$comment = strip_tags($comment);
-		if (empty($filename)) {
+		$now = $this->now;
+		if (empty($attId)) {
+			$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,";
+			$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,array((int) $itemId,$filename,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
+			$query = 'select `attId` from `tiki_tracker_item_attachments` where `itemId`=? and `user`=? and `created`=?';
+			$attId = $this->getOne($query, array($itemId, $user, $now));
+		} elseif (empty($filename)) {
 			$query = "update `tiki_tracker_item_attachments` set `comment`=?,`user`=?,`version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($comment, $user, $version, $longdesc, $attId));
 		} else {
@@ -179,6 +179,38 @@ class TrackerLib extends TikiLib {
 			if ($path) @unlink ($prefs['t_use_dir'] . $path);
 			$query = "update `tiki_tracker_item_attachments` set `filename`=?,`filesize`=?,`filetype`=?, `data`=?,`comment`=?,`user`=?,`path`=?, `version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($filename, $size, $type, $data, $comment, $user, $fhash, $version, $longdesc, (int)$attId));
+		}
+		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
+		if (count($watchers > 0)) {
+			global $smarty;
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+			$smarty->assign('mail_date', $this->now);
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_action', 'New File Atttached to Item:' . $itemId . ' at tracker ' . $trackerName);
+			$smarty->assign('mail_itemId', $itemId);
+			$smarty->assign('mail_trackerId', $trackerId);
+			$smarty->assign('mail_trackerName', $trackerName);
+			$smarty->assign('mail_attId', $attId);
+			$smarty->assign('mail_data', $filename."\n".$comment."\n".$version."\n".$longdesc);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $this->httpPrefix(). $foo["path"];
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
+			if (count($parts) > 1)
+				unset ($parts[count($parts) - 1]);
+			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			include_once ('lib/webmail/tikimaillib.php');
+			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+			foreach ($watchers as $w) {
+				$mail = new TikiMail($w['user']);
+				$mail->setHeader("From", $prefs['sender_email']);
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->send(array($w['email']));
+			}
 		}
 	}
 
@@ -201,11 +233,11 @@ class TrackerLib extends TikiLib {
 		}
 
 		$trackerId = $this->getOne("select `trackerId` from `tiki_tracker_items` where `itemId`=?",array((int) $itemId));
-		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 
 		if (count($watchers > 0)) {
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 			$smarty->assign('mail_date', $this->now);
 			$smarty->assign('mail_user', $user);
 			$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);

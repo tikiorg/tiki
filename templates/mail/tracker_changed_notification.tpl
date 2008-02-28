@@ -9,4 +9,9 @@
 {tr}Date{/tr}:
   {$mail_date|tiki_short_datetime}
 
-{$mail_data}            
+{$mail_data}
+
+{if $mail_attId}
+{tr}Download the file at:{/tr}
+  {$mail_machine_raw}/tiki-download_item_attachment.php?attId={$mail_attId}
+{/if}
