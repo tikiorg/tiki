@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.8 2008-02-28 13:35:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.9 2008-02-29 08:12:06 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -1161,6 +1161,9 @@ if (this.iewin) {
 */
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';
+
+// Set a session var to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough
+setSessionVar('javascript_enabled','y');
 
 /* Function to add image from filegals in non wysiwyg editor */
 /* must be here when ajax is activated                       */
