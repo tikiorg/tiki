@@ -16,9 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_tree($params, &$smarty) {
 	global $prefs;
 
-	if ( $prefs['feature_phplayers'] != 'y' ) {
-	  echo tra('phplayers are not available on this site');
-	  return;
+	if ( $prefs['feature_phplayers'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
+	  // If PHP Layers and/or JavaScript are disabled, force the php version of the tree
+	  $params['type'] = 'phptree';
 	}
 
 	global $tikiphplayers;
@@ -57,6 +57,7 @@ function smarty_function_tree($params, &$smarty) {
 	}
 
 	$structure = '';
+
 	if ( ! isset($params['type']) ) $params['type'] = 'tree';
 	if ( ! isset($params['expanded']) ) $params['expanded'] = 0;
 	if ( isset($params['data']) && is_array($params['data']) ) {
