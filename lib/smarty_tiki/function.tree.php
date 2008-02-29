@@ -43,7 +43,7 @@ function smarty_function_tree($params, &$smarty) {
 				}
 				if ( isset($data['current']) ) $data['name'] = '<b>'.$data['name'].'</b>';
 				$name = $data['name'] . ( isset($data['addon']) ? ' '.$data['addon'] : '' );
-				$ret .= str_repeat('.', $level).'|'.$name.'|'.$link.$add.'||folder.png';
+				$ret .= str_repeat('.', $level).'|'.$name.'|'.$link.'||folder.png';
 				if ( $expanded == $cur ) $ret .= '||1';
 				$ret .= "\n";
 				if ( is_array($data['data']) ) {
