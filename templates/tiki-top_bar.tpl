@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.6 2007-12-23 17:11:21 mose Exp $ *}
-{if $prefs.feature_siteidentity eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.7 2008-02-29 14:58:45 sylvieg Exp $ *}
+{if $prefs.feature_siteidentity eq 'y' && $prefs.feature_topbar eq 'y'}
 {if $prefs.feature_topbar_version eq 'y'}
 {tr}This is{/tr} Tikiwiki v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
 title="tikiwiki.org">{tr}Tiki community{/tr}</a>
