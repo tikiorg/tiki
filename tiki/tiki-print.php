@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.36.2.2 2008-01-21 13:45:42 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.36.2.3 2008-02-29 23:15:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,7 +115,7 @@ $smarty->assign('print_page', 'y');
 $smarty->assign('urlprefix', $base_url); // Obsolete, use base_url instead. This is for compatibility purposes only.
 $smarty->assign('mid', 'tiki-show_page.tpl');
 
-$smarty->assign('display', $_REQUEST['display']);
+$smarty->assign('display', isset($_REQUEST['display'])?$_REQUEST['display']: '');
 // Allow PDF export by installing a Mod that define an appropriate function
 if ( isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf' ) {
 	// Method using 'mozilla2ps' mod
