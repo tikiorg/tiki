@@ -232,15 +232,13 @@ else
 $smarty->assign('timeFormat12_24', $timeFormat12_24);
 
 if (isset ($workspace) && $workspace) {
-	$dc = $tikilib->get_date_converter($user);
-	$smarty->assign('startDate', $dc->getDisplayDateFromServerDate($workspace["startDate"]));
-	$smarty->assign('endDate', $dc->getDisplayDateFromServerDate($workspace["endDate"]));
-	$smarty->assign_by_ref('created', $dc->getDisplayDateFromServerDate($workspace["created"]));
+       	$smarty->assign('startDate', $workspace["startDate"]);
+	$smarty->assign('endDate', $workspace["endDate"]);
+	$smarty->assign_by_ref('created', $workspace["created"]);
 } else {
-	$dc = $tikilib->get_date_converter($user);
-	$date = $dc->getDisplayDateFromServerDate(mktime(date('G'), date('i'), date('s'), date('m'), date('d'), date('Y')));
-	$smarty->assign('startDate', $dc->getDisplayDateFromServerDate($date)); /* user time */
-	$smarty->assign('endDate', $dc->getDisplayDateFromServerDate($date));
+ 	$date = $tikilib->now;
+	$smarty->assign('startDate', $date);
+	$smarty->assign('endDate', $date);
 }
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M");
 $smarty->assign_by_ref('typesAll', $typesAll);
