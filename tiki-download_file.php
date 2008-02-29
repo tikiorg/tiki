@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.33.2.1 2007-10-26 15:56:37 sylvieg Exp $
+// CVS: $Id: tiki-download_file.php,v 1.33.2.2 2008-02-29 12:33:37 nyloth Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
@@ -87,7 +87,7 @@ if($tiki_p_download_files != 'y') {
   die;
 }
 
-if (!empty($_REQUEST['user'])) {
+if ( ! empty($_REQUEST['lock']) ) {
 	if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
 		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
 		$smarty->display('error.tpl');
@@ -161,4 +161,5 @@ if($info["path"]) {
 } else {
   echo "$content";
 }
+
 ?>

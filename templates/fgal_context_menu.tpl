@@ -51,6 +51,17 @@
 				{if $files[changes].lockedby}
 					{self_link _script='tiki-list_file_gallery.php' _class='fgalname' _icon='lock_delete' lock='n' fileId=$files[changes].fileId}{tr}Unlock{/tr}{/self_link}
 				{else}
+					{if $prefs.javascript_enabled eq 'y'}
+
+					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
+					<a class="fgalname" href="#" title="{tr}Download and lock{/tr}" onclick="window.open('tiki-download_file.php?fileId={$files[changes].fileId}'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return true;">{icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+
+					{else}
+
+					{* without javascript, the lockedby informations won't be refreshed until the user do it itself *}
+					<a class="fgalname" href="tiki-download_file.php?fileId={$files[changes].fileId}&amp;lock=y" title="{tr}Download and lock{/tr}">{icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+
+					{/if}
 					{self_link _script='tiki-list_file_gallery.php' _class='fgalname' _icon='lock_add' lock='y' fileId=$files[changes].fileId}{tr}Lock{/tr}{/self_link}
 				{/if}
 			{/if}
