@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.33 2008-02-28 16:26:00 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.34 2008-02-29 19:30:41 jyhem Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -171,9 +171,6 @@ CREATE INDEX lastModif on tiki_pages (lastModif);
 #2005-10-24 sylvieg to boost tiki_stats and tiki_orphan
 CREATE INDEX toPage on tiki_links (toPage);
 CREATE INDEX page_id on tiki_structures (page_id);
-
-#2005-10-25 sylvieg sped up refresh index
-CREATE INDEX locationPage on tiki_searchindex (location, page);
 
 #2005-10-26 sylvieg
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Downloaded', 'file gallery', 'n');
@@ -464,7 +461,8 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 # mose 2006-12-05
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_events', 'Can view events details', 'registered', 'calendar');
 
-#sylvieg 2006-12-08
+#sylvieg 2006-12-08 & jyhem 2008-02-29
+ALTER TABLE `tiki_objects` DROP KEY `type`;
 ALTER TABLE tiki_objects ADD KEY type (type, objectId);
 ALTER TABLE `tiki_file_galleries` ADD `show_modified` char(1) default NULL;
 
@@ -1683,8 +1681,8 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
   KEY(`original_translation_bit`)
 );
 
-#2008-02-05 lphuberdeau
- ALTER TABLE `tiki_pages_translation_bits` ADD INDEX ( `original_translation_bit` )  ;
+#2008-02-05 lphuberdeau & jyhem 2008-02-29
+ ALTER TABLE `tiki_pages_translation_bits` ADD INDEX ( `source_translation_bit` )  ;
 
 #2008-02-07 Jyhem (split perms tiki_p_view_file_gallery and tiki_p_view_trackers with tiki_p_list_file_galleries and tiki_p_list_trackers)
 # This should work with mysql 4 and upwards. Feel free to replace with a postgresql-compatible approach using temporary tables
@@ -1719,3 +1717,20 @@ ALTER TABLE `tiki_file_galleries` ADD COLUMN `show_files` char(1) default NULL;
 
 #2008-02-28 sylvieg
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed', 'file', 'n');
+
+#2008-02-29 jyhem
+ALTER TABLE galaxia_instance_comments change hash hash varchar(34) default NULL;
+#DROP TABLE `tiki_eph`;
+ALTER TABLE `tiki_comments` DROP INDEX `no_repeats`;
+ALTER TABLE `tiki_comments` ADD UNIQUE `no_repeats` ( `parentId` , `userName`(40) , `title` ( 100 ) , `commentDate` , `message_id`(40) , `in_reply_to` ( 40 ) );
+ALTER TABLE `tiki_forums` ADD `mandatory_contribution` char(1) default NULL;
+ALTER TABLE `tiki_comments` DROP INDEX `THREADED` , ADD KEY `threaded` (`message_id`,`in_reply_to`,`parentId`);
+ALTER TABLE `tiki_history` ADD `type` varchar(50) default NULL;
+ALTER TABLE `tiki_minical_events` change user user varchar(200) default '';
+ALTER TABLE `tiki_minical_topics` change user user varchar(200) default '';
+INSERT INTO `tiki_modules` (`moduleId`, `name`, `position`, `ord`, `type`, `title`, `cache_time`, `rows`, `params`, `groups`) VALUES (5,'since_last_visit_new','r',40,NULL,NULL,0,NULL,'','a:1:{i:0;s:6:\"Admins\";}');
+ALTER TABLE `tiki_newsletters` change allowTxt allowTxt char(1) default 'y';
+ALTER TABLE `tiki_calendar_roles` change userName username varchar(200) NOT NULL default '';
+
+
+
