@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.10 2008-02-29 21:55:12 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.11 2008-02-29 22:19:26 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Gallery{/tr}: {$name}</a></h1>
 
@@ -18,7 +18,7 @@
 	<img src='img/rss_podcast_80_15.png' border='0' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}"  align='right' /></a>
 	{else}
 	<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
-	{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}'"align='right'}</a>
+	{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'}</a>
 	{/if}
 {/if}
 {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
