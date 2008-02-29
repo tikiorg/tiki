@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.5 2008-02-27 15:54:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.6 2008-02-29 09:27:22 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if ($prefs['feature_file_galleries'] != 'y') {
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 
-$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords');
+$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords','show_fgalexplorer');
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
