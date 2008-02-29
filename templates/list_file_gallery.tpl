@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.15 2008-02-29 09:21:13 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.16 2008-02-29 09:23:25 nyloth Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
@@ -67,7 +67,7 @@
 {if $other_columns neq ''}
 	{capture name=over_other_columns}{strip}
 	<div class='opaque'>
-		<div class='box-title'>{tr}Other Sort{/tr}</div>
+		<div class='box-title'>{tr}Other Sorts{/tr}</div>
 		<div class='box-data'>
 			{if $other_columns_selected neq ''}
 				{self_link sort_mode='NULL'}{tr}No Additionnal Sort{/tr}{/self_link}
