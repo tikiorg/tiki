@@ -14,7 +14,7 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     $template = $params['template'];
     $htmlelement = $params['htmlelement'];
 
-    if ( $prefs['feature_ajax'] != 'y' ) {
+    if ( $prefs['feature_ajax'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
 	return " href=\"$url\" ";
     } else {
 	return " href=\"#\" onclick=\"loadComponent('$url','$template','$htmlelement');return false;\" ";
