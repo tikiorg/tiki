@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.9 2008-02-29 08:12:06 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.10 2008-02-29 12:27:43 nyloth Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -388,6 +388,7 @@ function hide(foo,f, section) {
 function flip(foo,style) {
 	showit = 'show_' + escape(foo);
 
+	if (style == null) style = '';
 	if (this.iewin && style == 'table-cell') {
 		style = 'block';
 	}
