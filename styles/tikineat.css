@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.11 2008-02-27 15:18:49 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.12 2008-02-29 08:20:03 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1662,7 +1662,7 @@ a.phplm:hover, .phplmnormal a:hover {
 	color: #6996C3;
 	text-decoration: none;
 }
-#jt1 .imgs:first-child, .treemenudiv > .imgs:first-child { display: none; }
+#jt1 .imgs:first-child, .treemenudiv > .imgs:first-child, .treemenudiv > a:first-child { display: none; }
 .box-data table {
 	width : 100%;
 	_width : 95%;
