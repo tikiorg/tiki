@@ -4,6 +4,12 @@
 
 # usage: $0   dbuser   dbpassword   /path/to/old/tiki.sql   /path/to/new/tiki.sql   /path/to/update/tiki-x.ytox.z.sql
 
+if [ $# -ne 5 ]
+then
+    echo 1>&2 "Usage: $0   dbuser   dbpassword   /path/to/old/tiki.sql   /path/to/new/tiki.sql   /path/to/update/tiki-x.ytox.z.sql"
+		exit 1
+fi
+
 user=$1
 pass=$2
 old=$3
