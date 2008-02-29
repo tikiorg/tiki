@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.8 2008-02-29 08:27:31 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.9 2008-02-29 12:29:57 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Gallery{/tr}: {$name}</a></h1>
 
@@ -64,17 +64,17 @@
 
 {if $prefs.javascript_enabled eq 'y'}
 
-	<div id="fgalexplorer_close" style="float:left; vertical-align:middle;  display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false,'');show('fgalexplorer_open',false,'');return false;">{icon _id='application_side_tree.png' alt='{tr}Show Tree{/tr}'}</a></div>
+	<div id="fgalexplorer_close" style="float:left; vertical-align:middle; display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;">{icon _id='application_side_tree' alt='{tr}Show Tree{/tr}'}</a></div>
 
-	<div id="fgalexplorer_open" style="float:left; vertical-align:middle; display:{if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_open',false,'');show('fgalexplorer_close',false,'');return false;">{icon _id='application_side_contract.png' alt='{tr}Hide Tree{/tr}'}</a></div>
+	<div id="fgalexplorer_open" style="float:left; vertical-align:middle; display:{if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer');hide('fgalexplorer_open',false);show('fgalexplorer_close',false);return false;">{icon _id='application_side_contract' alt='{tr}Hide Tree{/tr}'}</a></div>
 
 {else}
 
 	<div style="float:left; vertical-align:middle">
 	{if isset($smarty.request.show_fgalexplorer) and $smarty.request.show_fgalexplorer eq 'y'}
-		<a href="{$smarty.server.REQUEST_URI}&amp;show_fgalexplorer=n">{icon _id='application_side_contract.png' alt='{tr}Hide Tree{/tr}'}</a>
+		{self_link _icon='application_side_contract' show_fgalexplorer='n'}{tr}Hide Tree{/tr}{/self_link}
 	{else}
-		<a href="{$smarty.server.REQUEST_URI}&amp;show_fgalexplorer=y">{icon _id='application_side_tree.png' alt='{tr}Show Tree{/tr}'}</a>
+		{self_link _icon='application_side_tree' show_fgalexplorer='y'}{tr}Show Tree{/tr}{/self_link}
 	{/if}
 	</div>
 
