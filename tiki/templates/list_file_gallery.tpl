@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.13 2008-02-28 17:16:58 sept_7 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.14 2008-02-29 08:27:31 nyloth Exp $ *}
 {* param:$gal_info, $files, $show_find *}
 
 <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
@@ -20,7 +20,7 @@
 	{assign var=nbCols value=`$nbCols+1`}
 	<td class="heading" style="width:1%">&nbsp;</td>
 {/if}
-{if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n'}
+{if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
 	{assign var=nbCols value=`$nbCols+1`}
 	<td class="heading" style="width:1%">&nbsp;</td>
 {/if}
@@ -86,12 +86,12 @@
 	</td>
 {/if}
 
-{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y'}
+{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
 	{assign var=nbCols value=`$nbCols+1`}
 	<td class="heading">{tr}Actions{/tr}</td>
 {/if}
 
-{if $other_columns neq '' or $other_columns_selected neq ''}
+{if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
 	{assign var=nbCols value=`$nbCols+1`}
 	<td class="heading" style="width:1%">
 	{if $other_columns neq ''}
@@ -168,9 +168,9 @@
 </td>
 {/if}
 
-{if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n'}
+{if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
 	<td style="white-space: nowrap" class="{cycle advance=false}">
-		<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a><noscript>{include file=fgal_context_menu.tpl}</noscript>
+		<a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
 	</td>
 {/if}
 
@@ -241,11 +241,11 @@
 	<td class="{cycle advance=false}">{$files[changes].$other_columns_selected}</td>
 {/if}
 
-{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y'}
+{if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
 	<td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
 {/if}
 
-{if $other_columns neq '' or $other_columns_selected neq ''}
+{if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
 <td class="{cycle advance=false}">
 {if $show_infos eq 'y'}
 	{if $over_infos eq ''}
