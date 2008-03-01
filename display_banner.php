@@ -1,27 +1,33 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16 2007-03-06 19:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16.2.1 2008-03-01 17:12:54 leyan Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16 2007-03-06 19:29:45 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.16.2.1 2008-03-01 17:12:54 leyan Exp $
 
 // Only to be called from edit_banner or view_banner to display the banner without adding
 // impressions to the banner
+
 if (!isset($_REQUEST["id"])) {
 	die;
 }
 
-include_once("lib/init/initlib.php");
-include_once ('db/tiki-db.php');
-include_once ('lib/tikilib.php');
-$tikilib = new Tikilib($dbTiki);
+require_once ('tiki-setup.php');
 include_once ('lib/banners/bannerlib.php');
 
 if (!isset($bannerlib)) {
 	$bannerlib = new BannerLib($dbTiki);
+}
+
+// CHECK FEATURE BANNERS HERE
+if ($prefs['feature_banners'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
+
+	$smarty->display("error.tpl");
+	die;
 }
 
 $data = $bannerlib->get_banner($_REQUEST["id"]);
