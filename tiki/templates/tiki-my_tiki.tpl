@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.7 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.8 2008-03-01 17:05:53 pkdille Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
@@ -138,7 +138,7 @@
       <div class="cbox">
         <div class="cbox-title">{tr}Unread Messages{/tr}</div>
         <div class="cbox-data">
-          <table  class="normal">
+          <table class="normal">
             <tr>
               <th class="heading">{tr}Subject{/tr}</th>
               <th class="heading">{tr}From{/tr}</th>
@@ -171,7 +171,7 @@
           {if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}User tasks{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table  class="normal">
+          <table class="normal">
             <tr>
               <th class="heading">{tr}Tasks{/tr}</th>
             </tr>
@@ -196,18 +196,16 @@
           {if $userwatch eq $user}{tr}My forum topics{/tr}{else}{tr}User forum topics{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table  class="normal">
+          <table class="normal">
             <tr>
               <th class="heading">{tr}Forum topics{/tr}</th>              
-            </tr>
-            <tr>
               <th class="heading">{tr}Date of post{/tr}</th>              
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_topics}
               <tr>
                 <td class="{cycle advance=false}">
-                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
+                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&amp;forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a>
                 </td>                
                 <td class="{cycle}">
                   {$user_forum_topics[ix].commentDate|tiki_short_datetime}
@@ -227,18 +225,16 @@
           {if $userwatch eq $user}{tr}My forum replies{/tr}{else}{tr}User forum replies{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table  class="normal">
+          <table class="normal">
             <tr>
               <th class="heading">{tr}Forum replies{/tr}</th>              
-            </tr>
-            <tr>
               <th class="heading">{tr}Date of post{/tr}</th>              
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_replies}
               <tr>
                 <td class="{cycle advance=false}">
-                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
+                  <a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_replies[ix].threadId}&amp;forumId={$user_forum_replies[ix].object}">{$user_forum_replies[ix].title}</a>
                 </td>
                 <td class="{cycle}">
                   {$user_forum_replies[ix].commentDate|tiki_short_datetime}
@@ -258,7 +254,7 @@
           {if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}
         </div>
         <div class="cbox-data">
-          <table  class="normal">
+          <table class="normal">
             <tr>
               <th class="heading">{tr}Blogs{/tr}</th>
               <th class="heading" width="50px">{tr}Actions{/tr}</th>
