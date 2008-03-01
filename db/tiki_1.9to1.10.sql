@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.34 2008-02-29 19:30:41 jyhem Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.35 2008-03-01 00:55:58 nyloth Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1728,7 +1728,7 @@ ALTER TABLE `tiki_comments` DROP INDEX `THREADED` , ADD KEY `threaded` (`message
 ALTER TABLE `tiki_history` ADD `type` varchar(50) default NULL;
 ALTER TABLE `tiki_minical_events` change user user varchar(200) default '';
 ALTER TABLE `tiki_minical_topics` change user user varchar(200) default '';
-INSERT INTO `tiki_modules` (`moduleId`, `name`, `position`, `ord`, `type`, `title`, `cache_time`, `rows`, `params`, `groups`) VALUES (5,'since_last_visit_new','r',40,NULL,NULL,0,NULL,'','a:1:{i:0;s:6:\"Admins\";}');
+#INSERT INTO `tiki_modules` (`moduleId`, `name`, `position`, `ord`, `type`, `title`, `cache_time`, `rows`, `params`, `groups`) VALUES (5,'since_last_visit_new','r',40,NULL,NULL,0,NULL,'','a:1:{i:0;s:6:\"Admins\";}');
 ALTER TABLE `tiki_newsletters` change allowTxt allowTxt char(1) default 'y';
 ALTER TABLE `tiki_calendar_roles` change userName username varchar(200) NOT NULL default '';
 
