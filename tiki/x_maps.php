@@ -1,9 +1,21 @@
 <?php
 
 require_once('tiki-setup.php');
-include_once('lib/map/map_query.php');
+
+if($prefs['feature_maps'] != 'y' || $prefs['feature_ajax'] != 'y') {
+  $smarty->assign('msg',tra("Feature disabled"));
+  $smarty->display("error.tpl");
+  die;
+}
+
+if($tiki_p_map_view != 'y') {
+  $smarty->assign('msg',tra("You do not have permissions to view the maps"));
+  $smarty->display("error.tpl");
+  die;
+}
 
 //setting up xajax
+include_once('lib/map/map_query.php');
 require_once("lib/ajax/xajax.inc.php");
 $xajax = new xajax("x_maps.php");
 //$xajax->debugOn();

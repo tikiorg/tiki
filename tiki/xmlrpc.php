@@ -1,14 +1,9 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.29 2007-02-12 12:14:15 mose Exp $
-include_once("lib/init/initlib.php");
-require_once('db/tiki-db.php');
-require_once('lib/tikilib.php');
-require_once('lib/userslib.php');
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.29.2.1 2008-03-01 16:07:37 lphuberdeau Exp $
+include_once('tiki-setup.php');
 require_once("XML/Server.php");
 include_once('lib/blogs/bloglib.php');
-$tikilib = new Tikilib($dbTiki);
-$userlib = new Userslib($dbTiki);
-if($tikilib->get_preference("feature_xmlrpc",'n') != 'y') {
+if($prefs['feature_xmlrpc'] != 'y') {
   die;  
 }
 $map = array (

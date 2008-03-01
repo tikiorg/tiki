@@ -1,26 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.17 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.17.2.1 2008-03-01 16:07:36 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-include_once("lib/init/initlib.php");
-require_once ('db/tiki-db.php');
 
-require_once ('lib/tikilib.php');
-require_once ('lib/userslib.php');
-require_once ("XML/Server.php");
-include_once ('lib/blogs/bloglib.php');
-
-$tikilib = new Tikilib($dbTiki);
-$userlib = new Userslib($dbTiki);
-
-/* later
-if($tikilib->get_preference("feature_xmlrpc",'n') != 'y') {
+include_once('tiki-setup.php');
+require_once("XML/Server.php");
+include_once('lib/blogs/bloglib.php');
+if($prefs['feature_xmlrpc'] != 'y') {
   die;  
 }
-*/
 
 // Build map using webservices
 $map = array(

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_download_attachment.php,v 1.9 2007-03-06 19:29:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_download_attachment.php,v 1.9.2.1 2008-03-01 16:07:36 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,20 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+
+if ($prefs['feature_webmail'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+if ($tiki_p_use_webmail != 'y') {
+	$smarty->assign('msg', tra("Permission denied to use this feature"));
+
+	$smarty->display("error.tpl");
+	die;
+}
 
 require_once ('lib/webmail/webmaillib.php');
 
