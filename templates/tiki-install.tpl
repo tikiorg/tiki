@@ -105,7 +105,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 <tr class="formcolor">
 <td>&nbsp;</td>
 <td><input type="hidden" name="resetdb" value="{$resetdb}" />
-<input type="submit" name="dbinfo" /></td>
+<input type="submit" name="dbinfo" value="Connect" /></td>
 <td>&nbsp;</td>
 </tr>
 	  	
@@ -123,6 +123,8 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 				{if $lang}<input type="hidden" name="lang" value="{$lang}" />{/if}
 				<hr />
+		<table><tr><td>
+			<fieldset>
 		    <table>
 		    <tr><td style="text-align: center;" colspan="2"
  rowspan="1" height="26"><font size="5"><b>{tr}Install{/tr}</b></font>
@@ -135,15 +137,22 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
 			{/section}
 			</select>
-			<input type="submit" name="scratch" value="{tr}Create{/tr}" />
 		    </td></tr><tr>
-			<td height="100" valign="top">
-			</td><td height="100" valign="top">
+			<td valign="top">
+			</td><td valign="top">
 			<a target="_blank" href="http://doc.tikiwiki.org/Profiles" class="link">{tr}Descriptions of the available profiles{/tr}</a>
 		    </td>
-		    <tr><td colspan="2">
-
-			<hr />
+			</tr>
+			<tr>
+				<td style="text-align:center" colspan="2">
+					<input type="submit" name="scratch" value="{tr}Create{/tr}" />
+				</td>
+			</tr>
+			</table>
+			</fieldset>
+		</td><td>
+			<fieldset>
+		    <table>
 			<tr><td style="text-align: center;" colspan="2"
  rowspan="1" height="26"><font size="5"><b>{tr}Upgrade{/tr}</b></font>
  			</td></tr>
@@ -158,7 +167,6 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
 			{/section}
 			</select>
-			<input type="submit" name="update" value="{tr}Update{/tr}" />
 		    </td></tr>
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:
@@ -176,11 +184,13 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 
 			
 		</td></tr>		
-		
-		
-		
+		<tr><td style="text-align:center" colspan="2">
+			<input type="submit" name="update" value="{tr}Update{/tr}" />
+		</td></tr>
 		
 		    </table>
+			</fieldset>
+		</td></tr></table>
 		    </form><br />
 			<hr />
 			<br /><br /><br />
