@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-openid_register.tpl,v 1.3.2.1 2008-02-16 08:52:27 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-openid_register.tpl,v 1.3.2.2 2008-03-01 20:34:39 lphuberdeau Exp $ *}
 <h1>{tr}Your OpenID identity is valid{/tr}</h1>
 <p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
 <table width="100%">
@@ -12,6 +12,22 @@
 			<form method="post" action="tiki-register.php">
 				<fieldset>
 					<legend>{tr}Register{/tr}</legend>
+					{if $prefs.useRegisterPasscode eq 'y'}
+					<div>
+						<label for="openid_registration_passcode">{tr}Passcode to register (not your user password){/tr}</label>
+						<input type="password" name="passcode" id="openid_registration_passcode" />
+					</div>
+					{/if}
+					{if $prefs.rnd_num_reg eq 'y'}
+					<div>
+						{tr}Your registration code:{/tr}
+						<img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
+						<br />
+						<label="openid_registration_code">{tr}Registration code{/tr}</label>
+						<input type="text" maxlength="8" size="8" name="regcode" id="openid_registration_code" />
+					</div>
+					{/if}
+
 					<div>
 						<label for="openid_nickname">{tr}Username{/tr}</label>
 						<input id="openid_nickname" type="text" name="name" value="{$username}"/>
