@@ -2,12 +2,12 @@
 
 // $HEADER$
 
-include_once("lib/init/initlib.php");
-require_once('db/tiki-db.php');
-require_once('lib/tikilib.php');
-require_once('lib/userslib.php');
+include_once('tiki-setup.php');
+if($prefs['feature_xmlrpc'] != 'y' || $prefs['wiki_feature_3d'] != 'y') {
+  die;  
+}
+
 require_once("XML/Server.php");
-require_once("lib/wiki/wikilib.php");
 
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );

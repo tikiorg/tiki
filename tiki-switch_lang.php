@@ -1,6 +1,11 @@
 <?php
 require_once('tiki-setup.php');
-include_once('lib/tikilib.php');
+
+if ($prefs['feature_multilingual'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_multilingual");
+	$smarty->display("error.tpl");
+	die;
+}
 
 if (isset($_GET['from'])) 
 	$orig_url = $_GET['from'];
