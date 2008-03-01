@@ -27,7 +27,7 @@
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
 {assign var=calendarId value=$cell[w][d].items[items].calendarId}
-<div{if $cell[w][d].items[items].head > '...'} class="vevent"{/if}>
+<div{if $cell[w][d].items[items].head > '...'} {* class="vevent" *}{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding:0 2px;color:#666;float:left;">{$cell[w][d].items[items].prio}</span><div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}"><a style="padding:0 3px;background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"
 {if $myurl eq "tiki-action_calendar.php"}
 {if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].visible eq 'y'}href="{$cell[w][d].items[items].url}"{/if}
@@ -37,14 +37,16 @@
 {if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[items].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
 {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 >{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a>
-{* these hidden spans are for microformat hCalendar support *}
+{* these hidden spans are for microformat hCalendar support -- removed *}
 {if $cell[w][d].items[items].head > '...'} {* not continued - is real time- starts on this day *}
+{*
 <span class="dtstart" style="display:none;">{$cell[w][d].items[items].startTimeStamp|isodate}</span>
 <span class="dtend" style="display:none;">{$cell[w][d].items[items].endTimeStamp|isodate}</span>
 <span class="summary" style="display:none;">{$cell[w][d].items[items].name|escape}</span>
 <span class="url" style="display:none;">{$cell[w][d].items[items].web|escape}</span>
 <span class="location" style="display:none;">{$cell[w][d].items[items].location|escape}</span>
 <span class="category" style="display:none;">{$cell[w][d].items[items].category|escape}</span>
+*}
 {/if}
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" border="0"/></a>

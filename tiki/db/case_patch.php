@@ -1,5 +1,12 @@
 <?php
 
+//this script may only be included - so its better to err & die if called directly.
+//smarty is not there - we need setup
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 $list = $tikilib->list_pages(0,-1,'pageName_desc','');
 
 foreach ($list['data'] as $l) {

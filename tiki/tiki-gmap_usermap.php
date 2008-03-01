@@ -1,6 +1,12 @@
 <?php
 include "tiki-setup.php";
 
+if ($prefs['feature_gmap'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+	$smarty->display("error.tpl");
+	die;
+}
+
 $style = 'style="float:left;margin-right:5px;"';
 $query = "SELECT `login`, `avatarType`, `avatarLibName`, p1.`value` as lon, p2.`value` as lat FROM `users_users` as u ";
 $query.= "left join `tiki_user_preferences` as p1 on p1.`user`=u.`login` and p1.`prefName`=? ";
