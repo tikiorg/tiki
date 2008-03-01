@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.48 2008-03-01 17:13:01 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.49 2008-03-01 22:06:06 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -530,7 +530,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['calendar_view_tab'] = 'n';
 	$prefs['calendar_firstDayofWeek'] = 'user';
 	$prefs['calendar_timespan'] = '5';
-	$prefs['feature_cal_manual_time'] = '0';
 	$prefs['feature_jscalendar'] = 'n';
 	$prefs['feature_action_calendar'] = 'n';
 	$prefs['calendar_start_year'] = '+0';
