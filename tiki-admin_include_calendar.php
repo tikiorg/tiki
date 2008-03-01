@@ -17,7 +17,6 @@ if (isset($_REQUEST["calprefs"])) {
 
 	simple_set_toggle('calendar_sticky_popup');
 	simple_set_toggle('calendar_view_tab');
-	simple_set_toggle('feature_cal_manual_time');
 	simple_set_toggle('feature_jscalendar');
 
 	simple_set_value('calendar_view_mode');
