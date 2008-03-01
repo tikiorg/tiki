@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.17 2008-03-01 00:47:54 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.18 2008-03-01 10:11:27 nyloth Exp $ *}
 
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
 
@@ -217,7 +217,7 @@
             {else}
               {assign var=key_name value="show_$propname"}
             {/if}
-            {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' ) }
+            {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'a' or $gal_info.$key_name eq 'i' or $propname eq 'name' or ( $other_columns_selected neq '' and $propname eq $other_columns_selected ) ) }
               {assign var=propval value=$files[changes].$propname|escape}
           
               {* build link *}
@@ -268,14 +268,18 @@
                   {if $link neq ''}<a class='fgalname' {$link}>{/if}{$files[changes].filename}{if $link neq ''}</a>{/if}
                 </td>
               {/if}
-              {if $propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' ) }
-                <td class="{cycle advance=false}">{$propval}</td>
+              {if $other_columns_selected neq '' and $propname eq $other_columns_selected}
+                {assign var=other_columns_selected_val value=$propval}
+              {else}
+                {if $propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' ) }
+                  <td class="{cycle advance=false}">{$propval}</td>
+                {/if}
               {/if}
             {/if}
           {/foreach}
       
           {if $other_columns_selected neq ''}
-            <td class="{cycle advance=false}">{$files[changes].$other_columns_selected}</td>
+            <td class="{cycle advance=false}">{$other_columns_selected_val}</td>
           {/if}
           
           {if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
