@@ -1,11 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-page_loader.php,v 1.12 2007-03-06 19:29:50 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-page_loader.php,v 1.12.2.1 2008-03-01 17:12:48 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ('tiki-setup.php');
+
+if ($prefs['feature_html_pages'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_html_pages");
+
+	$smarty->display("error.tpl");
+	die;
+}
 
 include_once ('lib/htmlpages/htmlpageslib.php');
 

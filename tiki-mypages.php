@@ -1,12 +1,20 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.26.2.1 2007-10-17 09:42:52 niclone Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mypages.php,v 1.26.2.2 2008-03-01 17:12:48 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require_once ('tiki-setup.php');
+
+if($prefs['feature_mypage'] != 'y') {
+    $smarty->assign('msg', tra('This feature is disabled').': feature_mypage');
+    $smarty->display('error.tpl');
+    die;  
+}
+
+require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/mypage/mypagelib.php');
 require_once ('lib/ajax/ajaxlib.php');
 

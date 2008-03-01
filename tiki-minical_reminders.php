@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.16 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.16.2.1 2008-03-01 17:12:48 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,14 @@ include_once("lib/init/initlib.php");
 include_once ('tiki-setup_base.php');
 
 include_once ('lib/minical/minicallib.php');
+
+
+if ($prefs['feature_minical'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_minical");
+
+	$smarty->display("error.tpl");
+	die;
+}
 
 if (!$prefs['minical_reminders'])
 	die;

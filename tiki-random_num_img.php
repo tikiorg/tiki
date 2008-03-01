@@ -10,6 +10,11 @@
 // hmm. to many session tweaks in setup_smarty ... we need to call this
 require_once('tiki-setup.php');
 
+if ($prefs['feature_antibot'] != 'y' && $prefs['rnd_num_reg'] != 'y') {
+	die;
+}
+
+
 //random_number.php
 $img_number = imagecreate(95, 30);
 $white = imagecolorallocate($img_number, 255, 255, 255);

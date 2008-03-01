@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.64 2007-10-14 17:51:01 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.64.2.1 2008-03-01 17:12:48 lphuberdeau Exp $ *}
 {if $do_not_show_login_box ne 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
@@ -146,10 +146,10 @@
 				<input class="openid_url" type="text" name="openid_url"/>
 				<input type="submit" value="{tr}Go{/tr}"/>
 
-				<div>
-					<input type="checkbox" name="action" value="force" id="openid_force"/>
-					<label for="openid_force">{tr}Force assign of new OpenID user link{/tr}</label>
-				</div>
+				{*<div>*}
+					{*<input type="checkbox" name="action" value="force" id="openid_force"/>*}
+					{*<label for="openid_force">{tr}Force assign of new OpenID user link{/tr}</label>*}
+				{*</div>*}
 			</fieldset>
 		</form>
 	{/if}
