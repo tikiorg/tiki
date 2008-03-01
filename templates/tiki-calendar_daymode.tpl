@@ -21,14 +21,6 @@
 {else}
 <a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}" class="linkmenu summary">{$hrows[$h][hr].name}</a>
 {/if}
-{* these hidden spans are for microformat hCalendar support -- removed *}
-{*
-<span class="dtstart" style="display:none;">{$hrows[$h][hr].startTimeStamp|isodate}</span>
-<span class="dtend" style="display:none;">{$hrows[$h][hr].endTimeStamp|isodate}</span>
-<span class="url" style="display:none;">{$hrows[$h][hr].web|escape}</span>
-<span class="location" style="display:none;">{$hrows[$h][hr].location|escape}</span>
-<span class="category" style="display:none;">{$hrows[$h][hr].category|escape}</span>
-*}
 <span class="description">
 {if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}
 </span>
