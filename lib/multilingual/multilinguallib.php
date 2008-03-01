@@ -655,7 +655,9 @@ class MultilingualLib extends TikiLib {
 				INNER JOIN tiki_pages page ON page.page_id = a.objId
 				INNER JOIN tiki_pages_translation_bits candidate ON candidate.page_id = page.page_id
 			WHERE
-				b.objId = ?
+				a.type = 'wiki page'
+				AND b.type = 'wiki page'
+				AND b.objId = ?
 				AND IFNULL( candidate.original_translation_bit, candidate.translation_bit_id ) NOT IN(
 					SELECT IFNULL( original_translation_bit, translation_bit_id )
 					FROM tiki_pages_translation_bits
@@ -685,8 +687,10 @@ class MultilingualLib extends TikiLib {
 				INNER JOIN tiki_translated_objects a ON a.objId = page.page_id
 				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND a.objId <> b.objId
 			WHERE
-				b.objId = ?
-				 AND (
+				a.type = 'wiki page'
+				AND b.type = 'wiki page'
+				AND b.objId = ?
+				AND (
 					SELECT COUNT(*)
 					FROM tiki_pages_translation_bits
 					WHERE page_id = b.objId
