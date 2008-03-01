@@ -1,7 +1,7 @@
 <?php
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__))!=FALSE) {
   header('location: index.php');
   exit;
 }

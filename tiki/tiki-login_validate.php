@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25.2.1 2008-03-01 17:12:48 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,14 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+
+if ($prefs['validateUsers'] != 'y' && $prefs['validateRegistration'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": validateUsers");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
