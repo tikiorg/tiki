@@ -1,5 +1,5 @@
 <div style="margin:10px 30px;">
-<h1>{tr}Tiki installer{/tr} v{$tiki_version} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
+<h1>{tr}Tiki installer{/tr} v{$tiki_version} BETA <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
 
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
