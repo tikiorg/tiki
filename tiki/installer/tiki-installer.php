@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.6 2008-03-02 20:32:28 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.7 2008-03-02 20:47:03 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -774,6 +774,7 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 
 		if( $_REQUEST['file'] == 'tiki_1.9to1.10.sql' && $is19 ) {
 			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_edit_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
+			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_edit_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
 		}
 		$smarty->assign('dbdone', 'y');
 	}
