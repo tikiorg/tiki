@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.12 2008-02-29 08:20:03 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.13 2008-03-02 08:05:04 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -307,7 +307,8 @@ div.menuSection div.menuSection, div.menuSection div.separator {
 	margin : 0;
 	margin-right : 10px;
 	padding : 1px;
-        list-style-position: inside;
+  list-style: none;
+
 }
 .rssitem {
 	font-weight : normal;
@@ -318,9 +319,11 @@ div.menuSection div.menuSection, div.menuSection div.separator {
 	border-top: 0;
 }
 .rssdate {
+  display: block;
+  margin-left: 10%;
 	color: #999999;
+  font-size: 70%;
 	font-style: italic;
-        font-size: 10px;
 }
 .separator {
 	font-size : 10px;
