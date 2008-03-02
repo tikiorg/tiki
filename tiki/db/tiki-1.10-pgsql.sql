@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2008-02-27 15:18:37 $
--- $Author: nyloth $
+-- $Date: 2008-03-02 19:23:03 $
+-- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -440,7 +440,7 @@ CREATE TABLE "tiki_article_types" (
   "show_pubdate" varchar(1) default 'y',
   "show_expdate" varchar(1) default NULL,
   "show_reads" varchar(1) default 'y',
-  "show_size" varchar(1) default 'y',
+  "show_size" varchar(1) default 'n',
   "show_topline" varchar(1) default 'n',
   "show_subtitle" varchar(1) default 'n',
   "show_linkto" varchar(1) default 'n',
@@ -1089,6 +1089,7 @@ CREATE TABLE "tiki_comments" (
 
 CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title");
 CREATE  INDEX "tiki_comments_data" ON "tiki_comments"(substr("data", 0, 255));
+CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId");
 CREATE  INDEX "tiki_comments_objectType" ON "tiki_comments"("object","objectType");
 CREATE  INDEX "tiki_comments_commentDate" ON "tiki_comments"("commentDate");
 CREATE  INDEX "tiki_comments_hits" ON "tiki_comments"("hits");
@@ -1788,6 +1789,7 @@ CREATE TABLE "tiki_history" (
   KEY(historyId)
 ) ENGINE=MyISAM;
 
+CREATE  INDEX "tiki_history_user" ON "tiki_history"("user");
 -- --------------------------------------------------------
 
 --
@@ -2758,9 +2760,11 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:10:"Registered";}');
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}');
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
+
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}');
 
 -- --------------------------------------------------------
 
@@ -3312,6 +3316,9 @@ CREATE TABLE "tiki_received_pages" (
   "receivedFromSite" varchar(200) default NULL,
   "receivedFromUser" varchar(200) default NULL,
   "receivedDate" bigint default NULL,
+  "parent" varchar(255) default NULL,
+  "position" smallint unsigned default NULL,
+  "alias" varchar(255) default NULL,
   "structureName"  varchar(250) default NULL,
   "parentName"  varchar(250) default NULL,
   "page_alias" varchar(250) default '',
@@ -3706,8 +3713,8 @@ CREATE TABLE "tiki_submissions" (
   "heading" text,
   "body" text,
   "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
   "nbreads" bigint default NULL,
+  "author" varchar(200) default NULL,
   "votes" integer default NULL,
   "points" bigint default NULL,
   "type" varchar(50) default NULL,
@@ -5198,7 +5205,7 @@ CREATE TABLE "users_users" (
   "challenge" varchar(32) default NULL,
   "pass_confirm" bigint default NULL,
   "email_confirm" bigint default NULL,
-  "hash" varchar(32) default NULL,
+  "hash" varchar(34) default NULL,
   "created" bigint default NULL,
   "avatarName" varchar(80) default NULL,
   "avatarSize" bigint default NULL,
@@ -5632,8 +5639,8 @@ CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"("traI
 DROP TABLE "tiki_friends";
 
 CREATE TABLE "tiki_friends" (
-  "user" char(200) NOT NULL default '',
-  "friend" char(200) NOT NULL default '',
+  "user" varchar(200) NOT NULL default '',
+  "friend" varchar(200) NOT NULL default '',
   PRIMARY KEY ("user","friend")
 ) ENGINE=MyISAM;
 
@@ -5641,8 +5648,8 @@ CREATE TABLE "tiki_friends" (
 DROP TABLE "tiki_friendship_requests";
 
 CREATE TABLE "tiki_friendship_requests" (
-  "userFrom" char(200) NOT NULL default '',
-  "userTo" char(200) NOT NULL default '',
+  "userFrom" varchar(200) NOT NULL default '',
+  "userTo" varchar(200) NOT NULL default '',
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("userFrom","userTo")
 ) ENGINE=MyISAM;
@@ -5815,7 +5822,7 @@ CREATE TABLE "tiki_registration_fields" (
   "field" varchar(255) NOT NULL default '',
   "name" varchar(255) default NULL,
   "type" varchar(255) NOT NULL default 'text',
-  "show" smallint NOT NULL default '0',
+  "show" smallint NOT NULL default '1',
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
 ) ENGINE=MyISAM;
@@ -5902,6 +5909,8 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Upda
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'blog', 'n');
 
+INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'file', 'n');
+
 -- --------------------------------------------------------
 
 
@@ -5984,6 +5993,7 @@ CREATE TABLE "tiki_webmail_contacts_fields" (
 CREATE TABLE "tiki_mypage" (
   "id" bigserial,
   "id_users" bigint NOT NULL,
+  "id_types" bigint NOT NULL,
   "created" bigint NOT NULL,
   "modified" bigint NOT NULL,
   "viewed" bigint NOT NULL,
@@ -6004,6 +6014,7 @@ CREATE TABLE "tiki_mypage" (
 
 CREATE  INDEX "tiki_mypage_id_users" ON "tiki_mypage"("id_users");
 CREATE  INDEX "tiki_mypage_name" ON "tiki_mypage"("name");
+CREATE  INDEX "tiki_mypage_id_types" ON "tiki_mypage"("id_types");
 
 CREATE TABLE "tiki_mypagewin" (
   "id" bigserial,

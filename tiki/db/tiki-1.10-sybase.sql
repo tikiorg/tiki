@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-02-27 15:18:42 $
--- $Author: nyloth $
+-- $Date: 2008-03-02 19:23:05 $
+-- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -527,7 +527,7 @@ CREATE TABLE "tiki_article_types" (
   "show_pubdate" varchar(1) default 'y',
   "show_expdate" varchar(1) default NULL NULL,
   "show_reads" varchar(1) default 'y',
-  "show_size" varchar(1) default 'y',
+  "show_size" varchar(1) default 'n',
   "show_topline" varchar(1) default 'n',
   "show_subtitle" varchar(1) default 'n',
   "show_linkto" varchar(1) default 'n',
@@ -1310,6 +1310,8 @@ go
 CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title")
 go
 CREATE  INDEX "tiki_comments_data" ON "tiki_comments"("data")
+go
+CREATE  INDEX "tiki_comments_tc_pi" ON "tiki_comments"("parentId")
 go
 CREATE  INDEX "tiki_comments_objectType" ON "tiki_comments"("object" "objectType")
 go
@@ -2148,6 +2150,7 @@ CREATE TABLE "tiki_history" (
   "data" image default '',
   "type" varchar(50) default NULL NULL,
   PRIMARY KEY ("pageName","version")
+  KEY `user` (`user`),
   KEY(historyId)
 ) ENGINE=MyISAM
 go
@@ -3637,11 +3640,15 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","group
 go
 
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:10:"Registered";}')
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}')
 go
 
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
+go
+
+
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}')
 go
 
 
@@ -4296,6 +4303,9 @@ CREATE TABLE "tiki_received_pages" (
   "receivedFromSite" varchar(200) default NULL NULL,
   "receivedFromUser" varchar(200) default NULL NULL,
   "receivedDate" numeric(14,0) default NULL NULL,
+  "parent" varchar(255) default NULL NULL,
+  "position" numeric(3,0) unsigned default NULL NULL,
+  "alias" varchar(255) default NULL NULL,
   "structureName"  varchar(250) default NULL NULL,
   "parentName"  varchar(250) default NULL NULL,
   "page_alias" varchar(250) default '',
@@ -4787,8 +4797,8 @@ CREATE TABLE "tiki_submissions" (
   "heading" text default '',
   "body" text default '',
   "hash" varchar(32) default NULL NULL,
-  "author" varchar(200) default NULL NULL,
   "nbreads" numeric(14,0) default NULL NULL,
+  "author" varchar(200) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "points" numeric(14,0) default NULL NULL,
   "type" varchar(50) default NULL NULL,
@@ -6908,7 +6918,7 @@ CREATE TABLE "users_users" (
   "challenge" varchar(32) default NULL NULL,
   "pass_confirm" numeric(14,0) default NULL NULL,
   "email_confirm" numeric(14,0) default NULL NULL,
-  "hash" varchar(32) default NULL NULL,
+  "hash" varchar(34) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "avatarName" varchar(80) default NULL NULL,
   "avatarSize" numeric(14,0) default NULL NULL,
@@ -7676,8 +7686,8 @@ go
 
 
 CREATE TABLE "tiki_friends" (
-  "user" char(200) default '' NOT NULL,
-  "friend" char(200) default '' NOT NULL,
+  "user" varchar(200) default '' NOT NULL,
+  "friend" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("`user`","friend")
 ) ENGINE=MyISAM
 go
@@ -7689,8 +7699,8 @@ go
 
 
 CREATE TABLE "tiki_friendship_requests" (
-  "userFrom" char(200) default '' NOT NULL,
-  "userTo" char(200) default '' NOT NULL,
+  "userFrom" varchar(200) default '' NOT NULL,
+  "userTo" varchar(200) default '' NOT NULL,
   "tstamp" timestamp NOT NULL,
   PRIMARY KEY ("userFrom","userTo")
 ) ENGINE=MyISAM
@@ -7958,7 +7968,7 @@ CREATE TABLE "tiki_registration_fields" (
   "field" varchar(255) default '' NOT NULL,
   "name" varchar(255) default NULL NULL,
   "type" varchar(255) default 'text' NOT NULL,
-  `show` numeric(1,0) default '0' NOT NULL,
+  `show` numeric(1,0) default '1' NOT NULL,
   "size" varchar(10) default '10',
   PRIMARY KEY ("id")
 ) ENGINE=MyISAM
@@ -8121,6 +8131,10 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 go
 
 
+INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'file', 'n')
+go
+
+
 -- --------------------------------------------------------
 
 
@@ -8227,6 +8241,7 @@ go
 CREATE TABLE `tiki_mypage` (
   `id numeric(11 ,0) identity,
   `id_users` numeric(11,0) NOT NULL,
+  `id_types` numeric(11,0) NOT NULL,
   `created` numeric(11,0) NOT NULL,
   `modified` numeric(11,0) NOT NULL,
   `viewed` numeric(11,0) NOT NULL,
@@ -8244,7 +8259,8 @@ CREATE TABLE `tiki_mypage` (
   `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
   PRIMARY KEY ("`id`")
   KEY `id_users` (`id_users`),
-  KEY `name` (`name`)
+  KEY `name` (`name`),
+  KEY `id_types` (`id_types`)
 ) ENGINE=MyISAM
 go
 
