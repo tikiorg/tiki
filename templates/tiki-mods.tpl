@@ -1,16 +1,7 @@
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods</a>.{/tr}
-</div>
-</div>
-<br />
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-mods.tpl,v 1.21.2.2 2008-03-02 22:39:15 pkdille Exp $ *}
 
-<style>
-{literal}
-.focus { background-color : #eeee77; }
-{/literal}
-</style>
 <h1><a href="tiki-mods.php" class="pagetitle">{tr}Tikiwiki Mods{/tr}</a></h1>
+
 <span class="button2"><a href="tiki-mods_admin.php" class="linkbut">{tr}Mods Configuration{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}" class="linkbut">{tr}Update remote index{/tr}</a></span>
 <span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}" class="linkbut">{tr}Rebuild local list{/tr}</a></span>
@@ -21,7 +12,17 @@
 <span class="button2"><a href="tiki-mods.php?unpublishall=1{$findarg}{$typearg}" class="linkbut">{tr}Unpublish all{/tr}</a></span>
 </span>
 {/if}
+
 <br /><br />
+
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">
+    {tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods</a>.{/tr}
+  </div>
+</div>
+<br />
+
 {if $iswritable}
 <div class="simplebox" style="color:#009900;"><b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or 
 upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using 
