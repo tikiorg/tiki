@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.8 2008-03-02 20:18:17 leyan Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.9 2008-03-02 20:20:54 lphuberdeau Exp $ *}
 {if $prefs.feature_siteidentity eq 'y' && $prefs.feature_top_bar eq 'y'}
 {if $prefs.feature_topbar_version eq 'y'}
-{tr}This is{/tr} Tikiwiki v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- &#169; 2002&#8211;2007 {tr}by the{/tr} <a href="http://tikiwiki.org" 
+{tr}This is{/tr} Tikiwiki v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- &#169; 2002&#8211;2008 {tr}by the{/tr} <a href="http://tikiwiki.org" 
 title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {/if}
 {if $prefs.feature_topbar_date eq 'y'}
