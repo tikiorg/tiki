@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.4 2008-01-16 18:21:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.5 2008-03-02 19:13:55 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,29 @@ if (!empty($_REQUEST['lang'])) {
 	$language = 'en';
 }
 include_once('lib/init/tra.php');
+
+function list_tables( $dbTiki )
+{
+	static $list = array();
+	if( $list )
+		return $list;
+
+	$result = $dbTiki->Execute( "show tables" );
+	while( $row = $result->fetchRow() )
+		$list[] = reset( $row );
+	
+	return $list;
+}
+
+function has_tiki_db( $dbTiki )
+{
+	return in_array( 'users_users', list_tables( $dbTiki ) );
+}
+
+function has_tiki_db_110( $dbTiki )
+{
+	return in_array( 'tiki_pages_translation_bits', list_tables( $dbTiki ) );
+}
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
@@ -638,6 +661,9 @@ if (!file_exists($local)) {
 			$smarty->assign('dbcon', 'n');
 			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
 		} else {
+			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
+
 			$dbcon = true;
 			if (!isset($_REQUEST['reset'])) {
 				$smarty->assign('dbcon', 'y');
@@ -741,7 +767,12 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 	}
 
 	if ( isset($_REQUEST['update']) ) {
+		$is19 = ! has_tiki_db_110($dbTiki);
 		process_sql_file($_REQUEST['file'], $db_tiki);
+
+		if( $_REQUEST['file'] == 'tiki_1.9to1.10.sql' && $is19 ) {
+			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_edit_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
+		}
 		$smarty->assign('dbdone', 'y');
 	}
 }

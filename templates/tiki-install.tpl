@@ -125,7 +125,22 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 				<hr />
 		<table><tr><td>
 			<fieldset>
-		    <table>
+			{if $tikidb_created}
+			<script type="text/javascript">
+				{literal}
+				function install() {
+					document.getElementById('install-link').style.display='none';
+					document.getElementById('install-table').style.visibility='';
+				}
+				{/literal}
+			</script>
+			<div id="install-link" style="text-align:center">
+				<a href="javascript:install()">{tr}Make new install - Will destroy current database{/tr}</a>
+			</div>
+		    <table id="install-table" style="visibility:hidden">
+			{else}
+		    <table id="install-table">
+			{/if}
 		    <tr><td style="text-align: center;" colspan="2"
  rowspan="1" height="26"><font size="5"><b>{tr}Install{/tr}</b></font>
  			</td></tr>
@@ -151,6 +166,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 			</table>
 			</fieldset>
 		</td><td>
+			{if $tikidb_created}
 			<fieldset>
 		    <table>
 			<tr><td style="text-align: center;" colspan="2"
@@ -171,8 +187,9 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		    <tr><td colspan="2">
 			{tr}For database update from 1.8 or later{/tr}:
 			<ol>
-				<li>{tr}If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9 and don't need an additional script{/tr}.</li>
-				<li>{tr}If you upgrade from a previous 1.9.x version, use tiki_1.8to1.9, too. (ex.: 1.9.2 to 1.9.5){/tr}</li>
+				<li>{tr}If you upgrade from 1.8.x you <b>MUST</b> run tiki_1.8to1.9{/tr}.</li>
+				<li>{tr}If you upgrade from 1.9.x you <b>MUST</b> run tiki_1.9to1.10{/tr}.</li>
+				<li>{tr}If you upgrade from a previous 1.10.x version, use tiki_1.9to1.10, too. (ex.: 1.10.2 to 1.10.5){/tr}.</li>
 			</ol>
 		    <tr><td colspan="2">
 		    	{tr}For database update from 1.7.x, please visit <a target="help" href="http://doc.tikiwiki.org/Upgrade+1.7+to+1.8">Tiki database 1.7.x to 1.8x instructions{/tr}</a>
@@ -190,6 +207,7 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
 		
 		    </table>
 			</fieldset>
+			{/if}
 		</td></tr></table>
 		    </form><br />
 			<hr />
