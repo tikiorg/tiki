@@ -51,7 +51,7 @@
 </form>
 {/if}
 {if ($mode eq 'param')}
-<script language="JavaScript">
+<script type="text/javascript">
 {literal}
 function renderWikiPlugin()
 {

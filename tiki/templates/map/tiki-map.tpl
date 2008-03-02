@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40.2.1 2007-12-18 15:51:46 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.40.2.2 2008-03-02 21:44:35 pkdille Exp $ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
@@ -92,7 +92,7 @@
 						style="position:absolute; top:15px; left:257px" />
 					<img id="queryDown" src="img/icons2/down.gif" height="8" width="10" alt="{tr}Scroll Down{/tr}"
 						style="position:absolute; top:188px; left:257px" />
-				  <script language="JavaScript">
+				  <script type="text/javascript">
 				  	var scrollActive = false, scrollStop = true, scrollIncrement = 10, scrollInterval = 60;
 				  	xAddEventListener(xGetElementById('queryClose'),'click',query_close,false);
 				  	xAddEventListener(xGetElementById('queryUp'),'mousemove',query_up,false);
@@ -129,7 +129,7 @@
 			{/if}
 			{if $zoom eq 0}
 			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
-			<script language="JavaScript">
+			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='help';
 			</script>
@@ -138,7 +138,7 @@
 			{/if}
 			{if $zoom eq 1}
 			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1" />
-			<script language="JavaScript">
+			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='move';
 			</script>

@@ -5,8 +5,9 @@
 {else}
 <b><i>{$analysed_word}</i></b></center>
 {if $update eq 'y'}
-<center>{tr}has been updated{/tr}<br> <center><input type='submit' value ='Close this window' onclick='window.opener.location.reload();self.close();'>&nbsp;&nbsp;<input type='submit' value ='Go Back' onclick='javascript:history.go(-1);'>";
-<br>*{tr}Closing the window will reload your main browser{/tr}
+<center>{tr}has been updated{/tr}<br /> </center>
+<input type='submit' value ='Close this window' onclick='window.opener.location.reload();self.close();'>&nbsp;&nbsp;<input type='submit' value ='Go Back' onclick='javascript:history.go(-1);'>";
+<br />*{tr}Closing the window will reload your main browser{/tr}
 {else}
 <center><input type='submit' value ='Close this window' onclick='self.close();'></center>
 <table class='normal'>
