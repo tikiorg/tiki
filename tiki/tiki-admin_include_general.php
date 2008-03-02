@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.5 2008-02-13 22:29:13 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.59.2.6 2008-03-02 06:27:05 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "session_db",
         "contact_anon",
         "feature_help",
+        "feature_version_checks",
         "error_reporting_adminonly",
         "smarty_notice_reporting",
         "user_show_realnames",
@@ -57,6 +58,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "site_busy_msg",
         "site_closed_msg",
         "helpurl",
+        "tiki_version_check_frequency",
         "pref_syntax",
     );
 
