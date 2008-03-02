@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.8 2008-02-27 15:18:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.9 2008-03-02 19:37:26 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -146,7 +146,7 @@ $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 // Enable Versioning
 // move this to lib/setup/version.php ?
 
-$tiki_version = '1.10.0b0';
+$tiki_version = '1.10.0b1';
 $tiki_branch = 'unstable';
 $tiki_star = 'Arcturus';
 $tiki_uses_cvs = is_dir('CVS') ? 'y' : 'n';
