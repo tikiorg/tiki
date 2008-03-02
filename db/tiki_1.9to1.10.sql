@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.35 2008-03-01 00:55:58 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.36 2008-03-02 20:53:48 lphuberdeau Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1640,9 +1640,6 @@ ALTER TABLE `tiki_modules` ADD PRIMARY KEY  (name(100), position, ord, params(14
 UPDATE users_permissions set permName='tiki_p_edit_categorized' where permName='tiki_p_edit_categories';
 UPDATE users_permissions set permName='tiki_p_view_categorized', permDesc='Can view categorized items' where permName='tiki_p_view_categories' and permDesc="Can browse categories";
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category');
-UPDATE users_grouppermissions set permName='tiki_p_edit_categorized' where permName='tiki_p_edit_categories';
-UPDATE users_grouppermissions set permName='tiki_p_view_categorized' where permName='tiki_p_view_categories';
-# INSERT INTO users_grouppermissions(groupName,permName) values ('Anonymous','tiki_p_view_categories');
 
 #2007-12-07 sylvieg
 ALTER TABLE `tiki_user_assigned_modules` DROP PRIMARY KEY , ADD PRIMARY KEY ( `name` ( 30 ) , `user` , `position` , `ord` );
