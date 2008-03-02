@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.25 2008-02-18 15:21:25 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.26 2008-03-02 21:44:35 pkdille Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
-  <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
+  <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
 {* Display edit time out *}
 
 
 
-<script language='Javascript' type='text/javascript'>
+<script type="text/javascript">
 {literal}
 
 <!-- Begin

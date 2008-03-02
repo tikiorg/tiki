@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.15 2008-02-16 21:00:44 nkoth Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.16 2008-03-02 21:44:35 pkdille Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
-  <script language="JavaScript" src="lib/wiki/wiki-ajax.js"></script>
+  <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}

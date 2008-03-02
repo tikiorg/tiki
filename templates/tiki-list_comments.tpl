@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.1 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.2 2008-03-02 21:44:35 pkdille Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 
 <form method="get" action="tiki-list_comments.php">
@@ -27,7 +27,7 @@
 <input type="hidden" name="types[]" value="{$types[ix]|escape}" />
 {/section}
 <div class="formcolor">
-<script language='Javascript' type='text/javascript'>
+<script type="text/javascript">
 <!--
  // check / uncheck all.
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
@@ -64,7 +64,7 @@
 </table>
 
 <div class="formcolor">
-<script language='Javascript' type='text/javascript'>
+<script type="text/javascript">
 <!--
  // check / uncheck all.
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
