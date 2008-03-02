@@ -1,7 +1,7 @@
 <?php 
 
 // $HEADER$
-include_once('tiki-setup.php'):
+include_once('tiki-setup.php');
 if($prefs['feature_xmlrpc'] != 'y' || $prefs['wiki_feature_3d'] != 'y') {
   die;  
 }
