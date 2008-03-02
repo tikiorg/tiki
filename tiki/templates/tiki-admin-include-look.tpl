@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.6 2008-02-27 15:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.7 2008-03-02 20:28:17 leyan Exp $ *}
 <!--div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
@@ -73,6 +73,10 @@
 		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplatesDoc" target="tikihelp" class="tikihelp" title="{tr}Edit Templates{/tr}">{/if} {tr}Edit Templates{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
 		<td><input type="checkbox" name="feature_edit_templates" {if $prefs.feature_edit_templates eq 'y'}checked="checked"{/if}/>
 		{if $prefs.feature_edit_templates eq 'y'}<a href="tiki-edit_templates.php" class="link" title="{tr}Edit Templates{/tr}">{tr}Edit Templates{/tr}</a>{/if} </td>
+	</tr>
+	<tr>
+        <td class="form" > {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Site+Identity" target="tikihelp" class="tikihelp" title="{tr}Site Identity{/tr}">{/if} {tr}Site Identity{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+		<td ><input type="checkbox" name="feature_siteidentity" {if $prefs.feature_siteidentity eq 'y'}checked="checked"{/if}/> Required for all the following features</td>
 	</tr>
         </table>
        </fieldset> 
