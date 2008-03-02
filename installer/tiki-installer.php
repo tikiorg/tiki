@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.5 2008-03-02 19:13:55 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.6 2008-03-02 20:32:28 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -719,6 +719,8 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 		} else {
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
+			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
 		}
 	}
