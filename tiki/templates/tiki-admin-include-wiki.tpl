@@ -161,6 +161,7 @@
       </div>
       </td>
      </tr>
+	 <tr><td colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Set{/tr}" /></td><tr>
     </table>
     </form>
     </div>
