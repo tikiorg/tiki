@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/versioning.class.php,v 1.1.2.2 2007-12-03 02:45:26 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/versioning.class.php,v 1.1.2.3 2008-03-02 19:37:27 lphuberdeau Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -79,7 +79,11 @@ class Versioning {
 			10=>'1.9.8',
 			11=>'1.9.8.1',
 			12=>'1.9.8.2',
-			13=>'1.9.8.3'
+			13=>'1.9.8.3',
+			14=>'1.9.9',
+			15=>'1.9.10',
+			16=>'1.9.10.1',
+			17=>'1.10.0b1',
 		);
 	}
 	
