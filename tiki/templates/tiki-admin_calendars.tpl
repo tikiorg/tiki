@@ -186,7 +186,7 @@ href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectT
 </table>
 <br />
 {if $calendarId}{$name} : {/if}
-{tr}Delete events older than:{/tr} <input type="text" name="days" /> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
+{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 </form>
 
 </div>
