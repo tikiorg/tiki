@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29 2007-10-12 07:55:46 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.1 2008-03-03 20:21:22 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -86,7 +86,7 @@ function refresh_index($object_type, $object_id = null) {
 	case 'files': //case 'fgal': case 'file': 
 		$index_type = 'file';
 		$f_id = 'fileId';
-		$f_content = array('data', 'description', 'name', 'search_data');
+		$f_content = array('data', 'description', 'name', 'search_data', 'filename', 'comment');
 		$f_other = 'archiveId';
 		$query_where = ' where archiveId = ?';
 		$query_vars = array(0);
@@ -166,7 +166,9 @@ function refresh_index($object_type, $object_id = null) {
 			if ( isset($f_index_type) && $f_index_type != '' ) $index_type = $res[$f_index_type];
 			if ( is_array($filtering_expr) ) foreach ( $filtering_expr as $expr ) eval($expr);
 
-			if ( $content != '' && $index_type != '' && $id != '' ) insert_index(search_index($content), $index_type, $id);
+			if ( $content != '' && $index_type != '' && $id != '' ) {
+				insert_index(search_index($content), $index_type, $id);
+			}
 		}
 	}
 	return true;
@@ -186,14 +188,16 @@ function refresh_index_oldest() {
 function &search_index($data) {
 	$words = array();
 	// $data = trim(strtolower(strip_tags($data))); // Don't use strip_tags here, this is not always binary safe (and doesn't correctly handle files data)
-	$data = trim(strtolower(preg_replace('/[\s\x7f\x00-\x1f]+/', ' ', $data))); // Remove ascii non-printable characters and convert all whitespaces characters in spaces
+	// $data = trim(strtolower(preg_replace('/([\s\x7f\x00-\x1f]+/', ' ', $data))); // Remove ascii non-printable characters and convert all whitespaces characters in spaces
+	$data = trim(strtolower(preg_replace('/[^\pL\pN]+/', ' ', $data))); // Remove non-alphanum characters and convert all whitespaces characters in spaces
 	if ( $data != '' ) {
 		$sstrings = preg_split('/ /', $data, -1, PREG_SPLIT_NO_EMPTY); // split into words (do NOT use the split function that doesn't correctly handle some characters !)
 		foreach ( $sstrings as $value ) {
-			if (isset($words[$value]))
+			if ( isset($words[$value]) ) {
 				$words[$value]++; // count words
-			else
+			} else {
 				$words[$value] = 1;
+			}
 		}
 	}
 	return $words;
@@ -203,6 +207,7 @@ function insert_index(&$words, $location, $page) {
 	global $tikilib, $prefs;
 	$query = 'delete from `tiki_searchindex` where `location`=? and `page`=?';
 	$tikilib->query($query, array($location,$page), -1, -1, false);
+
 	foreach ( $words as $key => $value ) {
 		if ( strlen($key) > $prefs['search_min_wordlength'] ) {
 			$query = 'insert into `tiki_searchindex` (`location`,`page`,`searchword`,`count`,`last_update`) values(?,?,?,?,?)';
