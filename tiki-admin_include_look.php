@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_look.php,v 1.1.2.7 2008-03-02 20:28:17 leyan Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_look.php,v 1.1.2.8 2008-03-03 20:23:58 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -51,7 +51,8 @@ if (isset($_REQUEST["looksetup"])) {
 	"pagination_firstlast",
 	"pagination_icons",
 	"pagination_fastmove_links",
-	"use_context_menu"
+	"use_context_menu_icon",
+	"use_context_menu_text"
     );
 
     foreach ($pref_toggles as $toggle) {
