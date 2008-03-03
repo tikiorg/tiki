@@ -1,7 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.18 2008-03-01 10:11:27 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.19 2008-03-03 20:25:23 nyloth Exp $ *}
 
+{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' ) or $gallery_path neq '' }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
 
+{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'}
 {if $prefs.javascript_enabled eq 'y'}
 
   <div id="fgalexplorer_close" style="float:left; vertical-align:middle; display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;">{icon _id='application_side_tree' alt='{tr}Show Tree{/tr}'}</a></div>
@@ -19,10 +21,14 @@
   </div>
 
 {/if}
+{/if}
 
+{if $gallery_path neq ''}
   <div class="gallerypath" style="vertical-align:middle">&nbsp;&nbsp;{$gallery_path}</div>
+{/if}
 
 </div>
+{/if}
 
 <table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
   <tr>
@@ -38,10 +44,11 @@
     {/if}
       <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
 
-      <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
+      <form name="fgalform" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}" enctype="multipart/form-data">
         <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />
-      
+
+	{if $prefs.fgal_asynchronous_indexing eq 'y'}<input type="hidden" name="fast" value="y" />{/if} 
         {if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
         {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
         {if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
@@ -57,7 +64,7 @@
             {assign var=nbCols value=`$nbCols+1`}
             <td class="heading" style="width:1%">&nbsp;</td>
           {/if}
-          {if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
+          {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
             {assign var=nbCols value=`$nbCols+1`}
             <td class="heading" style="width:1%">&nbsp;</td>
           {/if}
@@ -123,7 +130,7 @@
             </td>
           {/if}
       
-          {if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
+          {if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
             {assign var=nbCols value=`$nbCols+1`}
             <td class="heading">{tr}Actions{/tr}</td>
           {/if}
@@ -142,12 +149,12 @@
           {cycle values="odd,even" print=false}
           {section name=changes loop=$files}
           
-            {if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'y'}
+            {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'y'}
               {capture name=over_actions}{strip}
               <div class='opaque'>
                 <div class='box-title'>{tr}Actions{/tr}</div>
                 <div class='box-data'>
-                  {include file=fgal_context_menu.tpl}
+                  {include file=fgal_context_menu.tpl menu_icon=$prefs.use_context_menu_icon menu_text=$prefs.use_context_menu_text}
                 </div>
               </div>
               {/strip}{/capture}
@@ -205,7 +212,7 @@
             </td>
           {/if}
       
-          {if $prefs.use_context_menu eq 'y' and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
+          {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
             <td style="white-space: nowrap" class="{cycle advance=false}">
               <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
             </td>
@@ -282,7 +289,7 @@
             <td class="{cycle advance=false}">{$other_columns_selected_val}</td>
           {/if}
           
-          {if $prefs.use_context_menu neq 'y' or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
+          {if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
             <td class="{cycle advance=false}">{include file=fgal_context_menu.tpl}</td>
           {/if}
           
@@ -323,7 +330,7 @@
             {if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
             <input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' />
           {/if}
-          <input  style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onclick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
+          <input style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onclick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
           </div>
           {if $smarty.request.movesel_x and !isset($file_info)} 
           <div>
@@ -344,7 +351,7 @@
 
       </form>
       
-        <br />
+        {reindex_file_pixel id=$reindex_file_id}<br />
 
         {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
