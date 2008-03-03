@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.6 2008-02-28 19:21:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.7 2008-03-03 20:18:11 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -91,8 +91,7 @@ class FileGalLib extends TikiLib {
 			if ($search_data === false)
 				return false;
 		}
-		if (empty($created))
-			$created = $this->now;
+		if ( empty($created) ) $created = $this->now;
 		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`hits`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`, `comment`, `author`, `lockedby`)
                           values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array($galleryId,trim($name),$description,$filename,$size,$type,$data,$creator,$created,0,$path,$checksum,$search_data,(int)$this->now,$user,$comment, $author, $lockedby));
@@ -110,7 +109,7 @@ class FileGalLib extends TikiLib {
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
 		}
 
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && ( $prefs['fgal_asynchronous_indexing'] != 'y' || ! isset($_REQUEST['fast']) ) ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('files', $fileId);
 		}
@@ -374,52 +373,56 @@ class FileGalLib extends TikiLib {
 		}
 		$oldPath = $this->getOne("select `path` from `tiki_files` where `fileId`=?",array($id));
 
-		if ($gal_info['archives'] == -1 || !$didFileReplace) { // no archive
+		if ( $gal_info['archives'] == -1 || ! $didFileReplace ) { // no archive
+
 			$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=?, `author`=?, `user`=?, `lockedby`=?  where `fileId`=?";
-			if (!($result = $this->query($query,array(trim($name),$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id))))
+			if ( ! ( $result = $this->query($query,array(trim($name),$description,$filename,$size,$type,$data,$user,(int)$this->now,$path,$checksum,$search_data,$author,$creator,$lockedby, $id)) ) ) {
 				return false;
-			
-			if ($didFileReplace && !empty($oldPath)) {
+			}
+
+			if ( $didFileReplace && !empty($oldPath) ) {
 				unlink($savedir . $oldPath);
 			}
+
+			if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' && ( $prefs['fgal_asynchronous_indexing'] != 'y' || ! isset($_REQUEST['fast']) ) ) {
+				require_once('lib/search/refresh-functions.php');
+				refresh_index('files', $id);
+			}
+
 		} else { //archive the old file : change archive_id, take away from indexation and categorization
-		  $idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby);
+
+			// Insert and index (for search) the new file
+			$idNew = $this->insert_file($gal_info['galleryId'], $name, $description, $filename, $data, $size, $type, $creator, $path, $comment, $author, $created, $lockedby);
+
 			if ($gal_info['archives'] > 0) {
 				$archives = $this->get_archives($id, 0, -1, 'created_asc');
 				if ($archives['cant'] >= $gal_info['archives']) {
 					$nb = $archives['cant'] - $gal_info['archives'] + 1;
-					$query = "delete from `tiki_files` where `fileId`in (".implode(',', array_fill(0, $nb, '?')).")";
+					$query = "delete from `tiki_files` where `fileId` in (".implode(',', array_fill(0, $nb, '?')).")";
 					for ($i = 0; $i < $nb; ++$i) {
 						$bindvars[] = $archives['data'][$i]['fileId'];
-						if ($archives['data'][$i]['path'])
+						if ( $archives['data'][$i]['path'] ) {
 							unlink ($savedir . $archives['data'][$i]['path']);
+						}
 					}
 					$this->query($query, $bindvars);
 				}
 			}
 			$query = "update `tiki_files` set `archiveId`=?, `search_data`=?,`user`=?, `lockedby`=? where `archiveId`=? or `fileId`=?";
 			$this->query($query,array($idNew, '',$creator,NULL, $id, $id));
+
 			if ($prefs['feature_categories'] == 'y') {
 				global $categlib; require_once('lib/categories/categlib.php');
 				$categlib->uncategorize_object('file', $id);
 			}
-			if ($prefs['feature_search'] == 'y') {
-				include_once('lib/search/refresh-functions.php');
-				$words = array();
-				insert_index($words, 'file', $id);
-			}
+
 			$id = $idNew;
-		}		
+		}
 
 		if ($gal_info['galleryId']) {
 			$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 
 			$this->query($query,array($this->now,$gal_info['galleryId']));
-		}
-
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
-			require_once('lib/search/refresh-functions.php');
-			refresh_index('files', $id);
 		}
 
 		return $id;
@@ -562,30 +565,7 @@ class FileGalLib extends TikiLib {
 	}
 	/* get archives of a file */
 	function get_archives($fileId, $offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
-		$mid = array();
-		$bindvars = array();
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid[] = "(upper(`name`) like upper(?) or upper(`filename`) like upper(?) or upper(`description`) like upper(?) or upper(`comment`) like upper(?))";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-		}		
-		$mid[] = '`archiveId`=?';
-		$bindvars[] = (int)$fileId;
-
-		$mid = implode(' AND ', $mid);
-		$query = "select * from `tiki_files` where $mid
-			order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-		$query_cant = "select count(*) from `tiki_files` where $mid";
-		$cant = $this->getOne($query_cant, $bindvars);
-		return array('cant'=>$cant, 'data'=>$ret);
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $fileId, true, false, false, true, false, false, false, false, '', false, true);
 	}
 	function duplicate_file_gallery($galleryId, $name, $description = '') {
 		global $user;

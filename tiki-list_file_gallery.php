@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.7 2008-03-01 00:47:54 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.8 2008-03-03 20:18:11 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,7 @@ $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('description', $gal_info['description']);
 
+$smarty->assign('reindex_file_id', -1);
 
 /*
 if ( isset($_REQUEST['batchaction']) &&  $_REQUEST['batchaction'] == 'delsel_x' && isset($_REQUEST['checked']) ) {
@@ -414,6 +415,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 // Process duplication of a gallery
 if ( ! empty($_REQUEST['duplicate']) && ! empty($_REQUEST['name']) && ! empty($_REQUEST['galleryId']) ) {
+	check_ticket('fgal');
 
 	$newGalleryId = $filegallib->duplicate_file_gallery(
 		$galleryId,
@@ -446,6 +448,7 @@ if ( ! empty($_REQUEST['duplicate']) && ! empty($_REQUEST['name']) && ! empty($_
 
 // Process removal of a gallery
 if ( ! empty($_REQUEST['removegal']) && ! empty($galleryId) ) {
+	check_ticket('fgal');
 
 	if ( ! ( $gal_info = $filegallib->get_file_gallery_info($_REQUEST['removegal']) ) ) {
 		$smarty->assign('msg', tra('Incorrect param'));
@@ -467,6 +470,144 @@ if ( ! empty($_REQUEST['removegal']) && ! empty($galleryId) ) {
 		key_get($area, tra('Remove file gallery: ').' '.$gal_info['name']);
 	}
 
+}
+
+// Process upload of a file version
+if ( ! empty($_FILES) ) {
+	check_ticket('fgal');
+
+	if ( $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y' ) {
+		$smarty->assign('msg', tra('Permission denied you can upload files but not to this file gallery'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
+	$savedir = $prefs['fgal_use_dir'];
+	foreach ( $_FILES as $k => $v ) {
+		$reg = array();
+		if ( ! empty($v['tmp_name']) && is_uploaded_file($v['tmp_name']) ) {
+			$tmp_dest = $prefs['tmpDir'].'/'.$v['name'].'.tmp';
+			$msg = '';
+			if ( ! $v['size'] ) {
+				$msg = tra('Warning: Empty file:').'  '.htmlentities($v['name']).'. '.tra('Please re-upload your file');
+			} elseif (
+				empty($v['name'])
+				|| ! preg_match('/^upfile(\d+)$/', $k, $regs)
+				|| ! ( $fileInfo = $filegallib->get_file_info($regs[1]) )
+			) {
+				$msg = tra('Could not upload the file').': '.htmlentities($v['name']);
+			} elseif (
+				( ! empty($prefs['fgal_match_regex']) && ( ! preg_match('/'.$prefs['fgal_match_regex'].'/', $v['name']) ) )
+				|| ( ! empty($prefs['fgal_nmatch_regex']) && ( preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $v['name']) ) )
+			) {
+				$msg = tra('Invalid filename (using filters for filenames)').': '.htmlentities($v['name']);
+			} elseif ( $_REQUEST['galleryId'] != $fileInfo['galleryId'] ) {
+				$msg = tra('Could not find the file requested');
+			} elseif ( ! empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y' ) {
+				// if locked, user must be the locker
+				$msg = tra(sprintf('The file is locked by %s', $fileInfo['lockedby']));
+			} elseif ( ! (
+				$tiki_p_edit_gallery_file == 'y'
+				|| ( ! empty($user) && ( $user == $fileInfo['user'] || $user == $fileInfo['lockedby']) )
+			) ) {
+				// must be the owner or the locker or have the perms
+				$msg = tra('Permission denied you can edit this file');
+			} elseif ( ! move_uploaded_file($v['tmp_name'], $tmp_dest) ) {
+				$msg = tra('Errors detected');
+			} elseif ( ! ($fp = fopen($tmp_dest, 'rb')) ) {
+				$msg = tra('Cannot read file:').' '.$tmp_dest;
+                        }
+
+			if ( $msg != '' ) {
+				$smarty->assign('msg', $msg);
+				$smarty->display('error.tpl');
+				die;
+			}
+
+			$data = '';
+			$fhash = '';
+
+			if ( $prefs['fgal_use_db'] == 'n' ) {
+				$fhash = md5(uniqid(md5($v['name'])));
+				@$fw = fopen($savedir.$fhash, 'wb');
+				if ( ! $fw ) {
+					$smarty->assign('msg', tra('Cannot write to this file:').$savedir.$fhash);
+					$smarty->display('error.tpl');
+					die;
+				}
+			}
+
+			while ( ! feof($fp) ) {
+				if ( $prefs['fgal_use_db'] == 'y' ) {
+					$data .= fread($fp, 8192 * 16);
+				} else {
+					if (($data = fread($fp, 8192 * 16)) === false) {
+						$smarty->assign('msg', tra('Cannot read the file:').$tmp_dest);
+						$smarty->display('error.tpl');
+						die;
+					}
+					fwrite($fw, $data);
+				}
+			}
+
+			fclose($fp);
+			// remove file after copying it to the right location or database
+			@unlink($tmp_dest);
+			
+			if ( $prefs['fgal_use_db'] == 'n' ) {
+				fclose($fw);
+				$data = '';
+			}
+
+			if ( preg_match('/.flv$/', $v['name']) ) $type = 'video/x-flv';
+
+			if ( $prefs['fgal_use_db'] == 'y' && ( ! isset($data) || strlen($data) < 1) ) {
+				$smarty->assign('msg', tra('Warning: Empty file:').' '.$v['name'].'. '.tra('Please re-upload your file'));
+				$smarty->display('error.tpl');
+				die;
+			}
+
+			$fileInfo['filename'] = $v['name'];
+
+			$fileId = $filegallib->replace_file(
+				$fileInfo['fileId'],
+				$fileInto['name'],
+				$fileInfo['description'],
+				$v['name'],
+				$data,
+				$v['size'],
+				$v['type'],
+				$user,
+				$fhash,
+				$fileInfo['comment'],
+				$gal_info,
+				true, // replace file
+				$fileInfo['author'],
+				$fileInfo['lastModif'],
+				$fileInfo['lockedby']
+			);
+
+			if ( ! $fileId ) {
+				if ( $prefs['fgal_use_db'] == 'n' ) {
+					@unlink($savedir.$fhash);
+				}
+				$smarty->assign('msg', tra('Upload was not successful. Duplicate file content').': '.$v['name']);
+				$smarty->display('error.tpl');
+				die;
+			}
+
+			$smarty->assign('fileChangedMessage', tra('File update was successful').': '.$v['name']);
+
+			if ( isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y' ) {
+				$smarty->assign('reindex_file_id', $fileId);
+			}
+
+		} elseif ( $v['error'] != 0 ) {
+			$smarty->assign('msg', tra('Upload was not successful').': '.$tikilib->uploaded_file_error($v['error']));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
 }
 
 // Set display config
@@ -654,5 +795,4 @@ if ( isset($_REQUEST['filegals_manager']) ) {
 } else {
 	$smarty->display('tiki.tpl');
 }
-
 ?>
