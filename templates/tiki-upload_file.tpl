@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.5 2008-02-15 14:18:45 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.6 2008-03-03 20:25:47 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -78,8 +78,12 @@
 	{/section}
 	</select>{/if}</td></tr>
 {include file=categorize.tpl}
-	<!--<tr><td colspan="2"><b>{tr}Now enter the file URL{/tr}{tr} or upload a local file from your disk{/tr}
-	<tr><td class="formcolor">URL:</td><td><input size="50" type="text" name="url" /></td></tr>-->
+
+{* File replacement is only here when the javascript upload action is not available in the file listing.
+   This may be moved later in another specific place (e.g. simple popup) for non-javascript browsers
+     since it is not really a "Property" of the file *}
+
+{if $prefs.javascript_enabled neq 'y'}
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
 		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -93,6 +97,7 @@
 		<input name="userfile5" type="file" />
 		<input name="userfile6" type="file" />{/if}
 	</td></tr>
+{/if}
 
 	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /><i>{tr}Unzip all zip files{/tr}</i></td></tr>
