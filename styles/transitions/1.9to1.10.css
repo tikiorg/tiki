@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.2 2008-02-26 20:46:29 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.3 2008-03-03 13:10:24 sept_7 Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -209,4 +209,15 @@ padding-left: 18px;
 /* Style for sections in tiki-forums. Alignement "center" was inline before */
 td.third {
   text-align: center;
+}
+
+/* Style for tikitabs */
+.tabactive {
+	border-color: black !important;
+	border-width: 1px !important;
+}
+
+.tabinactive {
+	border-color: transparent !important;
+	border-width: 0px !important;
 }
