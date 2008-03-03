@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.29.2.1 2007-11-08 18:18:51 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.29.2.2 2008-03-03 13:31:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,9 @@ if ($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas' and $user != 'admi
 }
 
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
-if ( ! eregi('/^https?\:/', $url) ) $url = ( ereg('^/', $url) ? $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'') : $base_url ).$url;
+if ( ! eregi('^https?\:', $url) ) {
+	$url = ( ereg('^/', $url) ? $url_scheme.'://'.$url_host.(($url_port!='')?":$url_port":'') : $base_url ).$url;
+}
 
 if ( SID ) $url .= '?'.SID;
 header('Location: '.$url);
