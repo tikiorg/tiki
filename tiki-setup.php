@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.9 2008-03-02 19:37:26 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.10 2008-03-03 20:20:00 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -68,6 +68,7 @@ if ( isset($_REQUEST['PHPSESSID']) ) $tikilib->update_session($_REQUEST['PHPSESS
 elseif ( function_exists('session_id') ) $tikilib->update_session(session_id());
 
 require_once('lib/setup/cookies.php');
+require_once('lib/setup/js_detect.php');
 require_once('lib/setup/user_prefs.php');
 require_once('lib/setup/language.php');
 require_once('lib/setup/wiki.php');
