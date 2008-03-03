@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.49 2008-03-01 22:06:06 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.50 2008-03-03 20:20:01 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -211,6 +211,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_file_galleries_batch'] = 'n';
 	$prefs['feature_file_galleries_rankings'] = 'n';
 	$prefs['fgal_enable_auto_indexing'] = 'y';
+	$prefs['fgal_asynchronous_indexing'] = 'y';
 	$prefs['fgal_allow_duplicates'] = 'n';
 	$prefs['fgal_sort_mode'] = '';
 	$prefs['feature_file_galleries_author'] = 'n';
@@ -781,7 +782,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['site_favicon'] = 'favicon.png';
 	$prefs['site_favicon_type'] = 'image/png';
 	$prefs['style'] = 'tikineat.css';
-	$prefs['use_context_menu'] = 'y';
+	$prefs['use_context_menu_icon'] = 'y';
+	$prefs['use_context_menu_text'] = 'y';
 
 	# mods
 	$prefs['feature_mods_provider'] = 'n';
@@ -994,6 +996,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_sefurl'] = 'n';
 	$prefs['pref_syntax'] = '1.9';
 	$prefs['feature_mootools'] = 'n';
+	$prefs['javascript_enabled'] = 'n';
 
 	// Special default values
 
@@ -1043,13 +1046,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Assign prefs to the session
 	$_SESSION['s_prefs'] = $prefs;
-}
-
-// Javascript auto-detection
-if ( isset($_SESSION['tiki_cookie_jar']) && isset($_SESSION['tiki_cookie_jar']['javascript_enabled']) ) {
-	$prefs['javascript_enabled'] = $_SESSION['tiki_cookie_jar']['javascript_enabled'];
-} else {
-	$prefs['javascript_enabled'] = 'n';
 }
 
 // Assign the prefs array in smarty, by reference
