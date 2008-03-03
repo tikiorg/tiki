@@ -25,10 +25,11 @@ if ((!empty($_SESSION['interactive_translation_mode'])&&($_SESSION['interactive_
 }
 
 function _translate_lang($key) {
-    if ( strstr($key[2], '{$') ) {
-	return $key[1].$key[2].'{/tr}';// keep the tags to be perhaps translated in block.tr.php
-    } else {
-	return tra($key[2]);
+	$s = tra($key[2]);
+	if ( $s == $key[2] && strstr($key[2], '{$') ) {
+		return $key[1].$key[2].'{/tr}';// keep the tags to be perhaps translated in block.tr.php
+	} else {
+		return $s;
     }
 }
 ?>
