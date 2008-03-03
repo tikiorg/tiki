@@ -13,6 +13,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _id: short name (i.e. 'page_edit') or relative file path (i.e. 'pics/icons/page_edit.png'). [required]
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
+ *  - _menu_text: if set to 'y', will use the 'title' argument as text after the icon and place the whole content between div tags with a 'icon_menu' class (not compatible with '_notag' param set to 'y').
+ *  - _menu_icon: if set to 'n', will not show icon image when _menu_text is 'y'.
  */
 function smarty_function_icon($params, &$smarty) {
   if ( ! is_array($params) || ! isset($params['_id']) ) return;
@@ -23,6 +25,9 @@ function smarty_function_icon($params, &$smarty) {
   $default_class = 'icon';
   $default_width = 16;
   $default_height = 16;
+  $menu_text = false;
+  $menu_icon = true;
+  $html = '';
 
   // Handle _ids that contains the real filename and path
   if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
@@ -78,6 +83,10 @@ function smarty_function_icon($params, &$smarty) {
         case '_notag':
           $notag = ($v == 'y');
           break;
+        case '_menu_text':
+          $menu_text = ($v == 'y');
+          $menu_icon = ( ! isset($params['_menu_icon']) || $params['_menu_icon'] == 'y' );
+          break;
       }
       unset($params[$k]);
     }
@@ -106,7 +115,15 @@ function smarty_function_icon($params, &$smarty) {
       if ( $v == '' ) unset($params[$k]);
     }
 
-    $html = smarty_function_html_image($params, $smarty);
+    // No need to add a title on a menu icon since there will be the same text just after the icon
+    if ( $menu_text ) {
+      $menu_text_val = $params['title'];
+      unset($params['title']);
+    }
+
+    if ( $menu_icon ) $html = smarty_function_html_image($params, $smarty);
+    if ( $menu_text ) $html = '<div class="iconmenu">'.$html.'<span class="iconmenutext"> '.$menu_text_val.'</span></div>';
+
   }
 
   return $html;
