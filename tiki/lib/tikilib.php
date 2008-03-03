@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.84 2008-02-27 16:02:25 sept_7 Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.85 2008-03-03 20:16:54 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2008,12 +2008,13 @@ function add_pageview() {
      * @param bool $recursive include all subgals recursively (yet only implemented for galleryId == -1)
      * @param string $my_user use another user than the current one
      * @param bool $keep_subgals_together do not mix files and subgals when sorting (if true, subgals will always be at the top)
+     * @param bool $parent_is_file use $galleryId param as $fileId (to return only archives of the file)
      * @return array of found files and subgals
      */
-    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true) {
+    function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId=-1, $with_archive=false, $with_subgals=false, $with_subgals_size=true, $with_files=true, $with_files_data=false, $with_parent_name=false, $with_files_count=true, $recursive=false, $my_user='', $keep_subgals_together=true, $parent_is_file=false) {
 	global $user, $tiki_p_admin_file_galleries;
 
-	if ( ! $with_files && ! $with_subgals ) return array();
+	if ( ( ! $with_files && ! $with_subgals ) || ( $parent_is_file && $galleryId <= 0 ) ) return array();
 
 	// galleryId == 0 is a way to get only the main galleries
 	if ( $galleryId == 0 ) {
@@ -2021,6 +2022,12 @@ function add_pageview() {
 		$with_files = false;
 		$with_archive = false;
 		$with_subgals = true;
+	}
+
+	$fileId = -1;
+	if ( $parent_is_file ) {
+		$fileId = $galleryId;
+		$galleryId = -2;
 	}
 
 	// recursive mode is only available for the whole tree
@@ -2081,7 +2088,7 @@ function add_pageview() {
 		$f_group_by = ' GROUP BY tf.`fileId`';
 	}
 
-	$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.' WHERE tf.`archiveId`=0';
+	$f_query = 'SELECT '.implode(', ', array_keys($f2g_corresp)).' FROM '.$f_table.' WHERE tf.`archiveId`='.( $parent_is_file ? $fileId : '0' );
 	$bindvars = array();
 
 	$mid = '';
