@@ -22,6 +22,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _htmlelement : (see smarty query function 'htmlelement' param)
  *   _icon : name of the icon to use (e.g. 'page_edit', 'cross', ...)
  *   _icon_class : CSS class to use for the icon's IMG tag
+ *   _menu_text : (see smarty icon function)
+ *   _menu_icon : (see smarty icon function)
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
  *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
  *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
@@ -91,6 +93,12 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat) {
             $icon_params['title'] = ''; // will already be included in the surrounding A tag
           }
 
+          if ( isset($params['_menu_text']) && $params['_menu_text'] == 'y' ) {
+            $icon_params['_menu_text'] = $params['_menu_text'];
+            $icon_params['title'] = $params['_title']; // Used as the menu text
+            $params['_title'] = ''; // will already be displayed as the menu text
+          }
+          if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
           if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
 
           $content = smarty_function_icon($icon_params, $smarty);
