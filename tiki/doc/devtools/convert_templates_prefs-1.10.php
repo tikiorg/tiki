@@ -13,6 +13,31 @@ $dirtoscan='templates';
 
 /*****************/
 
+/* defines functions scandir and file_out_contents if running PHP<5 */
+if (!function_exists('scandir')) {
+    function scandir($dir) {
+	$dh  = opendir($dir);
+	while (false !== ($filename = readdir($dh))) {
+	    $files[] = $filename;
+	}
+	sort($files);
+
+	return $files;
+    }
+}
+if (!function_exists('file_put_contents')) {
+    function file_put_contents($filename, $data) {
+        $f = @fopen($filename, 'w');
+        if (!$f) {
+            return false;
+        } else {
+            $bytes = fwrite($f, $data);
+            fclose($f);
+            return $bytes;
+        }
+    }
+}
+
 $src=array();
 $dst=array();
 
