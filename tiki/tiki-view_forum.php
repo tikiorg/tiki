@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.8 2008-01-25 21:06:40 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.9 2008-03-03 14:45:06 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -269,6 +269,10 @@ if (!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[
 $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 // Process a post form here 
 $smarty->assign('warning', 'n');
+
+if ($tiki_p_forum_post_topic == 'n' && isset($_REQUEST['comments_postComment']) && isset($_REQUEST['comments_title']) && $_REQUEST['forumId'] == $prefs['wiki_forum_id'] && $tikilib->page_exists($_REQUEST['comments_title'])) {
+	$tiki_p_forum_post_topic = 'y';
+}
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
