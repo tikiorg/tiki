@@ -1,11 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.8 2008-03-03 20:29:50 nyloth Exp $ *}
-<!--div class="rbox">
-	<div class="rbox-title tip">{tr}Tip{/tr}</div>
-	<div class="rbox-data tip">
-	{tr}Please also see:{/tr}
-	<a class="rbox-link" href="tiki-admin.php?page=siteid">{tr}Site Identity{/tr}</a>
-	</div>
-</div-->
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.9 2008-03-03 23:11:56 luciash Exp $ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -20,24 +13,21 @@
 		</div>
 
 		<fieldset>
-			<legend class="heading"><a href="#theme" name="theme"><span>{tr}Theme{/tr}</span></a></legend>
-			<table class="admin">
-				<tr>
-					<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
-					<td width="67%"><select name="site_style" id="general-theme">
+			<legend class="heading"><a href="#theme" name="theme" onclick="flip('theme'); return false;"><span>{tr}Theme{/tr}</span></a></legend>
+			<div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
+				<table class="admin">
+					<tr>
+						<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
+						<td width="67%"><select name="site_style" id="general-theme">
 	{section name=ix loop=$styles}
-              <option value="{$styles[ix]|escape}"
-                {if $prefs.site_style eq $styles[ix]}selected="selected"{/if}>
-                {$styles[ix]}</option>
-            {/section}
-            </select>
-            <input type="submit" name="style" value="{tr}Change style only{/tr}" />
-        </td>
-      </tr><tr>
-        <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
-        <td><select name="slide_style" id="general-slideshows">
-            {section name=ix loop=$slide_styles}
-              <option value="{$slide_styles[ix]|escape}"
+							<option value="{$styles[ix]|escape}"{if $prefs.site_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
+	{/section}
+						</select></td>
+					</tr><tr>
+						<td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
+						<td><select name="slide_style" id="general-slideshows">
+	{section name=ix loop=$slide_styles}
+							<option value="{$slide_styles[ix]|escape}"
                 {if $prefs.slide_style eq $slide_styles[ix]}selected="selected"{/if}>
                 {$slide_styles[ix]}</option>
             {/section}
@@ -347,7 +337,7 @@
 </fieldset>
 
 <fieldset>
-	<legend class="heading"><a href="#layout" name="layout" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
+	<legend class="heading"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
 	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			<table class="admin" width="100%">
 				<tr>
@@ -378,10 +368,9 @@
 
 
 <fieldset>
-					<legend class="heading"><a href="#"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
-
-				<table class="admin">
-				
+	<legend class="heading"><a href="#siteads" name="siteads" onclick="flip('siteads'); return false;"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
+	<div id="siteads" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_siteads) and $smarty.session.tiki_cookie_jar.show_siteads neq 'y'}none{else}block{/if};">
+		<table class="admin">
 				<tr>
 					<td class="form"><label for="feature_sitead">{tr}Activate{/tr}:</label></td>
 					<td><input type="checkbox" name="feature_sitead" id="feature_sitead"{if $prefs.feature_sitead eq 'y'} checked="checked"{/if} /></td>
@@ -395,7 +384,9 @@
 				<tr>
 					<td class="form"><label for="sitead_publish">{tr}Publish{/tr}:</label></td>
 					<td><input type="checkbox" name="sitead_publish" id="sitead_publish"{if $prefs.sitead_publish eq 'y'} checked="checked"{/if} /></td>
-				</tr></table>
+				</tr>
+		</table>
+	</div>
 </fieldset>                                
 
 			<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
