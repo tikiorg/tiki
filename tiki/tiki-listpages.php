@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.6 2008-02-27 19:10:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.7 2008-03-03 13:53:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -225,11 +225,13 @@ if ( ! empty($multiprint_pages) ) {
 			foreach ($listpages['data'] as $i=>$page) {
 				$cats = $categlib->get_object_categories('wiki page',$page['pageName']);
 				foreach ($cats as $cat) {
-					$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
-					if ($s = strrchr($cp, ':'))
-						$listpages['data'][$i]['categname'][] = substr($s, 1);
-					else
-						$listpages['data'][$i]['categname'][] = $cp;
+					if ($userlib->user_has_perm_on_object($user, $cat, 'category', 'tiki_p_view_categories')) {
+						$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
+						if ($s = strrchr($cp, ':'))
+							$listpages['data'][$i]['categname'][] = substr($s, 1);
+						else
+							$listpages['data'][$i]['categname'][] = $cp;
+					}
 				}
 			}
 		}
