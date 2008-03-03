@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.7 2008-03-02 20:28:17 leyan Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.8 2008-03-03 20:29:50 nyloth Exp $ *}
 <!--div class="rbox">
 	<div class="rbox-title tip">{tr}Tip{/tr}</div>
 	<div class="rbox-data tip">
@@ -351,8 +351,12 @@
 	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			<table class="admin" width="100%">
 				<tr>
-					<td class="form"><label for="use_context_menu">{tr}Use context menus for actions (in file galleries):{/tr}</label></td>
-					<td><input type="checkbox" id="use_context_menu" name="use_context_menu" {if $prefs.use_context_menu eq 'y'}checked="checked"{/if}/>
+					<td class="form"><label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet):{/tr}</label></td>
+					<td><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if}/>
+				</tr>
+				<tr>
+					<td class="form"><label for="use_context_menu_text">{tr}Use context menus for actions (text) (only in file galleries yet):{/tr}</label></td>
+					<td><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
 				</tr>
 				<tr>
 					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
