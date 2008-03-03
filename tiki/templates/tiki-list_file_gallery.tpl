@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.12 2008-03-01 00:47:54 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.13 2008-03-03 20:25:00 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -15,7 +15,7 @@
 {/if}
 </h1>
 
-<div name="description">{$description|escape}</div>
+<div class="description">{$description|escape}</div>
 
 <div class="navbar">
 {if $galleryId gt 0}
@@ -76,7 +76,12 @@
   <div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
 </div>
 {/if}
-
+{if isset($fileChangedMessage) and $fileChangedMessage neq ''}
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="note">{tr}Note{/tr}</div>
+  <div class="rbox-data" name="note">{$fileChangedMessage}</div>
+</div>
+{/if}
 
 <div class="navbar" align="right">
   {if $user and $prefs.feature_user_watches eq 'y'}
