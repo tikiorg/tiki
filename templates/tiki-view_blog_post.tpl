@@ -112,7 +112,7 @@
 {else}
 <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
 {/if}
-<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+<span id="comzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or $show_comments}inline{else}none{/if};">({tr}close{/tr})</span>
 </a>
 </div>
 </td></tr></table>
