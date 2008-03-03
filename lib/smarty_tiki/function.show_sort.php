@@ -8,23 +8,31 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_show_sort($params, &$smarty) {
 	global $url_path;
-	if (isset($_REQUEST[$params['sort']])) {
+
+	if ( isset($_REQUEST[$params['sort']]) ) {
 		$p =  $_REQUEST[$params['sort']];
-	} elseif ($s = $smarty->get_template_vars($params['sort'])) {
+	} elseif ( $s = $smarty->get_template_vars($params['sort']) ) {
 		$p = $s;
 	}
-  if (isset($params['sort']) and isset($params['var']) and isset($p)) {
-	  $prop = substr($p,0,strrpos($p,'_'));
-		$order = substr($p,strrpos($p,'_')+1);
-		if (strtolower($prop) == strtolower(trim($params['var']))) {
-		  switch($order) {
-			  case 'asc':
-			  case 'nasc':
-				  return "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_up.png'/>";
+
+	if ( isset($params['sort']) and isset($params['var']) and isset($p) ) {
+		$prop = substr($p, 0, strrpos($p, '_'));
+		$order = substr($p, strrpos($p, '_') + 1);
+
+		if ( strtolower($prop) == strtolower(trim($params['var'])) ) {
+			require_once $smarty->_get_plugin_filepath('function', 'icon');
+			$icon_params = array('alt' => tra('Invert Sort'), 'style' => 'vertical-align:middle');
+
+			switch( $order ) {
+				case 'asc':
+				case 'nasc':
+					$icon_params['_id'] = 'resultset_up';
+					return smarty_function_icon($icon_params, $smarty);
 					break;
-			  case 'desc':
-			  case 'ndesc':
-				  return "<img style='border:none;vertical-align:middle' src='".$url_path."pics/icons/resultset_down.png'/>";
+				case 'desc':
+				case 'ndesc':
+					$icon_params['_id'] = 'resultset_down';
+					return smarty_function_icon($icon_params, $smarty);
 					break;
 			}
 		}
