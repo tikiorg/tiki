@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.6 2008-03-03 20:25:47 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_file.tpl,v 1.39.2.7 2008-03-03 23:20:42 nyloth Exp $ *}
 
 <h1><a href="tiki-upload_file.php{if !empty($galleryId)}?galleryId={$galleryId}{if $editFileId}&amp;fileId={$editFileId}{/if}{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}" class="pagetitle">{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}</a></h1>
 
@@ -83,7 +83,7 @@
    This may be moved later in another specific place (e.g. simple popup) for non-javascript browsers
      since it is not really a "Property" of the file *}
 
-{if $prefs.javascript_enabled neq 'y'}
+{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
 		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
