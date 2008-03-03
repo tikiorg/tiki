@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.19 2008-03-03 14:21:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.20 2008-03-03 14:51:33 sylvieg Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}
@@ -12,7 +12,7 @@
 <table width="97%">
 <tr>
 <td>
-{if $tiki_p_forum_post_topic eq 'y' and $forumId ne $prefs.wiki_forum_id}
+{if ($tiki_p_forum_post_topic eq 'y' and $forumId ne $prefs.wiki_forum_id) or $tiki_p_admin_forum eq 'y'}
 <a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>
 {tr}New Topic{/tr}</a>
 {/if}
