@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.13 2008-03-03 20:20:00 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.14 2008-03-04 14:25:50 sept_7 Exp $
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -437,11 +437,13 @@ function tikitabs(focus,max) {
 				//show(tabname);
 				show(content);
 				setCookie('tab',focus);
-				document.getElementById(tabname).setAttribute('class','tabmark tabactive');
+				document.getElementById(tabname).className = 'tabmark';
+				document.getElementById(tabname).className += 'tabactive';
 			} else {
 				//hide(tabname);
 				hide(content);
-				document.getElementById(tabname).setAttribute('class','tabmark tabinactive');
+				document.getElementById(tabname).className = 'tabmark';
+				document.getElementById(tabname).className += 'tabinactive';
 			}
 		}
 	}
