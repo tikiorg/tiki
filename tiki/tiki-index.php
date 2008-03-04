@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.18 2008-02-21 06:14:03 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.19 2008-03-04 15:22:25 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,6 +61,8 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 
 $structure = 'n';
 $smarty->assign('structure',$structure);
+// Feature checks made in the function for structure language
+$structlib->use_user_language_preferences();
 
 if (isset($_REQUEST['page_ref_id'])) {
     // If a structure page has been requested

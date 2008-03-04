@@ -1,13 +1,18 @@
 <?php
-// CVS: $Id: structlib.php,v 1.94.2.2 2007-11-02 01:22:36 frank_p Exp $
+// CVS: $Id: structlib.php,v 1.94.2.3 2008-03-04 15:22:26 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   header('location: index.php');
   exit;
 }
 class StructLib extends TikiLib {
+	var $displayLanguageOrder;
+
 	function StructLib($db) {
+		global $prefs;
 		$this->TikiLib($db);
+
+		$this->displayLanguageOrder = array();
 	}
 	function s_export_structure($structure_id) {
 		global $exportlib, $tikidomain;
@@ -361,19 +366,84 @@ class StructLib extends TikiLib {
       return null;
 		return ($this->s_get_page_info($parent_id));
 	}
+
+	function use_user_language_preferences()
+	{
+		global $prefs, $multilinguallib;
+		if( $prefs['feature_multilingual'] != 'y' )
+			return;
+		if( $prefs['feature_multilingual_structures'] != 'y' )
+			return;
+
+		if( !$multilinguallib )
+			include_once('lib/multilingual/multilinguallib.php');
+
+		$this->displayLanguageOrder = $multilinguallib->preferedLangs();
+	}
+
+	function build_language_order_clause( &$args, $pageTable = 'tp', $structTable = 'ts' )
+	{
+		$query = " CASE\n";
+		
+
+		// Languages in preferences go first
+		foreach( $this->displayLanguageOrder as $key => $lang ) {
+			$query .= "\tWHEN $pageTable.lang = ? THEN ?\n";
+			$args[] = $lang;
+			$args[] = $key;
+		}
+
+		// If nothing in preferences, use structure default
+		$query .= "\tWHEN $structTable.page_id = $pageTable.page_id THEN ?\n";
+		$args[] = count($this->displayLanguageOrder);
+
+		// Else should never be required
+		$query .= "\tELSE ?\nEND\n";
+		$args[] = count($this->displayLanguageOrder) + 1;
+
+		return $query;
+	}
+
 	/** Return an array of page info
   */
 	function s_get_page_info($page_ref_id) {
-    $ret = array();
-	  $query =  'select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ';
-    $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
-    $query .= 'where ts.`page_id`=tp.`page_id` and `page_ref_id`=?';
-    $result = $this->query($query,array((int)$page_ref_id));
-    if($res = $result->fetchRow()) {
+		if( empty( $this->displayLanguageOrder ) )
+		{
+			$query =  'select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ';
+			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
+			$query .= 'where ts.`page_id`=tp.`page_id` and `page_ref_id`=?';
+			$result = $this->query($query,array((int)$page_ref_id));
+		}
+		else
+		{
+			$args = array( (int) $page_ref_id );
+
+			$query = "
+				SELECT 
+					`pos`, 
+					`page_ref_id`, 
+					`parent_id`, 
+					ts.`page_id`, 
+					`pageName`, 
+					`page_alias`
+				FROM
+					`tiki_structures` ts
+					LEFT JOIN tiki_translated_objects a ON a.type = 'wiki page' AND a.objId = ts.page_id
+					LEFT JOIN tiki_translated_objects b ON b.type = 'wiki page' AND a.traId = b.traId
+					LEFT JOIN `tiki_pages` tp ON b.`objId` = tp.`page_id` OR ts.page_id = tp.page_id
+				WHERE
+					`page_ref_id` = ?
+				ORDER BY " . $this->build_language_order_clause( $args )
+				. " LIMIT 1";
+
+			$result = $this->query( $query, $args );
+		}
+
+		if($res = $result->fetchRow()) {
 			return $res;
-    } else {
-      return null;
-    }
+		} else {
+			return null;
+		}
 	}
 	// that is intended to replace the get_subtree_toc and get_subtree_toc_slide
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
@@ -382,9 +452,40 @@ class StructLib extends TikiLib {
 		$ret = array();
 		$cant = $this->getOne('select count(*) from `tiki_structures` where `parent_id`=?',array((int)$id));
 		if ($cant) {
-			$query = 'select `page_ref_id`, `pageName`, `page_alias`, tp.`description` from `tiki_structures` ts, `tiki_pages` tp ';
-			$query.= 'where ts.`page_id`=tp.`page_id` and `parent_id`=? order by '.$this->convert_sortmode('pos_'.$order);
-			$result = $this->query($query,array((int)$id));
+			// TODO : FIX
+			$args = array();
+			if( ! $this->displayLanguageOrder ) {
+				$query = 'select `page_ref_id`, `pageName`, `page_alias`, tp.`description` from `tiki_structures` ts, `tiki_pages` tp ';
+				$query.= 'where ts.`page_id`=tp.`page_id` and `parent_id`=? order by '.$this->convert_sortmode('pos_'.$order);
+				$args[] = (int) $id;
+
+			} else {
+				$query = "
+				SELECT
+					`page_ref_id`,
+					`pageName`,
+					`page_alias`, 
+					tp.`description`
+				FROM
+					`tiki_structures` ts
+					INNER JOIN tiki_pages tp ON tp.page_id = (
+						SELECT tp.page_id
+						FROM
+							`tiki_pages` tr
+							LEFT JOIN tiki_translated_objects a ON tr.page_id = a.objId AND a.type = 'wiki page'
+							LEFT JOIN tiki_translated_objects b ON b.type = 'wiki page' AND a.traId = b.traId
+							LEFT JOIN tiki_pages tp ON b.objId = tp.page_id OR tr.page_id = tp.page_id
+						WHERE
+							tr.page_id = ts.page_id
+						ORDER BY " . $this->build_language_order_clause( $args ) . "
+						LIMIT 1
+					)
+				WHERE
+					parent_id = ?
+				";
+				$args[] = (int) $id;
+			}
+			$result = $this->query($query, $args);
 			$prefix=1;
 			while ($res = $result->fetchRow()) {
 				$res['prefix']=($tocPrefix=='')?'':"$tocPrefix.";
@@ -455,9 +556,28 @@ class StructLib extends TikiLib {
 	}
   //Is this page the head page for a structure?
 	function get_struct_ref_if_head($pageName) {
-    $query =  'select `page_ref_id` ';
-    $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
-    $query .= 'where ts.`page_id`=tp.`page_id` and (`parent_id` is null or `parent_id`=0) and `pageName`=?';
+		$query =  'select `page_ref_id` ';
+		$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
+		$query .= 'where ts.`page_id`=tp.`page_id` and (`parent_id` is null or `parent_id`=0) and `pageName`=?';
+		$page_ref_id = $this->getOne($query,array($pageName));
+		if( $page_ref_id )
+			return $page_ref_id;
+
+		if( !$this->displayLanguageOrder )
+			return null;
+
+		$query = "
+			SELECT 
+				page_ref_id 
+			FROM
+				tiki_structures ts
+				INNER JOIN tiki_translated_objects a ON ts.page_id = a.objId AND a.type = 'wiki page'
+				INNER JOIN tiki_translated_objects b ON a.traId = b.traId AND b.type = 'wiki page'
+				INNER JOIN tiki_pages tp ON b.objId = tp.page_id
+			WHERE
+				(parent_id IS NULL or parent_id = 0)
+				AND pageName = ?";
+
 		$page_ref_id = $this->getOne($query,array($pageName));
 		return $page_ref_id;
 	}
@@ -577,9 +697,23 @@ function get_struct_ref_id($pageName) {
 	function get_page_structures($pageName,$structure='') {
 		$ret = array();
 		$structures_added = array();
-		$query = 'select `page_ref_id` ';
-		$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
-		$query .= 'where ts.`page_id`=tp.`page_id` and `pageName`=?';
+		if( empty( $this->displayLanguageOrder ) ) {
+			$query = 'select `page_ref_id` ';
+			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
+			$query .= 'where ts.`page_id`=tp.`page_id` and `pageName`=?';
+		} else {
+			$query = "
+				SELECT DISTINCT
+					`page_ref_id`
+				FROM
+					tiki_structures ts
+					LEFT JOIN tiki_translated_objects a ON a.objId = ts.page_id AND a.type = 'wiki page'
+					LEFT JOIN tiki_translated_objects b ON a.traId = b.traId AND b.type = 'wiki page'
+					LEFT JOIN tiki_pages tp ON ts.page_id = tp.page_id OR b.objId = tp.page_id
+				WHERE
+					pageName = ?";
+		}
+
 		$result = $this->query($query,array($pageName));
 		while ($res = $result->fetchRow()) {
 			$next_page = $this->s_get_structure_info($res['page_ref_id']);

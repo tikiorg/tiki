@@ -50,6 +50,12 @@
         </tr><tr>
 		
 		
+			<td class="form"><label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
+			{if $prefs.feature_multilingual_structures eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+		
+		
 			<td class="form"><label for="feature_best_language">{tr}Show pages in user's preferred language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_best_language" id="feature_best_language"
 			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></td>
