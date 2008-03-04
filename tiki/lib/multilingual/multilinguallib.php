@@ -645,6 +645,7 @@ class MultilingualLib extends TikiLib {
 
 		$result = $this->query( "
 			SELECT DISTINCT
+				page.page_id,
 				page.pageName page,
 				" . $this->subqueryObtainUpdateVersion( 'a.objId', 'b.objId' ) . " last_update,
 				page.version current_version,
@@ -679,6 +680,7 @@ class MultilingualLib extends TikiLib {
 
 		$result = $this->query( "
 			SELECT DISTINCT
+				page.page_id,
 				page.pageName page,
 				" . $this->subqueryObtainUpdateVersion( 'b.objId', 'a.objId' ) . " last_update,
 				page.lang
