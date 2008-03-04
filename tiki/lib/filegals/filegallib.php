@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.7 2008-03-03 20:18:11 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.8 2008-03-04 22:28:12 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -170,6 +170,15 @@ class FileGalLib extends TikiLib {
 		$result = $this->query($query,array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
+	}
+
+	function move_file_gallery($galleryId, $new_parent_id) {
+		if ( (int)$galleryId <= 0 || (int)$new_parent_id != 0 ) return false;
+
+		return $this->query(
+			'update `tiki_file_galleries` set `parentId`=? where `galleryId`=?',
+			array((int)$new_parent_id, (int)$galleryId)
+		);
 	}
 
 	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon, $show_name, $show_size, $show_description, $show_created, $show_hits, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $show_last_user='', $show_comment='', $show_files='') {
