@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.3 2008-02-22 05:34:31 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.4 2008-03-04 16:43:35 chriscramer Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,11 @@ DIRS="backups db dump files img/wiki img/wiki_up img/trackers installer modules/
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"
+fi
+
+if [ -d 'lib/equation' ]; then
+	DIRS=$DIRS" lib/equation/tmp"
+	DIRS=$DIRS" lib/equation/pictures"
 fi
 
 
