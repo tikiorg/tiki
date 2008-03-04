@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.17 2008-03-04 22:32:29 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.18 2008-03-04 23:07:04 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -461,18 +461,8 @@ div.gallerypath a:hover {
 .fgalexplorer { border: 1px solid #8CACBB; }
 .fgallisting table td { padding-left: 2px; padding-right: 2px; }
 
-/* The table */
-table.normal {
-	padding : 0px;
-	margin : 0px;
-	border-collapse : collapse;
-	width : 100%;
-	voice-family : "\"}\"";
-	voice-family : inherit;
-}
-html>body table.normal {
-	width : 100%;
-}
+/* Tables */
+table.normal, table.admin,
 table.listgallery, table.creategalform, table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles, table.forumstable,
 table.forumformtable, table.viewthread, table.jukeboxlist {
@@ -481,11 +471,8 @@ table.forumformtable, table.viewthread, table.jukeboxlist {
 	border-collapse : collapse;
 	width : 100%;
 }
-
-TABLE.admin {
-	width : 100%;
-}
-TABLE.normalnoborder {
+table.normalnoborder {
+	border: none;
 }
 
 /* Cells in forms without background color (inside a div for example) */
@@ -753,8 +740,7 @@ div.titlebar {
 
 /* The bar where the actions for a page are displayed */
 DIV#page-bar {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 7px 0 5px !important; padding: 0 !important;
+
 }
 DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	margin: 0;
@@ -1751,18 +1737,21 @@ a.phplm:hover, .phplmnormal a:hover {
 }
 /***************** tiki tabs ***************/
 .tabs {
-	padding: 1px 5px;
+	border-bottom: solid 1px #225566 !important;
+	margin: 10px 6px 0 5px !important; padding: 0 !important;
 }
-.tabactive {border: solid 1px #225566 !important; border-top-width: 2px !important;
-	position: relative; top: -1px;}
+.tabactive {border: solid 1px #225566 !important; border-bottom: none !important; border-top-width: 2px !important;
+	position: relative; top: -2px;}
+[class].tabactive {top: -1px}
 .tabactive a {
 	background-color : #EEEEEE;
 	}
 .tabinactive {
-	border: solid 1px #666666 !important;
-	border-bottom: none !important;
-	position: relative !important; top: -2px !important;
+	border: solid 1px #666666 !important; border-bottom: none !important;
+	position: relative !important; top: -3px !important;
 	}
+[class].tabinactive {top: -2px !important}
+
 .tabmark {
 	display : inline;
 	font-size : 10px;
@@ -1793,27 +1782,40 @@ a.phplm:hover, .phplmnormal a:hover {
 }
 .tabcontent {
 	z-index : 200;
-	position : relative;
 	border : 1px solid #225566 !important;
 	border-top: none !important;
 	padding: 6px 2px 2px 2px;
 	margin: 5px;
 	margin-top : 0;
 	background-color : #EEEEEE;
-	border-radius : 0px 3px 3px 3px;
-	-moz-border-radius : 0px 3px 3px 3px;
-	-khtml-border-radius : 0px 3px 3px 3px;
+	border-radius : 0 0 3px 3px;
+	-moz-border-radius : 0 0 3px 3px;
+	-khtml-border-radius : 0 0 3px 3px;
+	text-align: center;
+}
+.tabcontent table {
+	margin-left: auto; margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 2%;
+	text-align: left;
+	width: 95%;
+}
+.tabcontent table td {
+	padding: 5px;
 }
 
 form fieldset.tabcontent {
 	border : 1px solid #225566;
 	border-top: none !important;
 	}
-form.admin DIV#page-bar {
+form.admin .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 2px 0 0px !important; padding: 0 !important;
+	margin: 10px 1px 0 0px !important; padding: 0 !important;
 }
 
+div.content {padding: 3px}
+
+div.content .tabs {margin: 0px; margin-bottom: 3px;}
 
 /*********************** Version Plugin Style **********************/
 .versions {
