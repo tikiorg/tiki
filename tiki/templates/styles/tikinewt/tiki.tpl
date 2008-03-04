@@ -20,10 +20,8 @@
 {/if}
 <div id="middle">
 	<div class="clearfix {if $prefs.feature_fullscreen != 'n' and $smarty.session.fullscreen != 'n'}fullscreen{/if}{if $prefs.feature_fullscreen != 'y' and $smarty.session.fullscreen !='n'}nofullscreen{/if}" id="c1c2">
-	<div id="middle">
-		<div id="c1c2">
-			<div id="wrapper">
-				<div id="col1" class="{if $prefs.feature_left_column ne 'n'}marginleft{/if}{if $prefs.feature_right_column ne 'n'} marginright{/if}">
+		<div id="wrapper">
+			<div id="col1" class="{if $prefs.feature_left_column ne 'n'}marginleft{/if}{if $prefs.feature_right_column ne 'n'} marginright{/if}">
 				{if $smarty.session.fullscreen neq 'y'}
 		{if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 			<div class="clearfix" id="showhide_columns">
