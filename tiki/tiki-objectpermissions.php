@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25 2007-10-12 07:55:29 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.1 2008-03-04 14:41:48 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,13 +163,12 @@ if ($prefs['feature_categories'] == 'y') {
 
 ask_ticket('object-perms');
 
-if (isset($_GET['filegals_manager'])) {
-  $smarty->assign('filegals_manager','y');
-  $smarty->assign('mid','tiki-objectpermissions.tpl');
-  $smarty->display("tiki_full.tpl");
-} else {
-  $smarty->assign('mid', 'tiki-objectpermissions.tpl');
-  $smarty->display("tiki.tpl");
+// Display the template
+$smarty->assign('mid','tiki-objectpermissions.tpl');
+if (isset($_REQUEST['filegals_manager'])) {
+	$smarty->assign('filegals_manager','y');
+	$smarty->display("tiki-print.tpl");
+}  else {
+	$smarty->display("tiki.tpl");
 }
-
 ?>
