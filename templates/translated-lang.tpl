@@ -26,9 +26,11 @@
 
 					if( option.value == "-" )
 						return;
-					else if( option.value == "_translate_" )
-						document.location.href = "tiki-edit_translation.php?page=" + escape(page_to_translate);
-					else
+					else if( option.value == "_translate_" ) {
+						element.form.action = "tiki-edit_translation.php";
+						element.value = page_to_translate;
+						element.form.submit();
+					} else
 						element.form.submit();
 				}
 				{/literal}
