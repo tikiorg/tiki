@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_htmldiff.php,v 1.1 2007-08-29 12:40:53 sept_7 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_htmldiff.php,v 1.1.2.1 2008-03-04 15:48:27 sept_7 Exp $
 
 /**
  * HTML diff renderer.
@@ -29,7 +29,8 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
 	$this->n = 0;
 	$this->rspan = false;
 	$this->lspan = false;
-	$this->tracked_tags = array ("table","ul","div");
+	//$this->tracked_tags = array ("table","ul","div");
+	$this->tracked_tags = array ("table","ul");
     }
 
     function _endDiff()
@@ -77,7 +78,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
 	       $string = preg_replace("#<br class='(.*)'\s*/>#","<span class='$1'>&crarr;</span><br class='$1' />",$string);
 	    } else {
                $string .= preg_replace("#<([^/> ]+)(.*)class=[\"']?([^\"']+)[\"']?(.*[^/]?)?>#","<$1$2 class='$3 $tag' $4>",$line);
-	     }
+	    }
           } 
 	}
 	return $string;
@@ -114,9 +115,9 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
     {
 	static $context = 0;
 
-	foreach($lines as $line) {
-		switch($type) {
-			case 'context':
+	switch($type) {
+		case 'context':
+			foreach($lines as $line) {
 				if ($context == 0 and $this->_can_break($line)) {
 		  			$context = 1;
 					$this->n++;
@@ -134,22 +135,29 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
 				}
 				$this->original[$this->n] .= "$line";
 				$this->final[$this->n] .= "$line";
-				break;
-			case 'change-added':
-			case 'added':
-				$this->_count_tags($line,'final');
-				$this->final[$this->n] .= $this->_insert_tag($line,'diffadded',$this->rspan);
-				$context = 0;
-				break;
-			case 'deleted':
-			case 'change-deleted':
-				$this->_count_tags($line,'original');
-				$this->original[$this->n] .= $this->_insert_tag($line,'diffdeleted',$this->lspan);
-				$context = 0;
-				break;
+			}
+			break;
+		case 'change-added':
+		case 'added':
+			foreach($lines as $line) {
+				if ($line != '') {
+				  $this->_count_tags($line,'final');
+				  $this->final[$this->n] .= $this->_insert_tag($line,'diffadded',$this->rspan);
+				  $context = 0;
+				}
+			}
+			break;
+		case 'deleted':
+		case 'change-deleted':
+			foreach($lines as $line) {
+				if ($line != '') {
+				  $this->_count_tags($line,'original');
+				  $this->original[$this->n] .= $this->_insert_tag($line,'diffdeleted',$this->lspan);
+				  $context = 0;
+				}
+			}
+			break;
 		}
-	
-	}
     }
 
     function _context($lines)
