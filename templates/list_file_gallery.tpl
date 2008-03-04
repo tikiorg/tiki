@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.19 2008-03-03 20:25:23 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.20 2008-03-04 22:31:57 nyloth Exp $ *}
 
 {if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' ) or $gallery_path neq '' }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
@@ -208,7 +208,12 @@
       
           {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'}
             <td style="text-align:center;" class="{cycle advance=false}">
-              <input type="checkbox" name="file[]" value="{$files[changes].fileId|escape}"  {if $smarty.request.file and in_array($files[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
+              {if $files[changes].isgal eq 1}
+                {assign var='checkname' value='subgal'}
+              {else}
+                {assign var='checkname' value='file'}
+              {/if}
+              <input type="checkbox" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $smarty.request.$checkname and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if} />
             </td>
           {/if}
       
@@ -315,7 +320,7 @@
           {/section}
 
           {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
-          <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked)"/>
+          <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
             <label for="clickall">{tr}Select All{/tr}</label>
           </td></tr>
           {/if}
@@ -328,9 +333,9 @@
           {tr}Perform action with checked:{/tr} 
           {if !isset($file_info)}
             {if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
-            <input style="vertical-align: middle;" type="image" name="movesel" src="pics/icons/arrow_right.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' />
+            {icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}
           {/if}
-          <input style="vertical-align: middle;" type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' onclick="return confirm('{tr}Are you sure you want to delete the selected files?{/tr}')" />
+          {icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}
           </div>
           {if $smarty.request.movesel_x and !isset($file_info)} 
           <div>
@@ -338,7 +343,7 @@
             <select name="moveto">
               {section name=ix loop=$all_galleries}
                 {if $all_galleries[ix].galleryId ne $gal_info.galleryId}
-                  <option value="{$all_galleries[ix].galleryId|escape}">{$all_galleries[ix].name}</option>
+                  <option value="{$all_galleries[ix].id|escape}">{$all_galleries[ix].name}</option>
                 {/if}
               {/section}
             </select>
