@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.13 2008-03-03 20:25:00 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.14 2008-03-04 21:26:14 pkdille Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -113,23 +113,20 @@
     && $comments_cant != 0)
     ||  $tiki_p_post_comments  == 'y'
     ||  $tiki_p_edit_comments  == 'y')}
-  <div id="page-bar">
-    <table>
-      <tr><td>
-        <div class="button2">
-          <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
-            {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-            {tr}Add Comment{/tr}
-            {elseif $comments_cant == 1}
-            <span class="highlight">{tr}1 comment{/tr}</span>
-            {else}
-            <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
-            {/if}
-            <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
-          </a>
-        </div>
-      </td></tr>
-    </table>
+
+    <span class="button2">
+      <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+        {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+          {tr}Add Comment{/tr}
+        {elseif $comments_cant == 1}
+          <span class="highlight">{tr}1 comment{/tr}</span>
+        {else}
+          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+        {/if}
+        <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
+      </a>
+    </span>
+
   </div>
   {include file=comments.tpl}
   {/if}
