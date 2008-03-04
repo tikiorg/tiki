@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.38 2008-03-04 21:11:40 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.39 2008-03-04 22:55:45 luciash Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -61,7 +61,7 @@
 </div><br />{/if}
 {if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
-<div id="page-bar">
+<div class="tabs">
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
