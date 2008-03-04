@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.8 2008-03-03 20:18:11 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.9 2008-03-04 22:31:57 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,40 +96,6 @@ $smarty->assign_by_ref('description', $gal_info['description']);
 
 $smarty->assign('reindex_file_id', -1);
 
-/*
-if ( isset($_REQUEST['batchaction']) &&  $_REQUEST['batchaction'] == 'delsel_x' && isset($_REQUEST['checked']) ) {
-	check_ticket('fgal');
-	if ( $tiki_p_admin_file_galleries != 'y' ) {
-		$smarty->assign('msg', tra('Permission denied you cannot remove this gallery'));
-		$smarty->display('error.tpl');
-		die;  
-	}
-	foreach ( $_REQUEST['checked'] as $id ) {
-		$filegallib->remove_file_gallery($id);
-	}
-}
-
-if ( isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] != 'delsel_x' && isset($_REQUEST['checked']) && isset($_REQUEST['groups']) ) {
-	check_ticket('fgal');
-	if ( $tiki_p_admin_file_galleries != 'y' && $tiki_p_assign_perm_file_gallery != 'y' ) {
-		$smarty->assign('msg', tra('Permission denied you cannot assign permissions for this object'));
-		$smarty->display('error.tpl');
-		die;
-	}
-	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
-	foreach ( $perms['data'] as $perm ) {
-		if ( $_REQUEST['batchaction'] == 'assign_'.$perm['permName'] ) {
-			foreach ( $_REQUEST['checked'] as $id ) {
-				foreach ( $_REQUEST['groups'] as $group ) {
-					$userlib->assign_object_permission($group, $id, 'file gallery', $perm['permName']);
-				}
-			}
-		}
-	}
-}
-
-*/
-
 // Execute batch actions
 if ( $tiki_p_admin_file_galleries == 'y' ) {
 	if ( isset($_REQUEST['delsel_x']) ) {
@@ -144,6 +110,9 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 			}
 			$filegallib->remove_file($info, $user, $gal_info);
 		}
+		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+			$filegallib->remove_file_gallery($subgal, $galleryId);
+		}
 	}
 
 	if ( isset($_REQUEST['movesel']) ) {
@@ -151,6 +120,9 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		foreach ( array_values($_REQUEST['file']) as $file ) {
 			// To move a topic you just have to change the object
 			$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+		}
+		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+			$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 		}
 	}
 }
