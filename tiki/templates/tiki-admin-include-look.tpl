@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.11 2008-03-04 21:11:40 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.12 2008-03-04 22:57:10 luciash Exp $ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -14,7 +14,7 @@
 
 {if $prefs.feature_tabs eq 'y'}
 	{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-	<div id="page-bar">
+	<div class="tabs">
 		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
 				class="tabmark tabinactive"><a 
 				href="#theme"
