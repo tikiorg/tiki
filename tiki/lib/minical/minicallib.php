@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 class MiniCalLib extends TikiLib {
 	function MiniCalLib($db) {
-		$this->TikiLib($db);
+		parent::TikiLib($db);
 	}
 
 	// Returns an array where each member of the array has:
