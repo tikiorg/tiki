@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.36 2008-03-02 20:53:48 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.37 2008-03-04 15:45:03 lphuberdeau Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1729,5 +1729,6 @@ ALTER TABLE `tiki_minical_topics` change user user varchar(200) default '';
 ALTER TABLE `tiki_newsletters` change allowTxt allowTxt char(1) default 'y';
 ALTER TABLE `tiki_calendar_roles` change userName username varchar(200) NOT NULL default '';
 
-
+#2008-03-04 lphuberdeau
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_detach_translation', 'Can remove association between two pages in a translation set', 'registered', 'tiki');
 

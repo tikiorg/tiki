@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.11 2008-02-26 16:24:17 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.12 2008-03-04 15:44:58 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -124,7 +124,7 @@ if ($type == "wiki page") {
 if (!isset($allowed_for_staging_only)) {
 // people blocked from approved page cannot access the following settings
 
-if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId'])) { // detach from a translation set
+if (isset($_REQUEST['detach']) && isset($_REQUEST['srcId']) && $tiki_p_detach_translation == 'y') { // detach from a translation set
 	check_ticket('edit-translation');
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }
