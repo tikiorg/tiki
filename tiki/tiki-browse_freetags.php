@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.8 2008-01-25 16:17:35 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.9 2008-03-04 18:45:54 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.8 2008-01-25 16:17:35 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.9 2008-03-04 18:45:54 sylvieg Exp $
 //
 
 // Initialization
@@ -28,9 +28,13 @@ if ($tiki_p_view_freetags != 'y') {
 	die;
 }
 
-if ($tiki_p_admin == 'y') {
-	if (isset($_REQUEST['del'])) {
+if (isset($_REQUEST['del'])) {
+	if ($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') {
 		$freetaglib->delete_object_tag($_REQUEST['itemit'],$_REQUEST['typeit'],$_REQUEST['tag']);
+	} else {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
 	}
 }
 
@@ -108,8 +112,19 @@ foreach ($tagArray as $t_ar) {
 $smarty->assign('tagString', trim($tagString));
 $smarty->assign('tag', $tagArray[0]);
 
-$maxRecords = $maxRecords;
-$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $prefs['freetags_browse_amount_tags_in_cloud']);
+if (empty($_REQUEST['maxPopular'])) {
+	$maxPopular = $prefs['freetags_browse_amount_tags_in_cloud'];
+} else {
+	$maxPopular = $_REQUEST['maxPopular'];
+	$smarty->assign_by_ref('maxPopular', $maxPopular);
+}
+if (empty($_REQUEST['tsort_mode'])) {
+	$tsort_mode = 'tag_asc';
+} else {
+	$tsort_mode = $_REQUEST['sort_mode'];
+	$smarty->assign_by_ref('tsort_mode', $tsort_mode);
+}
+$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, $maxPopular, $tsort_mode);
 if (!empty($prefs['freetags_cloud_colors'])) {
 	$colors = split(',', $prefs['freetags_cloud_colors']);
 	$prev = '';

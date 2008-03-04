@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.14 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.15 2008-03-04 18:45:54 sylvieg Exp $ *}
 
 <h1><a href="tiki-browse_freetags.php" class="pagetitle">{tr}Browse related tags{/tr}</a></h1>
 
@@ -135,6 +135,15 @@
           {foreach from=$most_popular_tags item=popular_tag}
             <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag}</a> 
           {/foreach}
+		  <div class="mini">
+		  {if empty($maxPopular)}{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}{/if}<a href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
+		  </div>
+		  <div class="mini">
+		  {tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
+		  </div>
+		  <div class="mini">
+		  <a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
+		  </div>
         {/if}
       </td>
   
@@ -144,7 +153,10 @@
   
         {if $cantobjects > 0}
           <table class="normal">
-			<tr><th>{tr}Type{/tr}</th><th>{tr}Name{/tr}</th><th>{tr}Description{/tr}</th><th>{tr}Remove Tags{/tr}</th></tr>
+			<tr>
+				<th>{tr}Type{/tr}</th><th>{tr}Name{/tr}</th><th>{tr}Description{/tr}</th>
+				{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}<th>{tr}Remove Tags{/tr}</th>{/if}
+			</tr>
             {cycle values="odd,even" print=false}
             {section name=ix loop=$objects}
               <tr class="{cycle}" >
@@ -155,9 +167,9 @@
                   <a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a>
                 </td>
                 <td>{$objects[ix].description}&nbsp;</td>
-                <td align="right">
+                {if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}<td align="right">
                   <a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-                </td>
+                </td>{/if}
               </tr>
             {/section}
           </table>
