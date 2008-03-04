@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.65.2.2 2008-02-15 13:52:25 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.65.2.3 2008-03-04 14:41:48 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -361,14 +361,13 @@ ask_ticket('upload-file');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-if (isset($_GET['filegals_manager'])) {
-  $smarty->assign('filegals_manager','y');
-  $smarty->assign('mid','tiki-upload_file.tpl');
-  $smarty->display("tiki_full.tpl");
-} else {
 // Display the template
-$smarty->assign('mid', 'tiki-upload_file.tpl');
-$smarty->display("tiki.tpl");
+$smarty->assign('mid','tiki-upload_file.tpl');
+if (isset($_REQUEST['filegals_manager'])) {
+	$smarty->assign('filegals_manager','y');
+	$smarty->display("tiki-print.tpl");
+}  else {
+	$smarty->display("tiki.tpl");
 }
 
 ?>
