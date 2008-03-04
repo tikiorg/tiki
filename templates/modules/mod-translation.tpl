@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.8 2008-02-05 19:07:39 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.9 2008-03-04 16:32:30 lphuberdeau Exp $ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
@@ -33,6 +33,32 @@
 						- <a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
 					</div>
 					{/if}
+				</li>
+				{/foreach}
+			</ul>
+			{/if}
+		</div>
+	{/if}
+	{if $mod_translation_equivalent_known or $mod_translation_equivalent_other}
+		<div>			
+			{tr}Equivalent translations{/tr}:
+			{if $mod_translation_equivalent_known}
+			<ul>
+				{foreach item=equiv from=$mod_translation_equivalent_known}
+				<li>
+					<a href="tiki-index.php?page={$equiv.page|escape:'url'}">{$equiv.page}</a> ({$equiv.lang})
+				</li>
+				{/foreach}
+			</ul>
+			{else}
+				<div>{tr}None match your{/tr} <a href="tiki-user_preferences.php">{tr}preferred languages{/tr}</a>.</div>
+			{/if}
+			{if $mod_translation_equivalent_other}
+			<a href="javascript:void(0)" onclick="document.getElementById('mod-translation-equiv-ul').style.display='block';this.style.display='none'">{tr}More...{/tr}</a>
+			<ul id="mod-translation-equiv-ul" style="display:none">
+				{foreach item=equiv from=$mod_translation_equivalent_other}
+				<li>
+					<a href="tiki-index.php?page={$equiv.page|escape:'url'}">{$equiv.page}</a> ({$equiv.lang})
 				</li>
 				{/foreach}
 			</ul>
@@ -74,13 +100,6 @@
 			</ul>
 			{/if}
 		</div>
-	{/if}
-	{if !$mod_translation_better_known and !$mod_translation_better_other and !$mod_translation_worst_known and !$mod_translation_worst_other}
-		{if $pivot_language and $pivot_language != $pageLang}
-			{tr}This page is up to date with the reference language:{/tr} {$pivot_language}
-		{else}
-			{tr}This page and all its translations are up to date.{/tr}
-		{/if}
 	{/if}
 {/tikimodule}
 {/if}
