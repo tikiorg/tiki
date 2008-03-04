@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: objectlib.php,v 1.9.2.1 2007-12-25 17:22:56 sylvieg Exp $
+// CVS: $Id: objectlib.php,v 1.9.2.2 2008-03-04 14:28:37 sept_7 Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // this is an abstract class
 class ObjectLib extends TikiLib {
 	function ObjectLib($db) {
-		$this->TikiLib($db);
+		parent::TikiLib($db);
 	}
 
     function add_object($type, $itemId, $description = '', $name = '', $href = '') {
