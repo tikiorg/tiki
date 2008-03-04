@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.9 2008-03-03 23:11:56 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.10 2008-03-04 03:51:38 luciash Exp $ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -6,15 +6,45 @@
 	{help crumb=$crumbs[$crumb]}</h3>
 	</div>
 
-	<form action="tiki-admin.php?page=look" method="post">
+	<form action="tiki-admin.php?page=look" class="admin" method="post">
 		<div class="heading button" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
 		</div>
 
-		<fieldset>
-			<legend class="heading"><a href="#theme" name="theme" onclick="flip('theme'); return false;"><span>{tr}Theme{/tr}</span></a></legend>
-			<div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
+{if $prefs.feature_tabs eq 'y'}
+	{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
+
+		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
+				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				href="#theme"
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a></label>
+		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
+				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				href="#layout"
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a></label>
+		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
+				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				href="#other"
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a></label>
+		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
+				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				href="#siteads"
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Site Ads and Banners{/tr}</a></label>
+
+	{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+{/if}
+
+		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
+			{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"><a 
+														href="#theme"
+														name="theme"
+														onclick="flip('theme'); return false;"><span>{tr}Theme{/tr}</span></a></legend>
+			<div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">{/if}
 				<table class="admin">
 					<tr>
 						<td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
@@ -22,28 +52,25 @@
 	{section name=ix loop=$styles}
 							<option value="{$styles[ix]|escape}"{if $prefs.site_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 	{/section}
-						</select></td>
+							</select></td>
 					</tr><tr>
 						<td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
 						<td><select name="slide_style" id="general-slideshows">
 	{section name=ix loop=$slide_styles}
-							<option value="{$slide_styles[ix]|escape}"
-                {if $prefs.slide_style eq $slide_styles[ix]}selected="selected"{/if}>
-                {$slide_styles[ix]}</option>
-            {/section}
-            </select>
-        </td>
-      </tr><tr>
-        <td class="form"><label for="transition_style_ver">{tr}Use transition style sheet from version{/tr}:</label></td>
-        <td><select name="transition_style_ver" id="transition_style_ver">            
-              <option value="none" {if $prefs.transition_style_ver eq 'none'}selected="selected"{/if}>{tr}Never use transition css{/tr}</option>
-              <option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
-              <option value="1.8" {if $prefs.transition_style_ver eq '1.8'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.8 if not specified{/tr}</option>
-              <option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
-            </select>
-        </td>
-	</tr>	<tr>
-		<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+							<option value="{$slide_styles[ix]|escape}"{if $prefs.slide_style eq $slide_styles[ix]} selected="selected"{/if}>{$slide_styles[ix]}</option>
+	{/section}
+							</select></td>
+					</tr><tr>
+        				<td class="form"><label for="transition_style_ver">{tr}Use transition style sheet from version{/tr}:</label></td>
+						<td><select name="transition_style_ver" id="transition_style_ver">            
+							<option value="none" {if $prefs.transition_style_ver eq 'none'}selected="selected"{/if}>{tr}Never use transition css{/tr}</option>
+							<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
+							<option value="1.8" {if $prefs.transition_style_ver eq '1.8'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.8 if not specified{/tr}</option>
+							<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
+							</select></td>
+					</tr><tr>
+						<td class="form"> {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=CssEditDev"
+						target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">{/if} {tr}Edit CSS{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
 		<td><input type="checkbox" name="feature_editcss" {if $prefs.feature_editcss eq 'y'}checked="checked"{/if}/>
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>{/if} </td>
 	</tr>
@@ -68,20 +95,20 @@
         <td class="form" > {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Site+Identity" target="tikihelp" class="tikihelp" title="{tr}Site Identity{/tr}">{/if} {tr}Site Identity{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
 		<td ><input type="checkbox" name="feature_siteidentity" {if $prefs.feature_siteidentity eq 'y'}checked="checked"{/if}/> Required for all the following features</td>
 	</tr>
-        </table>
-       </fieldset> 
+       </table>
+       {if $prefs.feature_tabs neq 'y'}</div>{/if}
+</fieldset> 
 
 {* --- General Layout options --- *}
-<fieldset class="admin">
-	<legend class="heading"><a href="#layout" name="layout" onclick="flip('layout'); return false;"><span>{tr}General Layout options{/tr}</span></a></legend>
-	<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#layout" name="layout" onclick="flip('layout'); return false;"><span>{tr}General Layout options{/tr}</span></a></legend>
+	<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 		<table class="admin" width="100%">
 			<tr>
         		<td class="form" colspan="5">
         
 {* --- Customize Site Header --- *}
 	<fieldset class="admin">
-
 					<legend><a href="#"><span>{tr}Custom Site Header{/tr}</span></a></legend>
 
 			<table class="admin">
@@ -100,7 +127,6 @@
 					<td class="form"><label for="sitemycode_publish">{tr}Publish{/tr}:</label></td>
 					<td><input type="checkbox" name="sitemycode_publish" id="sitemycode_publish"{if $prefs.sitemycode_publish eq 'y'} checked="checked"{/if} /></td>
 				</tr>
-				
         	</table>
 	</fieldset>
 
@@ -333,13 +359,13 @@
     
     
 		</table>
-	</div>
+	       {if $prefs.feature_tabs neq 'y'}</div>{/if}
 </fieldset>
 
-<fieldset>
-	<legend class="heading"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
-	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
-			<table class="admin" width="100%">
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
+	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">{/if}
+		<table class="admin" width="100%">
 				<tr>
 					<td class="form"><label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet):{/tr}</label></td>
 					<td><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if}/>
@@ -363,13 +389,13 @@
 					</td>
 				</tr>
 			</table>
-	</div>
+	{if $prefs.feature_tabs neq 'y'}</div>{/if}
 </fieldset>
 
 
-<fieldset>
-	<legend class="heading"><a href="#siteads" name="siteads" onclick="flip('siteads'); return false;"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
-	<div id="siteads" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_siteads) and $smarty.session.tiki_cookie_jar.show_siteads neq 'y'}none{else}block{/if};">
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#siteads" name="siteads" onclick="flip('siteads'); return false;"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
+	<div id="siteads" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_siteads) and $smarty.session.tiki_cookie_jar.show_siteads neq 'y'}none{else}block{/if};">{/if}
 		<table class="admin">
 				<tr>
 					<td class="form"><label for="feature_sitead">{tr}Activate{/tr}:</label></td>
@@ -386,7 +412,7 @@
 					<td><input type="checkbox" name="sitead_publish" id="sitead_publish"{if $prefs.sitead_publish eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 		</table>
-	</div>
+	{if $prefs.feature_tabs neq 'y'}</div>{/if}
 </fieldset>                                
 
 			<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
