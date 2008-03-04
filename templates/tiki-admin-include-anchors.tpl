@@ -1,4 +1,4 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.2 2007-11-28 05:40:28 luciash Exp $*}
+{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.3 2008-03-04 00:27:04 luciash Exp $*}
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}" class="link"><img border="0" src="pics/large/icon-configuration.png" alt="{tr}General{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}" class="link"><img border="0" src="pics/large/boot.png" alt="{tr}Features{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="link"><img border="0" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
@@ -71,7 +71,7 @@
    src="img/icons/admin_category.png" alt="{tr}Category{/tr}" /></a>
 {/if}
 <a href="tiki-admin.php?page=module" title="{tr}Module{/tr}" class="link"><img border="0"
-   src="img/mytiki/modules.gif" alt="{tr}Module{/tr}" /></a>   
+   src="pics/large/display-capplet.png" alt="{tr}Module{/tr}" /></a>   
    
 <a href="tiki-admin.php?page=look" title="{tr}Customize look and feel of your Tiki{/tr}" class="link"><img border="0"
    src="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" /></a>

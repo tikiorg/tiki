@@ -101,7 +101,7 @@
     <a href="tiki-admin.php?page=category" class="admbox{if $prefs.feature_categories ne 'y'} off{/if}" style="background-image: url('img/icons/admin_category.png')">
       <img src="pics/trans.png" alt="{tr}Categories{/tr}" title="{tr}Categories{/tr}{if $prefs.feature_categories ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Categories{/tr}</span>
     </a>
-    <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('img/mytiki/modules.gif')">
+    <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('pics/large/display-capplet48x48.png')">
       <img src="pics/trans.png" alt="{tr}Module{/tr}" title="{tr}Module{/tr}" /><span>{tr}Module{/tr}</span>
     </a>
     <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
