@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.10 2008-03-04 03:51:38 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.11 2008-03-04 21:11:40 luciash Exp $ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -14,33 +14,29 @@
 
 {if $prefs.feature_tabs eq 'y'}
 	{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-
-		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
-				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
-				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+	<div id="page-bar">
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
 				href="#theme"
-				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a></label>
-		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
-				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
-				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a></span>
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
 				href="#layout"
-				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a></label>
-		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
-				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
-				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a></span>
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
 				href="#other"
-				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a></label>
-		<label	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
-				class="tabmark{if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"
-				style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a 
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a></span>
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
 				href="#siteads"
-				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Site Ads and Banners{/tr}</a></label>
-
+				onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Site Ads and Banners{/tr}</a></span>
+	</div>
 	{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {/if}
 
-		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
-			{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}"><a 
+		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+			{if $prefs.feature_tabs neq 'y'}<legend class="heading"><a 
 														href="#theme"
 														name="theme"
 														onclick="flip('theme'); return false;"><span>{tr}Theme{/tr}</span></a></legend>
@@ -100,14 +96,14 @@
 </fieldset> 
 
 {* --- General Layout options --- *}
-<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
-	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#layout" name="layout" onclick="flip('layout'); return false;"><span>{tr}General Layout options{/tr}</span></a></legend>
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#layout" name="layout" onclick="flip('layout'); return false;"><span>{tr}General Layout options{/tr}</span></a></legend>
 	<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 		<table class="admin" width="100%">
 			<tr>
         		<td class="form" colspan="5">
         
-{* --- Customize Site Header --- *}
+	{* --- Customize Site Header --- *}
 	<fieldset class="admin">
 					<legend><a href="#"><span>{tr}Custom Site Header{/tr}</span></a></legend>
 
@@ -130,7 +126,7 @@
         	</table>
 	</fieldset>
 
-{* --- Customize Site Logo --- *}
+	{* --- Customize Site Logo --- *}
 	<fieldset>
 					<legend><a href="#"><span>{tr}Site Logo{/tr}</span></a></legend>
 
@@ -167,7 +163,7 @@
 				</tr></table>
 </fieldset>                                
 
-{* --- Site Search Bar --- *}
+	{* --- Site Search Bar --- *}
         <fieldset>
         					<legend><a href="#"><span>{tr}Site Search Bar{/tr}</span></a></legend>
 
@@ -181,7 +177,7 @@
                                 </table>
 </fieldset>                                
 
-{* --- Top Bar --- *}
+	{* --- Top Bar --- *}
         <fieldset>
 					<legend><a href="#"><span><input type="checkbox" name="feature_top_bar"
             {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/> {tr}Top Bar{/tr}</span></a></legend>
@@ -228,7 +224,7 @@
 </fieldset>
         </td><td class="form" colspan="3">
         
-{* --- Site Breadcrumbs --- *}
+	{* --- Site Breadcrumbs --- *}
 <fieldset class="admin">
 					<legend><a href="#"><span>{tr}Site Breadcrumbs{/tr}</span></a></legend>
 			<table class="admin">
@@ -362,8 +358,8 @@
 	       {if $prefs.feature_tabs neq 'y'}</div>{/if}
 </fieldset>
 
-<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
-	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
 	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">{/if}
 		<table class="admin" width="100%">
 				<tr>
@@ -393,10 +389,10 @@
 </fieldset>
 
 
-<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}" style="display:{if $focustab eq $cookietab}block{else}none{/if}"{/if}>
-	{if $prefs.feature_tabs neq 'y'}<legend class="heading {if $cookietab eq $tabi} tabactive{else} tabinactive{/if}" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#siteads" name="siteads" onclick="flip('siteads'); return false;"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
+<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+	{if $prefs.feature_tabs neq 'y'}<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#siteads" name="siteads" onclick="flip('siteads'); return false;"><span>{tr}Site Ads and Banners{/tr}</span></a></legend>
 	<div id="siteads" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_siteads) and $smarty.session.tiki_cookie_jar.show_siteads neq 'y'}none{else}block{/if};">{/if}
-		<table class="admin">
+		<table class="admin" width="100%">
 				<tr>
 					<td class="form"><label for="feature_sitead">{tr}Activate{/tr}:</label></td>
 					<td><input type="checkbox" name="feature_sitead" id="feature_sitead"{if $prefs.feature_sitead eq 'y'} checked="checked"{/if} /></td>

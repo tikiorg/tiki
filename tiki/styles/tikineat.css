@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.15 2008-03-04 03:51:38 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.16 2008-03-04 21:11:41 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -353,7 +353,7 @@ TD.module {
 div.cbox {
 	background-color : white;
 	margin : 3px;
-        margin-bottom : 6px;
+	margin-bottom : 6px;
 	border : 1px solid #8CACBB;
 	overflow : hidden;
 }
@@ -538,9 +538,9 @@ td.listartheading, td.forumheading, td.viewthread {
 	padding : 0 2px;
 }
 
-form.admin {}
+form.admin {padding: 3px}
 
-form.admin fieldset {border: solid 1px #8CACBB; margin: 2px; margin-bottom: 3px;}
+form.admin fieldset {border: solid 1px #8CACBB; margin: 0px; margin-bottom: 3px;}
 
 form.admin legend.heading {
 	background-color: transparent;
@@ -585,7 +585,7 @@ th.listartheading, th.forumheading, th.viewthread {
 .button {
 	background-color : #DEE7EC;
 	border : 1px solid #8CACBB;
-	margin: 2px;
+	margin: 0px;
 	padding : 0 2px;
 	text-align : center;
 	vertical-align : middle;
@@ -753,7 +753,8 @@ div.titlebar {
 
 /* The bar where the actions for a page are displayed */
 DIV#page-bar {
-	margin : 0;
+	border-bottom: solid 1px #225566 !important;
+	margin: 10px 7px 0 5px !important; padding: 0 !important;
 }
 DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
 	margin: 0;
@@ -1750,24 +1751,33 @@ a.phplm:hover, .phplmnormal a:hover {
 }
 /***************** tiki tabs ***************/
 .tabs {
-	padding : 1px 5px;
+	padding: 1px 5px;
 }
+.tabactive {border: solid 1px #225566 !important; border-top-width: 2px !important;
+	position: relative; top: -1px;}
+.tabactive a {
+	background-color : #EEEEEE;
+	}
+.tabinactive {
+	border: solid 1px #666666 !important;
+	border-bottom: none !important;
+	position: relative !important; top: -2px !important;
+	}
 .tabmark {
 	display : inline;
 	font-size : 10px;
 	background-color : #DDDDDD;
-	border : 1px solid #666666;
 	margin : 0px;
 	margin-right : 5px;
 	padding: 2px 0;
-	border-radius : 5px 5px 0 0;
-	-moz-border-radius : 5px 5px 0 0;
-	-khtml-border-radius : 5px 5px 0 0;
+	border-radius : 3px 3px 0 0;
+	-moz-border-radius : 3px 3px 0 0;
+	-khtml-border-radius : 3px 3px 0 0;
 }
 .tabmark a {
-	border-radius : 5px 5px 0 0;
-	-moz-border-radius : 5px 5px 0 0;
-	-khtml-border-radius : 5px 5px 0 0;
+	border-radius : 3px 3px 0 0;
+	-moz-border-radius : 3px 3px 0 0;
+	-khtml-border-radius : 3px 3px 0 0;
 	border-bottom : 0;
 	color : #666666;
 	font-weight : bold;
@@ -1784,15 +1794,26 @@ a.phplm:hover, .phplmnormal a:hover {
 .tabcontent {
 	z-index : 200;
 	position : relative;
-	border : 1px solid #999999;
+	border : 1px solid #225566 !important;
+	border-top: none !important;
 	padding: 6px 2px 2px 2px;
 	margin: 5px;
 	margin-top : 0;
 	background-color : #EEEEEE;
-	border-radius : 0px 4px 4px 4px;
-	-moz-border-radius : 0px 4px 4px 4px;
-	-khtml-border-radius : 0px 4px 4px 4px;
+	border-radius : 0px 3px 3px 3px;
+	-moz-border-radius : 0px 3px 3px 3px;
+	-khtml-border-radius : 0px 3px 3px 3px;
 }
+
+form fieldset.tabcontent {
+	border : 1px solid #225566;
+	border-top: none !important;
+	}
+form.admin DIV#page-bar {
+	border-bottom: solid 1px #225566 !important;
+	margin: 10px 2px 0 0px !important; padding: 0 !important;
+}
+
 
 /*********************** Version Plugin Style **********************/
 .versions {
