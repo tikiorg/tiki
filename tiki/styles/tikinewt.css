@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikinewt.css,v 1.1.2.1 2008-03-02 14:10:59 chibaguy Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikinewt.css,v 1.1.2.2 2008-03-04 02:09:18 chibaguy Exp $
 Variation of Tikineat theme but based on *litecss
 
 IE hacks applied !
@@ -188,11 +188,26 @@ label {
 
 /*********************** SITE IDENTITY HEADER ************************************/
 
+ul#sioptions {
+	list-style: none;
+	padding-left: 0;
+	width: 100%;
+	margin: 0;
+}
+
+#sioptions li {
+	float: left;
+	width: auto;
+	margin: 6px;
+}
+
 #sitesearchbar {
 	font-size: .95em;
 	padding: 5px;
 	text-align: right;
 }
+
+
 
 /*********************** GENERAL LAYOUT ************************************/
 DIV#tiki-main {
@@ -290,9 +305,11 @@ a.flip img {
 
 #col3 {
 	background-color: transparent;
-	width : 180px;
+	width : 179px;
+	margin-left: -180px;
 	text-align : center;
 	border-left : 1px solid #8CACBB;
+	
 }
 
 #col3 .content {
@@ -325,9 +342,6 @@ a.flip img {
 	background-color: transparent;
 	color: black;
 }
-
-
-
 
 DIV#tiki-top {
 	font-size : .95em;
@@ -413,10 +427,19 @@ div.box-data {
 	overflow: hidden;
 }
 
+.box-data ul {
+	list-style: none;
+}
+
 .box-data ol,
 .box-data ul {
 	margin-left: -2em;
 }
+
+html* .box-data ul {
+	margin-left: 1em;
+}
+
 div.separator, div.separatorline {
 	background-color: #FFFFFF;
 	color : black;
@@ -993,7 +1016,8 @@ html>body .wikitopline table {
 }
 #description {
 	margin : 0 10px;
-	font-size : 1.1em !important;
+	font-size : 1.1em;
+	_font-size: .7em;
 	color : #666;
 }
 .wiki {
@@ -1787,10 +1811,14 @@ div#loadstats {
 }
 
 /* phplayers style */
+.horbaritem a, .horbaritem a:visited, .horbaritem a:hover {
+	_font-size: 70%; font-weight: bold;
+}
+
 a.phplm:link, a.phplm, a.phplm:hover, a.phplm:visited, .phplmnormal a, .phplmnormal a:hover, .phplmnormal a:visited {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	color: #000000;
-	font-size: 11px;
+	font-size: .9em;
 	cursor: pointer;
 	font-weight: normal;
 }
