@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.14 2008-03-03 20:23:27 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.15 2008-03-04 03:51:38 luciash Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -538,14 +538,17 @@ td.listartheading, td.forumheading, td.viewthread {
 	padding : 0 2px;
 }
 
-fieldset {border: solid 1px #8CACBB; margin: 2px; margin-bottom: 3px}
+form.admin {}
 
-legend.heading {
-	background-color: #fff;
+form.admin fieldset {border: solid 1px #8CACBB; margin: 2px; margin-bottom: 3px;}
+
+form.admin legend.heading {
+	background-color: transparent;
+	border: none;
 	line-height: 2em; padding-left: 0px; padding-right: 0px;
 	}
 
-legend.heading a {
+form.admin legend.heading a {
 	background-color: #8CACBB;
 	display: block;
 	top: -1em;
@@ -554,18 +557,18 @@ legend.heading a {
 	position: relative;
 	text-decoration: none;
 }
-legend.heading a:hover {
+form.admin legend.heading a:hover {
 	background-color: #ACBB8C;
 	padding: 1px 0px 0;
 }
-legend.heading a span {
+form.admin legend.heading a span {
 	background-color: #fff;
 	display: block;
 	font-size: 1em;
 	line-height: 2em;
 	padding: 0 1em;
 }
-legend.heading a:hover span {
+form.admin legend.heading a:hover span {
 	line-height: 1.9em;
 	margin-top: 0.1em; border-left: solid 1px #8CACBB; border-right: solid 1px #8CACBB;
 }
