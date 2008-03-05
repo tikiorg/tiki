@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-03-02 19:23:01 $
-# $Author: lphuberdeau $
+# $Date: 2008-03-05 13:00:19 $
+# $Author: marclaporte $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4373,6 +4373,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_groups', 'Can subscribe to groups', 'registered', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_detach_translation', 'Can remove association between two pages in a translation set', 'registered', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
 # --------------------------------------------------------
 
 #
@@ -4937,6 +4939,7 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
 ) ENGINE = MyISAM ;
 
 # ---------- mypage ----------------
+DROP TABLE IF EXISTS tiki_mypage;
 CREATE TABLE `tiki_mypage` (
   `id` int(11) NOT NULL auto_increment,
   `id_users` int(11) NOT NULL,
@@ -4962,6 +4965,7 @@ CREATE TABLE `tiki_mypage` (
   KEY `id_types` (`id_types`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypagewin;
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
   `id_mypage` int(11) NOT NULL,
@@ -4982,6 +4986,7 @@ CREATE TABLE `tiki_mypagewin` (
   KEY `id_mypage` (`id_mypage`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types;
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
   `created` int(11) NOT NULL,
@@ -5000,6 +5005,7 @@ CREATE TABLE `tiki_mypage_types` (
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types_components;
 CREATE TABLE `tiki_mypage_types_components` (
   `id_mypage_types` int(11) NOT NULL,
   `compname` varchar(255) NOT NULL,
@@ -5008,6 +5014,9 @@ CREATE TABLE `tiki_mypage_types_components` (
   KEY `id_mypage_types` (`id_mypage_types`)
 ) ENGINE=MyISAM;
 
+# ------------------------------------
+
+DROP TABLE IF EXISTS tiki_pages_translation_bits;
 CREATE TABLE `tiki_pages_translation_bits` (
   `translation_bit_id` int(14) NOT NULL auto_increment,
   `page_id` int(14) NOT NULL,
@@ -5020,5 +5029,3 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY(`original_translation_bit`),
   KEY(`source_translation_bit`)
 );
-
-# ------------------------------------

@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2008-03-02 19:23:04 $
--- $Author: lphuberdeau $
+-- $Date: 2008-03-05 13:00:59 $
+-- $Author: marclaporte $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -5168,6 +5168,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_subscribe_groups', 'Can subscribe to groups', 'registered', 'tiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_detach_translation', 'Can remove association between two pages in a translation set', 'registered', 'tiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
+
 -- ******************************************************
 
 --
@@ -6001,6 +6005,8 @@ CREATE TABLE tiki_webmail_contacts_fields (
 
 
 -- ---------- mypage ----------------
+DROP TABLE IF EXISTS 'tiki_mypage';
+
 CREATE TABLE tiki_mypage (
   id INTEGER,
   id_users bigint NOT NULL,
@@ -6027,6 +6033,8 @@ CREATE TABLE tiki_mypage (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_mypagewin';
+
 CREATE TABLE tiki_mypagewin (
   id INTEGER,
   id_mypage bigint NOT NULL,
@@ -6048,6 +6056,8 @@ CREATE TABLE tiki_mypagewin (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_mypage_types';
+
 CREATE TABLE tiki_mypage_types (
   id INTEGER,
   created bigint NOT NULL,
@@ -6067,6 +6077,8 @@ CREATE TABLE tiki_mypage_types (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_mypage_types_components';
+
 CREATE TABLE tiki_mypage_types_components (
   id_mypage_types bigint NOT NULL,
   compname varchar(255) NOT NULL,
@@ -6075,6 +6087,10 @@ CREATE TABLE tiki_mypage_types_components (
   KEY id_mypage_types (id_mypage_types)
 ) ENGINE=MyISAM;
 
+
+-- ------------------------------------
+
+DROP TABLE IF EXISTS 'tiki_pages_translation_bits';
 
 CREATE TABLE tiki_pages_translation_bits (
   translation_bit_id INTEGER,
@@ -6089,7 +6105,5 @@ CREATE TABLE tiki_pages_translation_bits (
   KEY(source_translation_bit)
 );
 
-
--- ------------------------------------
 ;
 
