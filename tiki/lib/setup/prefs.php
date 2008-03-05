@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.52 2008-03-05 12:45:36 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.53 2008-03-05 13:52:21 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -814,9 +814,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	# textarea
 	$prefs['feature_smileys'] = 'y';
-	$prefs['popupLinks'] = 'n';
+	$prefs['popupLinks'] = 'y';
 	$prefs['feature_autolinks'] = 'y';
-	$prefs['quicktags_over_textarea'] = 'n';
+	$prefs['quicktags_over_textarea'] = 'y';
 	$prefs['default_rows_textarea_wiki'] = '20';
 	$prefs['default_rows_textarea_comment'] = '6';
 	$prefs['default_rows_textarea_forum'] = '20';
@@ -862,7 +862,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_friends'] = 'n';
 	$prefs['feature_fullscreen'] = 'n';
 	$prefs['feature_help'] = 'y';
-	$prefs['feature_hotwords'] = 'y';
+	$prefs['feature_hotwords'] = 'n';
 	$prefs['feature_hotwords_nw'] = 'n';
 	$prefs['feature_integrator'] = 'n';
 	$prefs['feature_live_support'] = 'n';
@@ -919,7 +919,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['use_proxy'] = 'n';
 	$prefs['user_list_order'] = 'score_desc';
 	$prefs['webserverauth'] = 'n';
-	$prefs['feature_purifier'] = 'y';
+	$prefs['feature_purifier'] = 'n';
 	$prefs['feature_lightbox'] = 'n';
 	$prefs['log_sql'] = 'n';
 
