@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.57 2008-03-05 15:11:49 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.58 2008-03-05 23:07:09 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -618,7 +618,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['min_user_length'] = 1;
 	$prefs['min_pass_length'] = 1;
 	$prefs['pass_chr_num'] = 'n';
-	$prefs['pass_due'] = 999;
+	$prefs['pass_due'] = -1;
 	$prefs['email_due'] = -1;
 	$prefs['unsuccessful_logins'] = 5;
 	$prefs['rnd_num_reg'] = 'n';
@@ -644,7 +644,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['auth_ldap_adminpass'] = '';
 	$prefs['auth_ldap_version'] = 3;
 	$prefs['auth_ldap_nameattr'] = 'displayName';
-	$prefs['https_login'] = 'allowed';
+	$prefs['https_login'] = 'disabled';
 	$prefs['feature_show_stay_in_ssl_mode'] = 'y';
 	$prefs['feature_switch_ssl_mode'] = 'y';
 	$prefs['https_port'] = 443;
