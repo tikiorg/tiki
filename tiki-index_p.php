@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.27.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.27.2.2 2008-03-05 19:12:46 tombombadilom Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,10 @@
 
 // Initialization
 require_once('tiki-setup.php');
+if ($prefs['feature_ajax'] == "y") {
+include_once('lib/ajax/ajaxlib.php');
+require_once ("lib/wiki/wiki-ajax.php");
+}
 
 include_once('lib/structures/structlib.php');
 
@@ -269,7 +273,17 @@ if ($prefs['feature_theme_control'] == 'y') {
 	include('tiki-tc.php');
 }
 ask_ticket('index-p');
+if ($prefs['feature_ajax'] == "y") {
 
+function wiki_ajax() {
+    global $ajaxlib, $xajax;
+    $ajaxlib->registerTemplate("tiki-show_page.tpl");
+    $ajaxlib->registerTemplate("tiki-editpage.tpl");
+    $ajaxlib->registerFunction("loadComponent");
+    $ajaxlib->processRequests();
+}
+wiki_ajax();
+}
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 $smarty->display("tiki-index_p.tpl");
