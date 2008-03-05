@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}Admin Menu Builder{/tr}">{icon _id='help'}</a>
+<a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Admin Menu Builder{/tr}">{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

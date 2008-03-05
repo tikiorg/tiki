@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.9 2008-02-28 21:02:58 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.10 2008-03-05 15:37:20 marclaporte Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Users Management" target="tikihelp" class="tikihelp" title="{tr}Admin Users{/tr}">
+<a href="{$prefs.helpurl}Users+Management" target="tikihelp" class="tikihelp" title="{tr}Admin Users{/tr}">
 {icon _id='help'}</a>{/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Users Template{/tr}">
