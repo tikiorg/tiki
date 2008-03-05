@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.5 2008-02-19 20:11:03 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_pages.tpl,v 1.31.2.6 2008-03-05 23:33:05 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received Pages{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
+<a href="{$prefs.helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

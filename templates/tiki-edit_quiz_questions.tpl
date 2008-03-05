@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.30.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.30.2.2 2008-03-05 23:33:05 marclaporte Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -60,7 +60,7 @@
 <h2>{tr}Import questions from text{/tr}
  {if $prefs.feature_help eq 'y'}
 <! -- help link data -- >
-  <a href="http://tikiwiki.org/tiki-index.php?page=QuizQuestionImport" target="tikihelp" class="tikihelp">
+  <a href="{$prefs.helpurl}Quiz+Question+Import" target="tikihelp" class="tikihelp">
   <img border="0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a>
  {/if}
 </h2>
