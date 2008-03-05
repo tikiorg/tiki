@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.2 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.3 2008-03-05 21:58:09 sampaioprimo Exp $ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -32,6 +32,10 @@
 	<a href="{$url_base}{$firstId}{$same_scale}"
 		class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt='{tr}First Image{/tr}'}</a>
 
+{* --- previous image --- *}
+	<a href="{$url_base}{$previmg}{$same_scale}"
+    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt='{tr}Prev Image{/tr}'}</a>
+
 {* --- previous scale --- *}
 	{if $scaleinfo.prevscale}
    	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt='{tr}Smaller{/tr}' title='{tr}Smaller{/tr}'}</a>
@@ -47,14 +51,10 @@
 	  <a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt='{tr}Bigger{/tr}' title='{tr}Bigger{/tr}'}</a>
 	{/if}
 	    
-{* --- previous image --- *}
-	<a href="{$url_base}{$previmg}{$same_scale}"
-    	class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">    	{icon _id='resultset_previous' alt='{tr}Prev Image{/tr}'}</a>
-
 {* --- popup launch --- *}
 	{if !$popup}
 	  <a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="gallink">
-        {html_image file='img/icons2/admin_unhide.gif' border='none' alt='{tr}Popup window{/tr}' title='{tr}Popup Window{/tr}'}</a>
+        {icon _id='layers' alt='{tr}Popup window{/tr}'}</a>
 	{/if}
 
 {* --- next image --- *}
