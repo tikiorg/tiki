@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.24 2007-10-14 17:51:01 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.24.2.1 2008-03-05 22:33:29 sylvieg Exp $ *}
 
-{if $prefs.feature_search eq 'y'}
+{if $prefs.feature_search eq 'y' && $tiki_p_search eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="search_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     <form class="forms" method="get" action="tiki-searchresults.php">

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.38 2008-03-04 18:45:55 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.39 2008-03-05 22:33:29 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1734,4 +1734,10 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #2008-03-04 sylvieg
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags', NULL);
+
+#2008-03-04 sylvieg
+SELECT count(*)  INTO @fgcant FROM users_permissions WHERE permName = 'tiki_p_search';
+INSERT INTO users_permissions (permName, permDesc, level, type) SELECT 'tiki_p_search','Can search', 'basic', 'tiki' FROM users_permissions WHERE @fgcant = 0;
+INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Anonymous','tiki_p_search' FROM `users_grouppermissions` WHERE @fgcant = 0;
+INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Registered','tiki_p_search' FROM `users_grouppermissions` WHERE @fgcant = 0;
 
