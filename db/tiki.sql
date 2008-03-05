@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-03-04 18:45:55 $
-# $Author: sylvieg $
+# $Date: 2008-03-05 12:58:40 $
+# $Author: marclaporte $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4939,6 +4939,7 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
 ) ENGINE = MyISAM ;
 
 # ---------- mypage ----------------
+DROP TABLE IF EXISTS tiki_mypage;
 CREATE TABLE `tiki_mypage` (
   `id` int(11) NOT NULL auto_increment,
   `id_users` int(11) NOT NULL,
@@ -4964,6 +4965,7 @@ CREATE TABLE `tiki_mypage` (
   KEY `id_types` (`id_types`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypagewin;
 CREATE TABLE `tiki_mypagewin` (
   `id` int(11) NOT NULL auto_increment,
   `id_mypage` int(11) NOT NULL,
@@ -4984,6 +4986,7 @@ CREATE TABLE `tiki_mypagewin` (
   KEY `id_mypage` (`id_mypage`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types;
 CREATE TABLE `tiki_mypage_types` (
   `id` int(11) NOT NULL auto_increment,
   `created` int(11) NOT NULL,
@@ -5002,6 +5005,7 @@ CREATE TABLE `tiki_mypage_types` (
   KEY `name` (`name`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_mypage_types_components;
 CREATE TABLE `tiki_mypage_types_components` (
   `id_mypage_types` int(11) NOT NULL,
   `compname` varchar(255) NOT NULL,
@@ -5010,6 +5014,9 @@ CREATE TABLE `tiki_mypage_types_components` (
   KEY `id_mypage_types` (`id_mypage_types`)
 ) ENGINE=MyISAM;
 
+# ------------------------------------
+
+DROP TABLE IF EXISTS tiki_pages_translation_bits;
 CREATE TABLE `tiki_pages_translation_bits` (
   `translation_bit_id` int(14) NOT NULL auto_increment,
   `page_id` int(14) NOT NULL,
@@ -5022,5 +5029,3 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY(`original_translation_bit`),
   KEY(`source_translation_bit`)
 );
-
-# ------------------------------------
