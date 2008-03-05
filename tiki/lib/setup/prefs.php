@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.54 2008-03-05 14:06:44 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.55 2008-03-05 14:35:36 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -901,7 +901,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['layout_section'] = 'n';
 	$prefs['limitedGoGroupHome'] = 'n';
 	$prefs['minical_reminders'] = 0;
-	$prefs['modallgroups'] = 'y';
+	$prefs['modallgroups'] = 'n';
 	$prefs['modseparateanon'] = 'n';
 	$prefs['php_docroot'] = 'http://php.net/';
 	$prefs['proxy_host'] = '';

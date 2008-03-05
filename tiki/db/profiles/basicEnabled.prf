@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.1 2007-12-07 05:56:44 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.2 2008-03-05 14:35:35 marclaporte Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('quick_edit','l',2,'d','',0,0,'','a:1:{i:0;s:10:\"Registered\";}');
@@ -73,7 +73,6 @@ REPLACE INTO tiki_preferences VALUES ('language','en');
 REPLACE INTO tiki_preferences VALUES ('load_threshold','3');
 REPLACE INTO tiki_preferences VALUES ('maxVersions','0');
 REPLACE INTO tiki_preferences VALUES ('min_pass_length','3');
-REPLACE INTO tiki_preferences VALUES ('modallgroups','n');
 REPLACE INTO tiki_preferences VALUES ('modseparateanon','n');
 REPLACE INTO tiki_preferences VALUES ('popupLinks','y');
 REPLACE INTO tiki_preferences VALUES ('rememberme','all');

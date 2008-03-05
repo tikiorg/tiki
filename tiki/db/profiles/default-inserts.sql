@@ -246,7 +246,6 @@ INSERT INTO tiki_preferences VALUES ('max_rss_mapfiles','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_wiki','10');
 INSERT INTO tiki_preferences VALUES ('maxVersions','0');
 INSERT INTO tiki_preferences VALUES ('min_pass_length','1');
-INSERT INTO tiki_preferences VALUES ('modallgroups','y');
 INSERT INTO tiki_preferences VALUES ('pass_chr_num','n');
 INSERT INTO tiki_preferences VALUES ('pass_due','999');
 INSERT INTO tiki_preferences VALUES ('poll_comments_default_ordering','points_desc');
