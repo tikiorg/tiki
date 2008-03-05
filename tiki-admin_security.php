@@ -92,7 +92,7 @@ if($prefs['feature_galleries']=='y' && !empty($prefs['gal_use_dir']) &&
      'message' => tra('The Path to store files in the imagegallery should be outside the tiki root directory'));
 }
 
-if($prefs['feature_edit_templates']='y') {
+if($prefs['feature_edit_templates']=='y') {
    $tikisettings['edit_templates']=array('risk' => tra('unsafe'),'setting' => tra('on'),
      'message' => tra('The feature "Edit Templates" is switched on. Do not allow anyone you cannot trust to use this feature. It can easily be used to inject php code.'));
 }
