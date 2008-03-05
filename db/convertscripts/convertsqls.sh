@@ -1,8 +1,8 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10.2.1 2008-02-27 06:22:29 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10.2.2 2008-03-05 12:39:32 marclaporte Exp $
 
 # Usage:
-# move to db/convertscripts and run:
+# from db/convertscripts, run:
 # ./convertsqls.sh domain.com/subdomain/
 
 
