@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Mail Notifications" target="tikihelp" class="tikihelp" title="{tr}Admin Email Notifications{/tr}">
+<a href="{$prefs.helpurl}Mail+Notifications" target="tikihelp" class="tikihelp" title="{tr}Admin Email Notifications{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

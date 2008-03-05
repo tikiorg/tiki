@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_cookies.php">{tr}Admin cookies{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}FortuneCookieDoc" target="tikihelp" class="tikihelp" title="{tr}Admin FortuneCookie{/tr}">{icon _id='help'}</a>
+<a href="{$prefs.helpurl}Cookie" target="tikihelp" class="tikihelp" title="{tr}Cookie{/tr}">{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

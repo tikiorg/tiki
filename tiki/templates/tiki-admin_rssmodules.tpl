@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_rssmodules.php">{tr}Admin RSS modules{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}RSSModules" target="tikihelp" class="tikihelp" title="{tr}Admin RSS Modules{/tr}">
+<a href="{$prefs.helpurl}RSS+Modules" target="tikihelp" class="tikihelp" title="{tr}Admin RSS Modules{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

@@ -1,8 +1,8 @@
-{* $Id: tiki-syslog.tpl,v 1.16.2.4 2008-02-14 10:25:11 nyloth Exp $ *}
+{* $Id: tiki-syslog.tpl,v 1.16.2.5 2008-03-05 15:37:21 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Syslog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system logs{/tr}">
+<a href="{$prefs.helpurl}System+Log" target="tikihelp" class="tikihelp" title="{tr}System log help{/tr}: {tr}system logs{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
