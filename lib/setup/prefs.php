@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.56 2008-03-05 15:00:09 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.57 2008-03-05 15:11:49 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -771,8 +771,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_right_column'] = 'y';
 	$prefs['feature_top_bar'] = 'y';
 	$prefs['feature_bot_bar'] = 'y';
-	$prefs['feature_bot_bar_icons'] = 'y';
-	$prefs['feature_bot_bar_debug'] = 'y';
+	$prefs['feature_bot_bar_icons'] = 'n';
+	$prefs['feature_bot_bar_debug'] = 'n';
 	$prefs['feature_bot_bar_rss'] = 'y';
 	$prefs['maxRecords'] = 10;
 	$prefs['maxArticles'] = 10;
