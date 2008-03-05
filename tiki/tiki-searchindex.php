@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.3 2007-12-26 10:08:06 pkdille Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.16.2.4 2008-03-05 22:33:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,11 @@ if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
 
 	$smarty->display("error.tpl");
+	die;
+}
+if ($tiki_p_search != 'y') {
+	$smarty->assign('msg',tra('Permission denied'));
+	$smarty->display('error.tpl');
 	die;
 }
 
