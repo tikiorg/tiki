@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.55 2008-03-05 14:35:36 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.56 2008-03-05 15:00:09 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -871,7 +871,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_mobile'] = 'n';
 	$prefs['feature_modulecontrols'] = 'n';
 	$prefs['feature_morcego'] = 'n';
-	$prefs['feature_multilingual'] = 'y';
+	$prefs['feature_multilingual'] = 'n';
 	$prefs['feature_multilingual_structures'] = 'n';
 	$prefs['feature_newsletters'] = 'n';
 	$prefs['feature_obzip'] = 'n';
@@ -897,7 +897,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_user_watches_translations'] = 'y';
 	$prefs['feature_workflow'] = 'n';
 	$prefs['feature_xmlrpc'] = 'n';
-	$prefs['helpurl'] = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
+	$prefs['helpurl'] = "http://doc.tikiwiki.org/";
 	$prefs['layout_section'] = 'n';
 	$prefs['limitedGoGroupHome'] = 'n';
 	$prefs['minical_reminders'] = 0;
