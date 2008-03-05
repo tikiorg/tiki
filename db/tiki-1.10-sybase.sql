@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-03-02 19:23:05 $
--- $Author: lphuberdeau $
+-- $Date: 2008-03-05 13:01:01 $
+-- $Author: marclaporte $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -6858,6 +6858,14 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_detach_translation', 'Can remove association between two pages in a translation set', 'registered', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -8238,6 +8246,10 @@ go
 
 
 -- ---------- mypage ----------------
+-- DROP TABLE "tiki_mypage"
+go
+
+
 CREATE TABLE `tiki_mypage` (
   `id numeric(11 ,0) identity,
   `id_users` numeric(11,0) NOT NULL,
@@ -8266,6 +8278,10 @@ go
 
 
 
+-- DROP TABLE "tiki_mypagewin"
+go
+
+
 CREATE TABLE `tiki_mypagewin` (
   `id numeric(11 ,0) identity,
   `id_mypage` numeric(11,0) NOT NULL,
@@ -8289,6 +8305,10 @@ go
 
 
 
+-- DROP TABLE "tiki_mypage_types"
+go
+
+
 CREATE TABLE `tiki_mypage_types` (
   `id numeric(11 ,0) identity,
   `created` numeric(11,0) NOT NULL,
@@ -8310,6 +8330,10 @@ go
 
 
 
+-- DROP TABLE "tiki_mypage_types_components"
+go
+
+
 CREATE TABLE `tiki_mypage_types_components` (
   `id_mypage_types` numeric(11,0) NOT NULL,
   `compname` varchar(255) NOT NULL,
@@ -8319,6 +8343,12 @@ CREATE TABLE `tiki_mypage_types_components` (
 ) ENGINE=MyISAM
 go
 
+
+
+-- ------------------------------------
+
+-- DROP TABLE "tiki_pages_translation_bits"
+go
 
 
 CREATE TABLE `tiki_pages_translation_bits` (
@@ -8336,8 +8366,6 @@ CREATE TABLE `tiki_pages_translation_bits` (
 go
 
 
-
--- ------------------------------------
 
 go
 
