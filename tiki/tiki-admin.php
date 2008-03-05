@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.7 2008-02-11 03:27:47 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.8 2008-03-05 15:55:07 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -174,17 +174,13 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Score";//get_strings tra("Score")
 		$description = "Score settings";//get_strings tra("Score settings")
 		include_once ('tiki-admin_include_score.php');
-	} else if ($adminPage == "projects") {
-		$admintitle = "Projects";//get_strings tra("Projects")
-		$description = "Projects configuration";//get_strings tra("Projects configuration")
-		include_once ('tiki-admin_include_projects.php');
 	} else if ($adminPage == "community") {
 		$admintitle = "Community";//get_strings tra("Community")
 		$description = "Community settings";//get_strings tra("Community settings")
 		include_once ('tiki-admin_include_community.php');
 	} else if ($adminPage == "siteid") {
 		$admintitle = "Site Identity";//get_strings tra("Site Identity")
-		$helpUrl = "Site+Logo+and+Identity+Config";
+		$helpUrl = "Site+Identity";
 		$description = "Site Identity features";//get_strings tra("Site Identity features")
 		include_once ('tiki-admin_include_siteid.php');
 	} else if ($adminPage == "calendar") {
@@ -208,7 +204,7 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "i18n") {
 		$admintitle = "i18n";//get_strings tra("i18n")
 		$description = "Internationalization";//get_strings tra("i18n")
-		$helpUrl = "Ii18h";
+		$helpUrl = "i18n";
 		include_once ('tiki-admin_include_i18n.php');
 	} else if ($adminPage == "wysiwyg") {
 		$admintitle = "wysiwyg";//get_strings tra("i18n")
