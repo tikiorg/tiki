@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.28.2.1 2007-10-18 08:51:34 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.28.2.2 2008-03-05 23:33:05 marclaporte Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -8,7 +8,7 @@
 
 <h1><a class="pagetitle" href="tiki-quiz_edit.php?quizId={$quiz->id}">{tr}Edit quiz{/tr}: {$quiz->name}</a>
 {if $prefs.feature_help}
-&nbsp &nbsp &nbsp<a title="{tr}Help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=QuizEdit" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+&nbsp &nbsp &nbsp<a title="{tr}Help{/tr}" href="{$prefs.helpurl}Quiz" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 </h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.4 2008-03-05 23:33:05 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/CommunicationsCenterDoc" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
+<a href="{$prefs.helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

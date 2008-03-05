@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-replicate.php">{tr}Replicate{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Replicate" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
+<a href="{$prefs.helpurl}Replicate" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
