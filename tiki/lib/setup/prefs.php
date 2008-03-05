@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.51 2008-03-04 15:22:25 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.52 2008-03-05 12:45:36 marclaporte Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -56,21 +56,21 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki'] = 'y';
 	$prefs['default_wiki_diff_style'] = 'minsidediff';
 	$prefs['feature_backlinks'] = 'y';
-	$prefs['feature_dump'] = 'y';
+	$prefs['feature_dump'] = 'n';
 	$prefs['feature_history'] = 'y';
 	$prefs['feature_lastChanges'] = 'y';
-	$prefs['feature_likePages'] = 'y';
+	$prefs['feature_likePages'] = 'n';
 	$prefs['feature_listPages'] = 'y';
 	$prefs['feature_page_title'] = 'y';
-	$prefs['feature_sandbox'] = 'y';
-	$prefs['feature_warn_on_edit'] = 'n';
+	$prefs['feature_sandbox'] = 'n';
+	$prefs['feature_warn_on_edit'] = 'y';
 	$prefs['feature_wiki_1like_redirection'] = 'y';
 	$prefs['feature_wiki_allowhtml'] = 'n';
 	$prefs['feature_wiki_attachments'] = 'n';
 	$prefs['feature_wiki_comments'] = 'n';
 	$prefs['feature_wiki_description'] = 'n';
 	$prefs['feature_wiki_discuss'] = 'n';
-	$prefs['feature_wiki_export'] = 'y';
+	$prefs['feature_wiki_export'] = 'n';
 	$prefs['feature_wiki_import_page'] = 'n';
 	$prefs['feature_wiki_footnotes'] = 'n';
 	$prefs['feature_wiki_icache'] = 'n';
