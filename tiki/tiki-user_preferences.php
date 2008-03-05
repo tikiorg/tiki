@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.12 2008-02-15 14:56:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.102.2.13 2008-03-05 19:06:23 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -318,17 +318,26 @@ if (isset($_REQUEST['chgadmin'])) {
 
 	// check user's password, admin doesn't need it to change other user's info
 	if ($tiki_p_admin != 'y' || $user == $userwatch) {
-	    list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
-	    if (!$ok) {
-		$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
-		$smarty->display("error.tpl");
-		die;
-	    }
+		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+			if ($ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch, $pass))
+				if ($ok->faultCode())
+					$ok = false;
+		} else {
+			list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
+		}
+		if (!$ok) {
+			$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
+			$smarty->display("error.tpl");
+			die;
+		}
 	}
 
 	if (!empty($_REQUEST['email']) && $prefs['login_is_email'] != 'y') {
 		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
 		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Email is set to %s"),$_REQUEST['email']));
+		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master
+			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
+		}
 	}
 
 	// If user has provided new password, let's try to change
