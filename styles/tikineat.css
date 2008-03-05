@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.18 2008-03-04 23:07:04 luciash Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.19 2008-03-05 09:49:27 nyloth Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -274,7 +274,10 @@ div.box-title table {
 	border-spacing: 0;
 }
 div.box-title table td {
-  text-align: center;
+	text-align: center;
+}
+div.opaque {
+	background-color: white;
 }
 div.box-data {
 	color : black;
