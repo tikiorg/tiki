@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.8 2008-03-02 20:53:48 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.9 2008-03-05 11:57:48 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// To (re-)enable this script the file has to be named tiki-installer.php and the following four lines 
+// To (re-)enable this script the file has to be named tiki-installer.php and the following four lines
 // must start with two '/' and 'stopinstall:'. (Make sure there are no spaces inbetween // and stopinstall: !)
 
 //stopinstall: header ("Status: 410 Gone"); /* PHP3 */
@@ -49,7 +49,7 @@ function list_tables( $dbTiki )
 	$result = $dbTiki->Execute( "show tables" );
 	while( $row = $result->fetchRow() )
 		$list[] = reset( $row );
-	
+
 	return $list;
 }
 
@@ -84,7 +84,7 @@ function process_sql_file($file,$db_tiki) {
 	while(!feof($fp)) {
 		$command.= fread($fp,4096);
 	}
-	
+
 	switch ( $db_tiki ) {
 	  case 'sybase': $statements = split("(\r|\n)go(\r|\n)", $command); break;
           case 'mssql': $statements = split("(\r|\n)go(\r|\n)", $command); break;
@@ -235,7 +235,7 @@ class Smarty_Tikiwiki extends Smarty {
 function kill_script() {
 	/*Header ('Location: tiki-install_disable.php');
 	die;*/
-	
+
 	$remove = 'no';
 	if (isset($_REQUEST['remove'])) $remove = 'yes';
 	$removed = false;
@@ -277,7 +277,7 @@ function kill_script() {
 </body></html>";
 	}
 	die;
-}																																	
+}
 
 function check_session_save_path() {
 	global $errors;
@@ -337,7 +337,7 @@ function get_webserver_uid() {
 
 function error_and_exit() {
 	global $errors, $docroot, $wwwgroup, $wwwuser;
-	
+
         $PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
 
         $httpd_conf = 'httpd.conf';
@@ -368,11 +368,11 @@ or
 
 2- With shell (SSH) access, you can run the command below.
 
-	a) Run setup.sh and follow the instructions:
+	a) To run setup.sh, follow the instructions:
 		\$ bash
 		\$ cd $docroot
 		\$ chmod +x setup.sh
-		\$ ./setup.sh 
+		\$ ./setup.sh
 
 		The script will offer you options depending on your server configuration.
 
@@ -413,9 +413,9 @@ function has_admin() {
                                 $admin_acc = 'y';
                         } else {
                                 $admin_acc = 'n';
-                        } 
-                } else { 
-                        $admin_acc = 'n'; 
+                        }
+                } else {
+                        $admin_acc = 'n';
                 }
         }
 }
@@ -493,7 +493,7 @@ function check_password() {
 		// next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
 		$query = "select login, hash from users_users where lower(login) = 'admin'";
 		$result = $dbTiki->Execute($query);
-		
+
 		$res = $result->fetchRow();
 		if ($res) {
 			$hash[] = crypt($pass, $res['hash']);
@@ -646,9 +646,9 @@ if (!file_exists($local)) {
 	        // avoid database change messages
 		ini_set('sybct.min_server_severity', '11');
 	}
-	
+
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	
+
 	// avoid errors in ADONewConnection() (wrong darabase driver etc...)
 	if( ! isset($dbservers[$db_tiki]) ) {
 		$dbcon = false;
@@ -705,7 +705,7 @@ if (isset($_SESSION['install-logged'])) {echo '$_SESSION[install-logged] is set<
 }
 echo "admin_acc=$admin_acc<br>";
 */
-if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' && 
+if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 		($admin_acc=='n' || (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"]=='y'))
 	)) && isset($_REQUEST['dbinfo'])) {
 
@@ -749,7 +749,7 @@ if ($admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
 
 $smarty->assign('admin_acc', $admin_acc);
 
-// Since we do have an admin account the user must login to 
+// Since we do have an admin account the user must login to
 // use the install script
 if ( isset($_REQUEST['login']) ) $tikifeedback[] = check_password();
 
