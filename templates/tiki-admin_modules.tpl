@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.15 2008-02-08 18:12:17 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.16 2008-03-06 00:44:13 marclaporte Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
@@ -210,11 +210,8 @@
 <br />
 
 <table class="normal"><tr><td valign="top" class="odd">
-	{if $wysiwyg eq 'n'}
-		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>
-	{else}
-		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=n#editcreate">{tr}Use normal editor{/tr}</a>
-	{/if}
+
+
 {if $um_name ne ''}
 <a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
 {/if}
@@ -227,15 +224,6 @@
 
 <textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data|escape}</textarea>
 
-{if $wysiwyg eq 'y'}
-	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
-	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
-	<script type="text/javascript" src="lib/htmlarea/dialog.js"></script>
-	<style type="text/css">
-		@import url(lib/htmlarea/htmlarea.css);
-	</style>
-	<script defer='defer'>(new HTMLArea(document.forms['editusr']['um_data'])).generate();</script>
-{/if}
 
 </td></tr>
 <tr><td class="form">{tr}Must be wiki parsed{/tr}</td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}/></td></tr>
