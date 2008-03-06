@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.23 2008-02-17 02:34:03 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.24 2008-03-06 13:49:01 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1309,8 +1309,12 @@ function get_included_groups($group, $recur=true) {
 		if (!isset($user)) {
 			return 'Anonymous';
 		}
-		if ($user == $_SESSION['u_info']['login'] && isset($_SESSION['u_info']['group'])) {
-			return isset($_SESSION['u_info']['group']['groupName']) ? $_SESSION['u_info']['group']['groupName']: $_SESSION['u_info']['group'];
+		if ($user == $_SESSION['u_info']['login']) {
+			if (is_string($_SESSION['u_info']['group'])) {
+				return $_SESSION['u_info']['group'];
+			} elseif (is_string($_SESSION['u_info']['group']['groupName'])) {
+				return $_SESSION['u_info']['group']['groupName'];
+			}
 		}
 		$query = "select `default_group` from `users_users` where `login` = ?";
 		$result = $this->getOne($query, array($user));
