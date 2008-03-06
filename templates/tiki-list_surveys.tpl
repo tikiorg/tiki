@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.30.2.1 2007-10-17 20:36:10 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.30.2.2 2008-03-06 00:26:13 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">
+<a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}">

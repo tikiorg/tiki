@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31.2.3 2008-03-06 00:26:12 marclaporte Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-admin_integrator.php">{tr}Integrator{/tr}</a>
 
   {if $prefs.feature_help eq 'y'}
-    <a href="http://tikiwiki.org/tiki-index.php?page=TikiIntegrator" target="tikihelp" class="tikihelp" title="{tr}Tiki integrator{/tr}">
+    <a href="{$prefs.helpurl}Integrator" target="tikihelp" class="tikihelp" title="{tr}Tiki integrator{/tr}">
       <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' />
     </a>
   {/if}

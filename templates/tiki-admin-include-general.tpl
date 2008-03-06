@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.9 2008-02-13 22:29:14 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.10 2008-03-06 00:26:12 marclaporte Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -160,7 +160,7 @@
         </td>
       </tr><tr>
         <td class="form"><label for="general-gzip">
-        {if $prefs.feature_help eq 'y'}<a href="http://tikiwiki.org/Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
+        {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
         {tr}Use gzipped output{/tr}
         {if $prefs.feature_help eq 'y'}</a>{/if}
         :</label>
