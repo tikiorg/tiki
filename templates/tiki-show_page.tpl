@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.16 2008-03-02 21:44:35 pkdille Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.17 2008-03-06 14:55:01 sylvieg Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -273,6 +273,8 @@
   {/section}.<br />
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
+{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'lastmodif'}
+	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
 {else}
 <br />
   {tr}Created by{/tr}: {$creator|userlink}.
