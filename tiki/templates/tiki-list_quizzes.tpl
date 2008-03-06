@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_quizzes.tpl,v 1.25.2.1 2007-10-17 20:36:10 niclone Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_quizzes.tpl,v 1.25.2.2 2008-03-06 00:26:13 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a>
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id222862" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
+<a href="{$prefs.helpurl}Quiz" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" />
 </a>
 {/if}

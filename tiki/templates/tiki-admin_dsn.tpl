@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
   
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=AdminDSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}">{icon _id='help'}</a>
+<a href="{$prefs.helpurl}Admin+DSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}">{icon _id='help'}</a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

@@ -1,7 +1,7 @@
 <h1><a class="pagetitle" href="tiki-admin_shoutbox_words.php">{tr}Admin Shoutbox Words{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ShoutboxWords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Shoutbox Words{/tr}">
+<a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Shoutbox Words{/tr}">
 {icon _id='help'}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}

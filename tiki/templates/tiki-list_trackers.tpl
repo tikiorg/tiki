@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.5 2008-02-21 16:21:52 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_trackers.tpl,v 1.28.2.6 2008-03-06 00:26:13 marclaporte Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
 {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
+<a href="{$prefs.helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}

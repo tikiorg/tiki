@@ -2,7 +2,7 @@
 
 {if $prefs.feature_help eq 'y'}
 <!-- the help link info --->
-<a href="http://tikiwiki.org/tiki-index.php?page=ScoreSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score System{/tr}">
+<a href="{$prefs.helpurl}Score" target="tikihelp" class="tikihelp" title="{tr}Score System{/tr}: {tr}Score System{/tr}">
 {icon _id='help'}</a>{/if}</h1>
 
 <div align="center">

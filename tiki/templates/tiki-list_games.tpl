@@ -7,7 +7,7 @@
     <h1><a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a>
 
       {if $prefs.feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Games" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Games{/tr}">
+<a href="{$prefs.helpurl}Games" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Games{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 
