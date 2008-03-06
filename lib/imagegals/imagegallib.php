@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.3 2008-01-28 17:38:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.4 2008-03-06 19:45:42 sampaioprimo Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -639,7 +639,9 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function rebuild_image($imageid, $itype, $xsize, $ysize=0) {
-		$galid = $this->get_gallery_from_image($imageid);
+	        global $prefs;
+	        
+	        $galid = $this->get_gallery_from_image($imageid);
 		if($ysize==0) {
 			$ysize=$xsize;
 		}
@@ -650,18 +652,27 @@ class ImageGalsLib extends TikiLib {
 
 		//if it is a scaled image, test the gallery settings
 		if ($itype == 's') {
-			$scaleinfo = $this->get_gallery_scale_info($galid);
-
 			$hasscale = false;
 
-			while (list($num, $sci) = each($scaleinfo)) {
+			if ($prefs["preset_galleries_info"] == 'y' && $prefs["scaleSizeGalleries"] > 0) {
+			    $scaleinfo = $prefs["scaleSizeGalleries"];
+			    if ((($scaleinfo == $xsize) && ($scaleinfo >= $ysize)) || (($scaleinfo == $ysize) && ($scaleinfo >= $xsize))) {
+				$hasscale = true;
+				$newx = $scaleinfo;
+				$newy = $scaleinfo;
+			    }
+			} else {
+			    $scaleinfo = $this->get_gallery_scale_info($galid);
+			    while (list($num, $sci) = each($scaleinfo)) {
 				if ((($sci['scale'] == $xsize) && ($sci['scale'] >= $ysize)) || 
 				    (($sci['scale'] == $ysize) && ($sci['scale'] >= $xsize))) {
-					$hasscale = true;
-
-					$newx = $sci['scale'];
-					$newy = $sci['scale'];
+				    $hasscale = true;
+				    
+				    $newx = $sci['scale'];
+				    $newy = $sci['scale'];
 				}
+			    }
+			    
 			}
 
 			if (!$hasscale)
@@ -669,7 +680,6 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		// now we can start rebuilding the image
-		global $prefs;
 		//if(!function_exists("ImageCreateFromString")) return false;
 		#get image and other infos
 		$this->get_image($imageid);
@@ -1626,7 +1636,7 @@ class ImageGalsLib extends TikiLib {
 
 
 		$result = $this->query($query,$bindvars,1);
-		
+
 		if ($result===false || $result===null) {
 			die;
 		}

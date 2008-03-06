@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.2 2007-11-17 08:11:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.3 2008-03-06 19:45:42 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,7 @@ if (isset($_REQUEST["galfeatures"])) {
 	simple_set_toggle ("feature_image_galleries_comments");
 	simple_set_toggle ("feature_gal_slideshow");
 	simple_set_toggle ("feature_gal_batch");
+	simple_set_toggle ("preset_galleries_info");
 
 	// Check for last character being a / or a \
 	// My next commit is to create a clas to put this code into
@@ -82,7 +83,6 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 	"gal_list_user",
 	"gal_list_imgs",
 	"gal_list_visits",
-	"preset_galleries_thumb"
 	);
 
 	foreach ($pref_toggles as $toggle) {

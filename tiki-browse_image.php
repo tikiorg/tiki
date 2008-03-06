@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.46.2.3 2007-12-16 16:22:11 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.46.2.4 2008-03-06 19:45:42 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,7 +115,7 @@ if (isset($_REQUEST["scalesize"])) {
 }
 $arrscales = $imagegallib->get_gallery_scale_info($galleryId);
 // adjust scale size to existing ones
-if ($scalesize) {
+if ($scalesize && !$prefs['preset_galleries_info'] == 'y') {
     $testscale = 0;
     for ($iscale = 0; $iscale < count($arrscales); $iscale++) {
         if ($scalesize <= $arrscales[$iscale]['scale']) {
