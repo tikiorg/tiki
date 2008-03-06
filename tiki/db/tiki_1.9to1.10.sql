@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.39 2008-03-05 22:33:29 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.40 2008-03-06 19:45:42 sampaioprimo Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1609,7 +1609,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 UPDATE tiki_menu_options set url='javascript:toggle(\'debugconsole\')' where url='javascript:toggle("debugconsole")';
 
 #2007-11-07 pkdille
-UPDATE `tiki_preferences` SET `name`='preset_galleries_thumb' WHERE `name`='preset_galleries_scale';
+UPDATE `tiki_preferences` SET `name`='preset_galleries_info' WHERE `name`='preset_galleries_scale';
 
 #2007-11-13 sylvieg
 ALTER TABLE users_groups ADD userChoice CHAR(1) DEFAULT NULL;

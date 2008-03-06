@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.4 2007-12-11 18:19:51 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.5 2008-03-06 19:45:43 sampaioprimo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -61,6 +61,17 @@
 	<input type="radio" name="gal_image_mouseover" value="only" {if $prefs.gal_image_mouseover eq 'only'}checked="checked"{/if}/>{tr}yes, and don't display those informations under the image{/tr}
 	</td>
     </tr>
+
+    <tr class="form">
+	<td><label>{tr}Use default max rows, images per row, thumbnails size and scale size for all galleries (set values below){/tr}</label></td>
+	<td><input type="checkbox" name="preset_galleries_info" {if $prefs.preset_galleries_info eq 'y'}checked="checked"{/if} /></td>
+    </tr>
+    <tr><td class="form">{tr}Max Rows per page{/tr}:</td><td class="form"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+    <tr><td class="form">{tr}Images per row{/tr}:</td><td class="form"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
+    <tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
+    <tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
+    <tr><td class="form">{tr}Default scale size{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
+
     <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
@@ -157,20 +168,8 @@
 		<td><label>{tr}Visits{/tr}</label></td>
 		<td><input type="checkbox" name="gal_list_visits" {if $prefs.gal_list_visits eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="form">
-		<td><label>{tr}Force galleries image size per default{/tr}</label></td>
-		<td><input type="checkbox" name="preset_galleries_thumb" {if $prefs.preset_galleries_thumb eq 'y'}checked="checked"{/if} /></td>
 
-	</tr>
-	
-        <tr><td class="form">{tr}Max Rows per page{/tr}:</td><td class="form"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
-        <tr><td class="form">{tr}Images per row{/tr}:</td><td class="form"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
-	<tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
-	<tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
-	
-	<tr><td class="form">{tr}Size of all thumbnails{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
-
-<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
+	<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
 
 	</table>	
 	</form>	
