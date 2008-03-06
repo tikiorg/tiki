@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.5 2008-03-06 19:45:43 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.6 2008-03-06 20:31:30 sampaioprimo Exp $ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -143,6 +143,10 @@
 	<tr class="form">
 		<td><label>{tr}Name{/tr}</label></td>
 		<td><input type="checkbox" name="gal_list_name" {if $prefs.gal_list_name eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr class="form">
+		<td><label>{tr}Parent{/tr}</label></td>
+		<td><input type="checkbox" name="gal_list_parent" {if $prefs.gal_list_parent eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr class="form">
 		<td><label>{tr}Description{/tr}</label></td>

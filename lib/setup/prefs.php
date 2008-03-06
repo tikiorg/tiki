@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.61 2008-03-06 19:45:43 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.62 2008-03-06 20:31:30 sampaioprimo Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -248,6 +248,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['image_galleries_comments_default_order'] = 'points_desc';
 	$prefs['image_galleries_comments_per_page'] = 10;
 	$prefs['gal_list_name'] = 'y';
+	$prefs['gal_list_parent'] = 'y';
 	$prefs['gal_list_description'] = 'y';
 	$prefs['gal_list_created'] = 'y';
 	$prefs['gal_list_lastmodif'] = 'y';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.3 2008-03-06 19:45:42 sampaioprimo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.24.2.4 2008-03-06 20:31:29 sampaioprimo Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 
 	$pref_toggles = array(
 	"gal_list_name",
+	"gal_list_parent",
 	"gal_list_description",
 	"gal_list_created",
 	"gal_list_lastmodif",
