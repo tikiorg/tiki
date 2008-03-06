@@ -247,6 +247,9 @@
     {tr}Add new freetags of approved copy (into tags field) when editing staging pages{/tr}: </td><td>
     <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
     </td></tr>
+    <tr><td class="form">
+    <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
     </tr></table>
@@ -571,6 +574,7 @@
     <option value="classic" {if $prefs.wiki_authors_style eq 'classic'}selected="selected"{/if}>{tr}as Creator &amp; Last Editor{/tr}</option>
     <option value="business" {if $prefs.wiki_authors_style eq 'business'}selected="selected"{/if}>{tr}Business style{/tr}</option>
     <option value="collaborative" {if $prefs.wiki_authors_style eq 'collaborative'}selected="selected"{/if}>{tr}Collaborative style{/tr}</option>
+	<option value="lastmodif" {if $prefs.wiki_authors_style eq 'lastmodif'}selected="selected"{/if}>{tr}Page last modified on{/tr}</option>
     <option value="none" {if $prefs.wiki_authors_style eq 'none'}selected="selected"{/if}>{tr}no (disabled){/tr}</option>
     </select> 
     </td></tr>
