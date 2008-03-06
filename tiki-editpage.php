@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.39 2008-02-26 16:24:17 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.181.2.40 2008-03-06 16:29:45 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -49,6 +49,10 @@ $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslat
 if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
 	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
 }
+if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
+	$_REQUEST['page'] = $prefs['wikiapproval_prefix'] . $_REQUEST['page'];
+}
+
 $page = $_REQUEST["page"];
 $smarty->assign_by_ref('page', $_REQUEST["page"]);
 
@@ -1122,7 +1126,7 @@ if (!$user or $user == 'anonymous') {
 if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');
 }
-if ($prefs['feature_wikiapproval'] == 'y') {	
+if ($prefs['feature_wikiapproval'] == 'y') {
 	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');

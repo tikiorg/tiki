@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.8 2008-02-08 19:34:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.9 2008-03-06 16:29:45 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,6 +249,8 @@ if (isset($_REQUEST["wikiapprovalprefs"])) {
 	simple_set_toggle('wikiapproval_sync_categories');
 	simple_set_toggle('wikiapproval_update_freetags');
 	simple_set_toggle('wikiapproval_combine_freetags');
+	simple_set_toggle('wikiapproval_delete_staging');
+	simple_set_value('wikiapproval_master_group');
 }
 
 if ($prefs['feature_forums'] == 'y') {
@@ -261,6 +263,8 @@ if ($prefs['feature_categories'] == 'y') {
 	$catree = $categlib->get_all_categories();
 	$smarty->assign('catree', $catree);
 }
+$all_groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('all_groups', $all_groups);
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);

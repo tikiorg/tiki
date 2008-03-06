@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.85 2008-03-03 20:16:54 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.86 2008-03-06 16:29:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4182,8 +4182,10 @@ function add_pageview() {
 			}
 			if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 				$ret['tiki_p_edit'] = 'y';
+				$ret['tiki_p_wiki_attach_files'] = 'y';
 			} else {
 				$ret['tiki_p_edit'] = 'n';
+				$ret['tiki_p_wiki_attach_files'] = 'n';
 			}
 			break;
 		case 'faq':
