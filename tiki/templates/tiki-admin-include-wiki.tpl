@@ -248,7 +248,17 @@
     <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
     </td></tr>
     <tr><td class="form">
-    <input type="checkbox" name="wikiapproval_combine_freetags" {if $prefs.wikiapproval_combine_freetags eq 'y'}checked="checked"{/if}/>
+    {tr}Delete staging pages at approval{/tr}: </td><td>
+    <input type="checkbox" name="wikiapproval_delete_staging" {if $prefs.wikiapproval_delete_staging eq 'y'}checked="checked"{/if}/>
+    </td></tr>
+    <tr><td class="form">
+    {tr}If not in the group, edit is always redirected to the staging page edit{/tr}: </td><td>
+	<select name="wikiapproval_master_group">
+	<option value=""{if $prefs.wikiapproval_master_group eq ''} selected="selected"{/if}></option>
+	{foreach from=$all_groups item=g}
+	<option value="{$g|escape}"{if $prefs.wikiapproval_master_group eq $g} selected="selected"{/if}>{$g|escape}</option>
+	{/foreach}
+	</select>
     </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
