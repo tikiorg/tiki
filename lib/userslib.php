@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.24 2008-03-06 13:49:01 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.25 2008-03-06 14:58:32 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1310,9 +1310,9 @@ function get_included_groups($group, $recur=true) {
 			return 'Anonymous';
 		}
 		if ($user == $_SESSION['u_info']['login']) {
-			if (is_string($_SESSION['u_info']['group'])) {
+			if (isset($_SESSION['u_info']['group']) && is_string($_SESSION['u_info']['group'])) {
 				return $_SESSION['u_info']['group'];
-			} elseif (is_string($_SESSION['u_info']['group']['groupName'])) {
+			} elseif (isset($_SESSION['u_info']['group']['groupName']) && is_string($_SESSION['u_info']['group']['groupName'])) {
 				return $_SESSION['u_info']['group']['groupName'];
 			}
 		}
