@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.8 2008-03-06 19:45:43 sampaioprimo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.9 2008-03-06 20:31:30 sampaioprimo Exp $ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -157,7 +157,9 @@
 <tr>
 {if $prefs.gal_list_name eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading">{tr}Parent{/tr}</td>
+{/if}
+{if $prefs.gal_list_parent eq 'y'}
+<td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'parentgallery_desc'}parentgallery_asc{else}parentgallery_desc{/if}">{tr}Parent{/tr}</td>
 {/if}
 {if $prefs.gal_list_description eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
@@ -185,7 +187,10 @@
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
 {if $prefs.gal_list_name eq 'y'}
-  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].galleryId}">{$galleries[changes].name}</a></td><td class="{cycle advance=false}">
+  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].galleryId}">{$galleries[changes].name}</a></td>
+{/if}
+{if $prefs.gal_list_parent eq 'y'}
+  <td class="{cycle advance=false}">
   {if $galleries[changes].parentgallery ne -1 }<a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].parentgallery}">{$galleries[changes].parentgalleryName}</a>{/if}
   {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
   </td>
