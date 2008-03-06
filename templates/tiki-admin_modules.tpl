@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.16 2008-03-06 00:44:13 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.62.2.17 2008-03-06 17:48:37 marclaporte Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
@@ -28,7 +28,7 @@
 {tr} or {/tr}&quot;<em>{tr}Displayed now, can't be unassigned{/tr}</em>&quot;.
 {tr}Only that way you can be sure users will notice new modules you assign later{/tr}.<br />
 <b>{tr}Note 2{/tr}</b>: {tr}If you assign modules to groups make sure that you have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups always{/tr}</em>&quot;
-{tr} on page {/tr}<a class="rbox-link" href="tiki-admin.php?page=general">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}General{/tr}</a>.
+{tr} on page {/tr}<a class="rbox-link" href="tiki-admin.php?page=module">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Module{/tr}</a>.
 </div>
 
 <h2>{tr}User Modules{/tr}</h2>
