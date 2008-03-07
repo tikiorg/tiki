@@ -187,14 +187,14 @@ class HistLib extends TikiLib {
 			$ret[] = $aux;
 		}
 
-		return $ret[0];
+		return empty($ret)?$ret: $ret[0];
 	}
 	
 	// note that this function returns the latest version in the
 	// history db table, which is one less than the current version 
-	function get_page_latest_version($page) {
+	function get_page_latest_version($page, $sort_mode='version_desc') {
 
-		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select `version` from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,array($page),1);
 		$ret = array();
 		

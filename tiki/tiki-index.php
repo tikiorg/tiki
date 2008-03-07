@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.19 2008-03-04 15:22:25 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.20 2008-03-07 16:32:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -706,7 +706,7 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		if ($canApproveStaging == 'y' && isset($approvedPageName)) {
 			include_once('lib/wiki/histlib.php');
 			$approvedPageInfo = $histlib->get_page_from_history($approvedPageName, 0);
-			if ($info['lastModif'] > $approvedPageInfo['lastModif']) {
+			if ($approvedPageInfo && $info['lastModif'] > $approvedPageInfo['lastModif']) {
 				$lastSyncVersion = $histlib->get_version_by_time($page, $approvedPageInfo['lastModif']);
 				// get very first version if unable to get last sync version.
 				if ($lastSyncVersion == 0) $lastSyncVersion = $histlib->get_version_by_time($page, 0, 'after');
