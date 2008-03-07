@@ -58,25 +58,30 @@ $staging_page = $page;
 $page = substr($staging_page, strlen($prefs['wikiapproval_prefix']));
 
 // If either page doesn't exist then display an error
+/*
 if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
 	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
 
 	$smarty->display("error.tpl");
 	die;
 }
+*/
+if (!($staging_info = $tikilib->get_page_info($staging_page))) {
+	$smarty->assign('msg', tra('Page cannot be found'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 // Check approved page edit permissions
 $info = $tikilib->get_page_info($page);
-$tikilib->get_perm_object($page, 'wiki page', $info, true);
+if ($info) {
+	$tikilib->get_perm_object($page, 'wiki page', $info, true);
+}
 if ($tiki_p_edit != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;
 }
-
-// get staging page info
-
-$staging_info = $tikilib->get_page_info($staging_page);
 
 if ( $staging_info['lastModif'] < $info['lastModif'] ) { 
 	$smarty->assign('msg', tra("Approved page was last saved after most recent staging edit"));
@@ -87,30 +92,44 @@ if ( $staging_info['lastModif'] < $info['lastModif'] ) {
 
 // update approved page contents
 // multiple commits are needed to make sure contributor list and history are synced
-
-$begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
-$commitversion = $histlib->get_page_latest_version($page) + 1;
+if ($info) {
+	$begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
+	$commitversion = $histlib->get_page_latest_version($page) + 1;
+ } else {
+	$begin_version = $histlib->get_page_latest_version($staging_page, 'version_asc');
+	$commitversion = 0;
+ }
 $lastversion = $histlib->get_page_latest_version($staging_page);
 $finalversion = $lastversion + 1;
 if ($begin_version > 0) {
-	for ($v = $begin_version; $v <= $lastversion; $v++) {
-		$version_info = $histlib->get_version($staging_page, $v);
-		$history = array();
-		if ($version_info) {
-			$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
-			$commitversion++;
-			$history[] = $version_info;
-			if ($prefs['feature_multilingual'] == 'y') {
-				// update translation bits
-				include_once("lib/multilingual/multilinguallib.php");
-				$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $v );				
-				$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
-			}			
-		} 		
+		for ($v = $begin_version; $v <= $lastversion; $v++) {
+			$version_info = $histlib->get_version($staging_page, $v);
+			$history = array();
+			if ($version_info) {
+				if ($info) {
+					$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+				} else {
+					$tikilib->create_page($page, 0, $version_info["data"], $version_info['lastModif'], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], $staging_info["lang"], $staging_info["is_html"]);
+					$info = $tikilib->get_page_info($page);
+				}
+				$commitversion++;
+				$history[] = $version_info;
+				if ($prefs['feature_multilingual'] == 'y') {
+					// update translation bits
+					include_once("lib/multilingual/multilinguallib.php");
+					$flags = $multilinguallib->get_page_bit_flags( $staging_info['page_id'], $v );				
+					$multilinguallib->createTranslationBit( 'wiki page', $info['page_id'], $commitversion, $flags );
+				}			
+			} 		
+		}
 	}
-}
 // finally approve current staging version
-$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+if ($info) {
+	$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+} else {
+	$tikilib->create_page($page, 0,  $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
+	$info = $tikilib->get_page_info($page);
+}
 $commitversion++;
 if ($prefs['feature_multilingual'] == 'y') {
 	// update translation bits
