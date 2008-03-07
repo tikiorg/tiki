@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.18 2008-03-04 14:28:38 sept_7 Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.113.2.19 2008-03-07 16:27:14 sylvieg Exp $
  *
  * \brief Categories support class
  *
@@ -555,6 +555,7 @@ class CategLib extends ObjectLib {
 
 							}
 						}
+
 					}
 				}
 			}
@@ -1127,10 +1128,10 @@ class CategLib extends ObjectLib {
 	
 	//Moved from tikilib.php
     function last_category_objects($categId, $maxRecords, $type="") {
-		$mid = "and tbl1.`categId`=?";
+		$mid = "and `categId`=?";
 		$bindvars = array((int)$categId);
 		if ($type) {
-		    $mid.= " and tbl2.`type`=?";
+		    $mid.= " and `type`=?";
 		    $bindvars[] = $type;
 		}
 		$sort_mode = "created_desc";
