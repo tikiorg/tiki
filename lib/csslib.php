@@ -146,7 +146,7 @@ class cssLib extends TikiLib {
 		$pos = strpos($data, "@version");
 		if( $pos === false ) { return false; }
 		// get version
-		preg_match("/(@[V|v]ersion):?\s+([\d]?)\.([\d]+)/i",
+		preg_match("/(@[V|v]ersion):?\s?([\d]+)\.([\d]+)/i",
 		$data, $matches);
 		$version = $matches[2].".".$matches[3];
 		return $version;
