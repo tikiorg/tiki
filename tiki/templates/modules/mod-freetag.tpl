@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.12.2.2 2008-01-07 15:13:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.12.2.3 2008-03-07 19:41:03 sylvieg Exp $ *}
 
-{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $tagid}
 {if !isset($tpl_module_title)}{assign value="{tr}Folksonomy{/tr}" var="tpl_module_title"}{/if}
 {tikimodule title=$tpl_module_title name="freetag" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 
