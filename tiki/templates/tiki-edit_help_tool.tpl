@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.5 2008-02-11 03:27:45 nkoth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.6 2008-03-07 16:42:49 sylvieg Exp $ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -72,7 +72,7 @@ function taginsert(area_name,tagid)
       <a title="{tr interactive='n'}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
         <img src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' title='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' border='0' />
       </a>
-      {cycle name='cycle'|cat:$qtnum}
+      {if $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
     {/section}
     <a title="{tr}special chars{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');">
       {icon _id='world_edit' alt='{tr}special characters{/tr}'}
