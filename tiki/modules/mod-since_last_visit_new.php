@@ -140,7 +140,9 @@ function since_last_visit_new($user, $params = null) {
     {
         if ($userlib->user_has_perm_on_object($user,$res['pageName'], 'wiki page', 'tiki_p_view')) {
            $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
-           $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
+           $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]);
+		   if ($prefs['wiki_authors_style'] != 'lastmodif')
+			   $ret["items"]["pages"]["list"][$count]["title"] .= " ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["user"])));
            $ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
            $count++;
        }
