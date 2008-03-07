@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.7 2008-01-17 18:38:08 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.8 2008-03-07 18:03:25 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,11 +51,6 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 
 	$mod_reference = &$these_modules[$mod_counter];
 	parse_str($mod_reference["params"], $module_params);
-	if (isset($module_params['title'])) { 
-		$smarty->assign('tpl_module_title',tra($module_params['title'])); 
-	} else {
-		$smarty->clear_assign('tpl_module_title');
-	}
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'y';
 	if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
 	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
@@ -128,6 +123,11 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 	}
 	if ($pass == 'y') {
+		if (isset($module_params['title'])) { 
+			$smarty->assign('tpl_module_title',tra($module_params['title'])); 
+		} else {
+			$smarty->clear_assign('tpl_module_title');
+		}
 		$show_columns[$these_modules_name] = 'y';
 		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
 		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
