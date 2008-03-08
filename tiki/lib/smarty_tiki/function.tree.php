@@ -26,7 +26,7 @@ function smarty_function_tree($params, &$smarty) {
 	require_once $smarty->_get_plugin_filepath('function', 'query');
 
 	if ( ! function_exists('data2struct') ) {
-		function data2struct(&$data, $level = 1, $expanded = 0) {
+		function data2struct(&$data, $level, &$expanded) {
 			static $cur = 0;
 			$ret = '';
 			if ( is_array($data) && $level > 0 ) {
@@ -44,11 +44,11 @@ function smarty_function_tree($params, &$smarty) {
 				if ( isset($data['current']) ) $data['name'] = '<b>'.$data['name'].'</b>';
 				$name = $data['name'] . ( isset($data['addon']) ? ' '.$data['addon'] : '' );
 				$ret .= str_repeat('.', $level).'|'.$name.'|'.$link.'||folder.png';
-				if ( $expanded == $cur ) $ret .= '||1';
+				if ( in_array($cur, $expanded) ) $ret .= '||1';
 				$ret .= "\n";
 				if ( is_array($data['data']) ) {
 					foreach ( $data['data'] as $d ) {
-						$ret .= data2struct($d, $level + 1);
+						$ret .= data2struct($d, $level + 1, $expanded);
 					}
 				}
 			}
@@ -59,12 +59,33 @@ function smarty_function_tree($params, &$smarty) {
 	$structure = '';
 
 	if ( ! isset($params['type']) ) $params['type'] = 'tree';
-	if ( ! isset($params['expanded']) ) $params['expanded'] = 0;
+	if ( ! isset($params['expanded']) ) $params['expanded'] = array(1);
 	if ( isset($params['data']) && is_array($params['data']) ) {
-		$item_expanded = ( $params['type'] == 'phptree' ) ? 0 : $params['expanded'];
-		$structure = data2struct($params['data'], 1, $item_expanded);
+		$expanded = ( $params['type'] == 'phptree' ) ? array(1) : $params['expanded'];
+		$structure = data2struct($params['data'], 1, $expanded);
 	}
 
-	return $tikiphplayers->mkMenu($structure, '', $params['type'], '', 0, $params['expanded']);
+	if ( $prefs['javascript_enabled'] == 'y' ) {
+
+		// Update cookie that stores tree elements that should be expanded
+		//   by keeping those already expanded by the user and those that should now be expanded ($params['expanded'])
+		//
+		if ( isset($_COOKIE) && isset($_COOKIE['phplm_expand']) && $_COOKIE['phplm_expand'] != '' ) {
+			$phplm_expand = implode('|', array_unique(array_merge($params['expanded'], explode('|', $_COOKIE['phplm_expand']))));
+			if ( ! headers_sent() ) {
+				// Not using php's setcookie function because pipes '|' are converted to %7C
+				//   and are no more understood by PHP Layers javacript
+				header('Set-Cookie: phplm_expand='.$phplm_expand.'; path=/');
+			}
+		}
+	
+		// Reset cookie that stores tree elements collapsed by the user, in order
+		//   to be sure every elements of $params['expanded'] are really expanded
+		//
+		setcookie('phplm_collapse', '', false, '/');
+
+	}
+
+	return $tikiphplayers->mkMenu($structure, '', $params['type'], '', 0, max($params['expanded']));
 }
 ?>
