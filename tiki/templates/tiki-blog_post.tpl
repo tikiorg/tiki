@@ -59,7 +59,9 @@
   </tr>
 {/if}
 
-{if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y' and $prefs.quicktags_over_textarea eq 'y'}
+{* show quicktags over textarea *}
+{if $prefs.quicktags_over_textarea eq 'y' and ($prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') ) 
+    }
   <tr>
     <td class="editblogform"><label>{tr}Quicktags{/tr}</label></td>
     <td class="editblogform">
@@ -68,7 +70,8 @@
   </tr>
 {/if}
 
-{if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
+{* show quickags on left side from textarea *}
+{if ( $prefs.feature_wysiwyg eq 'n' or ($prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and $wysiwyg eq 'n') )}
   <tr>
     <td class="editblogform">
       <br />
@@ -76,15 +79,15 @@
       <br />
 
       {if $prefs.quicktags_over_textarea neq 'y'}
-      <br /><br />
+        <br /><br />
         {include file=tiki-edit_help_tool.tpl area_name="blogedit"}
       {/if}
-
     </td>
     
     <td class="editblogform">
       <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
-{else}
+
+{else}  {* show textarea with wysiwyg editor *}
   <td class="editblogform" colspan="2">
     {editform Meat=$data InstanceName='data' ToolbarSet="Tiki"}
 {/if}
