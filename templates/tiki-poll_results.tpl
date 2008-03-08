@@ -1,7 +1,7 @@
-{* $Id: tiki-poll_results.tpl,v 1.17.2.2 2007-12-06 06:28:16 nkoth Exp $ *}
+{* $Id: tiki-poll_results.tpl,v 1.17.2.3 2008-03-08 19:36:47 sylvieg Exp $ *}
 <h1><a href="tiki-poll_results.php">{tr}Poll Results{/tr}</a></h1>
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
-{if !isset($list_votes)}
+{if empty($smarty.request.pollId) and !isset($list_votes)}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 {if !empty($offset)}<input type="hidden" name="offset" value="{$offset}" />{/if}
