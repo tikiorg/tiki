@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.10 2008-03-06 00:26:12 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.69.2.11 2008-03-08 21:12:22 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -92,6 +92,9 @@
 						{tr}smarty notice reporting{/tr}
       </td>
 	  </tr><tr>
+	  <td class="form"><label for="log_mail">{tr}Log Mail in Tiki Logs:{/tr}</label></td>
+	  <td><input type="checkbox" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} /></td>
+	  </TR><TR>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
       </tr><tr>
