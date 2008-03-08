@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.38 2008-02-28 14:57:13 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.39 2008-03-08 22:06:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2010,7 +2010,7 @@ class TrackerLib extends TikiLib {
 		$type['e'] = array(
 			'label'=>tra('category'), 
 			'opt'=>true, 
-			'help'=>tra('Category options: parentId,radio|checkbox(default),1|0(default) to have a select all button') );
+			'help'=>tra('Category options: parentId,d|m|radio|checkbox(default),1|0(default) to have a select all button, d for dropdown, m for multiple drop down') );
 		$type['r'] = array(
 			'label'=>tra('item link'),
 			'opt'=>true,

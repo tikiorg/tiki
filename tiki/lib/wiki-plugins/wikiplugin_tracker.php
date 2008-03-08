@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.19 2008-02-19 20:11:02 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.20 2008-03-08 22:06:47 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -586,10 +586,23 @@ function wikiplugin_tracker($data, $params) {
 							$back .= tra('Select All');
 							$back .= "</div>')/* ]]> */</script>";
 						}
-						foreach ($cats as $cat) {
-							$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
+						if (isset($f['options_array'][1]) && ($f['options_array'][1] == 'd' || $f['options_array'][1] == 'm')) {
+							$back .= '<select name="ins_cat_'.$f['fieldId'].'[]"';
+							if ($f['options_array'][1] == 'm') {
+								$back .= ' multiple="multiple"';
+							}
+							$back .= '>';
+							foreach ($cats as $cat) {
+								$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
+								$back .= '<option value="'.$cat['categId'].'" '.$checked.'>'.$cat['name'].'</option>';
+							}
+							$back .= '</select>';
+						} else {
 							$t = (isset($f["options_array"][1]) && $f["options_array"][1] == 'radio')? 'radio': 'checkbox';
-							$back .= '<input type="'.$t.'" name="ins_cat_'.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input><br />';
+							foreach ($cats as $cat) {
+								$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
+								$back .= '<input type="'.$t.'" name="ins_cat_'.$f['fieldId'].'[]" value="'.$cat["categId"].'" '.$checked.'>'.$cat['name'].'</input><br />';
+							}
 						}
 					} elseif ($f['type'] == 'c') {
 						$back .="<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
