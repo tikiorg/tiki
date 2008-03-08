@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.9 2008-03-04 22:31:57 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.10 2008-03-08 19:37:47 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -568,6 +568,7 @@ if ( ! empty($_FILES) ) {
 				die;
 			}
 
+			$smarty->assign('fileId', $_REQUEST['fileId']);
 			$smarty->assign('fileChangedMessage', tra('File update was successful').': '.$v['name']);
 
 			if ( isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y' ) {
@@ -699,7 +700,8 @@ $smarty->assign_by_ref('all_galleries', $all_galleries['data']);
 
 // Build galleries browsing tree and current gallery path array
 //
-function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, $cur_id = -1) {
+function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $cur_id = -1) {
+	static $total = 1;
 	$i = 0;
 	$current_path = array();
 	$path_found = false;
@@ -708,10 +710,12 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, $cur_id = -
 			$tree[$i] = &$galleries[$gk];
 			$tree[$i]['link_var'] = 'galleryId';
 			$tree[$i]['link_id'] = $gv['id'];
-			add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $gv['id']);
+			$tree[$i]['pos'] = $total++;
+			add2tree($tree[$i]['data'], $galleries, $gallery_id, $gallery_path, $expanded, $gv['id']);
 			if ( ! $path_found && $gv['id'] == $gallery_id ) {
 				if ( $_REQUEST['galleryId'] == $gv['id'] ) $tree[$i]['current'] = 1;
 				array_unshift($gallery_path, array($gallery_id, $gv['name']));
+				$expanded[] = $tree[$i]['pos'] + 1;
 				$gallery_id = $cur_id;
 				$path_found = true;
 			}
@@ -723,19 +727,21 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, $cur_id = -
 if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	$tree = array('name' => tra('File Galleries'), 'data' => array());
 	$gallery_path = array();
+	$expanded = array('1');
 
-	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path);
+	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
 
 	array_unshift($gallery_path, array(0, $tree['name']));
 	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
-		$gallery_path_str .= ( $dir_id[0] > 0 ? '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager' : '').'">'.$dir_id[1].'</a>' : $dir_id[1]);
+		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager' : '').'">'.$dir_id[1].'</a>';
 	}
 }
 
 $smarty->assign('gallery_path', $gallery_path_str);
 $smarty->assign_by_ref('tree', $tree);
+$smarty->assign_by_ref('expanded', $expanded);
 
 ask_ticket('fgal');
 
