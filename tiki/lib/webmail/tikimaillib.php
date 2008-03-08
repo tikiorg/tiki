@@ -79,6 +79,16 @@ class TikiMail extends HtmlMimeMail {
 		} else
 			return $string;
 	}
+	function send($recipients, $type = 'mail') {
+		global $prefs;
+		global $logslib; include_once ('lib/logs/logslib.php');
+		$result = parent::send($recipients, $type);
+		$title = $result?'mail': 'mail error';
+		if (!$result || $prefs['log_mail'])
+			foreach ($recipients as $u) {
+				$logslib->add_log($title, $u.'/'.$this->headers['Subject']);
+			}
+	}
 }	
 /**
   * encode a string
