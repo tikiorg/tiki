@@ -24,7 +24,7 @@
               {assign var=cname value=$slvn_item.cname}
               <div class="separator">
                 <a class="separator" href="javascript:toggle('{$cname}');">
-                  {$slvn_item.count}&nbsp;{$slvn_item.label}
+                  {$slvn_item.label}:&nbsp;{$slvn_item.count}
                 </a>
              </div>
              <div id="{$cname}" {if $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if}>
