@@ -1,6 +1,9 @@
-{* $Id: tiki-poll_results.tpl,v 1.17.2.3 2008-03-08 19:36:47 sylvieg Exp $ *}
-<h1><a href="tiki-poll_results.php">{tr}Poll Results{/tr}</a></h1>
-<span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Other Polls{/tr}</a></span>
+{* $Id: tiki-poll_results.tpl,v 1.17.2.4 2008-03-08 19:52:27 sylvieg Exp $ *}
+<h1><a href="tiki-poll_results.php{if !empty($smarty.request.pollId)}?pollId={$smarty.request.pollId}{/if}">{tr}Poll Results{/tr}</a></h1>
+<div class="navbar">
+<span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Polls{/tr}</a></span>
+<span class="button2"><a href="tiki-poll_results.php" class="linkbut">{tr}Top Voted Polls{/tr}</a></span>
+</div>
 {if empty($smarty.request.pollId) and !isset($list_votes)}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
