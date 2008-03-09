@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.9 2008-02-08 19:34:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.10 2008-03-09 21:40:00 sylvieg Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -129,13 +129,13 @@
 
     {if $prefs.wiki_list_id eq 'y'}
       <td class="{cycle advance=false}">
-        <a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
+        <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
       </td>
     {/if}
 
     {if $prefs.wiki_list_name eq 'y'}
       <td class="{cycle advance=false}">
-        <a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
+        <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
       </td>
     {/if}
 
@@ -207,7 +207,7 @@
 
     {if $prefs.wiki_list_categories eq 'y'}
       <td class="{cycle advance=false}">
-        {foreach item=categ from=$listpages[changes].categname}
+        {foreach item=categ from=$listpages[changes].categname name=categ}
 	  {if !$smarty.foreach.categ.first}<br />{/if}
 	    {$categ}
 	{/foreach}
