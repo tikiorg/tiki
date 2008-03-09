@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.21 2008-03-08 22:20:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.22 2008-03-09 21:23:59 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -596,7 +596,7 @@ function wikiplugin_tracker($data, $params) {
 								$back .= '<option value=""></option>"';
 							}
 							foreach ($cats as $cat) {
-								$checked = ($f['value'] == $cat['categId']) ? 'checked="checked"' : '';
+								$checked = ($f['value'] == $cat['categId']) ? 'selected="selected"' : '';
 								$back .= '<option value="'.$cat['categId'].'" '.$checked.'>'.$cat['name'].'</option>';
 							}
 							$back .= '</select>';

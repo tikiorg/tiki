@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.40 2008-03-05 02:20:32 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.41 2008-03-09 21:23:59 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -320,6 +320,15 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 /* ]]> */</script>
 {/if}
 {assign var=fca value=$field_value.options}
+{if $field_value.options_array[1] eq 'm' or $field_value.options_array[1] eq 'd'}
+	<select name="ins_cat_{$field_value.fieldId}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
+	{if $field_value.options_array[1] eq 'm' and !$field_value.isMandatory}<option value=""></option>{/if}
+	{foreach key=ku item=iu from=$field_value.categories name=foreache}
+	{assign var=fcat value=$iu.categId }
+	<option value="{$iu.categId}"{if $field_value.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.name|escape}</option>
+	{/foreach}
+	</select>
+{else}
 {* {assign var=onePerLine value="y"} *}
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$field_value.categories name=eforeach}
@@ -329,6 +338,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 </td>{if $onePerLine eq 'y'}{if !$smarty.foreach.eforeach.last}</tr><tr>{/if}{elseif !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.categories|@count%2}<td></td>{/if}{/if}
 {/foreach}
 </tr></table>
+{/if}
 
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
