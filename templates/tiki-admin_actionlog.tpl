@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.12 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.13 2008-03-09 11:01:22 luciash Exp $ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -23,7 +23,7 @@
 {cycle name=content values="1,2" print=false advance=false reset=true}
 
 {* -------------------------------------------------- tab with report --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Report" />
 <form method="get" action="tiki-admin_actionlog.php#Report">
 {* a get method to be able when you right click on the image to save it and not to save the tiki-admin_aqctionlog.php without param *}
@@ -392,7 +392,7 @@
 </div>{* tab *}
 
 {* -------------------------------------------------- tab with setting --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <a name="Setting" />
 <h2>{tr}Setting{/tr}</h2>
 <form method="post" action="tiki-admin_actionlog.php">
