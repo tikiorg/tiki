@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.9 2008-03-03 14:45:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.121.2.10 2008-03-10 18:04:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -393,7 +393,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST["comments_title"], "tiki-view_forum_thread.php?forumId=" . $forum_info['forumId'] . "&amp;comments_parentId=" . $threadId);			    
 
 			    }
-			} else {
+			} elseif ($_REQUEST['forumId'] != $prefs['wiki_forum_id']) {
 				$smarty->assign('duplic', 'y');
 				unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 			}
