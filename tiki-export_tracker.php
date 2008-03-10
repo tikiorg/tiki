@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.9 2008-02-07 19:38:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_tracker.php,v 1.12.2.10 2008-03-10 22:37:44 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,7 +140,7 @@ if (!empty($_REQUEST['file'])) {
 
 $offset = 0;
 $maxRecords = 100;
-$sort_mode = 'tti.itemId_asc';
+$sort_mode = 'itemId_asc';
 $smarty->assign_by_ref('heading', $heading);
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	// still need to filter the fields that are view only by the admin and the item creator
