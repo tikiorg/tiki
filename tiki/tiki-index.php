@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.20 2008-03-07 16:32:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.21 2008-03-10 18:16:59 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -620,6 +620,7 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 }
 
 // Display category path or not (like {catpath()})
+$cats = array();
 if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('wiki page',$page)) {
     $smarty->assign('is_categorized','y');
     if ($prefs['feature_categoryobjects'] == 'y' || $prefs['feature_categorypath'] == 'y') {
