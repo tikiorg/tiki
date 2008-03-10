@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.2 2008-03-05 14:35:35 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.3 2008-03-10 16:26:29 sylvieg Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('quick_edit','l',2,'d','',0,0,'','a:1:{i:0;s:10:\"Registered\";}');
@@ -218,6 +218,7 @@ REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_validate_links',''
 REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_view_referer_stats','');
 REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_view_user_results','');
 REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_wiki_admin_attachments','');
+REPLACE INTO users_grouppermissions VALUES ('Editors','tiki_p_clean_cache','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_add_events','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_attach_trackers','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_blog_post','');
