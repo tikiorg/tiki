@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-wysiwyg.tpl,v 1.3.2.1 2007-10-30 14:09:03 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-wysiwyg.tpl,v 1.3.2.2 2008-03-10 20:36:05 sylvieg Exp $ *}
 
 <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -44,7 +44,7 @@
           </tr>
           
           <tr>
-            <td class="form"><label for="wysiwyg_toolbar">{tr}Toolbar content{/tr}:</label></td>
+            <td class="form"><label for="wysiwyg_toolbar">{tr}Toolbar content{/tr}:</label></td><td>{tr}Restore defaults{/tr} <input type="checkbox" name="restore" /></td>
           </tr>
           
           <tr>
