@@ -376,6 +376,16 @@
     			<input type="checkbox" name="wiki_list_categories_path" {if $prefs.wiki_list_categories_path eq 'y'}checked="checked"{/if} />
     		</td>
     	</tr>
+		<tr>
+			<td class="form">{tr}Default sort order{/tr}:</td><td class="form"><select name="wiki_list_sortorder">
+				{foreach from=$options_sortorder key=key item=item}
+				<option value="{$item}" {if $prefs.wiki_list_sortorder eq $item} selected="selected"{/if}>{$key}</option>
+				{/foreach}
+				</select><br />
+				<input type="radio" name="wiki_list_sortdirection" value="desc" {if $prefs.wiki_list_sortdirection eq 'desc'}checked="checked"{/if} />{tr}descending{/tr}
+				<input type="radio" name="wiki_list_sortdirection" value="asc" {if $prefs.wiki_list_sortdirection eq 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+			</td>
+		</tr>
 
     	<tr>
     		<td colspan="2" class="button">

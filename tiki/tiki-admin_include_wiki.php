@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.9 2008-03-06 16:29:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.77.2.10 2008-03-10 19:39:55 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,12 +103,14 @@ if (isset($_REQUEST['wikilistprefs'])) {
 	'wiki_list_language',
 	'wiki_list_categories',
 	'wiki_list_categories_path',
-	'wiki_list_id'
+	'wiki_list_id',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
 	simple_set_int('wiki_list_name_len');
+	simple_set_value('wiki_list_sortorder');
+	simple_set_value('wiki_list_sortdirection');
 }
 
 if (isset($_REQUEST["wikifeatures"])) {
@@ -252,6 +254,17 @@ if (isset($_REQUEST["wikiapprovalprefs"])) {
 	simple_set_toggle('wikiapproval_delete_staging');
 	simple_set_value('wikiapproval_master_group');
 }
+
+$options_sortorder = array(
+						   tra('Name')=>'pageName',
+						   tra('LastModif')=>'lastModif',
+						   tra('Created')=>'created',
+						   tra('Creator')=>'creator',
+						   tra('Hits')=>'hits',
+						   tra('Last editor')=>'user',
+						   tra('Size')=>'page_size'
+						   );
+$smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 if ($prefs['feature_forums'] == 'y') {
 	$commentslib = new Comments($dbTiki);

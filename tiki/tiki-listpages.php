@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.7 2008-03-03 13:53:42 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.54.2.8 2008-03-10 19:39:56 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,7 +144,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	
 	if (!isset($_REQUEST["sort_mode"])) {
-		$sort_mode = 'pageName_asc';
+		$sort_mode = $prefs['wiki_list_sortorder'].'_'.$prefs['list_sortdirection'];
 	} else {
 		$sort_mode = $_REQUEST["sort_mode"];
 	}
