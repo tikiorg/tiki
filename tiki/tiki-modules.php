@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.8 2008-03-07 18:03:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.69.2.9 2008-03-10 05:43:16 nkoth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,10 +65,19 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$pass = 'n';
 	} elseif (isset($module_params['theme'])) {
 		global $tc_theme;
-		if (isset($tc_theme) && $tc_theme > '' && $module_params['theme'] != $tc_theme) {
-			$pass = 'n';
-		} elseif ($module_params['theme'] != $prefs['style'] && (!isset($tc_theme) || $tc_theme == '')) {
-			$pass = 'n';
+		if (substr($module_params['theme'],0,1) != '!') { // usual behavior
+			if (isset($tc_theme) && $tc_theme > '' && $module_params['theme'] != $tc_theme) {
+				$pass = 'n';
+			} elseif ($module_params['theme'] != $prefs['style'] && (!isset($tc_theme) || $tc_theme == '')) {
+				$pass = 'n';
+			}
+		} else { // negation behavior
+			$excluded_theme = substr($module_params['theme'],1);
+			if (isset($tc_theme) && $tc_theme > '' && $excluded_theme == $tc_theme) {
+				$pass = 'n';
+			} elseif ($excluded_theme == $prefs['style'] && (!isset($tc_theme) || $tc_theme == '')) {
+				$pass = 'n';
+			}
 		}
 	} elseif ($prefs['modallgroups'] != 'y') {
 		if ($mod_reference["groups"]) {
