@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.8 2008-03-01 17:12:48 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.9 2008-03-10 15:43:36 marclaporte Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -33,6 +33,9 @@
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $prefs.webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $prefs.allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $prefs.validateRegistration eq 'y'}checked="checked"{/if}/>
+{if empty($prefs.sender_email)}
+<div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</div>
+{/if} 
 <tr><td class="form">{tr}Create a group for each user <br />(with the same name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use tracker for more user information{/tr}:</td><td><input type="checkbox" name="userTracker" {if $prefs.userTracker eq 'y'}checked="checked"{/if} /></td></tr>
@@ -41,7 +44,11 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $prefs.useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}"/></td></tr>
 <tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")){ {/php} {tr} - Php GD library required{/tr}{php}}{/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $prefs.rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use login as email{/tr}:</td><td><input type="checkbox" name="login_is_email" {if $prefs.login_is_email eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if}/>
+{if empty($prefs.sender_email)}
+<div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</div>
+{/if} 
+</td></tr>
 <tr><td class="form">{tr}Validate user email server{/tr}:</td><td><input type="checkbox" name="validateEmail" {if $prefs.validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Users can opt-out internal messages{/tr}:</td><td><input type="checkbox" name="allowmsg_is_optional" {if $prefs.allowmsg_is_optional eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Users accept internal messages by default{/tr}:</td><td><input type="checkbox" name="allowmsg_by_default" {if $prefs.allowmsg_by_default eq 'y'}checked="checked"{/if}/></td></tr>
