@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.9 2008-03-02 20:20:54 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-top_bar.tpl,v 1.41.2.10 2008-03-10 17:45:18 sylvieg Exp $ *}
 {if $prefs.feature_siteidentity eq 'y' && $prefs.feature_top_bar eq 'y'}
 {if $prefs.feature_topbar_version eq 'y'}
 {tr}This is{/tr} Tikiwiki v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- &#169; 2002&#8211;2008 {tr}by the{/tr} <a href="http://tikiwiki.org" 
@@ -14,8 +14,12 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {if $prefs.feature_topbar_debug eq 'y' and $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
   &#160;//&#160;<a href="javascript:toggle('debugconsole');">{tr}debug{/tr}</a>
 {/if}
-{if $prefs.feature_phplayers eq 'y' and $prefs.feature_sitemenu eq 'y'}
-{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
+{if $prefs.feature_sitemenu eq 'y'}
+	{if $prefs.feature_phplayers eq 'y'}
+		{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
+	{else}
+		{menu id=$prefs.feature_topbar_id_menu type=horiz css=y}
+	{/if}
 {/if}
 {/if}
 {if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y')}
