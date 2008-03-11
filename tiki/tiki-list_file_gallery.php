@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.10 2008-03-08 19:37:47 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.11 2008-03-11 14:37:37 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -568,7 +568,7 @@ if ( ! empty($_FILES) ) {
 				die;
 			}
 
-			$smarty->assign('fileId', $_REQUEST['fileId']);
+			$smarty->assign('fileId', $fileId);
 			$smarty->assign('fileChangedMessage', tra('File update was successful').': '.$v['name']);
 
 			if ( isset($_REQUEST['fast']) && $prefs['fgal_asynchronous_indexing'] == 'y' ) {
@@ -580,6 +580,35 @@ if ( ! empty($_FILES) ) {
 			$smarty->display('error.tpl');
 			die;
 		}
+	}
+}
+
+// Update a file comment
+if ( isset($_REQUEST['comment']) && $_REQUEST['comment'] != '' && isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
+	$msg = '';
+	if ( ! $fileInfo = $filegallib->get_file_info($_REQUEST['fileId']) ) {
+		$msg = tra('Incorrect param');
+	} elseif ( $_REQUEST['galleryId'] != $fileInfo['galleryId'] ) {
+		$msg = tra('Could not find the file requested');
+	} elseif ( ( ! empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y' )
+		|| $tiki_p_edit_gallery_file != 'y'
+	) {
+		$msg = tra('You do not have permission to do that');
+	} else {
+		$filegallib->update_file(
+			$fileInfo['fileId'],
+			$fileInfo['name'],
+			$fileInfo['description'],
+			$user,
+			$_REQUEST['comment'],
+			false
+		);
+	}
+
+	if ( $msg != '' ) {
+		$smarty->assign('msg', $error_msg);
+		$smarty->display('error.tpl');
+		die;
 	}
 }
 
