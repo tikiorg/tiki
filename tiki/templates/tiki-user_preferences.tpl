@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.16 2008-02-12 15:15:56 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.17 2008-03-11 16:37:54 alain_desilets Exp $ *}
 
 <h1>
   {if $userwatch ne $user}
@@ -225,6 +225,8 @@
       <tr>
         <td  class="{cycle advance=false}">{tr}Language{/tr}:</td>
         <td class="{cycle}">
+          <br/>
+          {tr}Your preferred language{/tr}:
           <select name="language">
             {section name=ix loop=$languages}
               {if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
@@ -240,24 +242,25 @@
 		  {if $user_prefs.read_language}
 		  <div id="read-lang-div">
 		  {else}
-		  <a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">{tr}Can read more languages?{/tr}</a>
+		  <a href="javascript:void(0)" onclick="document.getElementById('read-lang-div').style.display='block';this.style.display='none';">
+		  <br/>
+		  {tr}Can you read more languages?{/tr}</a>
+		  <br/>&nbsp;
 		  <div id="read-lang-div" style="display: none">
 		  {/if}
-		  	{tr}Choose additional languages you can read from the list{/tr}:
+			{tr}Other languages you can read (select on the left to add to the list on the right){/tr}:
 			<br/>
-            <select name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
-			  <option></option>
+			<select name="_blank" onchange="document.getElementById('read-language-input').value+=' '+this.options[this.selectedIndex].value+' '">
+			  <option value="">{tr}Select language...{/tr}</option>
               {section name=ix loop=$languages}
                   <option value="{$languages[ix].value|escape}">
                     {$languages[ix].name}
                   </option>
               {/section}
             </select>
-			({tr}Selection adds to the list below{/tr})
-			<br/>
-			{tr}Languages you can read{/tr}:
-			<br/>
+			&nbsp;=>&nbsp;
 		  	<input id="read-language-input" type="text" name="read_language" value="{$user_prefs.read_language}"/>
+            <br/>&nbsp;
 		  </div>
 		  {/if}
         </td>
