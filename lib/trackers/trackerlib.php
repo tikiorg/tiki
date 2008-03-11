@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.40 2008-03-10 22:37:43 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.41 2008-03-11 16:59:59 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -981,12 +981,16 @@ class TrackerLib extends TikiLib {
 				}
 				$value = @ $ins_fields["data"][$i]["value"];
 
-				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q' and $itemId == false) {
-					$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
-					if ($value == NULL) {
-						$value = isset($ins_fields["data"][$i]['options_array'][0]) ? $ins_fields["data"][$i]['options_array'][0] : 1;
-					} else {
-						$value += 1;
+				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q') {
+					if (isset($ins_fields["data"][$i]['options_array'][3]) && $ins_fields["data"][$i]['options_array'][3] == 'itemId') {
+						$value = $itemId?$itemId: $new_itemId;
+					} elseif ($itemId == false) {
+						$value = $this->getOne("select max(cast(value as UNSIGNED)) from `tiki_tracker_item_fields` where `fieldId`=?",array((int)$fieldId));
+						if ($value == NULL) {
+							$value = isset($ins_fields["data"][$i]['options_array'][0]) ? $ins_fields["data"][$i]['options_array'][0] : 1;
+						} else {
+							$value += 1;
+						}
 					}
 				}
 
@@ -2036,7 +2040,7 @@ class TrackerLib extends TikiLib {
 		$type['q'] = array(
 			'label'=>tra('auto-increment'),
 			'opt'=>true,
-			'help'=>tra('Sequential auto-increment number:initial_value,prepend,append: initial_value default is 1, prepend will be displayed before the field, append will be displayed just after') );
+			'help'=>tra('Sequential auto-increment number:initial_value,prepend,append,itemId: initial_value default is 1, prepend will be displayed before the field, append will be displayed just after, itemId will use the item Id') );
 		$type['U'] = array(
 			'label'=>tra('user subscription'),
 			'opt'=>false,
