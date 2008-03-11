@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.42 2008-03-11 14:34:25 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.43 2008-03-11 22:01:12 lphuberdeau Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1662,6 +1662,16 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_c
 UPDATE tiki_menu_options set perm='tiki_p_clean_cache' WHERE url='tiki-admin_system.php';
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin_system.php' and position='1050' and perm='tiki_p_admin' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','');
+
+#2008-03-11 lphuberdeau
+CREATE TABLE tiki_pages_changes (
+	page_id int(14),
+	version int(10),
+	segments_added int(10),
+	segments_removed int(10),
+	segments_total int(10),
+	PRIMARY KEY(page_id, version)
+);
 
 #2008-03-11 nyloth
 DELETE FROM tiki_preferences WHERE name='fgal_list_parent';

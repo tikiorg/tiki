@@ -113,6 +113,13 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 
 	$smarty->assign( 'mod_translation_equivalent_known', $known );
 	$smarty->assign( 'mod_translation_equivalent_other', $other );
+
+	if( $prefs['quantify_changes'] == 'y' )
+	{
+		global $quantifylib;
+		include_once 'lib/wiki/quantifylib.php';
+		$smarty->assign( 'mod_translation_quantification', $quantifylib->getCompleteness( $transinfo['page_id'] ) );
+	}
 }
 
 ?>

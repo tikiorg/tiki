@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-03-05 14:28:18 $
--- $Author: marclaporte $
+-- $Date: 2008-03-11 22:01:11 $
+-- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -3316,6 +3316,10 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','')
 go
 
@@ -3448,7 +3452,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','')
 go
 
 
@@ -6858,6 +6862,14 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki', 'y')
+go
+
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki')
+go
+
+
 -- --------------------------------------------------------
 
 --
@@ -8356,6 +8368,23 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY(`source_translation_bit`)
 )
 go
+
+
+
+-- DROP TABLE "tiki_pages_changes"
+go
+
+
+CREATE TABLE "tiki_pages_changes" (
+  "page_id" numeric(14,0) default NULL NULL,
+  "version" numeric(10,0) default NULL NULL,
+  "segments_added" numeric(10,0) default NULL NULL,
+  "segments_removed" numeric(10,0) default NULL NULL,
+  "segments_total" numeric(10,0) default NULL NULL,
+  PRIMARY KEY(page_id, version)
+)
+go
+
 
 
 

@@ -89,6 +89,11 @@
   </td>
 		</tr><tr>
 
+		<td class="form"><label for="quantify_changes">{tr}Quantify change size{/tr}:</label></td>
+			<td><input type="checkbox" name="quantify_changes" id="quantify_changes"
+			{if $prefs.quantify_changes eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+		
 		
 		<td class="form"><label for="feature_user_watches_translations">{tr}User Watches Translations{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_user_watches_translations" id="feature_user_watches_translations"
