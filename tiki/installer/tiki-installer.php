@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.10 2008-03-11 05:27:02 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.11 2008-03-11 15:44:21 marclaporte Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -575,7 +575,7 @@ $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli)';
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli). Requires MySQL 4.1+';
 if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL classic (mysql)';
 if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
 if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
