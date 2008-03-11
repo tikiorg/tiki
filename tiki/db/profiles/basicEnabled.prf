@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.4 2008-03-10 16:47:41 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/basicEnabled.prf,v 1.10.2.5 2008-03-11 03:33:32 marclaporte Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n','n',1072170381,1072170381,'n');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules (name,position,ord,type,title,cache_time,rows,params,groups) VALUES ('quick_edit','l',2,'d','',0,0,'','a:1:{i:0;s:10:\"Registered\";}');
@@ -20,7 +20,6 @@ REPLACE INTO tiki_preferences VALUES ('feature_blogs','y');
 REPLACE INTO tiki_preferences VALUES ('feature_calendar','y');
 REPLACE INTO tiki_preferences VALUES ('feature_categories','y');
 REPLACE INTO tiki_preferences VALUES ('feature_categorypath','y');
-REPLACE INTO tiki_preferences VALUES ('feature_comm','y');
 REPLACE INTO tiki_preferences VALUES ('feature_contact','y');
 REPLACE INTO tiki_preferences VALUES ('feature_debug_console','n');
 REPLACE INTO tiki_preferences VALUES ('feature_drawings','y');
@@ -49,6 +48,7 @@ REPLACE INTO tiki_preferences VALUES ('feature_shoutbox','y');
 REPLACE INTO tiki_preferences VALUES ('feature_stats','y');
 REPLACE INTO tiki_preferences VALUES ('feature_submissions','y');
 REPLACE INTO tiki_preferences VALUES ('feature_tasks','y');
+REPLACE INTO tiki_preferences VALUES ('feature_trackers','y');
 REPLACE INTO tiki_preferences VALUES ('feature_userPreferences','y');
 REPLACE INTO tiki_preferences VALUES ('feature_user_bookmarks','y');
 REPLACE INTO tiki_preferences VALUES ('feature_user_watches','y');
@@ -104,22 +104,7 @@ REPLACE INTO tiki_preferences VALUES ('wikiSubmitNotice','');
 REPLACE INTO tiki_preferences VALUES ('wiki_cache','300');
 REPLACE INTO tiki_preferences VALUES ('wiki_page_regex','complete');
 REPLACE INTO tiki_preferences VALUES ('wiki_uses_slides','y');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_access_closed_site','');
 REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_banners','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_banning','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_calendar','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_charts','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_integrator','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_mailin','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_admin_workflow','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_broadcast','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_broadcast_all','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_edit_templates','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_view_templates','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_live_support_admin','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_map_create','');
-REPLACE INTO users_grouppermissions VALUES ('Admins','tiki_p_map_delete','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_comment_tracker_items','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_download_files','');
 REPLACE INTO users_grouppermissions VALUES ('Anonymous','tiki_p_edit_drawings','');
