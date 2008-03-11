@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.14 2008-03-04 21:26:14 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.15 2008-03-11 14:37:38 nyloth Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -79,7 +79,15 @@
 {if isset($fileChangedMessage) and $fileChangedMessage neq ''}
 <div class="rbox" name="tip">
   <div class="rbox-title" name="note">{tr}Note{/tr}</div>
-  <div class="rbox-data" name="note">{$fileChangedMessage}</div>
+  <div class="rbox-data" name="note">
+    {$fileChangedMessage}
+    <form method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}">
+      <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
+      <input type="hidden" name="fileId" value="{$fileId|escape}" />
+      {tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40" />
+      {icon _id='accept' _tag='input_image'}
+    </form>
+  </div>
 </div>
 {/if}
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.8 2008-03-04 22:28:12 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.9 2008-03-11 14:37:38 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -323,25 +323,34 @@ class FileGalLib extends TikiLib {
 		return $res;
 	}
 
-	function update_file($id, $name, $description,$user) {
+	function update_file($id, $name, $description, $user, $comment = NULL, $reindex = true) {
 
 		// Update the fields in the database
 		$name = strip_tags($name);
 
+		$bindvars = array($name, $description, (int)$this->now, $user);
+		if ( $comment === NULL ) {
+			$comment_set = '';
+		} else {
+			$comment_set = ', `comment`=?';
+			$bindvars[] = $comment;
+		}
+		$bindvars[] = $id;
+
 		$description = strip_tags($description);
-		$query = "update `tiki_files` set `name`=?, `description`=?, `lastModif`=?, `lastModifUser`=? where `fileId`=?";
-		$result = $this->query($query,array($name,$description,(int)$this->now,$user,$id));
+		$query = 'UPDATE `tiki_files` SET `name`=?, `description`=?, `lastModif`=?, `lastModifUser`=?'.$comment_set.' WHERE `fileId`=?';
+		$result = $this->query($query, $bindvars);
 
 		// Get the gallery id for the file and update the last modified field
-		$galleryId = $this->getOne("select `galleryId` from `tiki_files` where `fileId`=?",array($id));
+		$galleryId = $this->getOne('SELECT `galleryId` FROM `tiki_files` WHERE `fileId`=?', array($id));
 
-		if ($galleryId) {
-			$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
-			$this->query($query,array($this->now,$galleryId));
+		if ( $galleryId ) {
+			$query = 'UPDATE `tiki_file_galleries` SET `lastModif`=? WHERE `galleryId`=?';
+			$this->query($query, array($this->now, $galleryId));
 		}
 
 		global $prefs;
-		if ( $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
+		if ( $reindex && $prefs['feature_search'] == 'y' && $prefs['feature_search_fulltext'] != 'y' && $prefs['search_refresh_index_mode'] == 'normal' ) {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('files', $id);
 		}
