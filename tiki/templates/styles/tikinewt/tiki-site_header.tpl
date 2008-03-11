@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki-site_header.tpl,v 1.1.2.1 2008-03-02 14:07:24 chibaguy Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki-site_header.tpl,v 1.1.2.2 2008-03-11 15:17:55 nyloth Exp $ *}
 {* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}{/if}
 	<ul class="clearfix" id="sioptions">

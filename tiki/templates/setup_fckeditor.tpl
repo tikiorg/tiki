@@ -32,7 +32,7 @@ FCKConfig.StartupFocus = true ;
 FCKConfig.FormatOutput = true ;
 
 {if $prefs.feature_filegals_manager eq 'y'}
-FCKConfig.ImageBrowserURL = _TikiRoot + 'tiki-list_file_gallery.php?filegals_manager';
+FCKConfig.ImageBrowserURL = _TikiRoot + 'tiki-list_file_gallery.php?filegals_manager=y';
 {else}
 FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=../../connectors/' + _FileBrowserLanguage + '/connector.' + _FileBrowserExtension ;
 {/if}

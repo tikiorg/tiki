@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.21 2008-03-09 22:00:17 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.22 2008-03-11 15:17:55 nyloth Exp $ *}
 
 {if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' ) or $gallery_path neq '' }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
@@ -44,7 +44,7 @@
     {/if}
       <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
 
-      <form name="fgalform" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager{/if}" enctype="multipart/form-data">
+      <form name="fgalform" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" enctype="multipart/form-data">
         <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />
 
@@ -235,7 +235,7 @@
               {* build link *}
               {capture assign=link}{strip}
                 {if $files[changes].isgal eq 1}
-                  href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}"
+                  href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}"
                 {else}
                   {if $filegals_manager eq 'y'}
                     href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].id}&display');javascript:window.close() ;"
