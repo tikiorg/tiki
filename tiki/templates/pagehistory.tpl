@@ -1,34 +1,46 @@
 {if $diff_style}
-<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
-<table class="normal diff">
-<tr>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}View{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
-  <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}View{/tr}">{$new.version}</a>{if $new.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
-</tr>
-<tr>
-  <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$old.user|userlink} - {/if}{$old.lastModif|tiki_short_datetime}</td>
-  <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$new.user|userlink} - {/if}{$new.lastModif|tiki_short_datetime}</td>
-</tr>
-{if $old.comment || $new.comment}
-<tr>
-  <td colspan="2" class="editdate">{if $old.comment}{$old.comment}{else}&nbsp;{/if}</td>
-  <td colspan="2" class="editdate">{if $new.comment}{$new.comment}{else}&nbsp;{/if}</td>
-</tr>
-{/if}
-{if $old.description != $new.description}
-<tr>
-  <td colspan="2" class="diffdeleted">{if $old.description}{$old.description}{else}&nbsp;{/if}</td>
-  <td colspan="2" class="diffadded">{if $new.description}{$new.description}{else}&nbsp;{/if}</td>
-</tr>
-{/if}
+   {if $translation_mode eq 'n'}
+     <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
+   {else}
+     <P/>
+     {tr}Changes that need to be reproduced are highlighted below.{/tr}
+     <P/>
+   {/if}
+   <table class="normal diff">
+   {if $translation_mode eq 'n'}
+      <tr>
+        <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}View{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
+        <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$new.version}" title="{tr}View{/tr}">{$new.version}</a>{if $new.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
+      </tr>
+      <tr>
+        <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$old.user|userlink} - {/if}{$old.lastModif|tiki_short_datetime}</td>
+        <td colspan="2">{if $tiki_p_wiki_view_author ne 'n'}{$new.user|userlink} - {/if}{$new.lastModif|tiki_short_datetime}</td>
+      </tr>
+      {if $old.comment || $new.comment}
+         <tr>
+           <td colspan="2" class="editdate">{if $old.comment}{$old.comment}{else}&nbsp;{/if}</td>
+           <td colspan="2" class="editdate">{if $new.comment}{$new.comment}{else}&nbsp;{/if}</td>
+         </tr>
+      {/if}
+
+
+      {if $old.description != $new.description}
+         <tr>
+           <td colspan="2" class="diffdeleted">{if $old.description}{$old.description}{else}&nbsp;{/if}</td>
+           <td colspan="2" class="diffadded">{if $new.description}{$new.description}{else}&nbsp;{/if}</td>
+         </tr>
+      {/if}
+      
+   {/if}
+
 {/if}
 
 {if $diff_style eq "sideview"}
-<tr>
-  <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
-  <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
-</tr>
-</table>
+   <tr>
+     <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
+     <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
+   </tr>
+   </table>
 {/if}
 
 {if $diff_style eq 'unidiff'}
