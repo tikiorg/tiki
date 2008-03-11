@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.27 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.28 2008-03-11 21:14:42 alain_desilets Exp $ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
@@ -57,7 +57,12 @@ window.onload = timeIt;
 </script>
 
 
-<h1>{tr}Edit{/tr}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
+{if $translation_mode eq 'n'}
+   <h1>{tr}Edit{/tr}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
+{else}
+   <h1>{tr}Update '{$page}' based on '{$source_page}'{/tr}</h1>
+{/if}
+   
 {if $beingStaged eq 'y'}
 <div class="tocnav">
 {tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
