@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.67 2008-03-11 06:13:33 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.68 2008-03-11 14:34:25 nyloth Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -423,27 +423,27 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['users_prefs_allowMsgs'] = 'n';
 	$prefs['users_prefs_country'] = '';
 	$prefs['users_prefs_diff_versions'] = 'n';
-	$prefs['users_prefs_display_timezone'] = '';
+	$prefs['users_prefs_display_timezone'] = 'Local';
 	$prefs['users_prefs_email_is_public'] = 'n';
 	$prefs['users_prefs_homePage'] = '';
-	$prefs['users_prefs_lat'] = '';
-	$prefs['users_prefs_lon'] = '';
+	$prefs['users_prefs_lat'] = '0';
+	$prefs['users_prefs_lon'] = '0';
 	$prefs['users_prefs_mess_archiveAfter'] = '0';
 	$prefs['users_prefs_mess_maxRecords'] = '10';
 	$prefs['users_prefs_mess_sendReadStatus'] = 'n';
-	$prefs['users_prefs_minPrio'] = '1';
-	$prefs['users_prefs_mytiki_blogs'] = 'y';
-	$prefs['users_prefs_mytiki_gals'] = 'y';
-	$prefs['users_prefs_mytiki_items'] = 'y';
-	$prefs['users_prefs_mytiki_msgs'] = 'y';
-	$prefs['users_prefs_mytiki_pages'] = 'y';
-	$prefs['users_prefs_mytiki_tasks'] = 'y';
-	$prefs['users_prefs_mytiki_workflow'] = 'y';
+	$prefs['users_prefs_minPrio'] = '6';
+	$prefs['users_prefs_mytiki_blogs'] = 'n';
+	$prefs['users_prefs_mytiki_gals'] = 'n';
+	$prefs['users_prefs_mytiki_items'] = 'n';
+	$prefs['users_prefs_mytiki_msgs'] = 'n';
+	$prefs['users_prefs_mytiki_pages'] = 'n';
+	$prefs['users_prefs_mytiki_tasks'] = 'n';
+	$prefs['users_prefs_mytiki_workflow'] = 'n';
 	$prefs['users_prefs_realName'] = '';
-	$prefs['users_prefs_show_mouseover_user_info'] = 'y';
+	$prefs['users_prefs_show_mouseover_user_info'] = 'n';
 	$prefs['users_prefs_tasks_maxRecords'] = '10';
 	$prefs['users_prefs_user_dbl'] = 'n';
-	$prefs['users_prefs_user_information'] = 'public';
+	$prefs['users_prefs_user_information'] = 'private';
 	$prefs['users_prefs_userbreadCrumb'] = '4';
 	$prefs['users_prefs_mailCharset'] = 'utf-8';
 	$prefs['validateRegistration'] = 'n';
@@ -852,7 +852,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_comm'] = 'n';
 	$prefs['feature_contribution'] = 'n';
 	$prefs['feature_contribution_display_in_comment'] = 'y';
-	$prefs['feature_contribution_mandatory'] = 'y';
+	$prefs['feature_contribution_mandatory'] = 'n';
 	$prefs['feature_contribution_mandatory_blog'] = 'n';
 	$prefs['feature_contribution_mandatory_comment'] = 'n';
 	$prefs['feature_contribution_mandatory_forum'] = 'n';
@@ -943,7 +943,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_forums_tiki_search'] = '';
 	$prefs['feature_trackbackpings'] = 'n';
 	$prefs['feature_wiki_ext_icon'] = 'y';
-	$prefs['feature_wiki_mandatory_category'] = '';
+	$prefs['feature_wiki_mandatory_category'] = -1;
 	$prefs['freetags_3d_autoload'] = '';
 	$prefs['freetags_3d_camera_distance'] = '';
 	$prefs['freetags_3d_elastic_constant'] = '';

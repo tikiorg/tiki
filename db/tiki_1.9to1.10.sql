@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.41 2008-03-10 16:26:29 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.42 2008-03-11 14:34:25 nyloth Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -15,9 +15,6 @@
 # You may execute this command as often as you like, 
 # and may safely ignore any error messages that appear.
 
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pear_wiki_parser','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mootools','n');
-
 #2005-06-22 rlpowell: available_languages was getting truncated if all languages were selected
 ALTER TABLE `tiki_preferences` CHANGE value value text;
 
@@ -25,38 +22,6 @@ ALTER TABLE `tiki_preferences` CHANGE value value text;
 # This will allow up to 16777216 bytes instead of 65536
 ALTER TABLE `tiki_pages` CHANGE data data mediumtext;
 ALTER TABLE `tiki_pages` CHANGE cache cache mediumtext;
-
-# 2005-07-19 rv540 : users defaults used when creating a new user account
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_theme', 'global');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_userbreadCrumb', '4');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_language', 'global');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_display_timezone', 'Local');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_information', 'private');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_user_dbl', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_diff_versions', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_show_mouseover_user_info', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_email_is_public', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mailCharset', 'utf-8');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_realName', '');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_homePage', '');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_lat', '0');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_lon', '0');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_country', '');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_maxRecords', '10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_archiveAfter', '0');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mess_sendReadStatus', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_minPrio', '6');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_allowMsgs', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_pages', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_blogs', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_gals', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_msgs', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_tasks', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_items', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_mytiki_workflow', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('users_prefs_tasks_maxRecords', '10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_copyright', '10');
-
 
 # 2005-08-26 / 2005-09-31: mdavey: new table tiki_events for notificationlib / tikisignal
 CREATE TABLE `tiki_events` (
@@ -115,16 +80,11 @@ ALTER IGNORE TABLE tiki_comments ADD UNIQUE parentId(parentId, userName, title, 
 # making a copy first.
 # delete from tiki_comments tc1, tiki_comments tc2 where tc1.threadId < tc2.threadId and tc1.parentId = tc2.parentId and  tc1.userName = tc2.userName and  tc1.title = tc2.title and  tc1.commentDate = tc2.commentDate and  tc1.message_id = tc2.message_id and tc1.in_reply_to = tc2.in_reply_to;
 
-# 2005-09-08 sylvieg
-INSERT IGNORE INTO `tiki_preferences`(`name`,`value`) VALUES ('feature_wiki_protect_email', 'n');
-INSERT IGNORE INTO tiki_preferences(`name`,`value`) VALUES ('feature_wiki_1like_redirection', 'y');
-
 # 2005-09-12 sylvieg
 ALTER TABLE `tiki_actionlog` CHANGE `pageName` `object` varchar(255) default NULL;
 ALTER TABLE `tiki_actionlog` ADD `objectType` varchar(32) NOT NULL default '' AFTER `object`;
 ALTER TABLE `tiki_actionlog` ADD `categId` int(12) NOT NULL default '0' AFTER `comment`;
 ALTER TABLE `tiki_actionlog` ADD `actionId` int(8) NOT NULL auto_increment FIRST, ADD PRIMARY KEY (`actionId`);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_actionlog', 'y');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Action Log' and url='tiki-admin_actionlog.php' and position='1255' and section='feature_actionlog' and perm='tiki_p_admin' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','');
 CREATE TABLE `tiki_actionlog_conf` (
@@ -153,10 +113,6 @@ INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUE
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed version', 'wiki page', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Removed last version', 'wiki page', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Rollback', 'wiki page', 'n');
-
-#2005-09-21 sylvieg
-INSERT IGNORE INTO tiki_preferences(`name`,`value`) VALUES ('feature_wiki_show_hide_before', 'n');
-# --------------------------------------------------------
 
 #2005-09-27 brazilian tiki study group
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_subscribe_email', 'Can subscribe many e-mails at once (requires tiki_p_subscribe email)', 'editors', 'newsletters');
@@ -198,10 +154,8 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 #2005-11-14 sylvieg
 CREATE INDEX positionType ON tiki_modules (position, type);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homePage_if_bl_missing', 'n');
 
 #2005-12-02 amette
-
 CREATE TABLE `tiki_freetags` (
   `tagId` int(10) unsigned NOT NULL auto_increment,
   `tag` varchar(30) NOT NULL default '',
@@ -210,7 +164,6 @@ CREATE TABLE `tiki_freetags` (
 ) ENGINE=MyISAM;
 
 #2005-12-06 lfagundes
-
 ALTER TABLE `tiki_categorized_objects` rename to `tiki_objects`;
 ALTER TABLE `tiki_objects` CHANGE `catObjectId` `objectId` int(12) not null auto_increment;
 ALTER TABLE `tiki_objects` CHANGE `objId` `itemId` varchar(255);
@@ -241,9 +194,6 @@ INSERT INTO `tiki_categorized_objects` SELECT `objectId` FROM `tiki_objects`;
 ALTER TABLE users_groups ADD registrationChoice CHAR(1) DEFAULT NULL;
 CREATE INDEX login ON users_users (login);
 
-#2005-12-15 amette
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ajax','n');
-
 #2005-12-15 amette - Freetag permissions and menu item
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_freetags', 'Can browse freetags', 'basic', 'freetags');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_freetags_tag', 'Can tag objects', 'registered', 'freetags');
@@ -256,11 +206,6 @@ ALTER TABLE `tiki_history` ADD KEY user (`user`);
 #2006-01-05 sg
 ALTER TABLE users_groups ADD registrationUsersFieldIds text;
 ALTER TABLE tiki_tracker_fields ADD description text;
-
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_mandatory_category',-1);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_mandatory_category',-1);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_gallery_mandatory_category',-1);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_display_my_to_others', 'n');
 
 #2006-02-11 lfagundes
 alter table tiki_private_messages add `received` tinyint(1) not null default 0;
@@ -286,18 +231,12 @@ CREATE TABLE tiki_contributions_assigned (
   PRIMARY KEY  (objectId, contributionId)
 ) ENGINE=MyISAM;
 
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution', 'n');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin.php' and position='1050' and section='' and perm='tiki_p_admin_contribution' and groupname='' ;
 INSERT INTO `tiki_menu_options` (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Contribution' and url='tiki-admin_contribution.php' and position='1265' and section='feature_contribution' and perm='tiki_p_admin_contribution' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory', 'n');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_contribution', 'Can admin contributions', 'admin', 'contribution');
 ALTER TABLE `tiki_history` ADD `historyId` int(12) NOT NULL auto_increment FIRST, ADD  KEY (`historyId`);
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_display_in_comment', 'y');
-
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_forum', 'n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_comment', 'n');
 
 #2006-03-12 lfagundes
 CREATE TABLE tiki_page_drafts (
@@ -309,14 +248,8 @@ CREATE TABLE tiki_page_drafts (
   PRIMARY KEY  (pageName, user)
 ) ENGINE=MyISAM;
 
-#2006-03-16 sampaioprimo
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_mode','week');
-
 #2006-03-19 lfagundes
 alter table `tiki_page_drafts` add `lastModif` int(14); 
-
-#2006-03-28
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_replace', 'n');
 
 #2006-03-30 sylvieg
 UPDATE tiki_menu_options SET perm='tiki_p_view_sheet' where url='tiki-sheets.php';
@@ -348,17 +281,8 @@ CREATE TABLE tiki_sent_newsletters_errors (
 #2006-04-27
 ALTER TABLE `tiki_semaphores` ADD `objectType` varchar(20) default 'wiki page' AFTER `semName`;
 
-#2006-04-29 sampaioprimo
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_username_length','1');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_username_length','50');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lowercase_username','n');
-
 #2006-05-25 sampaioprimo & Jyhem 2007-06-14
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_source','y');
-
-# 2006-05-26 new preference eq 'y' to keep the default - sampaioprimo
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cms_print','y');
 
 # 2006-06-07 sylvieg (merge from 1.9)
 insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_objects','Can edit object permissions', 'admin', 'tiki');
@@ -366,13 +290,11 @@ insert into users_permissions (permName,permDesc,level,type) values ('tiki_p_adm
 INSERT INTO users_permissions (permName,permDesc,level,type) values ('tiki_p_admin_rssmodules','Can admin rss modules', 'admin', 'tiki');
 
 ALTER TABLE users_users MODIFY COLUMN `hash` varchar(34) default NULL;
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_crypt_passwords','tikihash');
 #2006-07-28 mkalbere
 ALTER TABLE `tiki_sent_newsletters` ADD `datatxt` longblob AFTER data;
 ALTER TABLE `tiki_newsletters` ADD `allowTxt` varchar(1);
 
 #sylvieg 9/13/06
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contribution_mandatory_blog', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Viewed', 'blog', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Posted', 'blog', 'n');
 INSERT IGNORE INTO `tiki_actionlog_conf`(`action`, `objectType`, `status`) VALUES ('Updated', 'blog', 'n');
@@ -383,8 +305,6 @@ ALTER TABLE `tiki_file_galleries` ADD `type` varchar(20) NOT NULL default 'defau
 
 #ohertel 09/23/06 adding Directory Batch Load feature for File Galleries
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_file_dir', 'Can use Directory Batch Load', 'editors', 'file galleries');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_batch','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_batch_dir','');
 
 #sylvieg 10/27/06 (delete not null for batch use)
 ALTER TABLE tiki_logs CHANGE logip logip varchar(200);
@@ -393,16 +313,12 @@ ALTER TABLE tiki_logs CHANGE logip logip varchar(200);
 INSERT INTO users_grouppermissions(groupName,permName) values ('Registered','tiki_p_watch_trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'Registered', 'trackers');
 
-#sylvieg 11/6/6
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_type','n');
-
 # 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
 update tiki_preferences set name='auth_pear_host' where name='auth_ldap_host';
 update tiki_preferences set name='auth_pear_port' where name='auth_ldap_port';
 
 #sylvieg 2006-11-13
 ALTER TABLE `tiki_file_galleries` ADD `parentId` int(14) NOT NULL default -1;
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_parent','n');
 
 #sylvieg 2006-11-16 & Jyhem 2007-06-14
 ALTER TABLE `tiki_file_galleries` ADD `lockable` char(1) default 'n';
@@ -1746,3 +1662,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_c
 UPDATE tiki_menu_options set perm='tiki_p_clean_cache' WHERE url='tiki-admin_system.php';
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='r' and name='Admin' and url='tiki-admin_system.php' and position='1050' and perm='tiki_p_admin' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','');
+
+#2008-03-11 nyloth
+DELETE FROM tiki_preferences WHERE name='fgal_list_parent';
