@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.3 2007-12-07 09:16:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.4 2008-03-11 22:58:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,9 @@ include_once("textareasize.php");
 $errors = array();
 if (isset($_REQUEST['send'])) {
 	check_ticket('tell-a-friend');
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		 $errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
+	}
 	$emails = explode(',', str_replace(' ','',$_REQUEST['addresses']));
 	foreach ($emails as $email) {
 		include_once('lib/registration/registrationlib.php');
@@ -50,7 +53,7 @@ if (isset($_REQUEST['send'])) {
 			$ok = $ret[0];
 		}
 		if (!$ok) {
-			$errors[] = $email;
+			$errors[] = tra('One of the email addresses you typed is invalid').': '.$email;
 		}
 	}
 	if (!empty($_REQUEST['addresses']))

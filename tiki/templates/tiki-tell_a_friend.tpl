@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.4.2.1 2007-10-20 21:45:16 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.4.2.2 2008-03-11 22:58:15 sylvieg Exp $ *}
 <h1>{tr}Send a link to a friend{/tr}</h1>
 <span class="button2"><a href="{$url}" class="linkbut">{tr}Back{/tr}</a></span>
 {if !empty($sent)}
@@ -10,7 +10,6 @@
 
 {if !empty($errors)}
 <div class="simplebox highlight">
-{tr}One of the email addresses you typed is invalid{/tr}<br />
 {foreach from=$errors item=m name=errors}
 {$m}
 {if !$smarty.foreach.errors.last}<br />{/if}
@@ -47,6 +46,10 @@
         <textarea name="comment" rows="10" cols='{$cols}' id='comment'>{$comment|escape}</textarea>
       </td>
     </tr>
+	{if $prefs.feature_antibot eq 'y' && $user eq ''}
+		{include file="antibot.tpl"}
+	{/if}
+
     
     <tr>
       <td class="formcolor"></td>
