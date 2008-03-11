@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-03-10 16:26:29 $
-# $Author: sylvieg $
+# $Date: 2008-03-11 22:01:11 $
+# $Author: lphuberdeau $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -5030,3 +5030,14 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY(`original_translation_bit`),
   KEY(`source_translation_bit`)
 );
+
+DROP TABLE IF EXISTS tiki_pages_changes;
+CREATE TABLE tiki_pages_changes (
+	page_id int(14),
+	version int(10),
+	segments_added int(10),
+	segments_removed int(10),
+	segments_total int(10),
+	PRIMARY KEY(page_id, version)
+);
+

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.86 2008-03-06 16:29:46 sylvieg Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.87 2008-03-11 22:01:13 lphuberdeau Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -4627,14 +4627,20 @@ function add_pageview() {
 	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`$mid) values(?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 	$result = $this->query($query, $bindvars);
 
+	$page_id = $this->get_page_id_from_name( $name );
+
+	if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' )
+	{
+		include_once 'lib/wiki/quantifylib.php';
+		$quantifylib->recordChangeSize( $page_id, 1, '', $data );
+	}
+
 	$this->clear_links($name);
 
 	// Pages are collected before adding slashes
 	foreach ($pages as $a_page) {
 	    $this->replace_link($name, $a_page);
 	}
-
-
 
 	// Update the log
 	if (strtolower($name) != 'sandbox') {
@@ -6842,7 +6848,7 @@ if (!$simple_wiki) {
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
     function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null) {
-	global $smarty, $prefs, $dbTiki, $histlib;
+	global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
@@ -6875,6 +6881,12 @@ if (!$simple_wiki) {
 	//$pageName=addslashes($pageName);
 	// But this should work (comment added by redflo):
 	$version = $old_version + 1;
+
+	if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' )
+	{
+		include_once 'lib/wiki/quantifylib.php';
+		$quantifylib->recordChangeSize( $info['page_id'], $version, $info['data'], $edit_data );
+	}
 
 	$html=$is_html?1:0;
 	if ($html && $prefs['feature_purifier'] != 'n') {

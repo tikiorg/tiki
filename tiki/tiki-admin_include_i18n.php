@@ -31,6 +31,7 @@ ask_ticket('admin-inc-i18n');
 		"feature_best_language",
         "feature_detect_language",
 		"change_language",		
+		"quantify_changes",
 		"feature_user_watches_translations",
         "lang_use_db",
 		"record_untranslated",

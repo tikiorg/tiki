@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2008-03-05 14:28:17 $
--- $Author: marclaporte $
+-- $Date: 2008-03-11 22:01:08 $
+-- $Author: lphuberdeau $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -2727,6 +2727,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','');
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','');
@@ -2793,7 +2795,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Score','tiki-admin_score.php',1235,'feature_score','tiki_p_admin','');
 
@@ -5424,6 +5426,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki', 'y');
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
@@ -6391,6 +6397,19 @@ CREATE TABLE `tiki_pages_translation_bits` (
   KEY(`original_translation_bit`),
   KEY(`source_translation_bit`)
 );
+
+
+DROP TABLE "tiki_pages_changes";
+
+CREATE TABLE "tiki_pages_changes" (
+  "page_id" number(14),
+  "version" number(10),
+  "segments_added" number(10),
+  "segments_removed" number(10),
+  "segments_total" number(10),
+  PRIMARY KEY(page_id, version)
+);
+
 
 ;
 

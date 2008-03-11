@@ -1,8 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.9 2008-03-04 16:32:30 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-translation.tpl,v 1.1.2.10 2008-03-11 22:01:15 lphuberdeau Exp $ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="translation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+	{if $prefs.quantify_changes eq 'y'}
+		<div>
+			{tr}Up-to-date-ness{/tr}: {$mod_translation_quantification}%
+		</div>
+	{/if}
 	{if $mod_translation_better_known or $mod_translation_better_other}
 		<div>			
 			{tr}Better translations{/tr}:
