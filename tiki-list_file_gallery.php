@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.11 2008-03-11 14:37:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.12 2008-03-11 15:17:54 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -764,7 +764,7 @@ if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
-		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager' : '').'">'.$dir_id[1].'</a>';
+		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=y' : '').'">'.$dir_id[1].'</a>';
 	}
 }
 
@@ -796,7 +796,7 @@ include_once('fgal_listing_conf.php');
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 
 // Display the template
-if ( isset($_REQUEST['filegals_manager']) ) {
+if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] == 'y' ) {
 	$smarty->assign('filegals_manager','y');
 	$smarty->display('tiki_full.tpl');
 } else {

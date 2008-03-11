@@ -10,14 +10,14 @@
 	{/if}
 
 	{if $files[changes].perms.tiki_p_upload_files eq 'y' and ( $files[changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[changes].user eq $user) or $files[changes].public eq 'y' ) }
-		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
+		<a href="tiki-upload_file.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}</a>
 	{/if}
 
 	{if $files[changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
             {if $files[changes].perms.has_special_perm eq 'y'}
-                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
             {else}
-                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt='{tr}Perms{/tr}'}</a>
+                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt='{tr}Perms{/tr}'}</a>
             {/if}
         {/if}
 
@@ -29,7 +29,7 @@
 		{if $menu_text eq 'y' or $menu_icon eq 'y'}
 			{* This form tag is needed when placed in a popup box through overlib.
 			If placed in a column, there is already a form tag around the whole table *}
-			<form method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
+			<form method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
 		{/if}
 		{if $menu_text neq 'y'}
 			{* This is needed for the 'Upload New Version' action to be correctly displayed
@@ -51,7 +51,7 @@
 	{if $gal_info.archives gt -1}
 		{if $files[changes].nbArchives gt 0}
 			{assign var=nb_archives value=$files[changes].nbArchives}
-			<a href="tiki-file_archives.php?fileId={$files[changes].fileId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
+			<a href="tiki-file_archives.php?fileId={$files[changes].fileId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}</a>
 		{else}
 			{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt='{tr}Archives{/tr}'}
 		{/if}
@@ -79,11 +79,11 @@
 
 			{else}
 				{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
-				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				
 			{/if}
 
-			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt='{tr}Properties{/tr}'}</a>
+			<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt='{tr}Properties{/tr}'}</a>
 
 			{if $gal_info.lockable eq 'y' and $files[changes].isgal neq 1}
 				{if $files[changes].lockedby}

@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66.2.5 2008-03-01 00:47:54 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66.2.6 2008-03-11 15:17:55 nyloth Exp $ *}
 {popup_init src="lib/overlib.js"}
-<h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&filegals_manager{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager{/if}{/if}">{tr}File Galleries{/tr}</a>
+<h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">{icon _id='help'}</a>
 {/if}
 {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager eq 'y'}?filegals_manager{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-file_galleries.tpl{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}File Galleries tpl{/tr}">
 {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}
 {if $tiki_p_admin eq 'y' and $filegals_manager ne 'y'}
@@ -22,15 +22,15 @@
 
 <div class="navbar">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager{/if}">{tr}List Galleries{/tr}</a>
-{if $galleryId}<a class="linkbut" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Browse Gallery{/tr}</a>{/if}
+<a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">{tr}List Galleries{/tr}</a>
+{if $galleryId}<a class="linkbut" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Browse Gallery{/tr}</a>{/if}
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Create New File Gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Create New File Gallery{/tr}</a>
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1{if $filegals_manager eq 'y'}&amp;filegals_manager{/if}">{tr}Duplicate File Gallery{/tr}</a>
+<a class="linkbut" href="tiki-file_galleries.php?dup_mode=1{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Duplicate File Gallery{/tr}</a>
 {/if}
 </div>
 

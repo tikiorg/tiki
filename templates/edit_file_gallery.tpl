@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/edit_file_gallery.tpl,v 1.1.2.1 2008-03-01 00:47:54 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/edit_file_gallery.tpl,v 1.1.2.2 2008-03-11 15:17:55 nyloth Exp $ *}
 {if $tiki_p_create_file_galleries eq 'y'}
   {if $galleryId eq 0}
   <h2>{tr}Create a file gallery{/tr}</h2>
@@ -9,7 +9,7 @@
   <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
   {/if}
   <div align="center">
-    <form action="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager{/if}" method="post">
+    <form action="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" method="post">
       <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
       <table class="normal">
         <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
