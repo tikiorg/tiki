@@ -55,13 +55,22 @@
 </a>
 {/if}
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
-<div class="faq_suggestions" id="faqsugg" style="display:none;">
+<div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
+{if !empty($error)}
+<br />
+ <div class="simplebox highlight">
+  {$error}
+ </div>
+{/if}
 <br />
 <form action="tiki-view_faq.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question"></textarea></td></tr>
-<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer"></textarea></td></tr>
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question">{if $pendingquestion}{$pendingquestion}{/if}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer">{if $pendinganswer}{$pendinganswer}{/if}</textarea></td></tr>
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
+{include file="antibot.tpl"}
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
