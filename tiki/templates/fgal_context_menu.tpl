@@ -29,7 +29,7 @@
 		{if $menu_text eq 'y' or $menu_icon eq 'y'}
 			{* This form tag is needed when placed in a popup box through overlib.
 			If placed in a column, there is already a form tag around the whole table *}
-			<form method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
+			<form name="form{$files[changes].fileId}" method="post" action="{$smarty.server.PHP_SELF}?galleryId={$gal_info.galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}{if $prefs.fgal_asynchronous_indexing eq 'y'}&amp;fast{/if}" enctype="multipart/form-data">
 		{/if}
 		{if $menu_text neq 'y'}
 			{* This is needed for the 'Upload New Version' action to be correctly displayed
@@ -68,13 +68,13 @@
 
 				{if $menu_text neq 'y'}</div>{/if}
 				<div class="upspan" style="position:relative{if $menu_text eq 'y'}; _position:absolute;{else}; float:left{/if}; overflow:hidden" title="{tr}Upload New Version{/tr}">
-					<input type="file" style="position:absolute; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
-					<a{if $menu_text eq 'y'} style="_display:none"{/if} href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
+					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				</div>
 
 				{if $menu_text eq 'y'}
 					{* the line above is to used for IE only *}
-					<a style="display:none; _display:block" href="#" onclick="document.getElementById('upfile{$files[changes].id}').click()">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+					<a style="display:none; _display:block; overflow: visible; height:0" href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				{/if}
 
 			{else}
