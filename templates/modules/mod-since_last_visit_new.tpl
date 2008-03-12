@@ -1,8 +1,10 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit_new.tpl,v 1.12.2.2 2008-03-12 20:05:46 pkdille Exp $ *}
+
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}`$slvn_info.label`{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     <table>
-      <tr height="20">
+      <tr>
         <td align="center">
 	{if $prefs.feature_calendar eq 'y'}
           <a class="linkmodule" href="tiki-calendar.php?todate={$slvn_info.lastLogin}" title="{tr}click to edit{/tr}">
