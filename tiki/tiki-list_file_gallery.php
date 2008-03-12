@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.12 2008-03-11 15:17:54 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.13 2008-03-12 12:59:34 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -731,10 +731,14 @@ $smarty->assign_by_ref('all_galleries', $all_galleries['data']);
 //
 function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $cur_id = -1) {
 	static $total = 1;
+	static $nb_galleries = 0;
 	$i = 0;
 	$current_path = array();
 	$path_found = false;
-	foreach ( $galleries as $gk => $gv ) {
+
+	if ( $nb_galleries == 0 ) $nb_galleries = count($galleries);
+	for ( $gk = 0 ; $gk < $nb_galleries ; $gk++ ) {
+		$gv =& $galleries[$gk];
 		if ( $gv['parentId'] == $cur_id && $gv['id'] != $cur_id ) {
 			$tree[$i] = &$galleries[$gk];
 			$tree[$i]['link_var'] = 'galleryId';
