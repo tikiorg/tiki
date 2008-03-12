@@ -15,7 +15,6 @@ function wikiplugin_submit_help() {
 }
 
 function wikiplugin_submit($data, $params) {
-
 	extract ($params,EXTR_SKIP);
 
 //image, default = y (show icons)
@@ -53,7 +52,9 @@ $title = array(
 	'Blinkbits',
 	'BlogMemes',
 	'Connotea',
-    'Mister Wong'
+    'Mister Wong',
+	'Facebook',
+	'Google'
 );
 
 //icons of the sites. assumed to be 16x16 pixels. shown if image=y
@@ -78,7 +79,9 @@ $icon = array(
 	'blinkbits.png',
 	'blogmemes.png',
 	'connotea.png',
-    'mrwong.png'
+    'mrwong.png',
+	'facebook.png',
+	'google.png'
 );
 
 //submission url of the site. refer to each site's faqs for exact url.
@@ -102,19 +105,20 @@ $url = array(
 	'http://www.blinkbits.com/bookmarklets/save.php?v=1&source_url=http://',
 	'http://www.blogmemes.net/post.php?url=http://',
 	'http://www.connotea.org/addpopup?continue=confirm&uri=http://',
-    'http://www.mister-wong.com/addurl/?bm_url=http://'
+    'http://www.mister-wong.com/addurl/?bm_url=http://',
+	'http://www.facebook.com/share.php?u=http://',
+	'http://www.google.com/bookmarks/mark?op=edit&amp;output=popup&amp;bkmk=http://'
 );
 
 //get the current tiki page and server
-$page = $_REQUEST['page'];
-$site = $_REQUEST['SERVER_NAME'];
+$my = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
 //build the submission links
-$result = "<p>Share this page:</p><p class='mini'>";
+$result = "<p>".tra('Share this page:')."</p><p class='mini'>";
 
 //loop for each $title
 for ($i = 0; $i < count($title); $i++) {
-	$result .= "&nbsp;<a href='" . $url[$i] . $site ."/tiki-index.php?page=" . $page ."' title='Submit to " . $title[$i] . "'>";
+	$result .= "&nbsp;<a href='".$url[$i].$my."' title='".tra('Submit to '). $title[$i] . "'>";
 
 //show the image?
 	if ($image == 'y'){
