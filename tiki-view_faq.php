@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.1 2007-12-07 05:56:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.2 2008-03-12 12:49:49 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,9 +88,16 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 if (isset($_REQUEST["sugg"])) {
 	check_ticket('view-faq');
 	if ($tiki_p_suggest_faq == 'y') {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+ $error = tra('You have mistyped the anti-bot verification code; please try again.');
+ $smarty->assign('error', $error);
+// Save the pending question and answer if antibot code is wrong
+ $smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);
+ $smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
+ } else {
 		$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],
 			$user);
-	}
+	}}
 }
 
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQUEST["faqId"]);
