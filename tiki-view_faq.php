@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.2 2008-03-12 12:49:49 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.24.2.3 2008-03-12 13:04:41 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,9 +95,16 @@ if (isset($_REQUEST["sugg"])) {
  $smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);
  $smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
  } else {
-		$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],
+  if (!empty($_REQUEST["suggested_question"]))
+  	{ 
+	   		$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],
 			$user);
-	}}
+} else {
+ $error = tra('You must suggest a question; please try again.');
+ $smarty->assign('error', $error);
+// Save the pending answer if question is empty
+ $smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
+ 	}}}
 }
 
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQUEST["faqId"]);
