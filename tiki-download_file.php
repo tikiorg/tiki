@@ -1,10 +1,11 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.33.2.2 2008-02-29 12:33:37 nyloth Exp $
+// CVS: $Id: tiki-download_file.php,v 1.33.2.3 2008-03-12 17:49:32 sept_7 Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
 include_once ('lib/stats/statslib.php');
 include_once('lib/filegals/filegallib.php');
+require_once('lib/images/images.php');
 
 if($prefs['feature_file_galleries'] != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -134,13 +135,65 @@ session_write_close();
 
 //print("File:$file<br />");
 //die;
-header("Content-type: $type");
+
+error_reporting(E_ALL);
+
+if (isset($_GET['icon'])) {
+  header("Content-type: image/png");
+  echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1));
+  die();
+}
+
+$image = new Image($content);
+
+$resize = false;
+// We resize if needed
+if (isset($_GET['x']) or isset($_GET['y'])) {
+	$image->resize($_GET['x']+0,$_GET['y']+0);
+	$resize = true;
+}
+
+// We change the image format if needed
+$convert = false;
+if (isset($_GET['format']) and Image::is_supported($_GET['format'])) {
+	$image->convert($_GET['format']);
+	$convert = true;
+}
+
+if (isset($_GET['thumbnail'])) {
+  if (Image::is_supported(substr($info['filename'],strrpos($info['filename'],'.')+1))) {
+    header("Content-type: image/jpeg");
+		if (!$resize) {
+    	$image->resize(16,16);
+		}
+		if (!$convert) {
+    	$image->convert('jpeg');
+		}
+    echo  $image->display();
+  } else {
+    header("Content-type: image/png");
+    echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1),16,16);
+  }
+  die();
+}
 
 // Added by Jenolan  31/8/2003 /////////////////////////////////////////////
 // File galleries should always be attachments (files) not inline (textual)
 if (!isset($_GET['display'])) {
-header( "Content-Disposition: attachment; filename=\"$file\"" );
+	header("Content-type: ".$image->get_mimetype());
+	header( "Content-Disposition: attachment; filename=\"$file\"" );
+} else {
+	if (!Image::is_supported(substr($info['filename'],strrpos($info['filename'],'.')+1))) {
+		header("Content-type: image/png");
+		echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1));
+		die();
+	} else {
+		header("Content-type: ".$image->get_mimetype());
+	}
+  echo  $image->display();
+	die();
 }
+
 //header( "Content-Disposition: inline; filename=$file" );
 
 if( $info["path"] )
@@ -149,7 +202,7 @@ if( $info["path"] )
 }
 else
 {
-	header("Content-Length: ". $info[ "filesize" ] );
+	header("Content-Length: ". strlen($image->display()) );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -159,7 +212,7 @@ header("Pragma: public");
 if($info["path"]) {
   readfile_chunked($prefs['fgal_use_dir'].$info["path"]);
 } else {
-  echo "$content";
+  echo $image->display();
 }
 
 ?>
