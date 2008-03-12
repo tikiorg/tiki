@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.21 2008-03-10 18:16:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.22 2008-03-12 15:10:01 ricks99 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,25 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 	// Create the HomePage if it doesn't exist
 	if ( ! empty($userHomePage) ) {
 		if ( ! $tikilib->page_exists($userHomePage)) {
-			$tikilib->create_page($userHomePage,0,'',$tikilib->now,'Tiki initialization');
+			$tikilib->create_page($userHomePage,0,'!Congratulations
+This is the default ))HomePage(( for your Tiki. If you are seeing this page, your installation was successful.
+
+You can change this page after logging in. Please review the [http://doc.tikiwiki.org/wiki+syntax|wiki syntax] for editing details.
+
+
+!!{img src=pics/icons/star.png alt="Star"} Get started.
+To begin configuring your site:
+#Log in as the __admin__.
+#Enable specific Tiki features.
+#Configure the features.
+
+
+!!{img src=pics/icons/help.png alt="Help"} Need help?
+For more information:
+*[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].
+*[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].
+*[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].
+',$tikilib->now,'Tiki initialization');
 			header('Location: tiki-index.php?page='.$userHomePage);
 		}
 	} else {
