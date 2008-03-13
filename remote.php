@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.6 2008-02-15 14:56:24 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.7 2008-03-13 16:43:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,8 @@ define('INTERTIKI_BADUSER',404);
 $map = array(
 	"intertiki.validate" => array("function"=>"validate"),
 	'intertiki.setUserInfo' => array('function' => 'set_user_info'),
-	"intertiki.version" => array("function"=>"get_version")
+	"intertiki.version" => array("function"=>"get_version"),
+	'intertiki.getUserInfo' => array('function' => 'get_user_info')
 );
 $s = new XML_RPC_Server($map);
 
@@ -111,6 +112,32 @@ function set_user_info($params) {
 function get_version($params) {
 	global $version;
 	return new XML_RPC_Response(new XML_RPC_Value($version, "int"));
+}
+
+function get_user_info($params) {
+	global $prefs, $userlib;
+	$key = $params->getParam(0); $key = $key->scalarval(); 
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+	$login = $params->getParam(1); $login = $login->scalarval(); 
+	$email = $params->getParam(2); $email = $email->scalarval();
+	if (empty($login)) {
+		$login = empty($email)?'': $userlib->get_user_by_email($email);
+	}
+	if (empty($login)) {
+		$msg = "Invalid username";
+		return new XML_RPC_Response(0, 102, $msg);
+	}
+	if (empty($email)) {
+		$email = $userlib->get_user_email($login);
+	}
+	$ret['login'] = new XML_RPC_Value($login, "string");
+	$ret['email'] = new XML_RPC_Value($email, "string");
+	return new XML_RPC_Response(new XML_RPC_Value($ret, "struct"));
 }
 
 ?>

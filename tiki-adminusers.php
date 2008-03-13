@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.3 2007-11-30 21:56:48 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.4 2008-03-13 16:43:46 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,9 @@ function batchImportUsers() {
 		die;	
 	}	
 	while (!feof($fhandle)) {
-		$data = fgetcsv($fhandle, 1000);	
+		$data = fgetcsv($fhandle, 1000);
+		if (empty(trim($data)))
+			continue;
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
 			if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") ==  "ISO-8859-1") {
@@ -57,36 +59,47 @@ function batchImportUsers() {
 	}
 	$added = 0;
 	$errors = array();
-	$discards = 0;
+	$discarded = array();
 	if ($tiki_p_admin != 'y')
 		$userGroups = $userlib->get_user_groups_inclusion($user);
 	foreach ($userrecs as $u) {
+		$local = array();
 		$exist = false;
-		if (empty($u['login'])) {
-			if (!empty($u['password']) || !empty($u['email'])) { // not empty line
-				$discarded[] = discardUser($u, tra("User login is required"));
-				++$discards;
+		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
+			if (empty($u['login']) && empty($u['email'])) {
+				$local[] = discardUser($u, tra("User login or email is required"));
+			} else { // pick up the info on the master
+				$info = $userlib->interGetUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], empty($u['login'])?'':$u['login'], empty($u['email'])?'':$u['email']);
+				if (empty($info)) {
+					$local[] = discardUser($u, tra("User does not exist on master"));
+				} else {
+					$u['login'] = $info['login'];
+					$u['email'] = $info['email'];
+				}
 			}
-			continue;
-		} elseif (empty($u['password'])) {
-			$discarded[] = discardUser($u, tra("Password is required"));
-			++$discards;
-			continue;
-		} elseif (empty($u['email'])) {
-			$discarded[] = discardUser($u, tra("Email is required"));
-			++$discards;
-			continue;
-		} elseif (!preg_match($patterns['login'],$u['login'])) {
-			$discarded[] = discardUser($u, tra("Login contains invalid characters"));
-			++$discards;
-		} elseif ($userlib->user_exists($u['login'])) {
-			 if ($_REQUEST['overwrite'] == 'n') {
-				$discarded[] = discardUser($u, tra("User is duplicated"));
-				++$discards;
-				continue;
-			}
-			$exist = true;
 		} else {
+			if (empty($u['login'])) {
+				$local[] = discardUser($u, tra("User login is required"));
+			}
+			if (empty($u['password'])) {
+				$local[] = discardUser($u, tra("Password is required"));
+			}
+			if (empty($u['email'])) {
+				$local[] = discardUser($u, tra("Email is required"));
+			}
+		}
+		if (!empty($local)) {
+			$discarded = array_merge($discarded, $local);
+			continue;
+		}
+		if ($userlib->user_exists($u['login'])) { // exist on local
+			$exist = true;
+		}
+		if ($exist && $_REQUEST['overwrite'] == 'n') {
+			$discarded[] = discardUser($u, tra("User is duplicated"));
+			continue;
+		}
+		if (!$exist) {
 			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
 			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u['login'], $u['email']));
@@ -119,10 +132,10 @@ function batchImportUsers() {
 		$added++;
 	}
 	$smarty->assign('added', $added);
-	if (@is_array($discarded)) {
+	if (count($discarded)) {
 		$smarty->assign('discarded', count($discarded));
+		$smarty->assign_by_ref('discardlist', $discarded);
 	}
-	@$smarty->assign('discardlist', $discarded);
 	if (count($errors)) {
 		array_unique($errors);
 		$smarty->assign_by_ref('errors', $errors);

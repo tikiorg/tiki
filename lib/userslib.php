@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.25 2008-03-06 14:58:32 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.26 2008-03-13 16:43:46 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -2664,6 +2664,35 @@ function get_included_groups($group, $recur=true) {
 		$result = $client->send($msg);
 		return $result;
     }
+	/* send request + interpret email/login */
+	function interGetUserInfo($remote, $user, $email) {
+		global $prefs;
+		include_once('XML/RPC.php');
+		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(0);
+		$params = array();
+		$params[] = new XML_RPC_Value($prefs['tiki_key'], 'string');
+		$params[] = new XML_RPC_Value($user, 'string');
+		$params[] = new XML_RPC_Value($email, 'string');
+		$msg = new XML_RPC_Message('intertiki.getUserInfo', $params);
+		$rpcauth = $client->send($msg);
+		if (!$rpcauth || $rpcauth->faultCode()) {
+			return false;
+		}
+		$response_value = $rpcauth->value();
+		for (;;) {
+			list($key, $value) = $response_value->structeach();
+			if ($key == '') {
+				break;
+			} elseif ($key == 'login') {
+				$u['login'] = $value->scalarval();
+			} elseif ($key == 'email') {
+				$u['email'] = $value->scalarval();
+			}
+		}
+		return $u;
+	}
 	/* send via XML_RPC user info to the main */
 	function interSendUserInfo($remote, $user) {
 		global $prefs, $userlib;
