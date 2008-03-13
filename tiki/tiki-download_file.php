@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tiki-download_file.php,v 1.33.2.3 2008-03-12 17:49:32 sept_7 Exp $
+// CVS: $Id: tiki-download_file.php,v 1.33.2.4 2008-03-13 20:12:44 nyloth Exp $
 // Initialization
 $force_no_compression = true;
 require_once('tiki-setup.php');
@@ -143,21 +143,22 @@ if (isset($_GET['icon'])) {
   echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1));
   die();
 }
+if ( isset($_GET['thumbnail']) || isset($_GET['display']) ) {
+	$image = new Image($content);
 
-$image = new Image($content);
+	$resize = false;
+	// We resize if needed
+	if (isset($_GET['x']) or isset($_GET['y'])) {
+		$image->resize($_GET['x']+0,$_GET['y']+0);
+		$resize = true;
+	}
 
-$resize = false;
-// We resize if needed
-if (isset($_GET['x']) or isset($_GET['y'])) {
-	$image->resize($_GET['x']+0,$_GET['y']+0);
-	$resize = true;
-}
-
-// We change the image format if needed
-$convert = false;
-if (isset($_GET['format']) and Image::is_supported($_GET['format'])) {
-	$image->convert($_GET['format']);
-	$convert = true;
+	// We change the image format if needed
+	$convert = false;
+	if (isset($_GET['format']) and Image::is_supported($_GET['format'])) {
+		$image->convert($_GET['format']);
+		$convert = true;
+	}
 }
 
 if (isset($_GET['thumbnail'])) {
@@ -180,7 +181,7 @@ if (isset($_GET['thumbnail'])) {
 // Added by Jenolan  31/8/2003 /////////////////////////////////////////////
 // File galleries should always be attachments (files) not inline (textual)
 if (!isset($_GET['display'])) {
-	header("Content-type: ".$image->get_mimetype());
+	header("Content-type: $type");
 	header( "Content-Disposition: attachment; filename=\"$file\"" );
 } else {
 	if (!Image::is_supported(substr($info['filename'],strrpos($info['filename'],'.')+1))) {
@@ -202,7 +203,7 @@ if( $info["path"] )
 }
 else
 {
-	header("Content-Length: ". strlen($image->display()) );
+	header("Content-Length: ". $info[ "filesize" ] );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -212,7 +213,6 @@ header("Pragma: public");
 if($info["path"]) {
   readfile_chunked($prefs['fgal_use_dir'].$info["path"]);
 } else {
-  echo $image->display();
+  echo "$content";
 }
-
 ?>
