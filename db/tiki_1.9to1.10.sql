@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.45 2008-03-13 21:14:04 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.46 2008-03-13 22:52:51 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1738,3 +1738,26 @@ ALTER TABLE users_users DROP KEY openid_url_56;
 ALTER TABLE users_users DROP KEY openid_url_57;
 ALTER TABLE users_users DROP KEY openid_url_58;
 ALTER TABLE users_users DROP KEY openid_url_59;
+ALTER TABLE `tiki_user_watches` DROP PRIMARY KEY;
+ALTER TABLE `tiki_user_watches` ADD PRIMARY KEY  (`user`(50),event,object(100),email(50));
+insert into tiki_user_watches (event,object,email,`type`,url,title)
+select event, object, email, 'wiki','tiki-lastchanges.php', 'Any wiki page is changed' from tiki_mail_events tme
+where event='wiki_page_changes';
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, 'wiki','tiki-lastchanges.php', 'Any wiki page is changed, even minor changes' from tiki_mail_events tme
+where event='wiki_page_changes_incl_minor';
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, concat('tracker', tit.itemId),concat('tiki-view_tracker_item.php?trackerId=', tit.trackerId,'&amp;itemId=',tit.itemId), tt.name from tiki_mail_events tme, tiki_tracker_items tit, tiki_trackers tt
+where event='tracker_modified_item' and object=itemId and tit.trackerId=tt.trackerId;
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, 'tracker',concat('tiki-view_tracker.php?trackerId=', tt.trackerId), tt.name from tiki_mail_events tme, tiki_trackers tt
+where event='tracker_modified' and tt.trackerId=tme.object;
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, 'cms','tiki-list_submissions.php', 'A user submits an article' from tiki_mail_events tme
+where event='article_submitted';
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, 'system','', 'PHP error' from tiki_mail_events tme
+where event='php_error';
+insert into tiki_user_watches (event, object,email,`type`,url,title)
+select event, object, email, 'users','tiki-adminusers.php', 'A user registers' from tiki_mail_events tme
+where event='user_registers';
