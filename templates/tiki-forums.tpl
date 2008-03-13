@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.10 2008-03-10 15:05:41 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.37.2.11 2008-03-13 23:49:49 ricks99 Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 {if $tiki_p_admin eq 'y'}
@@ -11,7 +11,7 @@
 <span class="button2"><a href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a></span>
 {/if}
 </div>
-
+{if $channels}
 {if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
   <table class="findtable">
     <tr>
@@ -39,7 +39,8 @@
     </tr>
   </table>
 {/if}  
-
+{/if}
+<br />
 <table class="normal">
   <tr>
     <td  class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
@@ -109,6 +110,8 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 {/if}	
 </tr>
+{sectionelse}
+<td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong><td>
 {/section}
 </table>
 <br />
