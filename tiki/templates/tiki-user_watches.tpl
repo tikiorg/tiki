@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.24.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.24.2.3 2008-03-13 21:00:48 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -66,7 +66,7 @@
 {section name=ix loop=$watches}
 <tr>
 <td style="text-align:center;" class="{cycle advance=false}">
-<input type="checkbox" name="watch[{$watches[ix].hash}]" />
+<input type="checkbox" name="watch[{$watches[ix].watchId}]" />
 </td>
 <td class="{cycle advance=false}">
 	{if $watches[ix].event eq 'article_submitted'}

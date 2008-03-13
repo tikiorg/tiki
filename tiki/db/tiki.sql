@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-03-11 22:01:11 $
-# $Author: lphuberdeau $
+# $Date: 2008-03-13 21:00:46 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3911,14 +3911,15 @@ CREATE TABLE tiki_user_votings (
 
 DROP TABLE IF EXISTS tiki_user_watches;
 CREATE TABLE tiki_user_watches (
+  watchId int(12) NOT NULL auto_increment,
   user varchar(200) NOT NULL default '',
   event varchar(40) NOT NULL default '',
   object varchar(200) NOT NULL default '',
-  hash varchar(32) default NULL,
   title varchar(250) default NULL,
   type varchar(200) default NULL,
   url varchar(250) default NULL,
   email varchar(200) default NULL,
+  KEY (watchId),
   PRIMARY KEY  (`user`(100),event,object(100))
 ) ENGINE=MyISAM;
 # --------------------------------------------------------

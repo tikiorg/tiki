@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.43 2008-03-11 22:01:12 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.44 2008-03-13 21:00:47 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1675,3 +1675,7 @@ CREATE TABLE tiki_pages_changes (
 
 #2008-03-11 nyloth
 DELETE FROM tiki_preferences WHERE name='fgal_list_parent';
+
+#2008-03-13 sylvieg
+ALTER TABLE tiki_user_watches ADD watchId int(12) NOT NULL auto_increment FIRST, ADD  KEY (`watchId`);
+alter table tiki_user_watches drop hash;
