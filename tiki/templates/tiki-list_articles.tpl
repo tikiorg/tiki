@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.50.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.50.2.5 2008-03-13 23:44:59 ricks99 Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -24,9 +24,10 @@
 <a class="linkbut" href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
 {/if}
 </div>
-
+{if $listpages}
 {include file="find.tpl"}
-
+{/if}
+<br />
 <table class="normal">
 <tr>
 {if $prefs.art_list_title eq 'y'}

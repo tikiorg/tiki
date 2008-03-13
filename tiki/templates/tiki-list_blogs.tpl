@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.49.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.49.2.3 2008-03-13 23:47:21 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
@@ -9,6 +9,7 @@
 <div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}Create New Blog{/tr}</a></div>
 {/if}
 <div align="center">
+{if $listpages}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -20,6 +21,8 @@
    </td>
 </tr>
 </table>
+{/if}
+<br />
 <table class="bloglist">
 <tr>
 {if $prefs.blog_list_title eq 'y'}
