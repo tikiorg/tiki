@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.4 2008-03-13 16:43:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.76.2.5 2008-03-13 16:48:33 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ function batchImportUsers() {
 	}	
 	while (!feof($fhandle)) {
 		$data = fgetcsv($fhandle, 1000);
-		if (empty(trim($data)))
+		if (empty($data))
 			continue;
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
