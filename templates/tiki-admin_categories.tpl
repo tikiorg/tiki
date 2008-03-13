@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.6 2008-02-26 21:12:55 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.7 2008-03-13 15:24:44 ricks99 Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
   
@@ -104,7 +104,7 @@
       {tr}Objects in category{/tr} <b>{$categ_name}</b>  
       </div>
       <div class="cbox-data">
-      
+{if $objects}      
       <table class="findtable">
       <tr><td class="findtable">{tr}Find{/tr}</td>
       <td class="findtable">
@@ -118,7 +118,7 @@
       </td>
       </tr>
       </table>
-      
+{/if}      
       <table class="normal">
       <tr>
         <td class="heading">&nbsp;</td>
@@ -131,6 +131,8 @@
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
       </tr>
+{sectionelse}
+      <tr><td class="even" colspan="3"><strong>{tr}No records found.{/tr}</td></tr>
       {/section}
       </table>
       
