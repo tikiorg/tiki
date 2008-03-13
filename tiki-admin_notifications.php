@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.1 2007-11-05 16:20:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.2 2008-03-13 21:00:48 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,7 +93,7 @@ if (isset($_REQUEST["removeevent"])) {
   $area = 'delnotif';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$tikilib->remove_user_watch_by_hash($_REQUEST["removeevent"]);
+		$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
   } else {
     key_get($area);
   }
@@ -101,7 +101,7 @@ if (isset($_REQUEST["removeevent"])) {
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('admin-notif');
 	foreach($_REQUEST['checked'] as $id) {
-		$tikilib->remove_user_watch_by_hash($id);
+		$tikilib->remove_user_watch_by_id($id);
 	}
  }	
 

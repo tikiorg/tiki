@@ -77,8 +77,8 @@
 <td>{$channels[user].email}</td>
 <td>{$channels[user].user}</td>
 <td>
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].hash}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-   <input type="checkbox" name="checked[]" value="{$channels[user].hash|escape}" {if $smarty.request.checked and in_array($channels[user].hash,$smarty.request.checked)}checked="checked"{/if} />
+   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].watchId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+   <input type="checkbox" name="checked[]" value="{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
 {sectionelse}

@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.87 2008-03-11 22:01:13 lphuberdeau Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.88 2008-03-13 21:00:48 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -195,23 +195,22 @@ class TikiLib extends TikiDB {
     /*shared*/
     function add_user_watch($user, $event, $object, $type, $title, $url, $email='') {
 
-	$hash = md5(uniqid('.'));
 	if (empty($email)) {
 		global $userlib;
 		$email = $userlib->get_user_email($user);
 	}
 	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
-	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
-	$query.= "values(?,?,?,?,?,?,?,?)";
-	$this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
+	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
+	$query.= "values(?,?,?,?,?,?,?)";
+	$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
 	return true;
     }
 
     /*shared*/
-    function remove_user_watch_by_hash($hash) {
-	$query = "delete from `tiki_user_watches` where `hash`=?";
-	$this->query($query,array($hash));
+    function remove_user_watch_by_id($id) {
+	$query = "delete from `tiki_user_watches` where `watchId`=?";
+	$this->query($query,array($id));
     }
 
     /*shared*/
@@ -4312,6 +4311,12 @@ function add_pageview() {
 		global $prefs;
 		return isset($prefs[$name]) ? $prefs[$name] : $default;
     }
+	function delete_preference($name) {
+		global $prefs;
+		$query = "delete from `tiki_preferences` where `name`=?";
+		$this->query($query,array($name));
+		$this->set_lastUpdatePrefs();
+	}
 
     function set_preference($name, $value) {
 		global $user_overrider_prefs, $user_preferences, $user, $prefs;
@@ -4346,7 +4351,6 @@ function add_pageview() {
 	function set_lastUpdatePrefs() {
 		$query = "update `tiki_preferences` set `value`=`value`+1 where `name`=?";
 		$this->query($query, array('lastUpdatePrefs'));
-		
 	}
 
 	function _get_values($table, $field_name, $var_names = null, &$global_ref, $query_cond = '', $bindvars = null) {
