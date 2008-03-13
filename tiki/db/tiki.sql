@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2008-03-13 21:00:46 $
+# $Date: 2008-03-13 21:14:04 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3919,7 +3919,7 @@ CREATE TABLE tiki_user_watches (
   type varchar(200) default NULL,
   url varchar(250) default NULL,
   email varchar(200) default NULL,
-  KEY (watchId),
+  KEY watchId (watchId),
   PRIMARY KEY  (`user`(100),event,object(100))
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
