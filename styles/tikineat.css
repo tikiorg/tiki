@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.19 2008-03-05 09:49:27 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.20 2008-03-13 19:42:55 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -355,7 +355,6 @@ TD.module {
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {
 	background-color : white;
-	margin : 3px;
 	margin-bottom : 6px;
 	border : 1px solid #8CACBB;
 	overflow : hidden;
@@ -1788,8 +1787,6 @@ a.phplm:hover, .phplmnormal a:hover {
 	border : 1px solid #225566 !important;
 	border-top: none !important;
 	padding: 6px 2px 2px 2px;
-	margin: 5px;
-	margin-top : 0;
 	background-color : #EEEEEE;
 	border-radius : 0 0 3px 3px;
 	-moz-border-radius : 0 0 3px 3px;
