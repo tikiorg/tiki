@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.44 2008-03-13 21:00:47 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.45 2008-03-13 21:14:04 sylvieg Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1460,7 +1460,7 @@ update `tiki_modules` set params=replace(params,'page=','pagemenu=') where name 
 
 #2007-09-08 openid support
 ALTER TABLE `users_users` ADD `openid_url` VARCHAR( 255 ) NULL ;
-ALTER TABLE `users_users` ADD INDEX ( `openid_url` ) ;
+ALTER TABLE `users_users` ADD INDEX openid_url ( `openid_url` ) ;
 
 #2007-09-10 niclone
 alter table tiki_mypage_types add column `templateuser` int not null;
@@ -1677,5 +1677,64 @@ CREATE TABLE tiki_pages_changes (
 DELETE FROM tiki_preferences WHERE name='fgal_list_parent';
 
 #2008-03-13 sylvieg
-ALTER TABLE tiki_user_watches ADD watchId int(12) NOT NULL auto_increment FIRST, ADD  KEY (`watchId`);
+ALTER TABLE tiki_user_watches ADD watchId int(12) NOT NULL auto_increment FIRST, ADD  KEY watchId (watchId);
 alter table tiki_user_watches drop hash;
+ALTER TABLE users_users DROP KEY openid_url_1;
+ALTER TABLE users_users DROP KEY openid_url_2;
+ALTER TABLE users_users DROP KEY openid_url_3;
+ALTER TABLE users_users DROP KEY openid_url_4;
+ALTER TABLE users_users DROP KEY openid_url_5;
+ALTER TABLE users_users DROP KEY openid_url_6;
+ALTER TABLE users_users DROP KEY openid_url_7;
+ALTER TABLE users_users DROP KEY openid_url_8;
+ALTER TABLE users_users DROP KEY openid_url_9;
+ALTER TABLE users_users DROP KEY openid_url_10;
+ALTER TABLE users_users DROP KEY openid_url_11;
+ALTER TABLE users_users DROP KEY openid_url_12;
+ALTER TABLE users_users DROP KEY openid_url_13;
+ALTER TABLE users_users DROP KEY openid_url_14;
+ALTER TABLE users_users DROP KEY openid_url_15;
+ALTER TABLE users_users DROP KEY openid_url_16;
+ALTER TABLE users_users DROP KEY openid_url_17;
+ALTER TABLE users_users DROP KEY openid_url_18;
+ALTER TABLE users_users DROP KEY openid_url_19;
+ALTER TABLE users_users DROP KEY openid_url_20;
+ALTER TABLE users_users DROP KEY openid_url_21;
+ALTER TABLE users_users DROP KEY openid_url_22;
+ALTER TABLE users_users DROP KEY openid_url_23;
+ALTER TABLE users_users DROP KEY openid_url_24;
+ALTER TABLE users_users DROP KEY openid_url_25;
+ALTER TABLE users_users DROP KEY openid_url_26;
+ALTER TABLE users_users DROP KEY openid_url_27;
+ALTER TABLE users_users DROP KEY openid_url_28;
+ALTER TABLE users_users DROP KEY openid_url_29;
+ALTER TABLE users_users DROP KEY openid_url_30;
+ALTER TABLE users_users DROP KEY openid_url_31;
+ALTER TABLE users_users DROP KEY openid_url_32;
+ALTER TABLE users_users DROP KEY openid_url_33;
+ALTER TABLE users_users DROP KEY openid_url_34;
+ALTER TABLE users_users DROP KEY openid_url_35;
+ALTER TABLE users_users DROP KEY openid_url_36;
+ALTER TABLE users_users DROP KEY openid_url_37;
+ALTER TABLE users_users DROP KEY openid_url_38;
+ALTER TABLE users_users DROP KEY openid_url_39;
+ALTER TABLE users_users DROP KEY openid_url_40;
+ALTER TABLE users_users DROP KEY openid_url_41;
+ALTER TABLE users_users DROP KEY openid_url_42;
+ALTER TABLE users_users DROP KEY openid_url_43;
+ALTER TABLE users_users DROP KEY openid_url_44;
+ALTER TABLE users_users DROP KEY openid_url_45;
+ALTER TABLE users_users DROP KEY openid_url_46;
+ALTER TABLE users_users DROP KEY openid_url_47;
+ALTER TABLE users_users DROP KEY openid_url_48;
+ALTER TABLE users_users DROP KEY openid_url_49;
+ALTER TABLE users_users DROP KEY openid_url_50;
+ALTER TABLE users_users DROP KEY openid_url_51;
+ALTER TABLE users_users DROP KEY openid_url_52;
+ALTER TABLE users_users DROP KEY openid_url_53;
+ALTER TABLE users_users DROP KEY openid_url_54;
+ALTER TABLE users_users DROP KEY openid_url_55;
+ALTER TABLE users_users DROP KEY openid_url_56;
+ALTER TABLE users_users DROP KEY openid_url_57;
+ALTER TABLE users_users DROP KEY openid_url_58;
+ALTER TABLE users_users DROP KEY openid_url_59;
