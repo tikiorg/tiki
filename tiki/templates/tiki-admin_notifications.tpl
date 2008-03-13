@@ -73,7 +73,7 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td>{$channels[user].event}</td>
-<td>{$channels[user].object}</td>
+<td>{if $channels[user].url}<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>{else}{$channels[user].object|escape}{/if}</td>
 <td>{$channels[user].email}</td>
 <td>{$channels[user].user}</td>
 <td>
