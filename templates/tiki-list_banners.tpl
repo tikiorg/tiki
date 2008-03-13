@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.5 2008-03-13 23:42:24 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Admin Banners{/tr}">
@@ -16,7 +16,7 @@
 <div class="navbar">
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 </div>
-
+{if $listpages}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -28,6 +28,8 @@
    </td>
 </tr>
 </table>
+{/if}
+<br />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'bannerId_desc'}bannerId_asc{else}bannerId_desc{/if}">{tr}Id{/tr}</a></td>
@@ -64,7 +66,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="10">
+<tr><td class="odd" colspan="11">
 {tr}No records found{/tr}
 </td></tr>
 {/section}
