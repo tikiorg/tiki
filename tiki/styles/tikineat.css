@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.20 2008-03-13 19:42:55 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.21 2008-03-14 13:30:28 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1952,7 +1952,7 @@ table.default	td {
 	margin: 0;
 }
 
-.upspan:hover .icon, a:hover .icon, span:hover .icon {
+.upspan:hover .icon, a:hover .icon, span:hover input.icon {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);
 	-moz-opacity: 1;
 	background-color: #DDDDDD;
