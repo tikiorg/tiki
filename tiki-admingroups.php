@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.9 2008-01-07 23:07:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.62.2.10 2008-03-14 19:51:58 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ $ag_home = '';
 $ag_defcat = 0;
 $ag_theme = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
-if (isset($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
+if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 
 // Process the form to add a group
