@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.41 2008-03-11 16:59:59 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.42 2008-03-14 22:05:14 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -770,8 +770,9 @@ class TrackerLib extends TikiLib {
 				}
 
 				if ( isset($fopt['options']) ) {
-					if (!empty($fopt['options']))
+					if (!empty($fopt['options'])) {
 						$fopt['options_array'] = split(',', $fopt['options']);
+					}
 					if ( $fopt['type'] == 'i' ) {
 						global $imagegallib;
 						include_once('lib/imagegals/imagegallib.php');
@@ -1610,7 +1611,7 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['options_array'] = split(',', $res['options']);
+			$res['options_array'] = preg_split('/\s*,\s*/', trim($res['options']));
 			$res['itemChoices'] = ( $res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
 			if ($tra_name && $prefs['feature_multilingual'] == 'y' && $prefs['language'] != 'en')
 				$res['name'] = tra($res['name']);
