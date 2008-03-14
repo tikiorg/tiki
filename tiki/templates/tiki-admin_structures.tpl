@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.51.2.8 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.51.2.9 2008-03-14 11:10:58 ricks99 Exp $ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}
@@ -56,14 +56,15 @@
 {/foreach}
 <br /><br />
 {/if}
-
+{if $channels}
 {include file="find.tpl"}
-
+{/if}
+<br />
 <h2>{tr}Structures{/tr}</h2>
 <table class="normal">
 <tr>
-  <td class="heading">{tr}Structure ID{/tr}</td>
-  <td  class="heading">{tr}Action{/tr}</td>
+  <th class="heading">{tr}Structure ID{/tr}</th>
+  <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
@@ -89,34 +90,45 @@
   {/if}&nbsp;
   </td>
 </tr>
+{sectionelse}
+<tr>
+  <td colspan="2" class="odd">{tr}No records found.{/tr}<td>
+</tr>
 {/section}
 </table>
-
+<br />
 <div style="text-align: center">
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
 
 {if $tiki_p_edit_structures == 'y'}
 <h2>{tr}Create new structure{/tr}</h2>
-<small>{tr}Use single spaces to indent structure levels{/tr}</small>
 <form action="tiki-admin_structures.php" method="post">
 <table class="normal">
 <tr>
    <td class="formcolor">{tr}Structure ID{/tr}:</td>
    <td class="formcolor"><input type="text" name="name" /></td>
+</tr>
+<tr>
    <td class="formcolor">{tr}Alias{/tr}:</td>
    <td class="formcolor"><input type="text" name="alias" /></td>
 </tr>    
 <tr>
    <td class="formcolor">{tr}Tree{/tr}:<br />(optional)</td>
-   <td colspan="3" class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
+   <td colspan="2" class="formcolor"><textarea rows="5" cols="60" name="tree" style="width:95%"></textarea>
+    <div class="rbox" name="tip">
+    <div class="rbox-title" name="tip">{tr}Note{/tr}</div>  
+    <div class="rbox-data" name="tip">{tr}Use single spaces to indent structure levels{/tr}</div>
+    </div>
+    <br />
+</td>
 </tr>    
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
 {/if}
 <tr>
    <td class="formcolor">&nbsp;</td>
-   <td colspan="3" class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
+   <td colspan="2" class="formcolor"><input type="submit" value="{tr}Create New Structure{/tr}" name="create" /></td>
 </tr>
 </table>
 </form>
