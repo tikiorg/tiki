@@ -130,6 +130,11 @@ var numl;var toBeHidden;
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $msgError} onload="javascript:location.hash='msgError'"{/if}
 {if $section} class="tiki_{$section}"{/if}{if $smarty.session.fullscreen eq 'y'} id="fullscreen"{/if}>
+<ul class="jumplinks">
+ <li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
+ {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
+ <li><a href="#footer">{tr}Jump to Footer{/tr}</a></li>*}
+</ul>
 {if $prefs.minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}
