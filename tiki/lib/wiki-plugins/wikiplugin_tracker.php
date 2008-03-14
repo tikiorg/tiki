@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.22 2008-03-09 21:23:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.23 2008-03-14 21:21:02 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n, url=\"http://site.com\", values=val1:val2:val3)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n, url=\"http://site.com\", values=val1:val2:val3, sort=y|n)}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
@@ -39,6 +39,9 @@ function wikiplugin_tracker($data, $params) {
 	}
 	if (!isset($showdesc)) {
 		$showdesc = "n";
+	}
+	if (!isset($sort)) {
+		$sort = 'n';
 	}
 	if (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') {
 		$utid = $userlib->get_usertrackerid($group);
@@ -319,7 +322,8 @@ function wikiplugin_tracker($data, $params) {
 			$outf = array();
 			if (isset($fields)) {
 				$fl = split(":",$fields);
-				$flds = $trklib->sort_fields($flds, $fl);		
+				if ($sort == 'y')
+					$flds = $trklib->sort_fields($flds, $fl);		
 				foreach ($fl as $l) {
 					if (substr($l,0,1) == '-') {
 						$l = substr($l,1);
