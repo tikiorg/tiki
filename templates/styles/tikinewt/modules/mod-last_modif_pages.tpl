@@ -13,7 +13,7 @@
     {section name=ix loop=$modLastModif}
 	<li>
       {if $absurl == 'y'}
-          <a class="linkmodule" href="{$feature_server_name}tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
+          <a class="linkmodule" href="{$base_url}tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}{if $prefs.wiki_authors_style ne 'lastmodif'}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user|username}{else}{tr}Anonymous{/tr}{/if}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$modLastModif[ix].pageName|escape|truncate:$maxlen:"...":true}
         {else}
@@ -21,7 +21,7 @@
         {/if}
           </a>
 		  {else}
-       <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user}{else}{tr}Anonymous{/tr}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
+       <a class="linkmodule" href="{$modLastModif[ix].pageName|sefurl}" title="{$modLastModif[ix].lastModif|tiki_short_datetime}{if $prefs.wiki_authors_style ne 'lastmodif'}, {tr}by{/tr} {if $modLastModif[ix].user ne ''}{$modLastModif[ix].user|username}{else}{tr}Anonymous{/tr}{/if}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$modLastModif[ix].pageName|escape|truncate:$maxlen:"...":true}
         {else}
