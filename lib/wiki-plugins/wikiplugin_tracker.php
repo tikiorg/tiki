@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.23 2008-03-14 21:21:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.24 2008-03-14 22:35:40 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -264,6 +264,7 @@ function wikiplugin_tracker($data, $params) {
 							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
 							if (!empty($params['fields']))
 								$url .= "&fields=".urlencode($params['fields']);
+							$url .= "#wikiplugin_tracker$trackerId";
 							header("Location: $url");
 							die;
 						} else {
@@ -715,14 +716,16 @@ function wikiplugin_tracker($data, $params) {
 	else {
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit'] == $trackerId)
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
-		$back = '';
+		$id = ' id="wikiplugin_tracker'.$trackerId.'"';
 		if ($showtitle == 'y') {
-			$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
+			$back.= '<div class="titlebar"'.$id.'>'.$tracker["name"].'</div>';
+			$id = '';
 		}
 		if ($showdesc == 'y') {
-			$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
+			$back.= '<div class="wikitext"'.$id.'>'.$tracker["description"].'</div><br />';
+			$id = '';
 		}
-		$back.= '<div>'.$data.'</div>';
+		$back.= "<div$id>".$data.'</div>';
 		return $back;
 	}
 }
