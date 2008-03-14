@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.2 2008-03-02 21:44:35 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.3 2008-03-14 12:04:16 ricks99 Exp $ *}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
-
+{if $comments}
 <form method="get" action="tiki-list_comments.php">
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
@@ -19,7 +19,9 @@
 {*</select>*}
 </td></tr></table>
    </form>
-
+{/if}
+<br />
+{if $comments}
 <form name="checkboxes_on" method="post" action="tiki-list_comments.php">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
@@ -38,7 +40,7 @@
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
-
+{/if}
 <table class="normal">
 <tr>
 <th class="heading">&nbsp;</th>
@@ -60,9 +62,11 @@
 <td class="{cycle advance=false}">{$comments[ix].commentDate|tiki_short_datetime}</td>
 <td class="{cycle}">{$comments[ix].data|truncate:50:"...":true}</td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
-
+{if $comments}
 <div class="formcolor">
 <script type="text/javascript">
 <!--
@@ -75,6 +79,7 @@
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
+{/if}
 </form>
 
 {if cant_pages ne 0}
