@@ -83,9 +83,10 @@
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-
+<br />
 <h2>{tr}Templates{/tr}</h2>
 <div  align="center">
+{if $channels}
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -97,6 +98,8 @@
    </td>
 </tr>
 </table>
+{/if}
+<br />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>

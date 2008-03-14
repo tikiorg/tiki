@@ -32,6 +32,7 @@
 {/if}
 <h2>{tr}Available FAQs{/tr}</h2>
 <div  align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -43,6 +44,8 @@
    </td>
 </tr>
 </table>
+{/if}
+<br />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
@@ -70,6 +73,8 @@
 </td>
 {/if}
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="{if $tiki_p_admin_faqs eq 'y'}5{else}4{/if}"><strong>{tr}No records found.{/tr}</strong><td></tr>
 {/section}
 </table>
 <br />
