@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.6 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.7 2008-03-14 12:04:15 ricks99 Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">
@@ -169,10 +169,11 @@
 </div>
 </div>
 </td></tr></table>
-
+<br />
 <a name="options"></a>
 <h2>{tr}Menu options{/tr}</h2>
 <div align="center">
+{if $channels}
   <form method="get" action="tiki-admin_menu_options.php">
     <table class="findtable">
       <tr>
@@ -194,6 +195,7 @@
       </tr>
     </table>
   </form>
+{/if}
 
 <form method="get" action="tiki-admin_menu_options.php">
 <input type="hidden" name="find" value="{$find|escape}" />
@@ -248,16 +250,22 @@ title="{tr}switch with next option{/tr}">{icon _id='down'}</a>{/if}
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="11"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
+{if $channels}
 	<script type="text/javascript"> /* <![CDATA[ */
 	document.write("<tr><td colspan=\"11\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
 	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
 	/* ]]> */</script>
+{/if}
 </table>
+{if $channels}
 <div align="left">
 {tr}Perform action with checked:{/tr}
 <input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 </div>
+{/if}
 </form>
 <br />
 

@@ -8,9 +8,10 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Notifications Template{/tr}">
 {icon _id='shape_square_edit'}</a>{/if}</h1>
 
-{if empty($prefs.sender_email)}
-<div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</div>
-{/if}
+{if empty($prefs.sender_email)}<br />
+<div class="simplebox">
+<div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications.{/tr}</div>
+</div><br />{/if}
 
 <h2>{tr}Add notification{/tr}</h2>
 {if !empty($tikifeedback)}
@@ -46,8 +47,9 @@
 </tr>    
 </form>
 </table>
-
+<br />
 <h2>{tr}EMail notifications{/tr}</h2>
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -60,14 +62,15 @@
    </td>
 </tr>
 </table>
+{/if}
 <form method="get" action="tiki-admin_notifications.php">
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Event{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Object{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}eMail{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}User{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'event_desc'}event_asc{else}event_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Event{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}Object{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}eMail{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_notifications.php?sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows ne $prefs.maxRecords}&amp;numrows={$numrows}{/if}">{tr}User{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$channels}
@@ -82,9 +85,10 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="4"><b>{tr}No records found.{/tr}</b></td></tr>
+<tr><td class="odd" colspan="5"><b>{tr}No records found.{/tr}</b></td></tr>
 {/section}
 </table>
+{if $channels}
 <div align="right">
 <script type="text/javascript"> /* <![CDATA[ */
 document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
@@ -93,6 +97,7 @@ document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
 <br />{tr}Perform action with checked:{/tr}
 <input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 </div>
+{/if}
 </form>
 <br />
 <div class="mini">
