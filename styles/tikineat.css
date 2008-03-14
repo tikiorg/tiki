@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.22 2008-03-14 20:29:43 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.23 2008-03-14 20:34:48 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1740,19 +1740,37 @@ a.phplm:hover, .phplmnormal a:hover {
 /***************** tiki tabs ***************/
 .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 6px 0 0px !important; padding: 0 !important;
+	margin-top: 10px !important; 
+	margin-right: 6px !important; 
+  padding: 0 !important;
 }
-.tabactive {border: solid 1px #225566 !important; border-bottom: none !important; border-top-width: 2px !important;
-	position: relative; top: -2px;}
-[class].tabactive {top: -1px}
+
+.tabactive {
+  border: solid 1px #225566 !important; 
+  border-bottom: none !important; 
+  border-top-width: 2px !important;
+	position: relative; 
+  top: -2px;
+}
+
+[class].tabactive {
+  top: -1px
+}
+
 .tabactive a {
 	background-color : #EEEEEE;
 	}
+
 .tabinactive {
-	border: solid 1px #666666 !important; border-bottom: none !important;
-	position: relative !important; top: -3px !important;
-	}
-[class].tabinactive {top: -2px !important}
+	border: solid 1px #666666 !important; 
+  border-bottom: none !important;
+	position: relative !important; 
+  top: -3px !important;
+}
+
+[class].tabinactive {
+  top: -2px !important
+}
 
 .tabmark {
 	display : inline;
@@ -1765,6 +1783,7 @@ a.phplm:hover, .phplmnormal a:hover {
 	-moz-border-radius : 3px 3px 0 0;
 	-khtml-border-radius : 3px 3px 0 0;
 }
+
 .tabmark a {
 	border-radius : 3px 3px 0 0;
 	-moz-border-radius : 3px 3px 0 0;
@@ -1774,14 +1793,17 @@ a.phplm:hover, .phplmnormal a:hover {
 	font-weight : bold;
 	padding : 1px 5px;
 }
+
 .tabmark a:active {
 	background-color : white;
 	color : red;
 }
+
 .tabmark a:hover {
 	color : black;
 	background-color : #CCCCCC;
 }
+
 .tabcontent {
 	z-index : 200;
 	border : 1px solid #225566 !important;
@@ -1793,13 +1815,16 @@ a.phplm:hover, .phplmnormal a:hover {
 	-khtml-border-radius : 0 0 3px 3px;
 	text-align: center;
 }
+
 .tabcontent table {
-	margin-left: auto; margin-right: auto;
+	margin-left: auto; 
+  margin-right: auto;
 	margin-top: 1%;
 	margin-bottom: 2%;
 	text-align: left;
 	width: 95%;
 }
+
 .tabcontent table td {
 	padding: 5px;
 }
@@ -1810,12 +1835,18 @@ form fieldset.tabcontent {
 	}
 form.admin .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0px !important; padding: 0 !important;
+	margin: 10px 1px 0 0px !important; 
+  padding: 0 !important;
 }
 
-div.content {padding: 3px}
+div.content {
+  padding: 3px
+}
 
-div.content .tabs {margin: 0px; margin-bottom: 3px;}
+div.content .tabs {
+  margin: 0px; 
+  margin-bottom: 3px;
+}
 
 /*********************** Version Plugin Style **********************/
 .versions {
