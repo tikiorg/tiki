@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.21 2008-03-14 13:30:28 pkdille Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.22 2008-03-14 20:29:43 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -1740,7 +1740,7 @@ a.phplm:hover, .phplmnormal a:hover {
 /***************** tiki tabs ***************/
 .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 6px 0 5px !important; padding: 0 !important;
+	margin: 10px 6px 0 0px !important; padding: 0 !important;
 }
 .tabactive {border: solid 1px #225566 !important; border-bottom: none !important; border-top-width: 2px !important;
 	position: relative; top: -2px;}
