@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.4 2008-03-15 21:11:16 sylvieg Exp $ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -72,6 +72,7 @@
   {/if}
 	<tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor">
 	<textarea rows="5" cols="50" name="description"></textarea></td></tr>
+	{if $tiki_p_list_image_galleries eq 'y'}
 	<tr><td class="formcolor">{tr}Gallery{/tr}:</td><td class="formcolor">
 	<select name="galleryId">
 	{section name=idx loop=$galleries}
@@ -81,6 +82,9 @@
 	{/section}
 	</select>
 	</td></tr>
+	{else}
+	<input type="hidden" name="galleryId" value="{$galleryId}" />
+	{/if}
 {include file=categorize.tpl}
 	<tr class="formcolor">
 	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}</b></td></tr>
@@ -101,6 +105,9 @@
 	<input name="userfile7" type="file" />
 	<input name="userfile8" type="file" />
 	</td></tr>
+	{if $prefs.feature_antibot eq 'y' && $user eq ''}
+		{include file="antibot.tpl"}
+	{/if}
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}Upload{/tr}" /> <span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_img_upload_size|kbsize}</span></td></tr>
 	</table>
 	</form>

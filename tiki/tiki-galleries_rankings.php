@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries_rankings.php,v 1.17 2007-10-12 07:55:27 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries_rankings.php,v 1.17.2.1 2008-03-15 21:11:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if ($prefs['feature_gal_rankings'] != 'y') {
 	die;
 }
 
-if ($tiki_p_view_image_gallery != 'y') {
+if ($tiki_p_list_image_galleries != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
 	$smarty->display("error.tpl");
