@@ -21,7 +21,7 @@
 
 {if $prefs.feature_tabs eq 'y'}
 {cycle values="1,2" name=tabs print=false advance=false}
-<div id="page-bar">
+<div class="tabs">
 	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Options{/tr}</a></span>
 	<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Manage Fields{/tr}</a></span>
 </div>
@@ -33,7 +33,7 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Options{/tr}</div>
 <div class="cbox-data">
-<form method='POST' action='tiki-user_contacts_prefs.php'>
+<form method='post' action='tiki-user_contacts_prefs.php'>
 <table class="admin">
 	<tr><td class="form">{tr}Default view{/tr}:</td>
 	<td class="form">
@@ -54,11 +54,11 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Manage Fields{/tr}</div>
 <div class="cbox-data">
-<form method='POST' action='tiki-user_contacts_prefs.php'>
+<form method='post' action='tiki-user_contacts_prefs.php'>
 <table class="admin"><tr><td>
 <table class="normal">
   <tr>
-	<td class="heading" colspan=2>{tr}Order{/tr}</td>
+	<td class="heading" colspan="2">{tr}Order{/tr}</td>
   	<td class="heading">{tr}Field{/tr}</td>
 	<td class="heading">{tr}Action{/tr}</td>
   </tr>
