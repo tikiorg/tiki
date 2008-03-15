@@ -7,12 +7,12 @@
 <div id="header">
 	{if $prefs.feature_siteidentity eq 'y'}
 	{* Site identity header section *}
-	<div id="siteheader">
+	<div class="clearfix" id="siteheader">
 		{include file="tiki-site_header.tpl"}
 	</div>
 	{/if}
 	{if $prefs.feature_top_bar eq 'y'}
-	<div id="tiki-top">
+	<div class="clearfix" id="tiki-top">
 		{include file="tiki-top_bar.tpl"}
 	</div>
 	{/if}
