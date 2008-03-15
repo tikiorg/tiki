@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.46 2007-10-12 07:55:32 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.46.2.1 2008-03-15 21:11:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,6 +96,9 @@ if (isset($_REQUEST["upload"])) {
 
 	$error_msg = '';
 
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$error_msg = tra('You have mistyped the anti-bot verification code; please try again.');
+	}
 	if (!empty($_REQUEST["url"])) {
 		// check URL. avoid uploading local files!
 		if(!preg_match('#http[s]?://#i',$_REQUEST["url"])) {
