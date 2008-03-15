@@ -1,8 +1,10 @@
+{* $header$ *}
 <table cellpadding="0" cellspacing="0" border="0" class="normal" width="100%">
 <tr>
 <th class="heading" width="20%"><a class="tableheading" href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>
 <th class="heading" width="20%"><a class="tableheading" href="{$myurl}?sort_mode={if $sort_mode eq 'end_desc'}end_asc{else}end_desc{/if}">{tr}End{/tr}</a></th>
-<th class="heading"><a class="tableheading" href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a><th class="heading">{tr}Action{/tr}</th>
+<th class="heading"><a class="tableheading" href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {if $listevents|@count eq 0}<tr><td colspan="5">{tr}No records found{/tr}</td></tr>{/if}
 {cycle values="odd,even" print=false}
