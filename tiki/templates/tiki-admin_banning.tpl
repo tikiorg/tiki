@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.33.2.4 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id: tiki-admin_banning.tpl,v 1.33.2.5 2008-03-15 22:30:50 sylvieg Exp $ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
@@ -38,7 +38,7 @@
 	<td class="formcolor"><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
 	<td class="formcolor">
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
-		<input type="text" name="user" id="banning-userregex" value="{$info.user|escape}" />
+		<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" />
 	</td>
 </tr>
 <tr>
