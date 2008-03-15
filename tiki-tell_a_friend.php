@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.4 2008-03-11 22:58:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tell_a_friend.php,v 1.8.2.5 2008-03-15 22:12:13 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,6 +56,16 @@ if (isset($_REQUEST['send'])) {
 			$errors[] = tra('One of the email addresses you typed is invalid').': '.$email;
 		}
 	}
+	if (empty($_REQUEST['email'])) {
+		$from = $prefs['sender_email'];
+	} else {
+		$smarty->assign_by_ref('email',$_REQUEST['email']);
+		if (validate_email($_REQUEST['email'])) {
+			$from = $_REQUEST['email'];
+		} else {
+			$errors[] = tra('Invalid email');
+		}
+	}
 	if (!empty($_REQUEST['addresses']))
 		$smarty->assign('addresses', $_REQUEST['addresses']);
 	if (!empty($_REQUEST['name']))
@@ -66,7 +76,7 @@ if (isset($_REQUEST['send'])) {
 		include_once ('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$smarty->assign_by_ref('mail_site', $_SERVER['SERVER_NAME']);
-		$mail->setFrom($prefs['sender_email']);
+		$mail->setFrom($from);
 		$txt = $smarty->fetch('mail/tellAFriend_subject.tpl');
 		$mail->setSubject($txt);
 		$txt = $smarty->fetch('mail/tellAFriend.tpl');
@@ -82,8 +92,8 @@ if (isset($_REQUEST['send'])) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
 } else {
-	$smarty->assign('name', $user);
-	
+	$smarty->assign_by_ref('name', $user);
+	$smarty->assign('email', $userlib->get_user_email($user));
 }
 ask_ticket('tell-a-friend');
 
