@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.33 2007-02-04 20:09:40 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.33.2.1 2008-03-16 01:00:38 nyloth Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -297,7 +297,6 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
     function get_file($repID, $file, $use_cache = 'y', $url = '')
     {
         global $tikilib;
-//        global $debugger;
         $data = '';
         // Try to get data from cache
         $cacheId = 0;
@@ -306,21 +305,17 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
 
         $rep = $this->get_repository($repID);
 
-//        $debugger->msg("exp: ".$rep["expiration"]);
         // If smth found in cache return it... else try to get it by usual way.
-        // \todo Smbd can explain why to use date('U') instead of time()???
         if ($data != '' && isset($data["data"]) && ($data["data"] != '')
          && ($rep["expiration"] > 0 ? (time() - $data["refresh"]) < $rep["expiration"] : true))
             return $data["data"];
-//        {
-//            $debugger->msg("Get page ".$url." from cache");
-//            $debugger->msg("Age of page (sec.): ".(time() - $data["refresh"]));
-//            return $data["data"];
-//        }
-//        else $debugger->msg("No cached page for ".$url);
 
         // Get file content to string
-        $data = @file_get_contents($file);
+        if ( ereg('^https?://', $file) ) {
+		$data = $tikilib->httprequest($file);
+	} else {
+		$data = @file_get_contents($file);
+	}
         if (isset($php_errormsg))
             $data .= "ERROR: ".$php_errormsg;
         else
