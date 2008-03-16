@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.10 2008-03-06 00:26:10 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.11 2008-03-16 13:56:22 sylvieg Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -212,7 +212,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     </tr>  
   <tr>     
     <td><input type="checkbox" name="feature_lightbox" {if $prefs.feature_lightbox eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Lightbox" target="tikihelp" class="tikihelp" title="{tr}Lightbox{/tr}"> {tr}Lightbox (Javascript modern visual effects on images){/tr} </td>
+    <td class="form"> <a href="{$prefs.helpurl}Image+Gallery+Config" target="tikihelp" class="tikihelp" title="{tr}Lightbox{/tr}"> {tr}Lightbox (Javascript modern visual effects on images){/tr}</a>{if !$lightboxlib}<br />{tr}You must install the lightbox library in lib/lightbox{/tr}{/if}</td>
     </tr>  
         
 {* ---------- Experimental features ------------ *}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.5 2008-03-04 20:48:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.6 2008-03-16 13:56:22 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -118,6 +118,11 @@ $features_toggles = array(
     }
 		$smarty->clear_compiled_tpl();
 }
+if (file_exists('lib/lightbox/js/lightbox.js'))
+	$lightboxlib = true;
+else
+	$lightbox = false;
+$smarty->assign_by_ref('lightboxlib', $lightboxlib);
 
 ask_ticket('admin-inc-features');
 ?>
