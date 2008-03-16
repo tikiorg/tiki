@@ -1,4 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/fgal_listing_conf.tpl,v 1.3.2.1 2008-02-27 15:18:50 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/fgal_listing_conf.tpl,v 1.3.2.2 2008-03-16 00:07:13 nyloth Exp $ *}
+
+{if is_array($fgal_options) and count($fgal_options) gt 0}
+	{foreach key=key item=item from=$fgal_options}
+<tr class="formcolor">
+	<td>{$item.name}</td>
+	<td><input type="checkbox" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
+</tr>
+	{/foreach}
+{/if}
 
 {if is_array($fgal_listing_conf) and count($fgal_listing_conf) gt 0}
 	{foreach key=key item=item from=$fgal_listing_conf}

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.22 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.23 2008-03-16 00:07:13 nyloth Exp $ *}
 
-{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' ) or $gallery_path neq '' }
+{if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && tiki_p_view_fgal_path eq 'y' ) }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
 
-{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'}
+{if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
 {if $prefs.javascript_enabled eq 'y'}
 
   <div id="fgalexplorer_close" style="float:left; vertical-align:middle; display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};"><a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;">{icon _id='application_side_tree' alt="{tr}Show Tree{/tr}"}</a></div>
@@ -23,7 +23,7 @@
 {/if}
 {/if}
 
-{if $gallery_path neq ''}
+{if $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y'}
   <div class="gallerypath" style="vertical-align:middle">&nbsp;&nbsp;{$gallery_path}</div>
 {/if}
 
@@ -32,7 +32,7 @@
 
 <table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
   <tr>
-    {if isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n'}
+    {if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
     <td width="25%" class="fgalexplorer" id="fgalexplorer" {if ( ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' ) }style="display:none"{/if}>
       <div style="overflow-x:auto; overflow-y:hidden">
       {include file='file_galleries.tpl'}

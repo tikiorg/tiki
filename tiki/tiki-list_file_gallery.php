@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.13 2008-03-12 12:59:34 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.14 2008-03-16 00:06:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,6 +44,8 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'show_last_user' => $prefs['fgal_list_last_user'],
 			'show_comment' => $prefs['fgal_list_comment'],
 			'show_files' => $prefs['fgal_list_files'],
+			'show_explorer' => $prefs['fgal_show_explorer'],
+			'show_path' => $prefs['fgal_show_path'],
 			'show_hits' => $prefs['fgal_list_hits'],
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => 'y',
@@ -334,6 +336,7 @@ if ( isset($_REQUEST['edit']) ) {
 			$info['path'],
 			$info['galleryId']
 		);
+		$smarty->assign('edit_mode', 'n');
 	} else {
 		$fgid = $filegallib->replace_file_gallery(
 			$galleryId,
@@ -363,7 +366,9 @@ if ( isset($_REQUEST['edit']) ) {
 			$_REQUEST['subgal_conf'],
 			$_REQUEST['fgal_list_user'],
 			$_REQUEST['fgal_list_comment'],
-			$_REQUEST['fgal_list_files']
+			$_REQUEST['fgal_list_files'],
+			( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
+			( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' )
 		);
 
 		if ( $prefs['feature_categories'] == 'y' ) {
@@ -380,9 +385,9 @@ if ( isset($_REQUEST['edit']) ) {
 			header('Location: tiki-list_file_gallery.php?galleryId='.$fgid);
 			die;
 		}
+		$smarty->assign('edit_mode', 'y');
 	}
 
-	$smarty->assign('edit_mode', 'n');
 }
 
 // Process duplication of a gallery

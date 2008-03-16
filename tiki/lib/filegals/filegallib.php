@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.9 2008-03-11 14:37:38 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/filegals/filegallib.php,v 1.76.2.10 2008-03-16 00:07:11 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -181,7 +181,7 @@ class FileGalLib extends TikiLib {
 		);
 	}
 
-	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon, $show_name, $show_size, $show_description, $show_created, $show_hits, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $show_last_user='', $show_comment='', $show_files='') {
+	function replace_file_gallery($galleryId, $name, $description, $user, $maxRows, $public, $visible = 'y', $show_id, $show_icon, $show_name, $show_size, $show_description, $show_created, $show_hits, $max_desc, $fgal_type='default', $parentId=-1, $lockable='n', $show_lockedby='y', $archives=-1, $sort_mode='', $show_modified='n', $show_creator='y', $show_author='n', $subgal_conf='', $show_last_user='', $show_comment='', $show_files='', $show_explorer='', $show_path='') {
 
 		global $prefs;
 
@@ -195,8 +195,8 @@ class FileGalLib extends TikiLib {
 		}
 
 		if ($galleryId > 0) {
-			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_hits`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?, `show_last_user`=?, `show_comment`=?, `show_files`=? where `galleryId`=?";
-			$bindvars=array(trim($name),(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_hits,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author, $subgal_conf, $show_last_user, $show_comment, $show_files, (int)$galleryId);
+			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_hits`=?,`max_desc`=?,`type`=?,`parentId`=?,`user`=?,`lockable`=?,`show_lockedby`=?, `archives`=?, `sort_mode`=?, `show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?, `show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?, `show_path`=? where `galleryId`=?";
+			$bindvars=array(trim($name),(int) $maxRows,$description,(int) $this->now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_hits,(int) $max_desc, $fgal_type, $parentId, $user, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author, $subgal_conf, $show_last_user, $show_comment, $show_files, $show_explorer, $show_path, (int)$galleryId);
 
 			$result = $this->query($query,$bindvars);
 
@@ -205,11 +205,11 @@ class FileGalLib extends TikiLib {
 			$this->query($query,$bindvars);
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_hits`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`, `subgal_conf`, `show_last_user`, `show_comment`, `show_files`)
+			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_hits`,`max_desc`,`type`, `parentId`, `lockable`, `show_lockedby`, `archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`, `subgal_conf`, `show_last_user`, `show_comment`, `show_files`, `show_explorer`, `show_path`)
                                     values (?,?,?,?,?,?,?,?,?,
-                                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $this->now,$user,(int) $this->now,(int) $maxRows,$public,0,$visible,
-							$show_id,$show_icon,$show_name,$show_description,$show_created,$show_hits,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author, $subgal_conf, $show_last_user, $show_comment, $show_files);
+							$show_id,$show_icon,$show_name,$show_description,$show_created,$show_hits,(int) $max_desc, $fgal_type, $parentId, $lockable, $show_lockedby, $archives, $sort_mode, $show_modified, $show_creator, $show_author, $subgal_conf, $show_last_user, $show_comment, $show_files, $show_explorer, $show_path);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId
@@ -588,7 +588,7 @@ class FileGalLib extends TikiLib {
 	function duplicate_file_gallery($galleryId, $name, $description = '') {
 		global $user;
 		$info = $this->get_file_gallery_info($galleryId);
-		$newGalleryId = $this->replace_file_gallery(0, $name, $description, $user, $info['maxRows'], $info['public'], $info['visible'], $info['show_id'], $info['show_icon'], $info['show_name'], $info['show_size'], $info['show_description'], $info['show_created'], $info['show_hits'], $info['max_desc'], $info['type'], $info['parentId'], $info['lockable'], $info['show_lockedby'], $info['archives'], $info['sort_mode'], $info['show_modified'], $info['show_creator'], $info['show_author'], $info['subgal_conf'], $info['show_last_user'], $info['show_comment'], $info['show_files']);
+		$newGalleryId = $this->replace_file_gallery(0, $name, $description, $user, $info['maxRows'], $info['public'], $info['visible'], $info['show_id'], $info['show_icon'], $info['show_name'], $info['show_size'], $info['show_description'], $info['show_created'], $info['show_hits'], $info['max_desc'], $info['type'], $info['parentId'], $info['lockable'], $info['show_lockedby'], $info['archives'], $info['sort_mode'], $info['show_modified'], $info['show_creator'], $info['show_author'], $info['subgal_conf'], $info['show_last_user'], $info['show_comment'], $info['show_files'], $info['show_explorer'], $info['show_path']);
 		return $newGalleryId;
 	}
 }

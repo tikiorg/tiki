@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.28.2.1 2008-02-27 15:18:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.28.2.2 2008-03-16 00:06:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,6 +69,9 @@ if (isset($_REQUEST["filegallistprefs"])) {
 	$_REQUEST['fgal_sort_mode'] = (empty($_REQUEST['fgal_sortorder'])?'created':$_REQUEST['fgal_sortorder']).'_'.(empty($_REQUEST['fgal_sortdirection'])?'desc':$_REQUEST['fgal_sortdirection']);
 	$prefs['fgal_sort_mode'] = $_REQUEST['fgal_sort_mode'];
 	simple_set_value('fgal_sort_mode');
+
+	simple_set_toggle('fgal_show_explorer');
+	simple_set_toggle('fgal_show_path');
 }
 
 if (isset($_REQUEST["filegalcomprefs"])) {
