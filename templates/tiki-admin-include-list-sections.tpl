@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-list-sections.tpl,v 1.35.2.3 2008-03-16 17:00:32 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-list-sections.tpl,v 1.35.2.4 2008-03-16 20:02:36 luciash Exp $ *}
 {*
  * If you want to change this page, check http://www.tikiwiki.org/tiki-index.php?page=AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers
@@ -114,7 +114,7 @@
    <a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
       <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
     </a>
-   <a href="tiki-admin.php?page=multimedia" class="admbox" style="background-image: url('img/icons/multimedia.png')">
+   <a href="tiki-admin.php?page=multimedia" class="admbox{if $prefs.feature_multimedia ne 'y'} off{/if}" style="background-image: url('pics/large/multimedia48x48.png')">
       <img src="pics/trans.png" alt="{tr}Multimedia{/tr}" title="{tr}Multimedia{/tr}" /><span>{tr}Multimedia{/tr}</span>
     </a>
 		<a href="tiki-admin.php?page=ads" class="admbox" style="background-image: url('pics/large/ads48x48.png')">

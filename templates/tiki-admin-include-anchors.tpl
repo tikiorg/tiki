@@ -1,4 +1,4 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.5 2008-03-16 18:52:39 luciash Exp $*}
+{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.6 2008-03-16 20:02:36 luciash Exp $*}
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}" class="link"><img border="0" src="pics/large/icon-configuration.png" alt="{tr}General{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}" class="link"><img border="0" src="pics/large/boot.png" alt="{tr}Features{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="link"><img border="0" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
@@ -87,7 +87,7 @@
 {/if}
 {if $prefs.feature_multimedia eq 'y'}
 <a href="tiki-admin.php?page=multimedia" title="{tr}Multimedia{/tr}" class="link"><img border="0"
-   src="img/icons/multimedia.png" alt="{tr}Multimedia{/tr}"  width="32" height="32" /></a>
+   src="pics/large/multimedia.png" alt="{tr}Multimedia{/tr}"  width="32" height="32" /></a>
 {/if}
 {if $prefs.feature_banners eq 'y'}
 <a href="tiki-admin.php?page=ads" title="{tr}Site Ads and Banners{/tr}" class="link"><img border="0"
