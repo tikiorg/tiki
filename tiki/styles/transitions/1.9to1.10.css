@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.3 2008-03-03 13:10:24 sept_7 Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.4 2008-03-16 01:02:39 nyloth Exp $
 
 The following CSS classes were added to Tiki between v1.9 and v1.10
 They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
@@ -221,3 +221,4 @@ td.third {
 	border-color: transparent !important;
 	border-width: 0px !important;
 }
+.iconmenutext { white-space: nowrap; }
