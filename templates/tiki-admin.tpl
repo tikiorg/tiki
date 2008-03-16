@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.6 2008-02-16 08:54:46 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.7 2008-03-16 16:57:51 luciash Exp $ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {breadcrumbs type="trail" loc="admin" crumbs=$crumbs}
@@ -7,13 +7,13 @@
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
-{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "siteid", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea","multimedia"))}
+{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads"))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
 {/if}
 {if $include != "list-sections"}
-  {include file="tiki-admin-include-anchors.tpl"}
+  <div class="adminanchors" style="background-color: #303030; color: white; padding: 3px">{include file="tiki-admin-include-anchors.tpl"}</div>
 {/if}
 
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
