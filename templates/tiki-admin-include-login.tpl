@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.9 2008-03-10 15:43:36 marclaporte Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.10 2008-03-16 17:43:12 luciash Exp $ *}
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 	
@@ -50,8 +50,6 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 {/if} 
 </td></tr>
 <tr><td class="form">{tr}Validate user email server{/tr}:</td><td><input type="checkbox" name="validateEmail" {if $prefs.validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Users can opt-out internal messages{/tr}:</td><td><input type="checkbox" name="allowmsg_is_optional" {if $prefs.allowmsg_is_optional eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Users accept internal messages by default{/tr}:</td><td><input type="checkbox" name="allowmsg_by_default" {if $prefs.allowmsg_by_default eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email (if "Store plaintext passwords" is activated.) Else, Reset passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $prefs.forgotPass ne 'n'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $prefs.feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
 <tr>
@@ -116,10 +114,6 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
     </tr></table>
   </td>
 </tr>
-
-<tr><td class="form">{tr}Maximum mailbox size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_mailbox_size" value="{$prefs.messu_mailbox_size|escape}" /></td></tr>
-<tr><td class="form">{tr}Maximum mail archive size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_archive_size" value="{$prefs.messu_archive_size|escape}" /></td></tr>
-<tr><td class="form">{tr}Maximum sent box size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_sent_size" value="{$prefs.messu_sent_size|escape}" /></td></tr>
 
 <tr><td class="form">{tr}Minimum username length{/tr}:</td><td><input type="text" name="min_username_length" value="{$prefs.min_username_length|escape}" /></td></tr>
 <tr><td class="form">{tr}Maximum username length{/tr}:</td><td><input type="text" name="max_username_length" value="{$prefs.max_username_length|escape}" /></td></tr>
