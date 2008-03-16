@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.48 2008-03-16 00:07:02 nyloth Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.49 2008-03-16 20:20:36 marclaporte Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -771,10 +771,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='articles';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','articles');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='articles';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='articles';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','articles');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='articles';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','articles');
 
@@ -785,10 +781,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='articles';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='articles';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','articles');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='articles';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='articles';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','articles');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='articles';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='articles';
@@ -844,10 +836,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='blogs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','blogs');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='blogs';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='blogs';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','blogs');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='blogs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','blogs');
 
@@ -858,10 +846,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='blogs';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='blogs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','blogs');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='blogs';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='blogs';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','blogs');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='blogs';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='blogs';
@@ -917,10 +901,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='calendar';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','calendar');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='calendar';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='calendar';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','calendar');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='calendar';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','calendar');
 
@@ -931,10 +911,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='calendar';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='calendar';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','calendar');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='calendar';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='calendar';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','calendar');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='calendar';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='calendar';
@@ -990,10 +966,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='faqs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','faqs');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='faqs';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='faqs';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','faqs');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='faqs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','faqs');
 
@@ -1004,10 +976,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='faqs';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='faqs';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','faqs');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='faqs';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='faqs';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','faqs');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='faqs';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='faqs';
@@ -1063,10 +1031,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='forums';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','forums');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='forums';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='forums';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','forums');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='forums';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','forums');
 
@@ -1077,10 +1041,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='forums';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='forums';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','forums');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='forums';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='forums';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','forums');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='forums';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='forums';
@@ -1136,10 +1096,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='trackers';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','trackers');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='trackers';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='trackers';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','trackers');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='trackers';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','trackers');
 
@@ -1150,10 +1106,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='trackers';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='trackers';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','trackers');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='trackers';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='trackers';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','trackers');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='trackers';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='trackers';
@@ -1300,10 +1252,6 @@ DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagic
 DELETE FROM tiki_quicktags WHERE taglabel='box' AND taginsert='^text^' AND tagicon='pics/icons/box.png' AND tagcategory='wiki';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','wiki');
 
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='images/ico_link.gif' AND tagcategory='wiki';
-DELETE FROM tiki_quicktags WHERE taglabel='rss feed' AND taginsert='{rss id= }' AND tagicon='pics/icons/feed.png' AND tagcategory='wiki';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('rss feed','{rss id= }','pics/icons/feed.png','wiki');
-
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic content' AND taginsert='{content id= }' AND tagcategory='wiki';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','wiki');
 
@@ -1314,10 +1262,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='images/fontfamily.gif' AND tagcategory='wiki';
 DELETE FROM tiki_quicktags WHERE taglabel='colored text' AND taginsert='~~#FF0000:text~~' AND tagicon='pics/icons/palette.png' AND tagcategory='wiki';
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','wiki');
-
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='images/footprint.gif' AND tagcategory='wiki';
-DELETE FROM tiki_quicktags WHERE taglabel='tagline' AND taginsert='{cookie}' AND tagicon='pics/icons/database_go.png' AND tagcategory='wiki';
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('tagline','{cookie}','pics/icons/database_go.png','wiki');
 
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='images/book.gif' AND tagcategory='wiki';
 DELETE FROM tiki_quicktags WHERE taglabel='dynamic variable' AND taginsert='%text%' AND tagicon='pics/icons/book_open.png' AND tagcategory='wiki';
