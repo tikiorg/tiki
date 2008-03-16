@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.7 2008-03-15 21:11:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.8 2008-03-16 14:10:56 sylvieg Exp $ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a></h1>
 
 <div class="navbar">
-{if $tiki_p_list_galleries eq 'y'}
+{if $tiki_p_list_image_galleries eq 'y'}
 <span class="button2"><a href="tiki-galleries.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a></span>
 {/if}
 {if $system eq 'n'}
@@ -113,7 +113,7 @@
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	   </a>
 {else}
-	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
+	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}<div>{$item.name}</div>{/if}{if $showfilename eq 'y'}<div>{$item.filename}</div>{/if}{if $showdescription eq 'y' and $item.description}<div>{$item.description}</div>{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	</a>
 {/if}
