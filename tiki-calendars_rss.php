@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.12.2.1 2007-11-26 14:41:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendars_rss.php,v 1.12.2.2 2008-03-16 23:11:14 leyan Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,11 +83,16 @@ if ($output["data"]=="EMPTY") {
 	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1), 0, $maxCalEntries);
 
 	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");
+	require_once("lib/smarty_tiki/modifier.isodate.php");
 
 	for ($i = 0; $i < sizeof($items); $i++) {
-	    $items[$i]["body"] = tra("Start:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["start"])."<br />\n";
-	    $items[$i]["body"] .= tra("End:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["end"])."<br />\n";
-	    $items[$i]["body"] .= $tikilib->parse_data($items[$i]["description"]);
+		$start_d = smarty_modifier_isodate($items[$i]["start"]);
+		$end_d = smarty_modifier_isodate($items[$i]["end"]);
+	
+		$items[$i]["body"] = "<div class=\"vevent\"> <span class=\"summary\">" . $items[$i]["name"] . "</span>"."<br />\n";
+ 	    $items[$i]["body"] .=  "<abbr class=\"dtstart\" title=\"" .$start_d ."\">" .tra("Start:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["start"]) . "</abbr>" ."<br />\n";
+	    $items[$i]["body"] .=  "<abbr class=\"dtend\" title=\""  .$end_d ."\">" . tra("End:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["end"]). "</abbr>"."<br />\n";
+	    $items[$i]["body"] .=  "<span class=\"descprition\">".($items[$i]["description"]) . "</span>". "</div>";
 	}
 
 	$changes = array('data' => $items);
