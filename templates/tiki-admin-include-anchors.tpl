@@ -1,4 +1,4 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.6 2008-03-16 20:02:36 luciash Exp $*}
+{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.7 2008-03-16 20:52:56 luciash Exp $*}
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}" class="link"><img border="0" src="pics/large/icon-configuration.png" alt="{tr}General{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}" class="link"><img border="0" src="pics/large/boot.png" alt="{tr}Features{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="link"><img border="0" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
@@ -83,7 +83,7 @@
    src="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" /></a>      
 {if $prefs.feature_copyright eq 'y'}
 <a href="tiki-admin.php?page=copyright" title="{tr}Copyright{/tr}" class="link"><img border="0"
-   src="pics/large/copyright48x48.png" alt="{tr}Copyright{/tr}" width="32" height="32" /></a>
+   src="pics/large/copyright.png" alt="{tr}Copyright{/tr}" width="32" height="32" /></a>
 {/if}
 {if $prefs.feature_multimedia eq 'y'}
 <a href="tiki-admin.php?page=multimedia" title="{tr}Multimedia{/tr}" class="link"><img border="0"
