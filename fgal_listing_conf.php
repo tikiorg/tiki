@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/fgal_listing_conf.php,v 1.1.2.1 2008-02-27 15:18:36 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/fgal_listing_conf.php,v 1.1.2.2 2008-03-16 00:06:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,3 +51,17 @@ foreach ( $fgal_listing_conf as $k => $v ) {
 
 }
 $smarty->assign_by_ref('fgal_listing_conf', $fgal_listing_conf);
+
+$fgal_options = array(
+	'show_explorer' => array('name' => tra('Explorer')),
+	'show_path' => array('name' => tra('Path'))
+);
+
+foreach ( $fgal_options as $k_gal => $v ) {
+	$k_prefs = 'fgal_'.$k_gal;
+
+	// Only check the current gallery value if the feature (in global prefs) is enabled
+	$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+}
+
+$smarty->assign_by_ref('fgal_options', $fgal_options);

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2008-03-15 21:11:14 $
-# $Author: sylvieg $
+# $Date: 2008-03-16 00:06:59 $
+# $Author: nyloth $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1324,6 +1324,8 @@ CREATE TABLE tiki_file_galleries (
   show_last_user char(1) default NULL,
   show_comment char(1) default NULL,
   show_files char(1) default NULL,
+  show_explorer char(1) default NULL,
+  show_path char(1) default NULL,
   PRIMARY KEY  (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -4378,6 +4380,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 # --------------------------------------------------------
 
 #

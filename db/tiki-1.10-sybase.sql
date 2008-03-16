@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-03-11 22:01:11 $
--- $Author: lphuberdeau $
+-- $Date: 2008-03-16 00:06:58 $
+-- $Author: nyloth $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1746,6 +1746,8 @@ CREATE TABLE "tiki_file_galleries" (
   "show_last_user" char(1) default NULL NULL,
   "show_comment" char(1) default NULL NULL,
   "show_files" char(1) default NULL NULL,
+  "show_explorer" char(1) default NULL NULL,
+  "show_path" char(1) default NULL NULL,
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM  
 go
@@ -6866,7 +6868,15 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 go
 
 
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki')
+INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries')
+go
+
+
+INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries')
 go
 
 

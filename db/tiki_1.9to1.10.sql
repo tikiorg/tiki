@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.47 2008-03-15 21:11:14 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.221.2.48 2008-03-16 00:07:02 nyloth Exp $
 
 # The following script will update a tiki database from version 1.9 to 1.10
 # 
@@ -1740,6 +1740,7 @@ ALTER TABLE users_users DROP KEY openid_url_58;
 ALTER TABLE users_users DROP KEY openid_url_59;
 ALTER TABLE `tiki_user_watches` DROP PRIMARY KEY;
 ALTER TABLE `tiki_user_watches` ADD PRIMARY KEY  (`user`(50),event,object(100),email(50));
+
 INSERT INTO tiki_user_watches (event,object,email,`type`,url,title)
 SELECT event, object, email, 'wiki','tiki-lastchanges.php', 'Any wiki page is changed' FROM tiki_mail_events tme WHERE event='wiki_page_changes';
 INSERT INTO tiki_user_watches (event, object,email,`type`,url,title)
@@ -1764,3 +1765,16 @@ UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tik
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries_rankings.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @fgcant = 0;
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_image_gallery' AND @fgcant = 0;
 ALTER TABLE tiki_images CHANGE user user varchar(200) default NULL;
+
+#2008-03-16 nyloth
+ALTER TABLE tiki_file_galleries ADD show_explorer char(1) default '?';
+ALTER TABLE tiki_file_galleries ADD show_path char(1) default '?';
+UPDATE tiki_file_galleries SET show_explorer='y' WHERE show_explorer='?';
+UPDATE tiki_file_galleries SET show_path='y' WHERE show_path='?';
+ALTER TABLE tiki_file_galleries CHANGE show_explorer show_explorer char(1) default NULL;
+ALTER TABLE tiki_file_galleries CHANGE show_path show_path char(1) default NULL;
+SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_view_fgal_explorer' INTO @permexist;
+INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Registered', 'tiki_p_view_fgal_explorer' FROM users_permissions WHERE @permexist = 0;
+INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Registered', 'tiki_p_view_fgal_path' FROM users_permissions WHERE @permexist = 0;
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
