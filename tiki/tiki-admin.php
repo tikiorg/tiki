@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.9 2008-03-16 16:57:50 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.10 2008-03-16 17:43:13 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -178,11 +178,11 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = "Community";//get_strings tra("Community")
 		$description = "Community settings";//get_strings tra("Community settings")
 		include_once ('tiki-admin_include_community.php');
-	} else if ($adminPage == "siteid") {
-		$admintitle = "Site Identity";//get_strings tra("Site Identity")
-		$helpUrl = "Site+Identity";
-		$description = "Site Identity features";//get_strings tra("Site Identity features")
-		include_once ('tiki-admin_include_siteid.php');
+	} else if ($adminPage == "messages") {
+		$admintitle = "Messages";//get_strings tra("Site Identity")
+		$helpUrl = "Inter-User Messages";
+		$description = "User Messages";// already translated
+		include_once ('tiki-admin_include_messages.php');
 	} else if ($adminPage == "calendar") {
 		$admintitle = "Calendar";//get_strings tra("Calendar")
 		$helpUrl = "Calendar+Admin";
