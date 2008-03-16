@@ -1,22 +1,23 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-list-sections.tpl,v 1.35.2.3 2008-03-16 17:00:32 luciash Exp $ *}
 {*
  * If you want to change this page, check http://www.tikiwiki.org/tiki-index.php?page=AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers
  *}
 
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">{tr}Enable/disable Tiki features in {/tr}<a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}</a>{tr}, but configure them elsewhere{/tr}</div>
+<div class="rbox tip">
+	<div class="rbox-title">{tr}Tip{/tr}</div>  
+	<div class="rbox-data">{tr}Enable/disable Tiki features in {/tr}<a class="rbox-link" href="tiki-admin.php?page=features">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Features{/tr}</a>{tr}, but configure them elsewhere{/tr}</div>
 </div>
 
 <div class="cbox">
-  <div class="cbox-title">
-    {tr}{$crumbs[$crumb]->description}{/tr}
-    {help crumb=$crumbs[$crumb]}
-  </div>
-  <div class="cbox-data">
-    <a href="tiki-admin.php?page=general" class="admbox" style="background-image: url('pics/large/icon-configuration48x48.png')">
-      <img src="pics/trans.png" alt="{tr}General{/tr}" title="{tr}General{/tr}" /><span>{tr}General{/tr}</span>
-    </a>
+ 	<div class="cbox-title">
+		{tr}{$crumbs[$crumb]->description}{/tr}
+		{help crumb=$crumbs[$crumb]}
+	</div>
+	<div class="cbox-data">
+		<a href="tiki-admin.php?page=general" class="admbox" style="background-image: url('pics/large/icon-configuration48x48.png')">
+			<img src="pics/trans.png" alt="{tr}General{/tr}" title="{tr}General{/tr}" /><span>{tr}General{/tr}</span>
+		</a>
     <a href="tiki-admin.php?page=features" class="admbox" style="background-image: url('pics/large/boot48x48.png')">
       <img src="pics/trans.png" alt="{tr}Features{/tr}" title="{tr}Features{/tr}" /><span>{tr}Features{/tr}</span>
     </a>
@@ -80,6 +81,9 @@
     <a href="tiki-admin.php?page=community" class="admbox" style="background-image: url('pics/large/users48x48.png')">
       <img src="pics/trans.png" alt="{tr}Community{/tr}" title="{tr}Community{/tr}" /><span>{tr}Community{/tr}</span>
     </a>
+		<a href="tiki-admin.php?page=messages" class="admbox{if $prefs.feature_messages ne 'y'} off{/if}" style="background-image: url('pics/large/messages48x48.png')">
+			<img src="pics/trans.png" alt="{tr}Messages{/tr}" title="{tr}Messages{/tr}{if $prefs.feature_messages ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Messages{/tr}</span>
+		</a>
     <a href="tiki-admin.php?page=intertiki" class="admbox{if $prefs.feature_intertiki ne 'y'} off{/if}" style="background-image: url('pics/large/intertiki48x48.png')">
       <img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>
     </a>
@@ -98,7 +102,7 @@
     <a href="tiki-admin.php?page=copyright" class="admbox{if $prefs.feature_copyright ne 'y'} off{/if}" style="background-image: url('pics/large/copyright48x48.png')">
       <img src="pics/trans.png" alt="{tr}Copyright{/tr}" title="{tr}Copyright{/tr}{if $prefs.feature_copyright ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Copyright{/tr}</span>
     </a>
-    <a href="tiki-admin.php?page=category" class="admbox{if $prefs.feature_categories ne 'y'} off{/if}" style="background-image: url('img/icons/admin_category.png')">
+    <a href="tiki-admin.php?page=category" class="admbox{if $prefs.feature_categories ne 'y'} off{/if}" style="background-image: url('pics/large/categories48x48.png')">
       <img src="pics/trans.png" alt="{tr}Categories{/tr}" title="{tr}Categories{/tr}{if $prefs.feature_categories ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Categories{/tr}</span>
     </a>
     <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('pics/large/display-capplet48x48.png')">
@@ -110,10 +114,12 @@
    <a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
       <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
     </a>
-  <a href="tiki-admin.php?page=multimedia" class="admbox" style="background-image: url('img/icons/multimedia.png')">
+   <a href="tiki-admin.php?page=multimedia" class="admbox" style="background-image: url('img/icons/multimedia.png')">
       <img src="pics/trans.png" alt="{tr}Multimedia{/tr}" title="{tr}Multimedia{/tr}" /><span>{tr}Multimedia{/tr}</span>
     </a>
-
-  </div>
+		<a href="tiki-admin.php?page=ads" class="admbox" style="background-image: url('pics/large/ads48x48.png')">
+			<img src="pics/trans.png" alt="{tr}Site Ads and Banners{/tr}" title="{tr}Site Ads and Banners{/tr}" /><span>{tr}Site Ads and Banners{/tr}</span>
+		</a>
+	</div>
 </div>
 
