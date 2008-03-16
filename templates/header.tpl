@@ -50,6 +50,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </title>
 
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
+<!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y'}

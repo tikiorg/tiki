@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.23 2008-03-16 00:07:13 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.24 2008-03-16 01:02:40 nyloth Exp $ *}
 
 {if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && tiki_p_view_fgal_path eq 'y' ) }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
@@ -44,7 +44,7 @@
     {/if}
       <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
 
-      <form name="fgalform" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" enctype="multipart/form-data">
+      <form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" enctype="multipart/form-data">
         <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />
 
