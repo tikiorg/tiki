@@ -2556,7 +2556,7 @@ TABLE.admin { width: 100%; }
 }
 
 .tabcontent {
-  z-index : 200;
+  z-index : 0;
   position: relative;
   border: 1px solid #999999;
   padding: 6px 2px 2px 2px;
