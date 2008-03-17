@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mouseover/wiki-plugins/wikiplugin_mouseover.php,v 1.1 2007-08-09 10:09:20 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/mouseover/wiki-plugins/wikiplugin_mouseover.php,v 1.2 2008-03-17 17:59:19 sylvieg Exp $
  * PLugin mouseover - See documentation http://www.bosrup.com/web/overlib/?Documentation
  */
 function wikiplugin_mouseover_help() {
@@ -13,6 +13,8 @@ function wikiplugin_mouseover($data, $params) {
 	if (empty($url)) {
 		$url = 'javascript:void()';
 	}
+	if (!isset($text))
+		$text = '';
 	if (!$smarty->get_template_vars('overlib_loaded')) {
 		$html .= '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
 		$html .= '<script type="text/javascript" src="lib/overlib.js"></script>';
@@ -23,6 +25,7 @@ function wikiplugin_mouseover($data, $params) {
 		$text = $tikilib->parse_data($text);
 		$text = substr($text, 0, -1);// do not ask me why - but the parsing adds a CR
 	}
+	$text = preg_replace('/\r\n/', '<br />', $text);
 	$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($text))."'";
 	foreach ($params as $param=>$value) {
 		$p = strtoupper($param);
