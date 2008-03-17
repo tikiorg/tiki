@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.9 2008-02-08 21:57:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.10 2008-03-17 20:32:28 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -309,21 +309,8 @@ function wikiplugin_trackerlist($data, $params) {
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
-
-			$cant_pages = ceil($items["cant"] / $max);
-			$smarty->assign_by_ref('cant_pages', $cant_pages);
-			$smarty->assign('actual_page', 1 + ($tr_offset / $max));
-
-			if ($items["cant"] > ($tr_offset + $max)) {
-				$smarty->assign('tr_next_offset', $tr_offset + $max);
-			} else {
-				$smarty->assign('tr_next_offset', -1);
-			}
-			if ($tr_offset > 0) {
-				$smarty->assign('tr_prev_offset', $tr_offset - $max);
-			} else {
-				$smarty->assign('tr_prev_offset', -1);
-			}
+			$smarty->assign_by_ref('max', $max);
+			$smarty->assign_by_ref('count_item', $items['cant']);
 			$smarty->assign_by_ref('items', $items["data"]);
 			$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 			

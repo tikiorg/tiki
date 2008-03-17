@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.4 2008-02-01 21:21:58 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.5 2008-03-17 20:32:29 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -109,32 +109,4 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
 
-{if $cant_pages > 1 or $tr_initial}
-<br />
-<div class="mini">
-{if $tr_prev_offset >= 0}
-[<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_prev_offset}{
-	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
-	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
->{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $tr_next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$tr_next_offset}{
-	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
-	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}"
->{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_offset={$selector_offset}{
-	if $tr_initial}&amp;tr_initial={$tr_initial}{/if}{
-	if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-{/if}
-
+{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
