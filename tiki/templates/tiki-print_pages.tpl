@@ -1,3 +1,4 @@
+{* $header$ *}
 <h1><a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a></h1>
 
 <table class="findtable">
@@ -17,7 +18,7 @@
 
 {if $prefs.feature_tabs eq 'y'}
   {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
-    <div id="page-bar">
+    <div class="tabs">
     <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};">
       <a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Structures{/tr}</a>
     </span>
