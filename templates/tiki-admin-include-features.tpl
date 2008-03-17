@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.11 2008-03-16 13:56:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.12 2008-03-17 22:05:43 pkdille Exp $ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
@@ -59,8 +59,8 @@
     </tr>
   <tr>  
     <td><input type="checkbox" name="feature_calendar" {if $prefs.feature_calendar eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Calendar{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td></tr>
-    </tr>    
+    <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Calendar" target="tikihelp" class="tikihelp" title="{tr}Calendar{/tr}">{/if} {tr}Calendar{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
+  </tr>    
 {* ---------- Minor features ------------ *}
   <tr>
     <td class="heading" colspan="5"
@@ -101,7 +101,7 @@
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Copyright" target="tikihelp" class="tikihelp" title="{tr}Copyright System{/tr}">{/if} {tr}Copyright system{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td> 
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_multimedia" {if $prefs.feature_multimedia eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Multimedia" target="tikihelp" class="tikihelp" title="{tr}Multimedia{/tr}"> {tr}Multimedia{/tr} </td>
+    <td class="form"> <a href="{$prefs.helpurl}Multimedia" target="tikihelp" class="tikihelp" title="{tr}Multimedia{/tr}"> {tr}Multimedia{/tr}</a> </td>
     </tr>    
   <tr>     
         <td><input type="checkbox" name="feature_shoutbox" {if $prefs.feature_shoutbox eq 'y'}checked="checked"{/if}/></td>
@@ -132,7 +132,7 @@
   </tr>
   <tr>
   	<td><input type="checkbox" name="feature_categories" {if $prefs.feature_categories eq 'y'}checked="checked"{/if}/></td>
-	<td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $prefs.feature_categories eq 'y'}</a>{/if}</td>
+	<td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Score" target="tikihelp" class="tikihelp" title="{tr}Score{/tr}: {tr}Score{/tr}">{/if} {tr}Score{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</td>    
@@ -164,10 +164,10 @@
   </tr>
   <tr>  
     <td><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></td>
-    <td class="form">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Menu+HOWTO" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}">{/if} {tr}Search engine friendly url{/tr}</td>
+    <td class="form">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Menu+HOWTO" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}">{/if} {tr}Search engine friendly url{/tr}</a></td>
     <td>&nbsp;</td>
     <td><input type="checkbox" name="feature_swffix" {if $prefs.feature_swffix eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Swffix" target="tikihelp" class="tikihelp" title="{tr}Swffix{/tr}"> {tr}Swffix{/tr} </td>
+    <td class="form"> <a href="{$prefs.helpurl}Swffix" target="tikihelp" class="tikihelp" title="{tr}Swffix{/tr}"> {tr}Swffix{/tr}</a> </td>
     </tr>
   <tr> 
     <td><input type="checkbox" name="feature_ajax" {if $prefs.feature_ajax eq 'y'}checked="checked"{/if}/></td>
@@ -186,7 +186,7 @@
     </tr>
   <tr>       
     <td><input type="checkbox" name="feature_purifier" {if $prefs.feature_purifier eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Purifier" target="tikihelp" class="tikihelp" title="{tr}HTML Purifier{/tr}"> {tr}HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save){/tr} </td>
+    <td class="form"> <a href="{$prefs.helpurl}Purifier" target="tikihelp" class="tikihelp" title="{tr}HTML Purifier{/tr}"> {tr}HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save){/tr}</a> </td>
     </tr>    
 
 {* ---------- User interface enhancement features ------------ *}
@@ -208,7 +208,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 		{tr}Fullscreen{/tr}">{/if} {tr}Allow users to activate fullscreen mode{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>     
     <td><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</td>   
+    <td class="form"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></td>   
     </tr>  
   <tr>     
     <td><input type="checkbox" name="feature_lightbox" {if $prefs.feature_lightbox eq 'y'}checked="checked"{/if}/></td>
@@ -372,9 +372,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $prefs.feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Bookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">{/if} {tr}User Bookmarks{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-        <td align="right"><div align="right">
+    <td>
       <input type="checkbox" name="feature_contacts" {if $prefs.feature_contacts eq 'y'}checked="checked"{/if}/>
-    </div></td>
+    </td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Contacts" target="tikihelp" class="tikihelp" title="{tr}User Contacts{/tr}">{/if} {tr}User Contacts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
   </tr>
   <tr>
@@ -382,10 +382,10 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $prefs.feature_user_watches eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">{/if} {tr}User Watches{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td align="right"><div align="right">
+    <td>
       <input type="checkbox" name="feature_user_watches_translations"
             {if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/>
-    </div></td>
+    </td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches Translations{/tr}">{/if} {tr}User Watches Translations{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
   </tr>
@@ -394,10 +394,10 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $prefs.feature_usermenu eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}UserMenuDoc" target="tikihelp" class="tikihelp" title="{tr}User Menu{/tr}">{/if} {tr}User Menu{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td align="right"><div align="right">
+    <td>
       <input type="checkbox" name="feature_tasks"
             {if $prefs.feature_tasks eq 'y'}checked="checked"{/if}/>
-    </div></td>
+    </td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Task" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">{/if} {tr}User Tasks{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
   </tr>
   <tr>
@@ -405,10 +405,10 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
             {if $prefs.feature_messages eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Inter-User+Messages" target="tikihelp" class="tikihelp" title="{tr}User Messages{/tr}">{/if} {tr}User Messages{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
-    <td align="right"><div align="right">
+    <td>
       <input type="checkbox" name="feature_userfiles"
             {if $prefs.feature_userfiles eq 'y'}checked="checked"{/if}/>
-    </div></td>
+    </td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}User Files{/tr}">{/if} {tr}User Files{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
   </tr>
@@ -416,9 +416,9 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_newsreader" {if $prefs.feature_newsreader eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Newsreader{/tr}">{/if} {tr}Newsreader{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </td>
 		<td>&nbsp;</td>
-    <td align="right"><div align="right">
+    <td>
       <input type="checkbox" name="feature_userlevels" {if $prefs.feature_userlevels eq 'y'}checked="checked"{/if}/>
-    </div></td>
+    </td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Levels" target="tikihelp" class="tikihelp" title="{tr}User Levels{/tr}">{/if} {tr}User Levels{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td>&nbsp;</td>
 		</tr>
