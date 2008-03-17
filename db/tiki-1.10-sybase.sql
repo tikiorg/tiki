@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-03-16 00:06:58 $
--- $Author: nyloth $
+-- $Date: 2008-03-17 22:39:19 $
+-- $Author: sylvieg $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -2248,7 +2248,7 @@ CREATE TABLE "tiki_images" (
   "lon" float default NULL NULL,
   "lat" float default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(200) default '',
   "hits" numeric(14,0) default NULL NULL,
   "path" varchar(255) default NULL NULL,
   PRIMARY KEY ("imageId")
@@ -2939,15 +2939,15 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_list_image_galleries','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_view_image_gallery','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_list_image_galleries','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_view_image_gallery','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_list_image_galleries','')
 go
 
 
@@ -5685,19 +5685,21 @@ go
 
 
 CREATE TABLE "tiki_user_watches" (
+  "watchId" numeric(12 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   "event" varchar(40) default '' NOT NULL,
   "object" varchar(200) default '' NOT NULL,
-  "hash" varchar(32) default NULL NULL,
   "title" varchar(250) default NULL NULL,
   "type" varchar(200) default NULL NULL,
   "url" varchar(250) default NULL NULL,
   "email" varchar(200) default NULL NULL,
-  PRIMARY KEY ("`user`","event","object")
+  PRIMARY KEY ("`user`","event","object","email")
 ) ENGINE=MyISAM
 go
 
 
+CREATE  INDEX "tiki_user_watches_watchId" ON "tiki_user_watches"("watchId")
+go
 -- --------------------------------------------------------
 
 --
@@ -6676,6 +6678,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki')
 go
 
@@ -6868,15 +6874,15 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 go
 
 
-INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki')
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki')
 go
 
 
-INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries')
 go
 
 
-INSERT INTO "users_permissions" ("permName", "permDesc", "level", "type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries')
 go
 
 
