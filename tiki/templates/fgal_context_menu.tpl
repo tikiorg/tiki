@@ -70,16 +70,14 @@
 
 				{if $menu_text neq 'y'}</div>{/if}
 				
-				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text neq 'y'}; float:left{/if}; overflow:hidden" title="{tr}Upload New Version{/tr}">
+				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{tr}Upload New Version{/tr}">
 					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
 					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				</div>
 
 				{if $menu_text eq 'y'}
-					{* the line above is to used for IE6- only *}
-					<!--[if lt IE 7]>
-					<a style="display:block; overflow: visible; height:0" href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
-					<![endif]-->
+					{* the line above is used to give enough space to the real 'Upload New Version' button *}
+					<a style="visibility: hidden">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				{/if}
 
 			{else}
