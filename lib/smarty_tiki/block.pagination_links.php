@@ -44,6 +44,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 
 	// Check main params and return no pagination links if there is a mistake
 	if ( ! isset($params['cant']) || $params['cant'] <= 0 ) return '';
+	if ( isset($params['step']) && $params['step'] == -1 ) return '';// display all
 	if ( ! isset($params['offset']) ) $params['offset'] = 0;
 	if ( ! isset($params['offset_arg']) ) $params['offset_arg'] = 'offset';
 	if ( isset($params['reloff']) && (
@@ -75,6 +76,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	} else {
 		$nb_pages = ceil($params['cant'] / $params['step']);
 	}
+	if ( $nb_pages == 1 ) return '';
 	if ( empty($url) || preg_match('/^\s*$/', $url) ) {
 		$url = smarty_function_query(array('_type' => $default_type), $smarty);
 	}
@@ -166,13 +168,13 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 		if ( $prefs['nextprev_pagination'] != 'n' ) {
 			if ( $params['prev'] == 'y' ) {
 				if ( isset($images) ) {
-					if ( $prefs['pagination_firstlast'] != 'n' ) {
+					if ( $prefs['pagination_firstlast'] != 'n' && $params['offset'] > $params['step'] ) {
 						$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
 								$params['offset_arg'].'='.$params['offset'].'&amp;reloff=-'.$params['offset'] : $params['offset_arg'].'=0'
 							), $images['first'], $params
 						);
 					}
-					if ( $prefs['pagination_fastmove_links'] == 'y' ) {
+					if ( $prefs['pagination_fastmove_links'] == 'y' && $next_fast_offset != $next_offset ) {
 						$html .= make_prevnext_link( $url.$prev_fast_offset, $images['previous_fast'], $params );
 					}
 				}
@@ -188,10 +190,10 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 					.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
 					.( isset($images) ? '' : ']' );
 				if ( isset($images) ) {
-					if ( $prefs['pagination_fastmove_links'] == 'y' ) {
+					if ( $prefs['pagination_fastmove_links'] == 'y' && $next_fast_offset != $next_offset ) {
 						$html .= make_prevnext_link( $url.$next_fast_offset, $images['next_fast'], $params );
 					}
-					if ( $prefs['pagination_firstlast'] != 'n' ) {
+					if ( $prefs['pagination_firstlast'] != 'n'  && $params['offset'] + 2*$params['step'] < $params['cant'] ) {
 						$i = ( $nb_pages - 1 ) * $params['step'] ;
 						$html .= make_prevnext_link( $url.( isset($params['reloff']) ?
 								$params['offset_arg'].'='.$params['offset'].'&amp;reloff='.($i - $params['offset']) : $params['offset_arg'].'='.$i
