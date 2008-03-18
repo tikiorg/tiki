@@ -6,7 +6,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$language}" lang="{$language}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">
 <head>
 {if $base_url and $dir_level gt 0}<base href="{$base_url}"/>{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -50,6 +50,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </title>
 
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
+<!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y'}
@@ -120,7 +121,7 @@ var numl;var toBeHidden;
   function confirmExit()
   {
     if (needToConfirm)
-      return "{tr}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";
+		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
   }
 {/literal}
 </script>
@@ -128,8 +129,9 @@ var numl;var toBeHidden;
 </head>
 
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-{if $msgError} onload="javascript:location.hash='msgError'"{/if}
-{if $section} class="tiki_{$section}"{/if}{if $smarty.session.fullscreen eq 'y'} id="fullscreen"{/if}>
+onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
+{if $section} class="tiki_{$section}"{/if}
+{if $smarty.session.fullscreen eq 'y'} id="fullscreen"{/if}>
 <ul class="jumplinks">
  <li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
  {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
