@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.41 2008-03-09 21:23:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.42 2008-03-18 21:16:50 sylvieg Exp $ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -154,14 +154,14 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 	</table>
 	</div>
 	{/capture}
+	{assign var=showpopup value='y'}
+{else}
+	{assign var=showpopup value='n'}
 {/if}
-<a class="tablename" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=view&amp;{if $offset}offset={$offset}{/if}&amp;reloff={$smarty.section.user.index}&amp;cant={$item_count}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if !empty($tracker_info.showPopup)} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true  }{/if}>
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user]}
+{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index}
 
-{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
- or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}</a>{/if}
 </td>
 {/if}
 {/foreach}

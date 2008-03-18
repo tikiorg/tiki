@@ -1,6 +1,6 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.19 2008-03-06 17:47:15 sylvieg Exp $ *}
-{* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y) *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.20 2008-03-18 21:16:51 sylvieg Exp $ *}
+{* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y), showpopup *}
 
 {if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
@@ -9,7 +9,7 @@
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
-	<a class="tablename" href="tiki-view_tracker_item.php?itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;show=view{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}">
+	<a class="tablename" href="tiki-view_tracker_item.php?itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;show=view{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true}{/if}>
 	{assign var='is_link' value='y'}
 {else}
 	{assign var='is_link' value='n'}
