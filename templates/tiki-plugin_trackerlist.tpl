@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.5 2008-03-17 20:32:29 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.6 2008-03-18 13:33:08 sylvieg Exp $ *}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -109,4 +109,4 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
 
-{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
+{if $max > 0}{pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}{/if}
