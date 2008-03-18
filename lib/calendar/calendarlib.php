@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.4 2008-02-12 20:07:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/calendar/calendarlib.php,v 1.75.2.5 2008-03-18 18:19:08 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -178,7 +178,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
-		global $user, $tiki_p_change_events;
+		global $user, $tiki_p_change_events, $prefs;
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
 		foreach ($list as $res) {
@@ -192,11 +192,11 @@ class CalendarLib extends TikiLib {
 			for ($i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop)) {
 				/* $head is in user time */
 				if ($dstart == $dend) {
-					$head = TikiLib::date_format("%H:%M", $res["start"]). " - " . TikiLib::date_format("%H:%M", $res["end"]);
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
 				} elseif ($i == $dstart) {
-					$head = TikiLib::date_format("%H:%M", $res["start"]). " ...";
+					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
 				} elseif ($i == $dend) {
-					$head = " ... " . TikiLib::date_format("%H:%M", $res["end"]);
+					$head = " ... " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
 				} else {
 					$head = " ... " . tra("continued"). " ... ";
 				}
