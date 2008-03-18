@@ -278,7 +278,7 @@ div#sitead {
 	font-size: .95em;
 	text-align: right;
 	max-width: 300px;
-	float: right; 
+	float: left; 
 }
 
 /** Middle **/
@@ -1035,7 +1035,8 @@ td.third {
 /* Style for tikitabs */
 .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 6px 0 5px !important; padding: 0 !important;
+	margin-top: 10px !important; 
+  padding: 0 !important;
 }
 
 .tabactive {
@@ -1125,7 +1126,6 @@ div.content {
 
 div.content .tabs {
 	margin: 0;
-	margin-bottom: 3px;
 }
 
 .tab-wrapper { 
