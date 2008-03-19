@@ -18,7 +18,9 @@ a,
 a:visited {
 	color: #225566;
 	font-weight: bold;
+  outline: none;
 }
+
 a:hover {
 	color: #224466;
 }
@@ -152,7 +154,7 @@ label {
 	cursor: pointer;
 }
 
-/***** Pasic Page Layout 
+/***** Basic Page Layout 
 	Including Site Header *****/
 
 
