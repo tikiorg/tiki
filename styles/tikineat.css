@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.25 2008-03-18 16:25:25 nyloth Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.26 2008-03-19 20:41:33 pkdille Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -90,6 +90,7 @@ ul {
 a {
 	color : #225566;
 	font-weight : bold;
+  outline: none;
 }
 a:hover {
 	color: #224466;
