@@ -68,6 +68,10 @@ hr {
 	color: #8CACBB;
 }
 
+img {
+	border: 0;
+}
+
 small {
 	font-size: .8em;
 }
@@ -141,7 +145,7 @@ fieldset {
 }
 
 textarea {
-	width: 100%;
+
 }
 
 label {
@@ -278,7 +282,7 @@ div#sitead {
 	font-size: .95em;
 	text-align: right;
 	max-width: 300px;
-	float: left; 
+	float: right; 
 }
 
 /** Middle **/
@@ -725,6 +729,7 @@ div.cbox {
 	margin-bottom: 6px;
 	border: 1px solid #8CACBB;
 	overflow: hidden;
+	font-size: 1em;
 }
 
 div.cbox-title {
