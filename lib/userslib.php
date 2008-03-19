@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.26 2008-03-13 16:43:46 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.27 2008-03-19 12:32:35 jyhem Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -255,7 +255,7 @@ class UsersLib extends TikiLib {
 
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
-    function validate_user(&$user, $pass, $challenge, $response, $validate_phase=false) {
+	function validate_user($user, $pass, $challenge, $response, $validate_phase=false) {
 	global $tikilib, $prefs, $user_ldap_attributes;
 
 	if ($user != 'admin' && $prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
