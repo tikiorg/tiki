@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.7 2008-02-08 09:10:41 jyhem Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.37.2.8 2008-03-19 21:26:19 pkdille Exp $ *}
 
 <h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
 
@@ -51,7 +51,7 @@
 </div>
 {/if}
 
-<table border="1" cellpadding="2" cellspacing="0">
+<table class="normal">
 <tr>
 {if $tiki_p_remove eq 'y'}<th class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
 <th class="heading">{tr}Date{/tr}</th>
