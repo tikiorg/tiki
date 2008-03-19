@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.89 2008-03-16 00:07:09 nyloth Exp $
+// CVS: $Id: tikilib.php,v 1.801.2.90 2008-03-19 18:08:39 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1976,7 +1976,7 @@ function add_pageview() {
     /*shared*/
     function get_file($id) {
 	$query = "select `path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description` from `tiki_files` where `fileId`=?";
-	$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data`,`filesize` from `tiki_files` where `fileId`=?";
+	$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data`,`filesize`, `lockedby` from `tiki_files` where `fileId`=?";
 	$result = $this->query($query,array((int) $id));
 	$res = $result->fetchRow();
 	return $res;
