@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.24 2008-03-14 22:35:40 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.25 2008-03-19 13:03:56 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -27,10 +27,23 @@ function wikiplugin_tracker($data, $params) {
 	//var_dump($_REQUEST);
 	extract ($params,EXTR_SKIP);
 
-	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker = $trklib->get_tracker($trackerId))) {
+	if ($prefs['feature_trackers'] != 'y') {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
-
+	if (!empty($trackerId) && !($tracker = $trklib->get_tracker($trackerId))) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
+	} elseif (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') {
+		$utid = $userlib->get_usertrackerid($group);
+		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
+			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
+			$trackerId = $utid['usersTrackerId'];
+			if (!empty($itemId) && empty($_REQUEST['ok']))
+				return('<b>Item already created</b>');
+		}
+	}
+	if (!isset($trackerId)) {
+		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
+	}
 	if (!isset($embedded)) {
 		$embedded = "n";
 	}
@@ -42,18 +55,6 @@ function wikiplugin_tracker($data, $params) {
 	}
 	if (!isset($sort)) {
 		$sort = 'n';
-	}
-	if (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') {
-		$utid = $userlib->get_usertrackerid($group);
-		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
-			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
-			$trackerId = $utid['usersTrackerId'];
-			if (!empty($itemId) && empty($_REQUEST['ok']))
-				return('<b>Item already created</b>');
-		}
-	}
-	if (!isset($trackerId)) {
-		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	if (!isset($action)) {
 		$action = 'Save';
