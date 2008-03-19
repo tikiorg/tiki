@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wysiwyg.php,v 1.1.2.2 2008-03-10 20:36:03 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wysiwyg.php,v 1.1.2.3 2008-03-19 14:00:42 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,13 +21,9 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 		"wysiwyg_wiki_semi_parsed"
 	);
 	if (isset($_REQUEST['restore']) && $_REQUEST['restore'] == 'on') {
-		$_REQUEST['wysiwyg_toolbar'] = "FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
-	Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
-	/
-	JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent,Blockquote
-	Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
-	/
-	Style,FontName,FontSize,-,TextColor,BGColor,-,Source";
+		$tikilib->delete_preference('wysiwyg_toolbar');
+	} else {
+		simple_set_value('wysiwyg_toolbar');
 	}
 
 	foreach ($pref_toggles as $toggle) {
@@ -35,7 +31,6 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 	}
 
 	simple_set_value('wysiwyg_toolbar_skin');
-	simple_set_value('wysiwyg_toolbar');
 }
 
 ask_ticket('admin-inc-wysiwyg');
