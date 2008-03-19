@@ -1,4 +1,5 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.7 2008-03-18 16:08:23 sylvieg Exp $ *}
+{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.8 2008-03-19 14:06:46 sylvieg Exp $ *}
+{if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -26,7 +27,7 @@
 {/if}
 
 {foreach key=jx item=ix from=$fields}
-{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'}
+{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields)}
 {if $ix.type eq 'l'}
 <td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
@@ -71,7 +72,24 @@
 
 {* ------------------------------------ *}
 {section name=ix loop=$items[user].field_values}
-{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
+{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields)}
+{if !empty($popupfields) && $items[user].field_values[ix].isMain eq 'y'}
+	{capture name=popup}
+	<div class="cbox">
+	<table>
+	{cycle values="odd,even" print=false}
+	{foreach from=$items[user].field_values item=f}
+		{if in_array($f.fieldId, $popupfields)}
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
+		{/if}
+	{/foreach}
+	</table>
+	</div>
+	{/capture}
+	{assign var=showpopup value='y'}
+{else}
+	{assign var=showpopup value='n'}
+{/if}
 <td class="auto">
 	{if isset($perms)}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
