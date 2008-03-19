@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.36.2.2 2008-01-29 13:20:27 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.36.2.3 2008-03-19 01:44:52 luciash Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -236,10 +236,9 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
+/* default $maxRecords defined in tiki-setup.php */
 if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
-} else {
-	$maxRecords = $maxRecords;
 }
 
 $filter = '';
@@ -267,8 +266,6 @@ if ($prefs['feature_multilingual'] == 'y') {
 }
 
 $channels = $structlib->list_structures($offset, $maxRecords, $sort_mode, $find, $exact_match, $filter);
-
-$cant_pages = ceil($channels["cant"] / $maxRecords);
 
 $smarty->assign('cant', $channels["cant"]);
 
