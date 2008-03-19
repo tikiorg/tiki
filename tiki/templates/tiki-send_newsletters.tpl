@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.28.2.3 2008-03-17 20:50:37 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_newsletters.tpl,v 1.28.2.4 2008-03-19 20:31:32 sylvieg Exp $ *}
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php{if $nlId}?nlId={$nlId}{/if}">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
@@ -54,7 +54,7 @@
 <br />
 {* --- tab headers --- *}
 {if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3,4" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit{/tr}</a></span>
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Drafts{/tr}&nbsp;({$cant_drafts})</a></span>
@@ -62,7 +62,7 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 {* --- tab with editior --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
