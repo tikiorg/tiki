@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.10 2008-03-17 20:32:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.11 2008-03-19 14:06:45 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -36,13 +36,22 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
-		if (!isset($fields)) {
-			$smarty->assign('msg', tra("missing fields list"));
-			return $smarty->fetch("error_simple.tpl");
-		} else {
+		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+		if (!empty($fields)) {
 			$listfields = split(':',$fields);
+			if ($sort == 'y') {
+				$allfields = $trklib->sort_fields($allfields, $listfields);
+			}
+		} else {
+			foreach($allfields['data'] as $f) {
+				$listfields[] = $f['fieldId'];
+			}
 		}
-
+		if (!empty($popup)) {
+			$popupfields = split(':', $popup);
+		} else {
+			$popupfields = array();
+		}
 		if ($t = $trklib->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info, $t);
 		$smarty->assign_by_ref('tracker_info', $tracker_info);
@@ -186,18 +195,6 @@ function wikiplugin_trackerlist($data, $params) {
 		$status_types = $trklib->status_types();
 		$smarty->assign('status_types', $status_types);
 
-		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-		if (!empty($fields)) {
-			$listfields = split(':',$fields);
-			if ($sort == 'y') {
-				$allfields = $trklib->sort_fields($allfields, $listfields);
-			}
-		} else {
-			foreach($allfields['data'] as $f) {
-				$listfields[] = $f['fieldId'];
-			}
-		}
-
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		} else {
@@ -261,7 +258,7 @@ function wikiplugin_trackerlist($data, $params) {
 
 
 		for ($i = 0; $i < count($allfields["data"]); $i++) {
-			if (in_array($allfields["data"][$i]['fieldId'],$listfields) and $allfields["data"][$i]['isPublic'] == 'y') {
+			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}
 			if (isset($check['fieldId']) && $allfields["data"][$i]['fieldId'] == $check['fieldId']) {
@@ -284,6 +281,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('fields', $passfields);
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
+		$smarty->assign_by_ref('popupfields', $popupfields);
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
