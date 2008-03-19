@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.8 2008-02-15 14:32:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.85.2.9 2008-03-19 13:17:26 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -204,7 +204,7 @@ if ( $isvalid ) {
 		// Redirect the user to the screen where he must change his password.
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no security risk involved
-		$url = 'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
+		$url = 'tiki-change_password.php?user=' . urlencode($user);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
 		$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
