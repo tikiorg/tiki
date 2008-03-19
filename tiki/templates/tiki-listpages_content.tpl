@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.10 2008-03-09 21:40:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.11 2008-03-19 02:07:49 luciash Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -65,7 +65,7 @@
 
     {if $prefs.wiki_list_status eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='status'}{tr}Status{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag'}{tr}Status{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_versions eq 'y'}
