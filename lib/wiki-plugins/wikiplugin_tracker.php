@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.25 2008-03-19 13:03:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tracker.php,v 1.85.2.26 2008-03-19 13:32:42 sylvieg Exp $
 // Includes a tracker field
 // Usage:
 // {TRACKER()}{TRACKER}
@@ -37,8 +37,6 @@ function wikiplugin_tracker($data, $params) {
 		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
 			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
 			$trackerId = $utid['usersTrackerId'];
-			if (!empty($itemId) && empty($_REQUEST['ok']))
-				return('<b>Item already created</b>');
 		}
 	}
 	if (!isset($trackerId)) {
@@ -219,7 +217,8 @@ function wikiplugin_tracker($data, $params) {
 
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
-					$itemId = $trklib->get_user_item($trackerId, $tracker);
+					if (!isset($itemId))
+						$itemId = $trklib->get_user_item($trackerId, $tracker);
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($email)) {
