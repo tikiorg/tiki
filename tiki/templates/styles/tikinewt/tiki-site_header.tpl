@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki-site_header.tpl,v 1.1.2.3 2008-03-14 08:13:57 chibaguy Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki-site_header.tpl,v 1.1.2.4 2008-03-19 05:41:14 chibaguy Exp $ *}
 {* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}
 		{/if}
+{* Site logo left or right, and sitead or not. *}
 {if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align neq 'center'}
 <div class="clearfix" id="sioptions">
 	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'left'}
@@ -23,6 +24,7 @@
 </div>
 {/if}
 
+{* Sitelogo centered, and sitead: to work in small vertical space, ad (halfbanner) is floated left; a second bannerzone is floated right. *}
 {if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'center'}
 <div class="clearfix" id="sioptionscentered">
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
@@ -33,4 +35,12 @@
 	<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}><a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
 	</div>	
 </div>
+{/if}
+
+{* No sitelogo but a sitead: ad is centered. *}
+{if $prefs.feature_sitelogo eq 'n'}
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+	<div align="center">
+	{eval var=$prefs.sitead}</div>
+	{/if}
 {/if}
