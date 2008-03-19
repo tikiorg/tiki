@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28.2.3 2008-03-10 16:26:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.28.2.4 2008-03-19 17:59:07 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 
-if ($tiki_p_clean_cache != 'y') {
+if ($user != 'admin' && $tiki_p_admin != 'y' && $tiki_p_clean_cache != 'y') { // admin test needed for the first inclusion of this perm befroring clearing the cache
 	$smarty->assign('msg', tra('You do not have permission to use this feature'));
 	$smarty->display('error.tpl');
 	die;
