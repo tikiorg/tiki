@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.2 2008-03-13 21:00:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.21.2.3 2008-03-20 16:03:30 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,23 +134,7 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
+$smarty->assign_by_ref('cant', $channels['cant']);
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 ask_ticket('admin-notif');
