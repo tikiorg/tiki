@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.1 2008-03-03 20:21:22 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.2 2008-03-20 15:33:27 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -11,6 +11,7 @@ function refresh_index($object_type, $object_id = null) {
 	if ( empty($object_type) ) return false;
 	global $tikilib;
 
+	$wiki_html = '';
 	$query_from = " from `tiki_$object_type`";
 	$query_limit = -1;
 	$query_offset = 0;
@@ -109,7 +110,8 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'wiki';
 		$f_id = 'pageName';
 		$f_content = array('data', 'description', 'pageName');
-		array_unshift($filtering_expr, '$content = $tikilib->parse_data($content);');
+		array_unshift($filtering_expr, '$content = $tikilib->parse_data($content, $res["is_html"]);');
+		$wiki_html = ', `is_html`';
 		break;
 
 	case 'tracker_items': //case 'track': case 'trackeritem': 
@@ -155,7 +157,7 @@ function refresh_index($object_type, $object_id = null) {
 		foreach ( $f_content as $k_content => $v_content ) $query_fields .= ', '.$v_content.(is_string($k_content)?' as '.$k_content:'');
 		if ( !empty($f_other) ) $query_fields .= ', '.( is_array($f_other) ? implode(', ', $f_other) : $f_other );
 
-		$result = $tikilib->query('select '.$query_fields.$query_from.$query_where, $query_vars, $query_limit, $query_offset);
+		$result = $tikilib->query('select '.$query_fields.$wiki_html.$query_from.$query_where, $query_vars, $query_limit, $query_offset);
 
 		if ( $result ) while ( $res = $result->fetchRow() ) if ( is_array($res) ) {
 			$id = '';
@@ -186,20 +188,59 @@ function refresh_index_oldest() {
 }
 
 function &search_index($data) {
-	$words = array();
-	// $data = trim(strtolower(strip_tags($data))); // Don't use strip_tags here, this is not always binary safe (and doesn't correctly handle files data)
-	// $data = trim(strtolower(preg_replace('/([\s\x7f\x00-\x1f]+/', ' ', $data))); // Remove ascii non-printable characters and convert all whitespaces characters in spaces
-	$data = trim(strtolower(preg_replace('/[^\pL\pN]+/', ' ', $data))); // Remove non-alphanum characters and convert all whitespaces characters in spaces
+
+	// Be sure we will parse UTF-8 data
+	if ( function_exists('mb_check_encoding')
+		&& function_exists('iconv')
+		&& function_exists('mb_detect_encoding')
+		&& mb_check_encoding($data, 'UTF-8')
+	) {
+		$data = iconv(mb_detect_encoding($data), 'UTF-8//TRANSLIT', $data);
+	}
+
+	// Clean the UTF-8 string using HTML Purifier
+@	require_once('lib/HTMLPurifier.auto.php');
+@	require_once('HTMLPurifier/Encoder.php');
+	if ( class_exists('HTMLPurifier_Encoder') ) {
+		$utf8encoder = new HTMLPurifier_Encoder();
+		$data = $utf8encoder->cleanUTF8($data);
+		unset($utf8encoder);
+	}
+
+	// Remove remaining HTML numeric entities
+	if ( function_exists('mb_decode_numericentity') ) {
+		if ( ! function_exists('utf8_entity_decode') ) {
+			function utf8_entity_decode($entity){
+				$convmap = array(0x0, 0x10000, 0, 0xfffff);
+				return mb_decode_numericentity($entity, $convmap, 'UTF-8');
+			}
+		}
+		$data = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $data);
+		$data = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $data );
+	}
+
+	// Lowerize
+	$data = function_exists('mb_convert_case') ? mb_convert_case($data, MB_CASE_LOWER, 'UTF-8') : strtolower($data);
+
+	// Convert punctuations to spaces
+	$data = preg_replace('/[\pP\pZ\pS]/u', ' ', $data);
+
 	if ( $data != '' ) {
-		$sstrings = preg_split('/ /', $data, -1, PREG_SPLIT_NO_EMPTY); // split into words (do NOT use the split function that doesn't correctly handle some characters !)
+		// Split into words (do NOT use the split function that doesn't correctly handle some characters !)
+		$sstrings = preg_split('/\s+/u', $data, -1, PREG_SPLIT_NO_EMPTY);
+
 		foreach ( $sstrings as $value ) {
-			if ( isset($words[$value]) ) {
-				$words[$value]++; // count words
-			} else {
-				$words[$value] = 1;
+			// Keep only alpha-num words
+			if ( preg_match('/^[\pL\pN]+$/u', $value) ) {
+				if ( isset($words[$value]) ) {
+					$words[$value]++; // count words
+				} else {
+					$words[$value] = 1;
+				}
 			}
 		}
 	}
+
 	return $words;
 }
 
@@ -209,7 +250,7 @@ function insert_index(&$words, $location, $page) {
 	$tikilib->query($query, array($location,$page), -1, -1, false);
 
 	foreach ( $words as $key => $value ) {
-		if ( strlen($key) > $prefs['search_min_wordlength'] ) {
+		if ( strlen($key) >= $prefs['search_min_wordlength'] ) {
 			$query = 'insert into `tiki_searchindex` (`location`,`page`,`searchword`,`count`,`last_update`) values(?,?,?,?,?)';
 			$tikilib->query($query, array($location,$page,$key,(int)$value,$tikilib->now), -1, -1, false);
 		}
