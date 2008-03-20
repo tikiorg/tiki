@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.15.2.3 2008-03-02 19:24:48 lphuberdeau Exp $
+# $Id: tikirelease.sh,v 1.15.2.4 2008-03-20 19:41:15 kerrnel22 Exp $
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release Tikiwiki ?
@@ -16,8 +16,7 @@
 #    - cd db/convertscripts and run convertsqls.sh
 #    - check for PHP syntax errors: find . -type f -name \*.php -exec php -l {} \;  | grep Parse
 #    - commit your changes
-#    - update list of valid releases in lib/setup/versioning.class.php
-#        array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1', etc etc etc);
+#    - set release branch (stable/unstable/head), version, and star in lib/setup/versioning.class.php
 #    - Replace version number in templates/tiki-install.tpl and
 #        templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl)
 #        with "{$tiki_version}"
@@ -62,6 +61,7 @@
 #       to next version number with CVS   ex.: 1.9.2 (CVS)  . This helps later on to 
 #       know exactly which files were included or not in a release.
 #
+#		- Also, update appropriate tw.o/*.version file with new release version
 #
 #
 # All that process has to be relayed on live irc channel : 
