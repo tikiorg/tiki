@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.10 2008-03-03 20:20:00 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.11 2008-03-20 19:35:06 kerrnel22 Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -145,17 +145,12 @@ $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
 $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 
 // Enable Versioning
-// move this to lib/setup/version.php ?
-
-$tiki_version = '1.10.0b1';
-$tiki_branch = 'unstable';
-$tiki_star = 'Arcturus';
-$tiki_uses_cvs = is_dir('CVS') ? 'y' : 'n';
-
-$smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_branch', $tiki_branch);
-$smarty->assign('tiki_star', $tiki_star);
-$smarty->assign('tiki_uses_cvs', $tiki_uses_cvs);
-
-
+// Please update the specified class below at release time, as well as
+// adding new release to http://tikiwiki.org/{$branch}.version file
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+$smarty->assign('tiki_version', $TWV->version);
+$smarty->assign('tiki_branch', $TWV->branch);
+$smarty->assign('tiki_star', $TWV->star);
+$smarty->assign('tiki_uses_cvs', $TWV->cvs);
 
