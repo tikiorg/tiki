@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.14 2008-03-16 16:57:51 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.15 2008-03-20 12:33:52 sylvieg Exp $ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -237,7 +237,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td class="form"><label for="feature_siteloclabel">{tr}Prefix breadcrumbs with 'Location:' label?{/tr}</td>
+					<td class="form"><label for="feature_siteloclabel">{tr}Prefix breadcrumbs with 'Location : ' {/tr}</label></td>
 					<td><input type="checkbox" name="feature_siteloclabel" id="feature_siteloclabel"{if $prefs.feature_siteloclabel eq 'y'} checked="checked"{/if} /></td>
 				</tr>
 				<tr>
