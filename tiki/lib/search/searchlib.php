@@ -1,5 +1,5 @@
 <?php
-// $Id: searchlib.php,v 1.38.2.3 2008-02-27 15:18:47 nyloth Exp $
+// $Id: searchlib.php,v 1.38.2.4 2008-03-20 15:33:27 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -33,6 +33,9 @@ class SearchLib extends TikiLib {
 	}
 
 	function find($where,$words,$offset, $maxRecords, $fulltext='', $filter='') {
+	  // Lowerize
+          $words = function_exists('mb_convert_case') ? mb_convert_case($words, MB_CASE_LOWER, 'UTF-8') : strtolower($words);
+
 	  $exact=$this->find_exact($where,$words,$offset, $maxRecords, $filter);
 	  $part=$this->find_part($where,$words,$offset, $maxRecords, $filter);
           if (count($part)) foreach ($part["data"] as $p) {
