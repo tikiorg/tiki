@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.4 2007-11-24 23:53:22 ntavares Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.5 2008-03-20 16:12:04 nyloth Exp $ *}
 
 {if $prefs.feature_search_stats eq 'y'}
   <div class="rbox" name="tip">
@@ -111,6 +111,15 @@
 	  <tr>
             <td>
               <a href="tiki-admin.php?page=search&amp;refresh_tracker_index_now=y" class="link" title="{tr}Refresh trackers search index now{/tr}">{tr}Refresh tracker search index now{/tr}</a>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+	{/if}
+      
+        {if $refresh_files_index_now neq 'y' and $prefs.trk_with_mirror_tables neq 'y'}
+	  <tr>
+            <td>
+              <a href="tiki-admin.php?page=search&amp;refresh_files_index_now=y" class="link" title="{tr}Refresh files search index now{/tr}">{tr}Refresh files search index now{/tr}</a>
             </td>
             <td>&nbsp;</td>
           </tr>
