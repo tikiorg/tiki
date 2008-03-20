@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.11 2008-03-19 02:07:49 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.12 2008-03-20 05:39:14 pkdille Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -129,13 +129,13 @@
 
     {if $prefs.wiki_list_id eq 'y'}
       <td class="{cycle advance=false}">
-        <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
+        <a href="tiki-index.php?page={$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">{$listpages[changes].page_id}</a>
       </td>
     {/if}
 
     {if $prefs.wiki_list_name eq 'y'}
       <td class="{cycle advance=false}">
-        <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
+        <a href="tiki-index.php?page={$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
       </td>
     {/if}
 
