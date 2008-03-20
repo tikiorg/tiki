@@ -184,7 +184,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	   		} elseif (isset($images)) {
 				$html .= '<a class="prevnext"><span style="padding-left:16px"></span></a><a class="prevnext"><span style="padding-left:16px"> </span></a>';
 			}
-			$html .= ' '.tra($params['itemname']).': '.(1 + floor(($real_offset) / $params['step'])).'/'.$nb_pages;
+			$html .= '<span class="pagenums">' . tra($params['itemname']).': '.(1 + floor(($real_offset) / $params['step'])).'/'.$nb_pages . "</span>";
 			if ( $params['next'] == 'y' ) {
 				$html .= ( isset($images) ? '' : ' [' )
 					.make_prevnext_link($url.$next_offset, ( isset($images) ? $images['next'] : tra('Next') ), $params )
