@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.8 2007-03-02 19:49:05 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.8.2.1 2008-03-20 19:31:07 sylvieg Exp $
  *
  * Tikiwiki QUOTE plugin.
  * 
@@ -17,7 +17,6 @@ function wikiplugin_quote_help() {
 
 function wikiplugin_quote($data, $params) {
 	/* set default values for some args */
-	$replyto = '';
 	
 	// Remove first <ENTER> if exists...
 //	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
@@ -25,6 +24,7 @@ function wikiplugin_quote($data, $params) {
 	$data = trim($data);
     
 	extract ($params, EXTR_SKIP);
+	print_r($params);
 	if (!empty($replyto)) {
 		$caption = $replyto . tra(' wrote:');
 	} else {
