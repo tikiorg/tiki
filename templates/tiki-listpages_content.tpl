@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.13 2008-03-20 13:19:19 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.14 2008-03-20 23:26:00 pkdille Exp $ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
@@ -40,57 +40,57 @@
 
     {if $prefs.wiki_list_lastmodif eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last mod{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif' _title='{tr}Last modification{/tr}'}{tr}Last mod{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_creator eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='creator'}{tr}Creator{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='creator' _title='{tr}Page creator{/tr}'}{tr}Creator{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_user eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='user'}{tr}Last author{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='user' _title='{tr}Last author{/tr}'}{tr}Last author{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_lastver eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version'}{tr}Last ver{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_comment eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='comment'}{tr}Com{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='comment' _title='{tr}Comment{/tr}}{tr}Com{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_status eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag'}{tr}Status{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag' _title='{tr}Status of the page{/tr}'}{tr}Lock{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_versions eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions'}{tr}Vers{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_links eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='links'}{tr}Links{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='links' _title='{tr}Links to other items in page{/tr}'}{tr}Links{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_backlinks eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='backlinks'}{tr}Backlinks{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='backlinks' _title='{tr}Links to this page in other pages{/tr}'}{tr}Backl.{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_size eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='size' _title='{tr}Page size{/tr}'}{tr}Size{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_language eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang'}{tr}Language{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang' _title='{tr}Language{/tr}'}{tr}Lang.{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_categories eq 'y'}
