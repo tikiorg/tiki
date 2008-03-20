@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.27 2008-03-19 12:32:35 jyhem Exp $
+// CVS: $Id: userslib.php,v 1.247.2.28 2008-03-20 16:31:28 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -976,22 +976,17 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	while ($res = $result->fetchRow()) {
 	    $aux = array();
 
-	    $aux["user"] = $res["login"];
-	    $aux["userId"] = $res["userId"];
-	    $aux["default_group"] = $res["default_group"];
-	    $user = $aux["user"];
-	    $aux["email"] = $res["email"];
-	    $aux["lastLogin"] = $res["lastLogin"];
+	    $res["user"] = $res["login"];
+	    $user = $res["user"];
 	    if ($inclusion) {
 	    	$groups = $this->get_user_groups_inclusion($user);
 	    } else {
 	    	$groups = $this->get_user_groups($user);
 	    }
-	    $aux["groups"] = $groups;
-	    $aux["currentLogin"] = $res["currentLogin"];
-	    $aux["age"] = $this->now - $res["registrationDate"];
-		$aux['provpass'] = $res['provpass'];
-	    $ret[] = $aux;
+	    $res["groups"] = $groups;
+	    $res["age"] = $this->now - $res["registrationDate"];
+		
+	    $ret[] = $res;
 	}
 
 	$retval = array();
