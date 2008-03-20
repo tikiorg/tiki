@@ -88,6 +88,7 @@ class TikiMail extends HtmlMimeMail {
 			foreach ($recipients as $u) {
 				$logslib->add_log($title, $u.'/'.$this->headers['Subject']);
 			}
+		return $result;
 	}
 }	
 /**

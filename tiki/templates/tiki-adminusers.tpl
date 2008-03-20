@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.11 2008-03-14 20:23:26 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.12 2008-03-20 16:31:29 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -16,9 +16,9 @@
 
 <div class="navbar">
 {if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin Groups{/tr}</a></span>
 {/if}
-<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin Users{/tr}</a></span>
 {if $userinfo.userId}
 <span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a New User{/tr}</a></span>
 {/if}
@@ -161,6 +161,9 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="thin">
   {if $users[user].user ne 'admin'}
     <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+  	{if $prefs.validateRegistration eq 'y' and $users[user].valid}
+		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate{/tr}">{icon _id='accept' alt="{tr}Validate{/tr}"}</a>
+	{/if}
   {/if}
 </td>
 </tr>
