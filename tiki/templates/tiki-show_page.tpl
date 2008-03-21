@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.17 2008-03-06 14:55:01 sylvieg Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.18 2008-03-21 11:00:45 ricks99 Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -139,7 +139,7 @@
 {section name=i loop=$translation_alert}
 <div class="cbox">
 <div class="cbox-title">
-{tr}Content may be out of date{/tr}
+{tr}{icon _id=information.png style="vertical-align:middle"} Content may be out of date{/tr}
 </div>
 <div class="cbox-data">
 	<p>{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}</p>

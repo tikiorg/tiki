@@ -26,7 +26,7 @@
 
 {if $langpage}
 <form method="post" action="tiki-editpage.php">
-	{tr}Language of newly translated page{/tr}: 
+	<p>{tr}Language of newly translated page{/tr}: 
 		<select name="lang" size="1">
 			{section name=ix loop=$languages}
 			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
@@ -34,19 +34,40 @@
 			{/if}
 			{/section}
 		</select>
-	<br/>{tr}Name of newly translated page{/tr}: <input type="text" size="40" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
-	<br/><input type="submit" value="{tr}Create translation{/tr}"/></p>
+	<br />{tr}Name of newly translated page{/tr}: <input type="text" size="40" name="page"/><input type="hidden" name="translationOf" value="{$name|escape}"/>
+	<input type="submit" value="{tr}Create translation{/tr}"/></p>
 	<textarea name="edit" style="display:none">^{$translate_message}^
 
 {$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 </form>
 {if !isset($allowed_for_staging_only)}
+{if ($articles and ($articles|@count ge '1')) or ($pages|@count ge '1')}
+{* only show if there are articles or pages to select *}
+<p>{tr}Or{/tr}</p>
+<form action="tiki-edit_translation.php" method="post">
+<input type="hidden" name="id" value="{$id}" />
+<input type="hidden" name="type" value="{$type|escape}" />
+<input type="hidden" name="page" value="{$name|escape}" />
+<p>{tr}Add existing page as a translation of this page{/tr}:<br />
+
+{if $articles}
+	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
+{else}
+	<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
+{/if}
+&nbsp;
+<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
+
+</form>
+</p>{/if}
+{/if}
 {if $trads|@count > 1}
-<hr />
 {if !empty($langpage)}
+<hr />
+<br />
 <h3>{tr}Manage existing translations of this page{/tr}</h3>
 	<table class="normal">
-	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{tr}Page{/tr}</td><td class="heading">{tr}Actions{/tr}</td></tr>
+	<tr><th class="heading">{tr}Language{/tr}</th><th class="heading">{tr}Page{/tr}</th><th class="heading">{tr}Actions{/tr}</th></tr>
 	{cycle values="odd,even" print=false}
 	{section name=i loop=$trads}
 	<tr class="{cycle}">
@@ -62,27 +83,12 @@
 {/if}
 {/if}
 
-<form action="tiki-edit_translation.php" method="post">
-<input type="hidden" name="id" value="{$id}" />
-<input type="hidden" name="type" value="{$type|escape}" />
-<input type="hidden" name="page" value="{$name|escape}" />
-
-<hr />
-
-<h3>{tr}Add existing page as a translation of this page{/tr}</h3>
-
-{if $articles}
-	<select name="srcId">{section name=ix loop=$articles}{if !empty($articles[ix].lang) and $langpage ne $articles[ix].lang}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}checked="checked"{/if}>{$articles[ix].title|truncate:80:"(...)":true}</option>{/if}{/section}</select>
+{* end of if !isset($allowed_for_staging_only)}
 {else}
-	<select name="srcName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName|escape}" {if $pages[ix].pageName == $srcId}checked="checked"{/if}>{$pages[ix].pageName|truncate:80:"(...)":true} ({$pages[ix].lang|escape})</option>{/section}</select>
-{/if}
-&nbsp;
-<input type="submit" class="wikiaction" name="set" value="{tr}Go{/tr}"/>
-
-</form>
-{/if} {* end of if !isset($allowed_for_staging_only)}
-{else}
-	<h2>{tr}No language is assigned to this page!{/tr}</h2>
+	<div class="simplebox">
+		{icon _id=delete.png alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
+		{tr}No language is assigned to this page.{/tr}
+	</div>
 	<p>{tr}Please select a language before performing translation.{/tr}</p>
 	<form method="post" action="tiki-edit_translation.php">
 		<p>
