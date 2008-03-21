@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.11 2008-03-20 19:35:07 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.12 2008-03-21 18:29:50 kerrnel22 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -325,8 +325,8 @@ if ($prefs['feature_version_checks'] == 'y') {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("A new major release branch is also available."));
 			}
 		} else {
-			$tikilib->set_preference('tiki_release',$TMV->version);
-			$smarty->assign('tiki_release', $TMV->version);
+			$tikilib->set_preference('tiki_release',$TWV->version);
+			$smarty->assign('tiki_release', $TWV->version);
 		}
 		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	}
