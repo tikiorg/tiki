@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.18 2008-03-14 22:05:15 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.141.2.19 2008-03-21 21:50:39 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,6 +211,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 		    $parentId = $listfields[$fid]['options_array'][0];
 		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
 		}
+		if (isset($xfields['data'][$i]['otherField']))
+			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 
 	} 
 
