@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.20 2008-03-18 21:16:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.21 2008-03-21 21:50:39 sylvieg Exp $ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y), showpopup *}
 
 {if $field_value.type ne 'x'}
@@ -34,13 +34,26 @@
 {* -------------------- items list -------------------- *}
 {elseif $field_value.type eq 'l'}
 	{foreach key=tid item=tlabel from=$field_value.links}
-		{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'}
-			<div><a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}&amp;show=view" class="link">{$tlabel|truncate:255:"..."|default:"&nbsp;"}</a></div>
-		{elseif $list_mode eq 'csv'}
-			{$tlabel}
-		{else}
-			<div>{$tlabel|truncate:255:"..."}</div>
-	{/if}
+		{if $tlabel}
+			{if $list_mode ne 'csv'}
+				<div>
+			{/if}
+			{if isset($field_value.otherField)}
+				{php}global $smarty; $smarty->_tpl_vars['field_value']['otherField']['value'] = $smarty->_tpl_vars['tlabel'];{/php}
+				{include file="tracker_item_field_value.tpl" field_value=$field_value.otherField}
+			{elseif $list_mode eq 'y'}
+				{$tlabel|truncate:255:"..."}
+			{else}
+				{$tlabel}
+			{/if}
+			</div>
+			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'}
+				</a>
+			{/if}
+			{if $list_mode ne 'csv'}
+				</div>
+			{/if}
+		{/if}
 	{/foreach}
 
 {* -------------------- static text -------------------- *}
@@ -118,8 +131,8 @@
 			{$field_value.value|truncate:$field_value.options_array[4]:"...":true}
 		{/if}
 	{else}
-		{if $parse ne 'n'}
-			{$field_value.pvalue}
+		{if $parse ne 'n'} {* the field is not necessary parsed if you come from a itm list field *}
+			{if $field_value.pvalue}{$field_value.pvalue}{else}{wiki}{$field_value.value}{/wiki}{/if}
 		{else}
 			{$field_value.value|escape}
 		{/if}	

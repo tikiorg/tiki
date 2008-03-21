@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.42 2008-03-14 22:05:14 sylvieg Exp $
+// CVS: $Id: trackerlib.php,v 1.231.2.43 2008-03-21 21:50:38 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -1622,6 +1622,21 @@ class TrackerLib extends TikiLib {
 					}
 				}
 				$res = $this->set_default_dropdown_option($res);						
+			}
+			if ($res['type'] == 'l' || $res['type'] == 'r') { // get the last field type
+				if (!empty($res['options_array'][3])) {
+					if (is_numeric($res['options_array'][3]))
+						$fieldId = $res['options_array'][3];
+					else
+						$fieldId = 0;
+				} elseif (is_numeric($res['options_array'][1])) {
+					$fieldId = $res['options_array'][1];
+				} elseif ($fields = split(':', $res['options_array'][1])) {
+					$fieldId = $fields[count($fields) - 1];
+				}
+				if (!empty($fieldId)) {
+					$res['otherField'] = $this->get_tracker_field($fieldId);
+				}
 			}
 			$ret[] = $res;
 		}
