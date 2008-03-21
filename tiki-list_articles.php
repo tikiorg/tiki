@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.38.2.1 2007-11-08 21:47:51 ricks99 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.38.2.2 2008-03-21 23:06:51 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,7 @@ if (!empty($_REQUEST['maxRecords'])) {
 } else {
 	$maxRecords = $maxRecords;
 }
+#samrty->assign_by_ref('maxRecords', $maxRecords);
 
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) {
   $pdate = '';
@@ -121,22 +122,7 @@ if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) { $visible_only="n"; 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only, '', $_REQUEST["categId"], '', '', $_REQUEST['lang']);
 // If there're more records then assign next_offset
-$cant_pages = ceil($listpages["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($listpages["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant', $listpages['cant']);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
