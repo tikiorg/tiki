@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.28 2008-03-20 16:31:28 sylvieg Exp $
+// CVS: $Id: userslib.php,v 1.247.2.29 2008-03-22 05:12:47 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -216,8 +216,23 @@ class UsersLib extends TikiLib {
     }
 
     function user_logout($user) {
+			global $prefs;
 			$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
 			$user = $this->query($query, array('cookie',(string)$user));
+			if ($prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
+				include_once('XML/RPC.php');
+				$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
+				$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
+				$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+				$client->setDebug(0);
+				$msg = new XML_RPC_Message(
+				       'intertiki.logout',
+							 array(
+							 new XML_RPC_Value($prefs['tiki_key'], 'string'),
+							 new XML_RPC_Value($user, 'string')
+							 ));
+				$client->send($msg);
+			}
     }
     
     function genPass() {
@@ -2058,10 +2073,12 @@ function get_included_groups($group, $recur=true) {
 	return $pass;
     }
 
-	function create_user_cookie($user) {
+	function create_user_cookie($user,$hash=false) {
 		global $prefs;
-		$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']);
-		$hash.= ".". ($this->now + $prefs['remembertime']);
+		if (!$hash) {
+			$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
+		}
+		$this->delete_user_cookie($user);
 		$this->set_user_preference($user,'cookie',$hash);
 		return $hash;
 	}
@@ -2071,11 +2088,12 @@ function get_included_groups($group, $recur=true) {
 		$this->query($query, array('cookie',$user));
 	}
 
-	function get_user_by_cookie($hash) {
+	function get_user_by_cookie($hash,$bypasscheck=false) {
 		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'])) {
-			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value`=? and `user`=?';
-			$user = $this->getOne($query, array('cookie',"$check.$expire",$userCookie));
+		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) or $bypasscheck) {
+			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
+			$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
+			// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
 			if ($user) {
 				if ($expire < $this->now) {
 					$query = 'delete from `tiki_user_preferences` where `prefName`=? and `value`=?';
@@ -2134,18 +2152,18 @@ function get_included_groups($group, $recur=true) {
 		$pass = $this->genPass();
 		// Note that tiki-generated passwords are due inmediatley
 		// Note: ^ not anymore. old pw is usable until the URL in the password reminder mail is clicked
-		$query = "update `users_users` set `provpass` = ? where " . $this->convert_binary() . " `login`=?";
+		$query = "update `users_users` set `provpass` = ? where `login`=?";
 		$result = $this->query($query, array($pass, $user));
 		return $pass;
     }
 
     function activate_password($user, $actpass) {
 		// move provpass to password and generate new hash, afterwards clean provpass
-		$query = "select `provpass`  from `users_users` where " . $this->convert_binary() . " `login`=?";
+		$query = "select `provpass`  from `users_users` where `login`=?";
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = $this->hash_pass($pass);
-			$query = "update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where " . $this->convert_binary() . " `login`=?";
+			$query = "update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where `login`=?";
 			$result = $this->query($query, array("", $hash, (int)$this->now, $user));
 			return $pass;
 		}
@@ -2647,15 +2665,19 @@ function get_included_groups($group, $recur=true) {
 	function intervalidate($remote,$user,$pass,$get_info = false) {
 		global $prefs;
 		include_once('XML/RPC.php');
+		$hashkey = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
 		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
-		$params = array();
-		$params[] = new XML_RPC_Value($prefs['tiki_key'], 'string');
-		$params[] = new XML_RPC_Value($user, 'string');
-		$params[] = new XML_RPC_Value($pass, 'string');
-		$params[] = new XML_RPC_Value($get_info, 'boolean');
-		$msg = new XML_RPC_Message('intertiki.validate', $params);
+		$msg = new XML_RPC_Message(
+				   'intertiki.validate',
+				   array(
+					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
+					 new XML_RPC_Value($user, 'string'),
+					 new XML_RPC_Value($pass, 'string'),
+					 new XML_RPC_Value($get_info, 'boolean'),
+					 new XML_RPC_Value($hashkey, 'string')
+					 ));
 		$result = $client->send($msg);
 		return $result;
     }
@@ -2730,6 +2752,24 @@ function get_included_groups($group, $recur=true) {
 			global $userprefslib; include_once('lib/userprefs/userprefslib.php');
 			$userprefslib->set_user_avatar($user, 'u', '', $user_details['avatarName'], $user_details['avatarSize'], $user_details['avatarFileType'], $avatarData);
 		}
+	}
+
+	function get_remote_user_by_cookie($hash) {
+		global $prefs;
+		include_once('XML/RPC.php');
+		$prefs['interlist'] = unserialize($prefs['interlist']);
+		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
+		// $fp=fopen('temp/interlogtest','a+');fputs($fp,"slave     -- ".$hash." --\n");fclose($fp);
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(0);
+		$msg = new XML_RPC_Message(
+		       'intertiki.cookiecheck',
+					 array(
+					 new XML_RPC_Value($prefs['tiki_key'], 'string'),
+					 new XML_RPC_Value($hash, 'string')
+					 ));
+		$result = $client->send($msg);
+		return $result;
 	}
 
 }
