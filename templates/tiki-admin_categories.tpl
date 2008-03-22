@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.8 2008-03-22 08:13:53 pkdille Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.9 2008-03-22 08:16:30 pkdille Exp $ *}
 
 <h1>
   <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
@@ -34,7 +34,7 @@
     <br />
     {tr}Current Category ID:{/tr} {$parentId}
   </div>
-<div>
+</div>
 
 {section name=dx loop=$catree}
 {assign var=after value=$smarty.section.dx.index_next}
@@ -143,7 +143,7 @@
         <td class="even">{tr}{$objects[ix].type}{/tr}</td>
       </tr>
 {sectionelse}
-      <tr><td class="even" colspan="3"><strong>{tr}No records found.{/tr}</td></tr>
+      <tr><td class="even" colspan="3"><strong>{tr}No records found.{/tr}</strong></td></tr>
       {/section}
       </table>
       
