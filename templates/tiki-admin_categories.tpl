@@ -1,30 +1,41 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.7 2008-03-13 15:24:44 ricks99 Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.8 2008-03-22 08:13:53 pkdille Exp $ *}
 
-<h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
+<h1>
+  <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
   
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">
-{icon _id='help'}</a>{/if}
+  {if $prefs.feature_help eq 'y'}
+    <a href="{$prefs.helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Categories{/tr}">
+      {icon _id='help'}
+    </a>
+  {/if}
 
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Categories tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+  {if $prefs.feature_view_tpl eq 'y'}
+    <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Categories tpl{/tr}">
+      {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}
+    </a>
+  {/if}
+</h1>
 
-<div class="navbar"><a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a></div>
+<div class="navbar">
+  <a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a>
+</div>
 
 {if !empty($errors)}
-<div class="simplebox highlight">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
+  <div class="simplebox highlight">{section name=ix loop=$errors}{$errors[ix]}{/section}</div>
 {/if}
+
 <div class="tree" id="top">
-<div class="treetitle">{tr}Current category{/tr}: 
-<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
-{section name=x loop=$path}
-&nbsp;::&nbsp;
-<a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
-{/section}
-<br />{tr}Current Category ID:{/tr} {$parentId}
-</div>
+  <div class="treetitle">{tr}Current category{/tr}: 
+    <a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
+    {section name=x loop=$path}
+      &nbsp;::&nbsp;
+      <a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
+    {/section}
+    <br />
+    {tr}Current Category ID:{/tr} {$parentId}
+  </div>
 <div>
+
 {section name=dx loop=$catree}
 {assign var=after value=$smarty.section.dx.index_next}
 {assign var=before value=$smarty.section.dx.index_prev}
