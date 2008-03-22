@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.11 2008-03-19 14:06:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.12 2008-03-22 12:13:54 sylvieg Exp $
 //
 // TODO : 
 // ----------
@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showlastmodif=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, popup=6:7, stickypopup=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showlastmodif=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -25,6 +25,10 @@ function wikiplugin_trackerlist($data, $params) {
 		$tracker_info = $trklib->get_tracker($trackerId);
 		if ($t = $trklib->get_tracker_options($trackerId)) {
 			$tracker_info = array_merge($tracker_info, $t);
+		}
+
+		if (!isset($sort)) {
+			$sort = 'n';
 		}
 
 		if ($tiki_p_admin_trackers != 'y') {
@@ -59,6 +63,13 @@ function wikiplugin_trackerlist($data, $params) {
 		//$query_array = array();
 		//$quarray = array();
 		//parse_str($_SERVER['QUERY_STRING'],$query_array);
+
+		if (isset($stickypopup) && $stickypopup == 'y') {
+			$stickypopup = true;
+		} else {
+			$stickypopup = false;
+		}
+		$smarty->assign_by_ref('stickypopup', $stickypopup);
 
 		if (!isset($showtitle)) {
 			$showtitle = "n";
@@ -104,10 +115,6 @@ function wikiplugin_trackerlist($data, $params) {
 			$showlastmodif = $tracker_info['showLastModif'];
 		}
 		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
-
-		if (!isset($sort)) {
-			$sort = 'n';
-		}
 
 		if (isset($checkbox)) {
 			$cb = split('/', $checkbox);
