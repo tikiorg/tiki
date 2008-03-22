@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.7 2008-02-27 15:18:37 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.142.2.8 2008-03-22 05:12:47 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,11 @@ $needed_prefs = array(
 	'language' => 'en',
 	'cookie_name' => 'tikiwiki',
 	'rememberme' => 'disabled',
+	'feature_intertiki' => 'n',
+	'tiki_key' => '',
+	'feature_intertiki_mymaster' => '',
+	'feature_intertiki_sharedcookie' => 'n',
+	'interlist' => array(),
 	'auth_method' => 'tiki',
 );
 $tikilib->get_preferences($needed_prefs, true, true);
@@ -310,7 +315,17 @@ $user_cookie_site = 'tiki-user-'.$cookie_site;
 if (($prefs['rememberme'] != 'disabled') 
 	and (isset($_COOKIE["$user_cookie_site"])) 
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
-	$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
+	if ($prefs['feature_intertiki'] == 'y' and !empty($prefs['feature_intertiki_mymaster']) and $prefs['feature_intertiki_sharedcookie'] == 'y') {
+		$rpcauth = $userlib->get_remote_user_by_cookie($_COOKIE["$user_cookie_site"]);
+		if (is_object($rpcauth)) {
+			$response_value = $rpcauth->value();
+			if (is_object($response_value))  {
+			$user = $response_value->scalarval();
+			}
+		}
+	} else {
+		$user = $userlib->get_user_by_cookie($_COOKIE["$user_cookie_site"]);
+	}
 	if ($user) {
 		$_SESSION["$user_cookie_site"] = $user;
 	}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.7 2008-03-13 16:43:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/remote.php,v 1.8.2.8 2008-03-22 05:12:47 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,6 +41,8 @@ define('INTERTIKI_BADUSER',404);
 $map = array(
 	"intertiki.validate" => array("function"=>"validate"),
 	'intertiki.setUserInfo' => array('function' => 'set_user_info'),
+	"intertiki.logout" => array("function"=>"logout"),
+	"intertiki.cookiecheck" => array("function"=>"cookie_check"),
 	"intertiki.version" => array("function"=>"get_version"),
 	'intertiki.getUserInfo' => array('function' => 'get_user_info')
 );
@@ -53,6 +55,7 @@ function validate($params) {
 	$login = $params->getParam(1); $login = $login->scalarval(); 
 	$pass = $params->getParam(2); $pass = $pass->scalarval(); 
 	$slave = $params->getParam(3); $slave = $slave->scalarval();
+	$hashkey = $params->getParam(4); $hashkey = $hashkey->scalarval();
 	
 	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
 		$msg = tra('Invalid server key');
@@ -76,7 +79,8 @@ function validate($params) {
 		}
 	} 
 	if ($prefs['intertiki_logfile']) logit($prefs['intertiki_logfile'],"logged",$login,INTERTIKI_OK,$prefs['known_hosts'][$key]['name']);
-	
+	$userlib->create_user_cookie($login,$hashkey);
+
 	if ($slave) {
 	    $logslib->add_log('intertiki','auth granted from '.$prefs['known_hosts'][$key]['name'],$login);
 	    global $userlib;
@@ -107,6 +111,42 @@ function set_user_info($params) {
 	$login = $params->getParam(1); $login = $login->scalarval(); 
 	$userlib->interSetUserInfo($login, $params->getParam(2));
 	return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
+}
+
+function logout($params) {
+	global $userlib,$logslib,$prefs;
+	$key = $params->getParam(0); $key = $key->scalarval();
+	$login = $params->getParam(1); $login = $login->scalarval();
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+	$userlib->user_logout($login);
+	$userlib->delete_user_cookie($login);
+	if ($prefs['intertiki_logfile']) logit($prefs['intertiki_logfile'],"logout",$login,INTERTIKI_OK,$prefs['known_hosts'][$key]['name']);
+	$logslib->add_log('intertiki','auth revoked from '.$prefs['known_hosts'][$key]['name'],$login);
+	return new XML_RPC_Response(new XML_RPC_Value(1, "boolean"));
+}
+
+function cookie_check($params) {
+	global $userlib,$prefs;
+	$key = $params->getParam(0); $key = $key->scalarval();
+	$hash = $params->getParam(1); $hash = $hash->scalarval();
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+	$result = $userlib->get_user_by_cookie($hash,true);
+	// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main      -- ".$hash."\n");fclose($fp);
+	if ($result) {
+		return new XML_RPC_Response(new XML_RPC_Value($result, "string"));
+	}
+	$msg = tra('Cookie not found');
+	return new XML_RPC_Response(0, 101, $msg);
 }
 
 function get_version($params) {

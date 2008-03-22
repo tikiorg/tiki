@@ -1,28 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.3 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.4 2008-03-22 05:12:48 mose Exp $ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}
 </div>
 </div>
-
-<div class="cbox">
-<div class="cbox-title">
-  {tr}Important{/tr}
-</div>
-<div class="cbox-data">
-<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
-<table class="admin">
-<tr>
-<td class="form" colspan="2"><label for="alter_tiki_prefs_table">
-{tr}Tiki preferences value field in db is set to be max. 250 characters long by default until now. That applies for the custom code content too. Check this field if you want to update your preferences database table to support more than 250 chars (although it was tested and works fine with mysql, it's recommended to backup your data manually before any database update){/tr}:</label> <input type="checkbox" name="alter_tiki_prefs_table" id="alter_tiki_prefs_table" /></td>
-</tr>
-<tr><td colspan="2" class="button"><input type="submit" name="alter_tiki_prefs_table" value="{tr}Save{/tr}" /></td></tr>
-</table>
-</form>
-</div>
-</div>
-
-
 
 
 <div class="cbox">
@@ -71,6 +52,7 @@
     </div>
   </td>
 </tr>
+<tr><td class="form">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:</td><td><input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/></td></tr>
 {if $prefs.interlist}
 {foreach key=k item=i from=$prefs.interlist}
 <tr><td class="button" colspan="2">
@@ -103,6 +85,7 @@
 <div class="cbox-data">
 <form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
 <table class="admin">
+<tr><td class="form">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}:</td><td><input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Intertiki Server enabled{/tr}:</td><td><input type="checkbox" name="feature_intertiki_server" {if $prefs.feature_intertiki_server eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Access Log file{/tr}:</td><td><input type="text" name="intertiki_logfile" value="{$prefs.intertiki_logfile}" size="42" /></td></tr>
 <tr><td class="form">{tr}Errors Log file{/tr}:</td><td><input type="text" name="intertiki_errfile" value="{$prefs.intertiki_errfile}" size="42" /></td></tr>
