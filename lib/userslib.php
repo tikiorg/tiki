@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: userslib.php,v 1.247.2.29 2008-03-22 05:12:47 mose Exp $
+// CVS: $Id: userslib.php,v 1.247.2.30 2008-03-22 12:21:02 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -832,6 +832,8 @@ class UsersLib extends TikiLib {
 		if ($res['valid'] > '' && $pass == $res['valid']) // used for validation of user account before activation
 		return array(USER_VALID, $user);
 
+		if (!empty($res['valid']))
+			return array(ACCOUNT_DISABLED, $user);
 	    return array(PASSWORD_INCORRECT, $user);
 	} else {
 	    // Use challenge-reponse method

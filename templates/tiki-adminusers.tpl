@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.12 2008-03-20 16:31:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.13 2008-03-22 12:21:04 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 
@@ -161,7 +161,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="thin">
   {if $users[user].user ne 'admin'}
     <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-  	{if $prefs.validateRegistration eq 'y' and $users[user].valid}
+  	{if $users[user].valid}
 		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate{/tr}">{icon _id='accept' alt="{tr}Validate{/tr}"}</a>
 	{/if}
   {/if}
