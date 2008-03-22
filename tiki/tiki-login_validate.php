@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25.2.2 2008-03-20 16:46:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.25.2.3 2008-03-22 12:21:03 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,7 @@ if ($isvalid) {
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));					
 		$mail->send(array($email));
 		$logslib->add_log('register','validated account '.$_REQUEST['user']);
-	} else {
+	} elseif (empty($user)) {
 		$user = $_REQUEST['user'];
 		$_SESSION["$user_cookie_site"] = $user;
 		$smarty->assign('user', $user);
