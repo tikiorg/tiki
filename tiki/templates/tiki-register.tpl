@@ -91,7 +91,8 @@
           {if $gr.registrationChoice eq 'y'}<input type="radio" name="chosenGroup" value="{$gr.groupName|escape}">{if $gr.groupDesc}{$gr.groupDesc}{else}{$gr.groupName}{/if}</input><br />{/if}
         {/foreach}</td></tr>
       {/if}
-      
+      {if $prefs.useRegisterAntibot eq 'y'}{include file='antibot.tpl'}{/if}
+
       <tr><td class="formcolor">&nbsp;</td>
       <td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
       </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.11 2008-03-20 16:34:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.12 2008/03/23 14:12:05 sylvieg Exp $ *}
 <div class="navbar">
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin Groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin Users{/tr}</a></span>
@@ -35,6 +35,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Use tracker for more group information{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $prefs.groupTracker eq 'y'}checked="checked"{/if} /></td></tr>
 
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $prefs.useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}"/></td></tr>
+<tr><td class="form">{tr}Use antibot at registration{/tr}</td><td><input type="checkbox" name="useRegisterAntibot" {if $prefs.useRegisterAntibot eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")){ {/php} {tr} - Php GD library required{/tr}{php}}{/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $prefs.rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use login as email{/tr}:</td><td><input type="checkbox" name="login_is_email" {if $prefs.login_is_email eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if}/>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.2 2008-02-11 23:32:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.3 2008/03/23 14:12:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -28,6 +28,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('webserverauth');
 	simple_set_toggle('useRegisterPasscode');
 	simple_set_value('registerPasscode');
+	simple_set_toggle('useRegisterAntibot');
 	simple_set_value('min_username_length');
 	simple_set_value('max_username_length');
 	simple_set_value('min_pass_length');

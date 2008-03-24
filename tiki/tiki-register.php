@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91.2.3 2008-02-06 20:55:53 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-register.php,v 1.91.2.4 2008/03/23 14:12:05 sylvieg Exp $
 
 /**
  * Tiki registration script
@@ -9,7 +9,7 @@
  * @license GNU LGPL
  * @copyright Tiki Community
  * @date created: 2002/10/8 15:54
- * @date last-modified: $Date: 2008-02-06 20:55:53 $
+ * @date last-modified: $Date: 2008/03/23 14:12:05 $
  */
 
 // Initialization
@@ -147,6 +147,11 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
       die;
     }	  
   
+	if ($prefs['useRegisterAntibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->display('error.tpl');
+		die;
+	}
 	if ($prefs['login_is_email'] == 'y') {
 		if (empty($_REQUEST['novalidation']) || $_REQUEST['novalidation'] != 'yes') {
 			$_POST['email'] = $_REQUEST['email'] = $_REQUEST['name'];
