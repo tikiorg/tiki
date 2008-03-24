@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.21 2008-01-29 03:13:39 nkoth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/commentslib.php,v 1.167.2.22 2008/03/24 14:51:10 sylvieg Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -907,8 +907,8 @@ class Comments extends TikiLib {
 	return true;
     }
 
-    function list_forums($offset, $maxRecords, $sort_mode, $find = '') {
-	global $user;
+    function list_forums($offset=0, $maxRecords=-1, $sort_mode='name_asc', $find = '') {
+		global $user;
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -2225,6 +2225,16 @@ class Comments extends TikiLib {
 	        return $this->query($query, array( 'n', (int)$threadId, (int)$parentId ) );
 	    }
 	    return false;
+	}
+	function list_directories_to_save() {
+		$dirs = array();
+		$forums = $this->list_forums();
+		foreach ($forums['data'] as $forum) {
+			if (!empty($forum['att_store_dir'])) {
+				$dirs[] = $forum['att_store_dir'];
+			}
+		}
+		return $dirs;
 	}
 }
 

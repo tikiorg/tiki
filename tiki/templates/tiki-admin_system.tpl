@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.29.2.4 2008-03-10 16:26:29 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_system.tpl,v 1.29.2.5 2008/03/24 14:51:10 sylvieg Exp $ *}
 <h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -39,10 +39,22 @@
 <td></td>
 </tr>
 </table>
+
+{if count($dirs)}
+<div class="cbox">
+<div class="cbox-title">{tr}Directories to save:{/tr}</div>
+<div class="cbox-data"> 
+{foreach from=$dirs item=d}
+	{$d} 
+{/foreach}
+</div>
+</div>
+{/if}
+
 {if count($templates)}
 <br />
-{tr}Templates compiler{/tr}
 <table class="sortable" id="templatecompiler" width="100%">
+<caption>{tr}Templates compiler{/tr}</caption>
 <tr>
 <th class="heading">{tr}Language{/tr}</th>
 <th class="heading">{tr}Compile{/tr}</th>
