@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.71 2008-03-22 05:12:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/setup/prefs.php,v 1.16.2.72 2008/03/23 14:12:05 sylvieg Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -617,6 +617,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['eponymousGroups'] = 'n';
 	$prefs['useRegisterPasscode'] = 'n';
 	$prefs['registerPasscode'] = md5($tikilib->genPass());
+	$prefs['useRegisterAntibot'] = 'n';
 	$prefs['rememberme'] = 'disabled';
 	$prefs['remembertime'] = 7200;
 	$prefs['feature_clear_passwords'] = 'n';
