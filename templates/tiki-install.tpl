@@ -146,7 +146,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			</script>
 			<div id="install-link">
 			<p><a href="javascript:install()">{tr}Reinstall database.{/tr}</a></p>
-			<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>Warning</strong>: This will destroy your current database.</p>
+			<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <table id="install-table" style="visibility:hidden">
 			{else}
@@ -156,7 +156,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		     <td><h2>{tr}Install{/tr}</h2></td>
 		    </tr>
 			 <tr>
-			  <td>{if $tikidb_created}<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>Warning</strong>: This will destroy your current database.</p>{/if}			  
+			  <td>{if $tikidb_created}<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:<br />
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
 			{section name=ix loop=$profiles}
@@ -180,7 +180,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			<fieldset>
 		    <table>
 			<tr><td><h2>{tr}Upgrade{/tr}</h2></td></tr>
-			<tr><td><p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Important{/tr}</strong>: {tr}Backup your database{/tr} {tr}with mysqldump or phpmyadmin before upgrading{/tr}. </p>
+			<tr><td><p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Important{/tr}</strong>: {tr}Backup your database with mysqldump, phpmyadmin, or other before upgrading.{/tr}</p>
 			<p>{tr}Update database using script{/tr}: <br />
 			<select name="file" size="{if $files}{$files|@count}{else}3{/if}">
 			{section name=ix loop=$files}
@@ -217,7 +217,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</td></tr></table>
 		    </form><br />
 <br />
-<h2>Other Options</h2>
+<h2>{tr}Other Options{/tr}</h2>
 <ul>
 	<li><a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
 	<li><a href="tiki-index.php" class="link">{tr}Do nothing and enter Tiki{/tr}</a>.</li>
@@ -278,7 +278,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 {/if}
 <p>&nbsp;</p>
-<h2>Important Information</h2>
+<h2>{tr}Important Information{/tr}</h2>
 {tr}Please read the following notes before entering Tikiwiki.{/tr}
 <p>&nbsp;</p>
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Installation Script{/tr}</h3>
