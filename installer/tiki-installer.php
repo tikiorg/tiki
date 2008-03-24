@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.11 2008-03-11 15:44:21 marclaporte Exp $
+// $Header: /cvsroot/tikiwiki/tiki/installer/tiki-installer.php,v 1.22.2.12 2008/03/24 13:17:08 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,9 +34,9 @@ $commands = array();
 ini_set('magic_quotes_runtime',0);
 
 if (!empty($_REQUEST['lang'])) {
-	$language = $_REQUEST['lang'];
+	$prefs['language'] = $_REQUEST['lang'];
 } else {
-	$language = 'en';
+	$prefs['language'] = 'en';
 }
 include_once('lib/init/tra.php');
 
