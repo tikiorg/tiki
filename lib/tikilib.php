@@ -4571,7 +4571,7 @@ function add_pageview() {
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
     function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null) {
-	global $smarty, $prefs, $dbTiki;
+	global $smarty, $prefs, $dbTikii, $quantifylib;
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);

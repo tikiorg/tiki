@@ -11,6 +11,7 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
+include_once ('lib/categories/categlib.php');
 include_once ("lib/ziplib.php");
 
 if ($tiki_p_view != 'y') {
