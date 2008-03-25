@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.18 2008-03-21 11:00:45 ricks99 Exp $ *} 
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.19 2008-03-23 19:18:53 ricks99 Exp $ *} 
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -149,7 +149,7 @@
 			<a href="tiki-index.php?page={if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage|escape:'url'}{else}{$translation_alert[i][j].page|escape:'url'}{/if}&bl=n">{if $translation_alert[i][j].approvedPage && $hasStaging == 'y'}{$translation_alert[i][j].approvedPage}{else}{$translation_alert[i][j].page}{/if}</a>
 			({$translation_alert[i][j].lang})
 			{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' or $canEditStaging eq 'y'} 
-			- <a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=inlinediff-full">{tr}update from it{/tr}</a>
+			<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=inlinediff-full" title="{tr}update from it{/tr}">{icon _id=arrow_refresh.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 			{/if}
 		</li>
 	{/section}
