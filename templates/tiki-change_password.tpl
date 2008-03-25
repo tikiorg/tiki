@@ -3,7 +3,7 @@
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}User{/tr}:</td>
-  <td class="formcolor"><input type="text" name="user" value="{$user|escape}" /></td>
+  <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" /></td>
 </tr>  
 <tr>
   <td class="formcolor">{if $tiki_p_admin eq 'y'}{tr}Admin password{/tr}{else}{tr}Old password{/tr}{/if}:</td>

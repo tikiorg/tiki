@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.20.2.2 2008-03-20 17:03:31 jyhem Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.20.2.2 2008/03/20 17:03:31 jyhem Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if (!isset($_REQUEST["user"]))
 if (!isset($_REQUEST["oldpass"]))
 	$_REQUEST["oldpass"] = '';
 
-$smarty->assign('user', $_REQUEST["user"]);
+$smarty->assign('userlogin', $_REQUEST["user"]);
 $smarty->assign('oldpass', $_REQUEST["oldpass"]);
 
 if (isset($_REQUEST["change"])) {
@@ -62,8 +62,6 @@ if (isset($_REQUEST["change"])) {
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
 	// Login the user
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
-	$user = $_REQUEST["user"];
-	$smarty->assign_by_ref('user', $user);
 	header ('location: '.$prefs['tikiIndex']);
 }
 ask_ticket('change-password');
