@@ -9,7 +9,7 @@
 <div>
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
-{tr}Find:{/tr} <input type="text" name="find" value="{$find|regex_replace:"/\"/":"'"} /> <input type="submit" name="search" value="{tr}Find{/tr}" />
+{tr}Find:{/tr} <input type="text" name="find" value="{$find|regex_replace:"/\"/":"'"}" /> <input type="submit" name="search" value="{tr}Find{/tr}" />
 </div>
 </form>
 <!--
