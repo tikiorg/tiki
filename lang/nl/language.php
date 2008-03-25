@@ -1403,7 +1403,7 @@ $lang=Array(
 // "Use File Galleries for images inclusion" => "Use File Galleries for images inclusion",
 // "Redirect On Error" => "Redirect On Error",
 // "Display 'MyTiki' in the application menu" => "Display 'MyTiki' in the application menu",
-// "User Contacts" => "User Contacts",
+// "User Contacts" => "Contacten gebruiker",
 // "User Levels" => "User Levels",
 // "Bottom bar icons" => "Bottom bar icons",
 // "Bottom bar debug" => "Bottom bar debug",
@@ -2405,6 +2405,7 @@ $lang=Array(
 // ### start of possibly untranslated words
 // ###
 
+"User Contacts" => "Contacten gebruiker",
 "Re:" => "Re:",
 "Antigua" => "Antigua",
 "Angola" => "Angola",
@@ -7201,5 +7202,9 @@ $lang=Array(
 "Last pages" => "Laatste pagina's",
 "Tiki RSS feed for the wiki pages" => "Tiki RSS-invoer voor de wiki pagina\\'s",
 "Last modifications to the Wiki." => "Laatste wijzigingen aan het Wiki.",
+"More Links" => "Meer Links",
+"User Levels" => "Gebruikersniveau",
+"Display 'MyTiki' in the application menu" => "Toon 'MyTiki' in het applicatiemenu",
+"Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>evaluation of each feature</a> on Tiki's developer site." => "Gelieve de <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>beoordeling van elke feature</a> op de TikiWiki ontwikkelwebsite.",
 "###end###"=>"###end###");
 ?>
