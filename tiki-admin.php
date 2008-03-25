@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.12 2008-03-21 18:29:50 kerrnel22 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.13 2008-03-24 21:25:44 kerrnel22 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -287,7 +287,7 @@ if (!empty($_GET['forcecheck'])) {
 
 	// See if a major release is available.
 	if ($upgrades[1]) {
-		$tikifeedback[] = array('num'=>1,'mes'=>tra("A new major release branch is available."));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
 	}
 
 	// If the versioning feature has been enabled, then store the current
@@ -300,17 +300,15 @@ if (!empty($_GET['forcecheck'])) {
 	}
 }
 
-// Versioning feature has been enabled, so first thing we do is normalize the
-// needs upgrade flag in the database if it is set and we've already upgraded.
+// Versioning feature has been enabled, so if the time is right, do a live
+// check, otherwise display the stored data.
 if ($prefs['feature_version_checks'] == 'y') {
-	if ($prefs['tiki_needs_upgrade'] == 'y' && $prefs['tiki_release'] == $TWV->version) {
-		// need to reset $tiki_needs_upgrade in case new upgrades do not 
-		// update $tiki_needs_upgrade in prefs
-		$prefs['tiki_needs_upgrade'] = 'n';
-		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-	}
+	// Pull version check database settings
+	$tiki_version_last_check = $tikilib->get_preference("tiki_version_last_check", 0);
+	$tiki_version_check_frequency = $tikilib->get_preference("tiki_version_check_frequency", 0);
 
-	if ($prefs['tiki_needs_upgrade'] != 'y' and $tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
+	// Time for a version check!
+	if ($tikilib->now > ($prefs['tiki_version_last_check'] + $prefs['tiki_version_check_frequency'])) {
 		$tikilib->set_preference('tiki_version_last_check', $tikilib->now);
 
 		$TWV->pollVersion();
@@ -320,15 +318,30 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$prefs['tiki_needs_upgrade'] = 'y';
 			$tikilib->set_preference('tiki_release', $TWV->release);
 			$smarty->assign('tiki_release', $TWV->release);
-			$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
 			if ($upgrades[1]) {
-				$tikifeedback[] = array('num'=>1,'mes'=>tra("A new major release branch is also available."));
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
 			}
 		} else {
+			$prefs['tiki_needs_upgrade'] = 'n';
 			$tikilib->set_preference('tiki_release',$TWV->version);
 			$smarty->assign('tiki_release', $TWV->version);
 		}
 		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
+		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
+	} else {
+		$tiki_needs_upgrade = $tikilib->get_preference("tiki_needs_upgrade", "n");
+		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
+		$tiki_release = $tikilib->get_preference("tiki_release", $TWV->version);
+		$smarty->assign('tiki_release', $tiki_release);
+
+		// Normalize database if necessary.  Usually when an upgrade has
+		// actually been done, but for whatever reason the database has
+		// not had its version tracking info updated.
+		if ($tiki_needs_upgrade == 'y' && $tiki_release == $TWV->version) {
+			$tiki_needs_upgrade = 'n';
+			$tikilib->set_preference('tiki_needs_upgrade', $tiki_needs_upgrade);
+			$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
+		}
 	}
 }
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
