@@ -55,7 +55,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		}
 
 		global $commentslib;
-		$attachments = $commentslib->get_thread_attachments( $object, 0 );
+		$attachments = $commentslib->get_thread_attachments( $event == 'forum_post_topic'? $threadId: $object, 0 );
 
 		if( count( $attachments ) > 0 )
 		{
