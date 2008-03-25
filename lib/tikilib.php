@@ -38,7 +38,6 @@ class TikiLib extends TikiDB {
 
     // Constructor receiving a PEAR::Db database object.
     function TikiLib($db) {
-	debug_print_backtrace();
 	if (!$db) {
 	    die ("Invalid db object passed to TikiLib constructor");
 	}
