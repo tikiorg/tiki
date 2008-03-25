@@ -1,5 +1,5 @@
 {if $diff_style}
-   {if $translation_mode eq 'n'}
+   {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
    {else}
      <P/>

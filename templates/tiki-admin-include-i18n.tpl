@@ -73,7 +73,7 @@
 				{if count($prefs.available_languages) > 0}checked="checked"{/if} 
 				onclick="updateList( this.checked )"/>
 				<div id="available_languages" {if count($prefs.available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
-					{tr}Available languages:{/tr}<br />
+					{tr}Available languages (Ctrl+Click to select multiple languages):{/tr}<br />
 					<select name="available_languages[]" multiple="multiple" size="5" id="available_languages_select">
 						{section name=ix loop=$languages}
 						<option value="{$languages[ix].value|escape}"
