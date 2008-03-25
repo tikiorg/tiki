@@ -63,11 +63,11 @@ $smarty->assign( 'sharedObject', $sharedObject );
 // Identify the 'other' groups / Must be done before form processing {{{
 $others = $sharedObject->getOtherGroups();
 $users = $groups = array();
-foreach( $others as $group )
-	if( $group{0} == '*' )
-		$users[] = substr( $group, 1 );
+foreach( $others as $g )
+	if( $g{0} == '*' )
+		$users[] = substr( $g, 1 );
 	else
-		$groups[] = $group;
+		$groups[] = $g;
 
 $smarty->assign( 'otherUsers', $users );
 $smarty->assign( 'otherGroups', $groups );
@@ -80,14 +80,14 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	{
 		// Add groups to the valid list for being selected
 		foreach( $_POST['groups'] as $name )
-			$group = $sharedObject->getGroup( $name );
+			$g = $sharedObject->getGroup( $name );
 	}
 
 	if( isset( $_POST['users'] ) && is_array( $_POST['users'] ) )
 	{
 		// Add groups to the valid list for being selected
 		foreach( $_POST['users'] as $name )
-			$group = $sharedObject->getGroup( '*' . $name );
+			$g = $sharedObject->getGroup( '*' . $name );
 	}
 	// }}}
 
@@ -96,12 +96,12 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	// when 'apply' is clicked
 	if( isset( $_POST['priv'] ) && is_array( $_POST['priv'] ) )
 	{
-		foreach( $_POST['priv'] as $group => $value )
-			if( $group = $sharedObject->getGroup( $group ) )
+		foreach( $_POST['priv'] as $g => $value )
+			if( $g = $sharedObject->getGroup( $g ) )
 			{
 				// Handled as an array for future use
 				$value = array_intersect( (array) $value, $validPermission );
-				$group->setObjectPermissions( $value );
+				$g->setObjectPermissions( $value );
 			}
 	}
 
