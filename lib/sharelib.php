@@ -93,14 +93,12 @@ class Tiki_ShareGroup
 
 class Tiki_ShareObject
 {
-	private static $groups;
+	var $objectHash;
+	var $objectId;
+	var $objectType;
 
-	private $objectHash;
-	private $objectId;
-	private $objectType;
-
-	private $loadedPermission;
-	private $validGroups;
+	var $loadedPermission;
+	var $validGroups;
 
 	function __construct( $objectType, $objectId ) // {{{
 	{
@@ -117,7 +115,7 @@ class Tiki_ShareObject
 			$this->loadGroups();
 	} // }}}
 
-	private function loadGroups() // {{{
+	function loadGroups() // {{{
 	{
 		global $tikilib;
 		global $Tiki_ShareObject__groups;
