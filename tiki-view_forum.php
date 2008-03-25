@@ -383,39 +383,32 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $threadId . "&forumId=" . $_REQUEST["forumId"];
 			    include_once ("freetag_apply.php");
 			    
-			    if( $threadId ) 
-			    {
-				// Deal with mail notifications.
-				include_once('lib/notifications/notificationemaillib.php');
-				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
-			    // Set watch if requested
-					if ($prefs['feature_user_watches'] == 'y' && $user && isset($_REQUEST['set_thread_watch']) && $_REQUEST['set_thread_watch'] == 'y') 
-					$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST["comments_title"], "tiki-view_forum_thread.php?forumId=" . $forum_info['forumId'] . "&amp;comments_parentId=" . $threadId);			    
+				// PROCESS ATTACHMENT HERE
+				if ($threadId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
+					if (is_uploaded_file($_FILES['userfile1']['tmp_name']))	{
+						check_ticket('view-forum');
+						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+						$commentslib->add_thread_attachment($forum_info, $threadId, $fp, '', $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'] );
+					} else {
+						$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+						$smarty->display("error.tpl");
+						die;
+					}
+				} //END ATTACHMENT PROCESSING
 
-			    }
-			} elseif ($_REQUEST['forumId'] != $prefs['wiki_forum_id']) {
+				if( $threadId ) { // Deal with mail notifications.
+					include_once('lib/notifications/notificationemaillib.php');
+					sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
+					// Set watch if requested
+					if ($prefs['feature_user_watches'] == 'y' && $user && isset($_REQUEST['set_thread_watch']) && $_REQUEST['set_thread_watch'] == 'y') 
+						$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST["comments_title"], "tiki-view_forum_thread.php?forumId=" . $forum_info['forumId'] . "&amp;comments_parentId=" . $threadId); 
+				}
+			} elseif ($_REQUEST['forumId'] != $prefs['wiki_forum_id']) { // the threadId already exists
 				$smarty->assign('duplic', 'y');
 				unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 			}
 
 
-			// PROCESS ATTACHMENT HERE        
-			if ($threadId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
-				if (is_uploaded_file($_FILES['userfile1']['tmp_name']))	{
-				    check_ticket('view-forum');
-				    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-				    $commentslib->add_thread_attachment(
-					    $forum_info, $threadId, $fp, '',
-					    $_FILES['userfile1']['name'],
-					    $_FILES['userfile1']['type'],
-					    $_FILES['userfile1']['size'] );
-				} else {
-					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-					$smarty->display("error.tpl");
-					die;
-				}
-			}
-			//END ATTACHMENT PROCESSING
 			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
 		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
 			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
