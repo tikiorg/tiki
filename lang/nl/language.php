@@ -7211,5 +7211,9 @@ $lang=Array(
 "Copyright system" => "Copyright systeem",
 "Propose a Fullscreen mode" => "Stel een Fullscreen mode voor",
 "Lightbox (Javascript modern visual effects on images)" => "Lightbox (moderne visuele effecten met Javascript op afbeeldingen)",
+"Switch User" => "Wissel van Gebruiker",
+"Nothing has changed" => "Er zijn geen wijzigingen",
+"Logged in as" => "Ingelogd als",
+"If your Tiki is acting weird, first thing to try is to clear your cache below. Also very important is to clear your cache after an upgrade (by FTP/SSH when needed)." => "Als je Tiki-installatie zie vreemd gedraagt, probeer dan eerst je tijdelijke bestanden hieronder te wissen. Het is ook zeer belangrijk je tijdelijke bestanden te wissen na een upgrade (eventueel via FTP/SSH indien nodig).",
 "###end###"=>"###end###");
 ?>
