@@ -38,6 +38,7 @@ class TikiLib extends TikiDB {
 
     // Constructor receiving a PEAR::Db database object.
     function TikiLib($db) {
+	debug_print_backtrace();
 	if (!$db) {
 	    die ("Invalid db object passed to TikiLib constructor");
 	}
@@ -4571,7 +4572,7 @@ function add_pageview() {
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
     function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null) {
-	global $smarty, $prefs, $dbTikii, $quantifylib;
+	global $smarty, $prefs, $dbTiki, $quantifylib;
 	include_once ("lib/commentslib.php");
 
 	$commentslib = new Comments($dbTiki);
