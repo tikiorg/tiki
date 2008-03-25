@@ -88,6 +88,7 @@ if (isset($_REQUEST["offset"])) {
 	$offset = 0;
 }
 $smarty->assign_by_ref('offset', $offset);
+
 if (isset($_REQUEST["find"])) {
 	$find = strip_tags($_REQUEST["find"]);
 } else {
@@ -97,19 +98,7 @@ $smarty->assign('find', $find);
 
 $comments = $commentslib->get_all_comments($_REQUEST['types'], $offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('comments', $comments['data']);
-if ($comments['cant'] > $offset + $maxRecords) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-$smarty->assign('cant_pages', ceil($comments["cant"] / $maxRecords));
+$smarty->assign_by_ref('cant', $comments['cant']);
 
 ask_ticket('list_comments');
 $smarty->assign('mid', 'tiki-list_comments.tpl');

@@ -1,4 +1,5 @@
 {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.3 2008-03-14 12:04:16 ricks99 Exp $ *}
+{popup_init src="lib/overlib.js"}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 {if $comments}
 <form method="get" action="tiki-list_comments.php">
@@ -41,26 +42,29 @@
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
 {/if}
+
 <table class="normal">
 <tr>
 <th class="heading">&nbsp;</th>
-<th class="heading">{if $types eq "wiki page"}<a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'object_desc'}object_asc{else}object_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Page{/tr}</a>{else}<a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'objectType_desc'}objectType_asc{else}objectType_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Type{/tr}</a>{/if}</th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Title{/tr}</a></th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Author{/tr}</a></th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'user_ip_desc'}user_ip_asc{else}user_ip_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}IP{/tr}</a></th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'commentDate_desc'}commentDate_asc{else}commentDate_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Date{/tr}</a></th>
-<th class="heading"><a href="tiki-list_comments.php?sort_mode={if $sort_mode eq 'data_desc'}data_asc{else}data_desc{/if}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Data{/tr}</a></th>
+{if is_array($types) and count($types) > 1}<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="objectType"}{tr}Type{/tr}{/self_link}</th>{/if}
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="title"}{tr}Title{/tr}{/self_link}</th>
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="userName"}{tr}Author{/tr}{/self_link}</th>
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="user_ip"}{tr}IP{/tr}{/self_link}</th>
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="commentDate"}{tr}Date{/tr}{/self_link}</th>
+<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="data"}{tr}Data{/tr}{/self_link}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$comments}
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$comments[ix].threadId|escape}"/></td>
-<td class="{cycle advance=false}">{if $types eq "wiki page"}{$comments[ix].object|truncate:50:"...":true}{elseif $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{$comments[ix].objectType}{/if}</td>
-<td class="{cycle advance=false}"><a href="{$comments[ix].href}">{$comments[ix].title|truncate:50:"...":true}</a></td>
+{if is_array($types) and count($types) > 1}<td class="{cycle advance=false}">{if $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{$comments[ix].objectType}{/if}</td>{/if}
+<td class="{cycle advance=false}">{$comments[ix].object|truncate:50:"...":true}</td>
+<td class="{cycle advance=false}"><a href="{$comments[ix].href}" title="{$comments[ix].title}">{$comments[ix].title|truncate:50:"...":true}</a></td>
 <td class="{cycle advance=false}">{$comments[ix].userName}</td>
 <td class="{cycle advance=false}">{$comments[ix].user_ip}</td>
 <td class="{cycle advance=false}">{$comments[ix].commentDate|tiki_short_datetime}</td>
-<td class="{cycle}">{$comments[ix].data|truncate:50:"...":true}</td>
+<td class="{cycle}" {popup caption='{tr}Data{/tr}' text=$comments[ix].data}>{$comments[ix].data|truncate:50:"...":true}</td>
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
@@ -82,14 +86,4 @@
 {/if}
 </form>
 
-{if cant_pages ne 0}
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-list_comments.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Prev{/tr}</a>]
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-[<a class="prevnext" href="tiki-list_comments.php?offset={$next_offset}&amp;sort_mode={$sort_mode}{if $find}&amp;find={$find}{/if}{$string_types}">{tr}Next{/tr}</a>]
-{/if}
-</div>
-{/if}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
