@@ -1543,13 +1543,16 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
 
 #2008-02-07 Jyhem (split perms tiki_p_view_file_gallery and tiki_p_view_trackers with tiki_p_list_file_galleries and tiki_p_list_trackers)
 # This should work with mysql 4 and upwards. Feel free to replace with a postgresql-compatible approach using temporary tables
-SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_file_galleries' INTO @fgcant;
+#2008-03-25 Jyhem: new syntax, mysql 4.0 compatible
+SET @fgcant=0;
+SELECT (@fgcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_list_file_galleries';
 INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_file_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries.php' AND perm='tiki_p_view_file_gallery' AND type='o' AND @fgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries_rankings.php' AND perm='tiki_p_view_file_gallery' AND @fgcant = 0;
-
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
-SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_trackers' INTO @tcant;
+
+SET @tcant=0;
+SELECT (@tcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_list_trackers';
 INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_trackers','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_trackers' WHERE perm='tiki_p_view_trackers' AND @tcant = 0;
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
@@ -1596,10 +1599,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags', NULL);
 
 #2008-03-04 sylvieg
-SELECT count(*)  INTO @fgcant FROM users_permissions WHERE permName = 'tiki_p_search';
-INSERT INTO users_permissions (permName, permDesc, level, type) SELECT 'tiki_p_search','Can search', 'basic', 'tiki' FROM users_permissions WHERE @fgcant = 0;
-INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Anonymous','tiki_p_search' FROM `users_grouppermissions` WHERE @fgcant = 0;
-INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Registered','tiki_p_search' FROM `users_grouppermissions` WHERE @fgcant = 0;
+#2008-03-25 Jyhem
+SET @pcant=0;
+SELECT (@pcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_search';
+INSERT INTO users_permissions (permName, permDesc, level, type) SELECT 'tiki_p_search','Can search', 'basic', 'tiki' FROM users_permissions WHERE @pcant = 0;
+INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Anonymous','tiki_p_search' FROM `users_grouppermissions` WHERE @pcant = 0;
+INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Registered','tiki_p_search' FROM `users_grouppermissions` WHERE @pcant = 0;
 
 #2008-03-10
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
@@ -1703,11 +1708,12 @@ SELECT event, object, email, 'users','tiki-adminusers.php', 'A user registers' F
 #2008-03-15 sylvieg
 DELETE FROM tiki_mail_events WHERE event='wiki_page_changes' or event='wiki_page_changes_incl_minor' or event='tracker_modified_item' or event='tracker_modified' or event='article_submitted' or event='php_error' or event='user_registers';
 
-SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_image_galleries' INTO @fgcant;
-INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_image_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_image_gallery' AND @fgcant = 0;
-UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @fgcant = 0;
-UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries_rankings.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @fgcant = 0;
-INSERT INTO `users_permissions` SELECT  'tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_image_gallery' AND @fgcant = 0;
+SET @imgcant=0;
+SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_image_galleries' INTO @imgcant;
+INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_image_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_image_gallery' AND @imgcant = 0;
+UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @imgcant = 0;
+UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries_rankings.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @imgcant = 0;
+INSERT INTO `users_permissions` SELECT  'tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_image_gallery' AND @imgcant = 0;
 ALTER TABLE tiki_images CHANGE user user varchar(200) default NULL;
 
 #2008-03-16 nyloth
