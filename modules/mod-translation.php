@@ -27,7 +27,6 @@ if( isset( $module_params['pivot_language'] ) ) {
 $smarty->assign( 'pivot_language', $pivotLanguage );
 
 if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
-	$smarty->assign( 'show_translation_module', true );
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
 
@@ -58,6 +57,8 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	}
 
 	unset( $completeList[$transinfo['page_id']] );
+
+	$smarty->assign( 'show_translation_module', $moduleActive = ! empty( $completeList ) );
 
 	$origBetter = $better = $multilinguallib->getBetterPages( $transinfo['page_id'] );
 	$better = array_filter( $better, 'filter_languages_from_pivot' );
@@ -114,7 +115,7 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
 	$smarty->assign( 'mod_translation_equivalent_known', $known );
 	$smarty->assign( 'mod_translation_equivalent_other', $other );
 
-	if( $prefs['quantify_changes'] == 'y' )
+	if( $prefs['quantify_changes'] == 'y' && $moduleActive )
 	{
 		global $quantifylib;
 		include_once 'lib/wiki/quantifylib.php';
