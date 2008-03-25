@@ -7206,5 +7206,10 @@ $lang=Array(
 "User Levels" => "Gebruikersniveau",
 "Display 'MyTiki' in the application menu" => "Toon 'MyTiki' in het applicatiemenu",
 "Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>evaluation of each feature</a> on Tiki's developer site." => "Gelieve de <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/tiki-index.php?page=Features'>beoordeling van elke feature</a> op de TikiWiki ontwikkelwebsite.",
+"Tell a Friend" => "Zeg het aan een vriend",
+"Copyright System" => "Copyright Systeem",
+"Copyright system" => "Copyright systeem",
+"Propose a Fullscreen mode" => "Stel een Fullscreen mode voor",
+"Lightbox (Javascript modern visual effects on images)" => "Lightbox (moderne visuele effecten met Javascript op afbeeldingen)",
 "###end###"=>"###end###");
 ?>
