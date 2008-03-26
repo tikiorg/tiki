@@ -118,7 +118,7 @@ $lang=Array(
 "Item Link options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field." => "Item Koppeling opties: trackerId,fieldId verwijst naar trackerId wiens fieldId overeenkomt met de inhoud van dat veld.",
 "Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere." => "Items lijst opties: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere toont de lijst van displayFieldIdThere van items in tracker trackerId wiens fieldIdThere overeenkomt met fieldIdHere.",
 "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insluiten artikelen in een wikipagina",
-"You need to supply information for : " => "U moet informatie aanleveren voor : ",
+"You need to supply information for : " => "U moet informatie ingeven voor : ",
 "missing tracker ID for plugin TRACKER" => "tracker ID voor plugin tracker ontbreekt",
 "Tip: hold down CTRL to select multiple categories" => "Tip: hou de CTRL toets ingedrukt om meerdere categorie&euml;n te selecteren",
 "Tip: uncheck the above checkbox to uncategorize this page/object" => "Tip: wis het bovenstaande selectieveld leeg om deze pagina/object uit de categorie&euml;n te verwijderen",
@@ -7238,5 +7238,10 @@ $lang=Array(
 "Exact&nbsp;match" => "Exact&nbsp;overeenkomen",
 "Look &amp; feel" => "Vormgeving",
 "To learn more about <a class=\"rbox-link\" target=\"tikihelp\" href=\"http://mods.tikiwiki.org\">mods</a>." => "Kom meer te weten van <a class=\"rbox-link\" target=\"tikihelp\" href=\"http://mods.tikiwiki.org\">mods</a>.",
+"To use cookie in a text area (Wiki page, etc), a <a class=\"rbox-link\" href=\"tiki-admin_modules.php\">module</a> or a template, use {literal}{cookie}{/literal}." => "Om een cookie in een tekstvak te gebruiken (Wiki-pagina, ...),een <a class=\"rbox-link\" href=\"tiki-admin_modules.php\">module</a> of een sjabloon, gebruik {literal}{cookie}{/literal}.",
+"You need to set <a href=\"tiki-admin.php?page=general\">Sender Email</a>" => "Je moet de <a href=\"tiki-admin.php?page=general\">Afzender van de e-mails</a> instellen",
+"A comment in a wiki page is posted or edited" => "Een commentaar op een wiki-pagina is gepost of aangepast",
+"More Criteria" => "Meer Criteria",
+"Remove Users and their Userpages" => "Verwijder Gebruikers en hun Gebruikerspagina",
 "###end###"=>"###end###");
 ?>
