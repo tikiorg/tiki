@@ -1759,25 +1759,30 @@ class Comments extends TikiLib {
 
 	/* administrative functions to get all the comments of some types + enlarge find
 	 *  no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '') {
+	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='') {
+		$join = '';
 		if (is_array($type)) {
-			$mid = '`objectType`in ('.implode(',', array_fill(0, count($type),'?')).')';
+			$mid = 'tc.`objectType`in ('.implode(',', array_fill(0, count($type),'?')).')';
 			$bindvars = $type;
 		} else {
-			$mid = '`objectType`=?';
+			$mid = 'tc.`objectType`=?';
 			$bindvars[] = $type;
 		}
 		if ($find) {
 			$find = "%$find%";
-			$mid .= ' and (`title` like ? or `data` like ? or `userName` like ? or  `user_ip` like ?)';
+			$mid .= ' and (tc.`title` like ? or tc.`data` like ? or tc.`userName` like ? or  tc.`user_ip` like ? or tc.`object` like ?)';
+			$bindvars[] = $find;
 			$bindvars[] = $find;
 			$bindvars[] = $find;
 			$bindvars[] = $find;
 			$bindvars[] = $find;
 		}
-		$query = "select * from `tiki_comments` where $mid order by ".$this->convert_sortmode($sort_mode);
+		if ($parent) {
+			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
+		}
+		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$query = "select count(*) from `tiki_comments` where $mid";
+		$query = "select count(*) from `tiki_comments` tc where $mid";
 		$cant = $this->getOne($query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -1791,6 +1796,7 @@ class Comments extends TikiLib {
 				case 'file gallery': $res['href'] = 'tiki-list_file_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
 				case 'image gallery': $res['href'] = 'tiki-browse_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
 			}
+			$res['parsed'] = $this->parse_comment_data($res['data']);
 			$ret[] = $res;
 		}
 		return array('cant'=>$cant, 'data'=>$ret);

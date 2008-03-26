@@ -58,13 +58,14 @@
 {section name=ix loop=$comments}
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$comments[ix].threadId|escape}"/></td>
-{if is_array($types) and count($types) > 1}<td class="{cycle advance=false}">{if $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{$comments[ix].objectType}{/if}</td>{/if}
+{if is_array($types) and count($types) > 1}<td class="{cycle advance=false}">{if $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{tr}{$comments[ix].objectType}{/tr}{/if}</td>{/if}
 <td class="{cycle advance=false}">{$comments[ix].object|truncate:50:"...":true}</td>
-<td class="{cycle advance=false}"><a href="{$comments[ix].href}" title="{$comments[ix].title}">{$comments[ix].title|truncate:50:"...":true}</a></td>
+<td class="{cycle advance=false}"><a href="{$comments[ix].href}" title="{$comments[ix].title}">{$comments[ix].title|truncate:50:"...":true}</a>
+{if $comments[ix].parentId and empty($comments[ix].parentTitle)}<br />{tr}Orphan{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$comments[ix].userName}</td>
 <td class="{cycle advance=false}">{$comments[ix].user_ip}</td>
 <td class="{cycle advance=false}">{$comments[ix].commentDate|tiki_short_datetime}</td>
-<td class="{cycle}" {popup caption='{tr}Data{/tr}' text=$comments[ix].data}>{$comments[ix].data|truncate:50:"...":true}</td>
+<td class="{cycle}" {popup caption=$comments[ix].title|replace:'"':'&quot;' text=$comments[ix].parsed|replace:'"':'&quot;'}>{$comments[ix].data|truncate:50:"...":true}</td>
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>

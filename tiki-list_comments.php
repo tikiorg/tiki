@@ -96,7 +96,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-$comments = $commentslib->get_all_comments($_REQUEST['types'], $offset, $maxRecords, $sort_mode, $find);
+$comments = $commentslib->get_all_comments($_REQUEST['types'], $offset, $maxRecords, $sort_mode, $find, 'y');
 $smarty->assign_by_ref('comments', $comments['data']);
 $smarty->assign_by_ref('cant', $comments['cant']);
 
