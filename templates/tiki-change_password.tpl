@@ -6,7 +6,7 @@
   <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" /></td>
 </tr>  
 <tr>
-  <td class="formcolor">{if $tiki_p_admin eq 'y'}{tr}Admin password{/tr}{else}{tr}Old password{/tr}{/if}:</td>
+  <td class="formcolor">{tr}Old password{/tr}:</td>
   <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
 </tr>     
 <tr>

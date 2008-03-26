@@ -39,17 +39,13 @@ if (isset($_REQUEST["change"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
+
 	// Check that provided user name could log in with old password, otherwise display error and exit
 	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
 	if (!$isvalid) {
-		// handling case where user name can't log in using old password (user invalid or wrong old password)
-		list($ok, $u, $error) = $userlib->validate_user("admin",$_REQUEST["oldpass"],'','');
-		// If admin is logged and provided admin password, then user password is still changed
-		if(!$ok or ($tiki_p_admin != 'y')) {
-			$smarty->assign('msg', tra("Invalid old password"));
-			$smarty->display("error.tpl");
+		$smarty->assign('msg', tra("Invalid old password or unknown user"));
+		$smarty->display("error.tpl");
 		die;
-		}
 	}
 
 	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
@@ -60,9 +56,9 @@ if (isset($_REQUEST["change"])) {
 	}
 
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
-	// Login the user
+	// Login the user and display Home page
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
-	header ('location: '.$prefs['tikiIndex']);
+	header ('Location: '.$prefs['tikiIndex']);
 }
 ask_ticket('change-password');
 
