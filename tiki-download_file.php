@@ -1,15 +1,14 @@
 <?php
 // CVS: $Id: tiki-download_file.php,v 1.33.2.4 2008-03-13 20:12:44 nyloth Exp $
 // Initialization
+
 $force_no_compression = true;
 require_once('tiki-setup.php');
-include_once ('lib/stats/statslib.php');
 include_once('lib/filegals/filegallib.php');
-require_once('lib/images/images.php');
 
-if($prefs['feature_file_galleries'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
+if ( $prefs['feature_file_galleries'] != 'y' ) {
+  $smarty->assign('msg', tra('This feature is disabled'));
+  $smarty->display('error.tpl');
   die;
 }
 
@@ -34,60 +33,153 @@ function readfile_chunked($filename,$retbytes=true) {
            $cnt += strlen($buffer);
        }
    }
-       $status = fclose($handle);
+   $status = fclose($handle);
    if ($retbytes && $status) {
        return $cnt; // return num. bytes delivered like readfile() does.
    }
    return $status;
 }
 
-if (isset($_REQUEST["fileId"])) {
-	$info = $tikilib->get_file($_REQUEST["fileId"]);
-} elseif (isset($_REQUEST["galleryId"]) && isset($_REQUEST["name"])) {
-	$info = $tikilib->get_file_by_name($_REQUEST["galleryId"], $_REQUEST["name"]);
+if ( isset($_REQUEST['fileId']) ) {
+	$info = $tikilib->get_file($_REQUEST['fileId']);
+} elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
+	$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
 	$_REQUEST['fileId'] = $info['fileId'];
 } else {
-	$smarty->assign('msg',tra('Incorrect param'));
+	$smarty->assign('msg', tra('Incorrect param'));
 	$smarty->display('error.tpl');
-  die;
+	die;
 }
-if (!is_array($info)) {
-	$smarty->assign('msg',tra('Incorrect param'));
+if ( ! is_array($info) ) {
+	$smarty->assign('msg', tra('Incorrect param'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-$_REQUEST["galleryId"] = $info["galleryId"];
+$_REQUEST['galleryId'] = $info['galleryId'];
 
-$smarty->assign('individual','n');
-if($userlib->object_has_one_permission($_REQUEST["galleryId"],'file gallery')) {
-  $smarty->assign('individual','y');
-  if($tiki_p_admin != 'y') {
+$smarty->assign('individual', 'n');
+if ( $userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery') ) {
+  $smarty->assign('individual', 'y');
+  if ( $tiki_p_admin != 'y' ) {
     // Now get all the permissions that are set for this type of permissions 'file gallery'
-    $perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
-    foreach($perms["data"] as $perm) {
-      $permName=$perm["permName"];
-      if($userlib->object_has_permission($user,$_REQUEST["galleryId"],'file gallery',$permName)) {
+    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
+    foreach ( $perms['data'] as $perm ) {
+      $permName = $perm['permName'];
+      if ( $userlib->object_has_permission($user, $_REQUEST['galleryId'], 'file gallery', $permName) ) {
         $$permName = 'y';
-        $smarty->assign("$permName",'y');
+        $smarty->assign("$permName", 'y');
       } else {
         $$permName = 'n';
-        $smarty->assign("$permName",'n');
+        $smarty->assign("$permName", 'n');
       }
     }
   }
 }
-if($tiki_p_admin_file_galleries == 'y') {
+
+if ( $tiki_p_admin_file_galleries == 'y' ) {
   $tiki_p_download_files = 'y';
 }
 
-
-if($tiki_p_download_files != 'y') {
-  $smarty->assign('msg',tra("You can not download files"));
-  $smarty->display("error.tpl");
+if ( $tiki_p_download_files != 'y' ) {
+  $smarty->assign('msg', tra('You can not download files'));
+  $smarty->display('error.tpl');
   die;
 }
 
+// Add hits ( if download or display only )
+if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
+
+	require_once('lib/stats/statslib.php');
+	$tikilib->add_file_hit($_REQUEST['fileId']);
+	$statslib->stats_hit($info['filename'], 'file', $_REQUEST['fileId']);
+
+	if ( $prefs['feature_actionlog'] == 'y' ) {
+		require_once('lib/logs/logslib.php');
+		$logslib->add_action('Downloaded', $_REQUEST['galleryId'], 'file gallery', 'fileId='.$_REQUEST["fileId"]);
+	}
+}
+
+// close the session in case of large downloads to enable further browsing
+session_write_close();
+error_reporting(E_ALL);
+
+$content = &$info['data'];
+
+// Handle images display, files thumbnails and icons
+if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']) ) {
+
+	// Modify the original image if needed
+	if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+
+		require_once('lib/images/images.php');
+		$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
+
+		// Fallback to an icon if the format is not supported
+		if ( ! Image::is_supported($format) ) {
+			$_GET['icon'] = 'y';
+		}
+		
+		if ( isset($_GET['icon']) ) {
+			unset($content);
+			$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
+			$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;
+			$content = Image::icon($format, $icon_x, $icon_y);
+			$format = Image::get_icon_default_format();
+			$info['filetype'] = 'image/'.$format;
+		}
+
+		if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
+			$image = new Image($content);
+		
+			$resize = false;
+			// We resize if needed
+			if ( isset($_GET['x']) || isset($_GET['y']) ) {
+				$image->resize($_GET['x']+0, $_GET['y']+0);
+				$resize = true;
+			}
+			// We scale if needed
+			elseif ( isset($_GET['scale']) ) {
+				$image->scale($_GET['scale']+0);
+				$resize = true;
+			}
+			// We reduce size if length or width is greater that $_GET['max'] if needed
+			elseif ( isset($_GET['max']) ) {
+				$image->resizemax($_GET['max']+0);
+				$resize = true;
+			}
+			// We resize to a thumbnail size if needed
+			elseif ( isset($_GET['thumbnail']) ) {
+				$image->resizethumb();
+			}
+		
+			// We change the image format if needed
+			if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
+				$image->convert($_GET['format']);
+			}
+			// By default, we change the image format to the usual most common format (jpeg) for thumbnails
+			elseif ( isset($_GET['thumbnail']) ) {
+				$image->convert('jpeg');
+			}
+		
+			$content =& $image->display();
+			$info['filetype'] = $image->get_mimetype();
+		}
+
+	}
+
+	if ( function_exists('mb_strlen') ) {
+		header('Content-Length: '.mb_strlen($content, '8bit'));
+	} else {
+		header('Content-Length: '.strlen($content));
+	}
+	header('Content-type: '.$info['filetype']);
+	echo "$content";
+
+	die();
+}
+
+// Lock while downloading
 if ( ! empty($_REQUEST['lock']) ) {
 	if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
 		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
@@ -95,124 +187,26 @@ if ( ! empty($_REQUEST['lock']) ) {
 		die;
 	}
 	$filegallib->lock_file($_REQUEST['fileId'], $user);
-}	 
-
-if (!IsSet($_SERVER['REQUEST_URI'])) { 
-	$_SERVER['REQUEST_URI'] = ''; 
-	
-	if (IsSet($_SERVER['PHP_SELF'])) { 
-	$_SERVER['REQUEST_URI'] = $_SERVER 
-	['REQUEST_URI'].$_SERVER['PHP_SELF']; 
-	} 
-	
-	if (IsSet($_SERVER['QUERY_STRING'])) { 
-	$_SERVER['REQUEST_URI'] = $_SERVER 
-	['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING']; 
-	} 
 }
 
-$foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1=str_replace("tiki-browse_image","tiki-browse_image",$foo["path"]);
-$foo2=str_replace("tiki-browse_image","show_image",$foo["path"]);
-$smarty->assign('url_browse',$tikilib->httpPrefix().$foo1);
-$smarty->assign('url_show',$tikilib->httpPrefix().$foo2);
-
-
-$tikilib->add_file_hit($_REQUEST["fileId"]);
-
-$type=&$info["filetype"];
-$file = preg_replace('/.*([^\/]*)$/U','$1', $info['filename']); // IE6 can not download file with / in the name (the / can be there from a previous bug)
-$content=&$info["data"];
-
-//add a hit
-$statslib->stats_hit($file,"file",$_REQUEST["fileId"]);
-if ($prefs['feature_actionlog'] == 'y') {
-	include_once('lib/logs/logslib.php');
-	$logslib->add_action('Downloaded', $_REQUEST['galleryId'], 'file gallery', 'fileId='.$_REQUEST["fileId"]);
-}
-// close the session in case of large downloads to enable further browsing
-session_write_close();
-
-//print("File:$file<br />");
-//die;
-
-error_reporting(E_ALL);
-
-if (isset($_GET['icon'])) {
-  header("Content-type: image/png");
-  echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1));
-  die();
-}
-if ( isset($_GET['thumbnail']) || isset($_GET['display']) ) {
-	$image = new Image($content);
-
-	$resize = false;
-	// We resize if needed
-	if (isset($_GET['x']) or isset($_GET['y'])) {
-		$image->resize($_GET['x']+0,$_GET['y']+0);
-		$resize = true;
-	}
-
-	// We change the image format if needed
-	$convert = false;
-	if (isset($_GET['format']) and Image::is_supported($_GET['format'])) {
-		$image->convert($_GET['format']);
-		$convert = true;
-	}
-}
-
-if (isset($_GET['thumbnail'])) {
-  if (Image::is_supported(substr($info['filename'],strrpos($info['filename'],'.')+1))) {
-    header("Content-type: image/jpeg");
-		if (!$resize) {
-    	$image->resize(16,16);
-		}
-		if (!$convert) {
-    	$image->convert('jpeg');
-		}
-    echo  $image->display();
-  } else {
-    header("Content-type: image/png");
-    echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1),16,16);
-  }
-  die();
-}
+// IE6 can not download file with / in the name (the / can be there from a previous bug)
+$file = preg_replace('/.*([^\/]*)$/U', '$1', $info['filename']);
 
 // Added by Jenolan  31/8/2003 /////////////////////////////////////////////
 // File galleries should always be attachments (files) not inline (textual)
-if (!isset($_GET['display'])) {
-	header("Content-type: $type");
-	header( "Content-Disposition: attachment; filename=\"$file\"" );
+
+header('Content-type: '.$info['filetype']);
+header("Content-Disposition: attachment; filename=\"$file\"");
+
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+
+if ( $info['path'] ) {
+	header('Content-Length: '.filesize($prefs['fgal_use_dir'].$info['path']) );
+	readfile_chunked($prefs['fgal_use_dir'].$info['path']);
 } else {
-	if (!Image::is_supported(substr($info['filename'],strrpos($info['filename'],'.')+1))) {
-		header("Content-type: image/png");
-		echo Image::icon(substr($info['filename'],strrpos($info['filename'],'.')+1));
-		die();
-	} else {
-		header("Content-type: ".$image->get_mimetype());
-	}
-  echo  $image->display();
-	die();
-}
-
-//header( "Content-Disposition: inline; filename=$file" );
-
-if( $info["path"] )
-{
-	header("Content-Length: ". filesize( $prefs['fgal_use_dir'].$info["path"] ) );
-}
-else
-{
-	header("Content-Length: ". $info[ "filesize" ] );
-}
-
-////////////////////////////////////////////////////////////////////////////
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Pragma: public");
-if($info["path"]) {
-  readfile_chunked($prefs['fgal_use_dir'].$info["path"]);
-} else {
-  echo "$content";
+	header('Content-Length: '.$info['filesize']);
+	echo "$content";
 }
 ?>
