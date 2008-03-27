@@ -1,93 +1,51 @@
 <?php
 
-class Image {
-  function __construct ($image) {
-    $this->data = imagecreatefromstring($image);
-    $exts=get_loaded_extensions();
-    $this->format = "";
+require_once('lib/images/abstract.php');
 
-// Which GD Version do we have?
-    if (in_array('gd',$exts)) {
+class Image extends ImageAbstract {
+  var $gdinfo;
+  var $gdversion;
+  var $havegd;
+
+  function __construct($image, $isfile = false) {
+    parent::__construct($image, false);
+
+    // Which GD Version do we have?
+    $exts = get_loaded_extensions();
+    if ( in_array('gd', $exts) && $image != '' ) {
       $this->havegd = true;
-/* copied from lib/imagegallib.php */
-      if (function_exists("gd_info")) {
-        $this->gdinfo = gd_info();
-        preg_match("/[0-9]+\.[0-9]+/", $this->gdinfo["GD Version"], $gdversiontmp);
-        $this->gdversion = $gdversiontmp[0];
-      } else {
-        //next try
-        ob_start();
-        phpinfo (INFO_MODULES);
-        if (preg_match('/GD Version.*2.0/', ob_get_contents())) {
-          $this->gdversion = "2.0";
-        } else {
-          // I have no experience ... maybe someone knows better
-          $this->gdversion = "1.0";
+      $this->get_gdinfo();
+      if ( $isfile ) {
+        $this->format = strtolower(substr($image, strrpos($image, '.') + 1));
+        if ( $this->is_supported($this->format) ) {
+          if ( $this->format == 'jpg' ) $this->format = 'jpeg';
+          $this->data = call_user_func('imagecreatefrom'.$this->format, $this->data);
         }
-
-        $this->gdinfo["JPG Support"] = preg_match('/JPG Support.*enabled/', ob_get_contents());
-        $this->gdinfo["PNG Support"] = preg_match('/PNG Support.*enabled/', ob_get_contents());
-        $this->gdinfo["GIF Create Support"] = preg_match('/GIF Create Support.*enabled/', ob_get_contents());
-        $this->gdinfo["WBMP Support"] = preg_match('/WBMP Support.*enabled/', ob_get_contents());
-        $this->gdinfo["XBM Support"] = preg_match('/XBM Support.*enabled/', ob_get_contents());
-        ob_end_clean();
+      } else {
+        $this->data = imagecreatefromstring($this->data);
       }
     } else {
       $this->havegd = false;
+      $this->gdinfo = array();
     }
-    $this->format = "jpeg";
   }
 
-  function Image ($image) {
-    self::__construct($image);
+  function Image($image, $isfile = false) {
+    Image::__construct($image, $isfile);
   }
 
-  function resize($x=0,$y=0) {
-    $x0 = imagesx($this->data);
-    $y0 = imagesy($this->data);
-    if ($x > 0 and $y > 0 ) {
-      $t = imagecreatetruecolor($x, $y);
-      imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $x0, $y0);
-      $this->data = $t;
-    } else if ($x > 0) {
-      $r = $x / $x0 ;
-      $t = imagecreatetruecolor($x, $y0*$r);
-      imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y0*$r, $x0, $y0);
-      $this->data = $t;
-    } else if ($y > 0) {
-      $r = $y / $y0 ;
-      $t = imagecreatetruecolor($x0*$r, $y);
-      imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x0*$r, $y, $x0, $y0);
-      $this->data = $t;
-    }
-    unset($t);
-  }
-
-  function scale($r) {
-    $y0 = imagesx($this->data);
-    $x0 = imagesy($this->data);
-    $t = imagecreatetruecolor($newx, $newy);
-    imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x0*$r, $y0*$r, $x0, $y0);
+  function _resize($x, $y) {
+    $t = imagecreatetruecolor($x, $y);
+    imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
     $this->data = $t;
     unset($t);
   }
 
-  function get_mimetype() {
-    return "image/".$this->format;
-  }
-
-  function get_format() {
-    if ($this->format == "") {
-      return "jpeg";
-    } else {
-      return $this->format;
-    }
-  }
-
   function display() {
   
+    ob_end_flush();
     ob_start();
-    switch($this->format) {
+    switch ( $this->format ) {
       case 'jpeg':
       case 'jpg':
         imagejpeg($this->data);
@@ -107,17 +65,8 @@ class Image {
     }
     $image = ob_get_contents();
     ob_end_clean();
- 
-    return $image;
-  }
 
-  function convert($format) {
-    if (self::is_supported($format)) {
-      $this->format = $format;
-      return true;
-    } else {
-      return false;
-    }
+    return $image;
   }
 
   function rotate($angle) {
@@ -125,10 +74,11 @@ class Image {
     return true;
   }
 
-  function is_supported($format) {
+  function get_gdinfo() {
+    $gdinfo = array();
+    $gdversion = '';
 
-/* copied from lib/imagegallib.php */
-    if (function_exists("gd_info")) {
+    if ( function_exists("gd_info") ) {
       $gdinfo = gd_info();
       preg_match("/[0-9]+\.[0-9]+/", $gdinfo["GD Version"], $gdversiontmp);
       $gdversion = $gdversiontmp[0];
@@ -136,13 +86,7 @@ class Image {
       //next try
       ob_start();
       phpinfo (INFO_MODULES);
-      if (preg_match('/GD Version.*2.0/', ob_get_contents())) {
-        $gdversion = "2.0";
-      } else {
-        // I have no experience ... maybe someone knows better
-        $gdversion = "1.0";
-      }
-
+      $gdversion = preg_match('/GD Version.*2.0/', ob_get_contents()) ? '2.0' : '1.0';
       $gdinfo["JPG Support"] = preg_match('/JPG Support.*enabled/', ob_get_contents());
       $gdinfo["PNG Support"] = preg_match('/PNG Support.*enabled/', ob_get_contents());
       $gdinfo["GIF Create Support"] = preg_match('/GIF Create Support.*enabled/', ob_get_contents());
@@ -150,78 +94,66 @@ class Image {
       $gdinfo["XBM Support"] = preg_match('/XBM Support.*enabled/', ob_get_contents());
       ob_end_clean();
     }
-    switch(strtolower($format)) {
+   
+    if ( isset($this) ) {
+      $this->gdinfo = $gdinfo;
+      $this->gdversion = $gdversion;
+    } 
+    return $gdinfo;
+  }
+
+  // This method do not need to be called on an instance
+  function is_supported($format) {
+
+    if ( ! function_exists('imagetypes') ) {
+      $gdinfo = isset($this) ? $this->gdinfo : Image::get_gdinfo();
+    }
+
+    switch ( strtolower($format) ) {
       case 'jpeg':
-      case'jpg':
-        if ($gdinfo["JPG Support"]) {
+      case 'jpg':
+        if ( isset($gdinfo) && $gdinfo['JPG Support'] ) {
           return true;
-        };
+        } else {
+          return ( imagetypes() & IMG_JPG );
+        }
       case 'png':
-        if ($gdinfo["PNG Support"]){
+        if ( isset($gdinfo) && $gdinfo['PNG Support'] ) {
           return true;
-        };
+        } else {
+          return ( imagetypes() & IMG_PNG );
+        }
       case 'gif':
-        if ($gdinfo["GIF Create Support"]) {
+        if ( isset($gdinfo) && $gdinfo['GIF Create Support'] ) {
           return true;
-        };
+        } else {
+          return ( imagetypes() & IMG_GIF );
+        }
       case 'wbmp':
-        if ($gdinfo["WBMP Support"]) {
+        if ( isset($gdinfo) && $gdinfo['WBMP Support']) {
           return true;
-        };
-      case' xbm':
-        if ($gdinfo["XBM Support"]) {
+        } else {
+          return ( imagetypes() & IMG_WBMP );
+        }
+      case 'xpm':
+        if ( isset($gdinfo) && $gdinfo['XPM Support']) {
           return true;
-        };
-      default:
-        return false;
+        } else {
+          return ( imagetypes() & IMG_XPM );
+        }
     }
+
+    return false;
   }
 
-  function icon($extension,$xsize = 0,$ysize = 0) {
-    $name = "lib/images/icons/$extension.png";
-    if (!file_exists($name)) {
-      $name = "lib/images/icons/unknown.png";
-    }
-    $f = fopen($name,'rb');
-    $size = filesize($name);
-    $image = fread($f,$size);
-    fclose($f);
-    $fimage = imagecreatefromstring($image);
-    $x0 = imagesx($fimage);
-    $y0 = imagesy($fimage);
-    if ($xsize > 0 and $ysize > 0 ) {
-      $t = imagecreatetruecolor($xsize, $ysize);
-      imagecopyresampled($t, $fimage, 0, 0, 0, 0, $xsize, $ysize, $x0, $y0);
-      $fimage = $t;
-    } else if ($xsize > 0) {
-      $r = $xsize / $x0 ;
-      $t = imagecreatetruecolor($xsize, $y0*$r);
-      imagecopyresampled($t, $fimage, 0, 0, 0, 0, $xsize, $y0*$r, $x0, $y0);
-      $fimage = $t;
-    } else if ($ysize > 0) {
-      $r = $ysize / $y0 ;
-      $t = imagecreatetruecolor($x0*$r, $ysize);
-      imagecopyresampled($t, $fimage, 0, 0, 0, 0, $x0*$r, $ysize, $x0, $y0);
-      $fimage = $t;
-    }
-    unset($t);
-    ob_start();
-    imagepng($fimage);
-    $image = ob_get_contents();
-    ob_end_clean();
-    return $image;
-  } 
-
-  function get_height() {
-		// Not yet implemented
-    return NULL;
+  function _get_height() {
+    return imagesy($this->data);
   }
-  function get_width() {
-		// Not yet implemented
-    return NULL;
+
+  function _get_width() {
+    return imagesx($this->data);
   }
 
 }
-
 
 ?>
