@@ -65,7 +65,7 @@
 <td class="{cycle advance=false}">{$comments[ix].userName}</td>
 <td class="{cycle advance=false}">{$comments[ix].user_ip}</td>
 <td class="{cycle advance=false}">{$comments[ix].commentDate|tiki_short_datetime}</td>
-<td class="{cycle}" {popup caption=$comments[ix].title|replace:'"':'&quot;' text=$comments[ix].parsed|replace:'"':'&quot;'}>{$comments[ix].data|truncate:50:"...":true}</td>
+<td class="{cycle}" {popup caption=$comments[ix].title|escape|replace:'"':'&quot;' text=$comments[ix].parsed|escape|replace:'"':'&quot;'}>{$comments[ix].data|truncate:50:"...":true}</td>
 </tr>
 {sectionelse}
 <tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
