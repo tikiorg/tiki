@@ -49,7 +49,8 @@ class ImageGalsLib extends TikiLib {
 
 		// Do we have the imagick PECL module?
 		// Module can be downloaded at http://pecl.php.net/package/imagick
-		if (in_array('imagick',$exts)) {
+		// Also check on 'imagick_rotate' function because the first check may detect imagick 2.x which has a completely different API
+		if ( in_array('imagick',$exts) && function_exists('imagick_rotate') ) {
 			$this->haveimagick = true;
 		} else {
 			$this->haveimagick = false;
@@ -60,18 +61,18 @@ class ImageGalsLib extends TikiLib {
 		//$this->uselib = "gd";
 		$this->uselib = $prefs['gal_use_lib'];
 
+		//Fallback to GD
+		if ($this->uselib == "imagick" && $this->haveimagick == false) {
+			$this->uselib = "gd";
+			$this->set_preference('gal_use_lib', 'gd');
+		}
+
 		if ($this->uselib == "imagick") {
 			$this->canrotate = true;
 		} else {
 			$this->canrotate = false;
 		}
 
-		//Fallback to GD
-		if ($this->uselib == "imagick" && $this->haveimagick == false) {
-			$this->uselib = "gd";
-
-			$this->set_preference('gal_use_lib', 'gd');
-		}
 
 		// get variables to determine if we can upload and how many data
 		// we can upload
