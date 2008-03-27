@@ -80,7 +80,7 @@
 <td>{tr}Database name{/tr}:<br />
 <input type="text" name="name" />
 </td><td>
-{tr}Enter the name of the database that Tiki will use.{/tr} {tr}The database must already exist. You can create the database using mysqladmin, PHPMyAdmin, or ask your
+{tr}Enter the name of the database that Tiki will use.{/tr} {tr}The database must already exist. You can create the database using mysqladmin, PHPMyAdmin, cPanel, or ask your
 hosting provider.  Normally Tiki tables won't conflict with other product names{/tr}.<br />
 <p>{tr}For Oracle{/tr}:
   <ul>
