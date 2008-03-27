@@ -242,7 +242,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_gal_slideshow'] = 'n';
 	$prefs['home_gallery'] = 0;
 	$prefs['gal_use_db'] = 'y';
-	$prefs['gal_use_lib'] = 'gd';
+	$prefs['gal_use_lib'] = 'imagick';
 	$prefs['gal_match_regex'] = '';
 	$prefs['gal_nmatch_regex'] = '';
 	$prefs['gal_use_dir'] = '';
