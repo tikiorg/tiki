@@ -159,17 +159,20 @@
               </div>
               {/strip}{/capture}
             {/if}
-      
+     
+            {capture name=over_preview}{strip}
+            {if $files[changes].type|truncate:6:'':true eq 'image/'}
+            <div class='opaque'>
+              <img src="tiki-download_file.php?fileId={$files[changes].id}&thumbnail" />
+            </div>
+            {/if}
+            {/strip}{/capture}
+ 
             {assign var=nb_over_infos value=0}
             {capture name=over_infos}{strip}
             <div class='opaque'>
               <div class='box-title'>{tr}Properties{/tr}</div>
               <div class='box-data'>
-                {* TODO *}
-                {if isset($prefs.fgal_context_preview)}
-                  <div style="float:left">Display File Preview here...</div>
-                  {assign var=nb_over_infos value=`$nb_over_infos+1`}
-                {/if}
                 <div>
                 {foreach item=prop key=propname from=$fgal_listing_conf}
                   {if isset($prop.key)}
@@ -245,6 +248,9 @@
                     {else}
                     href="tiki-download_file.php?fileId={$files[changes].id}"
                     {/if}
+                  {/if}
+                  {if $smarty.capture.over_preview neq ''}
+                    {popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
                   {/if}
                 {/if}
               {/strip}{/capture}
