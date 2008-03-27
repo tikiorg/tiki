@@ -40,12 +40,18 @@
 		{/if}
 	{/if}
 
+	{if $files[changes].type|truncate:6:'':true eq 'image/' }
+		<a href="tiki-download_file.php?fileId={$files[changes].id}&amp;display">
+		{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+		</a>
+	{/if}
+
 	{if (isset($files[changes].p_download_files) and  $files[changes].p_download_files eq 'y')
 	 or (!isset($files[changes].p_download_files) and $files[changes].perms.tiki_p_download_files eq 'y')}
 		{if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
 			<a href="{$download_path}{$files[changes].path}">
 		{else}
-			<a href="tiki-download_file.php?fileId={$files[changes].fileId}">
+			<a href="tiki-download_file.php?fileId={$files[changes].id}">
 		{/if}
 		{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt='{tr}Download{/tr}'}</a> 
 	{/if}
