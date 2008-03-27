@@ -67,11 +67,11 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 {if $show_filters eq 'y'}
 <td>
 <script type="text/javascript">
-fields = new Array({$cnt})
+fields = new Array({$cnt});
 {assign var=c value=0}
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
-fields[{$c}] = '{$fid}'
+fields[{$c}] = '{$fid}';
 {assign var=c value=$c+1}
 {/if}
 {/foreach}
