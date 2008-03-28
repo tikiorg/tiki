@@ -1,17 +1,12 @@
 <?php
+// $Id$
 
-// $Header: /cvsroot/tikiwiki/tiki/tests/index.php,v 1.6 2007-03-06 19:30:45 sylvieg Exp $
+// This is a part of TikiWiki CMS/Groupware -- LGPL licensed Free / Open Source Software
+// Copyright © 2002-2008 Luis Argerich, Garland Foster, Eduardo Polidor and many others
+// See the README file for details...
 
-// $Id:index.php 12211 2008-03-28 00:40:39Z luciash $
-// $URL$
-
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-// This redirects to the sites root to prevent directory browsing
+/// just redirect to the site's root to prevent directory browsing
 
 header ("location: ../tiki-index.php");
 die;
-
 ?>
