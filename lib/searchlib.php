@@ -436,7 +436,7 @@ class SearchLib extends TikiLib {
 			'from' => '`tiki_files` f',
 			'name' => 'f.`name`',
 			'data' => 'f.`description`',
-			'hits' => 'hits',
+			'hits' => 'f.hits',
 			'lastModif' => 'f.`created`',
 			'href' => 'tiki-download_file.php?fileId=%d',
 			'id' => array('`fileId`'),
