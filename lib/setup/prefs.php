@@ -617,7 +617,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['eponymousGroups'] = 'n';
 	$prefs['useRegisterPasscode'] = 'n';
 	$prefs['registerPasscode'] = md5($tikilib->genPass());
-	$prefs['useRegisterAntibot'] = 'n';
 	$prefs['rememberme'] = 'disabled';
 	$prefs['remembertime'] = 7200;
 	$prefs['feature_clear_passwords'] = 'n';

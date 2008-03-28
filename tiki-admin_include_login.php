@@ -28,7 +28,6 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('webserverauth');
 	simple_set_toggle('useRegisterPasscode');
 	simple_set_value('registerPasscode');
-	simple_set_toggle('useRegisterAntibot');
 	simple_set_value('min_username_length');
 	simple_set_value('max_username_length');
 	simple_set_value('min_pass_length');

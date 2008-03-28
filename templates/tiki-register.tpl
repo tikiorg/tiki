@@ -25,11 +25,6 @@
 
 {else}
 
-  {if $prefs.rnd_num_reg eq 'y'}
-    <small>{tr}Your registration code:{/tr}</small>
-    <img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/>
-    <br />
-  {/if}
   <form action="tiki-register.php" method="post"> <br />
     <table class="normal">
 
@@ -49,10 +44,6 @@
       {if $prefs.useRegisterPasscode eq 'y'}
         <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td>
 	<td class="formcolor"><input type="password" name="passcode" /></td></tr>
-      {/if}
-      {if $prefs.rnd_num_reg eq 'y'}
-        <tr><td class="formcolor">{tr}Registration code{/tr}:</td>
-        <td class="formcolor"><input type="text" maxlength="8" size="8" name="regcode" /></td></tr>
       {/if}
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
@@ -91,7 +82,7 @@
           {if $gr.registrationChoice eq 'y'}<input type="radio" name="chosenGroup" value="{$gr.groupName|escape}">{if $gr.groupDesc}{$gr.groupDesc}{else}{$gr.groupName}{/if}</input><br />{/if}
         {/foreach}</td></tr>
       {/if}
-      {if $prefs.useRegisterAntibot eq 'y'}{include file='antibot.tpl'}{/if}
+      {if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl'}{/if}
 
       <tr><td class="formcolor">&nbsp;</td>
       <td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>

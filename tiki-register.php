@@ -147,11 +147,6 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
       die;
     }	  
   
-	if ($prefs['useRegisterAntibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-		$smarty->display('error.tpl');
-		die;
-	}
 	if ($prefs['login_is_email'] == 'y') {
 		if (empty($_REQUEST['novalidation']) || $_REQUEST['novalidation'] != 'yes') {
 			$_POST['email'] = $_REQUEST['email'] = $_REQUEST['name'];
