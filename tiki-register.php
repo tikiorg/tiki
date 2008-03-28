@@ -72,7 +72,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
   }
   
   if($prefs['rnd_num_reg'] == 'y') {
-  	if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode']) {
+  	if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['antibotcode']) {
     $smarty->assign('msg',tra("Wrong registration code"));
     $smarty->display("error.tpl");
     die;	
