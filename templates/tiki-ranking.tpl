@@ -23,7 +23,9 @@
 <div class="cbox-data">
 <table >
 {section name=xi loop=$rankings[ix].data}
-<tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{if $rankings[ix].data[xi].name eq ""}-{else}{$rankings[ix].data[xi].name}{/if}</a></td><td  class="form" align="right">{if $rankings[ix].type eq 'nb'}{$rankings[ix].data[xi].hits}{else}{$rankings[ix].data[xi].hits|tiki_long_datetime}{/if}</td></tr>
+<tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{if $rankings[ix].data[xi].name eq ""}-{else}{$rankings[ix].data[xi].name}{/if}</a></td><td  class="form" align="right">{if $rankings[ix].type eq 'nb'}{$rankings[ix].data[xi].hits}{else}{$rankings[ix].data[xi].hits|tiki_long_datetime}{/if}</td></tr>
+{sectionelse}
+<tr><td colspan="3">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 </div>
