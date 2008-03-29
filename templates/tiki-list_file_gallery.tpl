@@ -111,8 +111,9 @@
   {include file='duplicate_file_gallery.tpl'}
 
 {else}
-
+{if $files}
   {include file='find.tpl' find_show_languages='n' find_show_categories='n'}
+{/if}
   {include file='list_file_gallery.tpl'}
 
   {if $galleryId gt 0
