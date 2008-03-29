@@ -20,7 +20,8 @@
 </form>
 
 <h2>{tr}Hotwords{/tr}</h2>
-<div  align="center">
+{if $words}
+<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -33,6 +34,7 @@
 </tr>
 </table>
 </div>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
