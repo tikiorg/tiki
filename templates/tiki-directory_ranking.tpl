@@ -31,6 +31,8 @@
   {/section}</i>
   </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="4">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 <br />
