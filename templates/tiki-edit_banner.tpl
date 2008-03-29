@@ -6,10 +6,10 @@
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="bannerId" value="{$bannerId|escape}" />
 <div class="simplebox">
-  <table ><tr><td>
-  <table >
+  <table>
   <tr>
-     <td class="form">{tr}URL to link the banner{/tr}</td><td class="form"><input type="text" name="url" value="{$url|escape}" /></td>
+	<td class="form">{tr}URL to link the banner{/tr}</td>
+	<td class="form"><input type="text" name="url" value="{$url|escape}" /></td>
    </tr>
   <tr><td class="form">{tr}Client{/tr}:</td>
       <td class="form">
@@ -23,23 +23,18 @@
    <tr><td class="form">{tr}Max impressions{/tr}:</td>
        <td class="form"><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i></td>
    </tr>
-   <tr><td  class="form">{tr}Zone{/tr}:</td>
-       <td class="form"><select name="zone">
+   <tr><td class="form">{tr}Zone{/tr}:</td>
+       <td class="form"><select name="zone"{if !$zones} disabled="disabled"{/if}>
            {section name=ix loop=$zones}
            <option value="{$zones[ix].zone|escape}" {if $zone eq $zones[ix].zone}selected="selected"{/if}>{$zones[ix].zone}</option>
+{sectionelse}<option value="" disabled="disabled" selected="selected">{tr}None{/tr}</option>
            {/section}
-           </select>
+           </select><br />
+	{tr}Or, create a new zone{/tr}:<br />
+	<input type="text" name="zoneName" size="10" />
+	<input type="submit" name="create_zone" value="{tr}Create{/tr}" />
         </td>
    </tr>
-   </table>
-   </td>
-   <td align="right"  class="form">
-   {tr}Create Zone{/tr}:
-   <input type="text" name="zoneName" size="10" /><br />
-   <input type="submit" name="create_zone" value="{tr}Create Zone{/tr}" />
-   </td>
-   </tr>
-   
    </table>
 </div>
 
@@ -160,6 +155,7 @@
 </form>
 <br /><br />
 
+{if $zones}
 <div align="left" class="simplebox">
 <h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 <table class="normal">
@@ -176,3 +172,4 @@
 {/section}
 </table>
 </div>
+{/if}
