@@ -1,5 +1,15 @@
 {* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.12 2008-02-04 16:53:36 sylvieg Exp $ *}
-<h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a></h1>
+<h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a>
+
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Adding+fields+to+a+tracker" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+
+{if $prefs.feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_tracker_fields.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Tracker fields tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt="{tr}edit{/tr}" /></a>{/if}
+
+</h1>
 
 <div  class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -34,6 +44,11 @@
 <option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
 {/foreach}
 </select>
+
+{if $prefs.feature_help eq 'y'}
+<a href="{$prefs.helpurl}Tracker+Field+Type" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+
 <div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>
 
