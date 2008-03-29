@@ -125,6 +125,7 @@
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
+{if $galleries}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -136,7 +137,6 @@
    </td>
 </tr>
 </table>
-
 <div>
 <form action="tiki-galleries.php" method="get">
 <select name="filter">
@@ -151,6 +151,8 @@
 </select>
 <input type="submit" value="{tr}Filter{/tr}" />
 </form>
+{/if}
+
 </div>
 
 <table class="normal">
