@@ -41,6 +41,7 @@
 
 <h2>{tr}Polls{/tr}</h2>
 <div align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -52,6 +53,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></td>
