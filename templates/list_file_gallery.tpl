@@ -320,17 +320,17 @@
           {cycle print=false}
 
           {sectionelse}
-          <tr><td colspan="{$nbCols}">
+          <tr><td class="odd" colspan="{$nbCols}">
             <b>{tr}No records found{/tr}</b>
           </td></tr>
           {/section}
-
+{if $files}
           {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
           <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
             <label for="clickall">{tr}Select All{/tr}</label>
           </td></tr>
           {/if}
-
+{/if}
         </table>
       
         {if $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
