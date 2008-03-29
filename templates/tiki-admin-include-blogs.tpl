@@ -12,12 +12,14 @@
       <form action="tiki-admin.php?page=blogs" method="post">
         <table class="admin"><tr>
           <td class="form"><label for="blogs-home">{tr}Home Blog (main blog){/tr}</label></td>
-          <td><select name="homeBlog" id="blogs-home">
+          <td><select name="homeBlog" id="blogs-home"{if !$blogs} disabled="disabled"{/if}>
               {section name=ix loop=$blogs}
                 <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $prefs.home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:$prefs.blog_list_title_len:"...":true}</option>
+{sectionelse}
+			<option value="" disabled="disabled" selected="selected">{tr}None{/tr}</option>
               {/section}
               </select></td>
-          <td><input type="submit" name="blogset" value="{tr}OK{/tr}" /></td>
+          <td><input type="submit" name="blogset" value="{tr}OK{/tr}"{if !$blogs} disabled="disabled"{/if} /></td>
         </tr></table>
       </form>
   </div>
