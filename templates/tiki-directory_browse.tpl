@@ -19,6 +19,7 @@ loc="page" crumbs=$crumbs}
 {/if}
 <div class="description">{$parent_info.description}</div>
 <br /><br />
+{if count($items) > 0}
 <div class="findtable">
 <form action="tiki-directory_search.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -35,7 +36,7 @@ loc="page" crumbs=$crumbs}
 <input type="submit" value="{tr}Search{/tr}" />
 </form>
 </div>
-
+{/if}
 {if count($categs)}
 <br /><br />
 <b>{tr}Subcategories{/tr}</b><br />
@@ -142,6 +143,7 @@ loc="page" crumbs=$crumbs}
 {/section}
 {/if}
 </div>
+{else}{tr}No records.{/tr}
 {/if}
 
 {if count($related)>0}
