@@ -66,6 +66,7 @@
 </form>
 <h2>{tr}Rss channels{/tr}</h2>
 <div  align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -77,6 +78,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'rssId_desc'}rssId_asc{else}rssId_desc{/if}">{tr}ID{/tr}</a></td>
