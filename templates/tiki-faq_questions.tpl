@@ -46,8 +46,8 @@
 {* end table *}
 
 </form>
-{* This is the area for choosing questions from the db... it really should support choosing options from the answers *}
-
+{* This is the area for choosing questions from the db... it really should support choosing options from the answers, but only show if there are existing questions *}
+{if $allq}
 <h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
@@ -79,12 +79,14 @@
 </tr>
 </table>
 </form>
+{/if}
 <br />
 
 {* next big chunk *}
 
 <h2>{tr}FAQ questions{/tr}</h2>
-<div  align="center">
+<div align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -96,25 +98,28 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading">
 <a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
 </td>
-<td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a>
+<td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Question{/tr}</a>
 </td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td  class="{cycle advance=false}">{$channels[user].questionId}</td>
+<td class="{cycle advance=false}">{$channels[user].questionId}</td>
 <td class="{cycle advance=false}">{$channels[user].question}</td>
-<td  class="{cycle}">
+<td class="{cycle}">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit'}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="3">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 
