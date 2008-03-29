@@ -72,10 +72,12 @@
   <div class="cbox-title">{tr}Trackers attachments{/tr}</div>
   <div class="cbox-data">
     <div class="admin">
+{if $attachments}
       <form action="tiki-admin.php?page=trackers" method="post">
         <input type="text" name="find" value="{$find|escape}" />
         <input type="submit" name="action" value="{tr}Find{/tr}" />
       </form>
+{/if}
       {cycle values="odd,even" print=false}
       <table class="normal">
         <tr>
@@ -120,12 +122,14 @@
             <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}Change{/tr}</a>
           </td>
         </tr>
+{sectionelse}
+	<tr class="odd"><td colpsan="9">{tr}No records{/tr}</td></tr>
         {/section}
       </table>
       
     {include file=tiki-pagination.tpl}
     </div>
-    
+{if $attachments}    
     <table>
       <tr>
         <td>
@@ -142,5 +146,7 @@
         </td>
       </tr>
     </table>
+{/if}
+<br />
   </div>
 </div>
