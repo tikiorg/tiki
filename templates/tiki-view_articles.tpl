@@ -130,6 +130,8 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 </div>
 </div>
 {/if}
+{sectionelse}
+{tr}No articles.{/tr}
 {/section}
 
 {if $cant_pages and $cant_pages ne 0}
