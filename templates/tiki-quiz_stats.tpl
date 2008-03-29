@@ -16,6 +16,7 @@
 <h2>{tr}Quizzes{/tr}</h2>
 <! -- begin find field ---!>
 <div  align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -28,6 +29,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-quiz_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizName_desc'}quizName_asc{else}quizName_desc{/if}">{tr}Quiz{/tr}</a>
@@ -58,6 +60,8 @@
 </tr>
 {/if}
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="4">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

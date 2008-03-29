@@ -13,7 +13,7 @@
 <div class="navbar">
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 </div>
-
+{if $channels}
 <table class="findtable">
 <tr>
 <td class="findtable">{tr}Find{/tr}</td>
@@ -27,6 +27,7 @@
    </td>
 </tr>
 </table>
+{/if}
 {/if}
 
 <table class="normal">
@@ -88,6 +89,8 @@ here's the bit on the adm and stats, it would be nice if there was a direct link
 </tr>
 {/if}
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="4">{tr}No records.{/tr}</td></tr>
 {/section}
 </table>
 
