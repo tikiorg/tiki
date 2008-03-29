@@ -46,7 +46,8 @@
 </table>
 </form>
 <h2>{tr}Newsletters{/tr}</h2>
-<div  align="center">
+<div align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -58,6 +59,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading">&nbsp;</td>
@@ -94,6 +96,8 @@ border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/ic
 <a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="10">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

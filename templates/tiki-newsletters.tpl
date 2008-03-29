@@ -59,6 +59,7 @@
 {if $showlist eq 'y'}
 <h2>{tr}Available Newsletters{/tr}</h2>
 <div  align="center">
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -70,6 +71,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
@@ -87,6 +89,8 @@
 {if $channels[user].tiki_p_send_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>{/if}</td>
 </tr>
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="3">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">
