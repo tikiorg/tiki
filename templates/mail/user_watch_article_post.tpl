@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/user_watch_article_post.tpl,v 1.3 2007-04-20 14:38:08 sylvieg Exp $ *}
+{* $Id$ *}
 {tr}New article post: {$mail_title} by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
 
 {tr}View the article at:{/tr}

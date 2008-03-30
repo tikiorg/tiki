@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/user_watch_image_gallery_upload.tpl,v 1.2 2007-05-02 14:38:53 sylvieg Exp $ *}
+{* $Id$ *}
 {tr}A new file was posted to image gallery{/tr}: {$galleryName}
 
 {tr}Posted by{/tr}: {$author}

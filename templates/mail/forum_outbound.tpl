@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/mail/forum_outbound.tpl,v 1.5 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Id$ *}
 {$title}
 
 {tr}Author:{/tr} {$author}
