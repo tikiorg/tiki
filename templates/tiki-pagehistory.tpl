@@ -34,7 +34,7 @@
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
 <div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>
-{if $prefs.default_wiki_diff_style ne "old"}
+{if ($prefs.default_wiki_diff_style ne "old") and $history}
 <div style=" text-align:right;"><select name="diff_style">
 	<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
 	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
