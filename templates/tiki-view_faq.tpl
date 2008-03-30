@@ -12,6 +12,9 @@
 {if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a> {/if}
 {if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}{/if}</a><br /><br />
 <h2>{tr}Questions{/tr}</h2>
+{if !$channels}
+{tr}There are no questions in this FAQ.{/tr}
+{else}
 <div class="faqlistquestions">
 <ol>
 {section name=ix loop=$channels}
@@ -31,6 +34,7 @@
 </div>
 </div>
 {/section}
+{/if}
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <a href="javascript:flip('faqsugg');" class="linkbut">
 {if $suggested_cant == 0}
