@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: lastcvs.sh,v 1.2 2003-08-01 10:30:46 redflo Exp $
+# $Id$
 # This file is used to build tarball from developers cvs
 # written by mose@mose.fr
 #

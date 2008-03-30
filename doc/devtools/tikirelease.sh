@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.15.2.4 2008-03-20 19:41:15 kerrnel22 Exp $
+# $Id$
 # written and maintained by mose@tikiwiki.org
 #
 # HOWTO release Tikiwiki ?

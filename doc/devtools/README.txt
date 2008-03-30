@@ -1,6 +1,6 @@
 Tikiwiki DevTools 
 -----------------
-$Id: README.txt,v 1.6 2007-03-02 19:49:09 luciash Exp $
+$Id$
 
 The content of this directory is intended to be used for 
 Tikiwiki development. It's included in the package for use

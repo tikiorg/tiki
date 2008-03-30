@@ -1,4 +1,4 @@
-# $Id: htaccess,v 1.4 2005-05-18 10:59:13 mose Exp $
+# $Id$
 
 #AuthUserFile "C:/Program Files/Apache Group/Apache/bin/users"
 #AuthName EnterPassword
