@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.8 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_tasks eq 'y' and $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>"}{/if}
 {tikimodule title=$tpl_module_title name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_theme.tpl,v 1.20 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Style{/tr}: `$prefs.style`"}{/if}
 {tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 	{if $prefs.change_theme ne 'n' or $user eq ''}

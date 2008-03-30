@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/Attic/mod-translation.tpl,v 1.1.2.16 2008/03/24 04:13:03 lphuberdeau Exp $ *}
+{* $Id$ *}
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}

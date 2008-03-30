@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_most_read_topics.tpl,v 1.12 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}

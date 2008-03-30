@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_last_sites.tpl,v 1.14 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_directory eq 'y'}
 {if !isset($tpl_module_title)}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.19 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Google Search{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="google" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}

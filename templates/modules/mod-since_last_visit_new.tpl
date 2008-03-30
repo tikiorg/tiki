@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit_new.tpl,v 1.12.2.2 2008-03-12 20:05:46 pkdille Exp $ *}
+{* $Id$ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}`$slvn_info.label`{/tr}"}{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-adsense.tpl,v 1.4.2.1 2008-02-16 08:02:10 luciash Exp $ *}
+{* $Id$ *}
 {* look comments in tikiwiki/modules/mod-adsense.php for usage *}
 <div style="text-align: center">
 {if $client}

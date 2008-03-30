@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.41 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {php}
 include_once("lib/class_calendar.php");

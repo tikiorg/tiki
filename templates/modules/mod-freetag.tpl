@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetag.tpl,v 1.12.2.3 2008-03-07 19:41:03 sylvieg Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $tagid}
 {if !isset($tpl_module_title)}{assign value="{tr}Folksonomy{/tr}" var="tpl_module_title"}{/if}

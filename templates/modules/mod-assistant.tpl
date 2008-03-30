@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-assistant.tpl,v 1.10.2.3 2008-02-27 03:04:30 marclaporte Exp $ *}
+{* $Id$ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Tikiwiki Assistant{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 <div align="center"><strong>{tr}Thank you for installing Tikiwiki{/tr}!</strong></div>

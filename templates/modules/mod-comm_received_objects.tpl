@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-comm_received_objects.tpl,v 1.10 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_comm eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Received objects{/tr}"}{/if}

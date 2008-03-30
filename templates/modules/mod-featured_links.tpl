@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.15 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_featuredLinks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Featured links{/tr}"}{/if}

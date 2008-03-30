@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_blogs.tpl,v 1.13 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 
 {if $user}
     {if $prefs.feature_blogs eq 'y'}

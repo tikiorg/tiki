@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images.tpl,v 1.14 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}

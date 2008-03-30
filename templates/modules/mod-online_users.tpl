@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.12 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations nobox=$modules_params.nobox}

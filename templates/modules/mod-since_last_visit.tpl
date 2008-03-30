@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Since your last visit{/tr}"}{/if}

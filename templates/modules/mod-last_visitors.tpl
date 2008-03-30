@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.11.2.1 2008-02-01 17:01:22 ricks99 Exp $ *}
+{* $Id$ *}
 
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.14.2.1 2008-03-05 22:33:29 sylvieg Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-wiki_last_comments.tpl,v 1.10.2.2 2008-02-08 23:13:18 sylvieg Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_wiki eq 'y'}
 {if !isset($tpl_module_title)}

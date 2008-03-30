@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_visited_faqs.tpl,v 1.12 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_faqs eq 'y'}
 {if !isset($tpl_module_title)}

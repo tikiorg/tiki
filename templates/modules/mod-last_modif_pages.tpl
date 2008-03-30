@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.29.2.3 2008-03-07 16:14:09 sylvieg Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_wiki eq 'y'}
 {if !isset($tpl_module_title)}

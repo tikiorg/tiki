@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.17 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Messages{/tr}"}{/if}

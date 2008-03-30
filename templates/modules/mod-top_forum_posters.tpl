@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_forum_posters.tpl,v 1.8 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}

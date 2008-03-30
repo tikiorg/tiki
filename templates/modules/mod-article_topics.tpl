@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-article_topics.tpl,v 1.4 2007-10-14 17:51:00 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}$module_title{/tr}"}{/if}

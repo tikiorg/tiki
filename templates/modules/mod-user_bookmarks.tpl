@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.21 2007-10-14 17:51:02 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="<a href=\"tiki-user_bookmarks.php\">{tr}Bookmarks{/tr}</a>"}{/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_actions.tpl,v 1.6.2.1 2008-02-29 05:03:19 chibaguy Exp $ *}
+{* $Id$ *}
 
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}

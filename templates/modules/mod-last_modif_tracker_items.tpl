@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.13 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_trackers eq 'y'}
 {if !isset($tpl_module_title)}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-action_calendar.tpl,v 1.1.2.1 2008-01-18 13:13:20 nyloth Exp $ *}
+{* $Id$ *}
 {tikimodule title="{tr}Tiki Calendar{/tr}" name="tiki_calendar" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {popup_init src="lib/overlib.js"}
 <div style="text-align:center; font-size:110%">{tr}{$focusdate|tiki_date_format:"%B"|ucfirst}{/tr}</div>

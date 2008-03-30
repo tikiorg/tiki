@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_pages.tpl,v 1.16.2.1 2007-10-22 07:29:56 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_wiki eq 'y'}
 {if !isset($tpl_module_title)}

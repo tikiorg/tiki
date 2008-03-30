@@ -1,4 +1,4 @@
-{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_morelikethis.tpl,v 1.2.2.1 2007-11-21 01:52:02 nkoth Exp $ *}
+{* based on $Id$ *}
 
 {if $prefs.feature_wiki eq 'y' && count($modMoreLikeThis) gt 0}
 

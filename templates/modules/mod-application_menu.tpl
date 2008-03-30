@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.125.2.1 2008-01-25 17:23:32 nyloth Exp $ *}
+{* $Id$ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Menu{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="application_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 &nbsp;<a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />

@@ -1,4 +1,4 @@
-{* based on $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-freetags_current.tpl,v 1.3.2.1 2007-11-21 01:52:02 nkoth Exp $ *}
+{* based on $Id$ *}
 
 {if $prefs.feature_freetags eq 'y' && count($modFreetagsCurrent) gt 0}
   {if !isset($tpl_module_title)}{eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}{/if}

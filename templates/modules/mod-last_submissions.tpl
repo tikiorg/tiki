@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_submissions eq 'y'}
 {if !isset($tpl_module_title)}

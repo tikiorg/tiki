@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.15 2007-10-14 17:51:01 mose Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_live_support eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Live support{/tr}"}{/if}
