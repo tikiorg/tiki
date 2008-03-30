@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-search_stats.tpl,v 1.24.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}Search Stats{/tr}">

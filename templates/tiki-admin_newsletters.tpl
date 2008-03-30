@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletters.tpl,v 1.40.2.5 2008-02-05 16:14:43 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.130.2.28 2008-03-11 21:14:42 alain_desilets Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>

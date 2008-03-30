@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_cssmenu.tpl,v 1.1.2.9 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 {if count($menu_channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-ads.tpl,v 1.1.2.1 2008-03-16 16:57:51 luciash Exp $ *}
+{* $Id$ *}
 
 <div class="cbox">
 	<div class="cbox-title">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-header.tpl,v 1.11.2.5 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Id$ *}
 <div class="postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-survey_stats.tpl,v 1.17.2.1 2007-10-17 20:36:11 niclone Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a></h1>
 
 <div class="navbar">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.24.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id$ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">

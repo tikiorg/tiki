@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_tracker_fields.tpl,v 1.58.2.12 2008-02-04 16:53:36 sylvieg Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a>
 
 {if $prefs.feature_help eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.84.2.13 2008-03-17 20:50:36 pkdille Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-admingroups.php{if !empty($groupname)}?group={$groupname|escape:'url'}{/if}">{tr}Admin groups{/tr}</a>

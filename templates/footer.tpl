@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/footer.tpl,v 1.11.2.2 2008-01-18 12:57:05 nyloth Exp $ *}
+{* $Id$ *}
 
 {if (! isset($display) or $display eq '')}
 {if count($phpErrors)}

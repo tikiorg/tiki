@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forum_import.tpl,v 1.1.2.2 2007-12-27 16:10:53 pkdille Exp $ *}
+{* $Id$ *}
 
 <h1><a class="pagetitle" href="tiki-forum_import.php">{tr}Forum Importer{/tr}</a>
 </h1>

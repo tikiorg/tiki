@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_surveys.tpl,v 1.30.2.2 2008-03-06 00:26:13 marclaporte Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}">

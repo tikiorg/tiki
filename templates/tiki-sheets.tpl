@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-sheets.tpl,v 1.22.2.4 2008-03-05 23:33:05 marclaporte Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Spreadsheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.4.18.1 2007-11-07 17:23:14 jyhem Exp $ *}
+{* $Id$ *}
 
 <h2>{tr}Available Repositories{/tr}</h2>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_gallery.tpl,v 1.55.2.8 2008-03-16 14:10:56 sylvieg Exp $ *}
+{* $Id$ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 <h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}

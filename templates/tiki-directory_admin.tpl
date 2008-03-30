@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin.tpl,v 1.22.2.1 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">

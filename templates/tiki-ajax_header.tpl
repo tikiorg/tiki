@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-ajax_header.tpl,v 1.7 2007-10-04 22:17:38 nyloth Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_ajax eq 'y'}
 
 {$xajax_js}

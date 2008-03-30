@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.27.2.4 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.32.2.2 2008-02-27 15:18:50 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 

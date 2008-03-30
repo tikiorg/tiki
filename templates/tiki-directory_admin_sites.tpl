@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_admin_sites.tpl,v 1.36.2.4 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
   
       {if $prefs.feature_help eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages_content.tpl,v 1.25.2.14 2008-03-20 23:26:00 pkdille Exp $ *}
+{* $Id$ *}
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 

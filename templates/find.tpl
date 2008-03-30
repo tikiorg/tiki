@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/find.tpl,v 1.10.2.5 2008-02-27 15:18:50 nyloth Exp $ *}
+{* $Id$ *}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 

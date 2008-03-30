@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-webmail.tpl,v 1.46.2.6 2008-01-30 15:33:53 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 {if $prefs.feature_help eq 'y'}

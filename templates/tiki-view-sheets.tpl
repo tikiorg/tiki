@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view-sheets.tpl,v 1.17.2.3 2008-03-02 21:44:35 pkdille Exp $ *}
+{* $Id$ *}
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />{* this shouldn't be here; links to CSS only allowed in head html tag !!! (luci) *}
 {* here is missing body tag when above link to CSS remains!!! (luci) *}
 <h1><a href="tiki-sheets.php?sheetId={$sheetId}" class="pagetitle">{tr}{$title}{/tr}</a></h1>

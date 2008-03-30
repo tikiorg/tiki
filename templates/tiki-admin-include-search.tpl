@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-search.tpl,v 1.21.2.5 2008-03-20 16:12:04 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_search_stats eq 'y'}
   <div class="rbox" name="tip">

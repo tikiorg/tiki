@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-p_share_page.tpl,v 1.2.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a class="pagetitle" href="tiki-index.php?page={$objectId}">{$objectId}</a></h1>
 <p>

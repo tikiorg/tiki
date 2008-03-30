@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.50.2.16 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Id$ *}
 
 {popup_init src="lib/overlib.js"}
 

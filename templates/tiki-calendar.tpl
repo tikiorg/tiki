@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.83.2.3 2008-03-15 06:44:57 pkdille Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <div id="calscreen">
 

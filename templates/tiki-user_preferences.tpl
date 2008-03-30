@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_preferences.tpl,v 1.113.2.17 2008-03-11 16:37:54 alain_desilets Exp $ *}
+{* $Id$ *}
 
 <h1>
   {if $userwatch ne $user}

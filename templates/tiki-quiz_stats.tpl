@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_stats.tpl,v 1.17.2.2 2008-03-05 23:33:05 marclaporte Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Quiz" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">

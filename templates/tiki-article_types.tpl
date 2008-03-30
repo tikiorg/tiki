@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.30.2.1 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

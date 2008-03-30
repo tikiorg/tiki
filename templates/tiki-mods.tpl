@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-mods.tpl,v 1.21.2.2 2008-03-02 22:39:15 pkdille Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-mods.php" class="pagetitle">{tr}Tikiwiki Mods{/tr}</a></h1>
 

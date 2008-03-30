@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-intertiki.tpl,v 1.12.2.4 2008-03-22 05:12:48 mose Exp $ *}
+{* $Id$ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-integrator.tpl,v 1.8 2007-07-24 18:03:32 jyhem Exp $ *}
+{* $Id$ *}
 
 <div class="integrated-page">
   {$data}

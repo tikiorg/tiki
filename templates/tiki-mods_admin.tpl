@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-mods_admin.tpl,v 1.7 2007-10-04 22:17:41 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-mods_admin.php" class="pagetitle">{tr}Tikiwiki Mods Configuration{/tr}</a></h1>
 <div class="navbar"><span class="button2"><a href="tiki-mods.php" class="linkbut">{tr}Mods Install/uninstall{/tr}</a></span></div>
 

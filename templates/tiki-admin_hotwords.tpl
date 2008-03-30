@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_hotwords.tpl,v 1.31.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}

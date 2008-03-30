@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-login.tpl,v 1.80.2.12 2008/03/23 14:12:05 sylvieg Exp $ *}
+{* $Id$ *}
 <div class="navbar">
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin Groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin Users{/tr}</a></span>

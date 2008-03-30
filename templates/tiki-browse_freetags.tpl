@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_freetags.tpl,v 1.35.2.15 2008-03-04 18:45:54 sylvieg Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-browse_freetags.php" class="pagetitle">{tr}Browse related tags{/tr}</a></h1>
 

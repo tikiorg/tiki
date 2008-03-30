@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.28.2.2 2008-03-05 23:33:05 marclaporte Exp $ *}
+{* $Id$ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}

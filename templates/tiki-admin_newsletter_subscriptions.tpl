@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_newsletter_subscriptions.tpl,v 1.32.2.8 2008-02-05 16:14:43 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
 
 <div class="navbar">

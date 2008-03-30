@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.22.2.1 2007-10-17 20:36:10 niclone Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

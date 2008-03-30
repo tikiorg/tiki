@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-batch_upload.tpl,v 1.14.2.2 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-batch_upload.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
 <span class="button2">
 {if $galleryId ne ''}

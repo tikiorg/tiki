@@ -1,4 +1,4 @@
-{*$Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-anchors.tpl,v 1.30.2.7 2008-03-16 20:52:56 luciash Exp $*}
+{*$Id$*}
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}" class="link"><img border="0" src="pics/large/icon-configuration.png" alt="{tr}General{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}" class="link"><img border="0" src="pics/large/boot.png" alt="{tr}Features{/tr}" width="32" height="32" /></a>
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="link"><img border="0" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>

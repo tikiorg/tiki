@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.42.2.4 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:url}{/if}" class="pagetitle">{tr}Assign User {$assign_user} to Groups{/tr}</a></h1>
 

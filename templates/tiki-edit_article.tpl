@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_article.tpl,v 1.65.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Id$ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}

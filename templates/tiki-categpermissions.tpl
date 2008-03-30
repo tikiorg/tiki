@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-categpermissions.tpl,v 1.13.2.1 2008-02-05 16:14:44 jyhem Exp $  *}
+{* $Id$  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}

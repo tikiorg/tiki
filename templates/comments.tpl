@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.98.2.12 2008-03-11 20:52:29 sylvieg Exp $ *}
+{* $Id$ *}
 
 {if $forum_mode eq 'y'}
 <div>

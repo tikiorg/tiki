@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.82.2.7 2008-01-30 04:38:41 nkoth Exp $ *}
+{* $Id$ *}
 
 {strip}
 <hr/>

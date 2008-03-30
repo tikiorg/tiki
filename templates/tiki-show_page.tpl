@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.129.2.19 2008-03-23 19:18:53 ricks99 Exp $ *} 
+{* $Id$ *} 
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}

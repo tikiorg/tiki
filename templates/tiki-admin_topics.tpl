@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.36.2.6 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

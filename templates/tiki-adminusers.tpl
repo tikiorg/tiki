@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.111.2.13 2008-03-22 12:21:04 sylvieg Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 

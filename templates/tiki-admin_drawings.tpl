@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.32.2.3 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 

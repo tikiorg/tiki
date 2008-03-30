@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/contribution.tpl,v 1.17.2.1 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">

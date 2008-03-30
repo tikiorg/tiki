@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.12.2.1 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 

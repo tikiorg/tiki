@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-body.tpl,v 1.7.2.3 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Id$ *}
 <div class="content">
 
 	<div class="author">

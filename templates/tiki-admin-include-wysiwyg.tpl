@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-wysiwyg.tpl,v 1.3.2.2 2008-03-10 20:36:05 sylvieg Exp $ *}
+{* $Id$ *}
 
 <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  

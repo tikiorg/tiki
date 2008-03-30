@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_menu.tpl,v 1.31.2.2 2007-12-07 15:40:24 sylvieg Exp $ *}
+{* $Id$ *}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
 

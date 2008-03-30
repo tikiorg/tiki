@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.66.2.6 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-file_galleries.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}{else}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}

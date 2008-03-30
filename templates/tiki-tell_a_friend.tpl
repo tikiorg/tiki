@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-tell_a_friend.tpl,v 1.4.2.3 2008-03-15 22:12:13 sylvieg Exp $ *}
+{* $Id$ *}
 <h1>{tr}Send a link to a friend{/tr}</h1>
 <span class="button2"><a href="{$url}" class="linkbut">{tr}Back{/tr}</a></span>
 {if !empty($sent)}

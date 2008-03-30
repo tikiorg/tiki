@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.26.2.2 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 
 {* The heading and category path *}
 {if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}

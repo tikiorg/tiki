@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.29.2.8 2008-03-01 17:05:53 pkdille Exp $ *}
+{* $Id$ *}
 
 <h1>
   <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>

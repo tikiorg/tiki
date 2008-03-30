@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_banners.tpl,v 1.28.2.5 2008-03-13 23:42:24 ricks99 Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Admin Banners{/tr}">

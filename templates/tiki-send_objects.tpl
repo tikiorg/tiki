@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-send_objects.tpl,v 1.28.2.4 2008-03-05 23:33:05 marclaporte Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}

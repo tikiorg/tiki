@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.51.2.9 2008-03-14 11:10:58 ricks99 Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
   
 {if $prefs.feature_help eq 'y'}

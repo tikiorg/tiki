@@ -1,5 +1,5 @@
 {strip}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tracker_item_field_value.tpl,v 1.19.2.22 2008-03-22 12:13:54 sylvieg Exp $ *}
+{* $Id$ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y), showpopup *}
 
 {if $field_value.type ne 'x'}

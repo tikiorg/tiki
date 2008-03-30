@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-openid_register.tpl,v 1.3.2.2 2008-03-01 20:34:39 lphuberdeau Exp $ *}
+{* $Id$ *}
 <h1>{tr}Your OpenID identity is valid{/tr}</h1>
 <p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
 <table width="100%">

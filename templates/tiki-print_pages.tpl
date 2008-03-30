@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_pages.tpl,v 1.13.2.6 2008-03-18 21:18:42 pkdille Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a></h1>
 
 <table class="findtable">

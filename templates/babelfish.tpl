@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.6 2007-10-04 22:17:35 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_babelfish eq 'y' and $prefs.feature_babelfish_logo eq 'y'}
 

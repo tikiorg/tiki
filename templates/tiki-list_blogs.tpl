@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_blogs.tpl,v 1.49.2.3 2008-03-13 23:47:21 ricks99 Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>

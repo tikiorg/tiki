@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.42.2.4 2008-03-15 21:11:16 sylvieg Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

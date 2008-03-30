@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-simple_plugin.tpl,v 1.13 2007-10-06 15:18:46 nyloth Exp $ *}
+{* $Id$ *}
 
 <div class="catlists">
     <div class="cbox-title">{$title}</div>

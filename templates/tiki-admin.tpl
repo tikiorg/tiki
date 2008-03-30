@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin.tpl,v 1.99.2.7 2008-03-16 16:57:51 luciash Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {breadcrumbs type="trail" loc="admin" crumbs=$crumbs}

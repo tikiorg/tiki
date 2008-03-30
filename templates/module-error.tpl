@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module-error.tpl,v 1.3 2004-02-02 18:37:44 musus Exp $ *}
+{* $Id$ *}
 {* Error module rendering *}
 
 <div class="box" id="module_error"><div class="box-title">{tr}Error{/tr}</div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_contribution.tpl,v 1.13.2.2 2008-01-30 15:33:48 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a  class="pagetitle" href="tiki-admin_contribution.php">{tr}Admin Contributions{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">

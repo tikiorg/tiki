@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_wiki_section.tpl,v 1.7.2.1 2007-10-20 12:58:35 pkdille Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-edit_wiki_section.php?object={$object|escape:url}&amp;type={$type|escape:url}&amp;pos={$pos}&amp;cell={$cell}">{tr}Edit Section:{/tr}{$title}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}View object{/tr}</a>
 

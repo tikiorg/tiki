@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment-footer.tpl,v 1.8 2007-10-15 08:16:38 jyhem Exp $ *}
+{* $Id$ *}
 <div class="postfooter">
 	<div class="status">
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_display_in_comment eq 'y'}

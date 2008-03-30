@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker.tpl,v 1.159.2.42 2008-03-18 21:16:50 sylvieg Exp $ *}
+{* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}

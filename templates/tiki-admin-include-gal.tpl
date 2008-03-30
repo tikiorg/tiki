@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-gal.tpl,v 1.34.2.6 2008-03-06 20:31:30 sampaioprimo Exp $ *}
+{* $Id$ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  

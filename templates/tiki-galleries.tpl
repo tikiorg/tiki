@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-galleries.tpl,v 1.71.2.9 2008-03-06 20:31:30 sampaioprimo Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}

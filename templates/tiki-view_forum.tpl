@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.111.2.21 2008-03-19 15:06:29 sylvieg Exp $ *}
+{* $Id$ *}
 
 <h1><a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a></h1>
 {if $forum_info.show_description eq 'y'}

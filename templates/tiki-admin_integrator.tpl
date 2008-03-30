@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.31.2.3 2008-03-06 00:26:12 marclaporte Exp $ *}
+{* $Id$ *}
 
 <h1>
   <a class="pagetitle" href="tiki-admin_integrator.php">{tr}Integrator{/tr}</a>

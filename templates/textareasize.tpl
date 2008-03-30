@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/textareasize.tpl,v 1.7.2.2 2008-02-05 02:16:06 ricks99 Exp $ *}
+{* $Id$ *}
 {* \brief: the 4 buttoms to change a textarea size (only one per form)
   * \param: $area_name = the textarea id
   * \param: $formId = the form id

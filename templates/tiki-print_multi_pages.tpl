@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_multi_pages.tpl,v 1.5.10.2 2007-10-24 17:36:22 sylvieg Exp $ *}
+{* $Id$ *}
 
 <div id="tiki-clean">
   {section name=ix loop=$pages}

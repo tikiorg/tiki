@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.38.2.4 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Id$ *}
 {* Module layout with controls *}
 
 {if $module_nobox neq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_tracker_item.tpl,v 1.155.2.38 2008-03-17 20:50:37 pkdille Exp $ *}
+{* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 <h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
 

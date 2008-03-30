@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_banner.tpl,v 1.21.2.3 2008-01-30 15:33:50 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a></h1>
 <div class="navbar">
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>

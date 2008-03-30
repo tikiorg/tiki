@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.8 2007-10-04 22:17:39 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">

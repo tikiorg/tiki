@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.61.2.9 2008-03-22 08:16:30 pkdille Exp $ *}
+{* $Id$ *}
 
 <h1>
   <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>

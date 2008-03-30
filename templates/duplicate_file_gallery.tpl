@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/duplicate_file_gallery.tpl,v 1.1.2.2 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 <h2>{tr}Duplicate File Gallery{/tr}</h2>
 <form action="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" method="post">

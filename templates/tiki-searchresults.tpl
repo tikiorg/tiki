@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchresults.tpl,v 1.31.2.5 2008-02-08 04:36:44 chibaguy Exp $ *}
+{* $Id$ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}
 {if $tiki_p_admin eq 'y'}

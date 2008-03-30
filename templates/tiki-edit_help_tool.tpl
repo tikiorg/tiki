@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help_tool.tpl,v 1.28.2.6 2008-03-07 16:42:49 sylvieg Exp $ *}
+{* $Id$ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">

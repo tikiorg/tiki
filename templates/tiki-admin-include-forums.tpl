@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-forums.tpl,v 1.26.2.5 2008-01-08 16:01:42 nyloth Exp $ *}
+{* $Id$ *}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.</div>

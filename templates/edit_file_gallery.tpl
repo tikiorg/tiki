@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/edit_file_gallery.tpl,v 1.1.2.2 2008-03-11 15:17:55 nyloth Exp $ *}
+{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
   {if $galleryId eq 0}
   <h2>{tr}Create a file gallery{/tr}</h2>

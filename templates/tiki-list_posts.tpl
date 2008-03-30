@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_posts.tpl,v 1.37.2.2 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Blogs{/tr}">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki_full.tpl,v 1.3 2007-10-06 15:18:46 nyloth Exp $ *}{include file="header.tpl"}
+{* $Id$ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $prefs.feature_bidi eq 'y'}
 <div dir="rtl">

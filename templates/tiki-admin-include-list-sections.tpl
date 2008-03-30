@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-list-sections.tpl,v 1.35.2.4 2008-03-16 20:02:36 luciash Exp $ *}
+{* $Id$ *}
 {*
  * If you want to change this page, check http://www.tikiwiki.org/tiki-index.php?page=AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers

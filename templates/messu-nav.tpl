@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/messu-nav.tpl,v 1.6.2.1 2008-03-20 21:56:56 pkdille Exp $ *}
+{* $Id$ *}
 <div class="navbar">
   <span class="button2">
     <a class="linkbut" href="messu-mailbox.php">{tr}Mailbox{/tr}</a>

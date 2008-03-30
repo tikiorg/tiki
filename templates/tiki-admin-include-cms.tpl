@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-cms.tpl,v 1.24.2.2 2008-01-30 15:33:47 nyloth Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.55.2.8 2007-12-27 20:58:43 pkdille Exp $ *}
+{* $Id$ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 

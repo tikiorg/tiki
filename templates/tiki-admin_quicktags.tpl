@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_quicktags.tpl,v 1.29.2.3 2008-03-05 14:05:15 marclaporte Exp $ *}
+{* $Id$ *}
 
 <h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 

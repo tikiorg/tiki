@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-user_watches.tpl,v 1.24.2.3 2008-03-13 21:00:48 sylvieg Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

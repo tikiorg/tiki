@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.37.2.3 2008-03-05 23:33:05 marclaporte Exp $ *}
+{* $Id$ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}

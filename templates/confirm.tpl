@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/confirm.tpl,v 1.11 2007-10-04 22:17:35 nyloth Exp $ *}
+{* $Id$ *}
 <div class="cbox">
 {if !empty($confirmation_text)}<div class="cbox-title">{$confirmation_text}</div>{/if}
 <br />

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_actionlog.tpl,v 1.46.2.14 2008-03-17 20:50:35 pkdille Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
 {if $prefs.feature_help eq 'y'}

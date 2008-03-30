@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-information.tpl,v 1.2 2007-10-04 22:17:40 nyloth Exp $ *}
+{* $Id$ *}
 <div id="tiki-center">
 <br />
 <div class="cbox">

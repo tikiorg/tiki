@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-charts.tpl,v 1.8.2.1 2007-10-17 20:36:07 niclone Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a></h1>

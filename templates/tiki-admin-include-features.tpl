@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.112.2.12 2008-03-17 22:05:43 pkdille Exp $ *}
+{* $Id$ *}
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate

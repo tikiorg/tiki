@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.53.2.3 2008-01-30 15:33:51 nyloth Exp $ *}
+{* $Id$ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
 {if $tiki_p_admin eq 'y'}

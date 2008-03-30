@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_image.tpl,v 1.54.2.3 2008-03-05 21:58:09 sampaioprimo Exp $ *}
+{* $Id$ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>

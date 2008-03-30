@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_validate_sites.tpl,v 1.30.2.3 2008-02-05 16:14:44 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
   
       {if $prefs.feature_help eq 'y'}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comment.tpl,v 1.35.2.1 2007-12-17 18:20:46 sylvieg Exp $ *}
+{* $Id$ *}
 {if $comment.doNotShow != 1 }
 <div class="post {$thread_style}" id="threadId{$comment.threadId}">
 	<div class="inner"><span class="corners-top"><span></span></span>

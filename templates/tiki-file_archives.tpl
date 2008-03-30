@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_archives.tpl,v 1.11.2.1 2008-03-03 20:16:13 nyloth Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_menu_options.tpl,v 1.57.2.7 2008-03-14 12:04:15 ricks99 Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">

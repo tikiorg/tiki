@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.80.2.4 2008-01-30 15:33:49 nyloth Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
 {if $prefs.feature_help eq 'y'}

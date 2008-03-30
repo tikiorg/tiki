@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-look.tpl,v 1.1.2.15 2008-03-20 12:33:52 sylvieg Exp $ *}
+{* $Id$ *}
 
 <div class="cbox">
 	<div class="cbox-title">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_comments.tpl,v 1.7.2.3 2008-03-14 12:04:16 ricks99 Exp $ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
 {if $comments}
