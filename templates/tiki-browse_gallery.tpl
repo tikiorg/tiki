@@ -113,7 +113,7 @@
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	   </a>
 {else}
-	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}<div>{$item.name}</div>{/if}{if $showfilename eq 'y'}<div>{$item.filename}</div>{/if}{if $showdescription eq 'y' and $item.description}<div>{$item.description}</div>{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
+	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{elseif $showfilename eq 'y'}{$item.filename}{elseif $showdescription eq 'y' and $item.description}{$item.description}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	</a>
 {/if}
