@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_frame.tpl,v 1.5 2007-01-22 02:55:44 franck Exp $ *}
+{* $Id$ *}
 
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>

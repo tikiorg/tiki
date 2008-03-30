@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_download.tpl,v 1.10.2.1 2008-01-02 21:31:43 pkdille Exp $ *}
+{* $Id$ *}
 
 <h3>{tr}Download Layer{/tr}</h3>
 {if $nodownload}
