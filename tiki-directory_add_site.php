@@ -88,8 +88,12 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('dir-add-site');
 	$msg = "";
 
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+ $msg .= tra("You have mistyped the anti-bot verification code; please try again. ");
+	}
+
 	if (empty($_REQUEST["name"])) {
-		$msg = tra("Must enter a name to add a site. ");
+		$msg .= tra("Must enter a name to add a site. ");
 	}
 
 	if (empty($_REQUEST["url"])) {

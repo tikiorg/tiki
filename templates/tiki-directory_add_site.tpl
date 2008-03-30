@@ -84,6 +84,9 @@
   </tr>
   -->
   <input name="isValid" type="hidden" value="" />
+{if $prefs.feature_antibot eq 'y' && $user eq ''}
+{include file="antibot.tpl"}
+{/if}
   <tr>
     <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
