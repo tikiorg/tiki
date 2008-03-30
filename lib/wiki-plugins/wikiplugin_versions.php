@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.10 2007-10-12 07:55:49 nyloth Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.10 2007-10-12 07:55:49 nyloth Exp $
  *
  * Versions plugin: Split the text in parts visible only under some conditions:
  * 

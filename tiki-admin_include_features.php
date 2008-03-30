@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.6 2008-03-16 13:56:22 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.77.2.6 2008-03-16 13:56:22 sylvieg Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/importerlib.php,v 1.1.2.2 2007-11-24 19:40:32 kerrnel22 Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/importerlib.php,v 1.1.2.2 2007-11-24 19:40:32 kerrnel22 Exp $
 //
 // Copyright (c)2002-2003
 // Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

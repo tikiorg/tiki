@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.8 2005-05-18 11:02:29 mose Exp $
+// $Id$
 // \brief Show last comments on wiki pages
 //
 

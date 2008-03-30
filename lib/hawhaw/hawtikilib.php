@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.22 2007-03-02 19:49:16 luciash Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.22 2007-03-02 19:49:16 luciash Exp $
 
 // HAWHAW function library for Tikiwiki
 

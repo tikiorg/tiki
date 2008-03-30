@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.19 2007-10-12 07:55:28 nyloth Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.19 2007-10-12 07:55:28 nyloth Exp $
  *
  * Integrated files viewer (wrapper)
  *

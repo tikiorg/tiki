@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.7 2007-03-02 19:49:06 luciash Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.7 2007-03-02 19:49:06 luciash Exp $
  *
  * Tikiwiki SF auto-links.
  * 

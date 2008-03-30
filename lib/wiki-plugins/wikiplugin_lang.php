@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.8 2007-10-12 07:55:48 nyloth Exp $
+/* $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.8 2007-10-12 07:55:48 nyloth Exp $
  * Displays the content data only if the language matched the current language or the language is the URI
  * {LANG(lang=fr)}Bon appétit{LANG}
  * tra("Displays the text only if the requested language matches (lang) or not (notlang) the + separated list of lang codes")

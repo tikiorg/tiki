@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.21 2007-10-15 07:43:27 sept_7 Exp $
+// $Id: /cvsroot/tikiwiki/tiki/jhot.php,v 1.21 2007-10-15 07:43:27 sept_7 Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.21 2007-10-15 07:43:27 sept_7 Exp $
+# $Id: /cvsroot/tikiwiki/tiki/jhot.php,v 1.21 2007-10-15 07:43:27 sept_7 Exp $
 include_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');

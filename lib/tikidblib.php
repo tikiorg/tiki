@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41.2.2 2007-12-01 19:52:53 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.41.2.2 2007-12-01 19:52:53 nyloth Exp $
 //
 
 // $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));

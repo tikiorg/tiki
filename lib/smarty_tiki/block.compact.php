@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.compact.php,v 1.1 2005-04-17 13:46:43 zaufi Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.compact.php,v 1.1 2005-04-17 13:46:43 zaufi Exp $
  *
  * Smarty plugin to make result HTML code smaller
  * In opposite to {strip} this plugin can be used ONCE at top level template

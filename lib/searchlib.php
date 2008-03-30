@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.6 2008-02-27 15:18:43 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/searchlib.php,v 1.48.2.6 2008-02-27 15:18:43 nyloth Exp $
 //test
 
 //this script may only be included - so its better to die if called directly.

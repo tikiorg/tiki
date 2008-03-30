@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.3 2008/03/23 14:12:05 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.61.2.3 2008/03/23 14:12:05 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 

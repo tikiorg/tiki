@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.9 2007-10-12 07:55:48 nyloth Exp $
+/* $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.9 2007-10-12 07:55:48 nyloth Exp $
  *
  * Tikiwiki CATPATH plugin.
  * 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.34.2.1 2007-12-07 05:56:37 mose Exp $
+// $Id: /cvsroot/tikiwiki/tiki/show_image.php,v 1.34.2.1 2007-12-07 05:56:37 mose Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

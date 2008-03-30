@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.5 2007-11-25 21:42:35 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-forum_import.php,v 1.1.2.5 2007-11-25 21:42:35 sylvieg Exp $
 //
 // Copyright (c)2002-2003
 // Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8.2.1 2008-02-14 10:25:11 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.8.2.1 2008-02-14 10:25:11 nyloth Exp $
 
 require_once ('tiki-setup.php');
 

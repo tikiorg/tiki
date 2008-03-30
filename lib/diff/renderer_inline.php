@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_inline.php,v 1.3 2006-02-04 17:16:47 jdrexler Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_inline.php,v 1.3 2006-02-04 17:16:47 jdrexler Exp $
 /**
  * "Inline" diff renderer.
  *

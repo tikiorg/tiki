@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5.2.1 2008-01-15 21:06:59 nkoth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-parsemode_setup.php,v 1.5.2.1 2008-01-15 21:06:59 nkoth Exp $
 
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) != FALSE) { header('location: index.php'); exit; }
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.7 2007-04-13 14:19:48 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.sortlinks.php,v 1.7 2007-04-13 14:19:48 sylvieg Exp $
 /* 
 * Smarty plugin 
 * ------------------------------------------------------------- 

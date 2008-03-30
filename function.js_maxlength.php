@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/function.js_maxlength.php,v 1.8 2005-08-25 20:50:04 michael_davey Exp $
+// $Id: /cvsroot/tikiwiki/tiki/function.js_maxlength.php,v 1.8 2005-08-25 20:50:04 michael_davey Exp $
 /**
  * \brief Smarty {js_maxlength} function handler
  *

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_slist.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_slist.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
  *
  * \brief List of Smarty vars
  *

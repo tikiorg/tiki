@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.26 2007-10-12 07:55:24 nyloth Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.26 2007-10-12 07:55:24 nyloth Exp $
  *
  * Admin interface for rules management
  *

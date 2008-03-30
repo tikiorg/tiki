@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.30.2.1 2008-02-27 00:09:14 franck Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.30.2.1 2008-02-27 00:09:14 franck Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_ads.php,v 1.1.2.1 2008-03-16 16:57:50 luciash Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_ads.php,v 1.1.2.1 2008-03-16 16:57:50 luciash Exp $
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.

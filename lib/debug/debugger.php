@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.6 2004-01-15 21:55:40 mose Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.6 2004-01-15 21:55:40 mose Exp $
  *
  * \brief Tiki internal debugger 
  *

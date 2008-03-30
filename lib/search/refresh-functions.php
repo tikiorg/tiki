@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.2 2008-03-20 15:33:27 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/search/refresh-functions.php,v 1.29.2.2 2008-03-20 15:33:27 nyloth Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

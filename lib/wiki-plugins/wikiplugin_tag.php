@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tag.php,v 1.2 2005-12-12 15:18:52 mose Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_tag.php,v 1.2 2005-12-12 15:18:52 mose Exp $
 
 // Wiki plugin to output something like <a_tag style=a_style>...</a_tag>
 //ex: {TAG(tag=STRIKE, style=color:#FF0000)}toto{TAG}

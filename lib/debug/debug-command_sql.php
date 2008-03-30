@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sql.php,v 1.4 2005-12-12 15:18:49 mose Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sql.php,v 1.4 2005-12-12 15:18:49 mose Exp $
  *
  * \brief Exec SQL query on Tiki DB
  *

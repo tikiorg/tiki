@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.35.2.1 2008-01-17 18:38:08 sylvieg Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.35.2.1 2008-01-17 18:38:08 sylvieg Exp $
  *
  * \brief Manage user assigned modules
  */

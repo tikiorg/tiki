@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.10 2007-03-02 19:49:20 luciash Exp $
+<?php // -*- coding:utf-8 -*- $Id: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.10 2007-03-02 19:49:20 luciash Exp $
 /* 
  * The listing associates country names used as filenames for flags in Tikiwiki for language translation
  */

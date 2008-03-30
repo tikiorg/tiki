@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_htmldiff.php,v 1.1.2.1 2008-03-04 15:48:27 sept_7 Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/diff/renderer_htmldiff.php,v 1.1.2.1 2008-03-04 15:48:27 sept_7 Exp $
 
 /**
  * HTML diff renderer.

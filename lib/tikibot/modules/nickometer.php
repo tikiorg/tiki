@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/nickometer.php,v 1.3 2004-05-12 13:15:32 damosoft Exp $
+$Id: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/nickometer.php,v 1.3 2004-05-12 13:15:32 damosoft Exp $
 
 Lame nickometer for wollabot 
 */

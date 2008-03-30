@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.popup_init.php,v 1.4 2006-12-29 11:17:49 mose Exp $ */
+/* $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.popup_init.php,v 1.4 2006-12-29 11:17:49 mose Exp $ */
 /**
  * Smarty plugin
  * @package Smarty

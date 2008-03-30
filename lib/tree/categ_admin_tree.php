@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.6 2007-03-06 19:30:29 sylvieg Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.6 2007-03-06 19:30:29 sylvieg Exp $
  *
  * \brief Categories browse tree
  *

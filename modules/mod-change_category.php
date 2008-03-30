@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.6.2.10 2008-02-27 14:47:05 sylvieg Exp $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 // param: id, shy, notop, detail, categorize,multiple,group,path, add, del

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.3 2008-03-05 22:33:29 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.39.2.3 2008-03-05 22:33:29 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,9 +8,10 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+require_once('lib/ajax/ajaxlib.php');
 
 require_once ('lib/searchlib.php'); 
-
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang');
 $smarty->assign('headtitle',tra('Search results'));
 
 $searchlib = &new SearchLib($tikilib->db);
@@ -133,13 +134,10 @@ if(($where=='blogs' || $where=='posts')) {
 	  die;
 	}
 }
+	if (isset($_REQUEST['maxRecords'])) {
+		$maxRecords = $_REQUEST['maxRecords'];
+	}
 
-if (($where == 'blogs' || $where == 'posts') and $prefs['feature_blogs'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
-	$smarty->display("error.tpl");
-	die;
-}
 // Already assigned above! $smarty->assign('where',$where);
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
@@ -175,24 +173,16 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 //	$results['cant'] = $CurrentIndex + 1;
 //}
 
-$cant_pages = ceil($results["cant"] / $maxRecords);
+$cant_pages = ceil($results["cant"]);
 $smarty->assign_by_ref('cant_results', $results["cant"]);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($results["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
 
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 $smarty->assign_by_ref('where2',$where2);
+
+$cant=$results['cant'];
+$smarty->assign('cant', $cant);
 
 // Find search results (build array)
 $smarty->assign_by_ref('results', $results["data"]);

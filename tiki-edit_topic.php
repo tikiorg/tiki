@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_topic.php,v 1.9 2007-10-12 07:55:27 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-edit_topic.php,v 1.9 2007-10-12 07:55:27 nyloth Exp $
 require_once('tiki-setup.php');
 include_once('lib/articles/artlib.php');
 

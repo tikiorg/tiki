@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.50.2.1 2008-03-01 17:12:48 lphuberdeau Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-mypage_ajax.php,v 1.50.2.1 2008-03-01 17:12:48 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

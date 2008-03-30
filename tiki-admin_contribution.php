@@ -1,5 +1,5 @@
 <?php
-//$Header: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
+//$Id: /cvsroot/tikiwiki/tiki/tiki-admin_contribution.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
 require_once('tiki-setup.php');
 
 if ($prefs['feature_contribution'] != 'y') {

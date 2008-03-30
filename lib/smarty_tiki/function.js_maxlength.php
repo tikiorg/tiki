@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.js_maxlength.php,v 1.5 2005-05-18 11:01:44 mose Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.js_maxlength.php,v 1.5 2005-05-18 11:01:44 mose Exp $
 /**
  * \brief Smarty {js_maxlength} function handler
  *

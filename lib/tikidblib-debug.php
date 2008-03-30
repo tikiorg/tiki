@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.16 2007-07-03 15:01:13 sept_7 Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/tikidblib-debug.php,v 1.16 2007-07-03 15:01:13 sept_7 Exp $
 //
 
 

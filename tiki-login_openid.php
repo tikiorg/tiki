@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.9 2007-10-12 07:55:29 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-login_openid.php,v 1.9 2007-10-12 07:55:29 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

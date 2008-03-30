@@ -1,14 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.9 2008-03-04 18:45:54 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.9 2008-03-04 18:45:54 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-//
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_freetags.php,v 1.17.2.9 2008-03-04 18:45:54 sylvieg Exp $
-//
 
 // Initialization
 require_once ('tiki-setup.php');
@@ -160,6 +157,9 @@ if ($objects["cant"] > ($offset + $maxRecords)) {
 } else {
 	$smarty->assign('next_offset', -1);
 }
+
+$cant=$objects['cant'];
+$smarty->assign('cant', $cant);
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {

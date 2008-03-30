@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.8.2.2 2008-03-20 19:32:20 sylvieg Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.8.2.2 2008-03-20 19:32:20 sylvieg Exp $
  *
  * Tikiwiki QUOTE plugin.
  * 

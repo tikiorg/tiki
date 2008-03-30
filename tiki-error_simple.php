@@ -1,6 +1,6 @@
 <?php
 
-// $Header:
+// $Id:
 
 echo '<html><body><pre><p>';
 if (isset($_REQUEST['error']) and !is_null($_REQUEST['error'])) {

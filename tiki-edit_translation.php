@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.12 2008-03-04 15:44:58 lphuberdeau Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.16.2.12 2008-03-04 15:44:58 lphuberdeau Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

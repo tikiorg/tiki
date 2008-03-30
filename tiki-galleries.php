@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.58.2.1 2008-03-15 21:11:15 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.58.2.1 2008-03-15 21:11:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

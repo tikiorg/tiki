@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.4 2008-03-06 19:45:42 sampaioprimo Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/imagegals/imagegallib.php,v 1.97.2.4 2008-03-06 19:45:42 sampaioprimo Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {

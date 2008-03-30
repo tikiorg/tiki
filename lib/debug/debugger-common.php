@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-common.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debugger-common.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
  *
  * \brief Commonly used stuff
  *

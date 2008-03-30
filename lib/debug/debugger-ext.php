@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-ext.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/debug/debugger-ext.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
  *
  * \brief Base class for external debugger command
  *

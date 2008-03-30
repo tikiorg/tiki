@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.5 2007-12-19 22:50:15 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.5 2007-12-19 22:50:15 sylvieg Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

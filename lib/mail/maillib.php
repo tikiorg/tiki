@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/mail/maillib.php,v 1.2 2007-03-02 19:49:19 luciash Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/mail/maillib.php,v 1.2 2007-03-02 19:49:19 luciash Exp $
 
 /* Common shared mail functions */
 

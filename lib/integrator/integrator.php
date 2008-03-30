@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.33.2.1 2008-03-16 01:00:38 nyloth Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.33.2.1 2008-03-16 01:00:38 nyloth Exp $
  * 
  * \brief Tiki integrator support class
  *

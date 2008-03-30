@@ -8,7 +8,7 @@
  * @copyright Tiki Community
  * @date created: 2003/3/21 16:48
  * @date last-modified: $Date: 2007-11-12 18:44:50 $
- * $Header: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.41.2.1 2007-11-12 18:44:50 ntavares Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/registration/registrationlib.php,v 1.41.2.1 2007-11-12 18:44:50 ntavares Exp $
  */
 
 //this script may only be included - so it's better to die if called directly

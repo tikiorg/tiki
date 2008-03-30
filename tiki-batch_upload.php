@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.16 2007-10-12 07:55:24 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-batch_upload.php,v 1.16 2007-10-12 07:55:24 nyloth Exp $
 
 $section = 'galleries';
 require_once ('tiki-setup.php');

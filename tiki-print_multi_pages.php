@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.3 2008-01-21 09:47:15 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-print_multi_pages.php,v 1.15.2.3 2008-01-21 09:47:15 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

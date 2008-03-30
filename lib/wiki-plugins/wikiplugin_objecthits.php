@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_objecthits.php,v 1.4.2.1 2007-12-07 12:55:20 pkdille Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_objecthits.php,v 1.4.2.1 2007-12-07 12:55:20 pkdille Exp $
 
 // Wiki plugin to display the number of hits per object
 // Franck Martin 2005

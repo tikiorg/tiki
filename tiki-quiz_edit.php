@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21.2.1 2007-11-04 21:49:20 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.21.2.1 2007-11-04 21:49:20 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.

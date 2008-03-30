@@ -1,5 +1,5 @@
 <?php
-//$Header: /cvsroot/tikiwiki/tiki/modules/mod-article_topics.php,v 1.2 2005-12-15 14:16:13 sylvieg Exp $
+//$Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

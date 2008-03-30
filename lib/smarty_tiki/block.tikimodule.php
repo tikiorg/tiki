@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.18 2007-10-16 14:11:35 mose Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.18 2007-10-16 14:11:35 mose Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *

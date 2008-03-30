@@ -1,5 +1,5 @@
 <?php
-/* $Header:
+/* $Id:
  *
  * Tikiwiki CATORPHANS plugin.
  * 

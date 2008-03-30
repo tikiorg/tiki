@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.40.2.1 2007-11-28 14:33:28 mose Exp $
+ * $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.40.2.1 2007-11-28 14:33:28 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:

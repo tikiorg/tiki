@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/faq.php,v 1.2 2003-11-18 01:34:56 mose Exp $
+$Id: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/faq.php,v 1.2 2003-11-18 01:34:56 mose Exp $
 
 FAQ module for wollabot 
 */

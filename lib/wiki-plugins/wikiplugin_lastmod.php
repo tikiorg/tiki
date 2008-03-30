@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.4.2.1 2007-12-07 12:55:20 pkdille Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lastmod.php,v 1.4.2.1 2007-12-07 12:55:20 pkdille Exp $
 
 // Wiki plugin to display last modification information.
 // rlpowell 31 Dec 2006

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.10 2007-10-12 07:55:27 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-graph_sheet.php,v 1.10 2007-10-12 07:55:27 nyloth Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

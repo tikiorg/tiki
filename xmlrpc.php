@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.29.2.1 2008-03-01 16:07:37 lphuberdeau Exp $
+# $Id: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.29.2.1 2008-03-01 16:07:37 lphuberdeau Exp $
 include_once('tiki-setup.php');
 require_once("XML/Server.php");
 include_once('lib/blogs/bloglib.php');

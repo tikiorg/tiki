@@ -1,5 +1,5 @@
 <?php // -*- coding:utf-8 -*-
-/* $Header: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5.2.1 2007-12-22 01:56:52 mose Exp $ */
+/* $Id: /cvsroot/tikiwiki/tiki/tiki-special_chars.php,v 1.5.2.1 2007-12-22 01:56:52 mose Exp $ */
 echo  '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html

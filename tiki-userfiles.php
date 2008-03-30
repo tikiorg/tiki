@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.22.2.1 2007-12-11 22:42:54 pkdille Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.22.2.1 2007-12-11 22:42:54 pkdille Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

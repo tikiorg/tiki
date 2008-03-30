@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.6 2008-02-26 18:47:16 lphuberdeau Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-freetag_translate.php,v 1.1.2.6 2008-02-26 18:47:16 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

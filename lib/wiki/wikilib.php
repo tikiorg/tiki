@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.11 2008-02-27 15:18:48 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/wiki/wikilib.php,v 1.110.2.11 2008-02-27 15:18:48 nyloth Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

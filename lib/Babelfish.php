@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.14 2007-03-06 19:29:58 sylvieg Exp $
+// $Id: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.14 2007-03-06 19:29:58 sylvieg Exp $
 
 // Tiki is copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.

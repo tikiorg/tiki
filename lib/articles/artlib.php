@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.16 2007/01/03 01:09:34 mose Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.16 2007/01/03 01:09:34 mose Exp $
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");

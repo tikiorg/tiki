@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-blog_last_comments.php,v 1.1 2006-01-26 23:28:08 amette Exp $
+// $Id$
 // \brief Show last comments on wiki pages
 //
 

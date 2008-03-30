@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/phpfunctions.php,v 1.2 2003-11-18 01:34:56 mose Exp $
+$Id: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/phpfunctions.php,v 1.2 2003-11-18 01:34:56 mose Exp $
 
 PHP function module for Wollabot 
 */

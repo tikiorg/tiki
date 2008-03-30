@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/google.php,v 1.3 2004-01-08 23:50:17 damosoft Exp $
+$Id: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/google.php,v 1.3 2004-01-08 23:50:17 damosoft Exp $
 
 Google "get-the-first-link" wollabot module
 */

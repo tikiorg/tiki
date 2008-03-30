@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.10 2007-10-12 07:55:28 nyloth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.10 2007-10-12 07:55:28 nyloth Exp $
 
 // Initialization
 require_once('tiki-setup.php');
