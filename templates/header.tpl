@@ -126,6 +126,61 @@ var numl;var toBeHidden;
 {/literal}
 </script>
 {/if}
+
+{if $prefs.feature_shadowbox eq 'y'}
+<!-- Includes for Shadowbox script -->
+	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
+
+{if $prefs.feature_mootools eq "y"}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
+{else}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+{/if}
+
+	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
+
+	<script type="text/javascript">
+
+{if $prefs.feature_mootools eq "y"}
+	{literal}
+		window.addEvent('domready', function() {
+	{/literal}
+{else}
+	{literal}
+		$(document).ready(function() {
+	{/literal}
+{/if}
+{literal}
+			var options = {
+				ext: {
+					img:        ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
+					qt:         ['dv', 'mov', 'moov', 'movie', 'mp4'],
+					wmp:        ['asf', 'wm', 'wmv'],
+					qtwmp:      ['avi', 'mpg', 'mpeg'],
+					iframe: ['asp', 'aspx', 'cgi', 'cfm', 'doc', 'htm', 'html', 'pdf', 'pl', 'php', 'php3', 'php4', 'php5', 'phtml', 'rb', 'rhtml', 'shtml', 'txt', 'vbs', 'xls']
+				},
+				handleUnsupported: 'remove',
+				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
+				resizeLgImages: true,
+				text: {
+{/literal}
+					cancel:   '{tr}Cancel{/tr}',
+					loading:  '{tr}Loading{/tr}',
+					close:    '{tr}<span class="shortcut">C</span>lose{/tr}',
+					next:     '{tr}<span class="shortcut">N</span>ext{/tr}',
+					prev:     '{tr}<span class="shortcut">P</span>revious{/tr}'
+{literal}
+				},
+				keysClose:          ['c', 27], // c OR esc
+				keysNext:           ['n', 39], // n OR arrow right
+				keysPrev:           ['p', 37]  // p OR arrow left
+			};
+
+			Shadowbox.init(options);
+		});
+	</script>
+{/literal}
+{/if}
 </head>
 
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}

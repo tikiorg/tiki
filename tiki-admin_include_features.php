@@ -98,6 +98,7 @@ $features_toggles = array(
 	"feature_lightbox",
 	"feature_userlevels",
 	"feature_mootools",
+	"feature_shadowbox",
 	"feature_swffix",
 	"layout_section",
 	"user_assigned_modules",

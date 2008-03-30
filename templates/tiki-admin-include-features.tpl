@@ -209,11 +209,14 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td>&nbsp;</td>     
     <td><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></td>   
-    </tr>  
+  </tr>  
   <tr>     
     <td><input type="checkbox" name="feature_lightbox" {if $prefs.feature_lightbox eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> <a href="{$prefs.helpurl}Image+Gallery+Config" target="tikihelp" class="tikihelp" title="{tr}Lightbox{/tr}"> {tr}Lightbox (Javascript modern visual effects on images){/tr}</a>{if !$lightboxlib}<br />{tr}You must install the lightbox library in lib/lightbox{/tr}{/if}</td>
-    </tr>  
+    <td>&nbsp;</td>
+    <td><input type="checkbox" name="feature_shadowbox" {if $prefs.feature_shadowbox eq 'y'}checked="checked"{/if}/></td>
+    <td class="form"> <a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></td>
+  </tr>
         
 {* ---------- Experimental features ------------ *}
   <tr>
