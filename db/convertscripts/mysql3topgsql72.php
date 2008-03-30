@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/mysql3topgsql72.php,v 1.16 2005-11-07 16:20:22 damosoft Exp $ */
+/* $Id$ */
 
 $tikiversion='1.9';
 if(!isset($_GET['version'])) {

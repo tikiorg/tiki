@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/mysql3tosqlite.php,v 1.10 2007-02-08 13:51:20 sylvieg Exp $ */
+/* $Id$ */
 
 $tikiversion='1.9';
 if(!isset($_GET['version'])) {

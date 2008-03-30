@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.10.2.2 2008-03-05 12:39:32 marclaporte Exp $
+# $Id$
 
 # Usage:
 # from db/convertscripts, run:

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.118.2.2 2008-02-27 15:18:42 nyloth Exp $
+# $Id$
 
 # The following script will update a tiki database from version 1.8.x to 1.9.x
 # The following script will ALSO update from version 1.9.x to 1.9.y
