@@ -930,6 +930,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['webserverauth'] = 'n';
 	$prefs['feature_purifier'] = 'n';
 	$prefs['feature_lightbox'] = 'n';
+	$prefs['feature_shadowbox'] = 'n';
 	$prefs['log_sql'] = 'n';
 	$prefs['log_mail'] = 'n';
 
