@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_trackerstat.tpl,v 1.5 2006-11-29 18:21:59 sylvieg Exp $ *}
+{* $Id$ *}
 <table class="normal wikiplugin_trackerstat">
 {cycle values="even,odd" print=false}
 {section name=istat loop=$stats}

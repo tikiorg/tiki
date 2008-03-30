@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_subscribegroups.tpl,v 1.1.2.1 2007-12-04 20:33:16 sylvieg Exp $ *}
+{* $Id$ *}
 {if !empty($userGroups)}
 {cycle values="odd,even" print=false}
 <table class="normal">

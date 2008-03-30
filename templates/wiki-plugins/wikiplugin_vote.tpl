@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/wikiplugin_vote.tpl,v 1.7 2007-08-04 10:34:31 sylvieg Exp $ *}
+{* $Id$ *}
 {strip}
 <span style="display:inline;{if $float}float:{$float}{/if}" class="poll">
 

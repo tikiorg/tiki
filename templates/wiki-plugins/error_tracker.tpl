@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/wiki-plugins/error_tracker.tpl,v 1.2 2007-10-04 22:17:51 nyloth Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_trackers ne 'y'}
 <span class="error">{tr}This feature is disabled{/tr}</span>
 {else}
