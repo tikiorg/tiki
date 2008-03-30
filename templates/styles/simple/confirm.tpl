@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/confirm.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 				<div class="cbox">
 					<div class="cbox-data">

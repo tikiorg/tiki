@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-forums_last_posts.tpl,v 1.3 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_forums eq 'y'}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Last `$module_rows` forum posts{/tr}" assign="tpl_module_title"}

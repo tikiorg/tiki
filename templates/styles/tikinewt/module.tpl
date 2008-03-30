@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/module.tpl,v 1.1.2.1 2008-03-02 14:07:24 chibaguy Exp $ *}
+{* $Id$ *}
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 <div class="box-shadow">

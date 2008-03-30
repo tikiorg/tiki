@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.10 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Id$ *}
 {* Module layout with controls *}
 
 <div class="box box-{$module_name|escape}">

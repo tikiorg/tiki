@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_files.tpl,v 1.3 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_file_galleries eq 'y'}
 {if $nonums eq 'y'}

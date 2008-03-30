@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-wiki_last_comments.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 {if $prefs.feature_wiki eq 'y'}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Last `$module_rows` wiki comments{/tr}" assign="tpl_module_title"}

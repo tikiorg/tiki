@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki-site_header.tpl,v 1.1.2.4 2008-03-19 05:41:14 chibaguy Exp $ *}
+{* $Id$ *}
 {* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}
 		{/if}

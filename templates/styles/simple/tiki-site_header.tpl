@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki-site_header.tpl,v 1.6 2007-10-06 15:18:47 nyloth Exp $ *}
+{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitemycode}{* here can be custom site admin code *}{/if}
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}

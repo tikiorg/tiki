@@ -1,18 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-searchindex.tpl,v 1.20.2.3 2007-12-15 01:28:04 luciash Exp $ *}
+{* $Id$ *}
 {if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
 {/if}
 
 {if !( $searchStyle eq "menu" )}
   <div class="nohighlight">
-    {tr}Search in{/tr}:
-    <br /><br />
+    <p>{tr}Search in{/tr}:</p>
     {foreach item=name key=k from=$where_list}
       <a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
     {/foreach}
   </div><!--nohighlight-->
-
-  <br /><br /> 
 
 {if $words neq ''}{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}{/if}
 {/if}
@@ -56,14 +53,9 @@
 {/section}
 </div>
 
-{if $cant_pages gt 0}<div class="mini">
-{if $prev_offset >= 0}
-[<a class="link" href="tiki-searchindex.php?where={$where}&amp;highlight={$words}&amp;offset={$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="link" href="tiki-searchindex.php?where={$where}&amp;highlight={$words}&amp;offset={$next_offset}">{tr}Next{/tr}</a>]
-{/if}
-</div>{/if}
+{* PAGINATION *}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
+{* END OF PAGINATION *}
+
 {/if}
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.25.2.1 2007-12-08 03:59:49 mose Exp $ *}
+{* $Id$ *}
 
 <div id="page-bar">
 

@@ -1,4 +1,4 @@
-{* $Id: tiki-plugin_trackerlist.tpl,v 1.33.2.8 2008-03-19 14:06:46 sylvieg Exp $ *}
+{* $Id$ *}
 {if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}

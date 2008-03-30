@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang2.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {tikimodule title="{tr}Language{/tr}: `$prefs.language`" name="switch_lang2"}
 <ul class='floatlist'>

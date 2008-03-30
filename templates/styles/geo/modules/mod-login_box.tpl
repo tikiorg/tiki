@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/geo/modules/mod-login_box.tpl,v 1.14 2007-10-04 22:17:48 nyloth Exp $ *}
+{* $Id$ *}
   {tikimodule title="{tr}Login{/tr}" name="login-box"}
     {if $user}
       {tr}logged as{/tr}: {$user}<br />

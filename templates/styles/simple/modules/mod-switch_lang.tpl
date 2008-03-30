@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-switch_lang.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {tikimodule title="{tr}Language: {/tr}`$prefs.language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
 	{if $prefs.change_language ne 'n' or $user eq ''}

@@ -1,4 +1,4 @@
-{* $Id: tiki-syslog.tpl,v 1.16.2.5 2008-03-05 15:37:21 marclaporte Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

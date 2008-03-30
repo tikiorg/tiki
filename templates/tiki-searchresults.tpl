@@ -110,13 +110,6 @@
 {/section}
 </div>
 
-{if $cant_pages gt 0}<div class="mini">
-{if $prev_offset >= 0}
-[<a class="linkbut" href="tiki-searchresults.php?where={$where}&amp;highlight={$words}&amp;offset={$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="linkbut" href="tiki-searchresults.php?where={$where}&amp;highlight={$words}&amp;offset={$next_offset}">{tr}Next{/tr}</a>]
-{/if}
-</div>{/if}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 {/if}

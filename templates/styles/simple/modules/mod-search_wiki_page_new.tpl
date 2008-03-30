@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-search_wiki_page_new.tpl,v 1.3 2007-07-20 17:33:59 jyhem Exp $ *}
+{* $Id$ *}
 
 {tikimodule title="{tr}Search Wiki PageName{/tr}" name="search_wiki_page" flip=$module_params.flip decorations=$module_params.decorations}
   <form class="forms" method="post" action="tiki-listpages.php">

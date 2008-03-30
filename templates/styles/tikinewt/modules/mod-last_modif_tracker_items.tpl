@@ -1,4 +1,4 @@
-{* based on (table changed to div and span) $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.8.10.3 2007/08/11 21:35:19 marclaporte *}
+{* based on (table changed to div and span) $Id: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.8.10.3 2007/08/11 21:35:19 marclaporte *}
 
 {if $feature_trackers eq 'y'}
 {if $nonums eq 'y'}

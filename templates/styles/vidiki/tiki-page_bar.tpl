@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/vidiki/tiki-page_bar.tpl,v 1.18 2007-10-04 22:17:51 nyloth Exp $ *}
+{* $Id$ *}
 
 <hr/>
 <div id="page-bar">

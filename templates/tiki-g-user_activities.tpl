@@ -1,3 +1,4 @@
+{*$Id: $*}
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-user_activities.php">{tr}User Activities{/tr}</a>
@@ -106,25 +107,7 @@
 {* END OF LISTING *}
 
 {* PAGINATION *}
-<div class="mini">
-<div align="center">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="{sameurl offset=$selector_offset}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div> 
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 {* END OF PAGINATION *}
 
 {* SHOW GRAPH IF AVAILABLE... *}

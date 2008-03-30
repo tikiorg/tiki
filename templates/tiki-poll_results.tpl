@@ -1,4 +1,4 @@
-{* $Id: tiki-poll_results.tpl,v 1.17.2.4 2008-03-08 19:52:27 sylvieg Exp $ *}
+{* $Id$ *}
 <h1><a href="tiki-poll_results.php{if !empty($smarty.request.pollId)}?pollId={$smarty.request.pollId}{/if}">{tr}Poll Results{/tr}</a></h1>
 <div class="navbar">
 <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Polls{/tr}</a></span>

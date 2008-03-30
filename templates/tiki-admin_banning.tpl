@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_banning.tpl,v 1.33.2.5 2008-03-15 22:30:50 sylvieg Exp $ *}
+{* $Id$ *}
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/module.tpl,v 1.8 2007-10-04 22:17:50 nyloth Exp $*}
+{* $Id$*}
 {* Module layout with controls *}
 
 <div class="box"><div class="box-title">

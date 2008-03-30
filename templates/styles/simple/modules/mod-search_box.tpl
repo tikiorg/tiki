@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-search_box.tpl,v 1.4 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_box" flip=$module_params.flip decorations=$module_params.decorations}

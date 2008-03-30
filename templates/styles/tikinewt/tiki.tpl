@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikinewt/tiki.tpl,v 1.1.2.4 2008-03-18 20:55:54 pkdille Exp $ *}
+{* $Id$ *}
 
 {include file="header.tpl"}
 {if $prefs.feature_ajax eq 'y'}

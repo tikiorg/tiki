@@ -1,4 +1,4 @@
-{* $Id: tiki-admin_polls.tpl,v 1.37.2.5 2008-02-08 13:56:55 jyhem Exp $ *}
+{* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}

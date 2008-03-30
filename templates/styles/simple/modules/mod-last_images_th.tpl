@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-last_images_th.tpl,v 1.5 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_galleries eq 'y'}
   {tikimodule title="{tr}Last Images{/tr}" name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations}

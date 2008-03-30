@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/smartiki/babelfish.tpl,v 1.2 2007-10-04 22:17:50 nyloth Exp $ *}
+{* $Id$ *}
 
 {if $prefs.feature_babelfish eq 'y'}
 

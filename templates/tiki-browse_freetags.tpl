@@ -176,27 +176,7 @@
     
           <br />   
     
-          <div class="mini">
-            {if $prev_offset >= 0}
-              [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tagString|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$prev_offset}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}Prev{/tr}</a>]
-              &nbsp;
-            {/if}
-            {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-      
-            {if $next_offset >= 0}
-              &nbsp;
-              [<a class="prevnext" href="tiki-browse_freetags.php?tag={$tagString|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$next_offset}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}Next{/tr}</a>]
-            {/if}
-      
-            {if $prefs.direct_pagination eq 'y'}
-              <br />
-              {section loop=$cant_pages name=foo}
-              {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-                <a class="prevnext" href="tiki-browse_freetags.php?tag={$tagString|escape:'url'}&find={$find|escape:'url'}&amp;type={$type|escape:'url'}&amp;offset={$selector_offset}{if $broaden}&amp;broaden={$broaden}{/if}">{$smarty.section.foo.index_next}</a>
-                &nbsp;
-              {/section}
-            {/if}
-          </div>
+          {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
         {/if}
       </td>
     </tr>
