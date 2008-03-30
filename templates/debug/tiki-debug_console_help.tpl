@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_help.tpl,v 1.3 2004-03-15 21:27:35 mose Exp $ *}
+{* $Id$ *}
 {* Show help for debugger commands *}
 
 {if $command_result.action eq 'one'}

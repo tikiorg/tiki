@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_watch_tab.tpl,v 1.5 2005-05-18 11:03:25 mose Exp $ *}
+{* $Id$ *}
 
 <table  id="watchlist">
   <caption> {tr}Watchlist{/tr} </caption>

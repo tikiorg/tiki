@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_permissions.tpl,v 1.3 2003-09-25 01:05:22 rlpowell Exp $ *}
+{* $Id$ *}
 {* Show permissions table *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}
