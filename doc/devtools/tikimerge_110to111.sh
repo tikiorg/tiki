@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge_110to111.sh,v 1.1.2.3 2007-10-16 20:32:31 mose Exp $
+# $Id$
 #
 # NOTE: Since 1.9.8 release, the 1.9 branch is frozen and merges are done manualy
 # merge now only concerns BRANCH-1-10 to HEAD

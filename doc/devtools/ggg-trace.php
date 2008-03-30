@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/doc/devtools/ggg-trace.php,v 1.6 2007-02-04 20:09:34 mose Exp $
+// $Id$
 //
 // George G. Geller
 // January 24, 2004

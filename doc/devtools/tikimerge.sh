@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.12.2.1 2007-10-16 18:17:35 mose Exp $
+# $Id$
 #
 # NOTE: Since 1.9 release, merge only concerns BRANCH-1-9 to HEAD
 #

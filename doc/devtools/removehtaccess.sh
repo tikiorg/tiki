@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/removehtaccess.sh,v 1.2 2005-10-27 20:12:31 sylvieg Exp $
+# $Id$
 # Script to remove _htaccess which can be browsed unless hidden
 # these files give an attacker useful information
 

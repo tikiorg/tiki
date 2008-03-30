@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sharetikidev.sh,v 1.2 2005-10-03 17:21:44 sylvieg Exp $
+# $Id$
 # that script prepares a dump of tiki for selective duplication
 # tested on debian only for now
 # 

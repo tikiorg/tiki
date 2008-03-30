@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/findstyledef.pl,v 1.1 2005/03/13 23:38:07 ohertel Exp $
+# $Id$
 # finds all the style and class definitions in tpl and php files
 #
 # calles by findstyledef.sh

@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sqlupgrade.sh,v 1.9 2006-05-22 17:09:08 mose Exp $
+# $Id$
 # that script runs the last sql upgrade
 # It reads db/local.php to find proper mysql info
 # mose@tikiwiki.org

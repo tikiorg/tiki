@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/synctiki.sh,v 1.2 2004-01-02 23:19:28 mose Exp $
+# $Id$
 # that script runs intelligent syncronize operation.
 # It reads db/local.php to find proper mysql info
 # and duplicate db on a local mirror

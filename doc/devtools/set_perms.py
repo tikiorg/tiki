@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/set_perms.py,v 1.3 2005-05-18 10:59:14 mose Exp $
+# $Id$
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.

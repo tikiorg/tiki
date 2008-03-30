@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.10 2005-11-30 19:41:27 ggeller Exp $
+# $Id$
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.

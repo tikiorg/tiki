@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/cleanwatch.sh,v 1.2 2005-08-29 03:14:44 mose Exp $
+# $Id$
 # mose@tikiwiki.org
 
 # Usage: ./doc/devtools/cleanwatch.sh <email> [multi]

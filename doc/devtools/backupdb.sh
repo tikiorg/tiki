@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/backupdb.sh,v 1.2 2006-01-20 09:54:53 sylvieg Exp $
+# $Id$
 #
 # A script to dump a TW and SCP copy it somewhere
 # Make sure you change the default values for your setup!

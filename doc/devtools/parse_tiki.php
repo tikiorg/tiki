@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/doc/devtools/parse_tiki.php,v 1.4 2007-10-12 07:55:36 nyloth Exp $
+<?php // $Id$
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
