@@ -40,8 +40,10 @@
 					{section name=i loop=$trads}
 					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
 					{/section}
+					{if $tiki_p_edit eq 'y'}
 					<option value="-">---</option>
 					<option value="_translate_">{tr}Translate{/tr}</option>
+					{/if}
 				</select>
 				</form>
 			{/if}
