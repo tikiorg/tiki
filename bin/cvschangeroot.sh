@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: cvschangeroot.sh,v 1.3 2006-07-14 11:00:45 sylvieg Exp $
+# $Id$
 
 if [ "$1" = "" ]; then
 	echo "Usage:   $0 CVSROOT"
