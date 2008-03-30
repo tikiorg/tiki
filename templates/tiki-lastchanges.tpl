@@ -9,6 +9,7 @@
 <a class="linkbut" {if $days eq '31'}id="highlight"{/if} href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
 <a class="linkbut" {if $days eq '0'}id="highlight"{/if} href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
 </div>
+{if $lastchanges}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -26,6 +27,7 @@
 {/if}   
 </tr>
 </table>
+{/if}
 <br />
 {if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
