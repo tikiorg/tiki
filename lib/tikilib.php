@@ -3168,92 +3168,94 @@ function add_pageview() {
 	return $res;
     }
 
-    function cache_links($links) {
-	global $prefs;
-	if ($prefs['cachepages'] != 'y') return false;
-	foreach ($links as $link) {
-	    if (!$this->is_cached($link)) {
-		$this->cache_url($link);
-	    }
-	}
-    }
-
-    function get_links($data) {
-	$links = array();
-
-	//Prevent the substitution of link [] inside a <tag> ex: <input name="tracker[9]" ... >
-	$data=preg_replace("/<[^>]*>/","",$data);
-
-	// Match things like [...], but ignore things like [[foo].
-	// -Robin
-	if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
-	    $res = $r1[1];
-	    $links = array_unique($res);
+	function cache_links($links) {
+		global $prefs;
+		if ($prefs['cachepages'] != 'y') return false;
+		foreach ($links as $link) {
+			if (!$this->is_cached($link)) {
+				$this->cache_url($link);
+			}
+		}
 	}
 
-	return $links;
+	function get_links($data) {
+		$links = array();
+
+		/// Prevent the substitution of link [] inside a <tag> ex: <input name="tracker[9]" ... >
+		$data = preg_replace("/<[^>]*>/","",$data);
+
+		/// Match things like [...], but ignore things like [[foo].
+		// -Robin
+		if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
+			$res = $r1[1];
+			$links = array_unique($res);
+		}
+
+		return $links;
     }
 
     function get_links_nocache($data) {
-	$links = array();
+		$links = array();
 
-	if (preg_match_all("/\[([^\]]+)/", $data, $r1)) {
-	    $res = array();
+		if (preg_match_all("/\[([^\]]+)/", $data, $r1)) {
+			$res = array();
 
-	    foreach ($r1[1] as $alink) {
-		$parts = explode('|', $alink);
+			foreach ($r1[1] as $alink) {
+				$parts = explode('|', $alink);
 
-		if (isset($parts[1]) && $parts[1] == 'nocache') {
-		    $res[] = $parts[0];
-		} else {
-		    if (isset($parts[2]) && $parts[2] == 'nocache') {
-			$res[] = $parts[0];
-		    }
-		}
-		// avoid caching URLs with common binary file extensions
-		$extension = substr($parts[0], -4);
-		$binary = array(
-			'.arj',
-			'.asf',
-			'.avi',
-			'.bz2',
-			'.com',
-			'.dat',
-			'.doc',
-			'.exe',
-			'.hqx',
-			'.mid',
-			'.mov',
-			'.mp3',
-			'.mpg',
-			'.ogg',
-			'.pdf',
-			'.ram',
-			'.rar',
-			'.rpm',
-			'.rtf',
-			'.sea',
-			'.sit',
-			'.tar',
-			'.tgz',
-			'.wav',
-			'.wmv',
-			'.xls',
-			'.zip',
-			'ar.Z', // .tar.Z
-			'r.gz'  // .tar.gz
-			    );
-			if (in_array($extension, $binary)) {
-			    $res[] = $parts[0];
+				if (isset($parts[1]) && $parts[1] == 'nocache') {
+					$res[] = $parts[0];
+				} elseif (isset($parts[2]) && $parts[2] == 'nocache') {
+					$res[] = $parts[0];
+				} else {
+					if (isset($parts[3]) && $parts[3] == 'nocache') {
+					$res[] = $parts[0];
+					}
+				}
+				/// avoid caching URLs with common binary file extensions
+				$extension = substr($parts[0], -4);
+				$binary = array(
+					'.arj',
+					'.asf',
+					'.avi',
+					'.bz2',
+					'.com',
+					'.dat',
+					'.doc',
+					'.exe',
+					'.hqx',
+					'.mid',
+					'.mov',
+					'.mp3',
+					'.mpg',
+					'.ogg',
+					'.pdf',
+					'.ram',
+					'.rar',
+					'.rpm',
+					'.rtf',
+					'.sea',
+					'.sit',
+					'.tar',
+					'.tgz',
+					'.wav',
+					'.wmv',
+					'.xls',
+					'.zip',
+					'ar.Z', // .tar.Z
+					'r.gz'  // .tar.gz
+				);
+				if (in_array($extension, $binary)) {
+					$res[] = $parts[0];
+				}
+
 			}
 
-	    }
+			$links = array_unique($res);
+		}
 
-	    $links = array_unique($res);
+		return $links;
 	}
-
-	return $links;
-    }
 
     function is_cacheable($url) {
 	// simple implementation: future versions should analyse
@@ -6023,6 +6025,7 @@ function add_pageview() {
 	    $target = '';
 	    $class = 'class="wiki"';
 	    $ext_icon = '';
+	    $rel='';
 
 	    if ($prefs['popupLinks'] == 'y')
 	    {
@@ -6036,41 +6039,43 @@ function add_pageview() {
 	    {
 			$target = '';
 	    } else {
+			$class = 'class="wiki external"';
 	    	if ($prefs['feature_wiki_ext_icon'] == 'y') {
-		    	$class = 'class="wiki external"';
 		    	$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 	    	}
+		   	$rel='external';
 	    }
 
 	    // The (?<!\[) stuff below is to give users an easy way to
 	    // enter square brackets in their output; things like [[foo]
 	    // get rendered as [foo]. -rlpowell
 
-	    if ($prefs['cachepages'] == 'y' && $this->is_cached($link))
-	    {
-		//use of urlencode for using cached versions of dynamic sites
-		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+	    if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
+			//use of urlencode for using cached versions of dynamic sites
+			$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
-		//$link2 = str_replace("/","\/",$link);
-		//$link2 = str_replace("?","\?",$link2);
-		//$link2 = str_replace("&","\&",$link2);
-		$link2 = str_replace("/", "\/", preg_quote($link));
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href=\"$link\">$1</a>$ext_icon", $data);
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href=\"$link\">$1</a>$ext_icon $cosa", $data);
-		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href=\"$link\">$link</a>$ext_icon $cosa", $data);
+			//$link2 = str_replace("/","\/",$link);
+			//$link2 = str_replace("?","\?",$link2);
+			//$link2 = str_replace("&","\&",$link2);
+			$link2 = str_replace("/", "\/", preg_quote($link));
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param here is nocache
+			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is for relation (rel) attribute (e.g. shadowbox)
+			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
+			$pattern = "/(?<!\[)\[$link2\]/";
+			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
 	    } else {
-		//$link2 = str_replace("/","\/",$link);
-		//$link2 = str_replace("?","\?",$link2);
-		//$link2 = str_replace("&","\&",$link2);
-		$link2 = str_replace("/", "\/", preg_quote($link));
+			//$link2 = str_replace("/","\/",$link);
+			//$link2 = str_replace("?","\?",$link2);
+			//$link2 = str_replace("&","\&",$link2);
+			$link2 = str_replace("/", "\/", preg_quote($link));
 
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-		$data = preg_replace($pattern, "<a $class $target href=\"$link\">$1</a>$ext_icon", $data);
-		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href=\"$link\">$link</a>$ext_icon", $data);
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+			$pattern = "/(?<!\[)\[$link2\]/";
+			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
 	    }
 
 	}
