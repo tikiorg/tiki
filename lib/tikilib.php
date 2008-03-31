@@ -5939,7 +5939,7 @@ function add_pageview() {
 	}
 
 	// Images
-	preg_match_all("/(\{img [^\}]+})/", $data, $pages);
+	preg_match_all("/(\{img [^\}]+\})/", $data, $pages);
 
 	foreach (array_unique($pages[1])as $page_parse) {
 	    $parts = $this->split_tag( $page_parse);
@@ -5950,6 +5950,7 @@ function add_pageview() {
 	    $imgdata["width"] = '';
 	    $imgdata["link"] = '';
 	    $imgdata["rel"] = '';
+	    $imgdata["title"] = '';
 	    $imgdata["align"] = '';
 	    $imgdata["desc"] = '';
 	    $imgdata["imalign"] = '';
@@ -5993,7 +5994,8 @@ function add_pageview() {
 				$imgtarget = ' target="_blank"';
 			}
 			if ($imgdata['rel']) $linkrel = ' rel="'.$imgdata['rel'].'"';
-			$repl = '<a href="'.$imgdata["link"].'"'.$linkrel.$imgtarget.'>' . $repl . '</a>';
+			if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
+			$repl = '<a href="'.$imgdata["link"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
 	    }
 
 	    if ($imgdata["desc"]) {
