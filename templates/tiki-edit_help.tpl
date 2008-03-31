@@ -1,8 +1,8 @@
 {* $Id$ *}
-{* Show wiki syntax and plugins help *}
+{** \brief Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
-<div class="wiki-edithelp"  id='edithelpzone' >
+<div class="wiki-edithelp" id="edithelpzone">
 <div id="wikihelp-tab">
 {if count($plugins) ne 0 and !($wysiwyg ne 'y' and $prefs.wysiwyg_wiki_parsed ne 'y' and $prefs.wysiwyg_wiki_semi_parsed ne 'y')}
   <div style="text-align: right;">
@@ -60,8 +60,9 @@
 {/if}{* wysiwyg *}
 
 <tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
-<tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an external link: [URL] or [URL|link_description] or [URL|description|nocache]  (that last form prevents the local Wiki from caching the page; please use that form for large pages!).{/tr}<br />{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
-<tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center imalign=right link=http://www.yahoo.com desc=foo alt=txt usemap=name class=xyz}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
+<tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br />
+{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
+<tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center imalign=right link=http://www.yahoo.com rel='shadowbox[gallery];type=img' desc=foo alt=txt usemap=name class=xyz}" {tr}displays an image{/tr} ({tr}imalign, height, width, desc, link, rel, usemap, class and align are optional{/tr})</td></tr>
 <tr><td><strong>{tr}Non cacheable images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg?nocache=1 width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>
 <tr><td><strong>{tr}Line break{/tr}:</strong></td><td>"%%%" {tr}(very useful especially in tables){/tr}</td></tr>
 {if $prefs.feature_drawings eq 'y'}
