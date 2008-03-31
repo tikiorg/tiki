@@ -160,6 +160,7 @@ var numl;var toBeHidden;
 					iframe: ['asp', 'aspx', 'cgi', 'cfm', 'doc', 'htm', 'html', 'pdf', 'pl', 'php', 'php3', 'php4', 'php5', 'phtml', 'rb', 'rhtml', 'shtml', 'txt', 'vbs', 'xls']
 				},
 				handleUnsupported: 'remove',
+				loadingImage: 'lib/shadowbox/images/loading.gif',
 				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
 				resizeLgImages: true,
 				text: {
