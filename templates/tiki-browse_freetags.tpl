@@ -34,10 +34,57 @@
   </div>
 {/if}
 
-<br />
-<br />
-
-{tr}Browse in{/tr}:<br />
+	<div align="center">
+        <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
+          <b>{tr}Tags{/tr}</b> 
+          <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
+          <a class="linkbut" onclick="clearTags();">{tr}Clear{/tr}</a>
+          <input type="submit" value="{tr}Go{/tr}" />
+          <br />
+          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+          <input type="radio" name="broaden" value="n"{if $broaden eq 'n'} checked{/if}> 
+          <label for="stopb">{tr}With all selected tags{/tr}</label>
+          <input type="radio" name="broaden" value="y"{if $broaden eq 'y'} checked{/if}> 
+          <label for="stopb">{tr}With one selected tag{/tr}</label>
+		  <input type="radio" name="broaden" value="last"{if $broaden eq 'last'} checked{/if}> 
+          <label for="stopb">{tr}With last selected tag{/tr}</label>
+          <br />
+	</div>
+  <div width="100%">
+      <div width="200" style="vertical-align:top;">
+        {if $prefs.freetags_browse_show_cloud eq 'y'}
+          <script type="text/javascript">
+            {literal}
+              function addTag(tag) {
+			  if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
+	        document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;	
+              }
+              function clearTags() {
+	        document.getElementById('tagBox').value = '';
+              }
+            {/literal}
+          </script>
+        
+          {foreach from=$most_popular_tags item=popular_tag}
+            <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag}</a> 
+          {/foreach}
+		  <div class="mini">
+		  {if empty($maxPopular)}{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}{/if}<a href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
+		  </div>
+		  <div class="mini">
+		  {tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
+		  </div>
+		  <div class="mini">
+		  <a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
+		  </div>
+        {/if}
+      </div>
+  
+      <div style="vertical-align:top;">
+  
+        {if $tagString}<h2>{$cantobjects} {tr}results found{/tr}</h2>{/if}
+  
+{tr}Browse in{/tr}:
 
   <a class="linkbut" {if $type eq ''} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}All{/tr}</a>
   
@@ -91,93 +138,27 @@
   {if $prefs.feature_articles eq 'y'}
     <a class="linkbut" {if $type eq 'article'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=article">{tr}Articles{/tr}</a>
   {/if}   
-
-  <br /> 
-  <br /> 
-
-	<div align="center">
-        <form action="tiki-browse_freetags.php" method="get" style="padding:5px 0;">
-          {tr}Select tags in the list or put them separated by spaces.{/tr}<br />
-          <b>{tr}Tags{/tr}</b> 
-          <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
-          <a class="linkbut" onclick="clearTags();">{tr}Clear{/tr}</a>
-          <br />
-          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-          <input type="radio" name="broaden" value="n"{if $broaden eq 'n'} checked{/if}> 
-          <label for="stopb">{tr}With all selected tags{/tr}</label>
-          <input type="radio" name="broaden" value="y"{if $broaden eq 'y'} checked{/if}> 
-          <label for="stopb">{tr}With one selected tag{/tr}</label>
-		  <input type="radio" name="broaden" value="last"{if $broaden eq 'last'} checked{/if}> 
-          <label for="stopb">{tr}With last selected tag{/tr}</label>
-          <br />
-          {tr}Find:{/tr} 
           <input type="text" name="find" value="{$find}" />
-          <br />
-          <input type="submit" value="{tr}Find{/tr}" />
+          <input type="submit" value="{tr}Filter{/tr}" />
         </form>
-	</div>
-  <table width="100%">
-    <tr>
-      <td width="200" style="vertical-align:top;">
-        {if $prefs.freetags_browse_show_cloud eq 'y'}
-          <script type="text/javascript">
-            {literal}
-              function addTag(tag) {
-			  if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
-	        document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;	
-              }
-              function clearTags() {
-	        document.getElementById('tagBox').value = '';
-              }
-            {/literal}
-          </script>
-        
-          {foreach from=$most_popular_tags item=popular_tag}
-            <a class="freetag_{$popular_tag.size}" href="tiki-browse_freetags.php?tag={$popular_tag.tag}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" onDblClick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag}</a> 
-          {/foreach}
-		  <div class="mini">
-		  {if empty($maxPopular)}{assign var=maxPopular value=50+$prefs.freetags_browse_amount_tags_in_cloud}{/if}<a href="{$smarty.server.PHP_SELF}?{query maxPopular=$maxPopular tagString=$tagString}">{tr}More Popular Tags{/tr}</a>
-		  </div>
-		  <div class="mini">
-		  {tr}Sort:{/tr}<a href="{$smarty.server.PHP_SELF}?{query tsort_mode=tag_asc}">{tr}Alphabetically{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query tsort_mode=count_desc tagString=$tagString}">{tr}By Size{/tr}</a>
-		  </div>
-		  <div class="mini">
-		  <a href="{$smarty.server.PHP_SELF}?{query mode=c tagString=$tagString}">{tr}Cloud{/tr}</a> | <a href="{$smarty.server.PHP_SELF}?{query mode=l tagString=$tagString}">{tr}List{/tr}</a>
-		  </div>
-        {/if}
-      </td>
-  
-      <td style="vertical-align:top;">
-  
-        {if $tagString}<h3>{$cantobjects} {tr}results found{/tr}</h3>{/if}
-  
+
         {if $cantobjects > 0}
-          <table class="normal">
-			<tr>
-				<th>{tr}Type{/tr}</th><th>{tr}Name{/tr}</th><th>{tr}Description{/tr}</th>
-				{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}<th>{tr}Remove Tags{/tr}</th>{/if}
-			</tr>
             {cycle values="odd,even" print=false}
             {section name=ix loop=$objects}
-              <tr class="{cycle}" >
-                <td>
-                  {tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
-                </td>
-                <td>
-                  <a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a>
-                </td>
-                <td>{$objects[ix].description}&nbsp;</td>
-                {if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}<td align="right">
-                  <a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-                </td>{/if}
-              </tr>
+		<div class="{cycle} freetagitemlist" >
+			<h3><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a>
+			{if $tiki_p_unassign_freetags eq 'y' or $tiki_p_admin eq 'y'}
+			<a href="tiki-browse_freetags.php?del=1&amp;tag={$tag}{if $type}&amp;type={$type|escape:'url'}{/if}&amp;typeit={$objects[ix].type|escape:'url'}&amp;itemit={$objects[ix].name|escape:'url'}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+			{/if}</h3>
+			<div class="type">
+			{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"|regex_replace:"/tracker [0-9]*/":"tracker item"}{/tr}
+			</div>
+			<div>
+			{$objects[ix].description}&nbsp;
+			</div>
+		</div>
             {/section}
-          </table>
-    
-          <br />   
     
           {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
         {/if}
-      </td>
-    </tr>
-  </table>
+      </div>
