@@ -108,14 +108,14 @@
         {foreach from=$images key=key item=item}
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
-{if $prefs.feature_lightbox neq 'y'}
-	<a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
-	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
-	   </a>
-{else}
+{if $prefs.feature_lightbox eq 'y' or $prefs.feature_shadowbox eq 'y'}
 	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{elseif $showfilename eq 'y'}{$item.filename}{elseif $showdescription eq 'y' and $item.description}{$item.description}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	</a>
+{else}
+	<a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
+	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
+	   </a>
 {/if}
           <br />
 
