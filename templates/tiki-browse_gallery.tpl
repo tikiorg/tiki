@@ -109,7 +109,7 @@
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
 {if $prefs.feature_lightbox eq 'y' or $prefs.feature_shadowbox eq 'y'}
-	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery]" title="{if $showname=='y' and $item.name neq ''}{$item.name}{elseif $showfilename eq 'y'}{$item.filename}{elseif $showdescription eq 'y' and $item.description}{$item.description}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
+	<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" rel="lightbox[gallery];type=img" title="{if $showname=='y' and $item.name neq ''}{$item.name}{elseif $showfilename eq 'y'}{$item.filename}{elseif $showdescription eq 'y' and $item.description}{$item.description}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu">
 	   <img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" />
 	</a>
 {else}
