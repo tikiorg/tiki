@@ -5949,6 +5949,7 @@ function add_pageview() {
 	    $imgdata["height"] = '';
 	    $imgdata["width"] = '';
 	    $imgdata["link"] = '';
+	    $imgdata["rel"] = '';
 	    $imgdata["align"] = '';
 	    $imgdata["desc"] = '';
 	    $imgdata["imalign"] = '';
@@ -5987,11 +5988,12 @@ function add_pageview() {
 	    $repl .= ' />';
 
 	    if ($imgdata["link"]) {
-		$imgtarget= '';
-		if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['link']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['link']))) {
-		    $imgtarget = ' target="_blank"';
-		}
-		$repl = '<a href="' . $imgdata["link"] .'"' . $imgtarget . '>' . $repl . '</a>';
+			$imgtarget= '';
+			if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['link']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['link']))) {
+				$imgtarget = ' target="_blank"';
+			}
+			if ($imgdata['rel']) $linkrel = ' rel="'.$imgdata['rel'].'"';
+			$repl = '<a href="'.$imgdata["link"].'"'.$linkrel.$imgtarget.'>' . $repl . '</a>';
 	    }
 
 	    if ($imgdata["desc"]) {
