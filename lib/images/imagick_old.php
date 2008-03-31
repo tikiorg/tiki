@@ -56,7 +56,7 @@ class Image extends ImageAbstract {
   }
 
   function get_height() {
-    return imagick_getheight($this->data)
+    return imagick_getheight($this->data);
   }
 
   function get_width() {
