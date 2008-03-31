@@ -1,3 +1,4 @@
+{* $Id$ *}
 
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
@@ -328,6 +329,12 @@
     			<input type="checkbox" name="wiki_list_comment" {if $prefs.wiki_list_comment eq 'y'}checked="checked"{/if} />
     		</td>
     	</tr>
+    	<tr>
+			  <td class="form">{tr}Comment length{/tr}:</td>
+			  <td class="form">
+				  <input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
+			  </td>
+		  </tr>
     	<tr>
     		<td class="form">{tr}Status{/tr}</td>
     		<td class="form">

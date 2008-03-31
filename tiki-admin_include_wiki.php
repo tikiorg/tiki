@@ -109,6 +109,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 		simple_set_toggle($toggle);
 	}
 	simple_set_int('wiki_list_name_len');
+	simple_set_int('wiki_list_comment_len');
 	simple_set_value('wiki_list_sortorder');
 	simple_set_value('wiki_list_sortdirection');
 }

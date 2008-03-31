@@ -55,12 +55,7 @@
 
     {if $prefs.wiki_list_lastver eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver{/tr}{/self_link}</td>
-    {/if}
-
-    {if $prefs.wiki_list_comment eq 'y'}
-      {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='comment' _title='{tr}Comment{/tr}}{tr}Com{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver.{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_status eq 'y'}
@@ -70,7 +65,7 @@
 
     {if $prefs.wiki_list_versions eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers{/tr}{/self_link}</td>
+      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers.{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_links eq 'y'}
@@ -136,6 +131,11 @@
     {if $prefs.wiki_list_name eq 'y'}
       <td class="{cycle advance=false}">
         <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
+        {if $prefs.wiki_list_comment eq 'y' && $listpages[changes].comment neq ""}
+          <div class="subcomment">
+            {$listpages[changes].comment|truncate:$prefs.wiki_list_comment_len:"...":true}
+          </div>
+        {/if}
       </td>
     {/if}
 
@@ -157,10 +157,6 @@
 
     {if $prefs.wiki_list_lastver eq 'y'}
       <td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].version}</td>
-    {/if}
-
-    {if $prefs.wiki_list_comment eq 'y'}
-      <td class="{cycle advance=false}">{if $listpages[changes].comment eq ""}&nbsp;{else}{$listpages[changes].comment}{/if}</td>
     {/if}
 
     {if $prefs.wiki_list_status eq 'y'}
