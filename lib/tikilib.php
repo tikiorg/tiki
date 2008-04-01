@@ -6077,6 +6077,7 @@ function add_pageview() {
 			$link2 = str_replace("/", "\/", preg_quote($link));
 
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
 			$pattern = "/(?<!\[)\[$link2\]/";
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
