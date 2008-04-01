@@ -18,9 +18,11 @@ if ( isset($_REQUEST['pollVote']) ) {
 			if ( ! isset($polllib) or ! is_object($polllib) ) {
 				include_once('lib/polls/polllib_shared.php');
 			}
-			$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
-			// Poll vote must go first, or the new vote will be seen as the previous one.
-			$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
+			if (!$tikilib->user_has_voted($user, 'poll'.$_REQUEST['polls_pollId'])) {
+				$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
+				// Poll vote must go first, or the new vote will be seen as the previous one.
+				$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
+			}
 		}
 	}
 	$pollId = $_REQUEST['polls_pollId'];
