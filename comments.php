@@ -283,7 +283,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	    } else {
 
 		    $smarty->assign('was_queued', 'n');
-		    $_REQUEST['was_queued'] = 'y';
+		    $_REQUEST['was_queued'] = 'n';
 
 		    if ( $_REQUEST["comments_threadId"] == 0 ) {
 
