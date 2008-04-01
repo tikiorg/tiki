@@ -134,12 +134,12 @@
 {/if}
 ***}
 
-</form>
 
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
 	{/section}
+</form>
 
 <div class="thread_pagination">
 
