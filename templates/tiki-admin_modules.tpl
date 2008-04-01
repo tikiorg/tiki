@@ -19,18 +19,6 @@
 <a class="linkbut" href="tiki-admin_modules.php?clear_cache=1">{tr}Clear Cache{/tr}</a>
 </div>
 
-<div class="simplebox">
-
-<b>{tr}Note 1{/tr}</b>: {tr}When you allowed users to configure modules via {/tr}
-<a href="tiki-user_assigned_modules.php">{tr}MyTiki{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Modules{/tr}</a>
-{tr} then make sure you select {/tr}
-&quot;<em>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</em>&quot;
-{tr} or {/tr}&quot;<em>{tr}Displayed now, can't be unassigned{/tr}</em>&quot;.
-{tr}Only that way you can be sure users will notice new modules you assign later{/tr}.<br />
-<b>{tr}Note 2{/tr}</b>: {tr}If you assign modules to groups make sure that you have turned off the option {/tr}&quot;<em>{tr}Display modules to all groups always{/tr}</em>&quot;
-{tr} on page {/tr}<a class="rbox-link" href="tiki-admin.php?page=module">{tr}Admin{/tr}&nbsp;{$prefs.site_crumb_seper}&nbsp;{tr}Module{/tr}</a>.
-</div>
-
 <h2>{tr}User Modules{/tr}</h2>
 <table class="normal">
 <tr>
@@ -92,13 +80,19 @@
 <tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
-<a {popup text="Params: specific params to the module + lang flip title decorations section overflow page nobox bgcolor color theme" width=100 center=true}>{icon _id='help'}</a></td></tr>
+<a {popup text="Params: specific params to the module + lang flip title decorations section overflow page nobox bgcolor color theme" width=100 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">Tip</div>  
+  <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
+</div>
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
 {/section}
 </select>
+{if $prefs.modallgroups eq 'y'}
+<div class="simplebox">{icon _id=information.png style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}</div><br />{/if}
 </td></tr>
 {if $prefs.user_assigned_modules eq 'y'}
 <tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
@@ -108,6 +102,8 @@
 <option value="P" {if $assign_type eq 'P'}selected="selected"{/if}>{tr}Displayed now, can't be unassigned{/tr}</option>
 <option value="h" {if $assign_type eq 'h'}selected="selected"{/if}>{tr}Not displayed until a user chooses it{/tr}</option>
 </select>
+<div class="simplebox">
+{icon _id=information.png style="vertical-align:middle;float:left;"}{tr}Because <a class="rbox-link" href="tiki-admin.php?page=module">Users can Configure Modules</a>, select either{/tr} &quot;{tr}Displayed now for all eligible users even with personal assigned modules{/tr}&quot;{tr} or {/tr}&quot;{tr}Displayed now, can't be unassigned{/tr}&quot; {tr}to make sure users will notice any newly assigned modules.{/tr}</div>
 </td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td></tr>
@@ -217,13 +213,13 @@
 {/if}
 <form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}"  /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
 <tr><td class="form">{tr}Data{/tr}</td><td>
 <textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:95%">{$um_data|escape}</textarea>
 </td></tr>
-<tr><td class="form">{tr}Must be wiki parsed{/tr}</td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if}/></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{tr}Create/Edit{/tr}" /></td></tr>
+<tr><td class="form"></td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}</td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}" /></td></tr>
 </table>
 </form>
 
