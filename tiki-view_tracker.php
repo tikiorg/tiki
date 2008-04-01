@@ -207,8 +207,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
 		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
 
-		if ($listfields[$fid]['type'] == 'e') { //category
-		    $parentId = $listfields[$fid]['options_array'][0];
+		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
+			$parentId = $listfields[$fid]['options_array'][0];
 		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
 		}
 		if (isset($xfields['data'][$i]['otherField']))
@@ -228,8 +228,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				$ins_fields["data"][$i]["value"] = $tikilib->now;
 			}
-		} elseif ($fields["data"][$i]["type"] == 'e') { // category
-			include_once('lib/categories/categlib.php');
+		} elseif ($fields["data"][$i]["type"] == 'e' && $prefs['feature_categories'] == 'y') { // category
 			$parentId = $fields["data"][$i]['options_array'][0];
 			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
 			$categId = "ins_cat_$fid";
