@@ -12,7 +12,7 @@
 <table width="97%">
 <tr>
 <td>
-{if ($tiki_p_forum_post_topic eq 'y' and $forumId ne $prefs.wiki_forum_id) or $tiki_p_admin_forum eq 'y'}
+{if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
 <a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>
 {tr}New Topic{/tr}</a>
 {/if}
@@ -280,11 +280,11 @@ a moderator approves it.{/tr}
 </tr>
 <tr>	
 	<td class="odd" colspan="3">
-	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
-	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
-	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
-	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
+	<input type="image" name="movesel" src="pics/icons/task_submitted.png" border='0' alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+	<input type="image" name="unlocksel" src="pics/icons/lock_break.png" border='0' alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
+	<input type="image" name="locksel" src="pics/icons/lock_add.png" border='0' alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
+	<input type="image" name="delsel" src="pics/icons/cross.png" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
+	<input type="image" name="splitsel" src="pics/icons/arrow_refresh.png" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
@@ -335,25 +335,25 @@ a moderator approves it.{/tr}
   {if $tiki_p_admin_forum eq 'y'}
   <td class="heading">&nbsp;</td>
   {/if}
-  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
+  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</td>
   {if $forum_info.topic_smileys eq 'y'}
-  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}Emot{/tr}</a></td>
+  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</td>
   {/if}
-  <td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
+  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</td>
   {if $forum_info.topics_list_replies eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}Replies{/tr}</a></td>
+  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</td>
   {/if}
   {if $forum_info.topics_list_reads eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Reads{/tr}</a></td>
+  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</td>
   {/if}
   {if $forum_info.topics_list_pts eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'average_desc'}average_asc{else}average_desc{/if}">{tr}pts{/tr}</a></td>
+  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</td>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></td>
+  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</td>
   {/if}
   {if $forum_info.topics_list_author eq 'y'}
-  	<td class="heading"><a class="tableheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={if $thread_sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}" title="sort by">{tr}Author{/tr}</a></td>
+  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</td>
   {/if}
 </tr>
 {cycle values="odd,even" print=false}
@@ -454,30 +454,8 @@ a moderator approves it.{/tr}
 {/section}
 </table>
 </form>
-  <div class="mini">
 
-{if $comments_cant_pages >1}
-
-  {if $comments_prev_offset >= 0}
-  [<a class="forumprevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Prev{/tr}</a>]&nbsp;
-  {/if}
-  {tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
-  {if $comments_next_offset >= 0}
-  &nbsp;[<a class="forumprevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">{tr}Next{/tr}</a>]
-  {/if}
-  {if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$comments_cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_per_page}
-<a class="prevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-
-{/if}
-
-  </div>
-  <br />
+{pagination_links cant=$comments_cant step=$comments_per_page offset=$comments_offset offset_arg='comments_offset'}{/pagination_links}
 
 {if $forum_info.forum_last_n > 0 && count($last_comments)}
 	{* Last n titles *}
