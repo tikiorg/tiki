@@ -424,7 +424,7 @@ if ( ! empty($_REQUEST['duplicate']) && ! empty($_REQUEST['name']) && ! empty($_
 }
 
 // Process removal of a gallery
-if ( ! empty($_REQUEST['removegal']) && ! empty($galleryId) ) {
+if ( ! empty($_REQUEST['removegal']) ) {
 	check_ticket('fgal');
 
 	if ( ! ( $gal_info = $filegallib->get_file_gallery_info($_REQUEST['removegal']) ) ) {
