@@ -93,7 +93,7 @@
 <td class="auto">
 	{if isset($perms)}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
-		$tiki_p_view_trackers=$perms.tiki_p_view_trackers $tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items $tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
 	{else}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"}
 	{/if}
