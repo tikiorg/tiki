@@ -634,22 +634,6 @@ $comments_cant = $commentslib->count_comments_threads($comments_objectId);
 $smarty->assign('comments_cant', $comments_cant);
 
 $comments_maxRecords = $_REQUEST["comments_per_page"];
-$comments_cant_pages = ceil($comments_cant / $comments_maxRecords);
-$smarty->assign('comments_cant_pages', $comments_cant_pages);
-$smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
-
-if ($comments_cant > ($comments_offset + $comments_maxRecords)) {
-    $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
-} else {
-    $smarty->assign('comments_next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($comments_offset > 0) {
-    $smarty->assign('comments_prev_offset', $comments_offset - $comments_maxRecords);
-} else {
-    $smarty->assign('comments_prev_offset', -1);
-}
 
 $smarty->assign_by_ref('comments_coms', $comments_coms);
 
