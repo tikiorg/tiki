@@ -1728,3 +1728,6 @@ INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Register
 INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Registered', 'tiki_p_view_fgal_path' FROM users_permissions WHERE @permexist = 0;
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
+
+#2008-04-01 sylvieg
+UPDATE users_permissions SET admin=NULL WHERE permName='tiki_p_search';
