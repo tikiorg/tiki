@@ -34,11 +34,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {* --- tikiwiki block --- *}		{php} include("lib/tiki-dynamic-js.php"); {/php}
 		<script type="text/javascript" src="lib/tiki-js.js"></script>
-{* --- amette extension --- *}
-		<script type="text/javascript" src="styles/simple-amette/nicetitle.js"></script>
-		<link rel="openid.server" href="http://amette.eu/openid/MyID.config.php" />
-		<link rel="openid.delegate" href="http://amette.eu/openid/MyID.config.php" />
-
 {include file="bidi.tpl"}{* this is included for Right-to-left languages *}
 
 {* --- page title block --- *}
