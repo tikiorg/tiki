@@ -118,12 +118,19 @@ if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']
 		// Fallback to an icon if the format is not supported
 		if ( ! Image::is_supported($format) ) {
 			$_GET['icon'] = 'y';
+			$_GET['max'] = 32;
 		}
 		
 		if ( isset($_GET['icon']) ) {
 			unset($content);
-			$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
-			$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;
+			if ( isset($_GET['max']) ) {
+				$icon_x = $_GET['max'];
+				$icon_y = $_GET['max'];
+			} else {
+				$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
+				$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
+			}
+
 			$content = Image::icon($format, $icon_x, $icon_y);
 			$format = Image::get_icon_default_format();
 			$info['filetype'] = 'image/'.$format;

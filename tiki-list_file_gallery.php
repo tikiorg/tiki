@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.14 2008-03-16 00:06:53 nyloth Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.50.2.14 2008-03-16 00:06:53 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ( $prefs['feature_categories'] == 'y' ) {
 	global $categlib; include_once('lib/categories/categlib.php');
 }
 
-$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords','show_fgalexplorer','dup_mode');
+$auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords','show_fgalexplorer','dup_mode','show_details','view');
 
 $gal_info = '';
 if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
@@ -642,6 +642,13 @@ $smarty->assign_by_ref('find', $_REQUEST['find']);
 $files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
 $smarty->assign_by_ref('files', $files['data']);
 $smarty->assign('cant', $files['cant']);
+
+/* Browse view */
+
+// Find the lenght of the longest file name
+$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : 'list' );
+$smarty->assign('thumbnail_size', 120);
+$smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n' );
 
 // Set comments config
 if ( $prefs['feature_file_galleries_comments'] == 'y' ) {

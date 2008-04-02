@@ -36,10 +36,27 @@
       {icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'}</a>
     {/if}
   {/if}
+  {if $view eq 'browse'}
+    {if $show_details eq 'y'}
+      {self_link show_details='n'}{icon _id='no_information' align='right' onload='adjustThumbnails()'}{/self_link}
+    {else}
+      {self_link show_details='y'}{icon _id='information' align='right' onload='adjustThumbnails()'}{/self_link}
+    {/if}
+  {/if}
+
   {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
-    <a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
+    {if $edit_mode eq 'y' or $dup_mode eq 'y'}
+      <a class="linkbut" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Browse Gallery{/tr}</a>
+    {else}
+      <a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
+      {if $view eq 'browse'}
+        <a href="tiki-list_file_gallery.php?view=list&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}browse image{/tr}">{tr}List Gallery{/tr}</a>
+      {else}
+        <a href="tiki-list_file_gallery.php?view=browse&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}browse image{/tr}">{tr}browse image{/tr}</a>
+      {/if}
+    {/if}
   {/if}
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
@@ -55,9 +72,6 @@
 
   {if $edit_mode eq 'y' or $dup_mode eq 'y'}
     <a class="linkbut" href="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">{tr}List Galleries{/tr}</a>
-    {if $galleryId gt 0}
-      <a class="linkbut" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Browse Gallery{/tr}</a>
-    {/if}
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
     <a class="linkbut" href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Create New File Gallery{/tr}</a>

@@ -2141,6 +2141,95 @@ div.imgaldescr {
 	margin-left: 10px;
 }
 
+/******************************************************* FILE GALLERIES **********************************************/
+
+div.thumbnailcontener {
+	margin: 4px;
+}
+div.thumbnail {
+	padding: 0;
+	background-color: white;
+	border-bottom: 1px solid #AAAAAA;
+	border-right: 1px solid #AAAAAA;
+	border-top: 1px solid #C7D0D9;
+	border-left: 1px solid #C7D0D9;
+	text-align: center;
+}
+div.thumbnamecontener, div.thumbimagecontener {
+	display: table;
+	#position: relative;
+	overflow: hidden;
+}
+div.thumbnamecontener {
+	background-color: #F3F6F9;
+	border-top: 1px dotted #C7D0D9;
+	border-bottom: 1px dotted #C7D0D9;
+	margin-bottom: 3px;
+	height: 2.5em;
+}
+div.thumbname, div.thumbimage {
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+	/* for IE including IE7 */
+	#position: absolute;
+	#left: 0;
+	#top: 50%;
+}
+div.thumbnamesub, div.thumbimagesub {
+	/* for IE including IE7 */
+	#position: relative;
+	#top: -50%;
+}
+div.thumbnail:hover {
+	background-color: #F3F6F9;
+}
+div.thumbnail:hover div.thumbnamecontener {
+	border-color: #6996C3;
+	background-color: #C7D0D9;
+}
+div.thumbimage img {
+	border: none;
+	display: block;
+	margin: auto;
+}
+div.thumbinfos {
+	padding-bottom: 15px; /* 10 px */
+}
+div.thumbinfo {
+	font-size: 9px;
+	font-weight: bold;
+	color: #76818E;
+}
+span.thumbinfoval {
+	color: #9EAAB4;
+}
+div.thumbname {
+	width: 100%;
+}
+div.thumbactions {
+	width: 100%;
+	margin-top: -20px; /* -25px */
+}
+div.thumbactions * {
+	vertical-align: middle;
+}
+div.thumbactions input {
+	float: left;
+}
+div.thumbactions a {
+	float: right;
+}
+div.thumbdescription {
+	margin-bottom: 2px;
+}
+div.thumbdescription + div.thumbinfo {
+	border-top: 1px dotted #C7D0D9;
+}
+div.thumbdescription span.thumbinfoname {
+	display: none;
+}
+
 div.gallerypath, div.gallerypath a {
 	color: #6996C3;
 	font-style: italic;
