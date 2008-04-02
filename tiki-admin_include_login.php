@@ -37,8 +37,6 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('validateUsers');
 	simple_set_toggle('validateEmail');
 	simple_set_toggle('login_is_email');
-	simple_set_toggle('allowmsg_is_optional');
-	simple_set_toggle('allowmsg_by_default');
 	simple_set_toggle('rnd_num_reg');
 	simple_set_toggle('pass_chr_num');
 	simple_set_toggle('lowercase_username');
@@ -162,7 +160,7 @@ if (isset($_REQUEST['users_defaults'])) {
 	foreach($_prefs as $pref) {
 		simple_set_value($pref);
 	}
-	
+
 	// boolean values
 	$_prefs = array(
 		'users_prefs_show_mouseover_user_info',
