@@ -32,8 +32,13 @@ if (isset($_REQUEST["user"])) {
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 if ($isvalid) {
-	$userlib->confirm_user($_REQUEST['user']);
-	if ($prefs['validateRegistration'] == 'y') {
+	$info = $userlib->get_user_info($_REQUEST['user']);
+	if ($info['waiting'] == 'a' && $prefs['validateUsers'] == 'y') { // admin validating -> need user email validation now
+		$userlib->send_validation_email($_REQUEST['user'], $info['valid'], $info['email'], '', 'y');
+		$userlib->change_user_waiting($_REQUEST['user'], 'u');
+		$logslib->add_log('register','admin validation '.$_REQUEST['user']);
+	} elseif ($info['waiting'] == 'a' && $prefs['validateRegistration'] == 'y') { //admin validating -> user can log in
+		$userlib->confirm_user($_REQUEST['user']);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$foo1 = str_replace('tiki-login_validate','tiki-login_scr',$foo['path']);
 		$machine =$tikilib->httpPrefix().$foo1;
@@ -46,8 +51,10 @@ if ($isvalid) {
 		$mail->setText($smarty->fetch('mail/moderate_activation_mail.tpl'));					
 		$mail->setSubject($smarty->fetch('mail/moderate_activation_mail_subject.tpl'));					
 		$mail->send(array($email));
+		$userlib->change_user_waiting($_REQUEST['user'], NULL);
 		$logslib->add_log('register','validated account '.$_REQUEST['user']);
 	} elseif (empty($user)) {
+		$userlib->confirm_user($_REQUEST['user']);
 		$user = $_REQUEST['user'];
 		$_SESSION["$user_cookie_site"] = $user;
 		$smarty->assign('user', $user);

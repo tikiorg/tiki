@@ -1912,17 +1912,23 @@ function get_included_groups($group, $recur=true) {
 	    $provpass = '';
 	}
 
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=? where `login`=?";
+	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?";
 	$result = $this->query($query, array(
 		    $provpass,
 		    $hash,
 		    '',
 			NULL,
 			$this->now,
+			NULL,
 		    $user
 		    ));
 	$cachelib->invalidate('userslist');
     }
+
+	function change_user_waiting($user, $who) {
+		$query = 'update `users_users` set `waiting`=?, `currentLogin`=?, `lastLogin`=? where `login`=?';
+		$this->query($query, array($who, NULL, NULL, $user));
+	}
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
 	global $tikilib, $cachelib, $patterns, $prefs;
@@ -1956,8 +1962,8 @@ function get_included_groups($group, $recur=true) {
 	$new_email_confirm = $this->now;
 	$query = "insert into
 	    `users_users`(`login`, `password`, `email`, `provpass`,
-		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`, `openid_url`, `lastLogin`)
-	    values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		    `registrationDate`, `hash`, `pass_confirm`, `email_confirm`, `created`, `valid`, `openid_url`, `lastLogin`, `waiting`)
+	    values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		    $user,
 		    $pass,
@@ -1970,7 +1976,8 @@ function get_included_groups($group, $recur=true) {
 		    (int) $this->now,
 			$valid,
 			$openid_url,
-			$lastLogin
+			$lastLogin,
+			($prefs['validateRegistration'] == 'y')? 'a': (($prefs['validateUsers'] == 'y')? 'u': NULL)
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
@@ -2541,7 +2548,7 @@ function get_included_groups($group, $recur=true) {
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;									
 	}
-	function send_validation_email($name, $apass, $email, $again='') {
+	function send_validation_email($name, $apass, $email, $again='', $second='') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
@@ -2554,7 +2561,17 @@ function get_included_groups($group, $recur=true) {
 		$smarty->assign('mail_email', $email);
 		$smarty->assign('mail_again', $again);
 		include_once('lib/webmail/tikimaillib.php');
-		if ($prefs['validateRegistration'] == 'y') {
+		if ($second == 'y') {
+			$mail_data = $smarty->fetch('mail/confirm_user_email_after_approval.tpl');
+			$mail = new TikiMail();
+			$mail->setText($mail_data);
+			$mail_data = sprintf($smarty->fetch('mail/confirm_user_email_after_approval_subject.tpl'), $_SERVER['SERVER_NAME']);
+			$mail->setSubject($mail_data);
+			if (!$mail->send(array($email))) {
+				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+				return false;
+			}
+		} elseif ($prefs['validateRegistration'] == 'y') {
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
 			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {

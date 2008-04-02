@@ -4436,6 +4436,7 @@ CREATE TABLE users_users (
   valid varchar(32) default NULL,
   unsuccessful_logins int(14) default 0,
   openid_url varchar(255) default NULL,
+  waiting char(1) default NULL,
   PRIMARY KEY  (userId),
   KEY login (login),
   KEY score (score),

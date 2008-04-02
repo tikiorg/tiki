@@ -145,7 +145,8 @@ class="prevnext">{tr}All{/tr}</a>
 
 <td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr}">{$users[user].user}</a></td>
 {if $prefs.login_is_email ne 'y'}<td>{$users[user].email}</td>{/if}
-<td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
+<td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}
+{if $users[user].waiting eq 'u'}<br />{tr}Need to validate email{/tr}{/if}</td>
 <td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}">{icon _id='key' alt="{tr}Assign Group{/tr}"}</a></td>
 
 <td>
@@ -161,7 +162,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="thin">
   {if $users[user].user ne 'admin'}
     <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-  	{if $users[user].valid}
+  	{if $users[user].valid && $users[user].waiting eq 'a'}
 		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate{/tr}">{icon _id='accept' alt="{tr}Validate{/tr}"}</a>
 	{/if}
   {/if}

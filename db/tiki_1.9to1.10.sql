@@ -1731,3 +1731,4 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #2008-04-01 sylvieg
 UPDATE users_permissions SET admin=NULL WHERE permName='tiki_p_search';
+ALTER TABLE users_users ADD waiting char(1) default NULL;
