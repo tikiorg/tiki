@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+<!-- *** footer start *** -->
 {if (! isset($display) or $display eq '')}
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
@@ -23,5 +23,4 @@
 <div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
 {/if}
 {/if}
-</body>
-</html>  
+<!-- *** footer end *** -->
