@@ -8,7 +8,7 @@
 		{/section}
 		</span>
 	{/if}
-	{if $forum_mode eq 'y' and $forum_info.vote_threads eq 'y' or $forum_mode neq 'y'}
+	{if ($forum_mode eq 'y' and $forum_info.vote_threads eq 'y' and $tiki_p_forum_vote eq 'y') or ($forum_mode neq 'y' and $tiki_p_vote_comments eq 'y')}
 		<span class="score">
 		<b>{tr}Score{/tr}</b>: {$comment.average|string_format:"%.2f"}
 		{if $comment.userName ne $user and (
