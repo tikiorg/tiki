@@ -35,17 +35,17 @@
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
   <input type="hidden" name="pageName" value="{$pageName|escape}" />
   <table class="normal">
-    <tr>
+    <tr class="formcolor">
       <td class="formcolor" style="width:150px;">{tr}Page name{/tr}:</td>
       <td class="formcolor"><input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" />
       </td>
     </tr>
 
     {if $tiki_p_use_content_templates eq 'y'}
-      <tr>
-        <td class="formcolor">{tr}Apply template{/tr}</td>
+    <tr class="formcolor">
+        <td class="formcolor">{tr}Apply template{/tr}:</td>
         <td class="formcolor">
-          <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
+          <select name="templateId"{if !$templates} disabled="disabled"{/if} onchange="javascript:document.getElementById('editpageform').submit();">
             <option value="0">{tr}none{/tr}</option>
             {section name=ix loop=$templates}
             <option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
@@ -59,29 +59,29 @@
       <td>{tr}Type{/tr}:</td>
       <td>
         <select name="type">
-          <option value='d' {if $info.type eq 'd'}selected="selected"{/if}>{tr}Dynamic{/tr}</option>
-          <option value='s' {if $info.type eq 's'}selected="selected"{/if}>{tr}Static{/tr}</option>
+          <option value='d'{if $info.type eq 'd'} selected="selected"{/if}>{tr}Dynamic{/tr}</option>
+          <option value='s'{if $info.type eq 's'} selected="selected"{/if}>{tr}Static{/tr}</option>
         </select>
       </td>
     </tr>
     <tr class="formcolor">
-      <td>{tr}Refresh rate (if dynamic) [secs]{/tr}:</td>
+      <td>{tr}Refresh rate (if dynamic){/tr}:</td>
       <td>
-        <input type="text" size="40" name="refresh" value="{$info.refresh|escape}" />
+        <input type="text" size="5" name="refresh" value="{$info.refresh|escape}" /> {tr}seconds{/tr}
+      </td>
+    </tr>
+
+    <tr class="formcolor">
+      <td>
+        {tr}Content{/tr}:<br />
+{include file="textareasize.tpl" area_name='htmlcode' formId='editpageform'} 
+      </td>
+      <td>
+        <textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>
       </td>
     </tr>
     <tr class="formcolor">
-      <td>
-        {tr}Content{/tr}:
-      </td>
-      <td>
-        <textarea name="content" id="htmlcode" rows="25" style="width:100%;">{$info.content|escape}</textarea>
-      </td>
-    </tr>
-    <tr class="formcolor">
-      <td>
-          {include file="textareasize.tpl" area_name='htmlcode' formId='editpageform'} 
-      </td>
+      <td></td>
       <td>
         <input type="submit" name="preview" value="{tr}Preview{/tr}" /> 
         <input type="submit" name="save" value="{tr}Save{/tr}" />
@@ -90,9 +90,10 @@
   </table>
 </form>
 
-
+<br />
 <h2>{tr}HTML pages{/tr}</h2>
-<div  align="center">
+<div align="center">
+{if $channels}
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -104,7 +105,7 @@
    </td>
 </tr>
 </table>
-
+{/if}
 <table class="normal">
   <tr>
     <td class="heading">
