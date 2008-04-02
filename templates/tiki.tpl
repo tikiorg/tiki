@@ -1,52 +1,4 @@
-{php}header('Content-Type: text/html; charset=utf-8');{/php}{*
-
-$Id$
-
---- IMPORTANT: If you edit this (or any other TPL file) file via the Tiki built-in TPL editor
-(tiki-edit_templates.php), all the javascript will be stripped. This will cause problems.
-(Ex.: menus stop collapsing/expanding).
-
-You should only modify header.tpl via a text editor through console, or ssh, or FTP edit commands. 
-And only if you know what you are doing ;-)
-
-You are most likely wanting to modify the top of your Tiki site. 
-Please consider using Look & Feel feature or modifying tiki-top_bar.tpl 
-which you can do safely via the web-based interface.       
----
-
-*}<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html 
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if isset($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">
-<head>
-{include file="header.tpl"}
-</head>
-
-<body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
-{if $section} class="tiki_{$section}"{/if}>
-{if $prefs.minical_reminders>100}
-<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
-{/if}
-
-{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
-{if $prefs.feature_siteidentity eq 'y' and $filegals_manager ne 'y'}
-{* Site identity header section *}
-	<div id="siteheader">
-		{include file="tiki-site_header.tpl"}
-	</div>
-{/if}
-
-{if $prefs.feature_fullscreen eq 'y' and $filegals_manager ne 'y' and $print_page ne 'y'}
-{if $smarty.session.fullscreen eq 'y'}
-<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=n" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Cancel Fullscreen{/tr}</a>
-{else}
-<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=y" style="float:right;padding:0 10px;font-size:80%;" class="menulink" id="fullscreenbutton">{tr}Fullscreen{/tr}</a>
-{/if}
-{/if}
-
-
+{* $Id$ *}{include file="header.tpl"}
 {* Index we display a wiki page here *}
 {if $prefs.feature_bidi eq 'y'}
 <div dir="rtl">
@@ -120,7 +72,4 @@ onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookieta
 {if $prefs.feature_bidi eq 'y'}
 </div>
 {/if}
-
 {include file="footer.tpl"}
-	</body>
-</html>
