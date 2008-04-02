@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2008-03-17 22:39:19 $
--- $Author: sylvieg $
+-- $Date: 2008-03-16 00:06:59 $
+-- $Author: nyloth $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -6870,7 +6870,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki', 'y')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki')
 go
 
 
@@ -6958,6 +6958,7 @@ CREATE TABLE "users_users" (
   "valid" varchar(32) default NULL NULL,
   "unsuccessful_logins" numeric(14,0) default 0,
   "openid_url" varchar(255) default NULL NULL,
+  "waiting" char(1) default NULL NULL,
   PRIMARY KEY ("userId")
 ) ENGINE=MyISAM  
 go

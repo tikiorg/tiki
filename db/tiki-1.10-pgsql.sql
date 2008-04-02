@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2008-03-17 22:39:19 $
--- $Author: sylvieg $
+-- $Date: 2008-03-16 00:06:59 $
+-- $Author: nyloth $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -5164,7 +5164,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_unassign_freetags', 'Can unassign tags from an object', 'basic', 'freetags');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki', 'y');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_search', 'Can search', 'basic', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
 
@@ -5232,6 +5232,7 @@ CREATE TABLE "users_users" (
   "valid" varchar(32) default NULL,
   "unsuccessful_logins" bigint default 0,
   "openid_url" varchar(255) default NULL,
+  "waiting" char(1) default NULL,
   PRIMARY KEY ("userId")
 ) ENGINE=MyISAM  ;
 
