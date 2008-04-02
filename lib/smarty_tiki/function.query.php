@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_query($params, &$smarty) {
   global $auto_query_args;
 
-  $query = array_merge($_POST, $_GET);
+  $query = array_merge($_GET, $_POST);
   if ( is_array($params) ) {
     foreach( $params as $param_name => $param_value ) {
   

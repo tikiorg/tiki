@@ -9,10 +9,10 @@
 {if $tr_initial and $initials[ini] eq $tr_initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
+{self_link _class="prevnext" tr_initial=$intials[ini]}{$initials[ini]}{/self_link}
 {/if}
 {/section}
-<a href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
+{self_link _class="prevnext" tr_initial=''}{tr}All{/tr}{/self_link}
 </div>
 {/if}
 
@@ -33,23 +33,20 @@
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $perms.tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto field{$ix.fieldId}"{if $perms.tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
-	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
+{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
 {/if}
 {else}
 <td class="heading auto field{$ix.fieldId}"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
-<a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode=f_{if 
-	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.fieldId}_desc{else}{$ix.fieldId}_asc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{$ix.name|default:"&nbsp;"}</a></td>
+{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
+</td>
 {/if}
 {/if}
 {/foreach}
 {if $showcreated eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
-	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}Created{/tr}</a></td>
+<td class="heading">{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
 {/if}
 {if $showlastmodif eq 'y'}
-<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}?{if $page}page={$page|escape:url}&amp;{/if}tr_sort_mode={if 
-	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}{if $tr_initial}&amp;tr_initial={$tr_initial}{/if}">{tr}LastModif{/tr}</a></td>
+<td class="heading">{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td class="heading" width="5%">{tr}Coms{/tr}</td>

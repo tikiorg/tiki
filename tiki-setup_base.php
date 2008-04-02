@@ -284,7 +284,7 @@ $varcheck_errors=varcheck($_REQUEST);
 // rebuild $_REQUEST after sanity check
 unset($_REQUEST);
 unset($_COOKIE['offset']);
-$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
+$_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
 if (!empty($_REQUEST['highlight'])) {
 	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
