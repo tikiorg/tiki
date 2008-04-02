@@ -1,6 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.56 2007/08/21 08:21:18 luciash Exp $
- *
+ * $Id: $ *
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
  * Uses *lite - an ultimate source ordered layout solution by luci as a base.
@@ -16,7 +15,7 @@
 /* 
  * redefine the base CSS -- needs to be adjusted for our own style which comes next
  */
-@import "nicetitle.css";
+/*@import "nicetitle.css";*/
 
 body {
  /* setting up the background. the color, then bg image and its form of repeating. */
@@ -30,9 +29,7 @@ font-family: 'Verdana';
  padding: 0; /* and padding */
 }
 
-#header {
-	background-color: transparent;
-}
+#header {	background-color: transparent;}
 
 #c1c2 {
 	background-color: transparent;
@@ -41,30 +38,48 @@ font-family: 'Verdana';
 #c1c2
 	#wrapper {
 		background-color: transparent;
+		padding: 0;
 	}
 
 #c1c2
 	#wrapper
 		#col1 {
 			background-color: transparent;
-			width: 70%;
 		}
+
+#c1c2
+	#wrapper
+		#col1.marginleft {
+			margin-left: 20%;/* change this in your stylesheet too when you change the width of #col2 */
+		}
+
+#c1c2
+	#wrapper
+		#col1.marginright {
+			margin-right: 30%;/* change this in your stylesheet too when you change the width of #col3 */
+		}
+
+
 
 #c1c2
 	#wrapper
 		#col1
 			.content {
 				background-color: transparent;
-				padding-top: 0px;
+				padding: 0.2em;
 			}
 
 #c1c2
 	#col2 {
-		background-color: transparent;
+		background-color: transparent;
+		padding: 0;
+		width: 20%;
 	}
 
 #col3 {
-	background-color: transparent;
+	background-color: transparent;
+	margin-left: -30%;
+	padding: 0;
 	width: 30%;
 }
 
@@ -97,7 +112,6 @@ dt {
 /* default font size for all text in divs. works together with 75% font-size for body */
 div {
  font-size: 1em;
- padding: 0.2em;
 }
 
 /* default color for links */
@@ -113,14 +127,14 @@ a:hover {
 
 /* headings */
 h1 {
- margin-top: 0px;
+ margin-top: 0;
  text-align: center;
  font-size: 25px;
 }
 h2 {
  font-size: 22px;
- margin-bottom: 0px;
- padding: 0px;
+ margin-bottom: 0;
+ padding: 0;
 }
 h3 {
  font-size: 18px;
@@ -369,7 +383,7 @@ textarea {
 	/* Konq does it without, FF needs this size and align here instead of only in normal h1 */
 	font-size: 25px;
 	text-align: center;
-	background-color: #24880C;
+	background: #24880C url("amette/gradient.png") center center repeat-x;
 	border: solid 1px #24880C;
 	color: #FFFFFF;
 	margin-top: 0px;
@@ -385,13 +399,15 @@ textarea {
 	/* Konq does it without, FF needs this size and align here instead of only in normal h1 */
 	font-size: 25px;
 	text-align: center;
-	background-color: #24880C;
-	border: solid 1px #24880C;
 	color: #FFFFFF;
 	margin-top: 0px;
 	padding-top: 4px;
 	padding-bottom: 4px; 
 	padding-left: 3px;
+}
+.content h1 a:hover {
+	background-color: transparent;
+	color: #86BE7D;
 }
 .leftcolonlywrapper {
  float: none; width: 100%;
@@ -423,9 +439,10 @@ textarea {
  padding: 0;
 }
 div.box-title {
- background: #24880C;
+ background: #24880C url("amette/gradient.png") center center repeat-x;
  border-bottom: solid 0 #abcdef;
  overflow: hidden;
+ padding: 0.2em;
  text-align: center;
  color: #FFFFFF;
 }
@@ -439,7 +456,8 @@ div.box-title table {
  overflow: auto;
  _overflow: hidden; /* MSIE workaround */
  _overflow-x: auto; /* MSIE workaround */
- padding-bottom: 0.2em;
+ padding: 0.2em;
+ padding-bottom: 0.4em;
  _width: 100%; /* MSIE workaround to make overflow work */
 }
 .box-data a {
