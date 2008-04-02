@@ -30,22 +30,24 @@
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Use in{/tr}:</td>
+<td>
 {if $prefs.feature_cms_templates eq 'y'}
-<tr><td class="formcolor">{tr}Use in CMS{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /></td></tr>
+<input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> {tr}CMS{/tr} ({tr}Articles{/tr}<br />{/if}
+{if $prefs.feature_wiki_templates eq 'y'}<input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /> {tr}Wiki{/tr}<br />
 {/if}
-{if $prefs.feature_wiki_templates eq 'y'}
-<tr><td class="formcolor">{tr}Use in Wiki{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /></td></tr>
+{if $prefs.feature_newsletters eq 'y'}<input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} /> {tr}Newsletters{/tr}<br />
 {/if}
-{if $prefs.feature_newsletters eq 'y'}
-<tr><td class="formcolor">{tr}Use in newsletters{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} /></td></tr>
-{/if}
-{if $prefs.feature_events eq 'y'}
-<tr><td class="formcolor">{tr}Use in events{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} /></td></tr>
+{if $prefs.feature_events eq 'y'}<input type="checkbox" name="section_events" {if $info.section_events eq 'y'}checked="checked"{/if} /> {tr}Events{/tr}<br />
 {/if}
 {if $prefs.feature_html_pages eq 'y'}
-<tr><td class="formcolor">{tr}Use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
+<input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /> {tr}HTML pages{/tr}<br />
 {/if}
-
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">Tip</div>  
+  <div class="rbox-data" name="tip">Use the Adminstration page of each enabled feature to allow the use of content templates.</div>
+</div><br /></td>
+</tr>
 {if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
   <tr>
     <td class="formcolor"><label>{tr}Quicktags{/tr}</label></td>
