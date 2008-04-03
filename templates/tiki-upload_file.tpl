@@ -26,7 +26,7 @@
 			<div class="wikitext">
 				{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
 				{tr}You can include the file in an Wiki page using{/tr}: <textarea cols="60" rows="2">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</textarea><br />
-				{tr}You can include the file in an HTML page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea><br /><br />
+				{tr}You can include the file in an HTML page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea><br /><br /><br />
 			</div>
 		</div>
 	{/section}
@@ -99,7 +99,7 @@
 	</td></tr>
 {/if}
 
-	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /><i>{tr}Unzip all zip files{/tr}</i></td></tr>
 	{/if}
 
