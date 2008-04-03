@@ -34,7 +34,6 @@
 	{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />{/if}
 	{if $smarty.request.topics_sort_mode}<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />{/if}
 	{if $smarty.request.topics_threshold}<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />{/if}
-	{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}
 
 	{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y'}
 	<div class="forum_actions">
