@@ -1,9 +1,11 @@
 {* $Id$ *}
 
-<h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
+<h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=wiki">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
 {/if}
+</h1>
+
 {include file="find.tpl"}
 
 <div align="center">
