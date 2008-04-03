@@ -16,7 +16,7 @@ include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/userprefs/userprefslib.php');
 
 // User preferences screen
-if ($prefs['feature_userPreferences'] != 'y' && $user != 'admin') {
+if ($prefs['feature_userPreferences'] != 'y' && $prefs['change_password'] != 'y' && $user != 'admin') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 	$smarty->display("error.tpl");
 	die;
@@ -83,7 +83,7 @@ $smarty->assign('show_mouseover_user_info',
 	isset($prefs['show_mouseover_user_info']) ? $prefs['show_mouseover_user_info'] : $prefs['feature_community_mouseover']
 );
 
-if (isset($_REQUEST["new_prefs"])) {
+if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
 	if ($prefs['change_theme'] == 'y') {

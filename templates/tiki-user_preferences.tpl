@@ -39,6 +39,7 @@
   </div>
 {/if}
 
+{if $prefs.feature_userPreferences eq 'y'}
 <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" />
@@ -523,7 +524,7 @@
     </tr>
   </table>
 </form>
-
+{/if}
 
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
   <br />
