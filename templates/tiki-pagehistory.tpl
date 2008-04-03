@@ -159,7 +159,7 @@
 {/if}
 </tr>
 {/foreach}
-{if $prefs.feature_multilingual eq 'y'}
+{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
 <tr>
 	<td colspan="9" class="right">
 		<select name="tra_lang">
