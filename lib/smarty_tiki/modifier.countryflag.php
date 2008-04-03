@@ -18,7 +18,7 @@ function smarty_modifier_countryflag($user)
 {
   global $tikilib;
   $flag = $tikilib->get_user_preference($user,'country','Other');
-  if ($flag == 'Other')
+  if ($flag == 'Other' || empty($flag))
       return '';
   return "<img alt='".tra($flag)."' src='img/flags/".$flag.".gif' />";
 }
