@@ -6,7 +6,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{if $base_url and $dir_level gt 0}<base href="{$base_url}"/>{/if}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $prefs.metatag_keywords ne ''}
 		<meta name="keywords" content="{$prefs.metatag_keywords}" />
 {/if}
@@ -95,10 +96,96 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $prefs.feature_trackers eq 'y' and $prefs.rss_tracker eq 'y'}
 		<link rel="alternate" type="application/xml" title="{tr}RSS Trackers{/tr}" href="tiki-tracker_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
+{if $prefs.feature_calendar eq 'y' and $prefs.rss_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
+{/if}
 {* ---- END of blocks ---- *}
 
-{if $headerlib}{$headerlib->output_headers()}{/if}
+{if $prefs.feature_mootools eq "y"}
+<script type="text/javascript" src="lib/mootools/mootools.js"></script>
+{if $mootools_windoo eq "y"}
+<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
+{/if}
+{if $mootab eq "y"}
+<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
+{/if}
+{/if}
 
+{if $prefs.feature_swffix eq "y"}
+<script type="text/javascript" src="lib/swffix/swffix.js"></script>
+{/if}
+
+{if $headerlib}{$headerlib->output_headers()}{/if}
+{if ($mid eq 'tiki-editpage.tpl')}
+<script type="text/javascript">
+{literal}
+  var needToConfirm = true;
+  
+  window.onbeforeunload = confirmExit;
+  function confirmExit()
+  {
+    if (needToConfirm)
+		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
+  }
+{/literal}
+</script>
+{/if}
+
+{if $prefs.feature_shadowbox eq 'y'}
+<!-- Includes for Shadowbox script -->
+	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
+
+{if $prefs.feature_mootools eq "y"}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
+{else}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+{/if}
+
+	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
+
+	<script type="text/javascript">
+
+{if $prefs.feature_mootools eq "y"}
+	{literal}
+		window.addEvent('domready', function() {
+	{/literal}
+{else}
+	{literal}
+		$(document).ready(function() {
+	{/literal}
+{/if}
+{literal}
+			var options = {
+				ext: {
+					img:        ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
+					qt:         ['dv', 'mov', 'moov', 'movie', 'mp4'],
+					wmp:        ['asf', 'wm', 'wmv'],
+					qtwmp:      ['avi', 'mpg', 'mpeg'],
+					iframe: ['asp', 'aspx', 'cgi', 'cfm', 'doc', 'htm', 'html', 'pdf', 'pl', 'php', 'php3', 'php4', 'php5', 'phtml', 'rb', 'rhtml', 'shtml', 'txt', 'vbs', 'xls']
+				},
+				handleUnsupported: 'remove',
+				loadingImage: 'lib/shadowbox/images/loading.gif',
+				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
+				resizeLgImages: true,
+				text: {
+{/literal}
+					cancel:   '{tr}Cancel{/tr}',
+					loading:  '{tr}Loading{/tr}',
+					close:    '{tr}<span class="shortcut">C</span>lose{/tr}',
+					next:     '{tr}<span class="shortcut">N</span>ext{/tr}',
+					prev:     '{tr}<span class="shortcut">P</span>revious{/tr}'
+{literal}
+				},
+				keysClose:          ['c', 27], // c OR esc
+				keysNext:           ['n', 39], // n OR arrow right
+				keysPrev:           ['p', 37]  // p OR arrow left
+			};
+
+			Shadowbox.init(options);
+		});
+	</script>
+{/literal}
+{/if}
 	</head>
 
 {* ---- BODY ---- *}
