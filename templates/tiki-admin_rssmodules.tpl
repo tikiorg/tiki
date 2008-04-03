@@ -39,7 +39,7 @@
 <input type="hidden" name="rssId" value="{$rssId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td>
 <td class="formcolor">
@@ -64,7 +64,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>{tr}Rss channels{/tr}</h2>
+<h2>{tr}RSS channels{/tr}</h2>
 <div  align="center">
 {if $channels}
 <table class="findtable">
@@ -81,59 +81,49 @@
 {/if}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'rssId_desc'}rssId_asc{else}rssId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></td>
-<td class="heading">{tr}Size{/tr}</td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}lastUpdated_asc{else}lastUpdated_desc{/if}">{tr}Last update{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}Refresh{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}showTitle_asc{else}showTitle_desc{/if}">{tr}show feed title{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}showPubDate_asc{else}showPubDate_desc{/if}">{tr}show pubdate{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'rssId_desc'}rssId_asc{else}rssId_desc{/if}">{tr}ID{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}lastUpdated_asc{else}lastUpdated_desc{/if}">{tr}Last update{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}showTitle_asc{else}showTitle_desc{/if}">{tr}Show Title?{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}showPubDate_asc{else}showPubDate_desc{/if}">{tr}Show Date?{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
+{cycle values="even,odd" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].rssId}</td>
-<td class="odd">{$channels[user].name}</td>
-<td class="odd">{$channels[user].description}</td>
-<td class="odd"><a class="link" href="{$channels[user].url}">{$channels[user].url|truncate:30:"...":true}</a></td>
-<td class="odd">{$channels[user].size}</td>
-<td class="odd">{$channels[user].lastUpdated|tiki_short_datetime}</td>
-<td class="odd">{$channels[user].minutes} min</td>
-<td class="odd">{$channels[user].showTitle}</td>
-<td class="odd">{$channels[user].showPubDate}</td>
-<td class="odd">
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}Delete{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}">{tr}View{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}">{tr}Refresh{/tr}</a>
+<td class="{cycle advance=false}">{$channels[user].rssId}</td>
+<td class="{cycle advance=false}"><strong>{$channels[user].name}</strong><br />{$channels[user].description}<br /><a class="link" href="{$channels[user].url}">URL: {$channels[user].url|truncate:50:"...":true}</a><br />
+Size: {$channels[user].size} kb<br />
+</td>
+<td class="{cycle advance=false}">{if $channels[user].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[user].lastUpdated|tiki_short_datetime}{/if}<br />
+Refresh rate: 
+{if $channels[user].minutes eq 1}1 {tr}minute{/tr}
+{elseif $channels[user].minutes eq  5}5 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  10}10 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  15}15 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  20}20 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  30}30 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  45}45 {tr}minutes{/tr}
+{elseif $channels[user].minutes eq  60}1 {tr}hour{/tr}
+{elseif $channels[user].minutes eq  90}1.5 {tr}hours{/tr}
+{elseif $channels[user].minutes eq  120}2 {tr}hours{/tr}
+{elseif $channels[user].minutes eq  360}6 {tr}hours{/tr}
+{elseif $channels[user].minutes eq  720}12 {tr}hours{/tr}
+{elseif $channels[user].minutes eq  3600}1 {tr}day{/tr}{/if}
+</td>
+<td class="{cycle advance=false}" style="text-align:center">{$channels[user].showTitle}</td>
+<td class="{cycle advance=false}" style="text-align:center">{$channels[user].showPubDate}</td>
+<td class="{cycle}">   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}" title="{tr}Delete{/tr}">{icon _id=cross.png alt="{tr}Delete{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}" title="{tr}Edit{/tr}">{icon _id=page_edit.png}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}" title="{tr}View{/tr}">{icon _id=feed.png alt="{tr}View feed{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh.png alt="{tr}Refresh{/tr}"}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].rssId}</td>
-<td class="even">{$channels[user].name}</td>
-<td class="even">{$channels[user].description}</td>
-<td class="even"><a class="link" href="{$channels[user].url}">{$channels[user].url|truncate:30:"...":true}</a></td>
-<td class="even">{$channels[user].size}</td>
-<td class="even">{$channels[user].lastUpdated|tiki_short_datetime}</td>
-<td class="even">{$channels[user].minutes} min</td>
-<td class="even">{$channels[user].showTitle}</td>
-<td class="even">{$channels[user].showPubDate}</td>
-<td class="even">
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}Delete{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}">{tr}View{/tr}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}">{tr}Refresh{/tr}</a>
-</td>
-</tr>
-{/if}
 {sectionelse}
-<tr><td colspan="10" class="odd">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="6" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
+
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
