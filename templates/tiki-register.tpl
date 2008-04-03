@@ -48,7 +48,10 @@
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
       <td class="formcolor"><input id='pass1' type="password" name="pass"
-        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/></td>
+        {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>
+	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<br /><i>{$prefs.min_pass_length} {tr}characters long{/tr}</i>{/if}
+	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<br /><i>{tr}Password must contain both letters and numbers{/tr}</i>{/if}
+	  </td>
       </tr>
 
       <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
