@@ -29,7 +29,7 @@
     <table class="normal">
 
 
-      <tr><td class="formcolor">{tr}Username{/tr}:</td>
+      <tr><td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
       <td class="formcolor">
         <input style="float:left" type="text" name="name" id="name"
 	  {if $prefs.feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
