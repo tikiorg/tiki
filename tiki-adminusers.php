@@ -156,6 +156,8 @@ if (isset($_REQUEST["newuser"])) {
 		} else {
 			if ($userlib->user_exists($_REQUEST["name"])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
+			} elseif ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['name'])) {
+				$tikifeedback[] = array('num'=>1,'mes'=>tra("Invalid email").' '.$_REQUEST['name']);
 			} elseif (!preg_match($patterns['login'],$_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
@@ -167,6 +169,8 @@ if (isset($_REQUEST["newuser"])) {
 				    $smarty->display("error.tpl");
 				    die;
 				}
+				if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email']))
+					$_REQUEST['email'] = $_REQUEST['name'];
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					$cookietab = '1';
