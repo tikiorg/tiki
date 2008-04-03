@@ -52,7 +52,7 @@
     {else}
       <a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}Edit Gallery{/tr}">{tr}Edit Gallery{/tr}</a>
       {if $view eq 'browse'}
-        <a href="tiki-list_file_gallery.php?view=list&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}browse image{/tr}">{tr}List Gallery{/tr}</a>
+        <a href="tiki-list_file_gallery.php?view=list&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}List Gallery{/tr}">{tr}List Gallery{/tr}</a>
       {else}
         <a href="tiki-list_file_gallery.php?view=browse&amp;galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" class="linkbut" title="{tr}browse image{/tr}">{tr}browse image{/tr}</a>
       {/if}
