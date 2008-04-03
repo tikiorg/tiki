@@ -37,24 +37,19 @@
 		{/if}
 					
 		{if $tiki_p_forums_report eq 'y' and $forum_mode eq 'y'}
-			<form action="tiki-view_forum_thread.php" method="post" style="display: inline;">
-				<input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
-				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
-				<input type="hidden" name="report" value="{$comment.threadId}" />
-				<input type="image" src="pics/icons/delete.png" alt="{tr}Report this post{/tr}" title="{tr}Report this post{/tr}" />
-			</form>
+			{self_link report=$comment.threadId _icon='delete' _alt='{tr}Report this post{/tr}' _title='{tr}Report this post{/tr}'}{/self_link}
 		{/if}
 					
 	  	{if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y' and $forumId}
-		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$thread_sort_mode_param}{$comments_per_page_param}&amp;savenotepad={$comment.threadId}">{icon _id='disk' alt='{tr}Save{/tr}'}</a>
+			{self_link savenotepad=$comment.threadId _icon='disk' _alt='{tr}Save to notepad{/tr}' _title='{tr}Save to notepad{/tr}'}{/self_link}
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
 		{if $forum_mode eq 'y'}
 		{if $user_watching_topic eq 'n'}
-		<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add">{icon _id='eye' alt='{tr}Monitor this Topic{/tr}'}</a>
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _icon='eye' _alt='{tr}Monitor this Topic{/tr}' _title='{tr}Monitor this Topic{/tr}'}{/self_link}
 		{else}
-		<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove">{icon _id='no_eye' alt='{tr}Stop Monitoring this Topic{/tr}'}</a>
+			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _icon='no_eye' _alt='{tr}Stop Monitoring this Topic{/tr}' _title='{tr}Stop Monitoring this Topic{/tr}'}{/self_link}
 		{/if}
 		{/if}
 		<br />
