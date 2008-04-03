@@ -12,7 +12,7 @@ if ( class_exists('Imagick') ) {
 } elseif ( function_exists('imagick_rotate') ) {
 	$detected_lib = 'imagick_old'; // Imagick 1.x
 } elseif ( function_exists('gd_info') ) {
-	$detected_lib = 'gd'; // Imagick 1.x
+	$detected_lib = 'gd'; // GD
 } else {
 	$smarty->assign('msg', tra('No graphic library found.'));
 	$smarty->display('error.tpl');
