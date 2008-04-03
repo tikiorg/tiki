@@ -2,10 +2,10 @@
 
 // Includes an article field
 // Usage:
-// {ARTICLE(Id=>articleId, Field=>FieldName)}{ARTICLE}
+// {BLOGLIST(Id=>blogId)}{BLOGLIST}
 // FieldName can be any field in the tiki_articles table, but title,heading, or body are probably the most useful.
 function wikiplugin_bloglist_help() {
-	return tra("Include all post in a blog").":<br />~np~{BLOGLIST(Id=>)}{ARTICLE}~/np~";
+	return tra("Use BLOGLIST to include all posts from a blog. Syntax is").":<br />~np~{BLOGLIST(Id=n)}{BLOGLIST}~/np~";
 }
 function wikiplugin_bloglist($data, $params) {
 	global $tikilib;
@@ -13,11 +13,13 @@ function wikiplugin_bloglist($data, $params) {
 	extract ($params,EXTR_SKIP);
 
 	if (!isset($Id)) {
-		return ("<b>missing blog ID for plugin BLOGLIST</b><br />");
+		$text = ("<b>missing blog Id for BLOGLIST plugins</b><br />");
+		$text .= wikiplugin_bloglist_help();
+		return $text;
 	}
-	if (!isset($Field)) {
-		$Field = 'heading';
-	}
+//	if (!isset($Field)) {
+//		$Field = 'heading';
+//	}
 	$text="<div class=\"blogtools\"><table><tr><th>" . tra("Date") . "</th><th>" . tra("Title") . "</th><th>" . tra("Author") . "</th></tr>\n";
 	$query = "select `postId`, `title`, `user`, `created`  from `tiki_blog_posts` where `blogId`=? order by `created` desc";
 	$result = $tikilib->query($query, array($Id));
