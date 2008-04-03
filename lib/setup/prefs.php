@@ -253,11 +253,11 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['image_galleries_comments_default_order'] = 'points_desc';
 	$prefs['image_galleries_comments_per_page'] = 10;
 	$prefs['gal_list_name'] = 'y';
-	$prefs['gal_list_parent'] = 'y';
+	$prefs['gal_list_parent'] = 'n';
 	$prefs['gal_list_description'] = 'y';
-	$prefs['gal_list_created'] = 'y';
+	$prefs['gal_list_created'] = 'n';
 	$prefs['gal_list_lastmodif'] = 'y';
-	$prefs['gal_list_user'] = 'y';
+	$prefs['gal_list_user'] = 'n';
 	$prefs['gal_list_imgs'] = 'y';
 	$prefs['gal_list_visits'] = 'y';
 	$prefs['feature_image_gallery_mandatory_category'] = '-1';
