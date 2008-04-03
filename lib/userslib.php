@@ -2191,7 +2191,7 @@ function get_included_groups($group, $recur=true) {
 
 		//Validate password here
 		if ( strlen($pass)<$prefs['min_pass_length'] ) {
-			return tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long");
+			return tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
 		}
 
 		// Check this code
