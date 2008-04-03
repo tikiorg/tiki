@@ -16,7 +16,7 @@ $languages = $tikilib->list_languages(false,null,true);
 $smarty->assign_by_ref("languages", $languages);
 
 
-if (isset($_REQUEST["i18nsetup"])) { 	
+if (isset($_REQUEST["i18nsetup"])) {
 ask_ticket('admin-inc-i18n');
 
 	if( isset( $_REQUEST['available_languages'] )
@@ -30,7 +30,8 @@ ask_ticket('admin-inc-i18n');
 		"feature_multilingual_structures",
 		"feature_best_language",
         "feature_detect_language",
-		"change_language",		
+// This option should be re-added to this page, no?
+//		"change_language",
 		"quantify_changes",
 		"feature_user_watches_translations",
         "lang_use_db",
@@ -42,7 +43,7 @@ ask_ticket('admin-inc-i18n');
 
     foreach ($pref_toggles as $toggle) {
         simple_set_toggle ($toggle);
-    }	
+    }
 
 	simple_set_value( 'language' );
 	simple_set_value( 'available_languages', '', true );
