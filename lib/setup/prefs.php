@@ -316,9 +316,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_forum_content_search'] = 'y';
 	$prefs['feature_forums_name_search'] = 'y';
 	$prefs['forums_ordering'] = 'created_desc';
-	$prefs['forum_list_topics'] =  'y';
+	$prefs['forum_list_topics'] =  'n';
 	$prefs['forum_list_posts'] =  'y';
-	$prefs['forum_list_ppd'] =  'y';
+	$prefs['forum_list_ppd'] =  'n';
 	$prefs['forum_list_lastpost'] =  'y';
 	$prefs['forum_list_visits'] =  'y';
 	$prefs['forum_list_desc'] =  'y';
