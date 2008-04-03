@@ -2229,6 +2229,9 @@ div.thumbdescription + div.thumbinfo {
 div.thumbdescription span.thumbinfoname {
 	display: none;
 }
+a.namealias {
+	font-style: italic;
+}
 
 div.gallerypath, div.gallerypath a {
 	color: #6996C3;

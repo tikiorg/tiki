@@ -1095,6 +1095,9 @@ div.thumbdescription + div.thumbinfo {
 div.thumbdescription span.thumbinfoname {
 	display: none;
 }
+a.namealias {	
+	font-style: italic;
+}
 
 /******************************************************* WEBLOGS **********************************************************/
 div.blogtitle {

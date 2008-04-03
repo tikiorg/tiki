@@ -78,11 +78,10 @@
 
     <div class="thumbnailcontener" style="float:left; width:{$thumbnailcontener_size}px">
 
-      <div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px;{* height:{math equation="x + 6" x=$thumbnail_size}px; overflow:hidden *}">
+      <div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px">
         <div class="thumbimagecontener" style="width:{$thumbnail_size}px; height:{$thumbnailcontener_size}px">
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">
-              {* <a href="tiki-download_file.php?fileId={$files[changes].id}&amp;display"> *}
               <a {$link}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{/if}>
                 <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail&amp;max={$thumbnail_size}" />
               </a>
@@ -102,7 +101,13 @@
         
             {* Format property values *}
             {if $propname eq 'id' or $propname eq 'name'}
-              {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+              {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
+                {* show the filename if only name should be displayed but is empty *}
+                {assign var=propval value=$files[changes].filename}
+                {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+              {else}
+                {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+              {/if}
             {elseif $propname eq 'created' or $propname eq 'lastmodif'}
               {assign var=propval value=$propval|tiki_short_date}
             {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}

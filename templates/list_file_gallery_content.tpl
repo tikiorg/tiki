@@ -197,7 +197,13 @@
   
       {* Format property values *}
       {if $propname eq 'id' or $propname eq 'name'}
-        {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+        {if $propname eq 'name' and $propval eq '' and $gal_info.show_name eq 'n'}
+          {* show the filename if only name should be displayed but is empty *}
+          {assign var=propval value=$files[changes].filename}
+          {assign var=propval value="<a class='fgalname namealias' $link>$propval</a>"}
+        {else}
+          {assign var=propval value="<a class='fgalname' $link>$propval</a>"}
+        {/if}
       {elseif $propname eq 'created' or $propname eq 'lastmodif'}
         {assign var=propval value=$propval|tiki_short_date}
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
