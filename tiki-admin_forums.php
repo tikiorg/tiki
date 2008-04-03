@@ -120,10 +120,10 @@ if (isset($_REQUEST["save"])) {
 		$usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"],
 		$usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"],
 		$_REQUEST["section"], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_pts'],
-		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], 
+		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'],
 		$_REQUEST['vote_threads'],
 		$_REQUEST['show_description'], $_REQUEST['inbound_pop_server'],
-		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], 
+		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'],
 		trim($_REQUEST['outbound_address']),
 		$_REQUEST['outbound_mails_for_inbound_mails'],
 		$_REQUEST['outbound_mails_reply_link'],
@@ -157,7 +157,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
 		global $userlib; include_once('lib/userslib.php');
 		$userlib->copy_object_permissions($_REQUEST['forumId'], $newForumId, 'forum');
-	}  
+	}
 	$_REQUEST['forumId'] = $newForumId;
 }
 
@@ -212,10 +212,10 @@ if ($_REQUEST["forumId"]) {
 	$info['att_max_size'] = 1000000;
 
 	$info["topics_list_reads"] = 'y';
-	$info["topics_list_pts"] = 'y';
+	$info["topics_list_pts"] = 'n';
 	$info["topics_list_lastpost"] = 'y';
 	$info["topics_list_author"] = 'y';
-	$info["vote_threads"] = 'y';
+	$info["vote_threads"] = 'n';
 	$info["forum_last_n"] = 0;
 	$info["is_flat"] = 'n';
 }
