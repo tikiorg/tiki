@@ -26,7 +26,6 @@ REPLACE INTO tiki_preferences VALUES ('feature_drawings','y');
 REPLACE INTO tiki_preferences VALUES ('feature_editcss','n');
 REPLACE INTO tiki_preferences VALUES ('feature_file_galleries','y');
 REPLACE INTO tiki_preferences VALUES ('feature_file_galleries_comments','y');
-REPLACE INTO tiki_preferences VALUES ('feature_file_galleries_rankings','y');
 REPLACE INTO tiki_preferences VALUES ('feature_forum_parse','y');
 REPLACE INTO tiki_preferences VALUES ('feature_forum_replyempty','y');
 REPLACE INTO tiki_preferences VALUES ('feature_forum_quickjump','y');

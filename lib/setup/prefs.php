@@ -88,7 +88,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_plurals'] = 'y';
 	$prefs['feature_wiki_print'] = 'y';
 	$prefs['feature_wiki_protect_email'] = 'y';
-	$prefs['feature_wiki_rankings'] = 'y';
+	$prefs['feature_wiki_rankings'] = 'n';
 	$prefs['feature_wiki_ratings'] = 'n';
 	$prefs['feature_wiki_replace'] = 'n';
 	$prefs['feature_wiki_show_hide_before'] = 'n';
@@ -184,7 +184,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_blogs'] = 'n';
 	$prefs['blog_list_order'] = 'created_desc';
 	$prefs['home_blog'] = 0;
-	$prefs['feature_blog_rankings'] = 'y';
+	$prefs['feature_blog_rankings'] = 'n';
 	$prefs['feature_blog_comments'] = 'n';
 	$prefs['blog_comments_default_ordering'] = 'points_desc';
 	$prefs['blog_comments_per_page'] = 10;
@@ -248,7 +248,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['gal_nmatch_regex'] = '';
 	$prefs['gal_use_dir'] = '';
 	$prefs['gal_batch_dir'] = '';
-	$prefs['feature_gal_rankings'] = 'y';
+	$prefs['feature_gal_rankings'] = 'n';
 	$prefs['feature_image_galleries_comments'] = 'n';
 	$prefs['image_galleries_comments_default_order'] = 'points_desc';
 	$prefs['image_galleries_comments_per_page'] = 10;
@@ -306,7 +306,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# forums
 	$prefs['feature_forums'] = 'n';
 	$prefs['home_forum'] = 0;
-	$prefs['feature_forum_rankings'] = 'y';
+	$prefs['feature_forum_rankings'] = 'n';
 	$prefs['feature_forum_parse'] = 'n';
 	$prefs['feature_forum_topics_archiving'] = 'n';
 	$prefs['feature_forum_replyempty'] = 'n';
@@ -335,7 +335,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# articles
 	$prefs['feature_articles'] = 'n';
 	$prefs['feature_submissions'] = 'n';
-	$prefs['feature_cms_rankings'] = 'y';
+	$prefs['feature_cms_rankings'] = 'n';
 	$prefs['feature_cms_print'] = 'y';
 	$prefs['feature_cms_emails'] = 'n';
 	$prefs['art_list_title'] = 'y';
