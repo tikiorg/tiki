@@ -14,7 +14,6 @@
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file=tiki-mytiki_bar.tpl}
 {/if}
-<h2>{tr}User Files{/tr}</h2>
 
 <div style="text-align:center;">
   <div style="height:20px; width:200px; border:1px solid black; background-color:#666666; text-align:left; margin:0 auto;">
@@ -28,6 +27,7 @@
   {/if}
 </div>
 
+<h2>{tr}User Files{/tr}</h2>
 <form action="tiki-userfiles.php" method="post">
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <table class="normal">
@@ -70,21 +70,19 @@
 </div>
 </div>
 
-
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-userfiles.php" method="post">
   <table class="normal">
     <tr>
       <td class="formcolor">{tr}Upload file{/tr}:</td>
       <td class="formcolor">
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile1" type="file" /><br />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile2" type="file" /><br />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile3" type="file" /><br />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile4" type="file" /><br />
-        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile5" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile1" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile2" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile3" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile4" type="file" /><br />
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="60" name="userfile5" type="file" /><br />
         <input style="font-size:9px;" type="submit" name="upload" value="{tr}Upload{/tr}" />
       </td>
     </tr>
   </table>
 </form>
-

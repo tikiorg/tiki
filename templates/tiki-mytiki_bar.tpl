@@ -11,7 +11,7 @@
 </a></td>
 {/if}
 
-{if $prefs.feature_userPreferences eq 'y'}
+{if $prefs.feature_userPreferences eq 'y' or $prefs.change_password eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_preferences.php" title="{tr}Preferences{/tr}">
 <img  border="0" src="img/mytiki/prefs.gif" alt="{tr}Prefs{/tr}" />
 </a></td>

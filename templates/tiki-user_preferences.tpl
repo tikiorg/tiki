@@ -40,17 +40,13 @@
 {/if}
 
 {if $prefs.feature_userPreferences eq 'y'}
+<h2>{tr}Personal Information{/tr}</h2>
 <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" />
 
   {cycle values="odd,even" print=false}
   <table class="normal">
-
-    <tr>
-      <td class="heading" colspan="2">{tr}Personal Information{/tr}</td>
-    </tr>
-  
     <tr>
       <td class="{cycle advance=false}">{tr}User{/tr}:</td>
       <td class="{cycle}">
@@ -527,14 +523,10 @@
 {/if}
 
 {if $prefs.change_password neq 'n' or ! ($prefs.login_is_email eq 'y' and $userinfo.login neq 'admin')}
-  <br />
+  <h2>{tr}Account Information{/tr}</h2>
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="normal">
-    <tr>
-      <td class="heading" colspan="2">{tr}Account Information{/tr}</td>
-    </tr>
-    
     {if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
       {if $prefs.change_password neq 'n' and ($prefs.login_is_email ne 'y' or $userinfo.login eq 'admin') }
         <tr>

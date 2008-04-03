@@ -13,7 +13,7 @@
 
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file=tiki-mytiki_bar.tpl}
-<div style="float:right;margin:5px;">
+<div class="navbar">
 	<span class="button2"><a href="tiki-contacts.php" class="linkbut" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a></span>
 </div>
 

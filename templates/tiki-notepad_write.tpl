@@ -2,8 +2,7 @@
 <h1><a class="pagetitle" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 
-<span class="button2"><a class="linkbut" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></span>
-<br /><br />
+<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></span></div>
 
 <form action="tiki-notepad_write.php" method="post">
 <input type="hidden" name="parse_mode" value="{$info.parse_mode|escape}" />

@@ -2,16 +2,16 @@
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 {/if}
-<div style="float:right;margin-right:10px;">
-<table border='0' cellpadding='0' cellspacing='0'>
-<tr><td><small>{tr}quota{/tr}&nbsp;{$percentage}%</small></td><td>
-<table border='0' height='10' cellpadding='0' cellspacing='0' width='200' style='background-color:#666666;'>
-<tr><td style='background-color:red;' width='{$cellsize}'>&nbsp;</td><td>&nbsp;</td></tr></table>
-</td></tr></table>
-</div>
 
-<span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span>
-<br /><br />
+<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span></div>
+
+<div style="text-align:center;">
+ <div style="height:20px; width:200px; border:1px solid black; background-color:#666666; text-align:left; margin:0 auto;">
+    <div style="background-color:red; height:100%; width:{$cellsize}px;"> 
+    </div>
+  </div>
+<small>{tr}quota{/tr}&nbsp;{$percentage}%</small>
+</div>
 
 {if count($channels) > 0}
 <h2>{tr}Notes{/tr}</h2>
