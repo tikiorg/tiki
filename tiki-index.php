@@ -709,7 +709,10 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 	if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');
-		$smarty->assign('approvedPageName', $approvedPageName);		
+		$smarty->assign('approvedPageName', $approvedPageName);	
+		$smarty->assign('approvedPageName', $approvedPageName);
+		$approvedPageExists = $tikilib->page_exists($approvedPageName);
+		$smarty->assign('approvedPageExists', $approvedPageExists);
 	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
 		$smarty->assign('needsStaging', 'y');
