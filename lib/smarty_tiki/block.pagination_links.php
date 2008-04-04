@@ -1,4 +1,5 @@
 <?php
+/* $Id: $ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -6,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/*
+/**
  * smarty_block_pagination_links: Generate pagination links
  *
  * url: base url to use for links (specified through the content between the pagination_links starting and ending tags).
@@ -76,7 +77,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	} else {
 		$nb_pages = ceil($params['cant'] / $params['step']);
 	}
-	if ( $nb_pages == 1 ) return '';
+	if ( $nb_pages == 0 ) return '';
 	if ( empty($url) || preg_match('/^\s*$/', $url) ) {
 		$url = smarty_function_query(array('_type' => $default_type), $smarty);
 	}
