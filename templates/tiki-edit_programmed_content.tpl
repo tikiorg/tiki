@@ -2,7 +2,8 @@
 <a class="linkbut" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Create New Block{/tr}</a>
 <a class="linkbut" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a><br />
 <h2>{tr}Block description: {/tr}{$description}</h2>
-<h2>{tr}Create or edit content{/tr}</h2>
+
+<h2>{if $data}{tr}Edit{/tr}{else}{tr}Create{/tr}{/if} {tr}content{/tr}</h2>
 {if $pId}
 {tr}You are editing block:{/tr} {$pId}<br />
 {/if}
@@ -17,12 +18,13 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}</td>
 <td class="formcolor">{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 </td></tr>
 </table>
 </form>
 <h2>{tr}Versions{/tr}</h2>
+{if $listpages}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -35,6 +37,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
@@ -54,15 +57,15 @@
 {/if}
 {/if}
 <td class="{$class}">&nbsp;{$listpages[changes].pId}&nbsp;</td>
-<td  class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-<td  class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
+<td class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
+<td class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
 <td class="{$class}">
-<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
+<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}" title="{tr}Remove{/tr}">{icon _id=cross.png alt="{tr}Remove{/tr}"}</a>
+<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}" title="{tr}Edit{/tr}">{icon _id=page_edit.png}</a>
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="4">
+<tr><td colspan="4" class="odd">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
