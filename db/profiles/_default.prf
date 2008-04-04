@@ -1,1 +1,2 @@
 # Default installation profile
+INSERT INTO tiki_preferences VALUES ('feature_siteidentity','y');
