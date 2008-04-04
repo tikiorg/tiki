@@ -602,7 +602,8 @@ class WikiLib extends TikiLib {
       if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
             return true;
       else {
-		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
+		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $pr
+efs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
 		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
 			return false;
@@ -749,6 +750,14 @@ class WikiLib extends TikiLib {
 		} else {
 			return 'tiki-index.php?page='.urlencode($page);
 		}
+	}
+	function move_attachments($old, $new) {
+		$query = 'update `tiki_wiki_attachments` set `page`=? where `page`=?';
+		$this->query($query, array($new, $old));
+	}
+	function duplicate_page($old, $new) {
+		$query = 'insert into `tiki_pages` (`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `flag`,`points`,`votes`,`pageRank`,`lang`,`lockedby`) select ?,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `flag`,`points`,`votes`,`pageRank`,`lang`,`lockedby` from `tiki_pages` where `pageName`=?';
+		$this->query($query, array($new, $old));
 	}
 
 }

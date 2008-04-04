@@ -243,7 +243,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 				}
   			}
           	$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, $hash);
-        	} else {
+            } else {
           	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
         	}
 
@@ -852,8 +852,16 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     $edit = $imagegallib->capture_images($edit);
     // apply the optional page edit filters before data storage
     $edit = $tikilib->apply_postedit_handlers($edit);
+	$exist = $tikilib->page_exists($_REQUEST['page']);
+	if (!$exist && $prefs['feature_wikiapproval'] == 'y' && $prefs['wikiapproval_delete_staging'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) { //needs to create the first history = initial page for history
+		$approvedPageName = substr($_REQUEST['page'], strlen($prefs['wikiapproval_prefix']));
+		if ($tikilib->page_exists($approvedPageName)) {
+			$wikilib->duplicate_page($approvedPageName, $_REQUEST['page']);
+			$exist = true;
+		}
+	}
     // If page exists
-    if(!$tikilib->page_exists($_REQUEST["page"])) {
+    if(!$exist) {
       // Extract links and update the page
       $links = $tikilib->get_links($_REQUEST["edit"]);
       /*
@@ -1131,6 +1139,8 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 		$approvedPageName = substr($page, strlen($prefs['wikiapproval_prefix']));	
 		$smarty->assign('beingStaged', 'y');
 		$smarty->assign('approvedPageName', $approvedPageName);
+		$approvedPageExists = $tikilib->page_exists($approvedPageName);
+		$smarty->assign('approvedPageExists', $approvedPageExists);
 	} elseif ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $cats)) {		
 		$stagingPageName = $prefs['wikiapproval_prefix'] . $page;
 		if ($prefs['wikiapproval_block_editapproved'] == 'y') {

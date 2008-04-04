@@ -65,7 +65,11 @@ window.onload = timeIt;
    
 {if $beingStaged eq 'y'}
 <div class="tocnav">
-{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
+{if $approvedPageExists}
+	{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
+{else}
+	{tr}This is a new staging page that has not been approved before.{/tr}
+{/if}
 {if $outOfSync eq 'y'} {tr}The current staging copy may contain changes that have yet to be approved.{/tr}{/if}
 {if $lastSyncVersion}
 	<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}" target="_blank">{tr}View changes since last approval.{/tr}</a>
@@ -386,7 +390,7 @@ function searchrep() {
 <input type="hidden" name="page2" value="{$page}" />
 <input name="userfile2" type="file" id="attach-upload" />
  {tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
-<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onclick="javascript:insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
+<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 </td></tr>
 {/if}
 {/if}

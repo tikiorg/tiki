@@ -1,5 +1,4 @@
 {* $Id$ *}
-
 {strip}
 <hr/>
 
@@ -78,7 +77,7 @@
 {if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 <span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}Export{/tr}</a></span>
 {/if}
-{if $prefs.feature_wiki_discuss eq 'y'}
+{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y'}
 <span class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}Discuss{/tr}</a></span>
 {/if}
 

@@ -10,13 +10,17 @@
 
 {if $beingStaged eq 'y'}
 <div class="tocnav">
-{tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
+{if $approvedPageExists}
+	{tr}This is the staging copy of{/tr} <a class="link" href="tiki-index.php?page={$approvedPageName|escape:'url'}">{tr}the approved version of this page.{/tr}</a>
+{else}
+	{tr}This is a new staging page that has not been approved before.{/tr}
+{/if}
 {if $outOfSync eq 'y'}
 	{if $canApproveStaging == 'y'}
 	{if $lastSyncVersion}<a class="link" href="tiki-pagehistory.php?page={$page|escape:'url'}&amp;diff2={$lastSyncVersion}">{tr}View changes since last approval.{/tr}</a>
 	{else}{tr}Viewing of changes since last approval is possible only after first approval.{/tr}{/if}
 	<a class="link" href="tiki-approve_staging_page.php?page={$page|escape:'url'}">{tr}Approve changes.{/tr}</a>
-	{else}
+	{elseif $approvedPageExists}
 	{tr}Latest changes will be synchronized after approval.{/tr}
 	{/if}
 {/if}
