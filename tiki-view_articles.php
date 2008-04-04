@@ -163,7 +163,7 @@ if ($offset > 0) {
 }
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+$smarty->assign_by_ref('cant', $listpages["cant"]);
 
 include_once ('tiki-section_options.php');
 

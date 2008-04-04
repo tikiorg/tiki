@@ -134,22 +134,4 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {tr}No articles.{/tr}
 {/section}
 
-{if $cant_pages and $cant_pages ne 0}
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="artprevnext" href="tiki-view_articles.php?offset={$prev_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="artprevnext" href="tiki-view_articles.php?offset={$next_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxArticles}
-<a class="artprevnext" href="tiki-view_articles.php?find={$find}&amp;topic={$topic}&amp;type={$type}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-{/if}
+{pagination_links cant=$cant step=$maxArticles offset=$offset}{/pagination_links}
