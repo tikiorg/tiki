@@ -89,14 +89,8 @@ if ( $re === FALSE) {
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1><font color="red">'.$local_php.' not found.</font></h1>
-				This is normal if you have not run the tiki installer yet. 
-				<a title="help" href="http://doc.tikiwiki.org/Installation" target="help">
-					<img border="0" src="img/icons/help.gif" alt="Help" />
-				</a>
-				<br />
-				<br />
-				Please run <a href=tiki-install.php>tiki-install.php</a>
+				<h1><font color="red">Tikiwiki could not find your '.$local_php.' file.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
+				<p>This is normal for a brand new Tikiwiki installation.</p><p>Run the Tikiwiki installer (<a href=tiki-install.php>tiki-install.php</a>) to configure you local.php file.</p><p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 			</div>
 		</div>
 		<hr>
@@ -166,10 +160,13 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1><font color="red">Unable to connect to the database !</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
+				<h1><font color="red">Tikiwiki is unable to connect to the database.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
 ';
+	print '<p>The following error message was returned:<div class="simplebox">';
 	print $dbTiki->ErrorMsg();
-	print '</div>
+	print '</div></p><p>Things to check:<ul><li>Is your database up and running?</li><li>Are your database login creditials correct?</li><li>Did you complete the Tiki Installer?</li></ul>
+<p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
+</div>
 		</div>
 		<hr>
 		<p align="center">
