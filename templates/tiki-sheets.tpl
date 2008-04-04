@@ -50,6 +50,7 @@
 {/if}
 <h2>{tr}Available Sheets{/tr}</h2>
 <div align="center">
+{if $sheets}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -61,6 +62,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
@@ -101,7 +103,7 @@
   </td>
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td colspan="6" class="odd">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

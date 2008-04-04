@@ -13,7 +13,7 @@
 <a class="linkbut" href="tiki-blog_post.php">{tr}Post{/tr}</a>
 <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
 </div>
-
+{if $listpages}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -25,6 +25,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'postId_desc'}postId_asc{else}postId_desc{/if}">{tr}Id{/tr}</a></td>
@@ -59,7 +60,7 @@
 {/if}
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td colspan="6" class="odd">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

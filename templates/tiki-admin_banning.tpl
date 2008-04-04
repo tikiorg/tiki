@@ -103,12 +103,13 @@
 </tr>
 </table>
 </form>
-
+{if $items}
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <label for="banning-find">{tr}Find{/tr}:</label><input type="text" name="find" id="banning-find" value="{$find|escape}" />
 </form>
+{/if}
 <h2>{tr}Rules{/tr}:</h2>
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
