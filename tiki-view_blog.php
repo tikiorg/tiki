@@ -219,6 +219,8 @@ if ($offset > 0) {
 
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
+$smarty->assign_by_ref('cant', $listpages["cant"]);
+
 //print_r($listpages["data"]);
 if ($prefs['feature_blog_comments'] == 'y') {
 	$comments_per_page = $prefs['blog_comments_per_page'];

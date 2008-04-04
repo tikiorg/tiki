@@ -145,27 +145,7 @@
   </div> <!--blogpost -->
 {/section}
 
-<br />
-
-<div class="mini">
-  {if $prev_offset >= 0}
-    [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
-  {/if}
-
-  {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-  {if $next_offset >= 0}
-    [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-  {/if}
-
-  {if $prefs.direct_pagination eq 'y'}
-    <br />
-    {section loop=$cant_pages name=foo}
-    {assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-      <a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-      {$smarty.section.foo.index_next}</a>
-    {/section}
-  {/if}
-</div> <!-- mini -->
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
 {if $prefs.feature_blog_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
