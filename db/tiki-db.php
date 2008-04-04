@@ -164,7 +164,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)
 ';
 	print '<p>The following error message was returned:<div class="simplebox">';
 	print $dbTiki->ErrorMsg();
-	print '</div></p><p>Things to check:<ul><li>Is your database up and running?</li><li>Are your database login creditials correct?</li><li>Did you complete the Tiki Installer?</li></ul>
+	print '</div></p><p>Things to check:<ul><li>Is your database up and running?</li><li>Are your database login credentials correct?</li><li>Did you complete the Tiki Installer?</li></ul>
 <p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 </div>
 		</div>
