@@ -988,12 +988,16 @@ class CategLib extends ObjectLib {
 			
 			$catpath = '';
 			foreach ($cats as $categId) {
-			        $catp = array();
+				$catp = array();
 				$info = $this->get_category($categId);
-				$catp["{$info['categId']}"] = $info["name"];
+				if ($include_excluded == false && !in_array($info['categId'], $excluded)) {
+					$catp[$info['categId']] = $info['name'];
+				}
 				while ($info["parentId"] != 0) {
 					$info = $this->get_category($info["parentId"]);
-					$catp["{$info['categId']}"] = $info["name"];
+					if ($include_excluded == false && !in_array($info['categId'], $excluded)) {
+						$catp[$info['categId']] = $info['name'];
+					}
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
 				// this line here needed to preserve old behavior where multiple categpaths
