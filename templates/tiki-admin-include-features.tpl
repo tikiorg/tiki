@@ -211,11 +211,11 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td class="form"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></td>   
   </tr>  
   <tr>     
-    <td><input type="checkbox" name="feature_lightbox" {if $prefs.feature_lightbox eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Image+Gallery+Config" target="tikihelp" class="tikihelp" title="{tr}Lightbox{/tr}"> {tr}Lightbox (Javascript modern visual effects on images){/tr}</a>{if !$lightboxlib}<br />{tr}You must install the lightbox library in lib/lightbox{/tr}{/if}</td>
+    <td><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_mootools neq 'y'} disabled="disabled"{/if}{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></td>
+    <td class="form"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a>{if $prefs.feature_mootools neq 'y'} ({tr}required{/tr}: {tr}Mootools{/tr}){/if}</td>
     <td>&nbsp;</td>
-    <td><input type="checkbox" name="feature_shadowbox" {if $prefs.feature_shadowbox eq 'y'}checked="checked"{/if}/></td>
-    <td class="form"> <a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
   </tr>
         
 {* ---------- Experimental features ------------ *}
