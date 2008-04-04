@@ -121,8 +121,9 @@
 {/if}
 
 <h2>{tr}Received Articles{/tr}</h2>
-{if $channels}
 <div align="center">
+
+{if $channels}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -135,6 +136,7 @@
 </tr>
 </table>
 {/if}
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a></td>
@@ -165,23 +167,8 @@
 <tr><td class="odd" colspan="6">{tr}No records.{/tr}</td></tr>
 {/section}
 </table>
-<br />
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-received_articles.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-received_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-received_articles.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
+
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 </div>
 
