@@ -92,6 +92,13 @@ if ( $staging_info['lastModif'] < $info['lastModif'] ) {
 
 // update approved page contents
 // multiple commits are needed to make sure contributor list and history are synced
+function change_name_in_attach_plugin($staging_page, $page, $data) {
+	$n = preg_replace('/([\(\)\.\?\+\*\[\]\|\$\^\-\'])/', '\\\$1', $staging_page);
+	$pattern = '/(\{file[^}]+page=\")'.$n.'(\"[^\}]*)/s';
+	$data = preg_replace($pattern,'$1'.$page.'$2', $data);
+	return $data;
+}
+
 if ($info) {
 	$begin_version = $histlib->get_version_by_time($staging_page, $info['lastModif'], 'after');
 	$commitversion = $histlib->get_page_latest_version($page) + 1;
@@ -106,6 +113,7 @@ if ($begin_version > 0) {
 			$version_info = $histlib->get_version($staging_page, $v);
 			$history = array();
 			if ($version_info) {
+				$version_info['data'] = change_name_in_attach_plugin($staging_page, $page, $version_info['data']);
 				if ($info) {
 					$tikilib->update_page($page, $version_info["data"], $version_info["comment"] . " [" . tra('approved by ').$user . "]", $version_info["user"], $version_info["ip"], $version_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
 				} else {
@@ -124,6 +132,7 @@ if ($begin_version > 0) {
 		}
 	}
 // finally approve current staging version
+$staging_info['data'] = change_name_in_attach_plugin($staging_page, $page, $staging_info['data']);
 if ($info) {
 	$tikilib->update_page($page, $staging_info["data"], $staging_info["comment"] . " [" . tra('approved by ').$user . "]", $staging_info["user"], $staging_info["ip"], $staging_info["description"], false, $staging_info["lang"], $staging_info["is_html"]);
 } else {
@@ -200,7 +209,11 @@ if ($prefs['feature_freetags'] == 'y' && ($prefs['wikiapproval_update_freetags']
 
 // update attachments
 if ($prefs['feature_wiki_attachments'] == 'y') {
-	$wikilib->move_attachments($page, $staging_page);
+	$staging_atts = $wikilib->list_wiki_attachments($staging_page);
+	$smarty->assign_by_ref('staging_atts', $staging_atts['data']);
+	$atts = $wikilib->list_wiki_attachments($page);
+	$smarty->assign_by_ref('atts', $atts['data']);
+	$wikilib->move_attachments($staging_page, $page);
 }
 
 //delete stagging page
