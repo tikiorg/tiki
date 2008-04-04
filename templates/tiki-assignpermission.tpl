@@ -99,7 +99,6 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$perms}
-<input type="hidden" name="permName[{$perms[user].permName}]" />
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="perm[{$perms[user].permName}]" 
 {assign var=has_inherited_one_perm value='n'}
