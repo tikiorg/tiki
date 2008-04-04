@@ -602,8 +602,7 @@ class WikiLib extends TikiLib {
       if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
             return true;
       else {
-		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $pr
-efs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
+		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
 		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
 			return false;

@@ -22,7 +22,7 @@
 <tr>
 <th class="heading">{tr}Date{/tr}</th>
 <th class="heading">{tr}User{/tr}</th>
-<th class="heading">{tr}IP{/tr}</th>
+{if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}IP{/tr}</th>{/if}
 <th class="heading">{tr}Comment{/tr}</th>
 <th class="heading">{tr}Version{/tr}</th>
 <th class="heading">{tr}Action{/tr}</th>
