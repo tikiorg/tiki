@@ -70,6 +70,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('items', $items["data"]);
+$smarty->assign_by_ref('cant', $items["cant"]);
 
 $section = 'directory';
 include_once ('tiki-section_options.php');
