@@ -61,7 +61,6 @@
 	  {$description}
   </div>
 {/if}
-<br />
 
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
     [ <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
@@ -70,16 +69,6 @@
     | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
     | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
 
-<br /><br />
-<div class="mini">
-      {if $prev_offset >= 0}
-        [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;&nbsp;
-      {/if}
-      {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-      {if $next_offset >= 0}
-      &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-      {/if}
-</div>
 
   <div class="thumbnails">
     <table class="galtable"  cellpadding="0" cellspacing="0">
@@ -161,23 +150,8 @@
     </table>
   </div>
 
-<div class="mini">
-      {if $prev_offset >= 0}
-        [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;&nbsp;
-      {/if}
-      {tr}Page{/tr}: {$actual_page}/{$cant_pages}
-      {if $next_offset >= 0}
-      &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-      {/if}
-      {if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxImages}
-<a class="prevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
+{pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
+
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}
    <form method="get" action="tiki-browse_gallery.php">

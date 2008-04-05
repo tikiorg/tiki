@@ -495,7 +495,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
-//print_r($galleries["data"]);
+$smarty->assign_by_ref('cant', $galleries["cant"]);
+
 $cat_type = 'image gallery';
 $cat_objid = $_REQUEST["galleryId"];
 include_once ("categorize_list.php");
