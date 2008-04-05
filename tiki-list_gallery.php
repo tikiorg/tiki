@@ -242,6 +242,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('images', $images["data"]);
+$smarty->assign_by_ref('cant', $images["cant"]);
 
 $cat_type = 'image gallery';
 $cat_objid = $_REQUEST["galleryId"];

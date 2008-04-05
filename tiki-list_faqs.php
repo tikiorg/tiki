@@ -133,6 +133,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'faq';
 $cat_objid = $_REQUEST["faqId"];
 include_once ("categorize_list.php");
