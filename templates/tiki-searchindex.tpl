@@ -51,11 +51,11 @@
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
 {/section}
+{/if}
 </div>
 
 {* PAGINATION *}
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
 {* END OF PAGINATION *}
 
-{/if}
 {/if}
