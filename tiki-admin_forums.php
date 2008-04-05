@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.6 2007-12-18 14:08:59 nkoth Exp $
+// $Id: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.48.2.6 2007-12-18 14:08:59 nkoth Exp $ 
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -268,6 +268,7 @@ for ($i = 0; $i < $max; $i++) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign_by_ref('cant', $channels["cant"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

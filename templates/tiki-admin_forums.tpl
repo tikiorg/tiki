@@ -426,13 +426,7 @@
 <input type="submit" name="batchaction" value="{tr}OK{/tr}" />
 </div>
 </form>
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#editforums">{tr}Prev{/tr}</a>]
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#editforums">{tr}Next{/tr}</a>]
-{/if}
-</div>
+
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 </div>
