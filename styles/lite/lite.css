@@ -1,36 +1,39 @@
-/*
+/**
  * *lite CSS - "like a KISS ? - lite is that easy !"
- * this is an ultimate source ordered layout solution by luci, comments/suggestions by e-mail to luci2007[-at-]ground.cz
- * the *lite CSS is the base style which should remain untouched. it is meant to be imported only at the top of your stylesheet using @import "lite.css";
- * for more info see the project page: http://sf.net/projects/litecss
- * license: LGPL
- * enjoy !
+ *
+ * this is an ultimate source ordered tableless layout solution ;)
+ * the lite.css file is the base style which should remain untouched. it is meant to be imported at the top of your own stylesheet using @import
+ * and the definitions can be overriden to suit your needs on the next lines there... for more info see the project page: http://sf.net/projects/litecss
+ * 
+ * @author: luciash d' being aka Lukáš 'luci' Mašek <luci2008 at ground dot cz>
+ * @license: LGPL
+ *
+ * enjoy ! -- luci
  */
 
 body {
-	background: #333333; color: black;
-	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center col */
+	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center column */
 	font-family: sans-serif;
-	font-size: 0.7em !important;
-	font-size /**/:70%;/* simmilar font size across all browsers 
-	(CSS valid workaround using IE/Win comment bugs - see http://www.info.com.ph/~etan/w3pantheon/style/commentbugs.html) */
-	margin: 0px; padding: 0px;
+	font-size: 80% !important;/* the body font-size must be in percents to scale the fonts in IE properly */
+	margin: 0; padding: 0;
 	width: 100%;/* this is needed to keep the width to the maximum available */
+}
+html>body {
+	font-size: 0.75em !important;/* redefine the body font-size for all modern browsers - ignored by old IEs */
 }
 /* and this is a special workaround for IE 7 */
 *:first-child+html
 body {
-	font-size: 70%;
+	font-size: 80% !important;
 }
 
 /* *** THE MAIN LAYOUT *** */
 #header {
-	background-color: #F0F0F0; color: black; height: auto;
+	height: auto;
 	width: 100%;
 }
 
 #c1c2 {
-	background-color: #6F6F6F; color: black;
 	border-color: #6F0;
 	display: block;/* keep "display: block" here to prevent layout breakage (mostly in Firefox) */
 	float: left;/* from IE 5.5 to IE 7 it works only when it is floated this way */
@@ -40,7 +43,7 @@ body {
 #c1c2[id] {
 	float: right;
 }
-/* and this is a special workaround for IE 7 */
+/* and this is a special workaround for IE 7 again */
 *:first-child+html
 #c1c2 {
 	float: left;/* for IE 7 it must be redefined back to left */
@@ -51,29 +54,27 @@ body {
 
 #c1c2
     #wrapper {
-		background-color: #909090; color: black;
 		border-color: #F00;
 		float: right;
 		width: 100%;
-		min-width: 100%;/* this is especially needed for MSIE 7 */
+		min-width: 100%;/* this is especially needed by IE 7 */
 	}
 
 #c1c2
 	#wrapper
 		#col1 {
-			background-color: #CFCFCF; color: black;
 			border-color: #000;
 		}
 
 #c1c2
 	#wrapper
-		#col1.marginleft {
+		.marginleft {
 			margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
 		}
 
 #c1c2
 	#wrapper
-		#col1.marginright {
+		.marginright {
 			margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
 		}
 
@@ -81,7 +82,6 @@ body {
 	#wrapper
 		#col1
 			.content {
-				background-color: white;
 				width: auto !important;
 				width /**/:100%;/* workaround for IE 5.x:
 				tables set to 100% width need parent element width of 100% as well*/
@@ -89,7 +89,6 @@ body {
 
 #c1c2
 	#col2 {
-		background-color: #C0C0C0; color: black;
 		border-color: #0c0;
 		float: right;/* from IE 5.5 to IE 6 it works only when it is floated this way */
 		margin-right: -100%;/* this way we set the position of the second column (appears visually as first column) in all browsers */
@@ -103,7 +102,7 @@ body {
 		float: left;/* this time IE 7 differs from its predecessors */
 	}
 
-/* this is a special workaround for IE 7 */
+/* another workaround for IE 7 */
 *:first-child+html
 #c1c2[id]
 	#col2 {
@@ -111,7 +110,6 @@ body {
 	}
 
 #col3 {
-	background-color: #9f9f9f; color: black;
 	border-color: #00009f;
 	float: left;/* for all versions of IE from 5.5 to 7 it works only when it is floated this way again */
 	margin-left: -180px;/* once more a speciality for IE to display the 3rd column; change this if you change the width too */
@@ -126,16 +124,13 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 	margin-right: -100%;
 }
 
-
 /* next comes footer */
-#footer {background-color: #606060; border-color: #066; color: white; clear: both; width: 100%;}
+#footer {border-color: #066; clear: both; width: 100%;}
 .footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
-
-.content {padding: 1em;}/* this takes care of all the content default appearance */
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
 
-/* some common html elements */
+/* some common html elements default styling */
 h1 {font-size: 2.4em}
 h2 {font-size: 2.1em}
 h3 {font-size: 1.8em}
