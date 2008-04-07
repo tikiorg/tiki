@@ -49,6 +49,8 @@
 		{tr}A user posts a forum topic{/tr}
 	{elseif $events[ix] eq 'wiki_page_changed'}
 		{tr}A user edited a wiki page{/tr}
+	{elseif $events[ix] eq 'wiki_page_in_lang_created'}
+		{tr}A user created a wiki page in a language{/tr}
 	{else}{$events[ix]}{/if}
 </option>
 {/section}
@@ -79,6 +81,8 @@
 		{tr}A user posts a forum topic{/tr}
 	{elseif $watches[ix].event eq 'wiki_page_changed'}
 		{tr}A user edited a wiki page{/tr}
+	{elseif $watches[ix].event eq 'wiki_page_in_lang_created'}
+		{tr}A user created a wiki page in a language{/tr}
 	{/if}
 	({$watches[ix].event})
 </td>
@@ -87,3 +91,16 @@
 {/section}
 </table>
 </form>
+{if $prefs.feature_user_watches_translations eq 'y'}
+<form method="post" action="tiki-user_watches.php">
+	<p>{tr}Watch language wiki page creations{/tr}:
+	<select name="langwatch">
+		{section name=ix loop=$languages}
+			<option value="{$languages[ix].value|escape}">
+			  {$languages[ix].name}
+			</option>
+		{/section}
+	</select>
+	<input type="submit" value="{tr}Add watch{/tr}"/>
+</form>
+{/if}

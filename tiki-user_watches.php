@@ -25,6 +25,23 @@ if ($prefs['feature_user_watches'] != 'y') {
 	die;
 }
 
+if( $prefs['feature_user_watches_translations'] ) {
+	$languages = $tikilib->list_languages();
+	$smarty->assign_by_ref('languages', $languages);
+}
+
+if (isset($_POST['langwatch']) && $prefs['feature_user_watches_translations'] ) {
+	$valid = false;
+	foreach( $languages as $lang )
+		if( $_POST['langwatch'] == $lang['value'] ) {
+			$valid = $lang;
+			break;
+		}
+	
+	if( $valid ) {
+		$tikilib->add_user_watch( $user, 'wiki_page_in_lang_created', $lang['value'], 'lang', tra('Language watch') . ": {$lang['name']}", "tiki-user_watches.php" );
+	}
+}
 
 if (isset($_REQUEST['id'])) {
   $area = 'deluserwatch';
