@@ -19,7 +19,7 @@
   {/if}
   <tr>
     <td class="formcolor">{tr}Email{/tr}</td>
-    <td class="formcolor"><input type="text" name="email" /></td>
+    <td class="formcolor">{if $prefs.login_is_email ne 'y'}<input type="text" name="email" />{else}<input type="text" name="name" />{/if}</td>
   </tr><tr>
     <td class="formcolor" colspan="2"><input type="submit" name="remind" value="{tr}Send me my Password{/tr}" /></td>
   </tr>  
