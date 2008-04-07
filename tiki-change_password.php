@@ -40,19 +40,27 @@ if (isset($_REQUEST["change"])) {
 		die;
 	}
 
+	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
+	if ( strlen($polerr)>0 ) {
+		$smarty->assign('msg',$polerr);
+	    $smarty->display("error.tpl");
+	    die;
+	}
+
+	if (empty($_REQUEST['oldpass']) && !empty($_REQUEST['actpass'])) {
+		$_REQUEST['oldpass'] = $userlib->activate_password($_REQUEST['user'], $_REQUEST['actpass']);
+		if (empty($_REQUEST['oldpass'])) {
+			$smarty->assign('msg', tra('Invalid username or activation code. Maybe this code has already been used.'));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
 	// Check that provided user name could log in with old password, otherwise display error and exit
 	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
 	if (!$isvalid) {
 		$smarty->assign('msg', tra("Invalid old password or unknown user"));
 		$smarty->display("error.tpl");
 		die;
-	}
-
-	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
-	if ( strlen($polerr)>0 ) {
-		$smarty->assign('msg',$polerr);
-	    $smarty->display("error.tpl");
-	    die;
 	}
 
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
