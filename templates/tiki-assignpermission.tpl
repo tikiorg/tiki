@@ -100,7 +100,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$perms}
 <tr>
-<td class="{cycle advance=false}"><input type="checkbox" name="perm[{$perms[user].permName}]" 
+<td class="{cycle advance=false}"><input type="hidden" name="permName[{$perms[user].permName}]" /><input type="checkbox" name="perm[{$perms[user].permName}]" 
 {assign var=has_inherited_one_perm value='n'}
 {assign var=has_inherited_perm value=''}
 {foreach key=gr item=it from=$inherited_groups_perms}
