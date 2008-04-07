@@ -7,11 +7,11 @@
 {/if}
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_category eq 'n'}
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{icon _id='eye' alt='{tr}watch only this category{/tr}'}</a>
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{icon _id='eye_arrow_down' alt='{tr}watch this category and their descendants{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add">{icon _id='eye' alt='{tr}Watch Only This Category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add_desc">{icon _id='eye_arrow_down' alt='{tr}Watch This Category and Their Descendants{/tr}'}</a>
 	{else}
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove">{icon _id='no_eye' alt='{tr}stop watching only this category{/tr}'}</a>
-		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove_desc">{icon _id='no_eye_arrow_down' alt='{tr}stop watching this category and their descendants{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove">{icon _id='no_eye' alt='{tr}Stop Watching Only This Category{/tr}'}</a>
+		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=remove_desc">{icon _id='no_eye_arrow_down' alt='{tr}Stop Watching This Category and Their Descendants{/tr}'}</a>
 	{/if}
 {/if}  
 <br /><br />
