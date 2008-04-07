@@ -4821,7 +4821,7 @@ function add_pageview() {
     // that textarea won't leave alone.
     function parse_htmlchar(&$data) {
 	// cleaning some user input
-	$data = preg_replace("/&(?!([a-z]{1,7};))/i", "&amp;", $data);
+	$data = preg_replace('/&(?![a-z]+;|#\d+;)/i', '&amp;', $data);
 
 	// oft-used characters (case insensitive)
 	$data = preg_replace("/~bs~/i", "&#92;", $data);
