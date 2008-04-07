@@ -1511,6 +1511,7 @@ $lang=Array(
 // "Hold down CTRL to select multiple categories" => "Hold down CTRL to select multiple categories",
 // "Uncheck the above checkbox to uncategorize this page/object" => "Uncheck the above checkbox to uncategorize this page/object",
 // "browse category" => "browse category",
+// "Browse Category" => "Browse category",
 // "posts:" => "posts:",
 // "top of page" => "top of page",
 // "Plain" => "Plain",

@@ -3293,6 +3293,7 @@ $lang=Array(
 "No categories defined" => "Geen categorie&eacute; gedefinieerd",
 "Admin categories" => "Categorie&euml;n beheren",
 "browse category" => "bekijk categorie",
+"Browse Category" => "Bekijk categorie",
 "on" => "op",
 "posts:" => "berichten:",
 "stars" => "sterren",

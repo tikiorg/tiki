@@ -3681,6 +3681,7 @@ $lang=Array(
 "No categories defined" => "Nebyly definovány žádné kategorie",
 "Admin categories" => "Administrace kategorií",
 "browse category" => "procházej kategorii",
+"Browse Category" => "Procházej kategorii",
 "on" => "v",
 "posts:" => "záznamy:",
 "stars" => "hvězdičky",

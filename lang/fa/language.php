@@ -3348,6 +3348,7 @@ $lang=Array(
 "No categories defined" => "هيچ طبقه‌اي تعريف نشده است",
 "Admin categories" => "مديريت طبقات",
 "browse category" => "مرور طبقه",
+"Browse Category" => "مرور طبقه",
 "on" => "در",
 "stars" => "شروع",
 "User Level" => "سطح كاربر",

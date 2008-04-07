@@ -3367,6 +3367,7 @@ $lang=Array(
 "No categories defined" => "Ei luokittelua määritelty",
 "Admin categories" => "Admin luokittelut",
 "browse category" => "selaa luokkaa",
+"Browse Category" => "Selaa luokkaa",
 "on" => " ",
 "posts:" => "lähetyksiä:",
 "stars" => "tähtiä",

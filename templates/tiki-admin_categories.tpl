@@ -17,7 +17,7 @@
 </h1>
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a>
+  <a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}Browse Category{/tr}</a>
 </div>
 
 {if !empty($errors)}

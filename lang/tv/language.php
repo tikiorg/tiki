@@ -1215,6 +1215,7 @@ $lang=Array(
 // "Uncheck the above checkbox to uncategorize this page/object" => "Uncheck the above checkbox to uncategorize this page/object",
 // "Admin categories" => "Admin categories",
 // "browse category" => "browse category",
+// "Browse Category" => "Browse category",
 // "on" => "on",
 // "posts:" => "posts:",
 // "stars" => "stars",

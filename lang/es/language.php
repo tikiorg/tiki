@@ -3475,6 +3475,7 @@ $lang=Array(
 "No categories defined" => "No se definieron categorías",
 "Admin categories" => "Administrar categorías",
 "browse category" => "navegar categoría",
+"Browse Category" => "Navegar categoría",
 "on" => "en",
 "posts:" => "posts",
 "stars" => "estrellas",

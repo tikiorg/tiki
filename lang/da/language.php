@@ -5028,6 +5028,7 @@ $lang=Array(
 "No categories defined" => "Der er ikke defineret nogen kategorier",
 "Admin categories" => "Administrér kategorier",
 "browse category" => "gennemkig kategorier",
+"Browse Category" => "Gennemkig kategorier",
 "on" => "i",
 "stars" => "stjerner",
 "User Level" => "Bruger niveau",

@@ -5289,6 +5289,7 @@ $lang=Array(
 "No categories defined" => "Először magukat a kategóriákat határozzuk meg",
 "Admin categories" => "Beállítom a kategóriákat",
 "browse category" => "kategória átlapozása",
+"Browse Category" => "Kategória átlapozása",
 "on" => "Dátum",
 "stars" => "sztárok",
 "User Level" => "Felhasználói szint",

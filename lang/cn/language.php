@@ -4900,6 +4900,7 @@ $lang=Array(
 "No categories defined" => "尚未定义类别",
 "Admin categories" => "管理类别",
 "browse category" => "浏览类别目录",
+"Browse Category" => "浏览类别目录",
 "on" => "在",
 "stars" => "星",
 "User Level" => "用户等级",

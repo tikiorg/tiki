@@ -3508,6 +3508,7 @@ $lang=Array(
 "No categories defined" => "Keine Kategorien definiert",
 "Admin categories" => "Kategorien verwalten",
 "browse category" => "Kategorien durchst&ouml;bern",
+"Browse Category" => "Kategorien durchst&ouml;bern",
 "on" => "am",
 "stars" => "Sterne",
 "User Level" => "Benutzerlevel",
