@@ -299,6 +299,11 @@ class TikiLib extends TikiDB {
 			$bindvars[] = $page['objName'];
 		}
 		$mid .= 'and ('.implode(' or ', $mids).')';
+	} else if ( $prefs['feature_user_watches_translations'] == 'y' 
+			&& $event == 'wiki_page_created' ) {
+		$page_info = $this->get_page_info( $object );
+		$mid = "`event`='wiki_page_in_lang_created' and `object`=? and `type`='lang'";
+		$bindvars[] = $page_info['lang'];
 	} else if ($event == 'forum_post_topic') {
 		$mid = "(`event`=? or `event`=?) and `object`=?";
 		$bindvars[] = $event;
@@ -327,6 +332,7 @@ class TikiLib extends TikiDB {
 	while ($res = $result->fetchRow()) {
 		switch($event) {
 			case 'wiki_page_changed':
+			case 'wiki_page_created':
 				$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
 				              $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
 				break;

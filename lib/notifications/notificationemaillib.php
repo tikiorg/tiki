@@ -154,8 +154,10 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	$nots = array();
 	$defaultLanguage = $prefs['site_language'];
 
-	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
+	if ($prefs['feature_user_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $pageName);
+	}
+	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_changed') {
 		global $structlib; include_once('lib/structures/structlib.php');
 		$nots2 = $structlib->get_watches($pageName);
 		if (!empty($nots2)) {
@@ -175,7 +177,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 	if ($prefs['feature_user_watches'] == 'y' && $event == 'wiki_page_created' && $structure_parent_id) {
 		global $structlib; include_once('lib/structures/structlib.php');
-		$nots = $structlib->get_watches('', $structure_parent_id);
+		$nots = array_merge( $nots, $structlib->get_watches('', $structure_parent_id) );
 	}
 
 	// admin notifications
