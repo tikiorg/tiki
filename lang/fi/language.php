@@ -5961,6 +5961,7 @@ $lang=Array(
 "special chars" => "erikoismerkit",
 "special characters" => "erikois merkit",
 "browse image" => "katso kuva",
+"Browse Images" => "Katso kuva",
 "Edit successful!" => "Muutos onnistui!",
 "The following image was successfully edited" => "Seuraava kuva on onnistuneesti muutettu",
 "Image Description" => "Kuvan Kuvaus",

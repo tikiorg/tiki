@@ -5897,6 +5897,7 @@ $lang=Array(
 "special chars" => "speciální znaky",
 "special characters" => "speciální znaky",
 "browse image" => "zobraz obrázek",
+"Browse Images" => "Zobraz obrázek",
 "Edit successful!" => "Upraveno!",
 "The following image was successfully edited" => "Následující obrázek byl úspěšně upraven",
 "Image Description" => "Popis obrázku",

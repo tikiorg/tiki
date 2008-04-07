@@ -5664,6 +5664,7 @@ $lang=Array(
 "special chars" => "speciale karakters",
 "special characters" => "speciale tekens",
 "browse image" => "bekijk afbeelding image",
+"Browse Images" => "Bekijk afbeelding image",
 "Edit successful!" => "Bewerking geslaagd!",
 "The following image was successfully edited" => "De volgende afbeelding werd met success bewerkt",
 "Image Description" => "Omschrijving Afbeelding",

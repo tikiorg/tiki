@@ -3399,6 +3399,7 @@ $lang=Array(
 // "New Outputformat" => "New Outputformat",
 // "New Mapfile" => "New Mapfile",
 // "browse image" => "browse image",
+// "Browse Images" => "Browse image",
 // "Edit successful!" => "Edit successful!",
 // "The following image was successfully edited" => "The following image was successfully edited",
 // "Upload from disk to change the image:" => "Upload from disk to change the image:",

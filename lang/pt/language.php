@@ -3364,6 +3364,7 @@ $lang=Array(
 // "\"{literal}{toc}{/literal}\", \"{literal}{maketoc}{/literal}\" prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc)" => "\"{literal}{toc}{/literal}\", \"{literal}{maketoc}{/literal}\" prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc)",
 // "Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;" => "Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;",
 // "browse image" => "browse image",
+// "Browse Images" => "Browse image",
 // "Upload from disk to change the image:" => "Upload from disk to change the image:",
 // "Save and Go Next" => "Save and Go Next",
 // "toggle interactive translation" => "toggle interactive translation",

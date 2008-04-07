@@ -6889,6 +6889,7 @@ $lang=Array(
 "special chars" => "caracters especials",
 "special characters" => "caràcters especials",
 "browse image" => "Explorar imatge",
+"Browse Images" => "Explorar imatge",
 "Edit successful!" => "Edició feta amb èxit!",
 "The following image was successfully edited" => "La imatge següent ha estat editada amb èxit",
 "Image Description" => "Descripció de la imatge",

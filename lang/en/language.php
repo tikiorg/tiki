@@ -4522,6 +4522,7 @@ $lang=Array(
 // "special chars" => "special chars",
 // "special characters" => "special characters",
 // "browse image" => "browse image",
+// "Browse Images" => "Browse image",
 // "Edit successful!" => "Edit successful!",
 // "The following image was successfully edited" => "The following image was successfully edited",
 // "Image Description" => "Image Description",

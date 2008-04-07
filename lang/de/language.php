@@ -5811,6 +5811,7 @@ $lang=Array(
 "special chars" => "Sonderzeichen",
 "special characters" => "Sonderzeichen",
 "browse image" => "Bild betrachten",
+"Browse Images" => "Bild betrachten",
 "Edit successful!" => "Bearbeitung erfolgreich!",
 "The following image was successfully edited" => "Das folgende Bild wurde erfolgreich bearbeitet",
 "Image Description" => "Bildbeschreibung",

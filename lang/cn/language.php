@@ -6821,6 +6821,7 @@ $lang=Array(
 "special chars" => "特殊字符",
 "special characters" => "特殊字符",
 "browse image" => "浏览图像",
+"Browse Images" => "浏览图像",
 "Edit successful!" => "编辑成功!",
 "The following image was successfully edited" => "下列图像已成功编辑",
 "Image Description" => "图像描述",

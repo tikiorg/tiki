@@ -3273,6 +3273,7 @@ $lang=Array(
 // "New Outputformat" => "New Outputformat",
 // "New Mapfile" => "New Mapfile",
 // "browse image" => "browse image",
+// "Browse Images" => "browse image",
 // "Upload from disk to change the image:" => "Upload from disk to change the image:",
 // "Save and Go Next" => "Save and Go Next",
 // "toggle interactive translation" => "toggle interactive translation",

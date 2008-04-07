@@ -5855,6 +5855,7 @@ $lang=Array(
 "special chars" => "حروف خاص",
 "special characters" => "حروف خاص",
 "browse image" => "مرور تصوير",
+"Browse Images" => "مرور تصوير",
 "Edit successful!" => "ويرايش موفقيت‌آميز بود!",
 "The following image was successfully edited" => "تصوير مقابل با موفقيت ويرايش شد",
 "Image Description" => "شرح تصوير",
