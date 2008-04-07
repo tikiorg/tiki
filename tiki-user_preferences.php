@@ -356,7 +356,8 @@ if (isset($_REQUEST['chgadmin'])) {
 		    die;
 		}
 
-	    $userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
+		$userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra('Password has been changed')));
 	}
 
 }
