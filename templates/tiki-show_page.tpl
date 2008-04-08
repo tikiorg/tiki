@@ -229,7 +229,7 @@
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
 {if $pageLang eq 'ar' or $pageLang eq 'he'}
-<div style="direction:RTL; unicode-bidi:embed; text-align: right;">
+<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 {$parsed}
 </div>
 {else}
