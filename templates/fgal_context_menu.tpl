@@ -101,7 +101,7 @@
 					{if $prefs.javascript_enabled eq 'y'}
 
 					{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
-					<a href="#" onclick="window.open('tiki-download_file.php?fileId={$files[changes].fileId}'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
+					<a href="#" onclick="window.open('tiki-download_file.php?fileId={$files[changes].fileId}&lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[changes].fileId lock=y}{/self_link}'; return false;">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt='{tr}Download and lock{/tr}'}</a>
 
 					{else}
 
