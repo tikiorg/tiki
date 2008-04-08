@@ -1,13 +1,26 @@
 <?php
 
+// $Id$
+
+// Copyright (c) 2002-2008, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__))!=FALSE) {
   header('location: index.php');
   exit;
 }
 
-if ($prefs['feature_calendar'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
+if ( ! ($prefs['feature_calendar'] == 'y' || $prefs['feature_action_calendar'] == 'y')) {
+  if (isset($_SERVER['SCRIPT_NAME'])) {
+    if ($_SERVER['SCRIPT_NAME'] == "tiki-calendar.php")
+      $smarty->assign('msg', tra("This feature is disabled") . ": feature_calendar");
+    elseif ($_SERVER['SCRIPT_NAME'] == "tiki-action_calendar.php")
+      $smarty->assign('msg', tra("This feature is disabled") . ": feature_action_calendar");
+    else
+      $smarty->assign('msg', tra("This feature is disabled"));
+  }
   $smarty->display("error.tpl");
   die;
 }
