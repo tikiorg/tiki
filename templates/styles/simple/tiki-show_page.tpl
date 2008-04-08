@@ -42,7 +42,7 @@
 	<div class="catpaths" style="clear: both">{tr}Categories{/tr}: |{$display_catpath}</div>
 {/if}
 
-{if $print_page ne 'y'}
+{if print_page ne 'y'}
 <div style="text-align: center">
 	{if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 	<a title="{tr}Edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="pics/icons/page_edit.png" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>
@@ -234,4 +234,8 @@
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
+{/if}
+
+{if $print_page ne 'y'}
+{include file=tiki-page_bar.tpl}
 {/if}
