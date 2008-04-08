@@ -228,7 +228,13 @@
 </div>
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{if $pageLang eq 'ar' or $pageLang eq 'he'}
+<div style="direction:RTL; unicode-bidi:embed; text-align: right;">
 {$parsed}
+</div>
+{else}
+{$parsed}
+{/if}
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 	<br />
 	<div align="center">
