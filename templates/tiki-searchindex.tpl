@@ -4,12 +4,12 @@
 {/if}
 
 {if !( $searchStyle eq "menu" )}
-  <div class="nohighlight">
+  <div class="nohighlight navbar">
     <p>{tr}Search in{/tr}:</p>
     {foreach item=name key=k from=$where_list}
       <a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
     {/foreach}
-  </div><!--nohighlight-->
+  </div><!-- nohighlight navbar -->
 
 {if $words neq ''}{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}{/if}
 {/if}

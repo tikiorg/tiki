@@ -6,9 +6,10 @@
 {/if}
 </h1>
 {/if}
+
 <div class="nohighlight">
 {if !( $searchStyle eq "menu" )}
-<div class="nohighlight">
+<div class="navbar">
 {tr}Search in{/tr}:<br />
 <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $prefs.feature_wiki eq 'y'}
@@ -41,7 +42,7 @@
 {if $prefs.feature_trackers eq 'y'}
  <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
 {/if}
-</div><!--nohighlight-->
+</div><!-- navbar -->
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {if $where3}{$where2}: {$where3}{else}{$cant_results} {$where2}{/if}
 {/if}
