@@ -17,8 +17,9 @@
 				{foreach item=better from=$mod_translation_better_known}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style=inlinediff-full" alt="{tr}update from it{/tr}">{icon _id=arrow_refresh.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style=inlinediff-full" alt="{tr}update from it{/tr}">{icon _id=page_translate_from.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{$better.page}</a> ({$better.lang})
 				</li>
 				{/foreach}
@@ -37,8 +38,9 @@
 				{foreach item=better from=$mod_translation_better_other}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style=inlinediff-full" alt="{tr}update from it{/tr}">{icon _id=arrow_refresh.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style=inlinediff-full" alt="{tr}update from it{/tr}">{icon _id=page_translate_from.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{$better.page}</a> ({$better.lang})
 				</li>
 				{/foreach}
@@ -84,8 +86,9 @@
 				{foreach item=worst from=$mod_translation_worst_known}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style=inlinediff-full">{icon _id=page_edit.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style=inlinediff-full">{icon _id=page_translate_to.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}" title="{$worst.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}" title="{$worst.page}">{$worst.page}</a> ({$worst.lang})
 				</li>
 				{/foreach}
@@ -103,8 +106,9 @@
 				{foreach item=worst from=$mod_translation_worst_other}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style=inlinediff-full">{icon _id=page_edit.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style=inlinediff-full">{icon _id=page_translate_to.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}">{$worst.page}</a> ({$worst.lang})
 				</li>
 				{/foreach}
