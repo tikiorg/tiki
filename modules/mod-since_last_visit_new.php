@@ -1,4 +1,9 @@
 <?php
+/* $Id$ */
+
+/**
+ * Module to show changes since last visit (new version)
+ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -94,7 +99,7 @@ function since_last_visit_new($user, $params = null) {
       }
 	if (!isset($perm) || $userlib->user_has_perm_on_object($user,$res['object'], $res['objectType'], $perm)) {
 				if (isset($ret["items"]["comments"]["list"][$count]["href"])) {
-					$ret["items"]["comments"]["list"][$count]["href"] .= '&amp;comments_show=y#threadId'.$res['threadId'];
+					$ret["items"]["comments"]["list"][$count]["href"] .= '&comzone=show#threadId'.$res['threadId'];
 				}
       	$ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". trim(strip_tags(smarty_modifier_userlink($res["userName"])));
       	$ret["items"]["comments"]["list"][$count]["label"] = $res["title"]; 
