@@ -119,6 +119,7 @@
 			</div>
 	{/if}
 		</div>
+		<br class="clear" style="clear: both" />
 {/if}{* <-- end of if $print_page ne 'y' *}
 	</div>
 </div>
