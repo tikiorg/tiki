@@ -88,6 +88,8 @@
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
 	{if $list_mode eq 'y'}
 		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
+	{elseif $list_mode eq 'csv'}
+		{$field_value.value}
 	{else}
 		{$field_value.value|escape}
 	{/if}
@@ -133,6 +135,8 @@
 	{else}
 		{if $parse ne 'n'} {* the field is not necessary parsed if you come from a itm list field *}
 			{if $field_value.pvalue}{$field_value.pvalue}{else}{wiki}{$field_value.value}{/wiki}{/if}
+		{elseif $list_mode eq 'cvs'}
+			{$field_value}
 		{else}
 			{$field_value.value|escape}
 		{/if}	
@@ -192,6 +196,8 @@
 		{mailto address=$field_value.value|escape encode="hex"}
 	{elseif $list_mode ne 'csv' and $field_value.options_array[0] eq '2' and $field_value.value}
 		{mailto address=$field_value.value|escape encode="none"}
+	{elseif $list_mode ne 'csv'}
+		{$field_value.value}
 	{else}
 		{$field_value.value|escape|default:"&nbsp;"}
 	{/if}
