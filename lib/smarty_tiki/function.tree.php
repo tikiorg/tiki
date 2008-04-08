@@ -34,7 +34,7 @@ function smarty_function_tree($params, &$smarty) {
 				$link = '';
 				if ( isset($data['link']) && $data['link'] != '') {
 					$link = $data['link'];
-				} elseif ( isset($data['link_id']) && isset($data['link_var']) && $data['link_id'] > 0 ) {
+				} elseif ( isset($data['link_id']) && isset($data['link_var']) && $data['link_id'] >= 0 ) {
 					$link = smarty_function_query(array(
 						'_type' => 'absolute_path',
 						$data['link_var'] => $data['link_id'],

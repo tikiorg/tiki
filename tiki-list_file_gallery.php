@@ -630,6 +630,14 @@ $smarty->assign_by_ref('maxRecords', $_REQUEST['maxRecords']);
 if ( ! isset($_REQUEST['offset']) ) $_REQUEST['offset'] = 0;
 $smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
+if (isset($_GET['slideshow'])) {
+  $_REQUEST['maxRecords'] = $maxRecords = -1;
+  $offset = 0;
+} 
+
+$smarty->assign_by_ref('name', $gal_info["name"]);
+$smarty->assign_by_ref('description', $gal_info["description"]);
+
 if ( ! isset($_REQUEST['sort_mode']) ) {
 	$_REQUEST['sort_mode'] = ( $gal_info['show_name'] == 'f' ? 'filename_asc' : 'name_asc' );
 }
@@ -638,10 +646,30 @@ $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 if ( ! isset($_REQUEST['find']) ) $_REQUEST['find'] = '';
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
-// Get list of files in the gallery
-$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
-$smarty->assign_by_ref('files', $files['data']);
-$smarty->assign('cant', $files['cant']);
+if (isset($_GET['slideshow'])) {
+  $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
+  $smarty->assign('cant', $files['cant']);
+  $i = 0;
+  foreach( $files['data'] as $file) {
+    $filesid[] = $file['fileId'];
+    $file_info[$i]['filename'] = $file['filename'];
+    $file_info[$i++]['name'] = $file['name'];
+  }
+  $smarty->assign_by_ref('filesid', $filesid);
+  $smarty->assign_by_ref('file', $file_info);
+  reset($filesid);
+  $smarty->assign('firstId',current($filesid));
+  $smarty->assign('show_find', 'n');
+  $smarty->assign('direct_pagination', 'y'); 
+  $smarty->display('file_gallery_slideshow.tpl');
+  die();
+} else {
+	// Get list of files in the gallery
+	$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
+	$smarty->assign_by_ref('files', $files['data']);
+	$smarty->assign('cant', $files['cant']);
+  $smarty->assign('mid','tiki-list_file_gallery.tpl');
+}
 
 /* Browse view */
 
@@ -770,7 +798,7 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded,
 }
 
 if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
-	$tree = array('name' => tra('File Galleries'), 'data' => array());
+	$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0 );
 	$gallery_path = array();
 	$expanded = array('1');
 
@@ -808,8 +836,6 @@ if ( $_REQUEST['galleryId'] != 0 ) {
 
 // Get listing display config
 include_once('fgal_listing_conf.php');
-
-$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 
 // Display the template
 if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] == 'y' ) {
