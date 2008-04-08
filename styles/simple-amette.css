@@ -1,14 +1,4 @@
-/*
- * $Id: $ *
- * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
- * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
- * Uses *lite - an ultimate source ordered layout solution by luci as a base.
- * Comments/suggestions e-mail to luci[-at-]sh.ground.cz
- * For more info feel free to visit http://www.ground.cz/luci/css/lite
- * We also try to make better templates (*.tpl files in templates/styles/simple) towards xhtml 1.0 strict validity.
- * For proper CSS2 syntax and possible values see e.g. http://www.zvon.org/xxl/CSS2Reference/Output/
- *
- */
+/* $Id: $ */
 
 @import "lite/lite.css"; /* here we import *lite as the base */
 
@@ -49,13 +39,13 @@ font-family: 'Verdana';
 
 #c1c2
 	#wrapper
-		#col1.marginleft {
+		.marginleft {
 			margin-left: 20%;/* change this in your stylesheet too when you change the width of #col2 */
 		}
 
 #c1c2
 	#wrapper
-		#col1.marginright {
+		.marginright {
 			margin-right: 30%;/* change this in your stylesheet too when you change the width of #col3 */
 		}
 
