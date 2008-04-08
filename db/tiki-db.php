@@ -89,8 +89,10 @@ if ( $re === FALSE) {
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1><font color="red">Tikiwiki could not find your '.$local_php.' file.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
-				<p>This is normal for a brand new Tikiwiki installation.</p><p>Run the Tikiwiki installer (<a href=tiki-install.php>tiki-install.php</a>) to configure you local.php file.</p><p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
+				<h1><font color="red">TikiWiki could not find your '.$local_php.' file.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
+				<p>This is normal for a brand new TikiWiki installation.</p><p>Run the TikiWiki installer (<a 
+href=tiki-install.php>tiki-install.php</a>) to create and add information to your db/local.php file. This file contains the information (username/password/database name/etc) to connect to a database.</p><p>Please see <a 
+href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 			</div>
 		</div>
 		<hr>
