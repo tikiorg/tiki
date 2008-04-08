@@ -142,7 +142,15 @@ if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId
 		if ( $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y' ) {
 			$error_msg = tra('You do not have permission to do that');
 		} else {
-			$filegallib->unlock_file($_REQUEST['fileId']);
+			if ($fileInfo['lockedby'] != $user) {
+				$area = 'unlock';
+				if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+					key_check($area);
+					$filegallib->unlock_file($_REQUEST['fileId']);
+				} else {
+					key_get($area, sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']));
+				}
+			}
 		}
 	} elseif ( $_REQUEST['lock'] == 'y' ) {
 		if ( ! empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user) {
