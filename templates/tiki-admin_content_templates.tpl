@@ -8,6 +8,12 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Content Templates Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="tip">Tip</div>  
+  <div class="rbox-data" name="tip">Use the Administration page of each enabled feature to allow the use of content templates.</div>
+</div>
+<br />
+
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>
@@ -43,10 +49,7 @@
 {if $prefs.feature_html_pages eq 'y'}
 <input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /> {tr}HTML pages{/tr}<br />
 {/if}
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">Tip</div>  
-  <div class="rbox-data" name="tip">Use the Adminstration page of each enabled feature to allow the use of content templates.</div>
-</div><br /></td>
+</td>
 </tr>
 {if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
   <tr>
@@ -60,7 +63,7 @@
 <tr>
   {assign var=area_name value="editwiki"}
   {if $wysiwyg ne 'y'}
-    <td class="formcolor">{tr}template{/tr}:
+    <td class="formcolor">{tr}Template{/tr}:
       <br /><br />
       {tr}Edit{/tr}:
       <br /><br />
@@ -81,11 +84,18 @@
   </td>
 </tr>
 
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">
+    <input type="submit" name="save" value="{tr}Save{/tr}" />
+    <input type="submit" name="preview" value="{tr}Preview{/tr}" />
+  </td>
+</tr>
 </table>
 </form>
-<br />
+
+<hr />
+
 <h2>{tr}Templates{/tr}</h2>
 <div  align="center">
 {if $channels}
