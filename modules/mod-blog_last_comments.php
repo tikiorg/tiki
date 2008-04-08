@@ -1,7 +1,7 @@
 <?php
-//
+///
 // $Id$
-// \brief Show last comments on wiki pages
+// \brief Show last comments in blogs
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (!function_exists("blog_last_comments")) {
 function blog_last_comments($limit)
 {
-    $query = "SELECT b.`title` as blogPostTitle, b.`postId`, c.`title` as commentTitle, `commentDate`,`userName`
+    $query = "SELECT b.`title` as blogPostTitle, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`,`userName`
 	    FROM `tiki_comments` c, `tiki_blog_posts` b
 	    WHERE `objectType`='post' AND b.`postId`=c.`object`
 	    ORDER BY `commentDate` desc";
@@ -25,12 +25,13 @@ function blog_last_comments($limit)
     {
       //WYSIWYCA hack: the $limit will not be respected
       if($tikilib->user_has_perm_on_object($user,$res["postId"],'post','tiki_p_read_blog')) {
-        $aux["blogPostTitle"] = $res["blogPostTitle"];
-	$aux["postId"] = $res["postId"];
-        $aux["commentTitle"]= $res["commentTitle"];
-        $aux["commentDate"] = $res["commentDate"];
-        $aux["user"] = $res["userName"];
-        $ret[] = $aux;
+		$aux["blogPostTitle"] = $res["blogPostTitle"];
+		$aux["postId"] = $res["postId"];
+		$aux["threadId"] = $res["threadId"];
+		$aux["commentTitle"]= $res["commentTitle"];
+		$aux["commentDate"] = $res["commentDate"];
+		$aux["user"] = $res["userName"];
+		$ret[] = $aux;
       }
     }
     return $ret;
