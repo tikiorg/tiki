@@ -33,7 +33,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 		<meta name="revisit-after" content="{$prefs.metatag_revisitafter}" />
 {/if}
 
-{* --- tikiwiki block --- *}		{php} include("lib/tiki-dynamic-js.php"); {/php}
+{* --- tikiwiki block --- *}
 		<script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}{* this is included for Right-to-left languages *}
 
@@ -189,7 +189,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	</head>
 
 {* ---- BODY ---- *}
-	<body{if $user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $prefs.show_comzone eq 'y'} javascript:flip('comzone');{/if}">
+	<body{if $user_dbl eq 'y' and $prefs.dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $prefs.feature_tabs eq 'y' and isset($cookietab)}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}">
 {if $prefs.minical_reminders>100}{* TODO: replace the iframe with something xhtml strict compatible *}
 		<iframe style="width: 0; height: 0; border: 0" src="tiki-minical_reminders.php"></iframe>
 {/if}
@@ -218,12 +218,12 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 				<div id="tiki-columns"><!-- START of Tiki columns switchers -->
 	{if $prefs.feature_left_column eq 'user'}
 					<span style="float: left"><a class="flip" 
-					href="#" onclick="toggleCols('col2','left'); return false">{tr}Show/Hide Left Menus{/tr}</a>
+					href="#" onclick="toggleCols('col2','left'); return false">{tr}Show/Hide Left Modules{/tr}</a>
 					</span>
 	{/if}
 	{if $prefs.feature_right_column eq 'user'}
 					<span style="float: right"><a class="flip"
-					href="#" onclick="toggleCols('col3','right'); return false">{tr}Show/Hide Right Menus{/tr}</a>
+					href="#" onclick="toggleCols('col3','right'); return false">{tr}Show/Hide Right Modules{/tr}</a>
 					</span>
 	{/if}
 					<br style='clear: both' />
@@ -235,7 +235,11 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 					<div id="c1c2"><!-- START of column 1 and column 2 holder -->
 
 						<div id="wrapper"><!-- START of column 1 wrapper -->
-							<div id="col1" class="{if $prefs.feature_left_column ne 'n'} marginleft{/if}{if $prefs.feature_right_column ne 'n'} marginright{/if}">
+							<div id="col1" class="{if
+								$prefs.feature_left_column ne 'n'}marginleft{/if} {if 
+								$prefs.feature_right_column ne 'n'}marginright{/if}" style="{if 
+									isset($cookie.show_col2) and $cookie.show_col2 ne 'y'}margin-left: 0;{/if}{if 
+									isset($cookie.show_col3) and $cookie.show_col3 ne 'y'}margin-right: 0;{/if}">
 
 								<div class="content">
 {$mid_data}
@@ -245,33 +249,19 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 						</div><!-- END of column1 wrapper -->
 
 	{if $prefs.feature_left_column ne 'n'}
-						<div id="col2"><!-- START of column 2 -->
+						<div id="col2" style="display: {if isset($cookie.show_col2) and $cookie.show_col2 ne 'y'}none{else}block{/if}"><!-- START of column 2 -->
 		{section name=homeix loop=$left_modules}
 			{$left_modules[homeix].data}
 		{/section}
-		{if $prefs.feature_left_column eq 'user'}
-			{literal}
-							<script type="text/javascript">
-								setfolderstate("leftcolumn");
-							</script>
-			{/literal}
-		{/if}
 						</div><!-- END of column 2 -->
 	{/if}
 					</div><!-- END of column 1 and column 2 holder -->
 
 	{if $prefs.feature_right_column ne 'n'}
-					<div id="col3"><!-- START of column 3 -->
+					<div id="col3" style="display: {if isset($cookie.show_col3) and $cookie.show_col3 ne 'y'}none{else}block{/if}"><!-- START of column 3 -->
 		{section name=homeix loop=$right_modules}
 			{$right_modules[homeix].data}
 		{/section}
-		{if $prefs.feature_right_column eq 'user'}
-			{literal}
-						<script type="text/javascript">
-							setfolderstate("rightcolumn");
-						</script>
-			{/literal}
-		{/if}
 					</div><!-- END of column 3 -->
 	{/if}
 	
