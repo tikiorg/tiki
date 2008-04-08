@@ -67,8 +67,11 @@
 	<table id="upload" class="normal">
 	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
 	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td></tr>
-	{if $editFileId}<input type="hidden" name="galleryId" value="{$galleryId}"/>
-	<input type="hidden" name="fileId" value="{$editFileId}"/>{else}
+	{if $editFileId}
+		<input type="hidden" name="galleryId" value="{$galleryId}"/>
+		<input type="hidden" name="fileId" value="{$editFileId}"/>
+		<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
+	{else}
 	<tr><td class="formcolor">{tr}File Gallery{/tr}:</td><td class="formcolor"> 
 	<select name="galleryId">
 	{section name=idx loop=$galleries}
