@@ -145,7 +145,7 @@ if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId
 			$filegallib->unlock_file($_REQUEST['fileId']);
 		}
 	} elseif ( $_REQUEST['lock'] == 'y' ) {
-		if ( ! empty($fileInfo['lockedby']) ) {
+		if ( ! empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user) {
 			$error_msg = sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']);
 		} elseif ( $tiki_p_edit_gallery_file != 'y' ) {
 			$error_msg = tra('You do not have permission to do that');
