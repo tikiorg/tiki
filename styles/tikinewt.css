@@ -6,12 +6,16 @@ Variation of Tikineat theme for TikiWiki CMS/Groupware, based on *litecss.
 /***** XHTML Elements ******/
 
 body {
-	background: #E9ECEF;
+	background: #E9ECEF url("tikinewt/bg_vertline.png") 180px 0px repeat-y;
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
 	font-size: 62.5%;
 	color: #000;
+}
+
+#main {
+	background: transparent url("tikinewt/bg_vertline.png") right top repeat-y;
 }
 
 a,
@@ -208,7 +212,7 @@ div#tiki-main {
 }
 
 #header {
-	background-color: transparent;
+	background-color: #E9ECEF;
 }
 
 #header a,
@@ -293,14 +297,16 @@ div#sitead {
 	text-align: left;
 	font-size: 1em;
 }
+#showhide_columns, .tellafriend {
+	border-left: 1px solid #8CACBB;
+}
 #c1c2 {
 	font-size: 1em;
-	background: #E9ECEF;
+	background-color: transparent;
 }
 
 #c1c2 #wrapper {
 	background-color: transparent;
-	border-top: 1px solid #8CACBB;
 }
 
 #fullscreen #col1 {
@@ -325,10 +331,11 @@ a.flip img {
 	display: none;
 }
 
+#c1c2 #wrapper {
+}
+
 #c1c2 #wrapper #col1 {
-	border-left: 1px solid #8CACBB;
-	border-right: 1px solid #8CACBB;
-	background-color: transparent;
+	background-color: #E9ECEF;
 }
 
 #c1c2	#wrapper #col1	.content {
@@ -337,9 +344,10 @@ a.flip img {
 
 #c1c2 #wrapper #col1 #tiki-center {
 	background: #F3F6F9;
-	margin: 5px;
+	margin: 0;
 	padding-left: 5px;
-	border: 1px solid #8CACBB;
+	padding-bottom: 0;
+	border-left: 1px solid #8CACBB;
 	font-size: .9em;
 }
 
@@ -348,19 +356,19 @@ a.flip img {
 	font-size: 1em;
 }
 
-#c1c2 #wrapper #col1.marginleft  {
+#c1c2 #wrapper .marginleft  {
 	margin-left: 180px;/* change this in your stylesheet too when you change the width of #col2 */
 }
 
-#c1c2 #wrapper #col1.marginright {
+#c1c2 #wrapper .marginright {
 	margin-right: 180px;/* change this in your stylesheet too when you change the width of #col3 */
 }
 
 #c1c2 #col2 {
 	background-color: transparent;
 	width: 180px;
-	text-align: left;
-	border-right: 1px solid #8CACBB;
+	text-align: left;/*
+	border-right: 1px solid #8CACBB;*/
 	font-size: 1.1em
 }
 
