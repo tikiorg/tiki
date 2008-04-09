@@ -37,7 +37,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Use in{/tr}:</td>
-<td>
+<td class="formcolor">
 {if $prefs.feature_cms_templates eq 'y'}
 <input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /> {tr}CMS{/tr} ({tr}Articles{/tr}<br />{/if}
 {if $prefs.feature_wiki_templates eq 'y'}<input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /> {tr}Wiki{/tr}<br />
@@ -48,6 +48,9 @@
 {/if}
 {if $prefs.feature_html_pages eq 'y'}
 <input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /> {tr}HTML pages{/tr}<br />
+{/if}
+{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}
+{tr}No features are configured to use templates.{/tr}
 {/if}
 </td>
 </tr>
