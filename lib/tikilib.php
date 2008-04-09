@@ -7537,10 +7537,10 @@ if (!$simple_wiki) {
 		if ( $with_names ) {
 			$ret = array();
 			foreach ( $flags as $f ) {
-				$ret[$f] = strtr($f, '_', ' ');
 				if ( $translate ) {
 					$ret[$f] = tra($ret[$f]);
 				}
+				$ret[$f] = strtr($f, '_', ' ');
 			}
 			if ( $sort_names ) {
 				asort($ret, SORT_STRING);
