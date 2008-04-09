@@ -5391,7 +5391,7 @@ function add_pageview() {
 		}
 	}
 	
-	global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain;
+	global $page_regex, $slidemode, $prefs, $ownurl_father, $tiki_p_admin_drawings, $tiki_p_edit_drawings, $tiki_p_edit_dynvar, $tiki_p_upload_picture, $page, $page_ref_id, $rsslib, $dbTiki, $structlib, $user, $tikidomain, $tikiroot;
 	global $wikilib; include_once('lib/wiki/wikilib.php');
 
 	// if simple_wiki is tru, disable some wiki syntax
@@ -5977,13 +5977,24 @@ function add_pageview() {
 			if (strstr($imgdata["src"],'javascript:')) {
 				$imgdata["src"]  = '';
 			}
-	    $repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" ';
 
-	    if ($imgdata["width"])
-		$repl .= ' width="' . $imgdata["width"] . '"';
+	$detected_lib = '';
+	$imgdata_dim = '';
+	if ( $prefs['feature_filegals_manager'] == 'y' ) {
+		include_once('lib/images/images.php');
+	}
+	if ( $detected_lib != '' && ereg('^'.$tikiroot.'tiki-download_file.php\?', $imgdata['src']) ) {
+		// If an image lib has been detected and if we are using an image from a file gallery,
+		//   then also resize the image server-side, because it will generally imply less data to download from the user
+		//   (i.e. speed up the page download) and a better image quality (browser resize algorithms are quick but bad)
+		//
+		if ( $imgdata['width'] ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
+		if ( $imgdata['height'] ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
+	}
+	if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
+	if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
 
-	    if ($imgdata["height"])
-		$repl .= ' height="' . $imgdata["height"] . '"';
+	    $repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" '.$imgdata_dim;
 
 	    if ($imgdata["imalign"]) {
 		$repl .= ' align="' . $imgdata["imalign"] . '"';
