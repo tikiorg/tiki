@@ -31,12 +31,6 @@
       {assign var=link_title value=''}
       {assign var=td_args value=' class="heading"'}
       
-      {if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby' and $gal_info.$key_name eq 'a') }
-        {assign var=propval value=$item.name[0]}
-        {assign var=link_title value=$item.name}
-        {assign var=td_args value=$td_args|cat:' style="width:1%; text-align:center"'}
-      {/if}
-      
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         {assign var=nbCols value=`$nbCols+1`}
         <td{$td_args}>{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field='filename'}{tr}Filename{/tr}{/self_link}</td>
