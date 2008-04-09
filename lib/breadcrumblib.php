@@ -264,12 +264,12 @@ class Breadcrumb {
         $len = count($crumbs);
         if ($prefs['feature_siteidentity'] == 'y' && $prefs['feature_breadcrumbs'] == 'y') {
             if ($loc == 'page' && ($prefs['feature_sitedesc'] == 'page' || ($prefs['feature_wiki_description'] == 'y' && $info) )) {
-                return '<div id="description">'.tra($crumbs[$len-1]->description).'</div>';
+                return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
             } else if ($loc == 'site' && $prefs['feature_sitedesc'] == 'y' ) {
-                return '<div id="description">'.tra($crumbs[$len-1]->description).'</div>';
+                return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
             }
         } else if ( !($prefs['feature_wiki_description'] == 'n' && $info)) {
-            return '<div id="description">'.tra($crumbs[$len-1]->description).'</div>';
+            return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
         }
     }
 
