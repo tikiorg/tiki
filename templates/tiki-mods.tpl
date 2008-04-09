@@ -18,7 +18,7 @@
 <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
   <div class="rbox-data" name="tip">
-    {tr}Tiki "mods" are are additional features not included int he public release. Learn more at <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
+    {tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
   </div>
 </div>
 <br />
