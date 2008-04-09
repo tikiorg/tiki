@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (!function_exists("wiki_last_comments")) {
 function wiki_last_comments($limit)
 {
-    $query = "select `object`,`title`,`commentDate`,`userName`
+    $query = "select `object`,`title`,`commentDate`,`userName`,`threadId`
               from `tiki_comments` where `objectType`='wiki page' order by `commentDate` desc";
     global $tikilib;
     global $user;
@@ -27,6 +27,7 @@ function wiki_last_comments($limit)
         $aux["title"]= $res["title"];
         $aux["commentDate"] = $res["commentDate"];
         $aux["user"] = $res["userName"];
+		$aux["threadId"] = $res["threadId"];
         $ret[] = $aux;
       }
     }
