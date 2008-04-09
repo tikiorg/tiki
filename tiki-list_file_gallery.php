@@ -136,7 +136,6 @@ if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId
 		$smarty->display("error.tpl");
 		die;
 	}
-
 	$error_msg = '';
 	if ( $_REQUEST['lock'] == 'n' && ! empty($fileInfo['lockedby']) ) {
 		if ( $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y' ) {
@@ -150,6 +149,8 @@ if ( isset($_REQUEST['lock']) && isset($_REQUEST['fileId']) && $_REQUEST['fileId
 				} else {
 					key_get($area, sprintf(tra('The file is already locked by %s'), $fileInfo['lockedby']));
 				}
+			}  else {
+				$filegallib->unlock_file($_REQUEST['fileId']);
 			}
 		}
 	} elseif ( $_REQUEST['lock'] == 'y' ) {
