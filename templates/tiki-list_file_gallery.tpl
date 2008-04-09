@@ -58,6 +58,11 @@
       {/if}
     {/if}
   {/if}
+
+  {if $tiki_p_assign_perm_file_gallery eq 'y'}
+		<a class="linkbut" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Permissions{/tr}</a>
+	{/if}
+
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
     {if $tiki_p_upload_files eq 'y'}
