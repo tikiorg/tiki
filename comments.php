@@ -445,7 +445,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		}
 	    }
 	  	// redirect back to parent after edit/post to create GET request instead of POST to allow proper bookmarking/refreshing, etc.
-		if ($forum_mode == 'y') {
+		if (isset($forum_mode) && $forum_mode == 'y') {
 			$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
 			if (!empty($_REQUEST['comments_threshold'])) 
 				$url .= "&comments_threshold=".$_REQUEST['comments_threshold'];
