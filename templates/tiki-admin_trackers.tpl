@@ -6,7 +6,11 @@
 {icon _id='help'}</a>{/if}
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Trackers tpl{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+{icon _id='shape_square_edit'}</a>{/if}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=trackers">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
+{/if}
+</h1>
 
 <div class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
@@ -170,8 +174,9 @@ for a tracker and they must be valid in SQL{/tr}</em>
 {section name=x loop=$fields}
 <option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."}</option>
 {/section}
-<option value="-1"{if $defaultOrderKey eq -1} selected="selected"{/if}>{tr}lastModif{/tr}</option>
+<option value="-1"{if $defaultOrderKey eq -1} selected="selected"{/if}>{tr}LastModif{/tr}</option>
 <option value="-2"{if $defaultOrderKey eq -2} selected="selected"{/if}>{tr}Created{/tr}</option>
+<option value="-3"{if $defaultOrderKey eq -3} selected="selected"{/if}>{tr}ItemId{/tr}</option>
 </select>
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What is default sort order in list?{/tr}</td><td>
@@ -290,12 +295,15 @@ categories = {$catsdump}
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}File{/tr}</td><td>{tr}Tracker{/tr}_{$trackerId}.csv</td></tr>
-<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td></tr>
-<tr class="formcolor"><td></td><td><input name="showItemId" type="checkbox" checked="checked" />itemId
+<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8">{tr}UTF-8{/tr}</option><option value="ISO-8859-1" selected="selected">{tr}ISO-8859-1{/tr}</option></select></td></tr>
+<tr class="formcolor"><td>{tr}Separator{/tr}</td><td><input type="text" name="separator" value="," /></td></tr>
+<tr class="formcolor"><td>{tr}Delimitors{/tr}</td><td><input type="text" name="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td></tr>
+<tr class="formcolor"><td>{tr}Carriage Return inside Field Value{/tr}</td><td><input type="text" name="CR" value='%%%' /></td></tr>
+<tr class="formcolor"><td>{tr}Parse{/tr}</td><td><input type="checkbox" name="parse"></td></tr>
+<tr class="formcolor"><td>{tr}Info{/tr}</td><td><input name="showItemId" type="checkbox" checked="checked" />itemId
 <br /><input type="checkbox" name="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if}>{tr}status{/tr}
 <br /><input type="checkbox" name="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if}>{tr}created{/tr}
 <br /><input type="checkbox" name="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if}>{tr}lastModif{/tr}
-<br /><input type="checkbox" name="parse" checked="checked">{tr}Parse{/tr}</td></tr>
 <tr class="formcolor"><td>{tr}Fields{/tr}</td><td><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
 <br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 

@@ -135,8 +135,8 @@
 	{else}
 		{if $parse ne 'n'} {* the field is not necessary parsed if you come from a itm list field *}
 			{if $field_value.pvalue}{$field_value.pvalue}{else}{wiki}{$field_value.value}{/wiki}{/if}
-		{elseif $list_mode eq 'cvs'}
-			{$field_value}
+		{elseif $list_mode eq 'csv'}
+			{$field_value.value}
 		{else}
 			{$field_value.value|escape}
 		{/if}	

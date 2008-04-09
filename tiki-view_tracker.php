@@ -593,6 +593,8 @@ if (!isset($_REQUEST["sort_mode"])) {
 			$sort_mode = 'lastModif';
 		elseif ($tracker_info['defaultOrderKey'] == -2)
 			$sort_mode = 'created';
+		elseif ($tracker_info['defaultOrderKey'] == -3)
+			$sort_mode = 'itemId';
 		elseif ($orderkey) {
 			$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 		} else {

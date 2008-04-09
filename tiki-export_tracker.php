@@ -125,8 +125,24 @@ if (isset($_REQUEST['parse'])) {
 $smarty->assign_by_ref('parse', $parse);
 
 if (empty($_REQUEST['encoding'])) {
-	$_REQUEST['encoding'] = 'UTF-8';
+	$_REQUEST['encoding'] = 'ISO-8859-1';
 }
+if (empty($_REQUEST['separator'])) {
+	$_REQUEST['separator'] = ',';
+}
+$smarty->assign_by_ref('separator', $_REQUEST['separator']);
+if (empty($_REQUEST['delimitorL'])) {
+	$_REQUEST['delimitorL'] = '"';
+}
+$smarty->assign_by_ref('delimitorL', $_REQUEST['delimitorL']);
+if (empty($_REQUEST['delimitorR'])) {
+	$_REQUEST['delimitorR'] = '"';
+}
+$smarty->assign_by_ref('delimitorR', $_REQUEST['delimitorR']);
+if (empty($_REQUEST['CR'])) {
+	$_REQUEST['CR'] = '%%%';
+}
+$smarty->assign_by_ref('CR', $_REQUEST['CR']);
 
 if (!empty($_REQUEST['file'])) {
 	$fp = fopen($prefs['tmpDir'].'/'.tra('tracker')."_".$_REQUEST['trackerId'].".csv", 'w');
@@ -140,7 +156,22 @@ if (!empty($_REQUEST['file'])) {
 
 $offset = 0;
 $maxRecords = 100;
-$sort_mode = 'itemId_asc';
+if ($tracker_info['defaultOrderKey'] == -1)
+	$sort_mode = 'lastModif';
+elseif ($tracker_info['defaultOrderKey'] == -2)
+	$sort_mode = 'created';
+elseif ($tracker_info['defaultOrderKey'] == -3)
+	$sort_mode = 'itemId';
+elseif (isset($tracker_info['defaultOrderKey'])) {
+	$sort_mode = $tracker_info['defaultOrderKey'];
+} else {
+	$sort_mode = 'itemId';
+}
+if (isset($tracker_info['defaultOrderDir'])) {
+	$sort_mode.= "_".$tracker_info['defaultOrderDir'];
+} else {
+		$sort_mode.= "_asc";
+}
 $smarty->assign_by_ref('heading', $heading);
 while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecords, $sort_mode, $listfields, $filterFields, $values, $_REQUEST['status'], $_REQUEST['initial'], $exactValues)) && !empty($items['data'])) {
 	// still need to filter the fields that are view only by the admin and the item creator
@@ -151,7 +182,7 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 	$smarty->assign_by_ref('items', $items["data"]);
 
 	$data = $smarty->fetch('tiki-export_tracker.tpl');
-	if (!empty($_REQUEST['encoding']) && $_REQUEST['encoding'] == 'ISO-8859-1') {
+	if (empty($_REQUEST['encoding']) || $_REQUEST['encoding'] == 'ISO-8859-1') {
 		$data = utf8_decode($data);
 	}
 

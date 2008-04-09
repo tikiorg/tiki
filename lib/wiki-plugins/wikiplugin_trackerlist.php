@@ -150,6 +150,8 @@ function wikiplugin_trackerlist($data, $params) {
 					$sort_mode = 'lastModif';
 				elseif ($tracker_info['defaultOrderKey'] == -2)
 					$sort_mode = 'created';
+				elseif ($tracker_info['defaultOrderKey'] == -3)
+					$sort_mode = 'itemId';
 				else
 					$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 				if (isset($tracker_info['defaultOrderDir'])) {
