@@ -784,7 +784,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_bot_bar_icons'] = 'n';
 	$prefs['feature_bot_bar_debug'] = 'n';
 	$prefs['feature_bot_bar_rss'] = 'y';
-	$prefs['maxRecords'] = 10;
+	$prefs['maxRecords'] = 25;
 	$prefs['maxArticles'] = 10;
 	$prefs['maxVersions'] = 0;
 	$prefs['feature_view_tpl'] = 'n';
