@@ -82,12 +82,20 @@
 
 {if $cant_pages > 1 or $initial}{initials_filter_links}{/if}
 
+{if $items|@count ge '1'}
 {* ------- list headings --- *}
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<td class="heading auto" style="width:20px;">&nbsp;</td>
+<td class="heading auto" style="width:20px;"></td>
+{/if}
+{if $tiki_p_admin_trackers eq 'y'}
+<td class="heading" width="15">
+<script type='text/javascript'>
+document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All{/tr}\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/>");
+</script>
+</td>
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
@@ -114,11 +122,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {if $tiki_p_admin_trackers eq 'y'}<td class="heading" width="5%">{tr}dls{/tr}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td class="heading" width="5%">
-<script type='text/javascript'>
-document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall\">{tr}All{/tr}</label>");
-</script>
-</td>
+<td class="heading" width="20">{tr}Action{/tr}</td>
 {/if}
 </tr>
 
@@ -132,6 +136,11 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 	{assign var=ustatus value=$items[user].status|default:"c"}
 	{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 	</td>
+{/if}
+{if $tiki_p_admin_trackers eq 'y'}
+  <td>
+    <input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
+  </td>
 {/if}
 
 {* ------- list values --- *}
@@ -176,14 +185,13 @@ document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" oncli
 <td  style="text-align:center;">{$items[user].comments}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-<td  style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
+<td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
 /></a> {$items[user].attachments}</td>
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
   <td>
-    <input type="checkbox" name="action[]" value='{$items[user].itemId}' style="border:1px;font-size:80%;" />
     <a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" 
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   </td>
@@ -192,13 +200,12 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {assign var=itemoff value=$itemoff+1}
 {/section}
 </table>
+
 {if $tiki_p_admin_trackers eq 'y'}
-<div style="text-align:right;">
-<script type='text/javascript'>
-document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/><label for=\"clickall2\">{tr}Select All{/tr}</label>");
-</script>
+<div style="text-align:left">
+{tr}Perform action with checked{/tr}: 
 <select name="batchaction">
-<option value="">{tr}with checked{/tr}</option>
+<option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>
 </select>
 <input type="hidden" name="trackerId" value="{$trackerId}" />
@@ -207,6 +214,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" type=\"checkbox\" oncl
 {/if}
 </form>
 {pagination_links cant=$item_count step=$maxRecords offset=$offset}{/pagination_links}
+{/if}
 </div>
 {else}<!-- {cycle name=content assign=focustab} -->
 {/if}
