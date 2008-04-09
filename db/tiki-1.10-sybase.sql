@@ -2737,7 +2737,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','')
 go
 
 
