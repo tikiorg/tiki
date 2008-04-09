@@ -436,6 +436,9 @@ function wikiplugin_tracker($data, $params) {
 				if ($f['type'] == 'g' and $f['options_array'][0] == '1') {
 					$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
 				}
+				if ($f['type'] == 'q') {
+					$back .= '<input type="hidden" name="track['.$f['fieldId'].']" />';
+				}
 				if (in_array($f['fieldId'],$outf)) {
 
 					if (in_array($f['fieldId'],$optional)) {
