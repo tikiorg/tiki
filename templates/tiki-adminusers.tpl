@@ -120,7 +120,16 @@ class="prevnext">{tr}All{/tr}</a>
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne  'y' and $set_default_groups_mode ne 'y'}#multiple{/if}">
 <table class="normal">
 <tr>
-<td class="heading auto">&nbsp;</td>
+<td class="heading auto">{if $users}
+  <script type='text/javascript'>
+  <!--
+  // check / uncheck all.
+  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
+  // for now those people just have to check every single box
+  document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+  //-->                     
+  </script>{/if}
+</td>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}User{/tr}</a></td>
 {if $prefs.login_is_email neq 'y'}<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>{/if}
@@ -168,19 +177,12 @@ class="prevnext">{tr}All{/tr}</a>
   {/if}
 </td>
 </tr>
+{sectionelse}
+<tr class="odd"><td colspan="8">{tr}No records found.{/tr}</td></tr>
 {/section}
-  <script type='text/javascript'>
-  <!--
-  // check / uncheck all.
-  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
-  // for now those people just have to check every single box
-  document.write("<tr><td class=\"thin\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td class=\"form\" colspan=\"18\"><label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
-  //-->                     
-  </script>
   <tr>
   <td class="form" colspan="18">
-  <a name="multiple"></a><p align="left"> {*on the left to have it close to the checkboxes*}
+  <a name="multiple"></a>{if $users}<p align="left"> {*on the left to have it close to the checkboxes*}
   {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
@@ -212,6 +214,7 @@ class="prevnext">{tr}All{/tr}</a>
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
   </p>
+{/if}
   </td></tr>
   </table>
   
