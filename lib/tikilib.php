@@ -1930,13 +1930,16 @@ function add_pageview() {
     function user_has_voted($user, $id) {
 	// If user is not logged in then check the session
 	if (!$user) {
-	    $votes = $_SESSION["votes"];
-
-	    if (in_array($id, $votes)) {
-		$ret = true;
-	    } else {
-		$ret = false;
-	    }
+		if (!isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated
+			$ret = true;
+		} else {
+			$votes = $_SESSION["votes"];
+			if (in_array($id, $votes)) {
+				$ret = true;
+			} else {
+				$ret = false;
+			}
+		}
 	} else {
 	    $query = "select count(*) from `tiki_user_votings` where `user`=? and `id`=?";
 	    $result = $this->getOne($query,array($user,(string) $id));
