@@ -6792,5 +6792,6 @@ $lang=Array(
 "Use this script" => "Use ce script",
 "Then rerun the installer using tiki_1.9to1.10." => "Ensuite, relancer l;installateur avec tiki_1.9to1.10.",
 "This Gallery is Public" => "Cette gallerie est publique",
+"Display Properties" => "Propriétés d'affichage",
 "###end###"=>"###end###");
 ?>

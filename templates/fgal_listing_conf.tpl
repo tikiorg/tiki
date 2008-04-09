@@ -14,7 +14,7 @@
 <tr class="formcolor">
 	<td>{$item.name}</td>
 	<td>
-		<select name="fgal_list_{$key}">
+		<select style="width: 100%" name="fgal_list_{$key}">
 		{if $key eq 'name'}
 			<option value="a"{if $item.value eq 'a'} selected="selected"{/if}>{tr}Name-filename{/tr}</option>
 			<option value="n"{if $item.value eq 'n'} selected="selected"{/if}>{tr}Name{/tr}</option>

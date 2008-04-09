@@ -21,7 +21,7 @@
 
 			<div id="content1"  class="tabcontent" style="clear:both;display:block;">
       <table class="normal">
-        <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}"/> ({tr}required field for podcasts{/tr})</td></tr>
+        <tr><td class="formcolor">{tr}Name{/tr}:<br/> ({tr}required field for podcasts{/tr})</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}" style="width:100%"/></td></tr>
         <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
           <select name="fgal_type">
             <!-- TODO: make this a configurable list read from database -->
@@ -30,7 +30,7 @@
             <option value="vidcast" {if $fgal_type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
           </select>
         </td></tr>
-        <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea> ({tr}required field for podcasts{/tr})</td></tr>
+        <tr><td class="formcolor">{tr}Description{/tr}:<br/>({tr}required field for podcasts{/tr})</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$description|escape}</textarea></td></tr>
         <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
 
         <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
