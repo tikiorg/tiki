@@ -33,7 +33,7 @@
 <table border="0" cellpadding="3" cellspacing="3" width="100%" style="clear: both">
   <tr>
     {if isset($tree) && count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
-    <td width="25%" class="fgalexplorer" id="fgalexplorer" {if ( ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' ) }style="display:none"{/if}>
+    <td width="25%" class="fgalexplorer" id="fgalexplorer" style="{if ( ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y') and ( ! isset($smarty.request.show_fgalexplorer) or $smarty.request.show_fgalexplorer neq 'y' ) }display:none;{/if} width: 25%">
       <div style="overflow-x:auto; overflow-y:hidden">
       {include file='file_galleries.tpl'}
       </div>
