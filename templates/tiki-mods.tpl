@@ -18,13 +18,13 @@
 <div class="rbox" name="tip">
   <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
   <div class="rbox-data" name="tip">
-    {tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods</a>.{/tr}
+    {tr}Tiki "mods" are are additional features not included int he public release. Learn more at <a class="rbox-link" target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
   </div>
 </div>
 <br />
 
 {if $iswritable}
-<div class="simplebox" style="color:#009900;"><b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or 
+<div class="simplebox" style="color:#009900;">{icon _id=information.png style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or 
 upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using 
 "./fixperms fix" for example).{/tr}</div>
 {else}
@@ -150,22 +150,30 @@ function update_button_install() {
 {if $tikifeedback}
 <br />
 {section name=n loop=$tikifeedback}
-<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>
+<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{if $tikifeedback[n].num > 0}{icon _id=delete.png alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}</div><br />
 {/section}{/if}
 
 {if not $installask}
+{if $display}
 <form method="get" action="tiki-mods.php">
-<select name="type" onchange="this.form.submit();">
+{tr}Find{/tr}
+<input type="text" name="find" value="{$find|escape}" />
+<input type="submit" name="f" value="{tr}Find{/tr}" />
+{tr}in{/tr} <select name="type" onchange="this.form.submit();">
 <option value="">{tr}all types{/tr}</option>
 {foreach key=it item=i from=$types}
 <option value="{$it|escape}"{if $it eq $type} selected="selected"{/if}>{$it}</option>
 {/foreach}
 </select>
-<input type="text" name="find" value="{$find|escape}" />
-<input type="submit" name="f" value="{tr}Find{/tr}" />
+
 </form>
+{else}
+No mods.
+{/if}
+
 
 <table cellspacing="0" cellpadding="2" border="0" class="normal">
+
 {foreach key=type item=i from=$display}
 <tr><td colspan="{if $prefs.feature_mods_provider eq 'y'}3{else}2{/if}">
 <span class="button2"><a href="tiki-mods.php?type={$type|escape:"url"}{$findarg}" class="linkbut" title="{tr}Display only this type{/tr}">{$type}</a></span>
@@ -174,7 +182,6 @@ function update_button_install() {
 {cycle values="odd,even" print=false}
 {foreach key=item item=it from=$display.$type}
 <tr class="{if $focus and $focus eq $display.$type.$item->name}focus{else}{cycle}{/if}">
-
 {if $prefs.feature_mods_provider eq 'y'}
  {assign var=mod value=$public.$type.$item->modname}
  {if $public.$type.$item}
