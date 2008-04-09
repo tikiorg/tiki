@@ -14,11 +14,15 @@
 	{/if}
 
 	{if $files[changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
-            {if $files[changes].perms.has_special_perm eq 'y'}
-                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
+            <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">
+            {if $files[changes].public neq 'y'}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_private' alt='{tr}Private Gallery{/tr}'}
+            {elseif $files[changes].perms.has_special_perm eq 'y'}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key_active' alt='{tr}Active Perms{/tr}'}
             {else}
-                <a href="tiki-objectpermissions.php?objectName={$files[changes].name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt='{tr}Perms{/tr}'}</a>
+                {icon _menu_text=$menu_text _menu_icon=$menu_icon _id='key' alt='{tr}Perms{/tr}'}
             {/if}
+						</a>
         {/if}
 
 	{if $files[changes].perms.tiki_p_create_file_galleries eq 'y'}
