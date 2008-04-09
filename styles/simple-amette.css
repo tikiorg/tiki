@@ -1,4 +1,4 @@
-/* $Id: $ */
+/* $Id$ */
 
 @import "lite/lite.css"; /* here we import *lite as the base */
 
@@ -19,7 +19,7 @@ font-family: 'Verdana';
  padding: 0; /* and padding */
 }
 
-#header {	background-color: transparent;}
+#header {	background-color: transparent;}
 
 #c1c2 {
 	background-color: transparent;
@@ -72,8 +72,8 @@ font-family: 'Verdana';
 	padding: 0;
 	width: 30%;
 }
-
-/* next comes footer */
+
+/* next comes footer */
 #footer {background-color: transparent}
 .footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
