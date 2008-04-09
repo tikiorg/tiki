@@ -3,13 +3,17 @@
 
 <h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=module">{icon _id='wrench' alt="{tr}Admin Feature{/tr}" style="vertical-align:bottom"}</a>
+{/if}
+
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Modules{/tr}">
-{icon _id='help'}</a>{/if}
+{icon _id='help' style="vertical-align:bottom"}</a>{/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Modules Template{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+{icon _id='shape_square_edit' style="vertical-align:bottom"}</a>{/if}</h1>
 
 <div class="navbar">
 <a class="linkbut" href="#assign">{tr}Assign Module{/tr}</a>
@@ -36,7 +40,7 @@
              <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a></td>
 </tr>
 {sectionelse}
-<tr><td colspan="6" class="odd">
+<tr><td colspan="3" class="odd">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
