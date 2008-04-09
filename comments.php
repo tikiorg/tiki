@@ -487,8 +487,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 
 // print "TIME2 in comments.php: ".($end_time - $start_time)."\n";
 
-
-if ($tiki_p_vote_comments == 'y') {
+if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
     // Process a vote here
     if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
 	$comments_show = 'y';
