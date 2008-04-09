@@ -9,14 +9,13 @@
 {icon _id='shape_square_edit'}</a>{/if}</h1>
 
 {if empty($prefs.sender_email)}<br />
-<div class="simplebox">
-<div class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications.{/tr}</div>
-</div><br />{/if}
+<div class="highlight simplebox">{icon _id=information.png style="vertical-align:middle"} {tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications.{/tr}</div>
+<br />{/if}
 
 <h2>{tr}Add notification{/tr}</h2>
 {if !empty($tikifeedback)}
-<div class="highlight simplebox">{section name=ix loop=$tikifeedback}{$tikifeedback[ix].mes}{/section}</div>
-{/if}
+<div class="highlight simplebox">{section name=ix loop=$tikifeedback}{icon _id=delete.png alt="{tr}Alert{/tr}" style="vertical-align:middle"} {$tikifeedback[ix].mes}.{/section}</div>
+<br />{/if}
 <table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
      <input type="hidden" name="find" value="{$find|escape}" />
@@ -66,6 +65,12 @@
 <form method="get" action="tiki-admin_notifications.php">
 <table class="normal">
 <tr>
+<th class="heading">
+{if $channels}<script type="text/javascript"> /* <![CDATA[ */
+document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+/* ]]> */</script>
+{/if}
+</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
@@ -75,28 +80,22 @@
 {cycle print=false values="even,odd"}
 {section name=user loop=$channels}
 <tr class="{cycle}">
+<td><input type="checkbox" name="checked[]" value="{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td>{$channels[user].event}</td>
 <td>{if $channels[user].url}<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>{else}{$channels[user].object|escape}{/if}</td>
 <td>{$channels[user].email}</td>
 <td>{$channels[user].user}</td>
 <td>
    <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].watchId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-   <input type="checkbox" name="checked[]" value="{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
 {sectionelse}
-<tr><td class="odd" colspan="5"><b>{tr}No records found.{/tr}</b></td></tr>
+<tr class="odd"><td colspan="6"><b>{tr}No records found.{/tr}</b></td></tr>
 {/section}
 </table>
 {if $channels}
-<div align="right">
-<script type="text/javascript"> /* <![CDATA[ */
-document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-/* ]]> */</script>
 <br />{tr}Perform action with checked:{/tr}
 <input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
-</div>
 {/if}
 </form>
 
