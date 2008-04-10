@@ -2721,4 +2721,19 @@ padding-left: 18px;
 	background-color : #eeee99 !important;
 }
 
+/* Style for OverBox */
+.opaque {
+  background-color: #FFFFFF;
+  width : auto;
+  border : 1px solid #666666;
+  border-radius : 10px;
+  -moz-border-radius : 10px;
+  -khtml-border-radius : 10px;
+  padding : 5px;
+}
+.opaque .box-title,
+.opaque .box-data {
+  width: auto;
+}
+
 /***** End of file ******/
