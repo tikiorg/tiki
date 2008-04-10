@@ -1,10 +1,5 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
-  {if $galleryId eq 0}
-  <h2>{tr}Create a file gallery{/tr}</h2>
-  {else}
-  <h2>{tr}Edit this file gallery:{/tr} {$name}</h2>
-  {/if}
   {if $individual eq 'y'}
   <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
   {/if}

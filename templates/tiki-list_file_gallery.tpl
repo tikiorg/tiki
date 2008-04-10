@@ -2,7 +2,18 @@
 
 {popup_init src="lib/overlib.js"}
 
-<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{if $galleryId eq 0}{tr}File Galleries{/tr}{else}{tr}Gallery{/tr}: {$name}{/if}</a>
+<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{strip}
+{if $edit_mode eq 'y'}
+  {if $galleryId eq 0}
+  {tr}Create a file gallery{/tr}
+  {else}
+  {tr}Edit Gallery{/tr}: {$name}
+  {/if}
+{else}
+{if $galleryId eq 0}{tr}File Galleries{/tr}{else}{tr}Gallery{/tr}: {$name}{/if}
+{/if}
+{/strip}</a>
+
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}File+Galleries" target="tikihelp" class="tikihelp" title="{tr}File Galleries{/tr}">{icon _id='help'}</a>
 {/if}
@@ -15,7 +26,12 @@
 {/if}
 </h1>
 
-<div class="description">{$description|escape}</div>
+
+{if $edit_mode neq 'y' and $description neq ''}
+<div class="simplebox">
+{$description|escape}
+</div>
+{/if}
 
 <div class="navbar">
 {if $galleryId gt 0}
@@ -87,7 +103,9 @@
 
 {/if}
 
+{if $edit_mode neq 'y'}
 <a href="#" onClick="javascript:window.open('tiki-list_file_gallery.php?galleryId={$galleryId}&slideshow','','menubar=no,width=600,height=500');" class="linkbut">{tr}SlideShow{/tr}</a>
+{/if}
 
 </div>
 
@@ -129,7 +147,7 @@
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Modifications{/tr}</div>
 {/if}
-<div class="rbox-data" name="tip">{tr}Property <b>{$fgp_name}</b> Changed{/tr}</div>
+<div class="rbox-data" name="warning">{tr}Property <b>{$fgp_name}</b> Changed{/tr}</div>
 {if $smarty.foreach.change.last}
 </div>
 {/if}
