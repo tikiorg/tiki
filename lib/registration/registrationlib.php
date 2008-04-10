@@ -352,7 +352,7 @@ class RegistrationLib extends TikiLib {
 
 	if ($Debug) print "::send_email";
 
-	$sender_email = $userlib->get_admin_email();
+	$sender_email = $prefs['sender_email'];
 	$mail_user = $data['user'];
 	$mail_site = $data['mail_site'];
 
