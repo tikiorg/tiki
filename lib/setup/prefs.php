@@ -916,7 +916,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['php_docroot'] = 'http://php.net/';
 	$prefs['proxy_host'] = '';
 	$prefs['proxy_port'] = '';
-	$prefs['sender_email'] = $userlib->get_admin_email();
+	$prefs['sender_email'] = $this->get_user_email($prefs['contact_user']);
 	$prefs['session_db'] = 'n';
 	$prefs['session_lifetime'] = 0;
 	$prefs['shoutbox_autolink'] = 'n';
