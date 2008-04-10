@@ -6794,7 +6794,6 @@ $lang=Array(
 "This Gallery is Public" => "Cette gallerie est publique",
 "Display Properties" => "Propriétés d'affichage",
 "Private Gallery" => "Galerie privée",
-"Changed_m" => "Modifié",
-"Changed_f" => "Modifiée",
+"Property <b>{\$fgp_name}</b> Changed" => "Propriété <b>{\$fgp_name}</b> Modifiée",
 "###end###"=>"###end###");
 ?>

@@ -87,6 +87,8 @@
 
 {/if}
 
+<a href="#" onClick="javascript:window.open('tiki-list_file_gallery.php?galleryId={$galleryId}&slideshow','','menubar=no,width=600,height=500');" class="linkbut">{tr}SlideShow{/tr}</a>
+
 </div>
 
 {if $filegals_manager eq 'y'}
@@ -127,7 +129,7 @@
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Modifications{/tr}</div>
 {/if}
-<div class="rbox-data" name="tip">{tr}Property{/tr}&nbsp;<b>{$fgp_name}</b> {tr}Changed_f{/tr}</div>
+<div class="rbox-data" name="tip">{tr}Property <b>{$fgp_name}</b> Changed{/tr}</div>
 {if $smarty.foreach.change.last}
 </div>
 {/if}
