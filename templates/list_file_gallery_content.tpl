@@ -32,7 +32,11 @@
       {assign var=td_args value=' class="heading"'}
       
       {if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby' and $gal_info.$key_name eq 'a') }
-         {assign var=propval value=$item.name[0]}
+         {if isset($item.icon)}
+            {assign var=propicon value=$item.icon}
+         {else}
+            {assign var=propval value=$item.name[0]}
+         {/if}
          {assign var=link_title value=$item.name}
          {assign var=td_args value=$td_args|cat:' style="width:1%;text-align:center"'}
       {/if}
@@ -43,7 +47,11 @@
       {/if}
       {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
         {assign var=nbCols value=`$nbCols+1`}
-        <td{$td_args}>{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}{$propval}{/self_link}</td>
+        <td{$td_args}>
+           {self_link _class="tableheading" _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}
+             {if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
+		   {/self_link}
+        </td>
       {/if}
     {/if}
   {/foreach}
