@@ -794,6 +794,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['style'] = 'tikineat.css';
 	$prefs['use_context_menu_icon'] = 'y';
 	$prefs['use_context_menu_text'] = 'y';
+	$prefs['feature_site_report'] = 'n';
 
 	# mods
 	$prefs['feature_mods_provider'] = 'n';
@@ -916,7 +917,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['php_docroot'] = 'http://php.net/';
 	$prefs['proxy_host'] = '';
 	$prefs['proxy_port'] = '';
-	$prefs['sender_email'] = $this->get_user_email($prefs['contact_user']);
+	$prefs['sender_email'] = '';
+	$prefs['feature_site_report_email'] = '';
 	$prefs['session_db'] = 'n';
 	$prefs['session_lifetime'] = 0;
 	$prefs['shoutbox_autolink'] = 'n';
