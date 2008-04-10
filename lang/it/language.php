@@ -6693,6 +6693,7 @@ $lang=Array(
 "Translate recorded" => "Traduzione memorizzata",
 "Original" => "Originale",
 "translate" => "traduci",
+"Translate" => "Traduci",
 "reset table" => "reset tabella",
 "Program dynamic content for block" => "Programma il contenuto dinamico del blocco",
 "Create New Block" => "Crea nuovo blocco",

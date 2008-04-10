@@ -5915,6 +5915,7 @@ $lang=Array(
 "Translate recorded" => "Přeložit zaznamenané",
 "Original" => "Originál",
 "translate" => "přeložit",
+"Translate" => "Přeložit",
 "reset table" => "resetuj tabulku",
 "Program dynamic content for block" => "Naprogramovat dynamický obsah pro tento blok",
 "Create New Block" => "Vytvořit nový blok",

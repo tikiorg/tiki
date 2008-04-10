@@ -6626,6 +6626,7 @@ $lang=Array(
 "Sat" => "Σαβ",
 "Sun" => "Κυρ",
 "translate" => "μετάφραση",
+"Translate" => "μετάφραση",
 "Admin FAQ" => "Διαχείριση FAQ",
 "View FAQ" => "Προβολή FAQ",
 "Edit this FAQ" => "Τροποποίηση FAQ",

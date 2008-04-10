@@ -5873,6 +5873,7 @@ $lang=Array(
 "Translate recorded" => "ترجمه ظبط شد",
 "Original" => "بكر",
 "translate" => "ترجمه كن",
+"Translate" => "ترجمه كن",
 "reset table" => "جدول را بازبنشان",
 "Program dynamic content for block" => "محتواي پوياي برنامه براي بلوك",
 "Create New Block" => "يك بلوك جديد ايجاد كن",

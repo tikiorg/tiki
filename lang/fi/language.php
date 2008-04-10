@@ -5979,6 +5979,7 @@ $lang=Array(
 "Translate recorded" => "Käännös taltioitu",
 "Original" => "Alkuperäinen",
 "translate" => "käännä",
+"Translate" => "Käännä",
 "reset table" => "nollaa taulukko",
 "Program dynamic content for block" => "Ohjelmoi muuttuva sisältö blokille",
 "Create New Block" => "Luo uusi blokki",

@@ -6344,6 +6344,7 @@ $lang=Array(
 "Edit translations" => "Redigera översättningar",
 "Translate recorded" => "Översättning sparad",
 "translate" => "översätt",
+"Translate" => "översätt",
 "reset table" => "töm tabell",
 "Program dynamic content for block" => "Programmera dynamiskt innehåll för block",
 "Create New Block" => "Skapa ett nytt block",

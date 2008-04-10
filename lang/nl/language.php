@@ -5682,6 +5682,7 @@ $lang=Array(
 "Translate recorded" => "Vertaling opgenomen",
 "Original" => "Originele",
 "translate" => "vertaal",
+"Translate" => "Vertaal",
 "reset table" => "maak tabel leeg",
 "Program dynamic content for block" => "Dynamische inhoud voor een blok programmeren",
 "Create New Block" => "Nieuw blok maken",

@@ -6328,6 +6328,7 @@ $lang=Array(
 "Edit translations" => "Upraviť preklady",
 "Original" => "Originál",
 "translate" => "preložiť",
+"Translate" => "Preložiť",
 "Program dynamic content for block" => "Naprogramovať dynamický obsah pre blok",
 "Create New Block" => "Vytvoriť nový blok",
 "Return to block listing" => "Späť na výpis blokov",

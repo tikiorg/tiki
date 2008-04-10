@@ -3950,6 +3950,7 @@ $lang=Array(
 // "Translate recorded" => "Translate recorded",
 // "Original" => "Original",
 // "translate" => "translate",
+// "Translate" => "translate",
 // "reset table" => "reset table",
 // "Edit question options" => "Edit question options",
 // "Admin quizzes" => "Admin quizzes",

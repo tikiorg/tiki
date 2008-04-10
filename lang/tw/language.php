@@ -6504,6 +6504,7 @@ $lang=Array(
 "Translate recorded" => "已記錄翻譯",
 "Original" => "原始",
 "translate" => "翻譯",
+"Translate" => "翻譯",
 "reset table" => "重設表格",
 "Program dynamic content for block" => "設計區塊的動態內容",
 "Create New Block" => "建立新區塊",

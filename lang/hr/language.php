@@ -6339,6 +6339,7 @@ $lang=Array(
 "Edit translations" => "Izmijeni prijevod",
 "Translate recorded" => "Prevedi snimljeno",
 "translate" => "prevedi",
+"Translate" => "Prevedi",
 "reset table" => "resetiraj tablicu",
 "Program dynamic content for block" => "Programiraj dinamički sadržaj za ovaj blok",
 "Create New Block" => "Napravi novi blok",

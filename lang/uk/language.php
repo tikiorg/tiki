@@ -6302,6 +6302,7 @@ $lang=Array(
 "Translate recorded" => "Перекладати записане",
 "Original" => "Ориґінал",
 "translate" => "перекласти",
+"Translate" => "перекласти",
 "reset table" => "скинути таблицю",
 "Program dynamic content for block" => "Програмувати динамічний вміст для блоку",
 "Create New Block" => "створити новий блок",

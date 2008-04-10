@@ -6962,6 +6962,7 @@ $lang=Array(
 "Edit translations" => "Editar traduções",
 "Translate recorded" => "Tradução registada",
 "translate" => "traduzir",
+"Translate" => "Traduzir",
 "reset table" => "reinicializar",
 "Program dynamic content for block" => "Programar conteúdo dinâmico para o bloco",
 "Create New Block" => "Criar um novo bloco",

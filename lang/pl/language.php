@@ -5124,6 +5124,7 @@ $lang=Array(
 "Translate recorded" => "Translate recorded",
 "Original" => "Original",
 "translate" => "translate",
+"Translate" => "Translate",
 "reset table" => "reset table",
 "Program dynamic content for block" => "Program dynamic content for block",
 "Return to block listing" => "Return to block listing",

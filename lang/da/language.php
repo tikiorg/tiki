@@ -6395,6 +6395,7 @@ $lang=Array(
 "Edit translations" => "Rediger sprog",
 "Translate recorded" => "Oversæt",
 "translate" => "oversæt",
+"Translate" => "Oversæt",
 "reset table" => "nulstil tabel",
 "Program dynamic content for block" => "Programmer dynamisk indhold til blokken",
 "Create New Block" => "Opret ny blok",

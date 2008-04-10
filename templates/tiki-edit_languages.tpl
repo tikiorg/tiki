@@ -59,7 +59,7 @@
       <td><input name="edit_rec_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255></td>
       <td class="form">{tr}Translation{/tr}:</td>
       <td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
-      <td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}translate{/tr}" />
+      <td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}Translate{/tr}" />
   {/section}
   <tr><td align="center"><input type="submit" name="tran_reset" value="{tr}reset table{/tr}" /></td></tr>
   </table>
@@ -83,7 +83,7 @@
       <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]}" size=30 maxlength=255 /></td>
       <td class="form">{tr}Translation{/tr}:</td>
       <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]}" size=42 maxlength=255 /></td>
-      <td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}translate{/tr}" /></td>
+      <td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}Translate{/tr}" /></td>
       <td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}Delete{/tr}" /></td>
   {/section}
   </table>

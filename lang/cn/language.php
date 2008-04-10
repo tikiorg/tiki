@@ -6839,6 +6839,7 @@ $lang=Array(
 "Translate recorded" => "已记录翻译",
 "Original" => "原始",
 "translate" => "翻译",
+"Translate" => "翻译",
 "reset table" => "重设表格",
 "Program dynamic content for block" => "设计模块的动态內容",
 "Create New Block" => "创建新模块",

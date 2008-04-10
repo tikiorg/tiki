@@ -5808,6 +5808,7 @@ $lang=Array(
 "Edit translations" => "Editar traducción",
 "Translate recorded" => "Traducción grabada",
 "translate" => "tranducir",
+"Translate" => "Tranducir",
 "reset table" => "reiniciar tabla",
 "Program dynamic content for block" => "Programar contenido dinámico para el bloque",
 "Create New Block" => "Crear nuevo bloque",

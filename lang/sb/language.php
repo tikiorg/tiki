@@ -4879,6 +4879,7 @@ $lang=Array(
 "Translate recorded" => "Translate recorded",
 "Original" => "Original",
 "translate" => "translate",
+"Translate" => "Translate",
 "reset table" => "reset table",
 "Block description: " => "Block description: ",
 "Publishing date" => "Publishing date",
