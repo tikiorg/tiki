@@ -190,6 +190,7 @@ if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']
 if ( ! empty($_REQUEST['lock']) ) {
 	if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
 		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
+		$smarty->assign('close_window', 'y');
 		$smarty->display('error.tpl');
 		die;
 	}

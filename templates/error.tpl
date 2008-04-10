@@ -1,3 +1,8 @@
+{if $close_window eq 'y'}
+<script type="text/javascript">
+close();
+</script>
+{/if}
 {capture assign=mid_data}
       {if ($errortype eq "402")}
       <center>
