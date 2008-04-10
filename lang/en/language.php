@@ -6578,6 +6578,7 @@ $lang=Array(
 // "Group Theme" => "Group Theme",
 "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}",
 "Your account request have been stored and will be activated by the admin as soon as possible." => "Your account request has been stored and will be activated by the admin as soon as possible.",
-
+"Changed_m" => "Changed",
+"Changed_f" => "Changed",
 "###end###"=>"###end###");
 ?>

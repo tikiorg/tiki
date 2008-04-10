@@ -347,38 +347,46 @@ if ( isset($_REQUEST['edit']) ) {
 		);
 		$smarty->assign('edit_mode', 'n');
 	} else {
-		$fgid = $filegallib->replace_file_gallery(
-			$galleryId,
-			$_REQUEST['name'],
-			$_REQUEST['description'],
-			$_REQUEST['user'],
-			$_REQUEST['maxRows'],
-			$public,
-			$visible,
-			$_REQUEST['fgal_list_id'],
-			$_REQUEST['fgal_list_type'],
-			$_REQUEST['fgal_list_name'],
-			$_REQUEST['fgal_list_size'],
-			$_REQUEST['fgal_list_description'],
-			$_REQUEST['fgal_list_created'],
-			$_REQUEST['fgal_list_hits'],
-			$_REQUEST['max_desc'],
-			$_REQUEST['fgal_type'],
-			$_REQUEST['parentId'],
-			$lockable,
-			$_REQUEST['fgal_list_lockedby'],
-			$_REQUEST['archives'],
-			$_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'],
-			$_REQUEST['fgal_list_lastmodif'],
-			$_REQUEST['fgal_list_creator'],
-			$_REQUEST['fgal_list_author'],
-			$_REQUEST['subgal_conf'],
-			$_REQUEST['fgal_list_user'],
-			$_REQUEST['fgal_list_comment'],
-			$_REQUEST['fgal_list_files'],
-			( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
-			( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' )
+		$old_gal_info = $filegallib->get_file_gallery_info($galleryId);
+		$gal_info = array('galleryId' => $galleryId,
+			'name' => $_REQUEST['name'],
+			'description' => $_REQUEST['description'],
+			'user' => $_REQUEST['user'],
+			'maxRows' => $_REQUEST['maxRows'],
+			'public' => $public,
+			'visible' => $visible,
+			'show_id' => $_REQUEST['fgal_list_id'],
+			'show_icon' => $_REQUEST['fgal_list_type'],
+			'show_name' => $_REQUEST['fgal_list_name'],
+			'show_size' => $_REQUEST['fgal_list_size'],
+			'show_description' => $_REQUEST['fgal_list_description'],
+			'show_created' => $_REQUEST['fgal_list_created'],
+			'show_hits' => $_REQUEST['fgal_list_hits'],
+			'max_desc' => $_REQUEST['max_desc'],
+			'type' => $_REQUEST['fgal_type'],
+			'parentId' => $_REQUEST['parentId'],
+			'lockable' => $lockable,
+			'show_lockedby' => $_REQUEST['fgal_list_lockedby'],
+			'archives' => $_REQUEST['archives'],
+			'sort_mode' => $_REQUEST['sortorder'].'_'.$_REQUEST['sortdirection'],
+			'show_modified' => $_REQUEST['fgal_list_lastmodif'],
+			'show_creator' => $_REQUEST['fgal_list_creator'],
+			'show_author' => $_REQUEST['fgal_list_author'],
+			'subgal_conf' => $_REQUEST['subgal_conf'],
+			'show_last_user' => $_REQUEST['fgal_list_user'],
+			'show_comment' => $_REQUEST['fgal_list_comment'],
+			'show_files' => $_REQUEST['fgal_list_files'],
+			'show_explorer' => ( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
+			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' )
 		);
+		$fgal_diff = array_diff_assoc($gal_info,$old_gal_info);
+		unset($fgal_diff['created']);
+		unset($fgal_diff['lastModif']);
+		unset($fgal_diff['votes']);
+		unset($fgal_diff['points']);
+		unset($fgal_diff['hits']);
+		$smarty->assign('fgal_diff',$fgal_diff);
+		$fgid = $filegallib->replace_file_gallery($gal_info);
 
 		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_type = 'file gallery';

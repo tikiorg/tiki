@@ -121,6 +121,18 @@
   {/if}
 </div>
 
+
+{foreach from=$fgal_diff item=fgp_prop key=fgp_name name=change}
+{if $smarty.foreach.change.first}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Modifications{/tr}</div>
+{/if}
+<div class="rbox-data" name="tip">{tr}Property{/tr}&nbsp;<b>{$fgp_name}</b> {tr}Changed_f{/tr}</div>
+{if $smarty.foreach.change.last}
+</div>
+{/if}
+{/foreach}
+
 {if $edit_mode eq 'y'}
 
   {include file='edit_file_gallery.tpl'}
