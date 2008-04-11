@@ -385,18 +385,23 @@ class TrackerLib extends TikiLib {
 	/* experimental shared */
 	function get_item_value($trackerId,$itemId,$fieldId) {
 		global $prefs;
-	        $res=""; 
-		$basequery = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
-		if ($this->is_multilingual($fieldId)=='y') {
-	        	$query= "$basequery  and ttif.`lang`=?";
-			$res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId,(string)$prefs['language']));
+		$query = "select ttif.`value`, ttf.`type`, ttif.`lang` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
+		$result = $this->query($query, array((int)$trackerId,(int)$fieldId,(int)$itemId));
+		if (!$result->numRows()) {
+			return '';
 		}
-	       if (!isset($res) || $res=='' ){
-	            //Try normal query
-                    $query = $basequery;
-                    $res=$this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
-               }
-		    return $res;
+		if ($this->is_multilingual($fieldId) == 'y') {
+			while ($res = $result->fetchRow()) {
+				if ($res['lang'] == $prefs['language']) {
+					return $res['value'];
+				}
+				$ret = $res['value'];
+			}
+		} else {
+			$res = $result->fetchRow();
+			$ret =  $res['value'];
+		}
+		return $ret;
 	}
 
 	/* experimental shared */
