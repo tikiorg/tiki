@@ -34,7 +34,7 @@ function smarty_function_poll($params, &$smarty) {
 				$comments_count = $commentslib->count_comments("poll:".$menu_info["pollId"]);
 			} else
 				$comments_count = 0;
-			$smarty->assign('comments', $comments_count);
+      $smarty->assign('comments_cant', $comments_count);
       $smarty->assign('ownurl','tiki-poll_results.php?pollId='.$id);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels);

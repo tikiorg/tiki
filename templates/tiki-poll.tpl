@@ -17,7 +17,7 @@
 <a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}View Results{/tr}</a><br />
 ({tr}Votes{/tr}: {$menu_info.votes})
 </div>
-{if $prefs.feature_poll_comments and $comments}
+{if $prefs.feature_poll_comments and $comments_cant and !isset($module_params)}
 <br />
 <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
