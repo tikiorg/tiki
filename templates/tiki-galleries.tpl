@@ -262,6 +262,6 @@
 
 {if $prefs.feature_maps eq 'y'}{$map_error}{/if}
 
-{pagination_links cant=$cant step=$maxImagesRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
 </div>
