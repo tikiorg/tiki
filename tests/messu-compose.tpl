@@ -1,3 +1,4 @@
+{* test *}
 <h1><a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
