@@ -13,6 +13,13 @@
 {include file=tiki-mytiki_bar.tpl}
 {/if}
 
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}</div>
+</div>
+
+
+
 {if $prefs.feature_articles eq 'y' and $tiki_p_read_article eq 'y'}
 <br />
 <h2>{tr}Add Watch{/tr}</h2>
@@ -32,11 +39,11 @@
 </table>
 </form>
 {/if}
-
+<br />
 <h2>{tr}Watches{/tr}</h2>
 <form action="tiki-user_watches.php" method="post" id='formi'>
-{tr}Event{/tr}:<select name="event" onchange="javascript:document.getElementById('formi').submit();">
-<option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All{/tr}</option>
+{tr}Show{/tr}:<select name="event" onchange="javascript:document.getElementById('formi').submit();">
+<option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All{/tr} {tr}watched events{/tr}</option>
 {section name=ix loop=$events}
 <option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if}>
 	{if $events[ix] eq 'article_submitted'}
@@ -56,20 +63,24 @@
 {/section}
 </select>
 </form>
-
+<br />
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 <tr>
-<td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="{tr}x{/tr}"></td>
-<td class="heading">{tr}Event{/tr}</td>
-<td class="heading">{tr}Object{/tr}</td>
+{if $watches}
+<th style="text-align:center;" class="heading"></th>
+{/if}
+<th class="heading">{tr}Event{/tr}</th>
+<th class="heading">{tr}Object{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$watches}
 <tr>
+{if $watches}
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="watch[{$watches[ix].watchId}]" />
 </td>
+{/if}
 <td class="{cycle advance=false}">
 	{if $watches[ix].event eq 'article_submitted'}
 		{tr}A user submits an article{/tr}
@@ -88,9 +99,17 @@
 </td>
 <td class="{cycle}"><a class="link" href="{$watches[ix].url}">{tr}{$watches[ix].type}{/tr}: {$watches[ix].title}</a></td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+{if $watches}
+{tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
+{/if}
 </form>
+
+
+
 {if $prefs.feature_user_watches_translations eq 'y'}
 <form method="post" action="tiki-user_watches.php">
 	<p>{tr}Watch language wiki page creations{/tr}:
