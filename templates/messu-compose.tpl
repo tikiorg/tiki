@@ -15,18 +15,17 @@
 <br /><br />
 
 {if $sent}
-<div class="simplebox highlight">{$message}</div>
+<div class="simplebox highlight">{if (strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}'))}{icon _id=delete.png alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept.png alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
 {/if}
-{if $allowMsgs ne "y"}
-<div class="simplebox highlight">{tr}If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>{/tr}</div>
+{if $allowMsgs ne "y"}<br />
+<div class="simplebox">{icon _id=information.png style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}</div>
 {/if}
 
+{if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,nbsp;).{/tr}</div><br />
+<div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,&nbsp;).{/tr}</div><br />
 </div>
-
-
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
@@ -39,7 +38,7 @@
     <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor"><label for="mess-composebcc">{tr}BCC{/tr}:</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /> <span class="warning">{tr}usernames separated with ,{/tr}</span></td>
+    <td class="formcolor"><label for="mess-composebcc">{tr}BCC{/tr}:</label></td><td class="formcolor"><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /> </td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-prio">{tr}Priority{/tr}:</label></td><td class="formcolor">
@@ -64,4 +63,5 @@
 	<tr><td><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
   </table>
 </form>
+{/if}
 <br />
