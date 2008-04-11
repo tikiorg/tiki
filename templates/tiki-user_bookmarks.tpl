@@ -13,11 +13,12 @@
 <br />
 {/if}
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
+<br />
 <h2>{tr}Folders{/tr}</h2>
 <table class="normal">
 <tr>
-  <td class="heading">{tr}Name{/tr}</td>
-  <td  class="heading">{tr}Action{/tr}</td>
+  <th class="heading">{tr}Name{/tr}</th>
+  <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
@@ -28,16 +29,18 @@
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}">{icon _id='cross' alt='{tr}Remove{/tr}' title='{tr}Remove Folder{/tr}'}</a>
   </td>
 </tr>
+{sectionelse}
+<tr><td colspan="2" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 
-
+<br />
 <h2>{tr}Bookmarks{/tr}</h2>
 <table class="normal">
 <tr>
-  <td  class="heading">{tr}Name{/tr}</td>
-  <td  class="heading">{tr}Url{/tr}</td>
-  <td class="heading">{tr}Action{/tr}</td>
+  <th class="heading">{tr}Name{/tr}</th>
+  <th class="heading">{tr}Url{/tr}</th>
+  <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$urls}
@@ -56,15 +59,19 @@
     &nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
   </td>
 </tr>
+{sectionelse}
+<tr><td colspan="3" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 <br />
 <h2>{tr}Admin folders and bookmarks{/tr}</h2>
 <table class="normal" cellpadding="0" cellspacing="0">
 <tr>
-  <td >
-    <b>{tr}Add or edit folder{/tr}</b>
+  <td>
+    <h3>{if $editfolder}{tr}Edit{/tr}{else}{tr}Add{/tr}{/if} {tr}a folder{/tr}</h3>
+{if $editfolder}
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}New{/tr}</a>
+{/if}
     {* form to add a category *}
     <table >
       <form action="tiki-user_bookmarks.php" method="post">
@@ -82,8 +89,10 @@
   </td>
   <td >
     {* form to add a url *}
-    <b>{tr}Add or edit a URL{/tr}</b>
+    <h3>{if $urlname}{tr}Edit{/tr}{else}{tr}Add{/tr}{/if} {tr}a URL{/tr}</h3>
+{if $urlname}
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}New{/tr}</a>
+{/if}
     <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editurl" value="{$editurl|escape}" />

@@ -20,13 +20,20 @@
 {if $allowMsgs ne "y"}
 <div class="simplebox highlight">{tr}If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>{/tr}</div>
 {/if}
+
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,nbsp;).{/tr}</div><br />
+</div>
+
+
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
     <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" />
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
 		<input type="hidden" name="reply" value="{$reply}" />
-		<input type="submit" name="send" value="{tr}Send{/tr}" /></td>
+</td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>
@@ -54,6 +61,7 @@
   <tr>
     <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
   </tr>
-</table>
+	<tr><td><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
+  </table>
 </form>
 <br />

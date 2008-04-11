@@ -53,7 +53,7 @@
 </td></tr>
 {/if}
 {/if}
-  <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$user_prefs.display_timezone}</td></tr>
+  <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$user_prefs.display_timezone|default:"{tr}System{/tr}"}</td></tr>
 
 {if $prefs.user_tracker_infos}
   {foreach item=itemField from=$userItem.field_values}
