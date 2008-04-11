@@ -444,7 +444,7 @@ foreach($xfields["data"] as $i=>$array) {
 		        
                                   global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
-                                  $multi_languages=$multilinguallib->getSystemLanguage();
+                                  $multi_languages = $prefs['available_languages'];
                                   $smarty->assign('multi_languages',$multi_languages);
                                   
                                   $ins_fields["data"][$i]['isMultilingual']='y';
