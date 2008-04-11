@@ -222,7 +222,7 @@
 				{if $prefs.feature_file_galleries eq 'y'}
         <tr>
           <td class="form">{tr}file gal{/tr}:</td>
-          <td class="form"><select name="file_galleryId">{section name=ix loop=$file_galleries}<option value="{$file_galleries[ix].galleryId|escape}">{$file_galleries[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
+          <td class="form"><select name="file_galleryId">{section name=ix loop=$file_galleries}<option value="{$file_galleries[ix].id|escape}">{$file_galleries[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfilegallery" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
