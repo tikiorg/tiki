@@ -76,7 +76,9 @@ if( !( is_numeric( $_GET['w'] )
 	&& is_numeric( $_GET['min'] )
 	&& is_numeric( $_GET['max'] )
 	&& is_array( $_GET['f'] )
-	&& $_GET['min'] < $_GET['max'] ) )
+	&& $_GET['min'] < $_GET['max'] 
+	&& $_GET['w'] >= 100
+	&& $_GET['h'] >= 100 ) )
 	die;
 
 switch( $_GET['t'] )
