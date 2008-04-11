@@ -795,6 +795,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['use_context_menu_icon'] = 'y';
 	$prefs['use_context_menu_text'] = 'y';
 	$prefs['feature_site_report'] = 'n';
+	$prefs['feature_site_send_link'] = 'n';
 
 	# mods
 	$prefs['feature_mods_provider'] = 'n';

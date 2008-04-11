@@ -1,10 +1,14 @@
 {* $Id$ *}
-<h1>{tr}Send a link to a friend{/tr}</h1>
+<h1>{if $report eq 'y'}{tr}Report to the webmaster{/tr}{else}{tr}Send a link to a friend{/tr}{/if}</h1>
 <span class="button2"><a href="{$url}" class="linkbut">{tr}Back{/tr}</a></span>
-{if !empty($sent)}
+{if isset($sent)}
 <div class="simplebox highlight">
+{if $report eq 'y'}
+{tr}Your email was sent{/tr}
+{else}
 {tr}The link was sent to the following addresses:{/tr}<br />
 {$sent|escape}
+{/if}
 </div>
 {/if}
 
@@ -25,10 +29,14 @@
       <td><a href={$prefix}{$url}>{$prefix}{$url}</a></td>
     </tr>
     
+	{if $report ne 'y'}
     <tr class="formcolor">
       <td class="formcolor">{tr}List of email addresses separated by commas{/tr}</td>
       <td class="formcolor"><input type="text" size="60" name="addresses" value="{$addresses|escape}"/></td>
     </tr>
+    {else}
+      <input type="hidden" name="report" value="y" />
+	{/if}
   
     <tr class="formcolor">
       <td class="formcolor">{tr}Your name{/tr}</td>

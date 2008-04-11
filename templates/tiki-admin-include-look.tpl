@@ -280,6 +280,27 @@
       </td>
         
       </tr>
+      {* --- Site Report Bar --- *}
+        <tr>
+        <td colspan="5">
+        <fieldset>
+            <legend><a href="#"><span>{tr}Site Report Bar{/tr}</span></a></legend>
+            <table class="admin">
+                <tr> 
+                    <td class="form"><label for="feature_site_report">{tr}Webmaster Report{/tr}:</label></td>
+                    <td><input type="checkbox" name="feature_site_report" id="feature_site_report"{if $prefs.feature_site_report eq 'y'} checked="checked"{/if} /></td>
+                </tr>
+               <tr> 
+                    <td class="form"><label for="feature_site_report_email">{tr}Webmaster Email{/tr}:</label></td>
+                    <td><input type="text" name="feature_site_report_email" id="feature_site_report_email" value="{$prefs.feature_site_report_email}" /> <i>{tr}Left blank to use the default sender email{/tr}</i></td>
+                </tr>
+				<tr> 
+                    <td class="form"><label for="feature_site_send_link">{tr}Send a link{/tr}:</label></td>
+                    <td><input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_send_link eq 'y'} checked="checked"{/if} /></td>
+                </tr>
+              </table>
+      </fieldset>
+      </td></tr> 
       <tr><td colspan="5">
       <fieldset>
 					<legend><a href="#"><span>{tr}Custom Site Footer{/tr}</span></a></legend>

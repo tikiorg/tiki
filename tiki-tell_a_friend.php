@@ -12,15 +12,29 @@ require_once ('tiki-setup.php');
 // To include a link in your tpl do
 //<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 
-if ($prefs['feature_tell_a_friend'] != 'y') {
-	$smarty->assign('msg', tra('This feature is disabled').': feature_tell_a_friend');
-	$smarty->display('error.tpl');
-	die;
-}
-if ($tiki_p_tell_a_friend != 'y') {
-	$smarty->assign('msg', tra('Permission denied'));
-	$smarty->display('error.tpl');
-	die;
+if (empty($_REQUEST['report'])) {
+	if ($prefs['feature_tell_a_friend'] != 'y') {
+		$smarty->assign('msg', tra('This feature is disabled').': feature_tell_a_friend');
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($tiki_p_tell_a_friend != 'y') {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
+ }
+if (!empty($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
+	if ($prefs['feature_site_report'] != 'y') {
+		$smarty->assign('msg', tra('This feature is disabled').': feature_site_report');
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($tiki_p_site_report != 'y') {
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 if (empty($_REQUEST['url'])) {
 	$smarty->assign('msg', tra('missing parameters'));
@@ -43,7 +57,16 @@ if (isset($_REQUEST['send'])) {
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 		 $errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 	}
-	$emails = explode(',', str_replace(' ','',$_REQUEST['addresses']));
+	if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
+		$emails = explode(',', str_replace(' ','',$_REQUEST['addresses']));
+	} else {
+		$email = !empty($prefs['feature_site_report_email'])? $prefs['feature_site_report_email']: (!empty($prefs['sender_email'])? $prefs['sender_email']: '' );
+		if (empty($email)) {
+			$errors[] = tra("The mail can't be sent. Contact the administrator");
+		}
+		$_REQUEST['addresses'] = $email;
+		$emails[] = $email;
+	}
 	foreach ($emails as $email) {
 		include_once('lib/registration/registrationlib.php');
 		if (function_exists('validate_email')) {
@@ -53,7 +76,10 @@ if (isset($_REQUEST['send'])) {
 			$ok = $ret[0];
 		}
 		if (!$ok) {
-			$errors[] = tra('One of the email addresses you typed is invalid').': '.$email;
+			if (isset($_REQUEST['report']) && $_REQUEST['report'] == 'y')
+				$errors[] = tra("The mail can't be sent. Contact the administrator");
+			else
+				$errors[] = tra('One of the email addresses you typed is invalid').': '.$email;
 		}
 	}
 	if (empty($_REQUEST['email'])) {
@@ -63,7 +89,7 @@ if (isset($_REQUEST['send'])) {
 		if (validate_email($_REQUEST['email'])) {
 			$from = $_REQUEST['email'];
 		} else {
-			$errors[] = tra('Invalid email');
+			$errors[] = tra('Invalid email').': '.$_REQUEST['email'];
 		}
 	}
 	if (!empty($_REQUEST['addresses']))
@@ -79,23 +105,34 @@ if (isset($_REQUEST['send'])) {
 		$mail->setFrom($from);
 		$mail->setHeader("Return-Path", "<$from>");
         $mail->setHeader("Reply-To",  "<$from>");
-		$txt = $smarty->fetch('mail/tellAFriend_subject.tpl');
-		$mail->setSubject($txt);
+		if (isset($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
+			$subject = tra('Report to the webmaster', $prefs['site_language']);
+		} else {
+			$subject = $smarty->fetch('mail/tellAFriend_subject.tpl');
+		}
 		$txt = $smarty->fetch('mail/tellAFriend.tpl');
+		$mail->setSubject($subject);
 		$mail->setText($txt);
 		$mail->buildMessage();
+		$ok = true;
 		foreach ($emails as $email) {
-			$mail->send(array($email));
+			$ok = $ok && $mail->send(array($email));
 		}
-		$smarty->assign_by_ref('sent', $_REQUEST['addresses']);
-		$smarty->assign('comment', '');
-		$smarty->assign('addresses', '');
-	} else {
-		$smarty->assign_by_ref('errors', $errors);
+		if ($ok) {
+			$smarty->assign_by_ref('sent', $_REQUEST['addresses']);
+			$smarty->assign('comment', '');
+			$smarty->assign('addresses', '');
+		} else {
+			$errors = tra("The mail can't be sent. Contact the administrator");
+		}
 	}
+	$smarty->assign_by_ref('errors', $errors);
 } else {
 	$smarty->assign_by_ref('name', $user);
 	$smarty->assign('email', $userlib->get_user_email($user));
+}
+if (!empty($_REQUEST['report'])) {
+	$smarty->assign_by_ref('report', $_REQUEST['report']);
 }
 ask_ticket('tell-a-friend');
 

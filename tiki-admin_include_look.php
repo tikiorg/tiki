@@ -52,7 +52,9 @@ if (isset($_REQUEST["looksetup"])) {
 	"pagination_icons",
 	"pagination_fastmove_links",
 	"use_context_menu_icon",
-	"use_context_menu_text"
+	"use_context_menu_text",
+	"feature_site_report",
+	"feature_site_send_link"
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -73,7 +75,8 @@ if (isset($_REQUEST["looksetup"])) {
 	"bot_logo_code",
 	"transition_style_ver",
 	"direct_pagination_max_middle_links",
-	"direct_pagination_max_ending_links"
+	"direct_pagination_max_ending_links",
+	"feature_site_report_email"
     );
 
     foreach ($pref_simple_values as $svitem) {

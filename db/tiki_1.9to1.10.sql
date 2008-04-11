@@ -1732,3 +1732,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 #2008-04-01 sylvieg
 UPDATE users_permissions SET admin=NULL WHERE permName='tiki_p_search';
 ALTER TABLE users_users ADD waiting char(1) default NULL;
+
+#2008-04-10 sylvieg
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
