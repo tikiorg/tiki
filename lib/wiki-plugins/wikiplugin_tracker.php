@@ -513,7 +513,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</td><td>";
 						if( isset($f['options_array'][1]) ) {
-							$back.= '<textarea cols='.$f['options_array'][1].' rows='.$f['options_array'][2].' name="track['.$f["fieldId"].']" wrap="soft">'.$f['value'].'</textarea>';
+							$back.= '<textarea cols="'.$f['options_array'][1].'" rows="'.$f['options_array'][2].'" name="track['.$f["fieldId"].']" wrap="soft">'.$f['value'].'</textarea>';
 						} else {
 							$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft">'.$f['value'].'</textarea>';
 						}
