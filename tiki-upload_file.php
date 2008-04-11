@@ -77,7 +77,11 @@ if (!empty($_REQUEST['fileId'])) {
 		die;
 	}
 	if (isset($_REQUEST['lockedby']) && $fileInfo['lockedby'] != $_REQUEST['lockedby']) {
-		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
+		if (empty($fileInfo['lockedby'])) {
+			$smarty->assign('msg', tra(sprintf('The file has been unlocked meanwhile')));
+		} else {			
+			$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
+		}
 		$smarty->display('error.tpl');
 		die;
 	}
