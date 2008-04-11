@@ -13,7 +13,7 @@ Add a value in first check when you create a new admin page. *}
   {assign var="include" value="list-sections"}
 {/if}
 {if $include != "list-sections"}
-  <div class="adminanchors" style="background-color: #303030; color: white; padding: 3px">{include file="tiki-admin-include-anchors.tpl"}</div>
+  <div class="simplebox adminanchors" >{include file="tiki-admin-include-anchors.tpl"}</div>
 {/if}
 
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}

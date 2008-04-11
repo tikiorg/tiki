@@ -2930,7 +2930,7 @@ $lang=Array(
 "New Window" => "Nouvelle fenêtre (n)",
 "inline frame" => "cadre dans la fenêtre (i)",
 "To add/remove FAQs, look for \"Admin FAQs\" under \"FAQs\" on the application menu, or" => "Pour créer/supprimer une FAQ, allez dans \"Administrer les FAQs\" dans \"FAQs\" dans le menu application, ou",
-"Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site." => "Merci d'aller voir <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>l'évaluation de chaque fonctionnalité</a> on Tiki's developer site.",
+"Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site." => "Merci d'aller voir <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>l'évaluation de chaque fonctionnalité</a> sur le site de développement de TikiWiki.",
 "Major Features" => "Fonctionnalités Principales",
 "Featured Help" => "Aide Liens vedette",
 "Spreadsheet" => "Tableur",
@@ -6797,5 +6797,9 @@ $lang=Array(
 "Display Properties" => "Propriétés d'affichage",
 "Private Gallery" => "Galerie privée",
 "Property <b>{\$fgp_name}</b> Changed" => "Propriété <b>{\$fgp_name}</b> Modifiée",
+"Site-wide" => "Global",
+"Technical" => "Technique",
+"UI enhancement" => "Améliorations UI",
+"Major" => "Principal",
 "###end###"=>"###end###");
 ?>
