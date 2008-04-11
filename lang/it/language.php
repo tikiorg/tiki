@@ -6439,6 +6439,7 @@ $lang=Array(
 "Edit this tracker" => "Modifica questa Nota",
 "View this tracker items" => "Visualizza le voci di questa Nota",
 "Edit tracker fields" => "Modifica i campi della Nota",
+"Edit tracker field" => "Modifica i campi della Nota",
 "Is column visible when listing tracker items?" => "Vuoi che la colonna sia visibile quando vengono elencate le voci della Nota?",
 "Column links to edit/view item?" => "Vuoi che la colonna linki alla  visualizzazione/modifica della voce?",
 "Tracker fields" => "Campi della Nota",

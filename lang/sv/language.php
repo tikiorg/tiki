@@ -5998,6 +5998,7 @@ $lang=Array(
 "Edit this tracker" => "Redigera denna ärendeföljare",
 "View this tracker items" => "Visa denna ärendeföljares poster",
 "Edit tracker fields" => "Redigera ärendeföljarfält",
+"Edit tracker field" => "Redigera ärendeföljarfält",
 "Is column visible when listing tracker items?" => "Är kolumnen synlig när man listar ärendeföljarposter",
 "Column links to edit/view item?" => "Kolumnlänkar till redigera/visa post?",
 "Tracker fields" => "Ärendeföljarfält",

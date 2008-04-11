@@ -6795,6 +6795,7 @@ $lang=Array(
 "Options (if apply)" => "Opções (se for o caso)",
 "Admin tracker" => "Administrar",
 "Edit tracker fields" => "Editar campos",
+"Edit tracker field" => "Editar campos",
 "Is column visible when listing tracker items?" => "Visível durante listagem de itens do acompanhamento?",
 "Column links to edit/view item?" => "Clique na coluna para editar/visualizar o item?",
 "Tracker fields" => "Campos do acompanhamento",

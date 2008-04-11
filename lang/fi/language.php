@@ -5434,6 +5434,7 @@ $lang=Array(
 "Edit this tracker" => "Muokkaa tätä kortistoa",
 "View this tracker items" => "Näytä tämän kortiston osat",
 "Edit tracker fields" => "Muokkaa kortiston kenttiä",
+"Edit tracker field" => "Muokkaa kortiston kenttiä",
 "Is column visible when listing tracker items?" => "Onko palsta näkyvä kun listataan kortiston osia?",
 "Column links to edit/view item?" => "Palstan linkit muuta/näytä osa?",
 "Column is searchable?" => "Palsta on etsittävissä?",

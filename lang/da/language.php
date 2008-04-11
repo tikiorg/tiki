@@ -6093,6 +6093,7 @@ $lang=Array(
 "Edit this tracker" => "Rediger denne agent",
 "View this tracker items" => "Se emner fra denne agent",
 "Edit tracker fields" => "Rediger agent-felter",
+"Edit tracker field" => "Rediger agent-felter",
 "Is column visible when listing tracker items?" => "Er kollonne synlig ved fremvisning af agent emner?",
 "Column links to edit/view item?" => "Kolonnelinks til at redigere/vise emne?",
 "Tracker fields" => "Agent-felter",

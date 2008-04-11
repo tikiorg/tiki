@@ -6193,6 +6193,7 @@ $lang=Array(
 "Edit this tracker" => "Редактировать этот трекер",
 "View this tracker items" => "Показать содержимое трекера",
 "Edit tracker fields" => "Редактировать поля трекера",
+"Edit tracker field" => "Редактировать поля трекера",
 "Is column visible when listing tracker items?" => "Видно ли колонку в списке элементов трекера?",
 "Column links to edit/view item?" => "Колонка ссылается на правку/просмотр элемента?",
 "Tracker fields" => "Поля трекера",

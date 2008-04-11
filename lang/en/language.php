@@ -3833,6 +3833,7 @@ $lang=Array(
 // "Edit this tracker" => "Edit this tracker",
 // "View this tracker items" => "View this tracker items",
 // "Edit tracker fields" => "Edit tracker fields",
+// "Edit tracker field" => "Edit tracker fields",
 // "Is column visible when listing tracker items?" => "Is column visible when listing tracker items?",
 // "Column links to edit/view item?" => "Column links to edit/view item?",
 // "Multilingual content" => "Multilingual content",

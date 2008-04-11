@@ -6370,6 +6370,7 @@ $lang=Array(
 "Edit this tracker" => "このトラッカーを変更する",
 "View this tracker items" => "このトラッカーのアイテムを見る",
 "Edit tracker fields" => "トラッカー・フィールドの変更",
+"Edit tracker field" => "トラッカー・フィールドの変更",
 "Is column visible when listing tracker items?" => "トラッカー・アイテム一覧時、列を表示しますか？",
 "Column links to edit/view item?" => "この列は「編集・閲覧」へリンクしますか？",
 "Tracker fields" => "トラッカー・フィールド",

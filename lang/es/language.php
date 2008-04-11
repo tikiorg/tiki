@@ -5290,6 +5290,7 @@ $lang=Array(
 "Edit this tracker" => "Editar tracker",
 "View this tracker items" => "Ver elementos del tracker",
 "Edit tracker fields" => "Editar campos del tracker ",
+"Edit tracker field" => "Editar campos del tracker ",
 "Is column visible when listing tracker items?" => "Columna visible cuando se listan items?",
 "Column links to edit/view item?" => "Enlaces en columna para editar/ver el item?",
 "Column is searchable?" => "Columna es buscable?",

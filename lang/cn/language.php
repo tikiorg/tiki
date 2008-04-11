@@ -6427,6 +6427,7 @@ $lang=Array(
 "Edit this tracker" => "编辑此跟踪",
 "View this tracker items" => "浏览此跟踪项目",
 "Edit tracker fields" => "编辑跟踪列",
+"Edit tracker field" => "编辑跟踪列",
 "Is column visible when listing tracker items?" => "当列出跟踪项目时可否看见列?",
 "Column links to edit/view item?" => "列是否链接到 编辑/查看 项目?",
 "Tracker fields" => "跟踪列",

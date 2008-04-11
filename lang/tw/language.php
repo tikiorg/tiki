@@ -6203,6 +6203,7 @@ $lang=Array(
 "Edit this tracker" => "編輯此追蹤",
 "View this tracker items" => "瀏覽此追蹤項目",
 "Edit tracker fields" => "編輯追蹤欄位",
+"Edit tracker field" => "編輯追蹤欄位",
 "Is column visible when listing tracker items?" => "當列出追蹤項目時可否看見欄位?",
 "Column links to edit/view item?" => "欄位是否連結到 編輯/觀看 項目?",
 "Tracker fields" => "追蹤欄位",

@@ -6378,6 +6378,7 @@ $lang=Array(
 "Edit this tracker" => "Edita aquest formulari",
 "View this tracker items" => "Visualitza els punts d'aquest formulari",
 "Edit tracker fields" => "Edita els camps del formulari",
+"Edit tracker field" => "Edita els camps del formulari",
 "Is column visible when listing tracker items?" => "És visible la columna quan es llisten els punts dels formulari?",
 "Column links to edit/view item?" => "Enllaços de columna per editar/veure punt?",
 "Column is searchable?" => "La columna és cercable?",

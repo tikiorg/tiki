@@ -6374,6 +6374,7 @@ $lang=Array(
 "Edit this tracker" => "עריכת עוקב",
 "View this tracker items" => "צפיה בפריטים בעוקב זה",
 "Edit tracker fields" => "עריכת שדות עוקב",
+"Edit tracker field" => "עריכת שדות עוקב",
 "Is column visible when listing tracker items?" => "השדה מוצג ברשימת הפריטים בעוקב",
 "Column links to edit/view item?" => "שדה ראשי המקושר לפעולת צפיה/עריכה",
 "Tracker fields" => "שדות עוקב",

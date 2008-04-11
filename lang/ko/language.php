@@ -6506,6 +6506,7 @@ $lang=Array(
 "Edit this tracker" => "수정",
 "View this tracker items" => "모든 아이템",
 "Edit tracker fields" => "필드 추가",
+"Edit tracker field" => "필드 추가",
 "Is column visible when listing tracker items?" => "트래커 아이템 표시할때 이 필드 표시 여부",
 "Tracker fields" => "트래커 필드들",
 "isMain" => "메인 여부",

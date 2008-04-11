@@ -5431,6 +5431,7 @@ $lang=Array(
 "Edit this tracker" => "Úprava tohoto trackeru",
 "View this tracker items" => "Zobrazit this tracker položky",
 "Edit tracker fields" => "Úprava položek trackeru",
+"Edit tracker field" => "Úprava položek trackeru",
 "Is column visible when listing tracker items?" => "Je sloupec viditelný when vypisuji položky trackeru?",
 "Column links to edit/view item?" => "Sloupec odkazuje na editaci/zobrazení položky?",
 "Column is searchable?" => "Lze ve sloupci vyhledávat?",

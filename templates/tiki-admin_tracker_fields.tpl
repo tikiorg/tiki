@@ -20,7 +20,11 @@
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
 </div>
 
-<h2>{tr}Edit tracker fields{/tr}</h2>
+{if $fieldId eq "0"}
+<h2>{tr}New tracker field{/tr}</h2>
+{else}
+<h2>{tr}Edit tracker field{/tr}</h2>
+{/if}
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
 {if $max and $max ne $prefs.maxRecords}<input type="hidden" name="max" value="{$max|escape}" />{/if}

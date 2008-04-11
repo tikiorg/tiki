@@ -6275,6 +6275,7 @@ $lang=Array(
 "Edit this tracker" => "Mekem senis long disfala tracker",
 "View this tracker items" => "Lukluk long olketa item blong disfala tracker",
 "Edit tracker fields" => "Mekem senis long olketa field blong tracker",
+"Edit tracker field" => "Mekem senis long olketa field blong tracker",
 "Is column visible when listing tracker items?" => "Hao, colum hemi soaot taem hemi listim kam olketa item blong tracker?",
 "Column links to edit/view item?" => "Olketa link blong colum fo lukluk/mekem senis long item?",
 "Tracker fields" => "Olketa field blong tracker",

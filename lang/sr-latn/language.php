@@ -5855,6 +5855,7 @@ $lang=Array(
 "Edit this tracker" => "Izmeni ovaj traker",
 "View this tracker items" => "Vidi zapise ovog trakera",
 "Edit tracker fields" => "Izmeni polja u trakeru",
+"Edit tracker field" => "Izmeni polja u trakeru",
 "Is column visible when listing tracker items?" => "Da li je kolona vidljiva na listi zapisa?",
 "Column links to edit/view item?" => "Kolona vodi ka izmeni/pregledu zapisa?",
 "Tracker fields" => "Polja trakera",

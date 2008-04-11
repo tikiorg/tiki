@@ -5353,6 +5353,7 @@ $lang=Array(
 "Edit this tracker" => "ويرايش اين tracker",
 "View this tracker items" => "نمايش اقلام اين tracker",
 "Edit tracker fields" => "ويرايش ستون‌هاي tracker",
+"Edit tracker field" => "ويرايش ستون‌هاي tracker",
 "Is column visible when listing tracker items?" => "آيا اين ستون هنگام نمايش فهرست اقلام tracker نمايش داده شود؟",
 "Column links to edit/view item?" => "از طريق اين ستون بتوان فقره را ويرايش كرد؟",
 "Column is searchable?" => "ستون قابل جستجو باشد؟",

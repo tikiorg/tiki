@@ -6051,6 +6051,7 @@ $lang=Array(
 "Edit this tracker" => "Upraviť tento prehľad",
 "View this tracker items" => "Zobraziť položky tohoto prehľade",
 "Edit tracker fields" => "Upraviť prehľadové polia",
+"Edit tracker field" => "Upraviť prehľadové polia",
 "Tracker fields" => "Tracker polia",
 "Id" => "ID",
 "Create/edit trackers" => "Vytvoriť/upraviť prehľady",
