@@ -85,6 +85,11 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	if ($gal_info['lockable'] == 'y' && empty($fileInfo['lockedby']) && $tiki_p_admin_file_galleries != 'y') {
+		$smarty->assign('msg', tra('You must lock the file before editing it'));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 
 	
