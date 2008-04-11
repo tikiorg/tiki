@@ -6886,6 +6886,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki')
+go
+
+
 -- --------------------------------------------------------
 
 --

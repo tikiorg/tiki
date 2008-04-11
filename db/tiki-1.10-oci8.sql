@@ -5445,6 +5445,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
