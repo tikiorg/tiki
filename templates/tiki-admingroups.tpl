@@ -134,8 +134,8 @@ class="prevnext">{tr}All{/tr}</a>
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
 <tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
-<tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
-<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}<br />{tr}The group will have all the permissions of the included groups{/tr}</i></td><td>
+<tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc" style="width:95%">{$groupdesc}</textarea></td></tr>
+<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}</td><td>
 {if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
 {foreach key=gr item=yn from=$inc}{if $yn eq 'y'}{$gr|escape} {/if}{/foreach}<br />
 {/if}
@@ -145,12 +145,18 @@ class="prevnext">{tr}All{/tr}</a>
 <option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
 {/foreach}
 </select>
+<br />&quot;{$groupname}&quot; {tr}will have all the permissions of the included groups{/tr}.
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
+
 </td></tr>
-<tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:<br />
-({tr}Use wiki page name or full URL{/tr})<br />
-{tr}To use a relative link, use ex.{/tr}: <i>http:tiki-forums.php</i><br />
-<a href="tiki-admin.php?page=general">{tr}More Links{/tr}</a> 
-</label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
+<tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
+</label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
+<br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relataive links (such as <em>http:tiki-forums.php</em>).{/tr}
+{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:left" align="left"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</div>{/if}
+
+</td></tr>
 {if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td><label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group{/tr}:</label>
   	 </td><td>
@@ -166,7 +172,7 @@ class="prevnext">{tr}All{/tr}</a>
   	 <tr class="formcolor"><td><label for="groups_theme">{tr}Group Theme{/tr}:</label>
   	 </td><td>
   	 <select name="theme" id="groups_theme" multiple="multiple" size="4">
-  	 <option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr}</option>
+  	 <option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr} ({tr}Use site default{/tr})</option>
   	             {section name=ix loop=$av_themes}
   	               <option value="{$av_themes[ix]|escape}"
   	                 {if $grouptheme eq $av_themes[ix]}selected="selected"{/if}>
