@@ -153,7 +153,7 @@ class="prevnext">{tr}All{/tr}</a>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
-<br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relataive links (such as <em>http:tiki-forums.php</em>).{/tr}
+<br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
 {if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:left" align="left"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</div>{/if}
 
 </td></tr>
