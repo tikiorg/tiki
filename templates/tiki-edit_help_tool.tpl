@@ -69,9 +69,7 @@ function taginsert(area_name,tagid)
     {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
   {/if}
     {section name=qtg loop=$quicktags}
-      <a title="{tr interactive='n'}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;">
-        <img src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' title='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' border='0' />
-      </a>
+      <a title="{tr interactive='n'}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');" onclick="needToConfirm = false;"><img src='{$quicktags[qtg].tagicon}' alt='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' title='{tr interactive="n"}{$quicktags[qtg].taglabel}{/tr}' border='0' /></a>
       {if $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
     {/section}
     <a title="{tr}special chars{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');">
