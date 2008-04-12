@@ -11,8 +11,8 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 {/foreach}
 {/if}
 
-{if $show_filters eq 'y'}
 <td style="width:100%;text-align:right;">
+{if $show_filters eq 'y'}
 <script type="text/javascript">
 fields = new Array({$cnt});
 {assign var=c value=0}
@@ -32,9 +32,9 @@ fields[{$c}] = '{$fid}';
 {/if}
 {/foreach}
 </select>
-</td>
 {/if}
-<td class="formcolor">
+</td>
+<td>
 {assign var=cnt value=0}
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
