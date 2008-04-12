@@ -14,35 +14,44 @@
 </div>
 </div>
 <br />
-
+<h2>{tr}PHP settings{/tr}</h2>
 <table class="normal">
-<tr><td colspan="4" class="heading">{tr}PHP settings{/tr}</td></tr>
-<tr><td class="heading">{tr}PHP variable{/tr}</td>
-<td class="heading">{tr}Setting{/tr}</td>
-<td class="heading">{tr}Risk Factor{/tr}</td>
-<td class="heading">{tr}Explanation{/tr}</td></tr>
+<tr><th class="heading">{tr}PHP variable{/tr}</th>
+<th class="heading">{tr}Setting{/tr}</th>
+<th class="heading">{tr}Risk Factor{/tr}</th>
+<th class="heading">{tr}Explanation{/tr}</th></tr>
+{cycle values="even,odd" print=false}
 {foreach from=$phpsettings key=key item=item}
-<tr><td class="form">{$key}</td>
-<td class="form">{$item.setting}</td>
-<td class="form">{$item.risk}</td>
-<td class="form">{$item.message}</td></tr>
+<tr><td class="{cycle advance=false}">{$key}</td>
+<td class="{cycle advance=false}">{$item.setting}</td>
+<td class="{cycle advance=false}">
+{if $item.risk eq 'safe'}{icon _id=accept.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'risky'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
+{/if}
+{$item.risk}</td>
+<td class="{cycle advance=true}">{$item.message}</td></tr>
 {/foreach}
+{if !$phpsettings}<tr><td colspan="4" class="odd">{tr}No records found.{/tr}</td></tr>
+{/if}
 </table>
 <br />
+<h2>{tr}Tikiwiki settings{/tr}</h2>
 <table class="normal">
-<tr><td colspan="4" class="heading">{tr}Tikiwiki settings{/tr}</td></tr>
-<tr><td class="heading">{tr}Tiki variable{/tr}</td>
-<td class="heading">{tr}Setting{/tr}</td>
-<td class="heading">{tr}Risk Factor{/tr}</td>
-<td class="heading">{tr}Explanation{/tr}</td></tr>
+<tr><th class="heading">{tr}Tiki variable{/tr}</th>
+<th class="heading">{tr}Setting{/tr}</th>
+<th class="heading">{tr}Risk Factor{/tr}</th>
+<th class="heading">{tr}Explanation{/tr}</th></tr>
 {foreach from=$tikisettings key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.setting}</td>
 <td class="form">{$item.risk}</td>
 <td class="form">{$item.message}</td></tr>
 {/foreach}
+{if !$tikisettings}<tr><td colspan="4" class="odd">{tr}No records found.{/tr}</td></tr>
+{/if}
 </table>
 <br />
+<h2>{tr}Security checks{/tr}</h2>
 <div class="form">
 <a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a><br />
 {tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}<br />
