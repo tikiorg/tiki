@@ -125,7 +125,7 @@
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
-{if $galleries}
+{if $galleries or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -152,7 +152,7 @@
 <input type="submit" value="{tr}Filter{/tr}" />
 </form>
 {/if}
-
+<br  />
 </div>
 
 <table class="normal">
@@ -221,9 +221,7 @@
   {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
     {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-      <a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">
-        {icon _id='page_edit'}
-      </a>
+      <a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='page_edit'}</a>
     {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}
