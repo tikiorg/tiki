@@ -45,7 +45,7 @@
 {elseif $viewmode eq "month"}
 <a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}Month{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$monthafter}" title="{tr}Month{/tr}&raquo;" class="next">&raquo;</a>
-{$daystart|tiki_date_format:"%B"}
+{$daystart|tiki_date_format:"%B %Y"}
 {elseif $viewmode eq "quarter"}
 <a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}Quarter{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$quarterafter}" title="{tr}Quarter{/tr} &raquo;" class="next">&raquo;</a>
