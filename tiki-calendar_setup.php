@@ -281,7 +281,7 @@ if ( $calendarViewMode == 'month' ||
 		$viewstart_y = TikiLib::date_format("%Y", $viewstart);
 
 		// Start in previous month if $wd is greater than the current day (relative to th current month)
-		if ( $viewstart_d < $wd ) {
+		if ( $viewstart_d <= $wd ) {
 
 			// TikiLib::make_time() used with timezones doesn't support month = 0
 			if ( $viewstart_m == 1 ) {
@@ -293,7 +293,7 @@ if ( $calendarViewMode == 'month' ||
 
 			// TikiLib::make_time() used with timezones doesn't support day = 0
 			// This supposes that $viewstart's day == 1, as defined above
-			$viewstart_d = Date_Calc::daysInMonth($viewstart_m, $viewstart_y) - ( $wd - 1 );
+			$viewstart_d = Date_Calc::daysInMonth($viewstart_m, $viewstart_y) - ( $wd - $viewstart_d );
 
 		} else {
 			$viewstart_d -= $wd;
