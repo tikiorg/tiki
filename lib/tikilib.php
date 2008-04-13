@@ -2102,7 +2102,7 @@ function add_pageview() {
 	$mid = '';
 	if ( $find ) {
 		$findesc = '%'.$find.'%';
-		$mid = ' (upper(`name`) LIKE upper(?) OR upper(`description`) LIKE upper(?) OR upper(`filename`) LIKE upper(?))';
+		$mid = ' (upper(tab.`name`) LIKE upper(?) OR upper(tab.`description`) LIKE upper(?) OR upper(tab.`filename`) LIKE upper(?))';
 		array_push($bindvars, $findesc, $findesc, $findesc);
 	}
 
