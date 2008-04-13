@@ -64,7 +64,13 @@ if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences
 	// If the display timezone is not known ...
 	if ( isset($_COOKIE['local_tz']) ) {
 		//   ... we try to use the timezone detected by javascript and stored in cookies
-		$prefs['display_timezone'] = $_COOKIE['local_tz'];
+		if ( $_COOKIE['local_tz'] == 'CEST' ) {
+			// CEST is not recognized as a DST timezone (with daylightsavings) by PEAR Date
+			//  ... So use one equivalent timezone name
+			$prefs['display_timezone'] = 'Europe/Paris';
+		} else {
+			$prefs['display_timezone'] = $_COOKIE['local_tz'];
+		}
 	} else {
 		// ... and we fallback to the server timezone if the cookie value is not available
 		$prefs['display_timezone'] = $prefs['server_timezone'];
