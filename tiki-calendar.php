@@ -220,7 +220,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
     }
     $cell[$i][$w]['day'] = $dday;
 
-    If ($calendarViewMode == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
+    if ($calendarViewMode == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
       $cell[$i][$w]['focus'] = true;
     } else {
       $cell[$i][$w]['focus'] = false;
