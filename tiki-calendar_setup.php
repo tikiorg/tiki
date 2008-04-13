@@ -276,20 +276,28 @@ if ( $calendarViewMode == 'month' ||
 	// $viewstart -= $wd * $d;
 	if ( $wd > 0 ) {
 
+		$viewstart_d = TikiLib::date_format("%d", $viewstart);
 		$viewstart_m = TikiLib::date_format("%m", $viewstart);
 		$viewstart_y = TikiLib::date_format("%Y", $viewstart);
 
-		// TikiLib::make_time() used with timezones doesn't support month = 0
-		if ( $viewstart_m == 1 ) {
-			$viewstart_m = 12;
-			$viewstart_y--;
-		} else {
-			$viewstart_m--;
-		}
+		// Start in previous month if $wd is greater than the current day (relative to th current month)
+		if ( $viewstart_d < $wd ) {
 
-		// TikiLib::make_time() used with timezones doesn't support day = 0
-		// This supposes that $viewstart's day == 1, as defined above
-		$viewstart_d = Date_Calc::daysInMonth($viewstart_m, $viewstart_y) - ( $wd - 1 );
+			// TikiLib::make_time() used with timezones doesn't support month = 0
+			if ( $viewstart_m == 1 ) {
+				$viewstart_m = 12;
+				$viewstart_y--;
+			} else {
+				$viewstart_m--;
+			}
+
+			// TikiLib::make_time() used with timezones doesn't support day = 0
+			// This supposes that $viewstart's day == 1, as defined above
+			$viewstart_d = Date_Calc::daysInMonth($viewstart_m, $viewstart_y) - ( $wd - 1 );
+
+		} else {
+			$viewstart_d -= $wd;
+		}
 
 		$viewstart = TikiLib::make_time(0, 0, 0, $viewstart_m, $viewstart_d, $viewstart_y);
 	}
