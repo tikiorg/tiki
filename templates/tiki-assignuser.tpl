@@ -25,7 +25,7 @@
 {foreach from=$user_info.groups item=what key=grp}
 {if $what eq 'included'}<i>{/if}{$grp}{if $what eq 'included'}</i>{/if}
 {if $grp != "Anonymous" && $grp != "Registered"}
-(<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title="remove">x</a>)
+<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title="Remove">{icon _id='cross' alt='{tr}Remove{/tr}' style="vertical-align:middle"}</a>{if !user_info.groups.last},{/if}
 {/if}&nbsp;&nbsp;
 {/foreach}
 </td></tr>
@@ -45,7 +45,7 @@
 </form>
 </td></tr>
 </table>
-
+<br />
 <div align="left"><h2>{tr}Assign User {$assign_user} to Groups{/tr}</h2></div>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -63,9 +63,9 @@
 
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th class="heading"><a class="tableheading" href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
@@ -78,7 +78,7 @@
 {if $users[user].what ne 'real'}
 <a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}" title="{tr}Assign User to Group{/tr}">{icon _id='accept' alt='{tr}Assign{/tr}'}</a>
 {elseif $users[user].groupName ne "Registered"}
-<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign">{icon _id='cross' alt='{tr}Unassign{/tr}'}</a>
+<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign">{icon _id='delete' alt='{tr}Unassign{/tr}'}</a>
 {/if}
 </td></tr>
 {/if}
