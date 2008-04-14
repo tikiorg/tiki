@@ -36,6 +36,15 @@ if (!empty($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
 		die;
 	}
 }
+if (empty($_REQUEST['url']) && !empty($_SERVER['HTTP_REFERER'])) {
+	$u = parse_url($_SERVER['HTTP_REFERER']);
+	if ($u['host'] != $_SERVER['SERVER_NAME']) {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$_REQUEST['url'] = $_REQUEST['HTTP_REFERER'];
+}
 if (empty($_REQUEST['url'])) {
 	$smarty->assign('msg', tra('missing parameters'));
 	$smarty->display('error.tpl');
