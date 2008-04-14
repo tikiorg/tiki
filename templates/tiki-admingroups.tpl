@@ -145,7 +145,7 @@ class="prevnext">{tr}All{/tr}</a>
 <option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
 {/foreach}
 </select>
-<br />&quot;{$groupname}&quot; {tr}will have all the permissions of the included groups{/tr}.
+<br />&quot;{$groupname|default:"Group"}&quot; {tr}will have all the permissions of the included groups{/tr}.
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
@@ -154,7 +154,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
 <br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
-{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:left" align="left"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</div>{/if}
+{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:middle"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</div>{/if}
 
 </td></tr>
 {if $prefs.feature_categories eq 'y'}
