@@ -1933,7 +1933,7 @@ function get_included_groups($group, $recur=true) {
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
 	global $tikilib, $cachelib, $patterns, $prefs;
 	
-	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user))
+	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered')
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()
