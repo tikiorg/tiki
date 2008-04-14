@@ -502,7 +502,9 @@ class MultilingualLib extends TikiLib {
 				LEFT JOIN tiki_pages_translation_bits self
 					ON bits.translation_bit_id = self.original_translation_bit AND self.page_id = ?
 			WHERE
-				a.objId = ?
+				a.type = 'wiki page'
+				AND b.type = 'wiki page'
+				AND a.objId = ?
 				AND bits.original_translation_bit IS NULL
 				AND self.original_translation_bit IS NULL
 				AND $conditions
