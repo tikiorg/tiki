@@ -3,7 +3,7 @@
 <div class="navbar">
 <a href="{$referer}" class="linkbut">{tr}Back{/tr}</a>
 </div>
-
+<br />
 <h2>{tr}Current permissions for this object{/tr}</h2>
 {if $filegals_manager ne 'y'}
 <div class="rbox" name="tip">
@@ -13,10 +13,15 @@
 </div>
 </div>
 {/if}
-
+<br />
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">
 <table class="normal">
-<tr><td class="heading"></td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td><td class="heading">{tr}Action{/tr}</td></tr>
+<tr><th class="heading">{if $page_perms}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write('<input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
+	/* ]]> */</script>
+{/if}</th>
+<th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Permission{/tr}</th><th class="heading">{tr}Action{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
 <tr>
@@ -27,23 +32,15 @@
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
 {/section}
-{if $page_perms}
-	<tr><td>
-	<script type="text/javascript"> /* <![CDATA[ */
-	document.write('<tr><td colspan="4"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
-	/* ]]> */</script>
-	</td></tr>
-{/if}
 </table>
-<div>
+{if $page_perms}<div>
 {tr}Perform action with checked:{/tr} 
 <input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 {if isset($inStructure)}
 {tr}and also to all pages of the sub-structure:{/tr} <input name="removestructure" type="checkbox" />
 {/if}
-</div>
-
+</div>{/if}
+<br />
 <h2>{tr}Assign permissions to this object{/tr}</h2>
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
@@ -87,7 +84,7 @@
 </table>
 </div>
 </form>
-
+<br />
 <h2>{tr}Current permissions for categories that this object belongs to{/tr}:</h2>
 {if !empty($page_perms) && !empty($categ_perms)}
 <div class="rbox" name="tip">
@@ -95,7 +92,7 @@
 <div class="rbox-data" name="tip">{tr}These permissions do not apply. Special permissions apply.{/tr}
 </div>
 {/if}<table class="normal">
-<tr><td class="heading">{tr}Category{/tr}</td><td class="heading">{tr}Group{/tr}</td><td class="heading">{tr}Permission{/tr}</td></tr>
+<tr><th class="heading">{tr}Category{/tr}</th><th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Permission{/tr}</th></tr>
 {cycle print=false values="even,odd"}
 {section  name=x loop=$categ_perms}
 	{section name=y loop=$categ_perms[x]}
@@ -106,6 +103,6 @@
 </tr>
 	{/section}
 {sectionelse}
-<tr><td colspan="3">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
+<tr><td colspan="3" class="odd">{if empty($page_perms)}{tr}No category permissions; global permissions apply{/tr}{else}{tr}No category permissions; special permissions apply{/tr}{/if}</td></tr>
 {/section}
 </table>
