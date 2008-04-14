@@ -16,7 +16,9 @@
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 {include file=tiki-mytiki_bar.tpl}
 {/if}
+<br />
 <h2>{tr}Select a news server to browse{/tr}</h2>
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -28,10 +30,11 @@
    </td>
 </tr>
 </table>
+{/if}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></td>
-<td  class="heading">&nbsp;</td>
+<th class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -44,6 +47,8 @@
 	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">{icon _id='cross' alt='{tr}Del{/tr}' title='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="2">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">
@@ -67,7 +72,7 @@
 </div>
 
 
-<h2>{tr}Add or edit a news server{/tr}</h2>
+<h2>{if $info.server|escape eq ''}{tr}Add a news server{/tr}{else}{tr}Edit news server{/tr}{/if}</h2>
 <form action="tiki-newsreader_servers.php" method="post">
 <input type="hidden" name="serverId" value="{$serverId|escape}" />
 <table class="normal">

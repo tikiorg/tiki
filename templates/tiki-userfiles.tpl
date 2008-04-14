@@ -26,16 +26,15 @@
     <small>{tr}Used space:{/tr} {tr}no limit for admin{/tr}</small>
   {/if}
 </div>
-
+<br />
 <h2>{tr}User Files{/tr}</h2>
 <form action="tiki-userfiles.php" method="post">
-<input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <table class="normal">
 <tr>
-<td style="text-align:center;" class="heading">&nbsp;</td>
-<td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
-<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></td>
+<th style="text-align:center;" class="heading">&nbsp;</th>
+<th class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
+<th style="text-align:right;" class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -43,12 +42,16 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="userfile[{$channels[user].fileId}]" />
 </td>
-<td class="{cycle advance=false}">{$channels[user].filename|iconify}<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">{$channels[user].filename}</a></td>
+<td class="{cycle advance=false}">{$channels[user].filename|iconify} <a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">{$channels[user].filename}</a></td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td style="text-align:right;" class="{cycle}">{$channels[user].filesize|kbsize}</td>
 </tr>
+{sectionelse}<tr><td class="odd" colspan="4">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+{if $channels|@count ge '1'}
+{tr}Perform action with checked:{/tr} <input type="submit" name="delete" value="{tr}Delete{/tr}" />
+{/if}
 </form>
 <div class="mini">
 <div align="center">
@@ -69,7 +72,7 @@
 {/if}
 </div>
 </div>
-
+<br />
 <h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-userfiles.php" method="post">
   <table class="normal">

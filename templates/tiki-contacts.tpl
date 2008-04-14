@@ -61,15 +61,15 @@
 {/section}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
+<th class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></th>
 {foreach from=$exts item=ext key=k}{if $ext.show eq 'y'}
-<td class="heading"><a class="tableheading">{$ext.tra}</a></td>
+<th class="heading"><a class="tableheading">{$ext.tra}</a></th>
 {/if}{/foreach}
-{if $view eq 'list'}<td class="heading">{tr}Groups{/tr}</td>{/if}
-<td class="heading">{tr}Action{/tr}</td>
+{if $view eq 'list'}<th class="heading">{tr}Groups{/tr}</th>{/if}
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach key=k item=channels from=$all}
@@ -100,6 +100,7 @@ title="{tr}Delete{/tr}">{icon _id='cross_admin' alt='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
 {/section}
+{else}<tr class="odd"><td>{tr}No records found.{/tr}</td></tr>
 {/if}
 {/foreach}
 </table>
