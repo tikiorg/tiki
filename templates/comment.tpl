@@ -3,7 +3,7 @@
 <div class="post {$thread_style}" id="threadId{$comment.threadId}">
 	<div class="inner"><span class="corners-top"><span></span></span>
 
-	<div class="postbody">
+	<div class="clearfix postbody">
 		{include file="comment-header.tpl"}
 		{include file="comment-body.tpl"}
 	</div>
