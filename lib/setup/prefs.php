@@ -767,6 +767,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_breadcrumbs'] = 'n';
 	$prefs['feature_siteloclabel'] = 'y';
 	$prefs['feature_sitesearch'] = 'y';
+	$prefs['feature_site_login'] = 'n';
 	$prefs['feature_sitemenu'] = 'n';
 	$prefs['feature_topbar_version'] = 'y';
 	$prefs['feature_topbar_date'] = 'y';

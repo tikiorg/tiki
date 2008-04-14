@@ -38,6 +38,7 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_sitenav",
 	"feature_sitead",
 	"feature_sitesearch",
+	"feature_site_login",
 	"feature_sitemenu",
 	"feature_topbar_version",
 	"feature_topbar_date",

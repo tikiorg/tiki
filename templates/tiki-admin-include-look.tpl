@@ -171,7 +171,17 @@
                                 </tr>
                                 
                                 </table>
-</fieldset>                                
+        </fieldset>
+	{* --- Site Login Bar --- *}
+	   <fieldset>
+			<legend><a href="#"><span>{tr}Site Login Bar{/tr}</span></a></legend>
+			<table class="admin">
+				<tr> 
+					<td class="form"><label for="feature_site_login">{tr}Activate{/tr}:</label></td>
+					<td><input type="checkbox" name="feature_site_login" id="feature_site_login"{if $prefs.feature_site_login eq 'y'} checked="checked"{/if} /></td>
+				</tr>
+			</table>
+		</fieldset>                                 
 
 	{* --- Top Bar --- *}
         <fieldset>

@@ -247,3 +247,14 @@ td.third {
  padding: 0px 5px;
  font-size: smaller;
 }
+#siteloginbar {
+ text-align: right;
+}
+#siteloginbar #register{
+ float: right;
+ padding-left: 5px;
+}
+#siteloginbar #pass{
+ float: right;
+ padding-left: 5px;
+}
