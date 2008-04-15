@@ -542,8 +542,8 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      */ 
 
     function safe_tag($user, $itemId, $type, $tag, $lang = null) {
-	if (!isset($user) || !isset($itemId) || !isset($type) || !isset($tag) ||
-	    empty($user) || empty($itemId) || empty($type) || empty($tag)) {
+	if (!isset($itemId) || !isset($type) || !isset($tag) ||
+	    empty($itemId) || empty($type) || empty($tag)) {
 	    die("safe_tag argument missing");
 	    return false;
 	}

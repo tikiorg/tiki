@@ -16,10 +16,14 @@ if ( isset($section) and isset($sections[$section])) {
 	include_once ('lib/freetag/freetaglib.php');
 	$here = $sections[$section];
 	if ( $tiki_p_freetags_tag == 'y' && isset($_POST['addtags']) && trim($_POST['addtags']) != '' ) {
+
 		if ( ! isset($user) ) $userid = 0;
 		else $userid = $userlib->get_user_id($user);
 
-		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+			$smarty->assign('freetag_error', tra('You have mistyped the anti-bot verification code; please try again.'));
+			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
+		} elseif (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']], $_POST['addtags']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $section, $_POST['addtags']);
