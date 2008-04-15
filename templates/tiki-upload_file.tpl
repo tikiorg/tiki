@@ -25,8 +25,8 @@
 			<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b><br />
 			<div class="wikitext">
 				{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
-				{tr}You can include the file in an Wiki page using{/tr}: <textarea cols="60" rows="2">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</textarea><br />
-				{tr}You can include the file in an HTML page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea><br /><br /><br />
+				{tr}You can include the file in an Wiki page using{/tr}:<br /> <textarea cols="60" rows="2">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</textarea><br />
+				{tr}You can include the file in an HTML page using{/tr}:<br /> <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea><br /><br /><br />
 			</div>
 		</div>
 	{/section}
