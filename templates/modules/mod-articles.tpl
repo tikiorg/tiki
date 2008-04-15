@@ -17,5 +17,10 @@
     </tr>
     {/section}
   </table>
+{if $module_params.more eq 'y'}
+	<div class="more">
+		 <a class="linkbut" href="tiki-view_articles.php">{tr}More...{/tr}</a>
+	</div>
+{/if}
 {/tikimodule}
 {/if}
