@@ -167,9 +167,9 @@ var numl;var toBeHidden;
 {/literal}
 					cancel:   '{tr}Cancel{/tr}',
 					loading:  '{tr}Loading{/tr}',
-					close:    '{tr}<span class="shortcut">C</span>lose{/tr}',
-					next:     '{tr}<span class="shortcut">N</span>ext{/tr}',
-					prev:     '{tr}<span class="shortcut">P</span>revious{/tr}'
+					close:    '{tr}\074span class="shortcut"\076C\074/span\076lose{/tr}',
+					next:     '{tr}\074span class="shortcut"\076N\074/span\076ext{/tr}',
+					prev:     '{tr}\074span class="shortcut"\076P\074/span\076revious{/tr}'
 {literal}
 				},
 				keysClose:          ['c', 27], // c OR esc
