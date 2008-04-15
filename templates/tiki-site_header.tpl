@@ -38,7 +38,7 @@
 			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
 		</form>
 		{if $prefs.allowRegister eq 'y'}<div id="register"><a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>{/if}
-		{if $prefs.change_password eq 'y'}<div id="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}Forgot Password{/tr}</a></div>{/if}
+		{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}<div id="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}Forgot Password{/tr}</a></div>{/if}
 	{/if}
 	</div>
 {/if}
