@@ -199,7 +199,7 @@ class ContactLib extends TikiLib {
 	}
     
 	function get_ext($id) {
-		$this->query('select * from `tiki_webmail_contacts_fields` where `fieldId`=?', array((int)$id));
+		$res = $this->query('select * from `tiki_webmail_contacts_fields` where `fieldId`=?', array((int)$id));
 		if (!$res->numRows()) return NULL;
 		return $res->fetchRow();
 	}
