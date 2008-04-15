@@ -20,7 +20,7 @@
 		
 		{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_blog eq 'n'}
-		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add">{icon _id='eye' alt='{tr}monitor this blog{/tr}'}</a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add">{icon _id='eye' alt='{tr}Monitor this Blog{/tr}'}</a>
 		{else}
 		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove">{icon _id='no_eye' alt='{tr}Stop Monitoring this Blog{/tr}'}</a>
 		{/if}

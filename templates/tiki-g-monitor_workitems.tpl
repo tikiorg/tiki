@@ -1,5 +1,5 @@
 {popup_init src="lib/overlib.js"}
-{*Smarty template $Id: $*}
+{*Smarty template $Id$*}
 <h1><a class="pagetitle" href="tiki-g-monitor_workitems.php">{tr}Monitor workitems{/tr}</a>
 </h1>
 {include file=tiki-g-monitor_bar.tpl}
