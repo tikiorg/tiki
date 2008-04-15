@@ -26,7 +26,7 @@ if( isset( $module_params['pivot_language'] ) ) {
 
 $smarty->assign( 'pivot_language', $pivotLanguage );
 
-if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) ) {
+if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) && is_string($page) ) {
 	global $multilinguallib;
 	include_once('lib/multilingual/multilinguallib.php');
 

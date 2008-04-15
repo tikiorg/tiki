@@ -58,7 +58,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			$area = 'listpages_delete';
 			if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]) ) ) {
 				key_check($area);
-				foreach ( $_REQUEST["checked"] as $page ) $tikilib->remove_all_versions($page);
+				foreach ( $_REQUEST["checked"] as $check ) $tikilib->remove_all_versions($check);
 			} else key_get($area, '<b>'.tra("Delete those pages:").'</b><br />'.implode('<br />', $_REQUEST["checked"]));
 			break;
 			
@@ -68,15 +68,15 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				$smarty->display("error.tpl");
 				die;
 			}
-			foreach ( $_REQUEST["checked"] as $page ) {
-				if ( $tikilib->page_exists($page) ) {
+			foreach ( $_REQUEST["checked"] as $check ) {
+				if ( $tikilib->page_exists($check) ) {
 					// Now check permissions to access this page
-					if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view')) {
+					if (!$tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_view')) {
 						$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 						$smarty->display("error.tpl");
 						die;
 					}
-					$page_info = $tikilib->get_page_info($page);
+					$page_info = $tikilib->get_page_info($check);
 					$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
 					$multiprint_pages[] = $page_info;
 				} else {
@@ -95,10 +95,10 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				die;
 			}
 			global $wikilib; include_once('lib/wiki/wikilib.php');
-			foreach ($_REQUEST["checked"] as $page) {
-				$info = $tikilib->get_page_info($page);
+			foreach ($_REQUEST["checked"] as $check) {
+				$info = $tikilib->get_page_info($check);
 				if ($info['flag'] == 'L' && ($tiki_p_admin_wiki == 'y' || ($user && ($user == $info['lockedby']) || (!$info['lockedby'] && $user == $info['user'])))) {
-					$wikilib->unlock_page($page);
+					$wikilib->unlock_page($check);
 					}	
 			}
 			break;
@@ -109,10 +109,10 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				die;
 			}
 			global $wikilib; include_once('lib/wiki/wikilib.php');
-			foreach ($_REQUEST["checked"] as $page) {
-				$info = $tikilib->get_page_info($page);
-				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_lock'))) {
-					$wikilib->lock_page($page);
+			foreach ($_REQUEST["checked"] as $check) {
+				$info = $tikilib->get_page_info($check);
+				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock'))) {
+					$wikilib->lock_page($check);
 					}	
 			}
 			break;
@@ -222,8 +222,8 @@ if ( ! empty($multiprint_pages) ) {
 		$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 		$smarty->assign_by_ref('categories', $categories);
 		if ((isset($prefs['wiki_list_categories']) && $prefs['wiki_list_categories'] == 'y') || (isset($prefs['wiki_list_categories_path']) && $prefs['wiki_list_categories_path'] == 'y')) {
-			foreach ($listpages['data'] as $i=>$page) {
-				$cats = $categlib->get_object_categories('wiki page',$page['pageName']);
+			foreach ($listpages['data'] as $i=>$check) {
+				$cats = $categlib->get_object_categories('wiki page',$check['pageName']);
 				foreach ($cats as $cat) {
 					if ($userlib->user_has_perm_on_object($user, $cat, 'category', 'tiki_p_view_categories')) {
 						$listpages['data'][$i]['categpath'][] = $cp = $categlib->get_category_path_string($cat);
