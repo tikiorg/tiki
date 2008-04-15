@@ -6,7 +6,7 @@
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modArticles}
     <tr>
-      {if $nonums != 'y'}
+      {if $module_params.nonums != 'y'}
         <td class="module" valign="top">{$smarty.section.ix.index_next})</td>
       {/if}
       <td class="module">&nbsp;
