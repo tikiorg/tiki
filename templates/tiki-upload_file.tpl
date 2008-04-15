@@ -102,12 +102,12 @@
 	</td></tr>
 {/if}
 
-	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+	{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}<tr><td class="formcolor">{tr}Batch upload{/tr}:</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /><i>{tr}Unzip all zip files{/tr}</i></td></tr>
 	{/if}
 
 	{if $tiki_p_admin_file_galleries eq 'y'}
-	<tr><td class="formcolor">{tr}Creator{/tr}</td><td class="formcolor">
+	<tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
 	<select name="user">
 	{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
 	</select>
@@ -115,11 +115,11 @@
 	{/if}
 
 	{if $prefs.feature_file_galleries_author eq 'y'}
-	<tr><td class="formcolor">{tr}Author if not the file creator{/tr}</td><td class="formcolor"><input type="text" name="author" value="{$fileInfo.author|escape}" /></td></tr>
+	<tr><td class="formcolor">{tr}Author if not the file creator{/tr}:</td><td class="formcolor"><input type="text" name="author" value="{$fileInfo.author|escape}" /></td></tr>
 	{/if}
 
 	{if $prefs.javascript_enabled neq 'y' && $editFileId}
-		<tr><td class="formcolor">{tr}Comment{/tr}</td><td  class="formcolor"><input type="text" name="comment" value="" size="40" /></td></tr>
+		<tr><td class="formcolor">{tr}Comment{/tr}:</td><td  class="formcolor"><input type="text" name="comment" value="" size="40" /></td></tr>
 	{/if}
 
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}" />{if isset($fileInfo.lockedby) and $user ne $fileInfo.lockedby}{icon _id="lock" class="" alt=""}<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>{/if}</td></tr>
