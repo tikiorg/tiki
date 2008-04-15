@@ -4,8 +4,7 @@
 
 <div id="tiki-mid">
 <div class="cbox">
-<div class="cbox-title">
-{tr}Error{/tr}
+<div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style=vertical-align:middle"} {tr}Error{/tr}
 </div>
 <div class="cbox-data">
 {$msg}<br /><br />
