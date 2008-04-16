@@ -109,9 +109,14 @@ $smarty->assign_by_ref('type', $type);
 
 if (isset($_REQUEST["topic"])) {
 	$topic = $_REQUEST["topic"];
-} else {
+ } else {
 	$topic = '';
 }
+if (isset($REQUEST['topicName'])) {
+	$topicName = $REQUEST['topicName'];
+ } else {
+	$topicName = '';
+ }
 $smarty->assign_by_ref('topic', $topic);
 
 if (isset($_REQUEST["categId"])) {
@@ -126,7 +131,7 @@ if (!isset($_REQUEST['lang'])) {
 }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $pdate, $user, $type, $topic, 'y', '', $categId, '', '', $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $pdate, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang']);
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);

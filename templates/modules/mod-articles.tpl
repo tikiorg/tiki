@@ -19,7 +19,8 @@
   </table>
 {if $module_params.more eq 'y'}
 	<div class="more">
-		 <a class="linkbut" href="tiki-view_articles.php">{tr}More...{/tr}</a>
+		 {assign var=sep value='?'}
+		 <a class="linkbut" href="tiki-view_articles.php{if $module_params.topicId}{$sep}topic={$module_params.topicId}{assign var=sep value='&amp;'}{/if}{if $module_params.topic}{$sep}topicName={$module_params.topic|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.categId}{$sep}categId={$module_params.categId}{assign var=sep value='&amp;'}{/if}{if $module_params.type}{$sep}type={$module_params.type|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.lang}{$sep}lang={$module_params.lang|escape:url}{assign var=sep value='&amp;'}{/if}">{tr}More...{/tr}</a>
 	</div>
 {/if}
 {/tikimodule}
