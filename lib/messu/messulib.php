@@ -81,8 +81,8 @@ class Messu extends TikiLib {
 					$prefs['sender_email'] = $userlib->get_user_email($from);
 				}
 				if (strlen( $prefs['sender_email'] ) > 1 ) {
-					$mail->setHeader("Reply-To", $local_sender_email);
-					$mail->setHeader("From", $local_sender_email);
+					$mail->setHeader("Reply-To", $prefs['sender_email']);
+					$mail->setHeader("From", $prefs['sender_email']);
 				}
 
 				if (!$mail->send(array($email), 'mail'))

@@ -37,10 +37,12 @@ if ($_REQUEST["contactId"]) {
 	$info = $contactlib->get_contact($_REQUEST["contactId"], $user);
 	foreach($info['ext'] as $k => $v) {
 	    if (!in_array($k, array_keys($exts))) {
-		$exts[$k]=$v;
-		$traducted_exts[$k]['tra']=tra($info['fieldname']);
-		$traducted_exts[$k]['art']=$info['fieldname'];
-		$traducted_exts[$k]['id']=$k;
+
+// okay, we need to grab the name from exts[], where fieldId = $k
+ 		$ext = $contactlib->get_ext($k);
+		$traducted_exts[$k]['tra'] = $ext['fieldname'];
+		$traducted_exts[$k]['art'] = $ext['fieldname'];
+		$traducted_exts[$k]['id'] = $k;
 	    }
 	}
 } else {
