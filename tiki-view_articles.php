@@ -10,8 +10,6 @@
 $section = 'cms';
 require_once ('tiki-setup.php');
 
-$smarty->assign('headtitle',tra('Articles'));
-
 include_once ('lib/articles/artlib.php');
 include_once("lib/commentslib.php");
 if ($prefs['feature_categories'] == 'y') {
@@ -149,23 +147,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
-$cant_pages = ceil($listpages["cant"] / $prefs['maxArticles']);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $prefs['maxArticles']));
 $smarty->assign('maxArticles', $prefs['maxArticles']);
 
-if ($listpages["cant"] > ($offset + $prefs['maxArticles'])) {
-	$smarty->assign('next_offset', $offset + $prefs['maxArticles']);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $prefs['maxArticles']);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 $smarty->assign_by_ref('cant', $listpages["cant"]);

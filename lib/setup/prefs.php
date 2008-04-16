@@ -366,6 +366,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['cms_right_column'] = 'y';
 	$prefs['cms_top_bar'] = 'n';
 	$prefs['cms_spellcheck'] = 'n';
+	$prefs['art_home_title'] = '';
 
 	# trackers
 	$prefs['feature_trackers'] = 'n';

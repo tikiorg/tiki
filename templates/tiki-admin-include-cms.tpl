@@ -68,6 +68,14 @@
           <td><input size="5" type="text" name="maxArticles" id="articles-maxhome"
                value="{$prefs.maxArticles|escape}" /></td>
         </tr><tr>
+			<td class="form"><label for="articles-titlehome">{tr}Title{/tr}: </label></td>
+			<td><select name='art_home_title' id='art_home_title'>
+				<option value=''></option>
+				<option value="topic"{if $prefs.art_home_title eq 'topic'} selected="selected"{/if}>{tr}Topic{/tr}</option>
+				<option value="type"{if $prefs.art_home_title eq 'type'} selected="selected"{/if}>{tr}Type{/tr}</option>
+				<option value="articles"{if $prefs.art_home_title eq 'articles'} selected="selected"{/if}>'{tr}Articles{/tr}'</option>
+			</select></td>
+		</tr><tr>
           <td colspan="2" class="button"><input type="submit" name="cmsprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
