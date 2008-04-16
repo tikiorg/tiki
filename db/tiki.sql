@@ -2540,6 +2540,7 @@ CREATE TABLE tiki_pages (
   lockedby varchar(200) default NULL,
   is_html tinyint(1) default 0,
   created int(14),
+  wysiwyg char(1) default NULL,
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),

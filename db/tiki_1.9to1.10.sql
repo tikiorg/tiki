@@ -1735,3 +1735,6 @@ ALTER TABLE users_users ADD waiting char(1) default NULL;
 
 #2008-04-10 sylvieg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
+
+#2008-004-14 sylvieg
+ALTER TABLE tiki_pages ADD wysiwyg char(1) default NULL;
