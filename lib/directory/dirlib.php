@@ -179,7 +179,7 @@ class DirLib extends TikiLib {
 		return $retval;
 	}
 
-	function dir_list_sites($parent, $offset, $maxRecords, $sort_mode, $find, $isValid) {
+	function dir_list_sites($parent, $offset=0, $maxRecords=-1, $sort_mode='hits_desc', $find='', $isValid='y') {
 		$bindvars = array((int)$parent);
 		if ($find) {
 			$findesc = '%'.$find.'%';

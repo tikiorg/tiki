@@ -27,5 +27,10 @@
     </tr>
   {/section}
   </table>
+{if $module_params.more eq 'y'}
+	<div class="more">
+		 <a class="linkbut" href="tiki-directory_browse.php{if $module_params.categoryId}?parent={$module_params.categoryId}{/if}">{tr}More...{/tr}</a>
+	</div>
+{/if}
 {/tikimodule}
 {/if}
