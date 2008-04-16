@@ -75,6 +75,15 @@ function wikiplugin_tracker($data, $params) {
 			$values = explode(':', $values);
 		}
 	}
+	if (isset($_REQUEST['values'])) {
+		if (is_array($_REQUEST['values'])) {
+			foreach ($_REQUEST['values'] as $i=>$k) {
+				$_REQUEST['values'][$i] = urldecode($k);
+			}
+		} else {
+			$_REQUEST['values'] = urldecode($_REQUEST['values']);
+		}
+	}
 
 	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
 		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
