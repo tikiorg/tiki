@@ -65,12 +65,13 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
     <table><tr>
     <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
     <td>
-      <div id="select_available_styles" {if count($prefs.available_styles) > 0}style="display:none;"{else}style="display:block;"{/if}>
+      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
         <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
       </div>
-      <div id="available_styles" {if count($prefs.available_styles) == 0}style="display:none;"{else}style="display:block;"{/if}>
+      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
         {tr}Available styles:{/tr}<br />
         <select name="available_styles[]" multiple="multiple" size="5">
+		  <option value=''>{tr}All{/tr}</option>
           {section name=ix loop=$styles}
             <option value="{$styles[ix]|escape}"
               {if in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
