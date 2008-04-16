@@ -205,7 +205,7 @@
           <select name="mystyle">
             <option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
               {section name=ix loop=$styles}
-                {if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
+                {if count($prefs.available_styles) == 0 || empty($prefs.available_styles[0]) || in_array($styles[ix], $prefs.available_styles)}
                   <option value="{$styles[ix]|escape}" {if $user_prefs.theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
                 {/if}
               {/section}

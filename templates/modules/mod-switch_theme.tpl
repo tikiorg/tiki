@@ -6,7 +6,7 @@
 		<select name="theme" size="1" onchange="this.form.submit();">
 			<option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
 		{section name=ix loop=$styleslist}
-			{if count($prefs.available_styles) == 0 || in_array($styleslist[ix], $prefs.available_styles)}
+			{if count($prefs.available_styles) == 0 || empty($prefs.available_styles[0]) || in_array($styleslist[ix], $prefs.available_styles)}
 			<option value="{$styleslist[ix]|escape}" {if $prefs.style eq $styleslist[ix]}selected="selected"{/if}>{$styleslist[ix]|truncate:15}</option>
 			{/if}
 		{/section}
