@@ -19,17 +19,40 @@
 {/if}
 
 {if count($uploads) > 0}
-	<h2>{tr}The following file was successfully uploaded{/tr}:</h2><br />
+	<h2>
+	{if count($uploads) eq 1}
+		{tr}The following file was successfully uploaded{/tr}:
+	{else}
+		{tr}The following files have been successfully uploaded{/tr}:
+	{/if}
+	</h2>
+
+	<table border="0" cellspacing="4" cellpadding="4">
 	{section name=ix loop=$uploads}
-		<div align="center">
-			<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b><br />
-			<div class="wikitext">
-				{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br /><br />
-				{tr}You can include the file in an Wiki page using{/tr}:<br /> <textarea cols="60" rows="2">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</textarea><br />
-				{tr}You can include the file in an HTML page using{/tr}:<br /> <textarea cols="60" rows="2">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</textarea><br /><br /><br />
-			</div>
-		</div>
+		<tr>
+			<td class="{cycle values="odd,even"}" style="text-align: center">
+				<img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;thumbnail=y" />
+			</td>
+			<td>
+				<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
+				<div class="button2">
+					<a href="#" onclick="javascript:flip('uploadinfos{$uploads[ix].fileId}');flip('uploadinfos{$uploads[ix].fileId}_close','inline');return false;" class="linkbut">
+						{tr}Additional Info{/tr}
+						<span id="uploadinfos{$uploads[ix].fileId}_close" style="display:none">({tr}Hide{/tr})</span>
+					</a>
+				</div>
+				<div style="display:none;" id="uploadinfos{$uploads[ix].fileId}">
+					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br />
+					{tr}You can include the file in an Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
+					{tr}You can include the file in an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
+				</div>
+			</td>
+		</tr>
 	{/section}
+	</table>
+
+<br />
+
 <h2>{tr}Upload File{/tr}</h2>
 {elseif $fileChangedMessage}
 	<div align="center">
