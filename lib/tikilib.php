@@ -4641,7 +4641,7 @@ function add_pageview() {
 			$hash2[] = $hash3;
 		}
 	}
-	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
+	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 	$result = $this->query($query, $bindvars);
 
 	$page_id = $this->get_page_id_from_name( $name );
