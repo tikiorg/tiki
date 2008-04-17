@@ -66,7 +66,7 @@
 </form>
 <h2>{tr}RSS channels{/tr}</h2>
 <div  align="center">
-{if $channels}
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
