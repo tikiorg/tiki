@@ -15,57 +15,59 @@
 </div>
 </div>
 <br />
-
+<h2>{tr}Exterminator{/tr}</h2>
 <table class="normal">
-<tr><td colspan="3" class="heading">{tr}Exterminator{/tr}</td></tr>
+<tr><th class="heading">{tr}Directory{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
 <tr class="form">
-<td><b>./templates_c/</b></td>
-<td><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty{/tr}</a></td>
-<td>({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize})</td>
+<td class="odd"><b>./templates_c/</b></td>
+<td class="odd">({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize|default:'0 Kb'})</td>
+<td class="odd"><a href="tiki-admin_system.php?do=templates_c" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 <tr class="form">
-<td><b>./modules/cache/</b></td>
-<td><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
-<td>({$modules.cant} {tr}Files{/tr} / {$modules.total|kbsize})</td>
+<td class="even"><b>./modules/cache/</b></td>
+<td class="even">({$modules.cant} {tr}Files{/tr} / {$modules.total|kbsize|default:'0 Kb'})</td>
+<td class="even"><a href="tiki-admin_system.php?do=modules_cache" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 <tr class="form">
-<td><b>./temp/cache/</b></td>
-<td><a href="tiki-admin_system.php?do=temp_cache" class="link">{tr}Empty{/tr}</a></td>
-<td>({$tempcache.cant} {tr}Files{/tr} / {$tempcache.total|kbsize})</td>
+<td class="odd"><b>./temp/cache/</b></td>
+<td class="odd">({$tempcache.cant} {tr}Files{/tr} / {$tempcache.total|kbsize|default:'0 Kb'})</td>
+<td class="odd"><a href="tiki-admin_system.php?do=temp_cache" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 <tr class="form">
-<td><b>{tr}All user prefs sessions{/tr}</b></td>
-<td><a href="tiki-admin_system.php?do=prefs" class="link">{tr}Empty{/tr}</a></td>
-<td></td>
+<td class="even"><b>{tr}All user prefs sessions{/tr}</b></td>
+<td class="even"></td>
+<td class="even"><a href="tiki-admin_system.php?do=prefs" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 </table>
-
+<br />
 {if count($dirs)}
 <div class="cbox">
 <div class="cbox-title">{tr}Directories to save:{/tr}</div>
 <div class="cbox-data"> 
+<ul>
 {foreach from=$dirs item=d}
-	{$d} 
+	<li>{$d}</li>
 {/foreach}
+</ul>
 </div>
 </div>
 {/if}
 
 {if count($templates)}
 <br />
+<h2>{tr}Templates compiler{/tr}</h2>
 <table class="sortable" id="templatecompiler" width="100%">
-<caption>{tr}Templates compiler{/tr}</caption>
 <tr>
 <th class="heading">{tr}Language{/tr}</th>
-<th class="heading">{tr}Compile{/tr}</th>
 <th class="heading">{tr}Pages{/tr}/{tr}Size{/tr}</th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {foreach key=key item=item from=$templates}
 <tr class="form">
 <td class="{cycle advance=false}"><b>{$key}</b></td>
+<td class="{cycle}">({$item.cant} {tr}Files{/tr} / {$item.total|kbsize|default:'0 Kb'})</td>
 <td class="{cycle advance=false}"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
-<td class="{cycle}">({$item.cant} {tr}Files{/tr} / {$item.total|kbsize})</td>
 </tr>
 {/foreach}
 </table>
