@@ -3860,6 +3860,7 @@ CREATE TABLE "tiki_pages" (
   "lockedby" varchar(200) default NULL NULL,
   "is_html" numeric(1,0) default 0,
   "created" numeric(14,0) default NULL NULL,
+  "wysiwyg" char(1) default NULL NULL,
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM 

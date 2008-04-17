@@ -3128,6 +3128,7 @@ CREATE TABLE "tiki_pages" (
   "lockedby" varchar(200) default NULL,
   "is_html" number(1) default 0,
   "created" number(14),
+  "wysiwyg" char(1) default NULL,
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM ;
