@@ -11,7 +11,7 @@
 <span class="button2"><a href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a></span>
 {/if}
 </div>
-{if $channels}
+{if $channels or ($find ne '')}
 {if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
   <table class="findtable">
     <tr>

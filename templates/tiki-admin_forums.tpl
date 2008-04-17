@@ -357,7 +357,8 @@
 
 <a name="editforums" id="editforums"></a>
 <h2>{tr}List Forums{/tr}</h2>
-<div  align="center">
+<div align="center">
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -369,7 +370,7 @@
    </td>
 </tr>
 </table>
-
+{/if}
 <form>
 <table class="normal">
 <tr>
@@ -410,8 +411,11 @@
 <input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="8">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+{if $channels}
 <div style="text-align:right;">
 <script type="text/javascript"> /* <![CDATA[ */
 	document.write('<label for="clickall">{tr}Select All{/tr}</label> ');
@@ -424,6 +428,7 @@
 	{if $tiki_p_admin_forum eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
 </select>
 <input type="submit" name="batchaction" value="{tr}OK{/tr}" />
+{/if}
 </div>
 </form>
 

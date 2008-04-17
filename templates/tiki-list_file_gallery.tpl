@@ -162,7 +162,7 @@
   {include file='duplicate_file_gallery.tpl'}
 
 {else}
-{if $files}
+{if $files or ($find ne '')}
   {include file='find.tpl' find_show_languages='n' find_show_categories='n'}
 {/if}
   {include file='list_file_gallery.tpl'}
