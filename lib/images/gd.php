@@ -45,7 +45,7 @@ class Image extends ImageAbstract {
   
     ob_end_flush();
     ob_start();
-    switch ( $this->format ) {
+    switch ( strtolower($this->format) ) {
       case 'jpeg':
       case 'jpg':
         imagejpeg($this->data);
