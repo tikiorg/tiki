@@ -81,8 +81,8 @@
     <tr>
       <td class="{cycle advance=false}">{tr}Country{/tr}:</td>
       <td class="{cycle}">
-        {if $user_prefs.country != "None" && $user_prefs.country != "Other"}
-          <img alt="{tr}Flag{/tr}" title="{tr}Flag{/tr}" src="img/flags/{$user_prefs.country}.gif" />
+        {if isset($user_prefs.country) && $user_prefs.country != "None" && $user_prefs.country != "Other"}
+          <img alt="{tr}{$user_prefs.country}{/tr}" title="{tr}{$user_prefs.country}{/tr}" src="img/flags/{$user_prefs.country}.gif" />
         {/if}
         <select name="country">
           <option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
