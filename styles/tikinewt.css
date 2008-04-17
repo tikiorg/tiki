@@ -192,6 +192,11 @@ div#tiki-main {
 	font-size: 1em;
 }
 
+#tiki-clean {
+	text-align: left;
+	padding: 1em;
+}
+
 #fullscreenbutton {
 	position: absolute;
 	top: 2px;
@@ -300,6 +305,7 @@ div#sitead {
 #showhide_columns, .tellafriend {
 	border-left: 1px solid #8CACBB;
 }
+
 #c1c2 {
 	font-size: 1em;
 	background-color: transparent;
@@ -407,6 +413,9 @@ a.flip img {
 #footer a {
 
 }
+
+div#credits {font-size: .9em}
+
 /* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 .footerbgtrap {
 	background-color: transparent;
@@ -666,6 +675,9 @@ a.tikihelp:hover {
 	cursor: help;
 	vertical-align: text-top;
 }
+/** Admin pages **/
+/* overrides inline css */
+div.adminanchors {background: #E9ECEF !important}
 
 /**** Boxes *****/
 
@@ -687,6 +699,7 @@ h3.box-title {
 	text-align: center;
 	margin: 0;
 	width: 100%;
+	position: relative;
 }
 
 div.box-title table {
@@ -698,6 +711,28 @@ div.box-title table {
 
 div.box-title table td {
   text-align: center;
+}
+
+.box a.flipmodtitle img {
+	display: none;
+}
+
+.box:hover a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid transparent;
+	height: 12px;
+	width: 12px;
+}
+
+a.flipmodtitle:hover img {
+	background: #DDDDDD;
+	border-right: 1px solid #1D49BB !important;
+	border-bottom: 1px solid #1D49BB !important;
+	border-top: 1px solid #4C89BB !important;
+	border-left: 1px solid #4C89BB !important;
 }
 
 div.box-data {
@@ -2149,7 +2184,7 @@ div.imgaldescr {
 	margin-left: 10px;
 }
 
-/******************************************************* FILE GALLERIES **********************************************/
+/***** File Galleries *****/
 
 div.thumbnailcontener {
 	margin: 4px;
