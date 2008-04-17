@@ -53,8 +53,9 @@
 </table>
 </form>
 <!--  find in existing surveys -->
+<br />
 <h2>{tr}Surveys{/tr}</h2>
-
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -66,6 +67,7 @@
    </td>
 </tr>
 </table>
+{/if}
 <!--  existing surveys -->
 
 <table class="normal">
@@ -112,6 +114,8 @@
    {/if}
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="6">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 <!--  the little page adjust... need to find the $prefs.maxRecords value so that we can set that to a user controlled value-->

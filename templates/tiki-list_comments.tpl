@@ -1,7 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <h1><a href="tiki-list_comments.php" class="pagetitle">{tr}Comments{/tr}</a></h1>
-{if $comments}
+{if $comments or ($find ne '')}
 <form method="get" action="tiki-list_comments.php">
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>

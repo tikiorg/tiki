@@ -32,7 +32,7 @@
 {/if}
 <h2>{tr}Available FAQs{/tr}</h2>
 <div  align="center">
-{if $channels}
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

@@ -56,7 +56,7 @@
 {/foreach}
 <br /><br />
 {/if}
-{if $channels}
+{if $channels or ($find ne '')}
 {include file="find.tpl"}
 {/if}
 <br />

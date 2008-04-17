@@ -38,7 +38,7 @@
 {if $channels}<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a><br /><br />
 {/if}
 <div  align="center">
-{if $channels}
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

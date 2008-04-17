@@ -16,7 +16,7 @@
 <div class="navbar">
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 </div>
-{if $listpages}
+{if $listpages or ($find ne '')}
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

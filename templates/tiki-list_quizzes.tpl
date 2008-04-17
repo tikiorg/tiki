@@ -13,7 +13,7 @@
 <div class="navbar">
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 </div>
-{if $channels}
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr>
 <td class="findtable">{tr}Find{/tr}</td>

@@ -24,7 +24,7 @@
 <a class="linkbut" href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
 {/if}
 </div>
-{if $listpages or ($find ne '')}
+{if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
 {include file="find.tpl"}
 {/if}
 <br />

@@ -101,7 +101,7 @@
 
 <h2>{tr}Templates{/tr}</h2>
 <div  align="center">
-{if $channels}
+{if $channels or ($find ne '')}
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
