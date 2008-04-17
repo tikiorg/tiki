@@ -55,10 +55,7 @@
 		{/if}
 	</div>
 {/if}
-{if $prefs.feature_topbar_version eq 'y'}
-<small>{tr}This is{/tr} Tikiwiki v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- &#169; 2002&#8211;2008 {tr}by the{/tr} <a href="http://tikiwiki.org" 
-title="tikiwiki.org">{tr}Tiki community{/tr}</a></small>
-{/if}
+{include file="credits.tpl"}
 {if $prefs.feature_topbar_date eq 'y'}
 {if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   <small><a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a></small>
