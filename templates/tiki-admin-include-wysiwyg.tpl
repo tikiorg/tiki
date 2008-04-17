@@ -23,6 +23,11 @@
           </tr>
           
           <tr>
+            <td class="form"><label for="wysiwyg_memo">{tr}Reopen with the same editor{/tr}:</label></td>
+            <td><input type="checkbox" name="wysiwyg_memo" id="wysiwyg_memo" {if $prefs.wysiwyg_memo eq 'y'}checked="checked"{/if} /></td>
+          </tr>
+
+          <tr>
             <td class="form"><label for="wysiwyg_wiki_parsed">{tr}Content is parsed like wiki page{/tr}:</label></td>
             <td><input type="checkbox" name="wysiwyg_wiki_parsed" id="wysiwyg_wiki_parsed" {if $prefs.wysiwyg_wiki_parsed eq 'y'}checked="checked"{/if} /></td>
           </tr>

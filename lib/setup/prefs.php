@@ -160,6 +160,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wysiwyg'] = 'n';
 	$prefs['wysiwyg_optional'] = 'y';
 	$prefs['wysiwyg_default'] = 'y';
+	$prefs['wysiwyg_memo'] = 'y';
 	$prefs['wysiwyg_wiki_parsed'] = 'y';
 	$prefs['wysiwyg_wiki_semi_parsed'] = 'y';
 	$prefs['wysiwyg_toolbar_skin'] = 'default';

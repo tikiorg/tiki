@@ -244,7 +244,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   			}
           	$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang, false, $hash);
             } else {
-          	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
+				$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang, false, $hash);
         	}
 
 			// Handle the translation bits after actual creation/update
@@ -816,6 +816,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
   if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
   if(!isset($_REQUEST["lang"])) $_REQUEST["lang"]='';
+  if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = '';
   if(isset($_REQUEST['wiki_cache'])) {
     $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
   }
@@ -869,7 +870,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       $cachedlinks = array_diff($links, $notcachedlinks);
       $tikilib->cache_links($cachedlinks);
       */
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash);
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg']);
       if ($prefs['wiki_watch_author'] == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
@@ -931,7 +932,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		} else {
 			$minor=false;
 		}
-		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash);
+		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg']);
 
 		// Handle translation bits
 		if ($prefs['feature_multilingual'] == 'y' && !$minor) {

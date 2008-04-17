@@ -6943,7 +6943,7 @@ if (!$simple_wiki) {
 		$saveLastModif = $this->now;
 	}
 
-	$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html);
+	$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg);
 	if ($lang) {
 		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
@@ -6968,7 +6968,6 @@ if (!$simple_wiki) {
 			$hash2[] = $hash3;
 		}
 	}
-	$bindvars[] = $wysiwyg;
 	$bindvars[] = $pageName;
 	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?  $mid where `pageName`=?";
 	$result = $this->query($query,$bindvars);

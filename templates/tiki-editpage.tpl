@@ -258,9 +258,11 @@ window.onload = timeIt;
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
+<input type="hidden" name="wysiwyg" value="n" />
 {else}
 <td colspan="2">
 {editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
+<input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>
 {if $prefs.feature_wiki_replace eq 'y'}

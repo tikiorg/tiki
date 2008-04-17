@@ -7,7 +7,13 @@ global $parsemode_setup;
 $parsemode_setup = 'y';
 $is_html = false;
 if ($prefs['feature_wysiwyg'] == 'y') {
-	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $prefs['wysiwyg_optional'] == 'y') or ($prefs['wysiwyg_optional'] == 'n' or ($prefs['wysiwyg_default'] == 'y' and !isset($_REQUEST['wysiwyg'])))) {
+	if ((isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'y' and $prefs['wysiwyg_optional'] == 'y') ) {
+		$_SESSION['wysiwyg'] = 'y';
+	} elseif ($prefs['wysiwyg_optional'] == 'n') {
+		$_SESSION['wysiwyg'] = 'y';
+	} elseif ($prefs['wysiwyg_memo'] == 'y' and !empty($info)) {
+		$_SESSION['wysiwyg'] = $info['wysiwyg'];
+	} elseif ($prefs['wysiwyg_default'] == 'y' and !isset($_REQUEST['wysiwyg'])) {
 		$_SESSION['wysiwyg'] = 'y';
 	} elseif ($prefs['wysiwyg_optional'] == 'y' and isset($_REQUEST['wysiwyg']) and $_REQUEST['wysiwyg'] == 'n') {
 		$_SESSION['wysiwyg'] = 'n';
