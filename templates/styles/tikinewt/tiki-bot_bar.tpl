@@ -55,14 +55,16 @@
 		{/if}
 	</div>
 {/if}
+<div id="credits"
 {include file="credits.tpl"}
 {if $prefs.feature_topbar_date eq 'y'}
-{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-  <small><a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a></small>
-{else}
-  <small>{$smarty.now|tiki_short_datetime}</small>
+	{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+	<a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
+	{else}
+	{$smarty.now|tiki_short_datetime}
+	{/if}
 {/if}
-{/if}
+</div>
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
