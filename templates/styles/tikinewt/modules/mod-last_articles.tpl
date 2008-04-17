@@ -1,5 +1,4 @@
-{* based on /cvsroot/tikiwiki/tiki/templates/modules/mod-last_articles.tpl,v 1.18 2007/10/14 17:51:00 mose *}
-
+ {* $Id$ *}
 {if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
@@ -41,6 +40,11 @@
         </li>
     {/section}
 {if $nonums != 'y'}</ol>{else}</ul>{/if}
-{eval var="<a style=\"margin-left: 20px\" href=\"tiki-view_articles.php?topic=$topicId&type=$type\">...{tr}more{/tr}</a>"}	
+{if $module_params.more eq 'y'}
+	<div class="more">
+		{assign var=sep value='?'}
+			<a class="linkbut" href="tiki-view_articles.php{if $module_params.topicId}{$sep}topic={$module_params.topicId}{assign var=sep value='&amp;'}{/if}{if $module_params.topic}{$sep}topicName={$module_params.topic|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.categId}{$sep}categId={$module_params.categId}{assign var=sep value='&amp;'}{/if}{if $module_params.type}{$sep}type={$module_params.type|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.lang}{$sep}lang={$module_params.lang|escape:url}{assign var=sep value='&amp;'}{/if}">{tr}More...{/tr}</a>
+	</div>
+{/if}
 {/tikimodule}
 {/if}
