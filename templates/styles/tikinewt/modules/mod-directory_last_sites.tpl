@@ -1,5 +1,4 @@
-{* based on /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_last_sites.tpl,v 1.14 2007/10/14 17:51:00 mose *}
-
+ {* $Id$ *}
 {if $prefs.feature_directory eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
@@ -23,5 +22,10 @@
       </li>
   {/section}
  {if $nonums != 'y'}</ol>{else}</ul>{/if}
+{if $module_params.more eq 'y'}
+	<div class="more">
+		<a class="linkbut" href="tiki-directory_browse.php{if $module_params.categoryId}?parent={$module_params.categoryId}{/if}">{tr}More...{/tr}</a>
+	</div>
+{/if}
 {/tikimodule}
 {/if}
