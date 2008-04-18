@@ -102,11 +102,15 @@ if (isset($_REQUEST["remind"])) {
 		if ($prefs['feature_clear_passwords'] == 'y') {
 			$tmp = tra("A password and your IP address reminder email has been sent ");
 		} else {
-			$tmp = tra("A new (and temporary) password and your IP address has been sent ");
+			$tmp = tra("An email with a link to reset your password has been sent ");
 		}
 
-		$tmp .= tra("to the registered email address for");
-		$tmp .= " " . $name. ".";
+		if ($prefs['login_is_email'] == 'y')
+			$tmp .= tra("to the email ");
+		else
+			$tmp .= tra("to the registered email address for");
+		$tmp .= " " . $name. ". ";
+		$tmp .= tra('Please contact the Administrator if you do not get the email, or if there is an issue with resetting the password.');
 		$smarty->assign('msg', $tmp);
 	}
 }
