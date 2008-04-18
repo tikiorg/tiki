@@ -643,8 +643,8 @@
     <table class="admin">
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$prefs.maxVersions|escape}" /> (0={tr}unlimited{/tr})</td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$prefs.keep_versions|escape}" /></td></tr>
-       <tr><td class="form">{tr}IP not displayed in history{/tr}:</td><td>
-	<input type="checkbox" name="feature_wiki_history_ip" {if $prefs.feature_wiki_history_ip eq 'n'}checked="checked"{/if}/>
+       <tr><td class="form">{tr}IP address displayed in history{/tr}:</td><td>
+	<input type="checkbox" name="feature_wiki_history_ip" {if $prefs.feature_wiki_history_ip eq 'y'}checked="checked"{/if}/>
     </td></tr>
      <tr><td class="form">{tr}Diff style{/tr}: </td><td><select name="default_wiki_diff_style">
        <option value="old" {if $prefs.default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
