@@ -51,5 +51,5 @@
 <tr><td class="odd" colspan="4">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
-<br />
+</div>
 
