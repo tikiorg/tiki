@@ -45,14 +45,8 @@ class Image extends ImageAbstract {
   }
 
   function is_supported($format) {
-    $format = strtoupper(trim($format));
-    switch ($format) {
-      case 'PDF':
-      case 'PS':
-      case 'HTML':
-        return false;
-    }
-    return true;
+    // not handled yet: html, mpeg, pdf
+    return in_array(strtolower($format), array('art', 'avi', 'avs', 'bmp', 'cin', 'cmyk', 'cur', 'cut', 'dcm', 'dcx', 'dib', 'dpx', 'epdf', 'fits', 'gif', 'gray', 'ico', 'jng', 'jpg', 'jpeg', 'mat', 'miff', 'mono', 'mng', 'mpc', 'msl', 'mtv', 'mvg', 'otb', 'p7', 'palm', 'pbm', 'pcd', 'pcds', 'pcl', 'pcx', 'pdb', 'pfa', 'pfb', 'pgm', 'picon', 'pict', 'pix', 'png', 'pnm', 'ppm', 'psd', 'ptif', 'pwp', 'rgb', 'rgba', 'rla', 'rle', 'sct', 'sfw', 'sgi', 'sun', 'tga', 'tim', 'txt', 'uil', 'uyvy', 'vicar', 'viff', 'wbmp', 'wpg', 'xbm', 'xcf', 'xpm', 'xwd', 'yuv'));
   }
 
   function get_height() {
