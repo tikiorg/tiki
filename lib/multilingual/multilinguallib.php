@@ -120,7 +120,7 @@ class MultilingualLib extends TikiLib {
 	 * @return if long is false: array(objId, lang, langName ) with langName=localized language name
 	 * @return if long id true: array(objId, objName, lang, langLongFormat)
 	 */
-	function getTranslations($type, $objId, $objName, $objLang, $long=false) {
+	function getTranslations($type, $objId, $objName='', $objLang='', $long=false) {
 		if ($type == 'wiki page') {
 			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as `objName` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 LEFT JOIN `tiki_pages` p ON p.`page_id`=t2.`objId` where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
 		}
