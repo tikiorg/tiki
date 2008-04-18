@@ -1,6 +1,8 @@
 {* $Id$ *}
-{* Template for Tikiwiki site identity header *}{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
-		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}{/if}
+{* Template for Tikiwiki site identity header *}
+{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
+	{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}
+{/if}
 {if $prefs.feature_sitelogo eq 'y'}
 		<div id="sitelogo" style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor}; {/if}text-align: {$prefs.sitelogo_align};">
 			<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
@@ -25,24 +27,10 @@
 		</div>{* search the site *}
 {/if}
 {if $prefs.feature_site_login eq 'y'}
-	<div id="siteloginbar">
-	{if $user}
-		{$user|userlink} | <a href="tiki-logout.php" title="{tr}Logout{/tr}">{tr}Logout{/tr}</a>
-	{else}
-		<form class="forms" name="loginbox" action="tiki-login.php" method="post">
-			<label for="sl-login-user">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}User{/tr}{/if}:</label>
-			<input type="text" name="user" id="sl-login-user" />
-			<label for="sl-login-pass">{tr}Password{/tr}:</label>
-			<input type="password" name="pass" id="sl-login-pass" size="10" />
-			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />{/if}
-			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
-		</form>
-		{if $prefs.allowRegister eq 'y'}<div class="register"><a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>{/if}
-		{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}<div class="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>{/if}
-	{/if}
-	</div>
+	{include file="tiki-site_header_login.tpl"}
 {/if}
 {/if}
+
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 		<div id="sitelocbar">
 			<small>{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}{if
