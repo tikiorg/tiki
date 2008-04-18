@@ -139,13 +139,16 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a comment{/tr}</h2>
-<form action="tiki-view_tracker_item.php" method="post">
+<form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Title{/tr}:</td><td><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
-<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Comment{/tr}:<br />
+{include file="textareasize.tpl" area_name='comment_data' formId='commentform' ToolbarSet='Tiki'}</td>
+<td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea>
+</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save_comment" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
