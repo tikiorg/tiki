@@ -175,13 +175,13 @@
     ||  $tiki_p_edit_comments  == 'y')}
 
     <span class="button2">
-      <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+      <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
         {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
           {tr}Add Comment{/tr}
         {elseif $comments_cant == 1}
-          <span class="highlight">{tr}1 comment{/tr}</span>
+          {tr}1 comment{/tr}
         {else}
-          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+          {$comments_cant} {tr}comments{/tr}
         {/if}
         <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
       </a>
