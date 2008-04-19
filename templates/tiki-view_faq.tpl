@@ -27,10 +27,24 @@
 <a name="q{$channels[ix].questionId}"></a>
 <div class="faqqa">
 <div class="faqquestion">
-<span class="faq_question_prefix">{tr}Q{/tr}: </span>{$channels[ix].question}
+  {if $prefs.faq_prefix neq 'none'}
+    <span class="faq_question_prefix">
+    {if $prefs.faq_prefix eq 'QA'}
+      {tr}Q{/tr}:
+    {elseif $prefs.faq_prefix eq 'question_id'}
+      {$smarty.section.ix.index_next}.&nbsp;
+    {/if}
+    </span>
+  {/if}
+  {$channels[ix].question}
 </div>
 <div class="faqanswer">
-<span class="faq_answer_prefix">{tr}A{/tr}: </span>{$channels[ix].parsed}
+  {if $prefs.faq_prefix eq 'QA'}
+    <span class="faq_answer_prefix">
+      {tr}A{/tr}:&nbsp;
+    </span>
+  {/if}
+  {$channels[ix].parsed}
 </div>
 </div>
 {/section}
@@ -47,13 +61,13 @@
 && $comments_cant != 0)
 ||  $tiki_p_post_comments  == 'y'
 ||  $tiki_p_edit_comments  == 'y')}
-<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
+<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant >= 1}highlight{/if}">
 {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
 {tr}Add Comment{/tr}
 {elseif $comments_cant == 1}
-<span class="highlight">{tr}1 comment{/tr}</span>
+  {tr}1 comment{/tr}
 {else}
-<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+  {$comments_cant} {tr}comments{/tr}
 {/if}
 <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
 </a>

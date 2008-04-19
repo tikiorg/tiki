@@ -504,8 +504,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# faq
 	$prefs['feature_faqs'] = 'n';
 	$prefs['feature_faq_comments'] = 'y';
-	$prefs['faq_comments_default_ordering'] = 'points_desc';
 	$prefs['faq_comments_per_page'] = 10;
+	$prefs['faq_comments_default_ordering'] = 'points_desc';
+	$prefs['faq_prefix'] = 'QA';
 
 	# quizzes
 	$prefs['feature_quizzes'] = 'n';

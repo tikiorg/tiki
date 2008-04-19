@@ -28,6 +28,13 @@
               <option value="points_desc" {if $prefs.faq_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
+          <td class="form">{tr}Question and Answer prefix on Answers{/tr}</td>
+          <td><select name="faq_prefix">
+              <option value="none" {if $prefs.faq_prefix eq 'none'}selected="selected"{/if}>{tr}None{/tr}</option>
+							<option value="QA" {if $prefs.faq_prefix eq 'QA'}selected="selected"{/if}>{tr}Q and A{/tr}</option>
+              <option value="question_id" {if $prefs.faq_prefix eq 'question_id'}selected="selected"{/if}>{tr}Question ID{/tr}</option>
+              </select></td>
+        </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="faqcomprefs"
               value="{tr}Change settings{/tr}" /></td>
         </tr></table>

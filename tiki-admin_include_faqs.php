@@ -15,8 +15,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["faqcomprefs"])) {
 	check_ticket('admin-inc-faqs');
 	simple_set_value('faq_comments_per_page');
-	simple_set_value('faq_comments_default_ordering');
 	simple_set_toggle('feature_faq_comments');
+	simple_set_value('faq_comments_default_ordering');
+	simple_set_value('faq_prefix');
 }
 ask_ticket('admin-inc-faqs');
 ?>
