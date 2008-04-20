@@ -55,6 +55,7 @@ if (isset($_REQUEST["wikiattprefs"])) {
 	simple_set_toggle('feature_wiki_attachments');
 	simple_set_value('w_use_db');
 	simple_set_value('w_use_dir');
+	simple_set_toggle('w_displayed_default');
 }
 
 if (isset($_REQUEST["wikiprefs"])) {

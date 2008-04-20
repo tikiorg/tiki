@@ -5,7 +5,8 @@
 {if $tiki_p_wiki_view_attachments == 'y'
  || $tiki_p_wiki_admin_attachments == 'y'
  || $tiki_p_wiki_attach_files == 'y'}
-{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}
+{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y')
+or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}
 <div id="attzone" style="display:block;">
 {else}
 <div id="attzone" style="display:none;">

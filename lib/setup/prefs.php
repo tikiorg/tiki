@@ -391,6 +391,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_tasks'] = 'n';
 	$prefs['w_use_db'] = 'y';
 	$prefs['w_use_dir'] = '';
+	$prefs['w_displayed_default'] = 'n';
 	$prefs['uf_use_db'] = 'y';
 	$prefs['uf_use_dir'] = '';
 	$prefs['userfiles_quota'] = 30;

@@ -127,8 +127,8 @@
     {else}
       <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
     {/if}
-    <span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
-'y'}inline{else}none{/if};">({tr}Hide{/tr})
+    <span id="attzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
+'y') or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}inline{else}none{/if};">({tr}Hide{/tr})
     </span>
     </a>
   </span>
