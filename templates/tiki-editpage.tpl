@@ -392,7 +392,7 @@ function searchrep() {
 <input type="hidden" name="page2" value="{$page}" />
 <input name="userfile2" type="file" id="attach-upload" />
  {tr}Comment{/tr}:<input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
-<input type="submit" class="wikiaction" name="attach" value="{tr}attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
+<input type="submit" class="wikiaction" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;" />
 </td></tr>
 {/if}
 {/if}

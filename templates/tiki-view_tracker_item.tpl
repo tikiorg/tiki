@@ -183,7 +183,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 <tr class="formcolor"><td>{tr}Version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea></td></tr>
 
-<tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}attach{/tr}"{/if} /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if} /></td></tr>
 </table>
 </form>
 {/if}

@@ -123,7 +123,7 @@
     {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
       {tr}Attach File{/tr}
     {elseif $atts|@count == 1}
-      {tr}1 file attached{/tr}
+      {tr}1 File Attached{/tr}
     {else}
       {tr}{$atts|@count} files attached{/tr}
     {/if}

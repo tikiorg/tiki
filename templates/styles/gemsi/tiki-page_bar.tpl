@@ -98,7 +98,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}Edit{/tr}</s
          && $tiki_p_wiki_admin_attachments == 'n'}
           {tr}Attach File{/tr}
         {elseif $atts_cnt == 1}
-          <span class="highlight">{tr}1 file attached{/tr}</span>
+          <span class="highlight">{tr}1 File Attached{/tr}</span>
         {else}
           <span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
         {/if}

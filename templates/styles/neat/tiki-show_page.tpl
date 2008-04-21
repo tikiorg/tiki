@@ -193,9 +193,9 @@
 {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
 {tr}Attach File{/tr}
 {elseif $atts|@count == 1}
-<span class="highlight">{tr}1 file attached{/tr}</span>
+<span class="highlight">{tr}1 File Attached{/tr}</span>
 {else}
-<span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
+<span class="highlight">{tr}{|} Files Attached{/tr}$atts|@count{tr}{|} Files Attached{/tr}</span>
 {/if}
 <span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
 </a></span>

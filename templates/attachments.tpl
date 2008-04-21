@@ -72,7 +72,7 @@ or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
                         <input size="16 " name="userfile1" type="file" id="attach-upload" />
    <label for="attach-comment">{tr}Comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
-                        <input type="submit" name="attach" value="{tr}attach{/tr}"/>
+                        <input type="submit" name="attach" value="{tr}Attach{/tr}"/>
  </td>
 </tr>
 </table>
