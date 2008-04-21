@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{include file="header_simple.tpl"}
 		<div class="center itranslator" style="clear: both">
 
 			<h1>{tr}Interactive translator{/tr}</h1>
