@@ -116,8 +116,8 @@
 					{literal}{if $user neq ''}{/literal}&lt;div align="right" style="float: right; font-size: 10px"&gt;{literal}{{/literal}tr}{tr}logged as{/tr}{literal}{/tr}{/literal}: {literal}{$user}{/literal}&lt;/div&gt;{literal}{/if}{/literal}</small></td>
 				</tr>
 				<tr>
-					<td class="form"><label for="sitemycode_publish">{tr}Publish{/tr}:</label></td>
-					<td><input type="checkbox" name="sitemycode_publish" id="sitemycode_publish"{if $prefs.sitemycode_publish eq 'y'} checked="checked"{/if} /></td>
+					<td class="form"><label for="sitemycode_publish">{tr}visible to admin only{/tr}:</label></td>
+					<td><input type="checkbox" name="sitemycode_publish" id="sitemycode_publish"{if $prefs.sitemycode_publish ne 'y'} checked="checked"{/if} /></td>
 				</tr>
         	</table>
 	</fieldset>
