@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n, url=\"http://site.com\", values=val1:val2:val3, sort=y|n)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=>1, fields=>id1:id2:id3, action=>Name of submit button, showtitle=>y|n, showdesc=>y|n, showmandatory=>y|n, embedded=>y|n, url=\"http://site.com\", values=val1:val2:val3, sort=y|n,preview=preview)}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
@@ -62,7 +62,7 @@ function wikiplugin_tracker($data, $params) {
 			$preview = 'Preview';
 		}
 	} else {
-		unset($_REQUEST['preview']);
+		unset($_REQUEST['tr_preview']);
 	}
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
@@ -93,7 +93,7 @@ function wikiplugin_tracker($data, $params) {
 
 	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
 
-	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['preview'])) {
+	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
@@ -224,7 +224,7 @@ function wikiplugin_tracker($data, $params) {
 					}
 				}
 
-				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['preview'])) {
+				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
 					if (!isset($itemId))
 						$itemId = $trklib->get_user_item($trackerId, $tracker);
@@ -420,7 +420,7 @@ function wikiplugin_tracker($data, $params) {
 			if ($showdesc == 'y' && $tracker['description']) {
 				$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 			}
-			if (isset($_REQUEST['preview'])) { // use for the computed and join fields
+			if (isset($_REQUEST['tr_preview'])) { // use for the computed and join fields
 				$assocValues = array();
 				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
@@ -683,12 +683,12 @@ function wikiplugin_tracker($data, $params) {
 							$params['date'] = $f['value'];
 						}
 						$back .= smarty_function_jscalendar_body($params,$smarty);
-					} elseif ($f['type'] == 'C' && isset($_REQUEST['preview'])) { // computed
+					} elseif ($f['type'] == 'C' && isset($_REQUEST['tr_preview'])) { // computed
 						$back .= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</td><td>";
 						$calc = preg_replace('/#([0-9]+)/','$assocNumerics[\1]',$f['options_array'][0]);
 						eval('$computed = '.$calc.';');
 						$back .= $computed;
-					} elseif ($f['type'] ==  'l'  && isset($_REQUEST['preview'])) { // itemlist
+					} elseif ($f['type'] ==  'l'  && isset($_REQUEST['tr_preview'])) { // itemlist
 						$back .= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors)."</td><td>";
 						$items = $trklib->get_items_list($f['options_array'][0], $f['options_array'][1], $assocValues[$f['options_array'][2]]);
 						$i = 0;
@@ -712,7 +712,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 			$back.= "<tr><td></td><td>";
 			if (!empty($preview)) {
-				$back .= "<input type='submit' name='preview' value='".tra($preview)."' />";
+				$back .= "<input type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
 			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
