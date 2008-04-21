@@ -1,5 +1,4 @@
 {* $Id: tiki.tpl 12618 2008-04-21 05:43:35Z chibaguy $ *}
-
 {include file="header.tpl"}
 {if $prefs.feature_ajax eq 'y'}
 {include file="tiki-ajax_header.tpl"}
