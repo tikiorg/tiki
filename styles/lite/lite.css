@@ -126,7 +126,7 @@ html>/*leave this comment here - it acts as an universal anti-IE hack !*/body
 
 /* next comes footer */
 #footer {border-color: #066; clear: both; width: 100%;}
-.footerbgtrap {background-color: #606060; color: white;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
+.footerbgtrap {background-color: transparent;}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 
 /*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
 
