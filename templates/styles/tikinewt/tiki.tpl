@@ -6,13 +6,15 @@
 {/if}
 <div id="main"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
-<div id="header">
+<div class="clearfix" id="header">
+	<div id="header-top">
 	{if $prefs.feature_siteidentity eq 'y'}
 	{* Site identity header section *}
 	<div class="clearfix" id="siteheader">
 		{include file="tiki-site_header.tpl"}
 	</div>
 	{/if}
+	</div>
 	{if $prefs.feature_top_bar eq 'y'}
 	<div class="clearfix" id="tiki-top">
 		{include file="tiki-top_bar.tpl"}
