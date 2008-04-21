@@ -1,5 +1,4 @@
 {* $Id$ *}
-
 {include file="header.tpl"}
 {if $prefs.feature_ajax eq 'y'}
 {include file="tiki-ajax_header.tpl"}
