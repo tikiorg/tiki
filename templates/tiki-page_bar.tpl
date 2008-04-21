@@ -119,13 +119,13 @@
 
 {strip}
   <span class="button2">
-    <a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut">
+    <a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
     {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
       {tr}Attach File{/tr}
     {elseif $atts|@count == 1}
-      <span class="highlight">{tr}1 file attached{/tr}</span>
+      {tr}1 file attached{/tr}
     {else}
-      <span class="highlight">{tr}{$atts|@count} files attached{/tr}</span>
+      {tr}{$atts|@count} files attached{/tr}
     {/if}
     <span id="attzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
 'y') or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}inline{else}none{/if};">({tr}Hide{/tr})
