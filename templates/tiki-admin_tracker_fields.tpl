@@ -81,7 +81,7 @@
 <tr class="formcolor"><td>{tr}Field is hidden?{/tr}</td><td>
 <select name="isHidden">
 <option value="n"{if $isHidden eq 'n'} selected="selected"{/if}>{tr}not hidden{/tr}</option>
-<option value="y"{if $isHidden eq 'y'} selected="selected"{/if}>{tr}visible by admin only{/tr}</option>
+<option value="y"{if $isHidden eq 'y'} selected="selected"{/if}>{tr}visible to admin only{/tr}</option>
 <option value="p"{if $isHidden eq 'p'} selected="selected"{/if}>{tr}editable by admin only{/tr}</option>
 <option value="c"{if $isHidden eq 'c'} selected="selected"{/if}>{tr}visible by creator &amp; admin only{/tr}</option>
 </select><br /><i>{tr}The option creator needs a field of type user selector and option 1{/tr}</i>
