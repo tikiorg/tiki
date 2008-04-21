@@ -9,17 +9,14 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="directory_top_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="0" cellspacing="0">
+ {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modTopdirSites}
-      <tr>
-        {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
-        <td class="module">
-          <a class="linkmodule" href="tiki-directory_redirect.php?siteId={$modTopdirSites[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target="_new"{/if}>
+        <li>
+		<a class="linkmodule" href="tiki-directory_redirect.php?siteId={$modTopdirSites[ix].siteId}" {if $directory_open_links eq 'n'}target="_new"{/if}>
             {$modTopdirSites[ix].name}
           </a>
-        </td>
-      </tr>
+      </li>
     {/section}
-  </table>
+ {if $module_params.nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}

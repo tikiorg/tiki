@@ -10,11 +10,11 @@
 {/if}
 
 {tikimodule title=$tpl_module_title name="top_games" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-<table  border="0" cellpadding="0" cellspacing="0">
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section name=ix loop=$modTopGames}
-<tr>{if $nonums neq 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
-<td class="module"><a class="linkmodule" href="tiki-list_games.php?game={$modTopGames[ix].gameName}">{$modTopGames[ix].thumbName}</a></td></tr>
+<li>
+<a class="linkmodule" href="tiki-list_games.php?game={$modTopGames[ix].gameName}">{$modTopGames[ix].thumbName}</a></li>
 {/section}
-</table>
+{if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}

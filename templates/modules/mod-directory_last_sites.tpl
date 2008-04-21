@@ -9,12 +9,9 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="directory_last_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="1" cellspacing="0" width="100%">
+{if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
   {section name=ix loop=$modLastdirSites}
-    <tr>
-      {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
-      <td class="module">
-	  	{if $absurl == 'y'}
+     <li>{if $absurl == 'y'}
           <a class="linkmodule" href="{$base_url}tiki-directory_redirect.php?siteId={$modLastdirSites[ix].siteId}" {if $prefs.directory_open_links eq 'n'}target="_new"{/if}>
           {$modLastdirSites[ix].name}
           </a>
@@ -23,13 +20,12 @@
           {$modLastdirSites[ix].name}
         </a>
 		{/if}
-      </td>
-    </tr>
+      </li>
   {/section}
-  </table>
+ {if $module_params.nonums != 'y'}</ol>{else}</ul>{/if}
 {if $module_params.more eq 'y'}
 	<div class="more">
-		 <a class="linkbut" href="tiki-directory_browse.php{if $module_params.categoryId}?parent={$module_params.categoryId}{/if}">{tr}More...{/tr}</a>
+		<a class="linkbut" href="tiki-directory_browse.php{if $module_params.categoryId}?parent={$module_params.categoryId}{/if}">{tr}More...{/tr}</a>
 	</div>
 {/if}
 {/tikimodule}

@@ -9,13 +9,9 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_modif_events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-   <table  border="0" cellpadding="0" cellspacing="0">
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modLastEvents}
-     <tr>
-      {if $nonums != 'y'}
-        <td class="module" valign="top">{$smarty.section.ix.index_next})</td>
-      {/if}
-      <td class="module">&nbsp;{$modLastEvents[ix].start|tiki_short_datetime}<br />
+     <li>{$modLastEvents[ix].start|tiki_short_datetime}<br />
        <a class="linkmodule" href="tiki-calendar.php?todate={$modLastEvents[ix].start}" title="{$modLastEvents[ix].lastModif|tiki_short_datetime}, {tr}by{/tr} {if $modLastEvents[ix].user ne ''}{$modLastEvents[ix].user}{else}{tr}Anonymous{/tr}{/if}">
         {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
          {$modLastEvents[ix].name|truncate:$maxlen:"...":true}
@@ -23,9 +19,8 @@
          {$modLastEvents[ix].name}
         {/if}
        </a>
-      </td>
-     </tr>
+      </li>
     {/section}
-   </table>
+	{if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}

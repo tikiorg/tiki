@@ -9,22 +9,20 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="1" cellspacing="0" width="100%">
+{if $nonums != 'y'}<ol class="module">{else}<ul class="module">{/if}
     {section name=ix loop=$modLastArticles}
-      <tr>
-        {if $nonums != 'y'}<td class="module">{$smarty.section.ix.index_next})</td>{/if}
+      <li>
 		{if $showTopicImg eq 'y' or $showDate eq 'y'}
-		<td class="module">
+		<div class="module">
 			{if $showDate eq 'y'}
-			<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
+				<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
 			{/if}
 			{if isset($showImg)}
-			{if $modLastArticles[ix].hasImage eq 'y'}<div class="image"><img alt="" border="0" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" /></div>{elseif $modLastArticles[ix].topicId}<div class="image"><img alt="" border="0" src="topic_image.php?id={$modLastArticles[ix].topicId}" width="{$showImg}" /></div>{/if}
+			{if $modLastArticles[ix].hasImage eq 'y'}<div class="image"><img alt="" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" /></div>{elseif $modLastArticles[ix].topicId}<div class="image"><img alt="" src="topic_image.php?id={$modLastArticles[ix].topicId}" width="{$showImg}" /></div>{/if}
 			{/if}
-		</td>		
+		</div>		
 		{/if}
-        <td class="module">
-		  {if $absurl == 'y'}
+ 		  {if $absurl == 'y'}
           <a class="linkmodule" href="{$base_url}tiki-read_article.php?articleId={$modLastArticles[ix].articleId}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
             {$modLastArticles[ix].title}
           </a>
@@ -38,10 +36,9 @@
 		  	   {if $showHeading > 0 and $showHeading ne 'y'}{$modLastArticles[ix].parsedHeading|truncate:$showHeading}{else}{$modLastArticles[ix].parsedHeading}{/if}
 		  </div>
 		  {/if}
-        </td>
-      </tr>
+        </li>
     {/section}
-  </table>
+{if $nonums != 'y'}</ol>{else}</ul>{/if}
 {if $module_params.more eq 'y'}
 	<div class="more">
 		 {assign var=sep value='?'}

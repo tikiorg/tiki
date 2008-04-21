@@ -9,17 +9,12 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="forums_best_voted_topics" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="0" cellspacing="0">
-    {section name=ix loop=$modForumsTopTopics}
-      <tr>
-        {if $nonums != 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
-        <td class="module">
-          <a class="linkmodule" href="{$modForumsTopTopics[ix].href}">
-            {$modForumsTopTopics[ix].name}
-          </a>
-        </td>
-      </tr>
-    {/section}
-  </table>
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
+   {section name=ix loop=$modForumsTopTopics}
+		<li><a class="linkmodule" href="{$modForumsTopTopics[ix].href}">
+           {$modForumsTopTopics[ix].name}</a>
+		</li>
+   {/section}
+   {if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}

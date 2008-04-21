@@ -10,11 +10,10 @@
 {/if}
 
 {tikimodule title="{tr}Top galleries{/tr}" name="top_image_galleries" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-<table  border="0" cellpadding="0" cellspacing="0">
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section name=ix loop=$modTopGalleries}
-<tr>{if $nonums != 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
-<td class="module"><a class="linkmodule" href="tiki-browse_gallery.php?galleryId={$modTopGalleries[ix].galleryId}">{$modTopGalleries[ix].name}</a></td></tr>
+<li><a class="linkmodule" href="tiki-browse_gallery.php?galleryId={$modTopGalleries[ix].galleryId}">{$modTopGalleries[ix].name}</a></li>
 {/section}
-</table>
+{if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}

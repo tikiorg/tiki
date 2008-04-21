@@ -3,20 +3,15 @@
 {if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}$module_title{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="0" cellspacing="0">
+ {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modArticles}
-    <tr>
-      {if $module_params.nonums != 'y'}
-        <td class="module" valign="top">{$smarty.section.ix.index_next})</td>
-      {/if}
-      <td class="module">&nbsp;
+       <li>
         <a class="linkmodule" href="tiki-read_article.php?articleId={$modArticles[ix].articleId}">
           {$modArticles[ix].title}
         </a>
-        </td>
-    </tr>
+        </li>
     {/section}
-  </table>
+ {if $module_params.nonums != 'y'}</ol>{else}</ul>{/if}
 {if $module_params.more eq 'y'}
 	<div class="more">
 		 {assign var=sep value='?'}

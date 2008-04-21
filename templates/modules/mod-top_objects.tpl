@@ -8,11 +8,12 @@
 {/if}
 
   {tikimodule title=$tpl_module_title name="top_objects" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="0" cellspacing="0">
+  {if $nonums != 'y'}<ol>{else}<ul>{/if}
   {section name=ix loop=$modTopObjects}
-     <tr>{if $nonums != 'y'}<td class="module" valign='top'>{$smarty.section.ix.index_next})</td>{/if}
-     <td class="module">{$modTopObjects[ix]->object} ({$modTopObjects[ix]->type})</td></tr>
+	<li>
+	{$modTopObjects[ix]->object} ({$modTopObjects[ix]->type})
+	</li>
   {/section}
-  </table>
+  {if $nonums != 'y'}</ol>{else}</ul>{/if}
   {/tikimodule}
 {/if}

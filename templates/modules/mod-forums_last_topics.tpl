@@ -9,23 +9,20 @@
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="forums_last_topics" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
-  <table  border="0" cellpadding="1" cellspacing="0" width="100%">
+{if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modForumsLastTopics}
-      <tr>
-        {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
-        <td class="module">
-		  {if $absurl == 'y'}
+      <li>
+	  	{if $absurl == 'y'}
           <a class="linkmodule" href="{$base_url}{$modForumsLastTopics[ix].href}" title="{$modForumsLastTopics[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastTopics[ix].user ne ''}{$modForumsLastTopics[ix].user}{else}{tr}Anonymous{/tr}{/if}">
             {$modForumsLastTopics[ix].name}
           </a>
-		  {else}
+		{else}
           <a class="linkmodule" href="{$modForumsLastTopics[ix].href}" title="{$modForumsLastTopics[ix].date|tiki_short_datetime}, {tr}by{/tr} {if $modForumsLastTopics[ix].user ne ''}{$modForumsLastTopics[ix].user}{else}{tr}Anonymous{/tr}{/if}">
             {$modForumsLastTopics[ix].name}
           </a>
-		  {/if}
-        </td>
-      </tr>
+		{/if}
+        </li>
     {/section}
-  </table>
+{if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}
 {/if}
