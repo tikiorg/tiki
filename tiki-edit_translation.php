@@ -219,6 +219,8 @@ if ($type == "wiki page") {
 					INNER JOIN tiki_translated_objects b ON a.traId = b.traId
 				WHERE
 					b.lang = ?
+					AND a.type = 'wiki page'
+					AND b.type = 'wiki page'
 			)
 		ORDER BY pageName ASC", array($langpage, $info['page_id'], $langpage) );
   $pages = array( 'data' => array() );
