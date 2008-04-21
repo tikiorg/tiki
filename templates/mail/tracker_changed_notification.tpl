@@ -10,6 +10,7 @@
   {$mail_date|tiki_short_datetime}
 
 {$mail_data}
+{* {$mail_data|replace:"\n\n":"\n"|replace:":\n":": "} to reduce the number of line *}
 
 {if $mail_attId}
 {tr}Download the file at:{/tr}
