@@ -105,7 +105,7 @@ if (isset($_REQUEST['cancel_edit'])) {
 		$page = $approvedPageName;  
 	}
 	$tikilib->semaphore_unset($page, $_SESSION["edit_lock_$page"]);
-	$url = "location: tiki-index.php?page=" . urlencode($page);
+	$url = "location:".$wikilib->sefurl($page);
 	if (!empty($_REQUEST['page_ref_id'])) {
 		$url .= '&page_ref_id='.$_REQUEST['page_ref_id'];
 	}	
@@ -311,7 +311,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
     if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
     } else {
-		$url = "tiki-index.php?page=$page";
+		$url = $wiki->sefurl($page);
     }
 	if ($prefs['feature_best_language'] == 'y') {
 		$url .= '&bl=n';
@@ -991,7 +991,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
   } else {
-		$url = "tiki-index.php?page=$page";
+	  $url = $wikilib->sefurl($page);
   }
   if ($prefs['feature_best_language'] == 'y') {
 		$url .= '&bl=n';
