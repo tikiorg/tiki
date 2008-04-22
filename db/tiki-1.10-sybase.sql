@@ -706,7 +706,7 @@ CREATE TABLE "tiki_blog_posts" (
   "user" varchar(200) default '',
   "trackbacks_to" text default '',
   "trackbacks_from" text default '',
-  "title" varchar(80) default NULL NULL,
+  "title" varchar(255) default NULL NULL,
   "priv" varchar(1) default NULL NULL,
   PRIMARY KEY ("postId")
 ) ENGINE=MyISAM  
