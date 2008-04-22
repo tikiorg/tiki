@@ -122,7 +122,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+h3.box-title, div.box-title {
 	background-color:    #CCCCCC;
 	border-bottom:   1px solid black;
 	color:   black;
@@ -133,7 +133,7 @@ div.box-title {
 	text-align:   left;
 	padding-left:   5px;
 	padding-right:   0px;
-	margin-bottom:   0px;
+	margin-bottom:   0px; margin-top: 0;
 	width:   170px;
 }
 
@@ -2824,4 +2824,14 @@ background-color: #edeeef;
 .highlight_word_2{color:black;background-color: #A0FFFF;}
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;}
 /* end of css file */

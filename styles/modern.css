@@ -96,12 +96,12 @@ h1, h2, h3, h4, h5, h6, p, .blogtitle, .separator, a.pagetitle
 
 .box-titletext, .titleb { color: white; font-weight: bold; padding: 1px; }
 
-div.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
+h3.box-title, .xxbox-title, .cbox-title, .articletitle, .tabmark, div.posthead,
 .heading, div.blogtitle {
     background-image: url(modern/bluebar.jpg);
     color: white;
     font-weight: bold;
-    margin-bottom: 1px;
+    margin-bottom: 1px; margin-top: 0;
     padding: 2px 0px 2px 0px;
     text-align: left;
 }
@@ -372,4 +372,14 @@ input.wikitext { padding: 0px; }
 .highlight_word_2{color:black;background-color: #A0FFFF;}
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {	margin-left: 3em;}
+* html .box-data ul {	margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 1em;}
 /* end of css file */

@@ -14,6 +14,11 @@ body {
 	text-align: center;
 }
 
+*:first-child+html
+body {
+	font-size: 75% !important;
+}
+
 
 html>body {
 	font: 84.5% Georgia, serif;
@@ -172,7 +177,7 @@ ul, ol {
 }
 
 li {
-	list-style: none;
+	
 }
 
 * html li {
@@ -765,16 +770,20 @@ a.flipmodtitle:hover img {
 
 .box-data ol,
 .box-data ul {
-	margin-left: -2em;
+	margin-left: -1.4em;
 	padding-right: 1em;
-	overflow: hidden;
+
 }
 
 /* IE */
-* html .box-data ul {	margin-left: 0;}
+* html .box-data ol {margin-left: 1em;}
+* html .box-data ul {margin-left: 1em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 2em}
+*:first-child+html .box-data ul {margin-left: 1em;}
 
-.box-data ol li {
-	list-style: none;
+.box-data ul li {
+	list-style: square;
 }
 
 /** Other boxes **/

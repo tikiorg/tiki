@@ -428,7 +428,7 @@ textarea {
  margin: 0.2em;
  padding: 0;
 }
-div.box-title {
+h3.box-title, div.box-title {
  background: #24880C url("amette/gradient.png") center center repeat-x;
  border-bottom: solid 0 #abcdef;
  overflow: hidden;
@@ -436,7 +436,7 @@ div.box-title {
  text-align: center;
  color: #FFFFFF;
 }
-div.box-title a, span.box-titletext a {
+h3.box-title a, div.box-title a, span.box-titletext a {
   color: white;
   }
 div.box-title table {
@@ -1420,3 +1420,14 @@ float: right;
 	font-weight: normal;
 	padding: 0px;
 }
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: 0;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;}
+/* end of css file */

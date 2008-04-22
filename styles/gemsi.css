@@ -155,23 +155,23 @@ div.box {
 	margin: 2px;
 	padding-bottom: 10px;
 }
-div.box-title, span.box-titletext {
+h3.box-title, span.box-titletext {
 	font-size: 110%;
 	font-weight: bold;
-	margin-bottom: 1px;
+	margin-bottom: 1px; margin-top: 0;
 	overflow: hidden;
 	color: #999999;
 	border-bottom: 1px solid #cccccc;
 }
-#leftcolumn div.box-title {
+#leftcolumn .box-title {
 	display: none;
 }
-div.box-title > a, span.box-titletext > a {
+h3.box-title > a, div.box-title > a, span.box-titletext > a {
 	text-decoration: underline;
 	color: #999999;
 }
 
-div.box-title > a, span.box-titletext > a:hover {
+h3.box-title > a, div.box-title > a, span.box-titletext > a:hover {
 	color: #1c60a8;
 }
 div.box-title table {
@@ -1973,4 +1973,14 @@ div.admbox img { margin-top: 20px; }
 .highlight_word_2{color:black;background-color: #A0FFFF;}
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {	margin-left: 3em;}
+* html .box-data ul {	margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;padding-right: 0}
 /* end of css file */

@@ -260,7 +260,7 @@ div.box {
 	width : 174px;
 	font-size : 10px;
 }
-div.box-title {
+h3.box-title, div.box-title {
 	background-color: #F3F6F9;
 	border-bottom : 1px solid #ACCCDD;
 	overflow : hidden;
@@ -2110,4 +2110,13 @@ table.default	td {
   width: auto;
 }
 
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;}
 /* end of css file */

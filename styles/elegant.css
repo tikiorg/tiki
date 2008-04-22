@@ -136,7 +136,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+h3.box-title {
 	/*background-image: url(dblue/dbluetop.jpg);  */
 	background-repeat:    no-repeat;
 	height:   19px;
@@ -152,10 +152,10 @@ div.box-title {
 	text-align:   center;
 	padding-left:   0px;
 	padding-right:   0px;
-	margin-bottom:   1px;
+	margin-bottom:   1px; margin-top: 0;
 	width:   170px;
 }
-
+h3.box-title a, h3.box-title:visited {color: white}
 div.box-title table {
     width: 100%;
 }
@@ -3033,4 +3033,14 @@ div.admbox img { margin-top: 20px; }
 .highlight_word_2{color:black;background-color: #A0FFFF;}
 .highlight_word_3{color:black;background-color: #ff66ff;}
 .highlight_word_4{color:black;background-color: #99ff99;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: 0;padding-right: 1em}
+/* IE */
+* html .box-data ol {	margin-left: 3em;}
+* html .box-data ul {	margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 3em}
+*:first-child+html .box-data ul {margin-left: 3em;}
 /* end of css file */

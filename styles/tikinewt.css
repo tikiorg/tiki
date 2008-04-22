@@ -742,21 +742,18 @@ div.box-data {
 	overflow: hidden;
 }
 
-.box-data ul {
-	list-style: none;
-}
-
 .box-data ol,
 .box-data ul {
 	margin-left: -3em;
 	padding-right: 1em;
-	overflow: hidden;
 }
 
-html .box-data ul {
-	margin-left: 0;
-	
-}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 2em;}
 
 td.module {
 	font-size: .95em;

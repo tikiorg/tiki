@@ -2368,4 +2368,11 @@ text-align: left;
 }
 .tabcontent { _width: 97% }
 
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: 0;padding-right: 1em}
+/* IE */
+* html .box-data ol {	margin-left: 3em;}
+* html .box-data ul {	margin-left: 2em;}
+*:first-child+html .box-data ul {margin-left: 3em;}
 /* end of css file */

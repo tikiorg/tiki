@@ -352,7 +352,7 @@ ul, ol {
  overflow: hidden;
  padding: 0;
 }
-div.box-title {
+h3.box-title, div.box-title {
  background: #abcdef;
  border-bottom: solid 0 #abcdef;
  overflow: hidden;
@@ -931,4 +931,14 @@ ul.toc li {margin-left: .2em; padding-left: .2em}
 .center {text-align: center;}
 .justify {text-align: justify;}
 .right {text-align: right;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 3em;}
+*:first-child+html .box-data ul {margin-left: 2em;}
 /* end of css file */
