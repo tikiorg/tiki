@@ -4,7 +4,7 @@
    {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$breadCrumb}
       <li>
-        <a class="linkmodule" href="tiki-index.php?page={$breadCrumb[ix]|escape:'url'}">
+        <a class="linkmodule" href="{$breadCrumb[ix]|sefurl}">
           {if ($maxlen > 0 && strlen($breadCrumb[ix]) > $maxlen)}
             {$breadCrumb[ix]|truncate:$maxlen:"...":true}
           {else}
