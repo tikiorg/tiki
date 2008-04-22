@@ -272,8 +272,6 @@ class MenuLib extends TikiLib {
 					$channels['data'][$selecteds[$o]]['selectedAscendant'] = true;
 				}
 			}
-			//if ($channels['data'][0]['optionId'] == 3464) {echo '<pre>SELECTEDS'; print_r($selecteds);echo $optionLevel.'-'.$selectedPosition; print_r($channels['data']);echo '</pre>';}
-
 		}
 		if (isset($selectedPosition)) {
 			$channels['data'][$selectedPosition]['selected'] = true;
