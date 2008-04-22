@@ -436,7 +436,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {elseif $cur_field.type eq 'S'}
 	{if $cur_field.description}
 		{if $cur_field.options_array[0] eq 1}
-			{wiki}{$cur_field.description|escape}{/wiki}
+			{wiki}{$cur_field.description}{/wiki}
 		{else}
 			{$cur_field.description|escape|nl2br}
 		{/if}

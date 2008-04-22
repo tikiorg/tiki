@@ -60,13 +60,13 @@
 {elseif $field_value.type eq 'S'}
 	{if $field_value.options_array[1] ne '' and $list_mode eq 'y'}
 		{if $field_value.options_array[0] eq 1}
-			{wiki}{$field_value.description|truncate:$field_value.options_array[1]:"...":true|escape}{/wiki}
+			{wiki}{$field_value.description|truncate:$field_value.options_array[1]:"...":true}{/wiki}
 		{else}
 			{$field_value.description|truncate:$field_value.options_array[1]:"...":true|escape|nl2br}
 		{/if}
 	{else}
 		{if $field_value.options_array[0] eq 1}
-			{wiki}{$field_value.description|escape}{/wiki}
+			{wiki}{$field_value.description}{/wiki}
 		{else}
 			{$field_value.description|escape|nl2br}
 		{/if}
