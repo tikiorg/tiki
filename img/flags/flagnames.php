@@ -12,6 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Here come the dynamically generated strings for img/flags/*.gif
 tra('Andorra');
 tra('United_Arab_Emirates');
+tra('United_Nations_Organization');
 tra('Afghanistan');
 tra('Antigua');
 tra('Anguilla');
