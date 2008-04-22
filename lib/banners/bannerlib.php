@@ -60,7 +60,7 @@ class BannerLib extends TikiLib {
 
 		case 'useImage':
 			$raw
-				= "<div align='center'><a target=$target href='banner_click.php?id=" . $res["bannerId"] . "&amp;url=" . urlencode($res["url"]). "'><img alt='banner' border='0' src=\"banner_image.php?id=" . $res["bannerId"] . "\" /></a></div>";
+				= "<div align='center' class='banner'><a target=$target href='banner_click.php?id=" . $res["bannerId"] . "&amp;url=" . urlencode($res["url"]). "'><img alt='banner' border='0' src=\"banner_image.php?id=" . $res["bannerId"] . "\" /></a></div>";
 
 			break;
 
