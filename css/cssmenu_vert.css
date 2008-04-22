@@ -50,6 +50,9 @@
 	left: auto;
 }
 
-.cssmenu_vert li.selected a {
+.cssmenu_vert li.selected > a {
 	background-color: #D3D3D3;
+}
+.cssmenu_vert li.selectedAscendant > a {
+	background-color: #E6E6E6;
 }

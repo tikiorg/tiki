@@ -249,11 +249,31 @@ class MenuLib extends TikiLib {
 				$channels['cant'] = 0;
 			}
 		} else {
+			$selecteds = array();
+			$optionLevel = 0;
 			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
+				}
+				if ($option['type'] != 'o' && $option['type'] != '-') {
+					$selecteds[$optionLevel] = $position;
+				}
 				if ($this->menuOptionMatchesUrl($option)) {
 					$selectedPosition = $position;
+					break;
 				}
 			}
+			if (isset($selectedPosition)) {
+				for ($o = 0; $o <= $optionLevel; ++$o) {
+					$channels['data'][$selecteds[$o]]['selectedAscendant'] = true;
+				}
+			}
+			//if ($channels['data'][0]['optionId'] == 3464) {echo '<pre>SELECTEDS'; print_r($selecteds);echo $optionLevel.'-'.$selectedPosition; print_r($channels['data']);echo '</pre>';}
+
 		}
 		if (isset($selectedPosition)) {
 			$channels['data'][$selectedPosition]['selected'] = true;

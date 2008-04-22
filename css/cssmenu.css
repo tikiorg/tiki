@@ -66,8 +66,11 @@
 	cursor : pointer;
 }
 
-.cssmenu li.selected a {
+.cssmenu li.selected > a {
 	background-color: #D3D3D3;
+}
+.cssmenu li.selectedAscendant > a {
+	background-color: #E6E6E6;
 }
 <!--[if IE]>
 <style type="text/css">

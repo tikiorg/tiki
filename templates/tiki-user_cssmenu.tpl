@@ -27,7 +27,7 @@ $smarty->assign('opensec', $opensec);
 {/php}
 {/if}
 
-<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}">
+<li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}{if $chdata.selectedAscendant} selectedAscendant{/if}">
 {if $icon}{icon _id='folder' align="left"}{/if}
 {if $chdata.url and $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
 {tr}{$chdata.name}{/tr}
@@ -38,7 +38,7 @@ $smarty->assign('opensec', $opensec);
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if $chdata.selected} selected{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{tr}{$chdata.name}{/tr}</a></li>
+<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if $chdata.selected} selected{/if}{if $chdata.selectedAscendant} selectedAscendant{/if}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{tr}{$chdata.name}{/tr}</a></li>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}

@@ -39,6 +39,9 @@
 	left: auto;
 }
 
-.cssmenu_horiz li.selected a {
+.cssmenu_horiz li.selected > a {
 	background-color: #D3D3D3;
+}
+ .cssmenu_horiz li.selectedAscendant > a {
+	background-color: #E6E6E6;
 }

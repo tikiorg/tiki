@@ -12,18 +12,10 @@ function smarty_function_menu($params, &$smarty)
     global $menulib; include_once('lib/menubuilder/menulib.php');
 	extract($params);
 
-	if (!isset($sectionLevel))
-		$smarty->caching = true;
 	if (empty($link_on_section) || $link_on_section == 'y') {
 		$smarty->assign('link_on_section', 'y');
 	} else {
 		 $smarty->assign('link_on_section', 'n');
-	}
-	if ($user) {
-		$uid = md5($tikilib->get_user_cache_id($user));
-		$cache_id = "menu$id|" . $uid;
-	} else {
-		$cache_id = "menu$id|";
 	}
 	if (isset($css)) {
 		static $idCssmenu;
@@ -41,16 +33,13 @@ function smarty_function_menu($params, &$smarty)
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}
-    if (!$smarty->is_cached($tpl, "$cache_id")) {
-		$menu_info = $tikilib->get_menu($id);
-		$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
-		$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'');
-		$channels = $tikilib->sort_menu_options($channels);
-		$smarty->assign('menu_channels',$channels['data']);
-		$smarty->assign('menu_info',$menu_info);
-    }
-    $smarty->display($tpl, "$cache_id");
-    $smarty->caching = false;
+	$menu_info = $tikilib->get_menu($id);
+	$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
+	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'');
+	$channels = $tikilib->sort_menu_options($channels);
+	$smarty->assign('menu_channels',$channels['data']);
+	$smarty->assign('menu_info',$menu_info);
+    $smarty->display($tpl);
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }
