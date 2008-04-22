@@ -18,11 +18,63 @@ a.freetag_5 { text-decoration: none; font-size: 16px; }
 a.freetag_6 { text-decoration: none; font-size: 18px; }
 a.freetag_7 { text-decoration: none; font-size: 20px; }
 
-.freetaglist {
-        background-color: #EEF5EE;
+.freetagsearch {
+  margin : 10px 0;
+  text-align: center;
 }
+
+.freetagskeywords {
+  margin: 10px 0;
+}
+
+.freetaglist {
+	background-color : #EEF5EE;
+	margin : 0 10px;
+	padding : 1px 5px;
+	border : 1px dashed #999;
+}
+
 .freetaglist a {
-        text-decoration: none;
+  text-decoration: none;
+}
+
+.freetagsort {
+	margin : 10px 0;
+}
+
+.freetagresult {
+  margin-left: 10%;
+  width : 70%;
+}
+
+.freetagitemlist {
+  background-color: #EEF5EE;
+	margin-top:10px;
+	padding:0px;
+  text-align:left;
+}
+
+.freetagitemlist h3 {
+	margin: 0px;
+	padding:0px;
+	background-color: #e7e9ea;
+}
+
+.freetagitemlist a {
+	text-decoration: none;
+}
+.freetagitemlist img {
+	float: right;
+}
+.freetagitemlist a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	background-color: #b9d6f7;
+}
+.freetagitemlist div.type {
+	font-weight: bold;
+	font-size: 0.8em;
+  margin-left: 10px
 }
 .morcego_embedded {
         border: 1px solid;
