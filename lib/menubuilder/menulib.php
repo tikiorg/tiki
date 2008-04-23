@@ -209,7 +209,9 @@ class MenuLib extends TikiLib {
 		return false;
 	}
 	// assign selected and selectedAscendant to a menu
-	function setSelected($channels, $sectionLevel='') {
+	// sectionLevel ->shows only the list of submenus where the url is find in this level
+	// toLevel -> do not show more than this level
+	function setSelected($channels, $sectionLevel='', $toLevel='') {
 		if (is_numeric($sectionLevel)) { // must extract only the submenu level sectionLevel where the current url is
 			$findUrl = false;
 			$optionLevel = 0;
@@ -222,14 +224,17 @@ class MenuLib extends TikiLib {
 				} else if ($option['type'] == 'r' || $option['type'] == 's') {
 					$optionLevel = 0;
 				}
-				if (!empty($subMenu) && $optionLevel <= $sectionLevel && $option['type'] != 'o') { //close the submenu
+				if (!empty($subMenu) && $optionLevel < $sectionLevel) { //close the submenu
 					if ($findUrl) {
 						break;
 					}
 					unset($subMenu);
 					$cant = 0;
 				}
-				if (($option['type'] == 'o' && $optionLevel == $sectionLevel) || $optionLevel > $sectionLevel) {
+				if ($optionLevel >= $sectionLevel - 1 && !empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
+					$findUrl = true;
+				}
+				if ($optionLevel >= $sectionLevel) {
 					$subMenu[] = $option;
 					++$cant;
 					if (!empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
@@ -237,7 +242,7 @@ class MenuLib extends TikiLib {
 						$selectedPosition = $cant - 1;
 					}
 				}
-				if (is_numeric($option['type'])) {
+				if ($option['type'] != '-' && $option['type'] != 'o') {
 					++$optionLevel;
 				}
 			}
@@ -266,6 +271,9 @@ class MenuLib extends TikiLib {
 					$selectedPosition = $position;
 					break;
 				}
+				if ($option['type'] != '-' && $option['type'] != 'o') {
+					++$optionLevel;
+				}
 			}
 			if (isset($selectedPosition)) {
 				for ($o = 0; $o <= $optionLevel; ++$o) {
@@ -275,6 +283,27 @@ class MenuLib extends TikiLib {
 		}
 		if (isset($selectedPosition)) {
 			$channels['data'][$selectedPosition]['selected'] = true;
+		}
+		if (is_numeric($toLevel)) {
+			$subMenu = array();
+			$cant = 0;
+			foreach ($channels['data'] as $position=>$option) {
+				if (is_numeric($option['type'])) {
+					$optionLevel = $option['type'];
+				} else if ($option['type'] == '-') {
+					$optionLevel = $optionLevel - 1;
+				} else if ($option['type'] == 'r' || $option['type'] == 's') {
+					$optionLevel = 0;
+				}
+				if ($optionLevel <= $toLevel) {
+					$subMenu[] = $option;
+					$cant++;
+				}
+				if ($option['type'] != '-' && $option['type'] != 'o') {
+					++$optionLevel;
+				}
+			}
+			$channels = array('data'=>$subMenu, 'cant'=>$cant);
 		}
 		return $channels;
 	}

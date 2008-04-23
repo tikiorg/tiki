@@ -35,7 +35,7 @@ function smarty_function_menu($params, &$smarty)
 	}
 	$menu_info = $tikilib->get_menu($id);
 	$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
-	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'');
+	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '');
 	$channels = $tikilib->sort_menu_options($channels);
 	$smarty->assign('menu_channels',$channels['data']);
 	$smarty->assign('menu_info',$menu_info);
