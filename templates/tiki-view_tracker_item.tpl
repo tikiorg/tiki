@@ -269,8 +269,9 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 {/if}
 {* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
-<tr class="formcolor"><td>{tr}Status{/tr}</td>
-<td>
+<tr class="formcolor">
+<td class="formlabel">{tr}Status{/tr}</td>
+<td class="formcontent">
 <select name="edstatus">
 {foreach key=st item=stdata from=$status_types}
 <option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if}
