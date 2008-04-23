@@ -550,6 +550,7 @@ div.menuSection div.separator {
 	text-decoration: none;
 }
 /****** Misc. Global Classes (layout and style) ****/
+.hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}
 #clear {
 	clear: both;
 }

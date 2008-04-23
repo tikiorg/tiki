@@ -658,8 +658,7 @@ div.menuSection div.separator {
 /* End from Tikineat */
 
 /****** Misc. Global Classes (layout and style) ****/
-
-.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
+.hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
 div#comzone {	display: none;	margin-top: 10px;}
