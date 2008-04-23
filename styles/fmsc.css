@@ -2375,4 +2375,22 @@ text-align: left;
 * html .box-data ol {	margin-left: 3em;}
 * html .box-data ul {	margin-left: 2em;}
 *:first-child+html .box-data ul {margin-left: 3em;}
+
+/* Module-flip img */
+
+h3.box-title {
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px solid transparent;
+}
+
+a.flipmodtitle:hover img {
+	border: 1px solid #dfc05d !important;
+}
 /* end of css file */

@@ -1983,4 +1983,22 @@ div.admbox img { margin-top: 20px; }
 /* IE7 */
 *:first-child+html .box-data ol,
 *:first-child+html .box-data ul {margin-left: 3em;padding-right: 0}
+
+/* Module-flip img */
+
+h3.box-title {
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px solid transparent;
+}
+
+a.flipmodtitle:hover img {
+	border: 1px solid white !important;
+}
 /* end of css file */
