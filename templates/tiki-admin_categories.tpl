@@ -81,8 +81,10 @@
       <div class="cbox-data">
       <form action="tiki-admin_categories.php" method="post">
       <input type="hidden" name="categId" value="{$categId|escape}" />
-      <table>
-        <tr><td class="form">{tr}Parent{/tr}:</td><td class="form">
+      <table class="normal">
+        <tr class="formcolor">
+        <td class="form">{tr}Parent{/tr}:</td>
+        <td class="form">
 				<select name="parentId">
 				<option value="0">{tr}Top{/tr}</option>
 				{section name=ix loop=$catree}
@@ -90,13 +92,13 @@
 				{/section}
 				</select>
 				</td></tr>
-        <tr><td class="form">{tr}Name{/tr}:</td><td class="form"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-        <tr><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td></tr>
-        {if $categId <= 0}<tr><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i></label></td>
+        <tr class="formcolor"><td class="form">{tr}Name{/tr}:</td><td class="form"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+        <tr class="formcolor"><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td></tr>
+        {if $categId <= 0}<tr class="formcolor"><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i></label></td>
         <td class="form"><input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" /></td></tr>
-        {else}<tr><td class="form" colspan="2"><a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a></td></tr>
+        {else}<tr class="formcolor"><td class="form" colspan="2"><a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a></td></tr>
         {/if}
-        <tr><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+        <tr class="formcolor"><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
       </table>
       </form>
       </div>
