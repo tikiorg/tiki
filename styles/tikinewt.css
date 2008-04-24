@@ -448,15 +448,6 @@ a.phplm:hover, .phplmnormal a:hover {
 	background-color: transparent;
 	text-decoration: underline;
 }
-#jt1 a.phplm, #jt1 a.phplm:hover, #jt1 a.phplm:link, #jt1 .phplmnormal, #jt1 .phplmnormal a:hover {
-	color: #6996C3;
-	text-decoration: none;
-}
-#jt1 .imgs:first-child, .treemenudiv > .imgs:first-child, .treemenudiv > a:first-child { display: none; }
-.box-data table {
-	width: 100%;
-	_width: 95%;
-}
 .mdkverbar  {
 	margin: 0;
 }
@@ -551,10 +542,21 @@ div.menuSection div.separator {
 }
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}
-#clear {
-	clear: both;
+.floatlist {
+	clear: left;
+	list-style-type: none;
+	margin: 0;
+	padding-left: 0;
 }
 
+.floatlist li {
+	float: left;
+}
+div#attzone, div#comzone {	display: none;	margin-top: 10px;}
+div#attzoneopen, div#comzoneopen {display: block; margin-top: 10px;}
+div#edithelpzone {display: none;}
+#rules-copy-panel {display: none;}
+.clear, #clear {clear: both;}
 .clearfix:after {
     content: "."; 
     display: block; 
@@ -566,38 +568,12 @@ div.menuSection div.separator {
 * html .clearfix {height: 1%;}
 /* End hide from IE-mac */
 
-/* floating ul/ol lists */
-.floatlist {
-	clear: left;
-	list-style-type: none;
-	margin: 0;
-	padding-left: 0;
-}
-
-.floatlist li {
-	float: left;
-}
-
-div#debugconsole {
-	position: absolute;
-	background: #F3F6F9;
-	top: 0;
-	left: 20px;
-	right: 310px;
-	height: auto;
-	z-index: 1;
-	padding: 5px;
-	border: 6px ridge #996600;
-	font-size: 1.2em;
-}
-
 #overdiv table {
 	width: auto !important;
 }
 
-div.opaque {
-	background-color: white;
-}
+.attention {color: red;}
+.highlight, #highlight  {}
 
 /* Banners of type text */
 .bannertext {
@@ -612,13 +588,6 @@ div.imagerank {
 	margin: 10px 5px;
 }
 
-.pagetitle, .forumspagetitle {
-	/*font-size: 24px; covered by h1 above. */
-	color: #234956;
-	margin: 0 10px;
-	margin-bottom: 3px;
-}
-
 .link, .gallink, .bloglink, .fgallink, .trailer,
 .opencomlink, .commentslink, .admlink,.forumbutlink {
 	font-weight: normal;
@@ -628,6 +597,19 @@ div.imagerank {
 div.searchdate {
 	font-size: .95em;
 	color: #333333;
+}
+
+div#debugconsole {
+	position: absolute;
+	background: #F3F6F9;
+	top: 0;
+	left: 20px;
+	right: 310px;
+	height: auto;
+	z-index: 1;
+	padding: 5px;
+	border: 6px ridge #996600;
+	font-size: 1.2em;
 }
 
 /* Pagination for listings */
@@ -644,43 +626,18 @@ div.searchdate {
 	padding: 1px 6px;
 }
 
-.attention {
-	color: red;
-}
+a.tikihelp, a.tikihelp:visited {}
+a.tikihelp:hover {}
 
-.highlight, #highlight  {
-	background: #eeee99 !important;
-	color: #000000;
-}
+#rss img {}
 
-div#edithelpzone {
-	display: none;
-}
-
-div#attzone {
-	display: none;
-	margin-top: 10px;
-}
-
-div#attzoneopen {
-	display: block;
-	margin-top: 10px;
-}
-a.tikihelp, a.tikihelp:visited {
-	border: 0;
-	vertical-align: text-top;
-}
-
-a.tikihelp:hover {
-	color: #224466;
-	cursor: help;
-	vertical-align: text-top;
-}
 /** Admin pages **/
 /* overrides inline css */
 div.adminanchors {background: #E9ECEF !important}
 
-/**** Boxes *****/
+/** Modules **/
+/* For extra module perimeter */
+.box-shadow {}
 
 div.box {
 	background: white;
