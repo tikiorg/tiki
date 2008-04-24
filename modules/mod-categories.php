@@ -70,7 +70,7 @@ if ($prefs['feature_categories'] != 'y') {
 				"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $cat["categId"] .$urlEnd.'">' . $cat["name"] . '</a><br />'
 			);
 		}
-		$tm = new CatBrowseTreeMaker("categ");
+		$tm = new CatBrowseTreeMaker("mod_categ");
 		$res = $tm->make_tree($categId, $tree_nodes);
 		$smarty->assign('tree', $res);
 	}
