@@ -3,6 +3,6 @@
 {else}
 {tr}Look at this link:{/tr}
 {/if}
-{$prefix}{$url}
+{$prefix}{$url|replace:' ':'+'}
 
 {$name}
