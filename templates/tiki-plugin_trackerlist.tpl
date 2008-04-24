@@ -136,7 +136,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
 
-{if $more}
+{if $more eq 'y'}
 	<div class="more">
 		 <a class="linkbut" href="{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}">{tr}More...{/tr}</a>
 	</div>
