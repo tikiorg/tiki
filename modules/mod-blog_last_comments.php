@@ -16,6 +16,10 @@ function blog_last_comments($limit)
 	    FROM `tiki_comments` c, `tiki_blog_posts` b
 	    WHERE `objectType`='post' AND b.`postId`=c.`object`
 	    ORDER BY `commentDate` desc";
+
+    global $bloglib;
+	include_once ('lib/blogs/bloglib.php');
+
     global $tikilib;
     global $user;
     $result = $tikilib->query($query, array(), $limit, 0);
@@ -24,14 +28,21 @@ function blog_last_comments($limit)
     while ($res = $result->fetchRow())
     {
       //WYSIWYCA hack: the $limit will not be respected
-      if($tikilib->user_has_perm_on_object($user,$res["postId"],'post','tiki_p_read_blog')) {
-		$aux["blogPostTitle"] = $res["blogPostTitle"];
-		$aux["postId"] = $res["postId"];
-		$aux["threadId"] = $res["threadId"];
-		$aux["commentTitle"]= $res["commentTitle"];
-		$aux["commentDate"] = $res["commentDate"];
-		$aux["user"] = $res["userName"];
-		$ret[] = $aux;
+      if ($tikilib->user_has_perm_on_object($user,$res["postId"],'post','tiki_p_read_blog')) {
+		/// check if the blog post is marked private
+		$priv = '';
+		if ($res2 = $bloglib->get_post($res['postId']['priv'])) {
+			$priv = $res2['priv'];
+		}
+		if ($priv != 'y' || ($user && $user == $res2["user"]) || $tiki_p_blog_admin == 'y') {
+			$aux["blogPostTitle"] = $res["blogPostTitle"];
+			$aux["postId"] = $res["postId"];
+			$aux["threadId"] = $res["threadId"];
+			$aux["commentTitle"]= $res["commentTitle"];
+			$aux["commentDate"] = $res["commentDate"];
+			$aux["user"] = $res["userName"];
+			$ret[] = $aux;
+		}
       }
     }
     return $ret;
