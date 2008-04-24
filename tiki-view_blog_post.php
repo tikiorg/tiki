@@ -91,6 +91,13 @@ if ($user && $user == $blog_data["user"]) {
 	$ownsblog = 'y';
 }
 
+if ($ownsblog == 'n' && $tiki_p_admin != 'y' && $post_info["priv"] == 'y') {
+	$smarty->assign('msg', tra("Permission denied: you cannot view this blog post while it is marked private"));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 $smarty->assign('ownsblog', $ownsblog);
 
 $post_info['data'] = TikiLib::htmldecode($post_info['data']);

@@ -28,8 +28,9 @@
     </table>
   </div>
 {/if}
-  
+
 {section name=ix loop=$listpages}
+	{if $ownsblog eq 'y' or $listpages[ix].priv neq 'y' or $tiki_p_blog_admin eq 'y'}
   <a name="postId{$listpages[ix].postId}"></a>
   <div class="blogpost">
     <div class="posthead">
@@ -133,6 +134,7 @@
       </table>
     </div> <!-- postbody -->
   </div> <!--blogpost -->
+	{/if}
 {/section}
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
