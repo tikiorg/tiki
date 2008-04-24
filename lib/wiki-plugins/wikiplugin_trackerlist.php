@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y|n, popup=6:7, stickypopup=y|n, showtitle=y|n, showlinks=y|n, showdesc=y|n, showinitials=y|n, showstatus=y|n, showcreated=y|n, showlastmodif=y|n, showfieldname=y|n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=, filtervalue=, exactvalue=, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y|n)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y, popup=6:7, stickypopup=y, showtitle=y, showlinks=y, showdesc=y, showinitials=y, showstatus=y, showcreated=y, showlastmodif=y, showfieldname=n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=1:2, filtervalue=x:y, exactvalue=x:y, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y,more=y,moreurl=,tpl=)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -115,6 +115,12 @@ function wikiplugin_trackerlist($data, $params) {
 			$showlastmodif = $tracker_info['showLastModif'];
 		}
 		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
+		if (!isset($more))
+			$more = 'n';
+		$smarty->assign_by_ref('more', $more);
+		if (!isset($moreurl))
+			$moreurl = 'tiki-view_tracker.php';
+		$smarty->assign_by_ref('moreurl', $moreurl);
 
 		if (isset($checkbox)) {
 			$cb = split('/', $checkbox);
@@ -316,6 +322,20 @@ function wikiplugin_trackerlist($data, $params) {
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
+			if (isset($tpl)) {
+				foreach ($items["data"] as $itkey=>$oneitem) {
+					$smarty->assign_by_ref('item', $oneitem);
+					foreach ($oneitem['field_values'] as $i=>$v) {
+						$smarty->assign_by_ref('field_value', $v);
+						$smarty->assign_by_ref('f_'.$v['fieldId'], $smarty->fetch('tracker_item_field_value.tpl'));
+					}
+					$items["data"][$itkey]['tpl'] = $smarty->fetch($tpl);
+				}
+			} else {
+				$tpl = '';
+			}
+			$smarty->assign('tpl', $tpl);
+			
 			$smarty->assign_by_ref('max', $max);
 			$smarty->assign_by_ref('count_item', $items['cant']);
 			$smarty->assign_by_ref('items', $items["data"]);

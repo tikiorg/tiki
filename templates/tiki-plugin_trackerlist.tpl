@@ -18,8 +18,11 @@
 
 {if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
 
+{if empty($tpl)}
 <table class="normal wikiplugin_trackerlist">
-{if $showfieldname ne 'n'}
+{/if}
+
+{if $showfieldname ne 'n' and empty($tpl)}
 <tr>
 {if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
@@ -59,6 +62,8 @@
 
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
+
+{if empty($tpl)}
 <tr class="{cycle}">
 {if $checkbox}<td><input type="checkbox" name="{$checkbox.name}[]" value="{$items[user].field_values[$checkbox.ix].value}" /></td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
@@ -70,6 +75,7 @@
 {* ------------------------------------ *}
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields)}
+<td class="auto">
 {if !empty($popupfields) && $items[user].field_values[ix].isMain eq 'y'}
 	{capture name=popup}
 	<div class="cbox">
@@ -87,7 +93,6 @@
 {else}
 	{assign var=showpopup value='n'}
 {/if}
-<td class="auto">
 	{if isset($perms)}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
 		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
@@ -114,8 +119,15 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 /></a>{$items[user].attachments}</td>
 {/if}
 </tr>
+
+{else}
+{$items[user].tpl}
+{/if}
+
 {/section}
+{if empty($tpl)}
 </table>
+{/if}
 {if $items|@count eq 0}
 {tr}No records found{/tr}
 {elseif $checkbox}
@@ -124,4 +136,10 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
 
+{if $more}
+	<div class="more">
+		 <a class="linkbut" href="{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}">{tr}More...{/tr}</a>
+	</div>
+{else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
+{/if}
