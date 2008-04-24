@@ -11,7 +11,7 @@ close();
       {else}
         <br />
         <div class="cbox">
-        <div class="cbox-title">{icon _id=exclamation alt="{tr}Error{/tr}" style=vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}</div>
+        <div class="cbox-title">{icon _id=exclamation alt={tr}Error{/tr} style=vertical-align:middle} {$errortitle|default:"{tr}Error{/tr}"}</div>
         <div class="cbox-data">
         <br />
         {if ($errortype eq "404")}
