@@ -31,7 +31,7 @@ function blog_last_comments($limit)
       if ($tikilib->user_has_perm_on_object($user,$res["postId"],'post','tiki_p_read_blog')) {
 		/// check if the blog post is marked private
 		$priv = '';
-		if ($res2 = $bloglib->get_post($res['postId']['priv'])) {
+		if ($res2 = $bloglib->get_post($res['postId'])) {
 			$priv = $res2['priv'];
 		}
 		if ($priv != 'y' || ($user && $user == $res2["user"]) || $tiki_p_blog_admin == 'y') {
