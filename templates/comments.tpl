@@ -356,7 +356,7 @@
 {* End of Post dialog *}
 
 </div>{if $forum_mode neq 'y'}<!-- comzone end -->{/if}
-
+</div> {* apparently unclosed div somewhere above; this /div added to prevent side columns in *litecss themes from not appearing *}
 {if empty($user)}
 <script type="text/javascript">
 var js_anonymous_name = getCookie('anonymous_name');
