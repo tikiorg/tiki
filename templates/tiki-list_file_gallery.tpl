@@ -187,7 +187,6 @@
       </a>
     </span>
 
-  </div>
   {include file=comments.tpl}
   {/if}
 {/if}
