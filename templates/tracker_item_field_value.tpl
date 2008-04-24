@@ -98,9 +98,9 @@
 {elseif $field_value.type eq 'i'}
 	{if $field_value.value ne ''}
 		{if $list_mode ne 'n'}
-			<img border="0" src="{$field_value.value}"  width="{$field_value.options_array[0]}" height="{$field_value.options_array[1]}" alt="n/a" />
+			<img border="0" src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
 		{else}
-			<img border="0" src="{$field_value.value}"  width="{$field_value.options_array[2]}" height="{$field_value.options_array[3]}" alt="n/a" />
+			<img border="0" src="{$field_value.value}"{if $field_value.options_array[2]} width="{$field_value.options_array[2]}"{/if}{if $field_value.options_array[3]} height="{$field_value.options_array[3]}"{/if} alt="" />
 		{/if}
 	{else}
 		<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
