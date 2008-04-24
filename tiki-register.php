@@ -135,7 +135,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
   
   // Check the mode
   if($prefs['useRegisterPasscode'] == 'y') {
-    if($_REQUEST['passcode']!=$prefs['registerPasscoder']) {
+    if($_REQUEST['passcode']!=$prefs['registerPasscode']) {
       $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
       $smarty->display("error.tpl");
       die;
