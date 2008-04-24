@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Site Language: {/tr} `$prefs.language`"}{/if}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Site Language:{/tr}&nbsp;`$prefs.language`"}{/if}
 {tikimodule title=$tpl_module_title name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {if $prefs.change_language ne 'n' or $user eq ''}
 <form method="get" action="tiki-switch_lang.php" target="_self">
