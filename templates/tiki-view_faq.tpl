@@ -50,28 +50,39 @@
 {/section}
 {/if}
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
-<a href="javascript:flip('faqsugg');" class="linkbut">
-{if $suggested_cant == 0}
-{tr}Add Suggestion{/tr}{elseif $suggested_cant == 1}
-<span class="highlight">{tr}1 suggestion{/tr}</span>{else}
-<span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>{/if}</a>
+  <span class="button2">
+  <a href="javascript:flip('faqsugg');" class="linkbut {if $suggested_cant > 0}highlight{/if}">
+    {if $suggested_cant == 0}
+      {tr}Add Suggestion{/tr}
+    {elseif $suggested_cant == 1}
+      {tr}1 suggestion{/tr}
+    {else}
+      {$suggested_cant} {tr}suggestions{/tr}
+    {/if}
+  </a>
+  </span>
 {/if}
+
 {if $prefs.feature_faq_comments == 'y'
-&& (($tiki_p_read_comments  == 'y'
-&& $comments_cant != 0)
-||  $tiki_p_post_comments  == 'y'
-||  $tiki_p_edit_comments  == 'y')}
-<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant >= 1}highlight{/if}">
-{if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}Add Comment{/tr}
-{elseif $comments_cant == 1}
-  {tr}1 comment{/tr}
-{else}
-  {$comments_cant} {tr}comments{/tr}
+    && (($tiki_p_read_comments  == 'y'
+    && $comments_cant != 0)
+  ||  $tiki_p_post_comments  == 'y'
+  ||  $tiki_p_edit_comments  == 'y')
+}
+  <span class="button2">
+  <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant >= 1}highlight{/if}">
+    {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+      {tr}Add Comment{/tr}
+    {elseif $comments_cant == 1}
+      {tr}1 comment{/tr}
+    {else}
+      {$comments_cant} {tr}comments{/tr}
+    {/if}
+    <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
+  </a>
+  </span>
 {/if}
-<span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
-</a>
-{/if}
+
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
 {if !empty($error)}
