@@ -22,6 +22,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 }
 function wikiplugin_tracker($data, $params) {
 	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib;
+	global $userregistering;
 	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -85,7 +86,7 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 
-	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
+	if (isset($_SERVER['SCRIPT_NAME']) && !(isset($userregistering) && is_array($userregistering))) {
 		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 			return '<b>'.$permMessage.'</b>';
 		}
@@ -399,21 +400,14 @@ function wikiplugin_tracker($data, $params) {
 			$back.= '<input type="hidden" name="refresh" value="1" />';
 			if (isset($_REQUEST['page']))
 				$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
+
 			 // for registration
-			if (isset($_REQUEST['name']))
-				$back.= '<input type="hidden" name="name" value="'.$_REQUEST["name"].'" />';
-			if (isset($_REQUEST['pass'])) {
-				$back.= '<input type="hidden" name="pass" value="'.$_REQUEST["pass"].'" />';
-				$back.= '<input type="hidden" name="passAgain" value="'.$_REQUEST["pass"].'" />';
+			if (isset($userregistering) && is_array($userregistering)) {
+			    foreach($userregistering as $k => $v)
+				$back.= '<input type="hidden" name="'.htmlspecialchars($k).'" value="'.htmlspecialchars($v).'" />';
+			    $back.= '<input type="hidden" name="register" value="register" />';
 			}
-			if (isset($_REQUEST['email']))
-				$back.= '<input type="hidden" name="email" value="'.$_REQUEST["email"].'" />';
-			if (isset($_REQUEST['regcode']))
-				$back.= '<input type="hidden" name="regcode" value="'.$_REQUEST["regcode"].'" />';
-			if (isset($_REQUEST['chosenGroup'])) // for registration
-				$back.= '<input type="hidden" name="chosenGroup" value="'.$_REQUEST["chosenGroup"].'" />';
-			if (isset($_REQUEST['register']))
-				$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
+
 			if ($showtitle == 'y') {
 				$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
 			}

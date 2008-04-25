@@ -523,7 +523,7 @@ class RegistrationLib extends TikiLib {
 	}
 
 	function register($rq, $rs=NULL) {
-		global $registrationlib, $userlib, $prefs, $patterns, $logslib, $tikilib, $notificationlib;
+		global $registrationlib, $userlib, $prefs, $patterns, $logslib, $tikilib, $notificationlib, $userregistering;
 		global $smarty; // <- must be used only for email notification
 
 		if (($prefs['feature_intertiki'] == 'y') && (!empty($prefs['feature_intertiki_mymaster'])))
@@ -616,6 +616,7 @@ class RegistrationLib extends TikiLib {
 			$re = $userlib->get_group_info(isset($rq['chosenGroup'])? $rq['chosenGroup']: 'Registered');
 			if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
 				include_once('lib/wiki-plugins/wikiplugin_tracker.php');
+				$userregistering=$rq; // <- (global variable) this will be used by tracker to print the register form content as hidden fields
 				$userTrackerData = wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n'));
 				$result['userTrackerData']=$userTrackerData;
 				if (!isset($rq['trackit']) || (isset($rq['error']) && $rq['error'] == 'y')) {

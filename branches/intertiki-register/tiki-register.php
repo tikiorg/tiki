@@ -68,6 +68,7 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 	}
 
 	$result=$registrationlib->register($rq, $rs);
+	var_dump($result);
 	if (count($result['error'])) {
 		$msg=''; foreach($result['error'] as $errstr) $msg.=$errstr."<br>";
 		$smarty->assign('msg', $msg);
