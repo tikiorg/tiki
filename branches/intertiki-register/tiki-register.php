@@ -67,8 +67,19 @@ if (isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUES
 			$rq['customfields'][$rs['customfields'][$custpref]['prefName']]=$_REQUEST[$rs['customfields'][$custpref]['prefName']];
 	}
 
-	$result=$registrationlib->register($rq, $rs);
-	var_dump($result);
+	$result=array('error' => array(),
+				  'email_valid' => '',
+				  );
+
+	if($prefs['rnd_num_reg'] == 'y') {
+		if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['antibotcode']) {
+			$result['error'][]=tra("Wrong registration code");
+		}
+	}
+
+	if (!count($result['error']))
+		$result=$registrationlib->register($rq, $rs);
+
 	if (count($result['error'])) {
 		$msg=''; foreach($result['error'] as $errstr) $msg.=$errstr."<br>";
 		$smarty->assign('msg', $msg);

@@ -547,12 +547,6 @@ class RegistrationLib extends TikiLib {
 			$result['error'][]=tra("User already exists");
 		}
   
-		if($prefs['rnd_num_reg'] == 'y') {
-			if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$rq['antibotcode']) {
-				$result['error'][]=tra("Wrong registration code");
-			}
-		}
-  
 		// VALIDATE NAME HERE
 		$n = strtolower($rq['name']);
 		if($n =='admin' || $n == 'anonymous' || $n == 'registered' || $n == strtolower(tra('Anonymous')) || $n == strtolower(tra('Registered'))) {
