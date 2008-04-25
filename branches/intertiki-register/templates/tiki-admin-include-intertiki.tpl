@@ -92,21 +92,23 @@
 <tr><td colspan="2" class="button">{tr}Known hosts{/tr}</td></tr>
 <tr><td colspan="2" class="form">
 <table>
-<tr><td>&nbsp;</td><td>{tr}Name{/tr}</td><td>{tr}Key{/tr}</td><td>{tr}IP{/tr}</td><td>{tr}Contact{/tr}</td></tr>
+<tr><td>&nbsp;</td><td>{tr}Name{/tr}</td><td>{tr}Key{/tr}</td><td>{tr}IP{/tr}</td><td>{tr}Contact{/tr}</td><td>{tr}Allow users to register{/tr}</td></tr>
 {if $prefs.known_hosts}
 {foreach key=k item=i from=$prefs.known_hosts}
 <tr><td><a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td>
 <td class="form"><input type="text" name="known_hosts[{$k}][name]" value="{$i.name}" size="12" /></td>
 <td><input type="text" name="known_hosts[{$k}][key]" value="{$i.key}" size="32" /></td>
 <td><input type="text" name="known_hosts[{$k}][ip]" value="{$i.ip}" size="12" /></td>
-<td><input type="text" name="known_hosts[{$k}][contact]" value="{$i.contact}" size="22" /></td></tr>
+<td><input type="text" name="known_hosts[{$k}][contact]" value="{$i.contact}" size="22" /></td>
+<td><input type="checkbox" name="known_hosts[{$k}][allowusersregister]" value="y" {if $i.allowusersregister=='y'}checked{/if} size="12" /></td></tr>
 {/foreach}
 {/if}
 <tr class="formrow"><td>{tr}New{/tr}:</td>
 <td><input type="text" name="newhost[name]" value="" size="12" /></td>
 <td><input type="text" name="newhost[key]" value="" size="32" /></td>
 <td><input type="text" name="newhost[ip]" value="" size="12" /></td>
-<td><input type="text" name="newhost[contact]" value="" size="22" /></td></tr>
+<td><input type="text" name="newhost[contact]" value="" size="22" /></td>
+<td><input type="checkbox" name="newhost[allowusersregister]" value="y" /></td></tr>
 </table>
 </td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="intertikiserver" value="{tr}Save{/tr}" /></td></tr>

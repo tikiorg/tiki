@@ -194,6 +194,9 @@ function get_registration_setup($params) {
 		return new XML_RPC_Response(0, 101, $msg);
 	}
 
+	if (!isset($prefs['known_hosts'][$key]['allowusersregister']) || ($prefs['known_hosts'][$key]['allowusersregister'] != 'y'))
+		return new XML_RPC_Response(0, 101, $msg);
+
 	require_once 'lib/registration/registrationlib.php';
 
 	$rs=$registrationlib->get_registration_setup();
@@ -210,6 +213,9 @@ function register_user($params) {
 		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}
+
+	if (!isset($prefs['known_hosts'][$key]['allowusersregister']) || ($prefs['known_hosts'][$key]['allowusersregister'] != 'y'))
+		return new XML_RPC_Response(0, 101, $msg);
 
 	require_once 'lib/registration/registrationlib.php';
 
