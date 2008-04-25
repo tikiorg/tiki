@@ -1,0 +1,82 @@
+# $Id$
+
+#AuthUserFile "C:/Program Files/Apache Group/Apache/bin/users"
+#AuthName EnterPassword
+#AuthType Basic
+#
+#<LIMIT GET POST>
+#require valid-user
+#</LIMIT>
+
+# this can be required to force utf-8 charset by default
+#     AddDefaultCharset utf-8
+# alternatively you can just enable auto-detection
+#     AddDefaultCharset off
+
+#<FilesMatch "\.(bak|inc|lib|sh|sql|tpl)$">
+#	order deny,allow
+#	deny from all
+#</FilesMatch>
+
+#<FilesMatch "^\.#">
+#	order deny,allow
+#	deny from all
+#</FilesMatch>
+
+#<FilesMatch "^CVS$">
+#	order deny,allow
+#	deny from all
+#</FilesMatch>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	
+	# direct one-word access
+	RewriteRule ^articles/?$           /tiki-view_articles.php                   [L]
+	RewriteRule ^blogs/?$              /tiki-list_blogs.php                      [L]
+	RewriteRule ^categories/?$         /tiki-browse_categories.php               [L]
+	RewriteRule ^charts/?$             /tiki-list_charts.php                     [L]
+	RewriteRule ^chat/?$               /tiki-chat.php                            [L]
+	RewriteRule ^contact/?$            /tiki-contact.php                         [L]
+	RewriteRule ^directories/?$        /tiki-directory_browse.php                [L]
+	RewriteRule ^eph/?$                /tiki-eph.php                             [L]
+	RewriteRule ^faqs/?$               /tiki-list_faqs.php                       [L]
+	RewriteRule ^files/?$              /tiki-file_galleries.php                  [L]
+	RewriteRule ^forums/?$             /tiki-forums.php                          [L]
+	RewriteRule ^galleries/?$          /tiki-galleries.php                       [L]
+	RewriteRule ^games/?$              /tiki-list_games.php                      [L]
+	RewriteRule ^images/?$             /tiki-galleries.php                       [L]
+	RewriteRule ^irc/?$                /tiki-view_irc.php                        [L]
+	RewriteRule ^my/?$                 /tiki-my_tiki.php                         [L]
+	RewriteRule ^newsletters/?$        /tiki-newsletters.php                     [L]
+	RewriteRule ^quizzes/?$            /tiki-list_quizzes.php                    [L]
+	RewriteRule ^stats/?$              /tiki-stats.php                           [L]
+	RewriteRule ^surveys/?$            /tiki-list_surveys.php                    [L]
+	RewriteRule ^trackers/?$           /tiki-list_trackers.php                   [L]
+
+	# access any object by its numeric identifier
+	RewriteRule ^article/?([0-9]+)       /tiki-read_article.php?articleId=$1       [QSA,L]
+	RewriteRule ^blog/?([0-9]+)          /tiki-view_blog.php?blogId=$1             [QSA,L]
+	RewriteRule ^chart/?([0-9]+)         /tiki-view_chart.php?chartId=$1           [QSA,L]
+	RewriteRule ^directory/?([0-9]+)     /tiki-directory_browse.php?parent=$1      [QSA,L]
+	RewriteRule ^dl/?([0-9]+)            /tiki-download_file.php?fileId=$1         [QSA,L]
+	RewriteRule ^eph/?([0-9]+)           /tiki-directory_browse.php?parent=$1      [QSA,L]
+	RewriteRule ^faq/?([0-9]+)           /tiki-view_faq.php?faqId=$1               [QSA,L]
+	RewriteRule ^file/?([0-9]+)          /tiki-list_file_gallery.php?galleryId=$1  [QSA,L]
+	RewriteRule ^forum/?([0-9]+)         /tiki-view_forum.php?forumId=$1           [QSA,L]
+	RewriteRule ^gallery/?([0-9]+)       /tiki-browse_gallery.php?galleryId=$1     [QSA,L]
+	RewriteRule ^image/?([0-9]+)         /tiki-browse_gallery.php?galleryId=$1     [QSA,L]
+	RewriteRule ^irc/?([0-9]+)$          /tiki-view_irc.php?date=$1                [QSA,L]
+	RewriteRule ^irc/?([A-Za-z0-9]+)$    /tiki-view_irc.php?channel=$1             [QSA,L]
+	RewriteRule ^irc/?([A-Za-z0-9]+)/([0-9]+) /tiki-view_irc.php?channel=$1&date=$2 [QSA,L]
+	RewriteRule ^newsletter/?([0-9]+)    /tiki-newsletters.php?nlId=$1             [QSA,L]
+	RewriteRule ^page/([-_\+A-Za-z0-9]+) /tiki-index.php?page=$1                   [QSA,L]
+	RewriteRule ^quiz/?([0-9]+)          /tiki-take_quiz.php?quizId=$1             [QSA,L]
+	RewriteRule ^survey/?([0-9]+)        /tiki-take_survey.php?surveyId=$1         [QSA,L]
+	RewriteRule ^tracker/?([0-9]+)       /tiki-view_tracker.php?trackerId=$1       [QSA,L]
+	RewriteRule ^wiki/([-_\+A-Za-z0-9]+) /tiki-index.php?page=$1                   [QSA,L]
+
+	# todo add support for all characters allowed in a Wiki name
+	# make sure this is the last rule!
+	RewriteRule	([-_\+A-Za-z0-9]+)$    /tiki-index.php?page=$1                   [QSA,L]
+</IfModule>

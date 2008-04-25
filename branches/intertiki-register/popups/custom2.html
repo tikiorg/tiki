@@ -1,0 +1,36 @@
+<html>
+<!-- $Header: /cvsroot/tikiwiki/tiki/popups/custom2.html,v 1.5 2006-08-29 20:19:11 sylvieg Exp $ -->
+ <head>
+  <title>Select Phrase</title>
+<script type="text/javascript">
+
+var myTitle = window.dialogArguments;
+document.title = myTitle;
+
+
+function returnSelected() {
+  var idx  = document.all.textPulldown.selectedIndex;
+  var text = document.all.textPulldown[idx].text;
+
+  window.returnValue = text;          // set return value
+  window.close();                     // close dialog
+}
+
+</script>
+</head>
+<body style="background-color: #FFFFFF; margin-tp: 15px; margin-left: 0; width: 300px; height: 60px;">
+
+<form method="get" onsubmit="Set(document.all.ColorHex.value); return false;">
+<div align="center">
+
+<select name="textPulldown">
+<option>The quick brown</option>
+<option>fox jumps over</option>
+<option>the lazy dog.</option>
+</select>
+
+<input type="button" value=" Go " onclick="returnSelected()" />
+
+</div>
+</form>
+</body></html>

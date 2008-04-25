@@ -1,0 +1,154 @@
+<?php
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.14 2007-03-06 19:29:49 sylvieg Exp $
+
+// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+require_once ('tiki-setup.php');
+
+if(@$feature_maps != 'y') {
+  $smarty->assign('msg',tra("Feature disabled"));
+  $smarty->display("error.tpl");
+  die;
+}
+      
+if (isset($_REQUEST['view_user'])) {
+	$userwatch = $_REQUEST['view_user'];
+} else {
+	if ($user) {
+		$userwatch = $user;
+	} else {
+		$smarty->assign('msg', tra("You are not logged in and no user indicated"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+
+if (!isset($_GET['mapfile']) || !isset($_GET['layer']))
+{
+		$smarty->assign('msg', tra("You have not specified a mapfile and a layer"));
+		$smarty->display("error.tpl");
+		die;
+} else
+{
+  $smarty->assign('mapfile', $_GET['mapfile']);
+  $smarty->assign('layer', $_GET['layer']);
+}
+
+if (!preg_match('/\.map$/i', $_GET['mapfile'])) {
+	$smarty->assign('msg', tra("mapfile name incorrect"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+if (isset($_GET['mapfile']))
+{
+  // Validate to prevent displaying any file
+  if (strstr($_GET["mapfile"], '..')) {
+    $smarty->assign('msg', tra("You do not have permission to do that"));
+    $smarty->display('error.tpl');
+    die;
+  }
+  $mapfile = $_GET['mapfile'];
+  $map = ms_newMapObj($map_path.$mapfile);
+} else {
+  $map = ms_newMapObj($map_path.$default_map);
+}
+
+// process the mapfile to define if the layer can be downloaded...
+  for ($j=0;$j<$map->numlayers;$j++)
+  {
+    $my_layers=$map->getLayer($j);
+      
+    //Metadata handling
+    $download=FALSE;
+    if ($my_layers->name==$_GET['layer'])
+    {
+      if($my_layers->getMetadata("DOWNLOAD")=='T')
+      {
+        $download=TRUE;
+        if ($my_layers->connection!="") {
+          $download_path=$map_path.$my_layers->connection;
+        } else {
+          $download_path=$map_path.$my_layers->data;
+        }
+      }
+    }
+  }
+
+//get the path and the filename without extension
+$extension = array_pop(explode('.', basename($download_path)));
+$file_name = substr(basename($download_path), 0,"-" . (strlen($extension) + 1));
+$file_path = dirname($download_path);
+
+// creates a temporary filename
+$tempfile="TM".date("YmdHis");
+
+// Get all files from the layer reference
+$files = array();
+$h = opendir($file_path);
+
+//first check if there is not a file with NDL extension
+// to stop download
+$nodownload=FALSE;
+while (($file = readdir($h)) !== false) {
+$extension = array_pop(explode('.', basename($file)));
+  if (substr(basename($file), 0,"-" . (strlen($extension) + 1))==$file_name)
+  {
+  	if ($extension=="NDL") {
+  	  $nodownload=TRUE;
+  	}
+  }
+}
+closedir ($h);
+$smarty->assign('nodownload', $nodownload);
+
+$DSEP=DIRECTORY_SEPARATOR;
+
+if (!$nodownload) {
+	$h = opendir($file_path);
+	while (($file = readdir($h)) !== false) {
+	$extension = array_pop(explode('.', basename($file)));
+	  if (substr(basename($file), 0,"-" . (strlen($extension) + 1))==$file_name)
+	  {
+	    $files[] = $file;
+	    copy($file_path.$DSEP.$file,"files".$DSEP.$tempfile.".".$extension);
+	    $dfiles[]=$tempfile.".".$extension;
+	  }
+	}	
+	closedir ($h);
+}
+
+//clean the files directory from old files
+$h = opendir("files");
+
+while (($file = readdir($h)) !== false) {
+  if (substr($file,0,2)=="TM") {
+    $filedate=substr($file,2,14);
+    if ($filedate<=date("YmdHis",mktime (0,0,0,date("m"),date("d")-2,date("Y")))) {
+      unlink("files".$DSEP.$file);
+    }
+  }
+}
+closedir ($h);
+
+// record that the user wanted to download some files
+// to be fixed by adding the tiki_download table definitively
+$userid = $userlib->get_user_id($user);
+//$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
+//$result = $userlib->query($query);
+
+$smarty->assign('nodownload', $nodownload);
+$smarty->assign_by_ref('files',$files);
+$smarty->assign_by_ref('dfiles',$dfiles);
+
+$section = 'maps';
+include_once ('tiki-section_options.php');
+
+$smarty->assign('mid', 'map/tiki-map_download.tpl');
+$smarty->assign('userwatch', $userwatch);
+
+$smarty->display('tiki.tpl');
+
+?>
