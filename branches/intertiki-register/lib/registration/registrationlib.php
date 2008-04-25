@@ -441,53 +441,103 @@ class RegistrationLib extends TikiLib {
     }
 
 	/**
+	 * return all informations needed to build a registration form, from a remote server (intertiki)
+	 */
+	function _get_remote_registration_setup() {
+		global $prefs;
+
+		include_once('XML/RPC.php');
+		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(0);
+		$msg = new XML_RPC_Message('intertiki.getRegistrationSetup',
+								   array(new XML_RPC_Value($prefs['tiki_key'], 'string')));
+		$result = $client->send($msg);
+		if (!$result || $result->faultCode()) {
+			return false;
+		}
+		$result = $result->value();
+		$result = XML_RPC_decode($result);
+		return $result;
+	}
+
+	/**
 	 *  return all informations needed to build a registration form
 	 */
-	function get_registration_local_datas() {
+	function get_registration_setup() {
 		global $userlib, $prefs;
-		$rd=array();
+
+		if (($prefs['feature_intertiki'] == 'y') && (!empty($prefs['feature_intertiki_mymaster'])))
+			return $this->_get_remote_registration_setup();
+
+		$rs=array();
 		
 		// about groups
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		$choicegroups=array();
-		$rd['mandatoryChoiceGroups']=true;
+		$rs['mandatoryChoiceGroups']=true;
 		foreach($listgroups['data'] as $k=>$gr) {
 			if ($gr['registrationChoice'] == 'y') {
 				$choicegroups[]=$gr;
-				if ($gr['groupName'] == 'Registered') $rd['mandatoryChoiceGroups'] = false;
+				if ($gr['groupName'] == 'Registered') $rs['mandatoryChoiceGroups'] = false;
 			}
 		}
-		if (!$rd['mandatoryChoiceGroups'])
+		if (!$rs['mandatoryChoiceGroups'])
 			$choicegroups[]=array('groupName' => '', 'groupDesc' => tra('no group'), 'registrationChoice' => 'y');
-		$rd['choicegroups']=$choicegroups;
+		$rs['choicegroups']=$choicegroups;
 		
 
 		//get custom fields
-		$rd['customfields'] = $this->get_customfields();
+		$rs['customfields'] = $this->get_customfields();
 
 		//some preferences
-		$rd['min_user_length'] = $prefs['min_user_length'];
-		$rd['min_pass_length'] = $prefs['min_pass_length'];
-		$rd['login_is_email'] = $prefs['login_is_email'];
-		$rd['lowercase_username'] = $prefs['lowercase_username'];
-		$rd['useRegisterPasscode'] = $prefs['useRegisterPasscode'];
-		$rd['pass_chr_num'] = $prefs['pass_chr_num'];
-		$rd['validateUsers'] = $prefs['validateUsers'];
-		$rd['validateEmail'] = $prefs['validateEmail'];
+		$rs['min_user_length'] = $prefs['min_user_length'];
+		$rs['min_pass_length'] = $prefs['min_pass_length'];
+		$rs['login_is_email'] = $prefs['login_is_email'];
+		$rs['lowercase_username'] = $prefs['lowercase_username'];
+		$rs['useRegisterPasscode'] = $prefs['useRegisterPasscode'];
+		$rs['pass_chr_num'] = $prefs['pass_chr_num'];
+		$rs['validateUsers'] = $prefs['validateUsers'];
+		$rs['validateEmail'] = $prefs['validateEmail'];
 		
-		return $rd;
+		return $rs;
 	}
 
+	function _remote_register($rq) {
+		global $prefs;
+		
+		include_once('XML/RPC.php');
+		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
+		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
+		$client->setDebug(0);
+		$msg = new XML_RPC_Message('intertiki.registerUser',
+								   array(new XML_RPC_Value($prefs['tiki_key'], 'string'),
+										 XML_RPC_encode($rq)));
+		$result = $client->send($msg);
+		if (!$result || $result->faultCode()) {
+			return false;
+		}
+		$result = $result->value();
+		$result = XML_RPC_decode($result);
+		return $result;		
+	}
 
-	function register($rq, $rd=NULL) {
+	function register($rq, $rs=NULL) {
 		global $registrationlib, $userlib, $prefs, $patterns, $logslib, $tikilib, $notificationlib;
 		global $smarty; // <- must be used only for email notification
+
+		if (($prefs['feature_intertiki'] == 'y') && (!empty($prefs['feature_intertiki_mymaster'])))
+			return $this->_remote_register($rq);
 
 		$result=array('error' => array(),
 					  'email_valid' => '',
 					  );
 
-		if ($rd === NULL) $rd=get_register_local_datas();
+		if ($rs === NULL) $rs=$this->get_registration_setup();
+		if (!$rs) {
+			$result['error'][]='internal error: registrationlib->register: \$rs is null';
+			return $result;
+		}
 
 		if($rq['novalidation'] != 'yes' and ($rq["pass"] <> $rq["passAgain"]) and !isset($rq['openid_url'])) {
 			$result['error'][]=tra("The passwords don't match");
@@ -547,7 +597,7 @@ class RegistrationLib extends TikiLib {
 				$result['error'][]=tra("Wrong passcode you need to know the passcode to register in this site");
 			}
 		}
-		if ((count($rd['choicegroups']) > 0) && $rd['$mandatoryChoiceGroups'] && empty($rq['chosenGroup'])) {
+		if ((count($rs['choicegroups']) > 0) && $rs['$mandatoryChoiceGroups'] && empty($rq['chosenGroup'])) {
 			$result['error'][]=tra('You must choose a group');
 		}	  
 	
@@ -633,9 +683,9 @@ class RegistrationLib extends TikiLib {
 		$tikilib->set_user_preference($rq['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
 
 		// Custom fields
-		foreach ($rd['customfields'] as $custpref=>$prefvalue ) {
-			if (isset($rq['customfields'][$rd['customfields'][$custpref]['prefName']]))
-				$tikilib->set_user_preference($rq["name"], $rd['customfields'][$custpref]['prefName'], $rq['customfields'][$rd['customfields'][$custpref]['prefName']]);
+		foreach ($rs['customfields'] as $custpref=>$prefvalue ) {
+			if (isset($rq['customfields'][$rs['customfields'][$custpref]['prefName']]))
+				$tikilib->set_user_preference($rq["name"], $rs['customfields'][$custpref]['prefName'], $rq['customfields'][$rs['customfields'][$custpref]['prefName']]);
 		}
 		
 		$emails = $notificationlib->get_mail_events('user_registers','*');

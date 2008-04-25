@@ -44,7 +44,10 @@ $map = array(
 	"intertiki.logout" => array("function"=>"logout"),
 	"intertiki.cookiecheck" => array("function"=>"cookie_check"),
 	"intertiki.version" => array("function"=>"get_version"),
-	'intertiki.getUserInfo' => array('function' => 'get_user_info')
+	'intertiki.getUserInfo' => array('function' => 'get_user_info'),
+	'intertiki.getRegistrationSetup' => array('function' => 'get_registration_setup'),
+	'intertiki.registerUser' => array('function' => 'register_user')
+
 );
 $s = new XML_RPC_Server($map);
 
@@ -179,5 +182,41 @@ function get_user_info($params) {
 	$ret['email'] = new XML_RPC_Value($email, "string");
 	return new XML_RPC_Response(new XML_RPC_Value($ret, "struct"));
 }
+
+function get_registration_setup($params) {
+	global $prefs, $registrationlib, $logslib;
+
+	$key = $params->getParam(0); $key = $key->scalarval(); 
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+
+	require_once 'lib/registration/registrationlib.php';
+
+	$rs=$registrationlib->get_registration_setup();
+	return new XML_RPC_Response(XML_RPC_encode($rs));
+}
+
+function register_user($params) {
+	global $prefs, $registrationlib, $logslib;
+
+	$key = $params->getParam(0); $key = $key->scalarval(); 
+	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $_SERVER['REMOTE_ADDR']) {
+		$msg = tra('Invalid server key');
+		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
+		return new XML_RPC_Response(0, 101, $msg);
+	}
+
+	require_once 'lib/registration/registrationlib.php';
+
+	$result=$registrationlib->register(XML_RPC_decode($params->getParam(1)));
+
+	return new XML_RPC_Response(XML_RPC_encode($result));
+}
+
 
 ?>
