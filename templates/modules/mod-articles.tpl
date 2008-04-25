@@ -6,7 +6,7 @@
  {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modArticles}
        <li>
-        <a class="linkmodule" href="tiki-read_article.php?articleId={$modArticles[ix].articleId}">
+        <a class="linkmodule" href="tiki-read_article.php?articleId={$modArticles[ix].articleId}" title="{$modArticles[ix].created|tiki_short_date}, {tr}by{/tr} {$modArticles[ix].author|escape}">
           {$modArticles[ix].title}
         </a>
         </li>
