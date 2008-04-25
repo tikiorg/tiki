@@ -987,7 +987,6 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
   } 
     
-  $page = urlencode($page);
   if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
   } else {
