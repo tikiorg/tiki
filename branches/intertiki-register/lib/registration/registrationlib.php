@@ -688,6 +688,7 @@ class RegistrationLib extends TikiLib {
 				$tikilib->set_user_preference($rq["name"], $rs['customfields'][$custpref]['prefName'], $rq['customfields'][$rs['customfields'][$custpref]['prefName']]);
 		}
 		
+		include_once("lib/notifications/notificationlib.php");
 		$emails = $notificationlib->get_mail_events('user_registers','*');
 		if (count($emails)) {
 			include_once("lib/notifications/notificationemaillib.php");
