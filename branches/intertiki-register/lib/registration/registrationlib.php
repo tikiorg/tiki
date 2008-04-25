@@ -482,8 +482,6 @@ class RegistrationLib extends TikiLib {
 				if ($gr['groupName'] == 'Registered') $rs['mandatoryChoiceGroups'] = false;
 			}
 		}
-		if (!$rs['mandatoryChoiceGroups'])
-			$choicegroups[]=array('groupName' => '', 'groupDesc' => tra('no group'), 'registrationChoice' => 'y');
 		$rs['choicegroups']=$choicegroups;
 		
 
