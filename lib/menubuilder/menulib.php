@@ -276,7 +276,7 @@ class MenuLib extends TikiLib {
 				}
 			}
 			if (isset($selectedPosition)) {
-				for ($o = 0; $o <= $optionLevel; ++$o) {
+				for ($o = 0; $o < $optionLevel; ++$o) {
 					$channels['data'][$selecteds[$o]]['selectedAscendant'] = true;
 				}
 			}
