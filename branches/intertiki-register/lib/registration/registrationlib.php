@@ -439,6 +439,218 @@ class RegistrationLib extends TikiLib {
 
         ask_ticket('register');
     }
+
+	/**
+	 *  return all informations needed to build a registration form
+	 */
+	function get_registration_local_datas() {
+		global $userlib, $prefs;
+		$rd=array();
+		
+		// about groups
+		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+		$choicegroups=array();
+		$rd['mandatoryChoiceGroups']=true;
+		foreach($listgroups['data'] as $k=>$gr) {
+			if ($gr['registrationChoice'] == 'y') {
+				$choicegroups[]=$gr;
+				if ($gr['groupName'] == 'Registered') $rd['mandatoryChoiceGroups'] = false;
+			}
+		}
+		if (!$rd['mandatoryChoiceGroups'])
+			$choicegroups[]=array('groupName' => '', 'groupDesc' => tra('no group'), 'registrationChoice' => 'y');
+		$rd['choicegroups']=$choicegroups;
+		
+
+		//get custom fields
+		$rd['customfields'] = $this->get_customfields();
+
+		//some preferences
+		$rd['min_user_length'] = $prefs['min_user_length'];
+		$rd['min_pass_length'] = $prefs['min_pass_length'];
+		$rd['login_is_email'] = $prefs['login_is_email'];
+		$rd['lowercase_username'] = $prefs['lowercase_username'];
+		$rd['useRegisterPasscode'] = $prefs['useRegisterPasscode'];
+		$rd['pass_chr_num'] = $prefs['pass_chr_num'];
+		$rd['validateUsers'] = $prefs['validateUsers'];
+		$rd['validateEmail'] = $prefs['validateEmail'];
+		
+		return $rd;
+	}
+
+
+	function register($rq, $rd=NULL) {
+		global $registrationlib, $userlib, $prefs, $patterns, $logslib, $tikilib, $notificationlib;
+		global $smarty; // <- must be used only for email notification
+
+		$result=array('error' => array(),
+					  'email_valid' => '',
+					  );
+
+		if ($rd === NULL) $rd=get_register_local_datas();
+
+		if($rq['novalidation'] != 'yes' and ($rq["pass"] <> $rq["passAgain"]) and !isset($rq['openid_url'])) {
+			$result['error'][]=tra("The passwords don't match");
+		}
+
+		if($userlib->user_exists($rq["name"])) {
+			$result['error'][]=tra("User already exists");
+		}
+  
+		if($prefs['rnd_num_reg'] == 'y') {
+			if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$rq['antibotcode']) {
+				$result['error'][]=tra("Wrong registration code");
+			}
+		}
+  
+		// VALIDATE NAME HERE
+		$n = strtolower($rq['name']);
+		if($n =='admin' || $n == 'anonymous' || $n == 'registered' || $n == strtolower(tra('Anonymous')) || $n == strtolower(tra('Registered'))) {
+			$result['error'][]=tra("Invalid username");
+		}
+	
+		if(strlen($rq["name"])>200) {
+			$result['error'][]=tra("Username is too long");
+		}
+	
+		if(strstr($rq["name"],' ')) {
+			$result['error'][]=tra("Username cannot contain whitespace");
+		}
+	
+		if($prefs['lowercase_username'] == 'y') {
+			if(ereg("[[:upper:]]", $rq["name"])) {
+				$result['error'][]=tra("Username cannot contain uppercase letters");
+			}
+		}
+	
+		//FALTA DEFINIR VALORES PADRÕES PARA AS DUAS VARIÁVEIS!!!
+		if(strlen($rq["name"])<$prefs['min_username_length']) {
+			$result['error'][]=tra("Username must be at least").' '.$prefs['min_username_length'].' '.tra("characters long");
+		}
+	
+		if(strlen($rq["name"])>$prefs['max_username_length']) {
+			$result['error'][]=tra("Username cannot contain more than").' '.$prefs['max_username_length'].' '.tra("characters");
+		}
+	
+		$polerr = $userlib->check_password_policy($rq["pass"]);
+		if ( !isset($rq['openid_url']) && (strlen($polerr)>0) ) {
+			$result['error'][]= $polerr;
+		}
+    
+		if (!preg_match($patterns['login'],$rq["name"])) {
+			$result['error'][]=tra("Invalid username");
+		}
+	
+		// Check the mode
+		if($prefs['useRegisterPasscode'] == 'y') {
+			if($rq['passcode']!=$prefs['registerPasscoder']) {
+				$result['error'][]=tra("Wrong passcode you need to know the passcode to register in this site");
+			}
+		}
+		if ((count($rd['choicegroups']) > 0) && $rd['$mandatoryChoiceGroups'] && empty($rq['chosenGroup'])) {
+			$result['error'][]=tra('You must choose a group');
+		}	  
+	
+		if ($prefs['login_is_email'] == 'y') {
+			if (empty($rq['novalidation']) || $rq['novalidation'] != 'yes') {
+				$rq['email'] = $rq['name'];
+			} else {
+				$rq['name'] = $rq['email'];
+			}
+		}
+	
+		$email_valid = 'y';
+		if (!validate_email($rq["email"],$prefs['validateEmail'])) {
+			$email_valid = 'n';
+		} elseif ($prefs['userTracker'] == 'y') {
+			$re = $userlib->get_group_info(isset($rq['chosenGroup'])? $rq['chosenGroup']: 'Registered');
+			if (!empty($re['usersTrackerId']) && !empty($re['registrationUsersFieldIds'])) {
+				include_once('lib/wiki-plugins/wikiplugin_tracker.php');
+				$userTrackerData = wikiplugin_tracker('', array('trackerId'=>$re['usersTrackerId'], 'fields'=>$re['registrationUsersFieldIds'], 'showdesc'=>'y', 'showmandatory'=>'y', 'embedded'=>'n'));
+				$result['userTrackerData']=$userTrackerData;
+				if (!isset($rq['trackit']) || (isset($rq['error']) && $rq['error'] == 'y')) {
+					$email_valid = 'n';// first pass or error
+				}
+			}
+		}
+	
+		$result['email_valid']=$email_valid;
+		if (count($result['error']) || $result['email_valid'] != 'y') return $result;
+
+		if (isset($rq['openid_url'])) {
+			$openid_url = $rq['openid_url'];
+		} else {
+			$openid_url = '';
+		}
+		if($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
+			$apass = addslashes(md5($tikilib->genPass()));
+			$userlib->send_validation_email($rq['name'], $apass, $rq['email']);
+			
+			$userlib->add_user($rq["name"],$apass,$rq["email"],$rq["pass"], false, 'n', $openid_url);
+			if (isset($rq['chosenGroup']) && $userlib->get_registrationChoice($rq['chosenGroup']) == 'y') {
+				$userlib->set_default_group($rq['name'], $rq['chosenGroup']);
+			}	
+			$logslib->add_log('register','created account '.$rq["name"]);
+			//$smarty->assign('showmsg','y'); // where is the $msg??
+			$result['msg']="yeah...";
+		} else {
+			$userlib->add_user($rq["name"],$rq["pass"],$rq["email"],'', false, 'n', $openid_url);
+			if (isset($rq['chosenGroup']) && $userlib->get_registrationChoice($rq['chosenGroup']) == 'y') {
+				$userlib->set_default_group($rq['name'], $rq['chosenGroup']);
+			}			
+			$logslib->add_log('register','created account '.$rq["name"]);
+			$result['msg']=$smarty->fetch('mail/user_welcome_msg.tpl');
+		}
+		
+		// save default user preferences
+		$tikilib->set_user_preference($rq['name'], 'theme', $prefs['style']);
+		$tikilib->set_user_preference($rq['name'], 'userbreadCrumb', $prefs['users_prefs_userbreadCrumb']);
+		$tikilib->set_user_preference($rq['name'], 'language', $prefs['users_prefs_language']);
+		$tikilib->set_user_preference($rq['name'], 'display_timezone', $prefs['users_prefs_display_timezone']);
+		$tikilib->set_user_preference($rq['name'], 'user_information', $prefs['users_prefs_user_information']);
+		$tikilib->set_user_preference($rq['name'], 'user_dbl', $prefs['users_prefs_user_dbl']);
+		$tikilib->set_user_preference($rq['name'], 'diff_versions', $prefs['users_prefs_diff_versions']);
+		$tikilib->set_user_preference($rq['name'], 'show_mouseover_user_info', $prefs['users_prefs_show_mouseover_user_info']);
+		$tikilib->set_user_preference($rq['name'], 'email is public', $prefs['users_prefs_email_is_public']);
+		$tikilib->set_user_preference($rq['name'], 'mailCharset', $prefs['users_prefs_mailCharset']);
+		$tikilib->set_user_preference($rq['name'], 'realName', '');
+		$tikilib->set_user_preference($rq['name'], 'homePage', '');
+		$tikilib->set_user_preference($rq['name'], 'lat', floatval(0));
+		$tikilib->set_user_preference($rq['name'], 'lon', floatval(0));
+		$tikilib->set_user_preference($rq['name'], 'country', '');
+		$tikilib->set_user_preference($rq['name'], 'mess_maxRecords',$prefs['users_prefs_mess_maxRecords']);
+		$tikilib->set_user_preference($rq['name'], 'mess_archiveAfter', $prefs['users_prefs_mess_archiveAfter']);
+		$tikilib->set_user_preference($rq['name'], 'mess_sendReadStatus', $prefs['users_prefs_mess_sendReadStatus']);
+		$tikilib->set_user_preference($rq['name'], 'minPrio',$prefs['users_prefs_minPrio']);
+		$tikilib->set_user_preference($rq['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_blogs',$prefs['users_prefs_mytiki_blogs']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_items', $prefs['users_prefs_mytiki_items']);
+		$tikilib->set_user_preference($rq['name'], 'mytiki_workflow', $prefs['users_prefs_mytiki_workflow']);
+		$tikilib->set_user_preference($rq['name'], 'tasks_maxRecords', $prefs['users_prefs_tasks_maxRecords']);
+
+		// Custom fields
+		foreach ($rd['customfields'] as $custpref=>$prefvalue ) {
+			if (isset($rq['customfields'][$rd['customfields'][$custpref]['prefName']]))
+				$tikilib->set_user_preference($rq["name"], $rd['customfields'][$custpref]['prefName'], $rq['customfields'][$rd['customfields'][$custpref]['prefName']]);
+		}
+		
+		$emails = $notificationlib->get_mail_events('user_registers','*');
+		if (count($emails)) {
+			include_once("lib/notifications/notificationemaillib.php");
+			$smarty->assign('mail_user',$rq["name"]);
+			$smarty->assign('mail_date',$tikilib->now);
+			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+			sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
+		}
+		
+
+		return $result;
+	}
+
 }
   
 global $dbTiki;
