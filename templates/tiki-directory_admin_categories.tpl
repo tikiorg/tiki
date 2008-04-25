@@ -25,7 +25,7 @@
 </form>
 
 {* Dislay a form to add or edit a category *}
-{if $categId eq 0}
+<br />{if $categId eq 0}
 <h2>{tr}Add a directory category{/tr}</h2>
 {else}
 <h2>{tr}Edit this directory category{/tr}: {$info.name}</h2>
@@ -92,20 +92,20 @@
   </tr>
 </table>
 </form>
-
+<br />
 <h2>{tr}Subcategories{/tr}</h2>
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <table class="normal">
   <tr>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'childrenType_desc'}childrenType_asc{else}childrenType_desc{/if}">{tr}cType{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'viewableChildren_desc'}viewableChildren_asc{else}viewableChildren_desc{/if}">{tr}View{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'allowSites_desc'}allowSites_asc{else}allowSites_desc{/if}">{tr}allow{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'showCount_desc'}showCount_asc{else}showCount_desc{/if}">{tr}count{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'editorGroup_desc'}editorGroup_asc{else}editorGroup_desc{/if}">{tr}editor{/tr}</a></td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'childrenType_desc'}childrenType_asc{else}childrenType_desc{/if}">{tr}cType{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'viewableChildren_desc'}viewableChildren_asc{else}viewableChildren_desc{/if}">{tr}View{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'allowSites_desc'}allowSites_asc{else}allowSites_desc{/if}">{tr}allow{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'showCount_desc'}showCount_asc{else}showCount_desc{/if}">{tr}count{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'editorGroup_desc'}editorGroup_asc{else}editorGroup_desc{/if}">{tr}editor{/tr}</a></th>
+    <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
@@ -122,6 +122,7 @@
    <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
+{sectionelse}<tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

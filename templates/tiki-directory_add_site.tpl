@@ -9,9 +9,8 @@
 {else}
 {if $save eq 'y'}
 <h2>{tr}Site added{/tr}</h2>
-<br /><b>
-  {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
-</b><br /><br />
+{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
+<br /><br />
 <table class="normal">
 <tr>
     <td class="formcolor">{tr}Name{/tr}:</td>
@@ -32,14 +31,12 @@
 </table>
 
 {else}
-  {if $msg}
-    <div class="commentsedithelp">
-      <br /><b>{tr}{$msg}{/tr}</b><br /><br />
-    </div>
-  {/if}
+{if $msg}
+    <div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}{$msg}{/tr}</div>
+{/if}
 
 {* Dislay a form to add or edit a site *}
-<h2>{tr}Add or edit a site{/tr}</h2>
+<br /><h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a site{/tr}{/if}</h2>
 <form action="tiki-directory_add_site.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
@@ -65,6 +62,12 @@
       <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>{$categs[ix].path}</option>
     {/section}
     </select>
+{if $categs|@count ge '2'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple categories.{/tr}</div>
+<br /></div>
+{/if}
     </td>
   </tr>
   <tr>

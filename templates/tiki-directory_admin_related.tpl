@@ -22,7 +22,7 @@
 </select>
 <input type="submit" name="go" value="{tr}Go{/tr}" />
 </form>
-
+<br />
 <h2>{tr}Add a related category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -47,14 +47,14 @@
   </tr>
 </table>
 </form>
-
+<br />
 <h2>{tr}Related categories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <table class="normal">
   <tr>
-    <td class="heading">{tr}Category{/tr}</td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th class="heading">{tr}Category{/tr}</th>
+    <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
@@ -75,6 +75,7 @@
 </td>
 </form>
 </tr>
+{sectionelse}<tr><td colspan="2" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

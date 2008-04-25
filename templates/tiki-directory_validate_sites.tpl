@@ -11,26 +11,25 @@
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
-<h2>{tr}Sites{/tr}</h2>
+<br /><h2>{tr}Sites{/tr}</h2>
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_validate_sites.php" method="post" name="form_validate_sites">
-<input type="submit" name="del" value="{tr}Remove{/tr}" />
-<input type="submit" name="validate" value="{tr}Validate{/tr}" />
 <script type="text/javascript">
 var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}]'{if not $smarty.section.user.last},{/if}{/section}];
 </script>
+<br />
 <table class="normal">
   <tr>
-    <td class="heading"><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_validate_sites',CHECKBOX_LIST,this.checked);" /></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></td>
+    <th class="heading">{if $items}<input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_validate_sites',CHECKBOX_LIST,this.checked);" />{/if}</th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></th>
 {if $prefs.directory_country_flag eq 'y'}
-    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></td>
+    <th class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></th>
 {/if}
-    <td class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th class="heading"><a class="tableheading" href="tiki-directory_validate_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
+    <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
@@ -56,8 +55,14 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
   {/section}</i>
   </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="6">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+{if $items}
+<br />{tr}Perform action with selected:{/tr} <input type="submit" name="del" value="{tr}Remove{/tr}" />
+<input type="submit" name="validate" value="{tr}Validate{/tr}" />
+{/if}
 </form>
 <div class="mini">
 {if $prev_offset >= 0}

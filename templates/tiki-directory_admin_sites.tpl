@@ -26,7 +26,7 @@
 </form>
 
 {* Dislay a form to add or edit a site *}
-<h2>{tr}Add or edit a site{/tr}</h2>
+<br /><h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a site{/tr}{/if}</h2>
 <form action="tiki-directory_admin_sites.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
@@ -51,6 +51,12 @@
       <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path}</option>
     {/section}
     </select>
+{if $categs|@count ge '2'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple categories.{/tr}</div>
+<br /></div>
+{/if}
     </td>
   </tr>
 {if $prefs.directory_country_flag eq 'y'}
@@ -75,27 +81,27 @@
   </tr>
 </table>
 </form>
-
+<br />
 <h2>{tr}Sites{/tr}</h2>
-
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_admin_sites.php" method="post">
-<div style="text-align:right;"><input type="submit" name="groupdel" value="{tr}Delete selected{/tr}" /></div>
 <table class="normal">
   <tr>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}Url{/tr}</a></td>
+    <th class="heading"> </th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></th>
 {if $prefs.directory_country_flag eq 'y'}
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></td>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}Country{/tr}</a></th>
 {/if}
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a></td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
+    <th class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a></th>
+    <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
+<td class="{cycle advance=false}"><input type="checkbox" name="remove[]" value="{$items[user].siteId}" /></td>
 <td class="{cycle advance=false}">{$items[user].name}</td>
 <td class="{cycle advance=false}"><a href="{$items[user].url}" target="_new">{$items[user].url}</a></td>
  {if $prefs.directory_country_flag eq 'y'}
@@ -106,20 +112,23 @@
 <td  class="{cycle advance=false}">
    <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{icon _id='page_edit'}</a>
    <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-	 <input type="checkbox" name="remove[]" value="{$items[user].siteId}" />
-</td>
+   </td>
 </tr>
 <tr>
   <td class="{cycle advance=false}">&nbsp;</td>
-  <td class="{cycle}" colspan="5"><i>{tr}Categories{/tr}:{assign var=fsfs value=1}
+  <td class="{cycle}" colspan="6"><i>{tr}Categories{/tr}:{assign var=fsfs value=1}
   {section name=ii loop=$items[user].cats}
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   {$items[user].cats[ii].path}
   {/section}</i>
   </td>
 </tr>
+{sectionelse}<tr><td class="odd" colspan="{if $prefs.directory_country_flag eq 'y'}7{else}6{/if}">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+{if $items}
+</br>{tr}Perform action with selected:{/tr} <input type="submit" name="groupdel" value=" {tr}Delete{/tr} " />
+{/if}
 </form>
 
 <div class="mini">

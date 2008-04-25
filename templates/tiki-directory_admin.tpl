@@ -8,8 +8,8 @@
 <img border='0' src='img/icons/info.gif' alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
 
 {include file=tiki-directory_admin_bar.tpl}
-
-<b>{tr}Statistics{/tr}</b><br /><br />
+<br />
+<h2>{tr}Statistics{/tr}</h2>
 {tr}There are{/tr} {$stats.invalid} {tr}invalid sites{/tr}<br />
 {tr}There are{/tr} {$stats.valid} {tr}valid sites{/tr}<br />
 {tr}There are{/tr} {$stats.categs} <a class="link" href="tiki-directory_admin_categories.php">{tr}Categories{/tr}</a><br />

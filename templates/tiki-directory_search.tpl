@@ -19,6 +19,7 @@
 
 
 <div class="dirlistsites">
+{if $items}
 <form method="post" action="tiki-directory_search.php">
 <input type="hidden" name="how" value="{$how|escape}" />
 <input type="hidden" name="words" value="{$words|escape}" />
@@ -36,6 +37,7 @@
 <input type="submit" name="xx" value="sort" />
 </form>
 <br />
+{/if}
 {section name=ix loop=$items}
 <div class="dirsite">
 {if $prefs.directory_country_flag eq 'y'}
@@ -54,6 +56,7 @@
 </span><br />
 <span class="dirsitetrail">{tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits}</span>
 </div>
+{sectionelse}{tr}No records found.{/tr}
 {/section}
 </div>
 <br />
