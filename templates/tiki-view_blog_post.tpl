@@ -8,11 +8,13 @@
 	<h3>{$post_info.created|tiki_short_datetime}</h3>
 {/if}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
-<div class="freetaglist">
-  {foreach from=$tags.data item=tag}
-	<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
-  {/foreach}
-</div>
+  {if $tags.data|@count >0}
+    <div class="freetaglist">
+      {foreach from=$tags.data item=tag}
+  	    <a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+      {/foreach}
+    </div>
+  {/if}
 {/if}
 <table ><tr><td align="left">
 <span class="posthead">
@@ -99,23 +101,21 @@
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')}
-<div id="page-bar">
-<table>
-<tr><td>
-<div class="button2">
-<a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut">
-{if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}Add Comment{/tr}
-{elseif $comments_cant == 1}
-<span class="highlight">{tr}1 comment{/tr}</span>
-{else}
-<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
-{/if}
-<span id="comzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or $show_comments}inline{else}none{/if};">({tr}close{/tr})</span>
-</a>
-</div>
-</td></tr></table>
-</div>
-{include file=comments.tpl}
+  ||  $tiki_p_edit_comments  == 'y')
+}
+  <div id="page-bar">
+    <div class="button2">
+      <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+        {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+          {tr}Add Comment{/tr}
+        {elseif $comments_cant == 1}
+          {tr}1 comment{/tr}
+        {else}
+          {$comments_cant}&nbsp;{tr}comments{/tr}
+        {/if}
+          <span id="comzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or $show_comments}inline{else}none{/if};">({tr}close{/tr})</span>
+      </a>
+    </div>
+  </div>
+  {include file=comments.tpl}
 {/if}
