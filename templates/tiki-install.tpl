@@ -319,7 +319,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <h2>{tr}Entering TikiWiki{/tr}</h2>
 {tr}You have completed the TikiWiki {if isset($smarty.post.scratch)}installation{else}upgrade{/if}. Use one of these links to continue{/tr}:
 <ul>
- <li><a href="tiki-install.php?kill=1" class="link">{tr}Disable the installation script and enter TikiWiki{/tr}.</a> <strong>(Recommended)</strong></li>
+ <li><a href="tiki-install.php?kill=1" class="link">{tr}Disable the installation script and enter TikiWiki{/tr}.</a> <strong>({tr}Recommended{/tr})</strong></li>
  <li><a href="tiki-index.php" class="link">{tr}Enter TikiWiki <em>without</em> disabling the installation script{/tr}.</a></li>
  <li><a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}.</a></li>
  <li><a href="tiki-install.php{if $multi}?multi={$multi}{/if}{if $lang}{if $multi}&amp;{else}?{/if}lang={$lang}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}.</a> {tr}Do not use your browser's Back button.{/tr}</li>
