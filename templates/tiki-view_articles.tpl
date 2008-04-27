@@ -107,15 +107,15 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments" class="linkbut">
-{if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-{tr}Add Comment{/tr}
-{elseif $listpages[ix].comments_cant == 1}
-<span class="highlight">{tr}1 comment{/tr}</span>
-{else}
-<span class="highlight">{$listpages[ix].comments_cant} {tr}comments{/tr}</span>
-{/if}
-</a>
+      <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments" class="linkbut {if $listpages[ix].comments_cant > 0}highlight{/if}">
+        {if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
+          {tr}Add Comment{/tr}
+        {elseif $listpages[ix].comments_cant == 1}
+          {tr}1 comment{/tr}
+        {else}
+          {$listpages[ix].comments_cant}&nbsp;{tr}comments{/tr}
+        {/if}
+      </a>
     </td>
   {/if}
 {/if}
