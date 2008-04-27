@@ -245,7 +245,9 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 		<div style="margin:10px 0px 5px 0px;border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
 		<p align="center" style="font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}complete{/tr}.</p>
-		<p>{tr}Your database has been configured and Tikiwiki is ready to run! {if isset($smarty.post.scratch)}If this is your first install, your admin password is <strong>admin</strong>.{/if} You can now log in into Tikiwiki as user <strong>admin</strong> and start configuring the application.{/tr}
+		<p>{tr}Your database has been configured and Tikiwiki is ready to run! {if isset($smarty.post.scratch)}If this is your first install, your admin password is <strong>admin</strong>.{/if} You can
+    		now log in into Tikiwiki as user <strong>admin</strong> and start configuring
+    		the application.{/tr}
 
 		</p>
 		</div>
