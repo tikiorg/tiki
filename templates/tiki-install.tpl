@@ -245,7 +245,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 		<div style="margin:10px 0px 5px 0px;border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
 		<p align="center" style="font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}complete{/tr}.</p>
-		<p>{tr}Your database has been configured and Tikiwiki is ready to run! {if isset($smarty.post.scratch)}If this is your first install, your admin password is <strong>admin</strong>.{/if} You can
+		<p>{tr}Your database has been configured and Tikiwiki is ready to run!{/tr} {if isset($smarty.post.scratch)}{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}{/if} {tr}You can
     		now log in into Tikiwiki as user <strong>admin</strong> and start configuring
     		the application.{/tr}
 
@@ -317,7 +317,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 <p>&nbsp;</p>
 <h2>{tr}Entering TikiWiki{/tr}</h2>
-{tr}You have completed the TikiWiki {if isset($smarty.post.scratch)}installation{else}upgrade{/if}. Use one of these links to continue{/tr}:
+{if isset($smarty.post.scratch)}{tr}You have completed the TikiWiki installation{/tr}{else}{tr}You have completed the TikiWiki upgrade{/tr}{/if}. {tr}Use one of these links to continue{/tr}:
 <ul>
  <li><a href="tiki-install.php?kill=1" class="link">{tr}Disable the installation script and enter TikiWiki{/tr}.</a> <strong>({tr}Recommended{/tr})</strong></li>
  <li><a href="tiki-index.php" class="link">{tr}Enter TikiWiki <em>without</em> disabling the installation script{/tr}.</a></li>
