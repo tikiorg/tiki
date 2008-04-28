@@ -1750,3 +1750,11 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 
 #2008-04-22 sylvieg
 ALTER TABLE tiki_blog_posts CHANGE title title varchar(255) default NULL;
+
+#2008-04-28 Jyhem
+# Try to limit impact of country names changes (these were not the actual names of the countries)
+UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Russian_Federation' WHERE tiki_tracker_item_fields.value='Russia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
+UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Republic_of_Montenegro' WHERE tiki_tracker_item_fields.value='Montenegro' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
+UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Republic_of_Serbia' WHERE tiki_tracker_item_fields.value='Serbia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
+UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Republic_of_Macedonia' WHERE tiki_tracker_item_fields.value='Macedonia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
+

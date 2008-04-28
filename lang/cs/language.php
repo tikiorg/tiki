@@ -1100,6 +1100,7 @@ přes MojeTiki->Moduly.<br />
 "Quatar" => "Katar",
 "Romania" => "Rumunsko",
 "Russia" => "Rusko",
+"Russian_Federation" => "Rusko",
 "Saudi_Arabia" => "Saudská Arábie",
 "Solomon_Islands" => "Šalamounovy Ostrovy",
 "Sweden" => "Švédsko",
