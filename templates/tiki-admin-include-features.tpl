@@ -27,7 +27,7 @@ td.form {
 <form class="admin" action="tiki-admin.php?page=features" method="post">
 
 {if $prefs.feature_tabs eq 'y'}
-<input style="float:right; margin-bottom: -1.2em !important" class="" type="submit" name="features" value="{tr}Save{/tr}" />
+<input style="float:right;margin-bottom: -1.2em" class="" type="submit" name="features" value="{tr}Save{/tr}" />
 <div class="tabs" style="clear: both;">
 	<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,10);">{tr}Major{/tr}</a></span>
 	<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,10);">{tr}Minor{/tr}</a></span>
