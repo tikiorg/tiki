@@ -22,6 +22,14 @@
 {if $tiki_p_admin_forum eq 'y'}
 <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
 {/if}
+	  
+{if $queued > 0}
+  <a class="linkbut highlight" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Manage Message Queue{/tr}&nbsp;({$queued})</a>
+{/if}
+
+{if $reported > 0}
+  <a class="linkbut highlight" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Manage Reported Messages{/tr}&nbsp;({$reported})</a>
+{/if}
 
 </td>
 <td style="text-align:right;">
