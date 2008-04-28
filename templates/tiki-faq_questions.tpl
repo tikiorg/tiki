@@ -4,7 +4,7 @@
 <a href="tiki-list_faqs.php?faqId={$faqId}" class="linkbut">{tr}Edit this FAQ{/tr}</a>
 <a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a><br />
 <br />
-<h2>{tr}Edit FAQ questions{/tr}</h2>
+<h2>{if $questionId}{tr}Edit FAQ question{/tr}{else}{tr}Add FAQ question{/tr}{/if}</h2>
 <form action="tiki-faq_questions.php" method="post" id="editpageform">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
@@ -48,7 +48,7 @@
 </form>
 {* This is the area for choosing questions from the db... it really should support choosing options from the answers, but only show if there are existing questions *}
 {if $allq}
-<h2> {tr}Use a question from another FAQ{/tr}</h2>
+<br /><h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
@@ -83,7 +83,7 @@
 <br />
 
 {* next big chunk *}
-
+<br />
 <h2>{tr}FAQ questions{/tr}</h2>
 <div align="center">
 {if $channels}
@@ -149,16 +149,19 @@
 <h2>{tr}Suggested questions{/tr}</h2>
 <table class="normal">
 <tr>
-  <td class="heading">{tr}question{/tr}</td>
-  <td class="heading">{tr}Answer{/tr}</td>
+  <th class="heading">{tr}Question{/tr}</th>
+  <th class="heading">{tr}Answer{/tr}</th>
+  <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}
 <tr>
-  <td class="{cycle advance=false}">{$suggested[ix].question} (<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}"><small>{tr}Remove{/tr}</small></a>)
-  (<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}"><small>{tr}Approve{/tr}</small></a>)
+  <td class="{cycle advance=false}">{$suggested[ix].question} </td>
+  <td class="{cycle advance=false}">{$suggested[ix].answer}</td>
+  <td class="{cycle}">
+  <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">{icon _id=cross alt="{tr}Remove{/tr}"}</a> 
+  <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}" alt="{tr}Approve{/tr}">{icon _id=accept alt="{tr}Approve{/tr}"}</a>
   </td>
-  <td class="{cycle}">{$suggested[ix].answer}</td>
 </tr>
 {/section}
 </table>

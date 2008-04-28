@@ -87,26 +87,24 @@
 <div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
 {if !empty($error)}
 <br />
- <div class="simplebox highlight">
-  {$error}
- </div>
+ <div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
 {/if}
 <br />
 <form action="tiki-view_faq.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question">{if $pendingquestion}{$pendingquestion}{/if}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer">{if $pendinganswer}{$pendinganswer}{/if}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question" style="width:95%;">{if $pendingquestion}{$pendingquestion}{/if}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer" style="width:95%;">{if $pendinganswer}{$pendinganswer}{/if}</textarea></td></tr>
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
 {include file="antibot.tpl"}
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value="{tr}Add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value=" {tr}Add{/tr} " /></td></tr>
 </table>
 </form>
 {if count($suggested) != 0}
 <br />
 <table class="normal">
-<tr><td class="heading">{tr}Suggested questions{/tr}</td></tr>
+<tr><th class="heading">{tr}Suggested questions{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}
 <tr><td class="{cycle}">{$suggested[ix].question}</td></tr>
