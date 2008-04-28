@@ -8,7 +8,7 @@
 </h1>
 
 {if $error}
-	<div class="simplebox hoghlight">
+	<div class="simplebox highlight">
 	{if $error == "traLang"}
 		{tr}You must specify the object language{/tr}
 	{elseif $error == "srcExists"}
