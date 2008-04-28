@@ -18,7 +18,7 @@
 {if $blogId > 0}<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>{/if}
 </div>
 {if $category_needed eq 'y'}
-<div class="simplebox hoghlight">{tr}A category is mandatory{/tr}</div>
+<div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
 {/if}
 <h2>{tr}Current heading{/tr}</h2>
 {if strlen($heading) > 0}
