@@ -611,23 +611,40 @@ class WikiLib extends TikiLib {
     }
 
     function lock_page($page) {
-	global $user;
+	global $user, $tikilib;
 
 	$query = "update `tiki_pages` set `flag`=?, `lockedby`=? where `pageName`=?";
 	$result = $this->query($query, array( "L", $user, $page ) );
 
 	if (!empty($user)) {
-		$query = "update `tiki_pages` set `user`=?  where `pageName`=?";
-
-		$result = $this->query($query, array( $user, $page ) );
+	    $info = $tikilib->get_page_info($page);
+	    
+	    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+	    $result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
+	    
+	    $query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
+	    $result = $this->query($query, array($user, tra('Page locked'), $info['version'] + 1, $page));
 	}
 
 	return true;
     }
 
     function unlock_page($page) {
+	global $user, $tikilib;
+	
 	$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
-	$result = $this->query($query, array( $page ) );
+	$result = $this->query($query, array($page));
+	
+	if (isset($user)) {
+	    $info = $tikilib->get_page_info($page);
+	    
+	    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
+	    $result = $this->query($query,array($page,(int) $info['version'],(int) $info['lastModif'],$info['user'],$info['ip'],$info['comment'],$info['data'],$info['description']));
+	    
+	    $query = "update `tiki_pages` set `user`=?, `comment`=?, `version`=? where `pageName`=?";
+	    $result = $this->query($query, array($user, tra('Page unlocked'), $info['version'] + 1, $page));
+	}
+	
 	return true;
     }
 
