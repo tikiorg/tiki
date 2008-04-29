@@ -30,34 +30,11 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST["galleryId"]);
 }	
 
-$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $gal_info, true);
-
-if (!empty($_REQUEST['galleryId'])) { // perms of the gallery can overwrite general perms
-	$smarty->assign('individual', 'n');
-	if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'file gallery')) {
-		$smarty->assign('individual', 'y');
-		if ($tiki_p_admin != 'y') {
-			// Now get all the permissions that are set for this type of permissions 'file gallery'
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
-			foreach ($perms["data"] as $perm) {
-				$permName = $perm["permName"];
-				if ($userlib->object_has_permission($user, $_REQUEST["galleryId"], 'file gallery', $permName)) {
-					$$permName = 'y';
-					$smarty->assign("$permName", 'y');
-				} else {
-					$$permName = 'n';
-					$smarty->assign("$permName", 'n');
-				}
-			}
-		}
-	}
-	if ($tiki_p_admin_file_galleries == 'y') {
-		$tiki_p_upload_files = 'y';
-		$tiki_p_edit_gallery_file = 'y';
-	}
+if (isset($_REQUEST['galleryId'])) {
+	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId']);
+	$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $gal_info, true);
 }
 
 if (!empty($_REQUEST['galleryId']) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
