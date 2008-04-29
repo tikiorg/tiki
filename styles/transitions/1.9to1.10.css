@@ -325,13 +325,13 @@ h3.box-title {
 }
 
 /* Lists in modules */
-.box-data ol,
-.box-data ul {margin-left: 0;padding-right: 1em}
+.box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
+.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
 /* IE */
-* html .box-data ol {margin-left: 3em;}
-* html .box-data ul {margin-left: 2em;}
+* html .box-data ol {margin-left: 0em;}
+* html .box-data ul {margin-left: 0em;}
 /* IE7 */
-*:first-child+html .box-data ol {margin-left: 3em;}
+*:first-child+html .box-data ol {margin-left: 0em;}
 *:first-child+html .box-data ul {margin-left: 0em;}
 
 /* MyTiki preferences Ajax */
