@@ -112,7 +112,6 @@
 {if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
-		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 		{if $editFileId}{$fileInfo.filename|escape}<br />{/if}
 		<input name="userfile1" type="file" />
 		{if !$editFileId}<input name="userfile2" type="file" />
