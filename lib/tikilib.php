@@ -1822,7 +1822,7 @@ function add_pageview() {
 	} else {
 	    $mid = " where `menuId`=? ";
 	}
-	if ($level) {
+	if ($level && $prefs['feature_userlevels'] == 'y') {
 		$mid.= " and `userlevel`<=?";
 		$bindvars[] = $level;
 	}
