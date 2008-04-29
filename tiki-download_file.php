@@ -11,6 +11,7 @@ if ( $prefs['feature_file_galleries'] != 'y' ) {
   $smarty->display('error.tpl');
   die;
 }
+@set_time_limit(0);
 
 /*
 Borrowed from http://php.net/manual/en/function.readfile.php#54295
