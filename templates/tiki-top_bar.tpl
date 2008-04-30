@@ -11,10 +11,10 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
   {$smarty.now|tiki_short_datetime}
 {/if}
 {/if}
-{if $prefs.feature_topbar_debug eq 'y' and $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
+{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_debug eq 'y' and $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
   &#160;//&#160;<a href="javascript:toggle('debugconsole');">{tr}debug{/tr}</a>
 {/if}
-{if $prefs.feature_sitemenu eq 'y'}
+{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_sitemenu eq 'y'}
 	{if $prefs.feature_phplayers eq 'y'}
 		{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
 	{else}
@@ -22,6 +22,6 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 	{/if}
 {/if}
 {/if}
-{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y')}
+{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y')}
 <div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a></div>
 {/if}
