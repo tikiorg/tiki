@@ -65,7 +65,7 @@
 {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
 <div class="tabs">
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker items for{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Insert new item{/tr}</a></span>

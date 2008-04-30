@@ -1165,6 +1165,7 @@ $lang=Array(
 "File Gallery" => "Galerie de fichiers",
 "Quizzes" => "QCMs",
 "Trackers" => "Formulaires",
+"Tracker items for" => "Liste des fiches de",
 "Survey" => "Enquête",
 "Charts" => "Palmarès",
 "blog" => "blogue",
