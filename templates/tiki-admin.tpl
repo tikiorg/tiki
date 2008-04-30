@@ -21,7 +21,9 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {if $tikifeedback}
-<div class="simplebox highlight">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
+<br /><div class="simplebox highlight">{section name=n loop=$tikifeedback}
+{if strstr($tikifeedback[n].mes, 'disabled')}{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align:middle"}{else}{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align:middle"}{/if}
+ {$tikifeedback[n].mes}<br />{/section}</div><br />
 {/if}
 {include file="tiki-admin-include-$include.tpl"}
 
