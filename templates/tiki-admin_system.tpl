@@ -15,7 +15,7 @@
 </div>
 </div>
 <br />
-<h2>{tr}Exterminator{/tr}</h2>
+<h2>{tr}Exterminator of cached content{/tr}</h2>
 <table class="normal">
 <tr><th class="heading">{tr}Directory{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
 <tr class="form">
