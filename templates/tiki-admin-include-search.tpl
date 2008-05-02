@@ -31,7 +31,7 @@
         </tr>
         <tr>
           <td class="form">
-            {tr}Parsed the result (can be slow){/tr}:
+            {tr}Parse the result (can be slow){/tr}:
           </td>
           <td>
             <input type="checkbox" name="search_parsed_snippet"
