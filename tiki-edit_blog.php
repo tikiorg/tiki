@@ -69,6 +69,7 @@ $smarty->assign('use_title', 'y');
 $smarty->assign('allow_comments', 'y');
 $smarty->assign('show_avatar', 'n');
 $smarty->assign('maxPosts', 10);
+$smarty->assign('creator', $user);
 
 
 if (!isset($created)) {
@@ -94,6 +95,8 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 }
 
 $smarty->assign_by_ref('heading', $heading);
+$users = $userlib->list_all_users();
+$smarty->assign_by_ref('users', $users);
 
 if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	// Check permission
@@ -117,19 +120,8 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
 	$smarty->assign('heading', $data["heading"]);
-	$smarty->assign_by_ref('blog_info', $data);
-}
+	$smarty->assign('creator', $data["user"]);
 
-if (isset($_REQUEST['preview'])) {
-	$smarty->assign('title', $_REQUEST["title"]);
-
-	$smarty->assign('description', $_REQUEST["description"]);
-	$smarty->assign('public', isset($_REQUEST["public"]) ? 'y' : 'n');
-	$smarty->assign('use_find', isset($_REQUEST["use_find"]) ? 'y' : 'n');
-	$smarty->assign('use_title', isset($_REQUEST["use_title"]) ? 'y' : 'n');
-	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
-	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
-	$smarty->assign('heading', $heading);
 }
 
 $category_needed = false;
@@ -146,14 +138,14 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 
 	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
 	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
-    $show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
+	$show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
 
 	// 'heading' was assumed set. -rlpowell
 	$heading = isset($_REQUEST['heading']) ? $_REQUEST['heading'] : '';
 
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
-	    $_REQUEST["description"], isset($_REQUEST['user'])?$_REQUEST['user']: $user, $public,
+	    $_REQUEST["description"], $_REQUEST["creator"], $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
 	    $heading, $use_title, $use_find,
 	    $allow_comments, $show_avatar);
@@ -169,11 +161,6 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	die;
 }
 
-if ($tiki_p_admin_trackers =='y') {
-	$users = $userlib->list_all_users();
-	$smarty->assign_by_ref('users', $users);
-}
-
 if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('title', $_REQUEST["title"]);
 
@@ -184,6 +171,7 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 	$smarty->assign('allow_comments', isset($_REQUEST["allow_comments"]) ? 'y' : 'n');
 	$smarty->assign('maxPosts', $_REQUEST["maxPosts"]);
 	$smarty->assign('heading', $heading);
+	$smarty->assign('creator', $_REQUEST["creator"]);
 }
 
 
