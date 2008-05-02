@@ -580,10 +580,16 @@ class TrackerLib extends TikiLib {
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
 				list($a, $asort_mode, $corder) = split('_', $sort_mode);
 				$csort_mode = 'sttif.`value` ';
-				$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
-					.' ON (tti.`itemId` = sttif.`itemId`'
+				if (isset($listfields[$asort_mode]['type']) && $listfields[$asort_mode]['type'] == 'l') {// item list
+					$optsl = split(',', $listfields[$asort_mode]['options']);
+					$optsl[1] = split(':', $optsl[1]);
+					$sort_tables = $this->get_left_join_sql(array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
+				} else {
+					$sort_tables = ' LEFT JOIN (`tiki_tracker_item_fields` sttif)'
+						.' ON (tti.`itemId` = sttif.`itemId`'
 						." AND sttif.`fieldId` = $asort_mode"
-					.')';
+						.')';
+				}
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
 				switch ($field['type']) {
@@ -2351,6 +2357,18 @@ class TrackerLib extends TikiLib {
 			$ret[$res['itemId']] = $res['value'];
 		}
 		return $ret;
+	}
+	function get_left_join_sql($fieldIds) {
+		$sql = " LEFT JOIN (`tiki_tracker_item_fields` t0) ON (tti.`itemId`= t0.`itemId` and t0.`fieldId`=".$fieldIds[0].")";
+		for ($i = 1; $i < count($fieldIds)-2; $i = $i+2) {
+			$a = $i -1;
+			$j = $i + 1;
+			$sql .= "LEFT JOIN (`tiki_tracker_item_fields` t$i) ON (t$a.`itemId`= t$i.`itemId` and t$i.`fieldId`=".$fieldIds[$i].")";
+			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$j) ON (t$i.`value`= t$j.`value` and t$i.`fieldId`=".$fieldIds[$j].")";
+		}
+		$i--;
+		$sql .= " LEFT JOIN (`tiki_tracker_item_fields` sttif) ON (t$i.`itemId`= sttif.`itemId` and sttif.`fieldId`=".$fieldIds[$i].")";
+		return $sql;
 	}
 }
 
