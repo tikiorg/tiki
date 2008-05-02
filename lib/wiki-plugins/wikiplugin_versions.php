@@ -11,7 +11,7 @@
  * http://doc.tikiwiki.org/PluginVersions
  */
 function wikiplugin_versions_help() {
-	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}".tra("text")."{VERSIONS}~/np~";
+	return tra("Split the text in parts visible only under some conditions").":<br />~np~{VERSIONS(nav=>y|n,title=>y|n,default=>)}".tra("This is the default text<br />---(version 3)-----------------------------<br />This is version 3 info<br />---(version 2)-----------------------------<br />This is version 2 info<br />---(version 1)-----------------------------<br />This is version 1 info")."{VERSIONS}~/np~";
 }
 
 function wikiplugin_versions($data, $params) {
