@@ -22,7 +22,7 @@
 {if $tiki_p_admin_forum eq 'y'}
 <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
 {/if}
-	  
+
 {if $queued > 0}
   <a class="linkbut highlight" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Manage Message Queue{/tr}&nbsp;({$queued})</a>
 {/if}
@@ -63,7 +63,7 @@
 </div>
 
 {if $prefs.feature_forum_content_search eq 'y'}
-  <form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+  <form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
     <input name="highlight" size="30" type="text" />
     <input type="hidden" name="where" value="forums" />
     <input type="hidden" name="forumId" value={$forum_info.forumId} />
@@ -95,7 +95,7 @@ a moderator approves it.{/tr}
   <b>{tr}Preview{/tr}</b>
   <div class="commentscomment">
   <div class="commentheader">
-  <table >
+  <table>
   <tr>
   <td>
   <div class="commentheader">
@@ -147,7 +147,7 @@ a moderator approves it.{/tr}
     <tr class="formcolor">
       <td>{tr}Title{/tr}</td>
       <td><input type="text" name="comments_title" value="{$comment_title|escape}" size="80" /></td>
-    </tr>      
+    </tr>
     {if $forum_info.forum_use_password ne 'n'}
     <tr class="formcolor">
     	<td>{tr}Password{/tr}</td>
@@ -175,10 +175,10 @@ a moderator approves it.{/tr}
       <option value="icon_frown.gif" {if $comment_topicsmiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
       <option value="icon_exclaim.gif" {if $comment_topicsmiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
       <option value="icon_idea.gif" {if $comment_topicsmiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
-      <option value="icon_mad.gif" {if $comment_topicsmiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>      
-      <option value="icon_neutral.gif" {if $comment_topicsmiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>      
-      <option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>      
-      <option value="icon_sad.gif" {if $comment_topicsmiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>      
+      <option value="icon_mad.gif" {if $comment_topicsmiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
+      <option value="icon_neutral.gif" {if $comment_topicsmiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
+      <option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
+      <option value="icon_sad.gif" {if $comment_topicsmiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
       <option value="icon_smile.gif" {if $comment_topicsmiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
       <option value="icon_wink.gif" {if $comment_topicsmiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
       </select>
@@ -221,7 +221,7 @@ a moderator approves it.{/tr}
 	  <td>{tr}Attach file{/tr}</td>
 	  <td>
 	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
-	  </td>   
+	  </td>
     </tr>
     {/if}
 	{if $prefs.feature_contribution eq 'y'}
@@ -257,7 +257,7 @@ a moderator approves it.{/tr}
     </tr>
     </table>
     </form>
-<br />    
+<br />
   <table class="normal" id="commentshelp">
   <tr><td class="even">
   <b>{tr}Editing posts{/tr}:</b>
@@ -291,7 +291,7 @@ a moderator approves it.{/tr}
 	<input type="image" name="unlocksel" src="pics/icons/lock_break.png" border='0' alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
 	<input type="image" name="locksel" src="pics/icons/lock_add.png" border='0' alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
 	<input type="image" name="delsel" src="pics/icons/cross.png" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-	<input type="image" name="splitsel" src="pics/icons/arrow_refresh.png" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
+	<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
@@ -374,7 +374,7 @@ a moderator approves it.{/tr}
   {if $tiki_p_admin_forum eq 'y'}
   <td class="{cycle advance=false}">
   	
-	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}"  {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
+	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}" {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
   </td>
   {/if}	
   <td style="text-align:center;" class="{cycle advance=false}">
@@ -392,13 +392,13 @@ a moderator approves it.{/tr}
   	&nbsp;{$comments_coms[ix].smiley}
   	{/if}
   </td>
-  {/if}  
+  {/if}
   
   <td class="{cycle advance=false}">
   <table width="100%"><tr><td>
-  <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
-  <br /><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
+  <br /><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>
   {/if}
   </td>
   
@@ -429,7 +429,7 @@ a moderator approves it.{/tr}
      class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
   {/if}
 
-  </td>   
+  </td>
   
   </tr></table>
   </td>
@@ -446,7 +446,7 @@ a moderator approves it.{/tr}
   	  <td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
 	  {if $comments_coms[ix].replies}
 	  <br />
-	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
+	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>
 	  {/if}
 	  </td>
   {/if}
@@ -487,7 +487,7 @@ a moderator approves it.{/tr}
 	<br />
 {/if}
 
-<table >  
+<table >
 <tr>
 <td style="text-align:left;">
 
