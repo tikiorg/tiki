@@ -323,7 +323,7 @@ a moderator approves it.{/tr}
 	{tr}Merge into topic{/tr}:
 	<select name="mergetopic">
 		{section name=ix loop=$comments_coms}
-			{if in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}
+			{if !in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}
 				<option value="{$comments_coms[ix].threadId|escape}">{$comments_coms[ix].title}</option>
 			{/if}
 		{/section}
