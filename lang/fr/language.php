@@ -1585,6 +1585,7 @@ $lang=Array(
 "Clickable Skype link" => "Lien Skype clickable",
 "Sorts the plugin content in the wiki page" => "Trie les lignes de données",
 "Edit" => "Modifier",
+"Edit/Delete" => "Modifier/Supprimer",
 "Split a page into rows and columns" => "Découpe une page en rangées et colonnes",
 "row1col1" => "rangée1col1",
 "row1col2" => "rangée1col2",
