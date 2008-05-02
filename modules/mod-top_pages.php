@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once ('lib/rankings/ranklib.php');
+global $ranklib; include_once ('lib/rankings/ranklib.php');
 $ranking = $ranklib->wiki_ranking_top_pages($module_rows);
 
 $smarty->assign('modTopPages', $ranking["data"]);
