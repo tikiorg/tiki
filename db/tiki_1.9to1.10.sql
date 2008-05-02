@@ -1756,3 +1756,6 @@ ALTER TABLE tiki_blog_posts CHANGE title title varchar(255) default NULL;
 UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Russian_Federation' WHERE tiki_tracker_item_fields.value='Russia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
 UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Republic_of_Macedonia' WHERE tiki_tracker_item_fields.value='Macedonia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
 
+#2008-05-02
+ALTER TABLE tiki_tracker_item_fields ADD INDEX fieldId (fieldId);
+ALTER TABLE tiki_tracker_item_fields ADD INDEX value (value(250));
