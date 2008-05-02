@@ -93,10 +93,11 @@
 </table>
 </form>
 {/if}
-
+<br />
 <h3>{tr}List of messages{/tr} ({$cant})</h3>
 
 {* FILTERING FORM *}
+{if $items or ($find ne '')}
 <form action="tiki-forum_queue.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -111,6 +112,7 @@
 </tr>
 </table>	
 </form>
+{/if}
 {*END OF FILTERING FORM *}
 
 {*LISTING*}
@@ -121,8 +123,9 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading" >&nbsp;</td>
-<td class="heading" >{tr}Message{/tr}</td>
+{if $items}<th class="heading" >&nbsp;</th>
+{/if}
+<th class="heading" >{tr}Message{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -165,18 +168,18 @@
 </tr>
 {sectionelse}
 <tr>
-	<td class="{cycle advance=false}" colspan="26">
+	<td class="{cycle advance=false}" colspan="2">
 	{tr}No messages queued yet{/tr}
 	</td>
 </tr>	
 {/section}
-<tr>
-	<td style='text-align:center;' class="heading" colspan='16'>
+</table>
+{if $items}
+<br />
+{tr}Perform action with checked:{/tr} 
 		<input type="submit" name="rej" value="{tr}Reject{/tr}" />
 		<input type="submit" name="app" value="{tr}Approve{/tr}" />
-	</td>
-</tr>
-</table>
+{/if}
 </form>
 {* END OF LISTING *}
 

@@ -200,7 +200,9 @@
 		</h2>
 	</div>
 
-	{if $msgError}<div id="msgError" class="simplebox highlight">{$msgError}</div>{/if}
+	{if $msgError}<div id="msgError" class="simplebox highlight">
+	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} 
+	{$msgError}</div><br />{/if}
 
 	{if $comment_preview eq 'y'}
 	<div class="post_preview">

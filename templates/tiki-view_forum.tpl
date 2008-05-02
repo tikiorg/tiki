@@ -82,11 +82,10 @@
 
 {if $was_queued eq 'y'}
 <div class="rbox">
-<div class="rbox-data" name="warning">
-{tr}Your message has been queued for approval, the message will be posted after
+<div class="rbox-data" name="warning">{icon _id=information style="vertical-align:middle;align=left"} {tr}Your message has been queued for approval, the message will be posted after
 a moderator approves it.{/tr}
 </div>
-</div>
+</div><br />
 {/if}
 
 
@@ -120,18 +119,18 @@ a moderator approves it.{/tr}
 
   {if $warning eq 'y'}
   <br /><br />
-  <div class="simplebox highlight"><br /><b>{tr}You have to enter a title and text{/tr}!</b><br /><br />
+  <div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}You have to enter a title and text{/tr}!
   </div>
   <br />
   {/if}
 {if $contribution_needed eq 'y'}
   <br /><br />
-  <div class="simplebox highlight"><br /><b>{tr}A contribution is mandatory{/tr}</b><br /><br />
+  <div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}A contribution is mandatory{/tr}
   </div>
   <br />
   {/if}
 {if $duplic eq 'y'}
-<div class="simplebox highlight"><br /><b>{tr}Another post with the same title and content already exists.{/tr} {tr}Please change your title or content then click Post.{/tr}</b><br /><br /></div>
+<div class="simplebox highlight">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"}{tr}Another post with the same title and content already exists.{/tr}<br />{tr}Please change your title or content then click Post.{/tr}</div><br />
 {/if}
 
 <div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
@@ -284,7 +283,7 @@ a moderator approves it.{/tr}
 <table class="normal">
 {if $tiki_p_admin_forum eq 'y'}
 <tr>
-	<td class="heading" colspan='18'>{tr}Moderator Actions{/tr}</td>
+	<th class="heading" colspan='18'>{tr}Moderator Actions{/tr}</th>
 </tr>
 <tr>	
 	<td class="odd" colspan="3">
@@ -341,27 +340,27 @@ a moderator approves it.{/tr}
 {/if}
 <tr>
   {if $tiki_p_admin_forum eq 'y'}
-  <td class="heading">&nbsp;</td>
+  <th class="heading">&nbsp;</th>
   {/if}
-  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</td>
+  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
   {if $forum_info.topic_smileys eq 'y'}
-  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</td>
+  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</th>
   {/if}
-  <td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</td>
+  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
   {if $forum_info.topics_list_replies eq 'y'}
-  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</td>
+  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_reads eq 'y'}
-  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</td>
+  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_pts eq 'y'}
-  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</td>
+  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</td>
+  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_author eq 'y'}
-  	<td class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</td>
+  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
   {/if}
 </tr>
 {cycle values="odd,even" print=false}

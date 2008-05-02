@@ -7,15 +7,14 @@
 {/if}
 
 {if $was_queued eq 'y'}
-<div class="rbox">
-<div class="rbox-data" name="warning">
-	{tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
-</div>
+<br /><div class="rbox">
+<div class="rbox-data" name="warning">{icon _id=information style="vertical-align:middle;align=left"} {tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}</div><br />
 </div>
 {/if}
 
-{if $post_reported eq 'y'}
-	<p class="simplebox highlight reported_note">{tr}The post has been reported and will be reviewed by a moderator.{/tr}</p>
+{if $post_reported eq 'y'}<br />
+	<div class="simplebox highlight reported_note">{icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}</div>
+	<br />
 {/if}
 
 {if $tiki_p_admin_forum eq "y"}

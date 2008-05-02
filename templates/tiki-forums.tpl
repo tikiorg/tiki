@@ -43,26 +43,26 @@
 <br />
 <table class="normal">
   <tr>
-    <td  class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
+    <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
     
     {if $prefs.forum_list_topics eq 'y'}
-	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</td>
+	    <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
     {/if}	
 
     {if $prefs.forum_list_posts eq 'y'}
-	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</td>
+	    <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
     {/if}	
 
     {if $prefs.forum_list_ppd eq 'y'}
-	    <td class="heading">{tr}PPD{/tr}</td>
+	    <th class="heading">{tr}PPD{/tr}</th>
     {/if}	
 
     {if $prefs.forum_list_lastpost eq 'y'}	
-	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</td>
+	    <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.forum_list_visits eq 'y'}
-	    <td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</td>
+	    <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
     {/if}	
   </tr>
 

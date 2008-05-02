@@ -3,9 +3,10 @@
 <h1><a class="pagetitle" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages for{/tr}: {$forum_info.name}</a>
 </h1>
 <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
-
+<br />
 <h2>{tr}List of messages{/tr} ({$cant})</h2>
 {* FILTERING FORM *}
+{if $items or ($find ne '')}
 <form action="tiki-forums_reported.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -20,6 +21,7 @@
 </tr>
 </table>	
 </form>
+{/if}
 {*END OF FILTERING FORM *}
 
 {*LISTING*}
@@ -30,9 +32,11 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading" ><input type="submit" name="del" value="x " /></td>
-<td class="heading" >{tr}Message{/tr}</td>
-<td class="heading" >{tr}Reported by{/tr}</td>
+{if $items}
+<th class="heading" ></th>
+{/if}
+<th class="heading">{tr}Message{/tr}</th>
+<th class="heading">{tr}Reported by{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -46,18 +50,22 @@
 	</td>
 	
 	<td class="{cycle}" style="text-align:left;">
-		{$items[ix].user}
+		{$items[ix].user|default:'{tr}Anonymous{/tr}'}
 	</td>
 
 </tr>
 {sectionelse}
 <tr>
-	<td class="{cycle advance=false}" colspan="26">
-	{tr}No messages queued yet{/tr}
+	<td class="{cycle advance=false}" colspan="2">
+	{tr}No records to display{/tr}
 	</td>
 </tr>	
 {/section}
 </table>
+{if $items}
+{tr}Perrom action with checked:{/tr} <input type="submit" name="del" value=" {tr}Delete{/tr} " />
+{/if}
+
 </form>
 {* END OF LISTING *}
 

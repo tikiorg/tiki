@@ -356,7 +356,7 @@
 {/if}
 
 <a name="editforums" id="editforums"></a>
-<h2>{tr}List Forums{/tr}</h2>
+<br /><h2>{tr}List Forums{/tr}</h2>
 <div align="center">
 {if $channels or ($find ne '')}
 <table class="findtable">
@@ -374,19 +374,27 @@
 <form>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}Topics{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}Coms{/tr}</a></td>
-<td class="heading">{tr}Users{/tr}</td>
-<td class="heading">{tr}Age{/tr}</td>
-<td class="heading">{tr}PPD{/tr}</td>
+<th class="heading">
+{if $channels}
+<script type="text/javascript"> /* <![CDATA[ */
+	document.write('<input title="{tr}Select All{/tr}" type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
+/* ]]> */</script>
+{/if}
+</th>
+<th class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}Topics{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}Coms{/tr}</a></th>
+<th class="heading">{tr}Users{/tr}</th>
+<th class="heading">{tr}Age{/tr}</th>
+<th class="heading">{tr}PPD{/tr}</th>
 <!--<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></td>-->
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
+<td class="{cycle advance=false}" style="text-align:center"><input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
@@ -408,7 +416,6 @@
    {/if}
   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {/if}
-<input type="checkbox" name="checked[]" value="{$channels[user].forumId|escape}" {if $smarty.request.checked and in_array($channels[user].forumId,$smarty.request.checked)}checked="checked"{/if} />
 </td>
 </tr>
 {sectionelse}
@@ -416,20 +423,16 @@
 {/section}
 </table>
 {if $channels}
-<div style="text-align:right;">
-<script type="text/javascript"> /* <![CDATA[ */
-	document.write('<label for="clickall">{tr}Select All{/tr}</label> ');
-	document.write('<input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-/* ]]> */</script>
+<div style="text-align:left">
 <br />
 {tr}Perform action with checked:{/tr} 
 <select name="batchaction" onchange="show('groups');">
-	<option value="">{tr}with checked{/tr}</option>
+	<option value="">{tr}...{/tr}</option>
 	{if $tiki_p_admin_forum eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
 </select>
-<input type="submit" name="batchaction" value="{tr}OK{/tr}" />
-{/if}
+<input type="submit" name="batchaction" value=" {tr}OK{/tr} " />
 </div>
+{/if}
 </form>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
