@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.16.2.1 2007-10-16 19:42:16 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/fmsc.css,v 1.16.2.1 2007/10/16 19:42:16 sylvieg Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -20,7 +20,6 @@ body {
 	padding: 0;
 	color: #5A5A58;
 	background-color: #B2221A;
-
 }	
 h1, h2, h3, h4, h5, h6 {
 	margin : 0 0 13px;
@@ -762,7 +761,7 @@ a.forumnameread {
 .tableheading, .gallistheading, .listgalheading, .bloglistheading,
 .llisfgalheading, .llistfileslink, .llistart, .lforumheading {
 	text-decoration: none;
-	color: #F3E7EE;
+	color: #5A5A58;
 	padding-right: 2px;
 	padding-left: 2px;
 
@@ -809,7 +808,7 @@ td.jukeboxlistvisitsodd {
 	border : 1px solid #ACB9C7;
 	border-collapse : collapse;
 	background-color : #F7F9FA;
-	color : 042D56;
+	color : #042D56;
 	font-size : 10px;
 }
 TD.even,td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven,td.gallistlastModifeven, td.gallistusereven ,
@@ -826,7 +825,7 @@ td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.
 td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven,
 td.jukeboxlistvisitseven {
 	border : 1px solid #60A4D3;
-	background-color : #F8F8F3;
+	background-color : lightgrey;
 	color : #5A5A58;
 	border-collapse : collapse;
 	padding: 2px;
