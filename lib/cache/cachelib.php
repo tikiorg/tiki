@@ -23,8 +23,8 @@ class Cachelib {
 			$this->folder.= "/$tikidomain"; 
 		}
     if(!is_dir($this->folder)) {
-  		mkdir($this->folder);
-			@chmod($this->folder,"0777");
+		mkdir($this->folder);
+		chmod($this->folder,0777);
     }
   }
 	
