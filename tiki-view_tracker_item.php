@@ -112,6 +112,7 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->display("error.tpl");
 	die;
 }
+$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 
 if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"])) {
 	$smarty->assign('msg', tra("No item indicated"));
@@ -217,7 +218,17 @@ if ( isset($_REQUEST['reloff']) ) {
 	}
 
 	$cant = 0;
-	$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, array(), $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
+	$listfields = array();
+	if (substr($sort_mode, 0, 2) == 'f_') {//look at the field in case the field needs some processing to find the sort
+		list($a, $i, $o) = split('_', $sort_mode);
+		foreach ($xfields['data'] as $f) {
+			if ($f['fieldId'] == $i) {
+				$listfields = array($i=>$f);
+				break;
+			}
+		}
+	}
+	$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 
 	if ( isset($trymove['data'][0]['itemId']) ) {
 		$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
@@ -298,7 +309,6 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
-$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $fields = array();
 $ins_fields = array();
 

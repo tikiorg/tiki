@@ -2359,15 +2359,16 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	function get_left_join_sql($fieldIds) {
-		$sql = " LEFT JOIN (`tiki_tracker_item_fields` t0) ON (tti.`itemId`= t0.`itemId` and t0.`fieldId`=".$fieldIds[0].")";
-		for ($i = 1; $i < count($fieldIds)-2; $i = $i+2) {
-			$a = $i -1;
+		$sql = '';
+		for ($i = 0; $i < count($fieldIds); $i = $i+3) {
 			$j = $i + 1;
-			$sql .= "LEFT JOIN (`tiki_tracker_item_fields` t$i) ON (t$a.`itemId`= t$i.`itemId` and t$i.`fieldId`=".$fieldIds[$i].")";
-			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$j) ON (t$i.`value`= t$j.`value` and t$i.`fieldId`=".$fieldIds[$j].")";
+			$k = $j + 1;
+			$tti = $i?"t$i": 'tti';
+			$sttif = $k<count($fieldIds)-1?"t$k": 'sttif';
+			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$i) ON ($tti.`itemId`= t$i.`itemId` and t$i.`fieldId`=".$fieldIds[$i].")";
+			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` t$j) ON (t$i.`value`= t$j.`value` and t$j.`fieldId`=".$fieldIds[$j].")";
+			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` $sttif) ON (t$j.`itemId`= $sttif.`itemId` and $sttif.`fieldId`=".$fieldIds[$k].")";
 		}
-		$i--;
-		$sql .= " LEFT JOIN (`tiki_tracker_item_fields` sttif) ON (t$i.`itemId`= sttif.`itemId` and sttif.`fieldId`=".$fieldIds[$i].")";
 		return $sql;
 	}
 }
