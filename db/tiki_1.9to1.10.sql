@@ -1759,3 +1759,7 @@ UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_field
 #2008-05-02
 ALTER TABLE tiki_tracker_item_fields ADD INDEX fieldId (fieldId);
 ALTER TABLE tiki_tracker_item_fields ADD INDEX value (value(250));
+
+#2008-05-04 marclaporte: in menu, adding tiki_p_search on upgrades, to be like clean installs
+DELETE FROM tiki_menu_options where menuId='42' and type='o' and name='Search' and url='tiki-searchindex.php' and position='13' and section='feature_search' and perm='' and groupname='';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','');
