@@ -105,7 +105,8 @@
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $prefs.w_use_db eq 'y'}checked="checked"{/if} /></td></tr>
     <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $prefs.w_use_db eq 'n'}checked="checked"{/if} /></td></tr>
     <tr><td class="form">{tr}Path{/tr}:</td><td><input type="text" name="w_use_dir" value="{$prefs.w_use_dir}" /></td></tr>
-	<tr><td class="form">{tr}List diplayed by default{/tr}</td><td><input type="checkbox" name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
+	<tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
+name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
 		<tr><td colspan="2" class="button"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 		</table>
 		</form>
