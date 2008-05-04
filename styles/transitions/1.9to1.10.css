@@ -290,6 +290,16 @@ td.third {
   width: auto;
 }
 
+
+/* Style for Site Identity */
+
+#sitesearchbar {
+        padding: 5px;
+        text-align: right;
+}
+
+
+
 #site_report {
  text-align: center;
 }
