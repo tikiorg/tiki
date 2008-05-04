@@ -1756,10 +1756,13 @@ ALTER TABLE tiki_blog_posts CHANGE title title varchar(255) default NULL;
 UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Russian_Federation' WHERE tiki_tracker_item_fields.value='Russia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
 UPDATE tiki_tracker_item_fields, tiki_tracker_fields SET tiki_tracker_item_fields.value='Republic_of_Macedonia' WHERE tiki_tracker_item_fields.value='Macedonia' AND tiki_tracker_item_fields.fieldId=tiki_tracker_fields.fieldId AND tiki_tracker_fields.type='y';
 
-#2008-05-02
+#2008-05-02 sylvieg
 ALTER TABLE tiki_tracker_item_fields ADD INDEX fieldId (fieldId);
 ALTER TABLE tiki_tracker_item_fields ADD INDEX value (value(250));
 
 #2008-05-04 marclaporte: in menu, adding tiki_p_search on upgrades, to be like clean installs
 DELETE FROM tiki_menu_options where menuId='42' and type='o' and name='Search' and url='tiki-searchindex.php' and position='13' and section='feature_search' and perm='' and groupname='';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','');
+
+#2008-05-04 sylvieg
+ALTER TABLE tiki_tracker_item_fields ADD INDEX lang (lang);

@@ -3504,6 +3504,7 @@ CREATE TABLE tiki_tracker_item_fields (
   PRIMARY KEY  (itemId,fieldId,lang),
   INDEX fieldId (fieldId),
   INDEX value (value(250)),
+  INDEX lang (lang),
   FULLTEXT KEY ft (value)
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
