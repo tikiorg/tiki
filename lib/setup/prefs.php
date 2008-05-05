@@ -758,6 +758,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['sitemycode_publish'] = 'n';
 	$prefs['feature_sitelogo'] = 'y';
 	$prefs['sitelogo_bgcolor'] = '';
+	$prefs['sitelogo_bgstyle'] = '';
 	$prefs['sitelogo_align'] = 'left';
 	$prefs['sitelogo_title'] = 'Tikiwiki powered site';
 	$prefs['sitelogo_src'] = 'img/tiki/tikilogo.png';
@@ -777,6 +778,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_topbar_date'] = 'y';
 	$prefs['feature_topbar_debug'] = 'y';
 	$prefs['feature_topbar_id_menu'] = '42';
+	$prefs['feature_topbar_custom_code'] = '';
 	$prefs['feature_sitetitle'] = 'y';
 	$prefs['feature_sitedesc'] = 'n';
 	$prefs['feature_bot_logo'] = 'n';

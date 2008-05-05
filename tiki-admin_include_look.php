@@ -65,6 +65,7 @@ if (isset($_REQUEST["looksetup"])) {
     $pref_simple_values = array(
 	"sitelogo_src",
 	"sitelogo_bgcolor",
+	"sitelogo_bgstyle",
 	"sitelogo_title",
 	"sitelogo_alt",
 	"sitemycode",
@@ -72,6 +73,7 @@ if (isset($_REQUEST["looksetup"])) {
 	"site_favicon",
 	"site_favicon_type",
 	"feature_topbar_id_menu",
+	"feature_topbar_custom_code",
 	"sitenav",
 	"bot_logo_code",
 	"transition_style_ver",

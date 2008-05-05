@@ -21,9 +21,8 @@ td.form {
  
 <div class="cbox">
   <div class="cbox-title">
-  <h3>{tr}{$crumbs[$crumb]->title}{/tr}
-  {help crumb=$crumbs[$crumb]}</h3>
-  </div>
+  {tr}{$crumbs[$crumb]->title}{/tr}
+  {help crumb=$crumbs[$crumb]}</div>
 <form class="admin" action="tiki-admin.php?page=features" method="post">
 
 {if $prefs.feature_tabs eq 'y'}

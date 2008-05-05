@@ -2,9 +2,8 @@
 
 <div class="cbox">
 	<div class="cbox-title">
-	<h3>{tr}{$crumbs[$crumb]->title}{/tr}
-	{help crumb=$crumbs[$crumb]}</h3>
-	</div>
+	{tr}{$crumbs[$crumb]->title}{/tr}
+	{help crumb=$crumbs[$crumb]}</div>
 
 	<form action="tiki-admin.php?page=look" class="admin" method="post">
 		<div class="heading button" style="text-align: right">
@@ -116,8 +115,8 @@
 					{literal}{if $user neq ''}{/literal}&lt;div align="right" style="float: right; font-size: 10px"&gt;{literal}{{/literal}tr}{tr}logged as{/tr}{literal}{/tr}{/literal}: {literal}{$user}{/literal}&lt;/div&gt;{literal}{/if}{/literal}</small></td>
 				</tr>
 				<tr>
-					<td class="form"><label for="sitemycode_publish">{tr}visible to admin only{/tr}:</label></td>
-					<td><input type="checkbox" name="sitemycode_publish" id="sitemycode_publish"{if $prefs.sitemycode_publish ne 'y'} checked="checked"{/if} /></td>
+					<td class="form"><label for="sitemycode_publish">{tr}Publish{/tr}:</label></td>
+					<td><input type="checkbox" name="sitemycode_publish" id="sitemycode_publish"{if $prefs.sitemycode_publish eq 'y'} checked="checked"{/if} /></td>
 				</tr>
         	</table>
 	</fieldset>
@@ -141,6 +140,10 @@
 					<td><input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$prefs.sitelogo_bgcolor}" size="15" maxlength="15" /></td>
 				</tr>
 				<tr>
+					<td class="form"><label for="sitelogo_bgstyle">{tr}Site logo background style{/tr}:</label></td>
+					<td><input type="text" name="sitelogo_bgstyle" id="sitelogo_bgstyle" value="{$prefs.sitelogo_bgstyle}" /><br /><i>{tr}Example{/tr} silver url(myStyle/img.gif) repeat</i></td>
+				</tr>
+				<tr>
 					<td class="form"><label for="sitelogo_align">{tr}Site logo alignment{/tr}:</label></td>
 					<td><select name="sitelogo_align" id="sitelogo_align">
 						<option value="left" {if $prefs.sitelogo_align eq 'left'}selected="selected"{/if}>{tr}on left side{/tr}</option>
@@ -156,7 +159,8 @@
 				<tr>
 					<td class="form"><label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label></td>
 					<td><input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="50" /></td>
-				</tr></table>
+				</tr>
+				</table>
 </fieldset>                                
 
 	{* --- Site Search Bar --- *}
@@ -209,6 +213,10 @@
 				<tr> 
                                         <td class="form"><label for="feature_topbar_debug">{tr}Debugger Console{/tr}:</label></td>
                                         <td><input type="checkbox" name="feature_topbar_debug" id="feature_topbar_debug"{if $prefs.feature_topbar_debug eq 'y'} checked="checked"{/if} /></td>
+                                </tr>
+				<tr> 
+                                        <td class="form"><label for="feature_topbar_custom_code">{tr}Custom code{/tr}:</label></td>
+                                        <td><textarea name="feature_topbar_custom_code" id="feature_topbar_custom_code" rows="6" style="width: 90%">{$prefs.feature_topbar_custom_code}</textarea></td>
                                 </tr></table>
 </fieldset>                                
 
