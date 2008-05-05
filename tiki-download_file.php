@@ -114,6 +114,8 @@ if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']
 	if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
 
 		require_once('lib/images/images.php');
+    if (!class_exists('Image')) die();
+
 		$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
 
 		// Fallback to an icon if the format is not supported
