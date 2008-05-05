@@ -224,7 +224,7 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 			}
 
 			$size = $_FILES["userfile$i"]['size'];
-			$name = $_FILES["userfile$i"]['name'];
+			$name = stripslashes($_FILES["userfile$i"]['name']);
 
 			$type = $_FILES["userfile$i"]['type'];
 
