@@ -22,6 +22,7 @@
 <h2>{tr}List of topics{/tr}</h2>
 <table class="normal">
 <tr>
+<td class="heading">{tr}ID{/tr}</td>
 <td class="heading">{tr}Name{/tr}</td>
 <td class="heading">{tr}Image{/tr}</td>
 <td class="heading">{tr}Active?{/tr}</td>
@@ -31,6 +32,7 @@
 {cycle print=false values="even,odd"}
 {section name=user loop=$topics}
 <tr>
+<td class="{cycle advance=false}">{$topics[user].topicId}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name}</a></td>
 <td class="{cycle advance=false}">
 {if $topics[user].image_size}
