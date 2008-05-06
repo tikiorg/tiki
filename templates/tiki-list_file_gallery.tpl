@@ -104,7 +104,7 @@
 {/if}
 
 {if $edit_mode neq 'y'}
-<a href="#" onClick="javascript:window.open('tiki-list_file_gallery.php?galleryId={$galleryId}&slideshow','','menubar=no,width=600,height=500');" class="linkbut">{tr}SlideShow{/tr}</a>
+<a href="#" onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId={$galleryId}&slideshow','','menubar=no,width=600,height=500');" class="linkbut">{tr}SlideShow{/tr}</a>
 {/if}
 
 </div>

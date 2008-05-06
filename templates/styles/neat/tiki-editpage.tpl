@@ -97,7 +97,7 @@
 
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}:</td><td class="formcolor">
-<select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
+<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
 <option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>

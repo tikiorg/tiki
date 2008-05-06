@@ -111,33 +111,33 @@ function _renValRad( name )
 <table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Title{/tr}:</td>
-		<td class="formcolor"><input type="text" name="title" value="{$title}" onChange="renderWikiPlugin()"/></td>
+		<td class="formcolor"><input type="text" name="title" value="{$title}" onchange="renderWikiPlugin()"/></td>
 	</tr>
 {if $showgridparam}
 	<tr>
 		<td class="formcolor">{tr}Independant Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onChange="renderWikiPlugin()" />
+			<input type="radio" name="independant" value="horizontal" id="ind_ori_hori" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="ind_ori_hori">{tr}Horizontal{/tr}</label>
-			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" onChange="renderWikiPlugin()" />
+			<input type="radio" name="independant" value="vertical" id="ind_ori_verti" onchange="renderWikiPlugin()" />
 			<label for="ind_ori_verti">{tr}Vertical{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Horizontal Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onChange="renderWikiPlugin()" />
+			<input type="radio" name="horizontal" value="bottom" id="hori_pos_bottom" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="hori_pos_bottom">{tr}Bottom{/tr}</label>
-			<input type="radio" name="horizontal" value="top" id="hori_pos_top" onChange="renderWikiPlugin()" />
+			<input type="radio" name="horizontal" value="top" id="hori_pos_top" onchange="renderWikiPlugin()" />
 			<label for="hori_pos_top">{tr}Top{/tr}</label>
 		</td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Vertical Scale{/tr}:</td>
 		<td class="formcolor">
-			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onChange="renderWikiPlugin()" />
+			<input type="radio" name="vertical" value="left" id="verti_pos_left" checked="checked" onchange="renderWikiPlugin()" />
 			<label for="verti_pos_left">{tr}Left{/tr}</label>
-			<input type="radio" name="vertical" value="right" id="verti_pos_right" onChange="renderWikiPlugin()" />
+			<input type="radio" name="vertical" value="right" id="verti_pos_right" onchange="renderWikiPlugin()" />
 			<label for="verti_pos_right">{tr}Right{/tr}</label>
 		</td>
 	</tr>
@@ -148,7 +148,7 @@ function _renValRad( name )
 {section name=i loop=$series}
 	<tr>
 		<td class="formcolor">{$series[i]}</td>
-		<td class="formcolor"><input type="text" name="series[{$series[i]}]" onChange="renderWikiPlugin()"/></td>
+		<td class="formcolor"><input type="text" name="series[{$series[i]}]" onchange="renderWikiPlugin()"/></td>
 	</tr>
 {/section}
 	<tr>

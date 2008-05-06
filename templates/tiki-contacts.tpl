@@ -34,7 +34,7 @@
 <tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Nickname{/tr}:</td><td><input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" /></td></tr>
 <tr class="formcolor" id='tr_exts'>
-  <td><select id='select_exts' onChange='ext_select();'>
+  <td><select id='select_exts' onchange='ext_select();'>
     <option>{tr}More...{/tr}</option>
   </select></td>
   <td></td>
