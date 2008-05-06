@@ -66,7 +66,7 @@
   <form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
     <input name="highlight" size="30" type="text" />
     <input type="hidden" name="where" value="forums" />
-    <input type="hidden" name="forumId" value={$forum_info.forumId} />
+    <input type="hidden" name="forumId" value="{$forum_info.forumId}" />
     <input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
   </form>
 {/if}
@@ -240,8 +240,11 @@ a moderator approves it.{/tr}
 	<tr class="formcolor">
       <td>{tr}Watch for replies{/tr}</td>
       <td>
-		<input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked"><label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label><br />
-		<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no"><label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
+		  <input type="radio" name="set_thread_watch" value="y" id="thread_watch_yes" checked="checked" />
+      <label for="thread_watch_yes">{tr}Send me an e-mail when someone replies to my topic{/tr}</label>
+      <br />
+		  <input type="radio" name="set_thread_watch" value="n" id="thread_watch_no" />
+      <label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
       </td>
     </tr>
     {/if}
@@ -287,11 +290,11 @@ a moderator approves it.{/tr}
 </tr>
 <tr>	
 	<td class="odd" colspan="3">
-	<input type="image" name="movesel" src="pics/icons/task_submitted.png" border='0' alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
-	<input type="image" name="unlocksel" src="pics/icons/lock_break.png" border='0' alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
-	<input type="image" name="locksel" src="pics/icons/lock_add.png" border='0' alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
-	<input type="image" name="delsel" src="pics/icons/cross.png" border='0' alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
-	<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" border='0' alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
+	<input type="image" name="movesel" src="pics/icons/task_submitted.png" alt='{tr}Move{/tr}' title='{tr}Move Selected Topics{/tr}' />
+	<input type="image" name="unlocksel" src="pics/icons/lock_break.png" alt='{tr}Unlock{/tr}' title='{tr}Unlock Selected Topics{/tr}' />
+	<input type="image" name="locksel" src="pics/icons/lock_add.png" alt='{tr}Lock{/tr}' title='{tr}Lock Selected Topics{/tr}' />
+	<input type="image" name="delsel" src="pics/icons/cross.png" alt='{tr}Delete{/tr}' title='{tr}Delete Selected Topics{/tr}' />
+	<input type="image" name="splitsel" src="pics/icons/arrow_merge.png" alt='{tr}Merge{/tr}' title='{tr}Merge Selected Topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
