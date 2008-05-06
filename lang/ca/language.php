@@ -4879,6 +4879,7 @@ $lang=Array(
 "minute" => "minut",
 "License" => "Llicència",
 "Minor" => "Menors",
+"Minor Edit" => "Menors",
 "Cancel Edit" => "Cancel·la edició",
 "RSS Trackers" => "Alimentacions RSS per a Formularis",
 "left/right" => "esquerra/dreta",

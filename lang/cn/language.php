@@ -5505,6 +5505,7 @@ $lang=Array(
 "License" => "授权",
 "Important" => "要点",
 "Minor" => "次要",
+"Minor Edit" => "次要",
 "Cancel Edit" => "取消编辑",
 "File galleries" => "下载中心",
 "Image galleries" => "图像画廊",

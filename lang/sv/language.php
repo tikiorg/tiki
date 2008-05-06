@@ -5210,6 +5210,7 @@ $lang=Array(
 "License" => "Licens",
 "Important" => "Viktigt",
 "Minor" => "Mindre",
+"Minor Edit" => "Mindre",
 "Cancel Edit" => "Avbryt redigering",
 "File galleries" => "Filgallerier",
 "Image galleries" => "Bildgallerier",

@@ -4598,6 +4598,7 @@ $lang=Array(
 "Copyright" => "Copyright",
 "Spellcheck" => "Spellcheck",
 "Minor" => "Minor",
+"Minor Edit" => "Minor",
 "posted by" => "posted by",
 "Permalink" => "Permalink",
 "referenced by" => "referenced by",

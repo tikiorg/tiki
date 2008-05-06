@@ -4866,6 +4866,7 @@ $lang=Array(
 "License" => "License",
 "Important" => "Important",
 "Minor" => "Minor",
+"Minor Edit" => "Minor",
 "Edit Post" => "Edit Post",
 "Use wysiwyg editor" => "Use wysiwyg editor",
 "Use normal editor" => "Use normal editor",

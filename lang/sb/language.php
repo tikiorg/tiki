@@ -4607,6 +4607,7 @@ $lang=Array(
 "License" => "License",
 "Important" => "Important",
 "Minor" => "Minor",
+"Minor Edit" => "Minor",
 "by creator" => "by creator",
 "by modificator" => "by modificator",
 "left/right" => "left/right",

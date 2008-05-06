@@ -4869,6 +4869,7 @@ $lang=Array(
 "License" => "Licença",
 "Important" => "Importante",
 "Minor" => "Menor",
+"Minor Edit" => "Menor",
 "Cancel Edit" => "Cancelar edição",
 "left/right" => "esquerdo/direito",
 "Unassign module" => "Módulo não associado",

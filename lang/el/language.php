@@ -1956,6 +1956,7 @@ $lang=Array(
 // "License" => "License",
 // "Important" => "Important",
 // "Minor" => "Minor",
+// "Minor Edit" => "Minor",
 // "Image galleries" => "Image galleries",
 // "My Tiki" => "My Tiki",
 // "List pages where I am a creator" => "List pages where I am a creator",

@@ -6241,6 +6241,7 @@ $lang=Array(
 "License" => "라이센스",
 "Important" => "중요도",
 "Minor" => "마이너",
+"Minor Edit" => "마이너",
 "Cancel Edit" => "수정취소",
 "File galleries" => "파일 자료실들",
 "Image galleries" => "그림 자료실",

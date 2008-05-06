@@ -4050,6 +4050,7 @@ $lang=Array(
 "License" => "Licentie",
 "Important" => "Belangrijk",
 "Minor" => "minder belangrijk",
+"Minor Edit" => "minder belangrijk",
 "Cancel Edit" => "Bewerking annuleren",
 "File galleries" => "Bestandgalerijen",
 "Image galleries" => "Beeldgalerijen",

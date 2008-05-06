@@ -4203,6 +4203,7 @@ $lang=Array(
 "License" => "Licencia",
 "Important" => "Importante",
 "Minor" => "Menor",
+"Minor Edit" => "Menor",
 "Cancel Edit" => "Cancelar edición",
 "File galleries" => "Galerías de archivos",
 "Image galleries" => "Galerías de imágenes",

@@ -5299,6 +5299,7 @@ $lang=Array(
 "License" => "Ліцензія",
 "Important" => "Важливо",
 "Minor" => "Незначне",
+"Minor Edit" => "Незначне",
 "Cancel Edit" => "скасувати редагування",
 "File galleries" => "Галереї файлів",
 "Image galleries" => "Галереї зображень",

@@ -1999,6 +1999,7 @@ $lang=Array(
 // "License" => "License",
 // "Important" => "Important",
 // "Minor" => "Minor",
+// "Minor Edit" => "Minor",
 // "Cancel Edit" => "Cancel Edit",
 // "File galleries" => "File galleries",
 // "Image galleries" => "Image galleries",

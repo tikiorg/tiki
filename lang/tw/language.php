@@ -5558,6 +5558,7 @@ $lang=Array(
 "License" => "授權",
 "Important" => "重要",
 "Minor" => "次要",
+"Minor Edit" => "次要",
 "Cancel Edit" => "取消編輯",
 "File galleries" => "檔案總覽",
 "Image galleries" => "圖庫",

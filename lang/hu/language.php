@@ -5733,6 +5733,7 @@ $lang=Array(
 "License" => "Licensz",
 "Important" => "Fontos",
 "Minor" => "apró módosítás",
+"Minor Edit" => "apró módosítás",
 "Cancel Edit" => "Szerkesztés megszakítása",
 "File galleries" => "Fájl gyűjtemények",
 "Image galleries" => "Kép galériák",

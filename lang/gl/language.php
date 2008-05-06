@@ -4070,6 +4070,7 @@ $lang=Array(
 "License" => "Licenza",
 "Important" => "Importante",
 "Minor" => "Menor",
+"Minor Edit" => "Menor",
 "Cancel Edit" => "Cancelar a edición",
 "File galleries" => "Galerías de ficheiros",
 "Image galleries" => "Galerías de imaxes",

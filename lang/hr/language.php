@@ -5391,6 +5391,7 @@ $lang=Array(
 "License" => "Licenca",
 "Important" => "Važno",
 "Minor" => "Manji",
+"Minor Edit" => "Manji",
 "Cancel Edit" => "Odustani od promjene",
 "File galleries" => "Galerije datoteka",
 "Image galleries" => "Galerije slike",

@@ -4129,6 +4129,7 @@ $lang=Array(
 "License" => "پروانه",
 "Important" => "مهم",
 "Minor" => "كوچك",
+"Minor Edit" => "كوچك",
 "Cancel Edit" => "تغييرات را لغو كن",
 "File galleries" => "سرسراهاي پرونده‌ها",
 "Image galleries" => "سرسراهاي تصاوير",

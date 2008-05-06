@@ -4196,6 +4196,7 @@ $lang=Array(
 "License" => "Lisenssi",
 "Important" => "Tärkeää",
 "Minor" => "Pieni",
+"Minor Edit" => "Pieni",
 "Cancel Edit" => "Peruuta muutos",
 "File galleries" => "Tiedosto galleriat",
 "Image galleries" => "Kuva galleriat",

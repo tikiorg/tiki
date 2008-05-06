@@ -5063,6 +5063,7 @@ $lang=Array(
 "License" => "Licenca",
 "Important" => "Važno",
 "Minor" => "Manji",
+"Minor Edit" => "Manji",
 "Cancel Edit" => "Odustani od izmene",
 "File galleries" => "Galerije fajlova",
 "Image galleries" => "Galerije slike",

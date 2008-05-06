@@ -5879,6 +5879,7 @@ $lang=Array(
 "License" => "レイセンス",
 "Important" => "重要",
 "Minor" => "マイナー",
+"Minor Edit" => "マイナー",
 "Cancel Edit" => "編集中止",
 "File galleries" => "ファイル・ギャラリー",
 "Image galleries" => "画像ギャラリー",
