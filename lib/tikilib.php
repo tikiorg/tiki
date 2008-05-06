@@ -7041,6 +7041,13 @@ if (!$simple_wiki) {
 		   }
 		}
 
+		if ($prefs['feature_multilingual'] == 'y' && $lang )
+		{
+			// Need to update the translated objects table when an object's language changes.
+			$this->query( "UPDATE tiki_translated_objects SET lang = ? WHERE objId = ? AND type = 'wiki page'",
+				array( $lang, $info['page_id'] ) );
+		}
+
 		if ($prefs['feature_user_watches'] == 'y' && $prefs['wiki_watch_minor'] != 'n') {
 			//  Deal with mail notifications.
 			include_once('lib/notifications/notificationemaillib.php');
