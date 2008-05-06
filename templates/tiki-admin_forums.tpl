@@ -53,7 +53,7 @@
 <tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
 <select name="section">
 <option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
-<option value="__new__"}>{tr}Create new{/tr}</option>
+<option value="__new__">{tr}Create new{/tr}</option>
 {section name=ix loop=$sections}
 <option  {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]}</option>
 {/section}
@@ -371,7 +371,7 @@
 </tr>
 </table>
 {/if}
-<form>
+<form action="#">
 <table class="normal">
 <tr>
 <th class="heading">
@@ -404,7 +404,7 @@
 <!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle}">
-<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}
+<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
@@ -430,7 +430,7 @@
 	<option value="">{tr}...{/tr}</option>
 	{if $tiki_p_admin_forum eq 'y'}<option value="delsel_x">{tr}Delete{/tr}</option>{/if}
 </select>
-<input type="submit" name="batchaction" value=" {tr}OK{/tr} " />
+<input type="submit" name="batchaction" value="{tr}OK{/tr}" />
 </div>
 {/if}
 </form>
