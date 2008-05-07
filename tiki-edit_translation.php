@@ -30,7 +30,7 @@ if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id'])
 
 include_once("lang/langmapping.php");
 
-if (isset($_REQUEST['page']) && $_REQUEST['page']) {
+if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST['type'] == 'wiki') && isset($_REQUEST['page']) && $_REQUEST['page']) {
 	if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
 		$smarty->assign('msg',tra("Page is a staging copy. Translation must begin from the approved copy."));
 		$smarty->display("error.tpl");
