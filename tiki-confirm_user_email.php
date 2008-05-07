@@ -17,14 +17,12 @@ if (!isset($prefs['email_due']) || $prefs['email_due'] < 0) {
 
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 	if ($userlib->confirm_email($_REQUEST['user'], $_REQUEST['pass'])) {
-		$smarty->assign('msg', tra('Account validated successfully.'));
 		$_SESSION["$user_cookie_site"] = $user = $_REQUEST['user'];
-		$smarty->assign('user', $user);
-		$smarty->assign('mid', 'tiki-information.tpl');
-		$smarty->display("tiki.tpl");
+		header('Location: tiki-information.php?msg='.urlencode('Account validated successfully.'));
 		die;
 	}
 }
+
 $smarty->assign('msg', tra('Problem. Try to log in again to receive new confirmation instructions.'));
 $smarty->display('error.tpl');
 ?>

@@ -16,7 +16,6 @@ if ($prefs['validateUsers'] != 'y' && $prefs['validateRegistration'] != 'y') {
 	die;
 }
 
-
 $isvalid = false;
 if (isset($_REQUEST["user"])) {
 	if (isset($_REQUEST["pass"])) {
@@ -57,7 +56,8 @@ if ($isvalid) {
 		$userlib->confirm_user($_REQUEST['user']);
 		$user = $_REQUEST['user'];
 		$_SESSION["$user_cookie_site"] = $user;
-		$smarty->assign('user', $user);
+		header('Location: tiki-information.php?msg='.urlencode('Account validated successfully.'));
+		die;
 	}
 	$smarty->assign('msg', tra("Account validated successfully."));
 	$smarty->assign('mid', 'tiki-information.tpl');
