@@ -45,7 +45,7 @@
 				<div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
 				</div>
 				{/if}
-					<div id="tiki-center" {*id needed for ajax editpage link*} class="content">
+					<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 						{$mid_data}
 					</div>
 				</div>
