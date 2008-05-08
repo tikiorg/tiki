@@ -225,6 +225,10 @@ div#tiki-main {
 	text-decoration: none;
 }
 
+#header-top {
+	position: relative;
+}
+
 /** Look & Feel (Site Identity) **/
 #siteheader {
 	text-align: left;
@@ -276,6 +280,9 @@ div#sitead {
 #sitelocbar {
 	float: left;
 }
+
+#siteloginbar {position: absolute; bottom:3px; right: 10px;}
+
 
 #tiki-top {
 	font-size: .95em;
@@ -414,13 +421,21 @@ a.flip img {
 
 }
 
-div#credits {font-size: .9em}
+div#credits {font-size: .9em; text-align: center}
 
 /* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 .footerbgtrap {
 	background-color: transparent;
 	color: black;
 }
+
+/*** Error page ***/
+
+div#tiki-main #tikimidtbl {
+	margin: auto;
+	width: auto;
+}
+
 	
 /****** Menus ******/
 /* phplayers style */
@@ -702,8 +717,9 @@ div.box-data {
 
 .box-data ol,
 .box-data ul {
-	margin-left: -3em;
+	margin-left: 0;
 	padding-right: 1em;
+	overflow: hidden;
 }
 
 /* IE */
