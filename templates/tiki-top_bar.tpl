@@ -25,4 +25,4 @@ title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {if $prefs.feature_siteidentity eq 'y' and $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y' and (!isset($edit_page) or $edit_page ne 'y')}
 <div class="tellafriend"><a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a></div>
 {/if}
-{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_custom_code}{$feature_topbar_custom_code}{/if}
+{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_custom_code}{eval var=$prefs.feature_topbar_custom_code}{/if}
