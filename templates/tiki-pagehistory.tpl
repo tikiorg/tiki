@@ -73,7 +73,7 @@
 <td class="odd">&nbsp;</td>
 {/if}
 <td class="odd">{$info.lastModif|tiki_short_datetime}</td>
-{if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user}</td>{/if}
+{if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user|userlink}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
 <td class="odd">
 	{if $info.comment}{$info.comment}{else}&nbsp;{/if}
