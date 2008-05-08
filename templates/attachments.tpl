@@ -53,7 +53,7 @@ or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_
  {/if}
  </td>
  <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>
- <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
+ <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user|userlink}{/if}</small></td>
  <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
  <td style="text-align:right;" class="{cycle}">{$atts[ix].hits}</td>
 </tr>
