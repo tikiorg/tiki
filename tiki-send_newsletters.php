@@ -9,6 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
+$prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 
 include_once ('lib/newsletters/nllib.php');
 
