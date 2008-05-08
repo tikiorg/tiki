@@ -149,6 +149,10 @@ input[type=checkbox] {border: 0;}
 
 * html .findtable input { font-size: 1em;}
 
+form.admin input[name="features"] {
+	margin-bottom: 3px !important;
+}
+
 select {
 }
 
@@ -267,6 +271,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	vertical-align: middle;
 	padding: 0;
 	margin: 0;
+	position: relative;
 }
 
 div#sioptions {
@@ -312,6 +317,8 @@ div#sitead {
 #sitelocbar {
 	float: left;
 }
+
+#siteloginbar {position: absolute; bottom:3px; right: 10px;}
 
 /* tiki-top_bar.tpl - menu and search */
 
@@ -462,6 +469,10 @@ a.flip img {
 
 #footer a:hover {
 
+}
+
+#credits {
+	font-size: .9em; text-align: center;
 }
 
 .footerbgtrap {}
@@ -769,7 +780,7 @@ a.flipmodtitle:hover img {
 
 .box-data ol,
 .box-data ul {
-	margin-left: -1.4em;
+	margin-left: 0;
 	padding-right: 1em;
 
 }
