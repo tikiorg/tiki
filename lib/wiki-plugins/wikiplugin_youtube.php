@@ -24,7 +24,7 @@ function wikiplugin_youtube($data, $params) {
 	    $quality = "high";
 	}
 
-	$movie = "http://www.youtube.com/v/" . preg_replace('/http:\/\/youtube\.com\/watch\?v=/', '', $movie);
+	$movie = "http://www.youtube.com/v/" . preg_replace('/http:\/\/(www.)?youtube\.com\/watch\?v=/', '', $movie);
 
 	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
 	$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
