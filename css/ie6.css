@@ -1,2 +1,8 @@
+body {behavior: url(css/csshover.htc)}
 div.upspantext { position: absolute !important; }
 form.upform { width: 100px; }
+.cssmenu ul li {float: left; width: 100% }
+.cssmenu h2, .cssmenu li {height: 1%}
+.cssmenu a, .cssmenu h2 {font: bold 1em/1.4em arial, helvetica, sans-serif;}
+.cssmenu { border-bottom: 1px solid #bbb}
+
