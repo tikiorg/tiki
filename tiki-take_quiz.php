@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'quizzes';
 require_once ('tiki-setup.php');
 
 include_once ('lib/quizzes/quizlib.php');
@@ -209,7 +210,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 $smarty->assign_by_ref('questions', $questions["data"]);
 
-$section = 'quizzes';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

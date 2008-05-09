@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'quizzes';
 require_once ('tiki-setup.php');
 
 include_once ('lib/quizzes/quizlib.php');
@@ -113,7 +114,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-$section = 'quizzes';
 include_once ('tiki-section_options.php');
 
 ask_ticket('quiz-stats');
