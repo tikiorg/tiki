@@ -29,9 +29,9 @@ $smarty->assign('opensec', $opensec);
 
 <li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}{if $chdata.selectedAscendant} selectedAscendant{/if}">
 {if $icon}{icon _id='folder' align="left"}{/if}
-{if $chdata.url and $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
+{if $link_on_section ne 'n'}<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}">{/if}
 {tr}{$chdata.name}{/tr}
-{if $chdata.url and $link_on_section ne 'n'}</a>{/if}
+{if $link_on_section ne 'n'}</a>{/if}
 
 {assign var=opensec value=$opensec+1}
 <ul>
