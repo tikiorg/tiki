@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'faqs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
@@ -151,7 +152,6 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','','faqs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$section = 'faqs';
 include_once ('tiki-section_options.php');
 ask_ticket('faq-questions');
 
