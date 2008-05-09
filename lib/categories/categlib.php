@@ -775,7 +775,7 @@ class CategLib extends ObjectLib {
 				require_once('lib/polls/polllib_shared.php');
 			}
 			// The page is not cateorized
-			$info = $pollib->get_poll($pollId);
+			$info = $polllib->get_poll($pollId);
 
 			$href = 'tiki-poll_form.php?pollId=' . $pollId;
 			$catObjectId = $this->add_categorized_object('poll', $pollId, $info["title"], $info["title"], $href);
