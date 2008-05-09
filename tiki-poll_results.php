@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'poll';
 require_once ('tiki-setup.php');
 
 include_once ('lib/polls/polllib.php');
