@@ -107,6 +107,7 @@ if ( ! empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interacti
 	$cachelib->empty_full_cache();
 }
 if ( $prefs['feature_freetags'] == 'y' ) require_once('lib/setup/freetags.php');
+//if ( $prefs['feature_categories'] == 'y') require_once('lib/setup/categories.php');
 if ( $prefs['feature_userlevels'] == 'y' ) require_once('lib/setup/userlevels.php');
 if ( $prefs['feature_fullscreen'] == 'y' ) require_once('lib/setup/fullscreen.php');
 if ( $prefs['auth_method'] == 'openid' ) require_once('lib/setup/openid.php');
