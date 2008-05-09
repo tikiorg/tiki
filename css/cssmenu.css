@@ -72,23 +72,3 @@
 .cssmenu li.selectedAscendant > a {
 	background-color: #E6E6E6;
 }
-<!--[if IE]>
-<style type="text/css">
-body {
-	_font-size : 100%;
-}
-.cssmenu ul li {
-	_float : left;
-	_width : 100%;
-}
-.cssmenu h2, .cssmenu li {
-	_height : 1%;
-}
-.cssmenu a, .cssmenu h2 {
-	_font : bold 1em/1.4em arial, helvetica, sans-serif;
-}
-.cssmenu {
-	_border-bottom : 1px solid #bbb;
-}
-</style>
-<![endif]-->
