@@ -224,11 +224,12 @@ class MenuLib extends TikiLib {
 				} else if ($option['type'] == 'r' || $option['type'] == 's') {
 					$optionLevel = 0;
 				}
-				if (!empty($subMenu) && $optionLevel < $sectionLevel) { //close the submenu
+				if ($optionLevel < $sectionLevel) { //close the submenu
 					if ($findUrl) {
 						break;
 					}
-					unset($subMenu);
+					if (!empty($subMenu))
+						unset($subMenu);
 					$cant = 0;
 				}
 				if ($optionLevel >= $sectionLevel - 1 && !empty($option['url']) && $this->menuOptionMatchesUrl($option)) {
