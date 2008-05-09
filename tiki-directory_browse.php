@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'directory';
 require_once('tiki-setup.php');
 
 include_once('lib/directory/dirlib.php');
@@ -147,7 +148,6 @@ if ($categ_info['allowSites'] == 'y') {
 	$smarty->assign_by_ref('items', $items["data"]);
 }
 
-$section = 'directory';
 include_once('tiki-section_options.php');
 
 // Related categs

@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'newsletters';
 require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
@@ -284,7 +285,6 @@ $cat_type='newsletter';
 $cat_objid = $_REQUEST["nlId"];
 include_once("categorize_list.php");
 */
-$section = 'newsletters';
 include_once ('tiki-section_options.php');
 
 ask_ticket('admin-nl-subsriptions');

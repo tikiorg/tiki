@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'file_galleries';
 require_once('tiki-setup.php');
 
 if ( $prefs['feature_file_galleries'] != 'y' ) {
@@ -736,7 +737,6 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 
 // Set section config
-$section = 'file_galleries';
 include_once('tiki-section_options.php');
 
 // Theme control

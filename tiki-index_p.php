@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once('tiki-setup.php');
 if ($prefs['feature_ajax'] == "y") {
 include_once('lib/ajax/ajaxlib.php');
@@ -247,7 +248,6 @@ if (empty($info["user"])) {
 $smarty->assign_by_ref('lastUser', $info["user"]);
 $smarty->assign_by_ref('description', $info["description"]);
 
-$section = 'wiki';
 include_once('tiki-section_options.php');
 
 $smarty->assign('wiki_extras', 'y');

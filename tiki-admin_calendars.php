@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'calendar';
 require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
@@ -195,7 +196,6 @@ $smarty->assign_by_ref('calendars', $calendars["data"]);
 // $cat_type = 'calendar';
 // $cat_objid = $_REQUEST["calendarId"];
 // include_once ("categorize_list.php");
-$section = 'calendar';
 include_once ('tiki-section_options.php');
 
 ask_ticket('admin-calendars');

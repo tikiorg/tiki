@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section='directory';
 require_once ('tiki-setup.php');
 
 include_once ('lib/directory/dirlib.php');
@@ -218,7 +219,6 @@ usort($countries, 'country_sort');
 $smarty->assign_by_ref('countries', $countries);
 
 // This page should be displayed with Directory section options
-$section='directory';
 include_once('tiki-section_options.php');
 ask_ticket('dir-add-site');
 

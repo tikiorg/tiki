@@ -8,6 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
@@ -98,7 +99,6 @@ $cat_type = 'sheet';
 $cat_objid = $_REQUEST["sheetId"];
 include_once ("categorize_list.php");
 
-$section = 'sheet';
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 // Display the template

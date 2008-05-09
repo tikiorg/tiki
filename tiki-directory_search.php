@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'directory';
 require_once ('tiki-setup.php');
 
 include_once ('lib/directory/dirlib.php');
@@ -75,7 +76,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-$section = 'directory';
 include_once ('tiki-section_options.php');
 
 // Display the template

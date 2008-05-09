@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'newsletters';
 require_once ('tiki-setup.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
@@ -356,7 +357,6 @@ include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','newsletters');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
-$section = 'newsletters';
 include_once ('tiki-section_options.php');
 
 setcookie('tab',$_REQUEST['cookietab']);

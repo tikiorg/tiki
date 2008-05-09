@@ -6,6 +6,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+$section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/filegals/filegallib.php');
@@ -344,7 +345,6 @@ $cat_type = 'file';
 $cat_objid = empty($_REQUEST['fileId'])? 0: $_REQUEST['fileId'];
 include_once('categorize_list.php');
 
-$section = 'file_galleries';
 include_once ('tiki-section_options.php');
 
 ask_ticket('upload-file');

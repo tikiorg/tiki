@@ -4,6 +4,7 @@
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+$section = 'file_galleries';
 require_once ('tiki-setup.php');
 
 include_once ('lib/filegals/filegallib.php');
@@ -109,7 +110,6 @@ $gal_info = array_merge($gal_info, array(
 ));
 $smarty->assign_by_ref('gal_info', $gal_info);
 
-$section = 'file_galleries';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

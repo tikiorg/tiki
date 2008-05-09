@@ -78,7 +78,6 @@ if ($tiki_p_admin_forum != 'y') {
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);
-$section = 'forums';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

@@ -26,6 +26,7 @@
  */
 
 // Initialization
+$section = 'games';
 require_once('tiki-setup.php');
 
 include_once('lib/games/gamelib.php');
@@ -255,7 +256,6 @@ if (isset($_REQUEST["remove"]) && $tiki_p_admin_games == 'y') {
 	}
 }
 
-$section = 'games';
 include_once('tiki-section_options.php');
 ask_ticket('list-games');
 

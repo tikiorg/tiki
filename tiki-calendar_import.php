@@ -8,6 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'calendar';
 require_once ('tiki-setup.php');
 require_once ('lib/calendar/calendarlib.php');
 
@@ -30,7 +31,6 @@ if (isset($_REQUEST["import"]) && isset($_REQUEST["calendarId"]) && isset($_FILE
 $calendars = $calendarlib->list_calendars(); // no check perm as p_admin only
 $smarty->assign_by_ref('calendars', $calendars['data']);
 
-$section = 'calendar';
 include_once ('tiki-section_options.php');
 
 // disallow robots to index page:

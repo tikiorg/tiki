@@ -192,7 +192,6 @@ if (isset($is_categorized) && $is_categorized) {
   $smarty->assign('is_categorized','n');
 }
 
-$section = 'cms';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

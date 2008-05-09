@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -448,7 +449,6 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtcycle', '');
 ask_ticket('edit-submission');
 
-$section = 'cms';
 $smarty->assign('section', $section);
 include_once ('tiki-section_options.php');
 

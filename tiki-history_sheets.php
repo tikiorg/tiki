@@ -8,6 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'sheet';
 require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
@@ -46,7 +47,6 @@ while( $row = $result->fetchRow() )
 
 $smarty->assign_by_ref( 'history', $data );
 
-$section = 'sheet';
 include_once ('tiki-section_options.php');
 ask_ticket('sheet');
 

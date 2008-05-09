@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'quizzes';
 require_once ('tiki-setup.php');
 
 include_once ('lib/quizzes/quizlib.php');
@@ -86,7 +87,6 @@ $smarty->assign_by_ref('result', $result);
 $questions = $quizlib->get_user_quiz_questions($_REQUEST["userResultId"]);
 $smarty->assign('questions', $questions);
 
-$section = 'quizzes';
 include_once ('tiki-section_options.php');
 
 ask_ticket('quiz-res-stats');

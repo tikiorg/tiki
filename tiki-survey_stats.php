@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'surveys';
 require_once ('tiki-setup.php');
 
 include_once ('lib/surveys/surveylib.php');
@@ -106,7 +107,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-$section = 'surveys';
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 

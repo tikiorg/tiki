@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'trackers';
 require_once ('tiki-setup.php');
 include_once('lib/categories/categlib.php');
 include_once ("lib/filegals/filegallib.php");
@@ -1165,7 +1166,6 @@ $smarty->assign('from',$from);
 if (isset($_REQUEST['status']))
 	$smarty->assign_by_ref('status', $_REQUEST['status']);
 
-$section = 'trackers';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');

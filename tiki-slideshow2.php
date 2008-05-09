@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
@@ -107,7 +108,6 @@ if (empty($info["user"])) {
 
 $smarty->assign_by_ref('lastUser', $info["user"]);
 
-$section = 'wiki';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('wiki_extras', 'y');

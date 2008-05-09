@@ -6,11 +6,8 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-
-
-
-
 // Initialization
+$section = 'categories';
 require_once ('tiki-setup.php');
 
 include_once ('lib/categories/categlib.php');
@@ -166,7 +163,6 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$section = 'categories';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');
 

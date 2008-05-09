@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'trackers';
 require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
@@ -101,7 +102,6 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$section = 'trackers';
 include_once('tiki-section_options.php');
 
 $smarty->assign_by_ref('channels', $channels["data"]);

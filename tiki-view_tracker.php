@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'trackers';
 require_once('tiki-setup.php');
 
 include_once('lib/trackers/trackerlib.php');
@@ -763,7 +764,6 @@ $groups = $userlib->list_all_groups();
 $smarty->assign('users', $users);
 $smarty->assign('groups', $groups);
 
-$section = 'trackers';
 include_once('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');

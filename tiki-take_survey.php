@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'surveys';
 require_once ('tiki-setup.php');
 
 include_once ('lib/surveys/surveylib.php');
@@ -140,7 +141,6 @@ if (isset($_REQUEST["ans"])) {
 }
 
 //print_r($questions);
-$section = 'surveys';
 include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");

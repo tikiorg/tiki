@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'wiki page';
 require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
@@ -167,7 +168,6 @@ if ($prefs['feature_wiki_comments'] == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'wiki';
 include_once ('tiki-section_options.php');
 ask_ticket('index-raw');
 

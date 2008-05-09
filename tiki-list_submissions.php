@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'cms';
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
@@ -123,7 +124,6 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$section = 'cms';
 include_once ('tiki-section_options.php');
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);

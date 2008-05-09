@@ -1,5 +1,6 @@
 <?php
 // Initialization
+$section = 'directory';
 require_once('tiki-setup.php');
 include_once('lib/directory/dirlib.php');
 
@@ -70,7 +71,6 @@ $smarty->assign_by_ref('info',$info);
 $countries = $tikilib->get_flags();
 $smarty->assign_by_ref('countries',$countries);
 
-$section = 'directory';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('save','y');

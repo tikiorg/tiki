@@ -1,6 +1,7 @@
 <?php
 // $Header$
 
+$section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 
@@ -302,7 +303,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
-$section = 'galleries';
 include_once ('tiki-section_options.php');
 
 // disallow robots to index page:

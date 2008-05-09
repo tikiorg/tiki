@@ -135,7 +135,6 @@ if ($prefs['feature_blogposts_comments'] == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'blogs';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

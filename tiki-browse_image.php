@@ -273,7 +273,6 @@ if ($resultscale) {
 }
 $smarty->assign_by_ref('scaleinfo',$scaleinfo);
 
-$section = 'galleries';
 include_once('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {

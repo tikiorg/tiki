@@ -323,7 +323,6 @@ if($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarVi
 		
 }
 
-$section = 'calendar';
 if ($prefs['feature_theme_control'] == 'y'	and isset($_REQUEST['calIds'])) {
 	$cat_type = "calendar";
 	$cat_objid = $_REQUEST['calIds'][0]; 

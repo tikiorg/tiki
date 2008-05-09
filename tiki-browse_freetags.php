@@ -8,6 +8,7 @@
 
 
 // Initialization
+$section = 'freetags';
 require_once ('tiki-setup.php');
 
 include_once ('lib/freetag/freetaglib.php');
@@ -168,7 +169,6 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$section = 'freetags';
 include_once ('tiki-section_options.php');
 ask_ticket('browse-freetags');
 
