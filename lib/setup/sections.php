@@ -17,36 +17,47 @@ $sections = array(
 		'feature' => 'feature_wiki',
 		'key' => 'page',
 		'itemkey' => '',
+		'objectType' =>'wiki page'
 	),
 	'blogs' => array(
 		'feature' => 'feature_blogs',
 		'key' => 'blogId',
 		'itemkey' => 'postId',
+		'objectType' =>'blog',
 	),
 	'file_galleries' => array(
 		'feature' => 'feature_file_galleries',
 		'key' => 'page',
 		'itemkey' => 'fileId',
+		'objectType' =>'file gallery',
+		'itemObjectType' => 'file',
 	),
 	'galleries' => array(
 		'feature' => 'feature_galleries',
 		'key' => 'galleryId',
 		'itemkey' => 'imageId',
+		'objectType' =>'image gallery',
+		'itemObjectType' => 'image',
 	),
 	'forums' => array(
 		'feature' => 'feature_forums',
 		'key' => 'forumId',
 		'itemkey' => 'postId',
+		'objectType' =>'forum',
+		'itemObjectType' => 'forum post',
 	),
 	'cms' => array(
 		'feature' => 'feature_articles',
-		'key' => 'topicId',
-		'itemkey' => 'articleId',
+		'key' => 'articleId',
+		'itemkey' => '',
+		'objectType' => 'article',
 	),
 	'trackers' => array(
 		'feature' => 'feature_trackers',
 		'key' => 'trackerId',
 		'itemkey' => 'itemId',
+		'objectType' =>'tracker',
+		'itemObjectType' => 'tracker %d',
 	),
 	'mytiki' => array(
 		'feature' => '',
@@ -77,21 +88,25 @@ $sections = array(
 		'feature' => 'feature_faqs',
 		'key' => 'faqId',
 		'itemkey' => '',
+		'objectType' => 'faq',
 	),
 	'quizzes' => array(
 		'feature' => 'feature_quizzes',
 		'key' => 'quizId',
 		'itemkey' => '',
+		'objectType' => 'quiz',
 	),
 	'poll' => array(
 		'feature' => 'feature_polls',
 		'key' => 'pollId',
 		'itemkey' => '',
+		'objectType' => 'poll',
 	),
 	'surveys' => array(
 		'feature' => 'feature_surveys',
 		'key' => 'surveyId',
 		'itemkey' => '',
+		'objectType' => 'survey',
 	),
 	'featured_links' => array(
 		'feature' => 'feature_featuredLinks',
@@ -102,11 +117,13 @@ $sections = array(
 		'feature' => 'feature_directory',
 		'key' => 'directoryId',
 		'itemkey' => '',
+		'objectType' => 'directory',
 	),
 	'calendar' => array(
 		'feature' => 'feature_calendar',
 		'key' => 'calendarId',
 		'itemkey' => 'calitmId',
+		'objectType' => 'calendar',
 	),
 	'workflow' => array(
 		'feature' => 'feature_workflow',
@@ -142,6 +159,7 @@ $sections = array(
 		'feature' => 'feature_html_pages',
 		'key' => 'pageId',
 		'itemkey' => '',
+		'objectType' => 'html page',
 	),
 	'swffix' => array(
 		'feature' => 'feature_swffix',
