@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'faqs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
@@ -138,7 +139,6 @@ $cat_type = 'faq';
 $cat_objid = $_REQUEST["faqId"];
 include_once ("categorize_list.php");
 
-$section = 'faqs';
 include_once ('tiki-section_options.php');
 ask_ticket('list-faqs');
 

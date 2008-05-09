@@ -7,6 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'faqs';
 require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
@@ -121,7 +122,6 @@ if ($prefs['feature_faq_comments'] == 'y') {
 	include_once ("comments.php");
 }
 
-$section = 'faqs';
 include_once ('tiki-section_options.php');
 
 if ($prefs['feature_theme_control'] == 'y') {
