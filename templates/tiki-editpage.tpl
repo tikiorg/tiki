@@ -138,7 +138,7 @@ window.onload = timeIt;
 {else}
 {if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
-  <input type="submit" onmouseover="return overlib('{tr}Save the page, but do not sent notifications and do not count it as new content to be translated.{/tr}');" onmouseout="nd();" class="wikiaction" name="minor" value="{tr}Minor Edit{/tr}" onclick="needToConfirm=false;" />
+  <input type="submit" onmouseover="return overlib('{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}');" onmouseout="nd();" class="wikiaction" name="minor" value="{tr}Minor Edit{/tr}" onclick="needToConfirm=false;" />
 {/if}
 <input type="submit" onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 {/if}
