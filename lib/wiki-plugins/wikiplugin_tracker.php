@@ -67,7 +67,6 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
-		echo('showing mandatory');
 		$smarty->assign('showmandatory', $showmandatory); 
 
 	if (!isset($permMessage)) {
