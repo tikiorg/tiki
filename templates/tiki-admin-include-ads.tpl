@@ -2,11 +2,11 @@
 
 <div class="cbox">
 	<div class="cbox-title">
-	<h3>{tr}{$crumbs[$crumb]->title}{/tr}
-	{help crumb=$crumbs[$crumb]}</h3>
+	{tr}{$crumbs[$crumb]->title}{/tr}
+	{help crumb=$crumbs[$crumb]}
 	</div>
 
-	<form action="tiki-admin.php?page=ads" class="admin" method="post">
+	<form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
 		<div class="heading button" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
