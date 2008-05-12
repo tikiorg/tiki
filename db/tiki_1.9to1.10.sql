@@ -1766,3 +1766,9 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 #2008-05-04 sylvieg
 ALTER TABLE tiki_tracker_item_fields ADD INDEX lang (lang);
+
+#2008-05-12 xavidp
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='System Admin' and url='tiki-admin_system.php' and position='1230' and section='' and perm='tiki_p_clean_cache';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Cache' and url='tiki-list_cache.php' and position='1080' and section='cachepages' and perm='tiki_p_admin';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','');
