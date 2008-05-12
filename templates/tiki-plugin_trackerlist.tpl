@@ -20,7 +20,6 @@
 
 {if empty($tpl)}
 <table class="normal wikiplugin_trackerlist">
-{/if}
 
 {if $showfieldname ne 'n' and empty($tpl)}
 <tr>
@@ -59,11 +58,33 @@
 {/if}
 </tr>
 {/if}
+{/if}
 
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 
+{* ------- popup ---- *}
+{if !empty($popupfields)}
+	{capture name=popup}
+	<div class="cbox">
+	<table>
+	{cycle values="odd,even" print=false}
+	{foreach from=$items[user].field_values item=f}
+		{if in_array($f.fieldId, $popupfields)}
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f item=$items[user]}</td></tr>
+		{/if}
+	{/foreach}
+	</table>
+	</div>
+	{/capture}
+	{assign var=showpopup value='y'}
+{else}
+	{assign var=showpopup value='n'}
+{/if}
+
+
 {if empty($tpl)}
+
 <tr class="{cycle}">
 {if $checkbox}<td><input type="checkbox" name="{$checkbox.name}[]" value="{$items[user].field_values[$checkbox.ix].value}" /></td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
@@ -76,23 +97,6 @@
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields)}
 <td class="auto">
-{if !empty($popupfields) && $items[user].field_values[ix].isMain eq 'y'}
-	{capture name=popup}
-	<div class="cbox">
-	<table>
-	{cycle values="odd,even" print=false}
-	{foreach from=$items[user].field_values item=f}
-		{if in_array($f.fieldId, $popupfields)}
-			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
-		{/if}
-	{/foreach}
-	</table>
-	</div>
-	{/capture}
-	{assign var=showpopup value='y'}
-{else}
-	{assign var=showpopup value='n'}
-{/if}
 	{if isset($perms)}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
 		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
@@ -120,14 +124,28 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {/if}
 </tr>
 
-{else}
-{$items[user].tpl}
+{else} {* a pretty tpl *}
+{* ------------------------------------ *}
+{section name=ix loop=$items[user].field_values}
+{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields)}
+{capture name=value}
+	{if isset($perms)}
+		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
+		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
+	{else}
+		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"}
+	{/if}
+{/capture}
+{set var=f_`$items[user].field_values[ix].fieldId` value=$smarty.capture.value}
 {/if}
-
 {/section}
+{* ------------------------------------ *}
+{include file="$tpl"}
+{/if}
+{/section}
+
 {if empty($tpl)}
 </table>
-{/if}
 {if $items|@count eq 0}
 {tr}No records found{/tr}
 {elseif $checkbox}
@@ -135,6 +153,9 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {if $checkbox.tpl}{include file=$checkbox.tpl}{/if}
 <input type="submit" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}" /></form>
 {/if}
+{/if}
+
+
 
 {if $more eq 'y'}
 	<div class="more">

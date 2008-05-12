@@ -322,16 +322,7 @@ function wikiplugin_trackerlist($data, $params) {
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
-			if (isset($tpl)) {
-				foreach ($items["data"] as $itkey=>$oneitem) {
-					$smarty->assign_by_ref('item', $oneitem);
-					foreach ($oneitem['field_values'] as $i=>$v) {
-						$smarty->assign_by_ref('field_value', $v);
-						$smarty->assign_by_ref('f_'.$v['fieldId'], $smarty->fetch('tracker_item_field_value.tpl'));
-					}
-					$items["data"][$itkey]['tpl'] = $smarty->fetch($tpl);
-				}
-			} else {
+			if (!isset($tpl)) {
 				$tpl = '';
 			}
 			$smarty->assign('tpl', $tpl);
