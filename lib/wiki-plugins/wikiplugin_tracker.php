@@ -67,6 +67,9 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($showmandatory)) {
 		$showmandatory = 'y';
 	}
+		echo('showing mandatory');
+		$smarty->assign('showmandatory', $showmandatory); 
+
 	if (!isset($permMessage)) {
 		$permMessage = tra("You do not have permission to insert an item");
 	}
@@ -361,7 +364,7 @@ function wikiplugin_tracker($data, $params) {
 
 			// Display warnings when needed
 			if(count($field_errors['err_mandatory']) > 0) {
-				$back.= '<div class="simplebox highlight">';
+				$back.= '<div class="simplebox highlight"><img src="pics/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
 				$back.= tra('Following mandatory fields are missing').'&nbsp;:<br/>';
 				$coma_cpt = count($field_errors['err_mandatory']);
 				foreach($field_errors['err_mandatory'] as $f) {
@@ -384,7 +387,7 @@ function wikiplugin_tracker($data, $params) {
 				$_REQUEST['error'] = 'y';
 			}
 			if (isset($field_errors['err_antibot'])) {
-				$back.= '<div class="simplebox highlight">';
+				$back.= '<div class="simplebox highlight"><img src="pics/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
 				$back .= tra('You have mistyped the anti-bot verification code; please try again.');
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
