@@ -12,7 +12,7 @@
     {/if}
   {/if}
 
-  {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y' or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y'))}
+  {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
     <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
   {/if}
 
