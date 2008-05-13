@@ -112,6 +112,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_bot_bar'] = 'n';
 	$prefs['wiki_cache'] = 0;
 	$prefs['wiki_comments_default_ordering'] = 'points_desc';
+	$prefs['wiki_comments_displayed_default'] = 'n';
 	$prefs['wiki_comments_per_page'] = 10;
 	$prefs['wiki_creator_admin'] = 'n';
 	$prefs['wiki_feature_copyrights'] = 'n';

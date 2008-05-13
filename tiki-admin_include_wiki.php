@@ -62,6 +62,7 @@ if (isset($_REQUEST["wikiprefs"])) {
 	check_ticket('admin-inc-wiki');
 	simple_set_value('wiki_comments_per_page');
 	simple_set_value('wiki_comments_default_ordering');
+	simple_set_toggle('wiki_comments_displayed_default');
 }
 
 if (isset($_REQUEST["rmvunusedpic"])) {
