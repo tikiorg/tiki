@@ -713,8 +713,8 @@ class ImageGalsLib extends TikiLib {
 		$filename = $this->filename; // filename of original image
 		$this->type = $itype;
 
-		//store
-		$this->store_image_data();
+		//store (needs overwrite param to be true to update, not create new)
+		$this->store_image_data(true);
 
 		//return new size
 		$newsize["xsize"] = $this->xsize;
@@ -1665,7 +1665,8 @@ class ImageGalsLib extends TikiLib {
 		# build scaled images or thumb if not available
 		if ($itype != 'o' && !isset($this->imageId)) {
 			if ($newsize = $this->rebuild_image($id, $itype, $xsize, $ysize)) {
-				return $this->get_image($id, $itype, $newsize["xsize"], $newsize["ysize"]);
+				// removed because this causes endless recursion
+				//return $this->get_image($id, $itype, $newsize["xsize"], $newsize["ysize"]);
 			}
 		}
 
