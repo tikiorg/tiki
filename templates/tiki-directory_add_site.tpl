@@ -3,9 +3,8 @@
 {include file=tiki-directory_bar.tpl}
 <br /><br />
 
-{if $categs[0] eq ''}
-  {tr}You cannot add sites until Directory Categories are setup.{/tr}<br />
-  {tr}Please contact the Site Administrator{/tr}
+{if $categs[0] eq ''}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"} {tr}You cannot add sites until Directory Categories are setup.{/tr}<br />{if $tiki_p_admin_directory_cats ne 'y'}
+  {tr}Please contact the Site Administrator{/tr}{else}{tr}<a href="tiki-directory_admin_categories.php">Add a category now</a>.{/tr}{/if}
 {else}
 {if $save eq 'y'}
 <h2>{tr}Site added{/tr}</h2>
