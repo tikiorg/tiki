@@ -388,7 +388,7 @@ class TrackerLib extends TikiLib {
 		$query = "select ttif.`value`, ttf.`type`, ttif.`lang` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=? ";
 		$result = $this->query($query, array((int)$trackerId,(int)$fieldId,(int)$itemId));
 		if (!$result->numRows()) {
-			return '';
+			return false;
 		}
 		if ($this->is_multilingual($fieldId) == 'y') {
 			while ($res = $result->fetchRow()) {
@@ -1349,40 +1349,74 @@ class TrackerLib extends TikiLib {
 	}
 
 	function import_csv($trackerId, $csvHandle, $replace = true) {
-		if (($data = fgetcsv($csvHandle,100000)) === FALSE) {
+		global $tikilib;
+		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
 			return -1;
+		}
+		$max = count($header);
+		for ($i = 0; $i < $max; $i++) {
+			$header[$i] = preg_replace('/ -- [0-9]*$/', '', $header[$i]);
 		}
 		$total = 0;
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000)) !== FALSE) {
-			$status = array_shift($data);
-			if (!$status) $status = 'o';
-			$itemId = array_shift($data);
-			$categs = array_shift($data);
-			$max = count($data);
-			$nextId = $this->getOne('select max(`itemId`) from `tiki_tracker_items`');
-			$itemId = (int) $nextId + 1;
+			$status = 'o';
+			$itemId = 0;
+			$created = $tikilib->now;
+			$lastModif = $created;
+			$cats = '';
+			for ($i = 0; $i < $max; $i++) {
+				if ($header[$i] == 'status')
+					$status = $data[$i];
+				elseif ($header[$i] == 'itemId')
+					$itemId = $data[$i];
+				elseif ($header[$i] == 'created' && is_numeric($data[$i]))
+					$created = $data[$i];
+				elseif ($header[$i] == 'lastModif' && is_numeric($data[$i]))
+					$lastModif = $data[$i];
+				elseif ($header[$i] == 'categs') // for old compatibility
+					$cats = split(',',trim($data[$i]));
+			}
+			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId) {
+				$query = "update `tiki_tracker_items` set `created`=?, `lastModif`=?, `status`=? where `itemId`=?";
+				$this->query($query, array((int)$created, (int)$lastModif, $status, (int)$itemId));
+				$replace = true;
+			} elseif ($itemId && !$t) {
+				$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`, `itemId`) values(?,?,?,?,?)";
+				$this->query($query,array((int)$trackerId, (int)$created,(int)$lastModif, $status, (int)$itemId));
+				$replace = false;
+			} else {
+				$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
+				$this->query($query,array((int)$trackerId, (int)$created,(int)$lastModif, $status));
+				$query = "select max(`itemId`) from `tiki_tracker_items` where `trackerId`=? and `created`=? and `lastModif`=? and `status`=?";
+				$itemId = $this->getOne($query, array((int)$trackerId, (int)$created,(int)$lastModif, $status));
+				$replace = false;
+			}
 			$need_reindex[] = $itemId;
-			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`,`itemId`) values(?,?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status,(int)$itemId));
-			if (trim($categs)) {
-				$cats = split(',',$categs);
+			if (!empty($cats)) {
 				foreach ($cats as $c) {
 					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
 				}
 			}
-			for ($i = 0; $i < $max; $i++) {
-				if (isset($fields["data"][$i])) {
-					$it = $fields["data"][$i];
-					$fieldId = $it['fieldId'];
-					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-					if ($it['type'] == 'e' or $it['type'] == 's') {
-						$data[$i] = '';
-					} elseif ($it['type'] == 'a') {
-						$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
+			$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+			$query2 = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
+			for ($i = 0; $i < $max; ++$i) {
+				foreach ($fields['data'] as $field) {
+					if ($field['name'] == $header[$i]) {
+						if ($field['type'] == 'e' or $field['type'] == 's') {
+							$data[$i] = '';
+						} elseif ($field['type'] == 'a') {
+							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
+						}
+						if ($itemId && $replace && $this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
+							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));
+						} else {
+							$this->query($query, array((int)$itemId,(int)$field['fieldId'], $data[$i]));
+						}							
+						echo "$itemId ".$field['fieldId'].' '.$data[$i].'<br>';
+						break;
 					}
-					$this->query($query,array((int) $itemId,(int) $fieldId,$data[$i]));
 				}
 			}
 			$total++;
