@@ -28,6 +28,7 @@
 {strip}
 {/if}
 {foreach from=$items item=item}
+{assign var='comma' value='n'}
 {if $showItemId ne 'n'}
 {assign var='comma' value='y'}
 {$delimitorL}{$item.itemId}{$delimitorR}
