@@ -26,7 +26,7 @@
 		</h3>
 	{else}
 	{if $module_flip eq 'y'}
-		<h3 ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+		<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 	{*/if*}
 {$module_title}
 		{if $module_flip eq 'y'}
