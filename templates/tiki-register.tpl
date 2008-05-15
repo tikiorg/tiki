@@ -11,8 +11,7 @@
 {$userTrackerData}
 
 {elseif $email_valid eq 'n'}
-
-  {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}<br />
+{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}<br />
   <form action="tiki-register.php" method="post">
     <input type="text" name="email" value="{$smarty.post.email}"/>
     <input type="hidden" name="name" value="{$smarty.post.name}"/>
@@ -32,12 +31,12 @@
       <tr><td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
       <td class="formcolor">
         <input style="float:left" type="text" name="name" id="name"
-	  {if $prefs.feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>
+	  {if $prefs.feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>&nbsp;
           {if $prefs.feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
-		{if $prefs.login_is_email eq 'y'}
-		({tr}Use your email as login{/tr})
+		{if $prefs.login_is_email eq 'y'} 
+		<em>{tr}Use your email as login{/tr}</em>.
 		{else}
-	  {if $prefs.lowercase_username eq 'y'}({tr}lowercase only{/tr}){/if}</td>
+	  {if $prefs.lowercase_username eq 'y'} <em>{tr}Lowercase only{/tr}</em>.{/if}</td>
 		{/if}
       </tr>
 
@@ -47,10 +46,10 @@
       {/if}
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
-      <td class="formcolor"><input id='pass1' type="password" name="pass"
-        {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>
-	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<br /><i>{$prefs.min_pass_length} {tr}characters long{/tr}</i>{/if}
-	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<br /><i>{tr}Password must contain both letters and numbers{/tr}</i>{/if}
+      <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass"
+        {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>&nbsp;
+	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum{/tr} {$prefs.min_pass_length} {tr}characters long{/tr}</em>.<br />{/if}
+	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 	  </td>
       </tr>
 
@@ -62,9 +61,9 @@
 {if $prefs.login_is_email ne 'y'}
       <tr><td class="formcolor">{tr}Email{/tr}:</td>
       <td class="formcolor"><input style="float:left" type="text" id="email" name="email"
-        {if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $prefs.feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}
-        {if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}<br />
-        <div style="float:left">{tr}A valid email is mandatory to register{/tr}</div>{/if}</td>
+        {if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>{if $prefs.feature_ajax eq'y'}<div id="checkmail" style="float:left"></div>{/if}&nbsp;
+        {if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
+        <em>{tr}A valid email is mandatory to register{/tr}</em>.{/if}</td>
       </tr>
 {/if}
       {* Custom fields *}
@@ -92,8 +91,8 @@
       </tr>
     </table>
   </form>
-<div class="simplebox">
-{tr}NOTE: Make sure to whitelist this domain to prevent<br />registration emails being canned by your spam filter!{/tr}
+<br /><div class="simplebox">
+{icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent<br />registration emails being canned by your spam filter!{/tr}
 </div>
   <br />
 
