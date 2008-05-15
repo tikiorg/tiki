@@ -32,13 +32,16 @@ function wikiplugin_tracker($data, $params) {
 	}
 	if (!empty($trackerId) && !($tracker = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
-	} elseif (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') {
+	} elseif (empty($trackerId) && !empty($view) && $view == 'user' && $prefs['userTracker'] == 'y') { // the user tracker item
 		$utid = $userlib->get_usertrackerid($group);
 		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
 			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
 			$trackerId = $utid['usersTrackerId'];
 		}
+	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
+		$itemId = $this->get_user_item($trackerId, $tracker);
 	}
+
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
@@ -99,7 +102,8 @@ function wikiplugin_tracker($data, $params) {
 	
 		$field_errors = array('err_mandatory'=>array(), 'err_value'=>array());
 	
-			global $notificationlib; include_once('lib/notifications/notificationlib.php');	
+			global $notificationlib; include_once('lib/notifications/notificationlib.php');
+			$tracker = $trklib->get_tracker($trackerId);
 			$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
@@ -313,6 +317,18 @@ function wikiplugin_tracker($data, $params) {
 					}
 				}
 			
+			} elseif (!empty($itemId)) {
+				if (isset($fields)) {
+					$fl = split(':', $fields);
+					foreach ($flds['data'] as $f) {
+						if (in_array($f['fieldId'], $fl))
+							$filter[] = $f;
+					}
+				} else {
+					$filter = &$flds['data'];
+				}
+				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter);
+
 			} else {
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
 					if (!is_array($_REQUEST['values']))

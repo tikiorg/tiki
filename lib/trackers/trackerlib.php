@@ -737,8 +737,10 @@ class TrackerLib extends TikiLib {
 			$fil[$res1['fieldId']] = $res1['value'];
 		}
 
-		foreach ( $listfields as $fieldId => $fopt ) {
-			$fopt['fieldId'] = $fieldId;
+		foreach ( $listfields as $fieldId =>$fopt ) {
+			if (empty($fopt['fieldId'])) // to accept listfield as a simple table
+				$fopt['fieldId'] = $fieldId;
+			$fieldId = $fopt['fieldId'];
 			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
 			$fopt['linkId'] = '';
 
