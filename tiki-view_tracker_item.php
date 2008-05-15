@@ -479,7 +479,11 @@ foreach($xfields["data"] as $i=>$array) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];				
 			}
 			// Get flags here
-			$ins_fields["data"][$i]['flags'] = $trklib->get_flags();
+			if ($ins_fields["data"][$i]["options_array"][1] == 1)	{
+				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true,true,false); // Sort in english names order
+			} else {
+				$ins_fields["data"][$i]['flags'] = $trklib->get_flags(true,true,true); // Sort in translated names order (default)
+			}
 
 		} else {
 

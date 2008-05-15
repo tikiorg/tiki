@@ -356,15 +356,19 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				$newItemRate = NULL;
 			}
-		
+
 		} elseif(  $fields["data"][$i]["type"] == 'y' ) { // country list
 			if (isset($_REQUEST["$ins_id"])) {		
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];	
 			}
 			// Get flags here
-			$fields["data"][$i]['flags'] = $trklib->get_flags();
+			if ($fields["data"][$i]["options_array"][1] == 1)	{
+				$fields["data"][$i]['flags'] = $trklib->get_flags(true,true,false); // Sort in english names order
+			} else {
+				$fields["data"][$i]['flags'] = $trklib->get_flags(true,true,true); // Sort in translated names order (default)
+			}
 			$fields["data"][$i]['defaultvalue'] = 'None';
-			
+
 		} else {
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];

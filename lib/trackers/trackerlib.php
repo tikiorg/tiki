@@ -2050,7 +2050,7 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('country selector'),
 			'opt'=>true,
 			'itemChoicesList' => $this->get_flags(true, true, true),
-			'help'=>tra('Country Selector options: 1|2 where 1 show only country name and 2 show only country flag. By default show both country name and flag') );
+			'help'=>tra('Country Selector options: name/flag, sortorder - name/flag is 0,1 or 2 where 1 shows only country name, 2 shows only country flag, 0 shows both (default). sortorder is 0 or 1 where 0 sorts according to translated text (default) and 1 sorts according to english country names even if country names are translated') );
 		$type['f'] = array(
 			'label'=>tra('date and time'),
 			'opt'=>true,

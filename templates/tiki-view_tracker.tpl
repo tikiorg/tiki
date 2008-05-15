@@ -488,16 +488,11 @@ rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{els
 {elseif $field_value.type eq 'y'}
 <select name="{$field_value.ins_id}">
 <option value=""{if $field_value.value eq '' or $field_value.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
-{sortlinks}
-{foreach item=flag from=$field_value.flags}
-{if $flag ne 'None' and ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($flag, $field_value.itemChoices) )}
-{capture name=flag}
-{tr}{$flag}{/tr}
-{/capture}
-<option value="{$flag|escape}" {if $input_err}{if $field_value.value eq $flag}selected="selected"{/if}{elseif $flag eq $field_value.defaultvalue}selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
+{foreach key=flag_filename item=flag_displayed from=$field_value.flags}
+{if $flag_displayed ne 'None' and ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($flag_filename, $field_value.itemChoices) )}
+<option value="{$flag_filename|escape}" {if $input_err}{if $field_value.value eq $flag_filename}selected="selected"{/if}{elseif $flag_filename eq $field_value.defaultvalue}selected="selected"{/if}{if $field_value.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag_filename}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag_displayed}</option>
 {/if}
 {/foreach}
-{/sortlinks}
 </select>
 
 {/if}

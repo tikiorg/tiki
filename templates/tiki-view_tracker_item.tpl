@@ -497,19 +497,15 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {elseif $cur_field.type eq 'c'}
 <input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
 
+{* -------------------- country selector -------------------- *}
 {elseif $cur_field.type eq 'y'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""{if $cur_field.value eq '' or $cur_field.value eq 'None'} selected="selected"{/if}></option>{/if}
-{sortlinks}
-{foreach item=flag from=$cur_field.flags}
-{if $flag ne 'None' and ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($flag, $cur_field.itemChoices) ) }
-{capture name=flag}
-{tr}{$flag}{/tr}
-{/capture}
-<option value="{$flag|escape}" {if $cur_field.value ne '' and $cur_field.value eq $flag}selected="selected"{/if}{if $cur_field.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$smarty.capture.flag|replace:'_':' '}</option>
+{foreach key=flag_filename item=flag_displayed from=$cur_field.flags}
+{if $flag_displayed ne 'None' and ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($flag_filename, $cur_field.itemChoices) ) }
+<option value="{$flag_filename|escape}" {if $cur_field.value ne '' and $cur_field.value eq $flag_filename}selected="selected"{/if}{if $cur_field.options_array[0] ne '1'} style="background-image:url('img/flags/{$flag_filename}.gif');background-repeat:no-repeat;padding-left:25px;padding-bottom:3px;"{/if}>{$flag_displayed}</option>
 {/if}
 {/foreach}
-{/sortlinks}
 </select>
 
 {elseif $cur_field.type eq 'i'}
