@@ -9,19 +9,20 @@
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span>
 </div>
-
+<br />
 <table><tr>
 <td valign="top">
 <table class="normal"><tr><td valign="top" class="odd" colspan="2">
 <h2>{tr}Edit menu options{/tr}</h2>
 <div style="text-align: right;">
 <a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">{tr}Show Quick Urls{/tr}</a>
-<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">{tr}Hide Quick Urls{/tr}</a>
 </div>
 </td>
 <td valign="top" class="even" id="urltop" style="display:none;">
 <h2>{tr}Some useful URLs{/tr}</h2>
-<hr />
+<div style="text-align: right;">
+<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">{tr}Hide Quick Urls{/tr}</a>
+</div>
 </td>
 </tr>
 <tr><td valign="top" class="odd" colspan="2">
@@ -32,9 +33,11 @@
  {if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
 <table>
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td colspan="3"><input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}URL{/tr}:<br />{tr}or PageName Surrounding by (( )){/tr}</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
+<br /><em>{tr}For wiki page, use ((PageName)).</em>{/tr}
+</td></tr>
+<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br /><em>{tr}Separate multiple sections with a comma (&nbsp;,&nbsp;).{/tr}</em></td></tr>
+<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br /><em>{tr}Separate multiple permissions with a comma (&nbsp;,&nbsp;).{/tr}</em></td></tr>
 <tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
 <select id="menu_groupname" name="groupname[]" size="4" multiple>
 <option value="">&nbsp;</option>
@@ -42,6 +45,11 @@
 <option value="{$k}" {$i}>{$k}</option>
 {/foreach}
 </select>
+{if $option_groups|@count ge '2'}
+<div class="rbox" name="tip">
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
+{/if}
 </td></tr>
 {if $prefs.feature_userlevels eq 'y'}
 <tr class="formcolor"><td>{tr}Level{/tr}:</td><td colspan="3">
@@ -70,7 +78,6 @@
 </table>
 </form>
 </td>
-
 <td valign="top" class="even" id="weburls" style="display:none;">
 <table>
 <tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
@@ -171,9 +178,9 @@
 </td></tr></table>
 <br />
 <a name="options"></a>
-<h2>{tr}Menu options{/tr}</h2>
+<br /><h2>{tr}Menu options{/tr}</h2>
 <div align="center">
-{if $channels}
+{if $channels or ($find ne '')}
   <form method="get" action="tiki-admin_menu_options.php">
     <table class="findtable">
       <tr>
@@ -204,48 +211,52 @@
 <input type="hidden" name="offset" value="{$offset}" />
 <table class="normal">
 <tr>
-<td class="heading"></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}ID{/tr}</a></td>
-<td class="heading">&nbsp;</td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Position{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Url{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Type{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Sections{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Permissions{/tr}</a></td>
-
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Group{/tr}</a></td>
-{if $prefs.feature_userlevels eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'level_desc'}level_asc{else}level_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Level{/tr}</a></td>
+<th class="heading">
+{if $channels}
+	<script type="text/javascript"> /* <![CDATA[ */
+	document.write("<input title=\"{tr}Select All{/tr}\" name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+	/* ]]> */</script>
 {/if}
-<td class="heading">{tr}Action{/tr}</td>
+</th>
+<th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}ID{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Position{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Name{/tr}</a></th>
+<th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Type{/tr}</a></th>
+{if $prefs.feature_userlevels eq 'y'}
+<th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'level_desc'}level_asc{else}level_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Level{/tr}</a></th>
+{/if}
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
-
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$channels[user].optionId|escape}"  {if $smarty.request.checked and in_array($channels[user].optionId,$smarty.request.checked)}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}">{$channels[user].optionId}</td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
-title="{tr}Edit{/tr}">{icon _id='page_edit'}</a></td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].name}</td>
-<td class="{cycle advance=false}"><a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a></td>
+<td class="{cycle advance=false}"><a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
+title="{tr}Edit{/tr}">{$channels[user].name}</a>
+<div style="margin-left:10px;">
+{if $channels[user].url}{tr}URL{/tr}: <a href="{$channels[user].url|escape}" class="link" target="_new" title="{$channels[user].canonic}">{$channels[user].canonic|truncate:40:' ...'}</a>{/if}
+{if $channels[user].section}<br />{tr}Sections{/tr}: {$channels[user].section}{/if}
+{if $channels[user].perm}<br />{tr}Permissions{/tr}: {$channels[user].perm}{/if}
+{if $channels[user].groupname}<br />{tr}Groups{/tr}: {$channels[user].groupname}{/if}
+</div>
+</td>
 <td class="{cycle advance=false}">{$channels[user].type_description}</td>
-<td class="{cycle advance=false}">{$channels[user].section}</td>
-<td class="{cycle advance=false}">{$channels[user].perm}</td>
-<td class="{cycle advance=false}">{$channels[user].groupname}</td>
+
 {if $prefs.feature_userlevels eq 'y'}
 {assign var=it value=$channels[user].userlevel}
 <td class="{cycle advance=false}">{$prefs.userlevels.$it}</td>
 {/if}
-<td class="{cycle advance=false}">
+<td class="{cycle advance=true}">
+<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
+title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 {if $channels[user].position > 1 }
 <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options"
-title="{tr}switch with previous option{/tr}">{icon _id='up'}</a>
+title="{tr}switch with previous option{/tr}">{icon _id='resultset_up'}</a>
 {/if}
 {if !$smarty.section.user.last}<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options"
-title="{tr}switch with next option{/tr}">{icon _id='down'}</a>{/if}
+title="{tr}switch with next option{/tr}">{icon _id='resultset_down.png'}</a>{/if}
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
@@ -253,12 +264,6 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {sectionelse}
 <tr><td class="odd" colspan="11"><strong>{tr}No records found.{/tr}</strong></td></tr>
 {/section}
-{if $channels}
-	<script type="text/javascript"> /* <![CDATA[ */
-	document.write("<tr><td colspan=\"11\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
-	/* ]]> */</script>
-{/if}
 </table>
 {if $channels}
 <div align="left">
