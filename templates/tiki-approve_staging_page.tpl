@@ -1,8 +1,8 @@
 <h1>{tr}Approve page changes in staging{/tr}</a>: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h1>
 <div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
-
-<div class="box highlight">{tr}Page has been approved{/tr}</div>
-
+<br />
+<div class="simplebox highlight">{icon _id=accept alt="{tr}Page has been approved{/tr}" style="vertical-align:middle"} {tr}Page has been approved{/tr}</div>
+<br />
 {if $staging_atts|count >= 1 || $atts|count >=1}
 {if  count($staging_atts) >= 1}
 	<h2>{tr}New attachments{/tr}</h2>

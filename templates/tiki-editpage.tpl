@@ -64,9 +64,8 @@ window.onload = timeIt;
 {/if}
    
 {if $beingStaged eq 'y'}
-<div class="tocnav">
-{if $approvedPageExists}
-	{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
+<br /><div class="tocnav">{icon _id=information style="vertical-align:middle" align="left"} 
+{if $approvedPageExists}{tr}You are editing the staging copy of the approved version of this page. Changes will be merged in after approval.{/tr}
 {else}
 	{tr}This is a new staging page that has not been approved before.{/tr}
 {/if}
@@ -77,7 +76,7 @@ window.onload = timeIt;
 </div>
 {/if}
 {if $needsStaging eq 'y'}
-<div class="tocnav">
+<div class="tocnav">{icon _id=information style="vertical-align:middle" align="left"} 
 {tr}You are editing the approved copy of this page.{/tr}
 {if $outOfSync eq 'y'} {tr}There are currently changes in the staging copy that have yet to be approved.{/tr}{/if}
  {tr}Are you sure you do not want to edit{/tr} <a class="link" href="tiki-editpage.php?page={$stagingPageName|escape:'url'}">{tr}the staging copy{/tr}</a> {tr}instead?{/tr}
