@@ -1,5 +1,4 @@
 <?php
-
 // $Id: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.16 2007-10-12 07:55:24 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -29,21 +28,6 @@ if (!isset($prefs['mapzone']))
 $smarty->assign('checkboxes_mapzone', array(
             180 => '[-180 180]',
             360 => '[0 360]'));
-$smarty->assign('mapzone_id', $prefs['mapzone']);     
-
-$smarty->assign('map_path', $prefs['map_path']);
-$smarty->assign('default_map', $prefs['default_map']);
-$smarty->assign('map_help', $prefs['map_help']);
-$smarty->assign('map_comments', $prefs['map_comments']);
-
-if (isset($prefs['gdaltindex']))
-{
-	$smarty->assign('gdaltindex', $prefs['gdaltindex']);
-}
-if (isset($prefs['ogr2ogr']))
-{
-	$smarty->assign('ogr2ogr', $prefs['ogr2ogr']);
-}
 
 if (isset($_REQUEST["mapuser"])) {
 	$map_error=$mapslib->makeusermap();
@@ -63,6 +47,12 @@ if (($_REQUEST["map_path"]=='') || ($_REQUEST["default_map"]=='')
 }
 } 
 
+if (isset($_REQUEST["map_path"])){
+    if (!is_dir($_REQUEST["map_path"])) {	
+			$map_error=tra("Path to mapfiles is invalid");
+		}
+}
+
 if (isset($_REQUEST["gdaltindex"])) {
 	if (function_exists("is_executable")) {  //linux
 		if (is_executable($_REQUEST["gdaltindex"])) {
@@ -77,7 +67,6 @@ if (isset($_REQUEST["gdaltindex"])) {
 			$map_error=tra("No valid gdaltindex executable");
 		}	
 	}
-	$smarty->assign('gdaltindex', $_REQUEST["gdaltindex"]);
 }
 if (isset($_REQUEST["ogr2ogr"])) {
 	if (function_exists("is_executable")) {  //linux
@@ -94,9 +83,8 @@ if (isset($_REQUEST["ogr2ogr"])) {
 			$map_error=tra("No valid ogr2ogr executable");
 		}
 	}
-	$smarty->assign('ogr2ogr', $_REQUEST["ogr2ogr"]);
+
 }
 
 $smarty->assign('map_error', $map_error);
-
 ?>
