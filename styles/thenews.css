@@ -242,15 +242,15 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 }
 
-#header h1,
-#header h2 {}
+#sitetitle,
+#sitesubtitle {}
 
-#header h1 {
+#sitetitle {
 	font-size: 2.4em;
 	padding-left: 1em;
 }
 
-#header h2 {
+#sitesubtitle {
 	font-size:1.6em;
 }
 
@@ -2387,21 +2387,17 @@ div.dirfooter {margin-top: 10px;}
 
 div#ajaxLoading {
 	display: none;
-	/*background: #A9A9A9;*/
 	position: absolute;
 	top: 50px;
 	right: 50%;
-	border: 1px solid #FF4500;
-	color: #FF4500;
+	color: #fff;
 	padding: 3px;
 	font-family: Verdana;
 	font-size: 90%;
-	background-color: transparent;
-	background: url(darkroom/button.png) repeat-x;
-	background: url(darkroom/moo.png);
-	height: 182px;
-	width: 150px;
-}
+	text-align: center;
+	background: transparent url(../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	height: 43px;
+	width: 50px}
 
 #shadowbox_title{height:auto !important;padding:0;overflow:display;}
 #shadowbox_title_inner{height:auto !important;font-size:1em !important;line-height: 1em !important;white-space: normal !important;padding:5px 0 4px 8px}
