@@ -552,7 +552,7 @@ class TrackerLib extends TikiLib {
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode ='' , $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
@@ -701,140 +701,139 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ( $res = $result->fetchRow() ) {
-			$fields = array();
-			$opts = array();
-			$last = array();
-			$res2 = array();
-			$fil = array();
-			$kx = '';
-
-			$itid = $res['itemId'];
-			$bindvars = array((string)$prefs['language'], (int)$res['itemId']);
-
-			$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
-				.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
-				." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?"
-				.' ORDER BY `position` ASC, `lang` DESC';
-			$result2 = $this->query($query2, $bindvars);
-
-			while ( $res1 = $result2->fetchRow() ) {
-				$inid = $res1['fieldId'];
-				$fil["$inid"] = $res1['value'];
+			$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields);
+			if (!empty($asort_mode)) {
+				foreach ($res['field_values'] as $i=>$field)
+					if ($field['fieldId'] == $asort_mode ) {
+						$kx = $fild['value'].'.'.$res['itemId'];
+				}
 			}
-
-			foreach ( $listfields as $fieldId => $fopt ) {
-				$fopt['fieldId'] = $fieldId;
-				$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
-				$fopt['linkId'] = '';
-
-				switch ( $fopt['type'] ) {
-				case 'r':
-					$fopt['links'] = array();
-					$opts = split(',', $fopt['options']);
-					$fopt['linkId'] = $this->get_item_id($opts[0], $opts[1], $fopt['value']);
-					$fopt['trackerId'] = $opts[0];
-					break;
-				case 'a':
-					$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
-					break;
-				case 'C':
-					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
-					eval('$computed = '.$calc.';');
-					$fopt['value'] = $computed;
-					break;
-				case 's':
-					$key = 'tracker.'.$trackerId.'.'.$itid;
-					$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-					$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
-					break;
-				case 'e':
-					global $categlib;
-					include_once('lib/categories/categlib.php');
-					$mycats = $categlib->get_child_categories($fopt['options']);
-					if (empty($zcatItemId) || $zcatItemId != $res['itemId']) {
-						$zcatItemId = $res['itemId'];
-						$zcats = $categlib->get_object_categories('tracker '.$trackerId, $res['itemId']);
-					}
-					$cats = array();
-					foreach ( $mycats as $m ) {
-						if ( in_array($m['categId'], $zcats) ) {
-							$cats[] = $m;
-						}
-					}
-					$fopt['categs'] = $cats;
-					break;
-				case 'l':
-					$optsl = split(',', $fopt['options']);
-					if ( isset($optsl[2]) && ($lst = $fil[$optsl[2]]) && isset($optsl[3])) {
-						$optsl[1] = split(':', $optsl[1]);
-						$fopt['links'] = $this->get_join_values($res['itemId'], array_merge(array($optsl[2]), $optsl[1], array($optsl[3])));
-						$fopt['trackerId'] = $optsl[0];
-					}
-					if (count($fopt['links']) == 1) { //if a computed field use it
-						foreach ($fopt['links'] as $linkItemId=>$linkValue) {
-							if (is_numeric($linkValue)) {
-								$fil[$fieldId] = $linkValue;
-							}
-						}
-					}
-					break;
-				}
-
-				if ( isset($fopt['options']) ) {
-					if (!empty($fopt['options'])) {
-						$fopt['options_array'] = split(',', $fopt['options']);
-					}
-					if ( $fopt['type'] == 'i' ) {
-						global $imagegallib;
-						include_once('lib/imagegals/imagegallib.php');
-						if ( $imagegallib->readimagefromfile($fopt['value']) ) {
-							$imagegallib->getimageinfo();
-							if ( ! isset($fopt['options_array'][1]) ) $fopt['options_array'][1] = 0;
-							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][0], $fopt['options_array'][1] );
-							$fopt['options_array'][0] = round($t * $imagegallib->xsize);
-							$fopt['options_array'][1] = round($t * $imagegallib->ysize);
-							if ( isset($fopt['options_array'][2]) ) {
-								if ( ! isset($fopt['options_array'][3]) ) $fopt['options_array'][3] = 0;
-								$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][2], $fopt['options_array'][3] );
-								$fopt['options_array'][2] = round($t * $imagegallib->xsize);
-								$fopt['options_array'][3] = round($t * $imagegallib->ysize);
-							}
-						}
-					} elseif ( $fopt['type'] == 'r' && isset($fopt['options_array'][3]) ) {
-						$fopt['displayedvalue'] = $this->concat_item_from_fieldslist(
-							$fopt['options_array'][0],
-							$this->get_item_id($fopt['options_array'][0], $fopt['options_array'][1], $fopt['value']),
-							$fopt['options_array'][3]
-						);
-						$fopt = $this->set_default_dropdown_option($fopt);
-					} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
-						if ( $prefs['feature_multilingual'] == 'y' ) {
-							foreach ( $fopt['options_array'] as $key => $l ) {
-								$fopt['options_array'][$key] = tra($l);
-							}
-						}
-						$fopt = $this->set_default_dropdown_option($fopt);
-					}
-				}
-
-				if ( empty($asort_mode) || $fieldId == $asort_mode ) {
-					$kx = $fopt['value'].'.'.$itid;
-				}
-
-				$last[$fieldId] = $fopt['value'];
-				$fields[] = $fopt;
-			}
-
-			$res['field_values'] = $fields;
-			if ( $kx == '' ) // ex: if the sort field is non visible, $kx is null
+			if (empty($kx)) // ex: if the sort field is non visible, $kx is null
 				$ret[] = $res;
-			else $ret[$kx] = $res;
+			else
+				$ret[$kx] = $res;
 		}
 
 		$retval = array();
 		$retval['data'] = array_values($ret);
 		$retval['cant'] = $cant;
 		return $retval;
+	}
+	function get_item_fields($trackerId, $itemId, $listfields) {
+		global $prefs;
+		$fields = array();
+		$fil = array();
+		$kx = '';
+
+		$bindvars = array((string)$prefs['language'], (int)$itemId);
+
+		$query2 = 'SELECT ttf.`fieldId`, `value`, `isPublic`'
+			.' FROM `tiki_tracker_item_fields` ttif INNER JOIN `tiki_tracker_fields` ttf ON ttif.`fieldId` = ttf.`fieldId`'
+			." WHERE (`lang` = ? or `lang` is null or `lang` = '') AND `itemId` = ?"
+			.' ORDER BY `position` ASC, `lang` DESC';
+		$result2 = $this->query($query2, $bindvars);
+
+		while ( $res1 = $result2->fetchRow() ) {
+			$fil[$res1['fieldId']] = $res1['value'];
+		}
+
+		foreach ( $listfields as $fieldId => $fopt ) {
+			$fopt['fieldId'] = $fieldId;
+			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
+			$fopt['linkId'] = '';
+
+			switch ( $fopt['type'] ) {
+			case 'r':
+				$fopt['links'] = array();
+				$opts = split(',', $fopt['options']);
+				$fopt['linkId'] = $this->get_item_id($opts[0], $opts[1], $fopt['value']);
+				$fopt['trackerId'] = $opts[0];
+				break;
+			case 'a':
+				$fopt['pvalue'] = $this->parse_data(trim($fopt['value']));
+				break;
+			case 'C':
+				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
+				eval('$computed = '.$calc.';');
+				$fopt['value'] = $computed;
+				break;
+			case 's':
+				$key = 'tracker.'.$trackerId.'.'.$itemId;
+				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
+				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
+				break;
+			case 'e':
+				global $categlib;
+				include_once('lib/categories/categlib.php');
+				$mycats = $categlib->get_child_categories($fopt['options']);
+				if (empty($zcatItemId) || $zcatItemId != $itemId) {
+					$zcatItemId = $itemId;
+					$zcats = $categlib->get_object_categories('tracker '.$trackerId, $itemId);
+				}
+				$cats = array();
+				foreach ( $mycats as $m ) {
+					if ( in_array($m['categId'], $zcats) ) {
+						$cats[] = $m;
+					}
+				}
+				$fopt['categs'] = $cats;
+				break;
+			case 'l':
+				$opts = split(',', $fopt['options']);
+				if ( isset($opts[2]) && isset($fil[$opts[2]]) && ($lst = $fil[$opts[2]]) && isset($opts[3])) {
+					$opts[1] = split(':', $opts[1]);
+					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($opts[2]), $opts[1], array($opts[3])));
+					$fopt['trackerId'] = $opts[0];
+				}
+				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
+					foreach ($fopt['links'] as $linkItemId=>$linkValue) {
+						if (is_numeric($linkValue)) {
+							$fil[$fieldId] = $linkValue;
+						}
+					}
+				}
+				break;
+			}
+
+			if ( isset($fopt['options']) ) {
+				if (!empty($fopt['options'])) {
+					$fopt['options_array'] = split(',', $fopt['options']);
+				}
+				if ( $fopt['type'] == 'i' ) {
+					global $imagegallib;
+					include_once('lib/imagegals/imagegallib.php');
+					if ( $imagegallib->readimagefromfile($fopt['value']) ) {
+						$imagegallib->getimageinfo();
+						if ( ! isset($fopt['options_array'][1]) ) $fopt['options_array'][1] = 0;
+						$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][0], $fopt['options_array'][1] );
+						$fopt['options_array'][0] = round($t * $imagegallib->xsize);
+						$fopt['options_array'][1] = round($t * $imagegallib->ysize);
+						if ( isset($fopt['options_array'][2]) ) {
+							if ( ! isset($fopt['options_array'][3]) ) $fopt['options_array'][3] = 0;
+							$t = $imagegallib->ratio($imagegallib->xsize, $imagegallib->ysize, $fopt['options_array'][2], $fopt['options_array'][3] );
+							$fopt['options_array'][2] = round($t * $imagegallib->xsize);
+							$fopt['options_array'][3] = round($t * $imagegallib->ysize);
+						}
+					}
+				} elseif ( $fopt['type'] == 'r' && isset($fopt['options_array'][3]) ) {
+					$fopt['displayedvalue'] = $this->concat_item_from_fieldslist(
+						$fopt['options_array'][0],
+						$this->get_item_id($fopt['options_array'][0], $fopt['options_array'][1], $fopt['value']),
+						$fopt['options_array'][3]
+					);
+					$fopt = $this->set_default_dropdown_option($fopt);
+				} elseif ( $fopt['type'] == 'd' || $fopt['type'] == 'D' ) {
+					if ( $prefs['feature_multilingual'] == 'y' ) {
+						foreach ( $fopt['options_array'] as $key => $l ) {
+							$fopt['options_array'][$key] = tra($l);
+						}
+					}
+					$fopt = $this->set_default_dropdown_option($fopt);
+				}
+			}
+			$fields[] = $fopt;
+		}
+		return($fields);
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
@@ -1621,11 +1620,13 @@ class TrackerLib extends TikiLib {
 				$mids[] = '!('.implode(' and ', $midors).')';
 			} elseif (is_array($val)) {
 				if (count($val) > 0) {
-					$mids[] = "`$type` in (".implode(",",array_fill(0,count($val),'?')).')';
+					if (!strstr($type, '`')) $type = "`$type`";
+					$mids[] = "$type in (".implode(",",array_fill(0,count($val),'?')).')';
 					$bindvars = array_merge($bindvars, $val);
 				}
 			} else {
-				$mids[] = "`$type`=?";
+				if (!strstr($type, '`')) $type = "`$type`";
+				$mids[] = "$type=?";
 				$bindvars[] = $val;
 			}
 		}
