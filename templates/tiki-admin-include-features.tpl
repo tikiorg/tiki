@@ -357,7 +357,7 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
 {* ---------- Administration features ------------ *}
 <fieldset {if $prefs.feature_tabs eq 'y'}id="content8"  class="tabcontent" style="clear:both;display:none;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-  <legend class="heading"><a href="#"><span>{tr}Administration{/tr}</legend>
+  <legend class="heading"><a href="#"><span>{tr}Administration{/tr}</span></a></legend>
 {/if}
 <table width="100%" class="admin">
   <tr>
