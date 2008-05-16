@@ -2,25 +2,24 @@
 
 require_once('tiki-setup.php');
 
-if($prefs['feature_maps'] != 'y' || $prefs['feature_ajax'] != 'y') {
-  $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("error.tpl");
-  die;
-}
-
-if($tiki_p_map_view != 'y') {
-  $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("error.tpl");
-  die;
-}
-
 //setting up xajax
 include_once('lib/map/map_query.php');
 require_once("lib/ajax/xajax.inc.php");
 $xajax = new xajax("x_maps.php");
-//$xajax->debugOn();
-//$xajax->statusMessagesOn();
+$xajax->debugOn();
+$xajax->statusMessagesOn();
 
+if($prefs['feature_maps'] != 'y' || $prefs['feature_ajax'] != 'y') {
+  $objResponse = new xajaxResponse();
+  $objResponse->addAlert(tra("Feature disabled"));
+  return $objResponse;
+}
+
+if($tiki_p_map_view != 'y') {
+  $objResponse = new xajaxResponse();
+  $objResponse->addAlert(tra("You do not have permissions to view the maps"));
+  return $objResponse;
+}
   
   function map_redraw($mapfile,$corx,$cory,$minx,$maxx,$miny,$maxy,$xsize,$ysize,$layers,$labels,$zoom,$changeleg=false,$corx2=0,$cory2=0) {
   	global $prefs;
