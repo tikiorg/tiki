@@ -58,7 +58,7 @@ window.onload = timeIt;
 
 
 {if $translation_mode eq 'n'}
-   <h1>{tr}Edit{/tr}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
+   <h1>{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
 {else}
    <h1>{tr}Update '{$page}' based on '{$source_page}'{/tr}</h1>
 {/if}
@@ -146,6 +146,9 @@ window.onload = timeIt;
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
+{if isset($hdr)}
+  <input type="hidden" name="hdr" value="{$hdr}" />
+{/if}
 {if $current_page_id}
   <input type="hidden" name="current_page_id" value="{$current_page_id}" />
 {/if}
@@ -157,9 +160,9 @@ window.onload = timeIt;
 {/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
-    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=y" onclick="needToConfirm = false;">{tr}Use wysiwyg editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="{$smarty.server.PHP_SELF}?{query wysiwyg="y"}" onclick="needToConfirm = false;">{tr}Use wysiwyg editor{/tr}</a></span>
   {else}
-    <span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page}&amp;wysiwyg=n" onclick="needToConfirm = false;">{tr}Use normal editor{/tr}</a></span>
+    <span class="button2"><a class="linkbut" href="{$smarty.server.PHP_SELF}?{query wysiwyg="n"}" onclick="needToConfirm = false;">{tr}Use normal editor{/tr}</a></span>
   {/if}
 {/if}
 <table class="normal">

@@ -6569,11 +6569,11 @@ if (!$simple_wiki) {
 					'title_real_num' => $current_title_real_num
 				));
 			}
-			global $tiki_p_edit;
-			if ($prefs['wiki_edit_section'] == 'y' && $tiki_p_edit == 'y') {
+			global $tiki_p_edit, $section;
+			if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
 				global $smarty;
 				include_once('lib/smarty_tiki/function.icon.php');
-				$button = '<div style="float:right;"><a href="tiki-edit_wiki_section.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+				$button = '<div style="float:right;"><a href="tiki-editpage.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			} else {
 				$button = '';
 			}
@@ -7637,17 +7637,17 @@ if (!$simple_wiki) {
 				++$header;
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
 					$level = $this->how_many_at_start($lines[$i], '!');
-					$end = strlen($lines[$i])+1;
+					$end = strlen($lines[$i]) + 1;
 					for (++$i; $i < count($lines); ++$i) {
 						if (substr($lines[$i], 0, 1) == '!' && $level >= $this->how_many_at_start($lines[$i], '!')) {
 							return (array($start, $end));
 						}
-						$end += strlen($lines[$i])+1;
+						$end += strlen($lines[$i]) + 1;
 					}
 					break;
 				}
 			}
-			$start += strlen($lines[$i])+1;
+			$start += strlen($lines[$i]) + 1;
 		}
 		return (array($start, $end));
 	}

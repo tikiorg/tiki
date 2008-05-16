@@ -122,6 +122,10 @@ if (isset($_REQUEST['minor'])) {
 if (isset($_REQUEST['partial_save'])) {
 	$_REQUEST['save'] = true;
 }
+if (isset($_REQUEST['hdr'])) {
+	$smarty->assign('hdr', $_REQUEST['hdr']);
+}
+
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 if ($prefs['feature_warn_on_edit'] == 'y') {
 	$editpageconflict = 'n';
@@ -646,7 +650,12 @@ if(isset($_REQUEST["edit"])) {
     if (isset($info['draft'])) {
 	$edit_data = $info['draft']['data'];
     } elseif (isset($info["data"])) {
-	$edit_data = $info["data"];
+		if (!empty($_REQUEST['hdr']) && $prefs['wiki_edit_section'] == 'y') {
+			list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+			$edit_data = substr($info['data'], $real_start, $real_len);
+		} else {
+			$edit_data = $info['data'];
+		}
 	} elseif ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix'] && !$tikilib->page_exists($page)) {
 	// Handle first creation of staging copy 
 	$oldpage = substr($page, strlen($prefs['wikiapproval_prefix']));	
@@ -931,6 +940,12 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 			$minor=true;
 		} else {
 			$minor=false;
+		}
+		if (isset($_REQUEST['hdr'])&& $prefs['wiki_edit_section'] == 'y') {
+			list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+			if ($edit[strlen($edit) - 1] != "\n")
+				$edit .= "\r\n";
+			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
 		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg']);
 
