@@ -84,7 +84,7 @@
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
-{/if}
 </form>
+{/if}
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
