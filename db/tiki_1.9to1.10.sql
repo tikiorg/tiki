@@ -1772,3 +1772,8 @@ DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='System 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','');
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Cache' and url='tiki-list_cache.php' and position='1080' and section='cachepages' and perm='tiki_p_admin';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','');
+
+#2008-05-16 etuate
+UPDATE tiki_menu_options SET url='tiki-map.php' WHERE name='Maps';
+UPDATE tiki_menu_options SET url='tiki-map.php' WHERE name='View Maps';
+
