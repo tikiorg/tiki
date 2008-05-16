@@ -228,6 +228,7 @@
 </div>
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+
 {if $pageLang eq 'ar' or $pageLang eq 'he'}
 <div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 {$parsed}
@@ -235,6 +236,7 @@
 {else}
 {$parsed}
 {/if}
+
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 	<br />
 	<div align="center">
@@ -251,6 +253,7 @@
 	</div>
 {/if}
 </div> {* End of main wiki page *}
+<div style="clear: both;" /> {* Information below the wiki content must not overlap the wiki content that could contain floated elements *}
 
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 
