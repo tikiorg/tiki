@@ -16,12 +16,12 @@
 {if !empty($tikifeedback)}
 <div class="highlight simplebox">{section name=ix loop=$tikifeedback}{icon _id=delete.png alt="{tr}Alert{/tr}" style="vertical-align:middle"} {$tikifeedback[ix].mes}.{/section}</div>
 <br />{/if}
-<table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
      <input type="hidden" name="find" value="{$find|escape}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      {if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
 	 {if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}" />{/if}
+<table class="normal">
 <tr><td class="formcolor">{tr}Event{/tr}:</td>
     <td class="formcolor">
     <select name="event">
@@ -44,8 +44,8 @@
 <tr><td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
 </tr>    
-</form>
 </table>
+</form>
 <br />
 <h2>{tr}EMail notifications{/tr}</h2>
 {if $channels or ($find ne '')}
@@ -75,7 +75,7 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
-<th class="heading">{tr}Action{/tr}</td>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$channels}
@@ -95,7 +95,7 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 </table>
 {if $channels}
 <br />{tr}Perform action with checked:{/tr}
-<input type="image" name="delsel" src='pics/icons/cross.png' alt={tr}Delete{/tr}' title='{tr}Delete{/tr}' />
+<input type="image" name="delsel" src='pics/icons/cross.png' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' />
 {/if}
 </form>
 

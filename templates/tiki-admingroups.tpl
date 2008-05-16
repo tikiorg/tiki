@@ -135,7 +135,7 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal">
 <tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc" style="width:95%">{$groupdesc}</textarea></td></tr>
-<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}</td><td>
+<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label><br /><i>{tr}Only directly included{/tr}</i></td><td>
 {if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
 {foreach key=gr item=yn from=$inc}{if $yn eq 'y'}{$gr|escape} {/if}{/foreach}<br />
 {/if}
@@ -149,12 +149,12 @@ class="prevnext">{tr}All{/tr}</a>
 <div class="rbox" name="tip">
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
-
+</div>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
 </label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
 <br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
-{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:middle"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</div>{/if}
+{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:middle"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</a></div>{/if}
 
 </td></tr>
 {if $prefs.feature_categories eq 'y'}
@@ -222,7 +222,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 <td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}User can assign to the group himself{/tr}</td><td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}></td></tr>
+<tr class="formcolor"><td>{tr}User can assign to the group himself{/tr}</td><td><input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}/></td></tr>
 {if $group ne ''}
 <tr class="formcolor"><td>&nbsp;
 <input type="hidden" name="olgroup" value="{$group|escape}" />
@@ -285,7 +285,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr>
 <td class="formcolor auto">{tr}Charset encoding:{/tr}</td><td  class="formcolor auto"><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
 </tr><tr>
-<td class="formcolor auto"></td><td class="formcolor auto"><input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br /><input type="checkbox" name="email">{tr}Email{/tr}</td>
+<td class="formcolor auto"></td><td class="formcolor auto"><input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br /><input type="checkbox" name="email"/>{tr}Email{/tr}</td>
 </tr><tr>
 <td class="formcolor auto"></td><td class="formcolor auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
 </tr>
