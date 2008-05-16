@@ -55,5 +55,5 @@
 <tr><td colspan="5" class="odd">{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</td></tr>
 {/section}
 </table>
-<! --- Beginning of the prev/next advance buttons found at bottom of page -->
+<!-- Beginning of the prev/next advance buttons found at bottom of page -->
 {pagination_links cant=$channels_cant step=$prefs.maxRecords offset=$offset}{/pagination_links}

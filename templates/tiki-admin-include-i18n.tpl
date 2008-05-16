@@ -84,9 +84,6 @@
 					</select>
 				</div>
 			</td>
-			
-	  
-  </td>
 		</tr><tr>
 
 		<td class="form"><label for="quantify_changes">{tr}Quantify change size{/tr}:</label></td>

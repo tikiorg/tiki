@@ -109,7 +109,7 @@
 				</tr>
 				<tr>
 					<td class="form"><label for="sitemycode">{tr}Content{/tr}:</label></td>
-					<td><textarea name="sitemycode" rows="6" style="width: 90%" id="sitemycode">{$prefs.sitemycode|escape}</textarea>
+					<td><textarea name="sitemycode" rows="6" cols="40" style="width: 90%" id="sitemycode">{$prefs.sitemycode|escape}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>: 
 					{literal}{if $user neq ''}{/literal}&lt;div align="right" style="float: right; font-size: 10px"&gt;{literal}{{/literal}tr}{tr}logged as{/tr}{literal}{/tr}{/literal}: {literal}{$user}{/literal}&lt;/div&gt;{literal}{/if}{/literal}</small></td>
@@ -216,7 +216,7 @@
                                 </tr>
 				<tr> 
                                         <td class="form"><label for="feature_topbar_custom_code">{tr}Custom code{/tr}:</label></td>
-                                        <td><textarea name="feature_topbar_custom_code" id="feature_topbar_custom_code" rows="6" style="width: 90%">{$prefs.feature_topbar_custom_code}</textarea></td>
+                                        <td><textarea name="feature_topbar_custom_code" id="feature_topbar_custom_code" rows="6" cols="40" style="width: 90%">{$prefs.feature_topbar_custom_code}</textarea></td>
                                 </tr></table>
 </fieldset>                                
 
@@ -331,7 +331,7 @@
 
 				<tr>
 					<td class="form"><label for="bot_logo_code">{tr}Content{/tr}:</label></td>
-					<td><textarea name="bot_logo_code" rows="6" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
+					<td><textarea name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
 					<br />
 					<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small></td>
 				</tr>
@@ -399,11 +399,11 @@
 		<table class="admin" width="100%">
 				<tr>
 					<td class="form"><label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet):{/tr}</label></td>
-					<td><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if}/>
+					<td><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if}/></td>
 				</tr>
 				<tr>
 					<td class="form"><label for="use_context_menu_text">{tr}Use context menus for actions (text) (only in file galleries yet):{/tr}</label></td>
-					<td><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/>
+					<td><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/></td>
 				</tr>
 				<tr>
 					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>

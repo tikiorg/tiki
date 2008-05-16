@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+{popup_init src="lib/overlib.js"}
 <h1>
   <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a>
   
@@ -58,16 +58,14 @@
 <span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {if $catree[dx].deep < $catree[$after].deep}
-<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
+<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></span>
 {elseif $catree[dx].deep eq $catree[$after].deep}
-</div>
+</span></div>
 {else}
-</div>
+</span></div>
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
-</span>
 {/section}
-</div>
 
 <a name="editcreate"></a>
     <div class="cbox">
@@ -103,12 +101,16 @@
       </form>
       </div>
     </div>
-
 {if $categId <= 0}
 <div class="cbox">
-<div class="cbox-title">{tr}Batch upload (CSV file):{/tr} <a {popup text='category,description,parent<br />vegetable,vegetable<br />potato,,vegetable'}>{icon _id='help'}</a></div>
-<div class="cbox-data"><form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data"><input type="file" name="csvlist" /><br /><input type="submit" name="import" value="{tr}Add{/tr}" /></form>
-</div></div>
+	<div class="cbox-title">{tr}Batch upload (CSV file):{/tr} <a {popup text='category,description,parent&lt;br /&gt;vegetable,vegetable&lt;br /&gt;potato,,vegetable'}>{icon _id='help'}</a></div> 
+	<div class="cbox-data">
+		<form action="tiki-admin_categories.php" method="post" enctype="multipart/form-data">
+			<input type="file" name="csvlist" /><br />
+			<input type="submit" name="import" value="{tr}Add{/tr}" />
+		</form>
+	</div>
+</div>
 {/if}
 
 <a name="objects"></a>

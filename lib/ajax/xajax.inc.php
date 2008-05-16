@@ -858,7 +858,7 @@ class xajax
 	function getJavascriptConfig()
 	{
 		$html  = "\t<script type=\"text/javascript\">\n";
-		$html .= "var xajaxRequestUri=\"".$this->sRequestURI."\";\n";
+		$html .= "var xajaxRequestUri=\"".urlencode($this->sRequestURI)."\";\n";
 		$html .= "var xajaxDebug=".($this->bDebug?"true":"false").";\n";
 		$html .= "var xajaxStatusMessages=".($this->bStatusMessages?"true":"false").";\n";
 		$html .= "var xajaxWaitCursor=".($this->bWaitCursor?"true":"false").";\n";

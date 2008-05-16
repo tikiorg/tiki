@@ -93,7 +93,7 @@
         </tr>
         <tr>
           <td width="20"><input type="checkbox" name="rss_forum" onclick="flip('forumrss');"{if $prefs.rss_forum eq 'y'} checked="checked"{/if}{if $prefs.feature_forums ne 'y'} disabled="disabled"{/if} /></td>
-          <td class="form" colspan="2">{tr}Individual forums{/tr}</a>
+          <td class="form" colspan="2">{tr}Individual forums{/tr}
             <div id="forumrss" style="display:{if ($prefs.rss_forum eq 'y') and ($prefs.feature_forums eq 'y')}block{else}none{/if};"><p>{tr}Title{/tr}: <input type="text" name="title_rss_forum" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_forum|escape}' /><br />{tr}Description{/tr}: <textarea name="desc_rss_forum" style="width:95%" cols="20" rows="2">{$prefs.desc_rss_forum|escape}</textarea><br />{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_forum" size="5" value="{$prefs.max_rss_forum|escape}" /></p>
             </div>
           </td>
@@ -108,7 +108,7 @@
         </tr>
         <tr>
           <td width="20"><input type="checkbox" name="rss_tracker" onclick="flip('trackerrss');"{if $prefs.rss_tracker eq 'y'} checked="checked"{/if}{if $prefs.feature_trackers ne 'y'} disabled="disabled"{/if} /></td>
-          <td class="form" colspan="2">{tr}Individual trackers items{/tr}</a> 
+          <td class="form" colspan="2">{tr}Individual trackers items{/tr} 
             <div id="trackerrss" style="display:{if ($prefs.rss_tracker eq 'y') and ($prefs.feature_trackers eq 'y')}block{else}none{/if};">
             <p>{tr}Title{/tr}: <input type="text" name="title_rss_tracker" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_tracker|escape}' /><br />{tr}Description{/tr}: <textarea name="desc_rss_tracker" style="width:95%" cols="20" rows="2">{$prefs.desc_rss_tracker|escape}</textarea><br />{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_tracker" size="5" value="{$prefs.max_rss_tracker|escape}" /></p>
             </div>

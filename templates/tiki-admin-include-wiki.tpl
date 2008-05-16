@@ -166,7 +166,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
       </div>
       </td>
      </tr>
-	 <tr><td colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Set{/tr}" /></td><tr>
+	 <tr><td colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Set{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -221,6 +221,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	{section name=ix loop=$catree}	
 	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_staging_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}	
+	</select>
 	</td></tr>
 	<tr><td class="form">{tr}Category for approved pages{/tr}:</td><td>
 	<select name="wikiapproval_approved_category">
@@ -228,6 +229,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	{section name=ix loop=$catree}	
 	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_approved_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}	
+	</select>
 	</td></tr>	
 	<tr><td class="form">{tr}Category for pages out of sync{/tr}:</td><td>
 	<select name="wikiapproval_outofsync_category">
@@ -235,6 +237,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	{section name=ix loop=$catree}	
 	<option value="{$catree[ix].categId|escape}" {if $prefs.wikiapproval_outofsync_category eq $catree[ix].categId}selected="selected"{/if}>{if $catree[ix].categpath}{$catree[ix].categpath}{else}{$catree[ix].name}{/if}</option>
 	{/section}	
+	</select>
 	</td></tr>
 	<tr><td class="form">
     {tr}Force bounce of editing of approved pages to staging{/tr}: </td><td>

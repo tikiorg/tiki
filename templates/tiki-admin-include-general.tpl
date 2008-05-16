@@ -94,7 +94,7 @@
 	  </tr><tr>
 	  <td class="form"><label for="log_mail">{tr}Log Mail in Tiki Logs:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} /></td>
-	  </TR><TR>
+	  </tr><tr>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
       </tr><tr>
@@ -150,7 +150,7 @@
 			<tr><td colspan="2">
 			
 			<table width="100%">
-        <td colspan="5"><hr/></td></tr>
+        <tr><td colspan="5"><hr/></td></tr>
         <tr>
         <td class="form"><label for="general-cache_ext_pages">{tr}Use cache for external pages{/tr}:</label></td>
         <td><input type="checkbox" name="cachepages" id="general-cache_ext_pages"
@@ -274,7 +274,7 @@
         <td ><select name="server_timezone" id="general-timezone">
 				{foreach key=tz item=tzinfo from=$timezones}
 				{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-				<option value="{$tz}"{if $prefs.server_timezone eq $tz} selected="selected"{/if}>{$tz} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+				<option value="{$tz}"{if $prefs.server_timezone eq $tz} selected="selected"{/if}>{$tz|escape:"html"} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
 				{/foreach}
 				</select></td>
       </tr><tr>

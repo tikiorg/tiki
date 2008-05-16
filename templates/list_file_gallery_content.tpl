@@ -198,7 +198,7 @@
             {/if}
           {/if}
           {if $smarty.capture.over_preview neq ''}
-            {popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
+            {literal} {/literal}{popup fullhtml="1" text=$smarty.capture.over_preview|escape:"javascript"|escape:"html"}
           {/if}
         {/if}
       {/strip}{/capture}
