@@ -256,7 +256,7 @@ title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 title="{tr}switch with previous option{/tr}">{icon _id='resultset_up'}</a>
 {/if}
 {if !$smarty.section.user.last}<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options"
-title="{tr}switch with next option{/tr}">{icon _id='resultset_down.png'}</a>{/if}
+title="{tr}switch with next option{/tr}">{icon _id='resultset_down'}</a>{/if}
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
