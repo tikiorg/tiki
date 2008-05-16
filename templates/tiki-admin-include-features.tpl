@@ -45,14 +45,6 @@ td.form {
 <br/>
 {/if}
 
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
-{/literal}
-//--><!]]>
-</script>
-
-
 {*
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
