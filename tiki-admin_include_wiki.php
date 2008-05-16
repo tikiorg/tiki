@@ -168,7 +168,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_show_hide_before',
 	'feature_wiki_allowhtml',
 	'wiki_show_version',
-	'feature_wiki_import_page'
+	'feature_wiki_import_page',
+	'wiki_edit_section',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);

@@ -6,9 +6,10 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+if (isset($_REQUEST['type']))
+	$section = $_REQUEST['type'];
 require_once ('tiki-setup.php');
 global $objectlib; include_once('lib/objectlib.php');
-include_once('lib/wiki-plugins/wikiplugin_split.php');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -46,9 +47,19 @@ if (isset($_REQUEST['save'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']); 
+	if (isset($_REQUEST['pos']) && isset($_REQUEST['cell'])) {
+		include_once('lib/wiki-plugins/wikiplugin_split.php');
+		list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
+	} elseif (isset($_REQUEST['hdr'])) {
+		list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ($_REQUEST['data'][strlen($_REQUEST['data']) - 1] != "\n") {
+			$_REQUEST['data'] .= "\n";
+		}
+	} else {
+		$real_start = 0;
+		$real_len = strlen($info['data']);
+	}
 	$data = substr($info['data'], 0, $real_start)."\r\n".$_REQUEST['data'].substr($info['data'], $real_start + $real_len);
-//echo $_REQUEST['pos']."-".$_REQUEST['cell']."->".$real_start."-".$real_len."<br>".$info['data']."<br>".$data;die;
 	$objectlib->set_data($_REQUEST['type'], $_REQUEST['object'], $data);
 	header('Location:'.$_REQUEST['referer']);
 	die;
@@ -67,7 +78,14 @@ if (isset($_REQUEST['save'])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-	list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
+	if (isset($_REQUEST['pos']) && isset($_REQUEST['cell'])) {
+		list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
+	} elseif (isset($_REQUEST['hdr'])) {
+		list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+	} else {
+		$real_start = 0;
+		$real_len = strlen($info['data']);
+	}	
 	$data = substr($info['data'], $real_start, $real_len);
 	$smarty->assign('title', $info['title']);
 }
@@ -75,8 +93,12 @@ if (isset($_REQUEST['save'])) {
 $smarty->assign_by_ref('data', $data);
 $smarty->assign('object', $_REQUEST['object']);
 $smarty->assign('type', $_REQUEST['type']);
-$smarty->assign('pos', $_REQUEST['pos']);
-$smarty->assign('cell', $_REQUEST['cell']);
+if (isset($_REQUEST['pos']))
+	$smarty->assign('pos', $_REQUEST['pos']);
+if (isset($_REQUEST['cell']))
+	$smarty->assign('cell', $_REQUEST['cell']);
+if (isset($_REQUEST['hdr']))
+	$smarty->assign('hdr', $_REQUEST['hdr']);
 $smarty->assign('referer', $_REQUEST['referer']);
 
 $section = $_REQUEST['type'];

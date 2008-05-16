@@ -635,6 +635,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </select>
     </td></tr>
     <tr><td class="form">{tr}Regex search and replace{/tr}:</td><td><input type="checkbox" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
+	<tr><td class="form">{tr}Edit section{/tr}:</td><td><input type="checkbox" name="wiki_edit_section" {if $prefs.wiki_edit_section eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>

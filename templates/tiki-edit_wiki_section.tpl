@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1><a href="tiki-edit_wiki_section.php?object={$object|escape:url}&amp;type={$type|escape:url}&amp;pos={$pos}&amp;cell={$cell}">{tr}Edit Section:{/tr}{$title}</a></h1>
+<h1><a href="tiki-edit_wiki_section.php?object={$object|escape:url}&amp;type={$type|escape:url}{if isset($pos)}&amp;pos={$pos}{/if}{if isset($cell)}&amp;cell={$cell}{/if}{if isset($hdr)}&amp;hdr={$hdr}{/if}">{tr}Edit Section:{/tr}{$title}</a></h1>
 <a href="{$referer}" class="linkbut">{tr}View object{/tr}</a>
 
 {if $preview}
@@ -31,12 +31,12 @@
 <input type="hidden" name="title" value="{$title}" />
 <input type="hidden" name="object" value="{$object}" />
 <input type="hidden" name="type" value="{$type}" />
-<input type="hidden" name="pos" value="{$pos}" />
-<input type="hidden" name="cell" value="{$cell}" />
-
-<input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
-<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
+{if isset($pos)}<input type="hidden" name="pos" value="{$pos}" />{/if}
+{if isset($cell)}<input type="hidden" name="cell" value="{$cell}" />{/if}
+{if isset($hdr)}<input type="hidden" name="hdr" value="{$hdr}" />{/if}
+<input type="submit" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />&nbsp;&nbsp;
+<input type="submit"  onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" class="wikiaction" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
+<input type="submit" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
 </td></tr>
 </table>
 </form>

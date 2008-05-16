@@ -6569,12 +6569,19 @@ if (!$simple_wiki) {
 					'title_real_num' => $current_title_real_num
 				));
 			}
-
+			global $tiki_p_edit;
+			if ($prefs['wiki_edit_section'] == 'y' && $tiki_p_edit == 'y') {
+				global $smarty;
+				include_once('lib/smarty_tiki/function.icon.php');
+				$button = '<div style="float:right;"><a href="tiki-edit_wiki_section.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			} else {
+				$button = '';
+			}
 			// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
 			if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-				$line = '<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
+				$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
 			} else {
-				$line = '<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
+				$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
 			}
 		    } elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 			// Close open paragraph, lists, and div's
@@ -7618,6 +7625,32 @@ if (!$simple_wiki) {
 		return str_replace($accents, $convs, $str);
 	}
 
+	/* return the positions in data where the hdr-nth header is find
+	 */
+	function get_wiki_section($data, $hdr) {
+		$start = 0;
+		$end = strlen($data);
+		$lines = explode("\n", $data);
+		$header = 0;
+		for ($i = 0; $i < count($lines); ++$i) {
+			if (substr($lines[$i], 0, 1) == '!') {
+				++$header;
+				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
+					$level = $this->how_many_at_start($lines[$i], '!');
+					$end = strlen($lines[$i])+1;
+					for (++$i; $i < count($lines); ++$i) {
+						if (substr($lines[$i], 0, 1) == '!' && $level >= $this->how_many_at_start($lines[$i], '!')) {
+							return (array($start, $end));
+						}
+						$end += strlen($lines[$i])+1;
+					}
+					break;
+				}
+			}
+			$start += strlen($lines[$i])+1;
+		}
+		return (array($start, $end));
+	}
 }
 
 
