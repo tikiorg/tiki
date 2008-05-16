@@ -34,7 +34,7 @@ function wikiplugin_split_help() {
  *		$pos is the position in the object where the non-parsed data begins
  */
 function wikiplugin_split($data, $params, $pos) {
-	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin;
+	global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin, $section;
 	global $replacement;
 
     // Remove first <ENTER> if exists...
@@ -152,10 +152,10 @@ function wikiplugin_split($data, $params, $pos) {
 				$i = substr($i, 2);
 				$ind += 2;
 			}
-			if ($edit == 'y' && $perm) {
+			if ($edit == 'y' && $perm && $section == 'wiki page') {
 				$result .= '<div class="split"><div style="float:right">';
 $result .= "$pos-$icell-".htmlspecialchars(substr($data,$pos, 10));
- 				$result .= '<a href="tiki-edit_wiki_section.php?object='.$object.'&amp;type='.$type.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
+ 				$result .= '<a href="tiki-editpage.php?page='.$object.'&amp;pos='.$pos.'&amp;cell='.$icell.'">'
   	                    .'<img src="pics/icons/page_edit.png" alt="'.tra('Edit').'" title="'.tra('Edit').'" border="0" width="16" height="16" /></a></div><br />';
  				$ind += strlen($i);
 				while (isset($data[$ind]) && ($data[$ind] == '-' || $data[$ind] == '@'))

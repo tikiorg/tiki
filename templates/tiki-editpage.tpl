@@ -149,6 +149,12 @@ window.onload = timeIt;
 {if isset($hdr)}
   <input type="hidden" name="hdr" value="{$hdr}" />
 {/if}
+{if isset($cell)}
+  <input type="hidden" name="cell" value="{$cell}" />
+{/if}
+{if isset($pos)}
+  <input type="hidden" name="pos" value="{$pos}" />
+{/if}
 {if $current_page_id}
   <input type="hidden" name="current_page_id" value="{$current_page_id}" />
 {/if}

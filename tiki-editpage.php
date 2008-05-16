@@ -125,6 +125,12 @@ if (isset($_REQUEST['partial_save'])) {
 if (isset($_REQUEST['hdr'])) {
 	$smarty->assign('hdr', $_REQUEST['hdr']);
 }
+if (isset($_REQUEST['pos'])) {
+	$smarty->assign('pos', $_REQUEST['pos']);
+}
+if (isset($_REQUEST['cell'])) {
+	$smarty->assign('cell', $_REQUEST['cell']);
+}
 
 // We set empty wiki page name as default here if not set (before including Tiki modules)
 if ($prefs['feature_warn_on_edit'] == 'y') {
@@ -650,8 +656,13 @@ if(isset($_REQUEST["edit"])) {
     if (isset($info['draft'])) {
 	$edit_data = $info['draft']['data'];
     } elseif (isset($info["data"])) {
-		if (!empty($_REQUEST['hdr']) && $prefs['wiki_edit_section'] == 'y') {
-			list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (!empty($_REQUEST['hdr'])) {
+				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+			} else {
+				include_once('lib/wiki-plugins/wikiplugin_split.php');
+				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
+			}
 			$edit_data = substr($info['data'], $real_start, $real_len);
 		} else {
 			$edit_data = $info['data'];
@@ -941,8 +952,13 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		} else {
 			$minor=false;
 		}
-		if (isset($_REQUEST['hdr'])&& $prefs['wiki_edit_section'] == 'y') {
-			list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (!empty($_REQUEST['hdr'])) {
+				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+			} else {
+				include_once('lib/wiki-plugins/wikiplugin_split.php');
+				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
+			}
 			if ($edit[strlen($edit) - 1] != "\n")
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
