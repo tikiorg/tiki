@@ -253,7 +253,6 @@
 	</div>
 {/if}
 </div> {* End of main wiki page *}
-<div style="clear: both;" /> {* Information below the wiki content must not overlap the wiki content that could contain floated elements *}
 
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 

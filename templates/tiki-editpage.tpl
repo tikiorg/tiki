@@ -121,7 +121,6 @@ window.onload = timeIt;
 {/if}
 {if $preview}
 {include file="tiki-preview.tpl"}
-<div style="clear: both;" /> {* Information below the wiki content must not overlap the wiki content that could contain floated elements *}
 {/if}
 {if $diff_style}
 <div style="overflow:auto;height:200px;">
