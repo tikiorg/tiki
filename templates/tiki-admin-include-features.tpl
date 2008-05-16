@@ -23,11 +23,11 @@ td.form {
   <div class="cbox-title">
   {tr}{$crumbs[$crumb]->title}{/tr}
   {help crumb=$crumbs[$crumb]}</div>
-<form class="admin" action="tiki-admin.php?page=features" method="post">
+<form class="admin" name="features" action="tiki-admin.php?page=features" method="post">
 
 {if $prefs.feature_tabs eq 'y'}
-<input style="float:right;margin-bottom: -1.2em" class="" type="submit" name="features" value="{tr}Save{/tr}" />
 <div class="tabs" style="clear: both;">
+<input style="float:right; margin-top : -7px;" type="submit" name="features" value="{tr}Save{/tr}"/>
 	<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,10);">{tr}Major{/tr}</a></span>
 	<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,10);">{tr}Minor{/tr}</a></span>
 	<span id="tab3" class="tabmark tabinactive"><a href="javascript:tikitabs(3,10);">{tr}Site-wide{/tr}</a></span>
@@ -44,6 +44,13 @@ td.form {
 </div>
 <br/>
 {/if}
+
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+{literal}
+{/literal}
+//--><!]]>
+</script>
 
 
 {*
@@ -201,7 +208,7 @@ td.form {
   </tr>
   <tr>  
     <td><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></td>
-    <td class="form">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}">{/if} {tr}Search engine friendly url{/tr}</a></td>
+    <td class="form">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}">{/if} {tr}Search engine friendly url{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</td>
     <td><input type="checkbox" name="feature_swffix" {if $prefs.feature_swffix eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> <a href="{$prefs.helpurl}Swffix" target="tikihelp" class="tikihelp" title="{tr}Swffix{/tr}"> {tr}Swffix{/tr}</a> </td>
     </tr>
@@ -419,8 +426,6 @@ target="tikihelp" class="tikihelp" title="{tr}PHPLayers{/tr}">{/if} {tr}PhpLayer
     <td><input type="checkbox" name="feature_notepad"
             {if $prefs.feature_notepad eq 'y'}checked="checked"{/if}/></td>
     <td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Notepad" target="tikihelp" class="tikihelp" title="{tr}User Notepad{/tr}">{/if} {tr}User Notepad{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
-  </tr>
-    
   </tr>
   <tr>
     <td><input type="checkbox" name="feature_user_bookmarks"
