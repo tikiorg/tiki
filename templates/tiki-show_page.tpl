@@ -236,6 +236,8 @@
 {else}
 {$parsed}
 {/if}
+<hr style="clear:both; height:0px;"/> {* Information below the wiki content
+must not overlap the wiki content that could contain floated elements *}
 
 {if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 	<br />
