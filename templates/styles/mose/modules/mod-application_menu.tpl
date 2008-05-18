@@ -341,7 +341,7 @@
   {if $prefs.feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('mapsmenu');"><img src="styles/mose/{$icn_mapsmenu}fo.gif" width="16" height="12" alt="[+]" border="0" name="mapsmenuicn" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('mapsmenu');">[-]</a>{/if} 
-  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  <a href="tiki-map.php" class="separator">{tr}Maps{/tr}</a>
   {if $prefs.feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mapsmenu');">[+]</a>{/if}
   </div>
   <div id="mapsmenu" style="{$mnu_mapsmenu}">

@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+{debug}
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
 <script src="lib/x/x_dom.js"></script>
@@ -11,7 +11,7 @@
 
 <h1>{$pagelink}</h1>
 <div align="center">
-  <form name="frmmap" id="frmmap" action="tiki-map.phtml" method="get">
+  <form name="frmmap" id="frmmap" action="tiki-map.php" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
 	<table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
@@ -113,14 +113,14 @@
 		  </td></tr>
 		  <tr><td align="center">	
 			{if $zoom eq -4}
-			<img id="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="-x4" title="{tr}Zoom out x4{/tr}" border="1" />
+			<img id="imgzoom0" src="" onclick="zoomin(0)" title="{tr}Zoom out x4{/tr}" border="1" />
 			{else}
-			<img id="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="-x4" title="{tr}Zoom out x4{/tr}" />
+			<img id="imgzoom0" src="" onclick="zoomin(0)" title="{tr}Zoom out x4{/tr}" />
 			{/if}
 			{if $zoom eq -3}
-			<img id="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="-x3" title="{tr}Zoom out x3{/tr}" border="1" />
+			<img id="imgzoom1" src="" onclick="zoomin(1)"  title="{tr}Zoom out x3{/tr}" border="1" />
 			{else}  
-			<img id="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="-x3" title="{tr}Zoom out x3{/tr}" />
+			<img id="imgzoom1" src="" onclick="zoomin(1)" title="{tr}Zoom out x3{/tr}" />
 			{/if}
 			{if $zoom eq -2}
 			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1" />
@@ -151,14 +151,14 @@
 			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" />
 			{/if}
 			{if $zoom eq 3}
-			<img id="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="x3" title="{tr}Zoom in x3{/tr}" border="1" />
+			<img id="imgzoom6" src="" onclick="zoomin(6)" alt="" title="{tr}Zoom in x3{/tr}" border="1" />
 			{else}
-			<img id="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="x3" title="{tr}Zoom in x3{/tr}" />
+			<img id="imgzoom6" src="" onclick="zoomin(6)" alt="" title="{tr}Zoom in x3{/tr}" />
 			{/if}
 			{if $zoom eq 4}
-			<img id="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="x4" title="{tr}Zoom in x4{/tr}" border="1" />
+			<img id="imgzoom7" src="" onclick="zoomin(7)" alt="" title="{tr}Zoom in x4{/tr}" border="1" />
 			{else}
-			<img id="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="x4" title="{tr}Zoom in x4{/tr}" />
+			<img id="imgzoom7" src="" onclick="zoomin(7)" alt="" title="{tr}Zoom in x4{/tr}" />
 			{/if}
 			&nbsp;
 			<select id="zoom" name="zoom" size="1" onchange="cbzoomchange()">
@@ -187,7 +187,7 @@
 				<img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
 			{/if}
 			&nbsp;
-			<a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
+			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
 			<small>{tr}Click on the map or click redraw{/tr}</small>
 			<input id="minx" type="hidden" name="minx" value="{$minx}" />
 			<input id="miny" type="hidden" name="miny" value="{$miny}" />
