@@ -259,7 +259,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/if}
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}User{/tr}:</td><td>{if $userinfo.login neq 'admin'}<input type="text" name="name"  value="{$userinfo.login|escape}" /> {if $prefs.login_is_email eq 'y'}<i>{tr}Use the email as username{/tr}</i>{/if}<br />
+<tr class="formcolor"><td>{tr}User{/tr}</td><td>{if $userinfo.login neq 'admin'}<input type="text" name="name"  value="{$userinfo.login|escape}" /> {if $prefs.login_is_email eq 'y'}<i>{tr}Use the email as username{/tr}</i>{/if}<br />
 {if $userinfo.userId}
   {if $prefs.feature_intertiki_server eq 'y'}
     <i>{tr}Warning: changing the username will require the user to change his password and will mess with slave intertiki sites that use this one as master{/tr}</i>
@@ -280,17 +280,17 @@ class="prevnext">{tr}All{/tr}</a>
 {if $prefs.auth_method eq 'auth' and ( $prefs.auth_create_user_tiki eq 'n' or $prefs.auth_skip_admin eq 'y' ) and $prefs.auth_create_user_auth eq 'n' and $userinfo.login neq 'admin'}
 <tr class="formcolor"><td colspan="2"><b>{tr}No password is required{/tr}</b><br /><i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i></td></tr>
 {else}
-<tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" id="pass" /></td></tr>
-<tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
+<tr class="formcolor"><td>{tr}Pass{/tr}</td><td><input type="password" name="pass" id="pass" /></td></tr>
+<tr class="formcolor"><td>{tr}Again{/tr}</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
 {if $userinfo.login neq 'admin'}
 <tr class="formcolor"><td>{tr}User must change his password at first login{/tr}</td><td><input type="checkbox" name="pass_first_login" /></td></tr>
 {/if}
 {/if}
-{if $prefs.login_is_email neq 'y'}<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>{/if}
+{if $prefs.login_is_email neq 'y'}<tr class="formcolor"><td>{tr}Email{/tr}</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>{/if}
 {if $userinfo.userId != 0}
-<tr class="formcolor"><td>{tr}Created{/tr}:</td><td>{$userinfo.created|tiki_long_datetime}</td></tr>
-{if $userinfo.login neq 'admin'}<tr class="formcolor"><td>{tr}Registration{/tr}:</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>{/if}
-<tr class="formcolor"><td>{tr}Last login{/tr}:</td><td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime}{/if}</td></tr>
+<tr class="formcolor"><td>{tr}Created{/tr}</td><td>{$userinfo.created|tiki_long_datetime}</td></tr>
+{if $userinfo.login neq 'admin'}<tr class="formcolor"><td>{tr}Registration{/tr}</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>{/if}
+<tr class="formcolor"><td>{tr}Last login{/tr}</td><td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime}{/if}</td></tr>
 {/if}
 {if $userinfo.userId}
 <tr class="formcolor"><td>&nbsp;</td><td>
