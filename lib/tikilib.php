@@ -197,23 +197,15 @@ class TikiLib extends TikiDB {
 
 	if (empty($email)) {
 		global $userlib;
-		global $smarty;
 		$email = $userlib->get_user_email($user);
 	}
-	
-	if (empty($email))	{
-        $smarty->assign('msg', tra('Adding this watch was not possible. Your account does not have any email address associated. To add one, please change your <a href=tiki-user_preferences.php>user preferences</a>.') );
-        $smarty->display('error.tpl');
-		die;
-	} else {
-		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
-		$this->query($query,array($user,$event,$object));
-		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
-		$query.= "values(?,?,?,?,?,?,?)";
-		$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
-		return true;
-	  }
-	}
+	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
+	$this->query($query,array($user,$event,$object));
+	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
+	$query.= "values(?,?,?,?,?,?,?)";
+	$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
+	return true;
+    }
 
     /*shared*/
     function remove_user_watch_by_id($id) {
@@ -2502,26 +2494,36 @@ function add_pageview() {
 
     function verify_friendship($user, $friend)
     {
-	if ($user == $friend) {
-	    return 0;
-	}
-
-	$query = "select count(*) from `tiki_friends` where `user`=? and `friend`=?";
-	return $this->getOne($query, array($user, $friend));
+		if ($user == $friend) {
+		    return 0;
+		}
+	
+		$query = "select count(*) from `tiki_friends` where `user`=? and `friend`=?";
+		return $this->getOne($query, array($user, $friend));
     }
 
+    // Check if there's already a friendship request from userwatched to userwatching
+    function verify_friendship_request($userwatched, $userwatching){
+    	if ($userwatched == $userwatching) {
+		    return 0;
+		}
+		
+		$query = "select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?";
+		return $this->getOne($query, array($userwatching, $userwatched));
+    }
+    
     function get_friends_count($user) {
-	global $cachelib;
-	$cacheKey = 'friends_count_'.$user;
-
-	if ($cachelib->isCached($cacheKey)) {
-	    return $cachelib->getCached($cacheKey);
-	} else {
-	    $query = "select count(*) from `tiki_friends` where `user`=?";
-	    $count = $this->getOne($query, array($user));
-	    $cachelib->cacheItem($cacheKey, $count);
-	    return $count;
-	}
+		global $cachelib;
+		$cacheKey = 'friends_count_'.$user;
+	
+		if ($cachelib->isCached($cacheKey)) {
+		    return $cachelib->getCached($cacheKey);
+		} else {
+		    $query = "select count(*) from `tiki_friends` where `user`=?";
+		    $count = $this->getOne($query, array($user));
+		    $cachelib->cacheItem($cacheKey, $count);
+		    return $count;
+		}
     }
 
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = true) {

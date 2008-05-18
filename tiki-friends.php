@@ -64,11 +64,23 @@ if (isset($_REQUEST['request_friendship'])) {
     // Should we send a message, or that would intimidate refusing friendships?
     // TODO: make it optional
     $messulib->post_message($friend, $user, $friend, '',
-			    tra("I have refused your friendship request!", $lg),
+			    tra("I have refused your friendship request.", $lg),
 			    '',
 			    3);
 
+}elseif (isset($_REQUEST['cancel_waiting_friendship'])) {
+    $friend = $_REQUEST['cancel_waiting_friendship'];
+    $userlib->refuse_friendship($friend, $user);
+    $lg = $tikilib->get_user_preference($friend, "language", $prefs['site_language']);
+    $smarty->assign('msg', sprintf(tra('Canceled friendship request with %s'),$friend));
 
+    // Should we send a message, or that would intimidate refusing friendships?
+    // TODO: make it optional
+    $messulib->post_message($friend, $user, $friend, '',
+			    tra("I have canceled my friendship request.", $lg),
+			    '',
+			    3);
+			    
 } elseif (isset($_REQUEST['break'])) { 
     $friend = $_REQUEST['break'];
     $userlib->break_friendship($user, $friend);

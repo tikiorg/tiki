@@ -41,12 +41,14 @@
 <tr>
   <td class="userlistheading">{tr}Login{/tr}</td>
   <td class="userlistheading">{tr}Request Time{/tr}</td>
+  <td class="userlistheading">{tr}Actions{/tr}</td>
 </tr>
 
 {foreach from=$waiting_requests item=time key=wuser}
 <tr>
   <td class="userlistodd">{$wuser|userlink}</td>
   <td class="userlistodd">{$time|date_format}</td>
+  <td class="userlistodd"><a href="tiki-friends.php?cancel_waiting_friendship={$wuser}">{tr}Cancel friendship request{/tr}</a></td>
 </tr>
 {/foreach}
 </table>

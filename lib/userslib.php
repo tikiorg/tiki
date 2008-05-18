@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // This lib uses pear so the constructor requieres
 // a pear DB object
 
-// some defiitions for helping with authentication
+// some definitions for helping with authentication
 define("USER_VALID", 2);
 
 define("SERVER_ERROR", -1);
@@ -2408,99 +2408,98 @@ function get_included_groups($group, $recur=true) {
     }
 
     // Friends methods
-    // TODO: if there's already a friendship request from friend to user, accept it
     function request_friendship($user, $friend)
     {
-	if (empty($user) || empty($friend) || $user == $friend) {
-	    return false;
-	}
-
-	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
-	$this->query($query, array($user, $friend));
-
-	$query = "insert into `tiki_friendship_requests` (`userFrom`, `userTo`) values (?, ?)";
-	$result = $this->query($query, array($user, $friend));
-
-	if (!$result)
-	    return false;
-
-	return true;
+		if (empty($user) || empty($friend) || $user == $friend) {
+		    return false;
+		} 
+		    
+		$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+		$this->query($query, array($user, $friend));
+	
+		$query = "insert into `tiki_friendship_requests` (`userFrom`, `userTo`) values (?, ?)";
+		$result = $this->query($query, array($user, $friend));
+	
+		if (!$result)
+		    return false;
+	
+		return true;
     }
 
     function accept_friendship($user, $friend)
     {
-	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
-				array($user, $friend));
-
-	if (!$exists)
-	    return false;
-
-	if (empty($user) || empty($friend)) {
-	    return false;
-	}
-
-	$query = "delete from `tiki_friends` where `user`=? and `friend`=?";
-	$this->query($query, array($user, $friend));
-	$this->query($query, array($friend, $user));
-
-	$query = "insert into `tiki_friends` (`user`, `friend`) values (?,?)";
-	$this->query($query, array($user, $friend));
-	$this->query($query, array($friend, $user));
-
-	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
-	$this->query($query, array($user, $friend));
-	$this->query($query, array($friend, $user));
-
-	$this->score_event($user,'friend_new',$friend);
-	$this->score_event($friend,'friend_new',$user);
-
-	global $cachelib;
-	$cachelib->invalidate('friends_count_'.$user);
-	$cachelib->invalidate('friends_count_'.$friend);
-
-	return true;
+		$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
+					array($user, $friend));
+	
+		if (!$exists)
+		    return false;
+	
+		if (empty($user) || empty($friend)) {
+		    return false;
+		}
+	
+		$query = "delete from `tiki_friends` where `user`=? and `friend`=?";
+		$this->query($query, array($user, $friend));
+		$this->query($query, array($friend, $user));
+	
+		$query = "insert into `tiki_friends` (`user`, `friend`) values (?,?)";
+		$this->query($query, array($user, $friend));
+		$this->query($query, array($friend, $user));
+	
+		$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+		$this->query($query, array($user, $friend));
+		$this->query($query, array($friend, $user));
+	
+		$this->score_event($user,'friend_new',$friend);
+		$this->score_event($friend,'friend_new',$user);
+	
+		global $cachelib;
+		$cachelib->invalidate('friends_count_'.$user);
+		$cachelib->invalidate('friends_count_'.$friend);
+	
+		return true;
     }
 
     function refuse_friendship($user, $friend)
     {
-	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
-				array($user, $friend));
-
-	if (!$exists)
-	    return false;
-
-	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
-	$this->query($query, array($user, $friend));
-	$this->query($query, array($friend, $user));
-
-	return true;
+		$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
+					array($user, $friend));
+	
+		if (!$exists)
+		    return false;
+	
+		$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+		$this->query($query, array($user, $friend));
+		$this->query($query, array($friend, $user));
+	
+		return true;
     }
-
+    
     function list_pending_friendship_requests($user)
     {
-
-	$query = "select * from `tiki_friendship_requests` where `userTo`=? order by tstamp";
-	$result = $this->query($query, array($user));
-
-	$requests = array();
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	    $requests[$res['userFrom']] = $res['tstamp'];
-	}
-
-	return $requests;
+	
+		$query = "select * from `tiki_friendship_requests` where `userTo`=? order by tstamp";
+		$result = $this->query($query, array($user));
+	
+		$requests = array();
+		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		    $requests[$res['userFrom']] = $res['tstamp'];
+		}
+	
+		return $requests;
     }
 
     function list_waiting_friendship_requests($user)
     {
-	$query = "select * from `tiki_friendship_requests` where `userFrom`=? order by tstamp";
-	$result = $this->query($query, array($user));
-
-	$requests = array();
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	    $requests[$res['userTo']] = $res['tstamp'];
-	}
-
-	return $requests;
+		$query = "select * from `tiki_friendship_requests` where `userFrom`=? order by tstamp";
+		$result = $this->query($query, array($user));
+	
+		$requests = array();
+		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		    $requests[$res['userTo']] = $res['tstamp'];
+		}
+	
+		return $requests;
     }
 
 

@@ -71,6 +71,14 @@
   <tr><td class="form">&nbsp;</td><td class="form">
     {icon _id='user'} {tr}This user is your friend{/tr}
   </td></tr>  
+  {elseif $friend_pending}
+    <tr><td class="form">&nbsp;</td><td class="form">
+    {icon _id='user_delete'} {tr}The user requested friendship with you{/tr} <br /><a class="link" href="tiki-friends.php?accept={$userinfo.login}">{tr}Accept friendship from this user{/tr}</a> <br /><a class="link" href="tiki-friends.php?refuse={$userinfo.login}">{tr}Refuse friendship from this user{/tr}</a>
+  	</td></tr>  
+  {elseif $friend_waiting}
+    <tr><td class="form">&nbsp;</td><td class="form">
+    {icon _id='user_delete'} {tr}Currently waiting for user approval{/tr} <br /><a class="link" href="tiki-friends.php?cancel_waiting_friendship={$userinfo.login}">{tr}Cancel friendship request towards this user{/tr}</a>
+  	</td></tr>  
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
     {icon _id='user_delete'} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
