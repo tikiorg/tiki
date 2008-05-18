@@ -108,11 +108,11 @@
 {/if}
 </form>
 
-
+<br />
 
 {if $prefs.feature_user_watches_translations eq 'y'}
 <form method="post" action="tiki-user_watches.php">
-	<p>{tr}Watch language wiki page creations{/tr}:
+	{tr}Watch language wiki page creations{/tr}:
 	<select name="langwatch">
 		{section name=ix loop=$languages}
 			<option value="{$languages[ix].value|escape}">
