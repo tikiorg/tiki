@@ -156,7 +156,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $prefs.login_is_email ne 'y'}<td>{$users[user].email}</td>{/if}
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}
 {if $users[user].waiting eq 'u'}<br />{tr}Need to validate email{/tr}{/if}</td>
-<td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}">{icon _id='key' alt="{tr}Assign Group{/tr}"}</a></td>
+<td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign Group{/tr}">{icon _id='group_key' alt="{tr}Assign Group{/tr}"}</a></td>
 
 <td>
 {foreach from=$users[user].groups key=grs item=what}
