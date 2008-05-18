@@ -197,15 +197,23 @@ class TikiLib extends TikiDB {
 
 	if (empty($email)) {
 		global $userlib;
+		global $smarty;
 		$email = $userlib->get_user_email($user);
 	}
-	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
-	$this->query($query,array($user,$event,$object));
-	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
-	$query.= "values(?,?,?,?,?,?,?)";
-	$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
-	return true;
-    }
+	
+	if (empty($email))	{
+        $smarty->assign('msg', tra('Adding this watch was not possible. Your account does not have any email address associated. To add one, please change your <a href=tiki-user_preferences.php>user preferences</a>.') );
+        $smarty->display('error.tpl');
+		die;
+	} else {
+		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
+		$this->query($query,array($user,$event,$object));
+		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
+		$query.= "values(?,?,?,?,?,?,?)";
+		$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
+		return true;
+	  }
+	}
 
     /*shared*/
     function remove_user_watch_by_id($id) {
