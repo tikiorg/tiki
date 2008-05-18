@@ -241,7 +241,7 @@ $smarty->assign('tiki_p_map_edit', $tiki_p_map_edit);
 if($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 	  if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.phtml?mapfile=".$_REQUEST['watch_object']);
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.php?mapfile=".$_REQUEST['watch_object']);
 	  } else {
 	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 	  }
@@ -259,7 +259,7 @@ if($prefs['feature_user_watches'] == 'y') {
 
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1 = str_replace("tiki-map_edit.php", "tiki-map.phtml", $foo["path"]);
+$foo1 = str_replace("tiki-map_edit.php", "tiki-map.php", $foo["path"]);
 $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 
 

@@ -33,7 +33,7 @@ if ($output["data"]=="EMPTY") {
 	$descId = "description";
 	$dateId = "lastModif";
 	$authorId = "";
-	$readrepl = "tiki-map.phtml?mapfile=";
+	$readrepl = "tiki-map.php?mapfile=";
 	
         $tmp = $prefs['title_rss_'.$feed];
         if ($tmp<>'') $title = $tmp;
