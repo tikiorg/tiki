@@ -6,3 +6,11 @@ $Date$
 $Date$
 $Author$
 $Revision$
+
+/*
+$Author$
+$Id$
+$Rev$
+$URL$
+$Date$
+*/
