@@ -142,6 +142,9 @@ ask_ticket('admin-notif');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+$admin_mail = $userlib->get_user_email('admin');
+$smarty->assign('admin_mail',$admin_mail);
+
 // Display the template
 $smarty->assign('mid', 'tiki-admin_notifications.tpl');
 $smarty->display("tiki.tpl");

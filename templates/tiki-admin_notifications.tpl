@@ -34,12 +34,20 @@
     </select>
     </td>
 </tr> 
-<tr><td class="formcolor">{tr}User:{/tr}</td><td class="formcolor"><input type="text" id="flogin" name="login" /></td></tr>
-<tr><td class="formcolor">{tr}Email:{/tr}</td>        
-    <td class="formcolor">
-      <input type="text" id='femail' name="email" />
-      <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}Use Admin Email{/tr}</a>
-    </td>
+<tr>
+  <td class="formcolor">{tr}User:{/tr}</td>
+  <td class="formcolor">
+    <input type="text" id="flogin" name="login" />
+  </td>
+</tr>
+<tr>
+  <td class="formcolor">{tr}Email:{/tr}</td>        
+  <td class="formcolor">
+    <input type="text" id='femail' name="email" />
+      {if $admin_mail neq ''}
+        <a href="#" onclick="javascript:document.getElementById('femail').value='{$admin_mail}';document.getElementById('flogin').value='admin'" class="link">{tr}Preload Admin Account{/tr}</a>
+      {/if}
+  </td>
 </tr> 
 <tr><td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
