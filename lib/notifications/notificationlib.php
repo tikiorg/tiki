@@ -66,9 +66,9 @@ class NotificationLib extends TikiLib {
 		$result = $this->query($query,array($event,$object,$email));
 	}
 	
-	function update_mail_address($oldMail, $newMail) {
-		$query = "update `tiki_user_watches` set `email`=? where `email`=?";
-		$result = $this->query($query,array($newMail,$oldMail));
+	function update_mail_address($user, $oldMail, $newMail) {
+		$query = "update `tiki_user_watches` set `email`=? where `user`=? and `email`=?";
+		$result = $this->query($query,array($user,$newMail,$oldMail));
 	}
 	function get_mail_events($event, $object) {
 		$query = "select `email` from `tiki_user_watches` where `event`=? and (`object`=? or `object`='*')";

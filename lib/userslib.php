@@ -2014,7 +2014,7 @@ function get_included_groups($group, $recur=true) {
     // Need to change the email-address for notifications, too
 	global $notificationlib; include_once('lib/notifications/notificationlib.php');
     $oldMail = $this->get_user_email($user);
-    $notificationlib->update_mail_address($oldMail, $email);
+    $notificationlib->update_mail_address($user, $oldMail, $email);
     
 	$query = "update `users_users` set `email`=? where " . $this->convert_binary(). " `login`=?";
 
