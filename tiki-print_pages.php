@@ -53,7 +53,9 @@ $smarty->assign('find', $find);
 
 if (isset($_REQUEST["addpage"])) {
 	if (!in_array($_REQUEST["pageName"], $printpages)) {
-		$printpages[] = $_REQUEST["pageName"];
+	foreach ($_REQUEST['pageName'] as $value) {
+		$printpages[] = $value;
+	}
 	}
 	$cookietab = 2;
 }
