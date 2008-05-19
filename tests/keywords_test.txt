@@ -1,8 +1,7 @@
-{* $Id: $ *}
+{* $Id$ *}
 $Id$
-this file is used to test commits
+This file is used to text keyword expansion.
 
-"are we really on BRANCH-1-10, mama ?"
 $Date$
 $Date$
 $Author$
