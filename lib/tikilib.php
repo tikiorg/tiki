@@ -4256,15 +4256,15 @@ function add_pageview() {
 		$ret = array();
 		switch ($objectType) {
 		case 'wiki page': case 'wiki':
-			if ($prefs['wiki_creator_admin'] == 'y' && $info['creator'] == $user) { //can admin his page
+			if ( $prefs['wiki_creator_admin'] == 'y' && ! empty($user) && $info['creator'] == $user ) { //can admin his page
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
 					$perm = $perm['permName'];
 					$ret[$perm] = 'y';
-       				if ($global) {
+					if ($global) {
 						global $$perm;
-	        			$$perm = 'y';
-        				$smarty->assign("$perm", 'y');
+						$$perm = 'y';
+						$smarty->assign("$perm", 'y');
 					}
 				}
 				return $ret;
