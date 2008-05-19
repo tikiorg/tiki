@@ -92,6 +92,12 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 // Assign final values to smarty vars in order
 foreach ( $handled_requests as $request_name ) $smarty->assign($request_name, $$request_name);
 
+// Handle "Post as Anonymous" feature
+$post_as_anonymous = false;
+if ( isset($_REQUEST['comments_postComment_anonymous']) && ! empty($user) && $prefs['feature_comments_post_as_anonymous'] == 'y' ) {
+	$_REQUEST['comments_postComment'] = $_REQUEST['comments_postComment_anonymous'];
+	$post_as_anonymous = true;
+}
 
 if ( ! isset($_REQUEST["comment_rating"]) ) $_REQUEST["comment_rating"] = '';
 $comments_aux = array();
@@ -100,7 +106,7 @@ $comments_aux = array();
 if (isset($_REQUEST['comzone'])) {
 	$comments_show = 'n';
 	$comzone_state = $_REQUEST['comzone'];
-	if ($comzone_state=='show'||$comzone_state=='o')	{
+	if ($comzone_state=='show'||$comzone_state=='o') {
 		$comments_show = 'y';
 		if (!isset($_COOKIE['comzone'])||$_COOKIE['comzone']=='c') setcookie('comzone','o');	
 	} 
@@ -294,9 +300,12 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 			} else {
 				$anonymous_name = '';
 			}
+
+			// Handle "Post as Anonymous" feature
+			$post_author = $post_as_anonymous ? '' : $user;
 	
 			$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
-				$user,
+				$post_author,
 				$_REQUEST["comments_title"],
 				$_REQUEST["comments_data"],
 				$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $anonymous_name);

@@ -185,6 +185,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_tell_a_friend" {if $prefs.feature_tell_a_friend eq 'y'}checked="checked"{/if}/></span>
 						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Tell+a+Friend" target="tikihelp" class="tikihelp" title="{tr}Tell a Friend{/tr}">{/if} {tr}Tell a Friend{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
+						<span class="checkbox"><input type="checkbox" name="feature_comments_post_as_anonymous" {if $prefs.feature_comments_post_as_anonymous eq 'y'}checked="checked"{/if}/></span>
+						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Post+Comments+as+Anonymous" target="tikihelp" class="tikihelp" title="{tr}Allow to post comments as Anonymous{/tr}">{/if} {tr}Allow to post comments as Anonymous{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
 				</div>
 			</fieldset>
 

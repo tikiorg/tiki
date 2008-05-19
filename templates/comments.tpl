@@ -328,9 +328,14 @@
 			</td>
 
 			<td class="formcolor">
-			    {if empty($user)}{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />{/if}
+			{if empty($user)}
+				{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
+			{/if}
 				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
+				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
+				{/if}
 				{if $forum_mode eq 'y'}
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{/if}

@@ -101,7 +101,8 @@ if (isset($_REQUEST["features"])) {
 		"layout_section",
 		"user_assigned_modules",
 		"feature_filegals_manager",
-		"feature_sefurl"
+		"feature_sefurl",
+		"feature_comments_post_as_anonymous"
 	);
 
 	$pref_byref_values = array(

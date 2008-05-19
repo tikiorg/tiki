@@ -1022,6 +1022,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['pref_syntax'] = '1.9';
 	$prefs['feature_mootools'] = 'n';
 	$prefs['javascript_enabled'] = 'n';
+	$prefs['feature_comments_post_as_anonymous'] = 'n';
 
 	// Special default values
 
