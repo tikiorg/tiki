@@ -2456,9 +2456,9 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin FAQs','tiki-list_faqs.php',660,'feature_faqs','tiki_p_admin_faqs','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Maps','tiki-map.phtml',700,'feature_maps','tiki_p_map_view','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Maps','tiki-map.php',700,'feature_maps','tiki_p_map_view','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Maps','tiki-map.phtml',703,'feature_maps','tiki_p_map_view','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Maps','tiki-map.php',703,'feature_maps','tiki_p_map_view','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Mapfiles','tiki-map_edit.php',705,'feature_maps','tiki_p_map_view','');
 
@@ -2576,7 +2576,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Groups','tiki-admingroups.php',1075,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Modules','tiki-admin_modules.php',1085,'','tiki_p_admin','');
 
@@ -2628,7 +2628,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Score','tiki-admin_score.php',1235,'feature_score','tiki_p_admin','');
 
@@ -4007,7 +4007,10 @@ CREATE TABLE "tiki_tracker_item_fields" (
   "fieldId" bigint NOT NULL default '0',
   "lang" char(16) default NULL,
   "value" text,
-  PRIMARY KEY ("itemId","fieldId","lang")
+  PRIMARY KEY ("itemId","fieldId","lang"),
+  "INDEX" fieldId (fieldId),
+  "INDEX" value (value(250)),
+  "INDEX" lang (lang)
 ) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
@@ -4882,6 +4885,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit categorized items', 'registered', 'category');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_comments', 'Can edit all comments', 'editors', 'comments');
 

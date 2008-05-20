@@ -3350,7 +3350,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Wiki Cache','tiki-list_cache.php',1080,'cachepages','tiki_p_admin','')
 go
 
 
@@ -3454,7 +3454,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','')
 go
 
 
@@ -5142,6 +5142,9 @@ CREATE TABLE "tiki_tracker_item_fields" (
   "lang" char(16) default NULL NULL,
   "value" text default '',
   PRIMARY KEY ("itemId","fieldId","lang")
+  "INDEX" fieldId (fieldId),
+  "INDEX" value (value(250)),
+  "INDEX" lang (lang)
 ) ENGINE=MyISAM
 go
 
@@ -6304,6 +6307,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categorized', 'Can edit categorized items', 'registered', 'category')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_categories', 'Can edit items in categories', 'registered', 'category')
 go
 
 
