@@ -390,7 +390,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {assign var=fca value=$cur_field.options_array[0]}
 {if $cur_field.options_array[1] eq 'm' or $cur_field.options_array[1] eq 'd'}
 	<select name="ins_cat_{$cur_field.fieldId}[]"{if $cur_field.options_array[1] eq 'm'} multiple="multiple"{/if}>
-	{if $cur_field.options_array[1] eq 'm' and !$cur_field.isMandatory}<option value=""></option>{/if}
+	{if $cur_field.isMandatory ne 'y'}<option value=""></option>{/if}
 	{foreach key=ku item=iu from=$cur_field.$fca name=foreache}
 	{assign var=fcat value=$iu.categId }
 	<option value="{$iu.categId}"{if $cur_field.cat.$fcat eq 'y'} selected="selected"{/if}>{$iu.name|escape}</option>
