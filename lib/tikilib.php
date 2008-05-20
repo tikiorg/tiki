@@ -6703,7 +6703,7 @@ if (!$simple_wiki) {
 			);
 
 			// Build maketoc arguments list (and remove " chars if they are around the value)
-			if ( is_array($maketoc_regs) ) {
+			if ( isset($maketoc_regs[1]) ) {
 				$nb_args = count($maketoc_regs[1]);
 				for ( $a = 0; $a < $nb_args ; $a++ ) {
 					$maketoc_args[strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
