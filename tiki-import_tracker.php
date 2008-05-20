@@ -30,7 +30,7 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 	$replace = false;
 	$fp = @ fopen($_FILES['importfile']['tmp_name'], "rb");
 	if ($fp) {
-		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp);
+		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, true, isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '');
 	}
 	fclose($fp);
 }

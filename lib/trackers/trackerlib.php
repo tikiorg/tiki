@@ -1349,7 +1349,7 @@ class TrackerLib extends TikiLib {
 		return $total;
 	}
 
-	function import_csv($trackerId, $csvHandle, $replace = true) {
+	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='') {
 		global $tikilib;
 		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
 			return -1;
@@ -1409,6 +1409,11 @@ class TrackerLib extends TikiLib {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
+						} elseif ($field['type'] == 'f' || $field['type'] == 'j') {
+							if ($dateFormat == 'mm/dd/yyyy') {
+								list($m, $d, $y) = split('/', $data[$i]);
+								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+							}	
 						}
 						if ($itemId && $replace && $this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
 							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));
