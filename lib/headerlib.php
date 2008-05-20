@@ -79,6 +79,8 @@ class HeaderLib {
 	}
 
 	function output_headers() {
+		global $style_ie6_css;
+
 		ksort($this->jsfiles);
 		ksort($this->js);
 		ksort($this->cssfiles);
@@ -112,6 +114,13 @@ class HeaderLib {
 					}
 				}
 			}
+		}
+
+		// Handle theme's special CSS file for IE6 hacks
+		if ( $style_ie6_css != '' ) {
+			$back .= "<!--[if IE 6]>\n"
+				.'<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n"
+				."<![endif]-->\n";
 		}
 
 		if (count($this->css)) {

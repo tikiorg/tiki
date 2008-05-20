@@ -44,3 +44,11 @@ if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
 
 $stlstl = split("-|\.", $prefs['style']);
 $style_base = $stlstl[0];
+
+// Allow to have an ie6.css file for the theme's specific hacks for IE 6
+$style_ie6_css = '';
+if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$style_base.'/ie6.css') ) {
+	$style_ie6_css = 'styles/'.$tikidomain.'/'.$style_base.'/ie6.css';
+} elseif ( is_file('styles/'.$style_base.'/ie6.css') ) {
+	$style_ie6_css = 'styles/'.$style_base.'/ie6.css';
+}
