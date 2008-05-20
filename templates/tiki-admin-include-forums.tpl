@@ -70,11 +70,11 @@
           <td><input type="checkbox" name="feature_forums_name_search"
               {if $prefs.feature_forums_name_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label>{tr}Search some forums by content (on "forum list"){/tr}</label></td>
+          <td><label>{tr}Search some forums by content on "forum list" (needs feature_search activated){/tr}</label></td>
           <td><input type="checkbox" name="feature_forums_search"
               {if $prefs.feature_forums_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label>{tr}Search in topics content on forum page{/tr}</label></td>
+          <td><label>{tr}Search in topics content on forum page (needs feature_search activated){/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_content_search"
               {if $prefs.feature_forum_content_search eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
