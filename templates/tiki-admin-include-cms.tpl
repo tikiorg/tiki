@@ -161,7 +161,7 @@
       </form>    
     </div>
   </div>
-</div>
+
 
 <div class="cbox">
 <div class="cbox-title">{tr}Import CSV file{/tr}</div>
