@@ -157,6 +157,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiapproval_delete_staging'] = 'n';
 	$prefs['wikiapproval_master_group'] = '';
 	$prefs['wiki-edit_section'] = 'n';
+	$prefs['wiki_edit_section'] = 'n';
 
 	# wysiwyg
 	$prefs['feature_wysiwyg'] = 'n';
