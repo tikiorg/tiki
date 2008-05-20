@@ -40,6 +40,9 @@ if (!isset($_REQUEST["error"])) {
   }
 }
 
+// filtering
+$_REQUEST["error"] = htmlentities(strip_tags($_REQUEST["error"]), ENT_QUOTES, "UTF-8");
+
 // This can be useful for putting custom code inside error page.
 // ie: in error.tpl {$referer) will hold "login" if user came from tiki-login.php
 // if this gets useful we can integrate with tickets, this was just a hack to show to LarsKl

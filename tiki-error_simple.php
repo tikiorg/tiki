@@ -4,7 +4,7 @@
 
 echo '<html><body><pre><p>';
 if (isset($_REQUEST['error']) and !is_null($_REQUEST['error'])) {
-	echo strip_tags($_REQUEST['error']);
+	echo htmlentities(strip_tags($_REQUEST["error"]), ENT_QUOTES, "UTF-8");	
 } else {
 	echo 'There was an unspecified error.  Please go back and try again.';
 }
