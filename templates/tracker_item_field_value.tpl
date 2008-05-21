@@ -46,7 +46,6 @@
 			{else}
 				{$tlabel}
 			{/if}
-			</div>
 			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'}
 				</a>
 			{/if}
