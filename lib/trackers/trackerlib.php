@@ -1416,7 +1416,10 @@ class TrackerLib extends TikiLib {
 							if ($dateFormat == 'mm/dd/yyyy') {
 								list($m, $d, $y) = split('/', $data[$i]);
 								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
-							}	
+							} elseif ($dateFormat == 'dd/mm/yyyy') {
+								list($d, $m, $y) = split('/', $data[$i]);
+								$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+							}
 						}
 						if ($itemId && $replace && $this->get_item_value($trackerId, $itemId, $field['fieldId']) !== false) {
 							$this->query($query2, array($data[$i], (int)$itemId,(int)$field['fieldId']));
