@@ -4,7 +4,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $smarty, $tikilib, $user, $module_rows;
+global $smarty, $tikilib, $user;
 
 $smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Articles"));
 
