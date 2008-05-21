@@ -49,8 +49,8 @@ function deldirfiles($dir){
   closedir($current_dir);
 }
 
-if ($prefs['feature_wiki_structure_webhelp'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_structure_webhelp");
+if ($prefs['feature_create_webhelp'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_create_webhelp");
 
 	$smarty->display("error.tpl");
 	die;
