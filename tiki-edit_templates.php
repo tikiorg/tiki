@@ -114,7 +114,7 @@ if (isset($_REQUEST["template"])) {
 
 if ($mode == 'listing') {
 	// Get templates from the templates directory
-	$where = array('', 'modules/', 'mail/', 'map/');
+	$where = array('', 'modules/', 'mail/', 'map/', 'styles/'.str_replace('.css', '', $prefs['style']).'/');
 	$files = array();
 	foreach ($where as $w) {
 		$h = opendir($smarty->template_dir.$w);
