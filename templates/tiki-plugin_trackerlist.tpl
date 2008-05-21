@@ -1,3 +1,4 @@
+{strip}
 {* $Id$ *}
 {if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
@@ -164,3 +165,4 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
 {/if}
+{/strip}
