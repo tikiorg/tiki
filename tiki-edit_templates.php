@@ -120,7 +120,7 @@ if ($mode == 'listing') {
 	foreach ($where as $w) {
 		$h = opendir($smarty->template_dir.$w);
 		while (($file = readdir($h)) !== false) {
-			if (substr($file,-4,4) == '.tpl' && ($w != $local || in_array($file, $files)) {
+			if (substr($file,-4,4) == '.tpl' && ($w != $local || !in_array($file, $files))) {
 				$files[] = $w.$file;
 			}
 		}
