@@ -8,7 +8,7 @@
 			<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
 		</div>{* site logo *}
 {/if}
-{if $prefs.feature_sitead eq 'y'}
+{if $prefs.feature_sitead eq 'y' and $print_page ne 'y'}
 		<div id="sitead" align="center">
 			{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
 		</div>{* optional ads (banners) *}
