@@ -1351,6 +1351,7 @@ class TrackerLib extends TikiLib {
 
 	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='') {
 		global $tikilib;
+		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
 			return -1;
 		}
@@ -1362,22 +1363,24 @@ class TrackerLib extends TikiLib {
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 		while (($data = fgetcsv($csvHandle,100000)) !== FALSE) {
-			$status = 'o';
+			$status = $tracker_info['defaultStatus'];
 			$itemId = 0;
 			$created = $tikilib->now;
 			$lastModif = $created;
 			$cats = '';
 			for ($i = 0; $i < $max; $i++) {
-				if ($header[$i] == 'status')
-					$status = $data[$i];
-				elseif ($header[$i] == 'itemId')
+				if ($header[$i] == 'status') {
+					if ($data[$i] == 'o' || $data[$i] =='p' || $data[$i] == 'c')
+						$status = $data[$i];
+				} elseif ($header[$i] == 'itemId') {
 					$itemId = $data[$i];
-				elseif ($header[$i] == 'created' && is_numeric($data[$i]))
+				} elseif ($header[$i] == 'created' && is_numeric($data[$i])) {
 					$created = $data[$i];
-				elseif ($header[$i] == 'lastModif' && is_numeric($data[$i]))
+				} elseif ($header[$i] == 'lastModif' && is_numeric($data[$i])) {
 					$lastModif = $data[$i];
-				elseif ($header[$i] == 'categs') // for old compatibility
+				} elseif ($header[$i] == 'categs') { // for old compatibility
 					$cats = split(',',trim($data[$i]));
+				}
 			}
 			if ($itemId && ($t = $this->get_tracker_for_item($itemId)) && $t == $trackerId) {
 				$query = "update `tiki_tracker_items` set `created`=?, `lastModif`=?, `status`=? where `itemId`=?";
@@ -1420,7 +1423,6 @@ class TrackerLib extends TikiLib {
 						} else {
 							$this->query($query, array((int)$itemId,(int)$field['fieldId'], $data[$i]));
 						}							
-						echo "$itemId ".$field['fieldId'].' '.$data[$i].'<br>';
 						break;
 					}
 				}
