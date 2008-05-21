@@ -10,6 +10,9 @@ border: 1px dashed #A9B8C2;
 clear:both;
 }
 
+li.freetag {list-style: none; display: inline; margin: 0; padding: 0}
+ul.freetag {margin: 0; padding: 0; display: inline}
+.freetag a {display: inline}
 a.freetag_1 { text-decoration: none; font-size: 8px; }
 a.freetag_2 { text-decoration: none; font-size: 10px; }
 a.freetag_3 { text-decoration: none; font-size: 12px; }
