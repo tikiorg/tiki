@@ -20,24 +20,24 @@
 		  </td></tr>
 		  <tr><td align="center">	
 			{if $zoom eq -2}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1" />
 			{else}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out x2{/tr}" />
 			{/if}
 			{if $zoom eq 0}
-			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
+			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" border="1" />
 			{else}
-			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" />
+			<img id="imgzoom3" src="pics/icons/shape_square_edit.png" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" />
 			{/if}
 			{if $zoom eq 1}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" border="1" />
 			{else}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" />
 			{/if}
 			{if $zoom eq 2}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" border="1" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in x2{/tr}" border="1" />
 			{else}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in x2{/tr}" />
 			{/if}
 			&nbsp;
 			<select id="zoom" name="zoom" size="1" onchange="cbzoomchange()">

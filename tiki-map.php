@@ -452,16 +452,14 @@ $smarty->assign_by_ref('layer_wiki',$layer_wiki);
 $smarty->assign_by_ref('layer_download',$layer_download);
 $smarty->assign('userwatch',$userwatch);
 
-  for ($i=-4;$i<=4;$i++)
+  for ($i=-2;$i<=2;$i++)
   {
      
   	  switch($i)
   	  {
-  	  case "-4":
-  	  case "-3":
   	  case "-2":
   	    $zoom_values[]=$i;
-  	    $zoom_display[]='zoom out '.$i.'x';
+  	    $zoom_display[]='Zoom out';
 		    break;
 		  case "0":
 		    	$zoom_values[]=$i;
@@ -472,10 +470,8 @@ $smarty->assign('userwatch',$userwatch);
 		    $zoom_display[]='pan';
        break;
   	  case "2":
-  	  case "3":
-  	  case "4":
   	    $zoom_values[]=$i;
-  	    $zoom_display[]='zoom in '.$i.'x';
+  	    $zoom_display[]='Zoom in';
        break;
 		  }
 		}

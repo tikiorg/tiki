@@ -111,53 +111,33 @@
 			</div>
 		  </td></tr>
 		  <tr><td align="center">	
-			{if $zoom eq -4}
-			<img id="imgzoom0" src="" onclick="zoomin(0)" title="{tr}Zoom out x4{/tr}" border="1" />
-			{else}
-			<img id="imgzoom0" src="" onclick="zoomin(0)" title="{tr}Zoom out x4{/tr}" />
-			{/if}
-			{if $zoom eq -3}
-			<img id="imgzoom1" src="" onclick="zoomin(1)"  title="{tr}Zoom out x3{/tr}" border="1" />
-			{else}  
-			<img id="imgzoom1" src="" onclick="zoomin(1)" title="{tr}Zoom out x3{/tr}" />
-			{/if}
 			{if $zoom eq -2}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" border="1" />
 			{else}
-			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" />
+			<img id="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(0)" alt="-x2" title="{tr}Zoom out{/tr}" />
 			{/if}
 			{if $zoom eq 0}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1" />
+			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" border="1" />
 			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='help';
 			</script>
 			{else}
-			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" />
+			<img id="imgzoom3" src="img/icons/info.gif" onclick="zoomin(1)" alt="Q" title="{tr}Query{/tr}" />
 			{/if}
 			{if $zoom eq 1}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" border="1" />
 			<script type="text/javascript">
   			var map=xGetElementById('map');
   			map.style.cursor='move';
 			</script>
 			{else}
-			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" />
+			<img id="imgzoom4" src="img/icons/move.gif" onclick="zoomin(2)" alt="P" title="{tr}Pan{/tr}" />
 			{/if}
 			{if $zoom eq 2}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" border="1" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}" border="1" />
 			{else}
-			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" />
-			{/if}
-			{if $zoom eq 3}
-			<img id="imgzoom6" src="" onclick="zoomin(6)" alt="" title="{tr}Zoom in x3{/tr}" border="1" />
-			{else}
-			<img id="imgzoom6" src="" onclick="zoomin(6)" alt="" title="{tr}Zoom in x3{/tr}" />
-			{/if}
-			{if $zoom eq 4}
-			<img id="imgzoom7" src="" onclick="zoomin(7)" alt="" title="{tr}Zoom in x4{/tr}" border="1" />
-			{else}
-			<img id="imgzoom7" src="" onclick="zoomin(7)" alt="" title="{tr}Zoom in x4{/tr}" />
+			<img id="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(3)" alt="x2" title="{tr}Zoom in{/tr}" />
 			{/if}
 			&nbsp;
 			<select id="zoom" name="zoom" size="1" onchange="cbzoomchange()">
