@@ -114,12 +114,13 @@ if (isset($_REQUEST["template"])) {
 
 if ($mode == 'listing') {
 	// Get templates from the templates directory
-	$where = array('', 'modules/', 'mail/', 'map/', 'styles/'.str_replace('.css', '', $prefs['style']).'/');
+	$local = 'styles/'.str_replace('.css', '', $prefs['style']).'/';
+	$where = array('', 'modules/', 'mail/', 'map/', $local);
 	$files = array();
 	foreach ($where as $w) {
 		$h = opendir($smarty->template_dir.$w);
 		while (($file = readdir($h)) !== false) {
-			if (substr($file,-4,4) == '.tpl') {
+			if (substr($file,-4,4) == '.tpl' && ($w != $local || in_array($file, $files)) {
 				$files[] = $w.$file;
 			}
 		}
