@@ -96,7 +96,9 @@
 
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
-	{if $field_value.value ne ''}
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{elseif $field_value.value ne ''}
 		{if $list_mode ne 'n'}
 			<img border="0" src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
 		{else}
@@ -204,12 +206,14 @@
 
 {* -------------------- rating -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_view_ratings eq 'y'}
-	<span style="padding-right:2em"><b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}" style="position:absolute">
-		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;
-	</b></span>
-	{if $tiki_p_tracker_vote_ratings eq 'y'}
-		<span nowrap="nowrap">
-			<span class="button2">
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{else}
+		<span style="padding-right:2em"><b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}" style="position:absolute">
+		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;</b>
+		</span>
+		{if $tiki_p_tracker_vote_ratings eq 'y'}
+			<span nowrap="nowrap"><span class="button2">
 			{if $item.my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
 			{else}
@@ -232,8 +236,8 @@
 						class="linkbut">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
-			</span>
-		</span>
+			</span></span>
+		{/if}
 	{/if}
 
 {* -------------------- header ------------------------- *}
