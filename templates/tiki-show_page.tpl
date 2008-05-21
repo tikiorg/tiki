@@ -60,7 +60,7 @@
 				<a title="{tr}Refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
 	{/if}
 	{if $prefs.feature_wiki_print eq 'y'}
-				<a title="{tr}Print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
+				<a title="{tr}Print{/tr}" href="tiki-print.php?{if isset($page_ref_id)}page_ref_id={$page_ref_id}{else}page={$page|escape:"url"}{/if}">{icon _id='printer' alt="{tr}Print{/tr}"}</a>
 	{/if}
 
 	{if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}

@@ -83,6 +83,11 @@ if ($info["flag"] == 'L') {
 	$smarty->assign('lock', false);
 }
 
+if (isset($_REQUEST['page_ref_id'])) {
+    // If a structure page has been requested
+    $page_ref_id = $_REQUEST['page_ref_id'];
+}
+
 $pdata = $tikilib->parse_data($info["data"],$info["is_html"]);
 $smarty->assign_by_ref('parsed', $pdata);
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
