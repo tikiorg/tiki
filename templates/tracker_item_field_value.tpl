@@ -35,7 +35,7 @@
 {elseif $field_value.type eq 'l'}
 	{foreach key=tid item=tlabel from=$field_value.links}
 		{if $tlabel}
-			{if $list_mode ne 'csv'}
+			{if $list_mode ne 'csv' and count($field_value.links) > 1}
 				<div>
 			{/if}
 			{if isset($field_value.otherField)}
@@ -49,7 +49,7 @@
 			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'}
 				</a>
 			{/if}
-			{if $list_mode ne 'csv'}
+			{if $list_mode ne 'csv' and count($field_value.links) > 1}
 				</div>
 			{/if}
 		{/if}
