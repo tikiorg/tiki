@@ -20,7 +20,7 @@
 {/if}
 
 {if $lastup}
-<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from CVS{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
+<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
 {/if}
 {/if}
 </body>
