@@ -2109,7 +2109,7 @@ function add_pageview() {
 	$galleryId_str = '';
 	if ( is_array($galleryId) ) {
 		$galleryId_str = ' in ('.implode(',', array_fill(0, count($galleryId),'?')).')';
-		$bindvars = array_merge($galleryId, $galleryId, $bindvars);
+		$bindvars = array_merge($galleryId, $bindvars);
 	} elseif ( $galleryId >= -1 && ! $recursive ) {
 		$galleryId_str = '=?';
 		if ( $with_subgals ) array_unshift($bindvars, $galleryId);
