@@ -705,7 +705,7 @@ class TrackerLib extends TikiLib {
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i=>$field)
 					if ($field['fieldId'] == $asort_mode ) {
-						$kx = $fild['value'].'.'.$res['itemId'];
+						$kx = $field['value'].'.'.$res['itemId'];
 				}
 			}
 			if (empty($kx)) // ex: if the sort field is non visible, $kx is null
