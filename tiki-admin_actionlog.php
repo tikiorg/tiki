@@ -26,7 +26,7 @@ if ($prefs['feature_actionlog'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-if (empty($user) || $tiki_p_view_actionlog != 'y') {
+if (empty($user) || $tiki_p_view_actionlog != 'y'|| $tiki_p_view_actionlog_owngroups != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
@@ -169,7 +169,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 			if (in_array($g, $_REQUEST['selectedGroups'])) {
 				$url .= "&amp;selectedGroups[]=$g";
 				$selectedGroups[$g] = 'y';
-				if ($tiki_p_admin == 'y') {
+				if ($tiki_p_admin == 'y' || $tiki_p_view_actionlog_owngroups == 'y') {
 					$members = $userlib->get_group_users($g);
 					foreach ($members as $m)
 						$_REQUEST['selectedUsers'][] = $m;

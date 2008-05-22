@@ -108,7 +108,7 @@
 		</div>
 		{/if}
 
-		{if $prefs.feature_actionlog == 'y' and !empty($user) and $tiki_p_view_actionlog eq 'y'}
+		{if $prefs.feature_actionlog == 'y' and !empty($user) and ($tiki_p_view_actionlog eq 'y' or $tiki_p_view_actionlog_owngroups eq 'y')}
 		<h5><a {ajax_href template=tiki-admin_actionlog.tpl
 		htmlelement=user_logs}tiki-admin_actionlog.php?selectedUsers[]=$user{/ajax_href}"><img  border="0" src="img/mytiki/gnome-vumeter.png" alt="{tr}Action Log{/tr}" width="32" height="32" />{tr}Action Log{/tr}</a></h5>
 		<div id="user_logs">

@@ -1777,3 +1777,5 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 UPDATE tiki_menu_options SET url='tiki-map.php' WHERE name='Maps';
 UPDATE tiki_menu_options SET url='tiki-map.php' WHERE name='View Maps';
 
+#sylvie 2006-12-21
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog_owngroups', 'Can view action log for users of his own groups', 'registered', 'tiki');
