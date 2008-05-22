@@ -478,6 +478,14 @@ a.flip img {
 
 /* end layout divs, etc. */
 
+/*** Error page ***/
+/* Not needed on non-error pages, right? */
+
+div#tiki-main #tikimidtbl {
+	margin: auto;
+	width: auto}
+div#tiki-bot {}
+
 /** Border boxes (if any) **/
 	
 /****** Menus ******/
@@ -583,17 +591,6 @@ a.flip img {
 	white-space: nowrap;
 }
 
-/* From Tikineat -- check */
-#jt1 a.phplm, #jt1 a.phplm:hover, #jt1 a.phplm:link, #jt1 .phplmnormal, #jt1 .phplmnormal a:hover {
-	color: #6996C3;
-	text-decoration: none;
-}
-#jt1 .imgs:first-child, .treemenudiv > .imgs:first-child, .treemenudiv > a:first-child { display: none; }
-.box-data table {
-	width: 100%;
-	_width: 95%;
-}
-/* End from Tikineat */
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -757,7 +754,10 @@ h3.box-title {
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
-	background: #fff;
+	background: #fff}
+	
+* html #col3 .box:hover a.flipmodtitle img {
+	right: 30px
 }
 
 a.flipmodtitle:hover img {
@@ -887,20 +887,11 @@ td.odd,
 td.even {
 	margin: 0;
 	padding: 0.2em;
-	vertical-align: top;
-}
+	vertical-align: top}
 
-td.odd {
-
-}
-
-td.even {
-
-}
-
-td.third {
-	
-}
+td.odd {background: #eeeeee}
+td.even {background: #f9f9f9}
+td.third {background: #e7e7e7}
 
 td.heading,
 td.bloglistheading {
@@ -1184,10 +1175,12 @@ span#description {
 	line-height: 1.5em;
 }
 
-.wikitext h1, h2, h3, h4 {
+.wikitext h1, 
+.wikitext h2, 
+.wikitext h3, 
+.wikitext h4 {
 	margin: 0 0 15px;
-	padding: 0;
-}
+	padding: 0}
 
 .wikitext h2 {
 	/*font-size: 1.2em;*/
@@ -1218,12 +1211,10 @@ span#description {
 }
 
 .wikitopline table {
-	width: 100% ;
-	_width: 97% ;
-}
-html>body .wikitopline table {
-	width: 100%;
-}
+	width: 100%}
+
+* html .wikitopline table {
+	width: 97%}
 /* End from Tikineat */
 
 table.wikitable {
@@ -1477,6 +1468,8 @@ img.articleimage {
 	margin-bottom:10px;
 }
 
+div.articletrailer {text-align: right}
+
 div.articletrailer .wikitopline {
 	float: left;
 } 
@@ -1657,10 +1650,9 @@ table.commentinfo {}
 	margin: 0;
 	margin-top: 5px;
 	padding: 3px 0px 3px 0px;
-	background-color: #F9FCFF;
-	font-size: 1.1em;
-	_font-size: 11px;
-}
+	background-color: #F9FCFF;	font-size: 1.1em;}
+	
+* html .post .postbody {font-size: 11px}
 .post .postbody-title {
 	display: block;
 	background-color: #E0EAF4; 
@@ -1812,7 +1804,19 @@ div.commentsedithelp {
 }
 
 /***** Tags (freetags) *****/
-a.freetag_1 { text-decoration: none; font-size: .8em }
+li.freetag {
+	list-style: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+ul.freetag {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+
+.freetag a {display:inline}a.freetag_1 { text-decoration: none; font-size: .8em }
 a.freetag_2 { text-decoration: none; font-size: .9em }
 a.freetag_3 { text-decoration: none; font-size: 1em }
 a.freetag_4 { text-decoration: none; font-size: 1.2em }
@@ -1851,12 +1855,9 @@ div.browsegallery {
 
 table.galtable {
 	border-collapse: collapse;
-	border: 1px solid #8CACBB;
-	width: 100%;
-	voice-family: "\"}\"";
-	voice-family: inherit;
-	width: 97%;
-}
+	border: 1px solid #8CACBB;	width: 100%}
+
+* html body table.galtable {width: 97%}
 
 html>body .galtable {
 	width: 100%;
@@ -1965,32 +1966,16 @@ span.dirsitecats {
 }
 
 /***** Calendar *****/
+/* Overrides calendar.css. */
 
-#calendar {
-	width: 100%;
-}
+.calodd {background: #eeeeee}
+.caleven { background: #f9f9f9 }
 
 .Cal0, 
 .Cal1, 
 .Cal2 {
 	color: #000;
-	font-size: 90%;
-	padding-right: 0;
-}
-
-.Cal0:before {
-	content: "? ";
-} 
-
-.Cal1:before {
-	content: "+ ";
-	background: #FFCC77;
-}
-	
-.Cal2:before {
-	content: "X ";
-	background: #EEEEAA;
-}
+	font-size: 90%}
 	
 .Calart,
 .Calblog,
@@ -2006,278 +1991,76 @@ span.dirsitecats {
 .Calsurv,
 .Caltrack,
 .Calwiki {
-	font-size: 90%;
-	padding: 0 3px;
-	margin-top: 0;
-}
+	font-size: 1em}
 
 .Calart,
 .Calart a,
 .Calart a:visited {
-	color: #FA8072;
-	font-weight: normal;
-}
-
-.Calart:before {
-	content: "A";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+	color: #FA8072}
 
 .Calblog,
 .Calblog a,
-.Calblog a:visited {
-	color: #DA70D6;
-	font-weight: normal;
-}
-
-.Calblog:before {
-	content: "B";
-	font-family: monospace;
-	background: #FFFFFF;	
-}
+.Calblog a:visited {color: #DA70D6}
 
 .Calchart,
 .Calchart a,
-.Calchart a:visited {
-	color: #304F30;
-	font-weight: normal;
-}
-
-.Calchart:before {
-	content: "Ch";
-	font-family: monospace;
-	background: #FFFFFF;
-} 
+.Calchart a:visited {color: #304F30}
 
 .Caldir,
 .Caldir a,
-.Caldir a:visited {
-	color: #800080;
-	font-weight: normal;
-}
-
-.Caldir:before {
-	content: "D";
-	font-family: monospace;
-	background: #FFFFFF;	
-}
-
-.Caleph,
-.Caleph a,
-.Caleph a:visited {
-	color: #008000;
-	font-weight: normal;
-}
-
-.Caleph:before {
-	content: "E";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+.Caldir a:visited {color: #800080}
 
 .Calfaq,
 .Calfaq a,
-.Calfaq a:visited {
-	color: #822222;
-	font-weight: normal;
-}
-
-.Calfaq:before {
-	content: "FQ";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+.Calfaq a:visited {color: #822222}
 
 .Calfgal,
 .Calfgal a,
-.Calfgal a:visited {
-	font-weight: normal;
-	color: #8B4513;
-}
-
-.Calfgal:before {
-	content: "Fi";
-	font-family: monospace;
-	background: #FFFFFF;	
-}
+.Calfgal a:visited {color: #8B4513}
 
 .Calforum,
 .Calforum a,
-.Calforum a:visited {
-	color: #808000;
-	font-weight: normal;
-}
-
-.Calforum:before {
-	content: "Fo";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+.Calforum a:visited {color: #808000}
 
 .Calgal,
 .Calgal a,
-.Calgal a:visited {
-	font-weight: normal;
-	color: #8B4513;
-}
-
-.Calgal:before {
-	content: "I";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+.Calgal a:visited {color: #8B4513}
 
 .Calnl,
 .Calnl a,
-.Calnl a:visited {
-	color: #708090;
-	font-weight: normal;
-}
-
-.Calnl:before {
-	content: "N";
-	font-family: monospace;
-	background: #FFFFFF;	
-}
+.Calnl a:visited {color: #708090}
 
 .Calquiz,
 .Calquiz a,
-.Calquiz a:visited {
-	color: #5F9EA0;
-	font-weight: normal;
-}
-
-.Calquiz:before {
-	content: "Q";
-	font-family: monospace;
-	background: #FFFFFF;
-}
+.Calquiz a:visited {color: #5F9EA0}
 
 .Calsurv,
 .Calsurv a,
-.Calsurv a:visited {
-	color: #DAA520;
-	font-weight: normal;
-}
-
-.Calsurv:before {
-	content: "S";
-	font-family: monospace;
-	background: #FFFFFF;	
-}
+.Calsurv a:visited {color: #DAA520}
 
 Caltrack,
 Caltrack a,
-Caltrack a:visited {
-	color: #00BD02;
-	font-weight: normal;
-}
+Caltrack a:visited {color: #00BD02}
 
-.Caltrack:before {
-	content: "Tr";
-	font-family: monospace;
-	background: #FFFFFF;
-}
-	
-.calweb {
-	font-weight: bold;
-	text-decoration: none;
-	padding-left: 3px;
-	padding-right: 3px;
-	color: #336699;
-}
-
-.Calweb:hover {
-	color: #996633;
-}
+.Calweb {font-size: 1em}
+.Calweb:hover {color: #996633}
 
 .Calwiki,
 .Calwiki a,
-.Calwiki a:visited {
-	color: #2C4B80;
-	font-weight: normal;
-}
-
-.Calwiki:before {
-	content: "W";
-	font-family: monospace;
-	background: #FFFFFF;
-}
-
-.calcheckbox {
-	background: #FFFFFF;
-}
+.Calwiki a:visited {color: #2C4B80}
 
 .calcontent a.linkmenu,
 .calcontent a.linkmenu:hover {
 	background: none;
-	padding: 0;
-}
+	padding: 0}
 
 .calfocus {
 	font-size: 90%;
-	background: transparent;
-}
+	background: inherit}
 
-.calfocus a {
-	text-decoration: none;
-	font-weight: normal;
-	color: #000000;
-}
+.caldark .calfocus { background: inherit }
 
-.calfocuson {
-	font-size: 90%;
-	background: #F3E498;
-}
-
-.calfocuson a {
-	text-decoration: none;
-	font-weight: normal;
-	color: #000000;
-}
-
-#calprio {
-	margin-left: 7px;
-	padding: 0 5px;
-	color: black;
-}
-
-.calprio1 {
-	background: #DAE0E0;
-}
-
-.calprio2 {
-	background: #DADCDC;
-}
-
-.calprio3 {
-	background: #DAD0D0;
-}
-
-.calprio4 {
-	background: #DACACA;
-}
-
-.calprio5 {
-	background: #DAC0D0;
-}
-
-.calprio6 {
-	background: #DABABA;
-}
-
-.calprio7 {
-	background: #DAB0B0;
-}
-
-.calprio8 {
-	background: #DAAAAA;
-}
-
-.calprio9 {
-	background: #DA9A9A;
-}
+.calfocuson + .calcontent { background: #e6eff8 }
 
 .calprio1 a,
 .calprio2 a,
@@ -2287,20 +2070,10 @@ Caltrack a:visited {
 .calprio6 a,
 .calprio7 a,
 .calprio8 a,
-.calprio9 a {
-	color: #393E51;
-	font-weight: normal;
-}
+.calprio9 a {color: #393E51}
 
-.caltitle {
-	font-weight: bold;
-	color: #425262;
-}
 
-.caltoggle {
-	font-size: 90%;
-	margin-bottom: 7px;
-}
+.caltoggle {font-size: 90%}
 
 /* This version for light-colored backgrounds */
 .opaque {
@@ -2308,8 +2081,7 @@ Caltrack a:visited {
    border-left: 1px solid #A9A9A9;
   	border-top: 1px solid #A9A9A9;
 	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
+	border-bottom: 1px solid #696969}
 
 .opaque .box-title {
 	background-color: white;
@@ -2327,17 +2099,8 @@ Caltrack a:visited {
 .box-data td.fc a.today,
 .box-data td a.today {
 	background: #D4D0C8;
-	border: solid 1px #696969;
-}
+	border: solid 1px #696969}
 
-#caltable .calfocuson a {
-  color:#000;
-}
-
-#caltable .calfocus a,
-#caltable .calfocuson a {
-  text-decoration:none;
-}
 /*****  Polls  *****/
 div.pollresults {margin-top: 5px;font-size: 1.2em;padding: 0 5px;}
 table.pollresults {width: 100%;}
@@ -2379,9 +2142,22 @@ span.dirsitedesc {}
 span.dirsitetrail {font-size: .95em;}
 span.dirsitecats {}
 .dirsitelink {}
-div.dirrelated {margin-top: 10px;padding: 5px;}
-td.dirfooter {font-size: .95em;}
-div.dirfooter {margin-top: 10px;}
+div.dirrelated {margin-top: 10px;padding: 5px}
+td.dirfooter {font-size: .95em}
+div.dirfooter {margin-top: 10px}
+
+/***** Messages *****/
+
+td.prio1, td.prio2, td.prio3, td.prio4, td.prio5 {border: 1px solid #8CACBB; padding-left: 2px}
+td.prio1 {background: #F7F9CA}
+td.prio2 {background: #F7F9EA}
+td.prio3 {background: #F7F9FA}
+td.prio4 {background: #F7F9FD}
+td.prio5 {background: #F7F9FF}
+div.messureadflag {background: #CCCCCC; padding-left: 5px}
+div.messureadhead {background: #DEDEDE; margin-top: 2px}
+div.messureadbody {margin-top: 5px;background: #DEDEDE}
+.readlink {font-size: 1em; color: black}
 
 /**********   Ajax   **********/
 
@@ -2454,19 +2230,11 @@ table.default	td {
 
 a.admbox {
 	border: 1px solid #AAAAAA;
-	height: 100px;
-	width: 100px;
-	background: #6C6C6C;
-	background-repeat: no-repeat;
-	background-position: center;
-}
+	background-color: #6C6C6C}
 
 a.admbox:hover, a.admbox:focus, a.admbox:active  {
-	background: #B2B2B2;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	border: 1px solid #292929;
-}
+	background-color: #B2B2B2;
+	border: 1px solid #292929}
 
 a.admbox.off {
 	/*background-color : #d0d0d0; */
@@ -2475,12 +2243,7 @@ a.admbox.off {
 }
 
 a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
-	border: 1px solid #9f9f9f;
-}
-
-a.admbox.off img {
-	background-image: url('../pics/overlay-disabled_item.png');
-}
+	border: 1px solid #9f9f9f}
 
 #rss img {
 	vertical-align: middle;
