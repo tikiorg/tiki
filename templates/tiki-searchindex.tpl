@@ -11,7 +11,6 @@
     {/foreach}
   </div><!-- nohighlight navbar -->
 
-{if $words neq ''}{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}{/if}
 {/if}
 <form class="forms" method="get" action="tiki-searchindex.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
@@ -27,6 +26,11 @@
 {/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
+
+<br />
+{if $words neq ''}
+  {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
+{/if}
 
 {if $words neq ''}
 <div class="searchresults">
