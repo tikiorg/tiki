@@ -134,6 +134,13 @@ if(($where=='blogs' || $where=='posts')) {
 	  die;
 	}
 }
+if(($where=='trackers')) {
+	if ($prefs['feature_trackers'] != 'y') {
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
+	  $smarty->display("error.tpl");
+	  die;
+	}
+}
 	if (isset($_REQUEST['maxRecords'])) {
 		$maxRecords = $_REQUEST['maxRecords'];
 	}
