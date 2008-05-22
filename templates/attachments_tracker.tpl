@@ -47,11 +47,11 @@
 		{if $attextra eq 'y'}
 			{assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
 			<a class="tablename" href="#" title="{tr}more info{/tr}" onclick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');">
-				<img src="img/icons/question.gif" border="0" alt="{tr}more info{/tr}"  hspace="2" vspace="1" />
+				{icon _id="information" alt="{tr}more info{/tr}"}
 			</a>
 		{/if}
 		<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}Download{/tr}">
-		   	<img src="img/icons/icon38.gif" border="0" alt="{tr}Download{/tr}" hspace="8" vspace="0" />
+		   	{icon _id='disk' alt="{tr}Download{/tr}"}
 		</a>
 		</td>
 		{foreach key=k item=x from=$attfields}
@@ -68,10 +68,10 @@
 		<td>
 		{if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
 			<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}">
-				{icon _id='cross' hspace="2" vspace="0" alt="{tr}Delete{/tr}"}
+				{icon _id='cross' alt="{tr}Delete{/tr}"}
 			</a>
 			<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Edit{/tr}">
-				{icon _id='page_edit' hspace="2" vspace="0"}
+				{icon _id='page_edit' alt="{tr}Edit{/tr}"}
 			</a>
 		{/if}
 		</td>
