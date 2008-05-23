@@ -1,4 +1,5 @@
 <h1><a class="pagetitle" href="tiki-edit_question_options.php?questionId={$questionId}">{tr}Edit question options{/tr}</a></h1>
+
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
@@ -35,28 +36,18 @@
 <td class="heading"><a class="tableheading" href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
+
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].optionId}</td>
-<td class="odd">{$channels[user].optionText}</td>
-<td class="odd">{$channels[user].points}</td>
-<td class="odd">
+<td class="{cycle advance=false}">{$channels[user].optionId}</td>
+<td class="{cycle advance=false}">{$channels[user].optionText}</td>
+<td class="{cycle advance=false}">{$channels[user].points}</td>
+<td class="{cycle}">
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
    <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].optionId}</td>
-<td class="even">{$channels[user].optionText}</td>
-<td class="even">{$channels[user].points}</td>
-<td class="even">
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <div class="mini">
