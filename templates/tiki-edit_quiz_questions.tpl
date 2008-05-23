@@ -4,15 +4,15 @@
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
 {* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
 
-<!- tiki-edit_quiz_questions.tpl start ->
+<!-- tiki-edit_quiz_questions.tpl start -->
 
 <h1><a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$quizId}">{tr}Edit quiz questions{/tr}</a>
-<! -- the help link info -->
+<!-- the help link info -->
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Quiz" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
-<! -- link to tpl -->
+<!-- link to tpl -->
 
      {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=/tiki-edit_quiz_questions.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Questions Tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
@@ -22,7 +22,7 @@
 
 </h1>
 
-<! -- beginning of link buttons -->
+<!-- beginning of link buttons -->
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
@@ -52,24 +52,24 @@
 </tr>
 
 
-<tr><td  class="formcolor">&nbsp;</td>
+<tr><td class="formcolor">&nbsp;</td>
 <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<! -- begin area to import questions en masse -- >
+<!-- begin area to import questions en masse -->
 <h2>{tr}Import questions from text{/tr}
  {if $prefs.feature_help eq 'y'}
-<! -- help link data -- >
+<!-- help link data -->
   <a href="{$prefs.helpurl}Quiz+Question+Import" target="tikihelp" class="tikihelp">
   <img border="0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a>
  {/if}
 </h2>
 
-<! -- begin form area for importing questions  -- >
+<!-- begin form area for importing questions -->
 <form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
   <table class="normal">
     <tr>
-      <td class="formcolor" colspan=2>{tr}Instructions: Type, or paste, your multiple choice questions below.  One line for the question, then start answer choices on subsequent lines.  Separate additional questions with a blank line.  Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}</td>
+      <td class="formcolor" colspan="2">{tr}Instructions: Type, or paste, your multiple choice questions below.  One line for the question, then start answer choices on subsequent lines.  Separate additional questions with a blank line.  Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}</td>
     </tr>
 
     <tr>
@@ -77,8 +77,7 @@
         {tr}Input{/tr}
       </td>
       <td class="formcolor">
-        <textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading' wrap="virtual" >
-</textarea>
+        <textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
       </td>
     </tr>
   </table>
@@ -87,9 +86,9 @@
   </div>
 </form>
 
-<! -- begin form for searching questions --->
+<!-- begin form for searching questions -->
 <h2>{tr}Questions{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -131,38 +130,24 @@
 
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].questionId}</td>
-<td class="odd">{$channels[user].position}</td>
-<td class="odd">{$channels[user].question}</td>
-<td class="odd">{$channels[user].options}</td>
-<td class="odd">{$channels[user].maxPoints}</td>
-<td class="odd">
+<td class="{cycle advance=false}">{$channels[user].questionId}</td>
+<td class="{cycle advance=false}">{$channels[user].position}</td>
+<td class="{cycle advance=false}">{$channels[user].question}</td>
+<td class="{cycle advance=false}">{$channels[user].options}</td>
+<td class="{cycle advance=false}">{$channels[user].maxPoints}</td>
+<td class="{cycle}">
    <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
    <a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt='{tr}Options{/tr}'}</a>
    <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].questionId}</td>
-<td class="even">{$channels[user].position}</td>
-<td class="even">{$channels[user].question}</td>
-<td class="even">{$channels[user].options}</td>
-<td class="even">{$channels[user].maxPoints}</td>
-<td class="even">
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
-   <a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt='{tr}Options{/tr}'}</a>
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 
-<! -- this is the page advance part -->
+<!-- this is the page advance part -->
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
@@ -182,4 +167,4 @@
 </div>
 </div>
 
-<!- tiki-edit_quiz_questions.tpl end ->
+<!-- tiki-edit_quiz_questions.tpl end -->
