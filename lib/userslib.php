@@ -1458,7 +1458,7 @@ function get_included_groups($group, $recur=true) {
 	$result = $this->query("select * from `users_users` where `$field`=?", array($user));
 	$res = $result->fetchRow();
 
-	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($user) : $this->get_user_groups($user);
+	$res['groups'] = ( $inclusion ) ? $this->get_user_groups_inclusion($res['login']) : $this->get_user_groups($res['login']);
 	$res['age'] = ( ! isset($res['registrationDate']) ) ? 0 : $this->now - $res['registrationDate'];
 	if ( $prefs['login_is_email'] == 'y' && isset($res['login']) && $res['login'] != 'admin' ) $res['email'] = $res['login'];
 
