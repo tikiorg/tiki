@@ -104,8 +104,8 @@
 </td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
 <td  class="{cycle}">
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}">{icon _id='wrench' alt='{tr}Edit{/tr}'}</a>
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='help' alt='{tr}question{/tr}' title='{tr}Questions{/tr}'}</a>
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
+   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
    <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
    {if $channels[user].individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>

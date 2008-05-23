@@ -68,7 +68,7 @@
 {if $tiki_p_admin_faqs eq 'y'}
 <td  class="{cycle}">
    <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='comments' alt='{tr}Questions{/tr}'}</a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt='{tr}Questions{/tr}'}</a>
    &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 {/if}
