@@ -36,28 +36,17 @@
 <td class="heading"><a class="tableheading" href="tiki-edit_quiz_results.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}answer_asc{else}answer_desc{/if}">{tr}Answer{/tr}</a></td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].fromPoints}</td>
-<td class="odd">{$channels[user].toPoints}</td>
-<td class="odd">{$channels[user].answer|truncate:230:"(...)":true}</td>
-<td class="odd">
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].resultId}">{tr}Remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;resultId={$channels[user].resultId}">{tr}Edit{/tr}</a>
+<td class="{cycle advance=false}">{$channels[user].fromPoints}</td>
+<td class="{cycle advance=false}">{$channels[user].toPoints}</td>
+<td class="{cycle advance=false}">{$channels[user].answer|truncate:230:"(...)":true}</td>
+<td class="{cycle}">
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;resultId={$channels[user].resultId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].resultId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].fromPoints}</td>
-<td class="even">{$channels[user].toPoints}</td>
-<td class="even">{$channels[user].answer|truncate:230:"(...)":true}</td>
-<td class="even">
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].resultId}">{tr}Remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;resultId={$channels[user].resultId}">{tr}Edit{/tr}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <div class="mini">
