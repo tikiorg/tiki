@@ -177,11 +177,17 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="odd">{$channels[user].questions}</td>
 <td class="odd">{$channels[user].results}</td>
 <td class="odd">
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}Remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}Questions{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}Results{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}Perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
+   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
+   <a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
+   {if $channels[user].individual eq 'y'}
+      {icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+   {else}
+      {icon _id='key' alt='{tr}Perms{/tr}'}
+   {/if}
+   </a>
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {else}
@@ -194,11 +200,17 @@ Results need to be sortable so as to give admin quick idea of user participation
 <td class="even">{$channels[user].questions}</td>
 <td class="even">{$channels[user].results}</td>
 <td class="even">
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{tr}Remove{/tr}</a>
-   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{tr}Edit{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{tr}Questions{/tr}</a>
-   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{tr}Results{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">{tr}Perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;quizId={$channels[user].quizId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
+   <a class="link" href="tiki-edit_quiz_questions.php?quizId={$channels[user].quizId}">{icon _id='help' alt='{tr}Questions{/tr}' title='{tr}Questions{/tr}'}</a>
+   <a class="link" href="tiki-edit_quiz_results.php?quizId={$channels[user].quizId}">{icon _id='application_form_magnify' alt='{tr}Results{/tr}' title='{tr}Results{/tr}'}</a>
+   <a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$channels[user].quizId}">
+   {if $channels[user].individual eq 'y'}
+      {icon _id='key_active' alt='{tr}Active Perms{/tr}'}
+   {else}
+      {icon _id='key' alt='{tr}Perms{/tr}'}
+   {/if}
+   </a>
+   <a class="link" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].quizId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {/if}
