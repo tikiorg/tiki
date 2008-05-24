@@ -11,7 +11,7 @@
 {/if}</h1>
 
 <div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
 <div class="rbox-data" name="tip">{tr}To create a drawing in a Wiki page, use {literal}{draw name=foo}{/literal}, where foo is the name of the drawing. After saving, click on the drawing link.{/tr}</div>
 </div>
 <br />
@@ -29,7 +29,14 @@
 <input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}:<td class="findtable"><input type="text" name="find" value="{$find|escape}" /></td></tr></table>
+<table class="findtable">
+  <tr>
+    <td class="findtable">{tr}Find{/tr}:</td>
+    <td class="findtable">
+      <input type="text" name="find" value="{$find|escape}" />
+    </td>
+  </tr>
+</table>
 </form>
 <form method="post" action="tiki-admin_drawings.php">
 <input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
@@ -39,12 +46,12 @@
 <table class="normal">
 <tr>
 {if $smarty.request.ver}
-<td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
+<td class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 {/if}
 <td class="heading">{tr}Name{/tr}</td>
-<td  class="heading">{tr}Ver{/tr}</td>
-<td  class="heading">{tr}Versions{/tr}</td>
-<td  class="heading">{tr}Action{/tr}</td>
+<td class="heading">{tr}Ver{/tr}</td>
+<td class="heading">{tr}Versions{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

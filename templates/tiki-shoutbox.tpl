@@ -15,8 +15,13 @@
 <h2>{tr}Change shoutbox general settings{/tr}</h2>
 <form action="tiki-shoutbox.php" method="post">
 <table class="normal">
-<tr><td class="odd">{tr}auto-link urls{/tr}</td><td class="odd"><input type="checkbox" name="shoutbox_autolink" value="on"{if $prefs.shoutbox_autolink eq 'y'} checked="checked"{/if}></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" /></td></tr>
+<tr>
+  <td class="odd">{tr}auto-link urls{/tr}</td>
+  <td class="odd">
+    <input type="checkbox" name="shoutbox_autolink" value="on"{if $prefs.shoutbox_autolink eq 'y'} checked="checked"{/if} />
+  </td>
+</tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -34,7 +39,7 @@
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
 {include file=antibot.tpl}
 {/if}
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -52,7 +57,6 @@
    </td>
 </tr>
 </table>
-
 
 {section name=user loop=$channels}
 <div class="shoutboxmsg">

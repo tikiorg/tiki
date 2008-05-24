@@ -217,7 +217,7 @@
 {/if}
 <form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}"  /></td></tr>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
 <tr><td class="form">{tr}Data{/tr}</td><td>
 <textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:95%">{$um_data|escape}</textarea>
@@ -342,7 +342,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');" title="{tr}Use phplayermenu{/tr}">{icon _id='accept' alt='{tr}Use{/tr}'}</a></a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');" title="{tr}Use phplayermenu{/tr}">{icon _id='accept' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 

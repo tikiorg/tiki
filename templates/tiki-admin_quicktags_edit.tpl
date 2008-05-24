@@ -8,7 +8,7 @@
 <td><input type="text" maxlength="255" size="25" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td>
 
-<td><textarea maxlength="255" cols ="50" rows="5" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
+<td><textarea cols ="50" rows="5" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
 <tr class="formcolor"><td>{tr}Category{/tr}:</td><td>
 <select name="tagcategory">
 {section name=ct loop=$list_categories}

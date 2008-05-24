@@ -14,7 +14,7 @@
 <tr><td class="findtable" colspan="2">
 {*<select name="types[]" multiple="multiple" size="5">*}
 {foreach key=key item=selected from=$list_types}
-<input type="checkbox"  name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if}>{tr}{$key|escape}{/tr}&nbsp;&nbsp;
+<input type="checkbox" name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if} />{tr}{$key|escape}{/tr}&nbsp;&nbsp;
 {*<option value="{$key|escape}" {if $selected eq 'y'}selected="selected"{/if}>{$key|escape}</option>*}
 {/foreach}
 {*</select>*}
@@ -37,7 +37,7 @@
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-  //-->                     
+  //-->
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
@@ -80,7 +80,7 @@
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-  //-->                     
+  //-->
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>

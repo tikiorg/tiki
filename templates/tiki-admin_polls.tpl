@@ -35,7 +35,7 @@
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 
@@ -129,8 +129,9 @@
 {/section}
 </select>
 <div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple pages.{/tr}</div>
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+  <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple pages.{/tr}</div>
+</div>
 </td></tr>
 <tr><td class="formcolor">{tr}Lock the pages{/tr}</td><td class="formcolor"><input type="checkbox" name="locked" /></td></tr>
 <tr><td class="formcolor"></td><td class="formcolor"><input type="submit" name="addPoll" value="{tr}Add{/tr}" /></td></tr></table>
