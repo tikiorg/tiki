@@ -29,20 +29,13 @@
 <td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'last_desc'}last_asc{else}last_desc{/if}">{tr}Last{/tr}</a></td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].referer}</td>
-<td class="odd">{$channels[user].hits}</td>
-<td class="odd">{$channels[user].last|tiki_short_datetime}</td>
-</tr>
-{else}
-<tr>
-<td class="even">{$channels[user].referer}</td>
-<td class="even">{$channels[user].hits}</td>
-<td class="even">{$channels[user].last|tiki_short_datetime}</td>
-</tr>
-{/if}
+  <tr>
+    <td class="{cycle advance=false}">{$channels[user].referer}</td>
+    <td class="{cycle advance=false}">{$channels[user].hits}</td>
+    <td class="{cycle}">{$channels[user].last|tiki_short_datetime}</td>
+  </tr>
 {/section}
 </table>
 <br />

@@ -36,18 +36,12 @@
 <!-- How can we increase the number of items displayed on a page? -->
 
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].term}</td>
-<td class="odd">{$channels[user].hits}</td>
-</tr>
-{else}
-<tr>
-<td class="even">{$channels[user].term}</td>
-<td class="even">{$channels[user].hits}</td>
-</tr>
-{/if}
+  <tr>
+    <td class="{cycle advance=false}">{$channels[user].term}</td>
+    <td class="{cycle}">{$channels[user].hits}</td>
+  </tr>
 {/section}
 </table>
 <br />

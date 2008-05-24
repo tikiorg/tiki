@@ -14,7 +14,7 @@
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>
-<! -- begin find field ---!>
+<!-- begin find field -->
 <div  align="center">
 {if $channels}
 <table class="findtable">
@@ -42,26 +42,18 @@
 </td>
 <td class="heading"><a class="tableheading" href="tiki-quiz_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'avgtime_desc'}avgtime_asc{else}avgtime_desc{/if}">{tr}Av time{/tr}</a></td>
 </tr>
-{section name=user loop=$channels}
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
-{if $smarty.section.user.index % 2}
-<tr>
-<td class="odd"><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName}</a></td>
-<td class="odd">{$channels[user].timesTaken}</td>
-<td class="odd">{$channels[user].avgavg}%</td>
-<td class="odd">{$channels[user].avgtime} secs</td>
-</tr>
-{else}
-<tr>
-<td class="even"><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName}</a></td>
-<td class="even">{$channels[user].timesTaken}</td>
-<td class="even">{$channels[user].avgavg}%</td>
-<td class="even">{$channels[user].avgtime} secs</td>
-</tr>
-{/if}
+  {cycle values="odd,even" print=false}
+  {section name=user loop=$channels}
+    {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
+      <tr>
+        <td class="{cycle advance=false}"><a class="tablename" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{$channels[user].quizName}</a></td>
+        <td class="{cycle advance=false}">{$channels[user].timesTaken}</td>
+        <td class="{cycle advance=false}">{$channels[user].avgavg}%</td>
+        <td class="{cycle}">{$channels[user].avgtime} secs</td>
+    </tr>
 {/if}
 {sectionelse}
-<tr><td class="odd" colspan="4">{tr}No records{/tr}</td></tr>
+<tr><td class="{cycle}" colspan="4">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

@@ -23,18 +23,13 @@
 <tr>
 <td class="heading">{tr}Template{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$files}
-{if $smarty.section.user.index % 2}
-<tr>
-<td class="odd"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
-</tr>
-{else}
-<tr>
-<td class="even"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
-</tr>
-{/if}
+  <tr>
+    <td class="{cycle}"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
+  </tr>
 {sectionelse}
-<tr><td colspan="2" class="odd">{tr}No records found{/tr}</td></tr>
+  <tr><td colspan="2" class="{cycle}">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 {/if}
