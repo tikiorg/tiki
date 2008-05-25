@@ -2,7 +2,7 @@
 {strip}
 <hr/>
 
-<div id="page-bar">
+<div class="clearfix" id="page-bar">
 {if $edit_page eq 'y'}
   {if $wysiwyg eq 'n' or $prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
     <span class="button2">
