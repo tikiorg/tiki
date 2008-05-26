@@ -1,3 +1,8 @@
+{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
+<div id="site_report">
+<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
+</div>
+{/if}
 {if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power" style="text-align: center">
@@ -55,7 +60,7 @@
 		{/if}
 	</div>
 {/if}
-<div id="credits"
+<div id="credits">
 {include file="credits.tpl"}
 {if $prefs.feature_topbar_date eq 'y'}
 	{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
