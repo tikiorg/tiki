@@ -6553,6 +6553,7 @@ $lang=Array(
 "view" => "megtekintem",
 "MyFiles" => "Fájljaim",
 "Subscribe" => "Előfizet",
+"Subscribe to This Newsletter" => "Előfizet",
 "Select news group" => "Hírcsoport választása",
 "Back to servers" => "Vissza a szerverekhez",
 "Msgs" => "Üzenetek",

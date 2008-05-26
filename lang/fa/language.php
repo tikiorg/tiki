@@ -6427,6 +6427,7 @@ $lang=Array(
 "Subscribe to newsletter" => "عضويت در خبرنامه",
 "Subscribe to Newsletter" => "عضويت در خبرنامه",
 "Subscribe" => "عضويت",
+"Subscribe to This Newsletter" => "عضويت",
 "Available Newsletters" => "خبرنامه‌هاي موجود",
 "Select news group" => "انتخاب گروه خبري",
 "Back to servers" => "بازگشت به سرورها",

@@ -6850,6 +6850,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Abbonati alla newsletter",
 "Subscribe to Newsletter" => "Abbonati alla newsletter",
 "Subscribe" => "Invia richiesta",
+"Subscribe to This Newsletter" => "Invia richiesta",
 "Select news group" => "Scegli newsgroup",
 "Back to servers" => "Indietro ai server",
 "Back to groups" => "Indietro ai gruppi",

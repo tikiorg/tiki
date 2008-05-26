@@ -6784,6 +6784,7 @@ $lang=Array(
 "Subscribe to newsletter" => "訂閱電子報",
 "Subscribe to Newsletter" => "訂閱電子報",
 "Subscribe" => "訂閱",
+"Subscribe to This Newsletter" => "訂閱",
 "Select news group" => "選擇 news 討論群",
 "Back to servers" => "返回伺服器列表",
 "Msgs" => "訊息",

@@ -6701,6 +6701,7 @@ $lang=Array(
 "Subscribe to newsletter" => "הרשמה לחדשון",
 "Subscribe to Newsletter" => "הרשמה לחדשון",
 "Subscribe" => "הרשמה",
+"Subscribe to This Newsletter" => "הרשמה",
 "First" => "ראשון",
 "Last Modified" => "שונה לאחרונה",
 "Assign permissions to " => "הקצאת הרשאות עבור ",

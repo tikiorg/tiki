@@ -6650,6 +6650,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Prihlásiť sa k odberu newsletteru",
 "Subscribe to Newsletter" => "Prihlásiť sa k odberu newsletteru",
 "Subscribe" => "Přihlásiť sa k odberu",
+"Subscribe to This Newsletter" => "Přihlásiť sa k odberu",
 "Select news group" => "Vybrať news group",
 "Back to servers" => "Späť na servery",
 "Msgs" => "Správ",

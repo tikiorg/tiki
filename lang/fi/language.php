@@ -6545,6 +6545,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Tilaa uutislehti",
 "Subscribe to Newsletter" => "Tilaa uutislehti",
 "Subscribe" => "Tilaa",
+"Subscribe to This Newsletter" => "Tilaa",
 "Available Newsletters" => "Saatavilla olevat Uutislehdet",
 "Select news group" => "Valitse uutisryhmä",
 "Back to servers" => "Takaisin palvelimelle",

@@ -7464,6 +7464,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Subscriure a butlletí",
 "Subscribe to Newsletter" => "Subscriure a butlletí",
 "Subscribe" => "Subscriu",
+"Subscribe to This Newsletter" => "Subscriu",
 "Available Newsletters" => "Butlletins disponibles",
 "Select news group" => "Selecciona un grup de notícies",
 "Back to servers" => "tornar a servidors",

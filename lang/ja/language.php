@@ -4988,6 +4988,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Subscribe to newsletter",
 "Subscribe to Newsletter" => "Subscribe to newsletter",
 "Subscribe" => "Subscribe",
+"Subscribe to This Newsletter" => "Subscribe",
 "Select news group" => "Select news group",
 "Back to servers" => "Back to servers",
 "Msgs" => "Msgs",

@@ -6891,6 +6891,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Subskrybuj biuletyn",
 "Subscribe to Newsletter" => "Subskrybuj biuletyn",
 "Subscribe" => "Subskrybuj",
+"Subscribe to This Newsletter" => "Subskrybuj",
 "Back to list of articles" => "Powróć do wykazu artykułów",
 "Notes" => "Notatki",
 "quota" => "pojemność",

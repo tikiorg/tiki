@@ -6194,6 +6194,7 @@ $lang=Array(
 "Subscribe to Newsletter" => "Assine o comunicado",
 "Email:" => "E-mail:",
 "Subscribe" => "Inscrever-se",
+"Subscribe to This Newsletter" => "Inscrever-se",
 "Reading article from" => "Lendo artigo de",
 "Back to servers" => "Voltar aos servidores",
 "Back to groups" => "Voltar aos grupos",

@@ -6597,6 +6597,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Upišite se na novine",
 "Subscribe to Newsletter" => "Upišite se na novine",
 "Subscribe" => "Upis",
+"Subscribe to This Newsletter" => "Upis",
 "Select news group" => "Odaberite grupo novosti",
 "Back to servers" => "Nazad na servere",
 "Msgs" => "Poruka",

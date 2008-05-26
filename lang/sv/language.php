@@ -6746,6 +6746,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Prenumerera på ett nyhetsbrev",
 "Subscribe to Newsletter" => "Prenumerera på ett nyhetsbrev",
 "Subscribe" => "Prenumerera",
+"Subscribe to This Newsletter" => "Prenumerera",
 "Select news group" => "Välj en nyhetsgrupp",
 "Back to servers" => "Åter till servrar",
 "Msgs" => "Medelanden",

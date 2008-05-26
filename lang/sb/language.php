@@ -5025,6 +5025,7 @@ $lang=Array(
 "duration" => "duration",
 "Subscription confirmed!" => "Subscription confirmed!",
 "Subscribe" => "Subscribe",
+"Subscribe to This Newsletter" => "Subscribe",
 "Msgs" => "Msgs",
 "First" => "First",
 "Configure Newsreader" => "Configure Newsreader",

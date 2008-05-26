@@ -6762,6 +6762,7 @@ $lang=Array(
 "Subscribe to newsletter" => "Подписаться на рассылку",
 "Subscribe to Newsletter" => "Подписаться на рассылку",
 "Subscribe" => "Подписаться",
+"Subscribe to This Newsletter" => "Подписаться",
 "Select news group" => "Выберите группу новостей",
 "Back to servers" => "Вернуться к серверам",
 "Msgs" => "Сообщ",
