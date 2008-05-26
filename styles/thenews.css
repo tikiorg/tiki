@@ -2125,7 +2125,6 @@ div.quizanswer {margin-bottom: 10px;}
 
 /***** Shoutbox *****/
 div.shoutboxmsg {margin-bottom: 0;padding: 4px;padding-bottom: 1px;}
-div.shoutboxmsg:last-child {/*border-bottom: 1px solid #8CACBB;*/}
 div.shoutboxmodmsg {font-size: .95em;margin: 0 5px 4px 5px;padding-top: 5px;padding-bottom: 1px;}
 textarea.tshoutbox{font-size: .95em;width: 90%;}
 .wiki-table {}
@@ -2175,7 +2174,7 @@ div#ajaxLoading {
 	height: 43px;
 	width: 50px}
 
-#shadowbox_title{height:auto !important;padding:0;overflow:display;}
+#shadowbox_title{height:auto !important;padding:0;overflow:visible;}
 #shadowbox_title_inner{height:auto !important;font-size:1em !important;line-height: 1em !important;white-space: normal !important;padding:5px 0 4px 8px}
 
 /***** TikiSheet Default Style *****/
