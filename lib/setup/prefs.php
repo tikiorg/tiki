@@ -1025,6 +1025,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';
 
+	# TikiTests
+	$prefs['feature_tikitests'] = 'n';
+
 	// Special default values
 
 	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )

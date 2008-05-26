@@ -40,7 +40,7 @@ class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer {
 			echo "<tr><td width='50%' colspan='2' style='vertical-align:top'>".$this->original[$i]."</td><td width='50%' colspan='2' style='vertical-align:top'>".$this->final[$i]."</td></tr>\n";
 		}
 	}
-        echo '</table>';
+        //echo '</table>';
         $val = ob_get_contents();
         ob_end_clean();
         return $val;

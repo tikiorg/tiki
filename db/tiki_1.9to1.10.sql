@@ -1779,3 +1779,10 @@ UPDATE tiki_menu_options SET url='tiki-map.php' WHERE name='View Maps';
 
 #sylvie 2006-12-21
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog_owngroups', 'Can view action log for users of his own groups', 'registered', 'tiki');
+
+#Sept 2008-05-23
+# Permission for TikiTests
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_tikitests', 'Can admin the TikiTests', 'admin', 'tikitests');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
+

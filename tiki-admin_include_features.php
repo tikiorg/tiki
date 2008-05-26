@@ -102,7 +102,8 @@ if (isset($_REQUEST["features"])) {
 		"user_assigned_modules",
 		"feature_filegals_manager",
 		"feature_sefurl",
-		"feature_comments_post_as_anonymous"
+		"feature_comments_post_as_anonymous",
+		"feature_tikitests"
 	);
 
 	$pref_byref_values = array(

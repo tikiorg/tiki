@@ -1,4 +1,8 @@
 {* $Id$ *}{include file="header.tpl"}
+{* TikiTest ToolBar *}
+{if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
+{include file="tiki-tests_topbar.tpl"}
+{/if}
 {* Index we display a wiki page here *}
 {if $prefs.feature_bidi eq 'y'}
 <div dir="rtl">

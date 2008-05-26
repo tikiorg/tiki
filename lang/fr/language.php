@@ -6903,5 +6903,8 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Canal de syndication RSS Tiki pour les pages Wiki",
 "Last modifications to the Wiki." => "Dernières pages Wiki modifiées.",
 "invalid mapfile name" => "nom de fichier-carte invalide",
+"Can admin the TikiTests" => "Droit d'administrer les TikiTests",
+"Can edit TikiTests" => "Droit d'éditer des TikiTests",
+"Can replay the TikiTests" => "Droit de rejouer des TikiTests",
 "###end###"=>"###end###");
 ?>
