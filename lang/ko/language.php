@@ -4512,6 +4512,7 @@ $lang=Array(
 // "Your email address was removed from the list of subscriptors." => "Your email address was removed from the list of subscriptors.",
 // "Subscription confirmed!" => "Subscription confirmed!",
 // "Subscribe to newsletter" => "Subscribe to newsletter",
+// "Subscribe to Newsletter" => "Subscribe to newsletter",
 // "Subscribe" => "Subscribe",
 // "Available Newsletters" => "Available Newsletters",
 // "Select news group" => "Select news group",

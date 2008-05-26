@@ -6744,6 +6744,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Din e-mejladress har tagits bort från listan med prenumeranter.",
 "Subscription confirmed!" => "Prenumerationen bekräftad!",
 "Subscribe to newsletter" => "Prenumerera på ett nyhetsbrev",
+"Subscribe to Newsletter" => "Prenumerera på ett nyhetsbrev",
 "Subscribe" => "Prenumerera",
 "Select news group" => "Välj en nyhetsgrupp",
 "Back to servers" => "Åter till servrar",

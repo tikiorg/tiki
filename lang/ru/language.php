@@ -6760,6 +6760,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Ваш адрес был удалён из списка подписчиков.",
 "Subscription confirmed!" => "Подписка подтверждена!",
 "Subscribe to newsletter" => "Подписаться на рассылку",
+"Subscribe to Newsletter" => "Подписаться на рассылку",
 "Subscribe" => "Подписаться",
 "Select news group" => "Выберите группу новостей",
 "Back to servers" => "Вернуться к серверам",

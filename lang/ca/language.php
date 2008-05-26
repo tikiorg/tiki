@@ -7462,6 +7462,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "La teva adreça de correu-e ha estat eliminada de la llista de subscriptors.",
 "Subscription confirmed!" => "Subscripció confirmada!",
 "Subscribe to newsletter" => "Subscriure a butlletí",
+"Subscribe to Newsletter" => "Subscriure a butlletí",
 "Subscribe" => "Subscriu",
 "Available Newsletters" => "Butlletins disponibles",
 "Select news group" => "Selecciona un grup de notícies",

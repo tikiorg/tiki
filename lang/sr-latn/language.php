@@ -6595,6 +6595,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Vaša email adresa je uklonjena sa liste pretplatnika.",
 "Subscription confirmed!" => "Upis potvrđen!",
 "Subscribe to newsletter" => "Upišite se na novine",
+"Subscribe to Newsletter" => "Upišite se na novine",
 "Subscribe" => "Upis",
 "Select news group" => "Odaberite grupo novosti",
 "Back to servers" => "Nazad na servere",

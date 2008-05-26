@@ -28,7 +28,7 @@
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
 <tr>
-  <td colspan="2" class="heading">{tr}Subscribe to newsletter{/tr}</td>
+  <td colspan="2" class="heading">{tr}Subscribe to Newsletter{/tr}</td>
 </tr>
 <tr>
   <td class="even">{tr}Name{/tr}:</td>
@@ -49,7 +49,7 @@
 {/if}
 <tr>
   <td class="even">&nbsp;</td>
-  <td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe{/tr}" /></td>
+  <td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe to Newsletter{/tr}" /></td>
 </tr>
 {/if}
 </table>
@@ -82,9 +82,9 @@
 {section name=user loop=$channels}
 {if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 <tr class="{cycle}">
-<td><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to newsletter{/tr}">{$channels[user].name}</a></td>
+<td><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name}</a></td>
 <td>{$channels[user].description}</td>
-<td>{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to newsletter{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>{/if}
+<td>{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>{/if}
 {if $channels[user].tiki_p_admin_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Admin{/tr}">{icon _id='page_edit' alt="{tr}Admin{/tr}"}</a>{/if}
 {if $channels[user].tiki_p_send_newsletters eq 'y'}&nbsp;<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>{/if}</td>
 </tr>

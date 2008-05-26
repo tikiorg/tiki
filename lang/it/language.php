@@ -6848,6 +6848,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Il tuo email è stato eliminato dalla lista degli abbonati.",
 "Subscription confirmed!" => "Abbonamento confermato!",
 "Subscribe to newsletter" => "Abbonati alla newsletter",
+"Subscribe to Newsletter" => "Abbonati alla newsletter",
 "Subscribe" => "Invia richiesta",
 "Select news group" => "Scegli newsgroup",
 "Back to servers" => "Indietro ai server",

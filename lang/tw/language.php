@@ -6782,6 +6782,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "你的email地址已從訂閱者名單中移除",
 "Subscription confirmed!" => "訂閱已確認!",
 "Subscribe to newsletter" => "訂閱電子報",
+"Subscribe to Newsletter" => "訂閱電子報",
 "Subscribe" => "訂閱",
 "Select news group" => "選擇 news 討論群",
 "Back to servers" => "返回伺服器列表",

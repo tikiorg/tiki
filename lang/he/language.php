@@ -6699,6 +6699,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "כתובת הדואר האלקטרוני שלך הוסרה מרשימת המנויים.",
 "Subscription confirmed!" => "ההרשמה אושרה!",
 "Subscribe to newsletter" => "הרשמה לחדשון",
+"Subscribe to Newsletter" => "הרשמה לחדשון",
 "Subscribe" => "הרשמה",
 "First" => "ראשון",
 "Last Modified" => "שונה לאחרונה",

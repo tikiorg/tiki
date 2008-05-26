@@ -5677,6 +5677,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Votre adresse électronique a été supprimée dans la liste des inscrits",
 "Subscription confirmed!" => "Votre inscription est confirmée!",
 "Subscribe to newsletter" => "S'inscrire à une newsletter",
+"Subscribe to Newsletter" => "S'inscrire à une newsletter",
 "Subscribe" => "S'inscrire",
 "Available Newsletters" => "Newsletters disponibles",
 "Select news group" => "Choisir un groupe de news",

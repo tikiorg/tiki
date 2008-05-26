@@ -6783,6 +6783,7 @@ $lang=Array(
 "Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed." => "Taggio long iu fo subscription. Baebae iu kolsap risivim wanfala email fo confirm subscription blong iu. Baebae mas confirm subscription fastaem bifoa eni niusleta hemi save sendem kam long iu.",
 "Your email address was removed from the list of subscriptors." => "Email adres blong iu hemi bin tekaotem from disfala list long olketa subscriptor.",
 "Subscribe to newsletter" => "Subscribe go long niusleta",
+"Subscribe to Newsletter" => "Subscribe go long niusleta",
 "Select news group" => " nius grup",
 "Back to servers" => "Go baek long olketa server",
 "Back to groups" => "Go baek long olketa grup",

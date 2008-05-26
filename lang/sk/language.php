@@ -6648,6 +6648,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Your email address was removed from the list of subscriptors",
 "Subscription confirmed!" => "Přihlásenie k odberu potvrdené!",
 "Subscribe to newsletter" => "Prihlásiť sa k odberu newsletteru",
+"Subscribe to Newsletter" => "Prihlásiť sa k odberu newsletteru",
 "Subscribe" => "Přihlásiť sa k odberu",
 "Select news group" => "Vybrať news group",
 "Back to servers" => "Späť na servery",

@@ -6543,6 +6543,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Sähköpostiosoitteesi on poistettu tilaajien listalta.",
 "Subscription confirmed!" => "Tilaus varmistettu!",
 "Subscribe to newsletter" => "Tilaa uutislehti",
+"Subscribe to Newsletter" => "Tilaa uutislehti",
 "Subscribe" => "Tilaa",
 "Available Newsletters" => "Saatavilla olevat Uutislehdet",
 "Select news group" => "Valitse uutisryhmä",

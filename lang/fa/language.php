@@ -6425,6 +6425,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "آدرس پست الكترونيكي شما از فهرست اعضا حذف شد",
 "Subscription confirmed!" => "عضصويت تاييد شد",
 "Subscribe to newsletter" => "عضويت در خبرنامه",
+"Subscribe to Newsletter" => "عضويت در خبرنامه",
 "Subscribe" => "عضويت",
 "Available Newsletters" => "خبرنامه‌هاي موجود",
 "Select news group" => "انتخاب گروه خبري",

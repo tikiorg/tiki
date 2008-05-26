@@ -6889,6 +6889,7 @@ $lang=Array(
 "MyFiles" => "MojePliki",
 "Subscription confirmed!" => "Subskrypcja potwierdzona!",
 "Subscribe to newsletter" => "Subskrybuj biuletyn",
+"Subscribe to Newsletter" => "Subskrybuj biuletyn",
 "Subscribe" => "Subskrybuj",
 "Back to list of articles" => "Powróć do wykazu artykułów",
 "Notes" => "Notatki",

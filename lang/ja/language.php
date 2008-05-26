@@ -4986,6 +4986,7 @@ $lang=Array(
 "Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed." => "Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.",
 "Subscription confirmed!" => "Subscription confirmed!",
 "Subscribe to newsletter" => "Subscribe to newsletter",
+"Subscribe to Newsletter" => "Subscribe to newsletter",
 "Subscribe" => "Subscribe",
 "Select news group" => "Select news group",
 "Back to servers" => "Back to servers",
