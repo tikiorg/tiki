@@ -58,7 +58,7 @@
 			<hr class="hidden" /> {* for semantic separation of center and side columns *}
 			{if $prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n'}
 				<div id="col2">
-				<h2 class="hidden">Additional/extra/common/generic/related information</h2>
+				<h2 class="hidden">Sidebar</h2>
 					<div class="content">
 						{section name=homeix loop=$left_modules}
 						 	{$left_modules[homeix].data}
@@ -74,7 +74,7 @@
 		{if $prefs.feature_right_column eq 'user'} 
 		style="display:{if isset($cookie.show_rightcolumn) and $cookie.show_rightcolumn ne 'y'}none{else}table-cell;_display:block{/if};"
 		{/if}>
-		<h2 class="hidden">Additional/extra/common/generic/related information</h2>
+		<h2 class="hidden">Sidebar</h2>
 		<div class="content">
 			{section name=homeix loop=$right_modules}
 				{$right_modules[homeix].data}
