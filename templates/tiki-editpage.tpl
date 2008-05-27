@@ -251,24 +251,22 @@ window.onload = timeIt;
   </tr>
 {/if}
 <tr class="formcolor">
+<td colspan="2">
 {if $wysiwyg ne 'y'}
-<td>
-{tr}Edit{/tr}:<br /><br />
-{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}<br /><br />
+<div style="float:left; margin-right:5px">{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
 {if $prefs.quicktags_over_textarea neq 'y'}
   {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 {/if}
-</td>
-<td>
 {if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
   {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 {/if}
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="WIDTH: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+</td></tr>
+<tr class="formcolor"><td colspan="2">
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="width: 100%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
 {else}
-<td colspan="2">
 {editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 <input type="hidden" name="wysiwyg" value="y" />
 {/if}
