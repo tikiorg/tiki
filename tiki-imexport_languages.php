@@ -85,6 +85,29 @@ if (isset($_REQUEST["export"])) {
 	exit (0);
 	$smarty->assign('expmsg', $expmsg);
 }
+
+// edit source string
+if (isset($_REQUEST["edit_source"])) {
+	if ($tiki_p_admin != 'y') {
+		$smarty->assign('msg', tra("Only the administrator can upload language files."));
+		$smarty->display("error.tpl");
+		die;
+	}	
+	check_ticket('import-lang');
+	$orig_source = $_REQUEST["orig_source"];
+	$new_source = $_REQUEST["new_source"];
+	$query_cant = "select count(*)  from `tiki_language` where `source`=?";
+	$cant = $tikilib->getOne($query_cant,$orig_source);
+	if ($cant) {
+		$query = "update `tiki_language` set `source`=? where `source`=?";
+		$result = $tikilib->query($query,array($new_source,$orig_source));
+		$editsourcemsg = $cant . ' ' . $orig_source . ' changed to ' . $new_source;
+	} else {
+		$editsourcemsg = 'String not found';
+	}
+	$smarty->assign('editsourcemsg', $editsourcemsg);
+}
+
 ask_ticket('import-lang');
 
 // disallow robots to index page:
