@@ -166,9 +166,9 @@ window.onload = timeIt;
 {/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
-    <span class="button2"><a class="linkbut" href="{$smarty.server.PHP_SELF}?{query wysiwyg="y"}" onclick="needToConfirm = false;">{tr}Use wysiwyg editor{/tr}</a></span>
+    <span class="button2">{self_link _class='linkbut' wysiwyg='y' onclick="needToConfirm = false;"}{tr}Use wysiwyg editor{/tr}{/self_link}
   {else}
-    <span class="button2"><a class="linkbut" href="{$smarty.server.PHP_SELF}?{query wysiwyg="n"}" onclick="needToConfirm = false;">{tr}Use normal editor{/tr}</a></span>
+    <span class="button2">{self_link _class='linkbut' wysiwyg='n' onclick="needToConfirm = false;"}{tr}Use normal editor{/tr}{/self_link}</span>
   {/if}
 {/if}
 <table class="normal">
