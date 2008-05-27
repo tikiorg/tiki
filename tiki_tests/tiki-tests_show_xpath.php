@@ -27,6 +27,8 @@ function get_from_dom($element) {
 
 function enlight_xpath($url, $xpath) {
 	global $smarty, $cookies,$base_url;
+	static $purifier;
+	static $loaded = false;
 
 	$result = array();
 	$data = $url->getElementsByTagName('data')->item(0)->textContent;
@@ -34,15 +36,31 @@ function enlight_xpath($url, $xpath) {
 		return tra('The page is empty');
 	}
 
-	$data =  tidy_parse_string($data,array(),'utf8');
-	tidy_diagnose($data);
+	if (function_exists(tidy_parse_string)) {
+		$data =  tidy_parse_string($data,array(),'utf8');
+		tidy_diagnose($data);
+	} else {
+		if (!$loaded) {
+			require_once("HTMLPurifier.auto.php");
+			$config =& HTMLPurifier_Config::createDefault();
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('Attr','EnableID', true);
+			$purifier = new HTMLPurifier($config);
+			$loaded = true;
+		}
+		if ($purifier) {
+			$data = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>'.$purifier->purify($data).'</body></html>';
+			//$data = $purifier->purify($data);
+		}
+	}
+
 	$dom_ref = DOMDocument::loadHTML($data);
 	$xp_ref = new DomXPath($dom_ref);
 	$res_ref = $xp_ref->query('//head');
-	$before_meta = $xp_ref->query('//meta');
+//	$before_meta = $xp_ref->query('//head/child[position=0]');
 	$base = $dom_ref->createElement('base');
 	$base->setAttribute('href',$base_url);
-	$res_ref->item(0)->insertBefore($base,$before_meta->item(0));
+	$res_ref->item(0)->insertBefore($base,NULL);
 	$res_ref = $xp_ref->query($xpath);
 	foreach($res_ref as $ref) {
 		$ref->setAttribute('style',"background-color: red;");

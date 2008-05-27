@@ -27,6 +27,8 @@ function get_from_dom($element) {
 
 function verif_url($url, $use_tidy = TRUE) {
 	global $smarty, $cookies;
+	static $purifier;
+	static $loaded = false;
 
 	$result = array();
 	$get = get_from_dom($url->getElementsByTagName('get')->item(0));
@@ -41,14 +43,13 @@ function verif_url($url, $use_tidy = TRUE) {
 	$options["redirect"] = 0;
 	$options["cookies"] = $cookies ;
 	$options["cookiestore"] = tempnam("/tmp/","tiki-tests") ;
+	$urlstr = $url->getAttribute("src");
 
 	switch (strtolower($url->getAttribute("method"))) {
 		case 'get':
-			$urlstr = $url->getAttribute("src");
 			$buffer = http_get($urlstr,$options,$info);
 				break;
 		case 'post':
-			$urlstr = $url->getAttribute("src");
 			$buffer = http_post_fields($urlstr,$post,NULL,$options,$info);
 	}
 
@@ -59,16 +60,33 @@ function verif_url($url, $use_tidy = TRUE) {
 		}
 	}
 
-	$data =  tidy_parse_string($data,array(),'utf8');
-	$buffer =  tidy_parse_string(http_parse_message($buffer)->body,array(),'utf8');
-	error_reporting(E_ALL);
-	if ($use_tidy) {
-		tidy_diagnose($data);
-		$result['ref_error_count'] = tidy_error_count($data);
-		$result['ref_error_msg'] = tidy_get_error_buffer($data);
-		tidy_diagnose($buffer);
-		$result['replay_error_count'] = tidy_error_count($buffer);
-		$result['replay_error_msg'] = tidy_get_error_buffer($buffer);
+	$buffer = http_parse_message($buffer)->body;
+	if (function_exists(tidy_parse_string)) {
+		$data =  tidy_parse_string($data,array(),'utf8');
+		$buffer =  tidy_parse_string($buffer->body,array(),'utf8');
+		if ($use_tidy) {
+			tidy_diagnose($data);
+			$result['ref_error_count'] = tidy_error_count($data);
+			$result['ref_error_msg'] = tidy_get_error_buffer($data);
+			tidy_diagnose($buffer);
+			$result['replay_error_count'] = tidy_error_count($buffer);
+			$result['replay_error_msg'] = tidy_get_error_buffer($buffer);
+		}
+	} else {
+		if (!$loaded) {
+			require_once("HTMLPurifier.auto.php");
+			$config =& HTMLPurifier_Config::createDefault();
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML', 'TidyLevel', 'light');
+			$purifier = new HTMLPurifier($config);
+			$loaded = true;
+		}
+		if ($purifier) {
+			$data = "<html><body>".$purifier->purify($data)."</body></html>";
+			$buffer = "<html><body>".$purifier->purify($buffer)."</body></html>";
+		}
+		$result['ref_error_msg'] = tra("Tidy Extension not present");
+		$result['replay_error_msg'] = tra("Tidy Extension not present");
 	}
 	// If we have a XPath then we extract the new DOM and print it in HTML
 	if (trim($xpath) != '') {
@@ -103,7 +121,7 @@ function verif_url($url, $use_tidy = TRUE) {
 	if (trim($xpath) != '') {
 		$result['html'] = preg_replace(array("/<html>/","/<\/html>/"),array("<div style='overflow: auto; width:500px; text-align: center'> ","</div>"),$tmp);
 	} else {
-		$result['html'] = preg_replace(array("/<html .*<body/U","/<\/body><\/html>/U"),array("<div style='overflow: auto; width:500px; text-align: center' ","</div>"),$tmp);
+		$result['html'] = preg_replace(array("/<html.*<body/U","/<\/body><\/html>/U"),array("<div style='overflow: auto; width:500px; text-align: center' ","</div>"),$tmp);
 	}
 	$result['url'] = $urlstr;
 	$result['method'] = $url->getAttribute("method");
