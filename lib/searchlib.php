@@ -254,7 +254,7 @@ class SearchLib extends TikiLib {
 			global $tikilib;
 			$ret[] = array(
 				'pageName' => $res["pageName"],
-				'data' => $tikilib->get_snippet($res['data'], $res['is_html']),
+				'data' => $tikilib->get_snippet($res['data'], isset($res['is_html'])? $res['is_html']:'n'),
 				'hits' => $res["hits"],
 				'lastModif' => $res["lastModif"],
 				'href' => $href,
