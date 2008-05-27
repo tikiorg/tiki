@@ -7219,17 +7219,8 @@ if (!$simple_wiki) {
 				global $tikidate, $tikilib, $prefs;
 				$display_tz = $tikilib->get_display_timezone();
 				if ( $display_tz == '' ) $display_tz = 'UTC';
-				$tikidate->setTZbyID($display_tz);
-				$tikidate->setDate('1970-01-01 00:00:00');
-				$tikidate->hour = $hour;
-				$tikidate->minute = $minute;
-				$tikidate->second = $second;
-				$tikidate->month = $month;
-				$tikidate->day = $day;
-				$tikidate->year = $year;
-				if ( $display_tz != 'UTC' ) {
-					$tikidate->convertTZbyID('UTC');
-				}
+					$tikidate->setTZbyID($display_tz);
+				$tikidate->setLocalTime($day,$month,$year,$hour,$minute,$second,0);
 				return $tikidate->getTime();
 			}
 			
