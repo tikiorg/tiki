@@ -1,10 +1,10 @@
 {if $prefs.art_home_title ne ''}
-<h2>
+<h1>
 {if $prefs.art_home_title eq 'topic' and !empty($topic)}
 {section name=it loop=$topics}{if $topics[it].topicId eq $topic}{tr}{$topics[it].name}{/tr}{/if}{/section}
 {elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
 {else}{tr}Articles{/tr}{/if}
-</h2>
+</h1>
 {/if}
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
