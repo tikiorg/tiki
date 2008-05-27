@@ -78,9 +78,14 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	// Get information about this galleryID and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
 
+	if ($tiki_p_admin == 'y') {
+		$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
+		$smarty->assign_by_ref('users', $users['data']);
+	}
 	if ($_REQUEST["sheetId"] > 0) {
 		$smarty->assign('title', $info["title"]);
 		$smarty->assign('description', $info["description"]);
+		$smarty->assign('creator', $info['author']);
 
 		$info = $sheetlib->get_sheet_layout($_REQUEST["sheetId"]);
 
@@ -93,6 +98,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('className', 'default');
 		$smarty->assign('headerRow', '0');
 		$smarty->assign('footerRow', '0');
+		$smarty->assign('creator', $user);
 	}
 }
 
@@ -116,7 +122,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('headerRow', $_REQUEST["headerRow"]);
 	$smarty->assign_by_ref('footerRow', $_REQUEST["footerRow"]);
 
-	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $user );
+	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $_REQUEST['creator']);
 	$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"] );
 
 	$cat_type = 'sheet';

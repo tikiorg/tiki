@@ -31,6 +31,15 @@
 <tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 {include file=categorize.tpl}
+{if $tiki_p_admin eq 'y'}
+<tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
+		<select name="creator">
+		<option value=""></option>
+		{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="sele
+cted"{/if}>{$users[ix].login|username}</option>{/section}
+		</select>
+</td></tr>
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}Save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
@@ -97,7 +106,7 @@
     </a>
   {/if}
   {if $sheets[changes].tiki_p_edit_sheet eq 'y'}
-    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">{icon _id='wrench' alt='{tr}Edit{/tr}'}</a>
+    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}">{icon _id='page_edit' alt='{tr}Edit{/tr}'}</a>
     <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet=y&amp;sheetId={$sheets[changes].sheetId}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   {/if}
   </td>
