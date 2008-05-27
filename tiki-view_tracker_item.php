@@ -318,6 +318,8 @@ $ins_categs = array();
 $textarea_options = false;
 $tabi = 1;
 
+$itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
+$smarty->assign_by_ref('itemUser', $itemUser);
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 	
@@ -337,7 +339,7 @@ foreach($xfields["data"] as $i=>$array) {
 			$rateFieldId = $fid;
 			//$fields["data"][$i] = $xfields["data"][$i];
 		}
-	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']))) {
+	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 
@@ -520,16 +522,16 @@ foreach($xfields["data"] as $i=>$array) {
 			  }
  			}
 		
-			if ($fields["data"][$i]["type"] == 'i')	{
-				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {					
-					if (!empty($prefs['gal_match_regex'])) {
+			if ($fields['data'][$i]['type'] == 'i' || $fields['data'][$i]['type'] == 'A') {
+				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
+					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_match_regex'])) {
 						if (!preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
 						}
 					}
-					if (!empty($prefs['gal_nmatch_regex'])) {
+					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_nmatch_regex'])) {
 						if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
@@ -680,6 +682,8 @@ if ($tiki_p_modify_tracker_items == 'y' || $special) {
 		else {
 			$error = $ins_fields;
 			$tabi = "2";
+			if ($tracker_info['useAttachments'] == 'y') ++$tabi;
+			if ($tracker_info['useComments'] == 'y') ++$tabi;
 			$smarty->assign('input_err', '1'); // warning to display
 
 			// can't go back if there are errors
@@ -731,7 +735,7 @@ if ($_REQUEST["itemId"]) {
 	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
-		 ($tracker_info['writerCanModify'] != 'y' || $user != $trklib->get_item_creator($info['trackerId'], $_REQUEST['itemId']))
+		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser)
 	) ) {
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
@@ -741,7 +745,7 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 
 	foreach($xfields["data"] as $i=>$array) {
-		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']))) {
+		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
@@ -894,7 +898,12 @@ if ($_REQUEST["itemId"]) {
 					     $ins_fields["data"][$i]["value"] = $info["$fid"];
 					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
 					}
-	
+				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
+					if ($fields['data'][$i]['options_array'][0] == 'email')
+						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);
+					else
+						$ins_fields['data'][$i]['value'] = $userlib->get_user_preference($itemUser, $fields['data'][$i]['options_array'][0]);
+
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}

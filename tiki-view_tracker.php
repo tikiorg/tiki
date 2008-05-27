@@ -214,7 +214,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 		}
 		if (isset($xfields['data'][$i]['otherField']))
 			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
-
 	} 
 
 	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')) {
@@ -408,16 +407,16 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
 				}
 
-			} elseif ($fields["data"][$i]["type"] == 'i')	{ // image
+			} elseif ($fields["data"][$i]["type"] == 'i' || $fields['data'][$i]['type'] == 'A')	{ // image or file
 				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-					if (!empty($prefs['gal_match_regex'])) {
+					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_match_regex'])) {
 						if (!preg_match('/'.$prefs['gal_match_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");
 							die;
 						}
 					}
-					if (!empty($prefs['gal_nmatch_regex'])) {
+					if ($fields['data'][$i]['type'] == 'i' && !empty($prefs['gal_nmatch_regex'])) {
 						if (preg_match('/'.$prefs['gal_nmatch_regex'].'/', $_FILES["$ins_id"]['name'], $reqs)) {
 							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
 							$smarty->display("error.tpl");

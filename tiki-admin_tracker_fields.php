@@ -162,6 +162,10 @@ function replace_tracker_from_request( $tracker_info )
 	$isMandatory = 'n';
     }
 
+	if ($_REQUEST['type'] == 'p' && $_REQUEST['options'] == 'password') {
+		$isMain = $isTblVisible = $isSearchable = 'n';
+	}
+
 	if ( isset($_REQUEST["type"]) && ( $_REQUEST["type"] == 'S' ) ) {
 		if ( isset($_REQUEST['descriptionStaticText']) ) {
 			$_REQUEST['description'] = $_REQUEST['descriptionStaticText'] ;

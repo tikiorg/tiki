@@ -76,7 +76,7 @@
 
 {* -------------------- empty field -------------------- *}
 {elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q'}
-	{if $list_mode ne 'csv'}&nbsp;{/if} {* to have something to click on *}
+	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R'}
@@ -127,6 +127,17 @@
 	{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
 	{/if}
 
+{* -------------------- file -------------------- *}
+{elseif $field_value.type eq 'A'}
+	<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+
+{* -------------------- preference -------------------- *}
+{elseif $field_value.type eq 'p'}
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{else}
+		{$field_value.value|escape}
+	{/if}
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}

@@ -101,7 +101,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
-{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) }
+{if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') }
 	<td class="heading auto">
 		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</td>
@@ -148,7 +148,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {* ------- list values --- *}
 {foreach from=$items[user].field_values key=ix item=field_value}
 
-{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y')}
+{if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 <td class="auto">
 {if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
@@ -271,6 +271,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 </td><td colspan="3" class="formcontent" >
 {/if}
+{/if}
+
+{if $field_value.type eq 'p' or $field_value.type eq 'A'}
+	{include file='tracker_item_field_input.tpl'}
+	{if $field_value.type eq 'p' and $field_value.options_array[0] == 'password'}<br /><i>Let empty to not change it</i>{/if}
 {/if}
 
 {* -------------------- system -------------------- *}

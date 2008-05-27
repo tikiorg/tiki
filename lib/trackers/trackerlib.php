@@ -159,9 +159,12 @@ class TrackerLib extends TikiLib {
 		if ($path) @unlink ($prefs['t_use_dir'] . $path);
 		$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
 		$result = $this->query($query,array((int) $attId));
+		$query = 'update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf using (`fieldId`) set `value`="" where ttif.`value`=? and ttf.`type`=?';
+		$this->query($query, array((int)$attId, 'A'));
 	}
 
-	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='') {
+	function replace_item_attachment($attId, $filename, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc, $trackerId=0, $itemId=0,$options='', $notif=true) {
+		global $prefs;
 		$comment = strip_tags($comment);
 		$now = $this->now;
 		if (empty($attId)) {
@@ -174,12 +177,13 @@ class TrackerLib extends TikiLib {
 			$query = "update `tiki_tracker_item_attachments` set `comment`=?,`user`=?,`version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($comment, $user, $version, $longdesc, $attId));
 		} else {
-			global $prefs;
 			$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
 			if ($path) @unlink ($prefs['t_use_dir'] . $path);
 			$query = "update `tiki_tracker_item_attachments` set `filename`=?,`filesize`=?,`filetype`=?, `data`=?,`comment`=?,`user`=?,`path`=?, `version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($filename, $size, $type, $data, $comment, $user, $fhash, $version, $longdesc, (int)$attId));
 		}
+		if (!$notif)
+			return $attId;
 		$watchers = $this->get_notification_emails($trackerId, $itemId, $options);
 		if (count($watchers > 0)) {
 			global $smarty;
@@ -212,6 +216,7 @@ class TrackerLib extends TikiLib {
 				$mail->send(array($w['email']));
 			}
 		}
+		return $attId;
 	}
 
 	function replace_item_comment($commentId, $itemId, $title, $data, $user, $options) {
@@ -569,16 +574,22 @@ class TrackerLib extends TikiLib {
 		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
 			return array('cant' => 0, 'data' => '');
 		}
+		if ( substr($sort_mode, 0, 2) == 'f_' ) {
+			list($a, $asort_mode, $corder) = split('_', $sort_mode);
+		}
 		if ( $initial ) {
 			$mid .= ' AND ttif.`value` LIKE ?';
 			$bindvars[] = $initial.'%';
+			if (isset($asort_mode)) {
+				$mid .= ' AND ttif.`fieldId` = ?';
+				$bindvars[] = $asort_mode;
+			}
 		}
 		if ( ! $sort_mode ) $sort_mode = 'lastModif_desc';
 
 		if ( substr($sort_mode, 0, 2) == 'f_' or $filtervalue or $exactvalue ) {
 			$cat_table = '';
 			if ( substr($sort_mode, 0, 2) == 'f_' ) {
-				list($a, $asort_mode, $corder) = split('_', $sort_mode);
 				$csort_mode = 'sttif.`value` ';
 				if (isset($listfields[$asort_mode]['type']) && $listfields[$asort_mode]['type'] == 'l') {// item list
 					$optsl = split(',', $listfields[$asort_mode]['options']);
@@ -743,7 +754,9 @@ class TrackerLib extends TikiLib {
 			$fieldId = $fopt['fieldId'];
 			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
 			$fopt['linkId'] = '';
-
+			if (!empty($fopt['options'])) {
+				$fopt['options_array'] = split(',', $fopt['options']);
+			}
 			switch ( $fopt['type'] ) {
 			case 'r':
 				$fopt['links'] = array();
@@ -781,11 +794,10 @@ class TrackerLib extends TikiLib {
 				$fopt['categs'] = $cats;
 				break;
 			case 'l':
-				$opts = split(',', $fopt['options']);
-				if ( isset($opts[2]) && isset($fil[$opts[2]]) && ($lst = $fil[$opts[2]]) && isset($opts[3])) {
-					$opts[1] = split(':', $opts[1]);
-					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($opts[2]), $opts[1], array($opts[3])));
-					$fopt['trackerId'] = $opts[0];
+				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
+					$opts[1] = split(':', $fopt['options_array'][1]);
+					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($fopt['options_array'][3])));
+					$fopt['trackerId'] = $fopt['options_array'][0];
 				}
 				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
 					foreach ($fopt['links'] as $linkItemId=>$linkValue) {
@@ -795,12 +807,23 @@ class TrackerLib extends TikiLib {
 					}
 				}
 				break;
+			case 'u':
+				if ($fopt['options_array'][0] == 1)
+					$useritem = $fopt['value'];
+				break;
+			case 'p':
+				if ($fopt['options_array'][0] == 'password') {
+				} elseif ($fopt['options_array'][0] == 'email' && isset($useritem)) {
+					global $userlib;
+					$fopt['value'] = $userlib->get_user_email($useritem);
+				} elseif (isset($useritem)) {
+					global $userlib;
+					$fopt['value'] = $userlib->get_user_preference($useritem, $fopt['options_array'][0]);
+				} 
+				break;
 			}
-
+			
 			if ( isset($fopt['options']) ) {
-				if (!empty($fopt['options'])) {
-					$fopt['options_array'] = split(',', $fopt['options']);
-				}
 				if ( $fopt['type'] == 'i' ) {
 					global $imagegallib;
 					include_once('lib/imagegals/imagegallib.php');
@@ -839,7 +862,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
-		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers;
+		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 
@@ -935,6 +958,23 @@ class TrackerLib extends TikiLib {
 					}
 					else {
 						continue;
+					}
+				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
+					global $tiki_p_attach_trackers;
+					if ($tiki_p_attach_trackers == 'y' && isset($ins_fields['data'][$i]['file_name'])) {
+						if ($prefs['t_use_db'] == 'n') {
+							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
+							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
+								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+								$smarty->display("error.tpl");
+								die;
+							}
+							fwrite($fw, $ins_fields['data'][$i]['value']);
+							fclose($fw);
+						} else {
+							$fhash = 0;
+						}
+						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($old_value, $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId, '', false);
 					}
 				}
 
@@ -1078,8 +1118,20 @@ class TrackerLib extends TikiLib {
                                                                 $query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`,`lang`) values(?,?,?,?)";
                                                                 $this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$linvalue['value'],(string)$linvalue['lang']));
                                                         }
-				}  
-				else {
+				} elseif ($ins_fields['data'][$i]['type']=='p') {
+					if ($ins_fields['data'][$i]['options_array'][0] == 'password') {
+						if (!empty($ins_fields['data'][$i]['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($ins_fields['data'][$i]['value'])) == '') {
+							$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
+						}
+					} elseif ($ins_fields['data'][$i]['options_array'][0] == 'email') {
+						if (!empty($ins_fields['data'][$i]['value']) && validate_email($ins_fields['data'][$i]['value'])) {
+							$userlib->change_user_email($user, $ins_fields['data'][$i]['value']);
+						}
+						
+					} else {
+						$tikilib->set_user_preference($user, $ins_fields['data'][$i]['options_array'][0], $ins_fields['data'][$i]['value']);
+					}
+				} else {
 
 					$is_date = (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j'));
 
@@ -1543,6 +1595,19 @@ class TrackerLib extends TikiLib {
 					   $erroneous_values[] = $f; 				
 					  }
 					}
+				break;
+				case 'p':
+				if ($f['options_array'][0] == 'password') {
+					global $userlib;
+					if (($e = $userlib->check_password_policy($f['value'])) != '') {
+						 $erroneous_values[] = $f;
+					}
+				} elseif ($f['options_array'][0] == 'email') {
+					if (!validate_email($f['value'])) {
+						$erroneous_values[] = $f;
+					}
+				}
+				break;
 				}
 			}
 		}
@@ -1992,7 +2057,7 @@ class TrackerLib extends TikiLib {
 			$result = $this->query($query,array((int)$attId));
 			$res = $result->fetchRow();
 			$res["trackerId"] = $resu['trackerId'];
-			$res["longdesc"] = $this->parse_data($res['longdesc']);
+			$res["longdesc"] = isset($res['longdesc'])?$this->parse_data($res['longdesc']):'';
 		} else {
 			$res = array(tra("Message") => tra("No extra information for that attached file. "));
 			$res['trackerId'] = 0;
@@ -2130,7 +2195,13 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('computed field'),
 			'opt'=>true,
 			'help'=>tra('Formula for computation, using # for indicating fields and +,*,/,- and parenthesis for operations.'));
-
+		$type['p'] = array(
+			'label'=>tra('user preference'),
+			'opt'=>true,
+			'help'=>'password|email');
+		$type['A'] = array(
+			'label'=>tra('attachment'),
+			'opt'=>false);
 		return $type;
 	}
 
