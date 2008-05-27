@@ -4256,7 +4256,7 @@ function add_pageview() {
 		$ret = array();
 		switch ($objectType) {
 		case 'wiki page': case 'wiki':
-			if ( $prefs['wiki_creator_admin'] == 'y' && ! empty($user) && $info['creator'] == $user ) { //can admin his page
+			if ( $prefs['wiki_creator_admin'] == 'y' && !empty($user) && isset($info) && $info['creator'] == $user ) { //can admin his page
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
 				foreach ($perms['data'] as $perm) {
 					$perm = $perm['permName'];
@@ -4269,20 +4269,46 @@ function add_pageview() {
 				}
 				return $ret;
 			}
-			if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($info['pageName'], $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
-				if (!$global) {
-					$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
-					foreach ($perms['data'] as $perm) {
-						global $$perm['permName'];
-						if ($perm['permName'] == 'tiki_p_view' || $perm['permName'] == 'tiki_p_edit') {
-							$ret[$perm['permName']] = 'y';
-						} else {
-							$ret[$perm['permName']] = $$perm['permName'];
+			if ($prefs['feature_wiki_userpage'] == 'y' && !empty($user) && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($objectId, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0) {
+				if (strcasecmp($objectId, $prefs['feature_wiki_userpage_prefix'].$user) == 0) { //can edit his page
+					if (!$global) {
+						$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', $this->get_permGroup_from_objectType($objectType));
+						foreach ($perms['data'] as $perm) {
+							global $$perm['permName'];
+							if ($perm['permName'] == 'tiki_p_view' || $perm['permName'] == 'tiki_p_edit') {
+								$ret[$perm['permName']] = 'y';
+							} else {
+								$ret[$perm['permName']] = $$perm['permName'];
+							}
 						}
+					} else {
+						global $tiki_p_edit, $tiki_p_view;
+						$tiki_p_view = 'y';
+						$smarty->assign('tiki_p_view', 'y');
+						$tiki_p_edit = 'y';
+						$smarty->assign('tiki_p_edit', 'y');
 					}
 				} else {
-					$smarty->assign('tiki_p_view', 'y');
-					$smarty->assign('tiki_p_edit', 'y');
+					if (!$global) {
+						$ret['tiki_p_edit'] = 'n';
+					} else {
+						global $tiki_p_edit;
+						$tiki_p_edit = 'n';
+						$smarty->assign('tiki_p_edit', 'n');
+					}
+				}
+				if (!$global) {
+					$ret['tiki_p_rename'] = 'n';
+					$ret['tiki_p_rollback'] = 'n';
+					$ret['tiki_p_lock'] = 'n';
+					$ret['tiki_p_assign_perm_wiki_page'] = 'n';
+				} else {
+					global $tiki_p_rename, $tiki_p_rollback, $tiki_p_lock, $tiki_p_assign_perm_wiki_page;
+					$tiki_p_rename = $tiki_p_rollback = $tiki_p_lock = $tiki_p_assign_perm_wiki_page = 'n';
+					$smarty->assign('tiki_p_rename', 'n');
+					$smarty->assign('tiki_p_rollback', 'n');
+					$smarty->assign('tiki_p_lock', 'n');
+					$smarty->assign('tiki_p_assign_perm_wiki_page', 'n');
 				}
 			}
 			break;
