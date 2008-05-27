@@ -44,7 +44,9 @@
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
 			<script type="text/javascript">
+<!--//--><![CDATA[//><!--
 				setsectionstate('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','{$module_dstate}', 'module.png');
+//--><!]]>
 			</script>
 {/if}
 		</div>

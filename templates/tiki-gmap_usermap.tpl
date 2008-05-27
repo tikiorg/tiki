@@ -8,7 +8,7 @@
 </div>
 
 <script type="text/javascript">
-//<![CDATA[
+<!--//--><![CDATA[//><!--
 function load() {literal}{{/literal}
   var map = new GMap2(document.getElementById("map"));
   map.addControl(new GLargeMapControl());
@@ -25,11 +25,11 @@ function load() {literal}{{/literal}
 {/foreach}
 
 {literal}}{/literal}
-//]]>
+//--><!]]>
 </script>
 
 <script type="text/javascript">
-//<![CDATA[
+<!--//--><![CDATA[//><!--
 function addLoadEvent(func) {literal}{{/literal}
   var oldonload = window.onload;
   if (typeof window.onload != 'function') {literal}{{/literal}
@@ -45,6 +45,6 @@ function addLoadEvent(func) {literal}{{/literal}
 {literal}}{/literal}
 
 addLoadEvent(load);
-//]]>
+//--><!]]>
 </script>
 

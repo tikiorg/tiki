@@ -1,6 +1,8 @@
 {if $close_window eq 'y'}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 close();
+//--><!]]>
 </script>
 {/if}
 {capture assign=mid_data}

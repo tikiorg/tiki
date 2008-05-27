@@ -7,8 +7,8 @@
 <div class="cbox">
   <div class="cbox-title">{tr}I18n setup{/tr}</div>
   <script type="text/javascript">
+	<!--//--><![CDATA[//><!--
   {literal}
-  // <![CDATA[
 	function updateList( active )
 	{
   		if( active )
@@ -24,7 +24,7 @@
 				optionList[i].selected = false;
 		}
 	}
-  // ]]>
+  //--><!]]>
   {/literal}
   </script>
   <div class="cbox-data">

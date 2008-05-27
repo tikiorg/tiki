@@ -72,7 +72,9 @@
 <option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 </select>
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
+//--><!]]>
 </script>
 <input type="submit" name="mark" value="{tr}mark{/tr}" />
 <table class="normal" >

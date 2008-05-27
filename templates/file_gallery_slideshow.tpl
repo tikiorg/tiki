@@ -1,15 +1,17 @@
-{* $Id: $ *}
+{* $Id$ *}
 
 <html>
 	<head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-     <script type="text/javascript" src="lib/mootools/mootools_packed.js"></script>
-     <script type="text/javascript" src="lib/slideshow/slideshow.rc1.packed.js"></script>
+<script type="text/javascript" src="lib/mootools/mootools_packed.js"></script>
+<script type="text/javascript" src="lib/slideshow/slideshow.rc1.packed.js"></script>
 {literal}
-     <script type="text/javascript">		
-       window.onload = function() { new editor(); }
-     </script>
+<script type="text/javascript">		
+<!--//--><![CDATA[//><!--
+	window.onload = function() { new editor(); }
+//--><!]]>
+</script>
 <style type="text/css">
 		div.slideshow {
 			margin: 18px auto;
@@ -132,6 +134,7 @@
 *}
 
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
    myShow = new Slideshow('my_slideshow', 
    {ldelim} thumbnailre: [ new RegExp("display") ,"display\&max=16" ], 
    type: 'push', 
@@ -145,6 +148,7 @@
    resize:true, 
    captions: [{foreach from=$file item=f name=files}'{if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'n'}{if $f.name ne ''}{$f.name|escape:"utf-8"}-{/if}{/if}{if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'f'}{$f.filename|escape:"utf-8"}{/if}'{if !$smarty.foreach.files.last},{/if}{/foreach}]
    {rdelim});
+//--><!]]>
 </script>
 
 	</body>

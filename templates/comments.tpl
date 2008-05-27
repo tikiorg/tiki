@@ -366,7 +366,9 @@
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
 {if empty($user)}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var js_anonymous_name = getCookie('anonymous_name');
 if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
+//--><!]]>
 </script>
 {/if}

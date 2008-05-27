@@ -137,12 +137,14 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			<fieldset>
 			{if $tikidb_created}
 			<script type="text/javascript">
+			<!--//--><![CDATA[//><!--
 				{literal}
 				function install() {
 					document.getElementById('install-link').style.display='none';
 					document.getElementById('install-table').style.visibility='';
 				}
 				{/literal}
+			//--><!]]>
 			</script>
 			<div id="install-link">
 			<p><a href="javascript:install()">{tr}Reinstall database.{/tr}</a></p>
@@ -255,11 +257,13 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$succcommands|@count} {tr}SQL queries{/tr}.</p>
 {if $failedcommands|@count > 0}
 			<script type="text/javascript">
+			<!--//--><![CDATA[//><!--
 				{literal}
 				function sql_failed() {
 					document.getElementById('sql_failed_log').style.display='block';
 				}
 				{/literal}
+			//--><!]]>
 			</script>
 
 <p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed{/tr}:</strong> {$failedcommands|@count} {tr}SQL queries{/tr}. 

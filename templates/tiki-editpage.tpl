@@ -9,10 +9,8 @@
 
 
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}
-
-<!-- Begin
-
 function Minutes(data) {
 for (var i = 0; i < data.length; i++)
 if (data.substring(i, i + 1) == ":")
@@ -52,7 +50,7 @@ sec = 0 + Seconds(document.editpageform.clock.value);
 Down();
 }
 window.onload = timeIt;
-//  End -->
+//--><!]]>
 {/literal}
 </script>
 
@@ -273,6 +271,7 @@ window.onload = timeIt;
 </td></tr>
 {if $prefs.feature_wiki_replace eq 'y'}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}
 function searchrep() {
   c = document.getElementById('caseinsens')
@@ -288,6 +287,7 @@ function searchrep() {
   t.value = str.replace(re,r.value)
 }
 {/literal}
+//--><!]]>
 </script>
 <tr class="formcolor"><td>{tr}Regex search {/tr}:</td><td>
 <input style="width:100;" class="wikitext" type="text" id="search"/>

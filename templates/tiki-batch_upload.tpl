@@ -32,10 +32,12 @@
 <td>{$it[3]|kbsize}</td>
 <td>{$it[4]}</td></tr>
 {/foreach}
-	<script type="text/javascript"> /* <![CDATA[ */
+	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
 	document.write("<tr><td colspan='4'><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'imgs[]',this.checked)\"/>");
 	document.write("<label for=\"clickall\">{tr}Select All{/tr}</label></td></tr>");
-	/* ]]> */</script>
+	//--><!]]>
+	</script>
 </table>
 <br />
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="removeExt" value="true" id="removeExt" /> {tr}Remove File Extension from Image Name{/tr}<br />

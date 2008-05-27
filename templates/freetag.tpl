@@ -4,11 +4,13 @@
 <td>{tr}Folksonomy Tags{/tr}</td>
 <td{if $cols} colspan="{$cols}"{/if}>
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}
   function addTag(tag) {
     document.getElementById('tagBox').value = document.getElementById('tagBox').value + ' ' + tag;
   }
 {/literal}
+//--><!]]>
 </script>
 <div id="freetager">
 {if $prefs.feature_help eq 'y'}

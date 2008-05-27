@@ -51,6 +51,7 @@
 
         {if $prefs.freetags_browse_show_cloud eq 'y'}
           <script type="text/javascript">
+					<!--//--><![CDATA[//><!--
             {literal}
               function addTag(tag) {
 			  if (tag.search(/ /) >= 0) tag = '"'+tag+'"';
@@ -60,6 +61,7 @@
 	        document.getElementById('tagBox').value = '';
               }
             {/literal}
+					//--><!]]>
           </script>
         
           <div class="freetaglist"> 

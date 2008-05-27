@@ -9,6 +9,7 @@
 	<input type="hidden" name="type" value="{$type}"/>
 	<input type="hidden" name="objId" value="{$objId}"/>
 	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
 	{literal}
 	function show_cleartra_checkboxes()
 	{
@@ -23,6 +24,7 @@
 		document.getElementById('scblink').style.display = 'none';
 	}
 	{/literal}
+	//--><!]]>
 	</script>
 	<a class="linkbut" href="javascript:show_cleartra_checkboxes()" id="scblink">{tr}Show checkboxes to clear language information on tags{/tr}</a>
 <table id="tagtranslationtable">

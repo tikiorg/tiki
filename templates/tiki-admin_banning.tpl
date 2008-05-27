@@ -2,7 +2,8 @@
 
 {* this script (un/)checks all checkboxes with id 'banning-section' *}
 <script type="text/javascript">
-{literal}<!--
+<!--//--><![CDATA[//><!--
+{literal}
 	function CheckAll() {
 		for (var i = 0; i < document.banningform.elements.length; i++) {
 			var e = document.banningform.elements[i];
@@ -11,7 +12,8 @@
 			}
 		}
 	}
-//-->{/literal}
+{/literal}
+//--><!]]>
 </script>
 
 <h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>

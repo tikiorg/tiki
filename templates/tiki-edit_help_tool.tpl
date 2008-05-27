@@ -2,6 +2,7 @@
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 function taginsert(area_name,tagid)
 {
 //fill variables
@@ -14,6 +15,7 @@ function taginsert(area_name,tagid)
 {literal}  
   insertAt(area_name,tag[tagid]);
 }
+//--><!]]>
 </script>
 {/literal}
 {if $prefs.quicktags_over_textarea neq 'y'}

@@ -61,6 +61,7 @@
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}
   var needToConfirm = true;
   
@@ -71,6 +72,7 @@
 		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
   }
 {/literal}
+//--><!]]>
 </script>
 {/if}
 
@@ -87,7 +89,7 @@
 	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
 
 	<script type="text/javascript">
-
+<!--//--><![CDATA[//><!--
 {if $prefs.feature_mootools eq "y"}
 	{literal}
 		window.addEvent('domready', function() {
@@ -126,6 +128,7 @@
 
 			Shadowbox.init(options);
 		});
+//--><!]]>
 	</script>
 {/literal}
 {/if}
