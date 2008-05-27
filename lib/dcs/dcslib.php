@@ -24,7 +24,7 @@ class DCSLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where (`description` like $findesc)";
+			$mid = " where (`description` like ?)";
 			$bindvars=array($findesc);
 		} else {
 			$mid = '';
