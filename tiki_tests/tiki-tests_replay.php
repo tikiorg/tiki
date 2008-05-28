@@ -114,6 +114,7 @@ function verif_url($url, $use_tidy = TRUE) {
 		}
 		$cookies = array_merge($cookies, $cookies_titi);
 		$buffer = $body;
+		curl_close($curl);
 	}
 
 	if (extension_loaded("tidy")) {
