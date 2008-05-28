@@ -14,6 +14,7 @@ class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stda
 <td style="width:100%;text-align:right;">
 {if $show_filters eq 'y'}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 fields = new Array({$cnt});
 {assign var=c value=0}
 {foreach key=fid item=field from=$listfields}
@@ -22,6 +23,7 @@ fields[{$c}] = '{$fid}';
 {assign var=c value=$c+1}
 {/if}
 {/foreach}
+//--><!]]>
 </script>
 <select name="filterfield" onchange="multitoggle(fields,this.options[selectedIndex].value);flip('filterbutton');">
 <option value="">{tr}Choose a filter{/tr}</option>

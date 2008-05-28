@@ -1,7 +1,7 @@
 {include file='tiki-mypage_content.tpl'}
 {literal}
 <script type="text/javascript">
-
+<!--//--><![CDATA[//><!--
 var id_mypage={/literal}{$id_mypage}{literal};
 var mypage_editit={/literal}{if $editit}true{else}false{/if}{literal};
 
@@ -270,6 +270,6 @@ function initMyPage() {
 }
 
 window.addEvent('domready', initMyPage);
-
+//--><!]]>
 </script>
 {/literal}

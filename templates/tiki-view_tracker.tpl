@@ -95,7 +95,9 @@
 {if $tiki_p_admin_trackers eq 'y'}
 <td class="heading" width="15">
 <script type='text/javascript'>
+<!--//--><![CDATA[//><!--
 document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All{/tr}\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/>");
+//--><!]]>
 </script>
 </td>
 {/if}
@@ -330,9 +332,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* -------------------- category -------------------- *}
 {elseif $field_value.type eq 'e'}
 {if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-<script type="text/javascript"> /* <![CDATA[ */
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
 document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$field_value.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
-/* ]]> */</script>
+//--><!]]>
+</script>
 {/if}
 {assign var=fca value=$field_value.options}
 {if $field_value.options_array[1] eq 'm' or $field_value.options_array[1] eq 'd'}
@@ -532,7 +536,9 @@ rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{els
 {assign var=fid value=$field_value.fieldId}
 {if $listfields.$fid.http_request}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listfields.$fid.http_request[3]}&filterfield={$listfields.$fid.http_request[1]}&status={$listfields.$fid.http_request[4]}&mandatory={$listfields.$fid.http_request[6]}','{$listfields.$fid.http_request[5]}','{$field_value.ins_id}')
+//--><!]]>
 </script>
 {/if}
 {/foreach}

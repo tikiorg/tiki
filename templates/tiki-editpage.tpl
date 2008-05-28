@@ -50,8 +50,8 @@ sec = 0 + Seconds(document.editpageform.clock.value);
 Down();
 }
 window.onload = timeIt;
-//--><!]]>
 {/literal}
+//--><!]]>
 </script>
 
 

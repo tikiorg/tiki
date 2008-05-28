@@ -130,12 +130,14 @@
 {/if}
 {literal}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 function update_button_install() {
 	var button=document.getElementById('button_install');
 	button.name='button-check';
 	button.value='Check again';
 	button.style.display='';
 }
+//--><!]]>
 </script>
 {/literal}
 </div>

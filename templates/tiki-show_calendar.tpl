@@ -1,5 +1,3 @@
-
-
 {* calendar view to be included both in tiki-calendar.tpl and wikiplugin-calendar *}
 <div class="tabrow">
 <table cellpadding="0" cellspacing="0" border="0">
@@ -11,6 +9,7 @@
 <input type="hidden" name="todateit" id="todate" value="" />
 </form>
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}function gotocal()  { {/literal}
 window.location = 'tiki-calendar.php?todate='+document.getElementById('todate').value+'{if $calendarId}&calendarId={$calendarId}&editmode=add{/if}';
 {literal} } {/literal}
@@ -24,6 +23,7 @@ singleClick : true,
 onUpdate     : gotocal,
 firstDay : {$firstDayofWeek}
 {literal} } );{/literal}
+//--><!]]>
 </script>
 {else}
 <div class="daterow">

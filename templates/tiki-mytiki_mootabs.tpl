@@ -222,6 +222,7 @@
 </div>
 {literal}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var tabs1 = new SimpleTabs($('tab-block-1'), {
 	entrySelector: 'h5',
 	ajaxOptions: {
@@ -238,6 +239,6 @@ var tabs1 = new SimpleTabs($('tab-block-1'), {
 			container.setStyle('display', '');
 		}
 });
-
+//--><!]]>
 </script>
 {/literal}

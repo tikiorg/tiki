@@ -2,7 +2,6 @@
 	{if isset($trads) && (count($trads) > 1 || $trads[0].langName)}
 		{if $td eq 'y'}<td style="vertical-align:top;text-align: left; width:42px;">{/if}
 		{if isset($verbose) && $verbose eq 'y'}The main text of this page is available in the following languages:{/if}
-		
 			{if isset($type) && $type == 'article'}
 				<form action="tiki-read_article.php" method="get">
 				<select name="articleId" onchange="this.form.submit()">
@@ -13,6 +12,7 @@
 				</form>
 			{else} {* get method to have the param in the url *}
 				<script type="text/javascript">
+				<!--//--><![CDATA[//><!--
 				{if $beingStaged == 'y'}
 					page_to_translate = "{$approvedPageName}";
 				{else}
@@ -34,6 +34,7 @@
 						element.form.submit();
 				}
 				{/literal}
+				//--><!]]>
 				</script>
 				<form action="tiki-index.php" method="get">
 				<select name="page" onchange="quick_switch_language( this )">

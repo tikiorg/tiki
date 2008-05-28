@@ -93,6 +93,7 @@
 </div>
 {literal}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 function changepage() {
 	var p=$('mypage_page_select').value;
 	var url='?showpage='+p;
@@ -248,6 +249,6 @@ function updateMypageParams(id, vals) {
 }
 
 window.addEvent('domready', initMypageEdit);
-
+//--><!]]>
 </script>
 {/literal}

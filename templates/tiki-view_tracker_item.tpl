@@ -327,9 +327,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'e'}
 {if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')} 
-<script type="text/javascript"> /* <![CDATA[ */
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
 document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
-/* ]]> */</script>
+//--><!]]>
+</script>
 {/if}
 {assign var=fca value=$cur_field.options_array[0]}
 {if $cur_field.options_array[1] eq 'm' or $cur_field.options_array[1] eq 'd'}
@@ -562,7 +564,9 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {foreach from=$ins_fields key=ix item=cur_field}
 {if $cur_field.http_request}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue={$cur_field.http_request[7]|escape:"url"}&selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
+//--><!]]>
 </script>
 {/if}
 {/foreach}

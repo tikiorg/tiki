@@ -10,9 +10,9 @@
 {if $page_mode eq 'edit'}
 	{if $editconflict eq 'y'}
 		<script type="text/javascript">
-		<!-- //Hide Script
+		<!--//--><![CDATA[//><!--
 		alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
-		//End Hide Script -->
+		//--><!]]>
 		</script>
 	{/if}
 	<div id="panel">
@@ -37,6 +37,7 @@
 	<script type="text/javascript" src="lib/sheet/control.js"></script>
 	<script type="text/javascript" src="lib/sheet/formula.js"></script>
 	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
 	var g;
 {$init_grid}
 
@@ -55,6 +56,7 @@
 	initGrid();
 	controlFormatCellBefore = '<form name="format" onsubmit="formatCellSubmit(this)"><select name="format"><option value="">None</option>';
 	controlFormatCellAfter = '</select><input type="submit" name="submit" value="{tr}Format Cell{/tr}" /></form>';
+	//--><!]]>
 	</script>
 
 {else}

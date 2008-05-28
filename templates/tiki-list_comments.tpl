@@ -31,13 +31,13 @@
 {/section}
 <div class="formcolor">
 <script type="text/javascript">
-<!--
+<!--//--><![CDATA[//><!--
  // check / uncheck all.
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-  //-->
+//--><!]]>
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
@@ -74,13 +74,13 @@
 {if $comments}
 <div class="formcolor">
 <script type="text/javascript">
-<!--
+<!--//--><![CDATA[//><!--
  // check / uncheck all.
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
  // for now those people just have to check every single box
   document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-  //-->
+//--><!]]>
 </script>
 &nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>

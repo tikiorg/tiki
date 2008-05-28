@@ -133,6 +133,7 @@
 
 {literal}
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 function changepage() {
 	var p=$('mptype_page_select').value;
 	window.location='?showpage='+p;
@@ -234,6 +235,6 @@ window.onload=initMptypeEdit;
 window.addEvent('domready', initMptypeEdit);
 {/if}
 {literal}
-
+//--><!]]>
 </script>
 {/literal}
