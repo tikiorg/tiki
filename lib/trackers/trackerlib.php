@@ -1403,7 +1403,7 @@ class TrackerLib extends TikiLib {
 		return $total;
 	}
 
-	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='') {
+	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8') {
 		global $tikilib;
 		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
@@ -1411,6 +1411,9 @@ class TrackerLib extends TikiLib {
 		}
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {
+			if ($encoding == 'ISO-8859-1') {
+				$header[$i] = utf8_encode($header[$i]);
+			}
 			$header[$i] = preg_replace('/ -- [0-9]*$/', '', $header[$i]);
 		}
 		if (count($header) != count(array_unique($header))) {
@@ -1426,6 +1429,9 @@ class TrackerLib extends TikiLib {
 			$lastModif = $created;
 			$cats = '';
 			for ($i = 0; $i < $max; $i++) {
+				if ($encoding == 'ISO-8859-1') {
+					$data[$i] = utf8_encode($data[$i]);
+				}
 				if ($header[$i] == 'status') {
 					if ($data[$i] == 'o' || $data[$i] =='p' || $data[$i] == 'c')
 						$status = $data[$i];

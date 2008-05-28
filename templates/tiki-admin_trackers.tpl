@@ -295,7 +295,7 @@ categories = {$catsdump}
 <form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}File{/tr}</td><td>{tr}Tracker{/tr}_{$trackerId}.csv</td></tr>
-<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8">{tr}UTF-8{/tr}</option><option value="ISO-8859-1" selected="selected">{tr}ISO-8859-1{/tr}</option></select></td></tr>
+<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td></tr>
 <tr class="formcolor"><td>{tr}Separator{/tr}</td><td><input type="text" name="separator" value="," /></td></tr>
 <tr class="formcolor"><td>{tr}Delimitors{/tr}</td><td><input type="text" name="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td></tr>
 <tr class="formcolor"><td>{tr}Carriage Return inside Field Value{/tr}</td><td><input type="text" name="CR" value='%%%' /></td></tr>
@@ -323,6 +323,7 @@ categories = {$catsdump}
 <input type="radio" name="dateFormat" value="mm/dd/yyyy" checked="ckecked" />{tr}month{/tr}/{tr}day{/tr}/{tr}year{/tr}(01/31/2008)<br />
 <input type="radio" name="dateFormat" value="dd/mm/yyyy" />{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)<br />
 <input type="radio" name="dateFormat" value="" />{tr}timestamp{/tr}</td></tr>
+<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
