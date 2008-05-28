@@ -166,7 +166,10 @@ class StatsLib extends TikiLib {
 			$result=false;
 			return $result;
 		}
-    $dayzero = $this->make_time(0, 0, 0, $this->date_format("%m"), $this->date_format("%d"), $this->date_format("%Y"));
+	$year = $this->date_format("%Y");
+	$day = $this->date_format("%d");
+	$month = $this->date_format("%m");
+    $dayzero = $this->make_time(0, 0, 0, $month, $day, $year);
     if (!is_null($id)) {
     	$object=$id."?".$object;
     }
