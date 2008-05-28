@@ -100,6 +100,14 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 
+	if (isset($_REQUEST['removeattach']) && $tracker['useAttachments'] == 'y') {
+		$owner = $trklib->get_item_attachment_owner($_REQUEST['removeattach']);
+		if ($tiki_p_wiki_admin_attachments == 'y' || ($user && $user == $owner)) {
+			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
+			unset($_REQUEST['removeattach']);
+		}
+	}
+
 	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
 
 	if (!isset($_REQUEST["ok"]) || $_REQUEST["ok"]  == "n" || !$thisIsThePlugin || isset($_REQUEST['tr_preview'])) {
