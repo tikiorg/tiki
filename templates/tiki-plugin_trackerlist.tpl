@@ -141,7 +141,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {/if}
 {/section}
 {* ------------------------------------ *}
-{include file="$tpl"}
+{include file="$tpl" item=$items[user]}
 {/if}
 {/section}
 
