@@ -54,7 +54,9 @@ $tiki_timer->start();
 require_once('tiki-setup_base.php');
 require_once('lib/setup/compatibility.php');
 require_once('lib/setup/prefs.php');
-require_once('tiki_tests/tikitestslib.php');
+if ($prefs['feature_tikitests'] == 'y') {
+	require_once('tiki_tests/tikitestslib.php');
+}
 $crumbs[] = new Breadcrumb($prefs['siteTitle'], '', $prefs['tikiIndex']);
 
 if ( $prefs['site_closed'] == 'y' ) require_once('lib/setup/site_closed.php');
