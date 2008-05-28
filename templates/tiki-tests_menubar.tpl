@@ -1,10 +1,29 @@
 {php}
 	$this->assign("tidy",extension_loaded("tidy"));
+	$this->assign("http",extension_loaded("http"));
+	$this->assign("curl",extension_loaded("curl"));
 {/php}
 {if !$tidy}
+<div class="rbox" name="warning">
+<div class="rbox-title" name="warning">{tr}Warning{/tr}</div>
+<div class="rbox-data" name="warning">{tr}Tidy extension not present{/tr}</div>
+</div>
+{/if}
+{if $http or $curl}
 <div class="rbox" name="notice">
 <div class="rbox-title" name="notice">{tr}Notice{/tr}</div>
-<div class="rbox-data" name="notice">{tr}Tidy extension not present{/tr}</div>
+{if $http}
+<div class="rbox-data" name="notice">{tr}PECL HTPP extension present{/tr}</div>
+{/if}
+{if $curl}
+<div class="rbox-data" name="notice">{tr}cURL extension present{/tr}</div>
+{/if}
+</div>
+{/if}
+{if !$http and !$curl}
+<div class="rbox" name="warning">
+<div class="rbox-title" name="warning">{tr}Notice{/tr}</div>
+<div class="rbox-data" name="warning">{tr}PECL HTPP and cURL extension not present. Replay of the TikiTest will not be possible.{/tr}</div>
 </div>
 {/if}
 <div class="navbar">

@@ -15,6 +15,12 @@ if ($tiki_p_admin_tikitests != 'y' and $tiki_p_play_tikitests != 'y') {
 	die;
 }
 
+if (!extension_loaded("http") and !extension_loaded("curl")) {
+	$smarty->assign('msg', tra('You need one of the extension pecl HTTP or Curl to replay the TikiTest'));
+	$smarty->display('error.tpl');
+	die;
+}
+
 function get_from_dom($element) {
 	if ($element === NULL) return NULL;
 	$es = $element->getElementsByTagName("*");
