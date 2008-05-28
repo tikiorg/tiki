@@ -97,6 +97,8 @@ $lang=Array(
 
 // ### start of untranslated words
 // ### uncomment value pairs as you translate
+"Word Limit Exceeded"=>"Nombre maximum de mots atteint",
+"Word Count:"=>"Nombre de mots :",
 // "First '.\$params['itemname']),\n\t\t\t'last' => tra('Last '.\$params['itemname']),\n\t\t\t'next' => tra('Next '.\$params['itemname']),\n\t\t\t'previous' => tra('Prev '.\$params['itemname']),\n\t\t\t'next_fast' => tra('Fast Next" => "First '.\$params['itemname']),\n\t\t\t'last' => tra('Last '.\$params['itemname']),\n\t\t\t'next' => tra('Next '.\$params['itemname']),\n\t\t\t'previous' => tra('Prev '.\$params['itemname']),\n\t\t\t'next_fast' => tra('Fast Next",
 // "Category options: parentId,d|m|radio|checkbox(default),1|0(default) to have a select all button, d for dropdown, m for multiple drop down" => "Category options: parentId,d|m|radio|checkbox(default),1|0(default) to have a select all button, d for dropdown, m for multiple drop down",
 // " 0|1|2|3|4|5 0,xsize,ysize. First record :0 for URL in file gal of MP3 only, 1 for URL of FLV in file gal video only , 2 for URL of MP3 or Video in file gal, 3 donwload MP3 only, 4 donwload FLV video only, 5 download FLV or MP3 (default is 0). Second record : X size of flash applet(default is 200) , Y size of flash applet (default is 100) " => " 0|1|2|3|4|5 0,xsize,ysize. First record :0 for URL in file gal of MP3 only, 1 for URL of FLV in file gal video only , 2 for URL of MP3 or Video in file gal, 3 donwload MP3 only, 4 donwload FLV video only, 5 download FLV or MP3 (default is 0). Second record : X size of flash applet(default is 200) , Y size of flash applet (default is 100) ",
