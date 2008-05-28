@@ -2089,7 +2089,7 @@ class TrackerLib extends TikiLib {
 		$type['a'] = array(
 			'label'=>tra('textarea'),
 			'opt'=>true,
-			'help'=>tra('Textarea options: quicktags,width,height,max,listmax - Use Quicktags is 1 or 0, width is indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved, listmax is the maximum number of characters that are displayed in list mode.'));
+			'help'=>tra('Textarea options: quicktags,width,height,max,listmax,wordmax - Use Quicktags is 1 or 0, width is indicated in chars, height is indicated in lines, max is the maximum number of characters that can be saved, listmax is the maximum number of characters that are displayed in list mode, wordmax>0 alert if word count exceeded, wordmax<0 display word count.'));
 		$type['c'] = array(
 			'label'=>tra('checkbox'),
 			'opt'=>true,

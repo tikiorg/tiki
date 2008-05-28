@@ -474,7 +474,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	
 }
 if ($textarea_options) {
-	include_once ('lib/quicktags/quicktagslib.php');
+	global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
 	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }

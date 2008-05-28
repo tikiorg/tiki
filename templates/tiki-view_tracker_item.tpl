@@ -463,7 +463,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
 
-{elseif $cur_field.type eq 'M'} 
+{elseif $cur_field.type eq 'M'}
 {if ($cur_field.options_array[0] > '2')}
 <input type="file" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />
 {else}

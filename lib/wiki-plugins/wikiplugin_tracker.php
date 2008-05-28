@@ -500,8 +500,15 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
 						$flds['data'][$i]['list'] = $categlib->get_child_categories($f["options_array"][0]);
-					} elseif ($f['type'] == 'A' && !empty($f['value'])) {
+					} elseif ($f['type'] == 'A') {
+						if (!empty($f['value']))
 							$flds['data'][$i]['owner'] = $trklib->get_item_attachment_owner($f['value']);
+					} elseif ($f['type'] == 'a') {
+						if ($f['options_array'][0] == 1 && empty($quicktags)) {
+							global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
+							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', 'trackers');
+							$smarty->assign_by_ref('quicktags', $quicktags['data']);
+						}
 					}
 				}
 			}
