@@ -975,6 +975,8 @@ class TrackerLib extends TikiLib {
 							$fhash = 0;
 						}
 						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($old_value, $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId ? $itemId : $new_itemId, '', false);
+					} else {
+						$ins_fields['data'][$i]['value'] = '';
 					}
 				}
 
@@ -1405,11 +1407,14 @@ class TrackerLib extends TikiLib {
 		global $tikilib;
 		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
-			return -1;
+			return 'Illegal first line';
 		}
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {
 			$header[$i] = preg_replace('/ -- [0-9]*$/', '', $header[$i]);
+		}
+		if (count($header) != count(array_unique($header))) {
+			return 'Duplicate header names';
 		}
 		$total = 0;
 		$need_reindex = array();

@@ -28,11 +28,17 @@ if ($tiki_p_admin_trackers != 'y') {
 
 if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_name'])) {
 	$replace = false;
+	$total = 'Incorrect file';
 	$fp = @ fopen($_FILES['importfile']['tmp_name'], "rb");
 	if ($fp) {
 		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, true, isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '');
 	}
 	fclose($fp);
+	if (!is_numeric($total)) {
+		$smarty->assign('msg', $total);
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 header('Location: tiki-view_tracker.php?trackerId='.$_REQUEST["trackerId"]);
 die;
