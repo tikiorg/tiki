@@ -141,7 +141,7 @@
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}
-	{if $field_value.options_array[4] ne '' and $list_mode eq 'y'}
+	{if $field_value.options_array[4] ne '' and $field_value.options_array[4] ne 0 and $list_mode eq 'y'}
 		{if $parse ne 'n'}
 			{wiki}{$field_value.value|truncate:$field_value.options_array[4]:"...":true}{/wiki}
 		{else}
