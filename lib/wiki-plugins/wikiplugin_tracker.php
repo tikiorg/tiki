@@ -528,6 +528,8 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</td><td>";
 						$smarty->assign_by_ref('field_value', $f);
+						if (isset($item))
+							$smarty->assign_by_ref('item', $item);
 						$back .= $smarty->fetch('tracker_item_field_input.tpl');
 					} else {//old
 					// numeric or text field
