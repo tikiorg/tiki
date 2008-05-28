@@ -543,7 +543,7 @@ class SearchLib extends TikiLib {
 			'objectKey' => 'tt.`trackerId`',
 			'objectKeyPerm' => 'tt.`trackerId`',
 			'objectKeyCat' => 'tt.`trackerId`',
-			'objectKeyGroup' => 'tt.`trackerId`',
+			'objectKeyGroup' => 'ttif.`itemId`',
 		);
 		if ($tiki_p_view_trackers_closed != 'y')
 			$search_trackers['filter'] .= " AND tti.`status` != 'c'";
