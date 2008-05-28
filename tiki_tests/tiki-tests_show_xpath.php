@@ -57,10 +57,9 @@ function enlight_xpath($url, $xpath) {
 	$dom_ref = DOMDocument::loadHTML($data);
 	$xp_ref = new DomXPath($dom_ref);
 	$res_ref = $xp_ref->query('//head');
-//	$before_meta = $xp_ref->query('//head/child[position=0]');
 	$base = $dom_ref->createElement('base');
 	$base->setAttribute('href',$base_url);
-	$res_ref->item(0)->insertBefore($base,NULL);
+	$res_ref->item(0)->insertBefore($base,$res_ref->item(0)->firstChild);
 	$res_ref = $xp_ref->query($xpath);
 	foreach($res_ref as $ref) {
 		$ref->setAttribute('style',"background-color: red;");
