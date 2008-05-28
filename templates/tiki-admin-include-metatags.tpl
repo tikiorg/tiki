@@ -9,7 +9,7 @@
         <tr><td class="form"><b>{tr}Item{/tr}</b></td>
             <td class="form"><b>{tr}Value{/tr}</b></td>
         </tr>
-        <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /></td></tr>
+        <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /> - {tr}Use the thread title in Forum pages instead{/tr} <input type="checkbox" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if}</td></tr>
         <tr><td class="form">{tr}Meta Description{/tr}:</td><td><input type="text" name="metatag_description" value="{$prefs.metatag_description}" size="50" /></td></tr>
         <tr><td class="form">{tr}Meta Author{/tr}:</td><td><input type="text" name="metatag_author" value="{$prefs.metatag_author}" size="50" /></td></tr>
         <tr><td class="heading" colspan="3" align="center">{tr}Geourl{/tr}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a></td></tr>
