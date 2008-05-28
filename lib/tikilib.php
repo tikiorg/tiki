@@ -6570,7 +6570,7 @@ if (!$simple_wiki) {
 			$divstate = substr($line, $hdrlevel, 1);
 			if ($divstate == '+' || $divstate == '-') {
 				// OK. Must insert flipper after HEADER, and then open new div...
-				$thisid = 'id' . urlencode($page) .$nb_hdrs;
+				$thisid = 'id' . str_replace("%","",urlencode($page)) .$nb_hdrs;
 				$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 				$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 				$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
