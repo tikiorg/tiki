@@ -36,22 +36,23 @@ function verif_url($url, $use_tidy = TRUE) {
 	$xpath = $url->getElementsByTagName('xpath')->item(0)->textContent;
 	$data = $url->getElementsByTagName('data')->item(0)->textContent;
 
-	$options["timeout"] = 2;
-	$options["connecttimeout"] = 2;
-	$options["url"] = $url->getAttribute("src");
-	$options["referer"] = $url->getAttribute("referer");
-	$options["redirect"] = 0;
-	$options["cookies"] = $cookies ;
-	$options["cookiestore"] = tempnam("/tmp/","tiki-tests") ;
 	$urlstr = $url->getAttribute("src");
 
-	switch (strtolower($url->getAttribute("method"))) {
-		case 'get':
-			$buffer = http_get($urlstr,$options,$info);
+	if (extension_loaded("http")) {
+		$options["timeout"] = 2;
+		$options["connecttimeout"] = 2;
+		$options["url"] = $url->getAttribute("src");
+		$options["referer"] = $url->getAttribute("referer");
+		$options["redirect"] = 0;
+		$options["cookies"] = $cookies ;
+		$options["cookiestore"] = tempnam("/tmp/","tiki-tests") ;
+		switch (strtolower($url->getAttribute("method"))) {
+			case 'get':
+				$buffer = http_get($urlstr,$options,$info);
 				break;
-		case 'post':
-			$buffer = http_post_fields($urlstr,$post,NULL,$options,$info);
-	}
+			case 'post':
+				$buffer = http_post_fields($urlstr,$post,NULL,$options,$info);
+		}
 
 	$headers = http_parse_headers($buffer);
 	if (isset($headers['Set-Cookie'])) {
@@ -61,9 +62,57 @@ function verif_url($url, $use_tidy = TRUE) {
 	}
 
 	$buffer = http_parse_message($buffer)->body;
-	if (function_exists(tidy_parse_string)) {
+	} elseif (extension_loaded("curl")) {
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $urlstr);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 2);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_HEADER, true);
+		curl_setopt($curl, CURLOPT_REFERER, $url->getAttribute("referer"));
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false );
+		curl_setopt($curl, CURLOPT_USERAGENT, "TikiTest" );
+		// We deal with the cookies
+		$cookies_string = "";
+		foreach($cookies as $c => $v) {
+			$cookies_string .= "$c=$v; path=/;";
+		}
+		curl_setopt($curl, CURLOPT_COOKIE, $cookies_string);
+		switch (strtolower($url->getAttribute("method"))) {
+			case 'get':
+				curl_setopt($curl, CURLOPT_HTTPGET, true);
+				break;
+			case 'post':
+				curl_setopt($curl, CURLOPT_POST, true);
+				$post_string = "";
+				foreach($post as $p => $v) {
+					if ($post_string != "") {
+						$post_string .= "&";
+					}
+					$post_string .= "$p=$v";
+				}
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $post_string);
+		}
+		$http_response = curl_exec($curl);
+		$header_size = curl_getinfo($curl,CURLINFO_HEADER_SIZE);
+		$header = substr($http_response, 0, $header_size);
+		$body = substr($http_response, $header_size);
+		preg_match_all('|Set-Cookie: (.*);|U', $header, $cookies_array);
+		foreach($cookies_array[1] as $c) {
+			$cookies_tmp .= "&$c";
+		}
+		parse_str($cookies_tmp,$cookies_titi);
+		if (!is_array($cookies)) {
+			$cookies = array();
+		}
+		$cookies = array_merge($cookies, $cookies_titi);
+		$buffer = $body;
+	}
+
+	if (extension_loaded("tidy")) {
 		$data =  tidy_parse_string($data,array(),'utf8');
-		$buffer =  tidy_parse_string($buffer->body,array(),'utf8');
+		$buffer =  tidy_parse_string($buffer,array(),'utf8');
 		if ($use_tidy) {
 			tidy_diagnose($data);
 			$result['ref_error_count'] = tidy_error_count($data);

@@ -36,7 +36,7 @@ function enlight_xpath($url, $xpath) {
 		return tra('The page is empty');
 	}
 
-	if (function_exists(tidy_parse_string)) {
+	if (extension_loaded("tidy")) {
 		$data =  tidy_parse_string($data,array(),'utf8');
 		tidy_diagnose($data);
 	} else {

@@ -27,8 +27,6 @@ function get_from_dom($element) {
 
 function get_url($url, $use_tidy = TRUE) {
 	global $smarty, $cookies;
-	static $purifier;
-	static $loaded = false;
 
 	$result = array();
 	$get = get_from_dom($url->getElementsByTagName('get')->item(0));
@@ -39,7 +37,7 @@ function get_url($url, $use_tidy = TRUE) {
 	$referer = $url->getAttribute("referer");
 
 	$result['data'] = $data;
-	if (function_exists(tidy_parse_string)) {
+	if (extension_loaded("tidy")) {
 		$data =  tidy_parse_string($data,array(),'utf8');
 		tidy_diagnose($data);
 		if ($use_tidy) {
@@ -47,20 +45,8 @@ function get_url($url, $use_tidy = TRUE) {
 			$result['ref_error_msg'] = tidy_get_error_buffer($data);
 		}
 	} else {
-		if (!$loaded) {
-			require_once("HTMLPurifier.auto.php");
-			$config =& HTMLPurifier_Config::createDefault();
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'light');
-			$purifier = new HTMLPurifier($config);
-			$loaded = true;
-		}
-		if ($purifier) {
-			$result['data'] = "<html><body>".$purifier->purify($data)."</body></html>";
-		}
 		$result['ref_error_msg'] = tra("Tidy Extension not present");
 	}
-	$result['html'] = preg_replace(array("/<html .*<body/U","/<\/body><\/html>/U"),array("<div style='overflow: auto; width:500px; text-align: center' ","</div>"),$data);
 	$result['url'] = $urlstr;
 	$result['xpath'] = $xpath;
 	$result['method'] = $url->getAttribute("method");
