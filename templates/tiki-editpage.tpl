@@ -164,7 +164,7 @@ window.onload = timeIt;
 {/if}
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
-    <span class="button2">{self_link _class='linkbut' wysiwyg='y' onclick="needToConfirm = false;"}{tr}Use wysiwyg editor{/tr}{/self_link}
+    <span class="button2">{self_link _class='linkbut' wysiwyg='y' onclick="needToConfirm = false;"}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
   {else}
     <span class="button2">{self_link _class='linkbut' wysiwyg='n' onclick="needToConfirm = false;"}{tr}Use normal editor{/tr}{/self_link}</span>
   {/if}
@@ -260,7 +260,7 @@ window.onload = timeIt;
 {/if}
 </td></tr>
 <tr class="formcolor"><td colspan="2">
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="width: 100%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="width: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
