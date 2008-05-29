@@ -138,6 +138,8 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 	{/if}
 {/capture}
 {set var=f_`$items[user].field_values[ix].fieldId` value=$smarty.capture.value}
+{else}
+{set var=f_`$items[user].field_values[ix].fieldId` value=''}
 {/if}
 {/section}
 {* ------------------------------------ *}
