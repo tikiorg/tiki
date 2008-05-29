@@ -932,6 +932,11 @@ if ($_REQUEST["itemId"]) {
 					$last[$fid] = $ins_fields["data"][$i]["value"];
 				}
 			}
+			if ($fields['data'][$i]['type'] == 'A') {
+				if (!empty($ins_fields['data'][$i]['value'])) {
+					$ins_fields['data'][$i]['info'] = $trklib->get_item_attachment($ins_fields['data'][$i]['value']);
+				}
+			}
 			if ($fields['data'][$i]['isMain'] == 'y')
 				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);			
 		}
