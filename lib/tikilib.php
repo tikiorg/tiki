@@ -7238,7 +7238,7 @@ if (!$simple_wiki) {
 
 				// If user timezone is not also in UTC, convert the date
 				if ( $tz != 'UTC' ) {
-					$tikidate->convertTZbyID($tz);
+					$tikidate->convertTZByID($tz);
 				}
 				return $tikidate->format($format);
 			}
