@@ -71,6 +71,9 @@ if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences
 		} else {
 			$prefs['display_timezone'] = $_COOKIE['local_tz'];
 		}
+		if ( ! Date_TimeZone::isValidID($tz) ) {
+			$prefs['display_timezone'] = $prefs['server_timezone'];
+		}
 	} else {
 		// ... and we fallback to the server timezone if the cookie value is not available
 		$prefs['display_timezone'] = $prefs['server_timezone'];
