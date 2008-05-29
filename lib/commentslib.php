@@ -706,22 +706,22 @@ class Comments extends TikiLib {
 	return $ret;
     }
 
-    function replace_forum($forumId, $name, $description, $controlFlood,
-	    $floodInterval, $moderator, $mail, $useMail,
-	    $usePruneUnreplied, $pruneUnrepliedAge, $usePruneOld,
-	    $pruneMaxAge, $topicsPerPage, $topicOrdering,
-	    $threadOrdering, $section, $topics_list_reads,
-	    $topics_list_replies, $topics_list_pts,
-	    $topics_list_lastpost, $topics_list_author, $vote_threads,
-	    $show_description, $inbound_pop_server, $inbound_pop_port,
-	    $inbound_pop_user, $inbound_pop_password, $outbound_address,
-	    $outbound_mails_for_inbound_mails, $outbound_mails_reply_link,
-	    $outbound_from, $topic_smileys, $topic_summary, $ui_avatar,
-	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
-	    $approval_type, $moderator_group, $forum_password,
-	    $forum_use_password, $att, $att_store, $att_store_dir,
-	    $att_max_size, $forum_last_n, $commentsPerPage, $threadStyle,
-	    $is_flat)
+    function replace_forum($forumId=0, $name='', $description='', $controlFlood='n',
+	    $floodInterval=120, $moderator='admin', $mail='', $useMail='n',
+	    $usePruneUnreplied='n', $pruneUnrepliedAge=2592000, $usePruneOld='n',
+	    $pruneMaxAge=259200, $topicsPerPage=10, $topicOrdering='lastPost_desc',
+	    $threadOrdering='', $section='', $topics_list_reads='y',
+	    $topics_list_replies='y', $topics_list_pts='n',
+	    $topics_list_lastpost='y', $topics_list_author='y', $vote_threads='n',
+	    $show_description='n', $inbound_pop_server='', $inbound_pop_port=110,
+	    $inbound_pop_user='', $inbound_pop_password='', $outbound_address='',
+	    $outbound_mails_for_inbound_mails='n', $outbound_mails_reply_link='n',
+	    $outbound_from='', $topic_smileys='n', $topic_summary='n', $ui_avatar='y',
+	    $ui_flag='y', $ui_posts='n', $ui_level='n', $ui_email='n', $ui_online='n',
+	    $approval_type='all_posted', $moderator_group='', $forum_password='',
+	    $forum_use_password='n', $att='att_no', $att_store='db', $att_store_dir='',
+	    $att_max_size=1000000, $forum_last_n=0, $commentsPerPage='', $threadStyle='',
+	    $is_flat='n')
     {
 	if ($forumId)
 	{

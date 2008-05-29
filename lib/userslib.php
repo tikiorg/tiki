@@ -2231,7 +2231,7 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc, $home, $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='') {
 		global $cachelib;  
 		if ($this->group_exists($group))
 			return false;
