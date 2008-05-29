@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <link rel="stylesheet" href="styles/slideshows/{$prefs.slide_style}" />
 <title>{$page_info.pageName}</title>
+<script type="text/javascript" src="lib/tiki-js.js"></script>
 </head>
 <body>
 <div align="center">
@@ -50,7 +51,9 @@
 {if $smarty.capture.navbar ne ''}{$smarty.capture.navbar}{/if}
 
 </table>
+{if $tiki_p_edit eq 'y'}
 <a href="tiki-editpage.php?page={$page_info.pageName|escape:url}">o</a>
+{/if}
 </div>
 </body>
 </html>
