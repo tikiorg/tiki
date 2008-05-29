@@ -6586,6 +6586,7 @@ if (!$simple_wiki) {
 			// use header but replace non-word character sequences
 			// with one underscore (for XHTML 1.0 compliance)
 			$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $title_text);
+			$thisid = ereg_replace('^_', '', $thisid);
 
 			// Add a number to the anchor if it already exists, to avoid duplicated anchors
 			if ( isset($all_anchors[$thisid]) ) {

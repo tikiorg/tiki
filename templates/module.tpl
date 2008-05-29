@@ -19,7 +19,7 @@
 		{/if}
 		{$module_title}
 		{if $module_flip eq 'y'}
-			<span id="moduleflip">
+			<span id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}icn" class="flipmodimage" src="pics/icons/module.png" border="0" width="16" height="16" alt="[{tr}toggle{/tr}]" /></a>
 			</span>
 		{/if}
@@ -30,7 +30,7 @@
 	{*/if*}
 {$module_title}
 		{if $module_flip eq 'y'}
-			<span id="moduleflip">
+			<span id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 <a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}icn" class="flipmodimage" src="pics/icons/module.png" border="0" alt="[{tr}Hide{/tr}]" /></a>
 			</span>
 		{/if}
