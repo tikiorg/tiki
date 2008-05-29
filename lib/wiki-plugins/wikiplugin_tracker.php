@@ -94,7 +94,7 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 
-	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
+	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php') && empty($itemId)) {
 		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
 			return '<b>'.$permMessage.'</b>';
 		}
