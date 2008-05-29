@@ -712,7 +712,7 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ( $res = $result->fetchRow() ) {
-			$res['itemUser'] = 0;
+			$res['itemUser'] = '';
 			$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i=>$field)
