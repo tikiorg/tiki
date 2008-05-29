@@ -340,7 +340,7 @@ function wikiplugin_tracker($data, $params) {
 				} else {
 					$filter = &$flds['data'];
 				}
-				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter);
+				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
 
 			} else {
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y

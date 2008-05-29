@@ -712,7 +712,8 @@ class TrackerLib extends TikiLib {
 		$ret = array();
 
 		while ( $res = $result->fetchRow() ) {
-			$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields);
+			$res['itemUser'] = 0;
+			$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
 			if (!empty($asort_mode)) {
 				foreach ($res['field_values'] as $i=>$field)
 					if ($field['fieldId'] == $asort_mode ) {
@@ -730,7 +731,7 @@ class TrackerLib extends TikiLib {
 		$retval['cant'] = $cant;
 		return $retval;
 	}
-	function get_item_fields($trackerId, $itemId, $listfields) {
+	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
 		global $prefs;
 		$fields = array();
 		$fil = array();
@@ -808,17 +809,18 @@ class TrackerLib extends TikiLib {
 				}
 				break;
 			case 'u':
-				if ($fopt['options_array'][0] == 1)
-					$useritem = $fopt['value'];
+				if ($fopt['options_array'][0] == 1) {
+					$itemUser = $fopt['value'];
+				}
 				break;
 			case 'p':
 				if ($fopt['options_array'][0] == 'password') {
-				} elseif ($fopt['options_array'][0] == 'email' && isset($useritem)) {
+				} elseif ($fopt['options_array'][0] == 'email' && !empty($itemUser)) {
 					global $userlib;
-					$fopt['value'] = $userlib->get_user_email($useritem);
-				} elseif (isset($useritem)) {
+					$fopt['value'] = $userlib->get_user_email($itemUser);
+				} elseif (!empty($itemUser)) {
 					global $userlib;
-					$fopt['value'] = $userlib->get_user_preference($useritem, $fopt['options_array'][0]);
+					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
 				} 
 				break;
 			}
