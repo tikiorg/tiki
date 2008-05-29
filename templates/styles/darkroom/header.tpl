@@ -10,7 +10,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <head>
 {if $base_url and $dir_level gt 0}<base href="{$base_url}"/>{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{if $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords}" />
+{if !empty($thread_info.title) & $prefs.metatag_threadtitle eq 'y'}<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} : {$thread_info.title}" />
+{elseif $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords}" />
 {/if}
 {if $prefs.metatag_author ne ''}<meta name="author" content="{$prefs.metatag_author}" />
 {/if}
