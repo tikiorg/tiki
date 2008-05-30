@@ -2,7 +2,11 @@
   <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
 </div>
 
-{eval var=$heading}
+{if strlen($heading) > 0}
+  {eval var=$heading}
+{else}
+  {include file="blog-heading.tpl"}
+{/if}
 
 {if $use_find eq 'y'}
   <div class="blogtools">
