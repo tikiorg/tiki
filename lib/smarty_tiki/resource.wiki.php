@@ -42,4 +42,3 @@ function smarty_resource_wiki_trusted($tpl_name, &$smarty)
 {
     return true;
 }
-?> 
