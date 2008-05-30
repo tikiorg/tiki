@@ -107,7 +107,11 @@ function createAnnotation( o, cid ) // {{{
 function handleClick( event, cid ) // {{{
 {
 	if( selected[cid] )
+	{
+		if( event.target.id == cid )
+			endEdit( cid, false );
 		return;
+	}
 
 	if( ! active )
 	{
