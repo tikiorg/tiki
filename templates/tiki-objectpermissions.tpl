@@ -157,7 +157,7 @@
 {cycle print=false values="even,odd"}
 {section name=prm loop=$perms}
 <tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}"><input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/></td><td class="{cycle advance=false}">{$perms[prm].permName|escape}<br /><i>{$perms[prm].permDesc|escape}</i></td>
+  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}"><input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/></td><td class="{cycle advance=false}">{$perms[prm].permName|escape}<br /><i>{tr}{$perms[prm].permDesc|escape}{/tr}</i></td>
 	</tr>
 {/section}
 </table></td>
