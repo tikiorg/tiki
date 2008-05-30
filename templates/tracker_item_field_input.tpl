@@ -244,9 +244,9 @@
 {* -------------------- jscalendar ------------------- *}
 {elseif $field_value.type eq 'j'}
 	{if $field_value.options_array[0] eq 'd'}
-		{jscalendar date=$now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
+		{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
 	{else}
-		{jscalendar date=$now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
+		{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
 		{/if}
 
 {* -------------------- item link -------------------- *}
