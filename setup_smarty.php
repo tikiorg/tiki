@@ -181,4 +181,6 @@ class Smarty_Tikiwiki extends Smarty {
 $smarty = new Smarty_Tikiwiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 // $smarty->load_filter('output','trimwhitespace');
+include_once('lib/smarty_tiki/resource.wiki.php');
+$smarty->register_resource('wiki', array('smarty_resource_wiki_source', 'smarty_resource_wiki_timestamp', 'smarty_resource_wiki_secure', 'smarty_resource_wiki_trusted'));
 ?>
