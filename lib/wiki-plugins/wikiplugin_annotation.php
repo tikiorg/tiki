@@ -11,14 +11,42 @@ function wikiplugin_annotation_help() {
 
 function wikiplugin_annotation($data, $params) {
 	static $first = true;
+	global $page, $tiki_p_edit;
 
 	$params = array_merge( array( 'align' => 'left', 'desc' => '' ), $params );
 
-	if( $first )
+	if( !function_exists( 'json_encode' ) )
+		return "^Annotations not supported on this host.^\n{img src={$params['src']}}";
+
+	$annotations = array();
+	foreach( explode( "\n", $data ) as $line )
+	{
+		$line = trim($line);
+		if( empty( $line ) )
+			continue;
+
+		if( preg_match( "/^\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)(.*)\[(.*)\]$/", $line, $parts ) )
+		{
+			$parts = array_map( 'trim', $parts );
+			list( $full, $x1, $y1, $x2, $y2, $label, $target ) = $parts;
+
+			$annotations[] = array(
+				'x1' => $x1,
+				'y1' => $y1,
+				'x2' => $x2,
+				'y2' => $y2,
+				'value' => $label,
+				'target' => $target,
+			);
+		}
+	}
+
+	$annotations = json_encode( $annotations );
+
+	if( $first ) // {{{
 	{
 		$first = false;
 		$script = <<<SCRIPT
-~np~
 <script type="text/javascript">
 var active = null;
 var selected = {};
@@ -44,6 +72,7 @@ function gete(cid) // {{{
 
 		editors[cid].fieldLabel = document.getElementById(cid + '-label');
 		editors[cid].fieldLink = document.getElementById(cid + '-link');
+		editors[cid].fieldContent = document.getElementById(cid + '-content');
 	}
 	
 	return editors[cid];
@@ -52,6 +81,19 @@ function gete(cid) // {{{
 function eactive(cid) // {{{
 {
 	return gete(cid).style.display == 'block';
+} // }}}
+
+function getFullOffset( node ) // {{{
+{
+	var offset = { top: 0, left: 0 };
+	
+	do
+	{
+		offset.left += node.offsetLeft;
+		offset.top += node.offsetTop;
+	} while( node = node.offsetParent );
+
+	return offset;
 } // }}}
 
 // FIXME : Need to remove container absolute position
@@ -80,6 +122,7 @@ function activateAnnotation( o, cid ) // {{{
 	o.obj.onclick = function (e) { if( active ) return; alert( 'Hello' ); };
 	o.id = o.obj.id = "annotation-" + nextid++;
 	annotations[o.id] = o;
+	o.cid = cid;
 
 	var div = document.createElement( 'div' );
 	var a = document.createElement( 'a' );
@@ -99,6 +142,13 @@ function activateAnnotation( o, cid ) // {{{
 
 function createAnnotation( o, cid ) // {{{
 {
+	var offset = getFullOffset( getc(cid) );
+
+	o.x1 = parseInt(o.x1) + parseInt(offset.left);
+	o.x2 = parseInt(o.x2) + parseInt(offset.left);
+	o.y1 = parseInt(o.y1) + parseInt(offset.top);
+	o.y2 = parseInt(o.y2) + parseInt(offset.top);
+
 	initAnnotation( o, cid );
 	activateAnnotation( o, cid );
 	positionize( o, cid );
@@ -139,6 +189,7 @@ function handleClick( event, cid ) // {{{
 		beginEdit( event, active, cid );
 
 		active = null;
+		gete(cid).fieldContent.innerHTML = serializeAnnotations( annotations, cid );
 	}
 } // }}}
 
@@ -181,8 +232,8 @@ function beginEdit( event, o, cid ) // {{{
 	if( left + 300 > window.innerWidth )
 		left += window.innerWidth - left - 300;
 	var top = event.pageY;
-	if( event.clientY + 250 > window.innerHeight )
-		top += window.innerHeight - event.clientY - 250;
+	if( event.clientY + 120 > window.innerHeight )
+		top += window.innerHeight - event.clientY - 120;
 
 	editor.style.top = top + "px";
 	editor.style.left = left + "px";
@@ -195,7 +246,7 @@ function beginEdit( event, o, cid ) // {{{
 	editor.fieldLabel.focus();
 
 	selected[cid] = o;
-	highlight( o.obj.id, cid );
+	highlight( o.id, cid );
 } // }}}
 
 function endEdit( cid, store ) // {{{
@@ -210,11 +261,13 @@ function endEdit( cid, store ) // {{{
 		o.value = editor.fieldLabel.value;
 		o.target = editor.fieldLink.value;
 		o.link.innerHTML = o.value;
+
+		editor.fieldContent.innerHTML = serializeAnnotations( annotations, cid );
 	}
 
 	gete(cid).style.display = 'none';
 
-	unhighlight( o.obj.id, cid );
+	unhighlight( o.id, cid );
 
 	return false;
 } // }}}
@@ -237,11 +290,32 @@ function handleDelete(cid) // {{{
 	o.link.parentNode.removeChild(o.link);
 	annotations[o.id] = null;
 	selected[cid] = null;
+
+	gete(cid).fieldContent.innerHTML = serializeAnnotations( annotations, cid );
 } // }}}
-</script>
-~/np~
-SCRIPT;
+
+function serializeAnnotations( data, cid ) // {{{
+{
+	var str = '';
+	var offset = getFullOffset( getc(cid) );
+	for( k in data )
+	{
+		var row = data[k];
+		if( row == null )
+			continue;
+		if( row.cid != cid )
+			continue;
+
+		str += "(" + (row.x1-offset.left) + "," + (row.y1-offset.top) + "),(" + (row.x2-offset.left) + "," + (row.y2-offset.top) + ") ";
+		str += row.value + " [" + row.target + "]\\n";
 	}
+
+	return str;
+} // }}}
+
+</script>
+SCRIPT;
+	} // }}}
 	else
 		$script = '';
 
@@ -249,11 +323,28 @@ SCRIPT;
 	$uid++;
 	$cid = 'container-annotation-' . $uid;
 
+	$labelSave = tra('Save changes to annotations');
+	
+	if( $tiki_p_edit == 'y' )
+		$form = <<<FORM
+<form method="post" action="tiki-annotation_edit.php">
+	<div style="display:none">
+		<input type="hidden" name="page" value="$page"/>
+		<input type="hidden" name="annotation" value="$uid"/>
+		<textarea id="$cid-content" name="content"></textarea>
+	</div>
+	<p><input type="submit" value="$labelSave"/></p>
+</form>
+FORM;
+	else
+		$form = '';
+
 	return <<<ANNOTATION
+~np~
 $script
 <div>
 <div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;" onclick="handleClick(event,'$cid')" onmousemove="handleMove(event,'$cid')">
-	<div id="$cid-editor" style="display:none;width:250px;height:220px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
+	<div id="$cid-editor" style="display:none;width:250px;height:100px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
 		<a href="javascript:endEdit('$cid', false);void(0)"><img src="images/fullscreen_minimize.gif" style="position:absolute;top:0px;right:0px;border:none;"/></a>
 		<a href="javascript:handleDelete('$cid');void(0)" style="position:absolute;bottom:0px;right:0px;text-decoration:none;"><img src="images/ed_delete.gif" style="border:none;"/>Delete</a>
 		<form method="post" action="" onsubmit="return endEdit('$cid',true);">
@@ -266,6 +357,19 @@ $script
 	</div>
 </div>
 </div>
+$form
+<script type="text/javascript">
+var toCreate$uid = $annotations;
+function todo$uid() {
+for( k in toCreate$uid )
+	createAnnotation( toCreate{$uid}[k], '$cid' );
+
+	gete('$cid').fieldContent.innerHTML = serializeAnnotations( annotations, '$cid' );
+}
+setTimeout('todo$uid()',1000);
+</script>
+<a href="javascript:todo$uid()">Test</a>
+~/np~
 ANNOTATION;
 }
 
