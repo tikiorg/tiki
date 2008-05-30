@@ -391,22 +391,8 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {* -------------------- textarea -------------------- *}
 {elseif $cur_field.type eq 'a'}
-{if $cur_field.description}
-<em>{$cur_field.description|escape|nl2br}</em><br />
-{/if}
-{if $prefs.quicktags_over_textarea eq 'y' and $cur_field.options_array[0] eq 1}
-      {include file=tiki-edit_help_tool.tpl qtnum=$cur_field.id area_name="area_"|cat:$cur_field.id}
-{/if}
-{if $cur_field.isMultilingual ne "y"}
-            <textarea name="ins_{$cur_field.id}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$cur_field.value|escape}</textarea>
-        {else}
-        <table>
-            {foreach from=$cur_field.lingualvalue item=ling}
-            <TR><TD>{$ling.lang}</td><td>
-                <textarea name="ins_{$cur_field.id}_{$ling.lang}" id="area_{$cur_field.id}" cols="{if $cur_field.options_array[1] gt 1}{$cur_field.options_array[1]}{else}50{/if}" rows="{if $cur_field.options_array[2] gt 1}{$cur_field.options_array[2]}{else}4{/if}">{$ling.value|escape}</textarea></td></tr>
-            {/foreach}
-        </table>
-        {/if}
+{include file=tracker_item_field_input.tpl field_value=$cur_field}
+
 {elseif $cur_field.type eq 'f'}
 {html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$prefs.display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
 
