@@ -32,7 +32,7 @@
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
 <tr>
-<td class="{cycle advance=false}" title="{$page_perms[pg].permName}">{tr}{$perms[pg].permDesc}{/tr}</td>
+<td class="{cycle advance=false}" title="{$page_perms[pg].permName}">{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i></td>
 <td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
 </tr>
 {sectionelse}
@@ -97,15 +97,22 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th class="heading">{tr}Permission{/tr}</th>
+	<th class="heading" colspan="2">{tr}Permission{/tr}</th>
 	<th class="heading">{tr}Group{/tr}</th>
 	<th class="heading" width="20px">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
 <tr>
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$page_perms[pg].permName|cat:' '|cat:$page_perms[pg].groupName|escape}"  {if $smarty.request.checked and in_array($page_perms[pg].permName.' '.$page_perms[pg].groupName,$smarty.request.checked)}checked="checked"{/if} />{$page_perms[pg].permName}</td>
-<td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
+<td class="{cycle advance=false}">
+	<input type="checkbox" name="checked[]" value="{$page_perms[pg].permName|cat:' '|cat:$page_perms[pg].groupName|escape}" />
+</td>
+<td class="{cycle advance=false}">
+	{$page_perms[pg].permName|escape}<br /><i>{tr}{$page_perms[pg].permDesc|escape}{/tr}</i>
+</td>
+<td class="{cycle advance=false}">
+	{$page_perms[pg].groupName}
+</td>
 <td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer|escape:"url"}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a></td></tr>
 {sectionelse}
 <tr><td colspan="4" class="odd">{if !empty($categ_perms)}{tr}No individual permissions, category permissions apply{/tr}{else}{tr}No individual permissions, category permissions apply{/tr}{/if}</td></tr>
@@ -142,15 +149,15 @@
 
 <table class="normal">
 	<tr>
-		<th class="heading" colspan="2">{tr}Permission{/tr}</th>
-		<th class="heading">{tr}Groups{/tr}</th>
+		<th class="heading">{tr}Permission{/tr}</th>
+		<th class="heading" colspan="2">{tr}Groups{/tr}</th>
 	</tr>
 <tr>
 <td width="45%"><table width="100%">
 {cycle print=false values="even,odd"}
 {section name=prm loop=$perms}
 <tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}"><input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>&nbsp;{$perms[prm].permDesc|escape}</td>
+  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}"><input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/></td><td class="{cycle advance=false}">{$perms[prm].permName|escape}<br /><i>{$perms[prm].permDesc|escape}</i></td>
 	</tr>
 {/section}
 </table></td>

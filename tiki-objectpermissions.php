@@ -114,7 +114,6 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
-$smarty->assign_by_ref('page_perms', $page_perms);
 
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
@@ -133,6 +132,16 @@ if ($tiki_p_admin_objects != 'y') {
 } else {
 	$smarty->assign_by_ref('perms', $perms['data']);
 }
+foreach ($page_perms as $i=>$pp) {
+	foreach ($perms['data'] as $p) {
+		if ($pp['permName'] == $p['permName']) {
+			$page_perms[$i]['permDesc'] = $p['permDesc'];
+			break;
+		}
+	}
+}
+$smarty->assign_by_ref('page_perms', $page_perms);
+
 
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
