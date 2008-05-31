@@ -11,8 +11,11 @@ function wikiplugin_subscribegroup_help() {
 }
 function wikiplugin_subscribegroup($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
-	if ($tiki_p_subscribe_groups != 'y' || empty($user)) {
+	if (empty($user)) {
 		return '';
+	}
+	if ($tiki_p_subscribe_groups != 'y') {
+		return tra('Permission denied');
 	}
 	extract ($params, EXTR_SKIP);
 
