@@ -1473,9 +1473,9 @@ UPDATE `tiki_preferences` SET `name`='preset_galleries_info' WHERE `name`='prese
 
 #2007-11-13 sylvieg
 ALTER TABLE users_groups ADD userChoice CHAR(1) DEFAULT NULL;
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_my_groups', 'A user can assign himself in groups', 'registered', 'tiki');
 UPDATE  users_permissions set permName='tiki_p_subscribe_groups', permDesc='Can subscribe to groups' where permName='tiki_p_assign_my_groups';
 UPDATE users_grouppermissions set permName='tiki_p_subscribe_groups' where permName='tiki_p_assign_my_groups';
+DELETE FROM users_permissions where permName='tiki_p_assign_my_groups';
 
 #2007-11-21 nkoth on behalf of ntavares==Panora200
 ALTER TABLE `users_groups` ADD `groupDefCat` int(12) DEFAULT 0;
