@@ -1786,3 +1786,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
 
+alter table users_permissions modify permName varchar(40);
+alter table users_grouppermissions modify permName varchar(40); 
+alter table users_objectpermissions modify permName varchar(40); 
+
+insert into users_permissions (permName,permDesc,level,type,admin) values ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries',NULL);

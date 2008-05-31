@@ -4950,7 +4950,7 @@ DROP TABLE "users_grouppermissions";
 
 CREATE TABLE "users_grouppermissions" (
   "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(31) default '' NOT NULL,
+  "permName" varchar(40) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
 ) ENGINE=MyISAM;
@@ -4994,7 +4994,7 @@ DROP TABLE "users_objectpermissions";
 
 CREATE TABLE "users_objectpermissions" (
   "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(31) default '' NOT NULL,
+  "permName" varchar(40) default '' NOT NULL,
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
   PRIMARY KEY ("objectId","objectType","groupName","permName")
@@ -5010,7 +5010,7 @@ CREATE TABLE "users_objectpermissions" (
 DROP TABLE "users_permissions";
 
 CREATE TABLE "users_permissions" (
-  "permName" varchar(31) default '' NOT NULL,
+  "permName" varchar(40) default '' NOT NULL,
   "permDesc" varchar(250) default NULL,
   "level" varchar(80) default NULL,
   "type" varchar(20) default NULL,
@@ -5454,6 +5454,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
+
+INSERT into users_permissions (permName,permDesc,level,type,admin) VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries',NULL);
 
 -- --------------------------------------------------------
 --

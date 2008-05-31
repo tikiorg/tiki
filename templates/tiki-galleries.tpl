@@ -235,7 +235,7 @@
   {/if}
   {/if}
   {/if}
-  {if $tiki_p_admin eq 'y'}
+  {if ($tiki_p_admin eq 'y') or  ($tiki_p_assign_perm_image_gallery eq 'y' )}
     {if $galleries[changes].individual eq 'y'}
 	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
     {else}
