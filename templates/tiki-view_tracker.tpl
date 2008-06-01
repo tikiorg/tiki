@@ -37,7 +37,7 @@
 			{section name=i loop=$watching_categories}
 				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
 			{/section}
-		{/if}	
+		{/if}
 	{/if}
 </div>
 
@@ -112,7 +112,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 {/foreach}
 
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if 
+<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
 $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
@@ -152,7 +152,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 
 {if $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password')}
 <td class="auto">
-{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+{if $field_value.isMain eq 'y' and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 {if !empty($tracker_info.showPopup)}
 	{capture name=popup}
@@ -189,14 +189,14 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 <td  style="text-align:center;">{$items[user].comments}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-<td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}" 
-link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
+<td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}"
+link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}"
 /></a> {$items[user].attachments}</td>
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
   <td>
-    <a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}" 
+    <a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}{if $sort_mode ne ''}&amp;sort_mode={$sort_mode}{/if}&amp;remove={$items[user].itemId}"
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   </td>
 {/if}
@@ -207,7 +207,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 
 {if $tiki_p_admin_trackers eq 'y'}
 <div style="text-align:left">
-{tr}Perform action with checked{/tr}: 
+{tr}Perform action with checked{/tr}:
 <select name="batchaction">
 <option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>
@@ -239,7 +239,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <td>
 <select name="status">
 {foreach key=st item=stdata from=$status_types}
-<option value="{$st}"{if $tracker_info.newItemStatus eq $st} selected="selected"{/if} 
+<option value="{$st}"{if $tracker_info.newItemStatus eq $st} selected="selected"{/if}
 style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
 {/foreach}
 </select>
@@ -450,7 +450,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 <select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 {if $field_value.isMandatory ne 'y'}<option value=""></option>{/if}
 {foreach key=id item=label from=$field_value.list}
-<option value="{$label|escape}" {if $input_err}{if $field_value.value eq $label}selected="selected"{/if}{elseif $defaultvalue eq $label}selected="selected"{/if}>{if $field_value.listdisplay.$id eq ''}{$label}{else}{$field_value.listdisplay.$id}{/if}</option>
+<option value="{$label|escape}" {if $input_err}{if $field_value.value eq $label}selected="selected"{/if}{elseif $defaultvalues.$fid eq $label}selected="selected"{/if}>{if $field_value.listdisplay.$id eq ''}{$label}{else}{$field_value.listdisplay.$id}{/if}</option>
 {/foreach}
 </select>
 

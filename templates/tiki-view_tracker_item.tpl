@@ -37,7 +37,7 @@
 			{section name=i loop=$watching_categories}
 				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
 			{/section}
-		{/if}	
+		{/if}
 	{/if}
 </div>
 
@@ -316,8 +316,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/foreach}
 {if $tiki_p_create_tracker_items eq 'y' and !(count($cur_field.links) >= 1 and $cur_field.tracker_options.oneUserItem eq 'y')}
 <div style="clear:both;text-align:right;"><a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
+{assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
 {section name=ox loop=$ins_fields}
-{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}
+{if $ins_fields[ox].fieldId eq $fieldopts[0]}
 {$ins_fields[ox].value}
 {/if}
 {/section}
@@ -326,7 +327,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {elseif $cur_field.type eq 'e'}
-{if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')} 
+{if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
@@ -358,7 +359,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
         {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
         <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
         {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
-    
+
     {else}
     <table>
         {foreach from=$cur_field.lingualvalue item=ling}
@@ -459,7 +460,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
 	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
 
-	{if $cur_field.value ne ''}	
+	{if $cur_field.value ne ''}
 	{if  $cur_field.options_array[1] ne '' } { $Lenght=$cur_field.options_array[1] }{/if}
 	{if  $cur_field.options_array[2] ne '' } { $Height=$cur_field.options_array[2] }{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
