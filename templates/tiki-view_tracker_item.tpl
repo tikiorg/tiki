@@ -110,8 +110,9 @@
 		{/if}
 		{$cur_field.name}
 		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1') and $cur_field.tracker_options.oneUserItem ne 'y'}
+		  {assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
 			<br />
-			<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $cur_field.options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a>
+			<a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;filterfield={$cur_field.options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $fieldopts[0]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}</a>
 		{/if}
 		</td>
 
