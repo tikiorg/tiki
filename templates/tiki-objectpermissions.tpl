@@ -1,7 +1,7 @@
 {* $Id$ *}
 <h1><a href="tiki-objectpermissions.php?objectName={$objectName|escape:url}&amp;objectType={$objectType|escape:url}&amp;objectId={$objectId|escape:url}&amp;permType={$permType|escape:url}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}</a></h1>
 <div class="navbar">
-<a href="{$referer|escape:"url"}" class="linkbut">{tr}Back{/tr}</a>
+<a href="{$referer}" class="linkbut">{tr}Back{/tr}</a>
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
