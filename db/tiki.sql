@@ -4389,6 +4389,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_c
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
 # --------------------------------------------------------
 
 #

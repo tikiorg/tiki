@@ -1791,3 +1791,6 @@ alter table users_grouppermissions modify permName varchar(40);
 alter table users_objectpermissions modify permName varchar(40); 
 
 insert into users_permissions (permName,permDesc,level,type,admin) values ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries',NULL);
+
+#2008-06-02 sylvieg
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
