@@ -169,9 +169,9 @@
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}
-	{if $field_value.value eq 'y' or $field_value.value eq 'on'}
+	{if $field_value.value eq 'y' or $field_value.value eq 'on' or strtolower($field_value.value) eq 'yes'}
 		{tr}Yes{/tr}
-	{elseif $field_value.value eq 'n'}
+	{elseif $field_value.value eq 'n' or strtolower($field_value.value) eq 'no'}
 		{tr}No{/tr}
 	{else}
 		{$field_value.value}
