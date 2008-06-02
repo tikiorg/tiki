@@ -1,10 +1,12 @@
 {* $Id$ *}
 {$showBoxCheck}
-<h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
+<h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send Newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php{if $nlId}?nlId={$nlId}{/if}">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
 {assign var=area_name value="editnl"}
 {if $emited eq 'y'}
+<div class="simplebox highlight">
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />
+</div>
 {if $errors}
 <span class="attention">{tr}Errors detected{/tr}<br /></span>
 <table class="normal">
@@ -18,7 +20,13 @@
 {/if}
 {if $presend eq 'y'}
 <br />
+<div class="title">
+<h2>{tr}Please Confirm{/tr}</h2>
+</div>
+<div class="simplebox highlight">
 <b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
+</div>
+<p>
 <form method="post" action="tiki-send_newsletters.php">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <input type="hidden" name="editionId" value="{$info.editionId}"/>
@@ -30,25 +38,37 @@
 <input type="submit" name="send" value="{tr}Send{/tr}" />
 <input type="submit" name="preview" value="{tr}Cancel{/tr}" />
 </form>
+</p>
+<div class="title">
 <h2>{tr}Preview{/tr}</h2>
-<div class="wikitext">{$subject}</div>
+</div>
+<h3>{tr}Subject{/tr}</h3>
+<div class="simplebox wikitext">{$subject}</div>
+
 <h3>{tr}HTML version{/tr}</h3>
-<div class="wikitext">{$dataparsed}</div>
+<div class="simplebox wikitext">{$dataparsed}</div>
+
 {if $allowTxt eq 'y' }
-<h3>{tr}Text version{/tr}</h3>
-<div class="wikitext">{$datatxt}</div>
+	<h3>{tr}Text version{/tr}</h3>
+	{if $info.datatxt}<div class="simplebox wikitext" >{$datatxt|escape|nl2br}</div>{/if}
+	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
 {/if}
 {else}
 {if $preview eq 'y'}
+<div class="title">
 <h2>{tr}Preview{/tr}</h2>
-<div class="wikitext">{$info.subject}</div>
+</div>
+<h3>{tr}Subject{/tr}</h3>
+<div class="simplebox wikitext">{$info.subject}</div>
+
 <h3>{tr}HTML version{/tr}</h3>
-<div class="wikitext">{$info.dataparsed}</div>
+<div class="simplebox wikitext">{$info.dataparsed}</div>
+
 {if $allowTxt eq 'y' }
-<h3>{tr}Text version{/tr}</h3>
-<div class="wikitext" >{$info.datatxt}</div>
+	<h3>{tr}Text version{/tr}</h3>
+	{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
+	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
 {/if}
-{if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
 
 <br />
@@ -63,7 +83,7 @@
 {/if}
 
 {cycle name=content values="1,2,3,4" print=false advance=false reset=true}
-{* --- tab with editior --- *}
+{* --- tab with editor --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
@@ -132,7 +152,7 @@
 <tr class="formcolor">
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor">
-    <input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as draft{/tr}" /></td>
+    <input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" /></td>
 </tr>
 
 <tr>

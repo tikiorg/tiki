@@ -7,16 +7,26 @@
 <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit{/tr}' /></a>{/if}</h1>
 
 <span class="button2"><a class="linkbut" href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a></span>
-{if $tiki_p_subscribe_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}subscribe{/tr}</a></span>{/if}
+{if $tiki_p_subscribe_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}Subscribe{/tr}</a></span>{/if}
 {if $tiki_p_send_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}Send Newsletters{/tr}</a></span>{/if}
 {if $tiki_p_admin_newsletters eq "y"}<span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a></span>{/if}
 
 {if $edition}
-<h2>{tr}Sent edition{/tr}</h2>
-{tr}Subject{/tr}
-<div class="wikitext">{$edition.subject}</div>
-{tr}Data{/tr}
-<div class="wikitext">{$edition.dataparsed}</div>
+<div class="title">
+<h2>{tr}Sent Edition{/tr}</h2>
+</div>
+<h3>{tr}Subject{/tr}</h3>
+<div class="simplebox wikitext">{$edition.subject}</div>
+
+<h3>{tr}HTML version{/tr}</h3>
+<div class="simplebox wikitext">{$edition.dataparsed}</div>
+
+{if $allowTxt eq 'y' }
+	<h3>{tr}Text version{/tr}</h3>
+	{if $edition.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
+	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
+{/if}
+
 {assign var="sent" value=$edition.users}
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br />
 {$edition.sent|tiki_short_datetime}

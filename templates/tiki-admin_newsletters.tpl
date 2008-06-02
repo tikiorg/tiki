@@ -14,7 +14,7 @@
 <span class="button2"><a class="linkbut" href="tiki-send_newsletters.php">{tr}Send Newsletters{/tr}</a></span>
 </div>
 
-<h2>{tr}Create/edit newsletters{/tr}</h2>
+<h2>{tr}Create/Edit Newsletters{/tr}</h2>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
@@ -88,8 +88,8 @@
 <td class="{cycle advance=false}">{$channels[user].drafts}</td>
 <td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
 <td class="{cycle}">
-<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}"><img 
-border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" /></a>
+{if ($channels[user].tiki_p_admin eq 'y') or ($channels[user].tiki_p_assign_perm_newsletters eq 'y')}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}" title="{tr}Assign Permissions{/tr}"><img 
+border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/icons/key{if $channels[user].individual eq 'y'}_active{/if}.png" /></a>{/if}
 <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt='{tr}Subscriptions{/tr}'}</a>
 <a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>

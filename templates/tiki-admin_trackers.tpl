@@ -112,7 +112,16 @@
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td>
+	<td colspan="2">
+		<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
+				<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
+				{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
+				{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
+				</span>
+		<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
+	</td>
+</tr>
 {include file=categorize.tpl colsCategorize=2}
 {if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Auto create corresponding categories{/tr}</td><td>
