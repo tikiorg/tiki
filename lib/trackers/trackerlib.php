@@ -1477,6 +1477,11 @@ class TrackerLib extends TikiLib {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
+						} elseif ($field['type'] == 'c') {
+							if (strtolower($data[$i]) == 'yes' || strtolower($data[$i]) == 'on')
+								$data[$i] = 'y';
+							elseif (strtolower($data[$i]) == 'no')
+								$data[$i] = 'n';
 						} elseif ($field['type'] == 'f' || $field['type'] == 'j') {
 							if ($dateFormat == 'mm/dd/yyyy') {
 								list($m, $d, $y) = split('/', $data[$i]);
