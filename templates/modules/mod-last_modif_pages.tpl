@@ -4,9 +4,9 @@
 {if !isset($tpl_module_title)}
 	{if $nonums eq 'y'}
 		{eval var="{*<a href=\"tiki-lastchanges.php\">*}{tr}Last `$module_rows` changes{/tr}{*</a>*}" assign="tpl_module_title"}
-{else}
-{eval var="{*<a href=\"tiki-lastchanges.php\">*}{tr}Last changes{/tr}{*</a>*}" assign="tpl_module_title"}
-{/if}
+  {else}
+    {eval var="{*<a href=\"tiki-lastchanges.php\">*}{tr}Last changes{/tr}{*</a>*}" assign="tpl_module_title"}
+  {/if}
 {/if}
 	{tikimodule title=$tpl_module_title name="last_modif_pages" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
@@ -32,6 +32,6 @@
      </li>
     {/section}
 	{if $nonums != 'y'}</ol>{else}</ul>{/if}
-	<a style="margin-left: 20px" href="tiki-lastchanges.php">...{tr}more{/tr}</a>
+	<a class="linkmodule" style="margin-left: 20px" href="tiki-lastchanges.php">...{tr}more{/tr}</a>
 	{/tikimodule}
 {/if}
