@@ -60,17 +60,8 @@
 {section  name=x loop=$categ_perms}
 	{section name=y loop=$categ_perms[x]}
 <tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}">
-	<table width="100%">
-	{foreach from=$categ_perms[x][y].all_perms item=v key=p name=all_perms}
-	{if $smarty.foreach.all_perms.first or $v eq 'y'}<tr>{/if}
-	{if $smarty.foreach.all_perms.first}<td rowspan="{$smarty.foreach.all_perms.total}">{$categ_perms[x][y].permDesc}({$categ_perms[x][y].permName})</td>{/if}
-	{if $v eq 'y'}<td>{$p}:{$v}</td>{/if}
-	{if $smarty.foreach.all_perms.first or $v eq 'y'}</tr>{/if}
-	{/foreach}
-	</table>
-	</td>
-  <td class="{cycle advance=false}">{$categ_perms[x][y].groupName}</td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].permName|escape}<br /><i>{$categ_perms[x][y].permDesc}</i></td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].groupName|escape}</td>
   <td class="{cycle advance=false}">{$categ_perms[x][0].catpath}</td>
 </tr>
 	{/section}

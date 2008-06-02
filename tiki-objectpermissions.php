@@ -148,6 +148,7 @@ if ($prefs['feature_categories'] == 'y') {
 	// Get the permissions of the categories that this object belongs to,
 	$categ_perms = array();
 	$parents = $categlib->get_object_categories($_REQUEST['objectType'], $_REQUEST['objectId']);
+	$perms_categ = $userlib->get_permissions(0, -1, 'permName_asc', '', 'category');
 	foreach ($parents as $categId) {
 		if ($userlib->object_has_one_permission($categId, 'category')) {
 			$categ_perm = $userlib->get_object_permissions($categId, 'category');
@@ -163,6 +164,16 @@ if ($prefs['feature_categories'] == 'y') {
 					$categ_perms[$x][0]['catpath'] = $categlib->get_category_name($categpath[$i]['categId']);
 					$x++;
 					break 1;
+				}
+			}
+		}
+	}
+	foreach ($categ_perms as $i=>$p) {
+		foreach ($p as $j=>$pp) {
+			foreach ($perms_categ['data'] as $ppp) {
+				if ($ppp['permName'] == $pp['permName']) {
+					$categ_perms[$i][$j]['permDesc'] = $ppp['permDesc'];
+					break;
 				}
 			}
 		}
