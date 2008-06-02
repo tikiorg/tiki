@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ("lib/ziplib.php");
 include_once ('lib/wiki/exportlib.php');
 
-if ($tiki_p_admin_wiki != 'y') {
+if ($tiki_p_admin_wiki != 'y' && $tiki_p_export_wiki != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;

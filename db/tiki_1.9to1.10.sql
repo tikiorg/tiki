@@ -1794,3 +1794,6 @@ insert into users_permissions (permName,permDesc,level,type,admin) values ('tiki
 
 #2008-06-02 sylvieg
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
+
+#2008-06-02 lphuberdeau
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_export_wiki', 'Can export wiki pages using the export feature', 'admin', 'wiki');
