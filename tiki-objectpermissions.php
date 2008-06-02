@@ -112,6 +112,12 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	}
 }
 
+if (isset($_REQUEST['delsel_x']) || isset($_REQUEST['action']) || isset($_REQUEST['assign'])) {
+	$cookietab = 2;
+	setcookie('tab',$cookietab);
+	$smarty->assign_by_ref('cookietab',$cookietab);
+}
+
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST["objectType"]);
 
