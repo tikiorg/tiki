@@ -1621,6 +1621,12 @@ class TrackerLib extends TikiLib {
 					}
 				}
 				break;
+				case 'a':
+					if (isset($f['options_array'][5]) &&  $f['options_array'][5] > 0) {
+						if (count(preg_split('/\s+/', $f['value'])) > $f['options_array'][5]) {
+							$erroneous_values[] = $f;
+						}
+					}
 				}
 			}
 		}

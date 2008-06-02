@@ -14,7 +14,7 @@
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
 	{section name=i loop=$field_value.options_array}
-		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item['my_rate']} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
+		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item.my_rate} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
 	{/section}
 
 {* -------------------- user selector -------------------- *}
@@ -185,11 +185,11 @@
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
     		{include file=tiki-edit_help_tool.tpl qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
 			{/if}
-		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')" onfocus="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 			{$field_value.value}
 		</textarea>
 		{if $field_value.options_array[5]}
-			<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true />{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>
+			<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}" size="4" readOnly=true{if !empty($field_value.value)} value="{$field_value.value|count_words}"{/if} />{if $field_value.options_array[5] > 0} {tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>
 		{/if}
 	{else}
 		<table>
@@ -200,10 +200,10 @@
 				{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
         			{include file=tiki-edit_help_tool.tpl qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
-				<textarea id="area_{$field_value.id}_{$ling.lang}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')" onfocus="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+				<textarea id="area_{$field_value.id}_{$ling.lang}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
 				</textarea>
-				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>{/if}
+				{if $field_value.options_array[5]}<div class="wordCount">{tr}Word Count:{/tr} <input type="text" id="cpt_{$field_value.fieldId}_{$ling.lang}" size="4" readOnly=true{if !empty($ling.value)} value="{$ling.value|count_words}"{/if} />{if $field_value.options_array[5] > 0}{tr}Max:{/tr} {$field_value.options_array[5]}{/if}</div>{/if}
       		</td>
     	</tr>
 		{/foreach}
@@ -244,9 +244,9 @@
 {* -------------------- jscalendar ------------------- *}
 {elseif $field_value.type eq 'j'}
 	{if $field_value.options_array[0] eq 'd'}
-		{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
+		{jscalendar date=$field_value.value|default:$smarty.now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
 	{else}
-		{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
+		{jscalendar date=$field_value.value|default:$smarty.now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
 		{/if}
 
 {* -------------------- item link -------------------- *}
@@ -254,11 +254,13 @@
 	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
 		{if $field_value.isMandatory ne 'y'}<option value=""></option>{/if}
 		{foreach key=id item=label from=$field_value.list}
-			<option value="{$label|escape}" {if $field_value.value eq $label or $field_value.defaultvalue eq $label}selected="selected"{/if}>
+			<option value="{$label|escape}" {if $input_err and $field_value.value eq $label or $defaultvalues.$fid eq $label or $field_value.defaultvalue eq $label}selected="selected"{/if}>
 				{if $field_value.displayedList.$id eq ''}{$label}{else}{$field_value.displayedList.$id}{/if}
 			</option>
 		{/foreach}
 	</select>
+
+{* -------------------- item list -------------------- *}
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}

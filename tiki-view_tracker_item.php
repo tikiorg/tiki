@@ -897,7 +897,7 @@ if ($_REQUEST["itemId"]) {
 				        } else {
 					     $ins_fields["data"][$i]["value"] = $info["$fid"];
 					     $ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data(htmlspecialchars($info["$fid"]));
-					}
+						}
 				} elseif ($fields['data'][$i]['type'] == 'p' && !empty($itemUser)) {
 					if ($fields['data'][$i]['options_array'][0] == 'email')
 						$ins_fields['data'][$i]['value'] = $userlib->get_user_email($itemUser);

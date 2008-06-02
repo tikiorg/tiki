@@ -231,7 +231,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 			{elseif $tiki_p_tracker_vote_ratings eq 'y'}
 				<td>
 					{section name=i loop=$cur_field.options_array}
-						{if $cur_field.options_array[i] eq $item['my_rate']}
+						{if $cur_field.options_array[i] eq $item.my_rate}
 							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
 						{else}
 							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
