@@ -34,7 +34,7 @@ else disp += sec;
 return (disp);
 }
 function Down() { 
-sec--;      
+sec--;
 if (sec == -1) { sec = 59; min--; }
 document.editpageform.clock.value = Display(min, sec);
 window.status = "{/literal}{tr}Your edit session will expire in{/tr}{literal}: " + Display(min, sec);
@@ -103,14 +103,14 @@ window.onload = timeIt;
 {if $likepages|@count < 0}
 <ul>
 {section name=back loop=$likepages}
-<li><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
 {/section}
 </ul>
 {else}
 <table class="normal"><tr>
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=back loop=$likepages}
-<td><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
+<td><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
 {/section}
 </tr></table>
 {/if}
@@ -126,6 +126,7 @@ window.onload = timeIt;
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
+<input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $preview && $staging_preview neq 'y'}
 <input type="submit" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
@@ -251,16 +252,7 @@ window.onload = timeIt;
 <tr class="formcolor">
 <td colspan="2">
 {if $wysiwyg ne 'y'}
-<div style="float:left; margin-right:5px">{include file="textareasize.tpl" area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
-{if $prefs.quicktags_over_textarea neq 'y'}
-  {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
-{/if}
-{if $wysiwyg ne 'y' and $prefs.quicktags_over_textarea eq 'y'}
-  {include file=tiki-edit_help_tool.tpl area_name='editwiki'}
-{/if}
-</td></tr>
-<tr class="formcolor"><td colspan="2">
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}" style="width: 98%;">{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+{include file="wiki_edit.tpl"}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
@@ -379,7 +371,7 @@ function searchrep() {
 {if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
 {if $prefs.feature_filegals_manager eq 'y'}
-<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-file_galleries.php?filegals_manager=y','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;">
+<input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-file_galleries.php?filegals_manager=y','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;" />
 {else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />
@@ -431,28 +423,8 @@ function searchrep() {
 {if $prefs.feature_contribution eq 'y'}
 {include file="contribution.tpl"}
 {/if}
-{if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
-<tr class="formcolor">
-<td>&nbsp;</td>
-<td>
-<input type="hidden" name="page" value="{$page|escape}" />
-<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
-{if $translation_mode eq 'y'}
-<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a partial translation.{/tr}');" onmouseout="nd();" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
-<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a completed translation.{/tr}');" onmouseout="nd();" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
-{else}
-{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
-  <input type="submit" class="wikiaction" name="minor" onmouseover="return overlib('{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}');" onmouseout="nd();" value="{tr}Minor Edit{/tr}" onclick="needToConfirm=false;" />
-{/if}
-<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
-{if $prefs.feature_ajax eq 'y'}
-  <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a draft.{/tr}');" onmouseout="nd();" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
-{/if}
-{/if}
-{if $page|lower ne 'sandbox'}
-  <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
-{/if}
-{/if}
+<tr class="formcolor"><td colspan="2" style="text-align:center;">
+{include file='wiki_edit_actions.tpl'}
 </td></tr>
 </table>
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
@@ -460,5 +432,5 @@ function searchrep() {
 {/if}
 </form>
 <br />
-{include file="tiki-page_bar.tpl"}
-{include file=tiki-edit_help.tpl}
+{include file='tiki-page_bar.tpl'}
+{include file='tiki-edit_help.tpl'}

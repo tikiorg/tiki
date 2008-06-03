@@ -57,12 +57,29 @@ class Smarty_Tikiwiki extends Smarty {
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
-		global $prefs, $style_base, $tikidomain;
+		global $prefs, $style_base, $tikidomain, $zoom_templates;
 
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
 		if (($tpl = $this->get_template_vars('mid')) && $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl') {
+
+			// Enable Template Zoom
+			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
+				if ( ! isset($_REQUEST['zoom']) && isset($_REQUEST['zoom_value']) && isset($_REQUEST['zoom_x']) && isset($_REQUEST['zoom_y']) ) {
+					// Hack for IE6 when using an image input to submit the zoom value
+					//  (IE will only send zoom_x and zoom_y params without the value instead of zoom)
+					//  In this case, and if we have set a hidden field 'zoom_value', we use it's value
+					//
+					$_REQUEST['zoom'] = $_REQUEST['zoom_value'];
+				}
+				if ( isset($_REQUEST['zoom']) && is_array($zoom_templates) && in_array($_REQUEST['zoom'], $zoom_templates) ) {
+					$_smarty_tpl_file = 'tiki_full.tpl';
+					$tpl = $_REQUEST['zoom'].'.tpl';
+					$prefs['feature_fullscreen'] = 'n';
+				}
+			}
+
 			// Enable AJAX
 			if ( $prefs['feature_ajax'] == 'y' ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');

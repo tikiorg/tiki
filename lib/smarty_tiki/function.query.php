@@ -52,9 +52,16 @@ function smarty_function_query($params, &$smarty) {
     $ret = '';
     if ( isset($params['_type']) && $params['_type'] == 'form_input' ) {
       foreach ( $query as $k => $v ) {
-        $ret .= '<input type="hidden"'
-             .' name="'.htmlspecialchars($k, ENT_QUOTES, 'UTF-8').'"'
-             .' value="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'" />'."\n";
+        $rtag = '<input type="hidden"';
+        $rname = htmlspecialchars($k, ENT_QUOTES, 'UTF-8');
+        if ( is_array($v) ) {
+          foreach ( $v as $vk => $vv ) {
+            $vrname = $rname.'['.htmlspecialchars($vk, ENT_QUOTES, 'UTF-8').']';
+            $ret .= $rtag.' name="'.$vrname.'" value="'.htmlspecialchars($vv, ENT_QUOTES, 'UTF-8').'" />'."\n";
+          }
+        } else {
+          $ret .= $rtag.' name="'.$rname.'" value="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'" />'."\n";
+        }
       }
     } else {
       $sep = '&amp;';

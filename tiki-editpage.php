@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 //var_dump($_REQUEST);die;
 // Initialization
+
 $section = "wiki page";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
@@ -12,6 +13,9 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 require_once ("lib/ajax/ajaxlib.php");
 require_once ("lib/wiki/wiki-ajax.php");
+
+// Define all templates files that may be used with the 'zoom' feature
+$zoom_templates = array('wiki_edit');
 
 function isNewTranslationMode()
 {
@@ -1101,10 +1105,10 @@ $cat_lang = $pageLang;
 $smarty->assign('section',$section);
 include_once ('tiki-section_options.php');
 if ($prefs['feature_freetags'] == 'y') {
-	include_once ("freetag_list.php");
-	//If in preview mode get the tags from the form and not from database
-	if (isset($_REQUEST["preview"]) ) {
-	    $smarty->assign('taglist',$_REQUEST["freetag_string"]);
+	include_once ('freetag_list.php');
+	// if given in the request, set the freetag list (used for preview mode, when coming back from zoom mode, ...)
+	if ( isset($_REQUEST['freetag_string']) ) {
+	    $smarty->assign('taglist', $_REQUEST['freetag_string']);
 	} elseif( isNewTranslationMode() ) {
 		$tags = $freetaglib->get_all_tags_on_object_for_language($_REQUEST['translationOf'], 'wiki page', $pageLang);
 		$smarty->assign( 'taglist', implode( ' ', $tags ) );

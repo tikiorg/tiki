@@ -1026,6 +1026,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_mootools'] = 'n';
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';
+	$prefs['feature_template_zoom'] = 'y';
 
 	# TikiTests
 	$prefs['feature_tikitests'] = 'n';
