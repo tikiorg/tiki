@@ -54,7 +54,8 @@ $tiki_timer->start();
 require_once('tiki-setup_base.php');
 require_once('lib/setup/compatibility.php');
 require_once('lib/setup/prefs.php');
-if ($prefs['feature_tikitests'] == 'y') {
+// TikiTests are PHP5 only
+if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>'))  {
 	require_once('tiki_tests/tikitestslib.php');
 }
 $crumbs[] = new Breadcrumb($prefs['siteTitle'], '', $prefs['tikiIndex']);
