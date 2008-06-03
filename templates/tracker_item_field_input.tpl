@@ -245,7 +245,7 @@
 
 {* -------------------- jscalendar ------------------- *}
 {elseif $field_value.type eq 'j'}
-	{if $field_value.options_array[0] eq 'd'}AAAA{$field_value.value}{$field_value.value|tiki_long_date}
+	{if $field_value.options_array[0] eq 'd'}
 		{if empty($cur_field.value)}
 			{jscalendar id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
 		{else}
