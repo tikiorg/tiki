@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c)}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
@@ -193,7 +193,7 @@ function wikiplugin_tracker($data, $params) {
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}
 				}
-				if (isset($_FILES['track'])) {// image fields
+				if (isset($_FILES['track'])) {// image or attachment fields
 					foreach ($_FILES['track'] as $label=>$w) {
 						foreach ($w as $fld=>$val) {
 							if ($label == 'tmp_name' && is_uploaded_file($val)) {
@@ -255,6 +255,8 @@ function wikiplugin_tracker($data, $params) {
 					}
 					if (isset($_REQUEST['status'])) {
 						$status = $_REQUEST['status'];
+					} elseif (isset($newstatus) && ($newstatus == 'o' || $newstatus == 'c'|| $newstatus == 'p')) {
+						$status = $newstatus;
 					} elseif (empty($itemId) && isset($tracker['newItemStatus'])) {
 						$status = $tracker['newItemStatus'];
 					} else {
@@ -505,10 +507,10 @@ function wikiplugin_tracker($data, $params) {
 							array_multisort($flagsTranslated, $flds['data'][$i]['flags']);
 						}
 					} elseif ($f['type'] == 'u') {
-						if ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)
+						if ($tiki_p_admin == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
 					} elseif ($f['type'] == 'g') {
-						if ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)
+						if ($tiki_p_admin == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
 							$flds['data'][$i]['list'] = $userlib->list_all_groups();
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
