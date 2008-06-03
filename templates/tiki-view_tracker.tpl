@@ -412,7 +412,9 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
-{html_select_date prefix=$field_value.ins_id time=$field_value.value start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year field_order=$prefs.display_field_order}{if $field_value.options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$field_value.value display_seconds=false}{/if}
+{if isset($field_value.options_array[1])}{assign var=start value=$field_value.options_array[1]}{elseif isset($prefs.calendar_start_year)}{assign var=start value=$prefs.calendar_start_year}{else}{assign var=start value=-4}{/if}
+{if isset($field_value.options_array[2])}{assign var=end value=$field_value.options_array[2]}{elseif isset($prefs.calendar_end_year)}{assign var=end value=$prefs.calendar_end_year}{else}{assign var=end value=+4}{/if}
+{html_select_date prefix=$field_value.ins_id time=$field_value.value start_year=$start end_year=$end field_order=$prefs.display_field_order}{if $field_value.options_array[0] ne 'd'} {tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$field_value.value display_seconds=false}{/if}
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}

@@ -395,8 +395,11 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {elseif $cur_field.type eq 'a'}
 {include file=tracker_item_field_input.tpl field_value=$cur_field}
 
+{* --------------------- date ------------------------ *}
 {elseif $cur_field.type eq 'f'}
-{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year="-4" end_year="+4" field_order=$prefs.display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
+{if isset($cur_field.options_array[1])}{assign var=start value=$cur_field.options_array[1]}{elseif isset($prefs.calendar_start_year)}{assign var=start value=$prefs.calendar_start_year}{else}{assign var=start value=-4}{/if}
+{if isset($cur_field.options_array[2])}{assign var=end value=$cur_field.options_array[2]}{elseif isset($prefs.calendar_and_year)}{assign var=end value=$prefs.calendar_end_year}{else}{assign var=end value=+4}{/if}
+{html_select_date prefix="ins_"|cat:$cur_field.id time=$cur_field.value start_year=$start end_year=$end field_order=$prefs.display_field_order}{if $cur_field.options_array[0] ne 'd'} {html_select_time prefix="ins_"|cat:$cur_field.id time=$cur_field.value display_seconds=false}{/if}
 
 {elseif $cur_field.type eq 'r'}
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
