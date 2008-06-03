@@ -478,9 +478,17 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {elseif $cur_field.type eq 'j'}
 {if $cur_field.options_array[0] eq 'd'}
-{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="n"}
+	{if empty($cur_field.value)}
+		{jscalendar id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="n"}
+	{else}
+		{jscalendar date=$cur_field.value id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="n"}
+	{/if}
 {else}
-{jscalendar date=$cur_field.value|default:$smarty.now id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
+	{if empty($cur_field.value)}
+		{jscalendar id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
+	{else}
+		{jscalendar date=$cur_field.value id=$cur_field.id fieldname="ins_"|cat:$cur_field.id showtime="y"}
+	{/if}
 {/if}
 {/if}
 

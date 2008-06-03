@@ -243,11 +243,19 @@
 
 {* -------------------- jscalendar ------------------- *}
 {elseif $field_value.type eq 'j'}
-	{if $field_value.options_array[0] eq 'd'}
-		{jscalendar date=$field_value.value|default:$smarty.now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
-	{else}
-		{jscalendar date=$field_value.value|default:$smarty.now id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
+	{if $field_value.options_array[0] eq 'd'}AAAA{$field_value.value}{$field_value.value|tiki_long_date}
+		{if empty($cur_field.value)}
+			{jscalendar id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
+		{else}
+			{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="n"}
 		{/if}
+	{else}
+		{if empty($cur_field.value)}
+			{jscalendar id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
+		{else
+			{jscalendar date=$field_value.value id=$field_value.ins_id fieldname=$field_value.ins_id showtime="y"}
+		{/if}
+	{/if}
 
 {* -------------------- item link -------------------- *}
 {elseif $field_value.type eq 'r'}
