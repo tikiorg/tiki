@@ -9,7 +9,7 @@
 {/foreach}
 {/if}
 {foreach from=$prefills item=field}
-&amp;values[]={$field.value}
+&amp;values[]={$field.value|escape:"url"}
 {/foreach}
 ">{if $params.label}{tr}{$params.label}{/tr}{else}{tr}Go{/tr}{/if}</a>
 {/strip}
