@@ -1,5 +1,5 @@
 {strip}
-{* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups*}
+{* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups, item(creator,rating,trackerId)*}
 
 {* ---- visible admin only ---- *}
 {if $field_value.isHidden eq 'y' and $tiki_p_admin_trackers ne 'y'}
@@ -96,7 +96,7 @@
 	<input type="file" name="{$field_value.ins_id}"{if isset($input_err)} value="{$field_value.value}"{/if} />
 	{if $field_value.value ne ''}
 		<img src="{$field_value.value}" alt="" width="{$field_value.options_array[2]}" height="{$field_value.options_array[3]}" />
-		<a href="{$smarty.server.PHP_SELF}?{query removeImage="y"}">{tr}Remove Image{/tr}</a>
+		<a href="{$smarty.server.PHP_SELF}?{query removeImage='y' fieldId=`$field_value.fieldId` itemId=`$item.itemId` trackerId=`$item.trackerId` fieldName=`$field_value.name`}">{icon _id='cross' alt='{tr}Remove Image{/tr}'}</a>
    {/if}
 
 {* -------------------- multimedia -------------------- *}

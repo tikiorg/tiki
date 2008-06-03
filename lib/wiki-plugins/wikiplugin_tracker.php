@@ -107,6 +107,12 @@ function wikiplugin_tracker($data, $params) {
 			unset($_REQUEST['removeattach']);
 		}
 	}
+	if (isset($_REQUEST['removeImage']) && !empty($_REQUEST['trackerId']) && !empty($_REQUEST['itemId']) && !empty($_REQUEST['fieldId']) && !empty($_REQUEST['fieldName'])) {
+		$img_field = array('data' => array());
+		$img_field['data'][] = array('fieldId' => $_REQUEST['fieldId'], 'type' => 'i', 'name' => $_REQUEST['fieldName'], 'value' => 'blank');
+		$trklib->replace_item($_REQUEST['trackerId'], $_REQUEST['itemId'], $img_field);
+	}
+	$back = '';
 
 	$thisIsThePlugin = isset($_REQUEST['trackit']) && $_REQUEST['trackit'] == $trackerId && ((isset($_REQUEST['fields']) && isset($params['fields']) && $_REQUEST['fields'] == $params['fields']) || (!isset($_REQUEST['fields']) && !isset($params['fields'])));
 
@@ -120,7 +126,6 @@ function wikiplugin_tracker($data, $params) {
 			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
 				return;
 			$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
-			$back = '';
 			$bad = array();
 			$embeddedId = false;
 			$onemandatory = false;
@@ -245,9 +250,17 @@ function wikiplugin_tracker($data, $params) {
 
 				if( count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 && empty($field_errors['err_antibot']) && !isset($_REQUEST['tr_preview'])) {
 					/* ------------------------------------- save the item ---------------------------------- */
-					if (!isset($itemId))
+					if (!isset($itemId)) {
 						$itemId = $trklib->get_user_item($trackerId, $tracker);
-					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields,$tracker['newItemStatus'], $ins_categs);
+					}
+					if (isset($_REQUEST['status'])) {
+						$status = $_REQUEST['status'];
+					} elseif (empty($itemId) && isset($tracker['newItemStatus'])) {
+						$status = $tracker['newItemStatus'];
+					} else {
+						$status = '';
+					}
+					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields, $status, $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (!empty($email)) {
 						$emailOptions = split("\|", $email);
@@ -546,8 +559,9 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back.= "</td><td>";
 						$smarty->assign_by_ref('field_value', $f);
-						if (isset($item))
+						if (isset($item)) {
 							$smarty->assign_by_ref('item', $item);
+						}
 						$back .= $smarty->fetch('tracker_item_field_input.tpl');
 					} else {//old
 					// numeric or text field
