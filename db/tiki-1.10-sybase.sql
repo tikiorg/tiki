@@ -6906,6 +6906,18 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_tikitests', 'Can admin the TikiTests', 'admin', 'tikitests')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests')
+go
+
+
 -- --------------------------------------------------------
 
 --

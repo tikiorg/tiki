@@ -5457,6 +5457,12 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_tikitests', 'Can admin the TikiTests', 'admin', 'tikitests');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
+
 -- --------------------------------------------------------
 --
 -- Table structure for table users_usergroups
