@@ -557,7 +557,7 @@ class TrackerLib extends TikiLib {
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode ='' , $listfields, $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
+	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
@@ -963,7 +963,7 @@ class TrackerLib extends TikiLib {
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
 					global $tiki_p_attach_trackers;
-					if ($tiki_p_attach_trackers == 'y' && isset($ins_fields['data'][$i]['file_name'])) {
+					if ($tiki_p_attach_trackers == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
 						if ($prefs['t_use_db'] == 'n') {
 							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
 							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
@@ -978,7 +978,7 @@ class TrackerLib extends TikiLib {
 						}
 						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($old_value, $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId ? $itemId : $new_itemId, '', false);
 					} else {
-						$ins_fields['data'][$i]['value'] = '';
+						continue;
 					}
 				}
 
