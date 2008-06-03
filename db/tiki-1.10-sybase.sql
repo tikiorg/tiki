@@ -5939,7 +5939,7 @@ go
 
 CREATE TABLE "users_grouppermissions" (
   "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
+  "permName" varchar(31) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
 ) ENGINE=MyISAM
@@ -5997,7 +5997,7 @@ go
 
 CREATE TABLE "users_objectpermissions" (
   "groupName" varchar(255) default '' NOT NULL,
-  "permName" varchar(40) default '' NOT NULL,
+  "permName" varchar(31) default '' NOT NULL,
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
   PRIMARY KEY ("objectId","objectType","groupName","permName")
@@ -6019,7 +6019,7 @@ go
 
 
 CREATE TABLE "users_permissions" (
-  "permName" varchar(40) default '' NOT NULL,
+  "permName" varchar(31) default '' NOT NULL,
   "permDesc" varchar(250) default NULL NULL,
   "level" varchar(80) default NULL NULL,
   "type" varchar(20) default NULL NULL,
@@ -6901,8 +6901,10 @@ go
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki')
 go
 
-INSERT into users_permissions (permName,permDesc,level,type,admin) VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries',NULL);
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki')
 go
+
 
 -- --------------------------------------------------------
 

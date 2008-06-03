@@ -4102,7 +4102,7 @@ CREATE TABLE tiki_download (
 DROP TABLE IF EXISTS users_grouppermissions;
 CREATE TABLE users_grouppermissions (
   groupName varchar(255) NOT NULL default '',
-  permName varchar(40) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   value char(1) default '',
   PRIMARY KEY  (groupName(30),permName)
 ) ENGINE=MyISAM;
@@ -4145,7 +4145,7 @@ CREATE TABLE users_groups (
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
   groupName varchar(255) NOT NULL default '',
-  permName varchar(40) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   objectType varchar(20) NOT NULL default '',
   objectId varchar(32) NOT NULL default '',
   PRIMARY KEY  (objectId, objectType, groupName(30),permName)
@@ -4161,7 +4161,7 @@ CREATE TABLE users_objectpermissions (
 
 DROP TABLE IF EXISTS users_permissions;
 CREATE TABLE users_permissions (
-  permName varchar(40) NOT NULL default '',
+  permName varchar(31) NOT NULL default '',
   permDesc varchar(250) default NULL,
   level varchar(80) default NULL,
   type varchar(20) default NULL,
@@ -4389,7 +4389,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_c
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_site_report', 'Can report a link to the webmaster', 'basic', 'tiki');
-INSERT into users_permissions (permName,permDesc,level,type,admin) VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries',NULL);
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_as_template', 'Can use the page as a tracker template', 'basic', 'wiki');
 # --------------------------------------------------------
 
 #
