@@ -742,6 +742,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# html header
 	$prefs['metatag_keywords'] = '';
 	$prefs['metatag_threadtitle'] = '';
+	$prefs['metatag_imagetitle'] = '';
 	$prefs['metatag_description'] = '';
 	$prefs['metatag_author'] = '';
 	$prefs['metatag_geoposition'] = '';
