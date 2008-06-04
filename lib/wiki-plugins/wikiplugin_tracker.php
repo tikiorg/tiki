@@ -540,6 +540,8 @@ function wikiplugin_tracker($data, $params) {
 			// Loop on tracker fields and display form
 			if (empty($tpl) && empty($wiki)) {
 				$back.= '<table class="wikiplugin_tracker">';
+			} else {
+				$back .= '<div class="wikiplugin_tracker">';
 			}
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
@@ -837,6 +839,8 @@ function wikiplugin_tracker($data, $params) {
 			if (empty($tpl) && empty($wiki)) {
 				$back.= "</td></tr>";
 				$back.= "</table>";
+			} else {
+				$back .= '</div>';
 			}
 			$back.= '</form>';
 			if (!empty($page))
