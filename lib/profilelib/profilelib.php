@@ -12,6 +12,8 @@ class Tiki_Profile
 	private $profile;
 	private $data = array();
 
+	private $objects = null;
+
 	function __construct( $url ) // {{{
 	{
 		$this->url = $url;
@@ -154,6 +156,9 @@ class Tiki_Profile
 
 	function getObjects() // {{{
 	{
+		if( !is_null( $this->objects ) )
+			return $this->objects;
+
 		$objects = array();
 
 		if( array_key_exists( 'objects', $this->data ) )
@@ -164,7 +169,34 @@ class Tiki_Profile
 					$objects[] = $o;
 			}
 
-		return $objects;
+		$classified = array();
+		$names = array();
+
+		// Order object creations to make sure all objects are created when needed
+		// Circular dependencies get dicarded
+		$counter = 0;
+		while( ! empty( $objects ) )
+		{
+			// Circular dependency found... give what we have
+			if( $counter++ > count($objects) * 2 )
+				break;
+
+			$object = array_shift( $objects );
+			$refs = $object->getInternalReferences();
+			$refs = array_diff( $refs, $names );
+			if( empty( $refs ) )
+			{
+				$counter = 0;
+				$classified[] = $object;
+				if( $object->getRef() )
+					$names[] = $object->getRef();
+			}
+			else
+				$objects[] = $object;
+		}
+
+		$this->objects = $classified;
+		return $this->objects;
 	} // }}}
 }
 
@@ -174,6 +206,8 @@ class Tiki_Profile_Object
 	private $domain;
 	private $profile;
 	private $id = false;
+
+	private $references = null;
 
 	public static function serializeNamedObject( $object ) // {{{
 	{
@@ -235,6 +269,26 @@ class Tiki_Profile_Object
 
 		$tikilib->query( "INSERT INTO tiki_profile_symbols (domain, profile, object, type, value, named) VALUES(?, ?, ?, ?, ?, ?)", 
 			array( $this->domain, $this->profile, $name, $this->getType(), $this->id, $named ) );
+	} // }}}
+
+	function getInternalReferences() // {{{
+	{
+		if( !is_null( $this->references ) )
+			return $this->references;
+
+		return $this->references = $this->traverseForReferences( $this->data );
+	} // }}}
+
+	private function traverseForReferences( $value ) // {{{
+	{
+		$array = array();
+		if( is_array( $value ) )
+			foreach( $value as $v )
+				$array = array_merge( $array, $this->traverseForReferences( $v ) );
+		elseif( preg_match( '/^\$([^:]+)$/', $value, $parts ) )
+			$array[] = $parts[1];
+
+		return $array;
 	} // }}}
 
 	function __get( $name ) // {{{
