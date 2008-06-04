@@ -58,14 +58,16 @@
 <span style="padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {if $catree[dx].deep < $catree[$after].deep}
-<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></span>
+<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
 {elseif $catree[dx].deep eq $catree[$after].deep}
-</span></div>
+</div>
 {else}
-</span></div>
+</div>
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
+{/span}
 {/section}
+</div>
 
 <a name="editcreate"></a>
     <div class="cbox">
