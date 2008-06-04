@@ -376,7 +376,7 @@ function wikiplugin_tracker($data, $params) {
 			
 			$optional = array();
 			$outf = array();
-			if (isset($fields)) {
+			if (isset($fields) && !empty($fields)) {
 				$fl = split(":",$fields);
 				if ($sort == 'y')
 					$flds = $trklib->sort_fields($flds, $fl);		
@@ -397,7 +397,7 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$outf[] = $l;
 				}
-			} else {
+			} elseif (!isset($fields)) {
 				foreach ($flds['data'] as $f) {
 					if ($f['isMandatory'] == 'y')
 						$optional[] = $f['fieldId'];
