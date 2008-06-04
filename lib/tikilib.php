@@ -4624,6 +4624,7 @@ function add_pageview() {
 	$commentslib = new Comments($dbTiki);
 	
 	if (!$user) $user = 'anonymous';
+	if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
 	// Collect pages before modifying data
 	$pages = $this->get_pages($data);
 
