@@ -41,9 +41,11 @@ function wikiplugin_tracker($data, $params) {
 		if (!empty($utid) && !empty($utid['usersTrackerId'])) {
 			$itemId = $trklib->get_item_id($utid['usersTrackerId'],$utid['usersFieldId'],$user);
 			$trackerId = $utid['usersTrackerId'];
+			$usertracker = true;
 		}
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
 		$itemId = $trklib->get_user_item($trackerId, $tracker);
+		$usertracker = true;
 	}
 
 	if (!isset($trackerId)) {
@@ -76,9 +78,6 @@ function wikiplugin_tracker($data, $params) {
 	}
 		$smarty->assign('showmandatory', $showmandatory); 
 
-	if (!isset($permMessage)) {
-		$permMessage = tra("You do not have permission to insert an item");
-	}
 	if (isset($values)) {
 		if (!is_array($values)) {
 			$values = explode(':', $values);
@@ -94,9 +93,15 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 
-	if (isset($_SERVER['SCRIPT_NAME']) && !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php') && empty($itemId)) {
-		if (!$tikilib->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_create_tracker_items')) {
-			return '<b>'.$permMessage.'</b>';
+	if (empty($_SERVER['SCRIPT_NAME']) || !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
+		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
+		} else {
+			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
+			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
+				return '<b>'.tra("You do not have permission to insert an item").'</b>';
+			} elseif ($perms['tiki_p_modify_tracker_items'] == 'n' && !empty($itemId)) { 
+				return '<b>'.tra("You do not have permission to modify an item").'</b>';
+			}
 		}
 	}
 
@@ -356,7 +361,9 @@ function wikiplugin_tracker($data, $params) {
 				} else {
 					$filter = &$flds['data'];
 				}
-				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
+				if (!empty($filter)) {
+					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
+				}
 
 			} else {
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
