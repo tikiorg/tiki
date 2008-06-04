@@ -348,6 +348,7 @@ function wikiplugin_tracker($data, $params) {
 			} elseif (!empty($itemId)) {
 				if (isset($fields)) {
 					$fl = split(':', $fields);
+					$filter = '';
 					foreach ($flds['data'] as $f) {
 						if (in_array($f['fieldId'], $fl))
 							$filter[] = $f;
