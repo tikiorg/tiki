@@ -1797,3 +1797,16 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #2008-06-02 lphuberdeau
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_export_wiki', 'Can export wiki pages using the export feature', 'admin', 'wiki');
+
+#2008-06-06 lphuberdeau
+CREATE TABLE tiki_profile_symbols (
+	`domain` VARCHAR(50) NOT NULL,
+	`profile` VARCHAR(50) NOT NULL,
+	`object` VARCHAR(50) NOT NULL,
+	`type` VARCHAR(20) NOT NULL,
+	`value` VARCHAR(50) NOT NULL,
+	`named` ENUM('y','n') NOT NULL,
+	`creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY( `domain`, `profile`, `object` ),
+	INDEX(`named`)
+);
