@@ -282,9 +282,9 @@ function searchrep() {
 //--><!]]>
 </script>
 <tr class="formcolor"><td>{tr}Regex search {/tr}:</td><td>
-<input style="width:100;" class="wikitext" type="text" id="search"/>
+<input style="width:100;" class="wikiedit" type="text" id="search"/>
 {tr}Replace to{/tr}:
-<input style="width:100;" class="wikitext" type="text" id="replace"/>
+<input style="width:100;" class="wikiedit" type="text" id="replace"/>
 <input type="checkbox" id="caseinsens" />{tr}Case Insensitivity{/tr}
 <input type="button" value="{tr}Replace{/tr}" onclick="javascript:searchrep();">
 </td></tr>
@@ -321,14 +321,14 @@ function searchrep() {
 </tr>
 {/if}
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
-<tr class="formcolor"><td>{tr}Title:{/tr}</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
+<tr class="formcolor"><td>{tr}Title:{/tr}</td><td><input size="40" class="wikiedit" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td>
 {if !empty($copyrights)}<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>{/if}</tr>
-<tr class="formcolor"><td>{tr}Year:{/tr}</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Authors:{/tr}</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Year:{/tr}</td><td><input size="4" class="wikiedit" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Authors:{/tr}</td><td><input size="40" class="wikiedit" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
 </table>
 </td></tr>
 {/if}
@@ -346,7 +346,7 @@ function searchrep() {
 <tr class="formcolor">
   <td>{tr}Import HTML{/tr}:</td>
   <td>
-    <input class="wikitext" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;
+    <input class="wikiedit" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;
   </td>
 </tr>
 <tr class="formcolor">
