@@ -414,17 +414,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 </select>
 
 {elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'}
-<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
-{assign var=otherValue value=$cur_field.value}
-{if $cur_field.isMandatory ne 'y' || empty($cur_field.value)}<option value=""></option>{/if}{*can be empty even if mandatory when coming from a user tracker *}
-{section name=jx loop=$cur_field.options_array}
-<option value="{$cur_field.options_array[jx]|escape}" {if (!empty($cur_field.value) and $cur_field.value eq $cur_field.options_array[jx]) or (empty($cur_field.value) and $cur_field.options_array[jx] eq $cur_field.defaultvalue)}selected="selected"{/if}>{$cur_field.options_array[jx]|tr_if}</option>
-{if !empty($cur_field.value) and $cur_field.value eq $cur_field.options_array[jx]}{assign var=otherValue value=''}{/if}
-{/section}
-</select>
-{if $cur_field.type eq 'D'}
-<br />{tr}Other:{/tr} <input type="text" name="ins_{$cur_field.id}_other" value="{$otherValue|escape}" />
-{/if}
+{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 
 {elseif $cur_field.type eq 'R'}
 {section name=jx loop=$cur_field.options_array}

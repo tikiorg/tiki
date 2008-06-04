@@ -418,16 +418,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- drop down -------------------- *}
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
-<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-{assign var=otherValue value=$field_value.value}
-<option value="">&nbsp;</option>
-{section name=jx loop=$field_value.options_array}
-<option value="{$field_value.options_array[jx]|escape}" {if $input_err}{if $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{/if}{elseif $defaultvalues.$fid eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
-{/section}
-</select>
-{if $field_value.type eq 'D'}
-<br />{tr}Other:{/tr} <input type="text" name="{$field_value.ins_id}_other" value="{$otherValue|escape}" />
-{/if}
+{include file="tracker_item_field_input.tpl"}
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}

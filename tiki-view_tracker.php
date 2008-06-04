@@ -374,8 +374,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			} else {
 				$ins_fields["data"][$i]["value"] = '';
 			}
-			if ($fields['data'][$i]['type'] == 'D' && !empty($_REQUEST[$ins_id.'_other'])) { // drop down with other
-				$ins_fields['data'][$i]['value'] = $_REQUEST[$ins_id.'_other'];
+			if ($fields['data'][$i]['type'] == 'D' && !empty($_REQUEST['other_'.$ins_id])) { // drop down with other
+				$ins_fields['data'][$i]['value'] = $_REQUEST['other_'.$ins_id];
 			}
 			if (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];

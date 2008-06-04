@@ -223,13 +223,15 @@
 {elseif $field_value.type eq 'd' or $field_value.type eq 'D'}
 	<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue={$field_value.value}{$field_value.http_request[5]}')"{/if}>
 	{assign var=otherValue value=$field_value.value}
-		<option value="">&nbsp;</option>
+		{if $field_value.isMandatory ne 'y' || empty($field_value.value)}
+			<option value="">&nbsp;</option>
+		{/if}
 		{section name=jx loop=$field_value.options_array}
 			<option value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx]}{assign var=otherValue value=''}selected="selected"{elseif $field_value.defaultvalue eq $field_value.options_array[jx]}selected="selected"{/if}>{$field_value.options_array[jx]|tr_if}</option>
 		{/section}
 	</select>
 	{if $field_value.type eq 'D'}
-	<br />{tr}Other:{/tr} <input type="text" name="{$field_value.ins_id}_other" value="{$otherValue|escape}" />
+	<br />{tr}Other:{/tr} <input type="text" name="other_{$field_value.ins_id}" value="{$otherValue|escape}" />
 	{/if}
 
 {* -------------------- radio buttons -------------------- *}

@@ -171,8 +171,8 @@ function wikiplugin_tracker($data, $params) {
 							}
 						}
 					}
-					if (!empty($_REQUEST['track_other'][$fl['fieldId']])) {
-						$flds['data'][$cpt]['value'] = $_REQUEST['track_other'][$fl['fieldId']];
+					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
+						$flds['data'][$cpt]['value'] = $_REQUEST['other_track'][$fl['fieldId']];
 					}
 					$full_fields[$fl['fieldId']] = $fl;
 					
@@ -187,8 +187,8 @@ function wikiplugin_tracker($data, $params) {
 				if (isset($_REQUEST['track'])) {
 					foreach ($_REQUEST['track'] as $fld=>$val) {
 						//$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
-						if (!empty($_REQUEST["track_other"][$fld])) {
-							$val = $_REQUEST["track_other"][$fld];
+						if (!empty($_REQUEST['other_track'][$fld])) {
+							$val = $_REQUEST['other_track'][$fld];
 						}
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}
