@@ -530,7 +530,9 @@ function wikiplugin_tracker($data, $params) {
 			}
 
 			// Loop on tracker fields and display form
-			$back.= '<table class="wikiplugin_tracker">';
+			if (empty($tpl)) {
+				$back.= '<table class="wikiplugin_tracker">';
+			}
 			$backLength0 = strlen($back);
 			foreach ($flds['data'] as $f) {
 				if ($f['type'] == 'u' and $f['options_array'][0] == '1') {
@@ -820,8 +822,10 @@ function wikiplugin_tracker($data, $params) {
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
 			}
-			$back.= "</td></tr>";
-			$back.= "</table>";
+			if (empty($tpl)) {
+				$back.= "</td></tr>";
+				$back.= "</table>";
+			}
 			$back.= '</form>';
 			if (!empty($page))
 				$back .= '~/np~';
