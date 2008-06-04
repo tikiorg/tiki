@@ -530,7 +530,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 
 			// Loop on tracker fields and display form
-			if (empty($tpl)) {
+			if (empty($tpl) && empty($wiki)) {
 				$back.= '<table class="wikiplugin_tracker">';
 			}
 			$backLength0 = strlen($back);
@@ -803,7 +803,9 @@ function wikiplugin_tracker($data, $params) {
 
 					if (!empty($f['description']) && $f['type'] != 'h')
 						$back .= '<br /><i>'.$f['description'].'</i>';
-					$back.= "</td></tr>";
+					if (empty($tpl) && empty($wiki)) {
+						$back.= "</td></tr>";
+					}
 				}
 			}
 			if (!empty($tpl)) {
@@ -814,7 +816,9 @@ function wikiplugin_tracker($data, $params) {
 			if ($prefs['feature_antibot'] == 'y' && empty($user)) {
 				$back .= $smarty->fetch('antibot.tpl');
 			}
-			$back.= "<tr><td></td><td>";
+			if (empty($tpl) && empty($wiki)) {
+				$back.= "<tr><td></td><td>";
+			}
 			if (!empty($preview)) {
 				$back .= "<input type='submit' name='tr_preview' value='".tra($preview)."' />";
 			}
@@ -822,7 +826,7 @@ function wikiplugin_tracker($data, $params) {
 			if ($showmandatory == 'y' and $onemandatory) {
 				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
 			}
-			if (empty($tpl)) {
+			if (empty($tpl) && empty($wiki)) {
 				$back.= "</td></tr>";
 				$back.= "</table>";
 			}
