@@ -48,8 +48,8 @@
 </tr>
 {cycle values="odd,even" print=false}
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
-<tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Bold text{/tr}</strong></td><td class="{cycle}"> 2 {tr}underscores{/tr} "_". {tr}Example{/tr} __{tr}text{/tr}__</td></tr>
-<tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Italic text{/tr}</strong></td><td class="{cycle}"> 2 {tr}single quotes{/tr} "'". {tr}Example{/tr} ''{tr}text{/tr}''</td></tr>
+<tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Bold text{/tr}</strong></td><td class="{cycle}"> 2 {tr}underscores{/tr} "_". {tr}Example{/tr} __{tr}text{/tr}__ = <strong>text</strong></td></tr>
+<tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Italic text{/tr}</strong></td><td class="{cycle}"> 2 {tr}single quotes{/tr} "'".  {tr}Example{/tr} ''{tr}text{/tr}'' = <em>text</em></td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Centered text{/tr}</strong></td><td class="{cycle}"> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}:</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Underlined text{/tr}</strong></td><td class="{cycle}"> 3 {tr}equals{/tr} "=". {tr}Example{/tr} ==={tr}text{/tr}===</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Text box{/tr}</strong></td><td class="{cycle}"> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} "^{tr}Box content{/tr}^"</td></tr>
@@ -65,7 +65,7 @@
 {else}
 <tr><td class="{cycle advance=false}"><strong>{tr}Tables{/tr}</strong></td><td class="{cycle}"> "||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||" {tr}creates a table{/tr}</td></tr>
 {/if}
-<tr><td class="{cycle advance=false}"><strong>{tr}Horizontal rule{/tr}</strong></td><td>"-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}</td></tr>
+<tr><td class="{cycle advance=false}"><strong>{tr}Horizontal rule{/tr}</strong></td><td class="{cycle}">"-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}</td></tr>
 {/if}{* wysiwyg *}
 
 <tr><td class="{cycle advance=false}"><strong>{tr}Wiki References{/tr}</strong></td><td class="{cycle}"> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
