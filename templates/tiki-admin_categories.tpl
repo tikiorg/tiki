@@ -65,7 +65,7 @@
 </div>
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
-{/span}
+</span>
 {/section}
 </div>
 
