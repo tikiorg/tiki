@@ -814,6 +814,9 @@ class TrackerLib extends TikiLib {
 				}
 				break;
 			case 'p':
+				if (empty($itemUser)) {
+					$itemUser = $this->get_item_creator($trackerId, $itemId);
+				}
 				if ($fopt['options_array'][0] == 'password') {
 				} elseif ($fopt['options_array'][0] == 'email' && !empty($itemUser)) {
 					global $userlib;

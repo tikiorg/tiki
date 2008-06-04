@@ -30,7 +30,7 @@
 {/if}
 
 {foreach key=jx item=ix from=$fields}
-{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')}
+{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')}
 {if $ix.type eq 'l'}
 <td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
@@ -96,9 +96,10 @@
 
 {* ------------------------------------ *}
 {section name=ix loop=$items[user].field_values}
-{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or ($items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser eq $user) or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password')}
+{if $items[user].field_values[ix].isPublic eq 'y' and ($items[user].field_values[ix].isHidden eq 'n' or $items[user].field_values[ix].isHidden eq 'c' or $items[user].field_values[ix].isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h' and in_array($items[user].field_values[ix].fieldId, $listfields) and ($items[user].field_values[ix].type ne 'p' or $items[user].field_values[ix].options_array[0] ne 'password')}
 <td class="auto">
-	{if isset($perms)}
+	{if $items[user].field_values[ix].isHidden eq 'c' and $items[user].itemUser ne $user}
+	{elseif isset($perms)}
 		{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$items[user].field_values[ix] list_mode="y"
 		tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items}
 	{else}
