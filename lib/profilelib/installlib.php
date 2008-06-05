@@ -359,7 +359,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'dropdown' => 'd',
 				'dropdown_other' => 'D',
 				'radio' => 'R',
-				'user' => 'y',
+				'user' => 'u',
 				'group' => 'g',
 				'ip_address' => 'I',
 				'country' => 'y',
