@@ -353,6 +353,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 		return array(
 			'type' => new Tiki_Profile_ValueMapConverter( array( // {{{
 				'text_field' => 't',
+				'text_area' => 'a',
 				'checkbox' => 'c',
 				'numeric' => 'n',
 				'dropdown' => 'd',
