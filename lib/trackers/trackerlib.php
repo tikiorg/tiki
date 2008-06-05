@@ -410,10 +410,15 @@ class TrackerLib extends TikiLib {
 	}
 
 	/* experimental shared */
-	function get_items_list($trackerId,$fieldId,$value,$status='o') {
+	function get_items_list($trackerId, $fieldId, $value, $status='o') {
 		$query = "select distinct ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=? and tti.`status`=?";
-		$result = $this->query($query,array((int) $trackerId,(int)$fieldId,$value,$status));
+		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
+		$bindVars = array((int)$trackerId, (int)$fieldId, $value);
+		if (!empty($status)) {
+			$query .= 'and tti.`status`=?';
+			$bindVars[] = $status;
+		}
+		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['itemId'];
@@ -751,7 +756,7 @@ class TrackerLib extends TikiLib {
 
 		foreach ( $listfields as $fieldId =>$fopt ) { // be possible to need the userItem before this field
 			if ($fopt['type'] == 'u' && $fopt['options_array'][0] == 1) {
-					$itemUser = $fopt['value'];
+				$itemUser = isset($fil[$fieldId]) ? $fil[$fieldId] : '';
 			}
 		}
 
@@ -2329,7 +2334,7 @@ class TrackerLib extends TikiLib {
 		if (!empty($userreal)) {
 			if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
 				$value = $userreal;
-				$items = $this->get_items_list($trackerId, $fieldId, $value);
+				$items = $this->get_items_list($trackerId, $fieldId, $value, '');
 				if ($items)
 					return $items[0];
 			}
@@ -2524,6 +2529,15 @@ class TrackerLib extends TikiLib {
 			$sql .= " LEFT JOIN (`tiki_tracker_item_fields` $sttif) ON (t$j.`itemId`= $sttif.`itemId` and $sttif.`fieldId`=".$fieldIds[$k].")";
 		}
 		return $sql;
+	}
+	function get_item_info($itemId) {
+		$query = 'select * from `tiki_tracker_items` where `itemId`=?';
+		$result = $this->query($query, array((int) $itemId));
+		if ($res = $result->fetchRow()) {
+			return $res;
+		} else {
+			return NULL;
+		}
 	}
 }
 
