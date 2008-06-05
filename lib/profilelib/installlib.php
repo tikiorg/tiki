@@ -143,7 +143,22 @@ class Tiki_Profile_Installer
 		$this->installed[$profile->url] = $profile;
 
 		foreach( $profile->getPreferences() as $pref => $value )
-			$tikilib->set_preference( $pref, $value );
+			switch( $pref )
+			{
+			case 'enable':
+				$value = (array) $value;
+				foreach( $value as $name )
+					$tikilib->set_preference( $name, 'y' );
+				break;
+			case 'disable':
+				$value = (array) $value;
+				foreach( $value as $name )
+					$tikilib->set_preference( $name, 'n' );
+				break;
+			default:
+				$tikilib->set_preference( $pref, $value );
+				break;
+			}
 
 		foreach( $profile->getObjects() as $object )
 			$this->getInstallHandler( $object )->install();
