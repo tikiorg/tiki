@@ -14,6 +14,40 @@ class Tiki_Profile
 
 	private $objects = null;
 
+	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
+	{
+		foreach( $conversion as $key => $endValue )
+		{
+			if( ! isset( $data[$key] ) )
+				continue;
+
+			$data[$key] = (array) $data[$key];
+
+			foreach( $data[$key] as $item )
+			{
+				if( $prependKey )
+					$item = "{$key}_{$item}";
+
+				if( !isset( $data[$item] ) )
+					$data[$item] = $endValue;
+			}
+
+			unset( $data[$key] );
+		}
+
+		return $data;
+	} // }}}
+
+	public static function convertYesNo( $data ) // {{{
+	{
+		$copy = $data;
+		foreach( $copy as &$value )
+			if( is_bool( $value ) )
+				$value = $value ? 'y' : 'n';
+
+		return $copy;
+	} // }}}
+
 	function __construct( $url ) // {{{
 	{
 		$this->url = $url;
@@ -148,8 +182,14 @@ class Tiki_Profile
 		$prefs = array();
 
 		if( array_key_exists( 'preferences', $this->data ) )
-			foreach( $this->data['preferences'] as $pref => $value )
-				$prefs[$pref] = is_bool( $value ) ? ($value?'y':'n') : $value;
+		{
+			$prefs = Tiki_Profile::convertLists( $this->data['preferences'], array(
+				'enable' => 'y', 
+				'disable' => 'n'
+			) );
+
+			$prefs = Tiki_Profile::convertYesNo( $prefs );
+		}
 
 		return $prefs;
 	} // }}}
@@ -202,6 +242,8 @@ class Tiki_Profile
 
 class Tiki_Profile_Object
 {
+	private static $known = array();
+
 	private $data;
 	private $domain;
 	private $profile;
@@ -212,6 +254,46 @@ class Tiki_Profile_Object
 	public static function serializeNamedObject( $object ) // {{{
 	{
 		return sprintf( "http://%s/%s#%s", $object['domain'], $object['profile'], $object['object'] );
+	} // }}}
+
+	public function replaceReferences( &$data ) // {{{
+	{
+		if( is_array( $data ) )
+			foreach( $data as &$sub )
+				$this->replaceReferences( $sub );
+		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $data, $parts ) )
+		{
+			$object = $this->convertReference( $parts );
+			$serialized = self::serializeNamedObject( $object );
+			
+			if( ! isset( self::$known[$serialized] ) )
+				self::$known[$serialized] = self::findObjectReference( $object );
+
+			$data = self::$known[$serialized];
+		}
+	} // }}}
+
+	private static function findObjectReference( $object ) // {{{
+	{
+		global $tikilib;
+
+		$result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
+			array( $object['domain'], $object['profile'], $object['object'] ) );
+
+		if( $row = $result->fetchRow() )
+			return $row['value'];
+	} // }}}
+
+	private function convertReference( $parts ) // {{{
+	{
+		list( $full, $null0, $null1, $domain, $null2, $profile, $object ) = $parts;
+
+		if( empty( $domain ) )
+			$domain = $this->domain;
+		if( empty( $profile ) )
+			$profile = $this->profile;
+
+		return array( 'domain' => $domain, 'profile' => $profile, 'object' => $object );
 	} // }}}
 
 	public static function getNamedObjects() // {{{
@@ -279,6 +361,14 @@ class Tiki_Profile_Object
 		return $this->references = $this->traverseForReferences( $this->data );
 	} // }}}
 
+	function getData() // {{{
+	{
+		if( array_key_exists( 'data', $this->data ) )
+			return $this->data['data'];
+
+		return array();
+	} // }}}
+
 	private function traverseForReferences( $value ) // {{{
 	{
 		$array = array();
@@ -296,8 +386,6 @@ class Tiki_Profile_Object
 		if( array_key_exists( $name, $this->data['data'] ) )
 			return $this->data['data'][$name];
 	} // }}}
-
-
 }
 
 ?>
