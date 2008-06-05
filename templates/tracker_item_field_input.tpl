@@ -14,7 +14,7 @@
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
 	{section name=i loop=$field_value.options_array}
-		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item.my_rate} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" />{$field_value.options_array[i]}
+		<input name="{$field_value.ins_id}"{if $field_value.options_array[i] eq $item.my_rate} checked="checked"{/if} type="radio" value="{$field_value.options_array[i]|escape}" id="{$field_value.ins_id}" /><label for="{$field_value.ins_id}">{$field_value.options_array[i]}</label>
 	{/section}
 
 {* -------------------- user selector -------------------- *}
@@ -85,7 +85,7 @@
 		<tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 		{foreach key=ku item=iu from=$field_value.list name=eforeach}
 		{assign var=fcat value=$iu.categId }
-		<td width="50%" nowrap="nowrap"><input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if (!is_array($field_value.value) and $field_value.value eq $fcat) or (is_array($field_value.value) and in_array($fcat, $field_value.value))} checked="checked"{/if}/><label for="cat{$i.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.list|@count%2}<td></td>{/if}{/if}
+		<td width="50%" nowrap="nowrap"><input type={if $field_value.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="{$field_value.ins_id}[]" value="{$iu.categId}" id="cat{$iu.categId}" {if (!is_array($field_value.value) and $field_value.value eq $fcat) or (is_array($field_value.value) and in_array($fcat, $field_value.value))} checked="checked"{/if}/><label for="cat{$iu.categId}">{$iu.name|escape}</label></td>{if !$smarty.foreach.eforeach.last}{cycle name=2_$fca}{else}{if $field_value.list|@count%2}<td></td>{/if}{/if}
 		{/foreach}
 		</tr>
 	</table>
@@ -243,14 +243,14 @@
 		{/section}
 	</select>
 	{if $field_value.type eq 'D'}
-	<br />{tr}Other:{/tr} <input type="text" name="other_{$field_value.ins_id}" value="{$otherValue|escape}" />
+	<br /><label for="other_{$field_value.ins_id}">{tr}Other:{/tr}</label> <input type="text" name="other_{$field_value.ins_id}" value="{$otherValue|escape}" id="other_{$field_value.ins_id}" />
 	{/if}
 
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
-		<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} />
-		{$field_value.options_array[jx]|escape}
+		<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id}" />
+		<label for="{$field_value.ins_id}">{$field_value.options_array[jx]|escape}</label>
 {/section}
 
 {* -------------------- checkbox -------------------- *}
