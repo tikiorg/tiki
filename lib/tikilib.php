@@ -6062,8 +6062,9 @@ external link\" />";
 
 	    if ($imgdata["align"]) {
 		$repl = '<div class="img" align="' . $imgdata["align"] . '">' . $repl . "</div>";
-            } else {
+            } elseif (!$imgdata["desc"]) {
                 $repl = '<span class="img">' . $repl . "</span>";
+			
             }
 
 	    $data = str_replace($page_parse, $repl, $data);
