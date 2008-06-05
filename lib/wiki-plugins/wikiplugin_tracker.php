@@ -208,6 +208,7 @@ function wikiplugin_tracker($data, $params) {
 									$data .= fread($fp, 8192 * 16);
 								}
 								fclose ($fp);
+								$files[$fld]['old_value'] = $files[$fld]['value'];
 								$files[$fld]['value'] = $data;
 							} else {
 								$files[$fld]['file_'.$label] = $val;

@@ -993,7 +993,7 @@ class TrackerLib extends TikiLib {
 						} else {
 							$fhash = 0;
 						}
-						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($old_value, $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId ? $itemId : $new_itemId, '', false);
+						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($ins_fields['data'][$i]['old_value'], $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId ? $itemId : $new_itemId, '', false);
 					} else {
 						continue;
 					}
