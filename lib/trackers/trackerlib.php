@@ -749,6 +749,12 @@ class TrackerLib extends TikiLib {
 			$fil[$res1['fieldId']] = $res1['value'];
 		}
 
+		foreach ( $listfields as $fieldId =>$fopt ) { // be possible to need the userItem before this field
+			if ($fopt['type'] == 'u' && $fopt['options_array'][0] == 1) {
+					$itemUser = $fopt['value'];
+			}
+		}
+
 		foreach ( $listfields as $fieldId =>$fopt ) {
 			if (empty($fopt['fieldId'])) // to accept listfield as a simple table
 				$fopt['fieldId'] = $fieldId;
@@ -757,6 +763,9 @@ class TrackerLib extends TikiLib {
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {
 				$fopt['options_array'] = split(',', $fopt['options']);
+			}
+			if ($fopt['isHidden'] == 'c' && empty($itemUser)) { // need itemUser
+				$itemUser = $this->get_item_creator($trackerId, $itemId);
 			}
 			switch ( $fopt['type'] ) {
 			case 'r':
