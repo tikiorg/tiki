@@ -383,3 +383,20 @@ h3.box-title {
 .tab-menu li.tab-selected a { 
 	background-color: #BCEC8F; 
 }
+
+/* find.tpl styles*/
+
+.findtable {
+  text-align:center;
+  margin-bottom : 10px;
+}
+
+.findtitle {
+	display: inline; 
+	vertical-align: middle;
+  margin: 0 1px;
+}
+
+.findtitle input {
+  margin-left: 2px;
+}
