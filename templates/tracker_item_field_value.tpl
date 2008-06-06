@@ -129,6 +129,17 @@
 
 {* -------------------- file -------------------- *}
 {elseif $field_value.type eq 'A'}
+	{if $list_mode eq 'y' and !empty($field_value.options_array[0])}
+		{if strstr($field_value.options_array[0], 'n')}
+			{$field_value.info.filename|escape}&nbsp;
+		{/if}
+		{if strstr($field_value.options_array[0], 's')}
+			[{$field_value.info.filesize|kbsize}]
+		{/if}
+		{if strstr($field_value.options_array[0], 't')}
+			{$field_value.info.filename|iconify}&nbsp;
+		{/if}
+	{/if}
 	<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
 
 {* -------------------- preference -------------------- *}

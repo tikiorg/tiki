@@ -840,6 +840,13 @@ class TrackerLib extends TikiLib {
 					$fopt['value'] = $userlib->get_user_preference($itemUser, $fopt['options_array'][0]);
 				} 
 				break;
+			case 'A':
+				if (!empty($fopt['options_array'][0])) {
+					$fopt['info'] = $this->get_item_attachment($fopt['value']);
+				}
+				break;
+			default:
+				break;
 			}
 			
 			if ( isset($fopt['options']) ) {
@@ -2242,7 +2249,8 @@ class TrackerLib extends TikiLib {
 			'help'=>'password|email');
 		$type['A'] = array(
 			'label'=>tra('attachment'),
-			'opt'=>false);
+			'opt'=>true,
+			'help'=>tra('listview=nst, n to see name/t to see type/s to see type/u to see user in list mode'));
 		return $type;
 	}
 
