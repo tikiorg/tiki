@@ -4178,6 +4178,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMultilingual" char(1) default 'n',
   "description" clob,
   "itemChoices" clob,
+  "errorMsg" clob,
   PRIMARY KEY ("fieldId")
 ) ENGINE=MyISAM  ;
 

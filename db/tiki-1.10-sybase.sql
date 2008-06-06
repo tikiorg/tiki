@@ -5061,6 +5061,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMultilingual" char(1) default 'n',
   "description" text default '',
   "itemChoices" text default '',
+  "errorMsg" text default '',
   PRIMARY KEY ("fieldId")
 ) ENGINE=MyISAM  
 go
