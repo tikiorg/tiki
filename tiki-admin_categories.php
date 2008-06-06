@@ -337,11 +337,13 @@ function array_csort($marray, $column) {
 
 $catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
 //$catree = array_csort($catree['data'],'categpath'); not needed as array is already sorted when returned from categlib
-foreach ($catree['data'] as $key=>$c) {
-	foreach ($path as $p) {
-		if ($p['categId'] == $c['categId']) {
-			$catree['data'][$key]['incat'] = 'y';
-			break;
+if (is_array($path)) {
+	foreach ($catree['data'] as $key=>$c) {
+		foreach ($path as $p) {
+			if ($p['categId'] == $c['categId']) {
+				$catree['data'][$key]['incat'] = 'y';
+				break;
+			}
 		}
 	}
 }
