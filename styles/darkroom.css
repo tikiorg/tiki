@@ -63,7 +63,7 @@ form {
 	padding: 0;
 	color: #F5F5F5}
 
-legend {}
+legend {color: #d8d8d8}
 
 input.button,
 button,
@@ -791,6 +791,7 @@ h3.box-title {
 .box-title a {color: #9D9D9D}
 .box a.flipmodtitle img {display: none}
 
+* html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {
 	display: block;
 	position: absolute;
@@ -808,6 +809,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 	margin: 8px;
 	overflow: hidden}
 
+* html .box a.flipmodtitle img {border: none}
 .box-menu_43_CSS_horiz .box-data {overflow: visible}
 .box-data a.linkmenu {display: block}
 .box-data select {width: 120px}
@@ -817,23 +819,9 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 	padding: 0.2em;
 	text-align: start}
 
-.box-data ol,
-.box-data ul {margin-left: -2em}
-
-.box-data ul {
-	list-style: none;
-	margin-left: -2em;
-	padding-left: 2em}
-
-* html .box-data ol {margin-left: 0}
-* html .box-data ul {margin-left: 0}
-*:first-child+html .box-data ol {margin-left: 2em}
-*:first-child+html .box-data ul {margin-left: 1em}
-
 .box-data li,
 .module li {padding: 0.2em}
 
-.box-data ol li {list-style: none}
 .box-footer {}
 
 /* Check on this ?? */
@@ -1694,7 +1682,7 @@ ul.freetag {
 	padding: 0;
 	display: inline}
 
-.freetag a { display:inline }
+.freetag a {display: inline}
 
 a.freetag_1 {
 	text-decoration: none;
@@ -2283,10 +2271,12 @@ table.default td {
 
 a.admbox {
 	border: 1px solid #AAAAAA;
-	background-color: #6C6C6C}
+	background: #6C6C6C center no-repeat}
 
-a.admbox:hover, a.admbox:focus, a.admbox:active  {
-	background-color: #B2B2B2;
+a.admbox:hover,
+a.admbox:focus,
+a.admbox:active  {
+	background: #B2B2B2 center no-repeat;
 	border: 1px solid #292929}
 
 a.admbox.off {border: 1px solid #9f9f9f}

@@ -80,11 +80,10 @@ hr {
 img {	border: 0;}
 
 .wikitext img {}
+legend {color: #000}
 
-fieldset {
-	border: solid 1px #A9A9A9;
-	padding: 10px;
-}
+fieldset {border: solid 1px #A9A9A9}
+#col2 fieldset { width: 100px }
 
 form {
 	margin: 0;
@@ -160,9 +159,8 @@ select[multiple] {
 	height: 10em;
 }
 
-select[name="theme"] {
-	width: /*140px*/ 90%;
-}
+select[name="theme"] {width: 160px}
+#col2 select[name="theme"] {width: 100px}
 
 small {
 	font-size: .9em;
@@ -746,6 +744,7 @@ h3.box-title {
 	display: none;
 }
 
+* html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {
 	display: block;
 	position: absolute;
@@ -756,14 +755,10 @@ h3.box-title {
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col3 .box:hover a.flipmodtitle img {
-	right: 30px
-}
+* html #col3 .box:hover a.flipmodtitle img {right: 30px}
 
-a.flipmodtitle:hover img {
-	border: 1px solid #AAAAAA !important;
-}
-
+* html .box a.flipmodtitle img {border: none}
+a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}
 
 .box-data {
@@ -778,18 +773,7 @@ a.flipmodtitle:hover img {
 }
 
 .box-data ol,
-.box-data ul {
-	margin-left: 0;
-	padding-right: 1em;
-
-}
-
-/* IE */
-* html .box-data ol {margin-left: 1em;}
-* html .box-data ul {margin-left: 1em;}
-/* IE7 */
-*:first-child+html .box-data ol {margin-left: 2em}
-*:first-child+html .box-data ul {margin-left: 1em;}
+.box-data ul {padding-right: 1em}
 
 .box-data ul li {
 	list-style: square;
@@ -2174,7 +2158,7 @@ div#ajaxLoading {
 	height: 43px;
 	width: 50px}
 
-#shadowbox_title{height:auto !important;padding:0;overflow:visible;}
+#shadowbox_title{height:auto !important;padding:0;overflow:visible}
 #shadowbox_title_inner{height:auto !important;font-size:1em !important;line-height: 1em !important;white-space: normal !important;padding:5px 0 4px 8px}
 
 /***** TikiSheet Default Style *****/

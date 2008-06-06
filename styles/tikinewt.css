@@ -690,6 +690,7 @@ div.box-title table td {
 	display: none;
 }
 
+* html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {
 	display: block;
 	position: absolute;
@@ -697,8 +698,9 @@ div.box-title table td {
 	top: 0;
 	border: 1px solid transparent;
 	height: 12px;
-	width: 12px;
-}
+	width: 12px}
+
+* html .box a.flipmodtitle img {border: none}
 
 a.flipmodtitle:hover img {
 	background: #DDDDDD;
@@ -717,17 +719,8 @@ div.box-data {
 
 .box-data ol,
 .box-data ul {
-	margin-left: 0;
 	padding-right: 1em;
-	overflow: hidden;
-}
-
-/* IE */
-* html .box-data ol {margin-left: 3em;}
-* html .box-data ul {margin-left: 2em;}
-/* IE7 */
-*:first-child+html .box-data ol,
-*:first-child+html .box-data ul {margin-left: 2em;}
+	overflow: hidden}
 
 td.module {
 	font-size: .95em;
@@ -1804,6 +1797,7 @@ td.forumtoolbar {
 	font-size: 1.1em;
 	_font-size: 11px;
 }
+* html .post .postbody {font-size: 11px}
 .post .postbody-title {
 	display: block;
 	background-color: #E0EAF4; 
@@ -2057,7 +2051,19 @@ td.categobjectsdataodd {
 }
 
 /***** Tags (freetags) *****/
+li.freetag {
+	list-style: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+ul.freetag {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
 
+.freetag a {display:inline}
 a.freetag_1 { text-decoration: none; font-size: .8em; }
 a.freetag_2 { text-decoration: none; font-size: .9em; }
 a.freetag_3 { text-decoration: none; font-size: 1em; }
@@ -2605,15 +2611,29 @@ div#loadstats {
 
 div#ajaxLoading {
 	display: none;
-	background: #BB5555;
 	position: absolute;
-	top: 0;
-	right: 0;
-	border: 1px solid #000000;
+	top: 50px;
+	right: 50%;
 	padding: 3px;
 	font-family: Verdana;
-	font-size: .9em;
-}
+	font-size: 90%;
+	text-align: center;
+	background: transparent url(../lib/shadowbox/images/loading-light.gif) no-repeat 50% 100%;
+	height: 43px;
+	width: 50px}
+
+#shadowbox_title {
+	height: auto !important;
+	padding: 0;
+	overflow: display}
+
+#shadowbox_title_inner{
+	height: auto !important;
+	font-size: 1em !important;
+	line-height: 1em !important;
+	white-space: normal !important;
+	padding:5px 0 4px 8px}
+
 
 /* TikiSheet Default Style {{{1 */
 table.default thead td, 
