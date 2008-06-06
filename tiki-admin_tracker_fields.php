@@ -70,6 +70,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["isHidden"] = 'n';
 	$info["isMandatory"] = 'n';
 	$info['description'] = '';
+	$info['errorMsg'] = '';
 	$info['itemChoices'] = array();
 }
 
@@ -92,6 +93,7 @@ $smarty->assign('isPublic', $info["isPublic"]);
 $smarty->assign('isHidden', $info["isHidden"]);
 $smarty->assign('isMandatory', $info["isMandatory"]);
 $smarty->assign('description', $info["description"]);
+$smarty->assign('errorMsg', $info['errorMsg']);
 $smarty->assign_by_ref('itemChoices', $info['itemChoices']);
 
 
@@ -175,11 +177,14 @@ function replace_tracker_from_request( $tracker_info )
 	} elseif (!isset($_REQUEST['description'])) {
 		$_REQUEST['description'] = '';
 	}
+	if (!isset($_REQUEST['errorMsg'])) {
+		$_REQUEST['errorMsg'] = '';
+	}
 
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-	$isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],
-	$isMultilingual, $_REQUEST["itemChoices"]);
+								   $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],
+								   $isMultilingual, $_REQUEST["itemChoices"], $_REQUEST['errorMsg']);
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
@@ -193,6 +198,7 @@ function replace_tracker_from_request( $tracker_info )
     $smarty->assign('isHidden', $isHidden);
     $smarty->assign('isMandatory', $isMandatory);
     $smarty->assign('description', '');
+	$smarty->assign('errorMsg', '');
     $smarty->assign('itemChoices', '');
     $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }

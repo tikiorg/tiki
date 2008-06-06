@@ -1810,3 +1810,7 @@ CREATE TABLE tiki_profile_symbols (
 	PRIMARY KEY( `domain`, `profile`, `object` ),
 	INDEX(`named`)
 );
+
+
+#2008-06-06 sylvieg
+ALTER TABLE tiki_tracker_fields ADD errorMsg text;

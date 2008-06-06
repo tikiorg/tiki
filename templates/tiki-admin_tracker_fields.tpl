@@ -102,6 +102,7 @@
 	</div>
 {/if}
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>
+<tr class="formcolor"><td>{tr}Error message:{/tr}</td><td><input type="text" name="errorMsg" value="{$errorMsg|escape}" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
