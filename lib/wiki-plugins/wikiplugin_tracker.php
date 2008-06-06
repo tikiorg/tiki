@@ -429,11 +429,18 @@ function wikiplugin_tracker($data, $params) {
 
 			if(count($field_errors['err_value']) > 0) {
 				$back.= '<div class="simplebox highlight">';
-				$back.= tra('Following fields are incorrect').'&nbsp;:<br/>';
-				$coma_cpt = count($field_errors['err_value']);
+				$b = '';
 				foreach($field_errors['err_value'] as $f) {
-					$back.= $f['name'];
-					$back.= --$coma_cpt > 0 ? ',&nbsp;' : '';
+					if (!empty($f['errorMsg'])) {
+						$back .= tra($f['errorMsg']).'<br>';
+					} else {
+						if (!empty($b))
+							$b .= ' : ';
+						$b .= $f['name'];
+					}
+				}
+				if (!empty($b)) {
+					$back.= tra('Following fields are incorrect').'&nbsp;:<br/>'.$b;
 				}
 				$back.= '</div><br />';
 				$_REQUEST['error'] = 'y';
