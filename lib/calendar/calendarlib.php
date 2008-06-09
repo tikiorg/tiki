@@ -77,10 +77,18 @@ class CalendarLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 		} else {
 			// create a new calendar
-			$query = "insert into `tiki_calendars` (`name`,`user`,`description`,`created`,`lastmodif`,`" . implode("`,`", array_keys($customflags)). "`) ";
-			$query.= "values (?,?,?,?,?," . implode(",", array_fill(0,count($customflags),"?")). ")";
-			$bindvars=array($name,$user,$description,$now,$now);
-			foreach ($customflags as $k => $v) $bindvars[]=$v;
+			$query = 'insert into `tiki_calendars` (`name`,`user`,`description`,`created`,`lastmodif`';
+			$bindvars = array($name,$user,$description,$now,$now);
+			if (!empty($customflags)) {
+				$query .= ',`' . implode("`,`", array_keys($customflags)). '`';
+			}
+			$query .= ') values (?,?,?,?,?';
+			if (!empty($customflags)) {
+				$query .= ',' . implode(",", array_fill(0,count($customflags),"?"));
+				foreach ($customflags as $k => $v)
+					$bindvars[] = $v;
+			}
+			$query .= ')';
 			$result = $this->query($query,$bindvars);
 			$calendarId = $this->GetOne("select `calendarId` from `tiki_calendars` where `created`=?",array($now));
 		}

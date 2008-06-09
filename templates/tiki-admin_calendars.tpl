@@ -45,18 +45,18 @@
 {foreach key=id item=cal from=$calendars}
 <tr class="{cycle}">
 <td>{$id}</td>
-<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} +{/if}</td>
-<td>{$cal.customlocations}{if $cal.show_location eq 'y'} +{/if}</td>
-<td>{$cal.customparticipants}{if $cal.show_participants eq 'y'} +{/if}</td>
-<td>{$cal.customcategories}{if $cal.show_category eq 'y'} +{/if}</td>
-<td>{$cal.customlanguages}{if $cal.show_language eq 'y'} +{/if}</td>
-<td>{$cal.customurl}{if $cal.show_url eq 'y'} +{/if}</td>
+<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>{$cal.customlocations}{if $cal.show_location eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>{$cal.customparticipants}{if $cal.show_participants eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>{$cal.customcategories}{if $cal.show_category eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>{$cal.customlanguages}{if $cal.show_language eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>{$cal.customurl}{if $cal.show_url eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.custompriorities}</td>
 <td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
 <td>
 <a title="{tr}Permissions{/tr}" class="link" 
-href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{icon _id='key' alt='{tr}Permissions{/tr}'}{if $cal.individual gt 0} {$cal.individual}</a>{/if}</td>
+href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt='{tr}Permissions{/tr}'}</a>{$cal.individual}{else}{icon _id='key' alt='{tr}Permissions{/tr}'}</a>{/if}</td>
 <td>
    &nbsp;&nbsp;<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a> &nbsp;
    <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
