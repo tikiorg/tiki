@@ -197,8 +197,18 @@ if($prefs['feature_user_watches'] == 'y') {
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-// Display the template
-$smarty->assign('mid', 'tiki-browse_categories.tpl');
-$smarty->display("tiki.tpl");
+if( isset( $_GET['plain'] ) )
+{
+	header( 'Content-Type: text/plain' );
+	foreach( $objects['data'] as $object )
+		echo	"{$object['categName']}\t{$object['type']}\t{$object['itemId']}\n";
+	exit;
+}
+else
+{
+	// Display the template
+	$smarty->assign('mid', 'tiki-browse_categories.tpl');
+	$smarty->display("tiki.tpl");
+}
 
 ?>
