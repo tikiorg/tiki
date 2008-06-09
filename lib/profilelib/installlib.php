@@ -436,6 +436,85 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 	}
 } // }}}
 
+class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandler // {{{
+{
+	private function getData() // {{{
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+
+		return $this->data = $data;
+	} // }}}
+
+	function getDefaultValues() // {{{
+	{
+		return array(
+			'tracker' => 0,
+			'status' => 'o',
+			'values' => array(),
+		);
+	} // }}}
+
+	function getConverters() // {{{
+	{
+		return array(
+			'status' => new Tiki_Profile_ValueMapConverter( array( 'open' => 'o', 'pending' => 'p', 'closed' => 'c' ) ),
+		);
+	} // }}}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['tracker'], $data['values'] ) )
+			return false;
+
+		if( ! is_array( $data['values'] ) )
+			return false;
+
+		foreach( $data['values'] as $row )
+			if( ! is_array( $row ) || count( $row ) != 2 )
+				return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		$data = $this->getData();
+		$converters = $this->getConverters();
+		$this->obj->replaceReferences( $data );
+
+		foreach( $data as $key => &$value )
+			if( isset( $converters[$key] ) )
+				$value = $converters[$key]->convert( $value );
+
+		$data = array_merge( $this->getDefaultValues(), $data );
+
+		global $trklib;
+		if( ! $trklib )
+			require_once 'lib/trackers/trackerlib.php';
+
+		$fields = $trklib->list_tracker_fields( $data['tracker'] );
+		foreach( $data['values'] as $row )
+		{
+			list( $f, $v) = $row;
+
+			foreach( $fields['data'] as $key => $entry )
+				if( $entry['fieldId'] == $f)
+					$fields['data'][$key]['value'] = $v;
+		}
+
+		return $trklib->replace_item(
+			$data['tracker'],
+			0,
+			$fields,
+			$data['status'] );
+	}
+} // }}}
+
 class Tiki_Profile_InstallHandler_Group extends Tiki_Profile_InstallHandler // {{{
 {
 	function canInstall()
