@@ -17,6 +17,9 @@ if ($tiki_p_view_tiki_calendar != 'y') {
 
 $headerlib->add_cssfile('css/calendar.css',20);
 
+$myurl = 'tiki-action_calendar.php';
+include_once("tiki-calendar_setup.php");
+
 $tikiItems = $tikicalendarlib->getTikiItems(true);
 $smarty->assign('tikiItems', $tikiItems);
 
@@ -54,7 +57,7 @@ $smarty->assign('hours', $hours);
 
 $smarty->assign('var', '');
 $smarty->assign('daformat2', $tikilib->get_long_date_format());
-$smarty->assign('myurl', 'tiki-action_calendar.php');
+$smarty->assign('myurl', $myurl);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-action_calendar.tpl');
