@@ -1,12 +1,22 @@
 <?php
 
-class TikiCalendarLib extends TikiLib {
+require_once('calendarlib.php');
+
+class TikiCalendarLib extends CalendarLib {
 
 	function TikiCalendarLib($db) {
-		$this->TikiLib($db);
+		parent::CalendarLib($db);
 	}
 
-	function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find) {
+	function list_items_by_day($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '') {
+		return $this->list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
+	}
+
+	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'actions') {
+		return parent::getCalendar($calIds, $viewstart, $viewend, $group_by, $item_name);
+	}
+
+	function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode = 'name_desc', $find = '') {
 		global $user;
 		$ret = array();
 		if ( ! is_array($tikiobj) ) return $ret;
@@ -70,7 +80,9 @@ class TikiCalendarLib extends TikiLib {
 							$where = ' '.tra('in').' <b>'.$res['where'].'</b>';
 						}
 						if ( $res['head'] == '' ) $res['head'] = $when.$where;
-						
+					
+						$res['group_description'] = $res['name'];
+	
 						$ret[$dstart][] = $res;
 						
 						unset($where);
@@ -152,153 +164,6 @@ class TikiCalendarLib extends TikiLib {
 		);
 		return ( $with_infos ? $return : array_keys($return) );
 	}
-
-	function getCalendar($tikiItems, &$viewstart, &$viewend, $group_by = '') {
-		global $user, $prefs, $smarty;
-
-		// Global vars used by tiki-calendar_setup.php (this has to be changed)
-		global $tikilib, $calendarViewMode, $request_day, $request_month, $request_year, $dayend, $myurl;
-		include('tiki-calendar_setup.php');
-
-		$listtikievents = $this->list_tiki_items($tikiItems, $user, $viewstart, $viewend, 0, 50, 'name_desc', '');
-	
-		$mloop = TikiLib::date_format('%m', $viewstart);
-		$dloop = TikiLib::date_format('%d', $viewstart);
-		$yloop = TikiLib::date_format('%Y', $viewstart);
-	
-		// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
-		for ($i = 0; $i <= $numberofweeks; $i++) {
-			$wee = TikiLib::date_format('%U', $viewstart + ($i * weekInSeconds) + $d);
-			$weeks[] = $wee;
-	
-			// $startOfWeek is a unix timestamp
-			$startOfWeek = $viewstart + $i * weekInSeconds;
-	
-			foreach ( $weekdays as $w ) {
-				$leday = array();
-				if ( $group_by == 'day' ) {
-					$key = 0;
-				}
-				if ( $calendarViewMode == 'day' ) {
-					$dday = $daystart;
-				} else {
-					$dday = TikiLib::make_time(0,0,0, $mloop, $dloop++, $yloop);
-				}
-				$cell[$i][$w]['day'] = $dday;
-	
-				if ( $calendarViewMode == 'day' or ( $dday >= $daystart && $dday <= $dayend ) ) {
-					$cell[$i][$w]['focus'] = true;
-				} else {
-					$cell[$i][$w]['focus'] = false;
-				}
-				if ( isset($listtikievents["$dday"]) ) {
-					$e = -1;
-	
-					foreach ( $listtikievents["$dday"] as $lte ) {
-						$lte['desc_name'] = $lte['name'];
-						if ( $calendarGroupByItem != 'n' ) {
-							if ( $group_by != 'day' ) $key = $lte['id'].'|'.$lte['type'];
-							if ( ! isset($leday[$key]) ) {
-								$leday[$key] = $lte;
-								if ( $group_by == 'day' ) {
-									$leday[$key]['description'] = array($lte['where'] => array($lte['name']));
-									$leday[$key]['head'] = TikiLib::date_format($prefs['short_date_format'], $cell[$i][$w]['day']);
-								} else {
-									$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
-									$leday[$key]['head'] = $lte['name'].', <i>'.tra('in').' '.$lte['where'].'</i>';
-								}
-								$leday[$key]['desc_name'] = '';
-							} else {
-								$leday_item =& $leday[$key];
-								$leday_item['user'] .= ', '.$lte['user'];
-	
-								if ( ! is_integer($leday_item['action']) ) {
-									$leday_item['action'] = 1;
-								}
-								$leday_item['action']++;
-	
-								if ( $group_by == 'day' ) {
-									$leday_item['name'] .= '<br />'.$lte['name'];
-									$leday_item['desc_name'] = $leday_item['action'].' '.tra('Actions').' '.tra('in').': ';
-									$leday_item['description'][$lte['where']][] = $lte['name'];
-								} else {
-									$leday_item['name'] = $lte['name'].' (x<b>'.$leday_item['action'].'</b>)';
-									$leday_item['desc_name'] = $leday_item['action'].' '.tra('Actions');
-									if ( $lte['show_description'] == 'y' && ! empty($lte['description']) ) {
-										$leday_item['description'] .= ",\n<br /> - <b>".$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
-										$leday_item['show_description'] = 'y';
-									}
-								}
-							}
-						} else {
-							$e++;
-							$key = "{$lte['time']}$e";
-							$leday[$key] = $lte;
-							$lte['desc_name'] .= tra($lte['action']);
-						}
-					}
-	
-					foreach ( $leday as $key => $lte ) {
-						if ( $group_by == 'day' ) {
-							$desc = '';
-							foreach ( $lte['description'] as $desc_where => $desc_items ) {
-								$desc_items = array_unique($desc_items);
-								foreach ( $desc_items as $desc_item ) {
-									if ( $desc != '' ) $desc .= '<br />';
-									$desc .= '- '.$desc_item.' <i>['.$desc_where.']</i>';
-								}
-							}
-							$lte['description'] = $desc;
-						}
-	
-						$smarty->assign_by_ref('cellhead', $lte["head"]);
-						$smarty->assign_by_ref('cellprio', $lte["prio"]);
-						$smarty->assign_by_ref('cellcalname', $lte["calname"]);
-						$smarty->assign('celllocation', "");
-						$smarty->assign('cellcategory', "");
-						$smarty->assign_by_ref('cellname', $lte["desc_name"]);
-						$smarty->assign('cellid', "");
-						$smarty->assign_by_ref('celldescription', $lte["description"]);
-						$smarty->assign('show_description', $lte["show_description"]);
-	
-						if ( ! isset($leday[$key]["over"]) ) {
-							$leday[$key]["over"] = '';
-						} else {
-							$leday[$key]["over"] .= "<br />\n";
-						}
-						$leday[$key]["over"] .= $smarty->fetch("tiki-calendar_box.tpl");
-					}
-				}
-	
-				if ( is_array($leday) ) {
-					ksort ($leday);
-					$cell[$i][$w]['items'] = array_values($leday);
-				}
-			}
-		}
-
-		if ( $_SESSION['CalendarViewList'] == 'list' ) {
-			if ( is_array($listtikievents) ) {
-				foreach ( $listtikievents as $le ) {
-					if ( is_array($le) ) {
-						foreach ( $le as $e ) {
-							$listevents[] = $e;
-						}
-					}
-				}
-			}
-		}
-
-		return array(
-			'cell' => $cell,
-			'listevents' => $listevents,
-			'weeks' => $weeks,
-			'weekdays' => $weekdays,
-			'daysnames' => $daysnames,
-			'trunc' => $trunc
-		);
-	}
-
 }
 global $dbTiki;
 $tikicalendarlib = new TikiCalendarLib($dbTiki);
