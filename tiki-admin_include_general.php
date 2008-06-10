@@ -167,7 +167,7 @@ if ($prefs['home_forum']) {
 }
 
 if ($prefs['home_file_gallery']) {
-	$hgalinfo = $tikilib->get_gallery($prefs['home_file_gallery']);
+	$hgalinfo = $tikilib->get_file_gallery($prefs['home_file_gallery']);
 	$smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
 } else {
 	$smarty->assign("home_fil_name", '');

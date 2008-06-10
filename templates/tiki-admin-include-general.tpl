@@ -40,25 +40,25 @@
             <option value="tiki-view_articles.php"
               {if $prefs.site_tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>
               {tr}Articles{/tr}</option>
-            {if $prefs.home_blog_name}
-              <option value="{$prefs.home_blog_url|escape}"
-                {if $prefs.site_tikiIndex eq $prefs.home_blog_url}selected="selected"{/if}>
-                {tr}Blog{/tr}: {$prefs.home_blog_name}</option>
+            {if $prefs.home_blog}
+              <option value="{$home_blog_url|escape}"
+                {if $prefs.site_tikiIndex eq $home_blog_url}selected="selected"{/if}>
+                {tr}Blog{/tr}: {$home_blog_name}</option>
             {/if}
-            {if $home_gal_name}
-              <option value="{$prefs.home_gallery_url|escape}"
-                {if $prefs.site_tikiIndex eq $prefs.home_gallery_url}selected="selected"{/if}>
+            {if $prefs.home_gallery}
+              <option value="{$home_gallery_url|escape}"
+                {if $prefs.site_tikiIndex eq $home_gallery_url}selected="selected"{/if}>
                 {tr}Image Gallery{/tr}: {$home_gal_name}</option>
             {/if}
-            {if $home_fil_name}
-              <option value="{$prefs.home_file_gallery_url|escape}"
-                {if $prefs.site_tikiIndex eq $prefs.home_file_gallery_url}selected="selected"{/if}>
+            {if $prefs.home_file_gallery}
+              <option value="{$home_file_gallery_url|escape}"
+                {if $prefs.site_tikiIndex eq $home_file_gallery_url}selected="selected"{/if}>
                 {tr}File Gallery{/tr}: {$home_fil_name}</option>
             {/if}
-            {if $prefs.home_forum_name}
-              <option value="{$prefs.home_forum_url|escape}"
-                {if $prefs.site_tikiIndex eq $prefs.home_forum_url}selected="selected"{/if}>
-                {tr}Forum{/tr}: {$prefs.home_forum_name}</option>
+            {if $prefs.home_forum}
+              <option value="{$home_forum_url|escape}"
+                {if $prefs.site_tikiIndex eq $home_forum_url}selected="selected"{/if}>
+                {tr}Forum{/tr}: {$home_forum_name}</option>
             {/if}
             {if $prefs.feature_custom_home eq 'y'}
               <option value="tiki-custom_home.php"
