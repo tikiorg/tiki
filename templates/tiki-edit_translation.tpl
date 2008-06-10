@@ -83,6 +83,20 @@
 {/if}
 {/if}
 
+<h3>{tr}Change language for this page{/tr}</h3>
+<form method="post" action="tiki-edit_translation.php">
+<div>
+	<select name="langpage">
+		<option value="">{tr}Select from available options...{/tr}</option>
+		{foreach item=lang from=$languages}
+		<option value="{$lang.value|escape}">{$lang.name}</option>
+		{/foreach}
+	</select>
+	<input type="hidden" name="page" value="{$name|escape}"/>
+	<input type="submit" name="switch" value="{tr}Change Language{/tr}"/>
+</div>
+</form>
+
 {* end of if !isset($allowed_for_staging_only)}
 {else}
 	<div class="simplebox">

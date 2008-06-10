@@ -52,7 +52,6 @@ if ((!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page' || $_REQUEST[
 	$edit_data = $info['data'];
 	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
 	$smarty->assign('translate_message', tra('Translation in progress.', $langpage));
-
 }
 else if ($_REQUEST['id']) {
 	if (!isset($_REQUEST['type'])) {

@@ -730,7 +730,6 @@ class MultilingualLib extends TikiLib {
 		}
 		return $flags;
 	}
-	
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);

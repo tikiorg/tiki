@@ -295,6 +295,7 @@ function searchrep() {
 {/if}
 {/if}
 {if $prefs.feature_multilingual eq 'y'}
+{if not($data.page_id)}
 <tr class="formcolor"><td>{tr}Language{/tr}:</td><td>
 <select name="lang">
 <option value="">{tr}Unknown{/tr}</option>
@@ -312,13 +313,16 @@ function searchrep() {
 <input type="hidden" name="source_page" value="{$source_page|escape}"/>
 {/if}
 </td></tr>
+{else}
 <tr class="formcolor">
 	<td>{tr}Translation request{/tr}:</td>
 	<td>
+		<input type="hidden" name="lang" value="{$lang|escape}"/>
 		<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
 		<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
 	</td>
 </tr>
+{/if}
 {/if}
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
