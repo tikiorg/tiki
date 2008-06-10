@@ -562,7 +562,7 @@ class TrackerLib extends TikiLib {
 	 * will filter items with fielId 1 with a value %this% or %that, and fieldId with the value there or those, and fieldId 3 with a value these
 	 * listfields = array(fieldId=>array('type'=>, 'name'=>...), ...)
 	 */
-	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '') {
+	function list_items($trackerId, $offset=0, $maxRecords=-1, $sort_mode ='' , $listfields='', $filterfield = '', $filtervalue = '', $status = '', $initial = '', $exactvalue = '', $filter='') {
 		global $tiki_p_view_trackers_pending, $tiki_p_view_trackers_closed, $tiki_p_admin_trackers, $prefs;
 
 		$cat_table = '';
@@ -575,6 +575,10 @@ class TrackerLib extends TikiLib {
 
 		$mid = ' WHERE tti.`trackerId` = ? ';
 		$bindvars = array($trackerId);
+
+		if (!empty($filter)) {
+			$this->parse_filter($filter, $mid, $bindvars);
+		}
 
 		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
 			return array('cant' => 0, 'data' => '');

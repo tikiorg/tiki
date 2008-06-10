@@ -8,7 +8,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y, popup=6:7, stickypopup=y, showtitle=y, showlinks=y, showdesc=y, showinitials=y, showstatus=y, showcreated=y, showlastmodif=y, showfieldname=n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=1:2, filtervalue=x:y, exactvalue=x:y, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y,more=y,moreurl=,view=user,tpl=,wiki=,view_user=user)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y, popup=6:7, stickypopup=y, showtitle=y, showlinks=y, showdesc=y, showinitials=y, showstatus=y, showcreated=y, showlastmodif=y, showfieldname=n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=1:2, filtervalue=x:y, exactvalue=x:y, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y,more=y,moreurl=,view=user,tpl=,wiki=,view_user=user,itemId=,url=)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -121,6 +121,9 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($moreurl))
 			$moreurl = 'tiki-view_tracker.php';
 		$smarty->assign_by_ref('moreurl', $moreurl);
+		if (!isset($url))
+			$url = '';
+		$smarty->assign_by_ref('url', $url);
 
 		if (isset($checkbox)) {
 			$cb = split('/', $checkbox);
@@ -199,6 +202,7 @@ function wikiplugin_trackerlist($data, $params) {
 		if ((isset($view) && $view == 'user') || isset($view_user)) {
 			if ($f = $trklib->get_field_id_from_type($trackerId, 'u', '1%')) {
 				$filterfield[] = $f;
+				$filtervalue[] = '';
 				$exactvalue[] = isset($view)? $user: $view_user;
 			}
 		}
@@ -211,6 +215,11 @@ function wikiplugin_trackerlist($data, $params) {
 		
 		if (!isset($exactvalue)) {
 			$exactvalue = '';
+		}
+		if (isset($itemId)) {
+			$filter = array('itemId', $itemId);
+		} else {
+			$filter = '';
 		}
 		
 		$rated = false;
@@ -306,7 +315,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('popupfields', $popupfields);
 
 		if (count($passfields)) {
-			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue);
+			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);
 
 			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
 				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
