@@ -97,7 +97,7 @@ if (isset($_REQUEST['broaden']) && $_REQUEST['broaden'] == 'last') {
 
 $smarty->assign('broaden', $broaden);
 
-$tagArray = $freetaglib->_parse_tag($_REQUEST['tag']);
+$tagArray = $freetaglib->_parse_tag((isset($_REQUEST['tag'])) ? $_REQUEST['tag'] : '');
 $tagString = '';
 foreach ($tagArray as $t_ar) {
 	if (strstr($t_ar, ' ')) {
@@ -108,7 +108,7 @@ foreach ($tagArray as $t_ar) {
 }
 
 $smarty->assign('tagString', trim($tagString));
-$smarty->assign('tag', $tagArray[0]);
+$smarty->assign('tag', (isset($tagArray[0])) ? $tagArray[0] : '');
 
 if (empty($_REQUEST['maxPopular'])) {
 	$maxPopular = $prefs['freetags_browse_amount_tags_in_cloud'];
