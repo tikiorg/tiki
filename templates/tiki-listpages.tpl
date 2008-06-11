@@ -6,7 +6,7 @@
 {/if}
 </h1>
 
-{include file="find.tpl"}
+{include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 
 <div align="center">
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">

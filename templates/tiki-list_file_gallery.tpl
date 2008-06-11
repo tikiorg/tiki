@@ -163,7 +163,7 @@
 
 {else}
 {if $files or ($find ne '')}
-  {include file='find.tpl' find_show_languages='n' find_show_categories='n'}
+  {include file='find.tpl' find_show_num_rows = 'y'}
 {/if}
   {include file='list_file_gallery.tpl'}
 

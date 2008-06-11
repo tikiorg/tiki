@@ -1,4 +1,24 @@
 {* $Id$ *}
+
+{*
+  parameters used in this template:
+
+  * filegals_manager      : If value = 'y' adds hidden input filegals_manager value=y
+  * sort_mode             : If value = 'y' adds hidden input sort_mode value=$sort_mode
+
+  * what                  : Change form title. Default value (if $what empty) is "Find". If $what is not empty, the text presented is $what content
+  * exact_match           : If set adds exact_match field
+  * types                 : If not empty adds type dropdown whith types array values
+    * find_type             : types dropdown selected value
+  * topics                : If not empty adds topic dropdown with topics array values
+  * find_show_languages   : If value = 'y' adds lang dropdown with languages value dropdown
+    * find_lang             : lang dropdown selected value
+  * find_show_categories  : If value = 'y' adds categories dropdown with categories array values
+    * find_categId          : categories selected value
+  * find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
+  *
+  *}
+
 <div class="findtable">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
@@ -41,7 +61,7 @@
 		</select>
 	</div>
 {/if}
-{if $find_show_languages ne 'n' and $prefs.feature_multilingual eq 'y'}
+{if $find_show_languages eq 'y' and $prefs.feature_multilingual eq 'y'}
 	<div class="findtitle findlang">
 		<select name="lang">
 		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
@@ -53,7 +73,7 @@
 		</select>
 	</div>
 {/if}
-{if $find_show_categories ne 'n' and $prefs.feature_categories eq 'y'}
+{if $find_show_categories eq 'y' and $prefs.feature_categories eq 'y'}
 	<div class="findtitle findcateg">
 		<select name="categId">
 		<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
@@ -63,7 +83,7 @@
 		</select>
 	</div>
 {/if}
-{if $find_show_num_rows ne 'n'}
+{if $find_show_num_rows eq 'y'}
   <label class="findtitle" for="findnumrows">
     {tr}Number of displayed rows{/tr}
   </label>

@@ -51,6 +51,6 @@
 {/if}
 
 {if $edit_mode ne 'y' and $dup_mode ne 'y'}
-	{include file='find.tpl' find_show_languages='n' find_show_categories='n'}
+	{include file='find.tpl' find_show_num_rows='y'}
 	{include file='list_file_gallery.tpl'}
 {/if}
