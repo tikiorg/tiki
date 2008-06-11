@@ -39,7 +39,7 @@
 <form action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="wikify" value="{tr}Wiki Overwrite{/tr}" />
-<input size="20" type="text" name="wiki_name" value="{$info.name|escape}" />
+<input size="40" type="text" name="wiki_name" value="{$info.name|escape}" />
 </form>
 {/if}
 </td>
