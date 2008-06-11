@@ -743,6 +743,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['metatag_keywords'] = '';
 	$prefs['metatag_threadtitle'] = '';
 	$prefs['metatag_imagetitle'] = '';
+	$prefs['metatag_freetags'] = '';
 	$prefs['metatag_description'] = '';
 	$prefs['metatag_author'] = '';
 	$prefs['metatag_geoposition'] = '';
