@@ -370,9 +370,9 @@ categories = {$catsdump}
 		<div id="duplicateTrackerDesc" style="display:none;" >
 			{include file=tiki-edit_help_tool.tpl qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
 			{if $descriptionIsParsed eq 'y'}<script language="javascript">
-				<!-- 
+				<!--//--><![CDATA[//><!--
 					toggleSpan('duplicateTrackerDesc');
-				// -->
+				//--><!]]>
 				</script>{/if}
 		</div>
 		<br />
