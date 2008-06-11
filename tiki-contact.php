@@ -26,9 +26,9 @@ if ($prefs['contact_anon'] != 'y' && !$user) {
 
 $smarty->assign('mid', 'tiki-contact.tpl');
 
-$email = $userlib->get_admin_email();
+$email = $userlib->get_user_email($prefs['contact_user']);
+if ($email == '') $email = $userlib->get_admin_email();
 $email = scrambleEmail($email, $tikilib->get_user_preference('admin', "email is public"));
-
 $smarty->assign('email', $email);
 
 if ($user == '' and $prefs['contact_anon'] == 'y') {
