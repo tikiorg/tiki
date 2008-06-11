@@ -15,7 +15,8 @@ class TemplatesLib extends TikiLib {
 		$bindvars = array();
 		if ($find) {
 			$bindvars[] = '%' . $find . '%';
-			$mid = " where (`content` like ?)";
+			$bindvars[] = '%' . $find . '%';
+			$mid = " where (`name` like ?) or (`content` like ?)";
 		} else {
 			$mid = "";
 		}
