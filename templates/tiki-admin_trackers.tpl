@@ -122,9 +122,9 @@
 	<div id="trackerDesc" style="display:none;" >
 		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
 		{if $descriptionIsParsed eq 'y'}<script language="javascript">
-			<!-- 
+			<!--//--><![CDATA[//><!--
 				toggleSpan('trackerDesc');
-			// -->
+			//--><!]]>
 			</script>{/if}
 	</div>
 	<br />
