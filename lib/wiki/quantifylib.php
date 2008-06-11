@@ -16,8 +16,8 @@ class QuantifyLib extends TikiLib {
 
 		list( $added, $removed, $complete ) = $this->calculateChangeSize( $oldData, $newData );
 
-		$this->query( "INSERT INTO tiki_pages_changes (page_id, version, segments_added, segments_removed, segments_total) VALUES(?,?,?,?,?)",
-			array( $pageId, $version, $added, $removed, $complete ) );
+		$this->query( "INSERT INTO tiki_pages_changes (page_id, version, segments_added, segments_removed, segments_total) VALUES(?,?,?,?,?) ON DUPLICATE KEY update segments_added = ?, segments_removed = ?, segments_total = ?",
+			array( $pageId, $version, $added, $removed, $complete, $added, $removed, $complete ) );
 	}
 
 	function calculateChangeSize( $oldData, $newData )
