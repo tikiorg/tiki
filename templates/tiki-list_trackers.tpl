@@ -15,7 +15,7 @@
 
 <div class="navbar">
 {if $tiki_p_admin_trackers eq 'y'}
-<span class="button2"><a href="tiki-admin_trackers.php?show=mod#mod" class="linkbut">{tr}Create trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_trackers.php?show=mod#mod" class="linkbut">{tr}Create Trackers{/tr}</a></span>
 {/if}
 </div>
 {if ($channels) or ($find)}

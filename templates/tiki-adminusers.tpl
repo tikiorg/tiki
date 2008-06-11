@@ -1,6 +1,6 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
-<h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
+<h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin Users{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Users+Management" target="tikihelp" class="tikihelp" title="{tr}Admin Users{/tr}">
@@ -315,7 +315,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {if $prefs.userTracker eq 'y'}
 {if $userstrackerid and $usersitemid}
-{tr}User tracker item : {$usersitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$userstrackerid}&amp;itemId={$usersitemid}&amp;show=mod" class="linkbut">{tr}Edit item{/tr}</a></span>
+{tr}User tracker item : {$usersitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$userstrackerid}&amp;itemId={$usersitemid}&amp;show=mod" class="linkbut">{tr}Edit Item{/tr}</a></span>
 {/if}
 <br /><br />
 {/if}

@@ -5,7 +5,9 @@
 {/if}
 
 {if $showmsg eq 'y'}
+<div class="simplebox highlight">
 {$msg}
+</div>
 
 {elseif $userTrackerData}
 {$userTrackerData}

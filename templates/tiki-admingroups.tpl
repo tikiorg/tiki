@@ -236,7 +236,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {if $prefs.groupTracker eq 'y'}
 {if $grouptrackerid and $groupitemid}
-{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit item{/tr}</a></span>
+{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit Item{/tr}</a></span>
 {elseif $grouptrackerid}
 {if $groupfieldid}
 {tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}" class="linkbut">{tr}Create item{/tr}</a></span>

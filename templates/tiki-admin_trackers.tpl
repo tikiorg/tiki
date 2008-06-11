@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin Trackers{/tr}</a>
  
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
@@ -13,10 +13,10 @@
 </h1>
 
 <div class="navbar">
-<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List Trackers{/tr}</a></span>
 {if $trackerId}
-<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker fields{/tr}</a></span>
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit This Tracker's Fields{/tr}</a></span>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View This Tracker's Items{/tr}</a></span>
 {/if}
 </div>
 
@@ -25,12 +25,12 @@
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Trackers{/tr}</a></span>
 {if $trackerId}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit Tracker{/tr} {$name} (#{$trackerId})</a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Create trackers{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Create Trackers{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Import/export{/tr}</a></span>
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Duplicate tracker{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Import/Export{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Duplicate Tracker{/tr}</a></span>
 </div>
 {/if}
 
@@ -99,7 +99,7 @@
 {* --- tab with form --- *}
 <a name="mod"></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}Create/edit trackers{/tr}</h2>
+<h2>{tr}Create/Edit Trackers{/tr}</h2>
 {if $trackerId}
 <div class="simplebox">
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">
@@ -358,7 +358,7 @@ categories = {$catsdump}
 
 {* --- tab with raw form --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}Duplicate tracker{/tr}</h2>
+<h2>{tr}Duplicate Tracker{/tr}</h2>
 
 <form action="tiki-admin_trackers.php" method="post">
 <table class="normal">
@@ -390,7 +390,7 @@ categories = {$catsdump}
 </tr>
 <tr class="formcolor"><td>{tr}Duplicate categories{/tr}</td><td><input type="checkbox" name="dupCateg" /></td></tr>
 <tr class="formcolor"><td>{tr}Duplicate perms{/tr}</td><td><input type="checkbox" name="dupPerms" /></td></tr>
-<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate tracker{/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate Tracker{/tr}" /></td></tr>
 </table>
 </form>
 </div>

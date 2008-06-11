@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a>
+<h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin Tracker{/tr}: {$tracker_info.name}</a>
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Adding+fields+to+a+tracker" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
@@ -12,12 +12,12 @@
 </h1>
 
 <div  class="navbar">
-<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List Trackers{/tr}</a></span>
 {if $tiki_p_admin_trackers eq 'y'}
-<span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin Trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit This Tracker{/tr}</a></span>
 {/if}
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View This Tracker's Items{/tr}</a></span>
 </div>
 
 {if $fieldId eq "0"}
@@ -191,7 +191,7 @@
 
 </div>
 
-<h2>{tr}Import/export trackers fields{/tr}</h2>
+<h2>{tr}Import/Export Trackers Fields{/tr}</h2>
 
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}

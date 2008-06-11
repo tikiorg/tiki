@@ -1,6 +1,6 @@
 {* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-<h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker item:{/tr} {$tracker_info.name}</a></h1>
+<h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Tracker Item:{/tr} {$tracker_info.name}</a></h1>
 
 {* --------- navigation ------ *}
 <div class="navbar">
@@ -13,20 +13,20 @@
   {/if}
 
   {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
-    <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
+    <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List Trackers{/tr}</a></span>
   {/if}
 
   {if $tiki_p_view_trackers eq 'y'}
     <span class="button2">
-      <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&status={$status}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="linkbut">{tr}View this tracker items{/tr}</a>
+      <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&status={$status}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="linkbut">{tr}View This Tracker's Items{/tr}</a>
     </span>
   {/if}
 
   {if $tiki_p_admin_trackers eq 'y'}
     &nbsp;&nbsp;
-    <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
-    <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
-    <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
+    <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin Trackers{/tr}</a></span>
+    <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit This Tracker{/tr}</a></span>
+    <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit Fields{/tr}</a></span>
   {/if}
 </div>
 
@@ -85,7 +85,7 @@
 {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 {* --- tab with view ------------------------------------------------------------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}View item{/tr}</h2>
+<h2>{tr}View Item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
   {assign var=ustatus value=$info.status|default:"p"}
@@ -139,7 +139,7 @@
 {if $tracker_info.useComments eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
-<h2>{tr}Add a comment{/tr}</h2>
+<h2>{tr}Add a Comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post" id="commentform" name="commentform">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
@@ -179,7 +179,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y' or $special}
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent nohighlight" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}Edit item{/tr}</h2>
+<h2>{tr}Edit Item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 {if $special}
 <input type="hidden" name="view" value=" {$special}" />
@@ -312,8 +312,8 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'l'}
 {foreach key=tid item=tlabel from=$cur_field.links}
-<div style="clear:both"><div style="float:right;text-align:right"><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View item{/tr}">{icon _id='magnifier' alt="{tr}View item{/tr}"}</a></div>
-<a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View item{/tr}">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
+<div style="clear:both"><div style="float:right;text-align:right"><a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View Item{/tr}">{icon _id='magnifier' alt="{tr}View Item{/tr}"}</a></div>
+<a href="tiki-view_tracker_item.php?trackerId={$cur_field.trackerId}&amp;itemId={$tid}" class="link" title="{tr}View Item{/tr}">{if $tlabel}{$tlabel}{else}&nbsp;{/if}</a></div>
 {/foreach}
 {if $tiki_p_create_tracker_items eq 'y' and !(count($cur_field.links) >= 1 and $cur_field.tracker_options.oneUserItem eq 'y')}
 <div style="clear:both;text-align:right;"><a href="tiki-view_tracker.php?trackerId={$cur_field.options_array[0]}&amp;vals%5B{$cur_field.options_array[1]}%5D=
@@ -323,7 +323,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {$ins_fields[ox].value}
 {/if}
 {/section}
-">{tr}Insert new item{/tr}
+">{tr}Insert New Item{/tr}
 </div>
 {/if}
 
