@@ -353,14 +353,14 @@
   </div>
 </div>
 
-<div class="simplebox">
 <div class="cbox">
   <div class="cbox-title">
     {tr}Change admin password{/tr}
   </div>
   <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=general">
-      <table class="admin"><tr>
+      <table class="admin">
+      <tr>
         <td class="form" ><label for="general-new_pass">{tr}New password{/tr}:</label></td>
         <td ><input type="password" name="adminpass" id="general-new_pass" /></td>
       </tr><tr>
@@ -370,8 +370,8 @@
         <td colspan="2" class="button">
           <input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
         </td>
-      </tr></table>
+      </tr>
+      </table>
     </form>
   </div>
-</div>
 </div>
