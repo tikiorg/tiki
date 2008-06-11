@@ -102,17 +102,7 @@
 <h2>{tr}Templates{/tr}</h2>
 <div  align="center">
 {if $channels or ($find ne '')}
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-admin_content_templates.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <br />
 <table class="normal">
