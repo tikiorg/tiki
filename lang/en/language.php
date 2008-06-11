@@ -6592,6 +6592,7 @@ $lang=Array(
 // "Group Default Category" => "Group Default Category",
 // "Group Theme" => "Group Theme",
 // "Use the thread title in Forum pages instead" => "Use the thread title in Forum pages instead",
+// "Insert page freetags in keywords list" => "Insert page freetags in keywords list",
 "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}",
 "Your account request have been stored and will be activated by the admin as soon as possible." => "Your account request has been stored and will be activated by the admin as soon as possible.",
 "###end###"=>"###end###");
