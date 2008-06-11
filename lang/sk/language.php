@@ -6134,6 +6134,7 @@ $lang=Array(
 "Roles" => "Role",
 "Permission" => "Práva",
 "No individual permissions global permissions apply" => "Žiadne individuálne práva; budú aplikované práva globálne",
+"No individual permissions. Global permissions apply." => "Žiadne individuálne práva; budú aplikované práva globálne",
 "to group" => "pre skupinu",
 "Change password enforced" => "Vynútená zmena hesla",
 "Old password" => "Pôvodné heslo",

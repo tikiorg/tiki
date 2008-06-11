@@ -5472,6 +5472,7 @@ $lang=Array(
 "Remove from this Category &amp; all its Children" => "Borrar desta categoría e de todos os seus fillos",
 "Remove from this Category Only" => "Borrar só desta categoría",
 "No individual permissions global permissions apply" => "Non hai permisos individuais, aplican os permisos globais",
+"No individual permissions. Global permissions apply." => "Non hai permisos individuais, aplican os permisos globais",
 "Assign permissions" => "Asignar permisos",
 "to group" => "ao grupo",
 "this category &amp; all its children" => "esta categoría e todos os seus fillos",

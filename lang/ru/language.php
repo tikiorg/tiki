@@ -6284,6 +6284,7 @@ $lang=Array(
 "import" => "Импорт",
 "Permission" => "право доступа",
 "No individual permissions global permissions apply" => "Никаких индивидуальных прав доступа, здесь только глобальные",
+"No individual permissions. Global permissions apply." => "Никаких индивидуальных прав доступа, здесь только глобальные",
 "to group" => "в группу",
 "Change password enforced" => "Требуется срочная смена пароля",
 "Old password" => "Старый пароль",

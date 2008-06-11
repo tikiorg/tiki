@@ -6187,6 +6187,7 @@ $lang=Array(
 "import" => "importer",
 "Permission" => "Tilladelse",
 "No individual permissions global permissions apply" => "Ingen individuelle adangsrettigheder, globale rettigheder gælder",
+"No individual permissions. Global permissions apply." => "Ingen individuelle adangsrettigheder, globale rettigheder gælder",
 "to group" => "til gruppe",
 "Change password enforced" => "Tvungent skift af adgangskode",
 "Old password" => "Gammel adgangskode",

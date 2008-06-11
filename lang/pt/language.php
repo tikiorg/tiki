@@ -6847,6 +6847,7 @@ $lang=Array(
 "Roles" => "Perfis",
 "Permission" => "Permissão",
 "No individual permissions global permissions apply" => "Nenhuma permissão individual, permissões globais em efeito",
+"No individual permissions. Global permissions apply." => "Nenhuma permissão individual, permissões globais em efeito",
 "Assign permissions" => "Atribuir permissões",
 "to group" => "ao grupo",
 "Change password enforced" => "Alteração obrigatória da palavra-passe",

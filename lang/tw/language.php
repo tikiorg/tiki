@@ -6298,6 +6298,7 @@ $lang=Array(
 "import" => "匯入",
 "Permission" => "權限",
 "No individual permissions global permissions apply" => "不採用單獨的權限設定,採用全體權限設定",
+"No individual permissions. Global permissions apply." => "不採用單獨的權限設定,採用全體權限設定",
 "to group" => "給群組",
 "Change password enforced" => "強制更改密碼",
 "Old password" => "舊密碼",

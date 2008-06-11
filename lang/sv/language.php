@@ -6112,6 +6112,7 @@ $lang=Array(
 "import" => "importera",
 "Permission" => "Rättighet",
 "No individual permissions global permissions apply" => "inga individuella rättigheter, globala rättigheter används",
+"No individual permissions. Global permissions apply." => "inga individuella rättigheter, globala rättigheter används",
 "Assign permissions" => "Tilldela rättigheter",
 "to group" => "till grupp",
 "Change password enforced" => "Lösenordsändring krävs",

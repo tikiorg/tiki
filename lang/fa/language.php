@@ -5598,6 +5598,7 @@ $lang=Array(
 "Remove from this Category &amp; all its Children" => "از اين طبقه و طبقات فرزندش حذف كن",
 "Remove from this Category Only" => "تنها از اين طبقه حذفش كن",
 "No individual permissions global permissions apply" => "بدون حقوق دسترسي فردي. حقوق دسترسي عمومي اعمال مي‌شوند.",
+"No individual permissions. Global permissions apply." => "بدون حقوق دسترسي فردي. حقوق دسترسي عمومي اعمال مي‌شوند.",
 "Assign permissions" => "تخصيص حقوق دسترسي به ",
 "to group" => "را به گروه",
 "this category &amp; all its children" => "اين طبقه و تمام طبقات فرزندانش",

@@ -6382,6 +6382,7 @@ $lang=Array(
 "Duration" => "Időtartam",
 "Permission" => "Jogosultság",
 "No individual permissions global permissions apply" => "Nincsenek egyéni engedélyek, a globális engedélyek érvényesek",
+"No individual permissions. Global permissions apply." => "Nincsenek egyéni engedélyek, a globális engedélyek érvényesek",
 "to group" => "csoporthoz",
 "Change password enforced" => "Jelszócsere kötelező",
 "Old password" => "Régi jelszó",

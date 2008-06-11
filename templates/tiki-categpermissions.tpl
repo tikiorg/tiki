@@ -23,7 +23,7 @@
 	(<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$catId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}Remove from this Category &amp; all its Children{/tr}</a>)
   </td></tr>
 {sectionelse}
-<tr><td class="odd" colspan="3">{tr}No individual permissions global permissions apply{/tr}</td></tr>
+<tr><td class="odd" colspan="3">{tr}No individual permissions. Global permissions apply.{/tr}</td></tr>
 {/section}
 </table>
 <br />

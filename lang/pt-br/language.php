@@ -6053,6 +6053,7 @@ $lang=Array(
 "Create/edit trackers" => "Criar/editar acompanhamentos",
 "There are individual permissions set for this tracker" => "Estas são as permissões individuais para este acompanhamento",
 "No individual permissions global permissions apply" => "Nenhuma permissão individual, permissões globais em efeito",
+"No individual permissions. Global permissions apply." => "Nenhuma permissão individual, permissões globais em efeito",
 "Use \"explicit\" names in the mirror table" => "Usar nomes \"explícitos\" nas tabelas espelho",
 "tracker name must be unique, field names must be unique \nfor a tracker and they must be valid in SQL" => "o nome do acompanhamento precisa ser único, assim como o nome dos campos \ne eles precisam ser válidos no SQL",
 "Show status" => "Mostrar status",

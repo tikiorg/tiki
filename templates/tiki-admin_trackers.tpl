@@ -104,7 +104,7 @@
 {tr}There are individual permissions set for this tracker{/tr}
 {else}
 {icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
-{tr}No individual permissions global permissions apply{/tr}
+{tr}No individual permissions. Global permissions apply.{/tr}
 {/if}
 </div>
 {/if}

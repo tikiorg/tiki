@@ -4828,6 +4828,7 @@ $lang=Array(
 "import" => "import",
 "Permission" => "Permission",
 "No individual permissions global permissions apply" => "No individual permissions global permissions apply",
+"No individual permissions. Global permissions apply." => "No individual permissions global permissions apply",
 "Channel Information" => "Channel Information",
 "Channel" => "Channel",
 "Ratio" => "Ratio",

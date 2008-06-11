@@ -5696,6 +5696,7 @@ $lang=Array(
 "Remove from this Category &amp; all its Children" => "Poista tästä luokasta &amp; ja kaikki alaluokat",
 "Remove from this Category Only" => "Poista vain tästä luokasta",
 "No individual permissions global permissions apply" => "Ei erityisoikeuksia yleiset oikeudet liitetään",
+"No individual permissions. Global permissions apply." => "Ei erityisoikeuksia yleiset oikeudet liitetään",
 "Assign permissions" => "Liitä oikeudet",
 "to group" => "ryhmälle",
 "this category &amp; all its children" => "tämä luokka &amp; ja kaikki alaluokat",

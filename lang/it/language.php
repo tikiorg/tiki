@@ -6517,6 +6517,7 @@ $lang=Array(
 "import" => "importa",
 "Permission" => "Permesso",
 "No individual permissions global permissions apply" => "Nessun permesso individuale, si applicano i criteri globali",
+"No individual permissions. Global permissions apply." => "Nessun permesso individuale, si applicano i criteri globali",
 "to group" => "al gruppo",
 "Change password enforced" => "Cambio password forzato",
 "Old password" => "Password corrente",

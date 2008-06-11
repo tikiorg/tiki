@@ -6182,6 +6182,7 @@ $lang=Array(
 "Create/edit trackers" => "Crea/edita formularis",
 "There are individual permissions set for this tracker" => "Hi ha permisos individuals per a aquest formulari",
 "No individual permissions global permissions apply" => "No hi ha permisos individuals, s'aplicaràn els permisos globals",
+"No individual permissions. Global permissions apply." => "No hi ha permisos individuals, s'aplicaràn els permisos globals",
 "Auto create corresponding categories" => "Auto crea les categories corresponents",
 "Use \"explicit\" names in the mirror table" => "Empra noms \"explícits\" a la taula mirall",
 "tracker name must be unique, field names must be unique \nfor a tracker and they must be valid in SQL" => "el nom del formulari ha de ser únic, els noms dels camps han de ser únics \nper a un formulari i han de ser vàlids en SQL (sense espais ni caràcters especials)",

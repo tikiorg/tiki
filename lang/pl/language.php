@@ -6673,6 +6673,7 @@ $lang=Array(
 "End" => "koniec",
 "Permission" => "Uprawnienia",
 "No individual permissions global permissions apply" => "Brak indywidalnego przydziału uprawnień, obowiązują uprawnienia globalne",
+"No individual permissions. Global permissions apply." => "Brak indywidalnego przydziału uprawnień, obowiązują uprawnienia globalne",
 "Old password" => "Stare hasło",
 "Again please" => "Ponownie",
 "Create PDF" => "Utwórz PDF",

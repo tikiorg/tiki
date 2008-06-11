@@ -6594,6 +6594,7 @@ $lang=Array(
 "Current permissions for this category" => "这个类别的权限",
 "Permission" => "权限",
 "No individual permissions global permissions apply" => "不采用单独的权限设置,采用全体权限设置",
+"No individual permissions. Global permissions apply." => "不采用单独的权限设置,采用全体权限设置",
 "Assign permissions" => "指定权限",
 "to group" => "给用户组",
 "this category &amp; all its children" => "这个类别和它的全部下位类",

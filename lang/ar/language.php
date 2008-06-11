@@ -3990,6 +3990,7 @@ $lang=Array(
 // "Remove from this Category &amp; all its Children" => "Remove from this Category &amp; all its Children",
 // "Remove from this Category Only" => "Remove from this Category Only",
 // "No individual permissions global permissions apply" => "No individual permissions global permissions apply",
+// "No individual permissions. Global permissions apply." => "No individual permissions global permissions apply",
 // "Assign permissions" => "Assign permissions",
 // "to group" => "to group",
 // "this category &amp; all its children" => "this category &amp; all its children",

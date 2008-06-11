@@ -6469,6 +6469,7 @@ $lang=Array(
 "import" => "インポート",
 "Permission" => "権限",
 "No individual permissions global permissions apply" => "個人権限が設定してなくて、グローバル権限のみになってます",
+"No individual permissions. Global permissions apply." => "個人権限が設定してなくて、グローバル権限のみになってます",
 "Assign permissions" => "権限の割当",
 "to group" => "をグループ",
 "Old password" => "古いパスワード",

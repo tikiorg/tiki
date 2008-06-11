@@ -5967,6 +5967,7 @@ $lang=Array(
 "import" => "uvezi",
 "Permission" => "Dozvola",
 "No individual permissions global permissions apply" => "Nema individualnih dozvola. Koriste se globalne dozvole.",
+"No individual permissions. Global permissions apply." => "Nema individualnih dozvola. Koriste se globalne dozvole.",
 "Assign permissions" => "Dodeli dozvole",
 "to group" => "grupi",
 "Change password enforced" => "Forsirana promena lozinke",

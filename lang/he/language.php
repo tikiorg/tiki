@@ -6454,6 +6454,7 @@ $lang=Array(
 "import" => "יבוא",
 "Permission" => "הרשאה",
 "No individual permissions global permissions apply" => "אין הרשאות ספציפיות. ההרשאות הקבוצתיות בתוקף.",
+"No individual permissions. Global permissions apply." => "אין הרשאות ספציפיות. ההרשאות הקבוצתיות בתוקף.",
 "to group" => "לקבוצה",
 "Change password enforced" => "שינוי סיסמה",
 "Old password" => "סיסמה ישנה",

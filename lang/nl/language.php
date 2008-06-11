@@ -5408,6 +5408,7 @@ $lang=Array(
 "Remove from this Category &amp; all its Children" => "Verwijder alle kinderen voor deze categorie",
 "Remove from this Category Only" => "Verwijder enkel van deze categorie",
 "No individual permissions global permissions apply" => "Er zijn geen individuele permissies gezet, globale permissies gelden",
+"No individual permissions. Global permissions apply." => "Er zijn geen individuele permissies gezet, globale permissies gelden",
 "Assign permissions" => "Wijs permissies toe",
 "to group" => "aan groep",
 "this category &amp; all its children" => "deze categorie en haar kinderen",
