@@ -64,7 +64,7 @@ class MenuLib extends TikiLib {
 		return $max;
 	}
 
-	function replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname, $level=0) {
+	function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0) {
 		if ($optionId) {
 			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?  where `optionId`=?";
 			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$optionId);

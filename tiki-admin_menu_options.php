@@ -24,7 +24,54 @@ if (!isset($_REQUEST["menuId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+function importOptions() {
+	global $smarty, $menulib;
+	$fname = $_FILES['csvfile']['tmp_name'];
+	$fhandle = fopen($fname, "r");
+	$fields = fgetcsv($fhandle, 1000);
+	if (!$fields[0]) {
+		$smarty->assign('msg', tra('The file is not a CSV file or has not a correct syntax'));
+		$smarty->display("error.tpl");
+		die;
+	}
+	while (!feof($fhandle)) {
+		$res = array('type'=>'','name'=>'','url'=>'', 'position'=>0, 'section'=>'', 'perm'=>'', 'groupname'=>'', 'userlevel'=>'');
+		$data = fgetcsv($fhandle, 1000);
+		if (empty($data))
+			continue;
+		for ($i = 0; $i < count($fields); $i++) {
+			$res[$fields[$i]] = $data[$i];
+		}
+		$menulib->replace_menu_option($_REQUEST['menuId'], 0, $res['name'], $res['url'], $res['type'], $res['position'], $res['section'], $res['perm'], $res['groupname'], $res['userlevel']);
+	}
+}
+if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
+	importOptions();
+}
 
+function exportOptions() {
+	global $menulib;
+	$data = "type,name,url,position,section,perm,groupname,userlevel\r\n";
+	$options = $menulib->list_menu_options($_REQUEST['menuId']);
+	foreach ($options['data'] as $option) {
+		$data .= $option['type'].',"'.str_replace('"', '""',$option['name']).'",'.str_replace('"', '""',$option['url']).','.$option['position'].','.$option['section'].','.$option['perm'].','.$option['groupname'].$option['userlevel']."\r\n";
+	}
+	if (empty($_REQUEST['encoding'])) {
+		$_REQUEST['encoding'] = 'UTF-8';
+	} elseif ($_REQUEST['encoding'] == 'ISO-8859-1') {
+		$data = utf8_decode($data);
+	}
+	header("Content-type: text/comma-separated-values; charset:".$_REQUEST['encoding']);
+	header("Content-Disposition: attachment; filename=".tra('menu')."_".$_REQUEST['menuId'].".csv");
+	header("Expires: 0");
+	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+	header("Pragma: public");
+	echo $data;
+	die;
+}
+if (!empty($_REQUEST['export'])) {
+	exportOptions();
+}
 $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 
 $smarty->assign('menuId', $_REQUEST["menuId"]);

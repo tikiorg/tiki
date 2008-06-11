@@ -1809,7 +1809,7 @@ function add_pageview() {
     }
 
     /*shared*/
-    function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false,$level=0) {
+    function list_menu_options($menuId, $offset=0, $maxRecords=-1, $sort_mode='position_asc', $find='', $full=false, $level=0) {
 		global $smarty,$user, $tiki_p_admin, $prefs;
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 	$ret = array();

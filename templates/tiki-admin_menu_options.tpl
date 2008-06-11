@@ -295,6 +295,18 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </div>
 </div>
 
+<h2>{tr}Export CSV data{/tr}</h2>
+<form action="tiki-admin_menu_options.php" method="post">
+<input type="hidden" name="menuId" value="{$menuId}" />
+<input type="submit" name="export" value="{tr}Export{/tr}" />
+</form
+
+<h2>{tr}Import CSV data{/tr}</h2>
+<form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="menuId" value="{$menuId}" />
+{tr}File{/tr}: <input name="csvfile" type="file" />
+<input type="submit" name="import" value="{tr}Import{/tr}" />
+</form>
 {*
 <form action="tiki-admin_menu_options.php" method="post">
 <textarea name="menudump" cols="70" rows="42">{$menudump}</textarea><br />
