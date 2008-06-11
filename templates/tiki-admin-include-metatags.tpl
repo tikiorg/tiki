@@ -9,7 +9,8 @@
         <tr><td class="form"><b>{tr}Item{/tr}</b></td>
             <td class="form"><b>{tr}Value{/tr}</b></td>
         </tr>
-        <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /> <br /> 
+        <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /> <br />
+        {tr}Insert freetags in keyword list{/tr} <input type="checkbox" name="prefs_metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked"{/if}<br />
         {tr}Use the thread title in Forum pages instead{/tr} <input type="checkbox" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if}<br />
         {tr}Use the image title in Image gallery pages instead{/tr} <input type="checkbox" name="prefs_metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if}
         </td></tr>
