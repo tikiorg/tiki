@@ -167,6 +167,5 @@ class TikiCalendarLib extends CalendarLib {
 }
 global $dbTiki;
 $tikicalendarlib = new TikiCalendarLib($dbTiki);
-define('weekInSeconds', 604800);
 
 ?>

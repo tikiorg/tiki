@@ -6,7 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+define('weekInSeconds', 604800);
+
 class CalendarLib extends TikiLib {
+
 	function CalendarLib($db) {
 		$this->TikiLib($db);
 	}

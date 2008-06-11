@@ -198,7 +198,6 @@ if ($_SESSION['CalendarViewGroups']) {
   $listevents = array();
 }
 
-define("weekInSeconds", 604800);
 $mloop = TikiLib::date_format("%m", $viewstart);
 $dloop = TikiLib::date_format("%d", $viewstart);
 $yloop = TikiLib::date_format("%Y", $viewstart);
