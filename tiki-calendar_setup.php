@@ -83,7 +83,7 @@ if (isset($_REQUEST["gbi"])) {
 }
 $smarty->assign_by_ref('group_by_item', $_SESSION['CalendarGroupByItem']);
 
-$calendarViewGroups = $_SESSION['CalendarViewGroups'];
+$calendarViewGroups = (isset($_SESSION['CalendarViewGroups'])) ? $_SESSION['CalendarViewGroups'] : '';
 $calendarViewList = $_SESSION['CalendarViewList'];
 $calendarGroupByItem = $_SESSION['CalendarGroupByItem'];
 
