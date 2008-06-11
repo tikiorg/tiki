@@ -42,7 +42,11 @@
 </div>
 
 {if !empty($tracker_info.description)}
-<div class="wikitext">{$tracker_info.description}</div>
+	{if $tracker_info.descriptionIsParsed eq 'y' }
+		<div class="wikitext">{wiki}{$tracker_info.description}{/wiki}</div>
+	{else}
+		<div class="wikitext">{$tracker_info.description|escape|nl2br}</div>
+	{/if}
 {/if}
 
 {if !empty($mail_msg)}

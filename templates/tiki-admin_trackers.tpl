@@ -1,6 +1,6 @@
 {* $Id$ *}
 <h1><a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
-  
+ 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
 {icon _id='help'}</a>{/if}
@@ -69,7 +69,11 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td><a class="tablename" href="tiki-admin_trackers.php?trackerId={$channels[user].trackerId}" title="{tr}Edit{/tr}">{$channels[user].name}</a></td>
-<td>{$channels[user].description}</td>
+{if $channels[user].descriptionIsParsed eq 'y' }
+<td>{wiki}{$channels[user].description}{/wiki}</td>
+{else}
+<td>{$channels[user].description|escape|nl2br}</td>
+{/if}
 <td>{$channels[user].created|tiki_short_date}</td>
 <td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
@@ -114,12 +118,23 @@
 <tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
 <tr class="formcolor"><td>{tr}Description{/tr}:</td>
 	<td colspan="2">
-		<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
-				<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
-				{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
-				{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
-				</span>
-		<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
+	{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleSpan('trackerDesc');" />
+	<div id="trackerDesc" style="display:none;" >
+		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
+		{if $descriptionIsParsed eq 'y'}<script language="javascript">
+			<!-- 
+				toggleSpan('trackerDesc');
+			// -->
+			</script>{/if}
+	</div>
+	<br />
+	<textarea id="trackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
+	<br />
+	{tr}Use Ratings:{/tr}<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
+		<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
+			{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
+			{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
+		</span>
 	</td>
 </tr>
 {include file=categorize.tpl colsCategorize=2}
@@ -272,6 +287,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 trackerId = {$trackerId}
 name = {$name}
 description = {$description}
+descriptionIsParsed = {$descriptionIsParsed}
 useExplicitNames = {$useExplicitNames}
 showStatus = {$showStatus}
 defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach} 
@@ -347,7 +363,22 @@ categories = {$catsdump}
 <form action="tiki-admin_trackers.php" method="post">
 <table class="normal">
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" name="name" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor">
+	<td>{tr}Description{/tr}</td>
+	<td colspan="2">
+		{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleSpan('duplicateTrackerDesc');" />
+		<div id="duplicateTrackerDesc" style="display:none;" >
+			{include file=tiki-edit_help_tool.tpl qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
+			{if $descriptionIsParsed eq 'y'}<script language="javascript">
+				<!-- 
+					toggleSpan('duplicateTrackerDesc');
+				// -->
+				</script>{/if}
+		</div>
+		<br />
+		<textarea id="duplicateTrackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
+	</td>
+</tr>
 <tr class="formcolor"><td>{tr}Tracker{/tr}</td>
 <td>
 <select name="trackerId">

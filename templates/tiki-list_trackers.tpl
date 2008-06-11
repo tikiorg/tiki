@@ -44,8 +44,12 @@
 {section name=user loop=$channels}
 {if $channels[user].individual eq 'n' or $channels[user].individual_tiki_p_view_trackers eq 'y'}
 <tr class="{cycle}">
-<td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{$channels[user].name}</a></td>
-<td>{$channels[user].description}</td>
+	<td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{$channels[user].name}</a></td>
+	{if $channels[user].descriptionIsParsed eq 'y' }
+		<td>{wiki}{$channels[user].description}{/wiki}</td>
+	{else}
+		<td>{$channels[user].description|escape|nl2br}</td>
+	{/if}
 <td>{$channels[user].created|tiki_short_datetime}</td>
 <td>{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;">{$channels[user].items}</td>

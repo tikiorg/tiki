@@ -33,7 +33,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 }
 
 if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQUEST['trackerId'])) {
-  $newTrackerId = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '' );
+  $newTrackerId = $trklib->duplicate_tracker($_REQUEST['trackerId'], $_REQUEST['name'], isset($_REQUEST['description'])?$_REQUEST['description']: '', $_REQUEST["duplicateDescriptionIsParsed"]?'y':'');
 	if (isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] == 'on' && $prefs['feature_categories'] == 'y') {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cats = $categlib->get_object_categories('tracker', $_REQUEST['trackerId']);
@@ -86,11 +86,13 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["showCreated"] = 'n';
 	}
+
 	if (isset($_REQUEST['showCreatedFormat'])) {
 		$tracker_options['showCreatedFormat'] = $_REQUEST['showCreatedFormat'];
 	} else {
 		$tracker_options['showCreatedFormat'] = '';
 	}
+
 	if (isset($_REQUEST["showCreatedView"]) 
 		&& ($_REQUEST["showCreatedView"] == 'on' 
 			or $_REQUEST["showCreatedView"] == 'y')) {
@@ -345,7 +347,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['showPopup'] = '';
 	}
 	
-	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
+	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
 	$cat_desc = $_REQUEST["description"];
@@ -363,6 +365,7 @@ $info = array();
 $fields = array('data'=>array());
 $info["name"] = '';
 $info["description"] = '';
+$info['descriptionIsParsed']='';
 $info["showCreated"] = '';
 $info['showCreatedFormat'] = '';
 $info["showCreatedView"] = '';
@@ -416,6 +419,7 @@ foreach ($dstatus as $ds) {
 $smarty->assign('fields', $fields['data']);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
+$smarty->assign('descriptionIsParsed', $info["descriptionIsParsed"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('showCreatedFormat', $info['showCreatedFormat']);
 $smarty->assign('showCreatedView', $info["showCreatedView"]);
@@ -510,6 +514,10 @@ $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $channels["cant"];
 include "tiki-pagination.php";
+
+include_once('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 

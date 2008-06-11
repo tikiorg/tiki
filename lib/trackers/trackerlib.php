@@ -1822,20 +1822,20 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Inserts or updates a tracker
-	function replace_tracker($trackerId, $name, $description, $options) {
+	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId)); 
 			if ($old) {
-				$query = "update `tiki_trackers` set `name`=?,`description`=?,`lastModif`=? where `trackerId`=?";
-				$this->query($query,array($name,$description,(int)$this->now,(int) $trackerId));
+				$query = "update `tiki_trackers` set `name`=?,`description`=?,`descriptionIsParsed`=?,`lastModif`=? where `trackerId`=?";
+				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			} else {
-				$query = "insert into `tiki_trackers` (`name`,`description`,`lastModif`,`trackerId`) values (?,?,?,?)";
-				$this->query($query,array($name,$description,(int)$this->now,(int) $trackerId));
+				$query = "insert into `tiki_trackers` (`name`,`description`,`descriptionIsParsed`,`lastModif`,`trackerId`) values (?,?,?,?,?)";
+				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			}
 		} else {
 			$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
-			$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`) values(?,?,?,?)";
-			$this->query($query,array($name,$description,(int) $this->now,(int) $this->now));
+			$query = "insert into `tiki_trackers`(`name`,`description`,`descriptionIsParsed`,`created`,`lastModif`) values(?,?,?,?,?)";
+			$this->query($query,array($name,$description,$descriptionIsParsed,(int) $this->now,(int) $this->now));
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $this->now));
 		}
 		$this->query("delete from `tiki_tracker_options` where `trackerId`=?",array((int)$trackerId));
@@ -2386,11 +2386,11 @@ class TrackerLib extends TikiLib {
 	function get_nb_items($trackerId) {
 		return $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
 	}
-	function duplicate_tracker($trackerId, $name, $description='') {
+	function duplicate_tracker($trackerId, $name, $description='', $descriptionIsParsed) {
 		$tracker_info = $this->get_tracker($trackerId);
 		if ($t = $this->get_tracker_options($trackerId))
 			$tracker_info = array_merge($tracker_info,$t);
-		$newTrackerId = $this->replace_tracker(0, $name, $description, array());
+		$newTrackerId = $this->replace_tracker(0, $name, $description, array(), $descriptionIsParsed);
 		$query = "select * from `tiki_tracker_options` where `trackerId`=?";
 		$result = $this->query($query, array($trackerId));
 		while ($res = $result->fetchRow()) {

@@ -39,6 +39,7 @@ if ($_REQUEST["trackerId"]) {
 
 	$info["name"] = '';
 	$info["description"] = '';
+	$info["descriptionIsParsed"] = '';
 }
 
 $smarty->assign('name', $info["name"]);
