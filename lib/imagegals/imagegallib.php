@@ -1370,40 +1370,11 @@ class ImageGalsLib extends TikiLib {
 
 	    global $prefs, $userlib, $user, $tiki_p_admin;
 	    while ($res = $result->fetchRow()) {
-
-		$add = TRUE;
-
-		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'image gallery')) {
-		    // gallery permissions override category permissions
-		    if (!$userlib->object_has_permission($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
-			$add = FALSE;
-		    }
-		} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-		    // no forum permissions so now we check category permissions
-		    global $categlib;
-		    if (!is_object($categlib)) {
-			include_once('lib/categories/categlib.php');
-		    }
-		    unset($tiki_p_view_categorized); // unset this var in case it was set previously
-		    $perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
-		    if ($perms_array) {
-			$is_categorized = TRUE;
-			foreach ($perms_array as $perm => $value) {
-			    $$perm = $value;
+			$res['perms'] = $this->get_perm_object($res['galleryId'], 'image gallery', $res, false);
+			if ($res['perms']['tiki_p_view_image_gallery'] == 'y') {
+				$res['images'] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($res['galleryId']));
+				$ret[] = $res;
 			}
-		    } else {
-			$is_categorized = FALSE;
-		    }
-
-		    if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-			$add = FALSE;
-		    }
-		}
-
-		if ($add) {
-		    $res['images'] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($res['galleryId']));
-		    $ret[] = $res;
-		}
 	    }
 
 	    if ($old_sort_mode == 'images_asc') {

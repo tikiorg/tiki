@@ -98,8 +98,6 @@
 {tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
 <tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" />{tr}pixels{/tr}</td></tr>
-{else}
-{$defaultscale=$prefs.scaleSizeGalleries}
 {/if}
 
 <tr><td class="formcolor">{tr}Owner of the gallery{/tr}:</td><td class="formcolor"><input type="text" name="owner" value="{$owner|escape}"/></td></tr>
@@ -217,16 +215,16 @@
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
 {/if}
   <td class="{cycle}" nowrap="nowrap">
-  {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_view_image_gallery eq 'y' ) }
+  {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_view_image_gallery eq 'y' }
   <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">{icon _id='table' alt='{tr}List{/tr}'}</a>
   {/if}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
-    {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
+    {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_create_galleries eq 'y' }
       <a class="gallink" title="{tr}Edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">{icon _id='page_edit'}</a>
     {/if}
   {/if}
-  {if $tiki_p_upload_images eq 'y'}
-  {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_images eq 'y' ) }
+  {if $galleries[changes].perms.tiki_p_upload_images eq 'y'}
+  {if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y' }
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
     <a class="gallink" href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">{icon _id='upload'}</a>
   {if ($galleries[changes].geographic eq 'y')}
@@ -235,15 +233,15 @@
   {/if}
   {/if}
   {/if}
-  {if ($tiki_p_admin eq 'y') or  ($tiki_p_assign_perm_image_gallery eq 'y' )}
-    {if $galleries[changes].individual eq 'y'}
+  {if ($tiki_p_admin eq 'y') or  ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
+    {if $galleries[changes].perms.has_special_perm eq 'y'}
 	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key_active' alt='{tr}Active Perms{/tr}'}</a>
     {else}
 	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleries[changes].galleryId}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
-  {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
+  {if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.has_special_perms eq 'n') or ($galleries[changes].perms.tiki_p_create_galleries eq 'y' ) }
     &nbsp;&nbsp;<a class="gallink" title="{tr}Delete{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   {/if}
   {/if}
