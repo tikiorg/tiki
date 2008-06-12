@@ -7,9 +7,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 if ($user) {
-		global $freetag;
+		global $freetaglib;
 		global $dbTiki;
-    if (!isset($freetag) or !is_object($freetag)) require_once("lib/freetag/freetaglib.php");
+    if (!isset($freetaglib) or !is_object($freetaglib)) require_once("lib/freetag/freetaglib.php");
     $most_popular_tags = $freetaglib->get_most_popular_tags($user, 0, $module_rows);
     $smarty->assign('most_popular_tags', $most_popular_tags);
 }
