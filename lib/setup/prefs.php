@@ -1032,6 +1032,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# TikiTests
 	$prefs['feature_tikitests'] = 'n';
 
+	# Tiki Profiles
+	$prefs['profile_sources'] = 'http://profiles.tikiwiki.org/profiles';
+
 	// Special default values
 
 	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )

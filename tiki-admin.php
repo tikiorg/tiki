@@ -246,6 +246,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Configure Site Ads and Banners";//get_strings tra("Configure Site Ads and Banners")
 		$helpUrl = "Site Ads and Banners";
 		include_once ('tiki-admin_include_ads.php');
+	} else if ($adminPage == "profiles") {
+		$admintitle = "Profiles";
+		$description = "Install predefined configuration profiles and ad-ons.";
+		$helpUrl = "Profile installation";
+		include_once ('tiki-admin_include_profiles.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
