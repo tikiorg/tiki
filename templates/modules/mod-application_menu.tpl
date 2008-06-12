@@ -211,7 +211,7 @@
     {/if}
   {/if}
   {if $tiki_p_edit_article eq 'y' && $prefs.feature_submissions ne 'y'}
-      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}Edit article{/tr}</a><br />
+      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}New article{/tr}</a><br />
   {/if}
   {if $tiki_p_send_articles eq 'y' and $prefs.feature_comm eq 'y'}
     &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send articles{/tr}</a><br />
