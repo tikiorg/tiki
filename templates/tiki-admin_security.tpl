@@ -27,6 +27,8 @@
 <td class="{cycle advance=false}">
 {if $item.risk eq 'safe'}{icon _id=accept.png alt="$item.risk" style="vertical-align:middle"}
 {elseif $item.risk eq 'risky'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unsafe'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unknown'}{icon _id=error.png alt="$item.risk" style="vertical-align:middle"}
 {/if}
 {$item.risk}</td>
 <td class="{cycle advance=true}">{$item.message}</td></tr>
@@ -41,11 +43,18 @@
 <th class="heading">{tr}Setting{/tr}</th>
 <th class="heading">{tr}Risk Factor{/tr}</th>
 <th class="heading">{tr}Explanation{/tr}</th></tr>
+{cycle values="even,odd" print=false}
 {foreach from=$tikisettings key=key item=item}
-<tr><td class="form">{$key}</td>
-<td class="form">{$item.setting}</td>
-<td class="form">{$item.risk}</td>
-<td class="form">{$item.message}</td></tr>
+<tr><td class="{cycle advance=false}">{$key}</td>
+<td class="{cycle advance=false}">{$item.setting}</td>
+<td class="{cycle advance=false}">
+{if $item.risk eq 'safe'}{icon _id=accept.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'risky'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unsafe'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unknown'}{icon _id=error.png alt="$item.risk" style="vertical-align:middle"}
+{/if}
+{$item.risk}</td>
+<td class="{cycle}">{$item.message}</td></tr>
 {/foreach}
 {if !$tikisettings}<tr><td colspan="4" class="odd">{tr}No records found.{/tr}</td></tr>
 {/if}
