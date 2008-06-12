@@ -94,17 +94,7 @@
 <h2>{tr}HTML pages{/tr}</h2>
 <div align="center">
 {if $channels}
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-admin_html_pages.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <table class="normal">
   <tr>

@@ -21,19 +21,7 @@
 
 <h2>{tr}Hotwords{/tr}</h2>
 {if $words}
-<div align="center">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_hotwords.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
-</div>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <table class="normal">
 <tr>

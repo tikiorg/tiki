@@ -43,16 +43,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
-<form method="get" action="tiki-admingroups.php">
-<table class="findtable"><tr>
-<td><label for="groups_find">{tr}Find{/tr}</label></td>
-<td><input type="text" name="find" id="groups_find" value="{$find|escape}" /></td>
-<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
-<td>{tr}Number of displayed rows{/tr}</td>
-<td><input type="text" size="4" name="numrows" value="{$numrows|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
-</tr></table>
-</form>
+{include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
 
 {if $cant_pages > 1 or !empty($initial) or !empty($find)}
 <div align="center">

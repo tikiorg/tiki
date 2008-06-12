@@ -46,18 +46,7 @@
 </table>
 </form>
 <br /><h2>{tr}Menus{/tr}</h2>
-<div align="center">
-<table class="findtable">
-<tr><td><label for="menus_find">{tr}Find{/tr}</label></td>
-   <td>
-   <form method="get" action="tiki-admin_menus.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" id="menus_find" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{include file='find.tpl' _sort_mode='y'}
 <table class="normal">
 <tr>
 <th class="heading"><a class="tableheading" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'menuId_desc'}menuId_asc{else}menuId_desc{/if}">{tr}ID{/tr}</a></th>
@@ -99,5 +88,4 @@
 {$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
-</div>
 </div>
