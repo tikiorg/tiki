@@ -14,14 +14,18 @@
   
 <table class="normal">
   <tr>
-    {if $checkboxes_on eq 'y'}
-      <td class="heading">&nbsp;</td>
+  {if $checkboxes_on eq 'y' && count($listpages) > 0}
+    <script type='text/javascript'>
+      <!--
+        // check / uncheck all.
+        // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
+        // for now those people just have to check every single box
+        document.write("<td class=\"heading\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"Select All\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
+        //-->                     
+    </script>
       {assign var='cntcol' value='1'}
     {/if}
   
-    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-      <td class="heading">&nbsp;</td>
-    {/if}
 
     {if $prefs.wiki_list_id eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
@@ -98,6 +102,9 @@
       <td class="heading">{tr}Categories{/tr}</td>
     {/if}
 
+    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
+      <td class="heading">Action</td>
+    {/if}
   </tr>
 
   {cycle values="even,odd" print=false}
@@ -106,19 +113,6 @@
     {if $checkboxes_on eq 'y'}
       <td class="{cycle advance=false}">
         <input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/>
-      </td>
-    {/if}
-
-    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-      <td class="{cycle advance=false}">
-  
-      {if $tiki_p_edit eq 'y'}
-        <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
-      {/if}
-  
-      {if $tiki_p_assign_perm_wiki_page eq 'y'}
-        <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
-      {/if}
       </td>
     {/if}
 
@@ -218,6 +212,19 @@
 	{/foreach}
       </td>
     {/if}
+
+    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
+      <td class="{cycle advance=false}">
+  
+      {if $tiki_p_edit eq 'y'}
+        <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
+      {/if}
+  
+      {if $tiki_p_assign_perm_wiki_page eq 'y'}
+        <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
+      {/if}
+      </td>
+    {/if}
     
     {cycle print=false}
   </tr>
@@ -230,23 +237,13 @@
   </tr>
   {/section}
 
-  {if $checkboxes_on eq 'y' && count($listpages) > 0}
-    <script type='text/javascript'>
-      <!--
-        // check / uncheck all.
-        // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
-        // for now those people just have to check every single box
-        document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-        document.write("<td colspan=\"{$cntcols}\"><label for=\"clickall\">{tr}All{/tr}</label></td></tr>");
-        //-->                     
-    </script>
-  {/if}
 </table>
 
   {if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
     <p align="left"> {*on the left to have it close to the checkboxes*}
+	{tr}Perform action with checked{/tr}:
       <select name="submit_mult" onchange="this.form.submit();">
-        <option value="" selected="selected">{tr}with checked{/tr}:</option>
+        <option value="" selected="selected">...</option>
         {if $tiki_p_remove eq 'y'} 
           <option value="remove_pages" >{tr}Remove{/tr}</option>
         {/if}
