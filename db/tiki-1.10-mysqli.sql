@@ -3557,6 +3557,7 @@ CREATE TABLE tiki_trackers (
   trackerId int(12) NOT NULL auto_increment,
   name varchar(255) default NULL,
   description text,
+  descriptionIsParsed varchar(1) default NULL,
   created int(14) default NULL,
   lastModif int(14) default NULL,
   showCreated char(1) default NULL,

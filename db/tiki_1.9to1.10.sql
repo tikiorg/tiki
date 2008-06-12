@@ -1814,3 +1814,7 @@ CREATE TABLE tiki_profile_symbols (
 
 #2008-06-06 sylvieg
 ALTER TABLE tiki_tracker_fields ADD errorMsg text;
+
+#2008-06-10 Jyhem
+ALTER TABLE `tiki_trackers` ADD `descriptionIsParsed` VARCHAR( 1 ) NULL DEFAULT '0' AFTER `description` ;
+
