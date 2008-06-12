@@ -20,7 +20,7 @@ class HtmlPagesLib extends TikiLib {
 	function list_html_pages($offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
 		if ($find) {
-			$mid = " where (`name` like ? or `content` like ?)";
+			$mid = " where (`pageName` like ? or `content` like ?)";
 			$bindvars[] = "%$find%";
 			$bindvars[] = "%$find%";
 		} else {
@@ -44,7 +44,7 @@ class HtmlPagesLib extends TikiLib {
 		$bindvars = array($pageName);
 		$mid = " where ".$this->convert_binary()." `pageName`=? ";
 		if ($find) {
-			$mid = " and (`name` like ? or `content` like ?)";
+			$mid = " and (`pageName` like ? or `content` like ?)";
 			$bindvars[] = "%$find%";
 			$bindvars[] = "%$find%";
 		}
