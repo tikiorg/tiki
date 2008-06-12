@@ -6,9 +6,9 @@
 {if !( $searchStyle eq "menu" )}
   <div class="nohighlight navbar">
     <p>{tr}Search in{/tr}:</p>
-    {foreach item=name key=k from=$where_list}
-      <a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
-    {/foreach}
+	{foreach item=name key=k from=$where_list}
+      	<a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
+   	{/foreach}
   </div><!-- nohighlight navbar -->
 
 {/if}
@@ -17,9 +17,23 @@
 {if ( $searchStyle eq "menu" )}
     {tr}in{/tr}
     <select name="where">
-    {foreach item=name key=k from=$where_list}
-    <option value="{$k}">{tr}{$name}{/tr}</option>
-    {/foreach}
+	{if empty($where_list)}
+		<option value="pages">{tr}Entire Site{/tr}</option>
+		{if $prefs.feature_wiki eq 'y'}<option value="wikis">{tr}Wiki Pages{/tr}</option>{/if}
+		{if $prefs.feature_galleries eq 'y'}<option value="galleries">{tr}Galleries{/tr}</option>{/if}
+		{if $prefs.feature_galleries eq 'y'}<option value="images">{tr}Images{/tr}</option>{/if}
+		{if $prefs.feature_file_galleries eq 'y'}<option value="files">{tr}Files{/tr}</option>{/if}
+		{if $prefs.feature_faqs eq 'y'}<option value="faqs">{tr}Faqs{/tr}</option>{/if}
+		{if $prefs.feature_forums eq 'y'}<option value="forums">{tr}Forums{/tr}</option>{/if}
+		{if $prefs.feature_blogs eq 'y'}<option value="blogs">{tr}Blogs{/tr}</option>{/if}
+		{if $prefs.feature_directory eq 'y'}<option value="directory">{tr}Directory{/tr}</option>{/if}
+		{if $prefs.feature_articles eq 'y'}<option value="articles">{tr}Articles{/tr}</option>{/if}
+		{if $prefs.feature_trackers eq 'y'}<option value="trackers">{tr}Trackers{/tr}</option>{/if}
+	{else}
+	    {foreach item=name key=k from=$where_list}
+    		<option value="{$k}">{tr}{$name}{/tr}</option>
+    	{/foreach}
+	{/if}
     </select>
 {else}
     <input type="hidden" name="where" value="{$where|escape}" />
