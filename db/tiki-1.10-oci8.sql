@@ -5011,7 +5011,7 @@ CREATE TABLE "users_objectpermissions" (
 DROP TABLE "users_permissions";
 
 CREATE TABLE "users_permissions" (
-  "permName" varchar(31) default '' NOT NULL,
+  "permName" varchar(40) default '' NOT NULL,
   "permDesc" varchar(250) default NULL,
   "level" varchar(80) default NULL,
   "type" varchar(20) default NULL,
@@ -5463,6 +5463,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
+
+INSERT INTO "users_permissions ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries');
+
 
 -- --------------------------------------------------------
 --
