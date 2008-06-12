@@ -7,19 +7,20 @@
 #
 # 
 # pre/
-#    - update changelog.txt (from CVS commit logs)
+#    - update changelog.txt (from SVN commit logs)
 #    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
 #    - update README
 #    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
 #    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
-#        previous version give the same db structure 
+#        previous version give the same db structure (but not necessarily the same data).
+#        The upgrade script is designed to be ran again & again. Specifically, we don't 
+#        want new permissions or modules to appear at upgrade. If there is a chance that 
+#        someone chose to delete something, it should not re-appear at each upgrade. 
 #    - cd db/convertscripts and run convertsqls.sh
+#    - update list of valid releases in tiki-admin_security.php:
+#        array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1', etc etc etc);
+#    - increment version number ($TWV->version) in lib/setup/twversion.class.php
 #    - check for PHP syntax errors: find . -type f -name \*.php -exec php -l {} \;  | grep Parse
-#    - commit your changes
-#    - set release branch (stable/unstable/head), version, and star in lib/setup/versioning.class.php
-#    - Replace version number in templates/tiki-install.tpl and
-#        templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl)
-#        with "{$tiki_version}"
 #    - commit your changes
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
 #        and load that page in your browser
