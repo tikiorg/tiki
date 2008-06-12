@@ -4,7 +4,7 @@
 {if ($type ne 'cloud')}<ul class="freetag">{/if}
 {foreach from=$most_popular_tags item=tag}
 {if ($type ne 'cloud')}<li class="freetag">{/if}
-  <a class="freetag_{$tag.size}" title="{tr}List everything tagged{/tr} {$tag.tag}" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a>
+  <a class="freetag_{$tag.size}" title="{tr}List everything tagged{/tr} {$tag.tag}" href="tiki-browse_freetags.php?tag={$tag.tag|escape:'url'}">{$tag.tag}</a>
   &nbsp;
 {if ($type ne 'cloud')}</li>{/if}
 {/foreach}
