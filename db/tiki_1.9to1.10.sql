@@ -1818,3 +1818,7 @@ ALTER TABLE tiki_tracker_fields ADD errorMsg text;
 #2008-06-10 Jyhem
 ALTER TABLE `tiki_trackers` ADD `descriptionIsParsed` VARCHAR( 1 ) NULL DEFAULT '0' AFTER `description` ;
 
+#2008-06-12 sylvieg
+update users_objectpermissions set permName='tiki_p_assign_perm_image_gallery' where permName='tiki_p_assign_perm_image_galler';
+update users_grouppermissions set permName='tiki_p_assign_perm_image_gallery' where permName='tiki_p_assign_perm_image_galler';
+delete from users_permissions where permName='tiki_p_assign_perm_image_galler';
