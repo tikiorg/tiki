@@ -55,7 +55,7 @@
 {else}
 <a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 {/if}
-<span style="padding-left:{$catree[dx].deep*30+5}px;">
+<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {if $catree[dx].deep < $catree[$after].deep}
 <a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
@@ -65,9 +65,8 @@
 </div>
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
-</span>
-{/section}
 </div>
+{/section}
 
 <a name="editcreate"></a>
     <div class="cbox">
@@ -165,7 +164,6 @@
 
       
       </div>
-    </div>
 
 {if $parentId != 0}
     <div class="cbox">
