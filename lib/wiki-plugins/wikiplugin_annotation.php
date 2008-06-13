@@ -127,7 +127,6 @@ function initAnnotation( o, cid ) // {{{
 
 function activateAnnotation( o, cid ) // {{{
 {
-	o.obj.onclick = function (e) { if( active ) return; alert( 'Hello' ); };
 	o.id = o.obj.id = "annotation-" + nextid++;
 	annotations[o.id] = o;
 	o.cid = cid;
@@ -197,7 +196,7 @@ function handleClick( event, cid ) // {{{
 		beginEdit( event, active, cid );
 
 		active = null;
-		gete(cid).fieldContent.innerHTML = serializeAnnotations( annotations, cid );
+		serializeAnnotations( annotations, cid );
 	}
 } // }}}
 
@@ -270,7 +269,7 @@ function endEdit( cid, store ) // {{{
 		o.target = editor.fieldLink.value;
 		o.link.innerHTML = o.value;
 
-		editor.fieldContent.innerHTML = serializeAnnotations( annotations, cid );
+		serializeAnnotations( annotations, cid );
 	}
 
 	gete(cid).style.display = 'none';
@@ -299,7 +298,7 @@ function handleDelete(cid) // {{{
 	annotations[o.id] = null;
 	selected[cid] = null;
 
-	gete(cid).fieldContent.innerHTML = serializeAnnotations( annotations, cid );
+	serializeAnnotations( annotations, cid );
 } // }}}
 
 function serializeAnnotations( data, cid ) // {{{
@@ -318,7 +317,7 @@ function serializeAnnotations( data, cid ) // {{{
 		str += row.value + " [" + row.target + "]\\n";
 	}
 
-	return str;
+	gete(cid).fieldContent.value = str;
 } // }}}
 
 </script>
@@ -355,7 +354,7 @@ $script
 	<div id="$cid-editor" style="display:none;width:250px;height:100px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
 		<a href="javascript:endEdit('$cid', false);void(0)"><img src="images/fullscreen_minimize.gif" style="position:absolute;top:0px;right:0px;border:none;"/></a>
 		<a href="javascript:handleDelete('$cid');void(0)" style="position:absolute;bottom:0px;right:0px;text-decoration:none;"><img src="images/ed_delete.gif" style="border:none;"/>Delete</a>
-		<form method="post" action="" onsubmit="return endEdit('$cid',true);">
+		<form method="post" action="" onsubmit="endEdit('$cid',true);return false;">
 			<div>Label</div>
 			<div><input type="text" name="label" id="$cid-label" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
 			<div>Link</div>
@@ -372,11 +371,14 @@ function todo$uid() {
 for( k in toCreate$uid )
 	createAnnotation( toCreate{$uid}[k], '$cid' );
 
-	gete('$cid').fieldContent.innerHTML = serializeAnnotations( annotations, '$cid' );
+	serializeAnnotations( annotations, '$cid' );
 }
-setTimeout('todo$uid()',1000);
+chain$uid = window.onload;
+window.onload = function(event) {
+	chain$uid(event);
+	todo$uid();
+};
 </script>
-<a href="javascript:todo$uid()">Test</a>
 ~/np~
 ANNOTATION;
 }
