@@ -140,7 +140,6 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 		
-		echo "Installing {$profile->domain}:{$profile->profile}\n";
 		$this->installed[$profile->url] = $profile;
 
 		foreach( $profile->getPreferences() as $pref => $value )

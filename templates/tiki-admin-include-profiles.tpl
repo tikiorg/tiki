@@ -2,7 +2,7 @@
 <script type="text/javascript">
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}
-function refreshCache( entry ) {
+function refreshCache( entry ) { // {{{
 	var status = document.getElementById( 'profile-status-' + entry );
 	var datespan = document.getElementById( 'profile-date-' + entry );
 	var pending = 'img/icons2/status_pending.gif';
@@ -24,7 +24,98 @@ function refreshCache( entry ) {
 		}
 	};
 	req.send(null);
-}
+} // }}}
+
+function showDetails( id, domain, profile ) { // {{{
+	
+	var nid = id + "-sub";
+	var prev = document.getElementById( id );
+	var obj = document.getElementById( nid );
+
+	if( obj )
+	{
+		obj.id = null;
+		obj.parentNode.removeChild( obj );
+		return;
+	}
+
+	var req = getHttpRequest( 'POST', baseURI + '&getinfo&pd=' + escape(domain) + '&pp=' + escape(profile), true );
+	req.onreadystatechange = function (aEvt) {
+		if (req.readyState == 4) {
+			if(req.status == 200) {
+				var data = eval( "(" + req.responseText + ")" );
+
+				var row = document.createElement( 'tr' );
+				var cell = document.createElement( 'td' );
+				var body = document.createElement( 'div' );
+				var ul = document.createElement( 'ul' );
+
+				row.appendChild( cell );
+				cell.colSpan = 3;
+
+				if( data.already )
+				{
+					var p = document.createElement( 'p' );
+					p.innerHTML = "A version of this profile is already installed.";
+					cell.appendChild(p);
+				}
+				else
+				{
+					var form = document.createElement( 'form' );
+					var p = document.createElement('p');
+					var submit = document.createElement('input');
+					var hidden = document.createElement('input');
+					form.method = 'post';
+					form.action = document.location.href;
+
+					form.appendChild(p);
+					submit.type = 'submit';
+					submit.name = 'install';
+					submit.value = 'Install Now';
+					p.appendChild(submit);
+					hidden.type = 'hidden';
+					hidden.name = 'url';
+					hidden.value = data.url;
+					p.appendChild(hidden);
+
+					cell.appendChild(form);
+				}
+
+				if( data.dependencies.length > 0 )
+				{
+					for( k in data.dependencies )
+					{
+						var li = document.createElement( 'li' );
+						var a = document.createElement( 'a' );
+						a.href = data.dependencies[k];
+						a.innerHTML = data.dependencies[k];
+
+						li.appendChild( a );
+						ul.appendChild( li );
+					}
+
+					var p = document.createElement( 'p' );
+					p.innerHTML = 'Will also be installed...';
+					cell.appendChild( p );
+					cell.appendChild( ul );
+				}
+
+				body.innerHTML = data.content;
+				body.style.height = '200px';
+				body.style.overflow = 'auto';
+				body.style.borderStyle = 'solid';
+				body.style.borderWidth = '2px';
+				body.style.borderColor = 'black';
+
+				cell.appendChild( body );
+
+				row.id = nid;
+				prev.parentNode.insertBefore( row, prev.nextSibling );
+			}
+		}
+	}
+	req.send(null);
+} // }}}
 {/literal}
 </script>
 <div class="rbox" name="tip">
@@ -112,9 +203,9 @@ function refreshCache( entry ) {
 			<th>{tr}Repository{/tr}</th>
 			<th>{tr}Category{/tr}</th>
 		</tr>
-		{foreach item=profile from=$result}
-		<tr>
-			<td><a href="{$profile.domain}/{$profile.name}">{$profile.name}</a></td>
+		{foreach key=k item=profile from=$result}
+		<tr id="profile-{$k}">
+			<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a></td>
 			<td>{$profile.domain}</td>
 			<td>{$profile.category}</td>
 		</tr>

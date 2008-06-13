@@ -8,8 +8,11 @@ require_once( 'Horde/Yaml/Exception.php' );
 class Tiki_Profile
 {
 	private $url;
+	private $pageUrl;
 	private $domain;
 	private $profile;
+
+	public $pageContent = null;
 	private $data = array();
 
 	private $objects = null;
@@ -63,6 +66,7 @@ class Tiki_Profile
 		case 'domain':
 		case 'profile':
 		case 'url':
+		case 'pageUrl':
 			return $this->$name;
 		}
 	} // }}}
@@ -83,6 +87,8 @@ class Tiki_Profile
 		$this->domain = $parts['host'] . rtrim( $dir, '/' );
 		$this->profile = $args['page'];
 
+		$this->pageUrl = dirname( $url ) . '/' . urlencode($this->profile);
+
 		return true;
 	} // }}}
 
@@ -90,6 +96,14 @@ class Tiki_Profile
 	{
 		$content = file_get_contents( $url );
 		$content = html_entity_decode( $content );
+		$content = str_replace( "\r", '', $content );
+
+		$begin = strpos( $content, "\n\n" );
+		if( ! $begin )
+			return false;
+
+		$content = substr( $content, $begin + 2 );
+		$this->pageContent = $content;
 
 		$base = strpos( $content, '{CODE(caption=>YAML' );
 		$begin = strpos( $content, ')}', $base ) + 2;
