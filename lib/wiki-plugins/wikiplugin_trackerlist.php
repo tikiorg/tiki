@@ -1,10 +1,5 @@
 <?php
 // $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_trackerlist.php,v 1.40.2.12 2008-03-22 12:13:54 sylvieg Exp $
-//
-// TODO : 
-// ----------
-// - filtrage avec expression exacte
-//
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
@@ -313,6 +308,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
+
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);

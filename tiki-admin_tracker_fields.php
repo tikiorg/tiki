@@ -72,6 +72,8 @@ if ($_REQUEST["fieldId"]) {
 	$info['description'] = '';
 	$info['errorMsg'] = '';
 	$info['itemChoices'] = array();
+	$info['visibleBy'] = array();
+	$info['editableBy'] = array();
 }
 
 if (isset($_REQUEST['up']) && $_REQUEST['fieldId']) {
@@ -95,6 +97,8 @@ $smarty->assign('isMandatory', $info["isMandatory"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('errorMsg', $info['errorMsg']);
 $smarty->assign_by_ref('itemChoices', $info['itemChoices']);
+$smarty->assign_by_ref('visibleBy', $info['visibleBy']);
+$smarty->assign_by_ref('editableBy', $info['editableBy']);
 
 
 if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != 'Rating')) {
@@ -184,7 +188,7 @@ function replace_tracker_from_request( $tracker_info )
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
 								   $isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"], $_REQUEST['description'],
-								   $isMultilingual, $_REQUEST["itemChoices"], $_REQUEST['errorMsg']);
+								   $isMultilingual, $_REQUEST["itemChoices"], $_REQUEST['errorMsg'], $_REQUEST['visibleBy'], $_REQUEST['editableBy']);
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
@@ -200,6 +204,8 @@ function replace_tracker_from_request( $tracker_info )
     $smarty->assign('description', '');
 	$smarty->assign('errorMsg', '');
     $smarty->assign('itemChoices', '');
+	$smarty->assign('visibleBy', array());
+	$smarty->assign('editableBy', array());
     $smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 
@@ -274,6 +280,8 @@ include_once('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
+$allGroups = $userlib->list_all_groups();
+$smarty->assign_by_ref('allGroups', $allGroups);
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-tracker-fields');
 

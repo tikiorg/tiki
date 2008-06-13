@@ -11,6 +11,13 @@
 {elseif $field_value.isHidden eq 'p' and $tiki_p_admin_trackers ne 'y'}
 	{if $field_value.value}{$field_value.value|escape}{/if}
 
+{* -- visible for some groups -- *}
+{elseif !empty($field_value.visibleBy) and !in_array($default_group, $field_value.visibleBy) and $tiki_p_admin_trackers ne 'y'}
+
+{* -- editable for some groups -- *}
+{elseif !empty($field_value.editableBy) and !in_array($default_group, $field_value.editableBy) and $tiki_p_admin_trackers ne 'y'}
+
+
 {* -------------------- system -------------------- *}
 {elseif $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $tiki_p_tracker_vote_ratings eq 'y'}
 	{section name=i loop=$field_value.options_array}
@@ -19,7 +26,7 @@
 
 {* -------------------- user selector -------------------- *}
 {elseif $field_value.type eq 'u'}
-	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
+	{if $field_value.options_array[0] eq 0 or empty($field_value.options_array) or $tiki_p_admin_trackers eq 'y'}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 		<option value="">{tr}None{/tr}</option>
 		{foreach key=id item=one from=$field_value.list}

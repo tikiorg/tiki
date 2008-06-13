@@ -3440,6 +3440,8 @@ CREATE TABLE tiki_tracker_fields (
   description text,
   itemChoices text,
   errorMsg text,
+  visibleBy text,
+  editableBy text,
   PRIMARY KEY  (fieldId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

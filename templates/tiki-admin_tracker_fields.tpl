@@ -62,6 +62,7 @@
 {foreach key=fk item=fi from=$field_types name=foreachname}
 {if isset($fi.itemChoicesList)}
 <select name="itemChoices[]" id='{$fk}itemChoices' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;"{else}style="display:none;"{/if} size="{math equation="min(10,x)" x=$fi.itemChoicesList|@count}" multiple="multiple">
+<option value="">&nbsp;</option>
 {sortlinks}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
@@ -84,7 +85,21 @@
 <option value="y"{if $isHidden eq 'y'} selected="selected"{/if}>{tr}visible to admin only{/tr}</option>
 <option value="p"{if $isHidden eq 'p'} selected="selected"{/if}>{tr}editable by admin only{/tr}</option>
 <option value="c"{if $isHidden eq 'c'} selected="selected"{/if}>{tr}visible by creator &amp; admin only{/tr}</option>
-</select><br /><i>{tr}The option creator needs a field of type user selector and option 1{/tr}</i>
+</select><br /><i>{tr}The option creator needs a field of type user selector and option 1{/tr}</i><br />
+{tr}Visible by:{/tr}
+<select name="visibleBy[]" size="3" multiple>
+<option value="">&nbsp;</option>
+{foreach item=group from=$allGroups}
+<option value="{$group|escape}"{if in_array($group, $visibleBy)} selected="selected"{/if}>{$group|escape}</option>
+{/foreach}
+</select><br />
+{tr}Editable by:{/tr}
+<select name="editableBy[]" size="3" multiple>
+<option value="">&nbsp;</option>
+{foreach item=group from=$allGroups}
+<option value="{$group|escape}"{if in_array($group, $editableBy)} selected="selected"{/if}>{$group|escape}</option>
+{/foreach}
+</select>
 </td></tr>
 <tr class="formcolor"><td>{tr}Field is mandatory?{/tr}</td><td><input type="checkbox" name="isMandatory" {if $isMandatory eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td>{tr}Order{/tr}:</td><td><input type="text" size="5" name="position" value="{$position}" /></td></tr>
@@ -161,7 +176,10 @@
 <td>{$channels[user].isTblVisible}</td>
 <td>{$channels[user].isSearchable}</td>
 <td>{$channels[user].isPublic}</td>
-<td>{$channels[user].isHidden}</td>
+<td>{$channels[user].isHidden}
+{if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
+{if !empty($channels[user].editableBy)}<br />{icon _id=page_edit}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
+</td>
 <td>{$channels[user].isMandatory}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
 <td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "Rating"}

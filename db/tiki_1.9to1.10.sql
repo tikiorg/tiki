@@ -1822,3 +1822,7 @@ ALTER TABLE `tiki_trackers` ADD `descriptionIsParsed` VARCHAR( 1 ) NULL DEFAULT 
 update users_objectpermissions set permName='tiki_p_assign_perm_image_gallery' where permName='tiki_p_assign_perm_image_galler';
 update users_grouppermissions set permName='tiki_p_assign_perm_image_gallery' where permName='tiki_p_assign_perm_image_galler';
 delete from users_permissions where permName='tiki_p_assign_perm_image_galler';
+
+#2008-06-13 sylvieg
+alter table tiki_tracker_fields add visibleBy text after errorMsg;
+alter table tiki_tracker_fields add editableBy text after visibleBy;
