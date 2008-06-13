@@ -6,23 +6,14 @@
 </h1>
 
 {if $tiki_p_create_blogs eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}Create New Blog{/tr}</a></div>
+  <div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}Create New Blog{/tr}</a></div>
 {/if}
 <div align="center">
+
 {if $listpages or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-list_blogs.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
-<br />
+
 <table class="bloglist">
 <tr>
 {if $prefs.blog_list_title eq 'y'}

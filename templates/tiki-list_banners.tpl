@@ -17,19 +17,8 @@
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 </div>
 {if $listpages or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-list_banners.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
-<br />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'bannerId_desc'}bannerId_asc{else}bannerId_desc{/if}">{tr}Id{/tr}</a></td>
