@@ -369,10 +369,32 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 
-	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), 
-	$_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
-	$body, $publishDate, $expireDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], 
-	$_REQUEST["topline"], $_REQUEST["subtitle"], $_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat);
+	$subid = $artlib->replace_submission( strip_tags($_REQUEST["title"]
+                                      , '<a><pre><p><img><hr><b><i>')
+                                      , $_REQUEST["authorName"]
+                                      , $_REQUEST["topicId"]
+                                      , $useImage
+                                      , $imgname
+                                      , $imgsize
+                                      , $imgtype
+                                      , $imgdata
+                                      , $heading
+                                      , $body
+                                      , $publishDate
+                                      , $expireDate
+                                      , $user
+                                      , $subId
+                                      , $_REQUEST["image_x"]
+                                      , $_REQUEST["image_y"]
+                                      , $_REQUEST["type"]
+                                      , $_REQUEST["topline"]
+                                      , $_REQUEST["subtitle"]
+                                      , $_REQUEST["linkto"]
+                                      , $_REQUEST["image_caption"]
+                                      , $_REQUEST["lang"]
+                                      , $_REQUEST["rating"]
+                                      , $isfloat
+                                    );
 
 	/*
   $links = $tikilib->get_links($body);
