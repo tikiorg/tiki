@@ -17,6 +17,8 @@
     * find_categId          : categories selected value
   * find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
   *
+  * Usage examples : {include file='find.tpl' _sort_mode='y'}
+  *                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
   *}
 
 <div class="findtable">
@@ -25,7 +27,7 @@
 {if $filegals_manager eq 'y'}<input type="hidden" name="filegals_manager" value="y" />{/if}
 {if $_sort_mode eq 'y'}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 
-{query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL'}
+{query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
 
 <label class="findtitle" for="findwhat">
   {if empty($what)}

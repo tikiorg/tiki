@@ -40,20 +40,10 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 {if ($channels) or ($find)}
-<div  align="center">
-<form method="get" action="tiki-admin_trackers.php">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-<td class="findtable">
-<input type="text" name="find" value="{$find|escape}" /></td>
-<td class="findtable">
-<input type="submit" value="{tr}Find{/tr}" name="search" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-</td></tr></table>
-{if ($find) and ($channels)}
-<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
-{/if}
-</form>
+  {include file='find.tpl' _sort_mode='y'}
+  {if ($find) and ($channels)}
+    <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+  {/if}
 {/if}
 
 <table class="normal">

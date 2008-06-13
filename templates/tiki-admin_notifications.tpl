@@ -57,18 +57,7 @@
 <br />
 <h2>{tr}EMail notifications{/tr}</h2>
 {if $channels or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_notifications.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-	 {tr}Number of displayed rows{/tr}<input type="text" size="4" name="numrows" value="{if $numrows}{$numrows}{else}{$prefs.maxRecords}{/if}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
 <table class="normal">

@@ -48,17 +48,7 @@
 <h2>{tr}Newsletters{/tr}</h2>
 <div align="center">
 {if $channels or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_newsletters.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <table class="normal">
 <tr>

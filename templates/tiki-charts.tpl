@@ -3,16 +3,10 @@
 
 <h1><a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a></h1>
 
-<h2>{tr}Charts{/tr}</h2>
 {if $items}
-<table class="findtable"><tr><td>
-<form action="tiki-charts.php" method="post">
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
-</form>
-</td></tr></table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <form action="tiki-charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />

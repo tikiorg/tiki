@@ -56,17 +56,7 @@
 <br />
 <h2>{tr}Surveys{/tr}</h2>
 {if $channels or ($find ne '')}
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-admin_surveys.php">
-     <input type="text" name="find" size= "40" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <!--  existing surveys -->
 
