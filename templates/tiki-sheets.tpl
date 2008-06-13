@@ -59,19 +59,10 @@ cted"{/if}>{$users[ix].login|username}</option>{/section}
 {/if}
 <h2>{tr}Available Sheets{/tr}</h2>
 <div align="center">
-{if $sheets}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-sheets.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{if $sheets or $find ne ''}
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>

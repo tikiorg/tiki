@@ -19,17 +19,10 @@
 {/if}
 </div>
 {if ($channels) or ($find)}
-<form method="get" action="tiki-list_trackers.php">
-<table class="findtable"><tr>
-<td>{tr}Find{/tr}</td>
-<td><input type="text" name="find" value="{$find|escape}" /></td>
-<td><input type="submit" value="{tr}Find{/tr}" name="search" /></td>
-<td><input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
-</tr></table>
-{if ($find) and ($channels)}
-<p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
-{/if}
-</form>
+  {include file='find.tpl' _sort_mode='y'}
+  {if ($find) and ($channels)}
+    <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
+  {/if}
 {/if}
 <!-- beginning of table -->
 <table class="normal">

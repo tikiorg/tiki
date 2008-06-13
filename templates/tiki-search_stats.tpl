@@ -11,18 +11,7 @@
 <a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
 </div>
 
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-search_stats.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
-
+{include file='find.tpl' _sort_mode='y'}
 
 <table class="normal">
 <tr>

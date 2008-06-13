@@ -60,25 +60,15 @@
 
 {if $showlist eq 'y'}
 <h2>{tr}Available Newsletters{/tr}</h2>
-<div  align="center">
-{if $channels}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_newsletters.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+<div align="center">
+{if $channels or $find ne''}
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading">&nbsp;</td>
+<td class="heading" width="80px">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

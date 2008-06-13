@@ -13,18 +13,11 @@
 <small>{tr}quota{/tr}&nbsp;{$percentage}%</small>
 </div>
 
-{if count($channels) > 0}
+{if count($channels) > 0 or $find ne ''}
 <h2>{tr}Notes{/tr}</h2>
-<table>
-<tr><td class="findtable">
-   <form method="get" action="tiki-notepad_list.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
+
 <form action="tiki-notepad_list.php" method="post">
 <table class="normal">
 <tr>

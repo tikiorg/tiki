@@ -44,19 +44,9 @@
 </form>
 {/if}
 
-
 <h2>{tr}Messages{/tr}</h2>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-shoutbox.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
 
 {section name=user loop=$channels}
 <div class="shoutboxmsg">

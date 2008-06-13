@@ -18,23 +18,14 @@
 {/if}
 <br />
 <h2>{tr}Select a news server to browse{/tr}</h2>
-{if $channels or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-newsreader_servers.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{if $channels or $find ne ''}
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <table class="normal">
 <tr>
 <th class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></th>
-<th class="heading">{tr}Action{/tr}</th>
+<th class="heading" width="80px">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

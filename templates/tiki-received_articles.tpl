@@ -123,18 +123,8 @@
 <h2>{tr}Received Articles{/tr}</h2>
 <div align="center">
 
-{if $channels}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-received_articles.php">
-     <input type="text" name="find" />
-     <input type="submit" name="search" value="{tr}Find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{if $channels or $find ne ''}
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 
 <table class="normal">

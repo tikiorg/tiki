@@ -134,19 +134,10 @@
 </table>
 {/if}
 
-{if $view eq 'list' and count($channels) > 0}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-minical.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="view" value="{$view|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{if $view eq 'list' and (count($channels) > 0 or $find ne '')}
+
+{include file='find.tpl' _sort_mode='y'}
+
 <a class="link" href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="view" value="{$view|escape}" />
