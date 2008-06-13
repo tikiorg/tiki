@@ -86,19 +86,10 @@
 <br />
 <h2>{tr}FAQ questions{/tr}</h2>
 <div align="center">
-{if $channels}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-faq_questions.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+{if $channels or ($find ne '')}
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <table class="normal">
 <tr>
 <td class="heading">
@@ -113,9 +104,9 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].questionId}</td>
 <td class="{cycle advance=false}">{$channels[user].question}</td>
-<td class="{cycle}">
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<td class="{cycle}" width="80px">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit'}</a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {sectionelse}
@@ -158,9 +149,9 @@
 <tr>
   <td class="{cycle advance=false}">{$suggested[ix].question} </td>
   <td class="{cycle advance=false}">{$suggested[ix].answer}</td>
-  <td class="{cycle}">
-  <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">{icon _id=cross alt="{tr}Remove{/tr}"}</a> 
+  <td class="{cycle}" width='80px'>
   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}" alt="{tr}Approve{/tr}">{icon _id=accept alt="{tr}Approve{/tr}"}</a>
+  <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">{icon _id=cross alt="{tr}Remove{/tr}"}</a> 
   </td>
 </tr>
 {/section}

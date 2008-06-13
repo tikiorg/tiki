@@ -44,17 +44,8 @@
 </form>
 
 <div align="center" style="clear:both;margin:5px;">
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-contacts.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
 
 <span class=alphafilter>
   <a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}All{/tr}</a>

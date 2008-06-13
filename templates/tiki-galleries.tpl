@@ -124,17 +124,9 @@
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
 {if $galleries or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-galleries.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
+
 <div>
 <form action="tiki-galleries.php" method="get">
 <select name="filter">
