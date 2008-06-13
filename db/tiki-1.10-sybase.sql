@@ -5216,6 +5216,7 @@ CREATE TABLE "tiki_trackers" (
   "trackerId" numeric(12 ,0) identity,
   "name" varchar(255) default NULL NULL,
   "description" text default '',
+  "descriptionIsParsed" varchar(1) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   "showCreated" char(1) default NULL NULL,
@@ -6811,6 +6812,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery', 'Can assign perms to image gallery', 'admin', 'image galleries')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki')
 go
 
@@ -6918,9 +6923,6 @@ go
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests')
 go
 
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries')
-go
 
 -- --------------------------------------------------------
 

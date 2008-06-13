@@ -4068,6 +4068,7 @@ CREATE TABLE "tiki_trackers" (
   "trackerId" bigserial,
   "name" varchar(255) default NULL,
   "description" text,
+  "descriptionIsParsed" varchar(1) default NULL,
   "created" bigint default NULL,
   "lastModif" bigint default NULL,
   "showCreated" char(1) default NULL,
@@ -5137,6 +5138,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery', 'Can assign perms to image gallery', 'admin', 'image galleries');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_actionlog_owngroups for users of his own groups', 'Can view action log', 'registered', 'tiki');
@@ -5190,8 +5193,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries');
 
 -- --------------------------------------------------------
 

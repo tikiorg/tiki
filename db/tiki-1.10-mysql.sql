@@ -3557,6 +3557,7 @@ CREATE TABLE tiki_trackers (
   trackerId int(12) NOT NULL auto_increment,
   name varchar(255) default NULL,
   description text,
+  descriptionIsParsed varchar(1) default NULL,
   created int(14) default NULL,
   lastModif int(14) default NULL,
   showCreated char(1) default NULL,
@@ -4367,6 +4368,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_source', 'Can view source of wiki pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_file_gallery', 'Can assign perms to file gallery', 'admin', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_image_gallery', 'Can assign perms to image gallery', 'admin', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog', 'Can view action log', 'registered', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_actionlog_owngroups for users of his own groups', 'Can view action log', 'registered', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_blog', 'Can assign perms to blog', 'admin', 'blogs');
@@ -4394,7 +4396,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_tikitests', 'Can admin the TikiTests', 'admin', 'tikitests');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_tikitests', 'Can edit TikiTests', 'editors', 'tikitests');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_tikitests', 'Can replay the TikiTests', 'registered', 'tikitests');
-INSERT INTO users_permissions (permName,permDesc,level,type) VALUES ('tiki_p_assign_perm_image_gallery','Can assign perms to image gallery','admin','image galleries');
 # --------------------------------------------------------
 
 #
