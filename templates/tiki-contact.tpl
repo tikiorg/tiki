@@ -35,5 +35,5 @@
 {/if}
 {if strlen($email)>0}
 <h2>{tr}Contact us by email{/tr}</h2>                              
-{tr}click here to send us an email{/tr}: {mailto address="$email" encode="javascript" extra='class="link"'}
+{tr}Click here to send us an email{/tr}: {mailto address="$email" encode="javascript" extra='class="link"'}
 {/if}

@@ -13,7 +13,7 @@
 </h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}this quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}This Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_edit.php">{tr}Admin Quizzes{/tr}</a>
 <br />
 <br />
