@@ -29,7 +29,7 @@ $list = new Tiki_Profile_List;
 
 $sources = $list->getSources();
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) { // {{{
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	check_ticket('admin-inc-profiles');
 
 	if( isset($_POST['config']) ) { // {{{
@@ -74,23 +74,44 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) { // {{{
 
 		$url = $_GET['pd'] . '/tiki-export_wiki_pages.php?page=' . urlencode( $_GET['pp'] );
 		$profile = new Tiki_Profile( $url );
-		$deps = $profile->getRequiredProfiles();
+		$error = '';
+
+		try
+		{
+			if( ! $deps = $installer->getInstallOrder( $profile ) )
+			{
+				$deps = $profile->getRequiredProfiles(true);
+				$deps[] = $profile;
+				$sequencable = false;
+			}
+			else
+				$sequencable = true;
+		}
+		catch( Exception $e )
+		{
+			$error = $e->getMessage();
+			$sequencable = false;
+		}
+
 		$dependencies = array();
 		foreach( $deps as $d )
 			if( ! $installer->isInstalled( $d ) )
 				$dependencies[] = $d->pageUrl;
 
-		file_put_contents('/tmp/out', print_r($dependencies,true));
+		$parsed = $tikilib->parse_data( $profile->pageContent );
+		$installed = $installer->isInstalled( $profile );
 
 		echo json_encode( array(
 			'dependencies' => $dependencies,
-			'content' => $tikilib->parse_data( $profile->pageContent ),
-			'already' => $installer->isInstalled( $profile ),
+			'installable' => $sequencable,
+			'error' => $error,
+			'content' => $parsed,
+			'already' => $installed,
 			'url' => $profile->url,
 		) );
 		exit;
 	} // }}}
-} // }}}
+}
 
 if( isset( $_GET['list'] ) ) { // {{{
 	$params = array_merge( array( 'repository' => '', 'category' => '', 'profile' => '' ), $_GET );

@@ -19,7 +19,7 @@ class Tiki_Profile_Installer
 			$this->installed[sprintf( "http://%s/tiki-export_wiki_pages.php?page=%s", $row['domain'], urlencode($row['profile']) )] = true;
 	} // }}}
 
-	private function getInstallOrder( Tiki_Profile $profile ) // {{{
+	function getInstallOrder( Tiki_Profile $profile ) // {{{
 	{
 		// Obtain the list of all required profiles
 		$dependencies = $profile->getRequiredProfiles(true);
@@ -50,7 +50,7 @@ class Tiki_Profile_Installer
 		// Make sure all referenced objects actually exist
 		$remain = array_diff( $referenced, $knownObjects );
 		if( ! empty( $remain ) )
-			return false;
+			throw new Exception( "Unknown objects are referenced: " . implode( ', ', $remain ) );
 
 		// Build the list of packages that need to be installed
 		$toSequence = array();
@@ -66,7 +66,7 @@ class Tiki_Profile_Installer
 			// If all packages were tested and no order was found, exit
 			// Probably means there is a circular dependency
 			if( $counter++ > count( $toSequence ) * 2 )
-				return false;
+				throw new Exception( "Profiles could not be ordered: " . implode( ", ", $toSequence ) );
 
 			$url = reset( $toSequence );
 

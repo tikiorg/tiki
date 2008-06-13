@@ -57,9 +57,10 @@ function showDetails( id, domain, profile ) { // {{{
 				{
 					var p = document.createElement( 'p' );
 					p.innerHTML = "A version of this profile is already installed.";
+					p.style.fontWeight = 'bold';
 					cell.appendChild(p);
 				}
-				else
+				else if( data.installable )
 				{
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');
@@ -80,8 +81,22 @@ function showDetails( id, domain, profile ) { // {{{
 
 					cell.appendChild(form);
 				}
+				else if( data.error )
+				{
+					var p = document.createElement('p');
+					p.style.fontWeight = 'bold';
+					p.innerHTML = "An error occured during the profile validation. This profile cannot be installed. Message: " + data.error;
+					cell.appendChild(p);
+				}
+				else
+				{
+					var p = document.createElement('p');
+					p.style.fontWeight = 'bold';
+					p.innerHTML = "An error occured during the profile validation. This profile cannot be installed.";
+					cell.appendChild(p);
+				}
 
-				if( data.dependencies.length > 0 )
+				if( data.dependencies.length > 1 )
 				{
 					for( k in data.dependencies )
 					{
@@ -95,7 +110,7 @@ function showDetails( id, domain, profile ) { // {{{
 					}
 
 					var p = document.createElement( 'p' );
-					p.innerHTML = 'Will also be installed...';
+					p.innerHTML = 'These profiles will be installed:';
 					cell.appendChild( p );
 					cell.appendChild( ul );
 				}
