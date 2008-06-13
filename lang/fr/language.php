@@ -1982,6 +1982,7 @@ $lang=Array(
 "Can insert comments for tracker items" => "Droit d'ajouter des commentaires aux fiches de formulaire",
 "Can list file galleries" => "Droit de lister les galeries de fichiers",
 "Can list image galleries" => "Droit de lister le contenu des galeries d'images",
+"Can assign perms to image gallery" => "Droit d'assigner les droits d'accès des galeries d'images",
 "Can list mypages" => "Droit de lister les mespages",
 "Can list registered users" => "Droit de lister les utilisateurs enregistrés",
 "Can list trackers" => "Droit de lister les formulaires",
