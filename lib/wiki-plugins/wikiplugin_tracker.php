@@ -46,8 +46,9 @@ function wikiplugin_tracker($data, $params) {
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
 		$itemId = $trklib->get_user_item($trackerId, $tracker);
 		$usertracker = true;
+	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
+		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
 	}
-
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	}
