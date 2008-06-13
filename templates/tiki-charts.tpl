@@ -3,7 +3,7 @@
 
 <h1><a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a></h1>
 
-{if $items}
+{if $items or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}
 {/if}
 
