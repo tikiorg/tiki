@@ -125,15 +125,15 @@ class ThemeControlLib extends TikiLib {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where (`theme` like $findesc)";
+			$mid = " where (`type` like ? and `name` like ?)";
 			$bindvars=array($type,$findesc);
 		} else {
-			$mid = "";
+			$mid = " where `type` like ?";
 			$bindvars=array($type);
 		}
 
-		$query = "select * from `tiki_theme_control_objects` where `type`=? $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_theme_control_objects` where `type`=? $mid";
+		$query = "select * from `tiki_theme_control_objects` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_theme_control_objects` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
