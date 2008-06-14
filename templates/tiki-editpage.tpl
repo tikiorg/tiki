@@ -195,7 +195,10 @@ window.onload = timeIt;
       {section name=ix loop=$templates}
         <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
       {/section}
-      </select>{if $tiki_p_edit_content_templates eq 'y'} <a href="tiki-admin_content_templates.php" class="link" onclick="needToConfirm = true;">{tr}Content templates{/tr}</a>{/if}
+      </select>
+        {if $tiki_p_edit_content_templates eq 'y'}
+          <a style="align=right;" href="tiki-admin_content_templates.php" class="link" onclick="needToConfirm = true;">{tr}Admin Content Templates{/tr}</a>
+        {/if}
     </td>
   </tr>
 {/if}
