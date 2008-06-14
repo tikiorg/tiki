@@ -41,7 +41,7 @@ $list_styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles', $list_styles);
 
 $find_objects = '';
-$types = array(
+$objectypes = array(
 	'image gallery',
 	'file gallery',
 	'forum',
@@ -53,7 +53,7 @@ $types = array(
 	'article'
 );
 
-$smarty->assign('types', $types);
+$smarty->assign('objectypes', $objectypes);
 
 if (!isset($_REQUEST['type']))
 	$_REQUEST['type'] = 'wiki page';

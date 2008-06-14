@@ -24,8 +24,8 @@
 <h2>{tr}Assign themes to objects{/tr}</h2>
 <form id='objform' action="tiki-theme_control_objects.php" method="post">
 <select name="type" onchange="javascript:document.getElementById('objform').submit();">
-{section name=ix loop=$types}
-<option value="{$types[ix]|escape}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
+{section name=ix loop=$objectypes}
+<option value="{$objectypes[ix]|escape}" {if $type eq $objectypes[ix]}selected="selected"{/if}>{$objectypes[ix]}</option>
 {/section}
 </select>
 <!--<input type="submit" name="settype" value="{tr}Set{/tr}" />-->
@@ -58,17 +58,9 @@
 </form> 
 
 <h2>{tr}Assigned objects{/tr}</h2>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-theme_control_objects.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
+
 <form action="tiki-theme_control_objects.php" method="post">
 <input type="hidden" name="type" value="{$type|escape}" />
 <table class="normal">

@@ -36,20 +36,7 @@
 <br /><br />
 {* start ************ Search  ***************}
 {if (not $show_form)} 
-  <table class="findtable">
-    <tr>
-      <td class="findtable">{tr}Find{/tr}</td>
-      <td class="findtable">
-        <div align="left">
-	  <form method="get" action="tiki-user_tasks.php">
-	    <input type="text" name="find" value="{$find|escape}" />
-            <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-            <input type="submit" value="{tr}Find{/tr}" name="search" />
-	  </form>
-        </div>
-      </td>
-    </tr>
-  </table>
+  {include file='find.tpl' _sort_mode='y'}
 {/if}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
