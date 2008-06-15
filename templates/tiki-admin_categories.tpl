@@ -195,7 +195,7 @@
           <td class="form"><input type="submit" name="addpage" value="{tr}Add{/tr}" /></td>
         </tr>
 				{/if}
-				{if $prefs.feature_cms eq 'y'}
+				{if $prefs.feature_articles eq 'y'}
         <tr>
           <td class="form">{tr}Article{/tr}:</td>
           <td class="form"><select name="articleId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
