@@ -1977,7 +1977,7 @@ function get_included_groups($group, $recur=true) {
 			$valid,
 			$openid_url,
 			$lastLogin,
-			($prefs['validateRegistration'] == 'y')? 'a': (($prefs['validateUsers'] == 'y')? 'u': NULL)
+			(!empty($_GLOBALS['user']) && $prefs['validateRegistration'] == 'y')? 'a': ((!empty($_GLOBALS['user']) && $prefs['validateUsers'] == 'y')? 'u': NULL)
 		    ));
 
 	$this->assign_user_to_group($user, 'Registered');
