@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="postbody-title">
+<div class="clearfix postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
 		and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )
