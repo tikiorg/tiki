@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="content">
+<div class="clearfix content">
 
 	<div class="author">
 
@@ -60,8 +60,10 @@
 	</div>
 
 {if $thread_style != 'commentStyle_headers'}
+<div class="clearfix postbody-content">
 	{$comment.parsed}
 	{* <span class="signature"><!-- SIGNATURE --></span> *}
+</div>
 {/if}
 
 </div>
