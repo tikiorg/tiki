@@ -41,7 +41,7 @@
 <td>{$list[ix].logId}</td>
 <td>{$list[ix].logtype}</td>
 <td><span title="{$list[ix].logtime|tiki_long_datetime}">{$list[ix].logtime|tiki_short_datetime}</span></td>
-<td>{$list[ix].loguser}</td>
+<td>{$list[ix].loguser|userlink}</td>
 <td title="{$list[ix].logmessage|escape:'html'}">{$list[ix].logmessage|truncate:60|escape:'html'}</td>
 <td>{$list[ix].logip|escape:"html"}</td>
 <td><span title="{$list[ix].logclient|escape:'html'}">{$list[ix].logclient|truncate:24:"..."|escape:'html'}</span></td>

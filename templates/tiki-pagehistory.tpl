@@ -112,7 +112,7 @@
 <td class="{cycle advance=false} button"><input type="checkbox" name="hist[{$element.version}]" /></td>
 {/if}
 <td class="{cycle advance=false}">{$element.lastModif|tiki_short_datetime}</td>
-{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$element.user}</td>{/if}
+{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$element.user|userlink}</td>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$element.ip}</td>{/if}
 <td class="{cycle advance=false}">
 	{if $element.comment}{$element.comment}{else}&nbsp;{/if}
