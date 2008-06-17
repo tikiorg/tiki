@@ -17,6 +17,8 @@ class Tiki_Profile
 
 	private $objects = null;
 
+	private static $known = array();
+
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
 	{
 		foreach( $conversion as $key => $endValue )
@@ -28,8 +30,10 @@ class Tiki_Profile
 
 			foreach( $data[$key] as $item )
 			{
-				if( $prependKey )
+				if( $prependKey === true )
 					$item = "{$key}_{$item}";
+				elseif( ! empty( $prependKey ) )
+					$item = $prependKey . $item;
 
 				if( !isset( $data[$item] ) )
 					$data[$item] = $endValue;
@@ -49,6 +53,17 @@ class Tiki_Profile
 				$value = $value ? 'y' : 'n';
 
 		return $copy;
+	} // }}}
+
+	private static function findObjectReference( $object ) // {{{
+	{
+		global $tikilib;
+
+		$result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
+			array( $object['domain'], $object['profile'], $object['object'] ) );
+
+		if( $row = $result->fetchRow() )
+			return $row['value'];
 	} // }}}
 
 	function __construct( $url ) // {{{
@@ -191,6 +206,23 @@ class Tiki_Profile
 		return $profiles;
 	} // }}}
 
+	public function replaceReferences( &$data ) // {{{
+	{
+		if( is_array( $data ) )
+			foreach( $data as &$sub )
+				$this->replaceReferences( $sub );
+		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $data, $parts ) )
+		{
+			$object = $this->convertReference( $parts );
+			$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
+			
+			if( ! isset( self::$known[$serialized] ) )
+				self::$known[$serialized] = self::findObjectReference( $object );
+
+			$data = self::$known[$serialized];
+		}
+	} // }}}
+
 	function getPreferences() // {{{
 	{
 		$prefs = array();
@@ -208,6 +240,55 @@ class Tiki_Profile
 		return $prefs;
 	} // }}}
 
+	function getPermissions() // {{{
+	{
+		if( ! array_key_exists( 'permissions', $this->data ) )
+			return array();
+
+		$groups = array();
+		foreach( $this->data['permissions'] as $groupName => $data )
+		{
+			$permissions = Tiki_Profile::convertLists( $data, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
+			$permissions = Tiki_Profile::convertYesNo( $permissions );
+			foreach( array_keys( $permissions ) as $key )
+				if( strpos( $key, 'tiki_p_' ) !== 0 )
+					unset( $permissions[$key] );
+
+			if( array_key_exists( 'description', $data ) )
+				$description = $data['description'];
+			else
+				$description = '';
+
+			$objects = array();
+			if( isset( $data['objects'] ) )
+				foreach( $data['objects'] as $o )
+				{
+					if( !isset($o['type'], $o['id']) )
+						continue;
+
+					$perms = Tiki_Profile::convertLists( $o, array( 'allow' => 'y', 'deny' => 'n' ), 'tiki_p_' );
+					$perms = Tiki_Profile::convertYesNo( $perms );
+
+					foreach( array_keys( $perms ) as $key )
+						if( strpos( $key, 'tiki_p_' ) !== 0 )
+							unset( $perms[$key] );
+
+					$o['permissions'] = $perms;
+					$objects[] = $o;
+				}
+
+			$groups[$groupName] = array(
+				'permissions' => $permissions,
+				'objects' => $objects,
+				'general' => array(
+					'description' => $description,
+				),
+			);
+		}
+
+		return $groups;
+	} // }}}
+
 	function getObjects() // {{{
 	{
 		if( !is_null( $this->objects ) )
@@ -218,7 +299,7 @@ class Tiki_Profile
 		if( array_key_exists( 'objects', $this->data ) )
 			foreach( $this->data['objects'] as $entry )
 			{
-				$o = new Tiki_Profile_Object( $entry, $this->domain, $this->profile );
+				$o = new Tiki_Profile_Object( $entry, $this );
 				if( $o->isWellStructured() )
 					$objects[] = $o;
 			}
@@ -256,10 +337,7 @@ class Tiki_Profile
 
 class Tiki_Profile_Object
 {
-	private static $known = array();
-
 	private $data;
-	private $domain;
 	private $profile;
 	private $id = false;
 
@@ -268,46 +346,6 @@ class Tiki_Profile_Object
 	public static function serializeNamedObject( $object ) // {{{
 	{
 		return sprintf( "http://%s/%s#%s", $object['domain'], $object['profile'], $object['object'] );
-	} // }}}
-
-	public function replaceReferences( &$data ) // {{{
-	{
-		if( is_array( $data ) )
-			foreach( $data as &$sub )
-				$this->replaceReferences( $sub );
-		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $data, $parts ) )
-		{
-			$object = $this->convertReference( $parts );
-			$serialized = self::serializeNamedObject( $object );
-			
-			if( ! isset( self::$known[$serialized] ) )
-				self::$known[$serialized] = self::findObjectReference( $object );
-
-			$data = self::$known[$serialized];
-		}
-	} // }}}
-
-	private static function findObjectReference( $object ) // {{{
-	{
-		global $tikilib;
-
-		$result = $tikilib->query( "SELECT value FROM tiki_profile_symbols WHERE domain = ? AND profile = ? AND object = ?",
-			array( $object['domain'], $object['profile'], $object['object'] ) );
-
-		if( $row = $result->fetchRow() )
-			return $row['value'];
-	} // }}}
-
-	private function convertReference( $parts ) // {{{
-	{
-		list( $full, $null0, $null1, $domain, $null2, $profile, $object ) = $parts;
-
-		if( empty( $domain ) )
-			$domain = $this->domain;
-		if( empty( $profile ) )
-			$profile = $this->profile;
-
-		return array( 'domain' => $domain, 'profile' => $profile, 'object' => $object );
 	} // }}}
 
 	public static function getNamedObjects() // {{{
@@ -323,10 +361,9 @@ class Tiki_Profile_Object
 		return $objects;
 	} // }}}
 	
-	function __construct( $data, $domain, $profile ) // {{{
+	function __construct( $data, Tiki_Profile $profile ) // {{{
 	{
 		$this->data = $data;
-		$this->domain = $domain;
 		$this->profile = $profile;
 	} // }}}
 
@@ -364,7 +401,7 @@ class Tiki_Profile_Object
 		}
 
 		$tikilib->query( "INSERT INTO tiki_profile_symbols (domain, profile, object, type, value, named) VALUES(?, ?, ?, ?, ?, ?)", 
-			array( $this->domain, $this->profile, $name, $this->getType(), $this->id, $named ) );
+			array( $this->profile->domain, $this->profile->profile, $name, $this->getType(), $this->id, $named ) );
 	} // }}}
 
 	function getInternalReferences() // {{{
@@ -381,6 +418,11 @@ class Tiki_Profile_Object
 			return $this->data['data'];
 
 		return array();
+	} // }}}
+
+	public function replaceReferences( &$data ) // {{{
+	{
+		$this->profile->replaceReferences( $data );
 	} // }}}
 
 	private function traverseForReferences( $value ) // {{{

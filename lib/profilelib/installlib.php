@@ -147,6 +147,32 @@ class Tiki_Profile_Installer
 
 		foreach( $profile->getObjects() as $object )
 			$this->getInstallHandler( $object )->install();
+
+		$permissions = $profile->getPermissions();
+		$profile->replaceReferences( $permissions );
+		foreach( $permissions as $groupName => $info )
+			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
+	} // }}}
+
+	private function setupGroup( $groupName, $info, $permissions, $objects ) // {{{
+	{
+		global $userlib;
+
+		if( ! $userlib->group_exists( $groupName ) )
+			$user->add_group( $groupName, $info['description'] );
+
+		foreach( $permissions as $perm => $v )
+			if( $v == 'y' )
+				$userlib->assign_permission_to_group( $groupName, $perm );
+			else
+				$userlib->remove_permission_from_group( $groupName, $perm );
+
+		foreach( $objects as $data )
+			foreach( $data['permissions'] as $perm => $v )
+				if( $v == 'y' )
+					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
+				else
+					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
 	} // }}}
 }
 
