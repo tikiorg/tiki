@@ -81,7 +81,7 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer {
 
 function diff2($page1, $page2, $type='sidediff') {
 	if ($type == 'htmldiff') {
-		global $tikilib;
+		global $tikilib, $prefs;
 		//$search = "#(<[^>]+>|\s*[^\s<]+\s*|</[^>]+>)#";
 		$search = "#(<[^>]+>|[,\"':\s]+|[^\s,\"':<]+|</[^>]+>)#";
 		preg_match_all($search,$page1,$out,PREG_PATTERN_ORDER);
@@ -117,7 +117,7 @@ function diff2($page1, $page2, $type='sidediff') {
 		} else if ($type == 'sidediff') {
 			require_once('renderer_sidebyside.php');
 			$renderer = new Text_Diff_Renderer_sidebyside($context, $words);
-		} else if ($type == 'bytes') {
+		} else if ($type == 'bytes' && $prefs['feature_actionlog_bytes'] != 'y') {
 			require_once('renderer_bytes.php');
 			$renderer = new Text_Diff_Renderer_bytes();
 		} else if ($type == 'htmldiff') {

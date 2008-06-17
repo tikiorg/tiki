@@ -818,8 +818,11 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# dev
 	$prefs['feature_experimental'] = 'n';
 
-	# admin
+  # Action logs
 	$prefs['feature_actionlog'] = 'n';
+	$prefs['feature_actionlog_bytes'] = 'y';
+  
+	# admin
 	$prefs['siteTitle'] = '';
 	$prefs['tmpDir'] = 'temp';
 

@@ -1826,3 +1826,6 @@ delete from users_permissions where permName='tiki_p_assign_perm_image_galler';
 #2008-06-13 sylvieg
 alter table tiki_tracker_fields add visibleBy text after errorMsg;
 alter table tiki_tracker_fields add editableBy text after visibleBy;
+
+#2008-06-16 pkdille & nyloth
+insert into tiki_preferences (name, value) values ('feature_actionlog_bytes','n');
