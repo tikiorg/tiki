@@ -189,12 +189,12 @@
           href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}"
         {else}
           {if $filegals_manager eq 'y'}
-            href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].id}&display');javascript:window.close() ;"
+            href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].id}&display');javascript:window.close() ;"  title="{tr}Download{/tr}"
           {elseif $tiki_p_download_files eq 'y'}
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
-              href="{$download_path}{$files[changes].path}"
+              href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}"
             {else}
-            href="tiki-download_file.php?fileId={$files[changes].id}"
+              href="tiki-download_file.php?fileId={$files[changes].id}" title="{tr}Download{/tr}"
             {/if}
           {/if}
           {if $smarty.capture.over_preview neq ''}
