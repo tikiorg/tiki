@@ -261,6 +261,13 @@ padding-left: 18px;
 	background-color : #eeee99 !important;
 }
 
+/* Style for error or warning announces
+ *  This class has to be added in the main style sheet */
+.error, #error{
+	background-color: #ee9999 !important;
+	color: #000000;
+}
+
 /* Style for sections in tiki-forums. Alignement "center" was inline before */
 td.third {
   text-align: center;
