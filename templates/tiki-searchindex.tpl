@@ -9,7 +9,8 @@
 	{foreach item=name key=k from=$where_list}
       	<a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
    	{/foreach}
-  </div><!-- nohighlight navbar -->
+  </div><!--nohighlight-->
+  {* do not change the comment below, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}
 
 {/if}
 <form class="forms" method="get" action="tiki-searchindex.php">
