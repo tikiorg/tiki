@@ -7175,5 +7175,6 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Canal de syndication RSS Tiki pour les pages Wiki",
 "Last modifications to the Wiki." => "Dernières pages Wiki modifiées.",
 "The page is empty" => "La page est vide",
+"Permission denied. You do not have permission to read complete articles." => "Droit d'accès refusé : vous ne pouvez pas consulter les articles complets.",
 "###end###"=>"###end###");
 ?>

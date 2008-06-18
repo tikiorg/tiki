@@ -1829,3 +1829,15 @@ alter table tiki_tracker_fields add editableBy text after visibleBy;
 
 #2008-06-16 pkdille & nyloth
 insert into tiki_preferences (name, value) values ('feature_actionlog_bytes','n');
+
+#2008-06-18 Jyhem
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_articles_read_heading', 'Can read article headings', 'basic', 'cms');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='s' and name='Articles' and url='tiki-view_articles.php' and position='350' and perm='tiki_p_articles_read_heading' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Articles home' and url='tiki-view_articles.php' and position='355' and perm='tiki_p_articles_read_heading' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Articles' and url='tiki-list_articles.php' and position='360' and perm='tiki_p_articles_read_heading' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','');
+
+
+

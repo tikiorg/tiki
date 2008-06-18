@@ -2767,7 +2767,7 @@ function add_pageview() {
 
 /*shared*/
 		  function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user=false, $type = '', $topicId = '', $visible_only = 'y', $topic='', $categId='',$creator='',$group='', $lang='') {
-        global $userlib, $user;
+	global $userlib, $user;
 
 	$mid = '';
 	$bindvars=array();
@@ -2918,11 +2918,10 @@ function add_pageview() {
 	    if ($res['topicId'] != 0 && $userlib->object_has_one_permission($res['topicId'], 'topic')) {// if no topic or if topic has no special perm don't have to check for topic perm
 		$add=$this->user_has_perm_on_object($user,$res['topicId'],'topic','tiki_p_topic_read');
 	    } else
-		$add = true;
-	    if ($add)
-		$add = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_read_article');
+		$add1 = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_read_article') ;
+		$add2 = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_articles_read_heading');
 	    // no need to do all of the following if we are not adding this article to the array
-	    if ($add) {
+	    if ($add1 || $add2) {
 		    $res["entrating"] = floor($res["rating"]);
 		    if (empty($res["body"])) {
 				$res["isEmpty"] = 'y';
@@ -2945,8 +2944,6 @@ function add_pageview() {
 		    if (($res["show_post_expire"] != 'y') and ($this->now > $res["expireDate"])) {
 				$res["disp_article"] = 'n';
 		    }
-		    //}
-//	    if ($add) { // moved this check to the top
 			$ret[] = $res;
 	    }
 	}
@@ -3040,7 +3037,7 @@ function add_pageview() {
 	} else {
 	    return '';
 	}
-	if (!($tiki_p_admin_cms == 'y' || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') && (!$res['topicId'] || !$userlib->object_has_one_permission($res['topicId'], 'topic') || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
+	if (!($tiki_p_admin_cms == 'y' || (($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_read_article') || ($this->user_has_perm_on_object($user, $articleId, 'article','tiki_p_articles_read_heading'))) && (!$res['topicId'] || !$userlib->object_has_one_permission($res['topicId'], 'topic') || $this->user_has_perm_on_object($user, $res['topicId'], 'topic','tiki_p_topic_read'))))) {
 		return false;
 	}
 

@@ -86,7 +86,13 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 </table>
 </div>
 <div class="articlebody">
-{$parsed_body}
+{if $tiki_p_read_article eq 'y'}
+	{$parsed_body}
+{else}
+	<div class="error simplebox">
+		{tr}Permission denied. You do not have permission to read complete articles.{/tr}
+	</div>
+{/if}
 {if $pages > 1}
 	<div align="center">
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.png' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
