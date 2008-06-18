@@ -1454,7 +1454,7 @@ $lang=Array(
 // "Fijian" => "Fijian",
 // "Galician" => "Galician",
 // "Template %s not registered" => "Template %s not registered",
-// "Error line: %d" => "Error line: %d",
+"Error line: %d" => "Linha do erro: %d",
 // "Tiki Link - Insert internal link" => "Tiki Link - Insert internal link",
 // "Select a Wiki page to link to:" => "Select a Wiki page to link to:",
 // "unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>" => "unknown destination directory. Please set it up in <a href='tiki-admin.php?page=galleries'>tiki-admin.php?page=galleries</a>",
