@@ -2282,6 +2282,26 @@ function get_included_groups($group, $recur=true) {
 		}
 
 		$cachelib->invalidate('grouplist');
+
+		$query = 'select * from `tiki_tracker_fields` where `visibleBy` like ?';
+		$result = $this->query($query, array('%"'.$olgroup.'"%'));
+		$query = 'update  `tiki_tracker_fields` set `visibleBy`=? where `visibleBy`=?';
+		while ($res = $result->fetchRow()) {
+			$g = unserialize($res['visibleBy']);
+			$g = str_replace($olgroup, $group, $g);
+			$g = serialize($g);
+			$this->query($query, array($g, $res['visibleBy']));
+		}
+		$query = 'select * from `tiki_tracker_fields` where `editableBy` like ?';
+		$result = $this->query($query, array('%"'.$olgroup.'"%'));
+		$query = 'update  `tiki_tracker_fields` set `editableBy`=? where `editableBy`=?';
+		while ($res = $result->fetchRow()) {
+			$g = unserialize($res['editableBy']);
+			$g = str_replace($olgroup, $group, $g);
+			$g = serialize($g);
+			$this->query($query, array($g, $res['editableBy']));
+		}
+
 		return true;
 	}
 
