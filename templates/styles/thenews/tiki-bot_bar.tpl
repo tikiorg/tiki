@@ -1,9 +1,9 @@
-{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
-<div id="site_report">
-<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
-</div>
-{/if}
 {if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
+{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
+	<div id="site_report">
+		<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to  Webmaster{/tr}</a>
+	</div>
+{/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power" style="text-align: center">
 		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
