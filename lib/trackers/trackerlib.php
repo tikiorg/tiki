@@ -1671,6 +1671,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_item($itemId) {
+		global $user;
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 		$result = $this->query($query, array((int) $itemId));
 		$res = $result->fetchRow();
@@ -1683,6 +1684,36 @@ class TrackerLib extends TikiLib {
 		foreach($fieldList['data'] as $f) {
 			if( $f['type'] == 'i' ) {
 				$imgList[] = $this->get_item_value($trackerId, $itemId, $f['fieldId']);
+			}
+		}
+		$watchers = $this->get_notification_emails($trackerId, $itemId, $this->get_tracker_options( $trackerId));
+		if (count($watchers > 0)) {
+			global $smarty;
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+			$smarty->assign('mail_date', $this->now);
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_action', 'deleted');
+			$smarty->assign('mail_itemId', $itemId);
+			$smarty->assign('mail_trackerId', $trackerId);
+			$smarty->assign('mail_trackerName', $trackerName);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = $this->httpPrefix(). $foo["path"];
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
+			if (count($parts) > 1)
+				unset ($parts[count($parts) - 1]);
+			$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
+			include_once ('lib/webmail/tikimaillib.php');
+			$smarty->assign('server_name', $_SERVER['SERVER_NAME']);
+			foreach ($watchers as $w) {
+				$mail = new TikiMail($w['user']);
+				$mail->setHeader("From", $prefs['sender_email']);
+				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->send(array($w['email']));
 			}
 		}
 
