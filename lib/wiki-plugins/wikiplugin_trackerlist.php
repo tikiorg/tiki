@@ -122,12 +122,8 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (!empty($ldelim))
 			$smarty->left_delimiter = $ldelim;
-		else
-			$smarty->left_delimiter = '{';
 		if (!empty($rdelim))
 			$smarty->right_delimiter = $rdelim;
-		else
-			$smarty->right_delimiter = '{';
 
 		if (isset($checkbox)) {
 			$cb = split('/', $checkbox);
