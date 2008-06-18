@@ -266,15 +266,12 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	padding: 0;
+	padding-top: 6px;
 	margin: 0;
 	position: relative;
 }
 
-div#sioptions {
-	width: 100%;
-	margin: 0;
-}
+div#sioptions {padding: 1em}
 
 #sioptionscentered {
 	text-align: center;
@@ -291,13 +288,11 @@ div.floatleft {
 }
 
 div#sitelogo {
-	width: 33%;
-	margin: auto;
-}
+	margin: auto}
 
 div#sitead {
 	margin: auto;
-}
+	clear: none}
 
 #sitead.floatright {
 	padding-right: 100px;
@@ -308,9 +303,8 @@ div#sitead {
 }
 
 #sioptionscentered #sitead.floatleft {
-	padding-left: 10px;
-}
-
+	padding-left: 10px}
+#bannertopright {padding-right: 1em}
 #sitelocbar {
 	float: left;
 }
@@ -1187,8 +1181,8 @@ span#description {
 	padding: 0.1em;
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #999;
-	margin: 10px 0 10px 0;
-}
+	margin: 10px 0}
+
 /* From Tikineat */
 .wikitext div.box {
 	width: auto;
@@ -1562,9 +1556,8 @@ span.posthead span.link {
 	font-weight: bold;
 }
 
-div.posthead h2 {
-	font-size:1.2em;
-}
+div.posthead h3 {
+	font-size:1.2em}
  
 div.postbody {
 	margin-right: 8px;

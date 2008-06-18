@@ -1517,7 +1517,7 @@ div.postfooter {
 /***** Forums *****/
 
 body.tiki_forums table.normal {margin: auto}
- 
+/* 
 td.threadsevenl {
 	border: 1px solid #999999;
 	border-collapse: collapse;
@@ -1540,19 +1540,16 @@ td.threadsoddr {
 
 table.threads {width: 100%}
 
-/* Check ?? */
+
 td.threadseparator {
 	border: 1px solid #999999;
 	border-collapse: collapse;
 	background: #474747;
 	height: 5px}
- 
-#forumpost {
-	display: none}
- 
-#forumpostopen {
-	display: block}
-
+*/
+#forumpost {display: none}
+#forumpostopen {display: block}
+/*
 td.forumtoolbar {
 	color: white;
 	font-weight: bold;
@@ -1568,8 +1565,7 @@ td.forumtoolbar {
 	color: #D8D8D8}
 
 table.commentinfo {background: #F0F0F0}
-
-/* Forums new */
+ */
 .post {
 	background: #3F3F3F;
 	color: #D8D8D8;
@@ -1579,6 +1575,8 @@ table.commentinfo {background: #F0F0F0}
 	background: #343434;
 	width: 100%}
 
+* html .post .postbody {font-size: 11px}
+	
 #col1 .post .postbody .content {
 	color: #D8D8D8;
 	border-color: transparent;
@@ -1706,11 +1704,6 @@ table.commentinfo {background: #F0F0F0}
 .post_preview,
 .top_post { margin-bottom: 15px}
 /*.post .postbody .signature { float: left}*/
-
-/*
-div.content {
-	color: #D8D8D8}
-*/
 
 /* Comments */
 #comzone {
