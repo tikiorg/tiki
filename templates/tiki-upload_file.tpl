@@ -137,6 +137,13 @@
 	</td></tr>
 	{/if}
 
+	{if $prefs.fgal_limit_hits_per_file eq 'y'}
+	<tr><td class="formcolor">{tr}Maximum amount of downloads{/tr}:</td><td class="formcolor">
+	<input type="text" name="hit_limit" value="{$hit_limit|default:0}"/>
+	{tr}0 for no limit{/tr}
+	</td></tr>
+	{/if}
+
 	{if $prefs.feature_file_galleries_author eq 'y'}
 	<tr><td class="formcolor">{tr}Author if not the file creator{/tr}:</td><td class="formcolor"><input type="text" name="author" value="{$fileInfo.author|escape}" /></td></tr>
 	{/if}

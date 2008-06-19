@@ -47,6 +47,18 @@
         </tr>
         
         <tr class="formcolor">
+          <td>{tr}Allow download limit per file{/tr}:</td>
+          <td><input type="checkbox" name="fgal_limit_hits_per_file"
+              {if $prefs.fgal_limit_hits_per_file eq 'y'}checked="checked"{/if}/></td>
+        </tr>
+        
+        <tr class="formcolor">
+          <td>{tr}Prevent download if score becomes negative{/tr}:</td>
+          <td><input type="checkbox" name="fgal_prevent_negative_score"
+              {if $prefs.fgal_prevent_negative_score eq 'y'}checked="checked"{/if}/></td>
+        </tr>
+        
+        <tr class="formcolor">
           <td>{tr}File author{/tr}:</td>
           <td><input type="checkbox" name="feature_file_galleries_author"
               {if $prefs.feature_file_galleries_author eq 'y'}checked="checked"{/if}/><i>{tr}For not registered author{/tr}</i></td>

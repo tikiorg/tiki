@@ -648,6 +648,24 @@ class FileGalLib extends TikiLib {
 		$newGalleryId = $this->replace_file_gallery($info);
 		return $newGalleryId;
 	}
+
+	function get_download_limit( $fileId )
+	{
+		global $tikilib;
+		return (int) $tikilib->get_preference( "fgal_{$fileId}_hit_limit" );
+	}
+
+	function set_download_limit( $fileId, $limit )
+	{
+		global $tikilib;
+		$limit = (int) $limit;
+		$pref = "fgal_{$fileId}_hit_limit";
+
+		if( $limit <= 0 )
+			$tikilib->delete_preference( $pref );
+		else
+			$tikilib->set_preference( $pref, $limit );
+	}
 }
 global $dbTiki;
 $filegallib = new FileGalLib($dbTiki);

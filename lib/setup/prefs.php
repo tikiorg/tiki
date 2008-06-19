@@ -240,6 +240,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['fgal_list_lockedby'] = 'n';
 	$prefs['fgal_show_path'] = 'y';
 	$prefs['fgal_show_explorer'] = 'y';
+	$prefs['fgal_limit_hits_per_file'] = 'n';
+	$prefs['fgal_prevent_negative_score'] = 'n';
 
 	# imagegals
 	$prefs['feature_galleries'] = 'n';

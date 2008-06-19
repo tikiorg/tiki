@@ -85,6 +85,10 @@ if (!isset($_REQUEST["description"]))
 	$_REQUEST["description"] = '';
 if (!isset($_REQUEST['author']))
 	$_REQUEST['author'] = '';
+if (isset($_REQUEST['hit_limit']))
+	$_REQUEST['hit_limit'] = (int) $_REQUEST['hit_limit'];
+else
+	$_REQUEST['hit_limit'] = 0;
 
 $smarty->assign('show', 'n');
 
@@ -255,6 +259,9 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 				if ($editFile) {
 					$didFileReplace = true;
 					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, $_REQUEST['comment'], $gal_info, $didFileReplace, $_REQUEST['author'], $fileInfo['lastModif'], $fileInfo['lockedby']);
+					if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+						$filegallib->set_download_limit( $editFileId, $_REQUEST['hit_limit'] );
+					}
 				}
 				else
 				  $fileId= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $_REQUEST['user'], $fhash, '', $_REQUEST['author']);
@@ -264,6 +271,10 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 						@unlink($savedir . $fhash);
 					}
 					
+				}
+
+				if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+					$filegallib->set_download_limit( $fileId, $_REQUEST['hit_limit'] );
 				}
 
 				if (count($errors) == 0) {
@@ -297,6 +308,9 @@ if (isset($_REQUEST["upload"]) && !empty($_REQUEST['galleryId'])) {
 		$cat_desc = substr($_REQUEST["description"], 0, 200);
 		$cat_name = empty($fileInfo['name'])?$fileInfo['filename']: $fileInfo['name'];
 		$cat_href = $podCastGallery?$podcast_url.$fhash: "$url_browse?fileId=".$editFileId; 
+		if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+			$filegallib->set_download_limit( $editFileId, $_REQUEST['hit_limit'] );
+		}
 		include_once ('categorize.php');
 	}
 
@@ -339,6 +353,10 @@ if (empty($_REQUEST['fileId'])) {
 if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
 	$users = $tikilib->list_users(0, -1, 'login_asc');
 	$smarty->assign_by_ref('users', $users['data']);
+}
+
+if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+	$smarty->assign( 'hit_limit', $filegallib->get_download_limit( $_REQUEST['fileId'] ) );
 }
 
 $cat_type = 'file';

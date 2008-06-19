@@ -23,6 +23,8 @@ if (isset($_REQUEST["filegalfeatures"])) {
 
 	simple_set_toggle("feature_file_galleries_rankings");
 	simple_set_toggle("feature_file_galleries_batch");
+	simple_set_toggle("fgal_limit_hits_per_file");
+	simple_set_toggle("fgal_prevent_negative_score");
 	simple_set_value("fgal_match_regex");
 	simple_set_value("fgal_nmatch_regex");
 

@@ -930,7 +930,7 @@ class TikiLib extends TikiDB {
      * shared
      */
     function score_event($user, $event_type, $id = '', $multiplier=false) {
-		global $scorelib;
+		global $scorelib,$prefs;
 		if (!is_object($scorelib)) {
 			include_once("lib/score/scorelib.php");
 		}
@@ -968,10 +968,12 @@ class TikiLib extends TikiDB {
 	}
 
 	// Perform check to make sure score does not go below 0 with negative scores
-	$result = $this->query( "select userId from users_users where score + ? >= 0 and login = ?",
-		array( $score, $user ) );
-	if( ! $row = $result->fetchRow( $result ) )
-		return false;
+	if( $prefs['fgal_prevent_negative_score'] == 'y' && strpos( $event_type, 'fgallery' ) === 0 ) {
+		$result = $this->query( "select userId from users_users where score + ? >= 0 and login = ?",
+			array( $score, $user ) );
+		if( ! $row = $result->fetchRow( $result ) )
+			return false;
+	}
 
 	$query = "update `users_users` set `score` = `score` + ? where `login`=?";
 	$event['id'] = $id; // just for debug
@@ -2275,8 +2277,21 @@ function add_pageview() {
 
     /*shared*/
     function add_file_hit($id) {
-	global $prefs, $user;
+	global $prefs, $user, $filegallib;
+
 	if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		// Enforce max download per file
+		if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
+			$limit = $filegallib->get_download_limit( $id );
+			if( $limit > 0 ) {
+				$result = $this->query( "select fileId from tiki_files where fileId = ? and hits < ?",
+					array( $id, $limit ) );
+
+				if( ! $result->fetchRow() )
+					return false;
+			}
+		}
+
 	    $query = "update `tiki_files` set `hits`=`hits`+1 where `fileId`=?";
 	    $result = $this->query($query,array((int) $id));
 	}
