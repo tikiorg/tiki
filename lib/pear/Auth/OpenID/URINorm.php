@@ -5,8 +5,8 @@
  *
  * @package OpenID
  * @author JanRain, Inc. <openid@janrain.com>
- * @copyright 2005 Janrain, Inc.
- * @license http://www.gnu.org/copyleft/lesser.html LGPL
+ * @copyright 2005-2008 Janrain, Inc.
+ * @license http://www.apache.org/licenses/LICENSE-2.0 Apache
  */
 
 require_once 'Auth/Yadis/Misc.php';
@@ -88,7 +88,7 @@ function Auth_OpenID_pct_encoded_replace($mo)
 function Auth_OpenID_remove_dot_segments($path)
 {
     $result_segments = array();
-    
+
     while ($path) {
         if (Auth_Yadis_startswith($path, '../')) {
             $path = substr($path, 3);
