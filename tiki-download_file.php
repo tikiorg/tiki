@@ -92,7 +92,13 @@ if ( $tiki_p_download_files != 'y' ) {
 if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	require_once('lib/stats/statslib.php');
-	$tikilib->add_file_hit($_REQUEST['fileId']);
+	if( ! $tikilib->add_file_hit($_REQUEST['fileId']) )
+	{
+		$smarty->assign('msg', tra('You cannot download this file right now. Your score is low or file limit was reached.'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
 	$statslib->stats_hit($info['filename'], 'file', $_REQUEST['fileId']);
 
 	if ( $prefs['feature_actionlog'] == 'y' ) {

@@ -934,11 +934,11 @@ class TikiLib extends TikiDB {
 		if (!is_object($scorelib)) {
 			include_once("lib/score/scorelib.php");
 		}
-	if ($user == 'admin' || !$user) { return; }
+	if ($user == 'admin' || !$user) { return true; }
 
 	$event = $scorelib->get_event($event_type);
 	if (!$event || !$event['score']) {
-	    return;
+	    return true;
 	}
 
 	$score = $event['score'];
@@ -957,7 +957,7 @@ class TikiLib extends TikiDB {
 		$bindvars[] = time();
 	    }
 	    if ($this->getOne($query, $bindvars)) {
-		return;
+		return true;
 	    }
 
 	    $query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
@@ -967,11 +967,17 @@ class TikiLib extends TikiDB {
 	    $this->query($query, array($user, $event_id, time() + ($expire*60)));
 	}
 
+	// Perform check to make sure score does not go below 0 with negative scores
+	$result = $this->query( "select userId from users_users where score + ? >= 0 and login = ?",
+		array( $score, $user ) );
+	if( ! $row = $result->fetchRow( $result ) )
+		return false;
+
 	$query = "update `users_users` set `score` = `score` + ? where `login`=?";
 	$event['id'] = $id; // just for debug
 
 	$this->query($query, array($score, $user));
-	return;
+	return true;
     }
 
     // List users by best scoring
@@ -2276,10 +2282,13 @@ function add_pageview() {
 	}
 
 	if ($prefs['feature_score'] == 'y') {
-	    $this->score_event($user, 'fgallery_download', $id);
+	    if( ! $this->score_event($user, 'fgallery_download', $id) )
+			return false;
+
 	    $query = "select `user` from `tiki_files` where `fileId`=?";
 	    $owner = $this->getOne($query, array((int)$id));
-	    $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id");
+	    if( ! $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id") )
+			return false;
 	}
 
 	return true;
