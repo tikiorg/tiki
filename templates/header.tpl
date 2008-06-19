@@ -71,6 +71,11 @@ var numl;var toBeHidden;
 <script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 
+{* --- universaleditbutton.org --- *}
+{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
+	<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}"/>
+{/if}
+
 {* --- Firefox RSS icons --- *}
 {if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
 <link rel="alternate" type="application/rss+xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}" />
