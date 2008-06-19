@@ -104,8 +104,7 @@ function getFullOffset( node ) // {{{
 	return offset;
 } // }}}
 
-// FIXME : Need to remove container absolute position
-function getx( event, cid ) // {{{
+function getx( event ) // {{{
 {
 	if( !event.pageX ) {
 		var e = document.documentElement||{}, b = document.body||{};
@@ -115,7 +114,7 @@ function getx( event, cid ) // {{{
 	return event.pageX;
 } // }}}
 
-function gety( event, cid ) // {{{
+function gety( event ) // {{{
 {
 	if( ! event.pageY ) {
 		var e = document.documentElement||{}, b = document.body||{};
@@ -140,6 +139,16 @@ function activateAnnotation( o, cid ) // {{{
 	o.id = o.obj.id = "annotation-" + nextid++;
 	annotations[o.id] = o;
 	o.cid = cid;
+
+	var x1 = o.x1;
+	var x2 = o.x2;
+	var y1 = o.y1;
+	var y2 = o.y2;
+
+	o.x1 = Math.min( x1, x2 );
+	o.x2 = Math.max( x1, x2 );
+	o.y1 = Math.min( y1, y2 );
+	o.y2 = Math.max( y1, y2 );
 
 	var div = document.createElement( 'div' );
 	var a = document.createElement( 'a' );
@@ -182,13 +191,31 @@ function handleClick( event, cid ) // {{{
 
 	if( ! active )
 	{
+		if( !event.pageX )
+		{
+			x = getx(event);
+			y = gety(event);
+
+			for( k in annotations )
+			{
+				var o = annotations[k];
+				if( !o )
+					continue;
+
+				if( x>o.x1 && x<o.x2 && y>o.y1 && y<o.y2 ) {
+					o.obj.onclick(event);
+					return;
+				}
+			}
+		}
+
 		active = {
 			obj: null,
 			link: null,
-			y1: gety(event, cid),
-			x1: getx(event, cid),
-			y2: gety(event, cid),
-			x2: getx(event, cid),
+			y1: gety(event),
+			x1: getx(event),
+			y2: gety(event),
+			x2: getx(event),
 			value: 'New annotation',
 			target: ''
 		};
@@ -198,8 +225,8 @@ function handleClick( event, cid ) // {{{
 	}
 	else
 	{
-		active.y2 = gety(event, cid);
-		active.x2 = getx(event, cid);
+		active.y2 = gety(event);
+		active.x2 = getx(event);
 		positionize( active, cid );
 
 		activateAnnotation( active, cid );
@@ -215,12 +242,11 @@ function handleMove( event, cid ) // {{{
 	if( active == null )
 		return;
 
-	active.y2 = gety(event, cid);
-	active.x2 = getx(event, cid);
+	active.y2 = gety(event);
+	active.x2 = getx(event);
 	positionize( active, cid );
 } // }}}
 
-// FIXME : Container absolute position?
 function positionize( o, cid ) // {{{
 {
 	o.obj.style.top = (Math.min(o.y1,o.y2)) + "px";
