@@ -107,12 +107,22 @@ function getFullOffset( node ) // {{{
 // FIXME : Need to remove container absolute position
 function getx( event, cid ) // {{{
 {
-	return event.pageX; // - getc(cid).offsetLeft;
+	if( !event.pageX ) {
+		var e = document.documentElement||{}, b = document.body||{};
+		event.pageX = event.clientX + (e.scrollLeft || b.scrollLeft || 0) - (e.clientLeft || 0);
+	}
+
+	return event.pageX;
 } // }}}
 
 function gety( event, cid ) // {{{
 {
-	return event.pageY; // - getc(cid).offsetTop;
+	if( ! event.pageY ) {
+		var e = document.documentElement||{}, b = document.body||{};
+		event.pageY = event.clientY + (e.scrollTop || b.scrollTop || 0) - (e.clientTop || 0);
+	}
+
+	return event.pageY;
 } // }}}
 
 function initAnnotation( o, cid ) // {{{
