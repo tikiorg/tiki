@@ -177,8 +177,8 @@
 <td>{$channels[user].isSearchable}</td>
 <td>{$channels[user].isPublic}</td>
 <td>{$channels[user].isHidden}
-{if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
-{if !empty($channels[user].editableBy)}<br />{icon _id=page_edit}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
+{if !empty($channels[user].visibleBy)}<br />{icon _id=magnifier width=10 height=10}{foreach from=$channels[user].visibleBy item=g}{$g|escape} {/foreach}{/if}
+{if !empty($channels[user].editableBy)}<br />{icon _id=page_edit width=10 height=10}{foreach from=$channels[user].editableBy item=g}{$g|escape} {/foreach}{/if}
 </td>
 <td>{$channels[user].isMandatory}</td>
 <td>{$channels[user].description|truncate:14:"..."}</td>
