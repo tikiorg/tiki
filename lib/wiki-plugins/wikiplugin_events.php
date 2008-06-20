@@ -14,7 +14,7 @@ function wikiplugin_events($data,$params) {
 	global $userlib;
 	global $tikilib;
 	global $tiki_p_admin;
-	global $tiki_p_view_calendar;
+	global $tiki_p_view_calendar, $smarty;
 
 	if (!isset($calendarlib)) {
 		include_once ('lib/calendar/calendarlib.php');
@@ -67,6 +67,11 @@ function wikiplugin_events($data,$params) {
     array_intersect(isset($calendarid) ? $calendarids : $calIds, $viewable),
     $maxdays);
  
+	$smarty->assign_by_ref('datetime', $datetime);
+	$smarty->assign_by_ref('desc', $desc);
+	$smarty->assign_by_ref('events', $events);
+	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_events.tpl').'~/np~';
+
 	$repl="";		
 	if (count($events)<$max) $max = count($events);
 
