@@ -6,9 +6,13 @@
 	<tr class="{cycle advance=false}">
 		<td>
 			{if $datetime eq 1}
-				{$event.start|tiki_short_datetime}<br />{$event.end|tiki_short_datetime}
+				{capture name="start"}{$event.start|tiki_short_datetime}{/capture}
+				{capture name="end"}{$event.end|tiki_short_datetime}{/capture}
+				{$smarty.capture.start}{if $smarty.capture.start ne $smarty.capture.end}<br />{$smarty.capture.end}{/if}
 			{else}
-				{$event.start|tiki_short_date}<br />{$event.end|tiki_short_date}
+				{capture name="start"}{$event.start|tiki_short_date}{/capture}
+				{capture name="end"}{$event.end|tiki_short_date}{/capture}
+				{$smarty.capture.start}{if $smarty.capture.start ne $smarty.capture.end}<br />{$smarty.capture.end}{/if}
 			{/if}
 		</td>
 		<td width="100%">

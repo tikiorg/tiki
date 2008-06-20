@@ -5,7 +5,7 @@
 //
 
 function wikiplugin_events_help() {
-	return tra("~np~{~/np~EVENTS(calendarid=>1,maxdays=>365,max=>-1,datetime=>0|1,desc=>0|1)}{EVENTS} Insert rss feed output into a wikipage");
+	return tra("~np~{~/np~EVENTS(calendarid=1|2,maxdays=365,max=-1,datetime=1,desc=1)}{EVENTS} Insert rss feed output into a wikipage");
 }
 
 
