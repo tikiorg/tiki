@@ -207,6 +207,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
 		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
 		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
+		$listfields[$fid]['visibleBy'] = $xfields['data'][$i]['visibleBy'];
+		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
 
 		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
 			$parentId = $listfields[$fid]['options_array'][0];
@@ -764,8 +766,8 @@ $smarty->assign_by_ref('listfields', $listfields);
 
 $users = $userlib->list_all_users();
 $groups = $userlib->list_all_groups();
-$smarty->assign('users', $users);
-$smarty->assign('groups', $groups);
+$smarty->assign_by_ref('users', $users);
+$smarty->assign_by_ref('groups', $groups);
 
 include_once('tiki-section_options.php');
 
