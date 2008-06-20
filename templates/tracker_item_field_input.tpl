@@ -40,9 +40,9 @@
 		{/foreach}
 		</select>
 	{elseif $field_value.options_array[0] eq 1}
-		<input type="hidden" name="authorfieldid" value="{$field_value.fieldId}" />
 		{if empty($field_value.value)}
 			{$user|escape}
+			<input type="hidden" name="authorfieldid" value="{$field_value.fieldId}" />
 		{else}
 			{$field_value.value|escape}
 		{/if}
@@ -55,7 +55,7 @@
 	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
 		<input type="text" name="{$field_value.ins_id}" value="{if $field_value.value}{$field_value.value|escape}{elseif $field_value.defaultvalue}{$field_value.defaultvalue|escape}{else}{$IP|escape}{/if}" />
 	{else}
-		{if $field_value.options_array[0] eq 1}<input type="hidden" name="authoripid" value="{$field_value.fieldId}" />{/if}
+		{if $field_value.options_array[0] eq 1 && empty($field_value.value)}<input type="hidden" name="authoripid" value="{$field_value.fieldId}" />{/if}
 		{$IP|escape}
 	{/if}
 
@@ -70,8 +70,14 @@
 				{/if}
 			{/section}
 		</select>
+	{elseif $field_value.options_array[0] eq 1}
+		{if empty($field_value.value)}
+			{$group|escape}
+			<input type="hidden" name="authorgroupfieldid" value="{$field_value.fieldId}" />
+		{else}
+			{$field_value.value|escape}
+		{/if}
 	{else}
-		{if $field_value.options_array[0] eq 1}<input type="hidden" name="authorgroupfieldid" value="{$field_value.fieldId}" />{/if}
 		{$group|escape}
 	{/if}
 
