@@ -39,8 +39,14 @@
 			{/if}
 		{/foreach}
 		</select>
+	{elseif $field_value.options_array[0] eq 1}
+		<input type="hidden" name="authorfieldid" value="{$field_value.fieldId}" />
+		{if empty($field_value.value)}
+			{$user|escape}
+		{else}
+			{$field_value.value|escape}
+		{/if}
 	{else}
-		{if $field_value.options_array[0] eq 1}<input type="hidden" name="authorfieldid" value="{$field_value.fieldId}" />{/if}
 		{$user|escape}
 	{/if}
 
