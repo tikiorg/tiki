@@ -254,6 +254,9 @@ $smarty->assign_by_ref('where_list', $where_list);
 // Find search results (build array)
 $smarty->assign_by_ref('results', $results["data"]);
 
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 // Display the template
 $smarty->assign('mid', 'tiki-searchindex.tpl');
 // $smarty->assign('searchNoResults', 'true');       // false is default

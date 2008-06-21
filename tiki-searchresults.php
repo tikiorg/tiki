@@ -194,6 +194,9 @@ $smarty->assign('cant', $cant);
 // Find search results (build array)
 $smarty->assign_by_ref('results', $results["data"]);
 
+// disallow robots to index page:
+$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
 ask_ticket('searchresults');
 
 // Display the template
