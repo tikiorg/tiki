@@ -662,7 +662,7 @@ class TikiLib extends TikiDB {
 	while ($res = $result->fetchRow()) {
 
 	    global $user;
-	    $add=$this->user_has_perm_on_object($user,$res['quizId'],'quiz',array('tiki_p_take_quiz','tiki_p_view_quiz_stats'));
+	    $add=$this->user_has_perm_on_object($user,$res['quizId'],'quiz',array('tiki_p_take_quiz'));
 
 		if ($add) {
 		    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
