@@ -145,6 +145,7 @@
 				<legend>{tr}OpenID Login{/tr}</legend>
 				<input class="openid_url" type="text" name="openid_url"/>
 				<input type="submit" value="{tr}Go{/tr}"/>
+				<a class="linkmodule tikihelp" target="_blank" href="http://doc.tikiwiki.org/OpenID">{tr}What is OpenID?{/tr}</a>
 
 				{*<div>
 					<input type="checkbox" name="action" value="force" id="openid_force"/>
