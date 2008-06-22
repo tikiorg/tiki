@@ -10,9 +10,11 @@
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url)}
-		{assign var=url value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
+		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
+	{else}
+		{assign var=urll value=$url}
 	{/if}
-	<a class="tablename" href="{$url}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
+	<a class="tablename" href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
 	{assign var='is_link' value='y'}
 {else}
 	{assign var='is_link' value='n'}
