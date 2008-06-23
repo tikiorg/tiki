@@ -935,7 +935,7 @@ table.admin tr td div#page-bar {
 }
 
 .tabactive {
-	border: solid;1px #225566 !important;
+	border: solid 1px #225566 !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
@@ -1337,7 +1337,7 @@ div.tocnav {
         list-style-image: url(../img/icons/footprint.gif);
 }
 
-li.toclevel
+li.toclevel {}
 
 /* TOC */
 ul.toc {
