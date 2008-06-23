@@ -139,6 +139,10 @@
           <td class="form"><input type="checkbox" name="art_list_visible" id="articles-visible"
               {if $prefs.art_list_visible eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
+          <td class="form"><label for="articles-lang">{tr}Language{/tr}</label></td>
+          <td class="form"><input type="checkbox" name="art_list_lang" id="articles-lang"
+              {if $prefs.art_list_lang eq 'y'}checked="checked"{/if} /></td>
+        </tr><tr>
           <td class="form"><label for="articles-author">{tr}Author{/tr}</label></td>
           <td class="form"><input type="checkbox" name="art_list_author" id="articles-author"
               {if $prefs.art_list_author eq 'y'}checked="checked"{/if} /></td>

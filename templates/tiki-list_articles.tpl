@@ -48,6 +48,9 @@
 {if $prefs.art_list_visible eq 'y'}
 	<td class="heading"><span class="tableheading">{tr}Visible{/tr}</span></td>
 {/if}
+{if $prefs.art_list_lang eq 'y'}
+	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang'}{tr}Lang{/tr}{/self_link}</td>
+{/if}
 {if $prefs.art_list_author eq 'y'}
 	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='authorName'}{tr}AuthorName{/tr}{/self_link}</td>
 {/if}
@@ -91,6 +94,9 @@
 {/if}
 {if $prefs.art_list_visible eq 'y'}
 	<td class="{cycle advance=false}">{tr}{$listpages[changes].disp_article}{/tr}</td>
+{/if}
+{if $prefs.art_list_lang eq 'y'}
+	<td class="{cycle advance=false}">{tr}{$listpages[changes].lang}{/tr}</td>
 {/if}
 {if $prefs.art_list_author eq 'y'}	
 	<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
