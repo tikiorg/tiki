@@ -2688,10 +2688,12 @@ function get_included_groups($group, $recur=true) {
 		$smarty->assign('mail_machine', $mail_machine);
 		$mail_data = $smarty->fetchLang($languageEmail, "mail/$tpl.tpl");		
 		$mail->setText($mail_data);
-		if (!$mail->send(array($this->get_user_email($user)))) {
+		if (!($email = $this->get_user_email($user)) || !$mail->send(array($email))) {
 			$smarty->assign('msg', tra("The user email confirmation can't be sent. Contact the administrator"));
+			return false;
 		} else {
 			$smarty->assign('msg', 'It is time to confirm your email. You will receive an mail with the instruction to follow');
+			return true;
 		}
 	}
 
