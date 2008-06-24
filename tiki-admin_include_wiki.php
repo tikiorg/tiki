@@ -155,7 +155,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_antibot',
 	'feature_backlinks',
 	'feature_likePages',
-	'feature_userVersions',
 	'wiki_uses_slides',
 	'feature_wiki_open_as_structure',
 	'feature_wiki_make_structure',

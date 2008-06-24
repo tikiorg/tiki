@@ -391,7 +391,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['user_show_realnames'] = 'n';
 	$prefs['feature_mytiki'] = 'y';
 	$prefs['feature_userPreferences'] = 'n';
-	$prefs['feature_userVersions'] = 'y';
 	$prefs['feature_user_bookmarks'] = 'n';
 	$prefs['feature_tasks'] = 'n';
 	$prefs['w_use_db'] = 'y';

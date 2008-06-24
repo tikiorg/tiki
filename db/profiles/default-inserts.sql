@@ -152,7 +152,6 @@ INSERT INTO tiki_preferences VALUES ('feature_user_bookmarks','n');
 INSERT INTO tiki_preferences VALUES ('feature_userfiles','n');
 INSERT INTO tiki_preferences VALUES ('feature_usermenu','n');
 INSERT INTO tiki_preferences VALUES ('feature_userPreferences','n');
-INSERT INTO tiki_preferences VALUES ('feature_userVersions','n');
 INSERT INTO tiki_preferences VALUES ('feature_user_watches','n');
 INSERT INTO tiki_preferences VALUES ('feature_user_watches_translations','y');
 INSERT INTO tiki_preferences VALUES ('feature_view_tpl','n');
