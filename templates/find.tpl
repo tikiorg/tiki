@@ -75,7 +75,7 @@
 		</select>
 	</div>
 {/if}
-{if $find_show_categories eq 'y' and $prefs.feature_categories eq 'y'}
+{if $find_show_categories eq 'y' and $prefs.feature_categories eq 'y' and !empty($categories)}
 	<div class="findtitle findcateg">
 		<select name="categId">
 		<option value='' {if $find_categId eq ''}selected="selected"{/if}>{tr}any category{/tr}</option>
