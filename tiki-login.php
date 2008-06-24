@@ -331,12 +331,12 @@ if ( $isvalid ) {
 	unset($isvalid);
 
 	switch ( $error ) {
-	case PASSWORD_INCORRECT: $smarty->assign('errortype', 402); $error = tra('Invalid password'); break;
-	case USER_NOT_FOUND: $smarty->assign('errortype', 402); $error = tra('Invalid username'); break;
+	case PASSWORD_INCORRECT: $error = tra('Invalid password'); break;
+	case USER_NOT_FOUND: $error = tra('Invalid username'); break;
 	case ACCOUNT_DISABLED: $error = tra('Account disabled'); break;
-	case USER_AMBIGOUS: $smarty->assign('errortype', 402); $error = tra('You must use the right case for your user name'); break;
+	case USER_AMBIGOUS: $error = tra('You must use the right case for your user name'); break;
 	case USER_NOT_VALIDATED: $error = tra('You are not yet validated'); break;
-	default: $smarty->assign('errortype', 402); $error = tra('Invalid username or password');
+	default: $error = tra('Invalid username or password');
 	}
 	$url = 'tiki-error.php?error='.urlencode($error);
 
