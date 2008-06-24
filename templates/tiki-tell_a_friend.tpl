@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1>{if $report eq 'y'}{tr}Report to the Webmaster{/tr}{else}{tr}Send a link to a friend{/tr}{/if}</h1>
+<h1>{if $report eq 'y'}{tr}Report to Webmaster{/tr}{else}{tr}Send a link to a friend{/tr}{/if}</h1>
 <span class="button2"><a href="{$url}" class="linkbut">{tr}Back{/tr}</a></span>
 {if isset($sent)}
 <div class="simplebox highlight">
