@@ -109,7 +109,7 @@ class Tiki_Profile
 
 	private function loadYaml( $url ) // {{{
 	{
-		$content = file_get_contents( $url );
+		$content = tiki_get_remote_file( $url );
 		$content = html_entity_decode( $content );
 		$content = str_replace( "\r", '', $content );
 

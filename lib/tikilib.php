@@ -7902,6 +7902,25 @@ function validate_email($email,$checkserver='n') {
 		return true;
 	}
 }
+
+function tiki_get_remote_file( $url )
+{
+	if( ini_get( 'allow_url_fopen' ) )
+		return file_get_contents( $url );
+	elseif( function_exists( 'curl_init' ) )
+	{
+		$ch = curl_init( $url );
+		curl_setopt( $ch, CURLOPT_HEADER, false );
+		curl_setopt( $ch, CURLOPT_NOBODY, false );
+		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, false );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+		return curl_exec( $ch );
+	}
+	else
+		return false;
+}
+
 /* Editor configuration
 Local Variables:
    tab-width: 4

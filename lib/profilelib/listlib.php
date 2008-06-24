@@ -33,7 +33,7 @@ class Tiki_Profile_List
 			unlink($file);
 		touch($file);
 
-		$content = file_get_contents( $path );
+		$content = tiki_get_remote_file( $path );
 
 		$parts = explode( "\n", $content );
 		$parts = array_map( 'trim', $parts );
