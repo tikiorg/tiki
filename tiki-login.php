@@ -317,8 +317,8 @@ if ( $isvalid ) {
  		if ( ($nb_bad_logins = $userlib->unsuccessful_logins($user)) >= $prefs['unsuccessful_logins'] ) {
 			$msg = sprintf(tra('More than %d unsuccessful login attempts have been made.'), $prefs['unsuccessful_logins']);
 			$smarty->assign('msg', $msg);
-			$userlib->send_confirm_email($user, 'unsuccessful_logins');
-			$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
+			if ($userlib->send_confirm_email($user, 'unsuccessful_logins'))
+				$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
 			$smarty->assign('user', '');
 			unset($user);
 			$smarty->assign('mid', 'tiki-information.tpl');
@@ -331,12 +331,12 @@ if ( $isvalid ) {
 	unset($isvalid);
 
 	switch ( $error ) {
-	case PASSWORD_INCORRECT: $error = tra('Invalid password'); break;
-	case USER_NOT_FOUND: $error = tra('Invalid username'); break;
+	case PASSWORD_INCORRECT: $smarty->assign('errortype', 402); $error = tra('Invalid password'); break;
+	case USER_NOT_FOUND: $smarty->assign('errortype', 402); $error = tra('Invalid username'); break;
 	case ACCOUNT_DISABLED: $error = tra('Account disabled'); break;
-	case USER_AMBIGOUS: $error = tra('You must use the right case for your user name'); break;
+	case USER_AMBIGOUS: $smarty->assign('errortype', 402); $error = tra('You must use the right case for your user name'); break;
 	case USER_NOT_VALIDATED: $error = tra('You are not yet validated'); break;
-	default: $error = tra('Invalid username or password');
+	default: $smarty->assign('errortype', 402); $error = tra('Invalid username or password');
 	}
 	$url = 'tiki-error.php?error='.urlencode($error);
 

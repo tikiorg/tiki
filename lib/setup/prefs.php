@@ -637,7 +637,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['pass_chr_num'] = 'n';
 	$prefs['pass_due'] = -1;
 	$prefs['email_due'] = -1;
-	$prefs['unsuccessful_logins'] = 5;
+	$prefs['unsuccessful_logins'] = -1;
 	$prefs['rnd_num_reg'] = 'n';
 	$prefs['auth_method'] = 'tiki';
 	$prefs['auth_pear'] = 'tiki';
