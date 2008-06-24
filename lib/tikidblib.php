@@ -147,6 +147,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     if (!$result) {
         if ($reporterrors) {
                 $this->sql_error($query, $values, $result);
+		return false;
         } else {
 	        $this->stopTimer($starttime);
                 return $result;
@@ -237,18 +238,21 @@ function sql_error($query, $values, $result) {
 		}
     }
 
+    if ( ! isset($_SESSION['fatal_error']) ) {
+	// Do not show the error if an error has already occured during the same script execution (error.tpl already called),
+	//   because tiki should have died before another error.
+	// This happens when error.tpl is called by tiki.sql... and tiki.sql is also called again in error.tpl, entering in an infinite loop.
 	require_once('tiki-setup.php');
-	if ($smarty) {
-		$smarty->assign('msg',$outp);
-		$smarty->display("error.tpl");
+	if ( $smarty ) {
+		$smarty->assign('msg', $outp);
+		$_SESSION['fatal_error'] = 'y';
+		$smarty->display('error.tpl');
+		unset($_SESSION['fatal_error']);
 	} else {
 		echo $outp;
 	}
-    // -- debugging stuff: after php 5.1.1 will disclose db user and password
-    // echo "<pre>";
-    // var_dump(debug_backtrace());
-    // echo "</pre>";
-    die();
+	die;
+    }
 }
 
 function ifNull($narg1,$narg2) {
