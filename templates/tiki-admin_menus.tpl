@@ -9,20 +9,20 @@
 {/if}</h1>
 
 <div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To use menus in a <a class="rbox-link" href="tiki-admin_modules.php">module</a>, <a class="rbox-link" href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.<br /><br />To use <a class="rbox-link" target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
-<ul>
-<li>{literal}{phplayers id=X}{/literal}</li>
-<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
-<li>{literal}{phplayers id=X type=vert}{/literal}</li>
-</ul>
-{tr}This will work well (or not!) depending on your theme. To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}
-
+  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
+  <div class="rbox-data" name="tip">
+    {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+  </div>
+  <div class="rbox-data" name="tip">
+    {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
+    <ul>
+      <li>{literal}{phplayers id=X}{/literal}</li>
+      <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
+      <li>{literal}{phplayers id=X type=vert}{/literal}</li>
+    </ul>
+    {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}
+  </div>
 </div>
-</div>
-<br />
-
-
 
 {if $menuId > 0}
 <h2>{tr}Edit this Menu:{/tr} {$name}</h2>
