@@ -50,7 +50,7 @@ close();
         	<br /><br />
 					{if ( !isset($user) ) }
 						<div class="simplebox highlight">
-							{tr}You are not loggued in.{/tr} <a href="tiki-login.php">{tr}Go to Login Page{/tr}</a>
+							{tr}You are not logged in.{/tr} <a href="tiki-login.php">{tr}Go to Login Page{/tr}</a>
 						</div>
         		<br /><br />
         	{/if}
