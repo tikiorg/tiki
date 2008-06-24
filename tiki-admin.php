@@ -248,7 +248,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_ads.php');
 	} else if ($adminPage == "profiles") {
 		$admintitle = "Profiles";
-		$description = "Install predefined configuration profiles and ad-ons.";
+		$description = "Install predefined configuration profiles and add-ons.";
 		$helpUrl = "Profile installation";
 		include_once ('tiki-admin_include_profiles.php');
 	}
