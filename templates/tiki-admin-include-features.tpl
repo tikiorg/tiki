@@ -9,13 +9,14 @@
 
 <div class="cbox">
 	<div class="cbox-title">{tr}{$crumbs[$crumb]->title}{/tr} {help crumb=$crumbs[$crumb]}</div>
-		<form class="admin" name="features" action="tiki-admin.php?page=features" method="post">
+		<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 			<div class="heading button" style="text-align: right">
 				<input type="submit" name="features" value="{tr}Apply{/tr}" />
 				<input type="reset" name="featuresreset" value="{tr}Reset{/tr}" />
 			</div>
+				 {if $prefs.feature_tabs eq 'y'}{tr}No tabs{/tr}<input type="checkbox" name="tabs"{if $tabs eq 'n'} checked="checked"{/if} onclick="document.features.submit();"/>{/if}  
 
-{if $prefs.feature_tabs eq 'y'}
+{if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}
 			<div class="tabs" style="clear: both;">
 				<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,10);">{tr}Main{/tr}</a></span>
 				<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,10);">{tr}Global Features{/tr}</a></span>
@@ -33,8 +34,8 @@
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"	class="tabcontent" style="clear:both;display:block;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content1"	class="tabcontent" style="clear:both;display:block;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Main Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -79,8 +80,8 @@
 			</fieldset>
 		
 {* ---------- Global features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content2"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content2"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Site Global Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -116,8 +117,8 @@
 			</fieldset>
 
 {* ---------- Additional features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content3"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content3"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Additional Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -193,8 +194,8 @@
 			</fieldset>
 
 {* ---------- Technical features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content4"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content4"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Technical Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -230,8 +231,8 @@
 			</fieldset>
 
 {* ---------- User interface enhancement features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content5"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content5"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}User interface enhancement features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -259,8 +260,8 @@
 			</fieldset>
 				
 {* ---------- Experimental features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content6"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content6"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Experimental Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -296,8 +297,8 @@
 			</fieldset>
 
 {* ---------- Content features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content7" class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content7" class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Content Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -346,8 +347,8 @@
 			</fieldset>
 
 {* ---------- Administration features ------------ *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content8"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content8"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}Administration Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
@@ -395,8 +396,8 @@
 			</fieldset>
 				
 {* --- User Features --- *}
-			<fieldset {if $prefs.feature_tabs eq 'y'}id="content9"	class="tabcontent" style="clear:both;display:none;"{/if}>
-{if $prefs.feature_tabs neq 'y'}
+			<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content9"	class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $prefs.feature_tabs neq 'y' or $tabs eq 'n'}
 				<legend class="heading"><a href="#"><span>{tr}User Features{/tr}</span></a></legend>
 {/if}
 				<div class="admin">
