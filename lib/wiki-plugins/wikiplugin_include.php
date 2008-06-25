@@ -55,17 +55,9 @@ function wikiplugin_include($data, $params) {
         $included_pages[$page] = 1;
         // only evaluate permission the first time round
         // evaluate if object or system permissions enables user to see the included page
-        $canbeseen="n";
-        if ($userlib->object_has_one_permission($page,'wiki page')) {
-            if ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')) {
-                $canbeseen="y";
-            }
-        } else {
-            if ($userlib->user_has_permission($user,'tiki_p_view')) {
-                $canbeseen="y";
-            }
-        }
-        if ($canbeseen=="n") {
+    	$data = $tikilib->get_page_info($page);
+	$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
+        if ($perms['tiki_p_view'] != 'y') {
             $included_pages[$page] = $max_times;
     //		I think is safer to show nothing instead of a message saying that a page can't be accessed
     //		$text="<b>User $user has no permission to access $page</b><br />";
@@ -74,7 +66,6 @@ function wikiplugin_include($data, $params) {
         }
     }
 
-    $data = $tikilib->get_page_info($page);
 
 	$text = $data['data'];
 	if (isset($start) || isset($stop)) {
