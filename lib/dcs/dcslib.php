@@ -22,40 +22,33 @@ class DCSLib extends TikiLib {
 	function list_content($offset = 0, $maxRecords = -1, $sort_mode = 'contentId_desc', $find = '') {
 
 		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " where (`description` like ?)";
-			$bindvars=array($findesc);
+			$findesc = '%'.$find.'%';
+			$mid = " WHERE (`description` LIKE ? OR `contentLabel` LIKE ?)";
+			$bindvars = array($findesc, $findesc);
 		} else {
 			$mid = '';
-			$bindvars=array();
+			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_content` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = 'SELECT `tc`.*, tpcd.`data`,'
+				.' COALESCE(`tpcf`.`future`,0) AS `future`,'
+				.' COALESCE(`tpca`.`actual`,?) AS `actual`,'
+				.' COALESCE(`tpcn`.`next`,?) AS `next`,'
+				.' GREATEST(0, COALESCE(`tpco`.`old`,0) - 1) AS `old`'
+			.' FROM (`tiki_content` AS `tc`'
+				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `future` FROM `tiki_programmed_content` WHERE `publishDate`>? GROUP BY contentId ) AS `tpcf` ON ( `tc`.`contentId` = `tpcf`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, max(`publishDate`) AS `actual` FROM `tiki_programmed_content` WHERE `publishDate`<=? GROUP BY contentId ) AS `tpca` ON ( `tc`.`contentId` = `tpca`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, min(`publishDate`) AS `next` FROM `tiki_programmed_content` WHERE `publishDate`>=? GROUP BY contentId ) AS `tpcn` ON ( `tc`.`contentId` = `tpcn`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, count(*) AS `old` FROM `tiki_programmed_content` WHERE `publishDate`<? GROUP BY contentId ) AS `tpco` ON ( `tc`.`contentId` = `tpco`.`contentId` )'
+				.' LEFT JOIN ( SELECT `contentId`, `data`, `publishDate` FROM `tiki_programmed_content` ) AS `tpcd` ON ( `tc`.`contentId` = `tpcd`.`contentId` AND `tpcd`.`publishDate` = `tpca`.`actual` ))'
+			." $mid ORDER BY ".$this->convert_sortmode($sort_mode);
+
 		$query_cant = "select count(*) from `tiki_content` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, array_merge(array($this->now, $this->now, $this->now, $this->now, $this->now, $this->now), $bindvars), $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
-			// Add actual version
-			// Add number of programmed versions
-			// Add next programmed version
-			// Add number of old versions
-
-			$id = $res["contentId"];
-			$query = "select count(*) from `tiki_programmed_content` where `publishDate`>? and `contentId`=?";
-			$res["future"] = $this->getOne($query,array($this->now,$id));
-			$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-			$res["actual"] = $this->getOne($query,array($id,$this->now));
-			$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>=?";
-			$res["next"] = $this->getOne($query,array($id,$this->now));
-			$query = "select count(*) from `tiki_programmed_content` where `contentId` = ? and `publishDate`<?";
-			$res["old"] = $this->getOne($query,array($id,$this->now));
-
-			if ($res["old"] > 0)
-				$res["old"]--;
-
+		while ( $res = $result->fetchRow() ) {
 			$ret[] = $res;
 		}
 
@@ -72,19 +65,29 @@ class DCSLib extends TikiLib {
 		return $res;
 	}
 
-	function get_random_content($contentId) {
+	function get_random_content($contentId = 0) {
 
-		$querycant = "select count(*) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-		$cant = $this->getOne($querycant,array($contentId,$this->now));
+		$where = ' WHERE `publishDate`<=?';
+		$bindvars = array($this->now);
 
-		if (!$cant)
+		if ( (int)$contentId > 0 ) {
+			$bindvars[] = $contentId;
+			$where .= ' AND `contentId`=?';
+		}
+
+		$querycant = 'SELECT count(*) FROM `tiki_programmed_content`'.$where;
+		$cant = $this->getOne($querycant, $bindvars);
+
+		if ( ! $cant ) {
 			return '';
+		}
 
 		$x = rand(0, $cant - 1);
-		$query = "select `data` from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-		$result = $this->query($query,array($contentId,$this->now),1,$x);
+		$query = 'SELECT `data` FROM `tiki_programmed_content`'.$where;
+		$result = $this->query($query, $bindvars, 1, $x);
 		$res = $result->fetchRow();
-		return $res["data"];
+
+		return $res['data'];
 	}
 
 	function get_next_content($contentId) {
@@ -149,11 +152,13 @@ class DCSLib extends TikiLib {
 		return true;
 	}
 
-	function get_content($id) {
-		$query = "select * from `tiki_content` where `contentId`=?";
+	function get_content($fieldvalue, $fieldname = 'contentId') {
+		if ( $fieldname != 'contentId' && $fieldname != 'contentLabel' ) return false;
 
-		$result = $this->query($query,array($id));
+		$query = 'select * from `tiki_content` where `'.$fieldname.'`=?';
+		$result = $this->query($query, array($fieldvalue));
 		$res = $result->fetchRow();
+
 		return $res;
 	}
 
@@ -165,21 +170,31 @@ class DCSLib extends TikiLib {
 		return $res;
 	}
 
-	function replace_content($contentId, $description) {
-
-		if ($contentId > 0) {
-			$query = "update `tiki_content` set `description`=? where `contentId`=?";
-
-			$result = $this->query($query,array($description,$contentId));
-			return $contentId;
-		} else {
-			$query = "insert into `tiki_content`(`description`) values(?)";
-
-			$result = $this->query($query,array($description));
-			$query = "select max(`contentId`) from `tiki_content` where `description` = ?";
-			$id = $this->getOne($query,array($description));
-			return $id;
+	function replace_content($contentId, $description, $label = null) {
+		$bindvars = array($description);
+		if ( $label !== null ) {
+			$bindvars[] = $label;
 		}
+
+		if ( $contentId > 0 ) {
+			$query = 'update `tiki_content` set `description`=?'
+				.( $label === null ? '' : ',`contentLabel`=?' )
+				.' where `contentId`=?';
+
+			$bindvars[] = $contentId;
+			$result = $this->query($query, $bindvars);
+		} else {
+			$query = 'insert into `tiki_content` (`description`'
+				.( $label === null ? '' : ',`contentLabel`')
+				.') values(?'
+				.( $label === null ? '' : ',?')
+				.')';
+
+			$result = $this->query($query, $bindvars);
+			$contentId = $this->getOne('select max(`contentId`) from `tiki_content` where `description` = ?', $bindvars);
+		}
+
+		return $contentId;
 	}
 }
 global $dbTiki;

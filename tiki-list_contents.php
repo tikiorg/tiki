@@ -33,20 +33,22 @@ if (isset($_REQUEST["remove"])) {
   $area = 'delcontents';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-		$dcslib->remove_contents($_REQUEST["remove"]);
+    $dcslib->remove_contents($_REQUEST["remove"]);
   } else {
     key_get($area);
   }
 }
 
 $smarty->assign('description', '');
+$smarty->assign('contentLabel', '');
 $smarty->assign('contentId', 0);
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('list-contents');
 	$smarty->assign('description', $_REQUEST["description"]);
+	$smarty->assign('contentLabel', $_REQUEST["contentLabel"]);
 
-	$id = $dcslib->replace_content($_REQUEST["contentId"], $_REQUEST["description"]);
+	$id = $dcslib->replace_content($_REQUEST["contentId"], $_REQUEST["description"], $_REQUEST["contentLabel"]);
 	$smarty->assign('contentId', $id);
 }
 
@@ -55,12 +57,9 @@ if (isset($_REQUEST["edit"])) {
 
 	$smarty->assign('contentId', $info["contentId"]);
 	$smarty->assign('description', $info["description"]);
+	$smarty->assign('contentLabel', $info["contentLabel"]);
 }
 
-// This script can receive the thresold
-// for the information as the number of
-// days to get in the log 1,3,4,etc
-// it will default to 1 recovering information for today
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'contentId_desc';
 } else {
@@ -71,7 +70,6 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {

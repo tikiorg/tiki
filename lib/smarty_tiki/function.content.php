@@ -6,21 +6,20 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_function_content($params, &$smarty)
-{
-    global $tikilib;
-    global $dbTiki;
-    global $dcslib;
-    include_once('lib/dcs/dcslib.php');
-    extract($params);
-    // Param = zone
+// Param: 'id' or 'label'
+function smarty_function_content($params, &$smarty) {
+  global $tikilib;
 
-    if (empty($id)) {
-        $smarty->trigger_error("assign: missing 'zone' parameter");
-        return;
-    }
-    $data = $dcslib->get_actual_content($id);
-    print($data);
+  if ( isset($params['id']) ) {
+    $data = $tikilib->get_actual_content($params['id']);
+  } elseif ( isset($params['label']) ) {
+    $data = $tikilib->get_actual_content_by_label($params['label']);
+  } else {
+    $smarty->trigger_error("assign: missing 'id' or 'label' parameter");
+    return false;
+  }
+
+  return $data;
 }
 
 ?>

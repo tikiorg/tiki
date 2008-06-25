@@ -8,8 +8,8 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/dcs/dcslib.php');
+$auto_query_args = array('contentId','sort_mode','offset','find');
 
 if (!isset($dcslib)) {
 	$dcslib = new DCSLib($dbTiki);
@@ -91,9 +91,6 @@ if (!isset($_REQUEST["sort_mode"])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -112,27 +109,9 @@ $smarty->assign('find', $find);
 
 // Get a list of last changes to the Wiki database
 $listpages = $dcslib->list_programmed_content($_REQUEST["contentId"], $offset, $maxRecords, $sort_mode, $find);
-
-// If there're more records then assign next_offset
-$cant_pages = ceil($listpages["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($listpages["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
+$smarty->assign_by_ref('cant', $listpages["cant"]);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
+
 ask_ticket('edit-programmed-content');
 
 // disallow robots to index page:
