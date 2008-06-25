@@ -1,5 +1,6 @@
 <?php
 
+global $calendarlib;
 require_once('calendarlib.php');
 
 class TikiCalendarLib extends CalendarLib {
