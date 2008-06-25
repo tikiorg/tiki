@@ -7194,5 +7194,6 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Canal de syndication RSS Tiki pour les pages Wiki",
 "Last modifications to the Wiki." => "Dernières pages Wiki modifiées.",
 "The page is empty" => "La page est vide",
+"Create/Edit" => "Créer/Modifier",
 "###end###"=>"###end###");
 ?>

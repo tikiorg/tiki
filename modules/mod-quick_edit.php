@@ -18,7 +18,7 @@ if (isset($module_params["templateId"])) {
 if (isset($module_params["submit"])) {
 	$submit = $module_params["submit"];
 } else {
-	$submit = tra('Edit','',true);
+	$submit = tra('Create/Edit','',true);
 }
 if (isset($module_params["size"])) {
 	$size = $module_params["size"];
