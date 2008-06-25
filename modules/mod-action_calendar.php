@@ -28,6 +28,9 @@ if ( $prefs['feature_action_calendar'] == 'y' && $tiki_p_view_tiki_calendar == '
         	$smarty->assign($tc_key, $tc_val);
 	}
 
+	$module_params['name'] = 'tiki_calendar';
+	if ( ! isset($module_params['title']) ) $module_params['title'] = tra('Tiki Calendar');
+
 	$smarty->assign('daformat2', $tikilib->get_long_date_format());
 	$smarty->assign('var', '');
 	$smarty->assign('myurl', 'tiki-action_calendar.php');

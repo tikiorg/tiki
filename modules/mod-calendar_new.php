@@ -24,6 +24,9 @@ if ( $prefs['feature_calendar'] == 'y' && $tiki_p_view_calendar == 'y' ) {
         	$smarty->assign($tc_key, $tc_val);
 	}
 
+	$module_params['name'] = 'calendar';
+	if ( ! isset($module_params['title']) ) $module_params['title'] = tra('Calendar');
+
 	$smarty->assign('daformat2', $tikilib->get_long_date_format());
 	$smarty->assign('var', '');
 	$smarty->assign('myurl', 'tiki-calendar.php');

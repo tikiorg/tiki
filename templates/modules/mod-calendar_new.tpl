@@ -1,5 +1,5 @@
 {* $Id: mod-calendar_new.tpl 12242 2008-03-30 13:22:01Z luciash $ *}
-{tikimodule title="{tr}Calendar{/tr}" name="calendar" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$module_params.title name=$module_params.name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
 {popup_init src="lib/overlib.js"}
 <div style="text-align:center; font-size:110%">{tr}{$focusdate|tiki_date_format:"%B"|ucfirst}{/tr}</div>
 <table cellpadding="0" cellspacing="0" border="0" id="caltable" style="text-align:center;">
@@ -28,7 +28,7 @@
 {if $month_cursor neq $focusmonth }
 <span style="color:lightgrey">{$day_cursor}</span>
 {elseif $cell[w][d].items[0].modifiable eq "y" || $cell[w][d].items[0].visible eq 'y'}
-<a style="text-decoration: underline; font-weight: bold" href="tiki-calendar.php?todate={$cell[w][d].day}&amp;viewmode=day"
+<a style="text-decoration: underline; font-weight: bold" href="{$myurl}?todate={$cell[w][d].day}&amp;viewmode=day"
 {if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[0].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 >{$day_cursor}</a>
 {else}
