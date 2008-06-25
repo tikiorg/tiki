@@ -337,11 +337,23 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     		</td>
     	</tr>
     	<tr>
-			  <td class="form">{tr}Comment length{/tr}:</td>
-			  <td class="form">
-				  <input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
-			  </td>
-		  </tr>
+		<td class="form">{tr}Comment length{/tr}:</td>
+		<td class="form">
+			<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
+		</td>
+	</tr>
+    	<tr>
+    		<td class="form">{tr}Description{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_description" {if $prefs.wiki_list_description eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+		<td class="form">{tr}Description length{/tr}:</td>
+		<td class="form">
+			<input type="text" name="wiki_list_description_len" value="{$prefs.wiki_list_description_len}" size="3" />
+		</td>
+	</tr>
     	<tr>
     		<td class="form">{tr}Status{/tr}</td>
     		<td class="form">

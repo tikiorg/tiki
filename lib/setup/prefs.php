@@ -121,6 +121,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_list_backlinks'] = 'y';
 	$prefs['wiki_list_comment'] = 'y';
 	$prefs['wiki_list_comment_len'] = '200';
+	$prefs['wiki_list_description'] = 'y';
+	$prefs['wiki_list_description_len'] = '200';
 	$prefs['wiki_list_creator'] = 'n';
 	$prefs['wiki_list_hits'] = 'y';
 	$prefs['wiki_list_lastmodif'] = 'y';

@@ -97,6 +97,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 	'wiki_list_user',
 	'wiki_list_lastver',
 	'wiki_list_comment',
+	'wiki_list_description',
 	'wiki_list_status',
 	'wiki_list_versions',
 	'wiki_list_links',
@@ -112,6 +113,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 	}
 	simple_set_int('wiki_list_name_len');
 	simple_set_int('wiki_list_comment_len');
+	simple_set_int('wiki_list_description_len');
 	simple_set_value('wiki_list_sortorder');
 	simple_set_value('wiki_list_sortdirection');
 }

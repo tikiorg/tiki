@@ -14,16 +14,15 @@
   
 <table class="normal">
   <tr>
-  {if $checkboxes_on eq 'y' && count($listpages) > 0}
-    <script type='text/javascript'>
-      <!--
-        // check / uncheck all.
-        // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
-        // for now those people just have to check every single box
-        document.write("<td class=\"heading\"><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"Select All\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-        //-->                     
-    </script>
+    {if $checkboxes_on eq 'y' && count($listpages) > 0}
+      <td class="heading">
+      {if $prefs.javascript_enabled eq 'y'}
+        <input name="switcher" id="clickall" type="checkbox" title="Select All" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
+      {/if}
+      </td>
       {assign var='cntcol' value='1'}
+    {else}
+      {assign var='cntcol' value='0'}
     {/if}
   
 
@@ -42,9 +41,22 @@
       <td class="heading" style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</td>
     {/if}
 
-    {if $prefs.wiki_list_lastmodif eq 'y'}
+    {if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif' _title='{tr}Last modification{/tr}'}{tr}Last mod{/tr}{/self_link}</td>
+      <td class="heading">
+      {assign var='lastmod_sortfield' value='lastModif'}
+      {assign var='lastmod_shorttitle' value='{tr}Last mod{/tr}'}
+      {if $prefs.wiki_list_lastmodif eq 'y' and $prefs.wiki_list_comment eq 'y'}
+        {assign var='lastmod_title' value='{tr}Last modification{/tr} / {tr}Comment{/tr}'}
+      {elseif $prefs.wiki_list_lastmodif eq 'y'}
+        {assign var='lastmod_title' value='{tr}Last modification{/tr}'}
+      {else}
+        {assign var='lastmod_title' value='{tr}Comment{/tr}'}
+        {assign var='lastmod_sortfield' value='comment'}
+        {assign var='lastmod_shorttitle' value='{tr}Comment{/tr}'}
+      {/if}
+      {self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$lastmod_sortfield _title=$lastmod_title}{$lastmod_shorttitle}{/self_link}
+      </td>
     {/if}
 
     {if $prefs.wiki_list_creator eq 'y'}
@@ -64,7 +76,7 @@
 
     {if $prefs.wiki_list_status eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag' _title='{tr}Status of the page{/tr}'}{tr}Lock{/tr}{/self_link}</td>
+      <td style="text-align:center;" class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag' _icon='lock_gray'}{tr}Status of the page{/tr}{/self_link}</td>
     {/if}
 
     {if $prefs.wiki_list_versions eq 'y'}
@@ -125,9 +137,9 @@
     {if $prefs.wiki_list_name eq 'y'}
       <td class="{cycle advance=false}">
         <a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>
-        {if $prefs.wiki_list_comment eq 'y' && $listpages[changes].comment neq ""}
+        {if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}
           <div class="subcomment">
-            {$listpages[changes].comment|truncate:$prefs.wiki_list_comment_len:"...":true}
+            {$listpages[changes].description|truncate:$prefs.wiki_list_description_len:"...":true}
           </div>
         {/if}
       </td>
@@ -137,8 +149,15 @@
       <td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].hits}</td>
     {/if}
 
-    {if $prefs.wiki_list_lastmodif eq 'y'}
-      <td class="{cycle advance=false}">{$listpages[changes].lastModif|tiki_short_datetime}</td>
+    {if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
+      <td class="{cycle advance=false}">
+        {if $prefs.wiki_list_lastmodif eq 'y'}
+          <div>{$listpages[changes].lastModif|tiki_short_datetime}</div>
+        {/if}
+        {if $prefs.wiki_list_comment eq 'y' && $listpages[changes].comment neq ""}
+          <div><i>{$listpages[changes].comment|truncate:$prefs.wiki_list_comment_len:"...":true}</i></div>
+        {/if}
+      </td>
     {/if}
 
     {if $prefs.wiki_list_creator eq 'y'}
@@ -223,6 +242,11 @@
       {if $tiki_p_assign_perm_wiki_page eq 'y'}
         <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
       {/if}
+
+      {if $tiki_p_remove eq 'y'}
+        <a class="link" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+      {/if}
+  
       </td>
     {/if}
     
@@ -245,17 +269,17 @@
       <select name="submit_mult" onchange="this.form.submit();">
         <option value="" selected="selected">...</option>
         {if $tiki_p_remove eq 'y'} 
-          <option value="remove_pages" >{tr}Remove{/tr}</option>
+        	<option value="remove_pages" >{tr}Remove{/tr}</option>
         {/if}
     
         {if $prefs.feature_wiki_multiprint eq 'y'}
-          <option value="print_pages" >{tr}Print{/tr}</option>
+        	<option value="print_pages" >{tr}Print{/tr}</option>
         {/if}
 
-		{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}
-			<option value="lock_pages" >{tr}Lock{/tr}</option>
-			<option value="unlock_pages" >{tr}Unlock{/tr}</option>
-		{/if}
+	{if $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_lock eq 'y' or $tiki_p_admin_wiki eq 'y')}
+		<option value="lock_pages" >{tr}Lock{/tr}</option>
+		<option value="unlock_pages" >{tr}Unlock{/tr}</option>
+	{/if}
       
         {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
       </select>                
