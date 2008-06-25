@@ -208,7 +208,7 @@ $lang=Array(
 "View item" => "Voir la fiche",
 "Add a comment" => "Ajouter un commentaire",
 "~np~{~/np~EVENTS(calendarid=>1,maxdays=>365,max=>-1,datetime=>0|1,desc=>0|1)}{EVENTS} Insert rss feed output into a wikipage" => "~np~{~/np~EVENTS(calendarid=>1,maxdays=>365,max=>-1,datetime=>0|1,desc=>0|1)}{EVENTS} Insère la syndication RSS dans une page Wiki",
-"You are not loggued in." => "Vous n'êtes pas connecté(e).",
+"You are not logged in." => "Vous n'êtes pas connecté(e).",
 "This will work well (or not!) depending on your theme. To learn more about <a class=\"rbox-link\" target=\"tikihelp\" href=\"http://themes.tikiwiki.org\">themes</a>" => "Cela va marcher (ou non!) selon votre thème. Pour apprendre plus sur les <a class=\"rbox-link\" target=\"tikihelp\" href=\"http://themes.tikiwiki.org\">thèmes</a>",
 // ### end of unused words
 
