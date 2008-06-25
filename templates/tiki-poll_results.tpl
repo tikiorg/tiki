@@ -28,14 +28,15 @@
 <h2><a href="tiki-poll_results.php?pollId={$poll_info_arr[x].pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info_arr[x].title}</a></h2>
 {if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info_arr[x].pollId}" class="linkbut">{tr}Votes{/tr}</a></span>{/if}
 <div class="pollresults">
+{cycle values="even,odd" print=false}
 <table class="pollresults">
 {section name=ix loop=$poll_info_arr[x].options}
-<tr><td class="pollr">
+<tr><td class="pollr {cycle advance=false}">
 {if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
 {$poll_info_arr[x].options[ix].title}
 {if $smarty.section.x.total > 1}</a>{/if}
 </td>
-    <td class="pollr"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$poll_info_arr[x].options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})</td></tr>
+    <td class="pollr {cycle}"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$poll_info_arr[x].options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})</td></tr>
 {/section}
 </table>
 <br />
