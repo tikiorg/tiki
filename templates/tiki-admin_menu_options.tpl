@@ -36,8 +36,8 @@
 <tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
 <br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 </td></tr>
-<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br /><em>{tr}Separate multiple sections with a comma (&nbsp;,&nbsp;).{/tr}</em></td></tr>
-<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br /><em>{tr}Separate multiple permissions with a comma (&nbsp;,&nbsp;).{/tr}</em></td></tr>
+<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br /><em>{tr}Separate multiple sections with a comma ( , ).{/tr}</em></td></tr>
+<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br /><em>{tr}Separate multiple permissions with a comma ( , ).{/tr}</em></td></tr>
 <tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
 <select id="menu_groupname" name="groupname[]" size="4" multiple>
 <option value="">&nbsp;</option>
