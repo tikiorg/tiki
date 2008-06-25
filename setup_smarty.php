@@ -62,7 +62,11 @@ class Smarty_Tikiwiki extends Smarty {
 		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
-		if (($tpl = $this->get_template_vars('mid')) && $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl') {
+		if ( ($tpl = $this->get_template_vars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
+
+			// Set the last mid template to be used by AJAX to simulate a 'BACK' action
+			$this->assign('last_mid_template', $_SESSION['last_mid_template']);
+			$_SESSION['last_mid_template'] = $tpl;
 
 			// Enable Template Zoom
 			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
