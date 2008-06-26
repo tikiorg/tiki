@@ -1,5 +1,5 @@
 <?php
-/* $Id: $ */
+/* $Id$ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -129,10 +129,10 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 	// Handle next/prev images
 	if ( $params['noimg'] == 'n' ) {
 		$tmp = array(
-			'first' => tra('First '.$params['itemname']),
-			'last' => tra('Last '.$params['itemname']),
-			'next' => tra('Next '.$params['itemname']),
-			'previous' => tra('Prev '.$params['itemname']),
+			'first' => tra("First {$params['itemname']}"),
+			'last' => tra("Last {$params['itemname']}"),
+			'next' => tra("Next {$params['itemname']}"),
+			'previous' => tra("Prev {$params['itemname']}"),
 			'next_fast' => tra('Fast Next'),
 			'previous_fast' => tra('Fast Prev'),
 		);
