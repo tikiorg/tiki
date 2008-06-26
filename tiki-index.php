@@ -263,14 +263,14 @@ $tikilib->get_perm_object($page, 'wiki page', $info, true);
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
-    if (!isset($user)){
-	$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-	$smarty->assign('errortitle',tra('Please login'));
-    } else {
-	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
-    } 
-    $smarty->display('error.tpl');
-    die;  
+	if (!isset($user)){
+		$smarty->assign('display_login_box','y');
+		$smarty->assign('errortitle',tra('Please login'));
+	} else {
+		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+	} 
+	$smarty->display('error.tpl');
+	die;  
 }
 
 // Convert page to structure

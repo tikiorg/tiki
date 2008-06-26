@@ -17,7 +17,7 @@ if (!isset($_REQUEST["trackerId"])) {
 
 if ($tiki_p_admin_trackers != 'y') {
   if (!isset($user)){
-    $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+		$smarty->assign('display_login_box','y');
     $smarty->assign('errortitle',tra("Please login"));
   } else {
     $smarty->assign('msg',tra("Permission denied you cannot view this page"));

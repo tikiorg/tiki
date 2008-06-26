@@ -93,16 +93,15 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
    		}
 		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 			if (!isset($user)){
-				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+				$smarty->assign('display_login_box','y');
 				$smarty->assign('errortitle',tra("Please login"));
 			} else {
 				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    			}
-	    		$smarty->display("error.tpl");
+			}
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
-
 
 	if ($tiki_p_admin_galleries == 'y') {
 		$tiki_p_view_image_gallery = 'y';

@@ -109,7 +109,7 @@ if ($tiki_p_view_trackers != 'y') {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
 		} else {
 			$smarty->assign('msg', tra("You do not have permission to use this feature"));

@@ -44,11 +44,19 @@ close();
 
 					<br />
 				{else}
-					<div class="simplebox error">
-						{$msg}
-					</div>
-					<br /><br />
-					{if ( !isset($user) ) }
+					{if ( isset($msg) ) }
+						<div class="simplebox error">
+							{$msg}
+						</div>
+						<br /><br />
+					{/if}
+					{if ( isset($display_login_box) ) }
+						<div >
+      				{include file=modules/mod-login_box.tpl}
+						</div>
+						<br /><br />
+					{/if}
+					{if ( !isset($user) && !isset($display_login_box) ) }
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>

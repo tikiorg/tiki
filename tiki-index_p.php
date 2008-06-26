@@ -79,16 +79,16 @@ if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y' && !$object_has_
     } else {
 	$is_categorized = FALSE;
     }
-    if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-	if (!isset($user)){
-	    $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-	    $smarty->assign('errortitle',tra("Please login"));
-	} else {
-	    $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		if (!isset($user)){
+			$smarty->assign('display_login_box','y');
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+		}
+		$smarty->display("error.tpl");
+		die;
 	}
-	$smarty->display("error.tpl");
-	die;
-    }
 } elseif ($prefs['feature_categories'] == 'y') {
     $is_categorized = $categlib->is_categorized('wiki page',$objId);
 } else {
