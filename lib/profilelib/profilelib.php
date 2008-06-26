@@ -437,6 +437,11 @@ class Tiki_Profile_Object
 		return $array;
 	} // }}}
 
+	function getProfile() // {{{
+	{
+		return $this->profile;
+	} // }}}
+
 	function __get( $name ) // {{{
 	{
 		if( array_key_exists( $name, $this->data['data'] ) )

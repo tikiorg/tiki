@@ -4,10 +4,10 @@ class Tiki_Profile_Installer
 {
 	private $installed = array();
 	private $handlers = array(
-		'group' => 'Tiki_Profile_InstallHandler_Group',
 		'tracker' => 'Tiki_Profile_InstallHandler_Tracker',
 		'tracker_field' => 'Tiki_Profile_InstallHandler_TrackerField',
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
+		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 	);
 
 	function __construct() // {{{
@@ -540,17 +540,59 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	}
 } // }}}
 
-class Tiki_Profile_InstallHandler_Group extends Tiki_Profile_InstallHandler // {{{
+class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler // {{{
 {
+	private $content;
+	private $description;
+	private $name;
+	private $lang;
+
+	function fetchData()
+	{
+		if( $this->name )
+			return;
+
+		$data = $this->obj->getData();
+
+		if( array_key_exists( 'name', $data ) )
+			$this->name = $data['name'];
+		if( array_key_exists( 'description', $data ) )
+			$this->description = $data['description'];
+		if( array_key_exists( 'lang', $data ) )
+			$this->lang = $data['lang'];
+		if( array_key_exists( 'content', $data ) )
+		{
+			$pageName = $data['content'];
+			$profile = $this->obj->getProfile();
+			$exportUrl = dirname( $profile->url ) . '/tiki-export_wiki_pages.php?'
+				. http_build_query( array( 'page' => $pageName ) );
+
+			$content = tiki_get_remote_file( $exportUrl );
+			$content = str_replace( "\r", '', $content );
+			$begin = strpos( $content, "\n\n" );
+			if( $begin !== false )
+				$this->content = substr( $content, $begin + 2 );
+		}
+	}
+
 	function canInstall()
 	{
-		// TODO
+		$this->fetchData();
+		if( empty( $this->name ) || empty( $this->content ) )
+			return false;
+
 		return true;
 	}
 
 	function _install()
 	{
-		// TODO
+		global $tikilib;
+		$this->fetchData();
+
+		if( $tikilib->create_page( $this->name, 0, $this->content, time(), 'Created by profile installer.', 'admin', '0.0.0.0', $this->description, $this->lang ) )
+			return $this->name;
+		else
+			return null;
 	}
 } // }}}
 
