@@ -1839,5 +1839,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Articles' and url='tiki-list_articles.php' and position='360' and perm='tiki_p_articles_read_heading' and groupname='' ;
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','');
 
-
-
+#2008-06-26 pkdille
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','');
