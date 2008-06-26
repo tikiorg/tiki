@@ -8,7 +8,7 @@
 <tr>
   <td class='formcolor'>{tr}New name{/tr}:</td>
   <td class='formcolor'>
-    <input type='text' name='newpage' value='{$page|escape}'/>
+    <input type='text' name='newpage' size='40' value='{$page|escape}'/>
     <input type="submit" name="rename" value='{tr}Rename{/tr}' />
   </td>
 </tr>
