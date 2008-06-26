@@ -11,7 +11,7 @@
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </td>
 </tr>
-<tr><td class="findtable" colspan="2">
+<tr><td class="findtable" colspan="2">{tr}in{/tr}: 
 {*<select name="types[]" multiple="multiple" size="5">*}
 {foreach key=key item=selected from=$list_types}
 <input type="checkbox" name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if} />{tr}{$key|escape}{/tr}&nbsp;&nbsp;
@@ -29,23 +29,21 @@
 {section name=ix loop=$types}
 <input type="hidden" name="types[]" value="{$types[ix]|escape}" />
 {/section}
-<div class="formcolor">
+
+{/if}
+
+<table class="normal">
+<tr>
+<th class="heading">{if $comments}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
  // check / uncheck all.
  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
  // for now those people just have to check every single box
-  document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-  document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
+  document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"{tr}Select All{/tr}\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
 //--><!]]>
-</script>
-&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
-</div>
-{/if}
-
-<table class="normal">
-<tr>
-<th class="heading">&nbsp;</th>
+</script>{/if}
+</th>
 {if is_array($types) and count($types) > 1}<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="objectType"}{tr}Type{/tr}{/self_link}</th>{/if}
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="title"}{tr}Title{/tr}{/self_link}</th>
@@ -73,16 +71,7 @@
 </table>
 {if $comments}
 <div class="formcolor">
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
- // check / uncheck all.
- // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
- // for now those people just have to check every single box
-  document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-  document.write("<label for=\"clickall\">{tr}Select All{/tr}</label>");
-//--><!]]>
-</script>
-&nbsp;&nbsp;&nbsp;&nbsp;{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
+{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
 </div>
 </form>
 {/if}
