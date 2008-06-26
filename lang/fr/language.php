@@ -52,6 +52,8 @@ $lang=Array(
 // ### Please remove manually!
 // ### N.B. Legitimate strings may be marked// ### as unused!
 // ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info
+":" => " :",
+"!" => " !",
 "Jan" => "janv.",
 "Feb" => "févr.",
 "Mar" => "mars",
@@ -2819,7 +2821,6 @@ $lang=Array(
 "Forums RSS" => "RSS Forums",
 "Maps RSS" => "RSS Cartes",
 "Calendars" => "Calendriers",
-"in:" => "dans :",
 "Entire Site" => "Tout le site",
 "Wiki Pages" => "Pages Wiki",
 "Image Gals" => "Galeries d'images",

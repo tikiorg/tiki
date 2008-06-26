@@ -38,6 +38,24 @@ function tra($content, $lg='', $no_interactive = false) {
 			if ($l and isset(${"lang_$l"}[$content])) {
 				return ${"lang_$l"}[$content];
 			} else {
+				// If no translation has been found and if the string ends with a punctuation,
+				//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
+				//   then it will try to translate 'Login' and ':' separately).
+				// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
+				//   (because there is no space before ':' in english, but there is one in others like french)
+				$punctuations = array(':', '!', ';');
+				$content_lenght = strlen($content);
+				foreach ( $punctuations as $p ) {
+					if ( $content[$content_lenght - 1] == $p ) {
+						$new_content = substr($content, 0, $content_lenght - 1);
+						if ( isset(${"lang_$l"}[$new_content]) ) {
+							return ${"lang_$l"}[$new_content].( isset(${"lang_$l"}[$p]) ? ${"lang_$l"}[$p] : $p );
+						} else {
+							return $content;
+						}
+					}
+				}
+
 				return $content;
 			}
 		} else {
@@ -68,7 +86,7 @@ function tra($content, $lg='', $no_interactive = false) {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 					$tikilib->query($query, array($content,$prefs['language']),-1,-1,false);
 				}
-			return $content.$tag;
+				return $content.$tag;
 			}
 			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
 			return $res["tran"].$tag;
