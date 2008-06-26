@@ -130,6 +130,7 @@ class Tiki_Profile
 		$yaml = substr( $content, $begin, $end - $begin );
 
 		$this->data = Horde_Yaml::load( $yaml );
+		$this->getObjects();
 	} // }}}
 
 	function getNamedObjects() // {{{
@@ -170,6 +171,9 @@ class Tiki_Profile
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
 		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $value, $parts ) )
 			$array[] = $this->convertReference( $parts );
+		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $value, $parts, PREG_SET_ORDER ) )
+			foreach( $parts as $row )
+				$array[] = $this->convertReference( $row );
 
 		return $array;
 	} // }}}
@@ -221,6 +225,17 @@ class Tiki_Profile
 
 			$data = self::$known[$serialized];
 		}
+		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $data, $parts, PREG_SET_ORDER ) )
+			foreach( $parts as $row )
+			{
+				$object = $this->convertReference( $row );
+				$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
+				
+				if( ! isset( self::$known[$serialized] ) )
+					self::$known[$serialized] = self::findObjectReference( $object );
+
+				$data = str_replace( $row[0], self::$known[$serialized], $data );
+			}
 	} // }}}
 
 	function getPreferences() // {{{
@@ -297,7 +312,7 @@ class Tiki_Profile
 		$objects = array();
 
 		if( array_key_exists( 'objects', $this->data ) )
-			foreach( $this->data['objects'] as $entry )
+			foreach( $this->data['objects'] as &$entry )
 			{
 				$o = new Tiki_Profile_Object( $entry, $this );
 				if( $o->isWellStructured() )
@@ -361,10 +376,12 @@ class Tiki_Profile_Object
 		return $objects;
 	} // }}}
 	
-	function __construct( $data, Tiki_Profile $profile ) // {{{
+	function __construct( &$data, Tiki_Profile $profile ) // {{{
 	{
-		$this->data = $data;
+		$this->data = &$data;
 		$this->profile = $profile;
+
+		$this->fetchExternals();
 	} // }}}
 
 	function isWellStructured() // {{{
@@ -440,6 +457,30 @@ class Tiki_Profile_Object
 	function getProfile() // {{{
 	{
 		return $this->profile;
+	} // }}}
+
+	private function fetchExternals() // {{{
+	{
+		$this->traverseForExternals( $this->data );
+	} // }}}
+	
+	private function traverseForExternals( &$data ) // {{{
+	{
+		if( is_array( $data ) )
+			foreach( $data as &$value )
+				$this->traverseForExternals( $value );
+		elseif( 0 === strpos( $data, 'wikicontent:' ) )
+		{
+			$pageName = substr( $data, strlen('wikicontent:') );
+			$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
+				. http_build_query( array( 'page' => $pageName ) );
+
+			$content = tiki_get_remote_file( $exportUrl );
+			$content = str_replace( "\r", '', $content );
+			$begin = strpos( $content, "\n\n" );
+			if( $begin !== false )
+				$data = substr( $content, $begin + 2 );
+		}
 	} // }}}
 
 	function __get( $name ) // {{{

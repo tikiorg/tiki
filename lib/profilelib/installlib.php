@@ -561,18 +561,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		if( array_key_exists( 'lang', $data ) )
 			$this->lang = $data['lang'];
 		if( array_key_exists( 'content', $data ) )
-		{
-			$pageName = $data['content'];
-			$profile = $this->obj->getProfile();
-			$exportUrl = dirname( $profile->url ) . '/tiki-export_wiki_pages.php?'
-				. http_build_query( array( 'page' => $pageName ) );
-
-			$content = tiki_get_remote_file( $exportUrl );
-			$content = str_replace( "\r", '', $content );
-			$begin = strpos( $content, "\n\n" );
-			if( $begin !== false )
-				$this->content = substr( $content, $begin + 2 );
-		}
+			$this->content = $data['content'];
 	}
 
 	function canInstall()
@@ -588,6 +577,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	{
 		global $tikilib;
 		$this->fetchData();
+		$this->obj->replaceReferences( $this->name );
+		$this->obj->replaceReferences( $this->description );
+		$this->obj->replaceReferences( $this->content );
+		$this->obj->replaceReferences( $this->lang );
 
 		if( $tikilib->create_page( $this->name, 0, $this->content, time(), 'Created by profile installer.', 'admin', '0.0.0.0', $this->description, $this->lang ) )
 			return $this->name;
