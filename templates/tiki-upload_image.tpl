@@ -113,7 +113,8 @@
 	</form>
 	</div>
 {else}
-	<a class="linkbut" href="tiki-galleries.php">{tr}You have to create a gallery first!{/tr}</a>
+	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"} {tr}No gallery available.{/tr} {tr}You have to create a gallery first!{/tr}
+	<p><a class="linkbut" href="tiki-galleries.php">{tr}Create New Gallery{/tr}</a></p>
 {/if}
 
 

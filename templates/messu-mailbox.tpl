@@ -62,25 +62,15 @@
 <input type="hidden" name="flag" value="{$flag|escape}" />
 <input type="hidden" name="flagval" value="{$flagval|escape}" />
 <input type="hidden" name="priority" value="{$priority|escape}" />
-<input type="submit" name="delete" value="{tr}Delete{/tr}" />
-<input type="submit" name="archive" value="{tr}move to archive{/tr}" />
-<input type="submit" name="download" value="{tr}Download{/tr}" />
-<select name="action">
-<option value="isRead_y">{tr}Mark as read{/tr}</option>
-<option value="isRead_n">{tr}Mark as unread{/tr}</option>
-<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
-<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
-</select>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}];
 //--><!]]>
 </script>
-<input type="submit" name="mark" value="{tr}mark{/tr}" />
-<table class="normal" >
+<table class="normal">
   <tr>
-    <td class="heading" ><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);" /></td>
-    <td class="heading" width='18' >&nbsp;</td>
+    <td class="heading" >{if $items}<input title="{tr}Select All{/tr}" type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_mailbox',CHECKBOX_LIST,this.checked);" />{/if}</td>
+    <td class="heading" width='18'>&nbsp;</td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}sender{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
@@ -108,6 +98,18 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
   <tr><td colspan="7" class="odd">{tr}No messages to display{/tr}<td></tr>
   {/section}
 </table>
+<p>Perform action with checked:
+<input type="submit" name="delete" value="{tr}Delete{/tr}" />
+<input type="submit" name="archive" value="{tr}Archive{/tr}" />
+<input type="submit" name="download" value="{tr}Download{/tr}" />
+<select name="action">
+<option value="isRead_y">{tr}Mark as read{/tr}</option>
+<option value="isRead_n">{tr}Mark as unread{/tr}</option>
+<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
+<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
+</select>
+<input type="submit" name="mark" value="{tr}mark{/tr}" />
+</p>
 </form>
 <br />
 <div class="mini">

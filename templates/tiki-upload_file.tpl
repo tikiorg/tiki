@@ -158,7 +158,8 @@
 	</div>
 	
 {else}
-	<div class="simplebox highlight"><a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">{tr}You have to create a gallery first!{/tr}</a></div>
+	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"} {tr}No gallery available.{/tr} {tr}You have to create a gallery first!{/tr}
+	<p><a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">{tr}Create New Gallery{/tr}</a></p>
 {/if}
 
 

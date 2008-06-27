@@ -82,14 +82,12 @@
 <td class="{cycle advance=false}">{$accounts[ix].username}</td>
 <td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" 
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}">
-{icon _id='page_edit'}
-</a>
+<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 {if $accounts[ix].current ne 'y'}
-<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">
-{icon _id='accept' alt="{tr}Activate{/tr}"}
-</a>{/if}
+<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Activate{/tr}"}</a>{/if}
 </td></tr>
+{sectionelse}
+<tr><td colspan="5" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 {/if}
