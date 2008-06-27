@@ -122,7 +122,6 @@ if (isset($_REQUEST["features"])) {
 
 }
 
-echo $_REQUEST['tabs'];
 if (!empty($_REQUEST['tabs'])) {
 	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
 }
