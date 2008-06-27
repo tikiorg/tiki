@@ -339,6 +339,8 @@ class ImageGalsLib extends TikiLib {
 
 		$newx = round($this->xsize / $tscale);
 		$newy = round($this->ysize / $tscale);
+		if ($newx > $this->xsize && $newy > $this->ysize)
+			return true;
 		return $this->resizeImage($newx, $newy);
 	}
 
