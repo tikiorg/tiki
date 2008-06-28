@@ -98,9 +98,11 @@
 </div>
   <br />
 
-  <table class="normal">
-    <tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass1','pass2');">{tr}Generate a password{/tr}</a></td>
-    <td class="formcolor"><input id='genepass' type="text" /></td>
-    </tr>
-  </table>
+  {if $prefs.generate_password eq 'y'}
+    <table class="normal">
+      <tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass1','pass2');">{tr}Generate a password{/tr}</a></td>
+        <td class="formcolor"><input id='genepass' type="text" /></td>
+      </tr>
+    </table>
+  {/if}
 {/if}

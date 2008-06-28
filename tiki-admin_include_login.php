@@ -43,7 +43,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('feature_challenge');
 	simple_set_toggle('feature_clear_passwords');
 	simple_set_toggle('forgotPass');
-	simple_set_value('feature_crypt_passwords');
+	simple_set_toggle('generate_password');
 	simple_set_value('https_login');
 	simple_set_toggle('feature_show_stay_in_ssl_mode');
 	simple_set_toggle('feature_switch_ssl_mode');

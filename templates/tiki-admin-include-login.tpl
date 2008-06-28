@@ -118,6 +118,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Password invalid after days{/tr}:</td><td><input type="text" name="pass_due" value="{$prefs.pass_due|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
 <tr><td class="form">{tr}Re-validate user by email after days{/tr}:</td><td><input type="text" name="email_due" value="{$prefs.email_due|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
 <tr><td class="form">{tr}Re-validate user by email after unsuccessful logins{/tr}:</td><td><input type="text" name="unsuccessful_logins" value="{$prefs.unsuccessful_logins|escape}" /><i>{tr}-1 for never{/tr}</i></td></tr>
+<tr><td class="form">{tr}Generate a password option{/tr}:</td><td><input type="checkbox" name="generate_password" {if $prefs.generate_password eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}HTTPS login{/tr}:</td><td class="form">
 <select name="https_login">
 <option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
