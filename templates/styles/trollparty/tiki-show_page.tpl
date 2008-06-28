@@ -174,7 +174,7 @@
 <div class="editdate" align="center"><p>{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page={$page|escape:"url"}</p></div>
 {/if}
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
-<div class="catblock">{$display_catobjects}</div>
+{$display_catobjects}
 {/if}
 
 {if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}

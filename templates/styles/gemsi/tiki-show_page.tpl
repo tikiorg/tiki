@@ -164,5 +164,5 @@
 </tr></table>
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y'}
-<div class="catblock">{$display_catobjects}</div>
+{$display_catobjects}
 {/if}
