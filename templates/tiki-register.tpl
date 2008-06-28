@@ -50,7 +50,7 @@
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
       <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass"
         {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>&nbsp;
-	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum{/tr} {$prefs.min_pass_length} {tr}characters long{/tr}</em>.<br />{/if}
+	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.<br />{/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 	  </td>
       </tr>
