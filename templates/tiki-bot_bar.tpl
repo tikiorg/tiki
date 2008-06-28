@@ -75,6 +75,10 @@
 	{include file="babelfish.tpl"}
 {/if}
 
+<div id="power" style="text-align: center">
+	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
+</div>
+
 {if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ {$num_queries} {tr}database queries used in {/tr} {$elapsed_in_db|truncate:3:''} secs ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>

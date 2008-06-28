@@ -1,9 +1,4 @@
 {* $Id$ *}
-
-<div id="power" style="text-align: center">
-	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
-</div>
-
 {if (! isset($display) or $display eq '')}
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;" class="linkbut">{tr}Show php error messages{/tr}</a></span><br />
