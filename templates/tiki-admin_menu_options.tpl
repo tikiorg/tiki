@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a>
+<h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$editable_menu_info.name}</a>
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">
 {icon _id='help'}</a>{/if}
@@ -170,7 +170,7 @@
 <td valign="top">
 <h2>{tr}Preview menu{/tr}</h2>
 <div class="box">
-<div class="box-title">{$menu_info.name}</div>
+<div class="box-title">{$editable_menu_info.name}</div>
 <div class="box-data">
 {include file=tiki-user_menu.tpl menu_channels=$allchannels}
 </div>
