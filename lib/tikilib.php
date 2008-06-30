@@ -1839,7 +1839,7 @@ function add_pageview() {
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
 		$res['canonic'] = $res['url'];
-		if (preg_match('|\(\(('.$res['url'].')\)\)|', $res['url'], $matches)) {
+		if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 			$res['url'] = 'tiki-index.php?page='.$matches[1];
 			$res['sefurl'] = $wikilib->sefurl($matches[1]);
 		}
