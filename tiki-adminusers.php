@@ -191,6 +191,7 @@ if (isset($_REQUEST["newuser"])) {
 			key_check($area);
 			$userlib->remove_user($_REQUEST["user"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
+			$logslib->add_log('users',sprintf(tra("Deleted account %s"),$_REQUEST['user']));
 		} else {
 			key_get($area);
 		}
@@ -216,6 +217,7 @@ if (isset($_REQUEST["newuser"])) {
 			key_check($area);
 			foreach ($_REQUEST["checked"] as $deleteuser) if ( $deleteuser != 'admin' ) {
 				$userlib->remove_user($deleteuser);
+				$logslib->add_log('users',sprintf(tra("Deleted account %s"),$deleteuser));
 				if ($_REQUEST['submit_mult'] == 'remove_users_with_page')
 					$tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'].$deleteuser);
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
