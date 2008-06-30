@@ -504,7 +504,7 @@ if(empty($info['user'])) {
 $smarty->assign_by_ref('lastUser',$info['user']);
 $smarty->assign_by_ref('description',$info['description']);
 
-if ( isset($_REQUEST['saved_msg']) ) {
+if ( isset($_REQUEST['saved_msg']) && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg',
