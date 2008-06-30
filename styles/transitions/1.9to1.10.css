@@ -10,7 +10,7 @@ border: 1px dashed #A9B8C2;
 clear:both;
 }
 
-li.freetag {list-style: none; display: inline; margin: 0; padding: 0}
+li.freetag {list-style: none; display: inline; margin: 0; padding: 0;}
 ul.freetag {margin: 0; padding: 0; display: inline}
 .freetag a {display: inline}
 a.freetag_1 { text-decoration: none; font-size: 8px; }
@@ -410,4 +410,28 @@ h3.box-title {
 .top_actions {
 	text-align: right;
 	margin-top: 5px;
+}
+
+/* categobjects.tpl */
+.catfeatures
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
+  list-style: none;
+}
+
+.catitems
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
+  list-style: none;
+}
+
+.catitems li
+{
+  padding:      0;
+  margin-left:  15px;
+  margin-bottom:2px;
 }
