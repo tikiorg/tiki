@@ -118,7 +118,7 @@ window.onload = timeIt;
 <br />
 {/if}
 {if $preview}
-{include file="tiki-preview.tpl"}
+  {include file="tiki-preview.tpl"}
 {/if}
 {if $diff_style}
 <div style="overflow:auto;height:200px;">
@@ -128,20 +128,6 @@ window.onload = timeIt;
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
-{if $preview && $staging_preview neq 'y'}
-<input type="submit" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm = false;" />
-{if $translation_mode eq 'y'}
-<input type="submit" onmouseover="return overlib('{tr}Save the page as a partial translation.{/tr}');" onmouseout="nd();" class="wikiaction" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
-<input type="submit" onmouseover="return overlib('{tr}Save the page as a completed translation.{/tr}');" onmouseout="nd();" class="wikiaction" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
-{else}
-{if $page|lower neq 'sandbox'}
-{if $tiki_p_minor eq 'y'}
-  <input type="submit" onmouseover="return overlib('{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}');" onmouseout="nd();" class="wikiaction" name="minor" value="{tr}Minor Edit{/tr}" onclick="needToConfirm=false;" />
-{/if}
-<input type="submit" onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" class="wikiaction" name="save" value="{tr}Save{/tr}" onclick="needToConfirm = false;" /> &nbsp;&nbsp; <input type="submit" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" class="wikiaction" name="cancel_edit" value="{tr}Cancel Edit{/tr}" />
-{/if}
-{/if}
-{/if}
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
@@ -160,9 +146,21 @@ window.onload = timeIt;
 {if $add_child}
   <input type="hidden" name="add_child" value="true" />
 {/if}
-{if $page|lower neq 'sandbox'}
-   <p><strong>{tr}Note{/tr}</strong>: {tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}</p>
+
+<div class="rbox tip">
+  <div class="rbox-data">
+  {if $page|lower neq 'sandbox'}
+    <strong>{tr}Note{/tr}</strong>: {tr}This edit session will expire in {$edittimeout} minutes{/tr}. {tr}<strong>Preview</strong> or <strong>Save</strong> your work to restart the edit session timer.{/tr}
+  {/if}
+  </div>
+</div>
+
+{if ( $preview && $staging_preview neq 'y' ) or $prefs.wiki_actions_bar eq 'top' or $prefs.wiki_actions_bar eq 'both'}
+<div class='top_actions'>
+  {include file='wiki_edit_actions.tpl'}
+</div>
 {/if}
+
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
   {if $wysiwyg ne 'y'}
     <span class="button2">{self_link _class='linkbut' wysiwyg='y' onclick="needToConfirm = false;"}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
@@ -170,6 +168,7 @@ window.onload = timeIt;
     <span class="button2">{self_link _class='linkbut' wysiwyg='n' onclick="needToConfirm = false;"}{tr}Use normal editor{/tr}{/self_link}</span>
   {/if}
 {/if}
+
 <table class="normal">
 {if $categIds}
 {section name=o loop=$categIds}
@@ -428,11 +427,16 @@ function searchrep() {
 <tr class="formcolor"><td>{tr}Lock this page{/tr}</td><td><input type="checkbox" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $prefs.feature_contribution eq 'y'}
-{include file="contribution.tpl"}
+  {include file="contribution.tpl"}
 {/if}
+{if $tiki_p_admin_wiki eq 'y'}
+  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y'}
+{/if}
+{if $prefs.wiki_actions_bar neq 'top'}
 <tr class="formcolor"><td colspan="2" style="text-align:center;">
-{include file='wiki_edit_actions.tpl'}
+  {include file='wiki_edit_actions.tpl'}
 </td></tr>
+{/if}
 </table>
 {if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and $wysiwyg eq 'y' and $allowhtml eq 'y'}
   <input type="hidden" name="allowhtml" checked="checked"/>

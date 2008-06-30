@@ -4637,7 +4637,7 @@ function add_pageview() {
 	/** Create a wiki page
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL) {
+    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'admin', $ip = '0.0.0.0', $description = '', $lang='', $is_html = false, $hash=null, $wysiwyg=NULL, $wiki_authors_style='') {
 	global $smarty, $prefs, $dbTiki, $quantifylib;
 	include_once ("lib/commentslib.php");
 
@@ -4670,7 +4670,7 @@ function add_pageview() {
 		$edit_data = $purifier->purify($edit_data);
 	}
 	$mid = ''; $midvar = '';
-	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg);
+	$bindvars = array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $html, $this->now, $wysiwyg, $wiki_authors_style);
 	if ($lang) {
 		$mid .= ',`lang`';
 		$midvar .= ',?';
@@ -4698,7 +4698,7 @@ function add_pageview() {
 			$hash2[] = $hash3;
 		}
 	}
-	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
+	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `wysiwyg`, `wiki_authors_style` $mid) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,? $midvar)";
 	$result = $this->query($query, $bindvars);
 
 	$page_id = $this->get_page_id_from_name( $name );
@@ -6951,7 +6951,7 @@ if (!$simple_wiki) {
 	/** Update a wiki page
 	 @param array $hash- lock_it,contributions, contributors
 	 **/
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='') {
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 	global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
@@ -7010,7 +7010,7 @@ if (!$simple_wiki) {
 		$saveLastModif = $this->now;
 	}
 
-	$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg);
+	$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
 	if ($lang) {
 		$mid .= ', `lang`=? ';
 		$bindvars[] = $lang;
@@ -7036,7 +7036,7 @@ if (!$simple_wiki) {
 		}
 	}
 	$bindvars[] = $pageName;
-	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?  $mid where `pageName`=?";
+	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `is_html`=?, `wysiwyg`=?, `wiki_authors_style`=?  $mid where `pageName`=?";
 	$result = $this->query($query,$bindvars);
 
 	// Parse edit_data updating the list of links from this page

@@ -98,6 +98,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_userpage'] = 'y';
 	$prefs['feature_wiki_userpage_prefix'] = 'UserPage';
 	$prefs['feature_wiki_usrlock'] = 'n';
+	$prefs['feature_wiki_save_draft'] = 'y';
 	$prefs['feature_wikiwords'] = 'y';
 	$prefs['feature_wikiwords_usedash'] = 'y';
 	$prefs['mailin_autocheck'] = 'n';
@@ -143,6 +144,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_page_regex'] = 'strict';
 	$prefs['wiki_page_separator'] = '...page...';
 	$prefs['wiki_page_navigation_bar'] = 'bottom';
+	$prefs['wiki_actions_bar'] = 'bottom';
 	$prefs['wiki_pagename_strip'] = '';
 	$prefs['wiki_right_column'] = 'y';
 	$prefs['wiki_top_bar'] = 'y';

@@ -9,7 +9,7 @@
 		{/if}
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />
 
-		{if $prefs.feature_ajax eq 'y'}
+		{if $prefs.feature_ajax eq 'y' && $prefs.feature_wiki_save_draft eq 'y'}
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a draft.{/tr}');" onmouseout="nd();" value="{tr}Save Draft{/tr}" onclick="save_draft()" />
 		{/if}
 	{/if}

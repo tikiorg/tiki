@@ -124,6 +124,13 @@
 	</div>
 </div>
 
+{if isset($saved_msg) && $saved_msg neq ''}
+<div class="rbox" name="tip">
+  <div class="rbox-title" name="note">{tr}Note{/tr}</div>
+  <div class="rbox-data" name="note">{$saved_msg}</div>
+</div>
+{/if}
+
 <div class="navbar" style="clear: both; text-align: right">
     {if $user and $prefs.feature_user_watches eq 'y'}
         {if $category_watched eq 'y'}
@@ -259,7 +266,7 @@ must not overlap the wiki content that could contain floated elements *}
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
 
 <p class="editdate"> {* begining editdate *}
-{if isset($prefs.wiki_authors_style) && $prefs.wiki_authors_style eq 'business'}
+{if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
   {tr}Last edited by{/tr} {$lastUser|userlink}
   {section name=author loop=$contributors}
    {if $smarty.section.author.first}, {tr}based on work by{/tr}
@@ -271,7 +278,7 @@ must not overlap the wiki content that could contain floated elements *}
    {$contributors[author]|userlink}
   {/section}.<br />                                         
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'collaborative'}
+{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'collaborative'}
 <br />
   {tr}Contributors to this page{/tr}: {$lastUser|userlink}
   {section name=author loop=$contributors}
@@ -281,8 +288,8 @@ must not overlap the wiki content that could contain floated elements *}
    {$contributors[author]|userlink}
   {/section}.<br />
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
-{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'none'}
-{elseif isset($prefs.wiki_authors_style) &&  $prefs.wiki_authors_style eq 'lastmodif'}
+{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'none'}
+{elseif isset($wiki_authors_style) && $wiki_authors_style eq 'lastmodif'}
 	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
 {else}
 <br />

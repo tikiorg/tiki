@@ -407,3 +407,7 @@ h3.box-title {
 .findtitle input {
   margin-left: 2px;
 }
+.top_actions {
+	text-align: right;
+	margin-top: 5px;
+}

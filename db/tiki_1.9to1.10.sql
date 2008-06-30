@@ -1842,3 +1842,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 #2008-06-26 pkdille
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','');
+
+#2008-06-30 nyloth
+ALTER TABLE tiki_pages ADD wiki_authors_style varchar(20) NOT NULL default '';

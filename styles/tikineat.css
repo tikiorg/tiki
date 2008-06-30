@@ -2138,4 +2138,8 @@ h3.box-title {
 a.flipmodtitle:hover img {
 	border: 1px solid #999999 !important;
 }
+.top_actions {
+	text-align: right;
+	margin-top: 5px;
+}
 /* end of css file */

@@ -724,6 +724,16 @@ if(isset($_REQUEST["description"])) {
   $smarty->assign_by_ref('description',$_REQUEST["description"]);
   $description = $_REQUEST["description"];
 }
+
+if ( isset($_REQUEST['wiki_authors_style']) && $tiki_p_admin_wiki == 'y' ) {
+	$wiki_authors_style = $_REQUEST['wiki_authors_style'];
+} elseif ( isset($info['wiki_authors_style']) ) {
+	$wiki_authors_style = $info['wiki_authors_style'];
+} else {
+	$wiki_authors_style = '';
+}
+$smarty->assign('wiki_authors_style', $wiki_authors_style);
+
 if($is_html) {
     $smarty->assign('allowhtml','y');
 } else {
@@ -838,6 +848,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   // to avoid error messages. This can happen if some features are
   // disabled
   if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
+  if(!isset($_REQUEST["wiki_authors_style"])) $_REQUEST["wiki_authors_style"]='';
   if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
   if(!isset($_REQUEST["lang"])) $_REQUEST["lang"]='';
   if(!isset($_REQUEST['wysiwyg'])) $_REQUEST['wysiwyg'] = '';
@@ -894,7 +905,9 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
       $cachedlinks = array_diff($links, $notcachedlinks);
       $tikilib->cache_links($cachedlinks);
       */
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg']);
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg'], $wiki_authors_style);
+      $info_new = $tikilib->get_page_info($page);
+
       if ($prefs['wiki_watch_author'] == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],'wiki page',$page,"tiki-index.php?page=$page");
       }
@@ -967,7 +980,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$edit .= "\r\n";
 			$edit = substr($info['data'], 0, $real_start).$edit.substr($info['data'], $real_start + $real_len);
 		}
-		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg']);
+		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
+		$info_new = $tikilib->get_page_info($page);
 
 		// Handle translation bits
 		if ($prefs['feature_multilingual'] == 'y' && !$minor) {
@@ -1021,7 +1035,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
     if ($tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page', 'tiki_p_admin_wiki', 'tiki_p_admin_categories'))
     $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
   } 
-    
+  
   if ($page_ref_id) {
 		$url = "tiki-index.php?page_ref_id=$page_ref_id";
   } else {
@@ -1030,6 +1044,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
   if ($prefs['feature_best_language'] == 'y') {
 		$url .= '&bl=n';
   }
+  $url .= '&saved_msg=y';
+
   header("location: $url");
   die;
 } //save

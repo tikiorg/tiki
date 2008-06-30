@@ -142,6 +142,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_monosp',
 	'feature_wiki_usrlock',
 	'feature_wiki_undo',
+	'feature_wiki_save_draft',
 	'feature_wiki_icache',
 	'feature_wiki_import_html',
 	'wiki_creator_admin',
@@ -184,7 +185,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_userpage_prefix',
 	'wiki_authors_style',
 	'feature_wiki_mandatory_category',
-	'wiki_page_navigation_bar'
+	'wiki_page_navigation_bar',
+	'wiki_actions_bar'
 	);
 	foreach ($pref_values as $value) {
 		simple_set_value($value);

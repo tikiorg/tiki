@@ -2546,6 +2546,7 @@ CREATE TABLE tiki_pages (
   is_html tinyint(1) default 0,
   created int(14),
   wysiwyg char(1) default NULL,
+  wiki_authors_style varchar(20) NOT NULL default '',
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
