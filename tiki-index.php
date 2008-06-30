@@ -248,6 +248,10 @@ details */
 // followed, then it still says 'About Me' in the title.
 $page = $info['pageName'];
 
+// Get the authors style for this page
+$wiki_authors_style = ( $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+$smarty->assign('wiki_authors_style', $wiki_authors_style);
+
 // Get the contributors for this page
 if (isset($prefs['wiki_authors_style']) && $prefs['wiki_authors_style'] != 'classic') {
 	$contributors = $wikilib->get_contributors($page, $info['user']);
@@ -499,6 +503,18 @@ if(empty($info['user'])) {
 }
 $smarty->assign_by_ref('lastUser',$info['user']);
 $smarty->assign_by_ref('description',$info['description']);
+
+if ( isset($_REQUEST['saved_msg']) ) {
+	// Generate the 'Page has been saved...' message
+	require_once('lib/smarty_tiki/modifier.userlink.php');
+	$smarty->assign('saved_msg',
+		sprintf(
+			tra('%s - Version %d of this page has been saved by %s.'),
+			TikiLib::date_format($prefs['long_date_format'].' '.$prefs['long_time_format'], $info['lastModif']),
+			$info['version'], smarty_modifier_userlink($info['user'])
+		)
+	);
+}
 
 // Comments engine!
 if ($prefs['feature_wiki_comments'] == 'y' and $tiki_p_wiki_view_comments == 'y') {
