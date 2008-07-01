@@ -2,7 +2,7 @@
 {$showBoxCheck}
 <h1><a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send Newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}</a></h1>
 {if $tiki_p_admin_newsletters eq "y"}<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-admin_newsletters.php{if $nlId}?nlId={$nlId}{/if}">{tr}Admin Newsletters{/tr}</a></span></div>{/if}
-{assign var=area_name value="editnl"}
+{assign var=area_name value="editwiki"}
 {if $emited eq 'y'}
 <div class="simplebox highlight">
 {tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />
@@ -124,7 +124,7 @@
 <tr class="formcolor">
   <td class="formcolor">{tr}Data HTML{/tr}:
     <br /><br />
-    {include file="textareasize.tpl" area_name='editnl' formId='editpageform'}
+    {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}
     {if $prefs.quicktags_over_textarea neq 'y'}
       <br /><br />
       {include file=tiki-edit_help_tool.tpl area_name='data'}
@@ -134,7 +134,7 @@
     {if $prefs.quicktags_over_textarea eq 'y'}
       {include file=tiki-edit_help_tool.tpl area_name='data'}
     {/if}
-    <textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
+    <textarea id='editwiki' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
     <input type="hidden" name="rows" value="{$rows}"/>
     <input type="hidden" name="cols" value="{$cols}"/>
   </td>
@@ -142,10 +142,10 @@
   
 <tr class="formcolor">
   <td class="formcolor" id="txtcol1">
-    {tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnltxt' formId='editpageform'}
+    {tr}Data Txt{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editwikitxt' formId='editpageform'}
   </td>
   <td class="formcolor" id="txtcol2" >
-    <textarea id='editnltxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+    <textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
   </td>
 </tr>
 
