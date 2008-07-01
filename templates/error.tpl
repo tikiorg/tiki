@@ -70,4 +70,9 @@ close();
 		</div>
 	{/if}
 {/capture}
+
+{if isset($smarty.request.xajax) && $smarty.request.xajax eq 'loadComponent'}
+{xajax_response content=$mid_data}
+{else}
 {include file=tiki.tpl}
+{/if}
