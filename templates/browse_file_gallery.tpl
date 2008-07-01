@@ -130,7 +130,6 @@
                     {else}
                       {$propval}
                     {/if}
-                    </a>
                   </div>
                 </div>
               </div>

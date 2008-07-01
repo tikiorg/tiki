@@ -299,7 +299,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <form action="tiki-admin_menu_options.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId}" />
 <input type="submit" name="export" value="{tr}Export{/tr}" />
-</form
+</form>
 
 <h2>{tr}Import CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">

@@ -73,12 +73,10 @@ href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectT
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
-
-</div>
 {else}
 <b>{tr}No records found{/tr}</b>
 {/if}
+</div>
 </div>
 
 {* --- tab with form --- *}

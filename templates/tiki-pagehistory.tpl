@@ -80,14 +80,14 @@
 	{if $translation_sources[$info.version]}
 		{foreach item=source from=$translation_sources[$info.version]}
 		<div>
-			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}</a>
+			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
 		</div>
 		{/foreach}
 	{/if}
 	{if $translation_targets[$info.version]}
 		{foreach item=target from=$translation_targets[$info.version]}
 		<div>
-			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}</a>
+			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
 		</div>
 		{/foreach}
 	{/if}
@@ -119,14 +119,14 @@
 	{if $translation_sources[$element.version]}
 		{foreach item=source from=$translation_sources[$element.version]}
 		<div>
-			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}</a>
+			{tr}Updated from{/tr}: <a href="tiki-index.php?page={$source.page|escape}">{$source.page}</a> at version {$source.version}
 		</div>
 		{/foreach}
 	{/if}
 	{if $translation_targets[$element.version]}
 		{foreach item=target from=$translation_targets[$element.version]}
 		<div>
-			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}</a>
+			{tr}Used to update{/tr}: <a href="tiki-index.php?page={$target.page|escape}">{$target.page}</a> to version {$target.version}
 		</div>
 		{/foreach}
 	{/if}

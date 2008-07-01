@@ -214,7 +214,7 @@
 
 {if $calendar.custompriorities eq 'y'}
 <tr class="formcolor"><td>
-{tr}Priority{/tr}</td<td>
+{tr}Priority{/tr}</td><td>
 {if $edit}
 <select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;width:40%;"
 onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
