@@ -178,7 +178,7 @@ class Tiki_Profile
 		return $array;
 	} // }}}
 
-	private function convertReference( $parts ) // {{{
+	function convertReference( $parts ) // {{{
 	{
 		list( $full, $null0, $null1, $domain, $null2, $profile, $object ) = $parts;
 
@@ -233,7 +233,7 @@ class Tiki_Profile
 				
 				if( ! isset( self::$known[$serialized] ) )
 					self::$known[$serialized] = self::findObjectReference( $object );
-
+				
 				$data = str_replace( $row[0], self::$known[$serialized], $data );
 			}
 	} // }}}
@@ -426,7 +426,8 @@ class Tiki_Profile_Object
 		if( !is_null( $this->references ) )
 			return $this->references;
 
-		return $this->references = $this->traverseForReferences( $this->data );
+		$this->references = $this->traverseForReferences( $this->data );
+		return $this->references;
 	} // }}}
 
 	function getData() // {{{
@@ -448,8 +449,23 @@ class Tiki_Profile_Object
 		if( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( '/^\$([^:]+)$/', $value, $parts ) )
-			$array[] = $parts[1];
+		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $value, $parts ) )
+		{
+			$ref = $this->profile->convertReference( $parts );
+			if( $this->profile->domain == $ref['domain']
+				&& $this->profile->profile == $ref['profile'] )
+				$array[] = $ref['object'];
+		}
+		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $value, $parts, PREG_SET_ORDER ) )
+		{
+			foreach( $parts as $row )
+			{
+				$ref = $this->profile->convertReference( $row );
+				if( $this->profile->domain == $ref['domain']
+					&& $this->profile->profile == $ref['profile'] )
+					$array[] = $ref['object'];
+			}
+		}
 
 		return $array;
 	} // }}}
