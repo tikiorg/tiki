@@ -302,6 +302,10 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </form>
 
 <h2>{tr}Import CSV data{/tr}</h2>
+<div class="rbox" name="tip">
+	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
+	<div class="rbox-data" name="tip">{tr}To add new options to the menu set the optionId field in the CSV file to 0.{/tr}</div>
+</div>
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="menuId" value="{$menuId}" />
 {tr}File{/tr}: <input name="csvfile" type="file" />
