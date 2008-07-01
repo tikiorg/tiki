@@ -1845,3 +1845,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 #2008-06-30 nyloth
 ALTER TABLE tiki_pages ADD wiki_authors_style varchar(20) NOT NULL default '';
+
+#2008-07-01 sylvieg
+alter table tiki_sessions change user user varchar(200) default '';
