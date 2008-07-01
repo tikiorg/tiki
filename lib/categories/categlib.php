@@ -599,6 +599,42 @@ class CategLib extends ObjectLib {
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
+	function categorize_any( $type, $identifier, $categId )
+	{
+		switch( $type )
+		{
+		case 'wiki page':
+		case 'wikipage':
+		case 'wiki_page':
+			return $this->categorize_page( $identifier, $categId );
+		case 'tracker':
+			return $this->categorize_tracker( $identifier, $categId );
+		case 'quiz':
+			return $this->categorize_quiz( $identifier, $categId );
+		case 'article':
+			return $this->categorize_article( $identifier, $categId );
+		case 'faq':
+			return $this->categorize_faq( $identifier, $categId );
+		case 'blog':
+			return $this->categorize_blog( $identifier, $categId );
+		case 'directory':
+			return $this->categorize_directory( $identifier, $categId );
+		case 'gallery':
+		case 'gal':
+			return $this->categorize_gallery( $identifier, $categId );
+		case 'file_gallery':
+		case 'file gallery':
+		case 'fgal':
+			return $this->categorize_file_gallery( $identifier, $categId );
+		case 'forum':
+			return $this->categorize_forum( $identifier, $categId );
+		case 'poll':
+			return $this->categorize_poll( $identifier, $categId );
+		case 'calendar':
+			return $this->categorize_calendar( $identifier, $categId );
+		}
+	}
+
 	function categorize_page($pageName, $categId) {
 		// Check if we already have this object in the tiki_categorized_objects page
 

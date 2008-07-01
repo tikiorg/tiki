@@ -643,10 +643,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 		{
 			list( $type, $object ) = $item;
 
-			if (!($catObjectId = $categlib->is_categorized($type, $object))) {
-				$catObjectId = $categlib->add_categorized_object($type, $object, '', '', '');
-			}
-			$categlib->categorize($catObjectId, $id);
+			$categlib->categorize_any( $type, $object, $id );
 		}
 
 		return $id;
