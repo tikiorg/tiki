@@ -164,9 +164,9 @@ class Tiki_Profile_Installer
 
 		foreach( $permissions as $perm => $v )
 			if( $v == 'y' )
-				$userlib->assign_permission_to_group( $groupName, $perm );
+				$userlib->assign_permission_to_group( $perm, $groupName );
 			else
-				$userlib->remove_permission_from_group( $groupName, $perm );
+				$userlib->remove_permission_from_group( $perm, $groupName );
 
 		foreach( $objects as $data )
 			foreach( $data['permissions'] as $perm => $v )
