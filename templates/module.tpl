@@ -25,18 +25,19 @@
 		{/if}
 		</h3>
 	{else}
-	{if $module_flip eq 'y'}
-		<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
-	{*/if*}
-{$module_title}
+		{if $module_flip eq 'y'}
+			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+		{else}
+			<h3 class="box-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
+		{/if}
+		{$module_title}
 		{if $module_flip eq 'y'}
 			<span id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 <a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}icn" class="flipmodimage" src="pics/icons/module.png" border="0" alt="[{tr}Hide{/tr}]" /></a>
 			</span>
 		{/if}
-{/if}
 		</h3>
-{/if}
+	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="box-data">
 {/if}
 {$module_content}

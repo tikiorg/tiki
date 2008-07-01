@@ -52,7 +52,10 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	$mod_reference = &$these_modules[$mod_counter];
 	parse_str($mod_reference["params"], $module_params);
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'y';
-	if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
+	if (isset($prefs['user_flip_modules']) && $prefs['user_flip_modules'] != 'module')
+		$module_params['flip'] = $prefs['user_flip_modules'];
+	elseif (!isset($module_params['flip']))
+		$module_params['flip'] = 'n';
 	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
 	if (!isset($module_params['nobox'])) $module_params['nobox'] = 'n';
 	if (isset($module_params['section']) && $module_params['section'] == 'wiki' && $section == 'wiki page') $module_params['section'] = 'wiki page';

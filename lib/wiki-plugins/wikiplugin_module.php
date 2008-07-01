@@ -80,7 +80,10 @@ function wikiplugin_module($data, $params) {
 		$module_rows = $max;
 		$module_params = $params;
 		if (!isset($module_params['decorations'])) $module_params['decorations'] = 'n';
-		if (!isset($module_params['flip'])) $module_params['flip'] = 'n';
+		if (!isset($module_params['flip']) && isset($prefs['user_flip_modules']) && $prefs['user_flip_modules'] != 'module')
+			$module_params['flip'] = $prefs['user_flip_modules'];
+		elseif (!isset($module_params['flip']))
+			$module_params['flip'] = 'n';
 		if (isset($module_params['title'])) { 
 			$smarty->assign('tpl_module_title',tra($module_params['title'])); 
 		} else {
