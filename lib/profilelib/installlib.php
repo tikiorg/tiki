@@ -8,6 +8,7 @@ class Tiki_Profile_Installer
 		'tracker_field' => 'Tiki_Profile_InstallHandler_TrackerField',
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
+		'category' => 'Tiki_Profile_InstallHandler_Category',
 	);
 
 	function __construct() // {{{
@@ -586,6 +587,69 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			return $this->name;
 		else
 			return null;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler // {{{
+{
+	private $name;
+	private $description = '';
+	private $parent = 0;
+	private $items = array();
+
+	function fetchData()
+	{
+		if( $this->name )
+			return;
+
+		$data = $this->obj->getData();
+
+		if( array_key_exists( 'name', $data ) )
+			$this->name = $data['name'];
+		if( array_key_exists( 'description', $data ) )
+			$this->description = $data['description'];
+		if( array_key_exists( 'parent', $data ) )
+			$this->parent = $data['parent'];
+		if( array_key_exists( 'items', $data ) && is_array( $data['items'] ) )
+			foreach( $data['items'] as $pair )
+				if( is_array($pair) && count( $pair ) == 2 )
+					$this->items[] = $pair;
+	}
+
+	function canInstall()
+	{
+		$this->fetchData();
+
+		if( empty( $this->name ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		$this->fetchData();
+		$this->obj->replaceReferences( $this->name );
+		$this->obj->replaceReferences( $this->description );
+		$this->obj->replaceReferences( $this->parent );
+		$this->obj->replaceReferences( $this->items );
+		
+		global $categlib;
+		require_once 'lib/categories/categlib.php';
+		$id = $categlib->add_category( $this->parent, $this->name, $this->description );
+
+		foreach( $this->items as $item )
+		{
+			list( $type, $object ) = $item;
+
+			if (!($catObjectId = $categlib->is_categorized($type, $object))) {
+				$catObjectId = $categlib->add_categorized_object($type, $object, '', '', '');
+			}
+			$categlib->categorize($catObjectId, $id);
+		}
+
+		return $id;
 	}
 } // }}}
 
