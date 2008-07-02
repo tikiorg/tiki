@@ -910,6 +910,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_newsletters'] = 'n';
 	$prefs['feature_obzip'] = 'n';
 	$prefs['feature_phplayers'] = 'n';
+	$prefs['feature_cssmenus'] = 'n';
 	$prefs['feature_projects'] = 'n';
 	$prefs['feature_ranking'] = 'n';
 	$prefs['feature_redirect_on_error'] = 'n';
