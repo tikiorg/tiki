@@ -309,8 +309,20 @@ class MenuLib extends TikiLib {
 		return $channels;
 	}
 	
+	// check if a option belongs to a menu
+	function check_menu_option($menuId, $optionId) {
+		$query = 'SELECT `menuId` FROM `tiki_menu_options` WHERE `optionId` = ?';
+		$dbMenuId = $this->getOne($query, array($optionId));
+		if ($dbMenuId == $menuId) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	function import_menu_options() {
-		global $smarty, $menulib;
+		global $smarty;
+		$options = array();
 		$fname = $_FILES['csvfile']['tmp_name'];
 		$fhandle = fopen($fname, "r");
 		$fields = fgetcsv($fhandle, 1000);
@@ -327,12 +339,21 @@ class MenuLib extends TikiLib {
 			for ($i = 0; $i < count($fields); $i++) {
 				$res[$fields[$i]] = $data[$i];
 			}
-			$this->replace_menu_option($_REQUEST['menuId'], $res['optionId'], $res['name'], $res['url'], $res['type'], $res['position'], $res['section'], $res['perm'], $res['groupname'], $res['userlevel']);
+			if ($res['optionId'] == 0 || $this->check_menu_option($_REQUEST['menuId'], $res['optionId'])) {
+				$options[] = $res;
+			} else {
+				$smarty->assign('msg', tra('You can only use optionId = 0 to create a new option or optionId equal an id that already belongs to the menu you are importing to update an option.'));
+				$smarty->display('error.tpl');
+				die;
+			}
+		}
+		fclose($fhandle);
+		foreach ($options as $option) {
+			$this->replace_menu_option($_REQUEST['menuId'], $option['optionId'], $option['name'], $option['url'], $option['type'], $option['position'], $option['section'], $option['perm'], $option['groupname'], $option['userlevel']);
 		}
 	}
 	
 	function export_menu_options() {
-		global $menulib;
 		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel"' . "\r\n";
 		$options = $this->list_menu_options($_REQUEST['menuId']);
 		foreach ($options['data'] as $option) {
