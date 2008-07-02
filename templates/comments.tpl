@@ -179,7 +179,7 @@
 
 {* Post dialog *}	
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
-<span id="form" />
+<div id="form">
 	{if $forum_mode eq 'y'}
 		{if $post_reply > 0 || $edit_reply > 0 || $comment_preview}
 			{* posting, editing or previewing a reply: show form *}
@@ -360,6 +360,7 @@
 	{/if}
 		
 {/if}
+</div>
 {* End of Post dialog *}
 
 </div>{if $forum_mode neq 'y'}<!-- comzone end -->{/if}
