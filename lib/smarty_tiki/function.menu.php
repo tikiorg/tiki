@@ -25,7 +25,7 @@ function smarty_function_menu($params, &$smarty)
 			$css = 'cssmenu.css';
 			$type = '';
 		}
-		$headerlib->add_cssfile("css/$css", 50);
+		//$headerlib->add_cssfile("css/$css", 50); too late to do that(must be done in header)
 		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
 		$smarty->assign('menu_type', $type);

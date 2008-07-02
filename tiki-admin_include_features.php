@@ -66,6 +66,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_newsreader",
 		"feature_notepad",
 		"feature_phplayers",
+		"feature_cssmenus",
 		"feature_polls",
 		"feature_tell_a_friend",
 		"feature_quizzes",

@@ -71,6 +71,10 @@ var numl;var toBeHidden;
 <script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 
+{*-- css menus block --*}
+<link rel="StyleSheet" href="css/cssmenu_vert.css" type="text/css"></link>
+<link rel="StyleSheet" href="css/cssmenu_horiz.css" type="text/css"></link>
+
 {* --- universaleditbutton.org --- *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
 	<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}"/>
