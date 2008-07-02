@@ -82,8 +82,7 @@
 
 {if $was_queued eq 'y'}
 <div class="rbox">
-<div class="rbox-data" name="warning">{icon _id=information style="vertical-align:middle;align=left"} {tr}Your message has been queued for approval, the message will be posted after
-a moderator approves it.{/tr}
+<div class="rbox-data highlight" name="warning">{icon _id=information style="vertical-align:middle;align=left"} {tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
 </div>
 </div><br />
 {/if}
