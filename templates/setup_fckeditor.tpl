@@ -56,4 +56,6 @@ FCKConfig.Plugins.Add( 'tikiimage', null, _TikiRoot + 'lib/fckeditor_tiki/plugin
 FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
 FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;
 
+FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' );
+
 FCKConfig.Plugins.Add( 'dragresizetable' );
