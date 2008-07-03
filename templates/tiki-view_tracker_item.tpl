@@ -43,8 +43,9 @@
 
 {* ------- return/next/previous tab --- *}
 {if $tiki_p_view_trackers eq 'y'}
-{pagination_links cant=$cant offset=$offset reloff=$urlquery.reloff itemname='Item'}
-	{$smarty.server.php_self}?{query itemId=$itemId}
+{pagination_links cant=$cant offset=$offset reloff=$smarty.request.reloff itemname='Item'}
+	{* Do not specify an itemId in URL used for pagination, because it will use the specified itemId instead of moving to another item *}
+	{$smarty.server.php_self}?{query itemId=NULL}
 {/pagination_links}
 {/if}
 
@@ -514,17 +515,13 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/foreach}
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
-{* --------------------------- to retrun to tracker list after saving --------- *}
+{* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
 <input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" /> <span>
 {/if}
 </td></tr>
 </table>
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-{foreach key=urlkey item=urlval from=$urlquery}
-<input type="hidden" name="{$urlkey}" value="{$urlval|escape}" />
-{/foreach}
+{query _type='form_input' itemId=NULL trackerId=NULL}
 {* ------------------- *}
 </form>
 

@@ -20,7 +20,7 @@ if ($prefs['feature_trackers'] != 'y') {
 	die;
 }
 
-$auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue');
+$auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue','exactvalue');
 $special = false;
 
 if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user'])) {
@@ -115,7 +115,7 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 }
 $xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 
-if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"])) {
+if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) and !isset($_REQUEST["offset"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -144,20 +144,18 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 // ************* previous/next **************
-$urlquery = array();
+
 foreach (array('status', 'filterfield', 'filtervalue', 'initial', 'exactvalue', 'reloff') as $reqfld) {
     $trynam = 'try'.$reqfld;
     if (isset($_REQUEST[$reqfld]) && is_string($_REQUEST[$reqfld])) {
-        $$trynam = $urlquery[$reqfld] = $_REQUEST[$reqfld];
+        $$trynam = $_REQUEST[$reqfld];
     } else {
         $$trynam = '';
     }
 }
 if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$tryfilterfield"])) {
 	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
-    $urlquery["filtervalue[".$tryfilterfield."]"] = $tryfiltervalue;
 }
-
 
 
 //Management of the field type 'User subscribe' (U)
@@ -210,6 +208,7 @@ if(isset($_REQUEST['user_subscribe']) || isset($_REQUEST['user_unsubscribe'])){
 //*********** handle prev/next links *****************
 
 if ( isset($_REQUEST['reloff']) ) {
+
 	if ( isset($_REQUEST['move']) ) {
 		switch ( $_REQUEST['move'] ) {
 			case 'prev': $tryreloff += -1; break;
@@ -232,8 +231,11 @@ if ( isset($_REQUEST['reloff']) ) {
 	$trymove = $trklib->list_items($_REQUEST['trackerId'], $offset + $tryreloff, 1, $sort_mode, $listfields, $tryfilterfield, $tryfiltervalue, $trystatus, $tryinitial, $tryexactvalue);
 
 	if ( isset($trymove['data'][0]['itemId']) ) {
-		$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
-		unset($item_info);
+		// Autodetect itemId if not specified
+		if ( ! isset($_REQUEST['itemId']) ) {
+			$_REQUEST['itemId'] = $trymove['data'][0]['itemId'];
+			unset($item_info);
+		}
 		$cant = $trymove['cant'];
 	} elseif ( isset($_REQUEST['cant']) ) {
 		$cant = $_REQUEST['cant'];
@@ -241,8 +243,6 @@ if ( isset($_REQUEST['reloff']) ) {
 
 	$smarty->assign('cant', $cant);
 }
-
-$smarty->assign_by_ref('urlquery', $urlquery);
 
 //*********** that's all for prev/next *****************
 
@@ -716,8 +716,13 @@ if (isset($_REQUEST["removeImage"])) {
 
 // ************* return to list ***************************
 if(isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
-	$urlreturn = "tiki-view_tracker.php?trackerId={$_REQUEST['trackerId']}&sort_mode={$_REQUEST['sort_mode']}&offset={$_REQUEST['offset']}";
-	foreach ($urlquery as $fldkey=>$fldval) {if ($fldval) { $urlreturn .= "&{$fldkey}=".urlencode($fldval); } }			header("Location: $urlreturn");
+	require_once('lib/smarty_tiki/block.self_link.php');
+	header('Location: '.smarty_block_self_link(array(
+		'_script' => 'tiki-view_tracker.php',
+		'_tag' => 'n',
+		'_urlencode' => 'n',
+		'itemId' => 'NULL'
+	), '', $smarty));
 	die;
 }
 // ********************************************************
@@ -947,20 +952,6 @@ if ($_REQUEST["itemId"]) {
 				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);			
 		}
 	}
-
-/* **************** seems it is only 1.8
-	for ($i = 0; $i < count($fields["data"]); $i++) {
-		$name = $fields["data"][$i]["name"];
-
-		$ins_name = 'ins_' . $name;
-        if ($fields["data"][$i]['type'] == 'f') {
-            $ins_fields["data"][$i]["value"] = 
-                    smarty_make_timestamp($info["$name"]);
-        } else {
-            $ins_fields["data"][$i]["value"] = $info["$name"];
-        }
-	}
-******************* */
 }
 //restore types values if there is an error
 if(isset($error)) {
