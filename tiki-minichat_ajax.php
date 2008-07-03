@@ -1,9 +1,12 @@
-// blah
-// blah
 <?php
-  /* Note: the two comments lines on top of this files make IE working... (don't ask...) */
 
 require_once('tiki-setup.php');
+
+header("Pragma: public");
+header("Pragma: no-cache");
+header("Cache-Control: no-cache, must-revalidate, no-store, post-check=0, pre-check=0, max-age=0");
+header("Expires: Tue, 27 Jul 1997 02:30:00 GMT"); // Date in the past
+header('Content-Type: application/javascript; charset=utf-8'); 
 
 $timeout_min=1000;
 $timeout_max=15000;
@@ -109,7 +112,7 @@ foreach($chans as $chan) {
 			}
 			
 			$t=date("H:i", $row['ts']);
-			$msgtotal="<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;".($row['nick'] === null ? '' : $row['nick'])."&gt;</span><span class='minichat_msg'>".htmlentities($row['msg'], ENT_QUOTES)."</span><br>".$msgtotal;
+			$msgtotal="<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;".($row['nick'] === null ? '' : $row['nick'])."&gt;</span><span class='minichat_msg'>".htmlentities($row['msg'], ENT_QUOTES, 'UTF-8')."</span><br>".$msgtotal;
 		}
 		
 		$msgtotal = str_replace(":-D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);

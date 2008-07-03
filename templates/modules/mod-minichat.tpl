@@ -21,7 +21,7 @@ var minichat_bigid=0;
 var minichat_selectedchan=null;
 
 function minichat_urlencode(str) {
-  str = escape(str);
+  str = encodeURIComponent(str);
   str = str.replace('+', '%2B');
   str = str.replace('%20', '+');
   str = str.replace('*', '%2A');
