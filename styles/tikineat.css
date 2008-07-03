@@ -2142,4 +2142,41 @@ a.flipmodtitle:hover img {
 	text-align: right;
 	margin-top: 5px;
 }
+
+div.minichatchans {
+  border-bottom: 1px solid #aaa;
+  overflow-x: auto;
+}
+
+a.minichata_selected {
+  text-decoration: none;
+  background-color: #eee;
+  padding: 1px;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+}
+a.minichata_unselected {
+  text-decoration: none;
+  padding: 1px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+
+div.minichatdiv {
+  font-size: 9px;
+}
+
+span.minichat_ts {
+  display: none;
+  letter-spacing: -1px;
+  margin-right: 2px;
+}
+
+span.minichat_nick {
+  color: #008;
+  margin-right: 2px;
+}
+
 /* end of css file */
