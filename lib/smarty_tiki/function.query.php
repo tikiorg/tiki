@@ -64,19 +64,30 @@ function smarty_function_query($params, &$smarty) {
         }
       }
     } else {
-      $sep = '&amp;';
-      if ( function_exists('http_build_query') ) {
+      if ( ! isset($params['_urlencode']) ) {
+        $params['_urlencode'] = 'y';
+      }
+      $sep = $params['_urlencode'] == 'n' ? '&' : '&amp;';
+      if ( function_exists('http_build_query') && $params['_urlencode'] == 'y' ) {
         $ret = http_build_query($query, '', $sep);
       } else {
         foreach ( $query as $k => $v ) {
           if ( is_array($v) ) {
             foreach ( $v as $vk => $vv ) {
-            if ( $ret != '' ) $ret .= $sep;
-            $ret .= urlencode($k.'['.$vk.']').'='.urlencode($vv);
+              if ( $ret != '' ) $ret .= $sep;
+              if ( $params['_urlencode'] == 'y' ) {
+                $ret .= urlencode($k.'['.$vk.']').'='.urlencode($vv);
+              } else {
+                $ret .= $k.'['.$vk.']='.$vv;
+              }
             }
           } else {
             if ( $ret != '' ) $ret .= $sep;
-            $ret .= urlencode($k).'='.urlencode($v);
+            if ( $params['_urlencode'] == 'y' ) {
+              $ret .= urlencode($k).'='.urlencode($v);
+            } else {
+              $ret .= $k.'='.$v;
+            }
           }
         }
       }
