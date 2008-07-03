@@ -1848,3 +1848,15 @@ ALTER TABLE tiki_pages ADD wiki_authors_style varchar(20) NOT NULL default '';
 
 #2008-07-01 sylvieg
 alter table tiki_sessions change user user varchar(200) default '';
+
+#2008-07-03 niclone
+CREATE TABLE `tiki_minichat` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `channel` varchar(31),
+  `ts` int(10) unsigned NOT NULL,
+  `user` varchar(31) default NULL,
+  `nick` varchar(31) default NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `channel` (`channel`)
+);

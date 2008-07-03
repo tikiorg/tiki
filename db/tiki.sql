@@ -5077,3 +5077,14 @@ CREATE TABLE tiki_pages_changes (
 	PRIMARY KEY(page_id, version)
 );
 
+DROP TABLE IF EXISTS tiki_minichat;
+CREATE TABLE `tiki_minichat` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `channel` varchar(31),
+  `ts` int(10) unsigned NOT NULL,
+  `user` varchar(31) default NULL,
+  `nick` varchar(31) default NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `channel` (`channel`)
+);
