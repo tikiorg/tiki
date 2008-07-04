@@ -23,6 +23,7 @@ if ($prefs['feature_blogs'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_create_blogs != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot create or edit blogs"));
 
 	$smarty->display("error.tpl");
@@ -104,6 +105,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y') {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this blog"));
 
 			$smarty->display("error.tpl");

@@ -16,8 +16,9 @@ if (!isset($prefs['rss_calendar']) || $prefs['rss_calendar'] != 'y') {
 }
 
 if ($tiki_p_view_calendar != 'y') {
-        $errmsg=tra("Permission denied you cannot view this section");
-        require_once ('tiki-rss_error.php');
+	$smarty->assign('errortype', 401);
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
 }
 
 $feed = "calendars";

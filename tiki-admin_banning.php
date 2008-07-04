@@ -17,6 +17,7 @@ if ($prefs['feature_banning'] != 'y') {
 }
 
 if ($tiki_p_admin_banning != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

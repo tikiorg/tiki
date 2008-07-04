@@ -33,6 +33,7 @@ if (!$user) {
 
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_banners != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove banners"));
 		$smarty->display("error.tpl");
 		die;

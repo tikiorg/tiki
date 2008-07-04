@@ -66,6 +66,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
@@ -88,6 +89,7 @@ if ($tiki_p_admin_galleries == 'y') {
 }
 
 if ($tiki_p_view_image_gallery != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
 	$smarty->display("error.tpl");
@@ -96,6 +98,7 @@ if ($tiki_p_view_image_gallery != 'y') {
 
 /*
 if($tiki_p_upload_images != 'y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot upload images"));
   $smarty->display("error.tpl");
   die;  
@@ -108,6 +111,7 @@ if ($_REQUEST["galleryId"] != 0) {
 //$smarty->assign('use_theme','y');
 /*
 if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
   $smarty->display("error.tpl");
   die;  
@@ -133,6 +137,7 @@ $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 if (isset($_REQUEST["remove"])) {
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
 		$smarty->display("error.tpl");
 		die;
@@ -150,6 +155,7 @@ if (isset($_REQUEST["rebuild"])) {
 	check_ticket('list-gal');
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
 
 		$smarty->display("error.tpl");

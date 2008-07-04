@@ -19,6 +19,7 @@ if ($prefs['feature_directory'] != 'y') {
 }
 
 if ($tiki_p_view_directory != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

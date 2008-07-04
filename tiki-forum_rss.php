@@ -15,8 +15,9 @@ if ($prefs['rss_forum'] != 'y') {
 }
 
 if ($tiki_p_forum_read != 'y' or !$tikilib->user_has_perm_on_object($user,$_REQUEST['forumId'],'forum','tiki_p_forum_read')) {
-        $errmsg=tra("Permission denied you cannot view this section");
-        require_once ('tiki-rss_error.php');
+	$smarty->assign('errortype', 401);
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
 }
 
 if(!isset($_REQUEST["forumId"])) {

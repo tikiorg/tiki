@@ -67,6 +67,7 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 $galleryId = $_REQUEST['galleryId'];
 
 if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && $tiki_p_view_file_gallery != 'y' ) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied you cannot view this section'));
 	$smarty->display('error.tpl');
 	die;
@@ -182,6 +183,7 @@ if ( ! empty($_REQUEST['remove']) ) {
 
 	if ( $tiki_p_admin_file_galleries != 'y'  && ( ! $user || $user != $gal_info['user'] ) ) {
 		if ( $user != $info['user'] ) {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('Permission denied you cannot remove files from this gallery'));
 			$smarty->display('error.tpl');
 			die;
@@ -271,6 +273,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 			// Check file upload rights
 			if ( $tiki_p_upload_files != 'y' ) {
+				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra("Permission denied you can't upload files so you can't edit them"));
 
 				$smarty->display('error.tpl');
@@ -282,6 +285,7 @@ if ( isset($_REQUEST['edit']) ) {
 				$info = $filegallib->get_file_info($_REQUEST["fileId"]);
 
 				if (!$user || $info['user'] != $user) {
+					$smarty->assign('errortype', 401);
 					$smarty->assign('msg', tra('Permission denied you cannot edit this file'));
 
 					$smarty->display('error.tpl');
@@ -297,6 +301,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 			// Check gallery creation rights
 			if ( $tiki_p_create_file_galleries != 'y' ) {
+				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra('Permission denied you cannot create galleries and so you cant edit them'));
 				$smarty->display('error.tpl');
 				die;
@@ -304,7 +309,8 @@ if ( isset($_REQUEST['edit']) ) {
 
 			// Check THIS gallery modification rights
 			if ( $galleryId > 0 ) {
-				if ( ! $user || $gal_info['user'] != $user ) {
+				if ( ! $user || $gal_info['user'] != $user ) 
+					$smarty->assign('errortype', 401);{
 					$smarty->assign('msg', tra('Permission denied you cannot edit this gallery'));
 					$smarty->display('error.tpl');
 					die;
@@ -452,6 +458,7 @@ if ( ! empty($_REQUEST['removegal']) ) {
 	}
 
 	if ( $tiki_p_admin_file_galleries != 'y' && ( ! $user || $gal_info['user'] != $user ) ) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied you cannot remove this gallery'));
 		$smarty->display('error.tpl');
 		die;
@@ -472,6 +479,7 @@ if ( ! empty($_FILES) ) {
 	check_ticket('fgal');
 
 	if ( $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y' ) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied you can upload files but not to this file gallery'));
 		$smarty->display('error.tpl');
 		die;
@@ -506,6 +514,7 @@ if ( ! empty($_FILES) ) {
 				|| ( ! empty($user) && ( $user == $fileInfo['user'] || $user == $fileInfo['lockedby']) )
 			) ) {
 				// must be the owner or the locker or have the perms
+				$smarty->assign('errortype', 401);
 				$msg = tra('Permission denied you can edit this file');
 			} elseif ( ! move_uploaded_file($v['tmp_name'], $tmp_dest) ) {
 				$msg = tra('Errors detected');

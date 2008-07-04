@@ -16,6 +16,7 @@ if (!isset($_REQUEST["trackerId"])) {
 }
 
 if ($tiki_p_admin_trackers != 'y') {
+	$smarty->assign('errortype', 401);
   if (!isset($user)){
 		$smarty->assign('display_login_box','y');
     $smarty->assign('errortitle',tra("Please login"));

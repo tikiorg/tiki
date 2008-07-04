@@ -80,6 +80,7 @@ if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y' && !$object_has_
 	$is_categorized = FALSE;
     }
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
@@ -97,6 +98,7 @@ if ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y' && !$object_has_
 
 // Now check permissions to access this page
 if ($tiki_p_view != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
 	$smarty->display("error.tpl");

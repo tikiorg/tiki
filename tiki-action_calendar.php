@@ -10,6 +10,7 @@ if ($prefs['feature_action_calendar'] != 'y') {
 }
 
 if ($tiki_p_view_tiki_calendar != 'y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg', tra("Permission denied you cannot view the Tiki calendar"));
 	$smarty->display("error.tpl");
 	die;

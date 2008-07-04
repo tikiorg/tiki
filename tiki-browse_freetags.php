@@ -30,6 +30,7 @@ if (isset($_REQUEST['del'])) {
 	if ($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') {
 		$freetaglib->delete_object_tag($_REQUEST['itemit'],$_REQUEST['typeit'],$_REQUEST['tag']);
 	} else {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;

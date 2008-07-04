@@ -47,6 +47,7 @@ if (substr($page, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiappro
 
 // first check perms for category set as the approved category (this could be necessary in some setups even though page perms are checked below)
 if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $prefs['wikiapproval_approved_category'] > 0 && !$categlib->has_edit_permission($user, $prefs['wikiapproval_approved_category'])) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot approve staging pages"));
 
 	$smarty->display("error.tpl");
@@ -78,6 +79,7 @@ if ($info) {
 	$tikilib->get_perm_object($page, 'wiki page', $info, true);
 }
 if ($tiki_p_edit != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 	$smarty->display("error.tpl");
 	die;

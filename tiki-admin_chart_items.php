@@ -17,6 +17,7 @@ if ($prefs['feature_charts'] != 'y') {
 }
 
 if ($tiki_p_admin_charts != 'y' and $tiki_p_suggest_chart_item != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

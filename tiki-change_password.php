@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 if ($prefs['change_password'] != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;

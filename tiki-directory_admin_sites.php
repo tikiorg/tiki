@@ -46,6 +46,7 @@ if (isset($parent_info) && $user) {
 }
 
 if ($tiki_p_admin_directory_sites != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

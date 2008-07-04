@@ -20,6 +20,7 @@ if ($prefs['feature_gal_batch'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_batch_upload_image_dir != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot use the batch directory loading"));
 	$smarty->display("error.tpl");
 	die;

@@ -15,8 +15,9 @@ if ($prefs['rss_file_galleries'] != 'y') {
 }
 
 if ($tiki_p_view_file_gallery != 'y') {
-        $errmsg=tra("Permission denied you cannot view this section");
-        require_once ('tiki-rss_error.php');
+	$smarty->assign('errortype', 401);
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
 }
 
 $feed = "filegals";

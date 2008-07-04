@@ -35,6 +35,7 @@ if ($prefs['feature_messages'] != 'y') {
 }
 
 if ($tiki_p_broadcast != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

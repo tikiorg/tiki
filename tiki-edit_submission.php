@@ -25,6 +25,7 @@ if ($prefs['feature_submissions'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_submit_article != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot send submissions"));
 
 	$smarty->display("error.tpl");
@@ -145,6 +146,7 @@ if (isset($_REQUEST["subId"])) {
 if (isset($_REQUEST["subId"])) {
 	if ($_REQUEST["subId"] > 0) {
 		if (($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) or $user == "") {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
 			$smarty->display("error.tpl");
 			die;

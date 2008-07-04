@@ -29,12 +29,14 @@ if($prefs['feature_listPages'] != 'y') {
 /*
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
   $smarty->display("error.tpl");
   die;  
 }
 */
 if ($tiki_p_blog_admin != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You cannot admin blogs"));
 
 	$smarty->display("error.tpl");

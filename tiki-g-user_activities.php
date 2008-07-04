@@ -17,6 +17,7 @@ if ($prefs['feature_workflow'] != 'y') {
 }
 
 if ($tiki_p_use_workflow != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

@@ -28,6 +28,7 @@ if ($prefs['feature_galleries'] != 'y') {
 }
 
 if ($_REQUEST["galleryId"] == 0 && $tiki_p_admin_galleries != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
 	$smarty->display("error.tpl");
@@ -75,6 +76,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
@@ -97,6 +99,7 @@ if ($tiki_p_admin_galleries == 'y') {
 }
 
 if ($tiki_p_view_image_gallery != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
 	$smarty->display("error.tpl");
@@ -114,6 +117,7 @@ if ($_REQUEST["galleryId"] != 0) {
 //$smarty->assign('use_theme','y');
 /*
 if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
   $smarty->display("error.tpl");
   die;  
@@ -163,6 +167,7 @@ if (isset($_REQUEST["remove"])) {
 	check_ticket('browse-gallery');
 	// To remove an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
 
 		$smarty->display("error.tpl");
@@ -182,6 +187,7 @@ if (isset($_REQUEST["rebuild"])) {
 	check_ticket('browse-gallery');
 	// To rebuild thumbnails the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot rebuild thumbnails in this gallery"));
 
 		$smarty->display("error.tpl");
@@ -196,6 +202,7 @@ if (isset($_REQUEST["rotateright"])) {
 	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
 
 		$smarty->display("error.tpl");
@@ -209,6 +216,7 @@ if (isset($_REQUEST["rotateleft"])) {
 	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
 
 		$smarty->display("error.tpl");

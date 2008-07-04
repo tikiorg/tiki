@@ -29,6 +29,7 @@ if (isset($_REQUEST['rremove'])) {
   $area = 'delstruct';
   $structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
 	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;		
@@ -45,6 +46,7 @@ if (isset($_REQUEST['rremovex'])) {
   $area = 'delstructandpages';
   $structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
 	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;		
@@ -61,6 +63,7 @@ if (isset($_REQUEST['export'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['export']);
 	if ($prefs['feature_wiki_export'] != 'y' || $tiki_p_admin_wiki != 'y' || !$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 		$smarty->display("error.tpl");
 		die;
@@ -72,6 +75,7 @@ if (isset($_REQUEST['export_tree'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['export_tree']);
 	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 		$smarty->display("error.tpl");
 		die;
@@ -88,6 +92,7 @@ if (isset($_REQUEST['remove'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
 	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
 		die;		

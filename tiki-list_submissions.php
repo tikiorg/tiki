@@ -29,6 +29,7 @@ if ($prefs['feature_submissions'] != 'y') {
 /*
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
   $smarty->display("error.tpl");
   die;  
@@ -36,6 +37,7 @@ if($tiki_p_view != 'y') {
 */
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_remove_submission != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove submissions"));
 		$smarty->display("error.tpl");
 		die;
@@ -52,6 +54,7 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["approve"])) {
 	check_ticket('list-submissions');
 	if ($tiki_p_approve_submission != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot approve submissions"));
 
 		$smarty->display("error.tpl");

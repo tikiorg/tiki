@@ -30,9 +30,10 @@ if ($prefs['feature_lastChanges'] != 'y') {
 
 // Now check permissions (depends on permissions for wiki pages)
 if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	$smarty->display("error.tpl");
+	die;  
 }
 
 // lines added by ramiro_v on 11/03/2002 begins here

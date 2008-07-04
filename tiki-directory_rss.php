@@ -21,6 +21,7 @@ if ($prefs['feature_directory'] != 'y') {
 }
 
 if ($tiki_p_view_directory != 'y') {
+	$smarty->assign('errortype', 401);
 	$errmsg=tra("Permission denied");
       require_once ('tiki-rss_error.php');
 }

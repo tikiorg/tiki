@@ -15,8 +15,9 @@ if ($prefs['rss_articles'] != 'y') {
 }
 
 if ($tiki_p_read_article != 'y') {
-        $errmsg=tra("Permission denied you cannot view this section");
-        require_once ('tiki-rss_error.php');
+	$smarty->assign('errortype', 401);
+	$errmsg=tra("Permission denied you cannot view this section");
+	require_once ('tiki-rss_error.php');
 }
 
 $feed = "articles";
@@ -40,6 +41,7 @@ if (isset($_REQUEST['lang'])) {
 $uniqueid .= '/'.$articleLang;
 
 if ($topic and !$tikilib->user_has_perm_on_object($user,$topic,'topic','tiki_p_topic_read')) {
+	$smarty->assign('errortype', 401);
 	$errmsg=tra("Permission denied you cannot view this section");
 	require_once ('tiki-rss_error.php');
 }

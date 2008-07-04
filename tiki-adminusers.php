@@ -120,6 +120,7 @@ function batchImportUsers() {
 						if (!in_array($err, $errors))
 								$errors[] = $err;
 					} elseif ($tiki_p_admin != 'y' &&  !array_key_exists($grp, $userGroups)) {
+						$smarty->assign('errortype', 401);
 						$err = tra("Permission denied").": $grp";
 						if (!in_array($err, $errors))
 								$errors[] = $err;

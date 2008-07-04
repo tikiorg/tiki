@@ -35,6 +35,7 @@ if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
 
 // Now check permissions to access this page
 if ($tiki_p_upload_images != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot edit images"));
 
 	$smarty->display("error.tpl");
@@ -92,6 +93,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
    			$is_categorized = FALSE;
    		}
 		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+			$smarty->assign('errortype', 401);
 			if (!isset($user)){
 				$smarty->assign('display_login_box','y');
 				$smarty->assign('errortitle',tra("Please login"));
@@ -111,6 +113,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 	}
 
 	if ($tiki_p_upload_images != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit images"));
 
 		$smarty->display("error.tpl");
@@ -125,6 +128,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
 
 	// Check the user to be admin or owner or the gallery is public
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you can edit images but not in this gallery"));
 
 		$smarty->display("error.tpl");

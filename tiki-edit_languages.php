@@ -16,6 +16,7 @@ if ($prefs['lang_use_db'] != 'y') {
 }
 
 if ($tiki_p_edit_languages != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 	$smarty->display("error.tpl");
 	die;

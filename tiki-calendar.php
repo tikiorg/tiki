@@ -104,6 +104,7 @@ if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
 			$is_categorized = FALSE;
 		}
 		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+			$smarty->assign('errortype', 401);
 			if (!isset($user)){
 				$smarty->assign('display_login_box','y');
 				$smarty->assign('errortitle',tra("Please login"));
@@ -117,6 +118,7 @@ if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
 }
 
 if ($viewOneCal != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
 	$smarty->display("error.tpl");
 	die;

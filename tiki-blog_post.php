@@ -27,6 +27,7 @@ if ($prefs['feature_blogs'] != 'y') {
 
 // Now check permissions to access this page
 if ((empty($_REQUEST['blogId']) && $tiki_p_blog_post != 'y') || (!empty($_REQUEST["blogId"]) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post'))) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 
 	$smarty->display("error.tpl");
@@ -85,6 +86,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
 
 			$smarty->display("error.tpl");
@@ -230,6 +232,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 	}
 
 	if ($tiki_p_blog_post != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot post"));
 		$smarty->display("error.tpl");
 		die;
@@ -246,6 +249,7 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 
 		if ($data["user"] != $user || !$user) {
 			if ($tiki_p_blog_admin != 'y') {
+				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
 				$smarty->display("error.tpl");
 				die;

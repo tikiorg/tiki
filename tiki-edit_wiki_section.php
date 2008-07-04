@@ -28,6 +28,7 @@ if (!isset($_REQUEST['type']) || $_REQUEST['type'] == 'wiki page')
 	$_REQUEST['type'] = 'wiki';
 $perm = $objectlib->get_needed_perm($_REQUEST['type'], 'edit');
 if (!$userlib->user_has_perm_on_object($user, $_REQUEST['object'], $_REQUEST['type'], $perm)) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;

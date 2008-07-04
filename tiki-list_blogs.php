@@ -26,6 +26,7 @@ if ($prefs['feature_blogs'] != 'y') {
 }
 
 if ($tiki_p_read_blog != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
 	$smarty->display("error.tpl");
@@ -39,6 +40,7 @@ if (isset($_REQUEST["remove"])) {
 
 	if ($data["user"] != $user) {
 		if ($tiki_p_blog_admin != 'y') {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("Permission denied you cannot remove this blog"));
 			$smarty->display("error.tpl");
 			die;

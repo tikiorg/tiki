@@ -27,6 +27,7 @@ if ($prefs['feature_gal_rankings'] != 'y') {
 }
 
 if ($tiki_p_list_image_galleries != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
 	$smarty->display("error.tpl");

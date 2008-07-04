@@ -29,6 +29,7 @@ if ($prefs['feature_listPages'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_view != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view pages"));
 	$smarty->display("error.tpl");
 	die;
@@ -51,6 +52,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 		case 'remove_pages':
 			// Now check permissions to remove the selected pages
 			if ( $tiki_p_remove != 'y' ) {
+				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra("Permission denied you cannot remove pages"));
 				$smarty->display("error.tpl");
 				die;
@@ -72,6 +74,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				if ( $tikilib->page_exists($check) ) {
 					// Now check permissions to access this page
 					if (!$tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_view')) {
+						$smarty->assign('errortype', 401);
 						$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 						$smarty->display("error.tpl");
 						die;

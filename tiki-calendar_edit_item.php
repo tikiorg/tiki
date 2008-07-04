@@ -126,6 +126,7 @@ if ($prefs['feature_categories'] == 'y') {
       $$p = $v;
     }
     if (isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
       $smarty->assign('msg',tra("Permission denied you cannot view this page"));
       $smarty->display("error.tpl");
       die;
@@ -262,6 +263,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$smarty->assign('edit',true);
 	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg', tra("Permission denied you can not view this page"));
   $smarty->display("error.tpl");
   die;
