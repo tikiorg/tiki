@@ -31,8 +31,14 @@
     {/if}
   </div>
   <div class="articlebody">
-    {$parsed_body}
-    </div>
+    {if $tiki_p_read_article eq 'y'}
+      {$parsed_body}
+    {else}
+      <div class="error simplebox">
+        {tr}Permission denied. You do not have permission to read complete articles.{/tr}
+      </div>
+    {/if}
+  </div>
 </div>
 
 {include file="footer.tpl"}
