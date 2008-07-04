@@ -122,7 +122,7 @@ function removephpslashes ($string) {
 
 function hardwire_file ($file)
 {
-	global $files, $completion;
+  global $files, $completion;
   $files[] = $file;
   if (!$completion)
 	  print "File (hardwired): $file<br />";
@@ -291,6 +291,16 @@ if ((!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') && !$completion) {
 }
 $tiki_timer->start("processing");
 
+if ( $completion) {
+    echo "<table border='1'>";
+      echo "<tr>";
+        echo "<td><b>Language</b></td>";
+        echo "<td><b>Completion</b></td>";
+        echo "<td><b>Translated</b></td>";
+        echo "<td><b>To tranlate</b></td>";
+        echo "<td><b>Unused</b></td>";
+      echo "</tr>";
+  }
 
 $oldEndMarker = '##end###';
 $endMarker = '###end###';
@@ -330,27 +340,27 @@ foreach ($languages as $sel) {
 
   if ($group_w) {
     // We set umask to zero value to allow proper chmod later
-    // (Is this really nesserary? Does not chmod work independently of umask?)
+    // (Is this really necessary? Does not chmod work independently of umask?)
     $old_umask = umask (0); 
   }
 
   if (!$completion) {
-	$fw = fopen("lang/$sel/new_language.php",'w');
+    $fw = fopen("lang/$sel/new_language.php",'w');
   
-	print("&lt;");
-	fwrite($fw,"<");
-	writeFile_and_User ($fw, "?php");
-  // The comment coding:utf-8 is for the benefit of emacs
-  // and must be on the very first line in the file
-  // we leave this comment in even if comments are off since
-  // editing files with the wrong encoding causes commical effects at best.
-	writeFile_and_User ($fw, " // -*- coding:utf-8 -*-\n");
+    print("&lt;");
+    fwrite($fw,"<");
+    writeFile_and_User ($fw, "?php");
+    // The comment coding:utf-8 is for the benefit of emacs
+    // and must be on the very first line in the file
+    // we leave this comment in even if comments are off since
+    // editing files with the wrong encoding causes commical effects at best.
+    writeFile_and_User ($fw, " // -*- coding:utf-8 -*-\n");
   }
 
   if (!$nohelp && !$completion) {
     // Good to have instructions for translators in the release file.
     // The comments get filtered away by Smarty anyway
-    writeFile_and_User ($fw, "// parameters:\n\n");
+    writeFile_and_User ($fw, "// Parameters:\n\n");
     writeFile_and_User ($fw, "// lang=xx    : only tranlates language 'xx',\n");
     writeFile_and_User ($fw, "//              if not given all languages are translated\n");
     writeFile_and_User ($fw, "\n");
@@ -402,8 +412,8 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// Prepare all languages for release \n\n");
 
 
-	// Start generating the lang array
-	writeFile_and_User ($fw, "\n\$lang=Array(\n");  
+    // Start generating the lang array
+    writeFile_and_User ($fw, "\n\$lang=Array(\n");  
   }
   foreach ($files as $file) {
     $data = file_get_contents($file);
@@ -459,7 +469,7 @@ foreach ($languages as $sel) {
         $words = $uqwords[1];
     }
 
-    // Transfer SINGLEqouted words (if any) to the words array
+    // Transfer SINGLE quoted words (if any) to the words array
     if (count ($sqwords, COUNT_RECURSIVE) > 2) {
       foreach (array_unique ($sqwords[1]) as $sqword) {
 	// Strip the extracted strings from escapes
@@ -470,7 +480,7 @@ foreach ($languages as $sel) {
       }
     }
 
-    // Transfer DOUBLEqouted words (if any) to the words array
+    // Transfer DOUBLE quoted words (if any) to the words array
     if (count ($dqwords, COUNT_RECURSIVE) > 2) {
       foreach (array_unique ($dqwords[1]) as $dqword) {
 	// Strip the extracted strings from escapes
@@ -506,7 +516,6 @@ foreach ($languages as $sel) {
     }
   } // foreach ($files as $file)
 
-
   //////////////////////////////////////////////
   if ($patch) {
     foreach ($unused as $key => $val) {
@@ -530,9 +539,16 @@ foreach ($languages as $sel) {
       }
     }
   }
+
   if ($completion) {
-	  echo "Completion: ".round((count($translated)*100)/(count($translated)+count($to_translate))). '%';
-	  continue;
+    echo "<tr>";
+      echo "<td style='text-align:center;'>$sel</td>";
+      echo "<td style='text-align:center;'>" . round((count($translated)*100)/(count($translated)+count($to_translate))) . '%' . "</td>";
+      echo "<td style='text-align:right;'>" . count($translated)    . "</td>";
+      echo "<td style='text-align:right;'>" . count($to_translate)  . "</td>";
+      echo "<td style='text-align:right;'>" . count ($unused)       . "</td>";
+    echo "</tr>";
+    continue;
   }
 
   unset ($unused['']);
@@ -669,5 +685,9 @@ foreach ($languages as $sel) {
 if (!$completion) {
 	echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br />\n";
 	echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br />\n";
+ }
+ else
+ {
+   echo "</table>";
  }
 ?>
