@@ -5439,7 +5439,7 @@ function add_pageview() {
     }
 
     //PARSEDATA
-    function parse_data($data,$is_html=false) {
+    function parse_data($data,$is_html=false,$absolute_links=false) {
    	// Don't bother if there's nothing...
 	  if (function_exists('mb_strlen')) {
 		if( mb_strlen( $data ) < 1 )
@@ -6034,6 +6034,13 @@ function add_pageview() {
 			if (strstr($imgdata["src"],'javascript:')) {
 				$imgdata["src"]  = '';
 			}
+
+	// Handle absolute links (e.g. to send a newsletter with images that remains on the tiki site)
+
+	if ( $imgdata['src'] != '' && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
+		global $base_host, $url_path;
+		$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ).$imgdata['src'];
+	}
 
 	$detected_lib = '';
 	$imgdata_dim = '';
