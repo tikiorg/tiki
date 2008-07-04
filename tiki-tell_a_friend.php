@@ -19,6 +19,7 @@ if (empty($_REQUEST['report'])) {
 		die;
 	}
 	if ($tiki_p_tell_a_friend != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
@@ -31,6 +32,7 @@ if (!empty($_REQUEST['report']) && $_REQUEST['report'] == 'y') {
 		die;
 	}
 	if ($tiki_p_site_report != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;

@@ -43,6 +43,7 @@ $page = $page_info["pageName"];
 
 // Now check permissions to access this page
 if ($tiki_p_view != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
 	$smarty->display("error.tpl");

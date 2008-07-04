@@ -21,13 +21,11 @@ if ($prefs['feature_shoutbox'] != 'y') {
 	die;
 }
 
-if ($user != 'admin') {
-	if ($tiki_p_admin_shoutbox != 'y') {
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
+if ($tiki_p_admin_shoutbox != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 // Do the add bad word form here

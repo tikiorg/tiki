@@ -19,6 +19,7 @@ if ($prefs['feature_quizzes'] != 'y') {
 }
 
 if ($tiki_p_admin_quizzes != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
 	$smarty->display("error.tpl");

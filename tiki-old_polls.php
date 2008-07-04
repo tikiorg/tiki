@@ -24,6 +24,7 @@ if ($prefs['feature_polls'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_view_poll_results != 'y') {
+	$smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("Permission denied you cannot view this page"));
   $smarty->display("error.tpl");
   die;  

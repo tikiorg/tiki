@@ -12,6 +12,7 @@
 require_once ('tiki-setup.php');
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_subscribe_groups != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

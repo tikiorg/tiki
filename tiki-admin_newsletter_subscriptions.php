@@ -53,6 +53,7 @@ if ($userlib->object_has_one_permission($_REQUEST["nlId"], 'newsletter')) {
 }
 
 if ($tiki_p_admin_newsletters != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

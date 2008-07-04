@@ -33,6 +33,7 @@ if (isset($_REQUEST["articleId"])) {
 	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
 
 	if ($article_data === false) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;

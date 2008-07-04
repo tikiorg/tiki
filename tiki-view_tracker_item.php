@@ -297,6 +297,7 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 }
 
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
+  $smarty->assign('errortype', 401);
   if (!$user) {
 		$smarty->assign('display_login_box','y');
     $smarty->assign('errortitle',tra("Please login"));
@@ -616,6 +617,7 @@ if (isset($tracker_info["authorfield"])) {
 	}
 }
 if ($tiki_p_view_trackers != 'y' && !$special) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
@@ -748,6 +750,7 @@ if ($_REQUEST["itemId"]) {
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
 		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser)
 	) ) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;

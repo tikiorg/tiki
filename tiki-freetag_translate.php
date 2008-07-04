@@ -32,6 +32,7 @@ if ($prefs['feature_multilingual'] != 'y') {
 }
 
 if ($tiki_p_freetags_tag != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
@@ -60,6 +61,7 @@ if ( $cat_objId ) {
 	$info = $tikilib->get_page_info( $cat_objId );
 } elseif (false&&$tiki_p_admin_freetags != 'y') {
 	// Global tag edit only available to admins
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

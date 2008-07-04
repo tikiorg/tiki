@@ -12,6 +12,7 @@ if($prefs['feature_friends'] != 'y') {
 }
 
 if($tiki_p_list_users != 'y') {
+	$smarty->assign('errortype', 401);
     $smarty->assign('msg',tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;

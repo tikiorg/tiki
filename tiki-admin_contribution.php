@@ -10,6 +10,7 @@ if ($prefs['feature_contribution'] != 'y') {
 include_once('lib/contribution/contributionlib.php');
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_contribution != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

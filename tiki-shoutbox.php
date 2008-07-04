@@ -18,6 +18,7 @@ if ($prefs['feature_shoutbox'] != 'y') {
 }
 
 if ($tiki_p_view_shoutbox != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

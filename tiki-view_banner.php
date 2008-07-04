@@ -42,6 +42,7 @@ if (!$info) {
 
 // Check user is admin or the client
 if (($user != $info["client"]) && ($tiki_p_admin_banners != 'y')) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to edit this banner"));
 
 	$smarty->display("error.tpl");

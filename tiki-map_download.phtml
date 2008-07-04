@@ -46,6 +46,7 @@ if (isset($_GET['mapfile']))
 {
   // Validate to prevent displaying any file
   if (strstr($_GET["mapfile"], '..')) {
+	$smarty->assign('errortype', 401);
     $smarty->assign('msg', tra("You do not have permission to do that"));
     $smarty->display('error.tpl');
     die;

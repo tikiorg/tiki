@@ -40,6 +40,7 @@ if (isset($_REQUEST["view_user"])) {
 		if ($tiki_p_admin == 'y') {
 			$userwatch = $_REQUEST["view_user"];
 		} else {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to view other users data"));
 
 			$smarty->display("error.tpl");

@@ -21,6 +21,7 @@ if ($prefs['feature_trackers'] != 'y') {
 }
 
 if ($tiki_p_admin_trackers != 'y' && $tiki_p_list_trackers != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

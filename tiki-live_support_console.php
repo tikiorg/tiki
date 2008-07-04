@@ -24,6 +24,7 @@ if ($prefs['feature_live_support'] != 'y') {
 }
 
 if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->is_operator($user)) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

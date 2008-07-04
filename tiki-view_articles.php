@@ -33,6 +33,7 @@ if ($prefs['feature_articles'] != 'y') {
 }
 
 if ( ($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y') ) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
 	$smarty->display("error.tpl");
@@ -41,6 +42,7 @@ if ( ($tiki_p_read_article != 'y') && ($tiki_p_articles_read_heading != 'y') ) {
 
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_remove_article != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
 		$smarty->display("error.tpl");
 		die;

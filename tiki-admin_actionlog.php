@@ -27,6 +27,7 @@ if ($prefs['feature_actionlog'] != 'y') {
 	die;
 }
 if (empty($user) || ($tiki_p_view_actionlog != 'y' && $tiki_p_view_actionlog_owngroups != 'y')) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

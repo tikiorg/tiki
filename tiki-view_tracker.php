@@ -108,6 +108,7 @@ if ($tiki_p_view_trackers != 'y') {
 	} elseif (!$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));

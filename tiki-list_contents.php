@@ -23,6 +23,7 @@ if ($prefs['feature_dynamic_content'] != 'y') {
 }
 
 if ($tiki_p_admin_dynamic != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

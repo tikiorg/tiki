@@ -102,6 +102,7 @@ function mypage_init() {
 	$smarty->assign('editit', $editit);
 
 	if (($tiki_p_admin != 'y') && $editit && ((int)$mypage->getParam('id_users') != $id_users)) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You are not the owner of this page"));
 		$smarty->display("error.tpl");
 		die();

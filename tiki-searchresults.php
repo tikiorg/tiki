@@ -23,6 +23,7 @@ if ($prefs['feature_search'] != 'y') {
 	die;
 }
 if ($tiki_p_search != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
@@ -61,6 +62,7 @@ if($where=='directory') {
   die;
 	}
   if($tiki_p_admin_directory != 'y' && $tiki_p_view_directory != 'y') {
+    $smarty->assign('errortype', 401);
     $smarty->assign('msg',tra("Permission denied"));
     $smarty->display("error.tpl");
     die;  
@@ -74,6 +76,7 @@ if($where=='faqs') {
 	  die;
 	}
 	if($tiki_p_admin_faqs != 'y' && $tiki_p_view_faqs != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;
@@ -87,6 +90,7 @@ if($where=='forums') {
   	die;
 	}
   if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
+	  $smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra("You do not have permission to use this feature"));
 		$smarty->display("error.tpl");
 	  die;

@@ -2,7 +2,8 @@
 // Initialization
 require_once('tiki-setup.php');
 
-if ($prefs['tiki_p_admin'] != 'y') {
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

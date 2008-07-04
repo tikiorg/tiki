@@ -25,6 +25,7 @@ if ($prefs['feature_newsreader'] != 'y') {
 }
 
 if ($tiki_p_newsreader != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
 	$smarty->display("error.tpl");

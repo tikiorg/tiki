@@ -20,6 +20,7 @@ if ($prefs['feature_ajax'] != 'y') {
 	die;
 }
 if ($tiki_p_map_view != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to use this feature'));
 	$smarty->display('error.tpl');
 	die;
@@ -43,6 +44,7 @@ $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 if (isset($_REQUEST['mapfile'])) {
   // Validate to prevent displaying any file
   if (strstr($_REQUEST["mapfile"], '..')) {
+	$smarty->assign('errortype', 401);
     $msg = tra("You do not have permission to do that");
     $access->display_error(basename(__FILE__), $msg);
   }

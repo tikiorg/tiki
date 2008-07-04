@@ -23,6 +23,7 @@ if ($prefs['feature_polls'] != 'y') {
 }
 
 if ($tiki_p_admin_polls != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

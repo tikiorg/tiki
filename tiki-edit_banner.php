@@ -25,6 +25,7 @@ if ($prefs['feature_banners'] != 'y') {
 }
 
 if ($tiki_p_admin_banners != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permissions to edit banners"));
 
 	$smarty->display("error.tpl");
@@ -43,6 +44,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 
 	// Check user is admin or the client
 	if (($user != $info["client"]) && ($tiki_p_admin_banners != 'y')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to edit this banner"));
 
 		$smarty->display("error.tpl");

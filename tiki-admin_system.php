@@ -8,6 +8,7 @@
 require_once ('tiki-setup.php');
 
 if ($user != 'admin' && $tiki_p_admin != 'y' && $tiki_p_clean_cache != 'y') { // admin test needed for the first inclusion of this perm befroring clearing the cache
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to use this feature'));
 	$smarty->display('error.tpl');
 	die;

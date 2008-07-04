@@ -66,6 +66,7 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));

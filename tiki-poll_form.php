@@ -26,9 +26,10 @@ if ($prefs['feature_polls'] != 'y') {
 
 // Now check permissions to access this page
 if($tiki_p_vote_poll != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
-  $smarty->display("error.tpl");
-  die;  
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	$smarty->display("error.tpl");
+	die;  
 }
 
 if (!isset($_REQUEST["pollId"])) {

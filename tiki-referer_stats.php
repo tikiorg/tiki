@@ -19,6 +19,7 @@ if ($prefs['feature_referer_stats'] != 'y') {
 }
 
 if ($tiki_p_view_referer_stats != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
@@ -35,13 +36,6 @@ if (isset($_REQUEST["clear"])) {
   }
 }
 
-/*
-if($tiki_p_take_quiz != 'y') {
-	$smarty->assign('msg',tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-*/
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'hits_desc';
 } else {

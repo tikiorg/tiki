@@ -50,6 +50,7 @@ if ($userlib->object_has_one_permission($trackerId, 'tracker')) {
 	}
 }
 if ($tiki_p_view_trackers != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

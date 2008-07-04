@@ -57,6 +57,7 @@ if ($prefs['feature_create_webhelp'] != 'y') {
 }
 
 if ($tiki_p_edit_structures != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

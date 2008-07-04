@@ -12,6 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
 
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu_option != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

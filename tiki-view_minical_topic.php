@@ -19,6 +19,7 @@ if ($prefs['feature_minical'] != 'y') {
 }
 
 if ($prefs['tiki_p_minical'] != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

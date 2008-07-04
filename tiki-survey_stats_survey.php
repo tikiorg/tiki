@@ -44,6 +44,7 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 }
 
 if ($tiki_p_view_survey_stats != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

@@ -17,10 +17,10 @@ if ($prefs['feature_charts'] != 'y') {
 }
 
 if ($tiki_p_view_chart != 'y') {
-        $smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-        $smarty->display("error.tpl");
-        die;
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 if (!isset($_REQUEST['chartId'])) {

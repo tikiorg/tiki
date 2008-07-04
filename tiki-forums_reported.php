@@ -71,6 +71,7 @@ if ($user) {
 
 // Must be admin to manipulate the queue
 if ($tiki_p_admin_forum != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

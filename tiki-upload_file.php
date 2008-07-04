@@ -39,6 +39,7 @@ if (isset($_REQUEST['galleryId'])) {
 }
 
 if (!empty($_REQUEST['galleryId']) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can upload files but not to this file gallery"));
 	$smarty->display('error.tpl');
 	die;
@@ -50,6 +51,7 @@ if (!empty($_REQUEST['fileId'])) {
 		die;
 	}
 	if (!((!empty($user) && ($user == $fileInfo['user'] || $user == $fileInfo['lockedby'])) || $tiki_p_edit_gallery_file == 'y')) {// must be the owner or the locker or have the perms
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you can edit this file"));
 		$smarty->display('error.tpl');
 		die;

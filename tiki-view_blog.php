@@ -71,6 +71,7 @@ if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
@@ -93,6 +94,7 @@ if ($tiki_p_blog_admin == 'y') {
 }
 
 if ($tiki_p_read_blog != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
 	$smarty->display("error.tpl");
@@ -138,6 +140,7 @@ if (isset($_REQUEST["remove"])) {
 	if ($ownsblog == 'n') {
 		if (!$user || $data["user"] != $user) {
 			if ($tiki_p_blog_admin != 'y') {
+				$smarty->assign('errortype', 401);
 				$smarty->assign('msg', tra("Permission denied you cannot remove the post"));
 
 				$smarty->display("error.tpl");

@@ -53,6 +53,7 @@ if ($tiki_p_rename == 'y') {
 	$allowed = 'n';
 }
 if ($allowed == 'n') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot rename this page"));
 
 	$smarty->display("error.tpl");

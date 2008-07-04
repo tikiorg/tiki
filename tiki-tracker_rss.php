@@ -25,6 +25,7 @@ if (!isset($_REQUEST["trackerId"])) {
         require_once ('tiki-rss_error.php');
 }
 if ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user,$_REQUEST['trackerId'],'tracker','tiki_p_view_trackers')) {
+	$smarty->assign('errortype', 401);
 	$errmsg=tra("Permission denied you cannot view this section");
 	require_once ('tiki-rss_error.php');
 }

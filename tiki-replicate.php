@@ -5,6 +5,7 @@ require_once ('tiki-setup.php');
 include_once 'lib/logs/logslib.php';
 
 if ($tiki_p_admin != 'y') {
+	$smarty->assign('errortype', 401);
 	if (!$user) {
 		$smarty->assign('display_login_box','y');
 		$smarty->assign('errortitle',tra("Please login"));

@@ -16,6 +16,7 @@ include_once ("lib/ziplib.php");
 
 if ($tiki_p_view != 'y') {
 // This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

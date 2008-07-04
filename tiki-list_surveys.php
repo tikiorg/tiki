@@ -20,6 +20,7 @@ if ($prefs['feature_surveys'] != 'y') {
 }
 
 if($tiki_p_take_survey!= 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra("You don't have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

@@ -134,6 +134,7 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg',tra("Permission denied you cannot view this page"));
 	    $smarty->display("error.tpl");
 		die;
@@ -165,6 +166,7 @@ if ($tiki_p_admin_forum == 'y') {
 }
 
 if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
+	$smarty->assign('errortype', 401);
     $smarty->assign('msg', tra("You do not have permission to use this feature"));
 
     $smarty->display("error.tpl");

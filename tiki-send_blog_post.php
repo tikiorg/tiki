@@ -97,6 +97,7 @@ if ($tiki_p_blog_admin == 'y') {
 }
 
 if ($tiki_p_read_blog != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
 	$smarty->display("error.tpl");

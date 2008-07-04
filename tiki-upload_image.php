@@ -21,6 +21,7 @@ if ($prefs['feature_galleries'] != 'y') {
 
 // Now check permissions to access this page
 if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST["galleryId"],"image gallery","tiki_p_upload_images") ) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot upload images"));
 
 	$smarty->display("error.tpl");
@@ -72,6 +73,7 @@ if (isset($_REQUEST["upload"])) {
 	}
 
 	if ($tiki_p_upload_images != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot upload images"));
 
 		$smarty->display("error.tpl");
@@ -88,6 +90,7 @@ if (isset($_REQUEST["upload"])) {
 
 	// Check the user to be admin or owner or the gallery is public
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you can upload images but not to this gallery"));
 
 		$smarty->display("error.tpl");

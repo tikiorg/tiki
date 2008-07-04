@@ -15,6 +15,7 @@ require_once ('lib/ajax/ajaxlib.php');
 include_once ('lib/bookmarks/bookmarklib.php');
 
 if ($tiki_p_create_bookmarks != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

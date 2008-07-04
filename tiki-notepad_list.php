@@ -28,6 +28,7 @@ if (!$user) {
 }
 
 if ($tiki_p_notepad != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
 	$smarty->display("error.tpl");

@@ -36,6 +36,7 @@ include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
 if ($tiki_p_remove != 'y' || !$wikilib->is_editable($page, $user)) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
 
 	$smarty->display("error.tpl");

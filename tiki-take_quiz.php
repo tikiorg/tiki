@@ -66,6 +66,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
    		$is_categorized = FALSE;
    	}
 	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
+		$smarty->assign('errortype', 401);
 		if (!isset($user)){
 			$smarty->assign('display_login_box','y');
 			$smarty->assign('errortitle',tra("Please login"));
@@ -81,6 +82,7 @@ $smarty->assign('quizId', $_REQUEST["quizId"]);
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
 
 if ($tiki_p_take_quiz != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

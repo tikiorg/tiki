@@ -54,6 +54,7 @@ if ($prefs['feature_editcss'] != 'y') {
 }
 
 if ($tiki_p_create_css != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
@@ -93,6 +94,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	}
 
 	if (!$fp) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to write the style sheet"));
 
 		$smarty->display("error.tpl");

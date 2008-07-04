@@ -48,6 +48,7 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 }
 
 if ($tiki_p_admin_forum != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You do not have permission to use this feature'));
 	$smarty->display('error.tpl');
 	die;

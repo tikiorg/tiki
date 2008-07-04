@@ -17,6 +17,7 @@ include_once ('lib/sharelib.php');
 
 // Basic validation {{{
 if ($tiki_p_assign_perm_wiki_page != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

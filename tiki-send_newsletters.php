@@ -36,6 +36,7 @@ if (($user=="admin") && (count($newsletters["data"])==0)) {
 }
 
 if (!$newsletters["cant"]) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

@@ -53,6 +53,7 @@ include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
 if ($tiki_p_rollback != 'y'  || !$wikilib->is_editable($page, $user)) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot rollback this page"));
 
 	$smarty->display("error.tpl");

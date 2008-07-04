@@ -31,6 +31,7 @@ if ($_REQUEST['objectType'] == 'wiki page') {
 $tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') ||(isset($special_perm) && $special_perm == 'y'))) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot assign permissions for this object"));
 	$smarty->display("error.tpl");
 	die;
@@ -69,6 +70,7 @@ if (isset($_REQUEST['assign']) && isset($_REQUEST['group']) && isset($_REQUEST['
 	check_ticket('object-perms');
 	foreach($_REQUEST['perm'] as $perm) {
 		if ($tiki_p_admin_objects != 'y' && !$userlib->user_has_permission($user, $perm)) {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra('Permission denied'));
 			$smarty->display('error.tpl');
 			die;

@@ -16,6 +16,7 @@ if($prefs['feature_maps'] != 'y') {
 }
 
 if ($tiki_p_map_edit !='y') {
+  $smarty->assign('errortype', 401);
   $smarty->assign('msg',tra("You do not have permissions to view the layers"));
   $smarty->display("error.tpl");
   die;      
@@ -94,6 +95,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
          if (is_file($directory_path.$DSEP.$_REQUEST["file"]) &&
         		!preg_match("/^\./", $_REQUEST["file"])) {
       		if ($tiki_p_map_delete !='y') {
+                    $smarty->assign('errortype', 401);
         			$smarty->assign('msg',tra("You do not have permissions to delete a file"));
         			$smarty->display("error.tpl");
         			die;      
@@ -116,6 +118,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
   if ($_REQUEST["action"]=="createdir") {
     if(!preg_match("/\./", $_REQUEST["directory"])){
       if ($tiki_p_map_create !='y') {
+        $smarty->assign('errortype', 401);
         $smarty->assign('msg',tra("You do not have permissions to create a directory"));
         $smarty->display("error.tpl");
         die;      
@@ -139,6 +142,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
     	if(!preg_match("/^\./", $_REQUEST["directory"]) || 
     	   !preg_match("/\.\//", $_REQUEST["directory"])){
     	  if ($tiki_p_map_delete !='y') {
+            $smarty->assign('errortype', 401);
     	    $smarty->assign('msg',tra("You do not have permissions to delete a directory"));
     	    $smarty->display("error.tpl");
     	    die;      
@@ -160,6 +164,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
     && isset($_REQUEST["filestoindex"])) {
   if ($_REQUEST["action"]=="createindex") {
       if ($tiki_p_map_create !='y') {
+        $smarty->assign('errortype', 401);
         $smarty->assign('msg',tra("You do not have permissions to create an index file"));
         $smarty->display("error.tpl");
         die;      

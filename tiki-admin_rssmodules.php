@@ -15,7 +15,8 @@ if (!isset($rsslib)) {
 	$rsslib = new RssLib($dbTiki);
 }
 
-if( $tiki_p_admin != 'y' and $tiki_p_admin_rssmodules != 'y' ) {
+if( $tiki_p_admin_rssmodules != 'y' ) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

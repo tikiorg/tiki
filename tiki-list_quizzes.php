@@ -19,13 +19,13 @@ if ($prefs['feature_quizzes'] != 'y') {
 	die;
 }
 
-/*
 if($tiki_p_take_quiz != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra("You don't have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
-*/
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {

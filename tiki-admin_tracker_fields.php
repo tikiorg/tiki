@@ -20,6 +20,7 @@ if ($prefs['feature_trackers'] != 'y') {
 
 // To admin tracker fields the user must have permission to admin trackers
 if ($tiki_p_admin_trackers != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

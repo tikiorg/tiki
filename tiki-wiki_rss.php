@@ -16,6 +16,7 @@ if ($prefs['rss_wiki'] != 'y') {
 }
 
 if ($tiki_p_view != 'y') {
+	$smarty->assign('errortype', 401);
 	$errmsg=tra("Permission denied you cannot view this section");
 	require_once ('tiki-rss_error.php');
 }

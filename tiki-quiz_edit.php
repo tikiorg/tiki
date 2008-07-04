@@ -68,6 +68,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 }
 
 if ($tiki_p_admin_quizzes != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to edit quizzes."));
 
 	$smarty->display("error.tpl");

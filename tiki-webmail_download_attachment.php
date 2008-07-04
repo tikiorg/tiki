@@ -17,6 +17,7 @@ if ($prefs['feature_webmail'] != 'y') {
 }
 
 if ($tiki_p_use_webmail != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
 	$smarty->display("error.tpl");

@@ -21,6 +21,7 @@ if ($prefs['feature_articles'] != 'y') {
 
 // PERMISSIONS: NEEDS p_admin
 if ($tiki_p_admin_cms != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

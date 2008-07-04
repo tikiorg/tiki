@@ -12,6 +12,7 @@ require_once ('tiki-setup.php');
 
 if ((isset($_REQUEST['page']) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_view_attachments') && !$tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments'))
   || (!isset($_REQUEST['page']) && $tiki_p_wiki_view_attachments != 'y' && $tiki_p_wiki_admin_attachments != 'y')) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;

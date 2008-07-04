@@ -137,7 +137,7 @@ if (isset($_REQUEST["edit"])) {
 
 if (isset($_REQUEST["removesheet"])) {
 	if ($tiki_p_edit_sheet != 'y') {
-
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot remove this sheet"));
 
 		$smarty->display("error.tpl");

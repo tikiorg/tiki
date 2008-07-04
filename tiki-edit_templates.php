@@ -29,6 +29,7 @@ if  ( ($tiki_p_view_templates != 'y') ||
       )
     )
 { 
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
 	$smarty->display("error.tpl");
@@ -44,6 +45,7 @@ if (!isset($_REQUEST["mode"])) {
 // Validate to prevent editing any file
 if (isset($_REQUEST["template"])) {
 	if (strstr($_REQUEST["template"], '..')) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to do that"));
 
 		$smarty->display('error.tpl');
@@ -70,6 +72,7 @@ if ($tiki_p_edit_templates == 'y') {
 		}
 		@$fp = fopen($file, 'w');
 		if (!$fp) {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to write the template:").' '.$file);
 			$smarty->display('error.tpl');
 			die;
@@ -101,6 +104,7 @@ if (isset($_REQUEST["template"])) {
 		$style_local = 'n';
 	$fp = fopen($file,'r');
 	if (!$fp) {
+		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to read the template"));
 		$smarty->display("error.tpl");
 		die;

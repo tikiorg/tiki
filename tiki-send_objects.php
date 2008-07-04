@@ -20,6 +20,7 @@ if ($prefs['feature_comm'] != 'y') {
 }
 
 if ($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

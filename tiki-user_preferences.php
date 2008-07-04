@@ -40,6 +40,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 			$smarty->display("error.tpl");
 			die;
 		} elseif ($tiki_p_admin != 'y' and $tiki_p_admin_users != 'y') {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to view other users data"));
 			$smarty->display("error.tpl");
 			die;
@@ -55,6 +56,7 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 				die;
 			}
 		} else {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg', tra("You do not have permission to view other users data"));
 			$smarty->display("error.tpl");
 			die;
