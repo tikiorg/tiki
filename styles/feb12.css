@@ -774,10 +774,12 @@ td.even {
 	border-right: solid 1px #909090;
 	border-collapse: collapse}
 
+tr.odd td,
 td.odd {
 	background-color: #F5F5F5;
 	border-right: 1px solid #909090}
 
+tr.even td,
 td.even {
 	background: #ECECEC;
 	border-right: 1px solid #909090}

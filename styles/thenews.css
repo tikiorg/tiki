@@ -867,8 +867,12 @@ td.even {
 	padding: 0.2em;
 	vertical-align: top}
 
+tr.odd td,
 td.odd {background: #eeeeee}
+
+tr.even td,
 td.even {background: #f9f9f9}
+
 td.third {background: #e7e7e7}
 
 td.heading,

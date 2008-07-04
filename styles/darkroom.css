@@ -895,16 +895,22 @@ div.simplebox {
 /** Tables **/
 table {
 	font-size: 1em;
-	width: 100%;
 	border-collapse: collapse}
 
 table.normal, 
 table.admin,
 table.bloglist  {
+	width: 100%;
 	border: solid 1px #696969;
 	border-collapse: collapse;
 	margin-top: 1em;
 	margin-bottom: 1em}
+	
+* html table.normal, 
+* html table.admin,
+* html table.bloglist {
+	width: 97%;
+	font-size: 11px}
 
 table.normal,
 table.bloglist {}
@@ -958,10 +964,12 @@ div.heading {} */
 tr.odd {background: #292929}
 tr.even {background: #3F3F3F}
 
+tr.odd td,
 td.odd {
 	background: #292929;
 	border-right: 1px solid #696969}
 
+tr.even td,
 td.even {
 	background: #232323;
 	border-right: 1px solid #696969}
