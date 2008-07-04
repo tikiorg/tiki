@@ -435,3 +435,68 @@ h3.box-title {
   margin-left:  15px;
   margin-bottom:2px;
 }
+
+/* rbox: remarks box (note/warning/tip/comment)
+ * added July 2008 for wikiplugin_remarksbox etc */
+
+.rbox {
+	margin: 1em .3em;
+}
+
+.rbox-title {
+	display: inline;
+	font-weight: bold;
+	font-size: 1.1em !important;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #ddd;
+	border-width: 0 1px 1px 0;
+	border-color: #CCC;
+	border-style: solid;
+	padding: .2em .5em .5em !important;
+	position: relative;
+	z-index: 0;
+}
+
+.rbox img {
+	padding-right: 3px;
+	vertical-align: middle;
+}
+
+.rbox-data {
+	padding: .4em;
+	font-style: italic;
+	border: 1px #DDD solid;
+	background-color: #eee;
+	position: relative;
+	z-index: 1;
+}
+
+.warning .rbox-title {
+	color: #f00;
+	background-color: #333;
+	border-color: #000;
+}
+
+.warning .rbox-data {
+	background-color: #fff;
+	font-size: 1.1em;
+	border-color: #333;
+}
+
+.note .rbox-title {
+	background-color: #ccc;
+	color: #06F;
+	border-color: #aaa;
+}
+
+.note .rbox-data {
+	background-color: #ECECEF;
+	border: .1em solid #ccc;
+}
+
+.comment .rbox-title, .tip .rbox-title .rbox-title.tip {}
+
+.comment .rbox-data, .tip .rbox-data, .rbox-data.tip {}
+
+/* end rbox */
