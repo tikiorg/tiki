@@ -28,7 +28,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
  *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
  */
-function smarty_block_self_link($params, $content, &$smarty, $repeat) {
+function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
     global $prefs;
     $default_type = 'absolute_path';
     $default_icon_type = 'relative';
