@@ -14,9 +14,12 @@
 {include file="messu-nav.tpl"}
 <br /><br />
 
-{if $sent}
-{$message}<br /><br />
+
+{if $message}
+<div class="simplebox highlight">{if $sent ne '1'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div><br />
+<br /><br />
 {/if}
+{if $sent ne '1'}
 <form action="messu-broadcast.php" method="post">
 <table class="normal" >
   <tr>
@@ -42,7 +45,6 @@
       <option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
     </select>
 		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
-    <input type="submit" name="send" value="{tr}Send{/tr}" />
     </td>
   </tr>
   <tr>
@@ -52,8 +54,9 @@
 <br />
 <table class="normal" >
   <tr>
-    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
+    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea><br /><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
   </tr>
 </table>
 </form>
+{/if}
 <br />

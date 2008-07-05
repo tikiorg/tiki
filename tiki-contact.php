@@ -35,7 +35,7 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 	$smarty->assign('sent', 0);
 	if (isset($_REQUEST['send'])) {
 		check_ticket('contact');
-		$smarty->assign('sent', 1);
+
 		$message = '';
 		// Validation:
 		// must have a subject or body non-empty (or both)
@@ -55,9 +55,10 @@ if ($user == '' and $prefs['contact_anon'] == 'y') {
 				die;
 			}
 		}
+		$smarty->assign('sent', 1);
 		$messulib->post_message($prefs['contact_user'], 'Anonymous', $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-		$message = tra('Message sent to'). ':' . $prefs['contact_user'] . '<br />';
+		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
 		$smarty->assign('message', $message);
 	}
 }
@@ -68,7 +69,7 @@ if ($user and $prefs['feature_messages'] == 'y' and $tiki_p_messages == 'y') {
 
 	if (isset($_REQUEST['send'])) {
 		check_ticket('contact');
-		$smarty->assign('sent', 1);
+
 
 		$message = '';
 
@@ -80,8 +81,8 @@ if ($user and $prefs['feature_messages'] == 'y' and $tiki_p_messages == 'y') {
 			$smarty->display("tiki.tpl");
 			die;
 		}
-
-		$message = tra('Message sent to'). ':' . $prefs['contact_user'] . '<br />';
+		$smarty->assign('sent', 1);
+		$message = tra('Message sent to'). ': ' . $prefs['contact_user'] . '<br />';
 		$messulib->post_message($prefs['contact_user'], $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 

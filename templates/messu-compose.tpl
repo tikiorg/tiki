@@ -12,13 +12,14 @@
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-<br /><br />
+
+{if $allowMsgs ne 'y'}<br />
+<div class="simplebox">{icon _id=information.png style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}</div><br /</br />
+{/if}
+
 
 {if $sent}
 <div class="simplebox highlight">{if (strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}'))}{icon _id=delete.png alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept.png alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
-{/if}
-{if $allowMsgs ne "y"}<br />
-<div class="simplebox">{icon _id=information.png style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}</div>
 {/if}
 
 {if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}
@@ -26,6 +27,7 @@
 <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
 <div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,&nbsp;).{/tr}</div><br />
 </div>
+
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>

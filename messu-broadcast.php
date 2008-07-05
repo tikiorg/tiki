@@ -91,7 +91,7 @@ if (isset($_REQUEST['group'])) {
 
 if (isset($_REQUEST['send'])) {
 	check_ticket('messu-broadcast');
-	$smarty->assign('sent', 1);
+
 
 	$message = '';
 
@@ -135,6 +135,8 @@ if (isset($_REQUEST['send'])) {
 		die;
 	}
 
+	$smarty->assign('sent', 1);
+	
 	// Insert the message in the inboxes of each user
 	foreach ($users as $a_user) {
 		$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);

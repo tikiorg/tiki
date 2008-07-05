@@ -1,9 +1,9 @@
 <h1><a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a></h1>
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $message}<br />
-<div class="simplebox highlight">{if $wassent ne 'y'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div><br />
+<div class="simplebox highlight">{if $sent ne '1'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div><br />
 {/if}
-{if $wassent ne 'y'}
+{if $sent ne '1'}
 <h2>{tr}Send a message to us{/tr}</h2>
   <form method="post" action="tiki-contact.php">
   <input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
@@ -37,5 +37,7 @@
 {if strlen($email)>0}
 <h2>{tr}Contact us by email{/tr}</h2>                              
 {tr}Click here to send us an email{/tr}: {mailto address="$email" encode="javascript" extra='class="link"'}
+{else}
+<p><a class="link" href="tiki-contact.php">Send another message.</a></p>
 {/if}
 {/if}
