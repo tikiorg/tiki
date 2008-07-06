@@ -741,10 +741,14 @@ div.titlebar {
 }
 
 /* The bar where the actions for a page are displayed */
-DIV#page-bar {
-
+div#page-bar {
+  border-top: 1px solid #8CACBB;
+  padding-top: 5px;
 }
-DIV#page-bar table, DIV#page-bar td, DIV#page-bar tr {
+
+div#page-bar table
+  , div#page-bar td
+  , div#page-bar tr {
 	margin: 0;
 	padding: 0;
 }

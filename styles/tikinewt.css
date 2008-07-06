@@ -1203,7 +1203,10 @@ div.titlebar {
 div#page-bar {
 	padding-bottom: 40px;
 	display: block;
+  border-top: 1px solid #8CACBB;
+  padding-top: 5px;
 }
+
 div#page-bar table, div#page-bar td, div#page-bar tr {
 	margin: 0;
 	padding: 0;
