@@ -7,9 +7,9 @@ close();
 {/if}
 {capture assign=mid_data}
 	{if ($errortype eq "402")}
-		<center>
-			{include file=tiki-login.tpl}
-		</center>
+		{include file=tiki-login.tpl}
+	{elseif $errortype eq 401 and !empty($prefs.permission_denied_url)}
+		{php}global $prefs; header('Location:'.$prefs['permission_denied_url']); exit; {/php}
 	{else}
 		<br />
 		<div class="cbox">
@@ -50,13 +50,9 @@ close();
 						</div>
 						<br /><br />
 					{/if}
-					{if ( isset($display_login_box) ) }
-						<div >
-      				{include file=modules/mod-login_box.tpl}
-						</div>
-						<br /><br />
-					{/if}
-					{if ( !isset($user) && !isset($display_login_box) ) }
+					{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+						{include file=tiki-login.tpl}
+					{elseif !isset($user) }
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>

@@ -184,6 +184,10 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <td><input type="text" name="user_tracker_infos" value="{$prefs.user_tracker_infos|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}Deactivate login autocomplete (do not remember login and password){/tr}:</td>
 <td><input type="checkbox" name="desactive_login_autocomplete" {if $prefs.desactive_login_autocomplete eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}On permission denied, display login box for anonymous:{/tr}</td>
+<td><input type="checkbox" name="permission_denied_login_box"{if $prefs.permission_denied_login_box eq 'y'} checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}On permission denied, send to this url:{/tr}</td>
+<td><input type="text" name="permission_denied_url" value="{$prefs.permission_denied_url|escape}" /></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>

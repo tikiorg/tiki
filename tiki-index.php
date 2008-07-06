@@ -268,12 +268,7 @@ $tikilib->get_perm_object($page, 'wiki page', $info, true);
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
-	if (!isset($user)){
-		$smarty->assign('display_login_box','y');
-		$smarty->assign('errortitle',tra('Please login'));
-	} else {
-		$smarty->assign('msg',tra('Permission denied you cannot view this page'));
-	} 
+	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 	$smarty->display('error.tpl');
 	die;  
 }

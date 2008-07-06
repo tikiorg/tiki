@@ -63,6 +63,8 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_toggle('desactive_login_autocomplete');
 	simple_set_value('available_languages');
 	simple_set_value('available_styles');
+	simple_set_toggle('permission_denied_login_box');
+	simple_set_value('permission_denied_url');
 
 
 	if (isset($_REQUEST['registration_choices'])) {

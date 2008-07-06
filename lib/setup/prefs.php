@@ -680,6 +680,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['cookie_name'] = 'tikiwiki';
 	$prefs['user_tracker_infos'] = '';
 	$prefs['desactive_login_autocomplete'] = 'n';
+	$prefs['permission_denied_login_box'] = 'y';
+	$prefs['permission_denied_url'] = '';
 	if ( $phpcas_enabled == 'y' ) {
 		$prefs['cas_create_user_tiki'] = 'n';
 		$prefs['cas_skip_admin'] = 'n';
