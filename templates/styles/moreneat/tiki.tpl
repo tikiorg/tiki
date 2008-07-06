@@ -47,9 +47,9 @@
 
 
 <div id="tiki-mid">
-<table id="tikimidtbl" border="0" cellpadding="0" cellspacing="0" >
+<table id="tikimidtbl" border="0" cellpadding="0" cellspacing="0">
   {if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
-    <tr><td id="tiki-columns" colspan="0" width="100%">
+    <tr><td id="tiki-columns" colspan="3" width="100%">
       {if $prefs.feature_left_column eq 'user'}
         <span style="float: left"><a class="flip" href="javascript:icntoggle('leftcolumn');">
         <img name="leftcolumnicn" class="colflip" src="img/icons/ofo.gif" border="0" alt="+/-" />&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a>
