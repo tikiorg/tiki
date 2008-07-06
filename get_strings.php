@@ -297,7 +297,7 @@ if ( $completion) {
         echo "<td><b>Language</b></td>";
         echo "<td><b>Completion</b></td>";
         echo "<td><b>Translated</b></td>";
-        echo "<td><b>To tranlate</b></td>";
+        echo "<td><b>To Translate</b></td>";
         echo "<td><b>Unused</b></td>";
       echo "</tr>";
   }
