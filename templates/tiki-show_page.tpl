@@ -52,7 +52,7 @@
 	{/if}
 	{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' or $canEditStaging eq 'y'}
 				<a title="{tr}Edit{/tr}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>{icon _id='page_edit'}</a>
-	{/if}       
+	{/if}
 	{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
 				<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">{icon _id='wiki3d' alt="{tr}3d browser{/tr}"}</a>
 	{/if}
@@ -264,8 +264,9 @@ must not overlap the wiki content that could contain floated elements *}
 </div> {* End of main wiki page *}
 
 {if $has_footnote eq 'y'}<div class="wikitext" id="wikifootnote">{$footnote}</div>{/if}
-
-<p class="editdate"> {* begining editdate *}
+{if $wiki_authors_style neq 'none' || $prefs.wiki_feature_copyrights eq 'y'|| $print_page eq 'y'}
+  <p class="editdate"> {* begining editdate *}
+{/if}
 {if isset($wiki_authors_style) && $wiki_authors_style eq 'business'}
   {tr}Last edited by{/tr} {$lastUser|userlink}
   {section name=author loop=$contributors}
@@ -276,7 +277,7 @@ must not overlap the wiki content that could contain floated elements *}
     {/if}
    {/if}
    {$contributors[author]|userlink}
-  {/section}.<br />                                         
+  {/section}.<br />
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {elseif isset($wiki_authors_style) && $wiki_authors_style eq 'collaborative'}
 <br />
@@ -297,7 +298,7 @@ must not overlap the wiki content that could contain floated elements *}
   {tr}Last Modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {/if}
 
-{if $prefs.wiki_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+{if $prefs.wiki_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <br />
@@ -314,7 +315,9 @@ must not overlap the wiki content that could contain floated elements *}
     {tr}The original document is available at{/tr} <a href="{$base_url}tiki-index.php?page={$page|escape:"url"}">{$base_url}tiki-index.php?page={$page|escape:"url"}</a>
 {/if}
 
-</p> {* end editdate *}
+{if $wiki_authors_style neq 'none' || $prefs.wiki_feature_copyrights eq 'y'|| $print_page eq 'y'}
+  </p> {* end editdate *}
+{/if}
 
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categoryobjects eq 'y' and $tiki_p_view_categories eq 'y'}
 {$display_catobjects}

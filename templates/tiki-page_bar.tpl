@@ -1,6 +1,5 @@
 {* $Id$ *}
 {strip}
-<hr/>
 
 <div class="clearfix" id="page-bar">
 {if $edit_page eq 'y'}

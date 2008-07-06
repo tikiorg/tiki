@@ -500,3 +500,9 @@ h3.box-title {
 .comment .rbox-data, .tip .rbox-data, .rbox-data.tip {}
 
 /* end rbox */
+
+div #page-bar
+{
+  border-top: 1px solid;
+  padding-top: 5px;
+}
