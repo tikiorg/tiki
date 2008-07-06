@@ -174,6 +174,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 			}
             $smarty->assign('module_params',array()); // ensure params not available outside current module
             unset($info); // clean up when done
+			$smarty->clear_assign('tpl_module_title');
 			$mod_reference["data"] = $data;
 //			if (!file_exists($nocache)) {
 //				$fp = fopen($cachefile, "w+");
