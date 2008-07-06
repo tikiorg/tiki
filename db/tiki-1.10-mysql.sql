@@ -2274,6 +2274,8 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_article_comments','tiki_p_admin','');
@@ -2544,6 +2546,7 @@ CREATE TABLE tiki_pages (
   is_html tinyint(1) default 0,
   created int(14),
   wysiwyg char(1) default NULL,
+  wiki_authors_style varchar(20) NOT NULL default '',
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -5074,3 +5077,14 @@ CREATE TABLE tiki_pages_changes (
 	PRIMARY KEY(page_id, version)
 );
 
+DROP TABLE IF EXISTS tiki_minichat;
+CREATE TABLE `tiki_minichat` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `channel` varchar(31),
+  `ts` int(10) unsigned NOT NULL,
+  `user` varchar(31) default NULL,
+  `nick` varchar(31) default NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `channel` (`channel`)
+);
