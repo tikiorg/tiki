@@ -24,7 +24,7 @@
 <td><div class="button2"><a class="linkbut" href="tiki-minical_prefs.php#import">{tr}Import{/tr}</a></div></td>
 </tr>
 </table>
-
+<br />
 <table class="normal" >
 <tr>
 	<td class="formcolor">
@@ -32,8 +32,7 @@
 <table class="normal">
 {section name=ix loop=$upcoming}
 <tr>
-
-<td class="even">
+	<td class="even">
 {$upcoming[ix].start|tiki_date_format:"%b %d %H:%M"}
 		{if $upcoming[ix].topicId}
 			{if $upcoming[ix].topic.isIcon eq 'y'}
@@ -45,6 +44,8 @@
 <a title="{$upcoming[ix].start|tiki_short_time}-{$upcoming[ix].end|tiki_short_time}:{$upcoming[ix].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$upcoming[ix].eventId}#add">{$upcoming[ix].title}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}	
 </table>
 	</td>
@@ -58,13 +59,12 @@
 <!--[{$pdate_h|tiki_date_format:"%H"}:{$pdate_h|tiki_date_format:"%M"}]-->
 
 {cycle values="odd,even" print=false}
-
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}">{icon _id='resultset_previous'}</a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|tiki_date_format:"%d"}&amp;mon={$yesterday|tiki_date_format:"%m"}&amp;year={$yesterday|tiki_date_format:"%Y"}">{icon _id='resultset_previous' style="vertical-align:middle"}</a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}">{icon _id='resultset_next'}</a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}">{icon _id='resultset_next' style="vertical-align:middle"}</a>
 </b>
-<table clas="normal"  >
+<table clas="normal" width="100%">
 {section name=ix loop=$slots}
 <tr>
 	<td class="{cycle}">
@@ -84,7 +84,7 @@
     	{/if}
     	
     	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
-    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">&nbsp; {icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+    	<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">{icon _id='cross' alt='{tr}Remove{/tr}' style="vertical-align:middle;"}</a>
     	<br />
     	{/section}
     	</td>
@@ -192,25 +192,22 @@
 </div>
 </div>
 {/if}
-
+<br />
 <a name="add"></a>
-<h2>{tr}Add or edit event{/tr}</h2>
+<h2>{if $eventId}{tr}Edit event{/tr}{else}{tr}Add event{/tr}{/if}</h2>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="eventId" value="{$eventId|escape}" />
 <input type="hidden" name="view" value="{$view|escape}" />
 <input type="hidden" name="duration" value="60*60" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}Save{/tr}" />
-      {if $eventId}
-      <input type="submit" name="remove2" value="{tr}Delete{/tr}" />
-      {/if}
+      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" style="width:95%"/>
       </td>
   </tr>
   <tr>
   	  <td class="formcolor">{tr}Start{/tr}</td>
   	  <td class="formcolor">
-  	  {html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order}
+  	  {html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr}
   	  {html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
   </tr>
@@ -241,8 +238,16 @@
   <tr>
   	  <td class="formcolor">{tr}Description{/tr}</td>
   	  <td class="formcolor">
-  	  <textarea name="description" rows="5" cols="80">{$info.description|escape}</textarea>
+  	  <textarea name="description" rows="5" cols="80" style="width:95%">{$info.description|escape}</textarea>
       </td>
+  </tr>
+  <tr>
+	<td>&nbsp;</td>
+	<td>
+		<input type="submit" name="save" value="{tr}Save{/tr}" />
+{if $eventId}		<input type="submit" name="remove2" value="{tr}Delete{/tr}" />
+{/if}
+	</td>
   </tr>
 </table>
 </form>
