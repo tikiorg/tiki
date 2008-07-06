@@ -94,12 +94,7 @@ if (isset($_REQUEST["editimage"]) || isset($_REQUEST["editimage_andgonext"])) {
    		}
 		if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
 			$smarty->assign('errortype', 401);
-			if (!isset($user)){
-				$smarty->assign('display_login_box','y');
-				$smarty->assign('errortitle',tra("Please login"));
-			} else {
-				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-			}
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
 			$smarty->display("error.tpl");
 			die;
 		}
