@@ -4,7 +4,8 @@
 {popup_init src="lib/overlib.js"}
 {/if}
 
-<h1><a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a></h1>
+{title}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
+
 <div class="navbar">
 {if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
 {if $user_watching_tracker ne 'y'}

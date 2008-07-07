@@ -1,18 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
-<img border="0" src="img/icons/info.gif" alt="{tr}Edit{/tr}" /></a>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=webmail" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}
-</h1>
+{title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
