@@ -197,7 +197,7 @@ class MenuLib extends TikiLib {
 			$pos = strpos($url, '/'.$option['sefurl']);
 			$lg = 1 + strlen($option['sefurl']);
 		} else {
-			$pos = stripos($url, $option['url']);
+			$pos = strpos(strtolower($url), strtolower($option['url']));
 			$lg = strlen($option['url']);
 		}
 		if ($pos !== false) {
