@@ -39,7 +39,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat)
   
   if ( $prefs['feature_view_tpl'] == 'y' && ( $tiki_p_edit_templates || $tiki_p_edit_templates ) ) {
     $html .= '<a href="tiki-edit_templates.php?template=' . $smarty->_tpl_vars['mid'] . '" target="tikihelp" class="tikihelp" title="' . tra('View tpl:') . ' ' . $content . '">' 
-          . smarty_function_icon(array('_id' => 'shape_square_edit'), $smarty)
+          . smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $smarty)
           . "</a>\n";
   }
   
