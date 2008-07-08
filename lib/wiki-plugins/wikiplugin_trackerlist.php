@@ -3,7 +3,7 @@
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y, popup=6:7, stickypopup=y, showtitle=y, showlinks=y, showdesc=y, showinitials=y, showstatus=y, showcreated=y, showlastmodif=y, showfieldname=n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=1:2, filtervalue=x:y, exactvalue=x:y, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y,more=y,moreurl=,view=user,tpl=,wiki=,view_user=user,itemId=,url=,ldelim=,rdelim=)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=1,fields=2:4:5, sort=y, popup=6:7, stickypopup=y, showtitle=y, showlinks=y, showdesc=y, shownbitems=n, showinitials=y, showstatus=y, showcreated=y, showlastmodif=y, showfieldname=n, status=o|p|c|op|oc|pc|opc, sort_mode=, max=, filterfield=1:2, filtervalue=x:y, exactvalue=x:y, checkbox=fieldId/name/title/submit/action/tpl,goIfOne=y,more=y,moreurl=,view=user,tpl=,wiki=,view_user=user,itemId=,url=,ldelim=,rdelim=)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 
@@ -85,6 +85,11 @@ function wikiplugin_trackerlist($data, $params) {
 			$showinitials = "n";
 		}
 		$smarty->assign_by_ref('showinitials', $showinitials);
+
+		if (!isset($shownbitems)) {
+			$shownbitems = "n";
+		}
+		$smarty->assign_by_ref('shownbitems', $shownbitems);
 		
 		if (!isset($showstatus)) {
 			$showstatus = "n";

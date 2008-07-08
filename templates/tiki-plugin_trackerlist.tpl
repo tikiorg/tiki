@@ -4,6 +4,8 @@
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
+{if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
+
 {if $cant_pages > 1 or $tr_initial or $showinitials eq 'y'}
 <div align="center">
 {section name=ini loop=$initials}

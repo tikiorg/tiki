@@ -6558,6 +6558,7 @@ $lang=Array(
 "Address book" => "Carnet d'adresses",
 " item found" => " fiche trouvée",
 " items found" => " fiches trouvées",
+"Items found:" => "Fiches trouvées :",
 "Word Limit Exceeded" => "Nombre maximum de mots atteint",
 "Word Count:" => "Nombre de mots :",
 "Number of voices" => "nombre de voies",
