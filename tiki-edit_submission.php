@@ -304,7 +304,7 @@ if (isset($_REQUEST["preview"])) {
 }
 
 // Pro
-if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) {
 	check_ticket('edit-submission'); 
 	include_once ("lib/imagegals/imagegallib.php");
 
@@ -415,9 +415,8 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-edit_submission.php?subId=" . $cat_objid;
 	include_once ("categorize.php");
 	include_once ("freetag_apply.php");
-	if ($tiki_p_autoapprove_submission == 'y') {
+	if ( isset($_REQUEST["save"]) && $tiki_p_autoapprove_submission == 'y' ) {
 		$artlib->approve_submission($subid);
-
 		header ("location: tiki-view_articles.php");
 		die;
 	}

@@ -184,7 +184,10 @@
 
 <div align="center">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
+<input type="submit" class="wikiaction" name="submit" value="{tr}Submit Article{/tr}" />
+{if $tiki_p_autoapprove_submission eq 'y'}
+	<input type="submit" class="wikiaction" name="save" value="{tr}Auto-Approve Article{/tr}" />
+{/if}
 </div>
 </form>
 <br />
