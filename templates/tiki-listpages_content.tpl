@@ -238,6 +238,10 @@
       {if $tiki_p_edit eq 'y'}
         <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
       {/if}
+
+      {if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+        <a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
+      {/if}
   
       {if $tiki_p_assign_perm_wiki_page eq 'y'}
         <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
