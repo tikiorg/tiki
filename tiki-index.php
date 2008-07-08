@@ -587,6 +587,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('index');
 		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'del_desc') && $tiki_p_watch_structure != 'y') {
+			$smarty->assign('errortype', 401);
 			$smarty->assign('msg',tra('Permission denied'));
 			$smarty->display('error.tpl');
 			die;
