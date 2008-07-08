@@ -1860,3 +1860,12 @@ CREATE TABLE `tiki_minichat` (
   PRIMARY KEY  (`id`),
   KEY `channel` (`channel`)
 );
+
+#2008-07-08 Jyhem
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_articles_admin_topics', 'Can admin article topics', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_articles_admin_types', 'Can admin article types', 'editors', 'cms');
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin topics' and url='tiki-admin_topics.php' and position='390' and perm='tiki_p_read_article,tiki_p_admin_cms' and groupname='' ;
+DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin types' and url='tiki-article_types.php' and position='395' and perm='tiki_p_read_article,tiki_p_admin_cms' and groupname='' ;
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','');
+
