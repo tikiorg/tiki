@@ -44,7 +44,7 @@
   {/section}
 
   {if $avatar}<tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>{/if}
-  {if $homepage}  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>
+  {if $homepage}  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{if $homePage ne ""}<a href="{$homePage}" class="link" title="{tr}Users HomePage{/tr}">{$homePage}</a>{/if}</td></tr>{/if}
 {if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>
 {if $userPage_exists}
@@ -53,7 +53,6 @@
 {$prefs.feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
 {else}&nbsp;{/if}
 </td></tr>
-{/if}
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$user_prefs.display_timezone|default:"{tr}System{/tr}"}</td></tr>
 
