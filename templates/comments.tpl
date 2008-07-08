@@ -363,7 +363,7 @@
 </div>
 {* End of Post dialog *}
 
-</div>{if $forum_mode neq 'y'}<!-- comzone end -->{/if}
+{if $forum_mode neq 'y'}</div><!-- comzone end -->{/if}
 {*</div>  now this tag causes problems instead of fixing (was added earlier to prevent side columns in *litecss themes from not appearing *}
 {if empty($user)}
 <script type="text/javascript">
