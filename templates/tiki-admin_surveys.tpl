@@ -87,9 +87,9 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td style="text-align:center;" class="{cycle advance=false}">
 {if $channels[user].status eq 'o'}
-	<img src="img/icons/ofo.gif" alt="{tr}Open{/tr}" />
+	{icon _id=ofolder alt="Open"}
 {else}
-	<img src="img/icons/fo.gif" alt="{tr}closed{/tr}" />
+	{icon _id=folder alt="closed"}
 {/if}
 </td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
