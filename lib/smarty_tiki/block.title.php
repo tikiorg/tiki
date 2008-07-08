@@ -12,6 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params: 
  *    help: name of the doc page on doc.tw.org
  *    admpage: admin panel name
+ *    url: link on the title
  *
  * usage: {title help='Example' admpage='example'}{tr}Example{/tr}{/title}
  *
@@ -27,9 +28,10 @@ function smarty_block_title($params, $content, &$smarty, $repeat)
 
   if ( ! isset($params['help']) ) $params['help'] = '';
   if ( ! isset($params['admpage']) ) $params['admpage'] = '';
+  if ( ! isset($params['url']) ) $params['url'] = $_SERVER['REQUEST_URI'];
   
   $html = '<h1>';
-  $html .= '<a class="pagetitle" href="' . $_SERVER['PHP_SELF'] . '">' . $content . "</a>\n";
+  $html .= '<a class="pagetitle" href="' . $params['url'] . '">' . $content . "</a>\n";
   
   if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
     $html .= '<a href="' . $prefs['helpurl'] . $params['help'] . '" target="tikihelp" class="tikihelp" title="' . tra('Help page:') . ' ' . $content . '">'
