@@ -28,7 +28,8 @@ $smarty->assign('opensec', $opensec);
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 	{if $prefs.feature_menusfolderstyle eq 'y'}
-	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}"><img src="img/icons/{if $menu_info.type ne 'd'}o{/if}fo.gif" border="0" name="menu{$cname}icn" alt='{tr}Toggle{/tr}'/></a>
+	{assign var="name" value=icnmenu$cname}
+	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">{if $menu_info.type ne 'd'}AAAA{icon _id="folder_open" alt='Toggle' name="$name"}{else}{icon _id="folder" alt='Toggle' name="$name"}{/if}</a>
 	{else}
 	<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>
 	{/if}
