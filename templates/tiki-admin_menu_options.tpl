@@ -8,6 +8,8 @@
 <div class="navbar">
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span>
+<span class="button2"><a href="#export" class="linkbut">{tr}Export{/tr}</a></span>
+<span class="button2"><a href="#import" class="linkbut">{tr}Import{/tr}</a></span>
 </div>
 <br />
 <table><tr>
@@ -295,16 +297,20 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </div>
 </div>
 
+<br />
+<a name="export"></a>
 <h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId}" />
 <input type="submit" name="export" value="{tr}Export{/tr}" />
 </form>
 
+<br />
+<a name="import"></a>
 <h2>{tr}Import CSV data{/tr}</h2>
 <div class="rbox" name="tip">
 	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-	<div class="rbox-data" name="tip">{tr}To add new options to the menu set the optionId field in the CSV file to 0.{/tr}</div>
+	<div class="rbox-data" name="tip">{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}</div>
 </div>
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="menuId" value="{$menuId}" />

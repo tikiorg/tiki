@@ -332,7 +332,7 @@ class MenuLib extends TikiLib {
 			die;
 		}
 		while (!feof($fhandle)) {
-			$res = array('optionId'=>'', 'type'=>'', 'name'=>'', 'url'=>'', 'position'=>0, 'section'=>'', 'perm'=>'', 'groupname'=>'', 'userlevel'=>'');
+			$res = array('optionId'=>'', 'type'=>'', 'name'=>'', 'url'=>'', 'position'=>0, 'section'=>'', 'perm'=>'', 'groupname'=>'', 'userlevel'=>'', 'remove'=>'');
 			$data = fgetcsv($fhandle, 1000);
 			if (empty($data))
 				continue;
@@ -349,15 +349,19 @@ class MenuLib extends TikiLib {
 		}
 		fclose($fhandle);
 		foreach ($options as $option) {
-			$this->replace_menu_option($_REQUEST['menuId'], $option['optionId'], $option['name'], $option['url'], $option['type'], $option['position'], $option['section'], $option['perm'], $option['groupname'], $option['userlevel']);
+			if ($option['remove'] == 'y') {
+				$this->remove_menu_option($option['optionId']);
+			} else {
+				$this->replace_menu_option($_REQUEST['menuId'], $option['optionId'], $option['name'], $option['url'], $option['type'], $option['position'], $option['section'], $option['perm'], $option['groupname'], $option['userlevel']);
+			}
 		}
 	}
 	
 	function export_menu_options() {
-		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel"' . "\r\n";
+		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel","remove"' . "\r\n";
 		$options = $this->list_menu_options($_REQUEST['menuId'], 0, -1, 'position_asc', '', true);
 		foreach ($options['data'] as $option) {
-			$data .= $option['optionId'].',"'.$option['type'].'","'.str_replace('"', '""',$option['name']).'","'.str_replace('"', '""',$option['url']).'",'.$option['position'].',"'.$option['section'].'","'.$option['perm'].'","'.$option['groupname'].'",'.$option['userlevel']."\r\n";
+			$data .= $option['optionId'].',"'.$option['type'].'","'.str_replace('"', '""',$option['name']).'","'.str_replace('"', '""',$option['url']).'",'.$option['position'].',"'.$option['section'].'","'.$option['perm'].'","'.$option['groupname'].'",'.$option['userlevel'].',"n"'."\r\n";
 		}
 		if (empty($_REQUEST['encoding'])) {
 			$_REQUEST['encoding'] = 'UTF-8';
