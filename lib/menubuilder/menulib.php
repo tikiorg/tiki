@@ -355,7 +355,7 @@ class MenuLib extends TikiLib {
 	
 	function export_menu_options() {
 		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel"' . "\r\n";
-		$options = $this->list_menu_options($_REQUEST['menuId']);
+		$options = $this->list_menu_options($_REQUEST['menuId'], 0, -1, 'position_asc', '', true);
 		foreach ($options['data'] as $option) {
 			$data .= $option['optionId'].',"'.$option['type'].'","'.str_replace('"', '""',$option['name']).'","'.str_replace('"', '""',$option['url']).'",'.$option['position'].',"'.$option['section'].'","'.$option['perm'].'","'.$option['groupname'].'",'.$option['userlevel']."\r\n";
 		}
