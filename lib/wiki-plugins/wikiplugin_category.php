@@ -19,7 +19,7 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3, types=>article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=>[type|created|name|hits|shuffle]_[asc|desc], sub=>y|n, split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=1+2+3, types=article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=[type|created|name|hits|shuffle]_[asc|desc], sub=y|n, split=|n, and=y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category($data, $params) {
