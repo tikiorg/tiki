@@ -56,14 +56,14 @@ function wikiplugin_rss($data,$params) {
 		$items = array_merge($items, $itemsrss);		
 	}
  
-	usort($items, 'rss_sort');
-	if ( count($ids) > 1 ) {
-		$items = array_slice($items, count($ids));
-	}
- 
 	if ( isset($items[0]) && $items[0]['isTitle'] == 'y' ) {
 		$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]['link'].'">'.TikiLib::htmldecode($items[0]['title']).'</a></div><br />'; 
 		$items = array_slice($items, 1);
+	}
+
+	usort($items, 'rss_sort');
+	if ( count($ids) > 1 ) {
+		$items = array_slice($items, count($ids));
 	}
 
 	if ( count($items) < $max ) $max = count($items);
@@ -101,7 +101,6 @@ function wikiplugin_rss($data,$params) {
 		}
 	}
 	$repl .= '</table>';
-
 	return $repl;
 }
 
