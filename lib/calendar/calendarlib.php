@@ -642,14 +642,15 @@ class CalendarLib extends TikiLib {
 		$mloop = TikiLib::date_format('%m', $viewstart);
 		$dloop = TikiLib::date_format('%d', $viewstart);
 		$yloop = TikiLib::date_format('%Y', $viewstart);
+		$curtikidate = new TikiDate();
+		$display_tz = $tikilib->get_display_timezone();
+		if ( $display_tz == '' ) $display_tz = 'UTC';
+		$curtikidate->setTZbyID($display_tz);
+		$curtikidate->setLocalTime($dloop,$mloop,$yloop,0,0,0,0);
 	
 		// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 		for ($i = 0; $i <= $numberofweeks; $i++) {
-			$wee = TikiLib::date_format('%U', $viewstart + ($i * weekInSeconds) + $d);
-			$weeks[] = $wee;
-	
-			// $startOfWeek is a unix timestamp
-			$startOfWeek = $viewstart + $i * weekInSeconds;
+			$weeks[] = $curtikidate->getWeekOfYear();
 	
 			foreach ( $weekdays as $w ) {
 				$leday = array();
@@ -659,7 +660,8 @@ class CalendarLib extends TikiLib {
 				if ( $calendarViewMode == 'day' ) {
 					$dday = $daystart;
 				} else {
-					$dday = TikiLib::make_time(0,0,0, $mloop, $dloop++, $yloop);
+					$dday = $curtikidate->getTime();
+					$curtikidate->addDays(1);
 				}
 				$cell[$i][$w]['day'] = $dday;
 	
