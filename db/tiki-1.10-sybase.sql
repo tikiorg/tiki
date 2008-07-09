@@ -2968,11 +2968,23 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','')
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','')
+go
+
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','')
 go
 
 
@@ -3008,11 +3020,11 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','')
 go
 
 
@@ -3478,6 +3490,14 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','')
+go
+
+
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Comments','tiki-list_comments.php',1260,'feature_wiki_comments','tiki_p_admin','')
 go
@@ -3529,6 +3549,7 @@ CREATE TABLE "tiki_menus" (
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
   "type" char(1) default NULL NULL,
+  "icon" varchar(200) NULL default NULL NULL,
   PRIMARY KEY ("menuId")
 ) ENGINE=MyISAM  
 go
@@ -3861,6 +3882,7 @@ CREATE TABLE "tiki_pages" (
   "is_html" numeric(1,0) default 0,
   "created" numeric(14,0) default NULL NULL,
   "wysiwyg" char(1) default NULL NULL,
+  "wiki_authors_style" varchar(20) default '' NOT NULL,
   PRIMARY KEY ("page_id")
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM 
@@ -5062,6 +5084,8 @@ CREATE TABLE "tiki_tracker_fields" (
   "description" text default '',
   "itemChoices" text default '',
   "errorMsg" text default '',
+  "visibleBy" text default '',
+  "editableBy" text default '',
   PRIMARY KEY ("fieldId")
 ) ENGINE=MyISAM  
 go
@@ -6484,6 +6508,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_read_heading', 'Can read article headings', 'basic', 'cms')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_read_blog', 'Can read blogs', 'basic', 'blogs')
 go
 
@@ -6589,6 +6617,14 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'cms')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_admin_topics', 'Can admin article topics', 'editors', 'cms')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_articles_admin_types', 'Can admin article types', 'editors', 'cms')
 go
 
 
@@ -8464,6 +8500,23 @@ CREATE TABLE "tiki_pages_changes" (
 )
 go
 
+
+
+-- DROP TABLE "tiki_minichat"
+go
+
+
+CREATE TABLE `tiki_minichat` (
+  `id numeric(10 ,0) identity,
+  `channel` varchar(31),
+  `ts` numeric(10,0) NOT NULL,
+  `user` varchar(31) default NULL NULL,
+  `nick` varchar(31) default NULL NULL,
+  `msg` varchar(255) NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `channel` (`channel`)
+)
+go
 
 
 
