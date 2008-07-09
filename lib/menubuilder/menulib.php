@@ -342,7 +342,7 @@ class MenuLib extends TikiLib {
 			if ($res['optionId'] == 0 || $this->check_menu_option($_REQUEST['menuId'], $res['optionId'])) {
 				$options[] = $res;
 			} else {
-				$smarty->assign('msg', tra('You can only use optionId = 0 to create a new option or optionId equal an id that already belongs to the menu you are importing to update an option.'));
+				$smarty->assign('msg', tra('You can only use optionId = 0 to create a new option or optionId equal an id that already belongs to the menu to update it.'));
 				$smarty->display('error.tpl');
 				die;
 			}
