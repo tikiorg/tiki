@@ -1812,6 +1812,10 @@ function add_pageview() {
 	$result = $this->query($query,array((int)$menuId));
 	if (!$result->numRows()) return false;
 	$res = $result->fetchRow();
+	if (empty($res['icon']))
+		$res['oicon'] = null;
+	else
+		$res['oicon'] = dirname($res['icon']).'/o'.basename($res['icon']);
 	return $res;
     }
 

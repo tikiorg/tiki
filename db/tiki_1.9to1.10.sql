@@ -1869,3 +1869,5 @@ DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Admin t
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','');
 
+#2008-07-09 sylvieg
+ALTER TABLE tiki_menus ADD icon varchar(200) NULL default NULL AFTER type;

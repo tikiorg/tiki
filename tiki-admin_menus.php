@@ -33,11 +33,10 @@ if ($_REQUEST["menuId"]) {
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["type"] = 'd';
+	$info['icon'] = null;
 }
 
-$smarty->assign('name', $info["name"]);
-$smarty->assign('description', $info["description"]);
-$smarty->assign('type', $info["type"]);
+$smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delmenu';
@@ -52,13 +51,12 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menus');
-	$menulib->replace_menu($_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["type"]);
+	if (!isset($_REQUEST['icon'])) $_REQUEST['icon'] = null;
+	$menulib->replace_menu($_REQUEST['menuId'], $_REQUEST['name'], $_REQUEST['description'], $_REQUEST['type'], $_REQUEST['icon']);
 	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
-	$smarty->assign('name', '');
-	$smarty->assign('description', '');
-	$smarty->assign('type', '');
 	$_REQUEST["menuId"] = 0;
 	$smarty->assign('menuId', 0);
+	$smarty->assign('info', array('name'=>'', 'description'=>'', 'type'=>'d', 'icon'=>null));
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

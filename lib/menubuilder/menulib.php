@@ -42,15 +42,15 @@ class MenuLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_menu($menuId, $name, $description, $type) {
+	function replace_menu($menuId, $name, $description='', $type='d', $icon=null) {
 		// Check the name
 		if (isset($menuId) and $menuId > 0) {
-			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=? where `menuId`=?";
-			$bindvars=array($name,$description,$type,(int)$menuId);
+			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=? where `menuId`=?";
+			$bindvars=array($name,$description,$type,$icon,(int)$menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus`(`name`,`description`,`type`) values(?,?,?)";
-			$bindvars=array($name,$description,$type);
+			$query = "insert into `tiki_menus`(`name`,`description`,`type`,`icon`) values(?,?,?,?)";
+			$bindvars=array($name,$description,$type,$icon);
 		}
 
 		$result = $this->query($query,$bindvars);

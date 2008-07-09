@@ -20,12 +20,14 @@
       <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
       <li>{literal}{phplayers id=X type=vert}{/literal}</li>
     </ul>
-    {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}
+    {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+	{tr}To use a menu in a tiki format: {/tr}{literal}{menu id=X}{/literal}<br />
+	{tr}To use menu in a css/suckerfish format: {/tr}{literal}{menu id=X css=y}{/literal}
   </div>
 </div>
 
 {if $menuId > 0}
-<h2>{tr}Edit this Menu:{/tr} {$name}</h2>
+<h2>{tr}Edit this Menu:{/tr} {$info.name}</h2>
 <a href="tiki-admin_menus.php" class="linkbut">{tr}Create new Menu{/tr}</a>
 {else}
 <h2>{tr}Create new Menu{/tr}</h2>
@@ -33,15 +35,18 @@
 <form action="tiki-admin_menus.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">
-<tr><td class="formcolor"><label for="menus_name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="menus_name" value="{$name|escape}" style="width:95%" /></td></tr>
-<tr><td class="formcolor"><label for="menus_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor"><label for="menus_name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="menus_name" value="{$info.name|escape}" style="width:95%" /></td></tr>
+<tr><td class="formcolor"><label for="menus_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="menus_desc" rows="4" cols="40" style="width:95%">{$info.description|escape}</textarea></td></tr>
 <tr><td class="formcolor"><label for="menus_type">{tr}Type{/tr}:</label></td><td class="formcolor">
 <select name="type" id="menus_type">
-<option value="d" {if $type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
-<option value="e" {if $type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
-<option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr} (f)</option>
+<option value="d" {if $info.type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr} (d)</option>
+<option value="e" {if $info.type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr} (e)</option>
+<option value="f" {if $info.type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr} (f)</option>
 </select>
 </td></tr>
+{if $prefs.feature_menusfolderstyle eq 'y'}
+<tr><td class="formcolor">{tr}Path to the folder icon for close sections{/tr}</td><td><input type="text" name="icon" value="{$info.icon}" /><br />{tr}Example:{/tr} styles/mose/pics/icons/folder.png<br />{tr}Provide also a folder icon for open sections with the same name with the letter 'o' before in the same directory (ex: folder.png and ofolder.png){/tr}<br />{tr}Default:{/tr}{icon _id="folder"}</td></tr>
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
