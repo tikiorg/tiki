@@ -5,7 +5,7 @@
 /* XHTML Elements */ 
 
 body {
-	text-align: center;
+	text-align: left;
 	font: normal 62.5%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
 	background: #fff url(feb12/pagebg.jpg) repeat-x}
@@ -91,7 +91,11 @@ input.button {
 	padding: 2px 3px; 
 	color: #333}
 
-textarea {  }
+textarea,
+body.wikitext {
+	color: #333;
+	background: #fff;
+	font-size: 1.3em}
 
 input[type=checkbox],
 input[type=radio] {border: 0}
@@ -1469,6 +1473,17 @@ td.categobjectsdataodd {}
 .cattitle {}
 .catlists a.link {}
 .catlists a.link:hover {}
+
+ul.catfeatures {}
+ul.catfeatures li {}
+ul.catitems {}
+
+ul.catitems li {
+	float: left !important;
+	padding-right: 18px;
+}
+
+ul.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 
