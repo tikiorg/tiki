@@ -28,8 +28,12 @@ include_once("lib/init/initlib.php");
 
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/libs/");
-
+/*
 require_once (SMARTY_DIR . 'Smarty.class.php');
+*/
+
+require_once ( 'lib/smarty/libs/Smarty.class.php');
+
 $commands = array();
 ini_set('magic_quotes_runtime',0);
 
@@ -560,7 +564,7 @@ if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$vir
 
 // Init smarty
 $smarty = new Smarty_Tikiwiki();
-//$smarty->load_filter('pre', 'tr');
+$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('style', 'tikineat.css');
@@ -794,6 +798,6 @@ $smarty->assign_by_ref('headerlib',$headerlib);
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
-$smarty->display("tiki.tpl");
+$smarty->display("tiki-print.tpl");
 
 ?>
