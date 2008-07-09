@@ -28,10 +28,6 @@ include_once("lib/init/initlib.php");
 
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/libs/");
-/*
-require_once (SMARTY_DIR . 'Smarty.class.php');
-*/
-
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 
 $commands = array();
