@@ -46,9 +46,9 @@ class CalendarLib extends TikiLib {
 		global $user;
 		if ($user) {
 			global $userlib;
-			$groups = $userlib->get_user_groups($user);
+			//$groups = $userlib->get_user_groups($user);
 			// need to add something
-			$query = "select `calendarId` from `tiki_calendars` where `user`=?";
+			$query = "select `calendarId` from `tiki_calendars` where `user`=? or `personal`='n'";
 			$bindvars=array($user);
 		} else {
 			$query = "select `calendarId` from `tiki_calendars`";
