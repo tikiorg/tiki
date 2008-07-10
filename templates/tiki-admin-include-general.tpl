@@ -340,7 +340,7 @@
 <td class="form"><label for="site_nav_seper">{tr}Preference syntax{/tr}:</label></td>
 <td><select name="pref_syntax">
 <option value="1.9" {if $prefs.pref_syntax eq '1.9'}selected="selected"{/if}>1.9 - $feature_foobar</option>
-<option value="1.10" {if $prefs.pref_syntax eq '1.10'}selected="selected"{/if}>1.10 - $prefs.feature_foobar, $prefs['feature_foobar']</option>
+<option value="2.0" {if $prefs.pref_syntax eq '2.0'}selected="selected"{/if}>2.0 - $prefs.feature_foobar, $prefs['feature_foobar']</option>
 </select></td>
 </tr>
 

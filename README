@@ -1,5 +1,5 @@
 Tiki! The wiki with a lot of features!
-version 1.10.1 (CVS) -Arcturus-
+version 2.0 (CVS) -Arcturus-
 
 
 DOCUMENTATION
@@ -13,7 +13,7 @@ DOCUMENTATION
   reasonably current PDF-snapshot of doc.tikiwiki.org:
   http://sourceforge.net/project/showfiles.php?group_id=64258&package_id=68737
 
-* The documentation for 1.10 version is under construction on http://doc.tikiwiki.org.
+* The documentation for 2.0 version is under construction on http://doc.tikiwiki.org.
   You're encouraged to contribute. Current 1.9 documentation still is useful 
   on many points.
 

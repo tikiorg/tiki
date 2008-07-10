@@ -197,12 +197,12 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <table class="normal" cellpadding="5">
 	<tr><th>{tr}To upgrade from{/tr}:</th><th>{tr}Use this script{/tr}:</th></tr>
 	<tr class="odd">
-		<td>1.10.x</td>
-		<td>tiki_1.9to1.10</td>
+		<td>2.0.x</td>
+		<td>tiki_1.9to2.0</td>
 	</tr>
 	<tr class="even">
 		<td>1.9.x or<br/>1.8.x</td>
-		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to1.10.{/tr}</td>
+		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to2.0.{/tr}</td>
 	</tr>
 	<tr class="odd">
 		<td>1.7.x</td>

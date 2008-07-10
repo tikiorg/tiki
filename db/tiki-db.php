@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 // Otherwise you will be ok.
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
-$dbversion_tiki = '1.10';
+$dbversion_tiki = '2.0';
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';

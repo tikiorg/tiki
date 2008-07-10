@@ -58,7 +58,7 @@ function has_tiki_db( $dbTiki )
 	return in_array( 'users_users', list_tables( $dbTiki ) );
 }
 
-function has_tiki_db_110( $dbTiki )
+function has_tiki_db_20( $dbTiki )
 {
 	return in_array( 'tiki_pages_translation_bits', list_tables( $dbTiki ) );
 }
@@ -130,7 +130,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.10") {
+function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="2.0") {
 	global $local;
 	global $db_tiki;
 	if ($dbs_tiki and $user_tiki) {
@@ -570,7 +570,7 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '1.10';
+$tiki_version = '2.0';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
@@ -637,7 +637,7 @@ if (!file_exists($local)) {
 	if (!isset($db_tiki)) {
 		//upgrade from 1.7.X
 		//$db_tiki="mysql";
-		//upgrade from 1.10 : if no db is specified, use the first db that this php installation can handle
+		//upgrade from 2.0 : if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);
 	}
@@ -662,7 +662,7 @@ if (!file_exists($local)) {
 			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
 		} else {
 			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
+			$smarty->assign( 'tikidb_is110',  has_tiki_db_20( $dbTiki ) );
 
 			$dbcon = true;
 			if (!isset($_REQUEST['reset'])) {
@@ -720,7 +720,7 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
 			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
+			$smarty->assign( 'tikidb_is110',  has_tiki_db_20( $dbTiki ) );
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
 		}
 	}
@@ -769,10 +769,10 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 	}
 
 	if ( isset($_REQUEST['update']) ) {
-		$is19 = ! has_tiki_db_110($dbTiki);
+		$is19 = ! has_tiki_db_20($dbTiki);
 		process_sql_file($_REQUEST['file'], $db_tiki);
 
-		if( $_REQUEST['file'] == 'tiki_1.9to1.10.sql' && $is19 ) {
+		if( $_REQUEST['file'] == 'tiki_1.9to2.0.sql' && $is19 ) {
 			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_edit_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
 			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_view_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
 			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_edit_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
