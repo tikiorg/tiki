@@ -36,7 +36,7 @@
 {if $ix.type eq 'l'}
 <td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
-{if $perms.tiki_p_tracker_view_ratings eq 'y'}
+{if $tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto field{$ix.fieldId}"{if $perms.tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
 {self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
 {/if}
