@@ -1,9 +1,0 @@
- Perm Wiki Plugin
-------------------
-
-To install copy the wiki-plugin/wikiplugin_perm.php to your lib/wiki-plugins
-folder of your TikiWiki installation.
-
-Then in wiki syntax type {PERM(perms=>tiki_p_someperm|tiki_p_otherperm)}some wiki content{PERM}
-
-The wiki content will only be shown if user has one of specified permissions

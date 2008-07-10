@@ -1,0 +1,508 @@
+/*
+$Header: /cvsroot/tikiwiki/tiki/styles/transitions/1.9to1.10.css,v 1.15.2.4 2008-03-16 01:02:39 nyloth Exp $
+
+The following CSS classes were added to Tiki between v1.9 and v1.10
+They should be added to themes (possibly with tweaks) to make the theme v1.10 ready
+*/
+/* editable wiki section */
+div.split {
+border: 1px dashed #A9B8C2;
+clear:both;
+}
+
+li.freetag {list-style: none; display: inline; margin: 0; padding: 0;}
+ul.freetag {margin: 0; padding: 0; display: inline}
+.freetag a {display: inline}
+a.freetag_1 { text-decoration: none; font-size: 8px; }
+a.freetag_2 { text-decoration: none; font-size: 10px; }
+a.freetag_3 { text-decoration: none; font-size: 12px; }
+a.freetag_4 { text-decoration: none; font-size: 14px; }
+a.freetag_5 { text-decoration: none; font-size: 16px; }
+a.freetag_6 { text-decoration: none; font-size: 18px; }
+a.freetag_7 { text-decoration: none; font-size: 20px; }
+
+.freetagsearch {
+  margin : 10px 0;
+  text-align: center;
+}
+
+.freetagskeywords {
+  margin: 10px 0;
+}
+
+.freetaglist {
+	background-color : #EEF5EE;
+	margin : 0 10px;
+	padding : 1px 5px;
+	border : 1px dashed #999;
+}
+
+.freetaglist a {
+  text-decoration: none;
+}
+
+.freetagsort {
+	margin : 10px 0;
+}
+
+.freetagresult {
+  margin-left: 10%;
+  width : 70%;
+}
+
+.freetagitemlist {
+  background-color: #EEF5EE;
+	margin-top:10px;
+	padding:0px;
+  text-align:left;
+}
+
+.freetagitemlist h3 {
+	margin: 0px;
+	padding:0px;
+	background-color: #e7e9ea;
+}
+
+.freetagitemlist a {
+	text-decoration: none;
+}
+.freetagitemlist img {
+	float: right;
+}
+.freetagitemlist a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	background-color: #b9d6f7;
+}
+.freetagitemlist div.type {
+	font-weight: bold;
+	font-size: 0.8em;
+  margin-left: 10px
+}
+.morcego_embedded {
+        border: 1px solid;
+        text-align: center;
+}
+
+div#ajaxLoading {
+       display: none;
+       background-color: #BB5555;
+       position: absolute;
+       top: 0px;
+       right: 0px;
+       border: 1px solid #000000;
+       padding: 3px;
+       font-family: Verdana;
+       font-size: 10px;
+}
+
+.wikiplugin_trackerstat, .wikiplugin_tracker, .wikiplugin_trackerlist {} 
+
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
+.navbar{margin: 10px 0;}
+
+/* Forums */
+.post .postbody {
+	clear: both;
+	width: 100%;
+	border-top: solid 1px gray;
+	border-bottom: solid 1px #E7EAED;
+	border-left: solid 1px #E7EAED;
+	border-right: solid 1px #E7EAED;
+	margin: 0;
+	margin-top: 5px;
+	padding: 3px 0px 3px 0px;
+	background-color: #F9FCFF;
+}
+.post .postbody-title {
+	display: block;
+	background-color: #E0EAF4; 
+	border-bottom: 1px solid #ACCCDD;
+	margin-bottom: 4px;
+	height: 100%;
+	overflow: auto;
+	padding-top: 2px;
+}
+.post .postbody-title .checkbox { float: left; }
+.post .postbody-title .title {
+	float: left;
+	color: #29677B;
+	font-weight: bold;
+	font-size: 12px;
+	margin-left: 5px;
+	margin-top: 3px;
+}
+.post .author {	
+	text-align: right;
+	vertical-align: top;
+}
+.post .author_post_info {
+	display: block;
+	background-color: #E0EAF4;
+	padding: 0 2px 2px 2px;
+}
+.post .author_info .icons { display: block; }
+.post .author_info .icons .actions { margin-right: 10px; }
+
+.post .author_post_info_on { font-style: italic; }
+.post .author_info {
+	float: right;
+	background-color: #F0F8FF;
+	padding: 0 2px 2px 2px;
+	margin-left: 5px;
+	border-left: 1px solid #D7E5F3;
+	border-bottom: 1px solid #D7E5F3;
+}
+.commentStyle_headers .author_info { float: left; }
+.post .postbody-title .actions {
+	float: right;
+	font-size: 10px;
+}
+.post .postbody .content {
+	float: left;
+	padding: 0px 3px 3px 3px;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	color: #000000;
+}
+.post .postbody .attachments {
+	clear: both;
+	border-top: 1px dotted #D9D9D9;
+	margin-top: 5px; 
+}
+.post .postbody .attachments img { vertical-align: text-bottom; }
+.post .postfooter .actions, .post .postfooter .status {
+	display:inline;
+	margin-left: 5px;
+	vertical-align: top;
+}
+.post .postfooter .status { font-size: 10px; }
+.post .postfooter {
+	float: right;
+	text-align: right;
+}
+.post .inner > .postfooter { clear: both; }
+.post .contribution {
+	background-color: #F0F8FF;
+	border: 1px solid #D7E5F3;
+	padding: 0 2px 0 2px;
+}
+.post .avatar {
+	float: right;
+	margin-bottom: 5px;
+	margin-left: 4px;
+	padding: 3px;
+	border: 1px solid #ACCCDD;
+	background-color: #E0EAF4;
+}
+.sub_comment { padding-left: 20px; }
+.sub_comment_area {
+	clear: both;
+	background: url("../../img/edge.gif") no-repeat top left; 
+}
+
+.forum_actions .actions {
+	clear: both;
+	border: 1px solid #999999;
+	background-color: #E1EBF5;
+	padding: 3px 3px 3px 3px;
+	vertical-align: middle;
+}
+.forum_actions .actions .action { 
+	margin-right: 10px;
+}
+.forum_actions .headers { vertical-align: bottom; }
+.forum_actions .headers .title {
+	float: left;
+	background-color: #C7D0D9;
+	border: 1px solid #999999;
+	border-bottom: 0;
+	padding: 1px;
+}
+.forum_actions .headers .infos {
+	float: right;
+	font-size: smaller;
+	padding-top: 2px;
+}
+.thread_pagination {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.nb_replies { white-space: nowrap; }
+.post_preview, .top_post { margin-bottom: 15px; }
+/*.post .postbody .signature { float: left; }*/
+
+/* Pagination for listings */
+/* This class already exists in tiki v1.9 but has to be changed as follows */
+/* to keep the same behaviour */
+.mini {
+        text-align :center;
+}
+
+/* OpenID  */
+.openid_url {
+background-image: url(../../img/icons/login-OpenID-bg.gif);
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-color: #ffffff;
+padding-left: 18px;
+}
+
+/* Style for navbar buttons 
+ *  This class has to be added in the main style sheet */
+#highlight  {
+	background-color : #eeee99 !important;
+}
+
+/* Style for error or warning announces
+ *  This class has to be added in the main style sheet */
+.error, #error{
+	background-color: #ee9999 !important;
+	color: #000000;
+}
+
+/* Style for sections in tiki-forums. Alignement "center" was inline before */
+td.third {
+  text-align: center;
+}
+
+/* Style for tikitabs */
+.tabactive {
+	border-color: black !important;
+	border-width: 1px !important;
+}
+
+.tabinactive {
+	border-color: transparent !important;
+	border-width: 0px !important;
+}
+.iconmenutext { white-space: nowrap; }
+
+/* Style for OverBox */
+.opaque {
+  background-color: #FFFFFF;
+  width : auto;
+  border : 1px solid #666666;
+  border-radius : 10px;
+  -moz-border-radius : 10px;
+  -khtml-border-radius : 10px;
+  padding : 5px;
+}
+.opaque .box-title,
+.opaque .box-data {
+  width: auto;
+}
+
+
+/* Style for Site Identity */
+
+#sitesearchbar {
+        padding: 5px;
+        text-align: right;
+}
+
+
+
+#site_report {
+ text-align: center;
+}
+#site_report a {
+ border-left: 1px solid #666666;
+ border-right: 1px solid #666666;
+ padding: 0px 5px;
+ font-size: smaller;
+}
+#siteloginbar {
+ text-align: right;
+}
+#siteloginbar #register{
+ float: right;
+ padding-left: 5px;
+}
+#siteloginbar #pass{
+ float: right;
+ padding-left: 5px;
+}
+
+/*  Module title and module-flip image */
+h3.box-title {
+	display: block;
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+}
+
+/* Lists in modules */
+.box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
+.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
+/* IE */
+* html .box-data ol {margin-left: 0em;}
+* html .box-data ul {margin-left: 0em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 0em;}
+*:first-child+html .box-data ul {margin-left: 0em;}
+
+/* MyTiki preferences Ajax */
+.tab-wrapper {
+	padding: 0; 
+	border: 1px solid #eee; 
+} 
+.tab-menu { 
+	list-style: none; 
+	padding: 2px 0; 
+	clear:  both; 
+	line-height: 17px; 
+	font-size: 12px; 
+} 
+.tab-menu li { 
+	width: 200px; 
+	display: inline; 
+	margin: 0 2px; 
+} 
+.tab-menu li a 	{ 
+	padding: 1px 5px; 
+	background-color: #f5f5f5; 
+	color:  #222; 
+	font-weight: bold; 
+	text-decoration: none; 
+} 
+.tab-menu li a:hover, 
+.tab-menu li a:focus { 
+	background-color: #FAEC8F; 
+	border-bottom-color:    #999; 
+} 
+.tab-menu li a:hover { 
+	background-color: #FAEC8F; 
+	border-bottom-color: #999; 
+} 
+.tab-menu li.tab-selected a { 
+	background-color: #BCEC8F; 
+}
+
+/* find.tpl styles*/
+
+.findtable {
+  text-align:center;
+  margin-bottom : 10px;
+}
+
+.findtitle {
+	display: inline; 
+	vertical-align: middle;
+  margin: 0 1px;
+}
+
+.findtitle input {
+  margin-left: 2px;
+}
+.top_actions {
+	text-align: right;
+	margin-top: 5px;
+}
+
+/* categobjects.tpl */
+.catfeatures
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
+  list-style: none;
+}
+
+.catitems
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
+  list-style: none;
+}
+
+.catitems li
+{
+  padding:      0;
+  margin-left:  15px;
+  margin-bottom:2px;
+}
+
+/* rbox: remarks box (note/warning/tip/comment)
+ * added July 2008 for wikiplugin_remarksbox etc */
+
+.rbox {
+	margin: 1em .3em;
+}
+
+.rbox-title {
+	display: inline;
+	font-weight: bold;
+	font-size: 1.1em !important;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #ddd;
+	border-width: 0 1px 1px 0;
+	border-color: #CCC;
+	border-style: solid;
+	padding: .2em .5em .5em !important;
+	position: relative;
+	z-index: 0;
+}
+
+.rbox img {
+	padding-right: 3px;
+	vertical-align: middle;
+}
+
+.rbox-data {
+	padding: .4em;
+	font-style: italic;
+	border: 1px #DDD solid;
+	background-color: #eee;
+	position: relative;
+	z-index: 1;
+}
+
+.warning .rbox-title {
+	color: #f00;
+	background-color: #333;
+	border-color: #000;
+}
+
+.warning .rbox-data {
+	background-color: #fff;
+	font-size: 1.1em;
+	border-color: #333;
+}
+
+.note .rbox-title {
+	background-color: #ccc;
+	color: #06F;
+	border-color: #aaa;
+}
+
+.note .rbox-data {
+	background-color: #ECECEF;
+	border: .1em solid #ccc;
+}
+
+.comment .rbox-title, .tip .rbox-title .rbox-title.tip {}
+
+.comment .rbox-data, .tip .rbox-data, .rbox-data.tip {}
+
+/* end rbox */
+
+div #page-bar
+{
+  border-top: 1px solid;
+  padding-top: 5px;
+}

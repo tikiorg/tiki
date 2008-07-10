@@ -1,0 +1,19 @@
+{* $Id$ *}
+$Id$
+
+This file is used to text keyword expansion.
+
+$Date$
+$Date$
+$Author$
+$Revision$
+
+/*
+$Author$
+$Id$
+$Rev$
+$URL$
+$Date$
+*/
+
+Why won't $Id$ expand?

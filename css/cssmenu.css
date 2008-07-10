@@ -1,0 +1,74 @@
+{* $Id$ *}
+.cssmenu {	
+	z-index : 1000 !important;
+	width : 100%; 
+	background-color : #fff;
+}
+.cssmenu ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+.cssmenu a, .cssmenu .menuSection {
+	display : block;
+	border : 1px solid #bbb;
+	border-bottom : 0;
+	margin : 0;
+	padding : 1px 3px;
+}
+.cssmenu ul li ul li:last-child a,
+.cssmenu ul:last-child li .menuSection {
+	border-bottom : 1px solid #bbb;
+}
+.cssmenu .menuSection {
+	font-weight : bold;
+	font-size : 1em;
+	background-image : url('../pics/icons/arrow_small.png');
+	background-position : right;
+	background-repeat : no-repeat;
+}
+.cssmenu .menuSection img {
+	padding-right : 5px;
+}
+.cssmenu ul li a {
+	padding-left : 23px;
+}
+.cssmenu ul li ul li a {
+	padding-left : 3px;
+	border-left : 0;
+}
+.cssmenu a {
+	text-decoration : none;
+}
+.cssmenu a:hover, .cssmenu .menuSection:hover {
+	cursor : pointer;
+	color : #000;
+	background-color : #ddd;
+}
+.cssmenu li {
+	background-color : #fff;
+	position : relative;
+}
+.cssmenu ul ul {
+	position : absolute;
+	top : 0;
+	left : 100%;
+	width : 100%;
+}
+.cssmenu ul ul,
+.cssmenu ul li:hover ul  {
+	display : none;
+	cursor : pointer;
+}
+.cssmenu ul li:hover ul,
+.cssmenu ul ul li:hover {
+	display : block;
+	cursor : pointer;
+}
+
+.cssmenu li.selected > a {
+	background-color: #D3D3D3;
+}
+.cssmenu li.selectedAscendant > a {
+	background-color: #E6E6E6;
+}

@@ -1,0 +1,1451 @@
+/* $Id$ */
+
+@import "lite/lite.css"; /* here we import *lite as the base */
+
+/* 
+ * redefine the base CSS -- needs to be adjusted for our own style which comes next
+ */
+/*@import "nicetitle.css";*/
+
+body {
+ /* setting up the background. the color, then bg image and its form of repeating. */
+ background: #ffffff; /* url('simple/bg.png') top center repeat-y;*/
+ /* shorthand for default font setting. size in percentage and font-family here */
+/* font-family: 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif; */
+font-family: 'Verdana';
+ font-size: 75%;
+ /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
+ margin: 0; /* zero margins for body */
+ padding: 0; /* and padding */
+}
+
+#header {	background-color: transparent;}
+
+#c1c2 {
+	background-color: transparent;
+}
+
+#c1c2
+	#wrapper {
+		background-color: transparent;
+		padding: 0;
+	}
+
+#c1c2
+	#wrapper
+		#col1 {
+			background-color: transparent;
+		}
+
+#c1c2
+	#wrapper
+		.marginleft {
+			margin-left: 20%;/* change this in your stylesheet too when you change the width of #col2 */
+		}
+
+#c1c2
+	#wrapper
+		.marginright {
+			margin-right: 30%;/* change this in your stylesheet too when you change the width of #col3 */
+		}
+
+
+
+#c1c2
+	#wrapper
+		#col1
+			.content {
+				background-color: transparent;
+				padding: 0.2em;
+			}
+
+#c1c2
+	#col2 {
+		background-color: transparent;
+		padding: 0;
+		width: 20%;
+	}
+
+#col3 {
+	background-color: transparent;
+	margin-left: -30%;
+	padding: 0;
+	width: 30%;
+}
+
+/* next comes footer */
+#footer {background-color: transparent}
+.footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
+
+.content {padding: 1em;}/* this takes care of all the content default appearance */
+
+/*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
+
+/*
+ * end of redefining the base layout 
+ */
+
+
+
+/*** next comes the own styling fun ***/
+
+/*
+ * the first there are going common html elements
+ */
+
+/*
+ * amette common html-elements
+ */
+dt {
+	font-weight: bold
+}
+/* default font size for all text in divs. works together with 75% font-size for body */
+div {
+ font-size: 1em;
+}
+
+/* default color for links */
+a {
+ color: #24880C;
+}
+
+/* default color for hovered links */
+a:hover {
+	color: #0000FF;
+	background-color: #FFFFFF;
+}
+
+/* headings */
+h1 {
+ margin-top: 0;
+ text-align: center;
+ font-size: 25px;
+}
+h2 {
+ font-size: 22px;
+ margin-bottom: 0;
+ padding: 0;
+}
+h3 {
+ font-size: 18px;
+}
+h4 {
+ font-size: 15px;
+}
+
+/* images have no border by default */
+img {
+ border: 0;
+}
+
+/* tables */
+table {
+ border: solid 1px #24880C;
+ font-size: 1em;
+ width: 99%;
+}
+
+table.galtable {
+	border-collapse: collapse;
+}
+
+table.normal td.heading {
+ background-color: #abcdef;
+ border: solid 1px #24880C;
+ font-size: 1em;
+ width: 15px;
+}
+
+table.admin td.heading {
+ background-color: #EEF5EE;
+ border: solid 1px #24880C;
+ font-size: 1em;
+ width: 15px;
+ text-align: center;
+}
+
+table.email td.closeButton {
+ width: 100%;
+}
+table.email td.closeButton form {
+/* luciash's http://xmlgraphics.apache.org/fop/ try */
+/*text-align: end;*/
+}
+
+table.email {
+ border:solid 1px #abcdef;
+}
+table.email td.body {
+ border: solid 1px #6699cc;
+}
+.commentinfo {
+	width: 100%;
+}
+
+/* Description on wiki pages */
+small {
+	font-size: 0.8em;
+}
+
+/* Prevent forms from generating unwanted padding or margins, aligns content to left */
+form {
+	margin: 0;
+	padding: 0;
+}
+
+/* Horizontal lines */
+hr {
+	border-top: none;
+	border-bottom: solid 0.2em #25880c;
+	border-left: none;
+	border-right: none;
+	height: 1px;
+}
+
+/* All input elements */
+input {
+	border: solid 1px #abcdef;
+	padding: 0.1em;
+	vertical-align: middle;
+}
+
+/* Set font size for one-line text input fields and password fields */
+input[type='text'], input[type='password'] {
+	font-size: 1em;
+}
+/* Same border for them and for textarea too */
+input[type='text'], input[type='password'], textarea {
+	border: solid 1px #24880C;
+}
+/* Try to have same look for submit buttons, file chooser fields and select dropdowns too */
+input[type="submit"], input[type="file"], select {
+  border: solid 1px #24880C;
+  background: #EEF5EE;
+  color: #24880C;
+  font-size: 0.9em;
+  height: 2em;
+  vertical-align: middle;
+}
+
+
+button {
+  border-style: solid;
+  border-width: 1px;
+  border: #24880C;
+  background: #24880C url("simple/button_bg.png") center center repeat-x;
+  color: #24880C;
+  font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+  font-size: 0.8em;
+  line-height: 1.6em;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 1px;
+  vertical-align: middle;
+}
+button:hover {
+  border-top-color: #000;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  border-left-color: #000;
+  color: #000;
+}
+
+fieldset {
+	border: solid 1px #99ccff;
+	padding: 0.9em;
+}
+
+/* All select elements, NOTE: text-align: start is RTL languages compatible */
+select {
+	_font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
+	text-align: start;
+	_vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
+}
+/*select[name="lang"], select[name="language"] {
+  height: 2em;
+}*/
+select[multiple] {
+	height: 10em;
+}
+
+textarea {
+	padding: 0.1em;
+	width: 98%;
+}
+
+/*
+ ***** Here we define some IDs *****
+ */
+/*** These are main parts of the layout ***/
+#mainmenu br { /* do not display line breaks in main menu when we later set links to display: block */
+	display: none;
+}
+
+/* hide attachments, comments and their form */
+#attzone, #comzone {
+ display: block;
+}
+
+/* main calendar table */
+#caltable {
+	border-left: solid 1px #abcdef;
+	border-top: solid 1px #abcdef;
+	border-right: none;
+	border-bottom: none;
+}
+/* main calendar table cells */
+#caltable td {
+	background: #FFFFFF;
+	border-right: solid 1px #abcdef;
+	border-bottom: solid 1px #abcdef;
+	padding: 0.1em;
+	vertical-align: top;
+}
+#caltable .calfocuson { /* calendar today */
+	background-color: #000000;
+	border: solid 1px #000000;
+}
+#caltable .calfocuson a { /* calendar focus date links */
+	color: #000000;
+}
+#caltable .calfocus a, #caltable .calfocuson a { /* calendar focus date links */
+  text-decoration: none;
+}
+/* content of calendar day */
+.calcontent {
+      min-height: 7em;
+      height: auto !important;
+      height: 7em;
+      min-width: 7em;
+      width: auto !important;
+      width: 7em;
+}
+
+/* Tiki debugger console */
+#debugconsole {
+	background-color: #def;
+	border: solid 1px #000;
+	left: 50%; top: 50%;
+	margin-left: -300px; margin-top: -150px;
+	overflow: auto;
+	position: absolute;
+	width: 600px; height: 300px;
+}
+
+#mod-assistant {
+}
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+#rules-copy-panel {
+  display: none;
+}
+
+/* Site Identity Search Bar */
+#sitesearchbar {
+	padding: 0.4em;
+	text-align: right;
+}
+
+/* ASSORTED  */
+
+#clear {
+	clear:both;
+	}
+	
+
+/*
+ ***** Here we define classes *****
+ */
+.hidden {
+ position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;
+}
+.maincontent div div, .maincontent ul, .maincontent h2, .maincontent h3, .maincontent div.wikitext {
+	text-align: start;
+}
+.maincontent table {
+ width: 98%; margin: auto;
+ margin-bottom: 0.2em; text-align: start;
+}
+.content h1 {
+	font-size: large;
+	font-weight: normal;
+	text-align: start;
+	/* Konq does it without, FF needs this size and align here instead of only in normal h1 */
+	font-size: 25px;
+	text-align: center;
+	background: #24880C url("amette/gradient.png") center center repeat-x;
+	border: solid 1px #24880C;
+	color: #FFFFFF;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 4px;
+	padding-bottom: 4px; 
+	padding-left: 3px;
+}
+.content h1 a {
+	font-size: large;
+	font-weight: normal;
+	text-decoration: none;
+	/* Konq does it without, FF needs this size and align here instead of only in normal h1 */
+	font-size: 25px;
+	text-align: center;
+	color: #FFFFFF;
+	margin-top: 0px;
+	padding-top: 4px;
+	padding-bottom: 4px; 
+	padding-left: 3px;
+}
+.content h1 a:hover {
+	background-color: transparent;
+	color: #86BE7D;
+}
+.leftcolonlywrapper {
+ float: none; width: 100%;
+}
+.leftcolonlymaincontent {
+ float: right; width: 75%;
+}
+
+.rightcolonlywrapper {
+ float: left; width: 65%;
+}
+.rightcolonlymaincontent {
+ float: none; width: 98%;
+}
+
+
+/* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
+.clear {
+ clear: both;
+}
+
+/*
+ * modules
+ */
+.box {
+ background-color: #EEF5EE;
+ border: none;
+ margin: 0.2em;
+ padding: 0;
+}
+h3.box-title, div.box-title {
+ background: #24880C url("amette/gradient.png") center center repeat-x;
+ border-bottom: solid 0 #abcdef;
+ overflow: hidden;
+ padding: 0.2em;
+ text-align: center;
+ color: #FFFFFF;
+}
+h3.box-title a, div.box-title a, span.box-titletext a {
+  color: white;
+  }
+div.box-title table {
+ width: 100%;
+}
+.box-data { /* data content of the module box */
+ overflow: auto;
+ _overflow: hidden; /* MSIE workaround */
+ _overflow-x: auto; /* MSIE workaround */
+ padding: 0.2em;
+ padding-bottom: 0.4em;
+ _width: 100%; /* MSIE workaround to make overflow work */
+}
+.box-data a {
+	text-decoration: underline;
+}
+.box-data a:hover {
+	color: #0000FF;
+	background-color: #FFFFFF;
+}
+.box-data .option, .box-data .separatorline {
+	font-size: 0.9em;
+	height: 1.2em;
+	text-align: start;
+}
+.box-data .separator {
+	text-align: start;
+	font-weight: bold;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+	padding: 0.2em;
+}
+.box-data form {
+	text-align: center;
+}
+/**********
+** Menus ++
+**********/
+.box-data a.linkmenu {
+	display: block;
+	border: 1px solid #EEF5EE;
+	margin-left: -10px;
+	margin-bottom: 1px;
+	margin-top: 1px;
+	font-size:1.3em;
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;
+	padding-left: 2em;
+	text-align: start;
+	text-decoration: none;
+}
+.box-data a.linkmenu:hover {
+	background-color: #ffffff;
+	border: solid 1px #24880C;
+	color: #24880C;
+}
+.box-data .linkmenu.highlight {
+	background-color: #ffffff;
+	border: solid 1px #24880C;
+	margin-bottom: 1px;
+	margin-top: 1px;
+}
+/*****************
+** custom menus **
+*****************/
+.menu {
+	width: 15em;
+	padding-left:2em;
+	margin-bottom: 0em;
+	font-family: 'Trebuchet MS', 'Lucida Grande',
+	Verdana, Lucida, Geneva, Helvetica, 
+	Arial, sans-serif;
+	background-color: #EEF5EE;
+	font-size: 1em;
+}
+.menu ul {
+	list-style: none;
+	margin: 0px;
+	margin-left: -30px;
+	padding: 0px;
+	border: none;
+}
+.menu li {
+	border-bottom: 1px solid #24880C;
+	list-style:none;
+	margin: 0px;
+	padding: -30px;
+}
+/* Hack for IE */
+.menu li {
+	border-bottom: 1px solid #24880C;
+	margin: 0;
+}
+.menu li a {
+	display: block;
+	padding: 5px 5px 5px 0em;
+	color: #24880C;
+	text-decoration: none;
+	width: 100%;
+}
+html>body .menu li a{
+	width: auto;
+}
+.box-title a.login {
+	color: #DABA00;
+	background-color: #EEF5EE;
+	text-decoration: none;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.box-title a.login:hover {
+	color: #DABA00;
+	background-color: #FFFFFF;
+}
+
+.box-title a.logout {
+	background-color: #FFFFFF;
+	text-decoration: none;
+	color: #24880C;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.box-title a.logout:hover {
+	background-color: #DABA00;
+	color: #FFFFFF;
+}
+
+.knownuser {
+	color: #90FF60;
+}
+.unknownuser {
+	/*color: #9F0000;*/
+	color: #FFCC00;
+}
+
+/* tables in modules */
+.box-data table {
+ margin: auto;
+}
+.box-data table td {
+ padding: 0.2em;
+ text-align: start;
+}
+
+/* lists in modules */
+.box-data li {
+ padding: 0em;
+ text-align: start;
+}
+
+/*
+ * controls for modules (logged-in users only)
+ */
+.modcontrols { /* group of control buttons */
+ display: block;
+ float: right;
+ width: 64px;
+ height: 16px;
+}
+/* every modcontrol button setting */
+.modcontrols a {
+ display: block;
+ float: left;
+ width: 16px;
+ height: 16px;
+}
+.modcontrols a span {
+ display: none; /*prevents displaying alternative text over control buttons */
+}
+
+.movemodup {
+ background: transparent url('simple/up_out.png') no-repeat center;
+}
+a:hover.movemodup {
+ background: transparent url('simple/up.png') no-repeat center;
+}
+
+.movemoddown {
+ background: transparent url('simple/down_out.png') no-repeat center;
+}
+a:hover.movemoddown {
+ background: transparent url('simple/down.png') no-repeat center;
+}
+
+.movemodopside {
+ background: transparent url('simple/move_out.png') no-repeat center;
+}
+a:hover.movemodopside {
+ background: transparent url('simple/move.png') no-repeat center;
+}
+
+.removemod {
+ background: transparent url('simple/close_out.png') no-repeat center;
+}
+a:hover.removemod {
+ background: transparent url('simple/close.png') no-repeat center;
+}
+
+/*
+ * common module tables
+ */
+.box-data table tr td.module {
+}
+
+/*
+ * calendar module table
+ */
+.box-data table tr td {
+}
+.box-data td a.nav { /* navigation links */
+	padding: 0.1em;
+	text-decoration: none;
+}
+.box-data td.fc { /* fc cells */
+	padding: 0;
+}
+.box-data td.fc a { /* calendar dates links */
+	display: block;
+	padding: 0.1em;
+	text-decoration: none;
+}
+.box-data td.fc a.today { /* calendar today link */
+	background-color: #ffcc00;
+	border: solid 1px #000000;
+}
+
+/*
+ * shoutbox messages for both: mod and shoutbox page too
+ */
+.shoutboxmodmsg, div.shoutboxmsg {
+}
+textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by msie5) */
+	width: auto;
+}
+
+/*
+ * user (messu) messages
+ */
+div.messureadbody {
+}
+
+/*
+ * common page classes
+ */
+.linkbut {
+ font-size: 0.9em;
+ border: solid 1px;
+ padding: 1px;
+ padding-right: 2px;
+ padding-left: 2px;
+ margin-bottom: 6px;
+ padding-bottom: 3px;
+ text-decoration: none;
+}
+.linkbut:hover {
+ color: #000000;
+}
+.pagetitle {
+ color: #000000;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+ font-size: 1.3em;
+}
+.titlebar {
+ background-color: #abcdef;
+ font-weight: bold;
+}
+/*
+ * calendar
+ */
+.opaque { /* onmouseover info box */
+	background-color: #FFFFFF;
+}
+
+/*
+ * content boxes
+ */
+.cbox-title {
+ font-size: medium;
+ text-align: center;
+/* background-color: #FFFFFF;*/
+ color: #003150;
+}
+.cbox {
+	background-color: #F0F0F0;
+	/*border: solid #0077CC;
+	 */
+}
+/*
+ * wiki pages
+ */
+.description {
+	text-align: center;
+	background-color: #24880C;
+	color: #FFFFFF;
+}
+.description h1 {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+.pageheading {
+	font-size: large;
+	background-color: #24880C;
+	border: solid 1px #24880C;
+	color: #FFFFFF;
+	text-align: center;
+	background-color: #24880C;
+	color: #FFFFFF;
+	margin-bottom: 4px;
+	text-decoration: none;
+}
+.pageheading h1 {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+.pageheading a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+.normal .even { /* table with class normal, even cells */
+	background-color: #FFFFFF;
+}
+.normal .odd { /* table with class normal, odd cells */
+	background-color: #FFFFFF;
+}
+.simplebox { /* simple box wiki syntax */
+	background-color: #FFFFFF;
+	border: 1px solid #99ccff;
+}
+
+.wikitable { /* wiki table syntax */
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+	border-right: none;
+	border-bottom: none;
+	margin: auto;
+	padding: 0;
+	width: 90%;
+}
+.wikitable td {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+	margin: 0;
+	padding: 0.2em;
+}
+
+.wikitext {
+	background-color: transparent;
+	overflow: auto;
+}
+
+.wikitopline {
+	border: 1px solid #abcdef;
+	background-color: #DFEDF7;
+}
+.wiki-edithelp {
+	display: none;
+}
+/*
+ * articles
+ */
+.titlea {
+ font-size: large;
+}
+.titleb {
+ font-size: x-small;
+}
+div.articlebody {
+}
+/*
+ * blogs
+ */
+.blogtitle {
+	padding: 0px;
+/*	font-size: large;
+	background-color: #24880C;
+	border: solid 1px #24880C;
+	color: #FFFFFF;*/
+}
+.bloginfo {
+	background-color: #EEF5EE; /*#F0F0F0;*/
+	color: #24880C;
+	font-size: 1.2em;
+	/*border: solid 1px #24880C;*/
+}
+.postbody {
+	margin-bottom: 0px;
+}
+.postfooter {
+	/*background-color: #F0F0F0;*/
+	text-align: right;
+	margin-bottom: 10px;
+/*	border: solid 1px #C0C0C0;
+	background-color: #E7F2D8;
+	border: solid 1px #6BB521;*/
+}
+.posthead h2 {
+	font-size: 20px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+.posthead {
+	/*background-color: #0174BB;*/
+	/*background-color: #24880C;*/
+	border-bottom: solid 1px #24880C;
+	color: #1B6309;
+	margin-top: 10px;
+}
+.postinfo {
+	/*background-color: #EEF5EE;*/
+	/*border: solid 1px #24880C;*/
+}
+/*
+ * image galleries
+ */
+.showimage {
+ text-align: center;
+}
+small.caption {
+	font-size: 10px;
+/*	font-weight: bold;*/
+}
+
+/* Warning color */
+.attention {
+	color: #cc0000;
+}
+
+/*
+ ***** JS related stuff *****
+ */
+
+/*
+ * PHP Layers Menus
+ */
+.mdkhorbar {
+	color: black;
+	background-color: #FFFFFF;
+	border: 1px outset #525252;
+}
+
+.horbar {
+	background-color: #0174BB;
+	margin-left: 0;
+	text-align: center;
+}
+.horbaritem {
+	text-align: right;
+}
+.horbaritem a {
+	text-align: right;
+	color: #FFFFFF;
+	font-size: 1em;
+	font-weight: bold;
+	text-decoration: none;
+	float: left;
+}
+.horbaritem a:hover {
+	color: #F0F0F0;
+	background-color: #24880C;
+}
+
+.mdkhorbaritem {
+	float: left;
+	white-space: nowrap;
+	font-size: 1em;
+}
+
+.mdkhorbaritem a {
+	display: block;
+	text-decoration: none;
+}
+
+.mdkhorbaritem a:link {
+	color: #000000;
+}
+
+.mdkhorbaritem a:visited {
+	color: #000000;
+}
+
+.mdkhorbaritem a:hover  {
+	background-color: #abcdef;
+}
+
+.mdkhorbaritem a:active {
+	color: #ff0000;
+}
+
+.mdkverbar {
+	color: black;
+	border: 1px solid #fdfefd;
+}
+
+.mdksubmenu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+}
+
+.mdksubframe {
+	position: relative;
+	display: block;
+	background-color: #FFFFFF;
+	border: 1px solid #fdfefd;
+}
+
+.mdkitem {
+	position: relative;
+	white-space: nowrap;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.mdkitem a {
+	position: relative;
+	display: block;
+	text-decoration: none;
+}
+
+.mdkitem a:link {
+}
+
+.mdkitem a:visited {
+}
+
+.mdkitem a:hover {
+	color: #000000;
+	background-color: #abcdef;
+}
+
+.mdkitem a:active {
+	color: #ff0000;
+}
+
+.mdkitem .mdkfwdarr {
+	position: absolute;
+	top: 5px;
+	right: 12px;
+}
+
+
+/* tiki tabs */
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	background-color: #abcdef;
+	border: 1px solid #abcdef;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 1px 0px 1px 0px;
+}
+.tabmark a { 
+	border-bottom : 0;
+	color: #000000;
+	padding: 1px 5px 1px 5px;
+	text-decoration: none;
+}
+.tabmark a:active {
+	background-color: #FFFFFF;
+	color: red;
+}
+.tabmark a:hover {
+	color: black;
+	background-color: #FFFFFF;
+}
+
+.tabcontent {
+	z-index : 200;
+	position: relative;
+	border: 1px solid #abcdef;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background-color: #FFFFFF;
+}
+
+/* trackers specific style */
+
+.statuson {
+	padding: 1px;
+	margin: 1px;
+	border: 1px inset #666666;
+	vertical-align: middle;
+	background-color: #bbaa99;
+}
+.statusoff {
+	padding: 1px;
+	margin: 2px;
+	vertical-align: middle;
+}
+
+.normal {
+	border: solid 1px #24880C;
+}
+
+.categpath {
+	font-size: x-small;
+}
+
+/* CODE plugin */
+.codecaption { 
+font-size : 12px; 
+padding : 0 10px; 
+background-color : #E7F2D8; 
+position : relative; 
+left: 3px; bottom : -3px; 
+display : inline; 
+border : 1px solid #ADACAF; 
+border-bottom : 0; 
+margin : 0; 
+/*    color : #666666;*/ 
+color: #000000; 
+/*background-color: #E9ECEF;*/ 
+font-weight : bold; 
+}
+
+.codelisting {
+	font-family : monospace;
+	font-size: 12px;
+	padding : 10px;
+	background-color : #FFFFFF;
+	margin : 0;
+	border : 1px solid #ADACAF;
+        overflow: auto;       /* for Netscape, Firefox, Opera */
+        _overflow-x: auto;   /* for IE */
+        _overflow-y: auto;     /* for IE */
+}
+
+/* VERSION plugin */
+.versions {
+	border-top: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	min-height: 142px;
+}
+.versionav {
+	display: inline;
+	float: right;
+	border-left: 1px solid #999999;
+}
+.versionav .button2 {
+	text-align: center;
+	display: block;
+	border: 0;
+	border-bottom: 1px solid #999999;
+	background-color: transparent;
+}
+.versionav .button2 .linkbut {
+	border: solid 0px;
+	margin-bottom: 6px;
+	text-decoration: none;
+	border: 0;
+	background-color: inherit;
+	padding: 0 10px;
+	/*margin-bottom: 1px;*/
+	/*padding: 0.5em;
+	/*padding-right: 2px;
+	padding-left: 2px;*/
+}
+.versionav .highlight {
+	background-color: #cccccc;
+	font-weight: bold;
+}
+.versiontitle {
+	font-weight: bold;
+	border-bottom: 1px solid #999999;
+	border-left: 1px solid #999999;
+	padding: 2px 30px;
+	float: right;
+}
+
+/* wiki diff styles */
+.diffheader {
+	background-color:#a9b8c2; font-weight: bold;
+}
+.diff div {
+	border-top: 1px solid #abcdef;
+}
+.diffadded {
+	background-color: #ccffcc;
+}
+.diffdeleted {
+	background-color: #ffcccc;
+}
+.diffchar {color: red;}
+
+/* QUOTE plugin */
+.quoteheader {
+	margin: 10px 5px 0px 5px;
+	padding: 4px;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #A9B8C2;
+	color: black;
+	font-weight: bold;
+	background-color: #A9B8C2;
+	font-size: 8pt;
+}
+.quotebody {
+	margin: 0px 5px 10px 5px;
+	padding: 5px;
+	border-color: #A9B8C2;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	color: black;
+	background-color: #edeeef;
+}
+
+/***************************************************** FREETAGS **************************************************************/
+li.freetag {
+	list-style:none;
+	display:inline;
+	margin:0px;
+	padding:0px;
+}
+ul.freetag {
+	margin:0px;
+	padding:0px;
+	display:inline;
+}
+
+a.freetag_1 { text-decoration: none; font-size: 9px; }
+a.freetag_2 { text-decoration: none; font-size: 10px; }
+a.freetag_3 { text-decoration: none; font-size: 12px; }
+a.freetag_4 { text-decoration: none; font-size: 14px; }
+a.freetag_5 { text-decoration: none; font-size: 16px; }
+a.freetag_6 { text-decoration: none; font-size: 18px; }
+a.freetag_7 { text-decoration: none; font-size: 20px; }
+
+.freetagitemlist h3 {
+	margin: 0px;
+	padding:0px;
+	color: #FFFFFF;
+	background-color: #24880C;
+}
+
+.freetaglist {
+        background-color: #EEF5EE;
+}
+.freetagitemlist {
+        background-color: #EEF5EE;
+	margin-top:10px;
+	padding:0px;
+}
+.freetaglist a {
+	text-decoration: none;
+}
+.freetagitemlist a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+.freetagitemlist img {
+	float: right;
+}
+.freetagitemlist a:hover {
+	text-decoration: none;
+	color: #0000FF;
+	background-color: #24880C;
+}
+.freetagitemlist div.type {
+	font-weight: bold;
+	color: #24880C;
+	font-size: 0.8em;
+}
+.morcego_embedded {
+	border: 1px solid;
+	text-align: center;
+}
+div#ajaxLoading {
+       display: none;
+       width: 40%;
+       background-color: #BB5555;
+       position: absolute;
+       margin-left: auto;
+       margin-right: auto;
+       text-align: center;
+       top: 5%;
+       left: 30%;
+       border: 1px solid #000000;
+       padding: 3px;
+       font-family: Verdana;
+       font-size: 18px;
+       font-weight: bold;
+       color: #FFFFFF;
+}
+
+/***************************************************** FAQS **************************************************************/
+
+/* end of css file */
+
+/* Neat CSS-Buttons */
+/*.btn {
+	display: block;
+	padding: 1px;
+	border: 0;
+	margin: 0;
+	text-decoration: none;
+	background-color: #666;
+	height: 15px;
+	width: 90px;
+}
+.btnFront {
+	float: left;
+	font: 10px Arial, sans-serif;
+	display: inline;
+	background-color: #f90;
+	color: #fff;
+	padding: 0 2px;
+	border: 1px solid #fff;
+	margin: 0px;
+	width: 20px;
+}
+
+.btnText {
+	float: right;
+	font: 10px Arial, sans-serif;
+	display: inline;
+	background-color: #898e79;
+	color: #fff;
+	padding: 0 2px;
+	border: 1px solid #fff;
+	border-left: 0;
+	margin: 0px;
+	width: 59px;
+}*/
+.btn {
+	display: inline;
+	font: x-small/200% Arial, sans-serif;
+	padding: 1px 0;
+	border: 1px solid #666;
+	margin: 0;
+	text-decoration: none;
+	background-color: #fff;
+}
+a.btn {
+	text-decoration: none;
+}
+.btnFront {
+	display: inline;
+	background-color: #f90;
+	color: #fff;
+	padding: 0 2px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border: 1px solid #fff;
+	border-top: 0;
+	border-bottom: 0;
+	margin: 0px;
+}
+
+.btnText {
+	display: inline; 
+	background-color: #898e79;
+	color: #fff;
+	padding: 0 2px;
+	padding-right: 3em;
+	border: 0;
+	border-right: 1px solid #fff;
+	margin: 0px;
+}
+.nickname {
+	font-size: 1.5em;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	color: #24880C;	
+}
+.fn {
+	font-size: 1.4em;
+}
+.street-address {
+	font-size: 1.1em;
+}
+.postal-code {
+	font-size:1.18em;
+}
+.locality {
+	font-size: 1.18em;
+}
+.country-name {
+	font-size: 1.15em;
+}
+#mod-hCard div {
+	margin:0px;
+	overflow:hidden;
+	clear: none;
+	width: 80%;
+}
+#mod-hCard * ul {
+	margin-left: -40px;
+	overflow:hidden;
+}
+#mod-hCard * li {
+	list-style: none;
+}
+
+#mod-hCard .photo {
+	float:left;
+	padding-right:8px;
+	padding-left:15px;
+	width:80px;
+}
+#mod-hCard img.photo {
+	float:left;
+	padding-right:5px;
+	padding-left:0px;
+}
+
+div.hcard-menu {
+	float:right;
+	padding: 0px;
+}
+
+.hcard-menu ul {
+list-style-type:none;
+padding: 0px;
+margin:0px;
+width:100%;
+margin-right: 10px;
+}
+
+#mod-hCard .hcard-menu li {
+	width: 100%;
+	background-color: #FFFFFF;
+	background-color: #EEF5EE;
+	text-decoration: none;
+}
+
+#mod-hCard .hcard-menu a {
+	width: 100%;
+	display:block;
+	color: #24880C;
+	background-color: #FFFFFF;
+	text-decoration: none;
+	text-align: center;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 1em;
+	padding-right: 0em;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	margin-right: 0px;
+}
+
+#mod-hCard .hcard-menu a:hover {
+	color: #DABA00;
+}
+
+#mod-hCard .hcard-menu a.highlight {
+	color: #DABA00;
+}
+
+/* GoogleMap in module (and elsewhere?)*/
+#mod-gmap_locator {
+	overflow:hidden;
+}
+
+#mod-amette_lastfm .rssitem {
+	list-style-image:url(simple-amette/audio.png);
+}
+
+#mod-blogroll > a {
+display: block;
+float: right;
+}
+
+#mod-blogroll li {
+	margin-left: -2.7em;
+	list-style-type: none;
+	font-weight: bold;
+	color: #24880C;
+	font-size: 1.2em;
+	padding-left:0px;
+}
+
+#mod-blogroll li * li {
+	font-size: 0.8em;
+	font-weight: normal;
+	padding: 0px;
+}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: 0;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;}
+
+/* Module-flip img */
+
+h3.box-title {
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px solid transparent;
+}
+
+a.flipmodtitle:hover img {
+	border: 1px solid #eef5ee !important;
+}
+/* end of css file */

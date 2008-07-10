@@ -1,7 +1,0 @@
-AddType application/x-javascript .js
-AddType text/css .css
-AddType text/xml .xml
-<FilesMatch "\.ph(p(3|4)?|tml)$">
-	order deny,allow
-	allow from all
-</FilesMatch>
