@@ -38,17 +38,20 @@
 # 4/ Build the release tarballs
 #    bash tikirelease.sh 3.0.RC3 tags/3.0.RC3
 #    
-# 5/ When the tarball is tested once you can copy-paste the produced line to upload
+# 5/ Test the produced tarball and share the testing : you need at least 3 install 
+#    from 3 different people
+# 
+# 6/ When the tarball is tested once you can copy-paste the produced line to upload
 #    both .gz and .bz2 to sourceforge
 #    
-# 6/ If you are release technician on sourceforge, add the files to the repository 
+# 7/ If you are release technician on sourceforge, add the files to the repository 
 #    in admin sf section. If you are not, ask a release technician to do it 
 # 
-# 7/ Warn people that do .rpm and ebuilds that the archive is avalaible so they can
+# 8/ Warn people that do .rpm and ebuilds that the archive is avalaible so they can
 #    complete the packaging process with new files. If you don't know who does that,
 #    warn everybody.
 #
-# 8/ unless in step 8/ you warned everybody you have now to announce the good news
+# 9/ unless in step 8/ you warned everybody you have now to announce the good news
 #    on devel mailing-list and ask marc to launch the announce-speading process 
 #    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
 #
@@ -85,9 +88,6 @@ OLDIR=`pwd`
 VER=$1
 RELTAG=$2
 
-# when ready to release (step 3), uncomment this line
-#RELTAG="tags/"`echo $VER | tr '.' '-'`"
-
 # ############################################################
 
 mkdir -p $WORKDIR
@@ -120,28 +120,6 @@ rm -rf $MODULE-$VER/templates_c/%*
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r $MODULE-$VER.zip $MODULE-$VER
-
-# ############################################################
-# special operation for a lighter tikiwiki
-# 
-# cp -rp $MODULE-$VER tikilight_$VER
-# find tikilight_$VER/img/avatars/ -type f -name '*.gif' | grep -v 000 | xargs -- rm -f
-# rm -rf tikilight_$VER/img/custom
-# find tikilight_$VER/lang -type f -name language.php | grep -v "/en/" | xargs -- rm -rf
-# rm -rf tikilight_$VER/lib/Galaxia/docs
-# rm -rf tikilight_$VER/calendar/iCal
-# rm -rf tikilight_$VER/lib/pear/SOAP/example
-# find tikilight_$VER/lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
-# find tikilight_$VER/templates/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
-# find tikilight_$VER/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
-# find tikilight_$VER/styles/ -type f -name "*.css" | grep -v elegant | grep -v moreneat | xargs -- rm -f
-# tar -czf $MODULE-$VER.light.tar.gz tikilight_$VER
-# tar -cjf $MODULE-$VER.light.tar.bz2 tikilight_$VER
-# zip -r $MODULE-$VER.light.zip tikilight_$VER
-# echo ""
-# echo "To upload the light archives, copy-paste and exectue the following line at will (depending on SF's mood):"
-# echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.light.tar.gz;put $MODULE-$VER.light.tar.bz2;put $MODULE-$VER.light.zip;quit;' upload.sf.net"
-# ############################################################
 
 echo ""
 echo "To upload the archives, copy-paste and exectue the following line at will (depending on SF's mood):"
