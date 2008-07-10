@@ -12,16 +12,6 @@
 {include file="tiki-ajax_header.tpl"}
 {/if}
 
-<div id="topMenu">
-{menu id=101 css=y type=horiz toLevel=0}
-<br clear="both" />
-</div>
-<div id="sousMenu">
-{menu id=101 css=y type=horiz sectionLevel=1}
-<br clear="both" />
-</div>
-{if isset($objectCategoryIds) and in_array(45, $objectCategoryIds)} CATEGORY CATB{/if}
-
 <div id="tiki-main">
   {if $prefs.feature_top_bar eq 'y'}
   <div id="tiki-top">
