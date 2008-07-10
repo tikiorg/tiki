@@ -310,7 +310,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 ALTER TABLE tiki_logs CHANGE logip logip varchar(200);
 
 #sylvieg 11/3/06
-INSERT INTO users_grouppermissions(groupName,permName) values ('Registered','tiki_p_watch_trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'Registered', 'trackers');
 
 # 2006-10-21 mose/cfreeze - changed pear auth params to be more generic
@@ -1302,99 +1301,13 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 ALTER TABLE tiki_user_assigned_modules ADD moduleId int(8) NOT NULL FIRST;
 UPDATE tiki_user_assigned_modules tuam set moduleId= (SELECT moduleId FROM tiki_modules tm WHERE tuam.name = tm.name  LIMIT 1);
 
-#2007-08-06 niclone
-CREATE TABLE `tiki_mypage` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_users` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `id_users` (`id_users`)
-) ENGINE=MyISAM;
-
-CREATE TABLE `tiki_mypagewin` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_mypage` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `inbody` enum('n','y') NOT NULL default 'n',
-  `modal` enum('n','y') NOT NULL default 'n',
-  `left` int(11) NOT NULL,
-  `top` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  `contenttype` enum('iframe','wiki') default NULL,
-  `content` text,
-  PRIMARY KEY  (`id`),
-  KEY `id_mypage` (`id_mypage`)
-) ENGINE=MyISAM;
-
-#2007-07-06 niclone
-ALTER TABLE `tiki_mypage` ADD `name` VARCHAR( 255 ) NOT NULL ,
-ADD `description` VARCHAR( 255 ) NOT NULL ;
-ALTER TABLE `tiki_mypage` ADD INDEX `name` ( `name` ) ;
-
 #2007-08-07 sylvieg
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_own_mypage', 'Can view/edit only one\'s own mypages', 'registered', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_mypage', 'Can edit any mypage', 'registered', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_mypage', 'Can admin any mypage', 'admin', 'mypage','y');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage', 'Can list mypages', 'admin', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage_component', 'Can list components', 'basic', 'component');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_component', 'Can view a component', 'basic', 'component');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_component', 'Can assign perms to component', 'admin', 'component');
 DELETE FROM users_permissions where type = 'component';
 
 #2007-08-13 nyloth
 ALTER TABLE tiki_forums_queue ADD COLUMN `in_reply_to` varchar(128) default NULL;
-
-#2007-08-14 niclone
-ALTER TABLE `tiki_mypage` ADD `id_types` INT NOT NULL AFTER `id_users`;
-ALTER TABLE `tiki_mypage` ADD INDEX `id_types` ( `id_types` );
-
-#2007-08-15 niclone
-CREATE TABLE `tiki_mypage_types` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_bin NOT NULL,
-  `description` varchar(255) collate utf8_bin NOT NULL,
-  `section` varchar(255) collate utf8_bin default NULL,
-  `permissions` varchar(255) collate utf8_bin default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM;
-
-CREATE TABLE `tiki_mypage_types_components` (
-  `id_mypage_types` int(11) NOT NULL,
-  `compname` varchar(255) collate utf8_bin NOT NULL,
-  `mincount` int(11) NOT NULL default '1',
-  `maxcount` int(11) NOT NULL default '1',
-  KEY `id_mypage_types` (`id_mypage_types`)
-) ENGINE=MyISAM;
-
-#2007-08-17 niclone
-ALTER TABLE `tiki_mypage` ADD `bgcolor` VARCHAR( 16 ) NULL ;
-
-#2007-08-17 niclone
-ALTER TABLE `tiki_mypagewin` CHANGE `content` `config` BLOB NULL DEFAULT NULL;
-ALTER TABLE `tiki_mypagewin` ADD `content` BLOB NULL DEFAULT NULL;
-
-#2007-08-21 niclone
-ALTER TABLE `tiki_mypage_types` ADD `def_height` INT NULL,
-	ADD `def_width` INT NULL,
-	ADD `fix_dimensions` ENUM( 'no', 'yes' ) NOT NULL,
-	ADD `def_bgcolor` VARCHAR( 8 ) NULL,
-	ADD `fix_bgcolor` ENUM( 'no', 'yes' ) NOT NULL;
-
-#2007-08-25 niclone
-ALTER TABLE `tiki_mypagewin` CHANGE `contenttype` `contenttype` VARCHAR(31) NULL DEFAULT NULL;
-
-#2007-08-27 niclone
-ALTER TABLE `tiki_mypage` ADD `created` INT NOT NULL AFTER `id_types`, ADD `modified` INT NOT NULL AFTER `created`, ADD `viewed` INT NOT NULL AFTER `modified`;
-ALTER TABLE `tiki_mypagewin` ADD `created` INT NOT NULL AFTER `id_mypage`, ADD `modified` INT NOT NULL AFTER `created`, ADD `viewed` INT NOT NULL AFTER `modified`;
-ALTER TABLE `tiki_mypage_types` ADD `created` INT NOT NULL AFTER `id`, ADD `modified` INT NOT NULL AFTER `created`;
-
-#2007-09-02 sylvieg
-ALTER TABLE  `tiki_mypage_types` CHANGE `name` `name` varchar(255) collate utf8_bin NOT NULL;
 
 #2007-09-02 mose
 ALTER TABLE `tiki_received_pages` ADD `parent` VARCHAR( 255 ) NULL , ADD `position` TINYINT UNSIGNED NULL , ADD `alias` VARCHAR( 255 ) NULL ;
@@ -1405,20 +1318,6 @@ update `tiki_modules` set params=replace(params,'page=','pagemenu=') where name 
 #2007-09-08 openid support
 ALTER TABLE `users_users` ADD `openid_url` VARCHAR( 255 ) NULL ;
 ALTER TABLE `users_users` ADD INDEX openid_url ( `openid_url` ) ;
-
-#2007-09-10 niclone
-alter table tiki_mypage_types add column `templateuser` int not null;
-
-#2007-09-12 niclone
-alter table tiki_mypage add column `winbgcolor` varchar(16) null;
-alter table tiki_mypage add column `wintitlecolor` varchar(16) null;
-alter table tiki_mypage add column `wintextcolor` varchar(16) null;
-
-#2007-09-14 niclone
-alter table tiki_mypage add column `bgimage` varchar(255) NULL;
-alter table tiki_mypage add column `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
-alter table tiki_mypage add column `winbgimage` varchar(255) NULL;
-alter table tiki_mypage add column `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL;
 
 # 2007-09-22 pkdille
 DELETE FROM `tiki_menu_options` WHERE menuId='42' and type='o' and name='Search stats' and url='tiki-search_stats.php' and position='1125' and section='feature_search' and perm='tiki_p_admin';
@@ -1473,8 +1372,7 @@ UPDATE `tiki_preferences` SET `name`='preset_galleries_info' WHERE `name`='prese
 
 #2007-11-13 sylvieg
 ALTER TABLE users_groups ADD userChoice CHAR(1) DEFAULT NULL;
-UPDATE  users_permissions set permName='tiki_p_subscribe_groups', permDesc='Can subscribe to groups' where permName='tiki_p_assign_my_groups';
-UPDATE users_grouppermissions set permName='tiki_p_subscribe_groups' where permName='tiki_p_assign_my_groups';
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_groups', 'Can subscribe to groups', 'registered', 'tiki');
 DELETE FROM users_permissions where permName='tiki_p_assign_my_groups';
 
 #2007-11-21 nkoth on behalf of ntavares==Panora200
@@ -1546,14 +1444,12 @@ CREATE TABLE IF NOT EXISTS `tiki_pages_translation_bits` (
 #2008-03-25 Jyhem: new syntax, mysql 4.0 compatible
 SET @fgcant=0;
 SELECT (@fgcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_list_file_galleries';
-INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_file_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries.php' AND perm='tiki_p_view_file_gallery' AND type='o' AND @fgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_file_galleries' WHERE url='tiki-file_galleries_rankings.php' AND perm='tiki_p_view_file_gallery' AND @fgcant = 0;
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_file_gallery' AND @fgcant = 0;
 
 SET @tcant=0;
 SELECT (@tcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_list_trackers';
-INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_trackers','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_trackers' WHERE perm='tiki_p_view_trackers' AND @tcant = 0;
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_trackers' AND @tcant = 0;
 
@@ -1603,8 +1499,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('
 SET @pcant=0;
 SELECT (@pcant:=count(*)) FROM users_permissions WHERE permName = 'tiki_p_search';
 INSERT INTO users_permissions (permName, permDesc, level, type) SELECT 'tiki_p_search','Can search', 'basic', 'tiki' FROM users_permissions WHERE @pcant = 0;
-INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Anonymous','tiki_p_search' FROM `users_grouppermissions` WHERE @pcant = 0;
-INSERT INTO `users_grouppermissions` (groupName,permName) SELECT 'Registered','tiki_p_search' FROM `users_grouppermissions` WHERE @pcant = 0;
 
 #2008-03-10
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_clean_cache', 'Can clean cache', 'editors', 'tiki');
@@ -1710,7 +1604,6 @@ DELETE FROM tiki_mail_events WHERE event='wiki_page_changes' or event='wiki_page
 
 SET @imgcant=0;
 SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_list_image_galleries' INTO @imgcant;
-INSERT INTO `users_grouppermissions` SELECT groupName,'tiki_p_list_image_galleries','' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_image_gallery' AND @imgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @imgcant = 0;
 UPDATE `tiki_menu_options` SET perm='tiki_p_list_image_galleries' WHERE url='tiki-galleries_rankings.php' AND perm='tiki_p_view_image_gallery' AND type='o' AND @imgcant = 0;
 INSERT INTO `users_permissions` SELECT  'tiki_p_list_image_galleries', 'Can list image galleries', 'basic', 'image galleries',NULL FROM `users_permissions` WHERE permName = 'tiki_p_view_image_gallery' AND @imgcant = 0;
@@ -1724,8 +1617,6 @@ UPDATE tiki_file_galleries SET show_path='y' WHERE show_path='?';
 ALTER TABLE tiki_file_galleries CHANGE show_explorer show_explorer char(1) default NULL;
 ALTER TABLE tiki_file_galleries CHANGE show_path show_path char(1) default NULL;
 SELECT count(*) FROM users_permissions WHERE permName = 'tiki_p_view_fgal_explorer' INTO @permexist;
-INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Registered', 'tiki_p_view_fgal_explorer' FROM users_permissions WHERE @permexist = 0;
-INSERT INTO users_grouppermissions(groupName,permName) SELECT distinct 'Registered', 'tiki_p_view_fgal_path' FROM users_permissions WHERE @permexist = 0;
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_explorer', 'Can view file galleries explorer', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_fgal_path', 'Can view file galleries path', 'basic', 'file galleries');
 

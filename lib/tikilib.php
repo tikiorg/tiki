@@ -4070,8 +4070,6 @@ function add_pageview() {
 			return 'surveys';
 		case 'newsletter':
 			return 'newsletters';
-		case 'mypage';
-			return 'mypage';
 		/* TODO */
 		default:
 			return $objectType;
@@ -4104,8 +4102,6 @@ function add_pageview() {
 			return 'tiki_p_admin_surveys';
 		case 'newsletter':
 			return 'tiki_p_admin_newsletters';
-		case 'mypage':
-			return 'tiki_p_admin_mypage';
 		/* TODO */
 		default:
 			return "tiki_p_admin_$objectType";
@@ -4248,13 +4244,6 @@ function add_pageview() {
 				$ret['tiki_p_subscribe_newsletters'] = 'y';
 			} else {
 				$ret['tiki_p_subscribe_newsletters'] = 'n';
-			}
-			break;
-		case 'mypage':
-			if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
-				$ret['tiki_p_view_mypage'] = 'y';
-			} else {
-				$ret['tiki_p_view_mypage'] = 'n';
 			}
 			break;
 			

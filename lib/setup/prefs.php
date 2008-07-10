@@ -1032,7 +1032,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_3d_adjust_camera'] = '';
 	$prefs['wiki_3d_autoload'] = '';
 	$prefs['feature_sefurl'] = 'n';
-	$prefs['pref_syntax'] = '1.9';
+	$prefs['pref_syntax'] = '1.10';
 	$prefs['feature_mootools'] = 'n';
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';

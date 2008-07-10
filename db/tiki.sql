@@ -2622,7 +2622,6 @@ CREATE TABLE tiki_preferences (
   value text,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
-INSERT INTO `tiki_preferences` (name, value) VALUES ('pref_syntax', '1.10');
 # --------------------------------------------------------
 
 #
@@ -4357,12 +4356,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tell_a_friend', 'Can send a link to a friend', 'Basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_file_galleries', 'Can list file galleries', 'basic', 'file galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mypage', 'Can view any mypage', 'basic', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_own_mypage', 'Can view/edit only one\'s own mypages', 'registered', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_mypage', 'Can edit any mypage', 'registered', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_mypage', 'Can admin any mypage', 'admin', 'mypage','y');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_mypage', 'Can list mypages', 'registered', 'mypage');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_mypage', 'Can assign perms to mypage', 'admin', 'mypage');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_structure', 'Can watch structure', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu', 'Can edit menu', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_menu_option', 'Can edit menu option', 'admin', 'tiki');
@@ -4947,84 +4940,6 @@ CREATE TABLE `tiki_webmail_contacts_fields` (
   PRIMARY KEY ( `fieldId` ),
   INDEX ( `user` )
 ) ENGINE = MyISAM ;
-
-# ---------- mypage ----------------
-DROP TABLE IF EXISTS tiki_mypage;
-CREATE TABLE `tiki_mypage` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_users` int(11) NOT NULL,
-  `id_types` int(11) NOT NULL,
-  `created` int(11) NOT NULL,
-  `modified` int(11) NOT NULL,
-  `viewed` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `bgcolor` varchar(16) default NULL,
-  `winbgcolor` varchar(16) default NULL,
-  `wintitlecolor` varchar(16) default NULL,
-  `wintextcolor` varchar(16) default NULL,
-  `bgimage` varchar(255) default NULL,
-  `bgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
-  `winbgimage` varchar(255) default NULL,
-  `winbgtype` enum ('color', 'imageurl') default 'color' NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_users` (`id_users`),
-  KEY `name` (`name`),
-  KEY `id_types` (`id_types`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS tiki_mypagewin;
-CREATE TABLE `tiki_mypagewin` (
-  `id` int(11) NOT NULL auto_increment,
-  `id_mypage` int(11) NOT NULL,
-  `created` int(11) NOT NULL,
-  `modified` int(11) NOT NULL,
-  `viewed` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `inbody` enum('n','y') NOT NULL default 'n',
-  `modal` enum('n','y') NOT NULL default 'n',
-  `left` int(11) NOT NULL,
-  `top` int(11) NOT NULL,
-  `width` int(11) NOT NULL,
-  `height` int(11) NOT NULL,
-  `contenttype` varchar(31) default NULL,
-  `config` blob,
-  `content` blob,
-  PRIMARY KEY (`id`),
-  KEY `id_mypage` (`id_mypage`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS tiki_mypage_types;
-CREATE TABLE `tiki_mypage_types` (
-  `id` int(11) NOT NULL auto_increment,
-  `created` int(11) NOT NULL,
-  `modified` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `section` varchar(255) default NULL,
-  `permissions` varchar(255) default NULL,
-  `def_height` int(11) default NULL,
-  `def_width` int(11) default NULL,
-  `fix_dimensions` enum('no','yes') NOT NULL,
-  `def_bgcolor` varchar(8) default NULL,
-  `fix_bgcolor` enum('no','yes') NOT NULL,
-  `templateuser` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM;
-
-DROP TABLE IF EXISTS tiki_mypage_types_components;
-CREATE TABLE `tiki_mypage_types_components` (
-  `id_mypage_types` int(11) NOT NULL,
-  `compname` varchar(255) NOT NULL,
-  `mincount` int(11) NOT NULL default '1',
-  `maxcount` int(11) NOT NULL default '1',
-  KEY `id_mypage_types` (`id_mypage_types`)
-) ENGINE=MyISAM;
-
-# ------------------------------------
 
 DROP TABLE IF EXISTS tiki_pages_translation_bits;
 CREATE TABLE `tiki_pages_translation_bits` (
