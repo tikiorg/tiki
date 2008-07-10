@@ -462,7 +462,7 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..*to1\..*\.sql$#',$file) || preg_match('#secdb#',$file)) {
+        	if (preg_match('#1\..*to.*\.sql$#',$file) || preg_match('#secdb#',$file)) {
                 	$files[] = $file;
         	}
 	}
@@ -662,7 +662,7 @@ if (!file_exists($local)) {
 			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
 		} else {
 			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_20( $dbTiki ) );
+			$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 
 			$dbcon = true;
 			if (!isset($_REQUEST['reset'])) {
@@ -720,7 +720,7 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
 			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_20( $dbTiki ) );
+			$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
 		}
 	}
