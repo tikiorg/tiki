@@ -48,7 +48,7 @@ function wikiplugin_map($data, $params) {
 	if(@$prefs['feature_maps'] != 'y') {
 		$map=tra("Feature disabled");
 	} else {
-		$map='<object border="0" hspace="0" vspace="0" type="text/html" data="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=frame" '.$widthdata.' '.$heightdata.'><a href="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.phtml?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a></object>';
+		$map='<object border="0" hspace="0" vspace="0" type="text/html" data="tiki-map.php?'.$mapdata.$extdata.$sizedata.'maponly=frame" '.$widthdata.' '.$heightdata.'><a href="tiki-map.php?'.$mapdata.$extdata.$sizedata.'"><img src="tiki-map.php?'.$mapdata.$extdata.$sizedata.'maponly=yes"/></a></object>';
 
 	}
 	return $map;
