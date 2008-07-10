@@ -7,10 +7,7 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 /*
  * Check location for Tiki Integrator script and setup aux CSS file if needed by repository

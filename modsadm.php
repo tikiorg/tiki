@@ -3,6 +3,7 @@
 
 if (!defined('STDOUT') || !defined('STDIN') || !defined('STDERR'))
      die("<p>shell only</p>");
+if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Initialization
 require_once ('tiki-setup.php');

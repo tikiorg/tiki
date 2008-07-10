@@ -7,10 +7,7 @@
  */
 
 //this script may only be included - so its better to die if called directly.
-if (basename($_SERVER["SCRIPT_NAME"]) == basename(__FILE__)) {
-  header("location: index.php");
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 include_once ('lib/tikilib.php');
 

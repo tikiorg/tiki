@@ -17,12 +17,15 @@
 //   * The client chat window
 // Long includes and heavy operations should be avoided to maximize the
 // response time of this script which is critical.
-include_once("lib/init/initlib.php");
-include_once ('db/tiki-db.php');
+include "tiki-setup.php";
+header( 'Content-Type: text/xml' );
 
-//lslib inherits from tikilib, so we need that ...
-include_once ('lib/tikilib.php');
+if( $prefs['feature_live_support'] != 'y' ) {
+	die;
+}
+
 include_once ('lib/live_support/lslib.php');
+
 header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");             // Date in the past
 header ("Last-Modified: " . gmdate("D, d M Y H:i:s"). " GMT"); // always modified
 header ("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1

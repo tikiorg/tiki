@@ -7,10 +7,7 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Check to see if admin has closed the site
 if ( $tiki_p_access_closed_site != 'y' and ! isset($bypass_siteclose_check) ) {

@@ -5,6 +5,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
 // details.
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // for PHP < 4.2.0
 if ( ! function_exists('array_fill') ) require_once('lib/compat/array_fill.func.php');

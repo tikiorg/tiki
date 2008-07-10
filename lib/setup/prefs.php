@@ -9,10 +9,7 @@
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
@@ -1046,6 +1043,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	# Tiki Profiles
 	$prefs['profile_sources'] = 'http://profiles.tikiwiki.org/profiles';
+
+	# Minichat
+	$prefs['feature_minichat'] = 'n';
 
 	// Special default values
 

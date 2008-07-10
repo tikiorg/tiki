@@ -9,6 +9,7 @@
 // uncomment and adapt the following line if you use smarty external to tiki
 // define('SMARTY_DIR', 'lib/smarty/');
 
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 require_once ( 'lib/smarty/libs/Smarty.class.php');
 
 class Smarty_MyPage extends Smarty {

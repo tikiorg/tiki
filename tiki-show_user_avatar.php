@@ -6,10 +6,13 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-include_once("lib/init/initlib.php");
-include_once ("tiki-setup_base.php");
+require 'tiki-setup.php';
+if( $prefs['feature_minichat'] != 'y' ) {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
-include_once ('lib/userprefs/userprefslib.php');
+	$smarty->display("error.tpl");
+	die;
+}
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.

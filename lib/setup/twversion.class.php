@@ -11,10 +11,6 @@
 
 // This script may only be included - so its better to die if called directly.
 // Should generally be instatiated from tiki-setup.php
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
 
 class TWVersion {
 	var $branch;		// Development cycle
