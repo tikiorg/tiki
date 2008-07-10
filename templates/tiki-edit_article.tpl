@@ -110,7 +110,7 @@
 </select>
 </td></tr>
 <tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own Image{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-<input name="userfile1" type="file" onblur="document.getElementById('useImage').checked = true;"/></td></tr>
+<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;"/></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
