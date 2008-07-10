@@ -261,7 +261,8 @@
 						trackerId={$item.trackerId}
 						&amp;rateitemId={$item.itemId}
 						&amp;fieldId={$rateFieldId}
-						&amp;rate_{$item.trackerId}={$field_value.options_array[i]}"
+						&amp;rate_{$item.trackerId}={$field_value.options_array[i]}
+						{if $page}&amp;page={$page|escape:url}{/if}"
 						class="linkbut">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
