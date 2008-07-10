@@ -27,7 +27,7 @@
 {if $showfieldname ne 'n' and empty($tpl)}
 <tr>
 {if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
-{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
+{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 	<td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
 
@@ -36,12 +36,12 @@
 {if $ix.type eq 'l'}
 <td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
-{if $tiki_p_tracker_view_ratings eq 'y'}
-<td class="heading auto field{$ix.fieldId}"{if $perms.tiki_p_tracker_vote_ratings eq 'y'} colspan="2"{/if}>
+{if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
+<td class="heading auto field{$ix.fieldId}">
 {self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
 {/if}
 {else}
-<td class="heading auto field{$ix.fieldId}"{if $ix.type eq 's' and $ix.name eq "Rating"} colspan="2"{/if}>
+<td class="heading auto field{$ix.fieldId}">
 {self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
 </td>
 {/if}
@@ -90,7 +90,7 @@
 
 <tr class="{cycle}">
 {if $checkbox}<td><input type="checkbox" name="{$checkbox.name}[]" value="{$items[user].field_values[$checkbox.ix].value}" /></td>{/if}
-{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
+{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td class="auto" style="width:20px;">
 {assign var=ustatus value=$items[user].status|default:"c"}
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 </td>
