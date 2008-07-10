@@ -41,9 +41,6 @@
 {if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
 {/if}
-{if $tiki_p_assign_perm_wiki_page eq 'y'}
-<span class="button2"><a href="tiki-p_share_page.php?objectId={$page|escape:"url"}&amp;objectType=wiki+page" class="linkbut">{tr}Share Page{/tr}</a></span>
-{/if}
 {if $tiki_p_admin_wiki eq 'y'}
 <span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></span>
 {/if}
