@@ -1,5 +1,9 @@
 <?php
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 $list = array();
 if(!empty($_SESSION['tiki_cookie_jar']) && is_array( $_SESSION['tiki_cookie_jar'] ) )
 	foreach( $_SESSION['tiki_cookie_jar'] as $name=>$value )
