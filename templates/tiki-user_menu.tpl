@@ -29,7 +29,7 @@ $smarty->assign('opensec', $opensec);
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 	{if $prefs.feature_menusfolderstyle eq 'y'}
 	{assign var="name" value=icnmenu$cname}
-	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">
+	<a class='separator' href="javascript:icntoggle('menu{$cname}', '{$menu_info.icon}');" title="{tr}Toggle options{/tr}">
 		{if $menu_info.type ne 'd'}
 			{if empty($menu_info.icon)}
 				{icon _id="ofolder" alt='Toggle' name="$name"}
@@ -51,7 +51,7 @@ $smarty->assign('opensec', $opensec);
 {if $chdata.url and $link_on_section eq 'y'}
 <a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="separator">
 {else}
-<a href="javascript:icntoggle('menu{$cname}');" class="separator">
+<a href="javascript:icntoggle('menu{$cname}', '{$menu_info.icon}');" class="separator">
 {/if}
 {tr}{$chdata.name}{/tr}
 </a>
@@ -94,9 +94,9 @@ while ($opensec) {
 {foreach key=pos item=chdata from=$menu_channels}
 {if $chdata.type ne 'o' and $chdata.type ne '-'}
   {if $prefs.feature_menusfolderstyle eq 'y'}
-    setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
+    setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}', basename($menu_info.icon));
   {else}
-    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
+    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}', basename($menu_info.icon));
   {/if}
 {/if}
 {/foreach}
