@@ -1299,7 +1299,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 DELETE FROM tiki_quicktags WHERE taginsert='#text' and tagcategory='wiki'; 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
 #2007-08-03 sylvieg
-ALTER TABLE tiki_user_assigned_modules ADD moduleId int(8) FIRST;
+ALTER TABLE tiki_user_assigned_modules ADD moduleId int(8) NOT NULL FIRST;
 UPDATE tiki_user_assigned_modules tuam set moduleId= (SELECT moduleId FROM tiki_modules tm WHERE tuam.name = tm.name  LIMIT 1);
 
 #2007-08-06 niclone
@@ -1871,3 +1871,18 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 #2008-07-09 sylvieg
 ALTER TABLE tiki_menus ADD icon varchar(200) NULL default NULL AFTER type;
+
+#2008-07-10 pkdille pre-release update
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_size` varchar(1) default 'n';
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_topline` varchar(1) default 'n';
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_subtitle` varchar(1) default 'n';
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_linkto` varchar(1) default 'n';
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_image_caption` varchar(1) default 'n';
+ALTER TABLE tiki_article_types MODIFY COLUMN `show_lang` varchar(1) default 'n';
+
+ALTER TABLE tiki_users_score MODIFY COLUMN `user` char(200) NOT NULL default '';
+ALTER TABLE tiki_images MODIFY COLUMN `user` varchar(200) default '';
+
+UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_drawings' AND `permDesc` = 'Can admin drawings' AND `level` = 'editors' AND `type` = 'drawings';
+UPDATE `users_permissions` SET `type` = 'calendar' where `permName` = 'tiki_p_view_tiki_calendar' AND `permDesc` = 'Can view Tikiwiki tools calendar' AND `level` = 'basic' AND  `type` = 'tiki';
+
