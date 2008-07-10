@@ -838,10 +838,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_copyright']='n';
 	$prefs['feature_multimedia']='n';
 
-	# mypage
-	$prefs['feature_mypage'] = 'n';
-	$prefs['feature_mypage_mandatory_category'] = -1;
-
 	# swffix
 	$prefs['feature_swffix'] = 'n';
 
