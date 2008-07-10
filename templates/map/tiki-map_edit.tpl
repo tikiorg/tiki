@@ -16,7 +16,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">
-<a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+<a class="link" href="tiki-map.php?mapfile={$files[user]}">{$files[user]}</a>
 </td>
 <td class="odd">
 {if $tiki_p_map_edit eq 'y'}
@@ -42,7 +42,7 @@
 {else}
 <tr>
 <td class="even">
-<a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+<a class="link" href="tiki-map.php?mapfile={$files[user]}">{$files[user]}</a>
 </td>
 <td class="even">
 {if $tiki_p_map_edit eq 'y'}
