@@ -141,6 +141,7 @@ table.email {
 table.email td.body {
   border: dashed 1px #69c;
 }
+td.button {text-align: right}
 
 /* Description on wiki pages */
 small {
