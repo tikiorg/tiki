@@ -43,13 +43,13 @@
 </div>
 <div class="postinfo">
 {if $use_title eq 'y'}
-	<small> {tr}posted by{/tr} {$listpages[ix].user|userlink}  
+	<small> {tr}Posted by{/tr} {$listpages[ix].user|userlink}  
 	{if $show_avatar eq 'y'}
        {$listpages[ix].avatar}
      {/if} 
 	 {tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
-  <small> {tr}posted by{/tr} {$listpages[ix].user} 
+  <small> {tr}Posted by{/tr} {$listpages[ix].user} 
 	{if $show_avatar eq 'y'}
         {$listpages[ix].avatar}
     {/if}
@@ -73,7 +73,7 @@
 {/if}
 </small>
 <a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/printer.png' style="border:0;" alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
-<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/email.png' style="border:0;" alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' width='16' height='16' /></a>
+<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='pics/icons/email.png' style="border:0;" alt='{tr}Email This Post{/tr}' title='{tr}Email This Post{/tr}' width='16' height='16' /></a>
 </div>
 </div>
 {/section}

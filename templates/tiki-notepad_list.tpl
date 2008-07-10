@@ -53,7 +53,7 @@
 </tr>
 {/section}
 <tr>
-	<td class="formcolor" colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
+	<td class="formcolor" colspan="4"><input type="submit" name="merge" value="{tr}Merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
 </tr>
 </table>
 </form>

@@ -23,7 +23,7 @@
 <div class="module">&nbsp;</div>
 {/section}
 {if $nonums != 'y'}</ol>{else}</ul>{/if}
-<input style="font-size: 9px;" type="submit" name="modTasksCom" value="{tr}done{/tr}" />
+<input style="font-size: 9px;" type="submit" name="modTasksCom" value="{tr}Done{/tr}" />
 <input style="font-size: 9px;" type="submit" name="modTasksDel" value="{tr}Del{/tr}" />
 </form>
 {/tikimodule}

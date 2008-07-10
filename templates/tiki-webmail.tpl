@@ -7,24 +7,24 @@
 <table>
 <tr>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}settings{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">
     <img border="0" src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /><br />
-    {tr}settings{/tr}</a>
+    {tr}Settings{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}mailbox{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">
     <img border="0" src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /><br />
-    {tr}mailbox{/tr}</a>
+    {tr}Mailbox{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}compose{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">
     <img border="0" src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /><br />
-    {tr}compose{/tr}</a>
+    {tr}Compose{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}contacts{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">
     <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /><br />
-    {tr}contacts{/tr}</a>
+    {tr}Contacts{/tr}</a>
   </td>
 </tr>
 </table>
@@ -105,15 +105,15 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <option value="read">{tr}Mark as read{/tr}</option>
 <option value="unread">{tr}Mark as unread{/tr}</option>
 </select>
-<input type="submit" name="operate" value="{tr}mark{/tr}" />
+<input type="submit" name="operate" value="{tr}Mark{/tr}" />
 <br /><br />
 <table class="normal">
 <tr>
   <td class="heading">&nbsp;</td>
   <td class="heading">&nbsp;</td>
-  <td class="heading">{tr}sender{/tr}</td>
-  <td class="heading">{tr}subject{/tr}</td>
-  <td class="heading">{tr}date{/tr}</td>
+  <td class="heading">{tr}Sender{/tr}</td>
+  <td class="heading">{tr}Subject{/tr}</td>
+  <td class="heading">{tr}Date{/tr}</td>
   <td class="heading">{tr}Size{/tr}</td>
 </tr>
 {section name=ix loop=$list}
@@ -129,14 +129,14 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
 <td style="background:{$class};">
 {if $list[ix].isFlagged eq 'y'}
-<img src="img/webmail/flagged.gif" alt='{tr}flagged{/tr}'/>
+<img src="img/webmail/flagged.gif" alt='{tr}Flagged{/tr}'/>
 {/if}
 {if $list[ix].isReplied eq 'y'}
-<img src="img/webmail/replied.gif" alt='{tr}replied{/tr}'/>
+<img src="img/webmail/replied.gif" alt='{tr}Replied{/tr}'/>
 {/if}
 </td>
 <td style="background:{$class};">{$list[ix].sender.name}</td>
-<td style="background:{$class};"><a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}clip{/tr}'/>{/if}</td>
+<td style="background:{$class};"><a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}Clip{/tr}'/>{/if}</td>
 <td style="background:{$class};">{$list[ix].timestamp|tiki_short_datetime}</td>
 <td align="right" style="background:{$class};">{$list[ix].size|kbsize}</td>
 </tr>
@@ -148,11 +148,11 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {if $locSection eq 'read'}
 {if $prev}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$prev}">{tr}Prev{/tr}</a> |{/if}
 {if $next}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$next}">{tr}Next{/tr}</a> |{/if}
- <a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}back to mailbox{/tr}</a> |
+ <a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Back To Mailbox{/tr}</a> |
 {if $fullheaders eq 'n'} 
- <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}full headers{/tr}</a>
+ <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}Full Headers{/tr}</a>
 {else}
- <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}">{tr}normal headers{/tr}</a>
+ <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}">{tr}Normal Headers{/tr}</a>
 {/if} 
 <table>
 <tr>
@@ -181,7 +181,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   <td>
     <form method="post" action="tiki-webmail.php">
     <input type="hidden" name="locSection" value="compose" />
-    <input type="submit" name="replyall" value="{tr}reply all{/tr}" />
+    <input type="submit" name="replyall" value="{tr}Reply To All{/tr}" />
     <input type="hidden" name="to" value="{$headers.replyto|escape}" />
     <input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
     <input type="hidden" name="cc" value="{$headers.replycc|escape}" />
@@ -191,7 +191,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   </td>
   <td>
     <form method="post" action="tiki-webmail.php">
-    <input type="submit" name="reply" value="{tr}forward{/tr}" />
+    <input type="submit" name="reply" value="{tr}Forward{/tr}" />
     <input type="hidden" name="locSection" value="compose" />
     <input type="hidden" name="to" value="" />
     <input type="hidden" name="cc" value="" />
@@ -324,8 +324,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
     <input type="hidden" name="attach3type" value="{$attach3type|escape}" />
     <input type="submit" name="send" value="{tr}Send{/tr}" />
     <table >
-    <tr class="formcolor"><td><a title="{tr}select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
-    <tr class="formcolor"><td>{tr}cc{/tr}</td><td><input id="cc" type="text" name="cc" value="{$cc|escape}" /></td><td>{tr}bcc{/tr}</td><td><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
+    <tr class="formcolor"><td><a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
+    <tr class="formcolor"><td>{tr}CC{/tr}</td><td><input id="cc" type="text" name="cc" value="{$cc|escape}" /></td><td>{tr}BCC{/tr}</td><td><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
     <tr class="formcolor"><td>{tr}Subject{/tr}</td><td colspan="3"><input size="69" type="text" name="subject" value="{$subject|escape}" /></td></tr>
     <tr class="formcolor"><td>{tr}Attachments{/tr}</td><td colspan="3">
     {if $attach1}
@@ -406,7 +406,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
     {else}
     <tr class="formcolor"><td>{tr}Attachment 3{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile3" type="file" /></td></tr>
     {/if}
-    <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="attached" value="{tr}done{/tr}" /></td></tr>
+    <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="attached" value="{tr}Done{/tr}" /></td></tr>
     </table>
     </form>
   
