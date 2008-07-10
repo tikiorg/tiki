@@ -53,6 +53,8 @@ if (!is_dir($prefs['map_path'])) {
 
 $smarty->assign('tiki_p_map_create', $tiki_p_map_create);
 
+$smarty->assign('title',tra("Mapfiles"));
+
 if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	$newmapfile = $prefs['map_path'].$_REQUEST["newmapfile"];
 
@@ -286,7 +288,11 @@ include_once ('tiki-section_options.php');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-// Get templates from the templates/modules directori
+if (isset($_REQUEST["mapfile"])) {
+	$smarty->assign('title',tra("map edit")." ".$_REQUEST["mapfile"]);
+}
+
+// Get templates from the templates/modules directory
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
 $smarty->display("tiki.tpl");
 
