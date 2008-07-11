@@ -28,6 +28,8 @@ if ($prefs['feature_trackers'] != 'y') {
 	die;
 }
 
+if (!empty($_REQUEST['itemId']))
+	$ratedItemId = $_REQUEST['itemId'];
 $_REQUEST["itemId"] = 0;
 $smarty->assign('itemId', $_REQUEST["itemId"]);
 
@@ -190,7 +192,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$creatorSelector = false;
 	}
 	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields)) 
-		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y'))
+		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
 		) {
 		
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
@@ -214,7 +216,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	} 
 
-	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')) {
+	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 		if ($fields["data"][$i]["type"] == 'f') { // date and time
@@ -346,7 +348,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
 				        } 
 
-		} elseif($fields["data"][$i]["type"] == 's') { // rating
+		} elseif($fields["data"][$i]["type"] == 's' and $xfields['data'][$i]['name'] == 'Rating') { // rating
 			if (isset($_REQUEST["$ins_id"])) {
 				$newItemRate = $_REQUEST["$ins_id"];
 				$newItemRateField = $fields["data"]["$i"]["fieldId"];
@@ -673,20 +675,13 @@ $smarty->assign('filtervalue', $filtervalue);
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-// this isn't too beautiful, but works and doesn't break anything existing - amette
 if (isset($_REQUEST["trackerId"])) $trackerId = $_REQUEST["trackerId"];
-if (isset($_REQUEST["rateitemId"])) $rate_itemId = $_REQUEST["rateitemId"];
 
-if ( isset($tracker_info['useRatings'])
-	and $tracker_info['useRatings'] == 'y' and $user
-	and isset($_REQUEST['rateitemId']) and isset($_REQUEST["rate_$trackerId"])
-	and isset($_REQUEST['fieldId']) and isset($_REQUEST["trackerId"])
-	and ( $_REQUEST["rate_$trackerId"] == 'NULL' || in_array($_REQUEST["rate_$trackerId"], split(',',$tracker_info['ratingOptions'])) )
-) {
-	if ( $_REQUEST["rate_$trackerId"] == 'NULL' ) {
-		$_REQUEST["rate_$trackerId"] = NULL;
-	}
-	$trklib->replace_rating($trackerId, $rate_itemId, $_REQUEST['fieldId'], $user, $_REQUEST["rate_$trackerId"]);
+if ( isset($tracker_info['useRatings'])	and $tracker_info['useRatings'] == 'y'
+	and $user and $tiki_p_tracker_vote_ratings == 'y'
+	and !empty($_REQUEST['trackerId']) and !empty($ratedItemId)
+	and isset($newItemRate) and ( $newItemRate == 'NULL' || in_array($newItemRate, split(',',$tracker_info['ratingOptions'])) )) {
+	$trklib->replace_rating($_REQUEST['trackerId'], $ratedItemId, $newItemRateField, $user, $newItemRate);
 }
 
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue);

@@ -124,7 +124,7 @@
 		{/if}
 		{if $stick eq 'y'}<td class="formcontent">{else}<td colspan="3" class="formcontent">{/if}
 
-		{include file="tracker_item_field_value.tpl" field_value=$cur_field list_mode=n}
+		{include file="tracker_item_field_value.tpl" field_value=$cur_field list_mode=n item=$item_info}
 
 		</td>
 		{if $stick ne 'y'}</tr>{/if}
@@ -231,13 +231,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 				</td>
 			{elseif $tiki_p_tracker_vote_ratings eq 'y'}
 				<td>
-					{section name=i loop=$cur_field.options_array}
-						{if $cur_field.options_array[i] eq $item.my_rate}
-							<input name="newItemRate" checked="checked" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
-						{else}
-							<input name="newItemRate" type="radio" value="{$cur_field.options_array[i]|escape}" />{$cur_field.options_array[i]}
-						{/if}
-					{/section}
+					{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 				</td>
 			{/if}
 		</tr>

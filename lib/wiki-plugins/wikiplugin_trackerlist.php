@@ -8,7 +8,7 @@ function wikiplugin_trackerlist_help() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating;
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
@@ -36,6 +36,22 @@ function wikiplugin_trackerlist($data, $params) {
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
+
+		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' && $user and $tiki_p_tracker_vote_ratings == 'y' && isset($_REQUEST['itemId']) ) {
+			foreach ($allfields['data'] as $f) {
+				if ($f['type'] == 's' && $f['name'] == 'Rating') {
+					$i = $f['fieldId'];
+					if (isset($_REQUEST["ins_$i"]) && ($_REQUEST["ins_$i"] == 'NULL' || in_array($_REQUEST["ins_$i"], split(',',$tracker_info['ratingOptions'])))) {
+						$trklib->replace_rating($trackerId, $_REQUEST['itemId'], $f['fieldId'], $user, $_REQUEST["ins_$i"]);
+						header('Location: tiki-index.php?page='.urlencode($page));
+						die;
+					}
+					break;
+				}
+			}
+		}
+		
+
 		if (!empty($fields)) {
 			$listfields = split(':',$fields);
 			if ($sort == 'y') {
@@ -147,14 +163,6 @@ function wikiplugin_trackerlist($data, $params) {
 			$smarty->assign_by_ref('checkbox', $check);
 		}	
 
-		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
-				and $user and isset($_REQUEST['itemId']) and isset($_REQUEST["rate_$trackerId"]) and isset($_REQUEST['fieldId'])
-				and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
-			if ($_REQUEST["rate_$trackerId"] == 'NULL') $_REQUEST["rate_$trackerId"] = NULL;
-			$trklib->replace_rating($trackerId,$_REQUEST['itemId'],$_REQUEST['fieldId'],$user,$_REQUEST["rate_$trackerId"]);
-			header('Location: tiki-index.php?page='.urlencode($page));
-		}
-		
 		if (isset($_REQUEST['tr_sort_mode'])) {
 		  //$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
 			$sort_mode = $_REQUEST['tr_sort_mode'];
@@ -227,7 +235,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$filter = '';
 		}
 		
-		$rated = false;
+		$newItemRateField = false;
 		$status_types = $trklib->status_types();
 		$smarty->assign('status_types', $status_types);
 
@@ -309,7 +317,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 			if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
 					and $allfields["data"][$i]['type'] == 's' and $allfields["data"][$i]['name'] == 'Rating') {
-				$rated = true;
+				$newItemRateField = $allfields["data"][$i]['fieldId'];
 			}
 		}
 		$smarty->assign_by_ref('filterfield',$filterfield);
@@ -328,7 +336,7 @@ function wikiplugin_trackerlist($data, $params) {
 				die;
 			}
 			
-			if ($rated && !empty($items['data'])) {
+			if ($newItemRateField && !empty($items['data'])) {
 				foreach ($items['data'] as $f=>$v) {
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'],$user);
 				}

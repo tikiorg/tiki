@@ -248,9 +248,9 @@
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
 					trackerId={$item.trackerId}
-					&amp;rateitemId={$item.itemId}
-					&amp;fieldId={$rateFieldId}
-					&amp;rate_{$item.trackerId}=NULL"
+					&amp;itemId={$item.itemId}
+					&amp;ins_{$field_value.fieldId}=NULL
+					{if $page}&amp;page={$page|escape:url}{/if}"
 					class="linkbut">-</a>
 			{/if}
 				{section name=i loop=$field_value.options_array}
@@ -259,9 +259,8 @@
 					{else}
 						<a href="{$smarty.server.PHP_SELF}?
 						trackerId={$item.trackerId}
-						&amp;rateitemId={$item.itemId}
-						&amp;fieldId={$rateFieldId}
-						&amp;rate_{$item.trackerId}={$field_value.options_array[i]}
+						&amp;itemId={$item.itemId}
+						&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}
 						{if $page}&amp;page={$page|escape:url}{/if}"
 						class="linkbut">{$field_value.options_array[i]}</a>
 					{/if}

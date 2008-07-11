@@ -255,7 +255,7 @@ if (!isset($item_info)) {
 		die;
 	}  
 }
-$smarty->assign('item_info', $item_info);
+$smarty->assign_by_ref('item_info', $item_info);
 
 $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
@@ -329,7 +329,7 @@ foreach($xfields["data"] as $i=>$array) {
 		$mainfield = $i;
 	}
 
-	if ($xfields["data"][$i]['type'] == 's') {
+	if ($xfields["data"][$i]['type'] == 's' && $xfields["data"][$i]['name'] == 'Rating') {
 		if ($tiki_p_tracker_view_ratings == 'y') {
 			$ins_fields["data"][$i] = $xfields["data"][$i];
 			$rateFieldId = $fid;
@@ -664,8 +664,8 @@ if ($tiki_p_modify_tracker_items == 'y' || $special) {
 				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];
 			}
 			$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["edstatus"], $ins_categs);
-			if (isset($_REQUEST["newItemRate"])) {
-				$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["newItemRate"]);
+			if (isset($rateFieldId) && isset($_REQUEST["ins_$rateFieldId"])) {
+				$trklib->replace_rating($_REQUEST["trackerId"],$_REQUEST["itemId"],$rateFieldId,$user,$_REQUEST["ins_$rateFieldId"]);
 			}
 			$mainfield = $ins_fields["data"][$mainfield]["value"];
 
@@ -723,16 +723,13 @@ if(isset($_REQUEST["returntracker"]) || isset($_REQUEST["save_return"])) {
 	die;
 }
 // ********************************************************
-
-if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_view_ratings == 'y') {
-	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($_REQUEST['rate']) and isset($_REQUEST['fieldId'])) {
-		$trklib->replace_rating($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId'],$user,$_REQUEST["rate"]);
+if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_vote_ratings == 'y') {
+	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($rateFieldId) and isset($_REQUEST['ins_'.$rateFieldId])) {
+		$trklib->replace_rating($_REQUEST['trackerId'],$_REQUEST['itemId'],$rateFieldId,$user,$_REQUEST['ins_'.$rateFieldId]);
 		header('Location: tiki-view_tracker_item.php?trackerId='.$_REQUEST['trackerId'].'&itemId='.$_REQUEST['itemId']);
+		die;
 	}
-	$item['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$_REQUEST['itemId'],$user);
-	$item['itemId'] = $itemId;
-	$item['trackerId'] = $trackerId;
-	$smarty->assign('item',$item);
+	$item_info['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$_REQUEST['itemId'],$user);
 }
 
 if ($_REQUEST["itemId"]) {
@@ -754,7 +751,7 @@ if ($_REQUEST["itemId"]) {
 	$lst = '';
 
 	foreach($xfields["data"] as $i=>$array) {
-		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's'and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
+		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
