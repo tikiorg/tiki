@@ -13,6 +13,7 @@ require_once ('lib/search/searchlib.php');
 // note: lib/search/searchlib.php is new. the old one was lib/searchlib.php
 
 $searchlib = &new SearchLib($tikilib->db);
+$auto_query_args = array('highlight','where');
 
 $smarty->assign('headtitle',tra('Search results'));
 
@@ -211,23 +212,7 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 //	$results['cant'] = $CurrentIndex + 1;
 //}
 
-$cant_pages = ceil($results["cant"] / $maxRecords);
 $smarty->assign('cant_results', $results["cant"]);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($results["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 
 $where_list = array('pages' => 'Entire Site');
 if ( $prefs['feature_wiki'] == 'y' ) {
