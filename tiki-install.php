@@ -58,6 +58,7 @@ function installer_is_accessible()
 		return true;
 	
 	$session_type = get_pref( $dbTiki, 'session_db', 'n' );
+	$cookie_name = 'tiki-user-' . get_pref( $dbTiki, 'cookie_name', 'tikiwiki' );
 
 	if ($session_type == 'y') {
 		include('db/local.php');
@@ -77,13 +78,10 @@ function installer_is_accessible()
 
 	session_start();
 
-	if( ! isset( $_SESSION['u_info'] ) )
+	if( ! isset( $_SESSION[$cookie_name] ) )
 		return false;
 	
-	if( empty( $_SESSION['u_info']['login'] ) )
-		return false;
-	
-	if( user_is_admin( $dbTiki, $_SESSION['u_info']['login'] ) )
+	if( user_is_admin( $dbTiki, $_SESSION[$cookie_name] ) )
 		return true;
 
 	global $db_tiki;
@@ -97,7 +95,8 @@ if ( installer_is_accessible() ) {
 	$admin_acc = 'y';
 	include_once("installer/tiki-installer.php");
 } else {
-	echo "Installer is only accessible to administrators. Login and try again.";
+	header( 'Location: index.php' );
+	exit;
 }
 
 ?>

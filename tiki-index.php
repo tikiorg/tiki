@@ -54,8 +54,6 @@ You can change this page after logging in. Please review the [http://doc.tikiwik
 
 !!{img src=pics/icons/star.png alt="Star"} Get started.
 To begin configuring your site:
-#Log in as the __admin__ with password __admin__.
-#Change the admin password.
 #Enable specific Tiki features.
 #Configure the features.
 

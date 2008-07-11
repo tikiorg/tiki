@@ -705,6 +705,7 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 		process_sql_file('tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql', $db_tiki);
 		$smarty->assign('dbdone', 'y');
 		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
+		$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if ( isset($_REQUEST['update']) ) {
