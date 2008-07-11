@@ -4335,13 +4335,30 @@ function add_pageview() {
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
 	function get_db_preferences() {
 		global $prefs;
-		$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-		while ( $res = $result->fetchRow() ) {
-			$prefs[$res['name']] = $res['value'];
-			$_SESSION['s_prefs'][$res['name']] = $res['value'];
-		}
-		$_SESSION['s_prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
-    }
+		// modified to cache for non-logged in users (case where logged out users have no session)
+		if (isset($_SESSION['s_prefs'])) {
+			// logged in
+			$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+			while ( $res = $result->fetchRow() ) {
+				$prefs[$res['name']] = $res['value'];
+				$_SESSION['s_prefs'][$res['name']] = $res['value'];
+			}
+			$_SESSION['s_prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];		
+		} else {
+			//logged out
+			global $cachelib; require_once("lib/cache/cachelib.php");
+			if (!$cachelib->isCached("tiki_preferences_cache")) {
+				$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+				while ( $res = $result->fetchRow() ) {
+					$prefs[$res['name']] = $res['value'];
+				}	
+				$prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
+				$cachelib->cacheItem("tiki_preferences_cache",serialize($prefs));
+			} else {
+				$prefs = unserialize($cachelib->getCached("tiki_preferences_cache"));
+			}
+		}	
+	}
 
 	function get_preferences( $names, $exact_match = false, $no_return = false ) {
 		global $prefs;
@@ -4383,6 +4400,9 @@ function add_pageview() {
     function set_preference($name, $value) {
 		global $user_overrider_prefs, $user_preferences, $user, $prefs;
 
+		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib->invalidate('tiki_preferences_cache');
+		
 		$this->set_lastUpdatePrefs();
 		
 		$query = "delete from `tiki_preferences` where `name`=?";
