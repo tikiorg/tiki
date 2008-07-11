@@ -161,7 +161,7 @@ window.onload = timeIt;
 </div>
 {/if}
 
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !$preview and $staging_preview neq 'y' and !isset($hdr)}
   {if $wysiwyg ne 'y'}
     <span class="button2" onclick="needToConfirm = false;">{self_link _class='linkbut' wysiwyg='y'}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
   {else}
