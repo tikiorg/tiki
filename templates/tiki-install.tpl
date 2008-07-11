@@ -118,7 +118,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <p>&nbsp;</p>
 <h2>{tr}Other Options{/tr}</h2>	  
 <ul>
-<li><a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
+ <li><a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}</a></li>
 </ul>
 <p>&nbsp;</p>
 	{else}

@@ -678,6 +678,7 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
 			$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
+			$_SESSION[$cookie_name] = 'admin';
 		}
 	}
 }
