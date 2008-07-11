@@ -216,7 +216,9 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <br />
 <h2>{tr}Other Options{/tr}</h2>
 <ul>
+	{if $tikidb_is20}
 	<li><a href="tiki-index.php" class="link">{tr}Do nothing and enter Tiki{/tr}</a>.</li>
+	{/if}
 	<li><a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}</a>.</li>
 </ul>
 <p>&nbsp;</p>
