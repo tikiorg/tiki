@@ -34,7 +34,7 @@
     <tr class="formcolor">
       <td class="formcolor">{tr}Friend's email{/tr}</td>
       <td class="formcolor"><input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}"/>
-	  <br /><em>{tr}Separate multiple email addresses with a comma.</em>{/tr}
+	  <br /><em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
 	  </td>
     </tr>
     {else}
