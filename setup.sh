@@ -5,7 +5,7 @@
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 # List of directories affected by this script:
-DIRS="backups db dump files img/wiki img/wiki_up img/trackers installer modules/cache temp temp/cache templates_c templates styles maps whelp mods"
+DIRS="backups db dump files img/wiki img/wiki_up img/trackers installer modules/cache temp temp/cache templates_c templates styles maps whelp mods tiki_tests/tests"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"
