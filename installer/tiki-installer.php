@@ -709,15 +709,7 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 	}
 
 	if ( isset($_REQUEST['update']) ) {
-		$is19 = ! has_tiki_db_20($dbTiki);
 		process_sql_file($_REQUEST['file'], $db_tiki);
-
-		if( $_REQUEST['file'] == 'tiki_1.9to2.0.sql' && $is19 ) {
-			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_edit_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
-			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_view_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
-			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_edit_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
-			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_view_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
-		}
 		$smarty->assign('dbdone', 'y');
 	}
 }
