@@ -304,11 +304,10 @@ td.third {
 /* Style for Site Identity */
 
 #sitesearchbar {
+	float: right;
         padding: 5px;
         text-align: right;
 }
-
-
 
 #site_report {
  text-align: center;
