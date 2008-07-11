@@ -17,6 +17,9 @@
 {if $trackerId}
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit This Tracker's Fields{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View This Tracker's Items{/tr}</a></span>
+<span class="button2"><a href="tiki-tracker_reports.php?trackerId={$trackerId}" class="linkbut">{tr}Reporting{/tr}</a></span>
+{else}
+<span class="button2"><a href="tiki-tracker_reports.php" class="linkbut">{tr}Reporting{/tr}</a></span>
 {/if}
 </div>
 

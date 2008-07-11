@@ -28,6 +28,7 @@
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin Trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit This Tracker{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit Fields{/tr}</a></span>
+<span class="button2"><a href="tiki-tracker_reports.php?trackerId={$trackerId}" class="linkbut">{tr}Reporting{/tr}</a></span>
 {/if}
 </div>
 
