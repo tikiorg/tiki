@@ -8,6 +8,9 @@ function tra($content, $lg='', $no_interactive = false) {
 	global $prefs;
 
 	if ($content) {
+		// do not translate english for performance reasons
+		if ($prefs['language'] == 'en' && $lg == '' && !isset($_SESSION['interactive_translation_mode'])) return ($content);
+
 		if ($prefs['lang_use_db'] != 'y') {
 			global $lang;
 			if ($lg != "") {
