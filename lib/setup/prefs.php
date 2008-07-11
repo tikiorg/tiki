@@ -869,6 +869,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['error_reporting_adminonly'] = 'y';
 	$prefs['error_reporting_level'] = 0;
 	$prefs['smarty_notice_reporting'] = 'n';
+	$prefs['smarty_security'] = 'n';
 	$prefs['feature_ajax'] = 'n';
 	$prefs['feature_antibot'] = 'n';
 	$prefs['feature_banners'] = 'n';

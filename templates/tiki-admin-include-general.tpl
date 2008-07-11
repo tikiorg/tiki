@@ -78,6 +78,11 @@
             </select>
         </td>
       </tr><tr>
+        <td class="form"><label for="smarty-security">{tr}Enable Smarty Security (e.g. do not allow php code in smarty templates){/tr}:</label></td>
+        <td><input type="checkbox" name="smarty_security" id="smarty-security"
+              {if $prefs.smarty_security eq 'y'}checked="checked"{/if}/>
+        </td>
+      </tr><tr>
       <td class="form"><label for="general-error">{tr}PHP error reporting level:{/tr}</label></td>
       <td><select name="error_reporting_level" id="general-error">
             <option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>

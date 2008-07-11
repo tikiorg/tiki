@@ -63,9 +63,15 @@ $needed_prefs = array(
 	'feature_intertiki_sharedcookie' => 'n',
 	'interlist' => array(),
 	'auth_method' => 'tiki',
+	'smarty_security' => 'n'
 );
 $tikilib->get_preferences($needed_prefs, true, true);
 extract($prefs);
+
+// Handle Smarty Security
+if ( $prefs['smarty_security'] == 'y' ) {
+	$smarty->security = true;
+}
 
 // set session lifetime
 if ($prefs['session_lifetime'] > 0) {

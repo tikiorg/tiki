@@ -34,7 +34,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "smarty_notice_reporting",
         "user_show_realnames",
 		"log_sql",
-		"log_mail"
+		"log_mail",
+		"smarty_security"
     );
 
     foreach ($pref_toggles as $toggle) {
