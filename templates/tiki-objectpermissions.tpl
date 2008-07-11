@@ -74,7 +74,7 @@
 
 <fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}Edit Permission{/tr}</span></a></legend>
+	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
 {/if}
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">
 {if $filegals_manager ne 'y'}
