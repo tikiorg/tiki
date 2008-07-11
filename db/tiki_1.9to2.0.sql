@@ -1777,3 +1777,10 @@ ALTER TABLE tiki_images MODIFY COLUMN `user` varchar(200) default '';
 UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_drawings' AND `permDesc` = 'Can admin drawings' AND `level` = 'editors' AND `type` = 'drawings';
 UPDATE `users_permissions` SET `type` = 'calendar' where `permName` = 'tiki_p_view_tiki_calendar' AND `permDesc` = 'Can view Tikiwiki tools calendar' AND `level` = 'basic' AND  `type` = 'tiki';
 
+#2008-07-10 Jyhem permissions clean-up
+UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_live_support_admin';
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_content_templates', 'Can admin content templates', 'admin', 'content templates', 'y');
+UPDATE `users_permissions` SET `type`='tiki' WHERE `permName` = 'tiki_p_admin_users';
+INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_comments', 'Can admin comments', 'admin', 'comments', 'y');
+UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_tikitests';
+
