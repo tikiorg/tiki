@@ -5011,6 +5011,7 @@ CREATE TABLE `tiki_minichat` (
   KEY `channel` (`channel`)
 );
 
+DROP TABLE IF EXISTS tiki_profile_symbols;
 CREATE TABLE tiki_profile_symbols (
 	`domain` VARCHAR(50) NOT NULL,
 	`profile` VARCHAR(50) NOT NULL,
