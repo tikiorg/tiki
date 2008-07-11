@@ -9,11 +9,6 @@
 // To (re-)enable this script the file has to be named tiki-installer.php and the following four lines
 // must start with two '/' and 'stopinstall:'. (Make sure there are no spaces inbetween // and stopinstall: !)
 
-//stopinstall: header ("Status: 410 Gone"); /* PHP3 */
-//stopinstall: header ("HTTP/1.0 410 Gone"); /* PHP4 */
-//stopinstall: header ('location: index.php');
-//stopinstall: die('gone');
-
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -473,42 +468,6 @@ function load_sql_scripts() {
 	$smarty->assign('files', $files);
 }
 
-function check_password() {
-	global $logged, $dbTiki, $multi;
-
-	$logged = 'n';
-	$pass = $_REQUEST['pass'];
-	$query = "select email from users_users where lower(login) = 'admin'";
-	$result = $dbTiki->Execute($query);
-
-	if (!$result->numRows()) {
-		$logged = 'n';
-		$_SESSION["install-logged-$multi"] = '';
-		return array('num'=>1,'mes'=>"No admin account set.");
-	} else {
-		$res = $result->fetchRow();
-		$hash[] = md5('admin' . $pass . $res['email']);
-		$hash[] = md5('admin' . $pass);
-		$hash[] = md5($pass);
-		// next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
-		$query = "select login, hash from users_users where lower(login) = 'admin'";
-		$result = $dbTiki->Execute($query);
-
-		$res = $result->fetchRow();
-		if ($res) {
-			$hash[] = crypt($pass, $res['hash']);
-		}
-
-		if ($res  && in_array($res['hash'], $hash)) {
-			$logged = 'y';
-			$_SESSION["install-logged-$multi"] = 'y';
-			return array('num'=>0,'mes'=>"admin logged in.");
-		} else {
-			return array('num'=>1,'mes'=>"Incorrect password");
-		}
-	}
-}
-
 // from PHP manual (ini-get function example)
 function return_bytes( $val ) {
 	$val = trim($val);
@@ -558,6 +517,8 @@ if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$vir
 	$multi = '';
 }
 
+$_SESSION["install-logged-$multi"] = 'y';
+
 // Init smarty
 $smarty = new Smarty_Tikiwiki();
 $smarty->load_filter('pre', 'tr');
@@ -585,7 +546,6 @@ if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
-$logged = false;
 
 // changed to path_translated 28/4/04 by damian
 // for IIS compatibilty
@@ -676,10 +636,6 @@ if (!file_exists($local)) {
 	}
 }
 
-
-// next lines checks if there is a admin account in the db
-$admin_acc = 'n';
-
 if ($dbcon) {
 	has_admin();
 }
@@ -734,24 +690,7 @@ load_profiles();
 //Load SQL scripts
 load_sql_scripts();
 
-// If no admin account then allow the creation of an admin account
-if ($admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
-	if ($_REQUEST['pass1'] == $_REQUEST['pass2']) {
-		$hash = md5($_REQUEST['pass1']);
-		//$query = "delete from users_users where login='admin'";
-		//$dbTiki->Execute($query);
-		$pass1 = addslashes($_REQUEST['pass1']);
-		$query = "insert into users_users(login,password,hash) values('admin','$pass1','$hash')";
-		$dbTiki->Execute($query);
-		$admin_acc = 'y';
-	}
-}
-
 $smarty->assign('admin_acc', $admin_acc);
-
-// Since we do have an admin account the user must login to
-// use the install script
-if ( isset($_REQUEST['login']) ) $tikifeedback[] = check_password();
 
 // If no admin account then we are logged
 if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
