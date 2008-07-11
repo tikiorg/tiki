@@ -1784,3 +1784,5 @@ UPDATE `users_permissions` SET `type`='tiki' WHERE `permName` = 'tiki_p_admin_us
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_comments', 'Can admin comments', 'admin', 'comments', 'y');
 UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_tikitests';
 
+#2008-07-11 nyloth
+UPDATE `tiki_preferences` SET `value`='n' WHERE `name`='feature_wysiwyg' AND `value`='default';
