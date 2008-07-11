@@ -21,17 +21,17 @@ function smarty_function_gallery($params, &$smarty)
     }
     $img = $tikilib->get_random_image($id);
     print('<div style="text-align: center">');
-    if ($hidelink != 1) {
+    if (!isset($hidelink) || $hidelink != 1) {
         print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'">');
      }
     print ('<img alt="thumbnail" class="athumb" src="show_image.php?id='.$img['imageId'].'&amp;thumb=1" />');
-    if ($hidelink !=1) {
+    if (!isset($hidelink) || $hidelink !=1) {
         print('</a>');
     }
-    if ($hideimgname !=1)  {  
+    if (!isset($hideimgname) || $hideimgname !=1)  {  
     	  print('<br /><b>'.$img['name'].'</b>');
     }
-    if ($showgalleryname == 1) {
+    if (isset($showgalleryname) && $showgalleryname == 1) {
         print('<br /><small>'.tra("Gallery").': <a href="tiki-browse_gallery.php?galleryId='.$img['galleryId'].'">'.$img['gallery'].'</a></small>');
     } 
     print('</div>');
