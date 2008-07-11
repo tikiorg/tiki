@@ -276,12 +276,10 @@
                                 </tr>
                                 </table>
 
-</fieldset>                                
-</td>      
+</fieldset>
+</td>
 
 
-
-        
         <td class="form">
       
       
@@ -382,10 +380,11 @@
         </td>
     </tr>
     <tr>
-        <td class="form" colspan="2"><input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
-        <label for="general-layout_section">{tr}Layout per section{/tr}</label>
-        </td>
-        <td style="text-align:right" colspan="3"><a href="tiki-admin_layout.php" class="link">{tr}Admin layout per section{/tr}</a></td>
+        <td class="form" colspan="5">
+	<div class="floatleft"><input type="checkbox" name="layout_section" id="general-layout_section" {if $prefs.layout_section eq 'y'}checked="checked"{/if}/>
+        <label for="general-layout_section">{tr}Layout per section{/tr}</label></div>
+	<div class="floatright">{if $prefs.layout_section eq 'y'}<a href="tiki-admin_layout.php" class="linkbut link">{else}<span class="linkbut disabled">{/if}{tr}Admin layout per section{/tr}{if $prefs.layout_section eq 'y'}</a>{else}</span>{/if}</div>
+	<hr class="clear" /></td>
       </tr>
     
     
@@ -396,33 +395,20 @@
 <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 	{if $prefs.feature_tabs neq 'y'}<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}"><a href="#other" name="other" onclick="flip('other'); return false;"><span>{tr}Other options{/tr}</span></a></legend>
 	<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">{/if}
-		<table class="admin" width="100%">
-				<tr>
-					<td class="form"><label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet):{/tr}</label></td>
-					<td><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if}/></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="use_context_menu_text">{tr}Use context menus for actions (text) (only in file galleries yet):{/tr}</label></td>
-					<td><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></td>
-					<td><input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label></td>
-					<td>
-						<select name="site_favicon_type" id="site_favicon_type">
-							<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
-							<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
-							<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
-						</select>
-					</td>
-				</tr>
-			</table>
+		<div class="form"><input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} /><label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label></div>
+		<div class="form"><input type="checkbox" id="use_context_menu_text" name="use_context_menu_text" {if $prefs.use_context_menu_text eq 'y'}checked="checked"{/if}/><label for="use_context_menu_text">{tr}Use context menus for actions (text) (only in file galleries yet){/tr}</label></div>
+		<div class="floatleft"><label for="site_favicon">{tr}Favicon icon file name:{/tr}</label></div>
+		<div class="floatright"><input type="text" name="site_favicon" id="site_favicon" value="{$prefs.site_favicon}" size="12" maxlength="32" /></div><br class="clear"/>
+		<div class="floatleft"><label for="site_favicon_type">{tr}Favicon icon MIME type:{/tr}</label></div>
+		<div class="floatright"><select name="site_favicon_type" id="site_favicon_type">
+						<option value="image/png" {if $prefs.site_favicon_type eq 'image/png'}selected="selected"{/if}>{tr}image/png{/tr}</option>
+						<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
+						<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
+					</select>
+		</div>
 	{if $prefs.feature_tabs neq 'y'}</div>{/if}
 </fieldset>
 
-		<div class="button" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
+		<div class="button clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
