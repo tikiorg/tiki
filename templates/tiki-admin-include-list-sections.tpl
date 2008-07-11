@@ -117,8 +117,8 @@
    <a href="tiki-admin.php?page=multimedia" class="admbox{if $prefs.feature_multimedia ne 'y'} off{/if}" style="background-image: url('pics/large/multimedia48x48.png')">
       <img src="pics/trans.png" alt="{tr}Multimedia{/tr}" title="{tr}Multimedia{/tr}" /><span>{tr}Multimedia{/tr}</span>
     </a>
-		<a href="tiki-admin.php?page=ads" class="admbox" style="background-image: url('pics/large/ads48x48.png')">
-			<img src="pics/trans.png" alt="{tr}Site Ads and Banners{/tr}" title="{tr}Site Ads and Banners{/tr}" /><span>{tr}Site Ads and Banners{/tr}</span>
+		<a href="tiki-admin.php?page=ads" class="admbox{if $prefs.feature_banners ne 'y'} off{/if}"" style="background-image: url('pics/large/ads48x48.png')">
+			<img src="pics/trans.png" alt="{tr}Site Ads and Banners{/tr}" title="{tr}Site Ads and Banners{/tr}" {if $prefs.feature_banners ne 'y'} ({tr}Disabled{/tr}){/if}/><span>{tr}Site Ads and Banners{/tr}</span>
 		</a>
 	</div>
 </div>
