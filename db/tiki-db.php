@@ -108,8 +108,9 @@ href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 	exit;
 }
 if (preg_match('/^adodb$/i', $api_tiki)) {
-	TikiInit::appendIncludePath('lib/adodb');
-	TikiInit::prependIncludePath('lib/pear');
+	TikiInit::prependIncludePath('lib/adodb');
+	if (strpos(ini_get('include_path'),'lib/pear') !== 0) 
+		TikiInit::prependIncludePath('lib/pear');
 
 	#error_reporting (E_ALL);       # show any error messages triggered
 	define('ADODB_FORCE_NULLS', 1);
