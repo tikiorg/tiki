@@ -24,9 +24,9 @@ if ($prefs['feature_banners'] != 'y') {
 }
 
 // IF NOT LOGGED aND NOT ADMIN BAIL OUT
-if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
-
+if ($tiki_p_admin != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;
 }
