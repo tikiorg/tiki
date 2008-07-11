@@ -600,6 +600,7 @@ if (!file_exists($local)) {
 		//upgrade from 2.0 : if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);
+		$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if ($db_tiki == 'sybase') {

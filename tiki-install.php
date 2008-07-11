@@ -38,8 +38,13 @@ function user_is_admin( $dbTiki, $name )
 
 function installer_is_accessible()
 {
+	global $cookie_name;
+
 	if( ! file_exists( 'db/local.php' ) )
+	{
+		$cookie_name = 'tiki-user-tikiwiki';
 		return true;
+	}
 
 	include_once("lib/init/initlib.php");
 	TikiInit::prependIncludePath('lib/adodb');
