@@ -224,8 +224,8 @@ function md5_check_dir($dir,&$result) { // save all suspicious files in $result
 // if check installation is pressed, walk through all files and compute md5 sums
 if (isset($_REQUEST['check_files'])) {
   global $tiki_versions;
-  require_once('lib/setup/versioning.class.php');
-  $version = new Versioning();
+  require_once('lib/setup/twversion.class.php');
+  $version = new TWVersion();
   $tiki_versions=$version->tikiVersions();
   $result=array();
   md5_check_dir(".",$result);
