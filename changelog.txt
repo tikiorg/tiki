@@ -20,7 +20,7 @@ Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
 Version 2.0
-<http://tikiwiki.org/ReleaseProcess2>
+<http://tikiwiki.org/ReleaseProcess20>
 ------------------
 
 
