@@ -43,9 +43,9 @@ $area = 'tiki';
 $crumbs = array();
 
 require_once('lib/setup/tikisetup.class.php');
-TikiSetup::prependIncludePath($tikipath);
-TikiSetup::prependIncludePath('lib');
-TikiSetup::prependIncludePath('lib/pear');
+TikiSetup::appendIncludePath($tikipath);
+TikiSetup::appendIncludePath('lib');
+TikiSetup::appendIncludePath('lib/pear');
 
 require_once('lib/setup/timer.class.php');
 $tiki_timer = new timer();
