@@ -679,8 +679,11 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	}
 }
 
-$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
+if( $dbTiki )
+{
+	$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+	$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
+}
 
 if ( isset($_REQUEST['restart']) ) $_SESSION["install-logged-$multi"] = '';
 
