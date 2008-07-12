@@ -22,12 +22,7 @@
 <div class="simplebox">{icon _id=information.png style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, you have to check <a href='tiki-user_preferences.php'>Allow messages from other users</a>{/tr}</div>
 {/if}
 
-
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,&nbsp;).{/tr}</div><br />
-</div>
-
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Separate multiple usernames with a comma (&nbsp;,&nbsp;).{/tr}{/remarksbox}
 
 <form action="messu-compose.php" method="post">
 <table class="normal" >

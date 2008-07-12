@@ -22,15 +22,9 @@
 <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-</div>
-
-<div class="rbox-data" name="tip">
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}Use ...page... to separate pages in a multi-page post{/tr}
-</div>
-
-<br />
+{/remarksbox}
 
 {if $preview}
 {include file="tiki-preview_article.tpl"}

@@ -23,10 +23,7 @@
 {/if}
 
 {if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Separate multiple usernames with a comma (&nbsp;,&nbsp;).{/tr}</div><br />
-</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
 <form action="messu-compose.php" method="post">
 <table class="normal" >

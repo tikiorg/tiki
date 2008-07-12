@@ -1,9 +1,6 @@
 {* $Id$ *}
 
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-	<div class="rbox-data" name="tip">{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}</div>
-</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 <hr />
 

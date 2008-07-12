@@ -8,12 +8,8 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin RSSmodules Template{/tr}">
 {icon _id='shape_square_edit'}</a>{/if}</h1>
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tips{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.</div>
-<div class="rbox-data" name="tip">{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
+<hr>{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 <div class="simplebox">

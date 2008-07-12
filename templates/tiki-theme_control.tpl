@@ -9,13 +9,7 @@
 <a href="tiki-edit_templates.php?template=tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
 {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>.{/tr}
-
-</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>.{/tr}{/remarksbox}
 
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />

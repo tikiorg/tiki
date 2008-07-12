@@ -1,17 +1,10 @@
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">
-          {tr}Use categories to regroup various Tiki objects{/tr}.
-        </div>
-	
-        <div class="rbox-data" name="tip">
-	  {tr}Link to{/tr} <a class="rbox-link" href="tiki-browse_categories.php">{tr}Browse categories{/tr}</a>
-        </div>
-        <div class="rbox-data" name="tip">
-	  {tr}Link to{/tr} <a class="rbox-link" href="tiki-admin_categories.php">{tr}Administer categories{/tr}</a>
-        </div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{tr}Use categories to regroup various Tiki objects{/tr}.
+<hr />
+{tr}Link to{/tr} <a class="rbox-link" href="tiki-browse_categories.php">{tr}Browse categories{/tr}</a>
+<hr />
+{tr}Link to{/tr} <a class="rbox-link" href="tiki-admin_categories.php">{tr}Administer categories{/tr}</a>
+{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">

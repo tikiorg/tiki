@@ -1,15 +1,12 @@
 {* $Id$ *}
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">{tr}To add/remove file galleries, go to "File Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-file_galleries.php">{tr}Click Here{/tr}</a>.</div>
-  <div class="rbox-data" name="tip">
-    {tr}If you decide to store files in a directory you must ensure that the user cannot access directly to the directory.{/tr}
-    {tr}You have two options to accomplish this:<br /><ul><li>Use a directory outside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use .htaccess to prevent the user from listing the directory contents</li></ul>{/tr}
-    {tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
-  </div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{tr}To add/remove file galleries, go to "File Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-file_galleries.php">{tr}Click Here{/tr}</a>.
+<hr />
+{tr}If you decide to store files in a directory you must ensure that the user cannot access directly to the directory.{/tr}
+{tr}You have two options to accomplish this:<br /><ul><li>Use a directory outside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use .htaccess to prevent the user from listing the directory contents</li></ul>{/tr}
+{tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
+{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">{tr}Home Gallery{/tr}</div>

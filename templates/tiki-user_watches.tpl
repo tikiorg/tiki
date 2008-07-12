@@ -13,15 +13,9 @@
 {include file=tiki-mytiki_bar.tpl}
 {/if}
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}</div>
-</div>
-
-
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
 {if $prefs.feature_articles eq 'y' and $tiki_p_read_article eq 'y'}
-<br />
 <h2>{tr}Add Watch{/tr}</h2>
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">

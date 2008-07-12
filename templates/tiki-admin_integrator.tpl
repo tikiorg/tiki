@@ -10,14 +10,9 @@
   {/if}
 </h1>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
     {tr}An easier way to integrate content from another site into Tiki is via iframed links using Tiki's <a class="rbox-link" href="tiki-admin_links.php">featured links</a> feature.{/tr}
-  </div>
-</div>
-
-<br />
+{/remarksbox}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>

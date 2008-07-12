@@ -1,9 +1,5 @@
 {if $prefs.feature_help eq "y"}
-  <div class="rbox" style="margin-top: 10px;">
-    <div class="rbox-title" style="background-color: #eeee99; font-weight : bold; display : inline; padding : 0 10px;">{tr}Tip{/tr}</div>  
-    <div class="rbox-data" style="padding: 2px 10px; background-color: #eeee99;">{tr}Freetags rock!{/tr}</div>
-  </div>
-  <br />
+{remarksbox type="tip" title="{tr}Tip{/tr}" icon=accept}{tr}Freetags rock!{/tr}{/remarksbox}
 {/if}
 
   <div id ="Browsing" class="cbox">
@@ -33,6 +29,7 @@
           <td><input type="text" name="freetags_user_color" value="{$prefs.freetags_user_color}" /></td>
         <tr>
 *}
+        <tr>
           <td class="form">{tr}Preload freetag random search when arriving on <a href="tiki-browse_freetags.php">freetag search grid</a>{/tr}: </td>
           <td><input type="checkbox" name="freetags_preload_random search" {if $prefs.freetags_preload_random_search eq 'y'}checked="checked"{/if} /></td>
         </tr>

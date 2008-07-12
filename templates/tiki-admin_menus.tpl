@@ -8,23 +8,19 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_menus.tpl" target="tikihelp" class="tikihelp" title="{tr}Edit template{/tr}: {tr}Admin Menus Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">
-    {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
-  </div>
-  <div class="rbox-data" name="tip">
-    {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
-    <ul>
-      <li>{literal}{phplayers id=X}{/literal}</li>
-      <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
-      <li>{literal}{phplayers id=X type=vert}{/literal}</li>
-    </ul>
-    {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
-	{tr}To use a menu in a tiki format: {/tr}{literal}{menu id=X}{/literal}<br />
-	{tr}To use menu in a css/suckerfish format: {/tr}{literal}{menu id=X css=y}{/literal}
-  </div>
-</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+  {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+  <hr />
+  {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
+  <ul>
+    <li>{literal}{phplayers id=X}{/literal}</li>
+    <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
+    <li>{literal}{phplayers id=X type=vert}{/literal}</li>
+  </ul>
+  {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+  {tr}To use a menu in a tiki format: {/tr}{literal}{menu id=X}{/literal}<br />
+  {tr}To use menu in a css/suckerfish format: {/tr}{literal}{menu id=X css=y}{/literal}
+{/remarksbox}
 
 {if $menuId > 0}
 <h2>{tr}Edit this Menu:{/tr} {$info.name}</h2>

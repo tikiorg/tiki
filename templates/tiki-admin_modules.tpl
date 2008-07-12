@@ -86,10 +86,7 @@
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
 <a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme'). Separator between params:'&'. E.g. maxlen=15&nonums=y.{/tr}" width=100 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">Tip</div>  
-  <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
-</div>
+{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
@@ -201,13 +198,7 @@
 {else}
 <h2>{tr}Edit this user module:{/tr} {$um_name}</h2>
 {/if}
-
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
-</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}{/remarksbox}
 
 <table class="normal">
  <tr valign="top">

@@ -133,11 +133,7 @@ function showDetails( id, domain, profile ) { // {{{
 } // }}}
 {/literal}
 </script>
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip"><a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}Tikiwiki Profiles{/tr}</a></div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}Tikiwiki Profiles{/tr}</a>{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">{tr}Configuration{/tr}</div>

@@ -65,25 +65,16 @@
 
 {if !$editFileId}
 	{if $prefs.feature_file_galleries_batch eq 'y'}
-	<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">{tr}Upload big files (e.g. PodCast files) here:{/tr} <a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Directory batch{/tr}</a></div>
-	</div>
-	<br /><br />
+	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Upload big files (e.g. PodCast files) here:{/tr} <a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}">{tr}Directory batch{/tr}</a>{/remarksbox}
 	{/if}
 {elseif isset($fileInfo.lockedby) and $fileInfo.lockedby neq ''}
-	<div class="rbox" name="tip">
-	<div class="rbox-title" name="note">{tr}Info{/tr}</div>  
-	<div class="rbox-data" name="note">
-	{icon _id="lock" class="" alt=""}
+	{remarksbox type="note" title="{tr}Info{/tr}" icon="lock"}
 	{if $user eq $fileInfo.lockedby}
 		{tr}You locked the file{/tr}
 	{else}
 		{tr}The file is locked by {$fileInfo.lockedby}{/tr}
 	{/if}
-	</div>
-	</div>
-	<br />
+	{/remarksbox}
 {/if}
 
 	<div align="center">

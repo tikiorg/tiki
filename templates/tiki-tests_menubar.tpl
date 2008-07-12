@@ -4,27 +4,16 @@
 	$this->assign("curl",extension_loaded("curl"));
 {/php}
 {if !$tidy}
-<div class="rbox" name="warning">
-<div class="rbox-title" name="warning">{tr}Warning{/tr}</div>
-<div class="rbox-data" name="warning">{tr}Tidy extension not present{/tr}</div>
-</div>
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Tidy extension not present{/tr}{/remarksbox}
 {/if}
 {if $http or $curl}
-<div class="rbox" name="notice">
-<div class="rbox-title" name="notice">{tr}Notice{/tr}</div>
-{if $http}
-<div class="rbox-data" name="notice">{tr}PECL HTPP extension present{/tr}</div>
-{/if}
-{if $curl}
-<div class="rbox-data" name="notice">{tr}cURL extension present{/tr}</div>
-{/if}
-</div>
+{remarksbox type="notice" title="{tr}Notice{/tr}"}
+{if $http}{tr}PECL HTPP extension present{/tr}{/if}
+{if $curl}{tr}cURL extension present{/tr}{/if}
+{/remarksbox}
 {/if}
 {if !$http and !$curl}
-<div class="rbox" name="warning">
-<div class="rbox-title" name="warning">{tr}Notice{/tr}</div>
-<div class="rbox-data" name="warning">{tr}PECL HTPP and cURL extension not present. Replay of the TikiTest will not be possible.{/tr}</div>
-</div>
+{remarksbox type="warning" title="{tr}Notice{/tr}"}{tr}PECL HTPP and cURL extension not present. Replay of the TikiTest will not be possible.{/tr}{/remarksbox}
 {/if}
 <div class="navbar">
 	{if $tiki_p_admin_tikitests eq 'y' or $tiki_p_play_tikitests eq 'y'}

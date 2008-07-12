@@ -84,10 +84,7 @@
       {/section}
     </select>
 {if $prefs.feature_help eq 'y'}
-  <div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple pages{/tr}.</div>
-  </div>
+  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple pages{/tr}.{/remarksbox}
 {/if}    
     <br />
     <input type="submit" name="addpage" value="{tr}Add Page{/tr}" />

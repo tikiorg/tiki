@@ -1,11 +1,10 @@
 {* $Id$ *}
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-galleries.php">{tr}Click Here{/tr}</a>.</div>
-<div class="rbox-data" name="tip">{tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{tr}To add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-galleries.php">{tr}Click Here{/tr}</a>.
+<hr />
+{tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.
+{/remarksbox}
 
 <div class="cbox">
 <div class="cbox-title">{tr}Home Gallery{/tr}</div>
@@ -98,15 +97,17 @@
     <div class="cbox-data">
     <form action="tiki-admin.php?page=gal" method="post">
     <table class="admin">
-    <tr class="form"><td><label>
+    <tr class="form"><td>
 {if $prefs.gal_use_db eq 'n'}
+<label>
 {tr}Move images from database storage to filesystem storage{/tr}
 </label>
-<input type="hidden" name="mvimg" value="to_fs" /></td>
+<input type="hidden" name="mvimg" value="to_fs" />
 {else}
+<label>
 {tr}Move images from filesystem storage to database storage{/tr}
 </label>
-<input type="hidden" name="mvimg" value="to_db" /></td>
+<input type="hidden" name="mvimg" value="to_db" />
 {/if}
 <td>
 <select name="move_gallery">

@@ -1,11 +1,5 @@
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">
-	
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}It works with the File Gallery, wiki pages (via a plugin), and a new multimedia tracker item{/tr}{/remarksbox}
 
-	</div>
-</div>
-<br />
 
 <div class="cbox">
   <div class="cbox-title">
@@ -79,12 +73,12 @@
    	<tr>
 	<td  class="form">{tr}Message after limited time{/tr}:</td><td class="form"><input type="text" name="LimitedMsg" value="{$prefs.LimitedMsg|escape}" size="25"/></td>
 	</tr>
+   	<tr>
 	<td  class="form">{tr}ID of System File Galleries to upload multimedia files{/tr}:</td><td class="form"><input type="text" name="MultimediaGalerie" value="{$prefs.MultimediaGalerie|escape}" size="4"/></td>
 	</tr>
-        
-        <td colspan="4" class="button"><input type="submit" name="multimediasetup" value="{tr}Save{/tr}" /></td>
-	 	  
-        </tr>
+   	<tr>
+	<td colspan="4" class="button"><input type="submit" name="multimediasetup" value="{tr}Save{/tr}" /></td>
+	</tr>
         </table>
       </form>
 
