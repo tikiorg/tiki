@@ -49,7 +49,7 @@
 {/pagination_links}
 {/if}
 
-{****  Display warnings about incorrect values and missing mandatory fields ***}
+{***  Display warnings about incorrect values and missing mandatory fields ***}
 {if count($err_mandatory) > 0}
 <div class="simplebox highlight">
 {tr}Following mandatory fields are missing{/tr}&nbsp;:<br/>
@@ -326,12 +326,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $cur_field.type eq 'e'}
 {if !empty($cur_field.options_array[2]) && ($cur_field.options_array[2] eq '1' or $cur_field.options_array[2] eq 'y')}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-document.write('<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$cur_field.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
-//--><!]]>
-</script>
-{/if}
+<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,'ins_cat_{$cur_field.fieldId}[]',this.checked)"/>{tr}Select All{/tr}</div>{/if}
 {assign var=fca value=$cur_field.options_array[0]}
 {if $cur_field.options_array[1] eq 'm' or $cur_field.options_array[1] eq 'd'}
 	<select name="ins_cat_{$cur_field.fieldId}[]"{if $cur_field.options_array[1] eq 'm'} multiple="multiple"{/if}>

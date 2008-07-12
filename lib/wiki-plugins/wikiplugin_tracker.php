@@ -704,10 +704,9 @@ function wikiplugin_tracker($data, $params) {
 						$back .= "</td><td>";
 						$i = 0;
 						if (!empty($f['options_array'][2]) && ($f['options_array'][2] == '1' || $f['options_array'][2] == 'y')) { 
-							$back .= '<script type="text/javascript"> /* <![CDATA[ */';
-							$back .= "document.write('<div class=\"categSelectAll\"><input type=\"checkbox\" onclick=\"switchCheckboxes(this.form,\'ins_cat_{$f['fieldId']}[]\',this.checked)\"/>";
+							$back .= "<div class=\"categSelectAll\"><input type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'ins_cat_{$f['fieldId']}[]',this.checked)\"/>";
 							$back .= tra('Select All');
-							$back .= "</div>')/* ]]> */</script>";
+							$back .= "</div>";
 						}
 						if (isset($f['options_array'][1]) && ($f['options_array'][1] == 'd' || $f['options_array'][1] == 'm')) {
 							$back .= '<select name="ins_cat_'.$f['fieldId'].'[]"';

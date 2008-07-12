@@ -215,11 +215,7 @@
 <tr>
 <th class="heading">
 {if $channels}
-	<script type="text/javascript">
-	<!--//--><![CDATA[//><!--
-	document.write("<input title=\"{tr}Select All{/tr}\" name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-	//--><!]]>
-	</script>
+	<input title="{tr}Select All{/tr}" name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
 {/if}
 </th>
 <th class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}ID{/tr}</a></th>

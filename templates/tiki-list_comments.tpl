@@ -35,14 +35,7 @@
 <table class="normal">
 <tr>
 <th class="heading">{if $comments}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
- // check / uncheck all.
- // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
- // for now those people just have to check every single box
-  document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"{tr}Select All{/tr}\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-//--><!]]>
-</script>{/if}
+<input name="switcher" id="clickall" type="checkbox" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>{/if}
 </th>
 {if is_array($types) and count($types) > 1}<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="objectType"}{tr}Type{/tr}{/self_link}</th>{/if}
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>

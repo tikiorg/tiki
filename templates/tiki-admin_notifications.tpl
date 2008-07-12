@@ -63,12 +63,7 @@
 <table class="normal">
 <tr>
 <th class="heading">
-{if $channels}<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-//--><!]]>
-</script>
-{/if}
+{if $channels}<input name="switcher" title="{tr}Select All{/tr}" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'checked[]',this.checked)" />{/if}
 </th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>

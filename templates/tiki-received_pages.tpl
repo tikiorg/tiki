@@ -121,7 +121,7 @@
 {section name=ix loop=$structures}
 {if $structures[ix].structureName eq $structures[user].structureName}
 <tr>
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}" </td>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$structures[ix].pageName|escape}"/></td>
 <td class="{cycle advance=false}">{$structures[ix].receivedPageId}</td>
 <td class="{cycle advance=false}">&nbsp;</td>
 {if $structures[ix].pageExists ne ''}
@@ -136,17 +136,9 @@
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">{icon _id='page_edit'}</a>
    <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt='{tr}View{/tr}'}</a>
 </td>
-</tr>
-{/if}
-{/section}
-{/if}
-{/section}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-	document.write('<tr><td colspan="8"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-	document.write('<label for="clickall">{tr}Select All{/tr}</label></td></tr>');
-//--><!]]>
-</script>
+</tr>{/if}{/section}{/if}{/section}
+<tr><td colspan="8"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
+<label for="clickall">{tr}Select All{/tr}</label></td></tr>
 </table>
 
 {tr}Prefix the checked:{/tr}<input type="text" name="prefix" />{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />

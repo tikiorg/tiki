@@ -365,11 +365,7 @@
 <tr>
 <th class="heading">
 {if $channels}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-	document.write('<input title="{tr}Select All{/tr}" type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'checked[]\',this.checked)"/>');
-//--><!]]>
-</script>
+	<input title="{tr}Select All{/tr}" type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
 {/if}
 </th>
 <th class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></th>
