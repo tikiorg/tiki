@@ -20,11 +20,11 @@ $sections = array(
 		'feature' => 'feature_blogs',
 		'key' => 'blogId',
 		'itemkey' => 'postId',
-		'objectType' =>'blog',
+		'objectType' =>'blog post',
 	),
 	'file_galleries' => array(
 		'feature' => 'feature_file_galleries',
-		'key' => 'page',
+		'key' => 'galleryId',
 		'itemkey' => 'fileId',
 		'objectType' =>'file gallery',
 		'itemObjectType' => 'file',
@@ -160,11 +160,6 @@ $sections = array(
 	),
 	'swffix' => array(
 		'feature' => 'feature_swffix',
-	),
-	'workflow' => array(
-		'feature' => 'feature_workflow',
-		'key' => '',
-		'itemkey' => '',
 	),
 );
 
