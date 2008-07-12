@@ -120,12 +120,6 @@
 	</div>
 	<br />
 	<textarea id="trackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
-	<br />
-	{tr}Use Ratings:{/tr}<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
-		<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
-			{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
-			{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
-		</span>
 	</td>
 </tr>
 {include file=categorize.tpl colsCategorize=2}
