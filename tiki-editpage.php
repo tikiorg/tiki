@@ -527,11 +527,55 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
             walk_and_parse($c[$i]["content"], $src, $p, $head_url );
         }
     }
-}
+}	// end walk_and_parse
+/**
+ * wrapper around zaufi's HTML sucker code just to use the html to wiki bit
+ *
+ * \param &$c string -- HTML in
+ * \param &$src string -- output string
+ */
+function parse_html(&$inHtml, &$parseddata) {
+	error_reporting(6143);
+	// Read compiled (serialized) grammar
+	$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
+	if (!$fp = @fopen($grammarfile,'r'))
+	{
+		$smarty->assign('msg', tra("Can't parse HTML data - no grammar file"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	$grammar = unserialize(fread($fp, filesize($grammarfile)));
+	fclose($fp);
+	// create parser object, insert html code and parse it
+	$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
+	$htmlparser->Parse();
+	// Should I try to convert HTML to wiki?
+	$parseddata = '';
+	$p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
+	walk_and_parse( $htmlparser->content, $parseddata, $p, '' );
+	// Is some tags still opened? (It can be if HTML not valid, but this is not reason
+	// to produce invalid wiki :)
+	while (count($p['stack']))
+	{
+		$e = end($p['stack']);
+		$parseddata .= $e['string'];
+		array_pop($p['stack']);
+	}
+	// Unclosed lists r ignored... wiki have no special start/end lists syntax....
+	// OK. Things remains to do:
+	// 1) fix linked images
+	$parseddata = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $parseddata);
+	// 2) fix remains images (not in links)
+	$parseddata = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $parseddata);
+	// 3) remove empty lines
+	$parseddata = preg_replace(",[\n]+,mU","\n", $parseddata);
+}	// end parse_html
+
 // Suck another page and append to the end of current
 include ('lib/htmlparser/htmlparser.inc');
 $suck_url = isset($_REQUEST["suck_url"]) ? $_REQUEST["suck_url"] : '';
-$parsehtml = isset ($_REQUEST["parsehtml"]) ? ($_REQUEST["parsehtml"] == 'on' ? 'y' : 'n')  : 'n';
+$parsehtml = isset ($_REQUEST["parsehtml"]) ? ($_REQUEST["parsehtml"] == 'on' ? 'y' : 'n')  : ($info['is_html'] ? 'n' : 'y');
+$smarty->assign('parsehtml', $parsehtml);
 if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
 {
     // \note by zaufi
@@ -554,40 +598,11 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     // Need to parse HTML?
     if ($parsehtml == 'y')
     {
-        // Read compiled (serialized) grammar
-        $grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
-        if (!$fp = @fopen($grammarfile,'r'))
-        {
-            $smarty->assign('msg', tra("Can't parse remote HTML page"));
-            $smarty->display("error.tpl");
-            die;
-        }
-        $grammar = unserialize(fread($fp, filesize($grammarfile)));
-        fclose($fp);
-        // create parser object, insert html code and parse it
-        $htmlparser = new HtmlParser($sdta, $grammar, '', 0);
-        $htmlparser->Parse();
-        // Should I try to convert HTML to wiki?
+    	// note by jonnyb - replaced by
         $parseddata = '';
-        $p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
-	$head_url = preg_replace( ';[^/]*$;', '', $_REQUEST["suck_url"] );
-        walk_and_parse( $htmlparser->content, $parseddata, $p, $head_url );
-        // Is some tags still opened? (It can be if HTML not valid, but this is not reason
-        // to produce invalid wiki :)
-        while (count($p['stack']))
-        {
-            $e = end($p['stack']);
-            $sdta .= $e['string'];
-            array_pop($p['stack']);
-        }
-        // Unclosed lists r ignored... wiki have no special start/end lists syntax....
-        // OK. Things remains to do:
-        // 1) fix linked images
-        $parseddata = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $parseddata);
-        // 2) fix remains images (not in links)
-        $parseddata = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $parseddata);
-        // 3) remove empty lines
-        $parseddata = preg_replace(",[\n]+,mU","\n", $parseddata);
+    	parse_html(&$sdta, &$parseddata);
+    	// following code moved to parse_html()
+    	
         // Reassign previous data
         $sdta = $parseddata;
     }
@@ -778,20 +793,50 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 } else {
 	$smarty->assign( 'translation_critical', 0 );
 }
-if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
-	// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
-	//   then we need to convert database's HTML entities into their "normal chars" equivalents
-	$smarty->assign('pagedata', TikiLib::htmldecode($edit_data));
-} else {
-	$smarty->assign('pagedata', $edit_data);
+
+// Parse (or not) $edit_data into $parsed
+// Handles switching editor modes
+if (isset($_REQUEST['mode_normal'])) {
+	// Parsing page data as first time seeing html page in normal editor
+	$smarty->assign('msg', "Parsing html to wiki");
+	$parsed = '';
+	parse_html($edit_data, $parsed);
+	$is_html = false;
+	$info['is_html'] = false;
+	$smarty->assign('allowhtml','n');
+} elseif (isset($_REQUEST['mode_wysiwyg'])) {
+	// Parsing page data as first time seeing wiki page in wysiwyg editor
+	$smarty->assign('msg', "Parsing wiki to html");
+	$secedit = $prefs['wiki_edit_section'];
+	$prefs['wiki_edit_section'] = 'n';		// get rid of the section edit icons
+	$exticons = $prefs['feature_wiki_ext_icon'];
+	$prefs['feature_wiki_ext_icon'] = 'n';		// and the external link icons
+	$parsed = $tikilib->parse_data($edit_data,false);
+	$smarty->assign('pagedata', $parsed);
+	$prefs['wiki_edit_section'] = $secedit;
+	$prefs['feature_wiki_ext_icon'] = $exticons;
+	$is_html = true;
+	$info['is_html'] = true;
+    $smarty->assign('allowhtml','y');
 }
-if ( isset($_REQUEST['edit']) && ! $is_html ) {
-	// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
-	//   then we need to convert HTML special chars into their HTML entities equivalent;
-	$parsed = htmlspecialchars($edit_data);
-} else {
-	$parsed = $edit_data;
+if (!$parsed) {
+	if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
+		// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
+		//   then we need to convert database's HTML entities into their "normal chars" equivalents
+		$parsed = TikiLib::htmldecode($edit_data);
+	} else {
+		$parsed = $edit_data;
+	}
+	if ( isset($_REQUEST['edit']) && ! $is_html ) {
+		// When we are in preview mode (i.e. data doesn't come from database) and if we don't allow HTML,
+		//   then we need to convert HTML special chars into their HTML entities equivalent;
+		$parsed = htmlspecialchars($edit_data);
+	} else {
+		$parsed = $edit_data;
+	}
 }
+$smarty->assign('pagedata', $parsed);
+
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
   $parsed = $tikilib->apply_postedit_handlers($parsed);
