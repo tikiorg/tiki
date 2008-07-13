@@ -512,3 +512,14 @@ div #page-bar
   text-align: center;
   font-size: 7pt;
 }
+
+#fullscreenbutton {
+  float: right;
+	position: absolute;
+	top: 2px;
+	right: 10px;
+	font-size: 80%;
+	white-space: nowrap;
+	padding: 0 4px;
+	cursor: pointer;
+}
