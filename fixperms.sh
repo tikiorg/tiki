@@ -16,28 +16,23 @@ fi
 AUSER=nobody
 AGROUP=nobody
 VIRTUALS=""
-
 USER=`whoami`
-UNAME=`uname | cut -c 1-6`
 
 if [ -f /etc/debian_version ]; then
 	AUSER=www-data
 	AGROUP=www-data
-fi
-
-if [ -f /etc/redhat-release ]; then
+elif [ -f /etc/redhat-release ]; then
 	AUSER=apache
 	AGROUP=apache
-fi
-
-if [ -f /etc/gentoo-release ]; then
+elif [ -f /etc/gentoo-release ]; then
 	AUSER=apache
 	AGROUP=apache
-fi
-
-if [ "$UNAME" = "CYGWIN" ]; then
-	AUSER=SYSTEM
-	AGROUP=SYSTEM
+else
+	UNAME=`uname | cut -c 1-6`
+	if [ "$UNAME" = "CYGWIN" ]; then
+		AUSER=SYSTEM
+		AGROUP=SYSTEM
+	fi
 fi
 
 if [ -z $1 ]; then
@@ -50,7 +45,7 @@ fi
 if [ "$COMMAND" = 'fix' ]; then
 	if [ "$USER" = 'root' ]; then
 		echo -n "User [$AUSER]: "
-		read 
+		read REPLY 
 		if [ -n "$REPLY" ]; then
 			AUSER=$REPLY
 		fi
@@ -70,7 +65,7 @@ questions. If you don't know what to answer, just press enter to each question (
 	fi
 
 	echo -n "Group [$AGROUP]: "
-	read 
+	read REPLY
 	if [ -n "$REPLY" ]; then
 		AGROUP=$REPLY
 	fi
@@ -106,35 +101,36 @@ questions. If you don't know what to answer, just press enter to each question (
 			done
 		fi
 	done
-	
+
 	echo -n "Fix global perms ..."
 	chown -R $AUSER:$AGROUP .
 	echo -n " chowned ..."
-	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;
-	echo -n " files perms fixed ..."
-	find . -type d -exec chmod 755 {} \;
-	echo " dirs perms fixed ... done"
-	
+
+#	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;	
+#	echo -n " files perms fixed ..."
+#	find . -type d -exec chmod 755 {} \;
+#	echo " dirs perms fixed ... done"
+
+	chmod -R a-x .
+	chmod -R u=rwX .
+	chmod -R go=rX .
+
+	echo " done."
+
 	echo -n "Fix special dirs ..."
 	if [ "$USER" = 'root' ]; then
-		for d in $DIRS; do
-			find $d -type d -exec chmod 775 {} \;
-			find $d -type f -exec chmod 664 {} \;
-			chmod 664 robots.txt tiki-install.php
-		done
+		chmod -R g+w $DIRS
 	else
-		for d in $DIRS; do
-			find $d -type d -exec chmod 777 {} \;
-			find $d -type f -exec chmod 666 {} \;
-			chmod 666 robots.txt tiki-install.php
-		done
+		chmod -R go+w $DIRS
 	fi
+
+#	chmod 664 robots.txt tiki-install.php
 	echo " done."
 
 elif [ "$COMMAND" = 'open' ]; then
 	if [ "$USER" = 'root' ]; then
 		echo -n "User [$AUSER]: "
-		read 
+		read REPLY
 		if [ -n "$REPLY" ]; then
 			AUSER=$REPLY
 		fi		
@@ -154,8 +150,9 @@ questions. If you don't know what to answer, just press enter to each question (
 
 		read 
 		echo -n "Open global perms ..."
-		find . -type d -exec chmod 777 {} \;
-		find . -type f -exec chmod 666 {} \;
+#		find . -type d -exec chmod 777 {} \;
+#		find . -type f -exec chmod 666 {} \;
+		chmod -R a=rwX .
 		echo " done"
 	fi
 else
